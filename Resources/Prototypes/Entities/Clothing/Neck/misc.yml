@@ -48,6 +48,7 @@
 - type: entity
   id: StethoscopeAction
   name: stethoscope-verb
+  noSpawn: true
   components:
   - type: EntityTargetAction
     icon: Clothing/Neck/Misc/stethoscope.rsi/icon.png

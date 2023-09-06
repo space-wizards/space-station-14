@@ -19,6 +19,7 @@
   id: ActionToggleMask
   name: action-name-mask
   description: action-description-mask-toggle
+  noSpawn: true
   components:
   - type: InstantAction
     icon: { sprite: Clothing/Mask/gas.rsi, state: icon }

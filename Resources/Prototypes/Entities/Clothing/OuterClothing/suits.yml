@@ -120,6 +120,7 @@
   id: TogglePhaseCloak
   name: action-name-toggle-phase-cloak
   description: action-desc-toggle-phase-cloak
+  noSpawn: true
   components:
   - type: InstantAction
     # have to plan (un)cloaking ahead of time

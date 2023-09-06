@@ -2,6 +2,7 @@
   id: RevenantShop
   name: Shop
   description: Opens the ability shop.
+  noSpawn: true
   components:
   - type: InstantAction
     icon: Interface/Actions/shop.png
@@ -11,6 +12,7 @@
   id: RevenantDefile
   name: Defile
   description: Costs 30 Essence.
+  noSpawn: true
   components:
   - type: InstantAction
     icon: Interface/Actions/defile.png
@@ -21,6 +23,7 @@
   id: RevenantOverloadLights
   name: Overload Lights
   description: Costs 40 Essence.
+  noSpawn: true
   components:
   - type: InstantAction
     icon: Interface/Actions/overloadlight.png
@@ -31,6 +34,7 @@
 #  id: RevenantBlight
 #  name: Blight
 #  description: Costs 50 Essence.
+#  noSpawn: true
 #  components:
 #  - type: InstantAction
 #    icon: Interface/Actions/blight.png
@@ -41,6 +45,7 @@
   id: RevenantMalfunction
   name: Malfunction
   description: Costs 60 Essence.
+  noSpawn: true
   components:
   - type: InstantAction
     icon: Interface/Actions/malfunction.png

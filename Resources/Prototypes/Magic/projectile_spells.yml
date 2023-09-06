@@ -2,6 +2,7 @@
   id: Fireball
   name: action-name-spell-fireball
   description: action-description-spell-fireball
+  noSpawn: true
   components:
   - type: WorldTargetAction
     useDelay: 30

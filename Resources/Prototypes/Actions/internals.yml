@@ -2,6 +2,7 @@
   id: ToggleInternals
   name: action-name-internals-toggle
   description: action-description-internals-toggle
+  noSpawn: true
   components:
   - type: InstantAction
     icon:

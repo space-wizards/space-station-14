@@ -2,6 +2,7 @@
   id: ActionFlashRune
   name: action-name-spell-rune-flash
   description: action-description-spell-rune-flash
+  noSpawn: true
   components:
   - type: InstantAction
     useDelay: 10
@@ -16,6 +17,7 @@
   id: ActionExplosionRune
   name: action-name-spell-rune-explosion
   description: action-description-spell-rune-explosion
+  noSpawn: true
   components:
   - type: InstantAction
     useDelay: 20
@@ -30,6 +32,7 @@
   id: ActionIgniteRune
   name: action-name-spell-rune-ignite
   description: action-description-spell-rune-ignite
+  noSpawn: true
   components:
   - type: InstantAction
     useDelay: 15
@@ -44,6 +47,7 @@
   id: ActionStunRune
   name: action-name-spell-rune-stun
   description: action-description-spell-rune-stun
+  noSpawn: true
   components:
   - type: InstantAction
     useDelay: 10

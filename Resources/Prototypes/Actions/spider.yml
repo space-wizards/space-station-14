@@ -2,6 +2,7 @@
   id: SpiderWebAction
   name: spider-web-action-name
   description: spider-web-action-description
+  noSpawn: true
   components:
   - type: InstantAction
     icon: Interface/Actions/web.png
@@ -12,6 +13,7 @@
   id: SericultureAction
   name: sericulture-action-name
   description: sericulture-action-description
+  noSpawn: true
   components:
   - type: InstantAction
     icon: Interface/Actions/web.png

@@ -2,6 +2,7 @@
   id: MechCycleEquipment
   name: action-name-mech-cycle
   description: action-description-mech-cycle
+  noSpawn: true
   components:
   - type: InstantAction
     itemIconStyle: NoItem
@@ -15,6 +16,7 @@
   id: MechOpenUI
   name: action-name-mech-control-panel
   description: action-description-mech-control-panel
+  noSpawn: true
   components:
   - type: InstantAction
     itemIconStyle: NoItem
@@ -28,6 +30,7 @@
   id: MechEject
   name: action-name-mech-eject
   description: action-description-mech-eject
+  noSpawn: true
   components:
   - type: InstantAction
     itemIconStyle: NoItem

@@ -119,6 +119,7 @@
   id: BaseToggleMagbootsAction
   name: action-name-magboot-toggle
   description: action-description-magboot-toggle
+  noSpawn: true
   components:
   - type: InstantAction
     itemIconStyle: NoItem
@@ -127,6 +128,7 @@
 - type: entity
   id: ToggleMagbootsAction
   parent: BaseToggleMagbootsAction
+  noSpawn: true
   components:
   - type: InstantAction
     icon: { sprite: Clothing/Shoes/Boots/magboots.rsi, state: icon }
@@ -135,6 +137,7 @@
 - type: entity
   id: ToggleMagbootsAdvancedAction
   parent: BaseToggleMagbootsAction
+  noSpawn: true
   components:
   - type: InstantAction
     icon: { sprite: Clothing/Shoes/Boots/magboots-advanced.rsi, state: icon }
@@ -143,6 +146,7 @@
 - type: entity
   id: ToggleMagbootsSyndieAction
   parent: BaseToggleMagbootsAction
+  noSpawn: true
   components:
   - type: InstantAction
     icon: { sprite: Clothing/Shoes/Boots/magboots-syndicate.rsi, state: icon }

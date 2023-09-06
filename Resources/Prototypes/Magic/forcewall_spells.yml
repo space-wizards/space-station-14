@@ -2,6 +2,7 @@
   id: ForceWall
   name: action-name-spell-forcewall
   description: action-description-spell-forcewall
+  noSpawn: true
   components:
   - type: InstantAction
     useDelay: 10

@@ -2,6 +2,7 @@
   id: ViewLaws
   name: action-name-view-laws
   description: action-description-view-laws
+  noSpawn: true
   components:
   - type: InstantAction
     itemIconStyle: NoItem

@@ -2,12 +2,14 @@
   id: ActionRevertPolymorph
   name: polymorph-revert-action-name
   description: polymorph-revert-action-description
+  noSpawn: true
   components:
   - type: InstantAction
     event: !type:RevertPolymorphActionEvent
 
 - type: entity
   id: ActionPolymorph
+  noSpawn: true
   components:
   - type: InstantAction
     event: !type:PolymorphActionEvent

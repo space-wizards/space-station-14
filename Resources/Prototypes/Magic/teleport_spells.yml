@@ -2,6 +2,7 @@
   id: Blink
   name: action-name-spell-blink
   description: action-description-spell-blink
+  noSpawn: true
   components:
   - type: WorldTargetAction
     useDelay: 10

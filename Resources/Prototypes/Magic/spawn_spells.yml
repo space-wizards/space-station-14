@@ -2,6 +2,7 @@
   id: SpawnMagicarpSpell
   name: action-name-spell-summon-magicarp
   description: action-description-spell-summon-magicarp
+  noSpawn: true
   components:
   - type: WorldTargetAction
     useDelay: 10

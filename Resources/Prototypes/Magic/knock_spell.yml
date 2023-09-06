@@ -2,6 +2,7 @@
   id: Knock
   name: action-name-spell-knock
   description: action-description-spell-knock
+  noSpawn: true
   components:
   - type: InstantAction
     useDelay: 10

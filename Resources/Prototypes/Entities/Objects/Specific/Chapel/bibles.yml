@@ -84,6 +84,7 @@
   id: BibleSummon
   name: bible-summon-verb
   description: bible-summon-verb-desc
+  noSpawn: true
   components:
   - type: InstantAction
     icon: { sprite: Clothing/Head/Hats/witch.rsi, state: icon }

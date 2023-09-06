@@ -102,6 +102,7 @@
   id: ActionPAIPlayMidi
   name: action-name-pai-play-midi
   description: action-description-pai-play-midi
+  noSpawn: true
   components:
   - type: InstantAction
     checkCanInteract: false

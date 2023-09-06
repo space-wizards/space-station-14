@@ -166,6 +166,7 @@
   id: SpawnRift
   name: action-name-carp-rift
   description: action-description-carp-rift
+  noSpawn: true
   components:
   - type: InstantAction
     icon:
@@ -178,6 +179,7 @@
   id: ActionDevour
   name: action-name-devour
   description: action-description-devour
+  noSpawn: true
   components:
   - type: EntityTargetAction
     icon: Interface/Actions/devour.png

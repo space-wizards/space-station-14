@@ -2,6 +2,7 @@
   id: ActionScream
   name: action-name-scream
   description: action-description-scream
+  noSpawn: true
   components:
   - type: InstantAction
     useDelay: 10
@@ -13,6 +14,7 @@
   id: TurnUndead
   name: turn-undead-action-name
   description: turn-undead-action-description
+  noSpawn: true
   components:
   - type: InstantAction
     checkCanInteract: false
@@ -23,6 +25,7 @@
   id: ActionToggleLight
   name: action-name-toggle-light
   description: action-description-toggle-light
+  noSpawn: true
   components:
   - type: InstantAction
     icon: { sprite: Objects/Tools/flashlight.rsi, state: flashlight }
@@ -33,6 +36,7 @@
   id: OpenStorageImplant
   name: open-storage-implant-action-name
   description: open-storage-implant-action-description
+  noSpawn: true
   components:
   - type: InstantAction
     itemIconStyle: BigAction
@@ -46,6 +50,7 @@
   id: ActivateMicroBomb
   name: activate-micro-bomb-action-name
   description: activate-micro-bomb-action-description
+  noSpawn: true
   components:
   - type: InstantAction
     checkCanInteract: false
@@ -60,6 +65,7 @@
   id: ActivateFreedomImplant
   name: use-freedom-implant-action-name
   description: use-freedom-implant-action-description
+  noSpawn: true
   components:
   - type: InstantAction
     charges: 3
@@ -75,6 +81,7 @@
   id: OpenUplinkImplant
   name: open-uplink-implant-action-name
   description: open-uplink-implant-action-description
+  noSpawn: true
   components:
   - type: InstantAction
     itemIconStyle: BigAction
@@ -88,6 +95,7 @@
   id: ActivateEmpImplant
   name: use-emp-implant-action-name
   description: use-emp-implant-action-description
+  noSpawn: true
   components:
   - type: InstantAction
     charges: 3
@@ -103,6 +111,7 @@
   id: ActivateDnaScramblerImplant
   name: use-dna-scrambler-implant-action-name
   description: use-dna-scrambler-implant-action-description
+  noSpawn: true
   components:
   - type: InstantAction
     charges: 1
@@ -117,6 +126,7 @@
   id: ToggleSuitPiece
   name: action-name-hardsuit
   description: action-description-hardsuit
+  noSpawn: true
   components:
   - type: InstantAction
     itemIconStyle: BigItem
@@ -127,6 +137,7 @@
   id: CombatModeToggle
   name: action-name-combat
   description: action-description-combat
+  noSpawn: true
   components:
   - type: InstantAction
     checkCanInteract: false
@@ -139,6 +150,7 @@
   parent: CombatModeToggle
   name: action-name-combat
   description: action-description-combat
+  noSpawn: true
   components:
   - type: InstantAction
     enabled: false
@@ -157,6 +169,7 @@
   id: VendingThrow
   name: vending-machine-action-name
   description: vending-machine-action-description
+  noSpawn: true
   components:
   - type: InstantAction
     useDelay: 30
@@ -166,6 +179,7 @@
   id: ArtifactActivate
   name: activate-artifact-action-name
   description: activate-artifact-action-desc
+  noSpawn: true
   components:
   - type: InstantAction
     icon:
@@ -178,6 +192,7 @@
   id: ToggleBlock
   name: action-name-blocking
   description: action-description-blocking
+  noSpawn: true
   components:
   - type: InstantAction
     icon: { sprite: Objects/Weapons/Melee/shields.rsi, state: teleriot-icon }
@@ -188,6 +203,7 @@
   id: ClearNetworkLinkOverlays
   name: network-configurator-clear-network-link-overlays
   description: network-configurator-clear-network-link-overlays-desc
+  noSpawn: true
   components:
   - type: InstantAction
     icon: { sprite: Objects/Tools/multitool.rsi, state: icon }
@@ -197,6 +213,7 @@
   id: AnimalLayEgg
   name: action-name-lay-egg
   description: action-description-lay-egg
+  noSpawn: true
   components:
   - type: InstantAction
     icon: { sprite: Objects/Consumable/Food/egg.rsi, state: icon }
@@ -207,6 +224,7 @@
   id: ActionSleep
   name: action-name-sleep
   description: action-desc-sleep
+  noSpawn: true
   components:
   - type: InstantAction
     checkCanInteract: false
@@ -217,6 +235,7 @@
   id: ActionWake
   name: action-name-wake
   description: action-desc-wake
+  noSpawn: true
   components:
   - type: InstantAction
     icon: { sprite: Clothing/Head/Hats/pyjamasyndicatered.rsi, state: icon }
@@ -227,6 +246,7 @@
   id: ActivateHonkImplant
   name: action-name-honk
   description: action-desc-honk
+  noSpawn: true
   components:
   - type: InstantAction
     icon: { sprite: Objects/Fun/bikehorn.rsi, state: icon }

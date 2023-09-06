@@ -3,6 +3,7 @@
   id: CritSuccumb
   name: action-name-crit-succumb
   description: action-description-crit-succumb
+  noSpawn: true
   components:
   - type: InstantAction
     itemIconStyle: NoItem
@@ -16,6 +17,7 @@
   id: CritFakeDeath
   name: action-name-crit-fake-death
   description: action-description-crit-fake-death
+  noSpawn: true
   components:
   - type: InstantAction
     itemIconStyle: NoItem
@@ -30,6 +32,7 @@
   id: CritLastWords
   name: action-name-crit-last-words
   description: action-description-crit-last-words
+  noSpawn: true
   components:
   - type: InstantAction
     itemIconStyle: NoItem

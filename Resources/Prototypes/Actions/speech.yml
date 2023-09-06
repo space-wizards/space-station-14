@@ -2,6 +2,7 @@
   id: ActionConfigureMeleeSpeech
   name: melee-speech-config
   description: melee-speech-config-desc
+  noSpawn: true
   components:
   - type: InstantAction
     itemIconStyle: BigItem

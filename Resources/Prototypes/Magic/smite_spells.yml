@@ -2,6 +2,7 @@
   id: Smite
   name: action-name-spell-smite
   description: action-description-spell-smite
+  noSpawn: true
   components:
   - type: EntityTargetAction
     useDelay: 60

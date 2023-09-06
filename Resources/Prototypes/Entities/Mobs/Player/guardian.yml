@@ -237,6 +237,7 @@
   id: ToggleGuardian
   name: action-name-guardian
   description: action-description-guardian
+  noSpawn: true
   components:
   - type: InstantAction
     icon: Interface/Actions/manifest.png

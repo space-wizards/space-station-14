@@ -86,6 +86,7 @@
   id: ActionAGhostShowSolar
   name: action-name-show-solar-console
   description: action-description-show-solar-console
+  noSpawn: true
   components:
   - type: InstantAction
     icon: { sprite: Structures/Machines/parts.rsi, state: box_0 }
@@ -98,6 +99,7 @@
   id: ActionAGhostShowCommunications
   name: action-name-show-communications-console
   description: action-description-show-communications-console
+  noSpawn: true
   components:
   - type: InstantAction
     icon: { sprite: Structures/Machines/parts.rsi, state: box_0 }
@@ -110,6 +112,7 @@
   id: ActionAGhostShowRadar
   name: action-name-show-radar-console
   description: action-description-show-radar-console
+  noSpawn: true
   components:
   - type: InstantAction
     icon: { sprite: Structures/Machines/parts.rsi, state: box_0 }
@@ -122,6 +125,7 @@
   id: ActionAGhostShowCargo
   name: action-name-show-cargo-console
   description: action-description-show-cargo-console
+  noSpawn: true
   components:
   - type: InstantAction
     icon: { sprite: Structures/Machines/parts.rsi, state: box_0 }
@@ -134,6 +138,7 @@
   id: ActionAGhostShowCrewMonitoring
   name: action-name-show-crew-monitoring-console
   description: action-description-crew-monitoring-console
+  noSpawn: true
   components:
   - type: InstantAction
     icon: { sprite: Structures/Machines/parts.rsi, state: box_0 }
@@ -146,6 +151,7 @@
   id: ActionAGhostShowStationRecords
   name: action-name-show-station-records-console
   description: action-description-station-records-console
+  noSpawn: true
   components:
   - type: InstantAction
     icon: { sprite: Structures/Machines/parts.rsi, state: box_0 }

@@ -27,6 +27,7 @@
   id: ActionBorgSwapModule
   name: action-name-swap-module
   description: action-desc-swap-module
+  noSpawn: true
   components:
   - type: InstantAction
     itemIconStyle: BigItem

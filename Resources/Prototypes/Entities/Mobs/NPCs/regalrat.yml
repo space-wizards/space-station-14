@@ -280,6 +280,7 @@
   id: ActionRatKingRaiseArmy
   name: rat-king-raise-army-name
   description: rat-king-raise-army-description
+  noSpawn: true
   components:
   - type: InstantAction
     icon: Interface/Actions/ratKingArmy.png
@@ -291,6 +292,7 @@
   id: ActionRatKingDomain
   name: rat-king-domain-name
   description: rat-king-domain-description
+  noSpawn: true
   components:
   - type: InstantAction
     useDelay: 10

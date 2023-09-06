@@ -39,6 +39,7 @@
   id: ActionMimeInvisibleWall
   name: mime-invisible-wall
   description: mime-invisible-wall-desc
+  noSpawn: true
   components:
   - type: InstantAction
     priority: -1

@@ -2,6 +2,7 @@
   id: ActionVehicleHorn
   name: action-name-honk
   description: action-desc-honk
+  noSpawn: true
   components:
   - type: InstantAction
     useDelay: 3.4

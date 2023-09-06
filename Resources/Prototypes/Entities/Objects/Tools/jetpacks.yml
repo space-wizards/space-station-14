@@ -61,6 +61,7 @@
   id: ActionToggleJetpack
   name: action-name-jetpack-toggle
   description: action-description-jetpack-toggle
+  noSpawn: true
   components:
   - type: InstantAction
     icon:
