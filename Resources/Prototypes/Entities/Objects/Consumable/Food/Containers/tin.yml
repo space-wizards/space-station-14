@@ -34,8 +34,6 @@
         damage: 6
       behaviors:
       - !type:OpenBehavior
-  - type: Sprite
-    sprite: Objects/Consumable/Food/snacks.rsi
   - type: Item
     sprite: Objects/Consumable/Food/snacks.rsi
     heldPrefix: packet
@@ -84,7 +82,7 @@
   description: Just a nice can of ripe peaches swimming in their own juices.
   components:
   - type: Sprite
-    sprite: Objects/Consumable/Food/Snacks/peaches.rsi
+    sprite: Objects/Consumable/Food/Tins/peaches.rsi
   - type: FlavorProfile
     flavors:
     - sweet
@@ -98,7 +96,7 @@
   name: tinned peaches
   components:
   - type: Sprite
-    sprite: Objects/Consumable/Food/Snacks/maint_peaches.rsi
+    sprite: Objects/Consumable/Food/Tins/peaches.rsi
 
 # slightly run down texture and different name
 - type: entity
@@ -107,7 +105,7 @@
   name: Maintenance Peaches
   components:
   - type: Sprite
-    sprite: Objects/Consumable/Food/Snacks/maint_peaches.rsi
+    sprite: Objects/Consumable/Food/Tins/maint_peaches.rsi
   - type: Food
     trash: FoodTinPeachesMaintTrash
 
@@ -115,6 +113,7 @@
 - type: entity
   parent: FoodTinPeachesMaint
   id: FoodTinPeachesMaintOpen
+  suffix: Open
   components:
   - type: Sprite
     layers:
@@ -129,7 +128,7 @@
   name: Maintenance Peaches
   components:
   - type: Sprite
-    sprite: Objects/Consumable/Food/Snacks/maint_peaches.rsi
+    sprite: Objects/Consumable/Food/Tins/maint_peaches.rsi
 
 - type: entity
   parent: FoodTinBase
@@ -138,7 +137,7 @@
   description: Musical fruit in a slightly less musical container.
   components:
   - type: Sprite
-    sprite: Objects/Consumable/Food/Snacks/beans.rsi
+    sprite: Objects/Consumable/Food/Tins/beans.rsi
   - type: FlavorProfile
     flavors:
     - savory
@@ -153,7 +152,7 @@
   name: tin of beans
   components:
   - type: Sprite
-    sprite: Objects/Consumable/Food/Snacks/beans.rsi
+    sprite: Objects/Consumable/Food/Tins/beans.rsi
 
 # MRE can
 
@@ -164,7 +163,7 @@
   description: A standard issue tin of meat with a convenient pull tab.
   components:
   - type: Sprite
-    sprite: Objects/Consumable/Food/Snacks/tinned_meat.rsi
+    sprite: Objects/Consumable/Food/Tins/meat.rsi
   # the convenient pull tab
   - type: Openable
     openableByHand: true
@@ -182,4 +181,4 @@
   name: tinned meat
   components:
   - type: Sprite
-    sprite: Objects/Consumable/Food/Snacks/tinned_meat.rsi
+    sprite: Objects/Consumable/Food/Tins/meat.rsi
