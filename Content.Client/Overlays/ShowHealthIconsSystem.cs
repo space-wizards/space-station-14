@@ -47,25 +47,19 @@ public sealed class ShowHealthIconsSystem : EquipmentHudSystem<ShowHealthIconsCo
 
     private void OnGetStatusIconsEvent(EntityUid uid, DamageableComponent damageableComponent, ref GetStatusIconsEvent args)
     {
-        if (!IsActive)
+        if (!IsActive || args.InContainer)
             return;
 
-        var healthIcons = DecideHealthIcon(uid, damageableComponent);
+        var healthIcons = DecideHealthIcon(damageableComponent);
 
         args.StatusIcons.AddRange(healthIcons);
     }
 
-    private IReadOnlyList<StatusIconPrototype> DecideHealthIcon(EntityUid uid, DamageableComponent damageableComponent)
+    private IReadOnlyList<StatusIconPrototype> DecideHealthIcon(DamageableComponent damageableComponent)
     {
         var result = new List<StatusIconPrototype>();
         if (damageableComponent.DamageContainerID == null ||
             !DamageContainers.Contains(damageableComponent.DamageContainerID))
-        {
-            return result;
-        }
-
-        if (EntityManager.TryGetComponent<MetaDataComponent>(uid, out var metaDataComponent) &&
-            (metaDataComponent.Flags & MetaDataFlags.InContainer) == MetaDataFlags.InContainer)
         {
             return result;
         }
