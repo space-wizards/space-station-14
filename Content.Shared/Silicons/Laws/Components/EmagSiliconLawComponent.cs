@@ -14,7 +14,7 @@ public sealed partial class EmagSiliconLawComponent : Component
     /// <summary>
     /// The sound effect that plays when the borg is emagged.
     /// </summary>
-    [DataField("emagSound"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField("sound"), ViewVariables(VVAccess.ReadWrite)]
     public SoundSpecifier? EmagSound;
 	
     /// <summary>
