@@ -119,7 +119,7 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
             comp.DoAfters.Add(id, newDoAfter);
 
             // Networking yay (if you have an easier way dear god please).
-            newDoAfter.UserPosition = GetCoordinates(newDoAfter.NetUserPosition);
+            newDoAfter.UserPosition = EnsureCoordinates<DoAfterComponent>(newDoAfter.NetUserPosition, uid);
             newDoAfter.InitialItem = EnsureEntity<DoAfterComponent>(newDoAfter.NetInitialItem, uid);
 
             var doAfterArgs = newDoAfter.Args;
