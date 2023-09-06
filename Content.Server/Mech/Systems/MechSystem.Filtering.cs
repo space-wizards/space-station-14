@@ -55,6 +55,9 @@ public sealed partial class MechSystem
         if (MathHelper.CloseToPercent(removed.TotalMoles, 0f))
             return;
 
+        // when oxygen gets too low start removing overflow gases (nitrogen) to maintain oxygen ratio
+        var oxygen = mechAir.Air.GetMoles(filter.Oxygen);
+        var gases = oxygen >= filter.TargetOxygen ? filter.Gases : filter.OverflowGases;
 
         var coordinates = Transform(uid).MapPosition;
         GasMixture? destination = null;
@@ -66,16 +69,17 @@ public sealed partial class MechSystem
 
         if (destination != null)
         {
-            _atmosphere.ScrubInto(removed, destination, filter.Gases);
+            _atmosphere.ScrubInto(removed, destination, gases);
         }
         else
         {
             // filtering into space/planet so just discard them
-            foreach (var gas in filter.Gases)
+            foreach (var gas in gases)
             {
                 removed.SetMoles(gas, 0f);
             }
         }
+
         _atmosphere.Merge(mechAir.Air, removed);
     }
 }
