@@ -33,7 +33,7 @@ public sealed class ItemPlacerSystem : EntitySystem
 
         component.MaxEntities = state.MaxEntities;
         component.PlacedEntities.Clear();
-        var ents = GetEntitySet(state.Entities);
+        var ents = EnsureEntitySet<ItemPlacerComponent>(state.Entities, uid);
         component.PlacedEntities.UnionWith(ents);
         _pool.Return(ents);
     }

@@ -33,7 +33,7 @@ public sealed class LinkedEntitySystem : EntitySystem
     {
         if (args.Current is LinkedEntityComponentState state)
         {
-            component.LinkedEntities = GetEntitySet(state.LinkedEntities);
+            component.LinkedEntities = EnsureEntitySet<LinkedEntityComponent>(state.LinkedEntities, uid);
         }
     }
 

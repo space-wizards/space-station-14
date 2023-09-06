@@ -63,7 +63,7 @@ public abstract partial class SharedBuckleSystem
         component.Position = state.Position;
         component.BuckleOffsetUnclamped = state.BuckleOffsetClamped;
         component.BuckledEntities.Clear();
-        component.BuckledEntities.UnionWith(GetEntitySet(state.BuckledEntities));
+        component.BuckledEntities.UnionWith(EnsureEntitySet<StrapComponent>(state.BuckledEntities, uid));
         component.MaxBuckleDistance = state.MaxBuckleDistance;
         component.OccupiedSize = state.OccupiedSize;
     }

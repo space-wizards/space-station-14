@@ -28,11 +28,11 @@ public sealed class ShuttleConsoleBoundUserInterface : BoundUserInterface
         _window.OnClose += OnClose;
     }
 
-    private void OnDestinationPressed(EntityUid obj)
+    private void OnDestinationPressed(NetEntity obj)
     {
         SendMessage(new ShuttleConsoleFTLRequestMessage()
         {
-            Destination = EntMan.GetNetEntity(obj),
+            Destination = obj,
         });
     }
 
@@ -51,19 +51,19 @@ public sealed class ShuttleConsoleBoundUserInterface : BoundUserInterface
         }
     }
 
-    private void OnStopAutodockPressed(EntityUid obj)
+    private void OnStopAutodockPressed(NetEntity obj)
     {
-        SendMessage(new StopAutodockRequestMessage() { DockEntity = EntMan.GetNetEntity(obj) });
+        SendMessage(new StopAutodockRequestMessage() { DockEntity = obj });
     }
 
-    private void OnAutodockPressed(EntityUid obj)
+    private void OnAutodockPressed(NetEntity obj)
     {
-        SendMessage(new AutodockRequestMessage() { DockEntity = EntMan.GetNetEntity(obj) });
+        SendMessage(new AutodockRequestMessage() { DockEntity = obj });
     }
 
-    private void OnUndockPressed(EntityUid obj)
+    private void OnUndockPressed(NetEntity obj)
     {
-        SendMessage(new UndockRequestMessage() { DockEntity = EntMan.GetNetEntity(obj) });
+        SendMessage(new UndockRequestMessage() { DockEntity = obj });
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)

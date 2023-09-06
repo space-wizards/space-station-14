@@ -22,7 +22,7 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
     private readonly IEntityManager _entManager;
     private readonly IGameTiming _timing;
 
-    private EntityUid? _shuttleUid;
+    private EntityUid? _shuttleEntity;
 
     /// <summary>
     /// Currently selected dock button for camera.
@@ -89,7 +89,7 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
 
     public void SetMatrix(EntityCoordinates? coordinates, Angle? angle)
     {
-        _shuttleUid = coordinates?.EntityId;
+        _shuttleEntity = coordinates?.EntityId;
         RadarScreen.SetMatrix(coordinates, angle);
     }
 
@@ -126,7 +126,7 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
                     Text = destination.Destination,
                 };
 
-                _destinations[button] = _entManager.GetEntity(destination.Entity);
+                _destinations[button] = destination.Entity;
                 button.OnPressed += OnHyperspacePressed;
                 HyperspaceDestinations.AddChild(button);
             }
@@ -183,20 +183,21 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
 
         foreach (var dock in docks)
         {
-            var grid = _docks.GetOrNew(_entManager.GetEntity(dock.Coordinates.NetEntity));
+            var grid = _docks.GetOrNew(dock.Coordinates.NetEntity);
             grid.Add(dock);
         }
 
         DockPorts.DisposeAllChildren();
         DockingScreen.Docks = _docks;
+        var shuttleNetEntity = _entManager.GetNetEntity(_shuttleEntity);
 
-        if (_shuttleUid != null && _docks.TryGetValue(_shuttleUid.Value, out var gridDocks))
+        if (shuttleNetEntity != null && _docks.TryGetValue(shuttleNetEntity.Value, out var gridDocks))
         {
             var index = 1;
 
             foreach (var state in gridDocks)
             {
-                var pressed = _entManager.GetEntity(state.Entity) == DockingScreen.ViewedDock;
+                var pressed = state.Entity == DockingScreen.ViewedDock;
 
                 string suffix;
 
@@ -246,12 +247,10 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
     /// </summary>
     private void OnDockToggled(BaseButton.ButtonEventArgs obj, DockingInterfaceState state)
     {
-        var ent = _entManager.GetEntity(state.Entity);
-
         if (_selectedDock != null)
         {
             // If it got untoggled via other means then we'll stop viewing the old dock.
-            if (DockingScreen.ViewedDock != null && DockingScreen.ViewedDock != ent)
+            if (DockingScreen.ViewedDock != null && DockingScreen.ViewedDock != state.Entity)
             {
                 StopAutodockPressed?.Invoke(DockingScreen.ViewedDock.Value);
             }
@@ -274,7 +273,7 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
         }
         else
         {
-            if (_shuttleUid != null)
+            if (_shuttleEntity != null)
             {
                 DockingScreen.Coordinates = _entManager.GetCoordinates(state.Coordinates);
                 DockingScreen.Angle = state.Angle;
@@ -288,9 +287,9 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
             UndockButton.Disabled = false;
             RadarScreen.Visible = false;
             DockingScreen.Visible = true;
-            DockingScreen.ViewedDock = ent;
-            StartAutodockPressed?.Invoke(ent);
-            DockingScreen.GridEntity = _shuttleUid;
+            DockingScreen.ViewedDock = state.Entity;
+            StartAutodockPressed?.Invoke(state.Entity);
+            DockingScreen.GridEntity = _shuttleEntity;
             _selectedDock = obj.Button;
         }
     }
@@ -310,13 +309,13 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
     {
         base.Draw(handle);
 
-        if (!_entManager.TryGetComponent<PhysicsComponent>(_shuttleUid, out var gridBody) ||
-            !_entManager.TryGetComponent<TransformComponent>(_shuttleUid, out var gridXform))
+        if (!_entManager.TryGetComponent<PhysicsComponent>(_shuttleEntity, out var gridBody) ||
+            !_entManager.TryGetComponent<TransformComponent>(_shuttleEntity, out var gridXform))
         {
             return;
         }
 
-        if (_entManager.TryGetComponent<MetaDataComponent>(_shuttleUid, out var metadata) && metadata.EntityPaused)
+        if (_entManager.TryGetComponent<MetaDataComponent>(_shuttleEntity, out var metadata) && metadata.EntityPaused)
         {
             FTLTime += _timing.FrameTime;
         }

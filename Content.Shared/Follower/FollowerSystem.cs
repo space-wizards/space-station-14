@@ -58,7 +58,7 @@ public sealed class FollowerSystem : EntitySystem
             return;
 
         _pool.Return(component.Following);
-        component.Following = GetEntitySet(state.Following);
+        component.Following = EnsureEntitySet<FollowedComponent>(state.Following, uid);
     }
 
     private void OnBeforeSave(BeforeSaveEvent ev)

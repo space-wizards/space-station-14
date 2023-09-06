@@ -46,7 +46,7 @@ public sealed class BinSystem : EntitySystem
         if (args.Current is not BinComponentState state)
             return;
 
-        component.Items = GetEntityList(state.Items);
+        component.Items = EnsureEntityList<BinComponent>(state.Items, uid);
         component.Whitelist = state.Whitelist;
         component.MaxItems = state.MaxItems;
     }

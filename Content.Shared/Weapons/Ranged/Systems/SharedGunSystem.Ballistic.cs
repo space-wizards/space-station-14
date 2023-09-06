@@ -51,7 +51,7 @@ public abstract partial class SharedGunSystem
 
         component.UnspawnedCount = state.UnspawnedCount;
         component.Cycleable = state.Cycleable;
-        component.Entities = GetEntityList(state.Entities);
+        component.Entities = EnsureEntityList<BallisticAmmoProviderComponent>(state.Entities, uid);
     }
 
     private void OnBallisticUse(EntityUid uid, BallisticAmmoProviderComponent component, UseInHandEvent args)

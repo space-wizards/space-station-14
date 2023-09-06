@@ -70,7 +70,7 @@ public abstract class SharedDeviceListSystem : EntitySystem
             return;
         }
 
-        comp.Devices = GetEntitySet(state.Devices);
+        comp.Devices = EnsureEntitySet<DeviceListComponent>(state.Devices, uid);
         comp.HandleIncomingPackets = state.HandleIncomingPackets;
         comp.IsAllowList = state.IsAllowList;
     }

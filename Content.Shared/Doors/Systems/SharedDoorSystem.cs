@@ -110,7 +110,7 @@ public abstract partial class SharedDoorSystem : EntitySystem
             return;
 
         door.CurrentlyCrushing.Clear();
-        door.CurrentlyCrushing.UnionWith(GetEntitySet(state.CurrentlyCrushing));
+        door.CurrentlyCrushing.UnionWith(EnsureEntitySet<DoorComponent>(state.CurrentlyCrushing, uid));
 
         door.State = state.DoorState;
         door.NextStateChange = state.NextStateChange;
