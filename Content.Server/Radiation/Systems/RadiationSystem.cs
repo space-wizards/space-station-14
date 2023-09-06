@@ -18,6 +18,7 @@ public sealed partial class RadiationSystem : EntitySystem
         base.Initialize();
         SubscribeCvars();
         InitRadBlocking();
+        InitStack();
     }
 
     public override void Shutdown()
