@@ -30,7 +30,7 @@ public sealed class RunVerbAsCommand : ToolshedCommand
             var runnerEid = EntityManager.GetEntity(runnerNet);
 
             if (EntityManager.Deleted(runnerEid) && runnerEid != default)
-                ctx.ReportError(new DeadEntity(runnerEid));
+                ctx.ReportError(new DeadEntity(runnerNet));
 
             if (ctx.GetErrors().Any())
                 yield break;

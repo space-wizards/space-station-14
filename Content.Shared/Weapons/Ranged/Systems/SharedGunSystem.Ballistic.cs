@@ -96,7 +96,7 @@ public abstract partial class SharedGunSystem
 
         args.Handled = true;
 
-        _doAfter.TryStartDoAfter(new DoAfterArgs(args.User, component.FillDelay, new AmmoFillDoAfterEvent(), used: uid, target: args.Target, eventTarget: uid)
+        _doAfter.TryStartDoAfter(new DoAfterArgs(EntityManager, args.User, component.FillDelay, new AmmoFillDoAfterEvent(), used: uid, target: args.Target, eventTarget: uid)
         {
             BreakOnTargetMove = true,
             BreakOnUserMove = true,

@@ -31,6 +31,7 @@ namespace Content.Server.Communications
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly RoundEndSystem _roundEndSystem = default!;
         [Dependency] private readonly StationSystem _stationSystem = default!;
+        [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
         [Dependency] private readonly IConfigurationManager _cfg = default!;
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
 

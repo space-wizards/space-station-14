@@ -93,7 +93,7 @@ namespace Content.Server.Interaction
             var dropArgs = new DragDropTargetEvent(user.Value, dragged);
 
             // trigger dragdrops on the target entity (what you are dropping onto)
-            RaiseLocalEvent(msg.Target, ref dropArgs);
+            RaiseLocalEvent(GetEntity(msg.Target), ref dropArgs);
         }
 
         #endregion

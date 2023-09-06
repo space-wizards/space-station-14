@@ -127,7 +127,7 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
         var ev = new ShuttleConsoleFTLTravelStartEvent(uid);
         RaiseLocalEvent(ref ev);
 
-        _shuttle.FTLTravel(xform.GridUid.Value, shuttle, args.Destination, dock: dock, priorityTag: tagEv.Tag);
+        _shuttle.FTLTravel(xform.GridUid.Value, shuttle, destination, dock: dock, priorityTag: tagEv.Tag);
     }
 
     private void OnDock(DockEvent ev)

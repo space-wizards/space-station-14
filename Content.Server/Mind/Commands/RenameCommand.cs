@@ -45,9 +45,9 @@ public sealed class RenameCommand : IConsoleCommand
         // Metadata
         var metadata = _entManager.GetComponent<MetaDataComponent>(entityUid);
         var oldName = metadata.EntityName;
-        entMan.System<MetaDataSystem>().SetEntityName(entityUid, name, metadata);
+        _entManager.System<MetaDataSystem>().SetEntityName(entityUid, name, metadata);
 
-        var minds = entMan.System<SharedMindSystem>();
+        var minds = _entManager.System<SharedMindSystem>();
 
         if (minds.TryGetMind(entityUid, out var mindId, out var mind))
         {
@@ -56,7 +56,7 @@ public sealed class RenameCommand : IConsoleCommand
         }
 
         // Id Cards
-        if (entMan.TrySystem<IdCardSystem>(out var idCardSystem))
+        if (_entManager.TrySystem<IdCardSystem>(out var idCardSystem))
         {
             if (idCardSystem.TryFindIdCard(entityUid, out var idCard))
             {
@@ -64,8 +64,8 @@ public sealed class RenameCommand : IConsoleCommand
 
                 // Records
                 // This is done here because ID cards are linked to station records
-                if (entMan.TrySystem<StationRecordsSystem>(out var recordsSystem)
-                    && entMan.TryGetComponent(idCard.Owner, out StationRecordKeyStorageComponent? keyStorage)
+                if (_entManager.TrySystem<StationRecordsSystem>(out var recordsSystem)
+                    && _entManager.TryGetComponent(idCard.Owner, out StationRecordKeyStorageComponent? keyStorage)
                     && keyStorage.Key != null)
                 {
                     var origin = _entManager.GetEntity(keyStorage.Key.Value.OriginStation);
@@ -83,7 +83,7 @@ public sealed class RenameCommand : IConsoleCommand
         }
 
         // PDAs
-        if (entMan.TrySystem<PdaSystem>(out var pdaSystem))
+        if (_entManager.TrySystem<PdaSystem>(out var pdaSystem))
         {
             var query = _entManager.EntityQueryEnumerator<PdaComponent>();
             while (query.MoveNext(out var uid, out var pda))
@@ -96,8 +96,8 @@ public sealed class RenameCommand : IConsoleCommand
         }
 
         // Admin Overlay
-        if (entMan.TrySystem<AdminSystem>(out var adminSystem)
-            && entMan.TryGetComponent<ActorComponent>(entityUid, out var actorComp))
+        if (_entManager.TrySystem<AdminSystem>(out var adminSystem)
+            && _entManager.TryGetComponent<ActorComponent>(entityUid, out var actorComp))
         {
             adminSystem.UpdatePlayerList(actorComp.PlayerSession);
         }

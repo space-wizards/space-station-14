@@ -55,7 +55,7 @@ namespace Content.IntegrationTests.Tests
             var xformQuery = clientEntManager.GetEntityQuery<TransformComponent>();
             var eye = client.ResolveDependency<IEyeManager>().CurrentEye;
 
-            var testMap = await pair.CreateTestMap(pairTracker);
+            var testMap = await pair.CreateTestMap();
 
             EntityUid serverEnt = default;
 
