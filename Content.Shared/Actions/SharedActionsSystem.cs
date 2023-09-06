@@ -602,7 +602,8 @@ public abstract class SharedActionsSystem : EntitySystem
     {
         if (actionId == null ||
             !Resolve(holderId, ref comp, ref actionContainer, false) ||
-            !TryGetContainer(holderId, out var container, actionContainer))
+            !TryGetContainer(holderId, out var container, actionContainer) ||
+            !container.Contains(actionId.Value))
         {
             return;
         }
