@@ -1,0 +1,66 @@
+- type: gameMap
+  id: HavenOrbital
+  mapName: 'HavenOrbital'
+  mapPath: /Maps/havenorbital.yml
+  minPlayers: 65
+  stations:
+    HavenOrbital:
+      stationProto: StandardNanotrasenStation
+      components:
+        - type: StationNameSetup
+          mapNameTemplate: '{0} HavenOrbital {1}'
+          nameGenerator:
+            !type:NanotrasenNameGenerator
+            prefixCreator: '14'
+        - type: StationEmergencyShuttle
+          emergencyShuttlePath: /Maps/Shuttles/emergency_bean.yml
+        - type: StationJobs
+          overflowJobs:
+            - Passenger
+          availableJobs:
+            #service
+            Bartender: [ 2, 2 ]
+            Botanist: [ 2, 3]
+            Chef: [ 2, 2 ]
+            Janitor: [ 2, 3 ]
+            Captain: [ 1, 1 ]
+            HeadOfPersonnel: [ 1, 1 ]
+            Chaplain: [ 1, 2 ]
+            Librarian: [ 1, 1 ]
+            ServiceWorker: [ 2, 3 ]
+            #engineering
+            ChiefEngineer: [ 1, 1 ]
+            StationEngineer: [ 4, 6 ]
+            AtmosphericTechnician: [ 2, 3 ]
+            TechnicalAssistant: [ 2, 2 ]
+            SeniorEngineer: [ 1, 1 ]
+            #medical
+            ChiefMedicalOfficer: [ 1, 1 ]
+            MedicalDoctor: [ 4, 6 ]
+            Chemist: [ 2, 3 ]
+            MedicalIntern: [ 2, 2 ]
+            Paramedic: [ 1, 1 ]
+            SeniorPhysician: [ 1, 1 ]
+            #science
+            ResearchDirector: [ 1, 1 ]
+            Scientist: [ 3, 4 ]
+            ResearchAssistant: [ 2, 3 ]
+            SeniorResearcher: [ 1, 1 ] 
+            #security
+            HeadOfSecurity: [ 1, 1 ]
+            SecurityOfficer: [ 5, 7 ]
+            Warden: [ 1, 1 ]
+            Lawyer: [ 2, 2 ]
+            SecurityCadet: [ 2, 3 ]
+            Detective: [ 1, 1 ]
+            SeniorOfficer: [ 1, 1 ]
+            #supply
+            CargoTechnician: [ 3, 5 ]
+            Quartermaster: [ 1, 1 ]
+            SalvageSpecialist: [ 4, 4 ]
+            #civilian
+            Passenger: [ -1, -1 ]
+            Clown: [ 1, 2 ]
+            Mime: [ 1, 1 ]
+            Musician: [ 1, 1 ]
+            Zookeeper: [ 1, 1 ]
