@@ -7,11 +7,11 @@ namespace Content.Server.Construction.Completions
 {
     [UsedImplicitly]
     [DataDefinition]
-    public sealed class SpawnPrototypeAtContainer : IGraphAction
+    public sealed partial class SpawnPrototypeAtContainer : IGraphAction
     {
-        [DataField("prototype")] public string Prototype { get; } = string.Empty;
-        [DataField("container")] public string Container { get; } = string.Empty;
-        [DataField("amount")] public int Amount { get; } = 1;
+        [DataField("prototype")] public string Prototype { get; private set; } = string.Empty;
+        [DataField("container")] public string Container { get; private set; } = string.Empty;
+        [DataField("amount")] public int Amount { get; private set; } = 1;
 
         public void PerformAction(EntityUid uid, EntityUid? userUid, IEntityManager entityManager)
         {

@@ -18,7 +18,7 @@
     - Back
   - type: AmmoCounter
   - type: Gun
-    fireRate: 0.3 # ~5 second cooldown between shots
+    fireRate: 0.75
     selectedMode: SemiAuto
     availableModes:
     - SemiAuto

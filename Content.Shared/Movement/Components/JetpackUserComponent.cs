@@ -6,7 +6,7 @@ namespace Content.Shared.Movement.Components;
 /// Added to someone using a jetpack for movement purposes
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-public sealed class JetpackUserComponent : Component
+public sealed partial class JetpackUserComponent : Component
 {
     public EntityUid Jetpack;
 }

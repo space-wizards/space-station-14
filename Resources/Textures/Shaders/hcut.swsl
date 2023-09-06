@@ -1,0 +1,13 @@
+light_mode unshaded;
+
+const highp float c = 0.3;
+const highp float alphaModifier = 0.2;
+const bool below = true;
+
+void fragment()
+{
+    highp vec4 tex = zTexture(UV);
+    highp float modifier = (UV.y > c ^^ !below) ? 1.0 : alphaModifier;
+
+    COLOR = vec4(tex.x, tex.y, tex.z, tex.w * modifier);
+}

@@ -41,6 +41,7 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
     private readonly AnchorableSystem _anchorable;
     private readonly BiomeSystem _biome;
     private readonly DungeonSystem _dungeon;
+    private readonly MetaDataSystem _metaData;
     private readonly SalvageSystem _salvage;
 
     public readonly EntityUid Station;
@@ -55,6 +56,7 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
         AnchorableSystem anchorable,
         BiomeSystem biome,
         DungeonSystem dungeon,
+        MetaDataSystem metaData,
         SalvageSystem salvage,
         EntityUid station,
         SalvageMissionParams missionParams,
@@ -67,6 +69,7 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
         _anchorable = anchorable;
         _biome = biome;
         _dungeon = dungeon;
+        _metaData = metaData;
         _salvage = salvage;
         Station = station;
         _missionParams = missionParams;
@@ -139,7 +142,7 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
 
         // Don't want consoles to have the incorrect name until refreshed.
         var ftlUid = _entManager.CreateEntityUninitialized("FTLPoint", new EntityCoordinates(mapUid, grid.TileSizeHalfVector));
-        _entManager.GetComponent<MetaDataComponent>(ftlUid).EntityName = SharedSalvageSystem.GetFTLName(_prototypeManager.Index<DatasetPrototype>("names_borer"), _missionParams.Seed);
+        _metaData.SetEntityName(ftlUid, SharedSalvageSystem.GetFTLName(_prototypeManager.Index<DatasetPrototype>("names_borer"), _missionParams.Seed));
         _entManager.InitializeAndStartEntity(ftlUid);
 
         var landingPadRadius = 24;

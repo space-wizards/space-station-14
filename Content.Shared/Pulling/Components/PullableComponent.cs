@@ -9,7 +9,7 @@ namespace Content.Shared.Pulling.Components
     [NetworkedComponent()]
     [Access(typeof(SharedPullingStateManagementSystem))]
     [RegisterComponent]
-    public sealed class SharedPullableComponent : Component
+    public sealed partial class SharedPullableComponent : Component
     {
         /// <summary>
         /// The current entity pulling this component.

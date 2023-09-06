@@ -8,7 +8,7 @@ namespace Content.Shared.DoAfter;
 [Serializable, NetSerializable]
 [DataDefinition]
 [Access(typeof(SharedDoAfterSystem))]
-public sealed class DoAfter
+public sealed partial class DoAfter
 {
     [DataField("index", required:true)]
     public ushort Index;
@@ -16,7 +16,7 @@ public sealed class DoAfter
     public DoAfterId Id => new(Args.User, Index);
 
     [IncludeDataField]
-    public readonly DoAfterArgs Args = default!;
+    public DoAfterArgs Args = default!;
 
     /// <summary>
     ///     Time at which this do after was started.

@@ -163,7 +163,7 @@
   - type: PaintableAirlock
     group: Glass
   - type: Construction
-    node: airlockMedSecurity
+    node: glassAirlockMedSecurity
 
 - type: entity
   parent: AirlockGlass
@@ -215,7 +215,7 @@
   - type: PaintableAirlock
     group: Glass
   - type: Construction
-    node: airlockMaxSecurity
+    node: glassAirlockMaxSecurity
 
 - type: entity
   parent: AirlockGlass
@@ -227,4 +227,4 @@
   - type: PaintableAirlock
     group: Glass
   - type: Construction
-    node: airlockMedSecurity
+    node: glassAirlockMedSecurity

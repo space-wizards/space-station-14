@@ -5,7 +5,7 @@ using JetBrains.Annotations;
 namespace Content.Shared.Construction.Steps;
 
 [DataDefinition]
-public sealed class PartAssemblyConstructionGraphStep : ConstructionGraphStep
+public sealed partial class PartAssemblyConstructionGraphStep : ConstructionGraphStep
 {
     /// <summary>
     /// A valid ID on <see cref="PartAssemblyComponent"/>'s dictionary of strings to part lists.

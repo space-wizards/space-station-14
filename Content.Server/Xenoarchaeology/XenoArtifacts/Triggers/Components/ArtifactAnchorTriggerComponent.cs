@@ -7,7 +7,7 @@
 /// Not every trigger can be a winner
 /// </remarks>
 [RegisterComponent]
-public sealed class ArtifactAnchorTriggerComponent : Component
+public sealed partial class ArtifactAnchorTriggerComponent : Component
 {
 
 }

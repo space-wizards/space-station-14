@@ -2,7 +2,7 @@ using System.Linq;
 using Content.IntegrationTests.Tests.Construction.Interaction;
 using Content.IntegrationTests.Tests.Interaction;
 using Content.IntegrationTests.Tests.Weldable;
-using Content.Server.Tools.Components;
+using Content.Shared.Tools.Components;
 
 namespace Content.IntegrationTests.Tests.DoAfter;
 
@@ -100,11 +100,7 @@ public sealed class DoAfterCancellationTests : InteractionTest
         await SpawnTarget(WeldableTests.Locker);
         var comp = Comp<WeldableComponent>();
 
-        Assert.Multiple(() =>
-        {
-            Assert.That(comp.Weldable, Is.True);
-            Assert.That(comp.IsWelded, Is.False);
-        });
+        Assert.That(comp.IsWelded, Is.False);
 
         await Interact(Weld, awaitDoAfters: false);
         await RunTicks(1);

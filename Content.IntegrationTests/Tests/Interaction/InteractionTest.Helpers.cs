@@ -66,7 +66,7 @@ public abstract partial class InteractionTest
         Task? tickTask = null;
         while (!task.IsCompleted)
         {
-            tickTask = PoolManager.RunTicksSync(PairTracker.Pair, 1);
+            tickTask = Pair.RunTicksSync(1);
             await Task.WhenAny(task, tickTask);
         }
 
@@ -699,7 +699,7 @@ public abstract partial class InteractionTest
 
     protected async Task RunTicks(int ticks)
     {
-        await PoolManager.RunTicksSync(PairTracker.Pair, ticks);
+        await Pair.RunTicksSync(ticks);
     }
 
     protected int SecondsToTicks(float seconds)

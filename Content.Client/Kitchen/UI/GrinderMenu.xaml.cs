@@ -83,7 +83,7 @@ namespace Content.Client.Kitchen.UI
             }
         }
 
-        private void RefreshContentsDisplay(IList<Solution.ReagentQuantity>? reagents, IReadOnlyList<EntityUid> containedSolids, bool isBeakerAttached)
+        private void RefreshContentsDisplay(IList<ReagentQuantity>? reagents, IReadOnlyList<EntityUid> containedSolids, bool isBeakerAttached)
         {
             //Refresh chamber contents
             _chamberVisualContents.Clear();
@@ -118,9 +118,11 @@ namespace Content.Client.Kitchen.UI
             }
             else
             {
-                foreach (var reagent in reagents)
+                foreach (var (reagent, quantity) in reagents)
                 {
-                    var reagentName = _prototypeManager.TryIndex(reagent.ReagentId, out ReagentPrototype? proto) ? Loc.GetString($"{reagent.Quantity} {proto.LocalizedName}") : "???";
+                    var reagentName = _prototypeManager.TryIndex(reagent.Prototype, out ReagentPrototype? proto) 
+                        ? Loc.GetString($"{quantity} {proto.LocalizedName}") 
+                        : "???";
                     BeakerContentBox.BoxContents.AddItem(reagentName);
                 }
             }

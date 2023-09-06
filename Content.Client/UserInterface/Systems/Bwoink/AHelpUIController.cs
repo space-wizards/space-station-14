@@ -4,7 +4,6 @@ using System.Numerics;
 using Content.Client.Administration.Managers;
 using Content.Client.Administration.Systems;
 using Content.Client.Administration.UI.Bwoink;
-using Content.Client.Gameplay;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Administration;
 using Content.Shared.Input;
@@ -24,7 +23,7 @@ using Robust.Shared.Utility;
 namespace Content.Client.UserInterface.Systems.Bwoink;
 
 [UsedImplicitly]
-public sealed class AHelpUIController: UIController, IOnStateChanged<GameplayState>, IOnSystemChanged<BwoinkSystem>
+public sealed class AHelpUIController: UIController, IOnSystemChanged<BwoinkSystem>
 {
     [Dependency] private readonly IClientAdminManager _adminManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
@@ -42,16 +41,8 @@ public sealed class AHelpUIController: UIController, IOnStateChanged<GameplaySta
 
         SubscribeNetworkEvent<BwoinkDiscordRelayUpdated>(DiscordRelayUpdated);
         SubscribeNetworkEvent<BwoinkPlayerTypingUpdated>(PeopleTypingUpdated);
-    }
 
-    public void OnStateEntered(GameplayState state)
-    {
         _adminManager.AdminStatusUpdated += OnAdminStatusUpdated;
-
-        CommandBinds.Builder
-            .Bind(ContentKeyFunctions.OpenAHelp,
-                InputCmdHandler.FromDelegate(_ => ToggleWindow()))
-            .Register<AHelpUIController>();
     }
 
     public void UnloadButton()
@@ -87,22 +78,21 @@ public sealed class AHelpUIController: UIController, IOnStateChanged<GameplaySta
         UIHelper!.ToggleWindow();
     }
 
-    public void OnStateExited(GameplayState state)
-    {
-        SetAHelpPressed(false);
-        _adminManager.AdminStatusUpdated -= OnAdminStatusUpdated;
-        UIHelper?.Dispose();
-        UIHelper = null;
-        CommandBinds.Unregister<AHelpUIController>();
-    }
     public void OnSystemLoaded(BwoinkSystem system)
     {
         _bwoinkSystem = system;
         _bwoinkSystem.OnBwoinkTextMessageRecieved += RecievedBwoink;
+
+        CommandBinds.Builder
+            .Bind(ContentKeyFunctions.OpenAHelp,
+                InputCmdHandler.FromDelegate(_ => ToggleWindow()))
+            .Register<AHelpUIController>();
     }
 
     public void OnSystemUnloaded(BwoinkSystem system)
     {
+        CommandBinds.Unregister<AHelpUIController>();
+
         DebugTools.Assert(_bwoinkSystem != null);
         _bwoinkSystem!.OnBwoinkTextMessageRecieved -= RecievedBwoink;
         _bwoinkSystem = null;

@@ -1434,7 +1434,7 @@ entities:
       pos: -1.5,5.5
       parent: 2
       type: Transform
-    - debug_streams: True
+    - debugStreams: True
       type: SensorMonitoringConsole
     - ShutdownSubscribers:
       - 3

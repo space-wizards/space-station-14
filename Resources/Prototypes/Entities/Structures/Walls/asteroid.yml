@@ -7,6 +7,7 @@
   suffix: Low Ore Yield
   description: A rocky asteroid.
   components:
+  - type: SoundOnGather
   - type: Gatherable
     whitelist:
       tags:
@@ -62,10 +63,6 @@
   suffix: higher ore yield
   description: An asteroid.
   components:
-  - type: Gatherable
-    whitelist:
-      tags:
-        - Pickaxe
   - type: OreVein
     oreChance: 0.33
     oreRarityPrototypeId: RandomOreDistributionStandard
@@ -102,10 +99,6 @@
   suffix: higher ore yield
   description: An asteroid.
   components:
-  - type: Gatherable
-    whitelist:
-      tags:
-        - Pickaxe
   - type: OreVein
     oreChance: 0.33
     oreRarityPrototypeId: RandomOreDistributionStandard
@@ -117,6 +110,7 @@
   parent: BaseStructure
   name: rock
   components:
+    - type: SoundOnGather
     - type: Gatherable
       whitelist:
         tags:

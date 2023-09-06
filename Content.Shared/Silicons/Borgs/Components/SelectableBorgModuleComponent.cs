@@ -8,7 +8,7 @@ namespace Content.Shared.Silicons.Borgs.Components;
 /// This is used for <see cref="BorgModuleComponent"/>s that can be "swapped" to, as opposed to having passive effects.
 /// </summary>
 [RegisterComponent, NetworkedComponent, Access(typeof(SharedBorgSystem))]
-public sealed class SelectableBorgModuleComponent : Component
+public sealed partial class SelectableBorgModuleComponent : Component
 {
     /// <summary>
     /// The sidebar action for swapping to this module.
@@ -24,7 +24,7 @@ public sealed class SelectableBorgModuleComponent : Component
     };
 }
 
-public sealed class BorgModuleActionSelectedEvent : InstantActionEvent
+public sealed partial class BorgModuleActionSelectedEvent : InstantActionEvent
 {
 }
 

@@ -35,7 +35,6 @@
         layer:
         - MachineLayer
   - type: EntityStorage
-    capacity: 500
   - type: PlaceableSurface
     isPlaceable: false # defaults to closed.
   - type: Damageable

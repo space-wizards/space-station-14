@@ -14,25 +14,26 @@ namespace Content.Shared.Kitchen
     {
         [ViewVariables]
         [IdDataField]
-        public string ID { get; } = default!;
+        public string ID { get; private set; } = default!;
 
         [DataField("name")]
         private string _name = string.Empty;
 
         [DataField("reagents", customTypeSerializer:typeof(PrototypeIdDictionarySerializer<FixedPoint2, ReagentPrototype>))]
-        private readonly Dictionary<string, FixedPoint2> _ingsReagents = new();
+        private Dictionary<string, FixedPoint2> _ingsReagents = new();
 
         [DataField("solids", customTypeSerializer: typeof(PrototypeIdDictionarySerializer<FixedPoint2, EntityPrototype>))]
-        private readonly Dictionary<string, FixedPoint2> _ingsSolids = new ();
+        private Dictionary<string, FixedPoint2> _ingsSolids = new ();
 
         [DataField("result", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-        public string Result { get; } = string.Empty;
+        public string Result { get; private set; } = string.Empty;
 
         [DataField("time")]
-        public uint CookTime { get; } = 5;
+        public uint CookTime { get; private set; } = 5;
 
         public string Name => Loc.GetString(_name);
 
+        // TODO Turn this into a ReagentQuantity[]
         public IReadOnlyDictionary<string, FixedPoint2> IngredientsReagents => _ingsReagents;
         public IReadOnlyDictionary<string, FixedPoint2> IngredientsSolids => _ingsSolids;
 

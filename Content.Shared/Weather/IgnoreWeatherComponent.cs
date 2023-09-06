@@ -6,7 +6,7 @@ namespace Content.Shared.Weather;
 /// This entity will be ignored for considering weather on a tile
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-public sealed class IgnoreWeatherComponent : Component
+public sealed partial class IgnoreWeatherComponent : Component
 {
 
 }

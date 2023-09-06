@@ -180,16 +180,27 @@ public abstract partial class SharedToolSystem : EntitySystem
         if (!Resolve(tool, ref toolComponent))
             return false;
 
+        // check if the tool can do what's required
+        if (!toolComponent.Qualities.ContainsAll(toolQualitiesNeeded))
+            return false;
+
+        // check if the user allows using the tool
         var ev = new ToolUserAttemptUseEvent(target);
         RaiseLocalEvent(user, ref ev);
         if (ev.Cancelled)
             return false;
 
-        if (!toolComponent.Qualities.ContainsAll(toolQualitiesNeeded))
+        // check if the tool allows being used
+        var beforeAttempt = new ToolUseAttemptEvent(user);
+        RaiseLocalEvent(tool, beforeAttempt);
+        if (beforeAttempt.Cancelled)
             return false;
 
-        var beforeAttempt = new ToolUseAttemptEvent(user);
-        RaiseLocalEvent(tool, beforeAttempt, false);
+        // check if the target allows using the tool
+        if (target != null && target != tool)
+        {
+            RaiseLocalEvent(target.Value, beforeAttempt);
+        }
 
         return !beforeAttempt.Cancelled;
     }
@@ -197,16 +208,16 @@ public abstract partial class SharedToolSystem : EntitySystem
     #region DoAfterEvents
 
     [Serializable, NetSerializable]
-    protected sealed class ToolDoAfterEvent : DoAfterEvent
+    protected sealed partial class ToolDoAfterEvent : DoAfterEvent
     {
         /// <summary>
         ///     Entity that the wrapped do after event will get directed at. If null, event will be broadcast.
         /// </summary>
         [DataField("target")]
-        public readonly EntityUid? OriginalTarget;
+        public EntityUid? OriginalTarget;
 
         [DataField("wrappedEvent")]
-        public readonly DoAfterEvent WrappedEvent = default!;
+        public DoAfterEvent WrappedEvent = default!;
 
         private ToolDoAfterEvent()
         {
@@ -233,10 +244,10 @@ public abstract partial class SharedToolSystem : EntitySystem
     }
 
     [Serializable, NetSerializable]
-    protected sealed class LatticeCuttingCompleteEvent : DoAfterEvent
+    protected sealed partial class LatticeCuttingCompleteEvent : DoAfterEvent
     {
         [DataField("coordinates", required:true)]
-        public readonly EntityCoordinates Coordinates;
+        public EntityCoordinates Coordinates;
 
         private LatticeCuttingCompleteEvent()
         {
@@ -251,10 +262,10 @@ public abstract partial class SharedToolSystem : EntitySystem
     }
 
     [Serializable, NetSerializable]
-    protected sealed class TilePryingDoAfterEvent : DoAfterEvent
+    protected sealed partial class TilePryingDoAfterEvent : DoAfterEvent
     {
         [DataField("coordinates", required:true)]
-        public readonly EntityCoordinates Coordinates;
+        public EntityCoordinates Coordinates;
 
         private TilePryingDoAfterEvent()
         {
@@ -270,7 +281,7 @@ public abstract partial class SharedToolSystem : EntitySystem
 }
 
 [Serializable, NetSerializable]
-public sealed class CableCuttingFinishedEvent : SimpleDoAfterEvent
+public sealed partial class CableCuttingFinishedEvent : SimpleDoAfterEvent
 {
 }
 

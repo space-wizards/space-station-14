@@ -179,12 +179,6 @@
           prob: 0.1
         - id: FoodPacketChipsTrash
           prob: 0.1
-        - id: FoodPacketChocolateTrash
-          prob: 0.1
-        - id: FoodPacketEnergyTrash
-          prob: 0.1
-        - id: FoodPacketPopcornTrash
-          prob: 0.1
         - id: FoodPacketSusTrash
           prob: 0.1
         - id: FoodPacketSyndiTrash
@@ -211,8 +205,6 @@
           # Cigarette Stuff
         - id: Ash
           prob: 0.15
-        - id: CigarSpent
-          prob: 0.15
         - id: CigaretteSpent
           prob: 0.15
           # Bacteria
@@ -226,8 +218,6 @@
         - id: FoodCornTrash
           prob: 0.15
           # Misc
-        - id: ShardGlass
-          prob: 0.1
         - id: DrinkGlass
           prob: 0.15
         - id: BrokenBottle
@@ -236,15 +226,11 @@
           prob: 0.15
         - id: LightBulbBroken
           prob: 0.15
-        - id: MousetrapArmed
-          prob: 0.15
         - id: CableApcStack10
           prob: 0.15
         - id: MobMouseDead
           prob: 0.1
         - id: RagItem
-          prob: 0.1
-        - id: Flare
           prob: 0.1
         - id: FoodKebabSkewer
           prob: 0.1

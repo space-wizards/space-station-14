@@ -15,7 +15,7 @@ namespace Content.Server.Speech.Components;
 /// </summary>
 [RegisterComponent]
 [Access(typeof(VocalSystem))]
-public sealed class VocalComponent : Component
+public sealed partial class VocalComponent : Component
 {
     /// <summary>
     ///     Emote sounds prototype id for each sex (not gender).
@@ -47,7 +47,7 @@ public sealed class VocalComponent : Component
     public EmoteSoundsPrototype? EmoteSounds = null;
 }
 
-public sealed class ScreamActionEvent : InstantActionEvent
+public sealed partial class ScreamActionEvent : InstantActionEvent
 {
 
 }

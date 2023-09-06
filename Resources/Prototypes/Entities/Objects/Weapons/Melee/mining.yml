@@ -52,10 +52,14 @@
   - type: MeleeWeapon
     damage:
       types:
-        Blunt: 10
-        Slash: 5
+        Blunt: 8
+        Slash: 2
   - type: Wieldable
-  - type: MeleeRequiresWield
+  - type: IncreaseDamageOnWield
+    damage:
+      types:
+        Blunt: 2.5
+        Slash: 2.5
   - type: GunRequiresWield
   - type: Item
     size: 150

@@ -6,7 +6,7 @@ namespace Content.Server.NPC.Pathfinding;
 /// Stores the relevant pathfinding data for grids.
 /// </summary>
 [RegisterComponent, Access(typeof(PathfindingSystem))]
-public sealed class GridPathfindingComponent : Component
+public sealed partial class GridPathfindingComponent : Component
 {
     [ViewVariables]
     public readonly HashSet<Vector2i> DirtyChunks = new();

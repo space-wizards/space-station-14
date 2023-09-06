@@ -13,7 +13,7 @@ namespace Content.Server.Explosion.Components;
 ///      component still determines the explosion type and other properties.
 /// </remarks>
 [RegisterComponent]
-public sealed class ExplosiveComponent : Component
+public sealed partial class ExplosiveComponent : Component
 {
 
     /// <summary>

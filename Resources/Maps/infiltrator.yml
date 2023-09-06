@@ -4737,14 +4737,6 @@ entities:
     - pos: -4.5,-17.5
       parent: 73
       type: Transform
-- proto: SyndicateComputerComms
-  entities:
-  - uid: 556
-    components:
-    - rot: -1.5707963267948966 rad
-      pos: 1.5,-4.5
-      parent: 73
-      type: Transform
 - proto: SyndieMiniBomb
   entities:
   - uid: 723

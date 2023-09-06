@@ -172,12 +172,12 @@ public abstract partial class SharedCryoPodSystem: EntitySystem
     }
 
     [Serializable, NetSerializable]
-    public sealed class CryoPodPryFinished : SimpleDoAfterEvent
+    public sealed partial class CryoPodPryFinished : SimpleDoAfterEvent
     {
     }
 
     [Serializable, NetSerializable]
-    public sealed class CryoPodDragFinished : SimpleDoAfterEvent
+    public sealed partial class CryoPodDragFinished : SimpleDoAfterEvent
     {
     }
 }
