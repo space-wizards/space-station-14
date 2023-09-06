@@ -219,7 +219,7 @@ public abstract class SharedEventHorizonSystem : EntitySystem
 
         // For prediction reasons always want the client to ignore these.
         if (HasComp<MapGridComponent>(otherUid) ||
-            HasComp<SharedGhostComponent>(otherUid))
+            HasComp<GhostComponent>(otherUid))
         {
             args.Cancelled = true;
             return true;

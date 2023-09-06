@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Atmos.EntitySystems;
@@ -200,7 +201,7 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
 
     public override void DoInsertDisposalUnit(EntityUid uid, EntityUid toInsert, EntityUid user, SharedDisposalUnitComponent? disposal = null)
     {
-        if (!Resolve(uid, ref disposal))
+        if (!ResolveDisposals(uid, ref disposal))
             return;
 
         if (!disposal.Container.Insert(toInsert))
@@ -541,7 +542,7 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
         if (entry == default || component is not DisposalUnitComponent sDisposals)
         {
             component.Engaged = false;
-            Dirty(component);
+            Dirty(uid, component);
             return false;
         }
 
@@ -549,7 +550,10 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
 
         _disposalTubeSystem.TryInsert(entry, sDisposals, beforeFlushArgs.Tags);
 
-        component.NextPressurized = GameTiming.CurTime + TimeSpan.FromSeconds(1f / PressurePerSecond);
+        component.NextPressurized = GameTiming.CurTime;
+        if (!component.DisablePressure)
+            component.NextPressurized += TimeSpan.FromSeconds(1f / PressurePerSecond);
+
         component.Engaged = false;
         // stop queuing NOW
         component.NextFlush = null;
@@ -557,7 +561,7 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
         UpdateVisualState(uid, component, true);
         UpdateInterface(uid, component, component.Powered);
 
-        Dirty(component);
+        Dirty(uid, component);
 
         return true;
     }
@@ -673,7 +677,7 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
             component.RecentlyEjected.Add(toRemove);
 
         UpdateVisualState(uid, component);
-        Dirty(component);
+        Dirty(uid, component);
     }
 
     public bool CanFlush(EntityUid unit, SharedDisposalUnitComponent component)
@@ -688,7 +692,7 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
         component.Engaged = true;
         UpdateVisualState(uid, component);
         UpdateInterface(uid, component, component.Powered);
-        Dirty(component);
+        Dirty(uid, component);
 
         if (!CanFlush(uid, component))
             return;
@@ -712,7 +716,7 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
 
         UpdateVisualState(uid, component);
         UpdateInterface(uid, component, component.Powered);
-        Dirty(component);
+        Dirty(uid, component);
     }
 
     /// <summary>
@@ -728,8 +732,23 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
         if (!component.Engaged)
         {
             component.NextFlush = null;
-            Dirty(component);
+            Dirty(uid, component);
         }
+    }
+
+    public override bool HasDisposals(EntityUid? uid)
+    {
+        return HasComp<DisposalUnitComponent>(uid);
+    }
+
+    public override bool ResolveDisposals(EntityUid uid, [NotNullWhen(true)] ref SharedDisposalUnitComponent? component)
+    {
+        if (component != null)
+            return true;
+
+        TryComp<DisposalUnitComponent>(uid, out var storage);
+        component = storage;
+        return component != null;
     }
 
     public override bool CanInsert(EntityUid uid, SharedDisposalUnitComponent component, EntityUid entity)

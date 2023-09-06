@@ -65,7 +65,7 @@ namespace Content.Server.Administration.Commands
             if (quantityFloat > 0)
                 _entManager.System<SolutionContainerSystem>().TryAddReagent(uid, solution, args[2], quantity, out _);
             else
-                _entManager.System<SolutionContainerSystem>().TryRemoveReagent(uid, solution, args[2], quantity);
+                _entManager.System<SolutionContainerSystem>().RemoveReagent(uid, solution, args[2], quantity);
         }
     }
 }

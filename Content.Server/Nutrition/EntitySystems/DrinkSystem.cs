@@ -101,7 +101,7 @@ public sealed class DrinkSystem : EntitySystem
         var total = 0f;
         foreach (var quantity in solution.Contents)
         {
-            var reagent = _proto.Index<ReagentPrototype>(quantity.ReagentId);
+            var reagent = _proto.Index<ReagentPrototype>(quantity.Reagent.Prototype);
             if (reagent.Metabolisms == null)
                 continue;
 

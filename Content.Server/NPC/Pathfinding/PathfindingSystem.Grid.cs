@@ -649,7 +649,7 @@ public sealed partial class PathfindingSystem
             }
         }
 
-        // _sawmill.Debug($"Built breadcrumbs in {sw.Elapsed.TotalMilliseconds}ms");
+        // Log.Debug($"Built breadcrumbs in {sw.Elapsed.TotalMilliseconds}ms");
         SendBreadcrumbs(chunk, grid.Owner);
     }
 
@@ -835,7 +835,7 @@ public sealed partial class PathfindingSystem
             }
         }
 
-        // _sawmill.Debug($"Built navmesh in {sw.Elapsed.TotalMilliseconds}ms");
+        // Log.Debug($"Built navmesh in {sw.Elapsed.TotalMilliseconds}ms");
         SendPolys(chunk, component.Owner, chunkPolys);
     }
 

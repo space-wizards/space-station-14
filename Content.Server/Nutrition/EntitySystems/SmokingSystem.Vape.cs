@@ -44,11 +44,12 @@ namespace Content.Server.Nutrition.EntitySystems
             var exploded = false;
 
             if (!args.CanReach
-            || solution == null
-            || comp.CancelToken != null
-            || !TryComp<BloodstreamComponent>(args.Target, out var _)
-            || _foodSystem.IsMouthBlocked(args.Target.Value, args.User))
+                || solution == null
+                || !HasComp<BloodstreamComponent>(args.Target)
+                || _foodSystem.IsMouthBlocked(args.Target.Value, args.User))
+            {
                 return;
+            }
 
             if (solution.Contents.Count == 0)
             {
@@ -72,9 +73,14 @@ namespace Content.Server.Nutrition.EntitySystems
             }
             else
             {
+                // All vapes explode if they contain anything other than pure water???
+                // WTF is this? Why is this? Am I going insane?
+                // Who the fuck vapes pure water?
+                // If this isn't how this is meant to work and this is meant to be for vapes with plasma or something,
+                // just re-use the existing RiggableSystem.
                 foreach (var name in solution.Contents)
                 {
-                    if (name.ReagentId != comp.SolutionNeeded)
+                    if (name.Reagent.Prototype != comp.SolutionNeeded)
                     {
                         exploded = true;
                         _explosionSystem.QueueExplosion(uid, "Default", comp.ExplosionIntensity, 0.5f, 3, canCreateVacuum: false);
@@ -106,8 +112,6 @@ namespace Content.Server.Nutrition.EntitySystems
 
             if (!exploded)
             {
-                comp.CancelToken = new CancellationTokenSource();
-
                 var vapeDoAfterEvent = new VapeDoAfterEvent(solution, forced);
                 _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, args.User, delay, vapeDoAfterEvent, uid, target: args.Target, used: uid)
                 {
@@ -121,14 +125,6 @@ namespace Content.Server.Nutrition.EntitySystems
 
         private void OnVapeDoAfter(EntityUid uid, VapeComponent comp, VapeDoAfterEvent args)
         {
-            if (args.Cancelled)
-            {
-                comp.CancelToken = null;
-                return;
-            }
-
-            comp.CancelToken = null;
-
             if (args.Handled
             || args.Args.Target == null)
                 return;

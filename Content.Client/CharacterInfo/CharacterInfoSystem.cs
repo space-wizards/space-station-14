@@ -2,6 +2,7 @@
 using Content.Shared.Objectives;
 using Robust.Client.GameObjects;
 using Robust.Client.Player;
+using Robust.Client.UserInterface;
 
 namespace Content.Client.CharacterInfo;
 
@@ -43,17 +44,34 @@ public sealed class CharacterInfoSystem : EntitySystem
     private void OnCharacterInfoEvent(CharacterInfoEvent msg, EntitySessionEventArgs args)
     {
         var entity = GetEntity(msg.NetEntity);
-        var sprite = CompOrNull<SpriteComponent>(entity);
         var data = new CharacterData(msg.JobTitle, msg.Objectives, msg.Briefing, sprite, Name(entity));
 
         OnCharacterUpdate?.Invoke(data);
     }
 
+    public List<Control> GetCharacterInfoControls(EntityUid uid)
+    {
+        var ev = new GetCharacterInfoControlsEvent(uid);
+        RaiseLocalEvent(uid, ref ev, true);
+        return ev.Controls;
+    }
+
     public readonly record struct CharacterData(
+        EntityUid Entity,
         string Job,
         Dictionary<string, List<ConditionInfo>> Objectives,
-        string Briefing,
-        SpriteComponent? Sprite,
+        string? Briefing,
         string EntityName
     );
+
+    /// <summary>
+    /// Event raised to get additional controls to display in the character info menu.
+    /// </summary>
+    [ByRefEvent]
+    public readonly record struct GetCharacterInfoControlsEvent(EntityUid Entity)
+    {
+        public readonly List<Control> Controls = new();
+
+        public readonly EntityUid Entity = Entity;
+    }
 }

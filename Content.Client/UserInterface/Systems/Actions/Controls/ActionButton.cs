@@ -205,13 +205,12 @@ public sealed class ActionButton : Control
             return;
         }
 
-        if (Action?.EntityIcon == null ||
-            !entityManager.TryGetComponent(entIcon.Value, out SpriteComponent? sprite))
+        if (!entityManager.HasComponent<SpriteComponent>(entIcon))
         {
             _bigItemSpriteView.Visible = false;
-            _bigItemSpriteView.Sprite = null;
+            _bigItemSpriteView.SetEntity(null);
             _smallItemSpriteView.Visible = false;
-            _smallItemSpriteView.Sprite = null;
+            _smallItemSpriteView.SetEntity(null);
         }
         else
         {
@@ -219,24 +218,21 @@ public sealed class ActionButton : Control
             {
                 case ItemActionIconStyle.BigItem:
                     _bigItemSpriteView.Visible = true;
-                    _bigItemSpriteView.Sprite = sprite;
+                    _bigItemSpriteView.SetEntity(entity);
                     _smallItemSpriteView.Visible = false;
-                    _smallItemSpriteView.Sprite = null;
+                    _smallItemSpriteView.SetEntity(null);
                     break;
                 case ItemActionIconStyle.BigAction:
-
                     _bigItemSpriteView.Visible = false;
-                    _bigItemSpriteView.Sprite = null;
+                    _bigItemSpriteView.SetEntity(null);
                     _smallItemSpriteView.Visible = true;
-                    _smallItemSpriteView.Sprite = sprite;
+                    _smallItemSpriteView.SetEntity(entity);
                     break;
-
                 case ItemActionIconStyle.NoItem:
-
                     _bigItemSpriteView.Visible = false;
-                    _bigItemSpriteView.Sprite = null;
+                    _bigItemSpriteView.SetEntity(null);
                     _smallItemSpriteView.Visible = false;
-                    _smallItemSpriteView.Sprite = null;
+                    _smallItemSpriteView.SetEntity(null);
                     break;
             }
         }

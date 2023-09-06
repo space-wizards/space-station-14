@@ -73,6 +73,12 @@ ghost-role-information-jonkbot-description = An artificial being of pure evil.
 ghost-role-information-mimebot-name = Mimebot
 ghost-role-information-mimebot-description = A Mimebot, act like a mime but dont act like a greytider.
 
+ghost-role-information-taxibot-name = TaxiBot
+ghost-role-information-taxibot-description = Drive the station crew to their destination.
+
+ghost-role-information-supplybot-name = SupplyBot
+ghost-role-information-supplybot-description = Deliver goods around the station.
+
 ghost-role-information-space-bear-name = Space bear
 ghost-role-information-space-bear-description = You're a bear! Do bear things.
 
@@ -149,8 +155,11 @@ ghost-role-information-cburn-agent-description = A highly trained CentCom agent,
 ghost-role-information-centcom-official-name = CentCom official
 ghost-role-information-centcom-official-description = Inspect the station, jot down performance reviews for heads of staff, bug the Captain.
 
+ghost-role-information-nukeop-rules = You are a syndicate operative tasked with the destruction of the station. As an antagonist, do whatever is required to complete this task.
+
+ghost-role-information-loneop-name = Lone Operative
+ghost-role-information-loneop-description = You are a lone nuclear operative. Destroy the station!
+ghost-role-information-loneop-rules = You are a syndicate operative tasked with the destruction of the station. As an antagonist, do whatever is required to complete this task.
+
 ghost-role-information-behonker-name = Behonker
 ghost-role-information-behonker-description = You are an antagonist, bring death and honks to those who do not follow the honkmother.
-
-ghost-role-information-taxibot-name = TaxiBot
-ghost-role-information-taxibot-description = Drive the station crew to their destination.

@@ -44,9 +44,9 @@ namespace Content.IntegrationTests.Tests
         [TestCase("ClickTestRotatingCornerInvisibleNoRot", 0.25f, 0.25f, DirSouthEastJustShy, 1, ExpectedResult = true)]
         public async Task<bool> Test(string prototype, float clickPosX, float clickPosY, double angle, float scale)
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { Connected = true });
-            var server = pairTracker.Pair.Server;
-            var client = pairTracker.Pair.Client;
+            await using var pair = await PoolManager.GetServerClient(new PoolSettings { Connected = true });
+            var server = pair.Server;
+            var client = pair.Client;
 
             var clientEntManager = client.ResolveDependency<IEntityManager>();
             var serverEntManager = server.ResolveDependency<IEntityManager>();
@@ -55,7 +55,7 @@ namespace Content.IntegrationTests.Tests
             var xformQuery = clientEntManager.GetEntityQuery<TransformComponent>();
             var eye = client.ResolveDependency<IEyeManager>().CurrentEye;
 
-            var testMap = await PoolManager.CreateTestMap(pairTracker);
+            var testMap = await pair.CreateTestMap(pairTracker);
 
             EntityUid serverEnt = default;
 
@@ -66,7 +66,7 @@ namespace Content.IntegrationTests.Tests
             });
 
             // Let client sync up.
-            await PoolManager.RunTicksSync(pairTracker.Pair, 5);
+            await pair.RunTicksSync(5);
 
             var hit = false;
             var clientEnt = clientEntManager.GetEntity(serverEntManager.GetNetEntity(serverEnt));
@@ -90,7 +90,7 @@ namespace Content.IntegrationTests.Tests
                 serverEntManager.DeleteEntity(serverEnt);
             });
 
-            await pairTracker.CleanReturnAsync();
+            await pair.CleanReturnAsync();
 
             return hit;
         }

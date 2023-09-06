@@ -56,10 +56,7 @@ public sealed partial class AnalysisConsoleMenu : FancyWindow
         }
         ArtifactDisplay.Visible = true;
 
-        if (!_ent.TryGetComponent<SpriteComponent>(uid, out var sprite))
-            return;
-
-        ArtifactDisplay.Sprite = sprite;
+        ArtifactDisplay.SetEntity(uid);
     }
 
     public void UpdateInformationDisplay(AnalysisConsoleScanUpdateState state)

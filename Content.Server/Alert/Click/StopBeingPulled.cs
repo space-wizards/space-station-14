@@ -20,7 +20,7 @@ namespace Content.Server.Alert.Click
             if (!entityManager.System<ActionBlockerSystem>().CanInteract(player, null))
                 return;
 
-            if (entityManager.TryGetComponent<SharedPullableComponent?>(player, out var playerPullable))
+            if (entityManager.TryGetComponent(player, out SharedPullableComponent? playerPullable))
             {
                 entityManager.System<SharedPullingSystem>().TryStopPull(playerPullable);
             }

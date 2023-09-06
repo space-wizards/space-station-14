@@ -11,6 +11,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 using System.Linq;
 using System.Numerics;
+using Content.Shared.FixedPoint;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Chemistry.UI
@@ -87,7 +88,7 @@ namespace Content.Client.Chemistry.UI
             Tabs.SetTabTitle(1, Loc.GetString("chem-master-window-output-tab"));
         }
 
-        private ReagentButton MakeReagentButton(string text, ChemMasterReagentAmount amount, string id, bool isBuffer, string styleClass)
+        private ReagentButton MakeReagentButton(string text, ChemMasterReagentAmount amount, ReagentId id, bool isBuffer, string styleClass)
         {
             var button = new ReagentButton(text, amount, id, isBuffer, styleClass);
             button.OnPressed += args
@@ -112,11 +113,11 @@ namespace Content.Client.Chemistry.UI
 
             InputEjectButton.Disabled = castState.InputContainerInfo is null;
             OutputEjectButton.Disabled = output is null;
-            CreateBottleButton.Disabled = output is null || !output.HoldsReagents;
-            CreatePillButton.Disabled = output is null || output.HoldsReagents;
+            CreateBottleButton.Disabled = output?.Reagents == null;
+            CreatePillButton.Disabled = output?.Entities == null;
 
             var remainingCapacity = output is null ? 0 : (output.MaxVolume - output.CurrentVolume).Int();
-            var holdsReagents = output?.HoldsReagents ?? false;
+            var holdsReagents = output?.Reagents != null;
             var pillNumberMax = holdsReagents ? 0 : remainingCapacity;
             var bottleAmountMax = holdsReagents ? remainingCapacity : 0;
 
@@ -139,13 +140,10 @@ namespace Content.Client.Chemistry.UI
         {
             if (state.BufferCurrentVolume == 0)
                 return "";
-            else
-            {
-                var reagent = state.BufferReagents.OrderBy(r => r.Quantity).First();
-                _prototypeManager.TryIndex(reagent.ReagentId, out ReagentPrototype? proto);
-                return proto?.LocalizedName ?? "";
-            }
 
+            var reagent = state.BufferReagents.OrderBy(r => r.Quantity).First().Reagent;
+            _prototypeManager.TryIndex(reagent.Prototype, out ReagentPrototype? proto);
+            return proto?.LocalizedName ?? "";
         }
 
         /// <summary>
@@ -184,10 +182,10 @@ namespace Content.Client.Chemistry.UI
             };
             bufferHBox.AddChild(bufferVol);
 
-            foreach (var reagent in state.BufferReagents)
+            foreach (var (reagent, quantity) in state.BufferReagents)
             {
                 // Try to get the prototype for the given reagent. This gives us its name.
-                _prototypeManager.TryIndex(reagent.ReagentId, out ReagentPrototype? proto);
+                _prototypeManager.TryIndex(reagent.Prototype, out ReagentPrototype? proto);
                 var name = proto?.LocalizedName ?? Loc.GetString("chem-master-window-unknown-reagent-text");
 
                 if (proto != null)
@@ -200,20 +198,20 @@ namespace Content.Client.Chemistry.UI
                             new Label {Text = $"{name}: "},
                             new Label
                             {
-                                Text = $"{reagent.Quantity}u",
+                                Text = $"{quantity}u",
                                 StyleClasses = {StyleNano.StyleClassLabelSecondaryColor}
                             },
 
                             // Padding
                             new Control {HorizontalExpand = true},
 
-                            MakeReagentButton("1", ChemMasterReagentAmount.U1, reagent.ReagentId, true, StyleBase.ButtonOpenRight),
-                            MakeReagentButton("5", ChemMasterReagentAmount.U5, reagent.ReagentId, true, StyleBase.ButtonOpenBoth),
-                            MakeReagentButton("10", ChemMasterReagentAmount.U10, reagent.ReagentId, true, StyleBase.ButtonOpenBoth),
-                            MakeReagentButton("25", ChemMasterReagentAmount.U25, reagent.ReagentId, true, StyleBase.ButtonOpenBoth),
-                            MakeReagentButton("50", ChemMasterReagentAmount.U50, reagent.ReagentId, true, StyleBase.ButtonOpenBoth),
-                            MakeReagentButton("100", ChemMasterReagentAmount.U100, reagent.ReagentId, true, StyleBase.ButtonOpenBoth),
-                            MakeReagentButton(Loc.GetString("chem-master-window-buffer-all-amount"), ChemMasterReagentAmount.All, reagent.ReagentId, true, StyleBase.ButtonOpenLeft),
+                            MakeReagentButton("1", ChemMasterReagentAmount.U1, reagent, true, StyleBase.ButtonOpenRight),
+                            MakeReagentButton("5", ChemMasterReagentAmount.U5, reagent, true, StyleBase.ButtonOpenBoth),
+                            MakeReagentButton("10", ChemMasterReagentAmount.U10, reagent, true, StyleBase.ButtonOpenBoth),
+                            MakeReagentButton("25", ChemMasterReagentAmount.U25, reagent, true, StyleBase.ButtonOpenBoth),
+                            MakeReagentButton("50", ChemMasterReagentAmount.U50, reagent, true, StyleBase.ButtonOpenBoth),
+                            MakeReagentButton("100", ChemMasterReagentAmount.U100, reagent, true, StyleBase.ButtonOpenBoth),
+                            MakeReagentButton(Loc.GetString("chem-master-window-buffer-all-amount"), ChemMasterReagentAmount.All, reagent, true, StyleBase.ButtonOpenLeft),
                         }
                     });
                 }
@@ -248,20 +246,29 @@ namespace Content.Client.Chemistry.UI
                     }
                 });
 
-                var contents = info.Contents
-                    .Select(lineItem =>
-                    {
-                        if (!info.HoldsReagents)
-                            return (lineItem.Id, lineItem.Id, lineItem.Quantity);
+                IEnumerable<(string Name, ReagentId Id, FixedPoint2 Quantity)> contents;
 
-                        // Try to get the prototype for the given reagent. This gives us its name.
-                        _prototypeManager.TryIndex(lineItem.Id, out ReagentPrototype? proto);
-                        var name = proto?.LocalizedName
-                                    ?? Loc.GetString("chem-master-window-unknown-reagent-text");
+                if (info.Entities != null)
+                {
+                    contents = info.Entities.Select(x => (x.Id, default(ReagentId), x.Quantity));
+                }
+                else if (info.Reagents != null)
+                {
+                    contents = info.Reagents.Select(x =>
+                        {
+                            _prototypeManager.TryIndex(x.Reagent.Prototype, out ReagentPrototype? proto);
+                            var name = proto?.LocalizedName
+                                       ?? Loc.GetString("chem-master-window-unknown-reagent-text");
 
-                        return (name, lineItem.Id, lineItem.Quantity);
-                    })
-                    .OrderBy(r => r.Item1);
+                            return (name, Id: x.Reagent, x.Quantity);
+                        })
+                        .OrderBy(r => r.Item1);
+                }
+                else
+                {
+                    return;
+                }
+
 
                 foreach (var (name, id, quantity) in contents)
                 {
@@ -326,8 +333,8 @@ namespace Content.Client.Chemistry.UI
     {
         public ChemMasterReagentAmount Amount { get; set; }
         public bool IsBuffer = true;
-        public string Id { get; set; }
-        public ReagentButton(string text, ChemMasterReagentAmount amount, string id, bool isBuffer, string styleClass)
+        public ReagentId Id { get; set; }
+        public ReagentButton(string text, ChemMasterReagentAmount amount, ReagentId id, bool isBuffer, string styleClass)
         {
             AddStyleClass(styleClass);
             Text = text;
