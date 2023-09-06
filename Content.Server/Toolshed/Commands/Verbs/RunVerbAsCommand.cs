@@ -29,8 +29,8 @@ public sealed class RunVerbAsCommand : ToolshedCommand
             var runnerNet = runner.Evaluate(ctx);
             var runnerEid = EntityManager.GetEntity(runnerNet);
 
-            if (EntityManager.Deleted(runnerEid) && runnerEid != default)
-                ctx.ReportError(new DeadEntity(runnerNet));
+            if (EntityManager.Deleted(runnerEid) && runnerEid.IsValid())
+                ctx.ReportError(new DeadEntity(runnerEid));
 
             if (ctx.GetErrors().Any())
                 yield break;

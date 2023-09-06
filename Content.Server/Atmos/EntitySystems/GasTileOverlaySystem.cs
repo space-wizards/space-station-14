@@ -343,7 +343,7 @@ namespace Content.Server.Atmos.EntitySystems
                     continue;
 
                 List<GasOverlayChunk> dataToSend = new();
-                ev.UpdatedChunks[GetNetEntity(grid)] = dataToSend;
+                ev.UpdatedChunks[netGrid] = dataToSend;
 
                 previouslySent.TryGetValue(grid, out var previousChunks);
 
