@@ -5,7 +5,7 @@ using Content.Server.Radio.EntitySystems;
 using Content.Server.Station.Systems;
 using Content.Shared.Radio;
 using Content.Shared.Security;
-using Content.Server.Security.Components;
+using Content.Shared.Security.Components;
 using Content.Server.StationRecords;
 using Content.Server.StationRecords.Systems;
 using Content.Shared.Access.Components;
