@@ -271,6 +271,9 @@ public abstract partial class SharedDoorSystem : EntitySystem
 
         SetState(uid, DoorState.Opening, door);
 
+        if (door.OpenSound != null)
+            PlaySound(uid, door.OpenSound, AudioParams.Default.WithVolume(-5), user, predicted);
+
         // I'm not sure what the intent here is/was? It plays a sound if the user is opening a door with a hands
         // component, but no actual hands!? What!? Is this the sound of them head-butting the door to get it to open??
         // I'm 99% sure something is wrong here, but I kind of want to keep it this way.

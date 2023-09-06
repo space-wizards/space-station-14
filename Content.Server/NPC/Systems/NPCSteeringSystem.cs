@@ -30,7 +30,7 @@ using Robust.Shared.Random;
 using Robust.Shared.Threading;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
-using Content.Shared.Doors.Prying.Systems;
+using Content.Server.Doors.Prying.Systems;
 
 namespace Content.Server.NPC.Systems;
 

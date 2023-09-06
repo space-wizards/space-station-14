@@ -8,7 +8,7 @@ using Content.Shared.Doors.Systems;
 using Content.Shared.Tools.Components;
 
 namespace Content.Shared.Doors.Prying.Systems;
-public sealed class DoorPryingSystem : EntitySystem
+public abstract class SharedDoorPryingSystem : EntitySystem
 {
     [Dependency] private readonly ISharedAdminLogManager _adminLog = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
