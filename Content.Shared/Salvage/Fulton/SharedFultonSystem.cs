@@ -188,7 +188,7 @@ public abstract partial class SharedFultonSystem : EntitySystem
     [Serializable, NetSerializable]
     protected sealed class FultonAnimationMessage : EntityEventArgs
     {
-        public EntityUid Entity;
-        public EntityCoordinates Coordinates;
+        public NetEntity Entity;
+        public NetCoordinates Coordinates;
     }
 }
