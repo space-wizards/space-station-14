@@ -292,7 +292,7 @@
 
 - type: entity
   parent: PaintingClassicBase
-  id: PaintingClassicLady
+  id: PaintingClassicLonely
   name: the lonely
   description: this painting depicts a wanderer. you feel lonely.
   components:
@@ -308,14 +308,6 @@
   - type: Sprite
     state: themother
 
-- type: entity
-  parent: PaintingClassicBase
-  id: PaintingClassicMother
-  name: the mother
-  description: this painting depicts a mother, her hand is posed in a long forgotten religious symbol.
-  components:
-  - type: Sprite
-    state: themother
 
 - type: entity
   parent: PaintingClassicBase
