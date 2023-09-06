@@ -2,7 +2,7 @@
 
 - type: entity
   abstract: true
-  parent: BaseItem
+  parent: FoodBase
   id: FoodTinBase
   name: tin
   description: A tin of something, sealed tight.
@@ -11,6 +11,25 @@
     solutions:
       food:
         maxVol: 20
+  - type: Openable
+    openableByHand: false
+    sound:
+      path: /Audio/Items/can_open3.ogg
+  - type: Destructible
+    thresholds:
+    # if tinned food is nuked just delete it, no sound
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 6
+      behaviors:
+      - !type:OpenBehavior
+  - type: Appearance
   - type: Sprite
     sprite: Objects/Consumable/Food/snacks.rsi
   - type: Item
@@ -27,9 +46,8 @@
         Blunt: 3
   - type: Damageable
     damageContainer: Inorganic
-  - type: PhysicalComposition
-    materialComposition:
-      Steel: 100
+  - type: StaticPrice
+    price: 50
 
 - type: entity
   abstract: true
@@ -61,34 +79,15 @@
   description: Just a nice can of ripe peaches swimming in their own juices.
   components:
   - type: Sprite
-    state: peachtin
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 6
-      behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          path: /Audio/Items/can_open3.ogg
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          FoodTinPeachesOpen:
-            min: 1
-            max: 1
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-  - type: StaticPrice
-    price: 50
-
-- type: entity
-  parent: FoodTinBase
-  id: FoodTinPeachesOpen
-  name: tinned peaches
-  description: Just a nice can of ripe peaches swimming in their own juices.
-  components:
-  - type: Sprite
-    state: peachtin-open
+    layers:
+    - state: peachtin
+      map: ["icon"]
+  - type: GenericVisualizer
+    visuals:
+      enum.DrinkCanStateVisual.Opened:
+        icon:
+          True: {state: "peachtin-open"}
+          False: {state: "peachtin"}
   - type: SolutionContainerManager
     solutions:
       food:
@@ -111,49 +110,36 @@
   - type: Sprite
     state: peachtin-empty
 
+# slightly run down texture and different name
 - type: entity
-  parent: FoodTinBase
+  parent: FoodTinPeaches
   id: FoodTinPeachesMaint
   name: Maintenance Peaches
-  description: Just a nice can of ripe peaches swimming in their own juices.
   components:
   - type: Sprite
-    state: peachtinmaint
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 6
-      behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          path: /Audio/Items/can_open3.ogg
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          FoodTinPeachesMaintOpen:
-            min: 1
-            max: 1
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-  - type: StaticPrice
-    price: 50
-
-- type: entity
-  parent: FoodTinBase
-  id: FoodTinPeachesMaintOpen
-  name: Maintenance Peaches
-  description: Just a nice can of ripe peaches swimming in their own juices.
-  components:
-  - type: Sprite
-    state: peachtinmaint-open
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 15
+    layers:
+    - state: peachtinmaint
+      map: ["icon"]
+  - type: GenericVisualizer
+    visuals:
+      enum.DrinkCanStateVisual.Opened:
+        icon:
+          True: {state: "peachtinmaint-open"}
+          False: {state: "peachtinmaint"}
   - type: Food
     trash: FoodTinPeachesMaintTrash
+
+# only exists for backwards compatibility with a few maps, nothing else uses it
+- type: entity
+  parent: FoodTinPeachesMaint
+  id: FoodTinPeachesMaintOpen
+  components:
+  - type: Sprite
+    layers:
+    - state: peachtinmaint-open
+      map: ["icon"]
+  - type: Openable
+    opened: true
 
 - type: entity
   parent: FoodTinBaseTrash
@@ -170,34 +156,15 @@
   description: Musical fruit in a slightly less musical container.
   components:
   - type: Sprite
-    state: beans
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 6
-      behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          path: /Audio/Items/can_open3.ogg
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          FoodTinBeansOpen:
-            min: 1
-            max: 1
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-  - type: StaticPrice
-    price: 50
-
-- type: entity
-  parent: FoodTinBase
-  id: FoodTinBeansOpen
-  name: tin of beans
-  description: Musical fruit in a slightly less musical container.
-  components:
-  - type: Sprite
-    state: beans-open
+    layers:
+    - state: beans
+      map: ["icon"]
+  - type: GenericVisualizer
+    visuals:
+      enum.DrinkCanStateVisual.Opened:
+        icon:
+          True: {state: "beans-open"}
+          False: {state: "beans"}
   - type: SolutionContainerManager
     solutions:
       food:
@@ -206,9 +173,9 @@
           Quantity: 15
   - type: FlavorProfile
     flavors:
-      - savory
-      - salty
-      - cheap
+    - savory
+    - salty
+    - cheap
   - type: Food
     trash: FoodTinBeansTrash
 
@@ -219,6 +186,7 @@
   components:
   - type: Sprite
     state: beans-empty
+
 # MRE can
 
 - type: entity
@@ -229,39 +197,17 @@
   components:
   - type: Sprite
     sprite: Objects/Consumable/Food/mre.rsi
-    state: tin-closed
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 6
-      behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          path: /Audio/Items/can_open3.ogg
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          FoodTinMREOpen:
-            min: 1
-            max: 1
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-  - type: SpawnItemsOnUse
-    items:
-      - id: FoodTinMREOpen
-    sound:
-      path: /Audio/Items/can_open3.ogg
-
-
-- type: entity
-  parent: FoodTinBase
-  id: FoodTinMREOpen
-  name: tinned meat
-  description: A standard issue tin of meat.
-  components:
-  - type: Sprite
-    sprite: Objects/Consumable/Food/mre.rsi
-    state: tin-open
+    - state: tin-closed
+      map: ["icon"]
+  - type: GenericVisualizer
+    visuals:
+      enum.DrinkCanStateVisual.Opened:
+        icon:
+          True: {state: "tin"}
+          False: {state: "tin-closed"}
+  # the convenient pull tab
+  - type: Openable
+    openableByHand: true
   - type: SolutionContainerManager
     solutions:
       food:
@@ -270,9 +216,9 @@
           Quantity: 15
   - type: FlavorProfile
     flavors:
-      - meaty
-      - salty
-      - cheap
+    - meaty
+    - salty
+    - cheap
   - type: Food
     trash: FoodTinMRETrash
 
