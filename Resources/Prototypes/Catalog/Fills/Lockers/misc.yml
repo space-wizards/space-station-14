@@ -173,212 +173,221 @@
           prob: 0.0010
           orGroup: syndiemaintloot
         # poster (25%)
-        - id: PosterContrabandFreeTonto
-          prob: 0.0023
-        - id: PosterContrabandAtmosiaDeclarationIndependence
-          prob: 0.0023
-        - id: PosterContrabandFunPolice
-          prob: 0.0023
-        - id: PosterContrabandLustyExomorph
-          prob: 0.0023
-        - id: PosterContrabandSyndicateRecruitment
-          prob: 0.0023
-        - id: PosterContrabandClown
-          prob: 0.0023
-        - id: PosterContrabandSmoke
-          prob: 0.0023
-        - id: PosterContrabandGreyTide
-          prob: 0.0023
-        - id: PosterContrabandMissingGloves
-          prob: 0.0023
-        - id: PosterContrabandHackingGuide
-          prob: 0.0023
-        - id: PosterContrabandRIPBadger
-          prob: 0.0023
-        - id: PosterContrabandAmbrosiaVulgaris
-          prob: 0.0023
-        - id: PosterContrabandDonutCorp
-          prob: 0.0023
-        - id: PosterContrabandEAT
-          prob: 0.0023
-        - id: PosterContrabandTools
-          prob: 0.0023
-        - id: PosterContrabandPower
-          prob: 0.0023
-        - id: PosterContrabandSpaceCube
-          prob: 0.0023
-        - id: PosterContrabandCommunistState
-          prob: 0.0023
-        - id: PosterContrabandLamarr
-          prob: 0.0023
-        - id: PosterContrabandBorgFancy
-          prob: 0.0023
-        - id: PosterContrabandBorgFancyv2
-          prob: 0.0023
-        - id: PosterContrabandKosmicheskayaStantsiya
-          prob: 0.0023
-        - id: PosterContrabandRebelsUnite
-          prob: 0.0023
-        - id: PosterContrabandC20r
-          prob: 0.0023
-        - id: PosterContrabandHaveaPuff
-          prob: 0.0023
-        - id: PosterContrabandRevolver
-          prob: 0.0023
-        - id: PosterContrabandDDayPromo
-          prob: 0.0023
-        - id: PosterContrabandSyndicatePistol
-          prob: 0.0023
-        - id: PosterContrabandEnergySwords
-          prob: 0.0023
-        - id: PosterContrabandRedRum
-          prob: 0.0023
-        - id: PosterContrabandCC64KAd
-          prob: 0.0023
-        - id: PosterContrabandPunchShit
-          prob: 0.0023
-        - id: PosterContrabandTheGriffin
-          prob: 0.0023
-        - id: PosterContrabandFreeDrone
-          prob: 0.0023
-        - id: PosterContrabandBustyBackdoorExoBabes6
-          prob: 0.0023
-        - id: PosterContrabandRobustSoftdrinks
-          prob: 0.0023
-        - id: PosterContrabandShamblersJuice
-          prob: 0.0023
-        - id: PosterContrabandPwrGame
-          prob: 0.0023
-        - id: PosterContrabandSunkist
-          prob: 0.0023
-        - id: PosterContrabandSpaceCola
-          prob: 0.0023
-        - id: PosterContrabandSpaceUp
-          prob: 0.0023
-        - id: PosterContrabandKudzu
-          prob: 0.0023
-        - id: PosterContrabandMaskedMen
-          prob: 0.0023
-        - id: PosterContrabandUnreadableAnnouncement
-          prob: 0.0023
-        - id: PosterContrabandFreeSyndicateEncryptionKey
-          prob: 0.0023
-        - id: PosterContrabandBountyHunters
-          prob: 0.0023
-        - id: PosterContrabandTheBigGasTruth
-          prob: 0.0023
-        - id: PosterContrabandWehWatches
-          prob: 0.0023
-        - id: PosterContrabandVoteWeh
-          prob: 0.0023
-        - id: PosterContrabandBeachStarYamamoto
-          prob: 0.0023
-        - id: PosterContrabandHighEffectEngineering
-          prob: 0.0023
-        - id: PosterContrabandNuclearDeviceInformational
-          prob: 0.0023
-        - id: PosterContrabandRevolt
-          prob: 0.0023
-        - id: PosterContrabandRise
-          prob: 0.0023
-        - id: PosterContrabandMoth
-          prob: 0.0023
-        - id: PosterContrabandCybersun600
-          prob: 0.0023
-        - id: PosterContrabandDonk
-          prob: 0.0023
-        - id: PosterContrabandEnlistGorlex
-          prob: 0.0023
-        - id: PosterContrabandInterdyne
-          prob: 0.0023
-        - id: PosterContrabandWaffleCorp
-          prob: 0.0023
-        - id: PosterLegitHereForYourSafety
-          prob: 0.0023
-        - id: PosterLegitNanotrasenLogo
-          prob: 0.0023
-        - id: PosterLegitCleanliness
-          prob: 0.0023
-        - id: PosterLegitHelpOthers
-          prob: 0.0023
-        - id: PosterLegitBuild
-          prob: 0.0023
-        - id: PosterLegitBlessThisSpess
-          prob: 0.0023
-        - id: PosterLegitScience
-          prob: 0.0023
-        - id: PosterLegitIan
-          prob: 0.0023
-        - id: PosterLegitObey
-          prob: 0.0023
-        - id: PosterLegitWalk
-          prob: 0.0023
-        - id: PosterLegitStateLaws
-          prob: 0.0023
-        - id: PosterLegitLoveIan
-          prob: 0.0023
-        - id: PosterLegitSpaceCops
-          prob: 0.0023
-        - id: PosterLegitUeNo
-          prob: 0.0023
-        - id: PosterLegitGetYourLEGS
-          prob: 0.0023
-        - id: PosterLegitDoNotQuestion
-          prob: 0.0023
-        - id: PosterLegitWorkForAFuture
-          prob: 0.0023
-        - id: PosterLegitSoftCapPopArt
-          prob: 0.0023
-        - id: PosterLegitSafetyInternals
-          prob: 0.0023
-        - id: PosterLegitSafetyEyeProtection
-          prob: 0.0023
-        - id: PosterLegitSafetyReport
-          prob: 0.0023
-        - id: PosterLegitReportCrimes
-          prob: 0.0023
-        - id: PosterLegitIonRifle
-          prob: 0.0023
-        - id: PosterLegitFoamForceAd
-          prob: 0.0023
-        - id: PosterLegitCohibaRobustoAd
-          prob: 0.0023
-        - id: PosterLegit50thAnniversaryVintageReprint
-          prob: 0.0023
-        - id: PosterLegitFruitBowl
-          prob: 0.0023
-        - id: PosterLegitPDAAd
-          prob: 0.0023
-        - id: PosterLegitEnlist
-          prob: 0.0023
-        - id: PosterLegitNanomichiAd
-          prob: 0.0023
-        - id: PosterLegit12Gauge
-          prob: 0.0023
-        - id: PosterLegitHighClassMartini
-          prob: 0.0023
-        - id: PosterLegitTheOwl
-          prob: 0.0023
-        - id: PosterLegitNoERP
-          prob: 0.0023
-        - id: PosterLegitCarbonDioxide
-          prob: 0.0023
-        - id: PosterLegitDickGumshue
-          prob: 0.0023
-        - id: PosterLegitThereIsNoGasGiant
-          prob: 0.0023
-        - id: PosterLegitJustAWeekAway
-          prob: 0.0023
-        - id: PosterLegitSecWatch
-          prob: 0.0023
-        - id: PosterLegitVacation
-          prob: 0.0023
-        - id: PosterLegitPeriodicTable
-          prob: 0.0023
-        - id: PosterLegitRenault
-          prob: 0.0023
-        - id: PosterLegitNTTGC
-          prob: 0.0023
+        - id: FoodPacketBoritosTrash # we need to spawn only one poster to not possibly overfill closet and yet we can't use null instead of ID
+          orGroup: poster
+          prob: 103
+        - id: FoodPacketCheesieTrash # TODO replace trash with nothing when we get proper loot tables or smth
+          orGroup: poster
+          prob: 103
+        - id: FoodPacketChipsTrash
+          orGroup: poster
+          prob: 103
+        - id: PosterLegitHereForYourSafetyRolled
+          orGroup: poster
+        - id: PosterLegitNanotrasenLogoRolled
+          orGroup: poster
+        - id: PosterLegitCleanlinessRolled
+          orGroup: poster
+        - id: PosterLegitHelpOthersRolled
+          orGroup: poster
+        - id: PosterLegitBuildRolled
+          orGroup: poster
+        - id: PosterLegitBlessThisSpessRolled
+          orGroup: poster
+        - id: PosterLegitScienceRolled
+          orGroup: poster
+        - id: PosterLegitIanRolled
+          orGroup: poster
+        - id: PosterLegitObeyRolled
+          orGroup: poster
+        - id: PosterLegitWalkRolled
+          orGroup: poster
+        - id: PosterLegitStateLawsRolled
+          orGroup: poster
+        - id: PosterLegitLoveIanRolled
+          orGroup: poster
+        - id: PosterLegitSpaceCopsRolled
+          orGroup: poster
+        - id: PosterLegitUeNoRolled
+          orGroup: poster
+        - id: PosterLegitGetYourLEGSRolled
+          orGroup: poster
+        - id: PosterLegitDoNotQuestionRolled
+          orGroup: poster
+        - id: PosterLegitWorkForAFutureRolled
+          orGroup: poster
+        - id: PosterLegitSoftCapPopArtRolled
+          orGroup: poster
+        - id: PosterLegitSafetyInternalsRolled
+          orGroup: poster
+        - id: PosterLegitSafetyEyeProtectionRolled
+          orGroup: poster
+        - id: PosterLegitSafetyReportRolled
+          orGroup: poster
+        - id: PosterLegitReportCrimesRolled
+          orGroup: poster
+        - id: PosterLegitIonRifleRolled
+          orGroup: poster
+        - id: PosterLegitFoamForceAdRolled
+          orGroup: poster
+        - id: PosterLegitCohibaRobustoAdRolled
+          orGroup: poster
+        - id: PosterLegit50thAnniversaryVintageReprintRolled
+          orGroup: poster
+        - id: PosterLegitFruitBowlRolled
+          orGroup: poster
+        - id: PosterLegitPDAAdRolled
+          orGroup: poster
+        - id: PosterLegitEnlistRolled
+          orGroup: poster
+        - id: PosterLegitNanomichiAdRolled
+          orGroup: poster
+        - id: PosterLegit12GaugeRolled
+          orGroup: poster
+        - id: PosterLegitHighClassMartiniRolled
+          orGroup: poster
+        - id: PosterLegitTheOwlRolled
+          orGroup: poster
+        - id: PosterLegitNoERPRolled
+          orGroup: poster
+        - id: PosterLegitCarbonDioxideRolled
+          orGroup: poster
+        - id: PosterLegitDickGumshueRolled
+          orGroup: poster
+        - id: PosterLegitThereIsNoGasGiantRolled
+          orGroup: poster
+        - id: PosterLegitJustAWeekAwayRolled
+          orGroup: poster
+        - id: PosterLegitSecWatchRolled
+          orGroup: poster
+        - id: PosterLegitVacationRolled
+          orGroup: poster
+        - id: PosterLegitPeriodicTableRolled
+          orGroup: poster
+        - id: PosterLegitRenaultRolled
+          orGroup: poster
+        - id: PosterLegitNTTGCRolled
+          orGroup: poster
+        - id: PosterContrabandFreeTontoRolled
+          orGroup: poster
+        - id: PosterContrabandAtmosiaDeclarationIndependenceRolled
+          orGroup: poster
+        - id: PosterContrabandFunPoliceRolled
+          orGroup: poster
+        - id: PosterContrabandLustyExomorphRolled
+          orGroup: poster
+        - id: PosterContrabandSyndicateRecruitmentRolled
+          orGroup: poster
+        - id: PosterContrabandClownRolled
+          orGroup: poster
+        - id: PosterContrabandSmokeRolled
+          orGroup: poster
+        - id: PosterContrabandGreyTideRolled
+          orGroup: poster
+        - id: PosterContrabandMissingGlovesRolled
+          orGroup: poster
+        - id: PosterContrabandHackingGuideRolled
+          orGroup: poster
+        - id: PosterContrabandRIPBadgerRolled
+          orGroup: poster
+        - id: PosterContrabandAmbrosiaVulgarisRolled
+          orGroup: poster
+        - id: PosterContrabandDonutCorpRolled
+          orGroup: poster
+        - id: PosterContrabandEATRolled
+          orGroup: poster
+        - id: PosterContrabandToolsRolled
+          orGroup: poster
+        - id: PosterContrabandPowerRolled
+          orGroup: poster
+        - id: PosterContrabandSpaceCubeRolled
+          orGroup: poster
+        - id: PosterContrabandCommunistStateRolled
+          orGroup: poster
+        - id: PosterContrabandLamarrRolled
+          orGroup: poster
+        - id: PosterContrabandBorgFancyRolled
+          orGroup: poster
+        - id: PosterContrabandBorgFancyv2Rolled
+          orGroup: poster
+        - id: PosterContrabandKosmicheskayaStantsiyaRolled
+          orGroup: poster
+        - id: PosterContrabandRebelsUniteRolled
+          orGroup: poster
+        - id: PosterContrabandC20rRolled
+          orGroup: poster
+        - id: PosterContrabandHaveaPuffRolled
+          orGroup: poster
+        - id: PosterContrabandRevolverRolled
+          orGroup: poster
+        - id: PosterContrabandDDayPromoRolled
+          orGroup: poster
+        - id: PosterContrabandSyndicatePistolRolled
+          orGroup: poster
+        - id: PosterContrabandEnergySwordsRolled
+          orGroup: poster
+        - id: PosterContrabandRedRumRolled
+          orGroup: poster
+        - id: PosterContrabandCC64KAdRolled
+          orGroup: poster
+        - id: PosterContrabandPunchShitRolled
+          orGroup: poster
+        - id: PosterContrabandTheGriffinRolled
+          orGroup: poster
+        - id: PosterContrabandFreeDroneRolled
+          orGroup: poster
+        - id: PosterContrabandBustyBackdoorExoBabes6Rolled
+          orGroup: poster
+        - id: PosterContrabandRobustSoftdrinksRolled
+          orGroup: poster
+        - id: PosterContrabandShamblersJuiceRolled
+          orGroup: poster
+        - id: PosterContrabandPwrGameRolled
+          orGroup: poster
+        - id: PosterContrabandSunkistRolled
+          orGroup: poster
+        - id: PosterContrabandSpaceColaRolled
+          orGroup: poster
+        - id: PosterContrabandSpaceUpRolled
+          orGroup: poster
+        - id: PosterContrabandKudzuRolled
+          orGroup: poster
+        - id: PosterContrabandMaskedMenRolled
+          orGroup: poster
+        - id: PosterContrabandUnreadableAnnouncementRolled
+          orGroup: poster
+        - id: PosterContrabandFreeSyndicateEncryptionKeyRolled
+          orGroup: poster
+        - id: PosterContrabandBountyHuntersRolled
+          orGroup: poster
+        - id: PosterContrabandTheBigGasTruthRolled
+          orGroup: poster
+        - id: PosterContrabandWehWatchesRolled
+          orGroup: poster
+        - id: PosterContrabandVoteWehRolled
+          orGroup: poster
+        - id: PosterContrabandBeachStarYamamotoRolled
+          orGroup: poster
+        - id: PosterContrabandHighEffectEngineeringRolled
+          orGroup: poster
+        - id: PosterContrabandNuclearDeviceInformationalRolled
+          orGroup: poster
+        - id: PosterContrabandRevoltRolled
+          orGroup: poster
+        - id: PosterContrabandRiseRolled
+          orGroup: poster
+        - id: PosterContrabandMothRolled
+          orGroup: poster
+        - id: PosterContrabandCybersun600Rolled
+          orGroup: poster
+        - id: PosterContrabandDonkRolled
+          orGroup: poster
+        - id: PosterContrabandEnlistGorlexRolled
+          orGroup: poster
+        - id: PosterContrabandInterdyneRolled
+          orGroup: poster
+        - id: PosterContrabandWaffleCorpRolled
+          orGroup: poster
 
 - type: entity
   id: ClosetWallMaintenanceFilledRandom
@@ -469,209 +478,218 @@
           prob: 0.0010
           orGroup: syndiemaintloot
         # poster (25%)
-        - id: PosterContrabandFreeTonto
-          prob: 0.0023
-        - id: PosterContrabandAtmosiaDeclarationIndependence
-          prob: 0.0023
-        - id: PosterContrabandFunPolice
-          prob: 0.0023
-        - id: PosterContrabandLustyExomorph
-          prob: 0.0023
-        - id: PosterContrabandSyndicateRecruitment
-          prob: 0.0023
-        - id: PosterContrabandClown
-          prob: 0.0023
-        - id: PosterContrabandSmoke
-          prob: 0.0023
-        - id: PosterContrabandGreyTide
-          prob: 0.0023
-        - id: PosterContrabandMissingGloves
-          prob: 0.0023
-        - id: PosterContrabandHackingGuide
-          prob: 0.0023
-        - id: PosterContrabandRIPBadger
-          prob: 0.0023
-        - id: PosterContrabandAmbrosiaVulgaris
-          prob: 0.0023
-        - id: PosterContrabandDonutCorp
-          prob: 0.0023
-        - id: PosterContrabandEAT
-          prob: 0.0023
-        - id: PosterContrabandTools
-          prob: 0.0023
-        - id: PosterContrabandPower
-          prob: 0.0023
-        - id: PosterContrabandSpaceCube
-          prob: 0.0023
-        - id: PosterContrabandCommunistState
-          prob: 0.0023
-        - id: PosterContrabandLamarr
-          prob: 0.0023
-        - id: PosterContrabandBorgFancy
-          prob: 0.0023
-        - id: PosterContrabandBorgFancyv2
-          prob: 0.0023
-        - id: PosterContrabandKosmicheskayaStantsiya
-          prob: 0.0023
-        - id: PosterContrabandRebelsUnite
-          prob: 0.0023
-        - id: PosterContrabandC20r
-          prob: 0.0023
-        - id: PosterContrabandHaveaPuff
-          prob: 0.0023
-        - id: PosterContrabandRevolver
-          prob: 0.0023
-        - id: PosterContrabandDDayPromo
-          prob: 0.0023
-        - id: PosterContrabandSyndicatePistol
-          prob: 0.0023
-        - id: PosterContrabandEnergySwords
-          prob: 0.0023
-        - id: PosterContrabandRedRum
-          prob: 0.0023
-        - id: PosterContrabandCC64KAd
-          prob: 0.0023
-        - id: PosterContrabandPunchShit
-          prob: 0.0023
-        - id: PosterContrabandTheGriffin
-          prob: 0.0023
-        - id: PosterContrabandFreeDrone
-          prob: 0.0023
-        - id: PosterContrabandBustyBackdoorExoBabes6
-          prob: 0.0023
-        - id: PosterContrabandRobustSoftdrinks
-          prob: 0.0023
-        - id: PosterContrabandShamblersJuice
-          prob: 0.0023
-        - id: PosterContrabandPwrGame
-          prob: 0.0023
-        - id: PosterContrabandSunkist
-          prob: 0.0023
-        - id: PosterContrabandSpaceCola
-          prob: 0.0023
-        - id: PosterContrabandSpaceUp
-          prob: 0.0023
-        - id: PosterContrabandKudzu
-          prob: 0.0023
-        - id: PosterContrabandMaskedMen
-          prob: 0.0023
-        - id: PosterContrabandUnreadableAnnouncement
-          prob: 0.0023
-        - id: PosterContrabandFreeSyndicateEncryptionKey
-          prob: 0.0023
-        - id: PosterContrabandBountyHunters
-          prob: 0.0023
-        - id: PosterContrabandTheBigGasTruth
-          prob: 0.0023
-        - id: PosterContrabandWehWatches
-          prob: 0.0023
-        - id: PosterContrabandVoteWeh
-          prob: 0.0023
-        - id: PosterContrabandBeachStarYamamoto
-          prob: 0.0023
-        - id: PosterContrabandHighEffectEngineering
-          prob: 0.0023
-        - id: PosterContrabandNuclearDeviceInformational
-          prob: 0.0023
-        - id: PosterContrabandRevolt
-          prob: 0.0023
-        - id: PosterContrabandRise
-          prob: 0.0023
-        - id: PosterContrabandMoth
-          prob: 0.0023
-        - id: PosterContrabandCybersun600
-          prob: 0.0023
-        - id: PosterContrabandDonk
-          prob: 0.0023
-        - id: PosterContrabandEnlistGorlex
-          prob: 0.0023
-        - id: PosterContrabandInterdyne
-          prob: 0.0023
-        - id: PosterContrabandWaffleCorp
-          prob: 0.0023
-        - id: PosterLegitHereForYourSafety
-          prob: 0.0023
-        - id: PosterLegitNanotrasenLogo
-          prob: 0.0023
-        - id: PosterLegitCleanliness
-          prob: 0.0023
-        - id: PosterLegitHelpOthers
-          prob: 0.0023
-        - id: PosterLegitBuild
-          prob: 0.0023
-        - id: PosterLegitBlessThisSpess
-          prob: 0.0023
-        - id: PosterLegitScience
-          prob: 0.0023
-        - id: PosterLegitIan
-          prob: 0.0023
-        - id: PosterLegitObey
-          prob: 0.0023
-        - id: PosterLegitWalk
-          prob: 0.0023
-        - id: PosterLegitStateLaws
-          prob: 0.0023
-        - id: PosterLegitLoveIan
-          prob: 0.0023
-        - id: PosterLegitSpaceCops
-          prob: 0.0023
-        - id: PosterLegitUeNo
-          prob: 0.0023
-        - id: PosterLegitGetYourLEGS
-          prob: 0.0023
-        - id: PosterLegitDoNotQuestion
-          prob: 0.0023
-        - id: PosterLegitWorkForAFuture
-          prob: 0.0023
-        - id: PosterLegitSoftCapPopArt
-          prob: 0.0023
-        - id: PosterLegitSafetyInternals
-          prob: 0.0023
-        - id: PosterLegitSafetyEyeProtection
-          prob: 0.0023
-        - id: PosterLegitSafetyReport
-          prob: 0.0023
-        - id: PosterLegitReportCrimes
-          prob: 0.0023
-        - id: PosterLegitIonRifle
-          prob: 0.0023
-        - id: PosterLegitFoamForceAd
-          prob: 0.0023
-        - id: PosterLegitCohibaRobustoAd
-          prob: 0.0023
-        - id: PosterLegit50thAnniversaryVintageReprint
-          prob: 0.0023
-        - id: PosterLegitFruitBowl
-          prob: 0.0023
-        - id: PosterLegitPDAAd
-          prob: 0.0023
-        - id: PosterLegitEnlist
-          prob: 0.0023
-        - id: PosterLegitNanomichiAd
-          prob: 0.0023
-        - id: PosterLegit12Gauge
-          prob: 0.0023
-        - id: PosterLegitHighClassMartini
-          prob: 0.0023
-        - id: PosterLegitTheOwl
-          prob: 0.0023
-        - id: PosterLegitNoERP
-          prob: 0.0023
-        - id: PosterLegitCarbonDioxide
-          prob: 0.0023
-        - id: PosterLegitDickGumshue
-          prob: 0.0023
-        - id: PosterLegitThereIsNoGasGiant
-          prob: 0.0023
-        - id: PosterLegitJustAWeekAway
-          prob: 0.0023
-        - id: PosterLegitSecWatch
-          prob: 0.0023
-        - id: PosterLegitVacation
-          prob: 0.0023
-        - id: PosterLegitPeriodicTable
-          prob: 0.0023
-        - id: PosterLegitRenault
-          prob: 0.0023
-        - id: PosterLegitNTTGC
-          prob: 0.0023
+        - id: FoodPacketBoritosTrash # we need to spawn only one poster to not possibly overfill closet and yet we can't use null instead of ID
+          orGroup: poster
+          prob: 103
+        - id: FoodPacketCheesieTrash # TODO replace trash with nothing when we get proper loot tables or smth
+          orGroup: poster
+          prob: 103
+        - id: FoodPacketChipsTrash
+          orGroup: poster
+          prob: 103
+        - id: PosterLegitHereForYourSafetyRolled
+          orGroup: poster
+        - id: PosterLegitNanotrasenLogoRolled
+          orGroup: poster
+        - id: PosterLegitCleanlinessRolled
+          orGroup: poster
+        - id: PosterLegitHelpOthersRolled
+          orGroup: poster
+        - id: PosterLegitBuildRolled
+          orGroup: poster
+        - id: PosterLegitBlessThisSpessRolled
+          orGroup: poster
+        - id: PosterLegitScienceRolled
+          orGroup: poster
+        - id: PosterLegitIanRolled
+          orGroup: poster
+        - id: PosterLegitObeyRolled
+          orGroup: poster
+        - id: PosterLegitWalkRolled
+          orGroup: poster
+        - id: PosterLegitStateLawsRolled
+          orGroup: poster
+        - id: PosterLegitLoveIanRolled
+          orGroup: poster
+        - id: PosterLegitSpaceCopsRolled
+          orGroup: poster
+        - id: PosterLegitUeNoRolled
+          orGroup: poster
+        - id: PosterLegitGetYourLEGSRolled
+          orGroup: poster
+        - id: PosterLegitDoNotQuestionRolled
+          orGroup: poster
+        - id: PosterLegitWorkForAFutureRolled
+          orGroup: poster
+        - id: PosterLegitSoftCapPopArtRolled
+          orGroup: poster
+        - id: PosterLegitSafetyInternalsRolled
+          orGroup: poster
+        - id: PosterLegitSafetyEyeProtectionRolled
+          orGroup: poster
+        - id: PosterLegitSafetyReportRolled
+          orGroup: poster
+        - id: PosterLegitReportCrimesRolled
+          orGroup: poster
+        - id: PosterLegitIonRifleRolled
+          orGroup: poster
+        - id: PosterLegitFoamForceAdRolled
+          orGroup: poster
+        - id: PosterLegitCohibaRobustoAdRolled
+          orGroup: poster
+        - id: PosterLegit50thAnniversaryVintageReprintRolled
+          orGroup: poster
+        - id: PosterLegitFruitBowlRolled
+          orGroup: poster
+        - id: PosterLegitPDAAdRolled
+          orGroup: poster
+        - id: PosterLegitEnlistRolled
+          orGroup: poster
+        - id: PosterLegitNanomichiAdRolled
+          orGroup: poster
+        - id: PosterLegit12GaugeRolled
+          orGroup: poster
+        - id: PosterLegitHighClassMartiniRolled
+          orGroup: poster
+        - id: PosterLegitTheOwlRolled
+          orGroup: poster
+        - id: PosterLegitNoERPRolled
+          orGroup: poster
+        - id: PosterLegitCarbonDioxideRolled
+          orGroup: poster
+        - id: PosterLegitDickGumshueRolled
+          orGroup: poster
+        - id: PosterLegitThereIsNoGasGiantRolled
+          orGroup: poster
+        - id: PosterLegitJustAWeekAwayRolled
+          orGroup: poster
+        - id: PosterLegitSecWatchRolled
+          orGroup: poster
+        - id: PosterLegitVacationRolled
+          orGroup: poster
+        - id: PosterLegitPeriodicTableRolled
+          orGroup: poster
+        - id: PosterLegitRenaultRolled
+          orGroup: poster
+        - id: PosterLegitNTTGCRolled
+          orGroup: poster
+        - id: PosterContrabandFreeTontoRolled
+          orGroup: poster
+        - id: PosterContrabandAtmosiaDeclarationIndependenceRolled
+          orGroup: poster
+        - id: PosterContrabandFunPoliceRolled
+          orGroup: poster
+        - id: PosterContrabandLustyExomorphRolled
+          orGroup: poster
+        - id: PosterContrabandSyndicateRecruitmentRolled
+          orGroup: poster
+        - id: PosterContrabandClownRolled
+          orGroup: poster
+        - id: PosterContrabandSmokeRolled
+          orGroup: poster
+        - id: PosterContrabandGreyTideRolled
+          orGroup: poster
+        - id: PosterContrabandMissingGlovesRolled
+          orGroup: poster
+        - id: PosterContrabandHackingGuideRolled
+          orGroup: poster
+        - id: PosterContrabandRIPBadgerRolled
+          orGroup: poster
+        - id: PosterContrabandAmbrosiaVulgarisRolled
+          orGroup: poster
+        - id: PosterContrabandDonutCorpRolled
+          orGroup: poster
+        - id: PosterContrabandEATRolled
+          orGroup: poster
+        - id: PosterContrabandToolsRolled
+          orGroup: poster
+        - id: PosterContrabandPowerRolled
+          orGroup: poster
+        - id: PosterContrabandSpaceCubeRolled
+          orGroup: poster
+        - id: PosterContrabandCommunistStateRolled
+          orGroup: poster
+        - id: PosterContrabandLamarrRolled
+          orGroup: poster
+        - id: PosterContrabandBorgFancyRolled
+          orGroup: poster
+        - id: PosterContrabandBorgFancyv2Rolled
+          orGroup: poster
+        - id: PosterContrabandKosmicheskayaStantsiyaRolled
+          orGroup: poster
+        - id: PosterContrabandRebelsUniteRolled
+          orGroup: poster
+        - id: PosterContrabandC20rRolled
+          orGroup: poster
+        - id: PosterContrabandHaveaPuffRolled
+          orGroup: poster
+        - id: PosterContrabandRevolverRolled
+          orGroup: poster
+        - id: PosterContrabandDDayPromoRolled
+          orGroup: poster
+        - id: PosterContrabandSyndicatePistolRolled
+          orGroup: poster
+        - id: PosterContrabandEnergySwordsRolled
+          orGroup: poster
+        - id: PosterContrabandRedRumRolled
+          orGroup: poster
+        - id: PosterContrabandCC64KAdRolled
+          orGroup: poster
+        - id: PosterContrabandPunchShitRolled
+          orGroup: poster
+        - id: PosterContrabandTheGriffinRolled
+          orGroup: poster
+        - id: PosterContrabandFreeDroneRolled
+          orGroup: poster
+        - id: PosterContrabandBustyBackdoorExoBabes6Rolled
+          orGroup: poster
+        - id: PosterContrabandRobustSoftdrinksRolled
+          orGroup: poster
+        - id: PosterContrabandShamblersJuiceRolled
+          orGroup: poster
+        - id: PosterContrabandPwrGameRolled
+          orGroup: poster
+        - id: PosterContrabandSunkistRolled
+          orGroup: poster
+        - id: PosterContrabandSpaceColaRolled
+          orGroup: poster
+        - id: PosterContrabandSpaceUpRolled
+          orGroup: poster
+        - id: PosterContrabandKudzuRolled
+          orGroup: poster
+        - id: PosterContrabandMaskedMenRolled
+          orGroup: poster
+        - id: PosterContrabandUnreadableAnnouncementRolled
+          orGroup: poster
+        - id: PosterContrabandFreeSyndicateEncryptionKeyRolled
+          orGroup: poster
+        - id: PosterContrabandBountyHuntersRolled
+          orGroup: poster
+        - id: PosterContrabandTheBigGasTruthRolled
+          orGroup: poster
+        - id: PosterContrabandWehWatchesRolled
+          orGroup: poster
+        - id: PosterContrabandVoteWehRolled
+          orGroup: poster
+        - id: PosterContrabandBeachStarYamamotoRolled
+          orGroup: poster
+        - id: PosterContrabandHighEffectEngineeringRolled
+          orGroup: poster
+        - id: PosterContrabandNuclearDeviceInformationalRolled
+          orGroup: poster
+        - id: PosterContrabandRevoltRolled
+          orGroup: poster
+        - id: PosterContrabandRiseRolled
+          orGroup: poster
+        - id: PosterContrabandMothRolled
+          orGroup: poster
+        - id: PosterContrabandCybersun600Rolled
+          orGroup: poster
+        - id: PosterContrabandDonkRolled
+          orGroup: poster
+        - id: PosterContrabandEnlistGorlexRolled
+          orGroup: poster
+        - id: PosterContrabandInterdyneRolled
+          orGroup: poster
+        - id: PosterContrabandWaffleCorpRolled
+          orGroup: poster
