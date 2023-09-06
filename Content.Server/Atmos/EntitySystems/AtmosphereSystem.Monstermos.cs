@@ -467,19 +467,20 @@ namespace Content.Server.Atmos.EntitySystems
                     otherTile.Air.Temperature = Atmospherics.TCMB;
                     continue;
                 }
-
-                // Pressure as a multiple of normal air pressure (takes temperature into account)
-                float pressureMultiple = (otherTile.Air.Pressure / 110.0f);
-                var sum = otherTile.Air.TotalMoles * SpacingEscapeRatio * pressureMultiple;
-                if (sum < SpacingMinGas)
+                var sum = otherTile.Air.TotalMoles;
+                if (SpacingEscapeRatio < 1f)
                 {
-                    // Boost the last bit of air draining from the tile.
-                    sum = Math.Min(SpacingMinGas, otherTile.Air.TotalMoles);
-                }
-                if (sum + otherTile.MonstermosInfo.CurrentTransferAmount > SpacingMaxWind * pressureMultiple)
-                {
-                    // Limit the flow of air out of tiles which have air flowing into them from elsewhere.
-                    sum = Math.Max(SpacingMinGas, SpacingMaxWind * pressureMultiple - otherTile.MonstermosInfo.CurrentTransferAmount);
+                    sum *= SpacingEscapeRatio;
+                    if (sum < SpacingMinGas)
+                    {
+                        // Boost the last bit of air draining from the tile.
+                        sum = Math.Min(SpacingMinGas, otherTile.Air.TotalMoles);
+                    }
+                    if (sum + otherTile.MonstermosInfo.CurrentTransferAmount > SpacingMaxWind)
+                    {
+                        // Limit the flow of air out of tiles which have air flowing into them from elsewhere.
+                        sum = Math.Max(SpacingMinGas, SpacingMaxWind - otherTile.MonstermosInfo.CurrentTransferAmount);
+                    }
                 }
                 totalMolesRemoved += sum;
                 otherTile.MonstermosInfo.CurrentTransferAmount += sum;
