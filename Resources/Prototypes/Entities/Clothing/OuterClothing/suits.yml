@@ -155,3 +155,42 @@
     sprite: Clothing/OuterClothing/Suits/monkey.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Suits/monkey.rsi
+  - type: ContainerContainer
+    containers:
+      toggleable-clothing: !type:ContainerSlot {}
+
+- type: entity
+  parent: ClothingOuterBase
+  id: ClothingOuterSuitIan
+  name: ian suit
+  description: Who's a good boy?
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Suits/iansuit.rsi
+  - type: Item
+    size: 30
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Suits/iansuit.rsi
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHatHoodIan
+  - type: ContainerContainer
+    containers:
+      toggleable-clothing: !type:ContainerSlot {}
+
+- type: entity
+  parent: ClothingOuterBase
+  id: ClothingOuterSuitCarp
+  name: carp suit
+  description: A special suit that makes you look just like a space carp, if your eyesight is bad.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Suits/carpsuit.rsi
+  - type: Item
+    size: 30
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Suits/carpsuit.rsi
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHatHoodCarp
+  - type: ContainerContainer
+    containers:
+      toggleable-clothing: !type:ContainerSlot {}

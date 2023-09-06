@@ -1608,6 +1608,8 @@
   - type: Bloodstream
     bloodMaxVolume: 150
     bloodReagent: SpiderBlood
+  - type: Speech
+    speechVerb: Arachnid
 
 - type: entity
   name: tarantula
@@ -1674,6 +1676,8 @@
     - type: FootstepModifier
       footstepSoundCollection:
         collection: FootstepClownFast
+    - type: Speech
+      speechVerb: Cluwne
 
 - type: entity
   name: possum
@@ -1858,6 +1862,8 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: corgi
   - type: Physics
+  - type: Speech
+    speechVerb: Canine
   - type: Fixtures
     fixtures:
       fix1:

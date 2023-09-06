@@ -18,7 +18,6 @@ public abstract class SharedConveyorController : VirtualController
     [Dependency] protected readonly EntityLookupSystem Lookup = default!;
     [Dependency] protected readonly SharedPhysicsSystem Physics = default!;
     [Dependency] private readonly SharedGravitySystem _gravity = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     protected const string ConveyorFixture = "conveyor";
 
@@ -117,7 +116,7 @@ public abstract class SharedConveyorController : VirtualController
             var itemRelative = conveyorPos - localPos;
 
             localPos += Convey(direction, speed, frameTime, itemRelative);
-            _transform.SetLocalPosition(transform, localPos);
+            transform.LocalPosition = localPos;
 
             // Force it awake for collisionwake reasons.
             Physics.SetAwake(entity, body, true);

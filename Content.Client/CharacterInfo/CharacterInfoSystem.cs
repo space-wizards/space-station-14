@@ -58,7 +58,7 @@ public sealed class CharacterInfoSystem : EntitySystem
         EntityUid Entity,
         string Job,
         Dictionary<string, List<ConditionInfo>> Objectives,
-        string Briefing,
+        string? Briefing,
         string EntityName
     );
 

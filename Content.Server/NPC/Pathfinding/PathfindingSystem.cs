@@ -47,7 +47,6 @@ namespace Content.Server.NPC.Pathfinding
         [Dependency] private readonly FixtureSystem _fixtures = default!;
         [Dependency] private readonly NPCSystem _npc = default!;
         [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-        [Dependency] private readonly SharedTransformSystem _transform = default!;
 
         private readonly Dictionary<ICommonSession, PathfindingDebugMode> _subscribedSessions = new();
 
@@ -383,7 +382,7 @@ namespace Content.Server.NPC.Pathfinding
                 return null;
             }
 
-            var localPos = _transform.GetInvWorldMatrix(xform).Transform(coordinates.ToMapPos(EntityManager));
+            var localPos = xform.InvWorldMatrix.Transform(coordinates.ToMapPos(EntityManager));
             var origin = GetOrigin(localPos);
 
             if (!TryGetChunk(origin, comp, out var chunk))

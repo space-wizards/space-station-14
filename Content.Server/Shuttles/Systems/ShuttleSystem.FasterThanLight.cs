@@ -1,5 +1,7 @@
 using Content.Server.Shuttles.Components;
 using Content.Server.Station.Systems;
+using Content.Shared.Body.Components;
+using Content.Shared.Maps;
 using Content.Shared.Parallax;
 using Content.Shared.Shuttles.Systems;
 using Content.Shared.StatusEffect;
@@ -75,8 +77,18 @@ public sealed partial class ShuttleSystem
     /// </summary>
     public const float FTLDestinationMass = 500f;
 
+    private EntityQuery<BodyComponent> _bodyQuery;
+    private EntityQuery<BuckleComponent> _buckleQuery;
+    private EntityQuery<StatusEffectsComponent> _statusQuery;
+    private EntityQuery<TransformComponent> _xformQuery;
+
     private void InitializeFTL()
     {
+        _bodyQuery = GetEntityQuery<BodyComponent>();
+        _buckleQuery = GetEntityQuery<BuckleComponent>();
+        _statusQuery = GetEntityQuery<StatusEffectsComponent>();
+        _xformQuery = GetEntityQuery<TransformComponent>();
+
         SubscribeLocalEvent<StationGridAddedEvent>(OnStationGridAdd);
     }
 
@@ -250,8 +262,8 @@ public sealed partial class ShuttleSystem
                     var fromRotation = _transform.GetWorldRotation(xform);
 
                     var width = Comp<MapGridComponent>(uid).LocalAABB.Width;
-                    _transform.SetCoordinates(uid, xform, new EntityCoordinates(_mapManager.GetMapEntityId(_hyperSpaceMap!.Value), new Vector2(_index + width / 2f, 0f)));
-                    _transform.SetLocalRotation(xform, Angle.Zero);
+                    xform.Coordinates = new EntityCoordinates(_mapManager.GetMapEntityId(_hyperSpaceMap!.Value), new Vector2(_index + width / 2f, 0f));
+                    xform.LocalRotation = Angle.Zero;
                     _index += width + Buffer;
                     comp.Accumulator += comp.TravelTime - DefaultArrivalTime;
 
@@ -336,7 +348,7 @@ public sealed partial class ShuttleSystem
                     }
                     else
                     {
-                        _transform.SetCoordinates(uid, xform, comp.TargetCoordinates);
+                        xform.Coordinates = comp.TargetCoordinates;
                         mapId = comp.TargetCoordinates.GetMapId(EntityManager);
                     }
 
@@ -461,31 +473,59 @@ public sealed partial class ShuttleSystem
     /// </summary>
     private void DoTheDinosaur(TransformComponent xform)
     {
-        var buckleQuery = GetEntityQuery<BuckleComponent>();
-        var statusQuery = GetEntityQuery<StatusEffectsComponent>();
+        // gib anything sitting outside aka on a lattice
+        // this is done before knocking since why knock down if they are gonna be gibbed too
+        var toGib = new ValueList<(EntityUid, BodyComponent)>();
+        GibKids(xform, ref toGib);
+
+        foreach (var (child, body) in toGib)
+        {
+            _bobby.GibBody(child, gibOrgans: false, body);
+        }
+
         // Get enumeration exceptions from people dropping things if we just paralyze as we go
         var toKnock = new ValueList<EntityUid>();
-
-        KnockOverKids(xform, buckleQuery, statusQuery, ref toKnock);
+        KnockOverKids(xform, ref toKnock);
 
         foreach (var child in toKnock)
         {
-            if (!statusQuery.TryGetComponent(child, out var status)) continue;
+            if (!_statusQuery.TryGetComponent(child, out var status)) continue;
             _stuns.TryParalyze(child, _hyperspaceKnockdownTime, true, status);
         }
     }
 
-    private void KnockOverKids(TransformComponent xform, EntityQuery<BuckleComponent> buckleQuery, EntityQuery<StatusEffectsComponent> statusQuery, ref ValueList<EntityUid> toKnock)
+    private void KnockOverKids(TransformComponent xform, ref ValueList<EntityUid> toKnock)
     {
         // Not recursive because probably not necessary? If we need it to be that's why this method is separate.
         var childEnumerator = xform.ChildEnumerator;
-
         while (childEnumerator.MoveNext(out var child))
         {
-            if (!buckleQuery.TryGetComponent(child.Value, out var buckle) || buckle.Buckled)
+            if (!_buckleQuery.TryGetComponent(child.Value, out var buckle) || buckle.Buckled)
                 continue;
 
             toKnock.Add(child.Value);
+        }
+    }
+
+    private void GibKids(TransformComponent xform, ref ValueList<(EntityUid, BodyComponent)> toGib)
+    {
+        // this is not recursive so people hiding in crates are spared, sadly
+        var childEnumerator = xform.ChildEnumerator;
+        while (childEnumerator.MoveNext(out var child))
+        {
+            if (!_xformQuery.TryGetComponent(child.Value, out var childXform))
+                continue;
+
+            // not something that can be gibbed
+            if (!_bodyQuery.TryGetComponent(child.Value, out var body))
+                continue;
+
+            // only gib if its on lattice/space
+            var tile = childXform.Coordinates.GetTileRef(EntityManager, _mapManager);
+            if (tile != null && !tile.Value.IsSpace())
+                continue;
+
+            toGib.Add((child.Value, body));
         }
     }
 
@@ -506,7 +546,7 @@ public sealed partial class ShuttleSystem
 
         if (config != null)
         {
-            FTLDock(config, shuttleUid, shuttleXform);
+            FTLDock(config, shuttleXform);
             return true;
         }
 
@@ -517,13 +557,10 @@ public sealed partial class ShuttleSystem
     /// <summary>
     /// Forces an FTL dock.
     /// </summary>
-    public void FTLDock(DockingConfig config, EntityUid uid, TransformComponent? shuttleXform = null)
+    public void FTLDock(DockingConfig config, TransformComponent shuttleXform)
     {
-        if (!Resolve(uid, ref shuttleXform))
-            return;
-
         // Set position
-        _transform.SetCoordinates(uid, shuttleXform, config.Coordinates);
+        shuttleXform.Coordinates = config.Coordinates;
         _transform.SetWorldRotation(shuttleXform, config.Angle);
 
         // Connect everything
@@ -632,7 +669,7 @@ public sealed partial class ShuttleSystem
             spawnPos = _transform.GetWorldPosition(targetXform, xformQuery);
         }
 
-        _transform.SetCoordinates(shuttleUid, xform, new EntityCoordinates(targetXform.MapUid.Value, spawnPos));
+        xform.Coordinates = new EntityCoordinates(targetXform.MapUid.Value, spawnPos);
 
         if (!HasComp<MapComponent>(targetXform.GridUid))
         {

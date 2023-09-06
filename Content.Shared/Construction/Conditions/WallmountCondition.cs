@@ -17,16 +17,15 @@ namespace Content.Shared.Construction.Conditions
         public bool Condition(EntityUid user, EntityCoordinates location, Direction direction)
         {
             var entManager = IoCManager.Resolve<IEntityManager>();
-            var transform = entManager.System<SharedTransformSystem>();
 
             // get blueprint and user position
-            var userWorldPosition = transform.GetWorldPosition(user);
+            var userWorldPosition = entManager.GetComponent<TransformComponent>(user).WorldPosition;
             var objWorldPosition = location.ToMap(entManager).Position;
 
             // find direction from user to blueprint
             var userToObject = (objWorldPosition - userWorldPosition);
             // get direction of the grid being placed on as an offset.
-            var gridRotation = transform.GetWorldRotation(location.EntityId);
+            var gridRotation = entManager.GetComponent<TransformComponent>(location.EntityId).WorldRotation;
             var directionWithOffset = gridRotation.RotateVec(direction.ToVec());
 
             // dot product will be positive if user direction and blueprint are co-directed
