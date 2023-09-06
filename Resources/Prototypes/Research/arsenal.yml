@@ -56,14 +56,13 @@
   id: AdvancedLaserManipulation
   name: research-technology-advanced-laser-manipulation
   icon:
-    sprite: Objects/Weapons/Guns/Battery/advancedlasergun.rsi
+    sprite: Objects/Weapons/Guns/Battery/laser_gun.rsi
     state: icon
   discipline: Arsenal
   tier: 1
-  cost: 10000
+  cost: 7500
   recipeUnlocks:
   - WeaponLaserCarbine
-  - WeaponAdvancedLaser
 
 - type: technology
   id: NonlethalAmmunition
@@ -91,12 +90,13 @@
   id: ConcentratedLaserWeaponry
   name: research-technology-concentrated-laser-weaponry
   icon:
-    sprite: Objects/Weapons/Guns/Battery/laser_cannon.rsi
+    sprite: Objects/Weapons/Guns/Battery/advancedlasergun.rsi
     state: icon
   discipline: Arsenal
   tier: 2
   cost: 10000
   recipeUnlocks:
+  - WeaponAdvancedLaser
   - WeaponLaserCannon
 
 - type: technology
