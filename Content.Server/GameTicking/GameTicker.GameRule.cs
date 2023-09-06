@@ -104,6 +104,7 @@ public sealed partial class GameTicker
         _sawmill.Info($"Started game rule {ToPrettyString(ruleEntity)}");
 
         ruleData.Active = true;
+        ruleData.ActivatedAt = _gameTiming.CurTime;
         var ev = new GameRuleStartedEvent(ruleEntity, id);
         RaiseLocalEvent(ruleEntity, ref ev, true);
         return true;

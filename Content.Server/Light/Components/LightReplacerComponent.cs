@@ -10,7 +10,7 @@ namespace Content.Server.Light.Components;
 ///     Can be reloaded by new light tubes or light bulbs
 /// </summary>
 [RegisterComponent, Access(typeof(LightReplacerSystem))]
-public sealed class LightReplacerComponent : Component
+public sealed partial class LightReplacerComponent : Component
 {
     [DataField("sound")]
     public SoundSpecifier Sound = new SoundPathSpecifier("/Audio/Weapons/click.ogg")

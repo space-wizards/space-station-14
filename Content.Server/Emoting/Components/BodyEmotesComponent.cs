@@ -9,7 +9,7 @@ namespace Content.Server.Emoting.Components;
 /// </summary>
 [RegisterComponent]
 [Access(typeof(BodyEmotesSystem))]
-public sealed class BodyEmotesComponent : Component
+public sealed partial class BodyEmotesComponent : Component
 {
     /// <summary>
     ///     Emote sounds prototype id for body emotes.

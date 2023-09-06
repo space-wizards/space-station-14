@@ -1,15 +1,15 @@
 using System.Linq;
 using Content.Server.Administration.Logs;
-using Content.Server.Ghost.Components;
-using Content.Server.Players;
 using Content.Server.Pointing.Components;
 using Content.Server.Visible;
 using Content.Shared.Bed.Sleep;
 using Content.Shared.Database;
+using Content.Shared.Ghost;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Input;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
+using Content.Shared.Mind;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Pointing;
 using Content.Shared.Popups;
@@ -38,6 +38,7 @@ namespace Content.Server.Pointing.EntitySystems
         [Dependency] private readonly MobStateSystem _mobState = default!;
         [Dependency] private readonly SharedPopupSystem _popup = default!;
         [Dependency] private readonly VisibilitySystem _visibilitySystem = default!;
+        [Dependency] private readonly SharedMindSystem _minds = default!;
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
 
         private static readonly TimeSpan PointDelay = TimeSpan.FromSeconds(0.5f);
@@ -169,7 +170,8 @@ namespace Content.Server.Pointing.EntitySystems
             // Get players that are in range and whose visibility layer matches the arrow's.
             bool ViewerPredicate(IPlayerSession playerSession)
             {
-                if (playerSession.ContentData()?.Mind?.CurrentEntity is not {Valid: true} ent ||
+                if (!_minds.TryGetMind(playerSession, out _, out var mind) ||
+                    mind.CurrentEntity is not { Valid: true } ent ||
                     !TryComp(ent, out EyeComponent? eyeComp) ||
                     (eyeComp.VisibilityMask & layer) == 0)
                     return false;

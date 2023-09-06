@@ -1,7 +1,7 @@
 namespace Content.Client.Smoking;
 
 [RegisterComponent]
-public sealed class BurnStateVisualsComponent : Component
+public sealed partial class BurnStateVisualsComponent : Component
 {
     [DataField("burntIcon")]
     public string BurntIcon = "burnt-icon";

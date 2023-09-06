@@ -167,7 +167,7 @@
    id: WardrobeCargoFilled
    suffix: Filled
    parent: WardrobeCargo
-   description: "This locker? Maybe 500 spacebucks. Brotherhood? Priceless."
+   description: "This locker? Maybe 500 spesos. Brotherhood? Priceless."
    components:
    - type: StorageFill
      contents:

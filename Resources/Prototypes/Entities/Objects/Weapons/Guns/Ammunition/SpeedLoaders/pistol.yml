@@ -40,25 +40,6 @@
   - type: Appearance
 
 - type: entity
-  id: SpeedLoaderPistolHighVelocity
-  name: "speed loader (.35 auto high-velocity)"
-  parent: BaseSpeedLoaderPistol
-  components:
-  - type: BallisticAmmoProvider
-    proto: CartridgePistolHighVelocity
-  - type: Sprite
-    layers:
-    - state: base
-      map: ["enum.GunVisualLayers.Base"]
-    - state: high-velocity-6
-      map: ["enum.GunVisualLayers.Mag"]
-  - type: MagazineVisuals
-    magState: high-velocity
-    steps: 7
-    zeroVisible: false
-  - type: Appearance
-
-- type: entity
   id: SpeedLoaderPistolPractice
   name: "speed loader (.35 auto practice)"
   parent: BaseSpeedLoaderPistol

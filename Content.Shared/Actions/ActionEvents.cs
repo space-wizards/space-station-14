@@ -21,6 +21,11 @@ public sealed class GetItemActionsEvent : EntityEventArgs
     public SortedSet<ActionType> Actions = new();
 
     /// <summary>
+    /// User equipping the item.
+    /// </summary>
+    public EntityUid User;
+
+    /// <summary>
     ///     Slot flags for the inventory slot that this item got equipped to. Null if not in a slot (i.e., if equipped to hands).
     /// </summary>
     public SlotFlags? SlotFlags;
@@ -30,8 +35,9 @@ public sealed class GetItemActionsEvent : EntityEventArgs
     /// </summary>
     public bool InHands => SlotFlags == null;
 
-    public GetItemActionsEvent(SlotFlags? slotFlags = null)
+    public GetItemActionsEvent(EntityUid user, SlotFlags? slotFlags = null)
     {
+        User = user;
         SlotFlags = slotFlags;
     }
 }
@@ -71,7 +77,7 @@ public sealed class RequestPerformActionEvent : EntityEventArgs
 /// <remarks>
 ///     To define a new action for some system, you need to create an event that inherits from this class.
 /// </remarks>
-public abstract class InstantActionEvent : BaseActionEvent { }
+public abstract partial class InstantActionEvent : BaseActionEvent { }
 
 /// <summary>
 ///     This is the type of event that gets raised when an <see cref="EntityTargetAction"/> is performed. The <see
@@ -81,7 +87,7 @@ public abstract class InstantActionEvent : BaseActionEvent { }
 /// <remarks>
 ///     To define a new action for some system, you need to create an event that inherits from this class.
 /// </remarks>
-public abstract class EntityTargetActionEvent : BaseActionEvent
+public abstract partial class EntityTargetActionEvent : BaseActionEvent
 {
     /// <summary>
     ///     The entity that the user targeted.
@@ -97,7 +103,7 @@ public abstract class EntityTargetActionEvent : BaseActionEvent
 /// <remarks>
 ///     To define a new action for some system, you need to create an event that inherits from this class.
 /// </remarks>
-public abstract class WorldTargetActionEvent : BaseActionEvent
+public abstract partial class WorldTargetActionEvent : BaseActionEvent
 {
     /// <summary>
     ///     The coordinates of the location that the user targeted.
@@ -110,7 +116,7 @@ public abstract class WorldTargetActionEvent : BaseActionEvent
 ///     system.
 /// </summary>
 [ImplicitDataDefinitionForInheritors]
-public abstract class BaseActionEvent : HandledEntityEventArgs
+public abstract partial class BaseActionEvent : HandledEntityEventArgs
 {
     /// <summary>
     ///     The user performing the action.

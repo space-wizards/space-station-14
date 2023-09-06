@@ -126,9 +126,6 @@ namespace Content.Client.Actions
 
         public override void AddAction(EntityUid uid, ActionType action, EntityUid? provider, ActionsComponent? comp = null, bool dirty = true)
         {
-            if (GameTiming.ApplyingState && !action.ClientExclusive)
-                return;
-
             if (!Resolve(uid, ref comp, false))
                 return;
 

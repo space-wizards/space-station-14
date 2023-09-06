@@ -34,7 +34,7 @@ public sealed class IdExaminableSystem : EntitySystem
             Text = Loc.GetString("id-examinable-component-verb-text"),
             Category = VerbCategory.Examine,
             Disabled = !detailsRange,
-            Message = Loc.GetString("id-examinable-component-verb-disabled"),
+            Message = detailsRange ? null : Loc.GetString("id-examinable-component-verb-disabled"),
             Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/character.svg.192dpi.png"))
         };
 

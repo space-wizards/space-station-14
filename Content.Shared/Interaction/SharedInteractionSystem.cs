@@ -100,6 +100,7 @@ namespace Content.Shared.Interaction
                 .Register<SharedInteractionSystem>();
 
             InitializeRelay();
+            InitializeBlocking();
         }
 
         public override void Shutdown()
@@ -1119,6 +1120,9 @@ namespace Content.Shared.Interaction
 
             // Entities may no longer exist (banana was eaten, or human was exploded)?
             if (!Exists(uidA) || !Exists(uidB))
+                return;
+
+            if (Paused(uidA) || Paused(uidB.Value))
                 return;
 
             RaiseLocalEvent(uidA, new ContactInteractionEvent(uidB.Value));

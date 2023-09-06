@@ -4,7 +4,7 @@ namespace Content.Shared.Roles
     ///     Provides special hooks for when jobs get spawned in/equipped.
     /// </summary>
     [ImplicitDataDefinitionForInheritors]
-    public abstract class JobSpecial
+    public abstract partial class JobSpecial
     {
         public abstract void AfterEquip(EntityUid mob);
     }

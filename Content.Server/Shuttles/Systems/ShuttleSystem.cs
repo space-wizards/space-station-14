@@ -44,9 +44,6 @@ public sealed partial class ShuttleSystem : SharedShuttleSystem
 
     public const float TileMassMultiplier = 0.5f;
 
-    public const float ShuttleLinearDamping = 0.05f;
-    public const float ShuttleAngularDamping = 0.05f;
-
     public override void Initialize()
     {
         base.Initialize();
@@ -57,7 +54,6 @@ public sealed partial class ShuttleSystem : SharedShuttleSystem
         InitializeIFF();
         InitializeImpact();
 
-        SubscribeLocalEvent<ShuttleComponent, ComponentAdd>(OnShuttleAdd);
         SubscribeLocalEvent<ShuttleComponent, ComponentStartup>(OnShuttleStartup);
         SubscribeLocalEvent<ShuttleComponent, ComponentShutdown>(OnShuttleShutdown);
 
@@ -85,21 +81,12 @@ public sealed partial class ShuttleSystem : SharedShuttleSystem
         CleanupHyperspace();
     }
 
-    private void OnShuttleAdd(EntityUid uid, ShuttleComponent component, ComponentAdd args)
-    {
-        // Easier than doing it in the comp and they don't have constructors.
-        for (var i = 0; i < component.LinearThrusters.Length; i++)
-        {
-            component.LinearThrusters[i] = new List<EntityUid>();
-        }
-    }
-
     private void OnGridFixtureChange(EntityUid uid, FixturesComponent manager, GridFixtureChangeEvent args)
     {
         foreach (var fixture in args.NewFixtures)
         {
-            _physics.SetDensity(uid, fixture, TileMassMultiplier, false, manager);
-            _fixtures.SetRestitution(uid, fixture, 0.1f, false, manager);
+            _physics.SetDensity(uid, fixture.Key, fixture.Value, TileMassMultiplier, false, manager);
+            _fixtures.SetRestitution(uid, fixture.Key, fixture.Value, 0.1f, false, manager);
         }
     }
 
@@ -125,7 +112,7 @@ public sealed partial class ShuttleSystem : SharedShuttleSystem
 
         if (component.Enabled)
         {
-            Enable(uid, physicsComponent);
+            Enable(uid, physicsComponent, component);
         }
     }
 
@@ -138,7 +125,7 @@ public sealed partial class ShuttleSystem : SharedShuttleSystem
 
         if (component.Enabled)
         {
-            Enable(uid, physicsComponent);
+            Enable(uid, physicsComponent, component);
         }
         else
         {
@@ -146,15 +133,15 @@ public sealed partial class ShuttleSystem : SharedShuttleSystem
         }
     }
 
-    private void Enable(EntityUid uid, PhysicsComponent component)
+    private void Enable(EntityUid uid, PhysicsComponent component, ShuttleComponent shuttle)
     {
         FixturesComponent? manager = null;
 
         _physics.SetBodyType(uid, BodyType.Dynamic, manager: manager, body: component);
         _physics.SetBodyStatus(component, BodyStatus.InAir);
         _physics.SetFixedRotation(uid, false, manager: manager, body: component);
-        _physics.SetLinearDamping(component, ShuttleLinearDamping);
-        _physics.SetAngularDamping(component, ShuttleAngularDamping);
+        _physics.SetLinearDamping(component, shuttle.LinearDamping);
+        _physics.SetAngularDamping(component, shuttle.AngularDamping);
     }
 
     private void Disable(EntityUid uid, PhysicsComponent component)

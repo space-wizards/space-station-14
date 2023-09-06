@@ -94,7 +94,7 @@ public sealed class GridDraggingSystem : SharedGridDraggingSystem
         }
 
         var mouseScreenPos = _inputManager.MouseScreenPosition;
-        var mousePos = _eyeManager.ScreenToMap(mouseScreenPos);
+        var mousePos = _eyeManager.PixelToMap(mouseScreenPos);
 
         if (_dragging == null)
         {

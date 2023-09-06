@@ -1,7 +1,7 @@
 ﻿namespace Content.Server.Chemistry.Components.SolutionManager
 {
     [RegisterComponent]
-    public sealed class ExaminableSolutionComponent: Component
+    public sealed partial class ExaminableSolutionComponent: Component
     {
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("solution")]

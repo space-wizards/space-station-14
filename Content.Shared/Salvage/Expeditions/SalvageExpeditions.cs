@@ -28,7 +28,7 @@ public sealed class SalvageExpeditionConsoleState : BoundUserInterfaceState
 /// Used to interact with salvage expeditions and claim them.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-public sealed class SalvageExpeditionConsoleComponent : Component
+public sealed partial class SalvageExpeditionConsoleComponent : Component
 {
 
 }
@@ -43,7 +43,7 @@ public sealed class ClaimSalvageMessage : BoundUserInterfaceMessage
 /// Added per station to store data on their available salvage missions.
 /// </summary>
 [RegisterComponent]
-public sealed class SalvageExpeditionDataComponent : Component
+public sealed partial class SalvageExpeditionDataComponent : Component
 {
     /// <summary>
     /// Is there an active salvage expedition.

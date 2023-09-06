@@ -52,6 +52,18 @@
 
 - type: entity
   parent: InflatableWallStack
+  id: InflatableWallStack5
+  suffix: 5
+  components:
+    - type: Sprite
+      state: item_wall
+    - type: Item
+      size: 5
+    - type: Stack
+      count: 5
+
+- type: entity
+  parent: InflatableWallStack
   id: InflatableWallStack1
   suffix: 1
   components:

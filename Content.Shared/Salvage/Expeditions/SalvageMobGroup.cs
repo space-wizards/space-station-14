@@ -3,7 +3,7 @@ using Content.Shared.Storage;
 namespace Content.Shared.Salvage.Expeditions;
 
 [DataDefinition]
-public record struct SalvageMobGroup()
+public partial record struct SalvageMobGroup()
 {
     // A mob may be cheap but rare or expensive but frequent.
 

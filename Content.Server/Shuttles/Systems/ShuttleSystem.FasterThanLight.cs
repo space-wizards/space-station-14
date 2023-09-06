@@ -1,5 +1,7 @@
 using Content.Server.Shuttles.Components;
 using Content.Server.Station.Systems;
+using Content.Shared.Body.Components;
+using Content.Shared.Maps;
 using Content.Shared.Parallax;
 using Content.Shared.Shuttles.Systems;
 using Content.Shared.StatusEffect;
@@ -75,8 +77,18 @@ public sealed partial class ShuttleSystem
     /// </summary>
     public const float FTLDestinationMass = 500f;
 
+    private EntityQuery<BodyComponent> _bodyQuery;
+    private EntityQuery<BuckleComponent> _buckleQuery;
+    private EntityQuery<StatusEffectsComponent> _statusQuery;
+    private EntityQuery<TransformComponent> _xformQuery;
+
     private void InitializeFTL()
     {
+        _bodyQuery = GetEntityQuery<BodyComponent>();
+        _buckleQuery = GetEntityQuery<BuckleComponent>();
+        _statusQuery = GetEntityQuery<StatusEffectsComponent>();
+        _xformQuery = GetEntityQuery<TransformComponent>();
+
         SubscribeLocalEvent<StationGridAddedEvent>(OnStationGridAdd);
     }
 
@@ -236,6 +248,7 @@ public sealed partial class ShuttleSystem
             var xform = Transform(uid);
             PhysicsComponent? body;
             ShuttleComponent? shuttle;
+            TryComp(uid, out shuttle);
 
             switch (comp.State)
             {
@@ -256,7 +269,8 @@ public sealed partial class ShuttleSystem
 
                     if (TryComp(uid, out body))
                     {
-                        Enable(uid, body);
+                        if (shuttle != null)
+                            Enable(uid, body, shuttle);
                         _physics.SetLinearVelocity(uid, new Vector2(0f, 20f), body: body);
                         _physics.SetAngularVelocity(uid, 0f, body: body);
                         _physics.SetLinearDamping(body, 0f);
@@ -283,7 +297,7 @@ public sealed partial class ShuttleSystem
                     // TODO: Arrival effects
                     // For now we'll just use the ss13 bubbles but we can do fancier.
 
-                    if (TryComp(uid, out shuttle))
+                    if (shuttle != null)
                     {
                         _thruster.DisableLinearThrusters(shuttle);
                         _thruster.EnableLinearThrustDirection(shuttle, DirectionFlag.South);
@@ -301,11 +315,13 @@ public sealed partial class ShuttleSystem
                     {
                         _physics.SetLinearVelocity(uid, Vector2.Zero, body: body);
                         _physics.SetAngularVelocity(uid, 0f, body: body);
-                        _physics.SetLinearDamping(body, ShuttleLinearDamping);
-                        _physics.SetAngularDamping(body, ShuttleAngularDamping);
+                        if (shuttle != null)
+                        {
+                            _physics.SetLinearDamping(body, shuttle.LinearDamping);
+                            _physics.SetAngularDamping(body, shuttle.AngularDamping);
+                        }
                     }
 
-                    TryComp(uid, out shuttle);
                     MapId mapId;
 
                     if (comp.TargetUid != null && shuttle != null)
@@ -347,9 +363,9 @@ public sealed partial class ShuttleSystem
                         {
                             Disable(uid, body);
                         }
-                        else
+                        else if (shuttle != null)
                         {
-                            Enable(uid, body);
+                            Enable(uid, body, shuttle);
                         }
                     }
 
@@ -457,31 +473,59 @@ public sealed partial class ShuttleSystem
     /// </summary>
     private void DoTheDinosaur(TransformComponent xform)
     {
-        var buckleQuery = GetEntityQuery<BuckleComponent>();
-        var statusQuery = GetEntityQuery<StatusEffectsComponent>();
+        // gib anything sitting outside aka on a lattice
+        // this is done before knocking since why knock down if they are gonna be gibbed too
+        var toGib = new ValueList<(EntityUid, BodyComponent)>();
+        GibKids(xform, ref toGib);
+
+        foreach (var (child, body) in toGib)
+        {
+            _bobby.GibBody(child, gibOrgans: false, body);
+        }
+
         // Get enumeration exceptions from people dropping things if we just paralyze as we go
         var toKnock = new ValueList<EntityUid>();
-
-        KnockOverKids(xform, buckleQuery, statusQuery, ref toKnock);
+        KnockOverKids(xform, ref toKnock);
 
         foreach (var child in toKnock)
         {
-            if (!statusQuery.TryGetComponent(child, out var status)) continue;
+            if (!_statusQuery.TryGetComponent(child, out var status)) continue;
             _stuns.TryParalyze(child, _hyperspaceKnockdownTime, true, status);
         }
     }
 
-    private void KnockOverKids(TransformComponent xform, EntityQuery<BuckleComponent> buckleQuery, EntityQuery<StatusEffectsComponent> statusQuery, ref ValueList<EntityUid> toKnock)
+    private void KnockOverKids(TransformComponent xform, ref ValueList<EntityUid> toKnock)
     {
         // Not recursive because probably not necessary? If we need it to be that's why this method is separate.
         var childEnumerator = xform.ChildEnumerator;
-
         while (childEnumerator.MoveNext(out var child))
         {
-            if (!buckleQuery.TryGetComponent(child.Value, out var buckle) || buckle.Buckled)
+            if (!_buckleQuery.TryGetComponent(child.Value, out var buckle) || buckle.Buckled)
                 continue;
 
             toKnock.Add(child.Value);
+        }
+    }
+
+    private void GibKids(TransformComponent xform, ref ValueList<(EntityUid, BodyComponent)> toGib)
+    {
+        // this is not recursive so people hiding in crates are spared, sadly
+        var childEnumerator = xform.ChildEnumerator;
+        while (childEnumerator.MoveNext(out var child))
+        {
+            if (!_xformQuery.TryGetComponent(child.Value, out var childXform))
+                continue;
+
+            // not something that can be gibbed
+            if (!_bodyQuery.TryGetComponent(child.Value, out var body))
+                continue;
+
+            // only gib if its on lattice/space
+            var tile = childXform.Coordinates.GetTileRef(EntityManager, _mapManager);
+            if (tile != null && !tile.Value.IsSpace())
+                continue;
+
+            toGib.Add((child.Value, body));
         }
     }
 

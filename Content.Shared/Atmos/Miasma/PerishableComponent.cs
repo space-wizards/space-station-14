@@ -7,7 +7,7 @@ namespace Content.Shared.Atmos.Miasma;
 /// It may be expanded to food at some point, but it's just for mobs right now.
 /// </summary>
 [RegisterComponent]
-public sealed class PerishableComponent : Component
+public sealed partial class PerishableComponent : Component
 {
     /// <summary>
     /// How long it takes after death to start rotting.
@@ -29,7 +29,7 @@ public sealed class PerishableComponent : Component
 
     /// <summary>
     /// How often the rotting ticks.
-    /// Feel free to weak this if there are perf concerns.
+    /// Feel free to tweak this if there are perf concerns.
     /// </summary>
     [DataField("perishUpdateRate"), ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan PerishUpdateRate = TimeSpan.FromSeconds(5);

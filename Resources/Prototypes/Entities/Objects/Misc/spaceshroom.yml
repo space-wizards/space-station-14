@@ -1,0 +1,123 @@
+- type: entity
+  name: spaceshroom
+  parent: BaseStructure
+  id: Spaceshroom
+  suffix: Structure
+  description: A cluster of wild mushrooms that likes to grow in dark, moist environments.
+  components:
+    - type: Sprite
+      sprite: Objects/Misc/spaceshroom.rsi
+      state: structure
+    - type: Transform
+      anchored: true
+    - type: Physics
+      bodyType: Static
+    - type: Fixtures
+      fixtures:
+        fix1:
+          shape:
+            !type:PhysShapeCircle
+            radius: 0.2
+    - type: InteractionOutline
+    # TODO: Nuke this shit
+    - type: OreVein
+      oreChance: 1.0
+      currentOre: SpaceShrooms
+    - type: Gatherable
+      whitelist:
+        components:
+          - Hands
+    - type: Damageable
+      damageContainer: Inorganic
+      damageModifierSet: Wood
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 150
+          behaviors:
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+
+- type: entity
+  name: spaceshroom
+  parent: FoodProduceBase
+  id: FoodSpaceshroom
+  description: A wild mushroom. There's no telling what effect it could have...
+  components:
+  - type: Produce
+  - type: Sprite
+    sprite: Objects/Misc/spaceshroom.rsi
+    state: object
+  - type: FlavorProfile
+    flavors:
+      - spaceshroom
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: SpaceDrugs
+        Quantity: 10
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 3
+        - ReagentId: Vitamin
+          Quantity: 2
+  - type: RandomFillSolution
+    solution: food
+    weightedRandomId: RandomFillSpaceshroom
+  - type: StaticPrice
+    price: 20
+
+- type: weightedRandomFillSolution
+  id: RandomFillSpaceshroom
+  fills:
+  - quantity: 10
+    weight: 10
+    reagents:
+    - SpaceDrugs
+  - quantity: 0
+    weight: 5
+    reagents:
+    - Water
+  - quantity: 10
+    weight: 3
+    reagents:
+    - Ephedrine
+  - quantity: 10
+    weight: 1
+    reagents:
+    - Lexorin
+  - quantity: 15
+    weight: 1
+    reagents:
+    - Amatoxin
+
+# Cooked Object
+- type: entity
+  name: cooked spaceshroom
+  parent: FoodProduceBase
+  id: FoodSpaceshroomCooked
+  description: A wild mushroom that has been cooked through. It seems the heat has removed its chemical effects.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - spaceshroomcooked
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 15
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+        - ReagentId: Vitamin
+          Quantity: 5
+  - type: Sprite
+    sprite: Objects/Misc/spaceshroom.rsi
+    state: spaceshroom_cooked
+  - type: Produce
+  - type: StaticPrice
+    price: 40

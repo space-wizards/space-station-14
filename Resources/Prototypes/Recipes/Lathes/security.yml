@@ -21,6 +21,14 @@
     Plastic: 300
 
 - type: latheRecipe
+  id: Truncheon
+  result: Truncheon
+  completetime: 2
+  materials:
+    Steel: 300
+    Plastic: 300
+
+- type: latheRecipe
   id: WeaponLaserCarbine
   result: WeaponLaserCarbine
   completetime: 8
@@ -34,9 +42,9 @@
   result: WeaponAdvancedLaser
   completetime: 5
   materials:
-    Steel: 1000
-    Glass: 500
-    Gold: 150
+    Steel: 1500
+    Glass: 1000
+    Gold: 850
 
 - type: latheRecipe
   id: WeaponLaserCannon
@@ -45,7 +53,7 @@
   materials:
     Steel: 1250
     Plastic: 750
-    Gold: 100
+    Gold: 500
 
 - type: latheRecipe
   id: WeaponXrayCannon
@@ -77,6 +85,14 @@
 - type: latheRecipe
   id: ClothingEyesGlassesSecurity
   result: ClothingEyesGlassesSecurity
+  completetime: 2
+  materials:
+    Steel: 300
+    Glass: 200
+    
+- type: latheRecipe
+  id: ClothingEyesHudSecurity
+  result: ClothingEyesHudSecurity
   completetime: 2
   materials:
     Steel: 300
@@ -192,27 +208,6 @@
     Glass: 5
 
 - type: latheRecipe
-  id: CartridgeAnomalousParticleDelta
-  result: CartridgeAnomalousParticleDelta
-  completetime: 2
-  materials:
-    Plastic: 25
-
-- type: latheRecipe
-  id: CartridgeAnomalousParticleEpsilon
-  result: CartridgeAnomalousParticleEpsilon
-  completetime: 2
-  materials:
-    Plastic: 25
-
-- type: latheRecipe
-  id: CartridgeAnomalousParticleZeta
-  result: CartridgeAnomalousParticleZeta
-  completetime: 2
-  materials:
-    Plastic: 25
-
-- type: latheRecipe
   id: TargetHuman
   result: TargetHuman
   completetime: 5
@@ -295,62 +290,6 @@
   materials:
     Steel: 350
     Plastic: 600
-
-- type: latheRecipe
-  id: CartridgePistolHighVelocity
-  result: CartridgePistolHighVelocity
-  completetime: 2
-  materials:
-    Steel: 20
-
-- type: latheRecipe
-  id: CartridgeMagnumHighVelocity
-  result: CartridgeMagnumHighVelocity
-  completetime: 2
-  materials:
-    Steel: 40
-
-- type: latheRecipe
-  id: CartridgeLightRifleHighVelocity
-  result: CartridgeLightRifleHighVelocity
-  completetime: 2
-  materials:
-    Steel: 40
-
-- type: latheRecipe
-  id: CartridgeRifleHighVelocity
-  result: CartridgeRifleHighVelocity
-  completetime: 2
-  materials:
-    Steel: 30
-
-- type: latheRecipe
-  id: MagazineBoxPistolHighVelocity
-  result: MagazineBoxPistolHighVelocity
-  completetime: 5
-  materials:
-    Steel: 1250
-
-- type: latheRecipe
-  id: MagazineBoxMagnumHighVelocity
-  result: MagazineBoxMagnumHighVelocity
-  completetime: 5
-  materials:
-    Steel: 2450
-
-- type: latheRecipe
-  id: MagazineBoxLightRifleHighVelocity
-  result: MagazineBoxLightRifleHighVelocity
-  completetime: 5
-  materials:
-    Steel: 2050
-
-- type: latheRecipe
-  id: MagazineBoxRifleHighVelocity
-  result: MagazineBoxRifleHighVelocity
-  completetime: 5
-  materials:
-    Steel: 1850
 
 - type: latheRecipe
   id: ShellShotgunIncendiary

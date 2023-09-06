@@ -78,14 +78,15 @@ public sealed class StepTriggerSystem : EntitySystem
         return false;
     }
 
-    private void UpdateColliding(EntityUid uid, StepTriggerComponent component, TransformComponent ownerTransform, EntityUid otherUid, EntityQuery<PhysicsComponent> query)
+    private void UpdateColliding(EntityUid uid, StepTriggerComponent component, TransformComponent ownerXform, EntityUid otherUid, EntityQuery<PhysicsComponent> query)
     {
         if (!query.TryGetComponent(otherUid, out var otherPhysics))
             return;
 
+        var otherXform = Transform(otherUid);
         // TODO: This shouldn't be calculating based on world AABBs.
-        var ourAabb = _entityLookup.GetWorldAABB(uid, ownerTransform);
-        var otherAabb = _entityLookup.GetWorldAABB(otherUid);
+        var ourAabb = _entityLookup.GetAABBNoContainer(uid, ownerXform.LocalPosition, ownerXform.LocalRotation);
+        var otherAabb = _entityLookup.GetAABBNoContainer(otherUid, otherXform.LocalPosition, otherXform.LocalRotation);
 
         if (!ourAabb.Intersects(otherAabb))
         {
@@ -96,9 +97,13 @@ public sealed class StepTriggerSystem : EntitySystem
             return;
         }
 
+        // max 'area of enclosure' between the two aabbs
+        // this is hard to explain
+        var intersect = Box2.Area(otherAabb.Intersect(ourAabb));
+        var ratio = Math.Max(intersect / Box2.Area(otherAabb), intersect / Box2.Area(ourAabb));
         if (otherPhysics.LinearVelocity.Length() < component.RequiredTriggerSpeed
             || component.CurrentlySteppedOn.Contains(otherUid)
-            || otherAabb.IntersectPercentage(ourAabb) < component.IntersectRatio
+            || ratio < component.IntersectRatio
             || !CanTrigger(uid, otherUid, component))
         {
             return;

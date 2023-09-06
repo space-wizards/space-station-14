@@ -20,6 +20,7 @@ using Content.Shared.Physics;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
+using Robust.Server.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision.Shapes;
@@ -35,6 +36,7 @@ namespace Content.Server.Climbing;
 public sealed class ClimbSystem : SharedClimbSystem
 {
     [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
+    [Dependency] private readonly AudioSystem _audio = default!;
     [Dependency] private readonly BodySystem _bodySystem = default!;
     [Dependency] private readonly DamageableSystem _damageableSystem = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
@@ -47,7 +49,7 @@ public sealed class ClimbSystem : SharedClimbSystem
     private const string ClimbingFixtureName = "climb";
     private const int ClimbingCollisionGroup = (int) (CollisionGroup.TableLayer | CollisionGroup.LowImpassable);
 
-    private readonly Dictionary<EntityUid, List<Fixture>> _fixtureRemoveQueue = new();
+    private readonly Dictionary<EntityUid, Dictionary<string, Fixture>> _fixtureRemoveQueue = new();
 
     public override void Initialize()
     {
@@ -133,6 +135,7 @@ public sealed class ClimbSystem : SharedClimbSystem
             BreakOnDamage = true
         };
 
+        _audio.PlayPvs(comp.StartClimbSound, climbable);
         _doAfterSystem.TryStartDoAfter(args, out id);
         return true;
     }
@@ -148,9 +151,12 @@ public sealed class ClimbSystem : SharedClimbSystem
     }
 
     private void Climb(EntityUid uid, EntityUid user, EntityUid instigator, EntityUid climbable, bool silent = false, ClimbingComponent? climbing = null,
-        PhysicsComponent? physics = null, FixturesComponent? fixtures = null)
+        PhysicsComponent? physics = null, FixturesComponent? fixtures = null, ClimbableComponent? comp = null)
     {
         if (!Resolve(uid, ref climbing, ref physics, ref fixtures, false))
+            return;
+
+        if (!Resolve(climbable, ref comp))
             return;
 
         if (!ReplaceFixtures(climbing, fixtures))
@@ -159,6 +165,7 @@ public sealed class ClimbSystem : SharedClimbSystem
         climbing.IsClimbing = true;
         Dirty(climbing);
 
+        _audio.PlayPvs(comp.FinishClimbSound, climbable);
         MoveEntityToward(uid, climbable, physics, climbing);
         // we may potentially need additional logic since we're forcing a player onto a climbable
         // there's also the cases where the user might collide with the person they are forcing onto the climbable that i haven't accounted for
@@ -205,8 +212,8 @@ public sealed class ClimbSystem : SharedClimbSystem
                 || (fixture.CollisionMask & ClimbingCollisionGroup) == 0)
                 continue;
 
-            climbingComp.DisabledFixtureMasks.Add(fixture.ID, fixture.CollisionMask & ClimbingCollisionGroup);
-            _physics.SetCollisionMask(uid, fixture, fixture.CollisionMask & ~ClimbingCollisionGroup, fixturesComp);
+            climbingComp.DisabledFixtureMasks.Add(name, fixture.CollisionMask & ClimbingCollisionGroup);
+            _physics.SetCollisionMask(uid, name, fixture, fixture.CollisionMask & ~ClimbingCollisionGroup, fixturesComp);
         }
 
         if (!_fixtureSystem.TryCreateFixture(
@@ -226,7 +233,7 @@ public sealed class ClimbSystem : SharedClimbSystem
 
     private void OnClimbEndCollide(EntityUid uid, ClimbingComponent component, ref EndCollideEvent args)
     {
-        if (args.OurFixture.ID != ClimbingFixtureName
+        if (args.OurFixtureId != ClimbingFixtureName
             || !component.IsClimbing
             || component.OwnerIsTransitioning)
             return;
@@ -255,18 +262,18 @@ public sealed class ClimbSystem : SharedClimbSystem
                 continue;
             }
 
-            _physics.SetCollisionMask(uid, fixture, fixture.CollisionMask | fixtureMask, fixtures);
+            _physics.SetCollisionMask(uid, name, fixture, fixture.CollisionMask | fixtureMask, fixtures);
         }
         climbing.DisabledFixtureMasks.Clear();
 
         if (!_fixtureRemoveQueue.TryGetValue(uid, out var removeQueue))
         {
-            removeQueue = new List<Fixture>();
+            removeQueue = new Dictionary<string, Fixture>();
             _fixtureRemoveQueue.Add(uid, removeQueue);
         }
 
         if (fixtures.Fixtures.TryGetValue(ClimbingFixtureName, out var climbingFixture))
-            removeQueue.Add(climbingFixture);
+            removeQueue.Add(ClimbingFixtureName, climbingFixture);
 
         climbing.IsClimbing = false;
         climbing.OwnerIsTransitioning = false;
@@ -433,7 +440,7 @@ public sealed class ClimbSystem : SharedClimbSystem
 
             foreach (var fixture in fixtures)
             {
-                _fixtureSystem.DestroyFixture(uid, fixture, body: physicsComp, manager: fixturesComp);
+                _fixtureSystem.DestroyFixture(uid, fixture.Key, fixture.Value, body: physicsComp, manager: fixturesComp);
             }
         }
 

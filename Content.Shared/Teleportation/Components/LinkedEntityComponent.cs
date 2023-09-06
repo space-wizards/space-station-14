@@ -9,7 +9,7 @@ namespace Content.Shared.Teleportation.Components;
 ///     thrown into to teleport an entity.
 /// </summary>
 [RegisterComponent, Access(typeof(LinkedEntitySystem)), NetworkedComponent]
-public sealed class LinkedEntityComponent : Component
+public sealed partial class LinkedEntityComponent : Component
 {
     /// <summary>
     ///     The entities that this entity is linked to.

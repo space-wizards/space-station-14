@@ -1,19 +1,18 @@
+using System.Numerics;
 using Content.Server.Administration.Logs;
-using Content.Server.Ghost.Components;
-using Content.Server.Mind.Components;
-using Content.Server.Station.Components;
 using Content.Server.Singularity.Events;
+using Content.Server.Station.Components;
 using Content.Shared.Database;
+using Content.Shared.Ghost;
+using Content.Shared.Mind.Components;
 using Content.Shared.Singularity.Components;
 using Content.Shared.Singularity.EntitySystems;
 using Content.Shared.Tag;
 using Robust.Shared.Containers;
-using Robust.Shared.Timing;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Events;
-using System.Numerics;
-
+using Robust.Shared.Timing;
 
 namespace Content.Server.Singularity.EntitySystems;
 
@@ -40,6 +39,8 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
         SubscribeLocalEvent<MapGridComponent, EventHorizonAttemptConsumeEntityEvent>(PreventConsume);
         SubscribeLocalEvent<GhostComponent, EventHorizonAttemptConsumeEntityEvent>(PreventConsume);
         SubscribeLocalEvent<StationDataComponent, EventHorizonAttemptConsumeEntityEvent>(PreventConsume);
+        SubscribeLocalEvent<EventHorizonComponent, MapInitEvent>(OnHorizonMapInit);
+        SubscribeLocalEvent<EventHorizonComponent, EntityUnpausedEvent>(OnHorizonUnpaused);
         SubscribeLocalEvent<EventHorizonComponent, StartCollideEvent>(OnStartCollide);
         SubscribeLocalEvent<EventHorizonComponent, EntGotInsertedIntoContainerMessage>(OnEventHorizonContained);
         SubscribeLocalEvent<EventHorizonContainedEvent>(OnEventHorizonContained);
@@ -49,6 +50,16 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
 
         var vvHandle = Vvm.GetTypeHandler<EventHorizonComponent>();
         vvHandle.AddPath(nameof(EventHorizonComponent.TargetConsumePeriod), (_, comp) => comp.TargetConsumePeriod, SetConsumePeriod);
+    }
+
+    private void OnHorizonMapInit(EntityUid uid, EventHorizonComponent component, MapInitEvent args)
+    {
+        component.NextConsumeWaveTime = _timing.CurTime;
+    }
+
+    private void OnHorizonUnpaused(EntityUid uid, EventHorizonComponent component, ref EntityUnpausedEvent args)
+    {
+        component.NextConsumeWaveTime += args.PausedTime;
     }
 
     public override void Shutdown()
@@ -82,10 +93,10 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
         if (!Resolve(uid, ref eventHorizon))
             return;
 
-        eventHorizon.LastConsumeWaveTime = _timing.CurTime;
-        eventHorizon.NextConsumeWaveTime = eventHorizon.LastConsumeWaveTime + eventHorizon.TargetConsumePeriod;
+        eventHorizon.NextConsumeWaveTime += eventHorizon.TargetConsumePeriod;
         if (eventHorizon.BeingConsumedByAnotherEventHorizon)
             return;
+
         if (!Resolve(uid, ref xform))
             return;
 
@@ -331,8 +342,9 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
         if (MathHelper.CloseTo(eventHorizon.TargetConsumePeriod.TotalSeconds, value.TotalSeconds))
             return;
 
+        var diff = (value - eventHorizon.TargetConsumePeriod);
         eventHorizon.TargetConsumePeriod = value;
-        eventHorizon.NextConsumeWaveTime = eventHorizon.LastConsumeWaveTime + eventHorizon.TargetConsumePeriod;
+        eventHorizon.NextConsumeWaveTime += diff;
 
         var curTime = _timing.CurTime;
         if (eventHorizon.NextConsumeWaveTime < curTime)
@@ -385,7 +397,7 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
     {
         if (comp.BeingConsumedByAnotherEventHorizon)
             return;
-        if (args.OurFixture.ID != comp.ConsumerFixtureId)
+        if (args.OurFixtureId != comp.ConsumerFixtureId)
             return;
 
         AttemptConsumeEntity(uid, args.OtherEntity, comp);

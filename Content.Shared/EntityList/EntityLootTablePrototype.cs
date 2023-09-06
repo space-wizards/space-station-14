@@ -9,7 +9,7 @@ namespace Content.Shared.EntityList;
 public sealed class EntityLootTablePrototype : IPrototype
 {
     [IdDataField]
-    public string ID { get; } = default!;
+    public string ID { get; private set; } = default!;
 
     [DataField("entries")]
     public ImmutableList<EntitySpawnEntry> Entries = ImmutableList<EntitySpawnEntry>.Empty;

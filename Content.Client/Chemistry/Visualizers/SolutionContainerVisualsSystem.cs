@@ -76,7 +76,8 @@ public sealed class SolutionContainerVisualsSystem : VisualizerSystem<SolutionCo
                     {
                         if (hasOverlay)
                             args.Sprite.LayerSetVisible(overlayLayer, true);
-                        args.Sprite.LayerSetSprite(baseLayer, component.MetamorphicDefaultSprite);
+                        if (component.MetamorphicDefaultSprite != null)
+                            args.Sprite.LayerSetSprite(baseLayer, component.MetamorphicDefaultSprite);
                     }
                 }
             }

@@ -1,0 +1,34 @@
+﻿# Actions added to mobs in crit.
+- type: instantAction
+  id: CritSuccumb
+  name: action-name-crit-succumb
+  description: action-description-crit-succumb
+  itemIconStyle: NoItem
+  checkCanInteract: false
+  icon:
+    sprite: Mobs/Ghosts/ghost_human.rsi
+    state: icon
+  serverEvent: !type:CritSuccumbEvent
+
+- type: instantAction
+  id: CritFakeDeath
+  name: action-name-crit-fake-death
+  description: action-description-crit-fake-death
+  itemIconStyle: NoItem
+  checkCanInteract: false
+  icon:
+    sprite: Interface/Actions/actions_crit.rsi
+    state: fakedeath
+  serverEvent: !type:CritFakeDeathEvent
+  useDelay: 30
+
+- type: instantAction
+  id: CritLastWords
+  name: action-name-crit-last-words
+  description: action-description-crit-last-words
+  itemIconStyle: NoItem
+  checkCanInteract: false
+  icon:
+    sprite: Interface/Actions/actions_crit.rsi
+    state: lastwords
+  serverEvent: !type:CritLastWordsEvent

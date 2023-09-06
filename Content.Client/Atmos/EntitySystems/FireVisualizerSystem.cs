@@ -1,6 +1,5 @@
 using Content.Client.Atmos.Components;
 using Content.Shared.Atmos;
-using OpenToolkit.Graphics.OpenGL;
 using Robust.Client.GameObjects;
 using Robust.Shared.Map;
 

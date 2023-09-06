@@ -34,6 +34,7 @@ public sealed class StationSystem : EntitySystem
     [Dependency] private readonly ChatSystem _chatSystem = default!;
     [Dependency] private readonly GameTicker _gameTicker = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private readonly MetaDataSystem _metaData = default!;
 
     private ISawmill _sawmill = default!;
 
@@ -328,7 +329,7 @@ public sealed class StationSystem : EntitySystem
             throw new ArgumentException("Tried to use a non-station entity as a station!", nameof(station));
 
         if (!string.IsNullOrEmpty(name))
-            MetaData(mapGrid).EntityName = name;
+            _metaData.SetEntityName(mapGrid, name);
 
         var stationMember = AddComp<StationMemberComponent>(mapGrid);
         stationMember.Station = station;
@@ -376,7 +377,7 @@ public sealed class StationSystem : EntitySystem
             throw new ArgumentException("Tried to use a non-station entity as a station!", nameof(station));
 
         var oldName = metaData.EntityName;
-        metaData.EntityName = name;
+        _metaData.SetEntityName(station, name, metaData);
 
         if (loud)
         {
@@ -449,7 +450,7 @@ public sealed class StationSystem : EntitySystem
     /// Returns the first station that has a grid in a certain map.
     /// If the map has no stations, null is returned instead.
     /// </summary>
-    /// </remarks
+    /// <remarks>
     /// If there are multiple stations on a map it is probably arbitrary which one is returned.
     /// </remarks>
     public EntityUid? GetStationInMap(MapId map)

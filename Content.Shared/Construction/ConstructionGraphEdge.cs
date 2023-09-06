@@ -4,7 +4,7 @@ namespace Content.Shared.Construction
 {
     [Serializable]
     [DataDefinition]
-    public sealed class ConstructionGraphEdge
+    public sealed partial class ConstructionGraphEdge
     {
         [DataField("steps")]
         private ConstructionGraphStep[] _steps = Array.Empty<ConstructionGraphStep>();
@@ -16,7 +16,7 @@ namespace Content.Shared.Construction
         private IGraphAction[] _completed = Array.Empty<IGraphAction>();
 
         [DataField("to", required:true)]
-        public string Target { get; } = string.Empty;
+        public string Target { get; private set; } = string.Empty;
 
         [ViewVariables]
         public IReadOnlyList<IGraphCondition> Conditions => _conditions;

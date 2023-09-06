@@ -13,7 +13,7 @@ namespace Content.Shared.Movement.Components
     /// Ignores gravity entirely.
     /// </summary>
     [RegisterComponent, NetworkedComponent]
-    public sealed class MovementIgnoreGravityComponent : Component
+    public sealed partial class MovementIgnoreGravityComponent : Component
     {
         /// <summary>
         /// Whether or not gravity is on or off for this object.

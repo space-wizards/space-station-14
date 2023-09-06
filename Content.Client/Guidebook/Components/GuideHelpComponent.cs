@@ -7,7 +7,7 @@ namespace Content.Client.Guidebook.Components;
 /// </summary>
 [RegisterComponent]
 [Access(typeof(GuidebookSystem))]
-public sealed class GuideHelpComponent : Component
+public sealed partial class GuideHelpComponent : Component
 {
     /// <summary>
     /// What guides to include show when opening the guidebook. The first entry will be used to select the currently
