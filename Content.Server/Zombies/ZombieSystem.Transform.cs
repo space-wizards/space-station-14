@@ -196,7 +196,10 @@ namespace Content.Server.Zombies
             if (hasMind && _mind.TryGetSession(mindId, out var session))
             {
                 //Zombie role for player manifest
-                _roles.MindAddRole(mindId, new ZombieRoleComponent { PrototypeId = zombie.ZombieRoleId });
+                if (!_roles.MindHasRole<ZombieRoleComponent>(mindId))
+                {
+                    _roles.MindAddRole(mindId, new ZombieRoleComponent { PrototypeId = zombie.ZombieRoleId });
+                }
 
                 //Greeting message for new bebe zombers
                 _chatMan.DispatchServerMessage(session, Loc.GetString("zombie-infection-greeting"));

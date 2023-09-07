@@ -21,19 +21,6 @@ namespace Content.Shared.Zombies;
 [RegisterComponent, NetworkedComponent, Access(typeof(SharedZombieSystem))]
 public sealed partial class ZombieComponent : Component
 {
-    public void CopyFrom(ZombieComponent other)
-    {
-        // Victims copy their settings from the zombie that bit them
-        MinInfectionChance = other.MinInfectionChance;
-        MaxInfectionChance = other.MaxInfectionChance;
-        InfectionTurnTime = other.InfectionTurnTime;
-        DeadMinTurnTime = other.DeadMinTurnTime;
-        PassiveHealing = other.PassiveHealing;
-        VirusDamage = other.VirusDamage;
-        AttackDamage = other.AttackDamage;
-        HealingOnBite = other.HealingOnBite;
-    }
-
     /// The baseline infection chance you have if you are completely nude
     /// </summary>
     [DataField("maxInfectionChance"), ViewVariables(VVAccess.ReadWrite)]

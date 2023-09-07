@@ -456,7 +456,10 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
 
             totalInfected++;
 
-            _roles.MindAddRole(mindId, new ZombieRoleComponent { PrototypeId = rules.PatientZeroPrototypeId });
+            if (!_roles.MindHasRole<ZombieRoleComponent>(mindId))
+            {
+                _roles.MindAddRole(mindId, new ZombieRoleComponent { PrototypeId = rules.PatientZeroPrototypeId });
+            }
             // OLD (merge): _mindSystem.AddRole(mind, new ZombieRole(mind, _prototypeManager.Index<AntagPrototype>(rules.PatientZeroPrototypeId)));
 
             var inCharacterName = string.Empty;

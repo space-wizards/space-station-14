@@ -1,9 +1,12 @@
 ﻿using Content.Shared.Movement.Systems;
+using Robust.Shared.Serialization.Manager;
 
 namespace Content.Shared.Zombies;
 
 public abstract partial class SharedZombieSystem : EntitySystem
 {
+    [Dependency] private readonly ISerializationManager _serialization = default!;
+
     /// <inheritdoc/>
     public override void Initialize()
     {
@@ -26,7 +29,10 @@ public abstract partial class SharedZombieSystem : EntitySystem
 
         // Copy settings from the rule
         if (settings != null)
-            zombie.CopyFrom(settings);
+        {
+            _serialization.CopyTo(settings, ref zombie, notNullableOverride:true);
+        }
+
         Dirty(uid, zombie);
 
         if (turnNow)
