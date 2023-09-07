@@ -101,7 +101,7 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
         HashSet<string>? radioChannels = intrinsicRadio?.Channels;
 
         var state = new SiliconLawBuiState(GetLaws(uid), radioChannels);
-        _userInterface.TrySetUiState(GetEntity(args.Entity), SiliconLawsUiKey.Key, state, (IPlayerSession) args.Session);
+        _userInterface.TrySetUiState(args.Entity, SiliconLawsUiKey.Key, state, (IPlayerSession) args.Session);
     }
 
     private void OnPlayerSpawnComplete(EntityUid uid, SiliconLawBoundComponent component, PlayerSpawnCompleteEvent args)
