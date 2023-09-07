@@ -1,5 +1,5 @@
 ﻿- type: entity
-  id: Fireball
+  id: ActionFireball
   name: action-name-spell-fireball
   description: action-description-spell-fireball
   noSpawn: true

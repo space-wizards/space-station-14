@@ -21,7 +21,7 @@
     - type: Spellbook
       spells:
         FlashRune: -1
-        SpawnMagicarpSpell: -1
+        ActionSpawnMagicarpSpell: -1
 
 - type: entity
   id: ForceWallSpellbook
@@ -34,7 +34,7 @@
         - state: bookforcewall
     - type: Spellbook
       spells:
-        ForceWall: -1
+        ActionForceWall: -1
 
 - type: entity
   id: BlinkBook
@@ -47,7 +47,7 @@
         - state: spellbook
     - type: Spellbook
       spells:
-        Blink: -1
+        ActionBlink: -1
 
 - type: entity
   id: SmiteBook
@@ -60,7 +60,7 @@
     - state: spellbook
   - type: Spellbook
     spells:
-      Smite: -1
+      ActionSmite: -1
 
 - type: entity
   id: KnockSpellbook
@@ -73,7 +73,7 @@
         - state: bookknock
     - type: Spellbook
       spells:
-        Knock: -1
+        ActionKnock: -1
 
 - type: entity
   id: FireballSpellbook
@@ -86,7 +86,7 @@
     - state: bookfireball
   - type: Spellbook
     spells:
-      Fireball: -1
+      ActionFireball: -1
 
 - type: entity
   id: ScrollRunes

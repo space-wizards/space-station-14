@@ -12,7 +12,7 @@
     - type: Clothing
       sprite: Clothing/Shoes/Boots/magboots.rsi
     - type: Magboots
-      toggleActionId: ToggleMagbootsAction
+      toggleActionId: ActionToggleMagboots
     - type: ClothingSpeedModifier
       walkModifier: 0.85
       sprintModifier: 0.8
@@ -42,7 +42,7 @@
   - type: Clothing
     sprite: Clothing/Shoes/Boots/magboots-advanced.rsi
   - type: Magboots
-    toggleActionId: ToggleMagbootsAdvancedAction
+    toggleActionId: ActionToggleMagbootsAdvanced
   - type: ClothingSpeedModifier
     walkModifier: 1
     sprintModifier: 1
@@ -80,7 +80,7 @@
   - type: Clothing
     sprite: Clothing/Shoes/Boots/magboots-syndicate.rsi
   - type: Magboots
-    toggleActionId: ToggleMagbootsSyndieAction
+    toggleActionId: ActionToggleMagbootsSyndie
   - type: ClothingSpeedModifier
     walkModifier: 0.95
     sprintModifier: 0.9
@@ -116,7 +116,7 @@
       - WhitelistChameleon
 
 - type: entity
-  id: BaseToggleMagbootsAction
+  id: ActionBaseToggleMagboots
   name: action-name-magboot-toggle
   description: action-description-magboot-toggle
   noSpawn: true
@@ -126,8 +126,8 @@
     event: !type:ToggleMagbootsEvent
 
 - type: entity
-  id: ToggleMagbootsAction
-  parent: BaseToggleMagbootsAction
+  id: ActionToggleMagboots
+  parent: ActionBaseToggleMagboots
   noSpawn: true
   components:
   - type: InstantAction
@@ -135,8 +135,8 @@
     iconOn: { sprite : Clothing/Shoes/Boots/magboots.rsi, state: icon-on }
 
 - type: entity
-  id: ToggleMagbootsAdvancedAction
-  parent: BaseToggleMagbootsAction
+  id: ActionToggleMagbootsAdvanced
+  parent: ActionBaseToggleMagboots
   noSpawn: true
   components:
   - type: InstantAction
@@ -144,8 +144,8 @@
     iconOn: Clothing/Shoes/Boots/magboots-advanced.rsi/icon-on.png
 
 - type: entity
-  id: ToggleMagbootsSyndieAction
-  parent: BaseToggleMagbootsAction
+  id: ActionToggleMagbootsSyndie
+  parent: ActionBaseToggleMagboots
   noSpawn: true
   components:
   - type: InstantAction

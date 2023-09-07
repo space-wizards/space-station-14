@@ -46,7 +46,7 @@ public sealed partial class RevenantSystem : EntitySystem
     [Dependency] private readonly GameTicker _ticker = default!;
 
     [ValidatePrototypeId<EntityPrototype>]
-    private const string RevenantShopId = "RevenantShop";
+    private const string RevenantShopId = "ActionRevenantShop";
 
     public override void Initialize()
     {

@@ -20,7 +20,7 @@ public sealed partial class ToggleableClothingComponent : Component
     ///     Action used to toggle the clothing on or off.
     /// </summary>
     [DataField("actionId", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string ActionId = "ToggleSuitPiece";
+    public string ActionId = "ActionToggleSuitPiece";
     public EntityUid? ToggleAction = null;
 
     /// <summary>

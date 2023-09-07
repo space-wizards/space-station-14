@@ -1,5 +1,5 @@
 - type: entity
-  id: MechCycleEquipment
+  id: ActionMechCycleEquipment
   name: action-name-mech-cycle
   description: action-description-mech-cycle
   noSpawn: true
@@ -13,7 +13,7 @@
     useDelay: 0.5
 
 - type: entity
-  id: MechOpenUI
+  id: ActionMechOpenUI
   name: action-name-mech-control-panel
   description: action-description-mech-control-panel
   noSpawn: true
@@ -27,7 +27,7 @@
     useDelay: 1
 
 - type: entity
-  id: MechEject
+  id: ActionMechEject
   name: action-name-mech-eject
   description: action-description-mech-eject
   noSpawn: true

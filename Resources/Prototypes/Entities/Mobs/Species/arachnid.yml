@@ -104,7 +104,7 @@
         visible: false
   # Misc
   - type: Sericulture
-    actionProto: SericultureAction
+    actionProto: ActionSericulture
     productionLength: 3
     entityProduced: MaterialWebSilk1
     hungerCost: 5

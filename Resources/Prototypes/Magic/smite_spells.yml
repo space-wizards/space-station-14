@@ -1,5 +1,5 @@
 ﻿- type: entity
-  id: Smite
+  id: ActionSmite
   name: action-name-spell-smite
   description: action-description-spell-smite
   noSpawn: true

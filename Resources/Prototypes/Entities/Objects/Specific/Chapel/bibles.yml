@@ -81,7 +81,7 @@
     - Belt
 
 - type: entity
-  id: BibleSummon
+  id: ActionBibleSummon
   name: bible-summon-verb
   description: bible-summon-verb-desc
   noSpawn: true

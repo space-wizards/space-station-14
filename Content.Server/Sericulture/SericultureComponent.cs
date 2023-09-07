@@ -16,7 +16,7 @@ public sealed partial class SericultureComponent : Component
     public string EntityProduced = "";
 
     [DataField("actionProto", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string ActionProto = "SericultureAction";
+    public string ActionProto = "ActionSericulture";
 
     [DataField("action")] public EntityUid? Action;
 

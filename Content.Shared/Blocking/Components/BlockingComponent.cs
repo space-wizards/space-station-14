@@ -48,7 +48,7 @@ public sealed partial class BlockingComponent : Component
     public DamageModifierSet ActiveBlockDamageModifier = default!;
 
     [DataField("blockingToggleActionId", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string BlockingToggleActionId = "ToggleBlock";
+    public string BlockingToggleActionId = "ActionToggleBlock";
 
     [DataField("blockingToggleAction")]
     public EntityUid? BlockingToggleAction;

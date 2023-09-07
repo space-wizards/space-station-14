@@ -46,7 +46,7 @@
     proto: lawyer
 
 - type: entity
-  id: StethoscopeAction
+  id: ActionStethoscope
   name: stethoscope-verb
   noSpawn: true
   components:

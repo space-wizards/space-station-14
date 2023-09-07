@@ -1,5 +1,5 @@
 ﻿- type: entity
-  id: ToggleInternals
+  id: ActionToggleInternals
   name: action-name-internals-toggle
   description: action-description-internals-toggle
   noSpawn: true

@@ -76,8 +76,8 @@
   - type: MobStateActions
     actions:
       Critical:
-      - CritSuccumb
-      - CritLastWords
+      - ActionCritSuccumb
+      - ActionCritLastWords
   - type: MobThresholds
     thresholds:
       0: Alive
@@ -134,7 +134,7 @@
   - type: Dragon
     spawnsLeft: 2
     spawnsProto: MobCarpDragon
-    spawnRiftActionId: SpawnRift
+    spawnRiftActionId: ActionSpawnRift
   - type: GuideHelp
     guides:
     - MinorAntagonists
@@ -163,7 +163,7 @@
         Brute: 15
 
 - type: entity
-  id: SpawnRift
+  id: ActionSpawnRift
   name: action-name-carp-rift
   description: action-description-carp-rift
   noSpawn: true

@@ -1,5 +1,5 @@
 ﻿- type: entity
-  id: SpawnMagicarpSpell
+  id: ActionSpawnMagicarpSpell
   name: action-name-spell-summon-magicarp
   description: action-description-spell-summon-magicarp
   noSpawn: true

@@ -25,7 +25,7 @@ public sealed partial class StealthClothingComponent : Component
     public float Visibility;
 
     [DataField("toggleActionId", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string ToggleActionId = "TogglePhaseCloak";
+    public string ToggleActionId = "ActionTogglePhaseCloak";
 
     /// <summary>
     /// The action for enabling and disabling stealth.

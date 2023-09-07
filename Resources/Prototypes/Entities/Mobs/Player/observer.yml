@@ -65,7 +65,7 @@
       - BypassInteractionRangeChecks
 
 - type: entity
-  id: GhostBoo
+  id: ActionGhostBoo
   name: action-name-boo
   description: action-description-boo
   noSpawn: true
@@ -77,7 +77,7 @@
     useDelay: 120
 
 - type: entity
-  id: ToggleLighting
+  id: ActionToggleLighting
   name: ghost-gui-toggle-lighting-manager-name
   description: ghost-gui-toggle-lighting-manager-desc
   noSpawn: true
@@ -89,7 +89,7 @@
     event: !type:ToggleLightingActionEvent
 
 - type: entity
-  id: ToggleFov
+  id: ActionToggleFov
   name: ghost-gui-toggle-fov-name
   description: ghost-gui-toggle-fov-desc
   noSpawn: true
@@ -101,7 +101,7 @@
     event: !type:ToggleFoVActionEvent
 
 - type: entity
-  id: ToggleGhosts
+  id: ActionToggleGhosts
   name: ghost-gui-toggle-ghost-visibility-name
   description: ghost-gui-toggle-ghost-visibility-desc
   noSpawn: true

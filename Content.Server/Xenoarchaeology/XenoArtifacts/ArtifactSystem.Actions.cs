@@ -10,7 +10,7 @@ public partial class ArtifactSystem
     [Dependency] private readonly ActionsSystem _actions = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
 
-    [ValidatePrototypeId<EntityPrototype>] private const string ArtifactActivateActionId = "ArtifactActivate";
+    [ValidatePrototypeId<EntityPrototype>] private const string ArtifactActivateActionId = "ActionArtifactActivate";
 
     /// <summary>
     ///     Used to add the artifact activation action (hehe), which lets sentient artifacts activate themselves,

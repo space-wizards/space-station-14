@@ -234,7 +234,7 @@
       - names_clown
 
 - type: entity
-  id: ToggleGuardian
+  id: ActionToggleGuardian
   name: action-name-guardian
   description: action-description-guardian
   noSpawn: true

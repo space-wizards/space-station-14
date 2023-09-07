@@ -142,11 +142,11 @@ public sealed partial class MechComponent : Component
 
     #region Action Prototypes
     [DataField("mechCycleAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string MechCycleAction = "MechCycleEquipment";
+    public string MechCycleAction = "ActionMechCycleEquipment";
     [DataField("mechUiAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string MechUiAction = "MechOpenUI";
+    public string MechUiAction = "ActionMechOpenUI";
     [DataField("mechEjectAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string MechEjectAction = "MechEject";
+    public string MechEjectAction = "ActionMechEject";
     #endregion
 
     #region Visualizer States

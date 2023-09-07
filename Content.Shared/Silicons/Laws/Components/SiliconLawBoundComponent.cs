@@ -15,7 +15,7 @@ public sealed partial class SiliconLawBoundComponent : Component
     /// The sidebar action that toggles the laws screen.
     /// </summary>
     [DataField("viewLawsAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string ViewLawsAction = "ViewLaws";
+    public string ViewLawsAction = "ActionViewLaws";
 
     /// <summary>
     /// The action for toggling laws. Stored here so we can remove it later.

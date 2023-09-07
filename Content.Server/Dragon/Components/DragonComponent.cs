@@ -37,7 +37,7 @@ namespace Content.Server.Dragon
         [ViewVariables(VVAccess.ReadWrite), DataField("maxAccumulator")] public float RiftMaxAccumulator = 300f;
 
         [DataField("spawnRiftActionId", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-        public string SpawnRiftActionId = "SpawnRift";
+        public string SpawnRiftActionId = "ActionSpawnRift";
 
         /// <summary>
         /// Spawns a rift which can summon more mobs.

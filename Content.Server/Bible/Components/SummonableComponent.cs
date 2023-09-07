@@ -26,7 +26,7 @@ namespace Content.Server.Bible.Components
         public EntityUid? Summon = null;
 
         [DataField("summonActionId", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-        public string SummonActionId = "BibleSummon";
+        public string SummonActionId = "ActionBibleSummon";
 
         [DataField("summonAction")]
         public EntityUid? SummonAction;

@@ -1,5 +1,5 @@
 ﻿- type: entity
-  id: Knock
+  id: ActionKnock
   name: action-name-spell-knock
   description: action-description-spell-knock
   noSpawn: true

@@ -87,7 +87,7 @@ namespace Content.Server.Atmos.Components
         public float TankFragmentScale { get; set; }    = 2 * Atmospherics.OneAtmosphere;
 
         [DataField("toggleActionId", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-        public string ToggleActionId = "ToggleInternals";
+        public string ToggleActionId = "ActionToggleInternals";
 
         [DataField("toggleAction")] public EntityUid? ToggleAction;
     }

@@ -13,7 +13,7 @@ namespace Content.Server.Animals.Components;
 public sealed partial class EggLayerComponent : Component
 {
     [DataField("eggLayAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string EggLayAction = "AnimalLayEgg";
+    public string EggLayAction = "ActionAnimalLayEgg";
 
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("hungerUsage")]

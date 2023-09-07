@@ -117,7 +117,7 @@
         Heat: 0.6
 
 - type: entity
-  id: TogglePhaseCloak
+  id: ActionTogglePhaseCloak
   name: action-name-toggle-phase-cloak
   description: action-desc-toggle-phase-cloak
   noSpawn: true

@@ -15,17 +15,17 @@ public sealed partial class GhostComponent : Component
     public bool IsAttached;
 
     [DataField("toggleLightingActionId", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string ToggleLightingActionId = "ToggleLighting";
+    public string ToggleLightingActionId = "ActionToggleLighting";
 
     [DataField("toggleLightingAction")] public EntityUid? ToggleLightingAction;
 
     [DataField("toggleFovActionId", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string ToggleFoVActionId = "ToggleFov";
+    public string ToggleFoVActionId = "ActionToggleFov";
 
     [DataField("toggleFovAction")] public EntityUid? ToggleFoVAction;
 
     [DataField("toggleGhostsActionId", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string ToggleGhostsActionId = "ToggleGhosts";
+    public string ToggleGhostsActionId = "ActionToggleGhosts";
 
     [DataField("toggleGhostsAction")] public EntityUid? ToggleGhostsAction;
 
@@ -39,7 +39,7 @@ public sealed partial class GhostComponent : Component
     public int BooMaxTargets = 3;
 
     [DataField("actionId", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string ActionId = "GhostBoo";
+    public string ActionId = "ActionGhostBoo";
 
     [DataField("action")] public EntityUid? Action;
 

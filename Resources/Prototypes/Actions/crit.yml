@@ -1,6 +1,6 @@
 ﻿# Actions added to mobs in crit.
 - type: entity
-  id: CritSuccumb
+  id: ActionCritSuccumb
   name: action-name-crit-succumb
   description: action-description-crit-succumb
   noSpawn: true
@@ -14,7 +14,7 @@
     event: !type:CritSuccumbEvent
 
 - type: entity
-  id: CritFakeDeath
+  id: ActionCritFakeDeath
   name: action-name-crit-fake-death
   description: action-description-crit-fake-death
   noSpawn: true
@@ -29,7 +29,7 @@
     useDelay: 30
 
 - type: entity
-  id: CritLastWords
+  id: ActionCritLastWords
   name: action-name-crit-last-words
   description: action-description-crit-last-words
   noSpawn: true

@@ -106,7 +106,7 @@ namespace Content.Shared.VendingMachines
         ///     The action available to the player controlling the vending machine
         /// </summary>
         [DataField("actionId", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-        public string? ActionId = "VendingThrow";
+        public string? ActionId = "ActionVendingThrow";
 
         [DataField("action")]
         public EntityUid? Action;

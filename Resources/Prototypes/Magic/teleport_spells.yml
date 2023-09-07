@@ -1,5 +1,5 @@
 ﻿- type: entity
-  id: Blink
+  id: ActionBlink
   name: action-name-spell-blink
   description: action-description-spell-blink
   noSpawn: true

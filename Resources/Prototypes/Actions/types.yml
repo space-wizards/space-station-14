@@ -11,7 +11,7 @@
     checkCanInteract: false
 
 - type: entity
-  id: TurnUndead
+  id: ActionTurnUndead
   name: turn-undead-action-name
   description: turn-undead-action-description
   noSpawn: true
@@ -33,7 +33,7 @@
     event: !type:ToggleActionEvent
 
 - type: entity
-  id: OpenStorageImplant
+  id: ActionOpenStorageImplant
   name: open-storage-implant-action-name
   description: open-storage-implant-action-description
   noSpawn: true
@@ -47,7 +47,7 @@
     event: !type:OpenStorageImplantEvent
 
 - type: entity
-  id: ActivateMicroBomb
+  id: ActionActivateMicroBomb
   name: activate-micro-bomb-action-name
   description: activate-micro-bomb-action-description
   noSpawn: true
@@ -62,7 +62,7 @@
     event: !type:ActivateImplantEvent
 
 - type: entity
-  id: ActivateFreedomImplant
+  id: ActionActivateFreedomImplant
   name: use-freedom-implant-action-name
   description: use-freedom-implant-action-description
   noSpawn: true
@@ -78,7 +78,7 @@
     event: !type:UseFreedomImplantEvent
 
 - type: entity
-  id: OpenUplinkImplant
+  id: ActionOpenUplinkImplant
   name: open-uplink-implant-action-name
   description: open-uplink-implant-action-description
   noSpawn: true
@@ -92,7 +92,7 @@
     event: !type:OpenUplinkImplantEvent
 
 - type: entity
-  id: ActivateEmpImplant
+  id: ActionActivateEmpImplant
   name: use-emp-implant-action-name
   description: use-emp-implant-action-description
   noSpawn: true
@@ -108,7 +108,7 @@
     event: !type:ActivateImplantEvent
 
 - type: entity
-  id: ActivateDnaScramblerImplant
+  id: ActionActivateDnaScramblerImplant
   name: use-dna-scrambler-implant-action-name
   description: use-dna-scrambler-implant-action-description
   noSpawn: true
@@ -123,7 +123,7 @@
     event: !type:UseDnaScramblerImplantEvent
 
 - type: entity
-  id: ToggleSuitPiece
+  id: ActionToggleSuitPiece
   name: action-name-hardsuit
   description: action-description-hardsuit
   noSpawn: true
@@ -134,7 +134,7 @@
     event: !type:ToggleClothingEvent
 
 - type: entity
-  id: CombatModeToggle
+  id: ActionCombatModeToggle
   name: action-name-combat
   description: action-description-combat
   noSpawn: true
@@ -146,8 +146,8 @@
     event: !type:ToggleCombatActionEvent
 
 - type: entity
-  id: CombatModeToggleOff
-  parent: CombatModeToggle
+  id: ActionCombatModeToggleOff
+  parent: ActionCombatModeToggle
   name: action-name-combat
   description: action-description-combat
   noSpawn: true
@@ -157,7 +157,7 @@
     autoPopulate: false
 
 - type: entity
-  id: ChangeVoiceMask
+  id: ActionChangeVoiceMask
   name: voice-mask-name-change-set
   description: voice-mask-name-change-set-description
   components:
@@ -166,7 +166,7 @@
     event: !type:VoiceMaskSetNameEvent
 
 - type: entity
-  id: VendingThrow
+  id: ActionVendingThrow
   name: vending-machine-action-name
   description: vending-machine-action-description
   noSpawn: true
@@ -176,7 +176,7 @@
     event: !type:VendingMachineSelfDispenseEvent
 
 - type: entity
-  id: ArtifactActivate
+  id: ActionArtifactActivate
   name: activate-artifact-action-name
   description: activate-artifact-action-desc
   noSpawn: true
@@ -189,7 +189,7 @@
     event: !type:ArtifactSelfActivateEvent
 
 - type: entity
-  id: ToggleBlock
+  id: ActionToggleBlock
   name: action-name-blocking
   description: action-description-blocking
   noSpawn: true
@@ -200,7 +200,7 @@
     event: !type:ToggleActionEvent
 
 - type: entity
-  id: ClearNetworkLinkOverlays
+  id: ActionClearNetworkLinkOverlays
   name: network-configurator-clear-network-link-overlays
   description: network-configurator-clear-network-link-overlays-desc
   noSpawn: true
@@ -210,7 +210,7 @@
     event: !type:ClearAllOverlaysEvent
 
 - type: entity
-  id: AnimalLayEgg
+  id: ActionAnimalLayEgg
   name: action-name-lay-egg
   description: action-description-lay-egg
   noSpawn: true
@@ -243,7 +243,7 @@
     event: !type:WakeActionEvent
 
 - type: entity
-  id: ActivateHonkImplant
+  id: ActionActivateHonkImplant
   name: action-name-honk
   description: action-desc-honk
   noSpawn: true

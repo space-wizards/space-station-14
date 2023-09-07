@@ -1,5 +1,5 @@
 - type: entity
-  id: RevenantShop
+  id: ActionRevenantShop
   name: Shop
   description: Opens the ability shop.
   noSpawn: true
@@ -9,7 +9,7 @@
     event: !type:RevenantShopActionEvent
 
 - type: entity
-  id: RevenantDefile
+  id: ActionRevenantDefile
   name: Defile
   description: Costs 30 Essence.
   noSpawn: true
@@ -20,7 +20,7 @@
     useDelay: 15
 
 - type: entity
-  id: RevenantOverloadLights
+  id: ActionRevenantOverloadLights
   name: Overload Lights
   description: Costs 40 Essence.
   noSpawn: true
@@ -31,7 +31,7 @@
     useDelay: 20
 
 #- type: entity
-#  id: RevenantBlight
+#  id: ActionRevenantBlight
 #  name: Blight
 #  description: Costs 50 Essence.
 #  noSpawn: true
@@ -42,7 +42,7 @@
 #    useDelay: 20
 
 - type: entity
-  id: RevenantMalfunction
+  id: ActionRevenantMalfunction
   name: Malfunction
   description: Costs 60 Essence.
   noSpawn: true

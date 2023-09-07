@@ -95,5 +95,5 @@ public sealed partial class ZombieRuleComponent : Component
     public bool ShuttleCalled;
 
     [ValidatePrototypeId<EntityPrototype>]
-    public const string ZombifySelfActionPrototype = "TurnUndead";
+    public const string ZombifySelfActionPrototype = "ActionTurnUndead";
 }

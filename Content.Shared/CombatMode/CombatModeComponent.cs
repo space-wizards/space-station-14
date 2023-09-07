@@ -33,7 +33,7 @@ namespace Content.Shared.CombatMode
         #endregion
 
         [DataField("combatToggleActionId", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-        public string CombatToggleActionId = "CombatModeToggle";
+        public string CombatToggleActionId = "ActionCombatModeToggle";
 
         [DataField("combatToggleAction")]
         public EntityUid? CombatToggleAction;
