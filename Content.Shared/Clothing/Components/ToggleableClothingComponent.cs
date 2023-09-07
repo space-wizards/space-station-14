@@ -21,7 +21,7 @@ public sealed partial class ToggleableClothingComponent : Component
     ///     Action used to toggle the clothing on or off.
     /// </summary>
     [DataField("actionId", customTypeSerializer: typeof(PrototypeIdSerializer<InstantActionPrototype>))]
-    public string ActionId = "ToggleSuitHelmet";
+    public string ActionId = "ToggleSuitPiece";
     public InstantAction? ToggleAction = null;
 
     /// <summary>
@@ -33,6 +33,7 @@ public sealed partial class ToggleableClothingComponent : Component
     /// <summary>
     ///     The inventory slot that the clothing is equipped to.
     /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)]
     [DataField("slot")]
     public string Slot = "head";
 

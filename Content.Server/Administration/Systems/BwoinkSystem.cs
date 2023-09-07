@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 using Content.Server.Administration.Managers;
 using Content.Server.Discord;
 using Content.Server.GameTicking;
-using Content.Server.Mind;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
+using Content.Shared.Mind;
 using JetBrains.Annotations;
 using Robust.Server.Player;
 using Robust.Shared;
@@ -31,7 +31,7 @@ namespace Content.Server.Administration.Systems
         [Dependency] private readonly IGameTiming _timing = default!;
         [Dependency] private readonly IPlayerLocator _playerLocator = default!;
         [Dependency] private readonly GameTicker _gameTicker = default!;
-        [Dependency] private readonly MindSystem _minds = default!;
+        [Dependency] private readonly SharedMindSystem _minds = default!;
 
         private ISawmill _sawmill = default!;
         private readonly HttpClient _httpClient = new();

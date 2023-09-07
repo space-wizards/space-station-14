@@ -23,7 +23,7 @@ public abstract partial class SharedFultonSystem : EntitySystem
     [Dependency] private   readonly MetaDataSystem _metadata = default!;
     [Dependency] protected readonly SharedAudioSystem Audio = default!;
     [Dependency] private   readonly SharedDoAfterSystem _doAfter = default!;
-    [Dependency] private   readonly SharedFoldableSystem _foldable = default!;
+    [Dependency] private   readonly FoldableSystem _foldable = default!;
     [Dependency] private   readonly SharedPopupSystem _popup = default!;
     [Dependency] private   readonly SharedStackSystem _stack = default!;
     [Dependency] protected readonly SharedTransformSystem TransformSystem = default!;
@@ -105,7 +105,7 @@ public abstract partial class SharedFultonSystem : EntitySystem
 
     private void OnFultonInteract(EntityUid uid, FultonComponent component, AfterInteractEvent args)
     {
-        if (args.Target == null || args.Handled)
+        if (args.Target == null || args.Handled || !args.CanReach)
             return;
 
         if (TryComp<FultonBeaconComponent>(args.Target, out var beacon))

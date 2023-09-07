@@ -139,12 +139,6 @@
     Shock: 1.2
 
 - type: damageModifierSet
-  id: Arachnid # Exo-skeleton, should have simillarities to skeleton resistances.
-  coefficients:
-    Blunt: 1.1
-    Heat: 1.5
-
-- type: damageModifierSet
   id: Moth # Slightly worse at everything but cold
   coefficients:
     Blunt: 1

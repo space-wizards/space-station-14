@@ -38,8 +38,8 @@ public sealed partial class ShuttleSystem
 
         var otherXform = Transform(args.OtherEntity);
 
-        var ourPoint = _transform.GetInvWorldMatrix(ourXform).Transform(args.WorldPoint);
-        var otherPoint = _transform.GetInvWorldMatrix(otherXform).Transform(args.WorldPoint);
+        var ourPoint = ourXform.InvWorldMatrix.Transform(args.WorldPoint);
+        var otherPoint = otherXform.InvWorldMatrix.Transform(args.WorldPoint);
 
         var ourVelocity = _physics.GetLinearVelocity(uid, ourPoint, ourBody, ourXform);
         var otherVelocity = _physics.GetLinearVelocity(args.OtherEntity, otherPoint, otherBody, otherXform);
