@@ -4,7 +4,7 @@ namespace Content.Server.Disposal.Tube.Components
     [RegisterComponent]
     [Access(typeof(DisposalTubeSystem))]
     [Virtual]
-    public class DisposalTransitComponent : Component
+    public partial class DisposalTransitComponent : Component
     {
     }
 }

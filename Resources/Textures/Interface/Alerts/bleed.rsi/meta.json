@@ -5,7 +5,7 @@
     "y": 32
   },
   "license": "CC-BY-SA-3.0",
-  "copyright": "https://github.com/tgstation/tgstation/blob/master/icons/effects/bleed.dmi",
+  "copyright": "Edited by Flareguy for Space Station 14, original sprite taken from https://github.com/tgstation/tgstation/blob/master/icons/effects/bleed.dmi",
   "states": [
     {
       "name": "bleed0"

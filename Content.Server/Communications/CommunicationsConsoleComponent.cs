@@ -6,7 +6,7 @@ using Robust.Shared.Audio;
 namespace Content.Server.Communications
 {
     [RegisterComponent]
-    public sealed class CommunicationsConsoleComponent : SharedCommunicationsConsoleComponent
+    public sealed partial class CommunicationsConsoleComponent : SharedCommunicationsConsoleComponent
     {
         public float UIUpdateAccumulator = 0f;
 

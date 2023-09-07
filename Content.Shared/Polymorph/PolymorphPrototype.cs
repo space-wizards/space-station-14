@@ -9,14 +9,14 @@ namespace Content.Shared.Polymorph
     /// </summary>
     [Prototype("polymorph")]
     [DataDefinition]
-    public sealed class PolymorphPrototype : IPrototype, IInheritingPrototype
+    public sealed partial class PolymorphPrototype : IPrototype, IInheritingPrototype
     {
         [ViewVariables]
         [IdDataField]
-        public string ID { get; } = default!;
+        public string ID { get; private set; } = default!;
 
         [DataField("name")]
-        public string Name { get; } = string.Empty;
+        public string Name { get; private set; } = string.Empty;
 
         [ParentDataField(typeof(AbstractPrototypeIdArraySerializer<PolymorphPrototype>))]
         public string[]? Parents { get; private set; }

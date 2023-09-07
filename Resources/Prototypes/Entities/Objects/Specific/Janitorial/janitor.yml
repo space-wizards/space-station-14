@@ -415,6 +415,8 @@
       sound:
         path: /Audio/Ambience/Objects/drain.ogg
     - type: Drain
+    - type: DumpableSolution
+      solution: drainBuffer
     - type: Appearance
     - type: SolutionContainerVisuals
       maxFillLevels: 1
@@ -456,7 +458,6 @@
         - Plunger
         - WhitelistChameleon
     - type: Sprite
-      netsync: false
       sprite: Objects/Specific/Janitorial/plunger.rsi
       state: plunger
     - type: Item
@@ -473,7 +474,7 @@
       clothingVisuals:
         head:
           - state: equipped-HELMET
-            offset: "0, 0.15"
+            offset: "0, 0.15625"
 
 - type: entity
   parent: BaseItem

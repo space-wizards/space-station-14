@@ -5,7 +5,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations;
 namespace Content.Shared.CartridgeLoader;
 
 [RegisterComponent, NetworkedComponent]
-public sealed class CartridgeLoaderComponent : Component
+public sealed partial class CartridgeLoaderComponent : Component
 {
     public const string CartridgeSlotId = "Cartridge-Slot";
 
@@ -42,6 +42,6 @@ public sealed class CartridgeLoaderComponent : Component
     [DataField("diskSpace")]
     public int DiskSpace = 5;
 
-    [DataField("uiKey", readOnly: true, required: true, customTypeSerializer: typeof(EnumSerializer))]
+    [DataField("uiKey", required: true, customTypeSerializer: typeof(EnumSerializer))]
     public Enum UiKey = default!;
 }

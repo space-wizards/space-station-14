@@ -5,13 +5,13 @@ using System.Numerics;
 
 namespace Content.Shared.FootPrints;
 [RegisterComponent]
-public sealed class FootPrintsComponent : Component
+public sealed partial class FootPrintsComponent : Component
 {
     //Visual start
     [ViewVariables(VVAccess.ReadOnly), DataField("leftBarePrint")]
     public string LeftBarePrint = "footprint-left-bare-human";
     [ViewVariables(VVAccess.ReadOnly), DataField("rightBarePrint")]
-    public string RightBarePrint { get; } = "footprint-right-bare-human";
+    public string RightBarePrint { get; private set; } = "footprint-right-bare-human";
 
     [ViewVariables(VVAccess.ReadOnly), DataField("shoesPrint")]
     public string ShoesPrint = "footprint-shoes";

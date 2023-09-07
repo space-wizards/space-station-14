@@ -108,7 +108,7 @@
   id: Dexalin
   reactants:
     Oxygen:
-      amount: 1
+      amount: 2
     Plasma:
       amount: 1
       catalyst: true
@@ -358,16 +358,6 @@
       amount: 1
   products:
     Siderlac: 2
-
-- type: reaction
-  id: Spaceacillin
-  reactants:
-    Cryptobiolin:
-      amount: 1
-    Inaprovaline:
-      amount: 1
-  products:
-    Spaceacillin: 2
 
 - type: reaction
   id: Cognizine

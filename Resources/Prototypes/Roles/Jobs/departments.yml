@@ -15,6 +15,7 @@
   color: "#9FED58"
   roles:
   - Bartender
+  - Borg
   - Botanist
   - Boxer
   - Chaplain

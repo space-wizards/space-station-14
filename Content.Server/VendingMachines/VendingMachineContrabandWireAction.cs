@@ -5,7 +5,7 @@ using Content.Shared.Wires;
 namespace Content.Server.VendingMachines;
 
 [DataDefinition]
-public sealed class VendingMachineContrabandWireAction : BaseToggleWireAction
+public sealed partial class VendingMachineContrabandWireAction : BaseToggleWireAction
 {
     public override Color Color { get; set; } = Color.Green;
     public override string Name { get; set; } = "wire-name-vending-contraband";

@@ -5,6 +5,7 @@ using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Shared.CCVar;
 using Robust.Shared.Configuration;
+using Content.Shared.Chemistry.Reagent;
 
 namespace Content.Server.FootPrints
 {
@@ -37,7 +38,7 @@ namespace Content.Server.FootPrints
                 foreach (var sol in listSolutions)
                 {
                     fullSolutionsQuantity += (float) sol.Quantity;
-                    if (sol.ReagentId == "Water")
+                    if (sol.Reagent.Prototype == "Water")
                         waterQuantity = (float) sol.Quantity;
                 }
                 if (waterQuantity / (fullSolutionsQuantity / 100f) > comp.OffPercent)

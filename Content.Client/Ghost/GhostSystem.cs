@@ -11,7 +11,6 @@ using Robust.Shared.GameStates;
 
 namespace Content.Client.Ghost
 {
-    [UsedImplicitly]
     public sealed class GhostSystem : SharedGhostSystem
     {
         [Dependency] private readonly IClientConsoleHost _console = default!;
@@ -60,7 +59,7 @@ namespace Content.Client.Ghost
 
             SubscribeLocalEvent<GhostComponent, ComponentInit>(OnGhostInit);
             SubscribeLocalEvent<GhostComponent, ComponentRemove>(OnGhostRemove);
-            SubscribeLocalEvent<GhostComponent, ComponentHandleState>(OnGhostState);
+            SubscribeLocalEvent<GhostComponent, AfterAutoHandleStateEvent>(OnGhostState);
 
             SubscribeLocalEvent<GhostComponent, PlayerAttachedEvent>(OnGhostPlayerAttach);
             SubscribeLocalEvent<GhostComponent, PlayerDetachedEvent>(OnGhostPlayerDetach);
@@ -77,7 +76,7 @@ namespace Content.Client.Ghost
 
         private void OnGhostInit(EntityUid uid, GhostComponent component, ComponentInit args)
         {
-            if (TryComp(component.Owner, out SpriteComponent? sprite))
+            if (TryComp(uid, out SpriteComponent? sprite))
             {
                 sprite.Visible = GhostVisibility;
             }
@@ -146,7 +145,7 @@ namespace Content.Client.Ghost
             PlayerAttached?.Invoke(component);
         }
 
-        private void OnGhostState(EntityUid uid, GhostComponent component, ref ComponentHandleState args)
+        private void OnGhostState(EntityUid uid, GhostComponent component, ref AfterAutoHandleStateEvent args)
         {
             if (TryComp<SpriteComponent>(uid, out var sprite))
                 sprite.LayerSetColor(0, component.color);

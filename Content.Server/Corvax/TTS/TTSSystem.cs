@@ -1,4 +1,4 @@
-﻿using System.Threading.Tasks;
+using System.Threading.Tasks;
 using Content.Server.Chat.Systems;
 using Content.Shared.Corvax.CCCVars;
 using Content.Shared.Corvax.TTS;
@@ -107,7 +107,7 @@ public sealed partial class TTSSystem : EntitySystem
             if (distance > ChatSystem.VoiceRange * ChatSystem.VoiceRange)
                 continue;
 
-            RaiseNetworkEvent(distance > ChatSystem.WhisperRange ? obfTtsEvent : fullTtsEvent, session);
+            //RaiseNetworkEvent(distance > ChatSystem.WhisperRange ? obfTtsEvent : fullTtsEvent, session);
         }
     }
 

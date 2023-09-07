@@ -1,5 +1,6 @@
 <DefaultWindow xmlns="https://spacestation14.io"
                xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+               xmlns:ui="clr-namespace:Content.Client.CrewManifest.UI"
                Title="{Loc 'crew-manifest-window-title'}"
                SetSize="450 750">
     <BoxContainer Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True">
@@ -11,9 +12,9 @@
         <BoxContainer HorizontalExpand="True" VerticalExpand="True">
             <ScrollContainer HorizontalExpand="True" VerticalExpand="True">
                 <!-- this MIGHT have race conditions -->
-                <BoxContainer Name="CrewManifestListing" Orientation="Vertical" HorizontalExpand="True">
+                <ui:CrewManifestListing Name="CrewManifestListing" Orientation="Vertical" HorizontalExpand="True">
                     <Label Text="{Loc 'crew-manifest-no-valid-station'}" HorizontalExpand="True" />
-                </BoxContainer>
+                </ui:CrewManifestListing>
                 <!-- Crew manifest goes here. -->
             </ScrollContainer>
         </BoxContainer>

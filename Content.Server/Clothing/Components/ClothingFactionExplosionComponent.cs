@@ -8,7 +8,7 @@ namespace Content.Server.Clothing.Components;
 //[NetworkedComponent]
 [RegisterComponent]
 [Access(typeof(ClothingFactionExplosionSystem))]
-public sealed class ClothingFactionExplosionComponent : Component
+public sealed partial class ClothingFactionExplosionComponent : Component
 {
     /// <summary>
     ///     friendly faction

@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Client.Corvax.Sponsors;
 using Content.Client.Corvax.TTS;
 using Content.Shared.Corvax.TTS;
@@ -81,6 +81,6 @@ public sealed partial class HumanoidProfileEditor
             return;
 
         _ttsSys.StopAllStreams();
-        _ttsMgr.RequestTTS(_previewDummy.Value, _random.Pick(_sampleText), Profile.Voice);
+        //_ttsMgr.RequestTTS(_previewDummy.Value, _random.Pick(_sampleText), Profile.Voice);
     }
 }

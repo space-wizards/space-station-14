@@ -82,6 +82,20 @@
     Durathread: 100
 
 - type: latheRecipe
+  id: ClothingUniformJumpsuitChiefEngineerTurtle
+  result: ClothingUniformJumpsuitChiefEngineerTurtle
+  completetime: 4
+  materials:
+    Cloth: 300
+
+- type: latheRecipe
+  id: ClothingUniformJumpskirtChiefEngineerTurtle
+  result: ClothingUniformJumpskirtChiefEngineerTurtle
+  completetime: 4
+  materials:
+    Cloth: 300
+
+- type: latheRecipe
   id: ClothingUniformJumpsuitChaplain
   result: ClothingUniformJumpsuitChaplain
   completetime: 4
@@ -344,6 +358,20 @@
 - type: latheRecipe
   id: ClothingUniformJumpskirtQM
   result: ClothingUniformJumpskirtQM
+  completetime: 4
+  materials:
+    Cloth: 300
+
+- type: latheRecipe
+  id: ClothingUniformJumpsuitQMTurtleneck
+  result: ClothingUniformJumpsuitQMTurtleneck
+  completetime: 4
+  materials:
+    Cloth: 300
+
+- type: latheRecipe
+  id: ClothingUniformJumpskirtQMTurtleneck
+  result: ClothingUniformJumpskirtQMTurtleneck
   completetime: 4
   materials:
     Cloth: 300

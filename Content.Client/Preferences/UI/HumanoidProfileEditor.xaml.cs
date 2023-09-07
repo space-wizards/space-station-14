@@ -11,6 +11,7 @@ using Content.Shared.GameTicking;
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Markings;
 using Content.Shared.Humanoid.Prototypes;
+using Content.Shared.Inventory;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
 using Content.Shared.StatusIcon;
@@ -59,7 +60,7 @@ namespace Content.Client.Preferences.UI
 
         private LineEdit _ageEdit => CAgeEdit;
         private LineEdit _nameEdit => CNameEdit;
-        private LineEdit _flavorTextEdit = null!;
+        private TextEdit _flavorTextEdit = null!;
         private Button _nameRandomButton => CNameRandomize;
         private Button _randomizeEverythingButton => CRandomizeEverything;
         private RichTextLabel _warningLabel => CWarningLabel;
@@ -114,7 +115,6 @@ namespace Content.Client.Preferences.UI
             IEntityManager entityManager, IConfigurationManager configurationManager)
         {
             RobustXamlLoader.Load(this);
-            _random = IoCManager.Resolve<IRobustRandom>();
             _prototypeManager = prototypeManager;
             _entMan = entityManager;
             _preferencesManager = preferencesManager;
@@ -139,6 +139,8 @@ namespace Content.Client.Preferences.UI
             #region Appearance
 
             _tabContainer.SetTabTitle(0, Loc.GetString("humanoid-profile-editor-appearance-tab"));
+
+            ShowClothes.OnPressed += ToggleClothes;
 
             #region Sex
 
@@ -493,26 +495,25 @@ namespace Content.Client.Preferences.UI
 
             _previewDummy = _entMan.SpawnEntity(dollProto, MapCoordinates.Nullspace);
             _lastSpecies = species;
-            var sprite = _entMan.GetComponent<SpriteComponent>(_previewDummy!.Value);
 
             _previewSprite = new SpriteView
             {
-                Sprite = sprite,
                 Scale = new Vector2(6, 6),
                 OverrideDirection = Direction.South,
                 VerticalAlignment = VAlignment.Center,
                 SizeFlagsStretchRatio = 1
             };
+            _previewSprite.SetEntity(_previewDummy.Value);
             _previewSpriteControl.AddChild(_previewSprite);
 
             _previewSpriteSide = new SpriteView
             {
-                Sprite = sprite,
                 Scale = new Vector2(6, 6),
                 OverrideDirection = Direction.East,
                 VerticalAlignment = VAlignment.Center,
                 SizeFlagsStretchRatio = 1
             };
+            _previewSpriteSide.SetEntity(_previewDummy.Value);
             _previewSpriteSideControl.AddChild(_previewSpriteSide);
             #endregion Dummy
 
@@ -527,6 +528,11 @@ namespace Content.Client.Preferences.UI
 
 
             IsDirty = false;
+        }
+
+        private void ToggleClothes(BaseButton.ButtonEventArgs obj)
+        {
+            RebuildSpriteView();
         }
 
         private void UpdateRoleRequirements()
@@ -729,14 +735,12 @@ namespace Content.Client.Preferences.UI
 
             _previewDummy = _entMan.SpawnEntity(dollProto, MapCoordinates.Nullspace);
             _lastSpecies = species;
-            var sprite = _entMan.GetComponent<SpriteComponent>(_previewDummy!.Value);
 
             if (_previewSprite == null)
             {
                 // Front
                 _previewSprite = new SpriteView
                 {
-                    Sprite = sprite,
                     Scale = new Vector2(6, 6),
                     OverrideDirection = Direction.South,
                     VerticalAlignment = VAlignment.Center,
@@ -744,16 +748,12 @@ namespace Content.Client.Preferences.UI
                 };
                 _previewSpriteControl.AddChild(_previewSprite);
             }
-            else
-            {
-                _previewSprite.Sprite = sprite;
-            }
+            _previewSprite.SetEntity(_previewDummy.Value);
 
             if (_previewSpriteSide == null)
             {
                 _previewSpriteSide = new SpriteView
                 {
-                    Sprite = sprite,
                     Scale = new Vector2(6, 6),
                     OverrideDirection = Direction.East,
                     VerticalAlignment = VAlignment.Center,
@@ -761,10 +761,8 @@ namespace Content.Client.Preferences.UI
                 };
                 _previewSpriteSideControl.AddChild(_previewSpriteSide);
             }
-            else
-            {
-                _previewSpriteSide.Sprite = sprite;
-            }
+            _previewSpriteSide.SetEntity(_previewDummy.Value);
+
             _needUpdatePreview = true;
         }
 
@@ -879,7 +877,7 @@ namespace Content.Client.Preferences.UI
         {
             if(_flavorTextEdit != null)
             {
-                _flavorTextEdit.Text = Profile?.FlavorText ?? "";
+                _flavorTextEdit.TextRope = new Rope.Leaf(Profile?.FlavorText ?? "");
             }
         }
 
@@ -1141,8 +1139,11 @@ namespace Content.Client.Preferences.UI
             if (Profile is null)
                 return;
 
-            EntitySystem.Get<HumanoidAppearanceSystem>().LoadProfile(_previewDummy!.Value, Profile);
-            LobbyCharacterPreviewPanel.GiveDummyJobClothes(_previewDummy!.Value, Profile);
+            var humanoid = _entMan.System<HumanoidAppearanceSystem>();
+            humanoid.LoadProfile(_previewDummy!.Value, Profile);
+
+            if (ShowClothes.Pressed)
+                LobbyCharacterPreviewPanel.GiveDummyJobClothes(_previewDummy!.Value, Profile);
         }
 
         public void UpdateControls()

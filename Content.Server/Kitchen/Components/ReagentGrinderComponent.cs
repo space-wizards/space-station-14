@@ -13,7 +13,7 @@ namespace Content.Server.Kitchen.Components
     /// it contained, juice an apple and get "apple juice".
     /// </summary>
     [Access(typeof(ReagentGrinderSystem)), RegisterComponent]
-    public sealed class ReagentGrinderComponent : Component
+    public sealed partial class ReagentGrinderComponent : Component
     {
         [ViewVariables(VVAccess.ReadWrite)]
         public int StorageMaxEntities = 6;
@@ -52,7 +52,7 @@ namespace Content.Server.Kitchen.Components
     }
 
     [Access(typeof(ReagentGrinderSystem)), RegisterComponent]
-    public sealed class ActiveReagentGrinderComponent : Component
+    public sealed partial class ActiveReagentGrinderComponent : Component
     {
         /// <summary>
         /// Remaining time until the grinder finishes grinding/juicing.

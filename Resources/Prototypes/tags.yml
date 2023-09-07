@@ -26,7 +26,13 @@
   id: Baguette
 
 - type: Tag
-  id: BaseballBat
+  id: Balloon
+
+- type: Tag
+  id: BaseballBat 
+
+- type: Tag
+  id: BBQsauce
 
 - type: Tag
   id: Bee
@@ -47,16 +53,130 @@
   id: BorgArm
 
 - type: Tag
+  id: BorgEngineerHead
+
+- type: Tag
+  id: BorgEngineerLArm
+
+- type: Tag
+  id: BorgEngineerLLeg
+
+- type: Tag
+  id: BorgEngineerRArm
+
+- type: Tag
+  id: BorgEngineerRLeg
+
+- type: Tag
+  id: BorgEngineerTorso
+
+- type: Tag
+  id: BorgGenericHead
+
+- type: Tag
+  id: BorgGenericLArm
+
+- type: Tag
+  id: BorgGenericLLeg
+
+- type: Tag
+  id: BorgGenericRArm
+
+- type: Tag
+  id: BorgGenericRLeg
+
+- type: Tag
+  id: BorgGenericTorso
+
+- type: Tag
   id: BorgHead
+
+- type: Tag
+  id: BorgJanitorHead
+
+- type: Tag
+  id: BorgJanitorLLeg
+
+- type: Tag
+  id: BorgJanitorRLeg
+
+- type: Tag
+  id: BorgJanitorTorso
 
 - type: Tag
   id: BorgLeg
 
 - type: Tag
-  id: BorgLeftLeg
+  id: BorgMedicalHead
 
 - type: Tag
-  id: BorgRightLeg
+  id: BorgMedicalLArm
+
+- type: Tag
+  id: BorgMedicalLLeg
+
+- type: Tag
+  id: BorgMedicalRArm
+
+- type: Tag
+  id: BorgMedicalRLeg
+
+- type: Tag
+  id: BorgMedicalTorso
+
+- type: Tag
+  id: BorgMiningHead
+
+- type: Tag
+  id: BorgMiningLArm
+
+- type: Tag
+  id: BorgMiningLLeg
+
+- type: Tag
+  id: BorgMiningRArm
+
+- type: Tag
+  id: BorgMiningRLeg
+
+- type: Tag
+  id: BorgMiningTorso
+
+- type: Tag
+  id: BorgModuleCargo
+
+- type: Tag
+  id: BorgModuleEngineering
+
+- type: Tag
+  id: BorgModuleGeneric
+
+- type: Tag
+  id: BorgModuleJanitor
+
+- type: Tag
+  id: BorgModuleMedical
+
+- type: Tag
+  id: BorgModuleService
+
+- type: Tag
+  id: BorgServiceHead
+
+- type: Tag
+  id: BorgServiceLArm
+
+- type: Tag
+  id: BorgServiceLLeg
+
+- type: Tag
+  id: BorgServiceRArm
+
+- type: Tag
+  id: BorgServiceRLeg
+
+- type: Tag
+  id: BorgServiceTorso
 
 - type: Tag
   id: BotanyHatchet
@@ -96,6 +216,9 @@
 
 - type: Tag
   id: CableCoil
+
+- type: Tag
+  id: CapacitorStockPart
 
 - type: Tag
   id: Carrot
@@ -168,6 +291,9 @@
   id: CigPack
 
 - type: Tag
+  id: ClothMade
+
+- type: Tag
   id: ClownMask
 
 - type: Tag
@@ -183,7 +309,10 @@
   id: CluwneHorn
 
 - type: Tag #Ohioans die happy
-  id: Corn
+  id: Corn 
+
+- type: Tag
+  id: Coldsauce
 
 - type: Tag
   id: Cow
@@ -273,6 +402,9 @@
   id: Donut
 
 - type: Tag
+  id: DrinkSpaceGlue
+
+- type: Tag
   id: DroneUsable
 
 - type: Tag
@@ -325,6 +457,9 @@
 
 - type: Tag
   id: Folder
+
+- type: Tag
+  id: FoodSnack
 
 - type: Tag
   id: FootstepSound
@@ -447,6 +582,9 @@
 - type: Tag
   id: HonkerRArm
 
+- type: Tag
+  id: Hotsauce
+
 - type: Tag #Drop this innate tool instead of deleting it.
   id: InnateDontDelete
 
@@ -470,6 +608,9 @@
 
 - type: Tag
   id: Kangaroo
+
+- type: Tag
+  id: Ketchup
 
 - type: Tag
   id: KeyedInstrument
@@ -584,8 +725,6 @@
 - type: Tag
   id: Multitool
 
-- type: Tag
-  id: NoSpinOnThrow
 
 - type: Tag
   id: NoBlockAnchoring
@@ -656,6 +795,9 @@
 - type: Tag
   id: PlushieGhost
 
+
+- type: Tag
+  id: PowerCellSmall
 
 - type: Tag
   id: Powerdrill
@@ -839,6 +981,12 @@
   id: VehicleKey
 
 - type: Tag
+  id: VimPilot
+
+- type: Tag
+  id: VoiceTrigger
+
+- type: Tag
   id: Wall
 
 - type: Tag
@@ -852,6 +1000,9 @@
 
 - type: Tag
   id: WallmountSubstationElectronics
+  
+- type: Tag
+  id: WeaponPistolCHIMPUpgradeKit
 
 - type: Tag
   id: Window
@@ -885,3 +1036,4 @@
 
 - type: Tag
   id: ModularReceiver
+

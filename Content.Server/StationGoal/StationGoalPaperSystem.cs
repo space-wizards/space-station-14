@@ -50,8 +50,7 @@ namespace Content.Server.StationGoal
                     Loc.GetString(goal.Text),
                     Loc.GetString("station-goal-fax-paper-name"),
                     null,
-                    "paper_stamp-centcom",
-                    new() { Loc.GetString("stamp-component-stamped-name-centcom") });
+                    "paper_stamp-centcom");
                 _faxSystem.Receive(fax.Owner, printout, null, fax);
 
                 wasSent = true;

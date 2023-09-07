@@ -107,12 +107,12 @@ namespace Content.Client.ContextMenu.UI
             // _entityManager.Deleted() implicitly checks all of these.
             if (_entityManager.Deleted(entity))
             {
-                Icon.Sprite = null;
+                Icon.SetEntity(null);
                 Text = string.Empty;
             }
             else
             {
-                Icon.Sprite = _entityManager.GetComponentOrNull<SpriteComponent>(entity);
+                Icon.SetEntity(entity);
                 Text = GetEntityDescription(entity.Value);
             }
         }

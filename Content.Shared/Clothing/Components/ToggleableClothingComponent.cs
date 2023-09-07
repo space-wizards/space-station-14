@@ -13,7 +13,7 @@ namespace Content.Shared.Clothing.Components;
 /// </summary>
 [Access(typeof(ToggleableClothingSystem))]
 [RegisterComponent]
-public sealed class ToggleableClothingComponent : Component
+public sealed partial class ToggleableClothingComponent : Component
 {
     public const string DefaultClothingContainerId = "toggleable-clothing";
 
@@ -21,18 +21,19 @@ public sealed class ToggleableClothingComponent : Component
     ///     Action used to toggle the clothing on or off.
     /// </summary>
     [DataField("actionId", customTypeSerializer: typeof(PrototypeIdSerializer<InstantActionPrototype>))]
-    public string ActionId = "ToggleSuitHelmet";
+    public string ActionId = "ToggleSuitPiece";
     public InstantAction? ToggleAction = null;
 
     /// <summary>
     ///     Default clothing entity prototype to spawn into the clothing container.
     /// </summary>
     [DataField("clothingPrototype", required: true, customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public readonly string ClothingPrototype = default!;
+    public string ClothingPrototype = default!;
 
     /// <summary>
     ///     The inventory slot that the clothing is equipped to.
     /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)]
     [DataField("slot")]
     public string Slot = "head";
 

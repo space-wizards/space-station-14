@@ -39,7 +39,7 @@ namespace Content.Server.Nutrition.EntitySystems
         {
             _audio.Play(_audio.GetSound(creamPie.Sound), Filter.Pvs(uid), uid, false, new AudioParams().WithVariation(0.125f));
 
-            if (EntityManager.TryGetComponent<FoodComponent?>(uid, out var foodComp))
+            if (EntityManager.TryGetComponent(uid, out FoodComponent? foodComp))
             {
                 if (_solutions.TryGetSolution(uid, foodComp.SolutionName, out var solution))
                 {
@@ -82,7 +82,7 @@ namespace Content.Server.Nutrition.EntitySystems
 
         protected override void CreamedEntity(EntityUid uid, CreamPiedComponent creamPied, ThrowHitByEvent args)
         {
-            _popup.PopupEntity(Loc.GetString("cream-pied-component-on-hit-by-message",("thrower", args.Thrown)), uid, args.Target);
+            _popup.PopupEntity(Loc.GetString("cream-pied-component-on-hit-by-message", ("thrower", args.Thrown)), uid, args.Target);
             var otherPlayers = Filter.Empty().AddPlayersByPvs(uid);
             if (TryComp<ActorComponent>(args.Target, out var actor))
             {

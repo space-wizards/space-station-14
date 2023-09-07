@@ -179,7 +179,7 @@ public abstract class SharedSalvageSystem : EntitySystem
         foreach (var id in ids)
         {
             // pick a random reward to give
-            var weights = _proto.Index<WeightedRandomPrototype>(id);
+            var weights = _proto.Index<WeightedRandomEntityPrototype>(id);
             rewards.Add(weights.Pick(rand));
         }
 
@@ -187,7 +187,7 @@ public abstract class SharedSalvageSystem : EntitySystem
     }
 
     /// <summary>
-    /// Get a list of WeightedRandomPrototype IDs with the rewards for a certain difficulty.
+    /// Get a list of WeightedRandomEntityPrototype IDs with the rewards for a certain difficulty.
     /// </summary>
     private string[] RewardsForDifficulty(DifficultyRating rating)
     {

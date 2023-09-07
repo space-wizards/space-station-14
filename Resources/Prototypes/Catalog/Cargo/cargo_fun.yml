@@ -177,3 +177,13 @@
   cost: 1000
   category: Fun
   group: market
+
+- type: cargoProduct
+  id: FunMysteryFigurines
+  icon:
+    sprite: Objects/Fun/figurines.rsi
+    state: fig_box
+  product: CrateFunMysteryFigurines
+  cost: 4000
+  category: Fun
+  group: market

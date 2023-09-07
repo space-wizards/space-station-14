@@ -2,7 +2,7 @@ namespace Content.Server.ErtCall
 {
     [RegisterComponent]
     [Access(typeof(ShuttleNameSystem))]
-    public sealed class ShuttleNameComponent : Component
+    public sealed partial class ShuttleNameComponent : Component
     {
         /// <summary>
         /// Firs segmet of shuttle name

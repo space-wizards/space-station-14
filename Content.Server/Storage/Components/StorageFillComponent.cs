@@ -4,7 +4,7 @@ using Content.Shared.Storage;
 namespace Content.Server.Storage.Components
 {
     [RegisterComponent, Access(typeof(StorageSystem))]
-    public sealed class StorageFillComponent : Component
+    public sealed partial class StorageFillComponent : Component
     {
         [DataField("contents")] public List<EntitySpawnEntry> Contents = new();
     }

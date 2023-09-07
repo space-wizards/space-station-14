@@ -69,3 +69,11 @@
   spawn: MaterialSheetMeat1
   maxCount: 30
   itemSize: 1
+
+- type: stack
+  id: WebSilk
+  name: silk
+  icon: { sprite: /Textures/Objects/Materials/silk.rsi, state: icon }
+  spawn: MaterialWebSilk1
+  maxCount: 50
+  itemSize: 1

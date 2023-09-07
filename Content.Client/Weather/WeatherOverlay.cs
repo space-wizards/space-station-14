@@ -2,7 +2,6 @@ using System.Linq;
 using System.Numerics;
 using Content.Client.Parallax;
 using Content.Shared.Weather;
-using OpenToolkit.Graphics.ES11;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;

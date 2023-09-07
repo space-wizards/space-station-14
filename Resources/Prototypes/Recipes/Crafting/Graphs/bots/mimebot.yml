@@ -24,8 +24,8 @@
         name: proximity sensor
       - tag: BorgHead
         icon:
-          sprite: Objects/Specific/Borg/head.rsi
-          state: light_borg_head
+          sprite: Objects/Specific/Robotics/cyborg_parts.rsi
+          state: borg_head
         name: borg head
         doAfter: 2
       - tag: BorgArm

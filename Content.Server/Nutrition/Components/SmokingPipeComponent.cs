@@ -7,7 +7,7 @@ namespace Content.Server.Nutrition.Components
     ///     A reusable vessel for smoking
     /// </summary>
     [RegisterComponent, Access(typeof(SmokingSystem))]
-    public sealed class SmokingPipeComponent : Component
+    public sealed partial class SmokingPipeComponent : Component
     {
         public const string BowlSlotId = "bowl_slot";
 

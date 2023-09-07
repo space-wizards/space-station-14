@@ -65,8 +65,8 @@
 - type: entity
   parent: ClothingOuterStorageBase
   id: ClothingOuterCoatInspector
-  name: inspectors coat
-  description: A strict inspector coat for being intimidating during inspections.
+  name: inspector's coat
+  description: A strict inspector's coat for being intimidating during inspections.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Coats/insp_coat.rsi

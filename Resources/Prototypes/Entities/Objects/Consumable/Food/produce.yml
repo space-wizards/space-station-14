@@ -8,6 +8,9 @@
   - type: SolutionContainerManager
   - type: Sprite
     state: produce
+  # let cows eat raw produce like wheat and oats
+  - type: Food
+    requiredStomachs: 2
   - type: Produce
   - type: PotencyVisuals
   - type: Appearance
@@ -229,28 +232,6 @@
   - type: Slippery
     paralyzeTime: 4
     launchForwardsMultiplier: 2
-
-- type: entity
-  name: banana peel
-  suffix: Explosive
-  parent: TrashBananaPeel
-  id: TrashBananaPeelExplosive
-  components:
-    - type: Sprite
-      sprite: Objects/Specific/Hydroponics/banana.rsi
-      layers:
-      - state: peel
-      - state: primed
-        shader: unshaded
-    - type: TriggerOnSlip
-    - type: ExplodeOnTrigger
-    - type: Explosive
-      explosionType: Default
-      maxIntensity: 2
-      totalIntensity: 10
-      canCreateVacuum: false
-    - type: DeleteOnTrigger
-    - type: AnimationPlayer
 
 - type: entity
   name: carrot
@@ -576,6 +557,36 @@
             Quantity: 10
 
 - type: entity
+  name: cocoa pod
+  parent: FoodProduceBase
+  id: FoodCocoaPod
+  description: You can never have too much chocolate!
+  components:
+  - type: FlavorProfile
+    flavors:
+      - chocolate
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 14
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 2
+        - ReagentId: Vitamin
+          Quantity: 1
+        - ReagentId: CocoaPowder
+          Quantity: 1
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/cocoa.rsi
+  - type: Produce
+    seedId: cocoa
+  - type: SpawnItemsOnUse
+    items:
+      - id: FoodCocoaBeans
+    sound:
+      path: /Audio/Effects/packetrip.ogg
+
+- type: entity
   name: ear of corn
   parent: FoodProduceBase
   id: FoodCorn
@@ -818,24 +829,24 @@
   id: FoodAloe
   description: A fragrant plant with soothing properties.
   components:
-    - type: FlavorProfile
-      flavors:
-        - medicine
-    - type: SolutionContainerManager
-      solutions:
-        food:
-          maxVol: 20 ##I'm pretty sure this has to match the total of 100 potency yields
-          reagents:
-            - ReagentId: Aloe
-              Quantity: 10
-            - ReagentId: Kelotane
-              Quantity: 10
-    - type: Sprite
-      sprite: Objects/Specific/Hydroponics/aloe.rsi
-    - type: Produce
-      seedId: aloe
-    - type: Extractable
-      grindableSolutionName: food
+  - type: FlavorProfile
+    flavors:
+      - medicine
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20 ##I'm pretty sure this has to match the total of 100 potency yields
+        reagents:
+        - ReagentId: Aloe
+          Quantity: 10
+        - ReagentId: Dermaline
+          Quantity: 10
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/aloe.rsi
+  - type: Produce
+    seedId: aloe
+  - type: Extractable
+    grindableSolutionName: food
 
 - type: entity
   name: poppy
@@ -962,24 +973,25 @@
   id: FoodFlyAmanita
   description: A delicious-looking mushroom like you see in those cartoons.
   components:
-    - type: FlavorProfile
-      flavors:
-        - mushroom
-    - type: SolutionContainerManager
-      solutions:
-        food:
-          maxVol: 30
-          reagents:
-            - ReagentId: Amatoxin
-              Quantity: 25
-            - ReagentId: Nutriment
-              Quantity: 5
-    - type: Sprite
-      sprite: Objects/Specific/Hydroponics/fly_amanita.rsi
-    - type: Produce
-      seedId: flyAmanita
-    - type: Extractable
-      grindableSolutionName: food
+  - type: FlavorProfile
+    flavors:
+      - mushroom
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 30
+        reagents:
+        - ReagentId: Amatoxin
+          Quantity: 25
+        - ReagentId: Nutriment
+          Quantity: 5
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/fly_amanita.rsi
+  - type: Produce
+    seedId: flyAmanita
+  - type: Extractable
+    grindableSolutionName: food
+  - type: BadFood
 
 - type: entity
   name: gatfruit

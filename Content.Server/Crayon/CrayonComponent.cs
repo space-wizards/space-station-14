@@ -6,7 +6,7 @@ using Robust.Shared.Audio;
 namespace Content.Server.Crayon
 {
     [RegisterComponent]
-    public sealed class CrayonComponent : SharedCrayonComponent
+    public sealed partial class CrayonComponent : SharedCrayonComponent
     {
         [DataField("useSound")] public SoundSpecifier? UseSound;
 

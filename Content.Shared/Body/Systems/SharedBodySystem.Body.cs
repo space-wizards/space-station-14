@@ -8,11 +8,14 @@ using Content.Shared.Coordinates;
 using Content.Shared.DragDrop;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
+using Robust.Shared.Network;
 
 namespace Content.Shared.Body.Systems;
 
 public partial class SharedBodySystem
 {
+    [Dependency] private readonly INetManager _netManager = default!;
+
     public void InitializeBody()
     {
         SubscribeLocalEvent<BodyComponent, ComponentInit>(OnBodyInit);
@@ -34,7 +37,10 @@ public partial class SharedBodySystem
             return;
 
         var prototype = Prototypes.Index<BodyPrototype>(body.Prototype);
-        InitBody(body, prototype);
+
+        if (!_netManager.IsClient || bodyId.IsClientSide())
+            InitBody(body, prototype);
+
         Dirty(body); // Client doesn't actually spawn the body, need to sync it
     }
 
@@ -72,7 +78,21 @@ public partial class SharedBodySystem
         return true;
     }
 
-    protected abstract void InitBody(BodyComponent body, BodyPrototype prototype);
+    protected void InitBody(BodyComponent body, BodyPrototype prototype)
+    {
+        var root = prototype.Slots[prototype.Root];
+        Containers.EnsureContainer<Container>(body.Owner, BodyContainerId);
+        if (root.Part == null)
+            return;
+        var bodyId = Spawn(root.Part, body.Owner.ToCoordinates());
+        var partComponent = Comp<BodyPartComponent>(bodyId);
+        var slot = new BodyPartSlot(root.Part, body.Owner, partComponent.PartType);
+        body.Root = slot;
+        partComponent.Body = bodyId;
+
+        AttachPart(bodyId, slot, partComponent);
+        InitPart(partComponent, prototype, prototype.Root);
+    }
 
     protected void InitPart(BodyPartComponent parent, BodyPrototype prototype, string slotId, HashSet<string>? initialized = null)
     {

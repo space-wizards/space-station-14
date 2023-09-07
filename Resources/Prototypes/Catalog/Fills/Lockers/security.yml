@@ -22,6 +22,7 @@
       - id: DoorRemoteArmory
       - id: ClothingOuterHardsuitWarden
       - id: HoloprojectorSecurity
+      - id: ClothingEyesHudSecurity
 
 - type: entity
   id: LockerWardenFilled
@@ -46,6 +47,7 @@
       - id: RubberStampWarden
       - id: DoorRemoteArmory
       - id: HoloprojectorSecurity
+      - id: ClothingEyesHudSecurity
       - id: BoxHeadsetPrisoner #инвазивное ентити (наше)
       - id: BoxHeadsetPrisoner #инвазивное ентити (наше)
       - id: BoxHeadsetPrisoner #инвазивное ентити (наше)
@@ -70,40 +72,44 @@
       - id: ClothingHeadsetSecurity
       - id: ClothingHandsGlovesColorBlack
       - id: ClothingShoesBootsJack
+      - id: WeaponMeleeNeedle
+        prob: 0.1
+      - id: ClothingEyesHudSecurity
 
 - type: entity
   id: LockerBrigmedicFilled
   suffix: Brigmedic, Filled
   parent: LockerBrigmedic
   components:
-    - type: StorageFill
-      contents:
-        - id: WeaponDisabler
-        - id: TrackingImplanter
-          amount: 2
-        - id: ClothingOuterHardsuitBrigmedic
-        - id: BoxSterileMask
-        - id: ClothingHeadHatBeretBrigmedic
-        - id: ClothingOuterCoatAMG
-        - id: ClothingUniformJumpsuitBrigmedic
-        - id: ClothingUniformJumpskirtBrigmedic
-        - id: ClothingUniformJumpskirtOfLife
-          prob: 0.1
-        - id: MedkitFilled
-        - id: MedkitCombatFilled
-          prob: 0.6
-        - id: MedkitAdvancedFilled
-          prob: 0.4
-        - id: MedkitOxygenFilled
-          prob: 0.3
-        - id: MedkitBruteFilled
-          prob: 0.3
-        - id: MedkitToxinFilled
-          prob: 0.3
-        - id: MedkitBurnFilled
-          prob: 0.7
-        - id: ClothingNeckCloakMoth #bzzz Moth-pocalypse
-          prob: 0.15
+  - type: StorageFill
+    contents:
+      - id: ClothingEyesHudSecurity
+      - id: WeaponDisabler
+      - id: TrackingImplanter
+        amount: 2
+      - id: ClothingOuterHardsuitBrigmedic
+      - id: BoxSterileMask
+      - id: ClothingHeadHatBeretBrigmedic
+      - id: ClothingOuterCoatAMG
+      - id: ClothingUniformJumpsuitBrigmedic
+      - id: ClothingUniformJumpskirtBrigmedic
+      - id: ClothingUniformJumpskirtOfLife
+        prob: 0.1
+      - id: MedkitFilled
+      - id: MedkitCombatFilled
+        prob: 0.6
+      - id: MedkitAdvancedFilled
+        prob: 0.4
+      - id: MedkitOxygenFilled
+        prob: 0.3
+      - id: MedkitBruteFilled
+        prob: 0.3
+      - id: MedkitToxinFilled
+        prob: 0.3
+      - id: MedkitBurnFilled
+        prob: 0.7
+      - id: ClothingNeckCloakMoth #bzzz Moth-pocalypse
+        prob: 0.15
 
 - type: entity
   id: LockerDetectiveFilled
@@ -112,6 +118,8 @@
   components:
   - type: StorageFill
     contents:
+      - id: ClothingEyesHudSecurity
+        prob: 0.3
       - id: ClothingHeadHatFedoraBrown
       - id: ClothingNeckTieDet
       - id: ClothingOuterVestDetective
@@ -119,9 +127,7 @@
       - id: FlashlightSeclite
       - id: ForensicScanner
       - id: BoxForensicPad
-      - id: WeaponRevolverInspector
       - id: DrinkDetFlask
-      - id: SpeedLoaderMagnum
       - id: ClothingHandsGlovesForensic
 
 - type: entity

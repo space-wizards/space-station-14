@@ -5,3 +5,11 @@
   description: spider-web-action-description
   serverEvent: !type:SpiderWebActionEvent
   useDelay: 25
+
+- type: instantAction
+  id: SericultureAction
+  icon: Interface/Actions/web.png
+  name: sericulture-action-name
+  description: sericulture-action-description
+  serverEvent: !type:SericultureActionEvent
+  useDelay: 1

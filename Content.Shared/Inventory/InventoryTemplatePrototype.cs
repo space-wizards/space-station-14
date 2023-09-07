@@ -9,36 +9,36 @@ public sealed class InventoryTemplatePrototype : IPrototype
 {
     [IdDataField] public string ID { get; } = string.Empty;
 
-    [DataField("slots")] public SlotDefinition[] Slots { get; } = Array.Empty<SlotDefinition>();
+    [DataField("slots")] public SlotDefinition[] Slots { get; private set; } = Array.Empty<SlotDefinition>();
 }
 
 [DataDefinition]
-public sealed class SlotDefinition
+public sealed partial class SlotDefinition
 {
-    [DataField("name", required: true)] public string Name { get; } = string.Empty;
-    [DataField("slotTexture")] public string TextureName { get; } = "pocket";
-    [DataField("slotFlags")] public SlotFlags SlotFlags { get; } = SlotFlags.PREVENTEQUIP;
-    [DataField("showInWindow")] public bool ShowInWindow { get; } = true;
-    [DataField("slotGroup")] public string SlotGroup { get; } = "Default";
-    [DataField("stripTime")] public float StripTime { get; } = 4f;
+    [DataField("name", required: true)] public string Name { get; private set; } = string.Empty;
+    [DataField("slotTexture")] public string TextureName { get; private set; } = "pocket";
+    [DataField("slotFlags")] public SlotFlags SlotFlags { get; private set; } = SlotFlags.PREVENTEQUIP;
+    [DataField("showInWindow")] public bool ShowInWindow { get; private set; } = true;
+    [DataField("slotGroup")] public string SlotGroup { get; private set; } = "Default";
+    [DataField("stripTime")] public float StripTime { get; private set; } = 4f;
 
     [DataField("uiWindowPos", required: true)]
-    public Vector2i UIWindowPosition { get; }
+    public Vector2i UIWindowPosition { get; private set; }
 
     [DataField("strippingWindowPos", required: true)]
-    public Vector2i StrippingWindowPos { get; }
+    public Vector2i StrippingWindowPos { get; private set; }
 
-    [DataField("dependsOn")] public string? DependsOn { get; }
+    [DataField("dependsOn")] public string? DependsOn { get; private set; }
 
     [DataField("displayName", required: true)]
-    public string DisplayName { get; } = string.Empty;
+    public string DisplayName { get; private set; } = string.Empty;
 
-    [DataField("stripHidden")] public bool StripHidden { get; }
+    [DataField("stripHidden")] public bool StripHidden { get; private set; }
 
     /// <summary>
     ///     Offset for the clothing sprites.
     /// </summary>
-    [DataField("offset")] public Vector2 Offset { get; } = Vector2.Zero;
+    [DataField("offset")] public Vector2 Offset { get; private set; } = Vector2.Zero;
 
     /// <summary>
     ///     Entity whitelist for CanEquip checks.

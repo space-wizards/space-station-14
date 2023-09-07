@@ -1,4 +1,4 @@
 namespace Content.Client.PowerCell;
 
 [RegisterComponent]
-public sealed class PowerCellVisualsComponent : Component {}
+public sealed partial class PowerCellVisualsComponent : Component {}

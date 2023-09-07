@@ -12,7 +12,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.Chemistry.TileReactions;
 
 [DataDefinition]
-public sealed class CreateEntityTileReaction : ITileReaction
+public sealed partial class CreateEntityTileReaction : ITileReaction
 {
     [DataField("entity", required: true, customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string Entity = default!;

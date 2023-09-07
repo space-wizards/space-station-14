@@ -564,6 +564,13 @@
   flavor: medicine
   pricePerUnit: 2 #imperial
   color: "#c8ff75"
+  plantMetabolism:
+    - !type:PlantAdjustToxins
+      amount: 6
+    - !type:PlantPhalanximine
+      conditions:
+      - !type:ReagentThreshold
+        min: 4
   metabolisms:
     Medicine:
       effects:
