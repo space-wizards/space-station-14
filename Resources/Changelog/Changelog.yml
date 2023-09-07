@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Fix trash bags., type: Fix}
-  id: 4278
-  time: '2023-07-18T11:44:00.0000000+00:00'
 - author: Chief-Engineer
   changes:
   - {message: Non-command role requirements have been modified., type: Tweak}
@@ -2989,3 +2984,9 @@ Entries:
       these..., type: Add}
   id: 4777
   time: '2023-09-07T01:21:14.0000000+00:00'
+- author: Varen
+  changes:
+  - {message: 'FTL transit on damaged shuttles is not lethal anymore, but passengers
+      should still hold on tight and remain inside the vehicle.', type: Tweak}
+  id: 4778
+  time: '2023-09-07T02:13:32.0000000+00:00'
