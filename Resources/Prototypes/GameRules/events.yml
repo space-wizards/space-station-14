@@ -61,10 +61,9 @@
   noSpawn: true
   components:
   - type: StationEvent
-    weight: 5
+    weight: 10
     duration: 1
-    earliestStart: 30
-  - type: RandomClosetSpawnRule
+  - type: RandomEntityStorageSpawnRule
     prototype: MobSkeletonCloset
 
 - type: entity

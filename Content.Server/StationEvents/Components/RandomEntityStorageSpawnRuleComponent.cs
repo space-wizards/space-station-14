@@ -7,8 +7,8 @@ namespace Content.Server.StationEvents.Components;
 /// <summary>
 /// Spawns a single entity in a random EntityStorage on the station
 /// </summary>
-[RegisterComponent, Access(typeof(RandomClosetSpawnRule))]
-public sealed partial class RandomClosetSpawnRuleComponent : Component
+[RegisterComponent, Access(typeof(RandomEntityStorageSpawnRule))]
+public sealed partial class RandomEntityStorageSpawnRuleComponent : Component
 {
     /// <summary>
     /// The entity to be spawned.
