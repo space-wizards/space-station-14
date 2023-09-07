@@ -36,7 +36,7 @@ public partial class RadiationSystem
         // precalculate world positions for each source
         // so we won't need to calc this in cycle over and over again
         var sourcesData = new ValueList<(EntityUid, RadiationSourceComponent, TransformComponent, Vector2)>();
-        foreach (var (uid, source, sourceTrs) in sources)
+        while (sources.MoveNext(out var uid, out var source, out var sourceTrs))
         {
             var worldPos = _transform.GetWorldPosition(sourceTrs, transformQuery);
             var data = (uid, source, sourceTrs, worldPos);
