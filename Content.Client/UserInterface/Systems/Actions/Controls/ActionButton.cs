@@ -27,7 +27,6 @@ public sealed class ActionButton : Control
     private bool _beingHovered;
     private bool _depressed;
     private bool _toggled;
-    private bool _spriteViewDirty;
 
     public BoundKeyFunction? KeyBind
     {
@@ -197,17 +196,8 @@ public sealed class ActionButton : Control
     private void UpdateItemIcon()
     {
         if (!Actions.TryGetActionData(ActionId, out var action) ||
-            (action.EntityIcon != null && !Entities.EntityExists(action.EntityIcon)))
-        {
-            // This is almost certainly because a player received/processed their own actions component state before
-            // being send the entity in their inventory that enabled this action.
-
-            // Defer updating icons to the next FrameUpdate().
-            _spriteViewDirty = true;
-            return;
-        }
-
-        if (action?.EntityIcon is not { } entity || !Entities.HasComponent<SpriteComponent>(entity))
+            action is not { EntityIcon: { } entity } ||
+            !Entities.HasComponent<SpriteComponent>(entity))
         {
             _bigItemSpriteView.Visible = false;
             _bigItemSpriteView.SetEntity(null);
@@ -313,12 +303,6 @@ public sealed class ActionButton : Control
     protected override void FrameUpdate(FrameEventArgs args)
     {
         base.FrameUpdate(args);
-
-        if (_spriteViewDirty)
-        {
-            _spriteViewDirty = false;
-            UpdateIcons();
-        }
 
         if (!Actions.TryGetActionData(ActionId, out var action))
         {
