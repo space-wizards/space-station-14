@@ -1,9 +1,4 @@
 Entries:
-- author: ArthurMousatov
-  changes:
-  - {message: Dead mobs now appear above puddles!, type: Fix}
-  id: 4277
-  time: '2023-07-18T11:14:00.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Fix trash bags., type: Fix}
@@ -2987,3 +2982,10 @@ Entries:
   - {message: Grog recipe now requires sugar., type: Tweak}
   id: 4776
   time: '2023-09-07T00:32:24.0000000+00:00'
+- author: Velcroboy
+  changes:
+  - {message: Chef Velcroboy has been in the kitchen messin around with the botanicals.
+      New recipes have been developed for some extra "special" brownies. Careful with
+      these..., type: Add}
+  id: 4777
+  time: '2023-09-07T01:21:14.0000000+00:00'
