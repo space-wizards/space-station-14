@@ -1,9 +1,4 @@
 Entries:
-- author: PJB3005
-  changes:
-  - {message: Fixed the PA even more for real this time pinky promise I swear., type: Fix}
-  id: 4280
-  time: '2023-07-18T20:55:18.0000000+00:00'
 - author: Vordenburg
   changes:
   - {message: Added new stamp sprites from TG Station., type: Add}
@@ -2991,3 +2986,8 @@ Entries:
       can hold the solution., type: Tweak}
   id: 4779
   time: '2023-09-07T16:49:02.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Bananium's radiation intensity increases in large stacks now., type: Tweak}
+  id: 4780
+  time: '2023-09-07T21:59:08.0000000+00:00'
