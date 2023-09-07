@@ -21,23 +21,21 @@ public sealed class ReplayTests
         Assert.That(server.CfgMan.GetCVar(CVars.ReplayServerRecordingEnabled), Is.False);
         var recordMan = server.ResolveDependency<IReplayRecordingManager>();
         Assert.That(recordMan.IsRecording, Is.False);
-
+        
+        // Setup cvars.
         var autoRec = server.CfgMan.GetCVar(CCVars.ReplayAutoRecord);
         var autoRecName = server.CfgMan.GetCVar(CCVars.ReplayAutoRecordName);
         var tempDir = server.CfgMan.GetCVar(CCVars.ReplayAutoRecordTempDir);
-
-        // Setup auto record cvars.
         server.CfgMan.SetCVar(CVars.ReplayServerRecordingEnabled, true);
         server.CfgMan.SetCVar(CCVars.ReplayAutoRecord, true);
         server.CfgMan.SetCVar(CCVars.ReplayAutoRecordTempDir, "/a/b/");
         server.CfgMan.SetCVar(CCVars.ReplayAutoRecordName, $"c/d/{autoRecName}");
 
+        // Restart the round a few times
         var ticker = server.System<GameTicker>();
-
         await server.WaitPost(() => ticker.RestartRound());
         await pair.RunTicksSync(25);
         Assert.That(recordMan.IsRecording, Is.True);
-
         await server.WaitPost(() => ticker.RestartRound());
         await pair.RunTicksSync(25);
         Assert.That(recordMan.IsRecording, Is.True);
@@ -48,6 +46,7 @@ public sealed class ReplayTests
         server.CfgMan.SetCVar(CCVars.ReplayAutoRecordTempDir, autoRecName);
         server.CfgMan.SetCVar(CCVars.ReplayAutoRecordName, tempDir);
 
+        // Restart the round again to disable the current recording.
         await server.WaitPost(() => ticker.RestartRound());
         await pair.RunTicksSync(25);
         Assert.That(recordMan.IsRecording, Is.False);
