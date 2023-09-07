@@ -39,6 +39,10 @@
         mask:
         - ItemMask
   - type: Appearance
+  # speso crafting real
+  - type: Tag
+    tags:
+    - RawMaterial
 
 - type: material
   id: Credit
