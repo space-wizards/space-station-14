@@ -16,6 +16,7 @@ using Content.Shared.Actions.ActionTypes;
 using Content.Shared.CCVar;
 using Content.Shared.Humanoid;
 using Content.Shared.Mind;
+using Content.Shared.Mind.Components;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
@@ -362,16 +363,13 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
         return healthy;
     }
 
-    public void AddToInfectedList(EntityUid uid, ZombieComponent zombie, ZombieRuleComponent rules, MindContainerComponent? mindComponent = null)
+    public void AddToInfectedList(EntityUid uid, ZombieComponent zombie, ZombieRuleComponent rules)
     {
-        if (!Resolve(uid, ref mindComponent))
-            return;
-
-        var mind = mindComponent.Mind;
-        if (mind?.Session != null && mind.OwnedEntity != null)
+        var hasMind = _mindSystem.TryGetMind(uid, out var mindId, out var mind);
+        if (hasMind && mind?.OwnedEntity != null && _mindSystem.TryGetSession(mindId, out var session))
         {
             var inCharacterName = MetaData(mind.OwnedEntity.Value).EntityName;
-            rules.InitialInfectedNames.Add(inCharacterName, mind.Session.Name);
+            rules.InitialInfectedNames.Add(inCharacterName, session.Name);
         }
     }
 
@@ -448,8 +446,8 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
                 Log.Info("Selected a patient 0.");
             }
 
-            prefList.Remove(zombie);
-            playerList.Remove(zombie);
+            prefList.Remove(zombieSession);
+            playerList.Remove(zombieSession);
             if (!_mindSystem.TryGetMind(zombieSession, out var mindId, out var mind) ||
                 mind.OwnedEntity is not { } ownedEntity)
             {

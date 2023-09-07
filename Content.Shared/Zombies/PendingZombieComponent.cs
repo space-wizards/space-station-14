@@ -9,7 +9,7 @@ namespace Content.Shared.Zombies;
 /// They should also have a ZombieComponent.
 /// </summary>
 [RegisterComponent, NetworkedComponent, Access(typeof(SharedZombieSystem))]
-public sealed class PendingZombieComponent : Component
+public sealed partial class PendingZombieComponent : Component
 {
     /// <summary>
     /// The amount of time before the infected begins to take damage in seconds.

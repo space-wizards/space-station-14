@@ -1,3 +1,5 @@
+using Content.Shared.Mind;
+
 namespace Content.Server.Ghost.Components
 {
     [RegisterComponent]
@@ -16,9 +18,9 @@ namespace Content.Server.Ghost.Components
     /// </summary>
     public sealed class GhostMoveAttempt : CancellableEntityEventArgs
     {
-        public Mind.Mind Mind { get; }
+        public MindComponent Mind { get; }
 
-        public GhostMoveAttempt(Mind.Mind mind)
+        public GhostMoveAttempt(MindComponent mind)
         {
             Mind = mind;
         }

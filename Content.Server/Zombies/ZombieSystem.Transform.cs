@@ -21,6 +21,7 @@ using Content.Shared.Damage;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Humanoid;
+using Content.Shared.Mind.Components;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
@@ -79,8 +80,8 @@ namespace Content.Server.Zombies
             if (!Resolve(target, ref mobState, logMissing: false))
                 return;
 
-            //He's gotta have a mind
-            var mindcomp = EnsureComp<MindContainerComponent>(target);
+            // //He's gotta have a mind
+            // var mindcomp = EnsureComp<MindContainerComponent>(target);
 
             //If you weren't already, you're a real zombie now, son.
             zombie ??= EnsureComp<ZombieComponent>(target);

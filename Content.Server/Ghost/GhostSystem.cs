@@ -102,7 +102,7 @@ namespace Content.Server.Ghost
                 return;
 
             // Check that no systems (eg PendingZombieSystem) want to block the player from turning into a ghost.
-            var attemptMove = new GhostMoveAttempt(mind.Mind);
+            var attemptMove = new GhostMoveAttempt(mind);
             RaiseLocalEvent(uid, attemptMove);
             if (attemptMove.Cancelled)
                 return;

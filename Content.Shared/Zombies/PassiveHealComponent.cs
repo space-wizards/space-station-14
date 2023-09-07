@@ -9,7 +9,7 @@ namespace Content.Shared.Zombies;
 ///   For providing a flat heal each second to a living mob. Currently only used by zombies.
 /// </summary>
 [RegisterComponent, NetworkedComponent, Access(typeof(PassiveHealSystem))]
-public sealed class PassiveHealComponent : Component
+public sealed partial class PassiveHealComponent : Component
 {
     /// <summary>
     /// Specific healing points per second. Specify negative values to heal.

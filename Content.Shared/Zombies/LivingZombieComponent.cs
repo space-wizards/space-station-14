@@ -6,6 +6,6 @@ namespace Content.Shared.Zombies;
 ///   Tracks any player who is alive and is currently a zombie. Simplifies queries.
 /// </summary>
 [RegisterComponent, NetworkedComponent, Access(typeof(SharedZombieSystem))]
-public sealed class LivingZombieComponent : Component
+public sealed partial class LivingZombieComponent : Component
 {
 }
