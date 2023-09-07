@@ -130,7 +130,7 @@
   graph:
     - node: start
       edges:
-        - to: ModsuitRND
+        - to: modsuitRND
           steps:
             - material: Cloth
               amount: 5
@@ -165,7 +165,7 @@
                 sprite: Clothing/Objects/Specific/Modsuits/Construction/regularrnd.rsi
                 state: Hardsuit-core
               doAfter: 1
-    - node: ModsuitRND
+    - node: modsuitRND
       entity: ClothingOuterModsuitRND
 
 - type: constructionGraph
@@ -174,7 +174,7 @@
   graph:
     - node: start
       edges:
-        - to: ModsuitEngineer
+        - to: modsuitEngineer
           steps:
             - material: Cloth
               amount: 5
@@ -209,7 +209,7 @@
                 sprite: Clothing/Objects/Specific/Modsuits/Construction/engineering.rsi
                 state: Hardsuit-core
               doAfter: 1
-    - node: ModsuitEngineer
+    - node: modsuitEngineer
       entity: ClothingOuterModsuitEngineer
 
 - type: constructionGraph
@@ -218,7 +218,7 @@
   graph:
     - node: start
       edges:
-        - to: ModsuitHOS
+        - to: modsuitHOS
           steps:
             - material: Cloth
               amount: 5
@@ -226,34 +226,34 @@
             - tag: HOSModBoots
               name: A HOS suit
               icon:
-                sprite: Clothing/Objects/Specific/Modsuits/Construction/hos.rsi
+                sprite: Objects/Specific/Modsuits/Construction/hos.rsi
                 state: Boots
               doAfter: 1
             - tag: HOSModGauntlets
               name: HOS Gauntlets
               icon:
-                sprite: Clothing/Objects/Specific/Modsuits/Construction/hos.rsi
+                sprite: Objects/Specific/Modsuits/Construction/hos.rsi
                 state: Gauntlets
               doAfter: 1
             - tag: HOSModChestplate
               name: HOS Chestplate
               icon:
-                sprite: Clothing/Objects/Specific/Modsuits/Construction/hos.rsi
+                sprite: Objects/Specific/Modsuits/Construction/hos.rsi
                 state: Chestplate
               doAfter: 1
             - tag: HOSModHelmet
               name: HOS Helmet
               icon:
-                sprite: Clothing/Objects/Specific/Modsuits/Construction/hos.rsi
+                sprite: Objects/Specific/Modsuits/Construction/hos.rsi
                 state: Helmet
               doAfter: 1
             - tag: HOSModHardsuitcore
               name: HOS hardsuit core
               icon:
-                sprite: Clothing/Objects/Specific/Modsuits/Construction/hos.rsi
+                sprite: Objects/Specific/Modsuits/Construction/hos.rsi
                 state: Hardsuit-core
               doAfter: 1
-    - node: ModsuitHOS
+    - node: modsuitHOS
       entity: ClothingOuterModsuitHOS
 
 - type: constructionGraph
@@ -262,7 +262,7 @@
   graph:
     - node: start
       edges:
-        - to: ModsuitSecurity
+        - to: modsuitSecurity
           steps:
             - material: Cloth
               amount: 5
@@ -297,7 +297,7 @@
                 sprite: Clothing/Objects/Specific/Modsuits/Construction/security.rsi
                 state: Hardsuit-core
               doAfter: 1
-    - node: ModsuitSecurity
+    - node: modsuitSecurity
       entity: ClothingOuterModsuitSecurity
 
 - type: constructionGraph
@@ -306,7 +306,7 @@
   graph:
     - node: start
       edges:
-        - to: ModsuitCMO
+        - to: modsuitCMO
           steps:
             - material: Cloth
               amount: 5
@@ -341,7 +341,7 @@
                 sprite: Clothing/Objects/Specific/Modsuits/Construction/cmo.rsi
                 state: Hardsuit-core
               doAfter: 1
-    - node: ModsuitCMO
+    - node: modsuitCMO
       entity: ClothingOuterModsuitCMO
 
 - type: constructionGraph
@@ -350,7 +350,7 @@
   graph:
     - node: start
       edges:
-        - to: ModsuitSalvage
+        - to: modsuitSalvage
           steps:
             - material: Cloth
               amount: 5
@@ -385,5 +385,5 @@
                 sprite: Clothing/Objects/Specific/Modsuits/Construction/salvage.rsi
                 state: Hardsuit-core
               doAfter: 1
-    - node: ModsuitSalvage
+    - node: modsuitSalvage
       entity: ClothingOuterModsuitSalvage

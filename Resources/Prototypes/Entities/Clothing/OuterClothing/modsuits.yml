@@ -90,6 +90,9 @@
     coefficient: 0.05
   - type: ExplosionResistance
     damageCoefficient: 0.5
+  - type: ClothingSpeedModifier
+    walkModifier: 0.9 
+    sprintModifier: 0.95 
   - type: Armor
     modifiers:
       coefficients:
@@ -200,8 +203,9 @@
     walkModifier: 0.75
     sprintModifier: 0.75
   - type: PointLight
+    color: "#ebebeb"
     enabled: false
-    radius: 2
+    radius: 2.75
     softness: 20
     autoRot: true
   - type: ToggleableClothing
@@ -236,8 +240,9 @@
     walkModifier: 0.85
     sprintModifier: 0.85
   - type: PointLight
+    color: "#ebebeb"
     enabled: false
-    radius: 2.5
+    radius: 3.5
     softness: 20
     autoRot: true
   - type: ToggleableClothing
@@ -273,8 +278,9 @@
     walkModifier: 0.75
     sprintModifier: 0.75
   - type: PointLight
+    color: "red"
     enabled: false
-    radius: 2
+    radius: 3
     softness: 20
     autoRot: true
   - type: ToggleableClothing
@@ -310,8 +316,9 @@
     walkModifier: 0.85
     sprintModifier: 0.85
   - type: PointLight
+    color: "red"
     enabled: false
-    radius: 2.75
+    radius: 3.5
     softness: 20
     autoRot: true
   - type: ToggleableClothing
@@ -347,6 +354,7 @@
     walkModifier: 0.8
     sprintModifier: 0.8
   - type: PointLight
+    color: "#eec344"
     enabled: false
     radius: 3
     softness: 20
@@ -382,8 +390,9 @@
     walkModifier: 0.75 #0.65
     sprintModifier: 0.75 #0.65
   - type: PointLight
+    color: "#70c5c7"
     enabled: false
-    radius: 1.85
+    radius: 3
     softness: 20
     autoRot: true
   - type: ToggleableClothing
@@ -417,8 +426,9 @@
     walkModifier: 0.9
     sprintModifier: 0.9
   - type: PointLight
+    color: "#70c5c7"
     enabled: false
-    radius: 2.5
+    radius: 4
     softness: 20
     autoRot: true
   - type: ToggleableClothing
@@ -446,7 +456,7 @@
       coefficients:
         Blunt: 0.65 #0.8
         Slash: 0.75 #0.8
-        Piercing: 0.7 #0.8
+        Piercing: 0.65 #0.8
         Shock: 0.6
         Radiation: 0
         Heat: 0.25
@@ -455,8 +465,9 @@
     walkModifier: 0.9 #0.8
     sprintModifier: 0.9 #0.8
   - type: PointLight
+    color: "#e6aa5c"
     enabled: false
-    radius: 4.5
+    radius: 6
     softness: 20
     autoRot: true
   - type: ToggleableClothing
@@ -487,8 +498,9 @@
     walkModifier: 0.75
     sprintModifier: 0.75
   - type: PointLight
+    color: "#a0f1e8"
     enabled: false
-    radius: 1.5
+    radius: 3.5
     softness: 20
     autoRot: true
   - type: ToggleableClothing
@@ -519,8 +531,9 @@
     walkModifier: 0.85
     sprintModifier: 0.85
   - type: PointLight
+    color: "#a0f1e8"
     enabled: false
-    radius: 1.9
+    radius: 4.5
     softness: 20
     autoRot: true
   - type: ToggleableClothing
@@ -549,18 +562,22 @@
         Blunt: 0.85
         Slash: 0.85
         Shock: 0.85
-        Radiation: 0.8
-        Heat: 0.8
+        Radiation: 0.6
+        Heat: 0.6
   - type: ClothingSpeedModifier
     walkModifier: 0.4
     sprintModifier: 0.4
   - type: PointLight
+    color: "#9a26dd"
     enabled: false
-    radius: 1.85
+    radius: 4
     softness: 20
     autoRot: true
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetModsuitRegularRND
+  - type: Construction
+    graph: ModsuitRND
+    node: modsuitRND
 
 - type: entity
   parent: ClothingOuterModsuitEngineering
@@ -585,14 +602,15 @@
         Blunt: 0.8
         Slash: 0.8
         Shock: 0.8
-        Radiation: 0.6
-        Heat: 0.65
+        Radiation: 0.4
+        Heat: 0.45
   - type: ClothingSpeedModifier
-    walkModifier: 0.55
-    sprintModifier: 0.55
+    walkModifier: 0.6
+    sprintModifier: 0.6
   - type: PointLight
+    color: "#9a26dd"
     enabled: false
-    radius: 2.66
+    radius: 5
     softness: 20
     autoRot: true
   - type: ToggleableClothing
@@ -631,8 +649,9 @@
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetModsuitCap
   - type: PointLight
+    color: "#b289db"
     enabled: false
-    radius: 3
+    radius: 6
     softness: 20
     autoRot: true
 
@@ -653,18 +672,24 @@
     coefficient: 0.2 #про лаваленд не забывать
   - type: ExplosionResistance
     damageCoefficient: 0.3
+  - type: PointLight
+    color: "#a0f1e8"
+    enabled: false
+    radius: 5
+    softness: 20
+    autoRot: true
   - type: Armor
     modifiers:
       coefficients:
         Blunt: 0.7 #так же
         Slash: 0.7 #так же
-        Piercing: 0.75 # оригинал - 0.5
+        Piercing: 0.8 # оригинал - 0.5
         Shock: 0.7 #отсутствует
         Caustic: 0.7 #так же
         Radiation: 0.3 # так же
-        Heat: 0.9 #про лаваленд не забывать, отсутствует
+        Heat: 0.75 #про лаваленд не забывать, отсутствует
   - type: ClothingSpeedModifier
-    walkModifier: 0.8 #оригинал - 0.75, меньше брони - скаф утиля нужно найти еще.
+    walkModifier: 0.8 #оригинал - 0.75
     sprintModifier: 0.8
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetModsuitSalvage
@@ -683,26 +708,144 @@
     highPressureMultiplier: 0.04
     lowPressureMultiplier: 1000
   - type: TemperatureProtection
-    coefficient: 0.2 #про лаваленд не забывать
+    coefficient: 0.2 
   - type: ExplosionResistance
     damageCoefficient: 0.3
   - type: Armor
     modifiers:
       coefficients:
-        Blunt: 0.55
-        Slash: 0.55 
-        Piercing: 0.75 #зачем утилям защита от автоматов дробашей?
+        Blunt: 0.6
+        Slash: 0.6 
+        Piercing: 0.75 
         Shock: 0.7 
         Caustic: 0.5
         Radiation: 0.3 
         Heat: 0.7 
   - type: ClothingSpeedModifier
-    walkModifier: 0.85 #оригинал - 0.75, меньше брони - скаф утиля нужно найти еще.
+    walkModifier: 0.85 
     sprintModifier: 0.85
   - type: PointLight
+    color: "#a0f1e8"
     enabled: false
-    radius: 2.75
+    radius: 6
     softness: 20
     autoRot: true
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetModsuitSalvage
+
+- type: entity
+  parent: ClothingOuterModsuitEngineering
+  id: ClothingOuterModsuitBlueshield
+  name: salvage better modsuit
+  description: A special suit that protects against hazardous, low pressure environments. Has radiation shielding.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Modsuits/blueshield.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Modsuits/blueshield.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.04
+    lowPressureMultiplier: 1000
+  - type: TemperatureProtection
+    coefficient: 0.2 
+  - type: ExplosionResistance
+    damageCoefficient: 0.3
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.6
+        Slash: 0.6 
+        Piercing: 0.45 #0.5
+        Shock: 0.7 
+        Caustic: 0.4 #0.6
+        Radiation: 0.3 #0.4
+        Heat: 0.2 #0.25 
+  - type: ClothingSpeedModifier
+    walkModifier: 0.85 
+    sprintModifier: 0.85
+  - type: PointLight
+    color: "#a0f1e8"
+    enabled: false
+    radius: 8
+    softness: 20
+    autoRot: true
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetModsuitBlueshield
+
+- type: entity
+  parent: ClothingOuterModsuitEngineering
+  id: ClothingOuterModsuitCentcom
+  name: salvage better modsuit
+  description: A special suit that protects against hazardous, low pressure environments. Has radiation shielding.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Modsuits/pimp.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Modsuits/pimp.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.04
+    lowPressureMultiplier: 1000
+  - type: TemperatureProtection
+    coefficient: 0.05 
+  - type: ExplosionResistance
+    damageCoefficient: 0.1
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.3
+        Slash: 0.3 
+        Piercing: 0.25 #0.5
+        Shock: 0.1 
+        Caustic: 0.1 #0.6
+        Radiation: 0.2 #0.4
+        Heat: 0.1 #0.25 
+  - type: ClothingSpeedModifier
+    walkModifier: 0.85 
+    sprintModifier: 0.85
+  - type: PointLight
+    color: "green"
+    enabled: false
+    radius: 8
+    softness: 20
+    autoRot: true
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetModsuitCentcom
+
+- type: entity
+  parent: ClothingOuterModsuitEngineering
+  id: ClothingOuterModsuitInterdyne
+  name: salvage better modsuit
+  description: A special suit that protects against hazardous, low pressure environments. Has radiation shielding.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Modsuits/interdyne.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Modsuits/interdyne.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.04
+    lowPressureMultiplier: 1000
+  - type: TemperatureProtection
+    coefficient: 0.05 
+  - type: ExplosionResistance
+    damageCoefficient: 0.3
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.8
+        Slash: 0.8 
+        Piercing: 0.8
+        Shock: 0.5 
+        Caustic: 0.2
+        Radiation: 0.2
+        Heat: 0.2 
+  - type: ClothingSpeedModifier
+    walkModifier: 0.95
+    sprintModifier: 0.9
+  - type: PointLight
+    color: "red"
+    enabled: false
+    radius: 6
+    softness: 20
+    autoRot: true
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetModsuitInterdyne

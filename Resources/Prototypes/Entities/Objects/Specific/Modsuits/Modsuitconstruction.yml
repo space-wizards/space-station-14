@@ -617,6 +617,9 @@
   - type: Sprite
     sprite: Objects/Specific/Modsuits/Construction/regularnd.rsi
     state: boots
+  - type: Tag
+    tags:
+    - RNDModBoots
 
 - type: entity
   parent: BaseItem
@@ -629,6 +632,9 @@
   - type: Sprite
     sprite: Objects/Specific/Modsuits/Construction/regularnd.rsi
     state: Chestplate
+  - type: Tag
+    tags:
+    - RNDModChestplate
 
 - type: entity
   parent: BaseItem
@@ -641,6 +647,9 @@
   - type: Sprite
     sprite: Objects/Specific/Modsuits/Construction/regularnd.rsi
     state: Gauntlets
+  - type: Tag
+    tags:
+    - RNDModGauntlets
 
 - type: entity
   parent: BaseItem
@@ -653,6 +662,9 @@
   - type: Sprite
     sprite: Objects/Specific/Modsuits/Construction/regularnd.rsi
     state: Hardsuit-core
+  - type: Tag
+    tags:
+    - RNDModHardsuitcore
 
 - type: entity
   parent: BaseItem
@@ -665,6 +677,9 @@
   - type: Sprite
     sprite: Objects/Specific/Modsuits/Construction/regularnd.rsi
     state: Helmet
+  - type: Tag
+    tags:
+    - RNDModHelmet
 
 - type: entity
   parent: BaseItem

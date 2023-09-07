@@ -100,7 +100,7 @@
   - type: Clothing
     sprite: Clothing/Head/Modsuits/security-red.rsi
   - type: PressureProtection
-    highPressureMultiplier: 0.3
+    highPressureMultiplier: 0.15
     lowPressureMultiplier: 1000
 
 - type: entity
@@ -130,7 +130,7 @@
   - type: Clothing
     sprite: Clothing/Head/Modsuits/engineering-white.rsi
   - type: PressureProtection
-    highPressureMultiplier: 0.3
+    highPressureMultiplier: 0.002
     lowPressureMultiplier: 1000
 
 - type: entity
@@ -145,7 +145,7 @@
   - type: Clothing
     sprite: Clothing/Head/Modsuits/atmospherics.rsi
   - type: PressureProtection
-    highPressureMultiplier: 0.3
+    highPressureMultiplier: 0.05
     lowPressureMultiplier: 1000
 
 - type: entity
@@ -160,7 +160,7 @@
   - type: Clothing
     sprite: Clothing/Head/Modsuits/brigmedic.rsi
   - type: PressureProtection
-    highPressureMultiplier: 0.3
+    highPressureMultiplier: 0.15
     lowPressureMultiplier: 1000
 
 - type: entity
@@ -175,5 +175,50 @@
   - type: Clothing
     sprite: Clothing/Head/Modsuits/engineering.rsi
   - type: PressureProtection
-    highPressureMultiplier: 0.3
+    highPressureMultiplier: 0.1
+    lowPressureMultiplier: 1000
+
+- type: entity
+  parent: ClothingHeadHardsuitBase
+  id: ClothingHeadHelmetModsuitBlueshield
+  noSpawn: true
+  name: salvage modsuit helmet
+  description: Special hardsuit helmet, made for the captain of the station.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Modsuits/blueshield.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Modsuits/blueshield.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.1
+    lowPressureMultiplier: 1000
+
+- type: entity
+  parent: ClothingHeadHardsuitBase
+  id: ClothingHeadHelmetModsuitCentcom
+  noSpawn: true
+  name: salvage modsuit helmet
+  description: Special hardsuit helmet, made for the captain of the station.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Modsuits/pimp.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Modsuits/pimp.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.05
+    lowPressureMultiplier: 1000
+
+- type: entity
+  parent: ClothingHeadHardsuitBase
+  id: ClothingHeadHelmetModsuitInterdyne
+  noSpawn: true
+  name: salvage modsuit helmet
+  description: Special hardsuit helmet, made for the captain of the station.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Modsuits/interdyne.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Modsuits/interdyne.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.1
     lowPressureMultiplier: 1000
