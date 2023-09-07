@@ -43,8 +43,8 @@ public sealed class ReplayTests
         // Reset cvars
         server.CfgMan.SetCVar(CVars.ReplayServerRecordingEnabled, false);
         server.CfgMan.SetCVar(CCVars.ReplayAutoRecord, autoRec);
-        server.CfgMan.SetCVar(CCVars.ReplayAutoRecordTempDir, autoRecName);
-        server.CfgMan.SetCVar(CCVars.ReplayAutoRecordName, tempDir);
+        server.CfgMan.SetCVar(CCVars.ReplayAutoRecordTempDir, tempDir);
+        server.CfgMan.SetCVar(CCVars.ReplayAutoRecordName, autoRecName);
 
         // Restart the round again to disable the current recording.
         await server.WaitPost(() => ticker.RestartRound());
