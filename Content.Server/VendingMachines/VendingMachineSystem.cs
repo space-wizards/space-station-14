@@ -43,6 +43,7 @@ namespace Content.Server.VendingMachines
             base.Initialize();
 
             _sawmill = Logger.GetSawmill("vending");
+            SubscribeLocalEvent<VendingMachineComponent, MapInitEvent>(OnComponentMapInit);
             SubscribeLocalEvent<VendingMachineComponent, PowerChangedEvent>(OnPowerChanged);
             SubscribeLocalEvent<VendingMachineComponent, BreakageEventArgs>(OnBreak);
             SubscribeLocalEvent<VendingMachineComponent, GotEmaggedEvent>(OnEmagged);
@@ -59,6 +60,12 @@ namespace Content.Server.VendingMachines
             SubscribeLocalEvent<VendingMachineComponent, RestockDoAfterEvent>(OnDoAfter);
 
             SubscribeLocalEvent<VendingMachineRestockComponent, PriceCalculationEvent>(OnPriceCalculation);
+        }
+
+        private void OnComponentMapInit(EntityUid uid, VendingMachineComponent component, MapInitEvent args)
+        {
+            _action.AddAction(uid, ref component.Action, component.ActionId, uid);
+            Dirty(uid, component);
         }
 
         private void OnVendingPrice(EntityUid uid, VendingMachineComponent component, ref PriceCalculationEvent args)
@@ -87,8 +94,6 @@ namespace Content.Server.VendingMachines
             {
                 TryUpdateVisualState(uid, component);
             }
-
-            _action.AddAction(uid, ref component.Action, component.ActionId, uid);
         }
 
         private void OnActivatableUIOpenAttempt(EntityUid uid, VendingMachineComponent component, ActivatableUIOpenAttemptEvent args)

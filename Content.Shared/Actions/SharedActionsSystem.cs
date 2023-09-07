@@ -38,7 +38,7 @@ public abstract class SharedActionsSystem : EntitySystem
         SubscribeLocalEvent<ActionsComponent, DidUnequipEvent>(OnDidUnequip);
         SubscribeLocalEvent<ActionsComponent, DidUnequipHandEvent>(OnHandUnequipped);
 
-        SubscribeLocalEvent<ActionsComponent, ComponentInit>(OnActionsInit);
+        SubscribeLocalEvent<ActionsComponent, MapInitEvent>(OnActionsMapInit);
         SubscribeLocalEvent<ActionsComponent, ComponentGetState>(OnActionsGetState);
         SubscribeLocalEvent<ActionsComponent, ComponentShutdown>(OnActionsShutdown);
 
@@ -225,7 +225,7 @@ public abstract class SharedActionsSystem : EntitySystem
         Dirty(actionId);
     }
 
-    private void OnActionsInit(EntityUid uid, ActionsComponent component, ComponentInit args)
+    private void OnActionsMapInit(EntityUid uid, ActionsComponent component, MapInitEvent args)
     {
         EnsureContainer(uid);
     }

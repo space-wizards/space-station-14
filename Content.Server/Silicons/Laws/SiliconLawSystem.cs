@@ -42,7 +42,6 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<SiliconLawBoundComponent, ComponentStartup>(OnComponentStartup);
         SubscribeLocalEvent<SiliconLawBoundComponent, ComponentShutdown>(OnComponentShutdown);
         SubscribeLocalEvent<SiliconLawBoundComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<SiliconLawBoundComponent, MindAddedMessage>(OnMindAdded);
@@ -57,11 +56,6 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
         SubscribeLocalEvent<EmagSiliconLawComponent, ExaminedEvent>(OnExamined);
     }
 
-    private void OnComponentStartup(EntityUid uid, SiliconLawBoundComponent component, ComponentStartup args)
-    {
-        _actions.AddAction(uid, ref component.ProvidedAction, component.ViewLawsAction);
-    }
-
     private void OnComponentShutdown(EntityUid uid, SiliconLawBoundComponent component, ComponentShutdown args)
     {
         if (component.ProvidedAction != null)
@@ -70,6 +64,7 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
 
     private void OnMapInit(EntityUid uid, SiliconLawBoundComponent component, MapInitEvent args)
     {
+        _actions.AddAction(uid, ref component.ProvidedAction, component.ViewLawsAction);
         GetLaws(uid, component);
     }
 

@@ -28,8 +28,10 @@ namespace Content.Server.Abilities.Mime
         {
             base.Initialize();
             SubscribeLocalEvent<MimePowersComponent, ComponentInit>(OnComponentInit);
+            SubscribeLocalEvent<MimePowersComponent, MapInitEvent>(OnComponentMapInit);
             SubscribeLocalEvent<MimePowersComponent, InvisibleWallActionEvent>(OnInvisibleWall);
         }
+
         public override void Update(float frameTime)
         {
             base.Update(frameTime);
@@ -52,8 +54,12 @@ namespace Content.Server.Abilities.Mime
         private void OnComponentInit(EntityUid uid, MimePowersComponent component, ComponentInit args)
         {
             EnsureComp<MutedComponent>(uid);
-            _actionsSystem.AddAction(uid, ref component.InvisibleWallAction, component.InvisibleWallActionId, uid);
             _alertsSystem.ShowAlert(uid, AlertType.VowOfSilence);
+        }
+
+        private void OnComponentMapInit(EntityUid uid, MimePowersComponent component, MapInitEvent args)
+        {
+            _actionsSystem.AddAction(uid, ref component.InvisibleWallAction, component.InvisibleWallActionId, uid);
         }
 
         /// <summary>

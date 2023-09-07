@@ -18,14 +18,15 @@ public partial class ArtifactSystem
     /// </summary>
     public void InitializeActions()
     {
-        SubscribeLocalEvent<ArtifactComponent, ComponentStartup>(OnStartup);
+        SubscribeLocalEvent<ArtifactComponent, MapInitEvent>(OnStartup);
         SubscribeLocalEvent<ArtifactComponent, ComponentRemove>(OnRemove);
 
         SubscribeLocalEvent<ArtifactComponent, ArtifactSelfActivateEvent>(OnSelfActivate);
     }
 
-    private void OnStartup(EntityUid uid, ArtifactComponent component, ComponentStartup args)
+    private void OnStartup(EntityUid uid, ArtifactComponent component, MapInitEvent args)
     {
+        RandomizeArtifact(uid, component);
         _actions.AddAction(uid, Spawn(ArtifactActivateActionId), null);
     }
 

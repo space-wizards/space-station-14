@@ -21,13 +21,13 @@ namespace Content.Server.RatKing
         {
             base.Initialize();
 
-            SubscribeLocalEvent<RatKingComponent, ComponentStartup>(OnStartup);
+            SubscribeLocalEvent<RatKingComponent, MapInitEvent>(OnMapInit);
 
             SubscribeLocalEvent<RatKingComponent, RatKingRaiseArmyActionEvent>(OnRaiseArmy);
             SubscribeLocalEvent<RatKingComponent, RatKingDomainActionEvent>(OnDomain);
         }
 
-        private void OnStartup(EntityUid uid, RatKingComponent component, ComponentStartup args)
+        private void OnMapInit(EntityUid uid, RatKingComponent component, MapInitEvent args)
         {
             _action.AddAction(uid, ref component.ActionRaiseArmy, component.ActionRaiseArmyId);
             _action.AddAction(uid, ref component.ActionDomain, component.ActionDomainId);

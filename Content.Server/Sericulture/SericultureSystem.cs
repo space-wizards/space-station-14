@@ -21,13 +21,13 @@ public sealed partial class SericultureSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<SericultureComponent, ComponentInit>(OnCompInit);
+        SubscribeLocalEvent<SericultureComponent, MapInitEvent>(OnCompMapInit);
         SubscribeLocalEvent<SericultureComponent, ComponentShutdown>(OnCompRemove);
         SubscribeLocalEvent<SericultureComponent, SericultureActionEvent>(OnSericultureStart);
         SubscribeLocalEvent<SericultureComponent, SericultureDoAfterEvent>(OnSericultureDoAfter);
     }
 
-    private void OnCompInit(EntityUid uid, SericultureComponent comp, ComponentInit args)
+    private void OnCompMapInit(EntityUid uid, SericultureComponent comp, MapInitEvent args)
     {
         _actionsSystem.AddAction(uid, ref comp.Action, comp.ActionProto, uid);
     }

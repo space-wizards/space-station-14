@@ -19,11 +19,11 @@ namespace Content.Shared.PAI
         {
             base.Initialize();
 
-            SubscribeLocalEvent<PAIComponent, ComponentStartup>(OnStartup);
+            SubscribeLocalEvent<PAIComponent, MapInitEvent>(OnMapInit);
             SubscribeLocalEvent<PAIComponent, ComponentShutdown>(OnShutdown);
         }
 
-        private void OnStartup(EntityUid uid, PAIComponent component, ComponentStartup args)
+        private void OnMapInit(EntityUid uid, PAIComponent component, MapInitEvent args)
         {
             _actionsSystem.AddAction(uid, ref component.MidiAction, component.MidiActionId);
         }

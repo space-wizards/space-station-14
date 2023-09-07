@@ -18,9 +18,9 @@ public sealed class MeleeSpeechSystem : SharedMeleeSpeechSystem
         SubscribeLocalEvent<MeleeSpeechComponent, MeleeSpeechBattlecryChangedMessage>(OnBattlecryChanged);
         SubscribeLocalEvent<MeleeSpeechComponent, MeleeSpeechConfigureActionEvent>(OnConfigureAction);
         SubscribeLocalEvent<MeleeSpeechComponent, GetItemActionsEvent>(OnGetActions);
-        SubscribeLocalEvent<MeleeSpeechComponent, ComponentInit>(OnComponentInit);
+        SubscribeLocalEvent<MeleeSpeechComponent, MapInitEvent>(OnComponentMapInit);
     }
-    private void OnComponentInit(EntityUid uid, MeleeSpeechComponent component, ComponentInit args)
+    private void OnComponentMapInit(EntityUid uid, MeleeSpeechComponent component, MapInitEvent args)
     {
         _actionSystem.AddAction(uid, ref component.ConfigureAction, component.ConfigureActionId, uid);
     }

@@ -28,7 +28,6 @@ namespace Content.Server.Revenant.EntitySystems;
 public sealed partial class RevenantSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly ActionsSystem _action = default!;
     [Dependency] private readonly AlertsSystem _alerts = default!;
     [Dependency] private readonly DamageableSystem _damage = default!;
@@ -53,6 +52,7 @@ public sealed partial class RevenantSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<RevenantComponent, ComponentStartup>(OnStartup);
+        SubscribeLocalEvent<RevenantComponent, MapInitEvent>(OnMapInit);
 
         SubscribeLocalEvent<RevenantComponent, RevenantShopActionEvent>(OnShop);
         SubscribeLocalEvent<RevenantComponent, DamageChangedEvent>(OnDamage);
@@ -84,9 +84,11 @@ public sealed partial class RevenantSystem : EntitySystem
         //ghost vision
         if (TryComp(uid, out EyeComponent? eye))
             eye.VisibilityMask |= (uint) (VisibilityFlags.Ghost);
+    }
 
-        var shopaction = Spawn(RevenantShopId);
-        _action.AddAction(uid, shopaction, null);
+    private void OnMapInit(EntityUid uid, RevenantComponent component, MapInitEvent args)
+    {
+        _action.AddAction(uid, Spawn(RevenantShopId), null);
     }
 
     private void OnStatusAdded(EntityUid uid, RevenantComponent component, StatusEffectAddedEvent args)

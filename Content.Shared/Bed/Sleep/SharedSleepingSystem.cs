@@ -19,6 +19,7 @@ namespace Content.Server.Bed.Sleep
         {
             base.Initialize();
             SubscribeLocalEvent<SleepingComponent, ComponentStartup>(OnStartup);
+            SubscribeLocalEvent<SleepingComponent, MapInitEvent>(OnMapInit);
             SubscribeLocalEvent<SleepingComponent, ComponentShutdown>(OnShutdown);
             SubscribeLocalEvent<SleepingComponent, SpeakAttemptEvent>(OnSpeakAttempt);
             SubscribeLocalEvent<SleepingComponent, CanSeeAttemptEvent>(OnSeeAttempt);
@@ -33,13 +34,16 @@ namespace Content.Server.Bed.Sleep
 
         private void OnStartup(EntityUid uid, SleepingComponent component, ComponentStartup args)
         {
-            component.WakeAction = Spawn(WakeActionId);
-            _actionsSystem.SetCooldown(component.WakeAction, _gameTiming.CurTime, _gameTiming.CurTime + TimeSpan.FromSeconds(15));
-            _actionsSystem.AddAction(uid, component.WakeAction.Value, null);
-
             var ev = new SleepStateChangedEvent(true);
             RaiseLocalEvent(uid, ev);
             _blindableSystem.UpdateIsBlind(uid);
+        }
+
+        private void OnMapInit(EntityUid uid, SleepingComponent component, MapInitEvent args)
+        {
+            component.WakeAction = Spawn(WakeActionId);
+            _actionsSystem.SetCooldown(component.WakeAction, _gameTiming.CurTime, _gameTiming.CurTime + TimeSpan.FromSeconds(15));
+            _actionsSystem.AddAction(uid, component.WakeAction.Value, null);
         }
 
         private void OnShutdown(EntityUid uid, SleepingComponent component, ComponentShutdown args)

@@ -2,7 +2,6 @@ using Content.Shared.Actions;
 using Content.Shared.Popups;
 using Content.Shared.Targeting;
 using Robust.Shared.Network;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.CombatMode;
@@ -11,7 +10,6 @@ public abstract class SharedCombatModeSystem : EntitySystem
 {
     [Dependency] protected readonly IGameTiming Timing = default!;
     [Dependency] private   readonly INetManager _netMan = default!;
-    [Dependency] private   readonly IPrototypeManager _protoMan = default!;
     [Dependency] private   readonly SharedActionsSystem _actionsSystem = default!;
     [Dependency] private   readonly SharedPopupSystem _popup = default!;
 
@@ -19,12 +17,12 @@ public abstract class SharedCombatModeSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<CombatModeComponent, ComponentStartup>(OnStartup);
+        SubscribeLocalEvent<CombatModeComponent, MapInitEvent>(OnStartup);
         SubscribeLocalEvent<CombatModeComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<CombatModeComponent, ToggleCombatActionEvent>(OnActionPerform);
     }
 
-    private void OnStartup(EntityUid uid, CombatModeComponent component, ComponentStartup args)
+    private void OnStartup(EntityUid uid, CombatModeComponent component, MapInitEvent args)
     {
         _actionsSystem.AddAction(uid, ref component.CombatToggleAction, component.CombatToggleActionId);
     }

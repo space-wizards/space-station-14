@@ -8,7 +8,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 
 namespace Content.Shared.VendingMachines
 {
-    [RegisterComponent, NetworkedComponent]
+    [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
     public sealed partial class VendingMachineComponent : Component
     {
         /// <summary>
@@ -106,9 +106,11 @@ namespace Content.Shared.VendingMachines
         ///     The action available to the player controlling the vending machine
         /// </summary>
         [DataField("actionId", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+        [AutoNetworkedField]
         public string? ActionId = "ActionVendingThrow";
 
         [DataField("action")]
+        [AutoNetworkedField]
         public EntityUid? Action;
 
         public float NonLimitedEjectForce = 7.5f;
