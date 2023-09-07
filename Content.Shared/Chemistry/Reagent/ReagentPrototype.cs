@@ -141,7 +141,7 @@ namespace Content.Shared.Chemistry.Reagent
             return removed;
         }
 
-        public void ReactionPlant(EntityUid? plantHolder, Solution.ReagentQuantity amount, Solution solution)
+        public void ReactionPlant(EntityUid? plantHolder, ReagentQuantity amount, Solution solution)
         {
             if (plantHolder == null)
                 return;

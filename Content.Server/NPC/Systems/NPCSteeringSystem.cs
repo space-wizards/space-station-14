@@ -88,6 +88,7 @@ public sealed partial class NPCSteeringSystem : SharedNPCSteeringSystem
     {
         base.Initialize();
 
+        Log.Level = LogLevel.Info;
         _fixturesQuery = GetEntityQuery<FixturesComponent>();
         _modifierQuery = GetEntityQuery<MovementSpeedModifierComponent>();
         _factionQuery = GetEntityQuery<NpcFactionMemberComponent>();

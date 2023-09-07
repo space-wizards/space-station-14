@@ -13,8 +13,6 @@ using Content.Server.Info;
 using Content.Server.Maps;
 using Content.Server.MoMMI;
 using Content.Server.NodeContainer.NodeGroups;
-using Content.Server.Objectives;
-using Content.Server.Objectives.Interfaces;
 using Content.Server.Players.PlayTimeTracking;
 using Content.Server.Preferences.Managers;
 using Content.Server.ServerInfo;
@@ -40,7 +38,6 @@ namespace Content.Server.IoC
             IoCManager.Register<INodeGroupFactory, NodeGroupFactory>();
             IoCManager.Register<IConnectionManager, ConnectionManager>();
             IoCManager.Register<ServerUpdateManager>();
-            IoCManager.Register<IObjectivesManager, ObjectivesManager>();
             IoCManager.Register<IAdminManager, AdminManager>();
             IoCManager.Register<ISharedAdminManager, AdminManager>();
             IoCManager.Register<EuiManager, EuiManager>();

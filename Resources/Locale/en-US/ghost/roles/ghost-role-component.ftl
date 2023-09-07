@@ -76,6 +76,9 @@ ghost-role-information-mimebot-description = A Mimebot, act like a mime but dont
 ghost-role-information-taxibot-name = TaxiBot
 ghost-role-information-taxibot-description = Drive the station crew to their destination.
 
+ghost-role-information-supplybot-name = SupplyBot
+ghost-role-information-supplybot-description = Deliver goods around the station.
+
 ghost-role-information-space-bear-name = Space bear
 ghost-role-information-space-bear-description = You're a bear! Do bear things.
 

@@ -283,7 +283,7 @@ public sealed partial class GunSystem : SharedGunSystem
         // Do a throw
         if (!HasComp<ProjectileComponent>(uid))
         {
-            RemComp<AmmoComponent>(uid);
+            RemoveShootable(uid);
             // TODO: Someone can probably yeet this a billion miles so need to pre-validate input somewhere up the call stack.
             ThrowingSystem.TryThrow(uid, mapDirection, gun.ProjectileSpeed, user);
             return;

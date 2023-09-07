@@ -311,6 +311,7 @@ namespace Content.IntegrationTests.Tests
                 "DebrisFeaturePlacerController", // Above.
                 "LoadedChunk", // Worldgen chunk loading malding.
                 "BiomeSelection", // Whaddya know, requires config.
+                "DeployableBarrier",
             };
 
             await using var pair = await PoolManager.GetServerClient();

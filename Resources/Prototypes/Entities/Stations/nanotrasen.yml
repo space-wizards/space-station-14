@@ -36,3 +36,14 @@
   noSpawn: true
   components:
     - type: Transform
+
+- type: entity
+  id: StandardStationArena
+  parent:
+  - BaseStation
+  - BaseStationJobsSpawning
+  - BaseStationRecords
+  - BaseStationNanotrasen
+  noSpawn: true
+  components:
+    - type: Transform
