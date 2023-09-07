@@ -326,9 +326,11 @@
     Rum:
       amount: 1
     Water:
+      amount: 2
+    Sugar:
       amount: 1
   products:
-    Grog: 2
+    Grog: 4
 
 - type: reaction
   id: HippiesDelight
