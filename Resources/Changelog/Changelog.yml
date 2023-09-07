@@ -1,14 +1,4 @@
 Entries:
-- author: PrPleGoo
-  changes:
-  - {message: Added onion goggles for the chef. It displays hunger icons for hungry/overfed
-      mobs. Can also be eaten., type: Add}
-  - {message: The chef's starting gear now includes the onion goggles, type: Tweak}
-  - {message: The beer goggles now display thirst icons for thirsty/overhydrated mobs.,
-    type: Tweak}
-  - {message: The bartender's starting gear now includes the beer goggles, type: Tweak}
-  id: 4275
-  time: '2023-07-18T06:01:22.0000000+00:00'
 - author: Chief-Engineer
   changes:
   - {message: Zombies have been removed as a round start game mode on secret., type: Remove}
@@ -2992,3 +2982,8 @@ Entries:
       alternative., type: Add}
   id: 4774
   time: '2023-09-06T21:41:53.0000000+00:00'
+- author: Endecc
+  changes:
+  - {message: Secure crates are now craftable with 5 steel and 2 LV cable, type: Add}
+  id: 4775
+  time: '2023-09-07T00:25:25.0000000+00:00'
