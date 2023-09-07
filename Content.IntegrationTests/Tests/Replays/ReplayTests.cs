@@ -21,7 +21,7 @@ public sealed class ReplayTests
         Assert.That(server.CfgMan.GetCVar(CVars.ReplayServerRecordingEnabled), Is.False);
         var recordMan = server.ResolveDependency<IReplayRecordingManager>();
         Assert.That(recordMan.IsRecording, Is.False);
-        
+
         // Setup cvars.
         var autoRec = server.CfgMan.GetCVar(CCVars.ReplayAutoRecord);
         var autoRecName = server.CfgMan.GetCVar(CCVars.ReplayAutoRecordName);
