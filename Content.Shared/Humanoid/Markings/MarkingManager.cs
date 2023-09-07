@@ -43,13 +43,75 @@ namespace Content.Shared.Humanoid.Markings
         /// </summary>
         /// <param name="category"></param>
         /// <param name="species"></param>
-        /// <param name="sex"></param>
         /// <remarks>
         ///     This is done per category, as enumerating over every single marking by species isn't useful.
         ///     Please make a pull request if you find a use case for that behavior.
         /// </remarks>
         /// <returns></returns>
         public IReadOnlyDictionary<string, MarkingPrototype> MarkingsByCategoryAndSpecies(MarkingCategories category,
+            string species)
+        {
+            var speciesProto = _prototypeManager.Index<SpeciesPrototype>(species);
+            var onlyWhitelisted = _prototypeManager.Index<MarkingPointsPrototype>(speciesProto.MarkingPoints).OnlyWhitelisted;
+            var res = new Dictionary<string, MarkingPrototype>();
+
+            foreach (var (key, marking) in MarkingsByCategory(category))
+            {
+                if (onlyWhitelisted && marking.SpeciesRestrictions == null)
+                {
+                    continue;
+                }
+
+                if (marking.SpeciesRestrictions != null && !marking.SpeciesRestrictions.Contains(species))
+                {
+                    continue;
+                }
+                res.Add(key, marking);
+            }
+
+            return res;
+        }
+
+        /// <summary>
+        ///     Markings by category and sex.
+        /// </summary>
+        /// <param name="category"></param>
+        /// <param name="sex"></param>
+        /// <remarks>
+        ///     This is done per category, as enumerating over every single marking by species isn't useful.
+        ///     Please make a pull request if you find a use case for that behavior.
+        /// </remarks>
+        /// <returns></returns>
+        public IReadOnlyDictionary<string, MarkingPrototype> MarkingsByCategoryAndSex(MarkingCategories category,
+            Sex sex)
+        {
+            var res = new Dictionary<string, MarkingPrototype>();
+
+            foreach (var (key, marking) in MarkingsByCategory(category))
+            {
+                if (marking.SexRestriction != null && marking.SexRestriction != sex)
+                {
+                    continue;
+                }
+
+                res.Add(key, marking);
+            }
+
+            return res;
+        }
+
+        /// <summary>
+        ///     Markings by category, species and sex.
+        /// </summary>
+        /// <param name="category"></param>
+        /// <param name="species"></param>
+        /// <param name="sex"></param>
+        /// <remarks>
+        ///     This is done per category, as enumerating over every single marking by species isn't useful.
+        ///     Please make a pull request if you find a use case for that behavior.
+        /// </remarks>
+        /// <returns></returns>
+        public IReadOnlyDictionary<string, MarkingPrototype> MarkingsByCategoryAndSpeciesAndSex(MarkingCategories category,
             string species, Sex sex)
         {
             var speciesProto = _prototypeManager.Index<SpeciesPrototype>(species);

@@ -200,15 +200,13 @@ public sealed partial class MarkingSet
     }
 
     /// <summary>
-    ///     Filters and colors markings based on species and it's restrictions in the marking's prototype from this marking set.
+    ///     Filters markings based on sex and it's restrictions in the marking's prototype from this marking set.
     /// </summary>
     /// <param name="sex">The species to filter.</param>
     /// <param name="markingManager">Marking manager.</param>
-    /// <param name="prototypeManager">Prototype manager.</param>
-    public void EnsureSexes(Sex sex, MarkingManager? markingManager = null, IPrototypeManager? prototypeManager = null)
+    public void EnsureSexes(Sex sex, MarkingManager? markingManager = null)
     {
         IoCManager.Resolve(ref markingManager);
-        IoCManager.Resolve(ref prototypeManager);
 
         var toRemove = new List<(MarkingCategories category, string id)>();
 
@@ -222,7 +220,7 @@ public sealed partial class MarkingSet
                     continue;
                 }
 
-                if (prototype.SexRestriction != sex)
+                if (prototype.SexRestriction != null && prototype.SexRestriction != sex)
                 {
                     toRemove.Add((category, marking.MarkingId));
                 }
