@@ -555,7 +555,7 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
 
     private void SearchAndDisplay()
     {
-        if (_window == null || _actionsSystem == null)
+        if (_window is not { Disposed: false } || _actionsSystem == null)
             return;
 
         var search = _window.SearchBar.Text;
