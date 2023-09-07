@@ -529,9 +529,6 @@ public sealed partial class ShuttleSystem
             var foo = childXform.LocalPosition - shuttleBody.LocalCenter;
             _throwing.TryThrow(tossed, foo.Normalized() * 10.0f, 50.0f);
         }
-
-
-
     }
 
     /// <summary>
