@@ -23,6 +23,7 @@ public sealed partial class NewsWriterMenu : FancyWindow
         RobustXamlLoader.Load(this);
 
         ContentsContainer.RectClipContent = false;
+        // Customize scrollbar width and margin. This is not possible in xaml
         var scrollbar = ArticleListScrollbar.GetChild(1);
         scrollbar.SetWidth = 6f;
         scrollbar.Margin = new Thickness(0, 0, 2 , 0);
@@ -44,8 +45,7 @@ public sealed partial class NewsWriterMenu : FancyWindow
                 Title = article.Name,
                 Author = article.Author ?? Loc.GetString("news-read-ui-no-author"),
                 PublicationTime = article.ShareTime,
-                ArtcileNumber = i,
-                Margin = new Thickness(0, 0, 0, 8)
+                ArtcileNumber = i
             };
             control.OnDeletePressed += () => DeleteButtonPressed?.Invoke(control.ArtcileNumber);
 
@@ -77,6 +77,7 @@ public sealed partial class NewsWriterMenu : FancyWindow
     {
         base.Resized();
         var margin = ArticleEditorPanel.Margin;
+        // Bandaid for the funny 1 pixel margin differences
         ArticleEditorPanel.Margin =  new Thickness(Width - 1, margin.Top, margin.Right, margin.Bottom);
     }
 

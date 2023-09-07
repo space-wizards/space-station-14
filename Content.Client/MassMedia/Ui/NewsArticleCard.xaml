@@ -1,6 +1,7 @@
 <Control xmlns="https://spacestation14.io"
          xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
-         xmlns:system="clr-namespace:System;assembly=System.Runtime">
+         xmlns:system="clr-namespace:System;assembly=System.Runtime"
+         Margin="0 0 0 8">
     <PanelContainer StyleClasses="AngleRect" ModulateSelfOverride="#2b2b31"/>
     <BoxContainer Orientation="Vertical" SetHeight="60">
         <Control HorizontalExpand="True" SetHeight="27">
