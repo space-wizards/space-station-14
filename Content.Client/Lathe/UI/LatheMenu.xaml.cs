@@ -26,6 +26,11 @@ public sealed partial class LatheMenu : DefaultWindow
     public event Action<string, int>? OnEjectPressed;
     public List<string> Recipes = new();
 
+    /// <summary>
+    /// Default volume for a sheet if the material's entity prototype has no material composition.
+    /// </summary>
+    private const int DEFAULT_SHEET_VOLUME = 100;
+
     public LatheMenu(LatheBoundUserInterface owner)
     {
         RobustXamlLoader.Load(this);
@@ -72,11 +77,11 @@ public sealed partial class LatheMenu : DefaultWindow
                 continue;
 
             var sheetVolume = SheetVolume(material);
-            // rounded here not in locale since doesn't make sense to show 0.5 sheets if you cant eject it
-            var maxEjectableSheets = (int) MathF.Floor((float) volume / sheetVolume);
+            var sheets = (float) volume / sheetVolume;
+            var maxEjectableSheets = (int) MathF.Floor(sheets);
 
             var unit = Loc.GetString(material.Unit);
-            var amountText = Loc.GetString("lathe-menu-material-amount", ("amount", maxEjectableSheets), ("unit", unit));
+            var amountText = Loc.GetString("lathe-menu-material-amount", ("amount", sheets), ("unit", unit));
             var name = Loc.GetString(material.Name);
             var mat = Loc.GetString("lathe-menu-material-display", ("material", name), ("amount", amountText));
 
@@ -201,12 +206,12 @@ public sealed partial class LatheMenu : DefaultWindow
     private int SheetVolume(MaterialPrototype material)
     {
         if (material.StackEntity == null)
-            return 100;
+            return DEFAULT_SHEET_VOLUME;
 
         var proto = _prototypeManager.Index<EntityPrototype>(material.StackEntity);
 
         if (!proto.TryGetComponent<PhysicalCompositionComponent>(out var composition))
-            return 100;
+            return DEFAULT_SHEET_VOLUME;
 
         return composition.MaterialComposition.FirstOrDefault(kvp => kvp.Key == material.ID).Value;
     }
