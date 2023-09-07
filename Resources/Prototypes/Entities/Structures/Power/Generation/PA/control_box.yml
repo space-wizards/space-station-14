@@ -23,7 +23,7 @@
       type: WiresBoundUserInterface
   - type: WiresPanel
   - type: Wires
-    BoardName: "Mk2 Particle Accelerator"
+    BoardName: wires-board-name-pa
     LayoutId: ParticleAccelerator
 
 # Unfinished

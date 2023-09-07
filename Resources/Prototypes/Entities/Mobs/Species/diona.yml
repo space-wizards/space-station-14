@@ -35,6 +35,44 @@
         amount: 5
   - type: Bloodstream
     bloodReagent: Water
+  - type: Reactive
+    groups:
+      Flammable: [ Touch ]
+      Extinguish: [ Touch ]
+      Acidic: [Touch, Ingestion]
+    reactions:
+    - reagents: [Water, SpaceCleaner]
+      methods: [Touch]
+      effects:
+      - !type:WashCreamPieReaction
+    - reagents: [ PlantBGone ]
+      methods: [ Touch ]
+      effects:
+      - !type:HealthChange
+        scaled: true
+        damage:
+          types:
+            Blunt: 2
+            Slash: 2
+            Piercing: 3
+      - !type:PopupMessage
+        type: Local
+        visualType: Large
+        messages: [ "diona-hurt-by-herbicide-popup" ]
+        probability: 0.66
+    - reagents: [ WeedKiller ]
+      methods: [ Touch ]
+      effects:
+      - !type:HealthChange
+        scaled: true
+        damage:
+          types:
+            Poison: 5
+      - !type:PopupMessage
+        type: Local
+        visualType: Large
+        messages: [ "diona-hurt-by-herbicide-popup" ]
+        probability: 0.66
   - type: Fixtures
     fixtures:
       fix1:
@@ -53,6 +91,8 @@
   - type: MovementSpeedModifier
     baseWalkSpeed : 1.5
     baseSprintSpeed : 3.5
+  - type: Speech
+    speechVerb: Plant
   - type: Vocal
     sounds:
       Male: UnisexDiona

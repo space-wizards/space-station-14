@@ -540,6 +540,16 @@
     Gold: 50
 
 - type: latheRecipe
+  id: BorgModuleHarvesting
+  result: BorgModuleHarvesting
+  completetime: 3
+  materials:
+    Steel: 500
+    Glass: 750
+    Plastic: 250
+    Gold: 50
+
+- type: latheRecipe
   id: BorgModuleClowning
   result: BorgModuleClowning
   completetime: 3

@@ -17,8 +17,8 @@ public sealed partial class SerializationTest
     [Test]
     public async Task SerializeGenericEnums()
     {
-        await using var pairTracker = await PoolManager.GetServerClient();
-        var server = pairTracker.Pair.Server;
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
         var seriMan = server.ResolveDependency<ISerializationManager>();
         var refMan = server.ResolveDependency<IReflectionManager>();
 
@@ -68,7 +68,7 @@ public sealed partial class SerializationTest
         Assert.That(seriMan.ValidateNode<Enum>(typedNode).GetErrors().Any(), Is.True);
         Assert.That(seriMan.ValidateNode<TestEnum>(typedNode).GetErrors().Any(), Is.False);
 
-        await pairTracker.CleanReturnAsync();
+        await pair.CleanReturnAsync();
     }
 
     private enum TestEnum : byte { Aa, Bb, Cc, Dd }

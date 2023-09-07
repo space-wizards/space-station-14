@@ -3,13 +3,14 @@ using Content.Server.Body.Systems;
 using Content.Server.Chat;
 using Content.Server.Chat.Systems;
 using Content.Server.Cloning;
-using Content.Server.Inventory;
-using Content.Shared.Bed.Sleep;
 using Content.Server.GameTicking.Rules;
 using Content.Server.Ghost.Components;
-using Content.Server.Mind;
+using Content.Server.Inventory;
+using Content.Shared.Bed.Sleep;
 using Content.Shared.Damage;
+using Content.Shared.Humanoid;
 using Content.Shared.Inventory;
+using Content.Shared.Mind;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
@@ -19,7 +20,6 @@ using Content.Shared.Zombies;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
-using Content.Shared.Humanoid;
 
 namespace Content.Server.Zombies;
 

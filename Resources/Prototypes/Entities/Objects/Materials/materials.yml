@@ -9,7 +9,6 @@
   - type: Item
     sprite: Objects/Materials/materials.rsi
     size: 30
-  - type: ItemStatus
   - type: Tag
     tags:
       - DroneUsable
@@ -132,6 +131,9 @@
       - DroneUsable
       - Gauze
       - RawMaterial
+  - type: Construction
+    graph: WebObjects # not sure if I should either keep this here or just make another prototype. Will keep it here just in case.
+    node: cloth
 
 - type: entity
   parent: MaterialCloth
@@ -472,6 +474,25 @@
     stackType: WebSilk
   - type: Item
     size: 50
+  - type: Food
+    requiresSpecialDigestion: true
+  - type: FlavorProfile
+    flavors:
+      - cobwebs
+    ignoreReagents:
+      - Fiber
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 3
+        reagents:
+        - ReagentId: Fiber
+          Quantity: 3
+  - type: Tag
+    tags:
+      - ClothMade
+      - DroneUsable
+      - RawMaterial
 
 - type: entity
   parent: MaterialWebSilk

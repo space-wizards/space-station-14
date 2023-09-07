@@ -3,9 +3,7 @@ using Content.Server.NodeContainer.NodeGroups;
 using Content.Server.NodeContainer.Nodes;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
-using Content.Server.Power.Pow3r;
 using JetBrains.Annotations;
-using Robust.Shared.Map;
 
 namespace Content.Server.Power.NodeGroups
 {
@@ -24,13 +22,12 @@ namespace Content.Server.Power.NodeGroups
 
     [NodeGroup(NodeGroupID.Apc)]
     [UsedImplicitly]
-    public sealed partial class ApcNet : BaseNetConnectorNodeGroup<IApcNet>, IApcNet
+    public sealed partial class ApcNet : BasePowerNet<IApcNet>, IApcNet
     {
         private PowerNetSystem? _powerNetSystem;
 
         [ViewVariables] public readonly List<ApcComponent> Apcs = new();
         [ViewVariables] public readonly List<ApcPowerProviderComponent> Providers = new();
-        [ViewVariables] public readonly List<PowerConsumerComponent> Consumers = new();
 
         //Debug property
         [ViewVariables] private int TotalReceivers => Providers.Sum(provider => provider.LinkedReceivers.Count);
@@ -38,9 +35,6 @@ namespace Content.Server.Power.NodeGroups
         [ViewVariables]
         private IEnumerable<ApcPowerReceiverComponent> AllReceivers =>
             Providers.SelectMany(provider => provider.LinkedReceivers);
-
-        [ViewVariables]
-        public PowerState.Network NetworkNode { get; } = new();
 
         public override void Initialize(Node sourceNode, IEntityManager entMan)
         {
@@ -89,21 +83,7 @@ namespace Content.Server.Power.NodeGroups
             QueueNetworkReconnect();
         }
 
-        public void AddConsumer(PowerConsumerComponent consumer)
-        {
-            consumer.NetworkLoad.LinkedNetwork = default;
-            Consumers.Add(consumer);
-            QueueNetworkReconnect();
-        }
-
-        public void RemoveConsumer(PowerConsumerComponent consumer)
-        {
-            consumer.NetworkLoad.LinkedNetwork = default;
-            Consumers.Remove(consumer);
-            QueueNetworkReconnect();
-        }
-
-        public void QueueNetworkReconnect()
+        public override void QueueNetworkReconnect()
         {
             _powerNetSystem?.QueueReconnectApcNet(this);
         }

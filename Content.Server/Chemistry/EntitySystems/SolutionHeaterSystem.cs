@@ -10,7 +10,6 @@ namespace Content.Server.Chemistry.EntitySystems;
 
 public sealed class SolutionHeaterSystem : EntitySystem
 {
-    [Dependency] private readonly ItemPlacerSystem _itemPlacer = default!;
     [Dependency] private readonly PowerReceiverSystem _powerReceiver = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SolutionContainerSystem _solution = default!;

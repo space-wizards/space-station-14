@@ -20,6 +20,15 @@
       "name": "checker-dark"
     },
     {
+      "name": "concrete"
+    },
+    {
+      "name": "grayconcrete"
+    },
+    {
+      "name": "oldconcrete"
+    },
+    {
       "name": "gcircuit"
     },
     {

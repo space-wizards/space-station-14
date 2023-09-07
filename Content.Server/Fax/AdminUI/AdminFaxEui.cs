@@ -1,9 +1,9 @@
 using Content.Server.DeviceNetwork.Components;
 using Content.Server.EUI;
-using Content.Server.Ghost.Components;
 using Content.Shared.Eui;
 using Content.Shared.Fax;
 using Content.Shared.Follower;
+using Content.Shared.Ghost;
 using Content.Shared.Paper;
 
 namespace Content.Server.Fax.AdminUI;

@@ -21,6 +21,11 @@ public sealed class GetItemActionsEvent : EntityEventArgs
     public SortedSet<ActionType> Actions = new();
 
     /// <summary>
+    /// User equipping the item.
+    /// </summary>
+    public EntityUid User;
+
+    /// <summary>
     ///     Slot flags for the inventory slot that this item got equipped to. Null if not in a slot (i.e., if equipped to hands).
     /// </summary>
     public SlotFlags? SlotFlags;
@@ -30,8 +35,9 @@ public sealed class GetItemActionsEvent : EntityEventArgs
     /// </summary>
     public bool InHands => SlotFlags == null;
 
-    public GetItemActionsEvent(SlotFlags? slotFlags = null)
+    public GetItemActionsEvent(EntityUid user, SlotFlags? slotFlags = null)
     {
+        User = user;
         SlotFlags = slotFlags;
     }
 }
