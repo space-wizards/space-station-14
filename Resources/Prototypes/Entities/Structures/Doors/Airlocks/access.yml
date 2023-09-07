@@ -578,6 +578,22 @@
   - type: AccessReader
     access: [["External"]]
 
+- type: entity
+  parent: AirlockSyndicateGlass
+  id: AirlockSyndicateGlassLocked
+  suffix: Syndicate, Locked
+  components:
+  - type: AccessReader
+    access: [["SyndicateAgent"]]
+
+- type: entity
+  parent: AirlockSyndicateGlass
+  id: AirlockSyndicateNukeopGlassLocked
+  suffix: Nukeop, Locked
+  components:
+  - type: AccessReader
+    access: [["NuclearOperative"]]
+
 # Maintenance Hatches
 - type: entity
   parent: AirlockMaint
