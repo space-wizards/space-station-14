@@ -188,7 +188,7 @@ namespace Content.Client.Actions
                 if (instantAction.Event != null)
                     instantAction.Event.Performer = user;
 
-                PerformAction(user, actions, instantAction, instantAction.Event, GameTiming.CurTime);
+                PerformAction(user, actions, actionId, instantAction, instantAction.Event, GameTiming.CurTime);
             }
             else
             {

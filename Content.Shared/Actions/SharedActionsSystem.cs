@@ -162,11 +162,15 @@ public abstract class SharedActionsSystem : EntitySystem
 
     public void SetCooldown(EntityUid? actionId, TimeSpan start, TimeSpan end)
     {
+        if (actionId == null)
+            return;
+
         var action = GetActionData(actionId);
         if (action == null)
             return;
 
         action.Cooldown = (start, end);
+        Dirty(actionId.Value, action);
     }
 
     #region ComponentStateManagement
@@ -198,7 +202,7 @@ public abstract class SharedActionsSystem : EntitySystem
         }
 
         action.Toggled = toggled;
-        Dirty(actionId);
+        Dirty(actionId.Value, action);
     }
 
     public void SetEnabled(EntityUid? actionId, bool enabled)
@@ -210,7 +214,7 @@ public abstract class SharedActionsSystem : EntitySystem
         }
 
         action.Enabled = enabled;
-        Dirty(actionId);
+        Dirty(actionId.Value, action);
     }
 
     public void SetCharges(EntityUid? actionId, int? charges)
@@ -222,7 +226,7 @@ public abstract class SharedActionsSystem : EntitySystem
         }
 
         action.Charges = charges;
-        Dirty(actionId);
+        Dirty(actionId.Value, action);
     }
 
     private void OnActionsMapInit(EntityUid uid, ActionsComponent component, MapInitEvent args)
@@ -313,6 +317,7 @@ public abstract class SharedActionsSystem : EntitySystem
                 if (entityAction.Event != null)
                 {
                     entityAction.Event.Target = entityTarget;
+                    Dirty(ev.Action, entityAction);
                     performEvent = entityAction.Event;
                 }
 
@@ -343,6 +348,7 @@ public abstract class SharedActionsSystem : EntitySystem
                 if (worldAction.Event != null)
                 {
                     worldAction.Event.Target = entityCoordinatesTarget;
+                    Dirty(ev.Action, worldAction);
                     performEvent = worldAction.Event;
                 }
 
@@ -370,7 +376,7 @@ public abstract class SharedActionsSystem : EntitySystem
             performEvent.Performer = user;
 
         // All checks passed. Perform the action!
-        PerformAction(user, component, action, performEvent, curTime);
+        PerformAction(user, component, ev.Action, action, performEvent, curTime);
     }
 
     public bool ValidateEntityTarget(EntityUid user, EntityUid target, EntityTargetActionComponent action)
@@ -434,7 +440,7 @@ public abstract class SharedActionsSystem : EntitySystem
         return _interactionSystem.InRangeUnobstructed(user, coords, range: action.Range);
     }
 
-    public void PerformAction(EntityUid performer, ActionsComponent? component, BaseActionComponent action, BaseActionEvent? actionEvent, TimeSpan curTime, bool predicted = true)
+    public void PerformAction(EntityUid performer, ActionsComponent? component, EntityUid actionId, BaseActionComponent action, BaseActionEvent? actionEvent, TimeSpan curTime, bool predicted = true)
     {
         var handled = false;
 
@@ -477,6 +483,8 @@ public abstract class SharedActionsSystem : EntitySystem
             dirty = true;
             action.Cooldown = (curTime, curTime + action.UseDelay.Value);
         }
+
+        Dirty(actionId, action);
 
         if (dirty && component != null)
             Dirty(performer, component);
@@ -528,6 +536,7 @@ public abstract class SharedActionsSystem : EntitySystem
         holder ??= EnsureComp<ActionsComponent>(holderId);
         action.Provider = provider;
         action.AttachedEntity = holderId;
+        Dirty(actionId, action);
 
         actionContainer ??= EnsureContainer(holderId);
         AddActionInternal(actionId, actionContainer);
@@ -621,7 +630,10 @@ public abstract class SharedActionsSystem : EntitySystem
         container.Remove(actionId.Value);
 
         if (action != null)
+        {
             action.AttachedEntity = null;
+            Dirty(actionId.Value, action);
+        }
 
         if (dirty)
             Dirty(holderId, comp);

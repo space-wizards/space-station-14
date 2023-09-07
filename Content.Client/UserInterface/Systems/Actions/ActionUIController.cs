@@ -237,7 +237,7 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
                 action.Event.Performer = user;
             }
 
-            _actionsSystem.PerformAction(user, actionComp, action, action.Event, _timing.CurTime);
+            _actionsSystem.PerformAction(user, actionComp, actionId, action, action.Event, _timing.CurTime);
         }
         else
             EntityManager.RaisePredictiveEvent(new RequestPerformActionEvent(actionId, coords));
@@ -269,7 +269,7 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
                 action.Event.Performer = user;
             }
 
-            _actionsSystem.PerformAction(user, actionComp, action, action.Event, _timing.CurTime);
+            _actionsSystem.PerformAction(user, actionComp, actionId, action, action.Event, _timing.CurTime);
         }
         else
             EntityManager.RaisePredictiveEvent(new RequestPerformActionEvent(actionId, args.EntityUid));

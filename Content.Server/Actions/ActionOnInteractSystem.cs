@@ -31,12 +31,12 @@ public sealed class ActionOnInteractSystem : EntitySystem
         if (options.Count == 0)
             return;
 
-        var act = _random.Pick(options);
+        var (actId, act) = _random.Pick(options);
         if (act.Event != null)
             act.Event.Performer = args.User;
 
         act.Provider = uid;
-        _actions.PerformAction(args.User, null, act, act.Event, _timing.CurTime, false);
+        _actions.PerformAction(args.User, null, actId, act, act.Event, _timing.CurTime, false);
         args.Handled = true;
     }
 
@@ -51,14 +51,14 @@ public sealed class ActionOnInteractSystem : EntitySystem
             var entOptions = GetValidActions<EntityTargetActionComponent>(component.Actions, args.CanReach);
             for (var i = entOptions.Count - 1; i >= 0; i--)
             {
-                var action = entOptions[i];
+                var action = entOptions[i].Comp;
                 if (!_actions.ValidateEntityTarget(args.User, args.Target.Value, action))
                     entOptions.RemoveAt(i);
             }
 
             if (entOptions.Count > 0)
             {
-                var entAct = _random.Pick(entOptions);
+                var (entActId, entAct) = _random.Pick(entOptions);
                 if (entAct.Event != null)
                 {
                     entAct.Event.Performer = args.User;
@@ -66,7 +66,7 @@ public sealed class ActionOnInteractSystem : EntitySystem
                 }
 
                 entAct.Provider = uid;
-                _actions.PerformAction(args.User, null, entAct, entAct.Event, _timing.CurTime, false);
+                _actions.PerformAction(args.User, null, entActId, entAct, entAct.Event, _timing.CurTime, false);
                 args.Handled = true;
                 return;
             }
@@ -76,7 +76,7 @@ public sealed class ActionOnInteractSystem : EntitySystem
         var options = GetValidActions<WorldTargetActionComponent>(component.Actions, args.CanReach);
         for (var i = options.Count - 1; i >= 0; i--)
         {
-            var action = options[i];
+            var action = options[i].Comp;
             if (!_actions.ValidateWorldTarget(args.User, args.ClickLocation, action))
                 options.RemoveAt(i);
         }
@@ -84,7 +84,7 @@ public sealed class ActionOnInteractSystem : EntitySystem
         if (options.Count == 0)
             return;
 
-        var act = _random.Pick(options);
+        var (actId, act) = _random.Pick(options);
         if (act.Event != null)
         {
             act.Event.Performer = args.User;
@@ -92,7 +92,7 @@ public sealed class ActionOnInteractSystem : EntitySystem
         }
 
         act.Provider = uid;
-        _actions.PerformAction(args.User, null, act, act.Event, _timing.CurTime, false);
+        _actions.PerformAction(args.User, null, actId, act, act.Event, _timing.CurTime, false);
         args.Handled = true;
     }
 
@@ -111,9 +111,9 @@ public sealed class ActionOnInteractSystem : EntitySystem
         return canReach || action is BaseTargetActionComponent { CheckCanAccess: false };
     }
 
-    private List<T> GetValidActions<T>(List<EntityUid>? actions, bool canReach = true) where T : BaseActionComponent
+    private List<(EntityUid Id, T Comp)> GetValidActions<T>(List<EntityUid>? actions, bool canReach = true) where T : BaseActionComponent
     {
-        var valid = new List<T>();
+        var valid = new List<(EntityUid Id, T Comp)>();
 
         if (actions == null)
             return valid;
@@ -127,7 +127,7 @@ public sealed class ActionOnInteractSystem : EntitySystem
                 continue;
             }
 
-            valid.Add(action);
+            valid.Add((id, action));
         }
 
         return valid;
