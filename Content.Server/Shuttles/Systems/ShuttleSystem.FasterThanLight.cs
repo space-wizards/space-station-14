@@ -19,6 +19,7 @@ using Content.Shared.Buckle.Components;
 using Content.Shared.Doors.Components;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Shuttles.Components;
+using Content.Shared.Throwing;
 using JetBrains.Annotations;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
@@ -79,17 +80,17 @@ public sealed partial class ShuttleSystem
 
     private EntityQuery<BodyComponent> _bodyQuery;
     private EntityQuery<BuckleComponent> _buckleQuery;
+    private EntityQuery<PhysicsComponent> _physicsQuery;
     private EntityQuery<StatusEffectsComponent> _statusQuery;
     private EntityQuery<TransformComponent> _xformQuery;
-    private EntityQuery<PhysicsComponent> _physicsQuery;
 
     private void InitializeFTL()
     {
         _bodyQuery = GetEntityQuery<BodyComponent>();
         _buckleQuery = GetEntityQuery<BuckleComponent>();
+        _physicsQuery = GetEntityQuery<PhysicsComponent>();
         _statusQuery = GetEntityQuery<StatusEffectsComponent>();
         _xformQuery = GetEntityQuery<TransformComponent>();
-        _physicsQuery = GetEntityQuery<PhysicsComponent>();
 
         SubscribeLocalEvent<StationGridAddedEvent>(OnStationGridAdd);
     }
@@ -479,13 +480,17 @@ public sealed partial class ShuttleSystem
         var toKnock = new ValueList<EntityUid>();
         KnockOverKids(xform, ref toKnock);
 
-        foreach (var child in toKnock)
+        if (TryComp<PhysicsComponent>(xform.GridUid, out var shuttleBody))
         {
-            if (!_statusQuery.TryGetComponent(child, out var status)) continue;
-            _stuns.TryParalyze(child, _hyperspaceKnockdownTime, true, status);
 
-            // If the guy we knocked down is on a spaced tile, throw them too
-            TossIfSpaced(child);
+            foreach (var child in toKnock)
+            {
+                if (!_statusQuery.TryGetComponent(child, out var status)) continue;
+                _stuns.TryParalyze(child, _hyperspaceKnockdownTime, true, status);
+
+                // If the guy we knocked down is on a spaced tile, throw them too
+                TossIfSpaced(shuttleBody, child);
+            }
         }
     }
 
@@ -505,7 +510,7 @@ public sealed partial class ShuttleSystem
     /// <summary>
     /// Throws people who are standing on a spaced tile, tries to throw them towards a neighbouring space tile
     /// </summary>
-    private void TossIfSpaced(EntityUid tossed)
+    private void TossIfSpaced(PhysicsComponent shuttleBody, EntityUid tossed)
     {
 
         if (!_xformQuery.TryGetComponent(tossed, out var childXform))
@@ -521,19 +526,8 @@ public sealed partial class ShuttleSystem
         {
             Vector2 direction = -Vector2.UnitY;
 
-            foreach (Direction tileDirection in Enum.GetValues(typeof(Direction)))
-            {
-                var otherTile = grid.GetTileRef(tile.Value.GridIndices + DirectionExtensions.ToIntVec(tileDirection));
-                if (otherTile.IsSpace())
-                {
-                    direction = DirectionExtensions.ToVec(tileDirection);
-                    break;
-                }
-            }
-
-            // Mass independant yeeting.
-            var impulseVector = direction.Normalized() * 500.0f * phys.Mass;
-            _physics.ApplyLinearImpulse(tossed, impulseVector, body: phys);
+            var foo = childXform.LocalPosition - shuttleBody.LocalCenter;
+            _throwing.TryThrow(tossed, foo.Normalized() * 10.0f, 50.0f);
         }
 
 
