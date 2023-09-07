@@ -408,6 +408,7 @@
   id: FoodSnackMREBrownieOpen
   parent: FoodSnackBase
   name: brownie
+  suffix: MRE
   description: A precisely mixed brownie, made to withstand blunt trauma and harsh conditions. Tastes like shit.
   components:
   - type: FlavorProfile
