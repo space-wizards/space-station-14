@@ -229,6 +229,8 @@
       moles:
         - 18710.71051 # oxygen
       temperature: 72
+  - type: AccessReader
+    access: [["Atmospherics"]]
 
 - type: entity
   parent: GasCanister
@@ -279,6 +281,8 @@
         - 0 # oxygen
         - 18710.71051 # nitrogen
       temperature: 72
+  - type: AccessReader
+    access: [["Atmospherics"]]
 
 - type: entity
   parent: GasCanister
@@ -333,6 +337,8 @@
         - 0 # nitrogen
         - 18710.71051 # CO2
       temperature: 72
+  - type: AccessReader
+    access: [["Atmospherics"]]
 
 - type: entity
   parent: GasCanister
