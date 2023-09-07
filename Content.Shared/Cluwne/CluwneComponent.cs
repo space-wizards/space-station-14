@@ -41,22 +41,10 @@ public sealed partial class CluwneComponent : Component
     public string AutoEmoteSound = "CluwneGiggle";
 
     /// <summary>
-    /// If this is true then has a % chance to transform target into a cluwne when hit with melee.
-    /// </summary>
-    [DataField("cluwneOnMelee")]
-    public bool CluwneOnMelee = false;
-
-    /// <summary>
     /// Portal proto id.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("portal", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string Portal = "PortalGreeny";
-
-    /// <summary>
-    /// Should be true if this is cluwnebeast.
-    /// </summary>
-    [DataField("isBeast")]
-    public bool IsBeast = false;
 
     /// <summary>
     /// Amount of time cluwne is paralyzed for when falling over.

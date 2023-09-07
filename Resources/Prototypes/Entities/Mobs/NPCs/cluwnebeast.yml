@@ -13,6 +13,8 @@
   - type: RotationVisuals
     defaultRotation: 90
     horizontalRotation: 90
+  - type: Speech
+    speechVerb: Cluwne
   - type: Reactive
     groups:
       Flammable: [Touch]
@@ -90,7 +92,6 @@
     requiredLegs: 2
   - type: Cluwne
     isCluwne: false
-    autoEmoteSound: CluwneBeastGiggle
     emoteId: CluwneBeast
   - type: FootstepModifier
     footstepSoundCollection:
@@ -100,4 +101,3 @@
   - type: RandomMetadata
     nameSegments:
     - names_clown
-
