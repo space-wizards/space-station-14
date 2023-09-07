@@ -44,6 +44,7 @@
       - reactantPrototype: Plasma
         powerGenerationEfficiency: 1
         reactantBreakdownRate: 0.0002
+        byproductPrototype: Tritium
     # Note that this doesn't matter too much (see next comment)
     # However it does act as a cap on power receivable via the collector.
   - type: Battery
