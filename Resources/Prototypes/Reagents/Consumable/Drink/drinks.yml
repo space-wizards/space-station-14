@@ -314,6 +314,11 @@
       effects:
       - !type:SatiateThirst
         factor: 4
+  reactiveEffects:
+    Acidic:
+      methods: [ Touch ]
+      effects:
+      - !type:FelinidCoolDownReaction
 
 - type: reagent
   id: Ice

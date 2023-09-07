@@ -7,6 +7,7 @@ using Content.Shared.Charges.Components;
 using Content.Shared.Charges.Systems;
 using Content.Shared.Damage;
 using Content.Shared.Eye.Blinding.Components;
+using Content.Shared.Ganimed.Components;
 using Content.Shared.Flash;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
@@ -115,6 +116,11 @@ namespace Content.Server.Flash
 
             if (attempt.Cancelled)
                 return;
+			
+			if (EntityManager.HasComponent<FelinidComponent>(target)) {
+				flashDuration *= 1.7f;
+				slowTo *= 0.8f;
+			}
 
             flashable.LastFlash = _timing.CurTime;
             flashable.Duration = flashDuration / 1000f; // TODO: Make this sane...

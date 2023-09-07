@@ -31,3 +31,9 @@ trait-accentless-desc = You don't have the accent that your species would usuall
 
 trait-wheelchair-bound-name = Wheelchair Bound
 trait-wheelchair-bound-desc = You cannot move without your wheelchair. Wheelchair included.
+
+trait-monochromatic-name = Monochromatic Color Blindness
+trait-monochromatic-desc = Your vision only allows you to discern shades of gray.
+
+trait-felinid-name = Felinid
+trait-felinid-desc = Your DNA is altered to be more similar to a cat.

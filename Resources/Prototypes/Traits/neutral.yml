@@ -22,3 +22,11 @@
     - type: LizardAccent
     - type: ReplacementAccent
       accent: dwarf
+
+- type: trait
+  id: FelinidAncestry
+  name: trait-felinid-name
+  description: trait-felinid-desc
+  components:
+    - type: OwOAccent
+    - type: Felinid

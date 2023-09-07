@@ -5,3 +5,10 @@
   components:
     - type: LightweightDrunk
       boozeStrengthMultiplier: 2
+
+- type: trait
+  id: Monochromatic
+  name: trait-monochromatic-name
+  description: trait-monochromatic-desc
+  components:
+    - type: Monochromacy
