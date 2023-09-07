@@ -71,11 +71,7 @@ public sealed partial class LatheMenu : DefaultWindow
             if (!_prototypeManager.TryIndex(materialId, out MaterialPrototype? material))
                 continue;
 
-            var unit = Loc.GetString(material.Unit);
-            var amountText = Loc.GetString("lathe-menu-material-amount", ("amount", volume / 100), ("unit", unit));
-            var name = Loc.GetString(material.Name);
-            var mat = Loc.GetString("lathe-menu-material-display", ("material", name), ("amount", amountText));
-            var volumePerSheet = 0;
+            var volumePerSheet = 100;
             var maxEjectableSheets = 0;
 
             if (material.StackEntity != null)
@@ -88,6 +84,11 @@ public sealed partial class LatheMenu : DefaultWindow
                     maxEjectableSheets = (int) MathF.Floor((float) volume / volumePerSheet);
                 }
             }
+
+            var unit = Loc.GetString(material.Unit);
+            var amountText = Loc.GetString("lathe-menu-material-amount", ("amount", volume / volumePerSheet), ("unit", unit));
+            var name = Loc.GetString(material.Name);
+            var mat = Loc.GetString("lathe-menu-material-display", ("material", name), ("amount", amountText));
 
             var row = new LatheMaterialEjector(materialId, OnEjectPressed, volumePerSheet, maxEjectableSheets)
             {
