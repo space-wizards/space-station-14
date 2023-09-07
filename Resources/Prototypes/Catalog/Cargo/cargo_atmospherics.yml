@@ -24,7 +24,7 @@
     sprite: Structures/Storage/canister.rsi
     state: blue
   product: LiquidOxygenCanister
-  cost: 11000
+  cost: 2500
   category: Atmospherics
   group: market
 
@@ -44,7 +44,7 @@
     sprite: Structures/Storage/canister.rsi
     state: red
   product: LiquidNitrogenCanister
-  cost: 11000
+  cost: 2500
   category: Atmospherics
   group: market
 
@@ -64,7 +64,7 @@
     sprite: Structures/Storage/canister.rsi
     state: black
   product: LiquidCarbonDioxideCanister
-  cost: 22000 # Until someone fixes it co2 can be used to oneshot people so it's more expensive
+  cost: 4000
   category: Atmospherics
   group: market
 
