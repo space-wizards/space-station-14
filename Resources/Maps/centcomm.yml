@@ -208,10 +208,12 @@ entities:
       type: Physics
     - fixtures: {}
       type: Fixtures
-    - type: OccluderTree
-    - type: SpreaderGrid
-    - type: Shuttle
-    - type: GridPathfinding
+    # - type: OccluderTree
+    - id: centcomm
+      type: BecomesStation
+    # - type: SpreaderGrid
+    # - type: Shuttle
+    # - type: GridPathfinding
     - gravityShakeSound: !type:SoundPathSpecifier
         path: /Audio/Effects/alert.ogg
       type: Gravity
@@ -4209,9 +4211,6 @@ entities:
         chunkSize: 4
       type: GridAtmosphere
     - type: GasTileOverlay
-    - following:
-      - invalid
-      type: Followed
 - proto: AcousticGuitarInstrument
   entities:
   - uid: 7414
