@@ -26,9 +26,10 @@ public sealed partial class HumanoidAppearanceComponent : Component
 
     [DataField("gender")]
     [ViewVariables] public Gender Gender = default!;
-
+	
+	[ViewVariables(VVAccess.ReadWrite)]
     [DataField("age")]
-    [ViewVariables] public int Age = 18;
+    public int Age = 18;
 
     /// <summary>
     ///     Any custom base layers this humanoid might have. See:
@@ -55,6 +56,7 @@ public sealed partial class HumanoidAppearanceComponent : Component
     /// <summary>
     ///     Skin color of this humanoid.
     /// </summary>
+	[ViewVariables(VVAccess.ReadWrite)]
     [DataField("skinColor")]
     public Color SkinColor { get; set; } = Color.FromHex("#C0967F");
 
@@ -68,9 +70,11 @@ public sealed partial class HumanoidAppearanceComponent : Component
     [DataField("sex")]
     public Sex Sex = Sex.Male;
 
+	[ViewVariables(VVAccess.ReadWrite)]
     [DataField("eyeColor")]
     public Color EyeColor = Color.Brown;
 	
+	[ViewVariables(VVAccess.ReadWrite)]
     [DataField("speakerColor")]
     public Color SpeakerColor = Color.White;
 
