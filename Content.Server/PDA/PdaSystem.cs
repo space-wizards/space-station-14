@@ -117,7 +117,9 @@ namespace Content.Server.PDA
                 return;
 
             var message = FormattedMessage.EscapeText(args.Message);
-            var wrappedMessage = $"[font size=12][bold]PDA[/bold] {args.Header}: [/font]\n\"{message}\"";
+            var wrappedMessage = Loc.GetString("pda-notification-message",
+                ("header", args.Header),
+                ("message", message));
 
             _chatManager.ChatMessageToOne(
                 ChatChannel.Local,
