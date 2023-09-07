@@ -9,7 +9,7 @@ namespace Content.IntegrationTests.Tests.Replays;
 public sealed class ReplayTests
 {
     /// <summary>
-    /// Simple test that just makes sure that replays auto recording on round restarts works without any issues.
+    /// Simple test that just makes sure that automatic replay recording on round restarts works without any issues.
     /// </summary>
     [Test]
     public async Task AutoRecordReplayTest()
