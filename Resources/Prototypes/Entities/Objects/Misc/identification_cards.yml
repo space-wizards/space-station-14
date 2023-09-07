@@ -571,6 +571,18 @@
         type: AgentIDCardBoundUserInterface
 
 - type: entity
+  name: passenger ID card
+  parent: AgentIDCard
+  id: NukieAgentIDCard
+  suffix: Nukie
+  components:
+  - type: Access
+    tags:
+    - Maintenance
+    - SyndicateAgent
+    - NuclearOperative
+
+- type: entity
   parent: IDCardStandard
   id: AtmosIDCard
   name: atmospheric technician ID card
