@@ -4,7 +4,7 @@
   mapPath: /Maps/centcomm-ganimed.yml
   minPlayers: 10
   stations:
-    centcomm:
+    centcomm-ganimed:
       stationProto: NanotrasenCentralCommand
       components:
         - type: StationNameSetup
