@@ -122,13 +122,12 @@ namespace Content.Server.PDA
                 ("message", message));
 
             _chatManager.ChatMessageToOne(
-                ChatChannel.Local,
+                ChatChannel.Notifications,
                 message,
                 wrappedMessage,
                 EntityUid.Invalid,
                 false,
-                actor.PlayerSession.ConnectedClient,
-                Color.LightGray);
+                actor.PlayerSession.ConnectedClient);
         }
 
         /// <summary>
