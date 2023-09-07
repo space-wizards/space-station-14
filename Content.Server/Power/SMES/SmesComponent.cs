@@ -10,7 +10,7 @@ namespace Content.Server.Power.SMES;
 ///     Code interfacing with the powernet is handled in <see cref="BatteryStorageComponent"/> and <see cref="BatteryDischargerComponent"/>.
 /// </summary>
 [RegisterComponent, Access(typeof(SmesSystem))]
-public sealed class SmesComponent : Component
+public sealed partial class SmesComponent : Component
 {
     [ViewVariables]
     public ChargeState LastChargeState;

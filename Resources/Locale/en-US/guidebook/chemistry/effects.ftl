@@ -31,6 +31,12 @@ reagent-effect-guidebook-explosion-reaction-effect =
         *[other] cause
     } an explosion
 
+reagent-effect-guidebook-emp-reaction-effect =
+    { $chance ->
+        [1] Causes
+        *[other] cause
+    } an electromagnetic pulse
+
 reagent-effect-guidebook-foam-area-reaction-effect =
     { $chance ->
         [1] Creates
@@ -260,6 +266,12 @@ reagent-effect-guidebook-make-sentient =
         [1] Makes
         *[other] make
     } the metabolizer sentient
+
+reagent-effect-guidebook-make-polymorph =
+    { $chance ->
+        [1] Polymorphs
+        *[other] polymorph
+    } the metabolizer into a { $entityname }
 
 reagent-effect-guidebook-modify-bleed-amount =
     { $chance ->

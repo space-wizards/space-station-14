@@ -4,6 +4,7 @@ using Content.Server.Construction.Components;
 using Content.Server.Temperature.Components;
 using Content.Server.Temperature.Systems;
 using Content.Shared.Construction;
+using Content.Shared.Construction.Components;
 using Content.Shared.Construction.EntitySystems;
 using Content.Shared.Construction.Steps;
 using Content.Shared.DoAfter;
@@ -39,6 +40,7 @@ namespace Content.Server.Construction
                 new []{typeof(AnchorableSystem)},
                 new []{typeof(EncryptionKeySystem)});
             SubscribeLocalEvent<ConstructionComponent, OnTemperatureChangeEvent>(EnqueueEvent);
+            SubscribeLocalEvent<ConstructionComponent, PartAssemblyPartInsertedEvent>(EnqueueEvent);
         }
 
         /// <summary>
@@ -386,6 +388,16 @@ namespace Content.Server.Construction
                     }
                     return HandleResult.False;
 
+                }
+
+                case PartAssemblyConstructionGraphStep partAssemblyStep:
+                {
+                    if (ev is not PartAssemblyPartInsertedEvent)
+                        break;
+
+                    if (partAssemblyStep.Condition(uid, EntityManager))
+                        return HandleResult.True;
+                    return HandleResult.False;
                 }
 
                 #endregion

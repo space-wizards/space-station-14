@@ -1,10 +1,11 @@
 namespace Content.Server.Mousetrap;
 
 [RegisterComponent]
-public sealed class MousetrapComponent : Component
+public sealed partial class MousetrapComponent : Component
 {
     [ViewVariables]
-    public bool IsActive;
+	[DataField("isActive")]
+    public bool IsActive = false;
 
     /// <summary>
     ///     Set this to change where the

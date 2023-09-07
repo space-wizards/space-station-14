@@ -9,7 +9,6 @@
   - type: Item
     sprite: Objects/Materials/Sheets/other.rsi
     size: 30
-  - type: ItemStatus
   - type: Tag
     tags:
     - Sheet
@@ -141,6 +140,19 @@
     heldPrefix: plastic
     size: 30
   - type: Appearance
+
+- type: entity
+  parent: SheetPlastic
+  id: SheetPlastic10
+  name: plastic
+  suffix: 10
+  components:
+  - type: Sprite
+    state: plastic
+  - type: Item
+    size: 10
+  - type: Stack
+    count: 10
 
 - type: entity
   parent: SheetPlastic

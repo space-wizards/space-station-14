@@ -10,7 +10,7 @@ namespace Content.Server.StationEvents.Components;
 /// Used an event that gifts the station with certian cargo
 /// </summary>
 [RegisterComponent, Access(typeof(CargoGiftsRule))]
-public sealed class CargoGiftsRuleComponent : Component
+public sealed partial class CargoGiftsRuleComponent : Component
 {
     /// <summary>
     /// The base announcement string (which then incorporates the strings below)

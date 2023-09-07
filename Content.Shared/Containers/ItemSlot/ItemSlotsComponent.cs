@@ -15,14 +15,14 @@ namespace Content.Shared.Containers.ItemSlots
     [RegisterComponent]
     [Access(typeof(ItemSlotsSystem))]
     [NetworkedComponent]
-    public sealed class ItemSlotsComponent : Component
+    public sealed partial class ItemSlotsComponent : Component
     {
         /// <summary>
         ///     The dictionary that stores all of the item slots whose interactions will be managed by the <see
         ///     cref="ItemSlotsSystem"/>.
         /// </summary>
         [DataField("slots", readOnly:true)]
-        public readonly Dictionary<string, ItemSlot> Slots = new();
+        public Dictionary<string, ItemSlot> Slots = new();
 
         // There are two ways to use item slots:
         //
@@ -58,7 +58,7 @@ namespace Content.Shared.Containers.ItemSlots
     [DataDefinition]
     [Access(typeof(ItemSlotsSystem))]
     [Serializable, NetSerializable]
-    public sealed class ItemSlot
+    public sealed partial class ItemSlot
     {
         public ItemSlot() { }
 
@@ -233,4 +233,16 @@ namespace Content.Shared.Containers.ItemSlots
             Priority = other.Priority;
         }
     }
+
+    /// <summary>
+    /// Event raised on the slot entity and the item being inserted to determine if an item can be inserted into an item slot.
+    /// </summary>
+    [ByRefEvent]
+    public record struct ItemSlotInsertAttemptEvent(EntityUid SlotEntity, EntityUid Item, EntityUid? User, ItemSlot Slot, bool Cancelled = false);
+
+    /// <summary>
+    /// Event raised on the slot entity and the item being inserted to determine if an item can be ejected from an item slot.
+    /// </summary>
+    [ByRefEvent]
+    public record struct ItemSlotEjectAttemptEvent(EntityUid SlotEntity, EntityUid Item, EntityUid? User, ItemSlot Slot, bool Cancelled = false);
 }

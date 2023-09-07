@@ -22,7 +22,6 @@ public sealed class HandTeleporterSystem : EntitySystem
     public override void Initialize()
     {
         SubscribeLocalEvent<HandTeleporterComponent, UseInHandEvent>(OnUseInHand);
-
         SubscribeLocalEvent<HandTeleporterComponent, TeleporterDoAfterEvent>(OnDoAfter);
     }
 

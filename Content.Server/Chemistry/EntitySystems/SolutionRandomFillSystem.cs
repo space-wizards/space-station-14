@@ -20,18 +20,20 @@ public sealed class SolutionRandomFillSystem : EntitySystem
         SubscribeLocalEvent<RandomFillSolutionComponent, MapInitEvent>(OnRandomSolutionFillMapInit);
     }
 
-    public void OnRandomSolutionFillMapInit(EntityUid uid, RandomFillSolutionComponent component, MapInitEvent args)
+    private void OnRandomSolutionFillMapInit(EntityUid uid, RandomFillSolutionComponent component, MapInitEvent args)
     {
         var target = _solutionsSystem.EnsureSolution(uid, component.Solution);
-        var reagent = _proto.Index<WeightedRandomPrototype>(component.WeightedRandomId).Pick(_random);
+        var pick = _proto.Index<WeightedRandomFillSolutionPrototype>(component.WeightedRandomId).Pick(_random);
 
-        if (!_proto.TryIndex<ReagentPrototype>(reagent, out ReagentPrototype? reagentProto))
+        var reagent = pick.reagent;
+        var quantity = pick.quantity;
+
+        if (!_proto.HasIndex<ReagentPrototype>(reagent))
         {
-            Logger.Error(
-                $"Tried to add invalid reagent Id {reagent} using SolutionRandomFill.");
+            Log.Error($"Tried to add invalid reagent Id {reagent} using SolutionRandomFill.");
             return;
         }
 
-        target.AddReagent(reagent, component.Quantity);
+        target.AddReagent(reagent, quantity);
     }
 }

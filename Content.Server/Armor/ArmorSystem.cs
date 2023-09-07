@@ -6,6 +6,7 @@ using Content.Server.Cargo.Systems;
 using Robust.Shared.Prototypes;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.Inventory;
+using Content.Shared.Silicons.Borgs;
 
 namespace Content.Server.Armor
 {
@@ -22,6 +23,7 @@ namespace Content.Server.Armor
             base.Initialize();
 
             SubscribeLocalEvent<ArmorComponent, InventoryRelayedEvent<DamageModifyEvent>>(OnDamageModify);
+            SubscribeLocalEvent<ArmorComponent, BorgModuleRelayedEvent<DamageModifyEvent>>(OnBorgDamageModify);
             SubscribeLocalEvent<ArmorComponent, GetVerbsEvent<ExamineVerb>>(OnArmorVerbExamine);
             SubscribeLocalEvent<ArmorComponent, PriceCalculationEvent>(GetArmorPrice);
         }
@@ -63,6 +65,11 @@ namespace Content.Server.Armor
         }
 
         private void OnDamageModify(EntityUid uid, ArmorComponent component, InventoryRelayedEvent<DamageModifyEvent> args)
+        {
+            args.Args.Damage = DamageSpecifier.ApplyModifierSet(args.Args.Damage, component.Modifiers);
+        }
+
+        private void OnBorgDamageModify(EntityUid uid, ArmorComponent component, ref BorgModuleRelayedEvent<DamageModifyEvent> args)
         {
             args.Args.Damage = DamageSpecifier.ApplyModifierSet(args.Args.Damage, component.Modifiers);
         }

@@ -1,5 +1,5 @@
-using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Array;
 using Robust.Shared.Utility;
 
@@ -10,7 +10,7 @@ namespace Content.Shared.StatusIcon;
 /// information for status icons.
 /// </summary>
 [Virtual, DataDefinition]
-public class StatusIconData : IComparable<StatusIconData>
+public partial class StatusIconData : IComparable<StatusIconData>
 {
     /// <summary>
     /// The icon that's displayed on the entity.
@@ -23,6 +23,12 @@ public class StatusIconData : IComparable<StatusIconData>
     /// </summary>
     [DataField("priority")]
     public int Priority = 10;
+
+    /// <summary>
+    /// A preference for where the icon will be displayed. None | Left | Right
+    /// </summary>
+    [DataField("locationPreference")]
+    public StatusIconLocationPreference LocationPreference = StatusIconLocationPreference.None;
 
     public int CompareTo(StatusIconData? other)
     {
@@ -47,5 +53,13 @@ public sealed class StatusIconPrototype : StatusIconData, IPrototype, IInheritin
 
     /// <inheritdoc/>
     [IdDataField]
-    public string ID { get; } = default!;
+    public string ID { get; private set; } = default!;
+}
+
+[Serializable, NetSerializable]
+public enum StatusIconLocationPreference : byte
+{
+    None,
+    Left,
+    Right,
 }

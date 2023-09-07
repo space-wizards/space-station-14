@@ -99,8 +99,6 @@
   components:
   - type: WallMount
     arc: 360 # interact despite grilles
-    # Attention! If adding tags here:
-    # Keep WindowTintedDirectional in mind
   - type: Tag
     tags:
       - Window
@@ -170,28 +168,6 @@
     node: windowDirectional
   - type: StaticPrice
     price: 10
-
-- type: entity
-  id: WindowTintedDirectional
-  parent: WindowDirectional
-  name: directional tinted window
-  description: Don't smudge up the glass down there.
-  placement:
-    mode: SnapgridCenter
-    snap:
-    - Window
-  components:
-  - type: Sprite
-    sprite: Structures/Windows/directional.rsi
-    state: tinted_window
-  - type: Tag
-    tags:
-      - ForceNoFixRotations
-  - type: Icon
-    sprite: Structures/Windows/directional.rsi
-    state: tinted_window
-  - type: Occluder
-    boundingBox: "-0.5,-0.5,0.5,-0.3"
 
 - type: entity
   id: WindowFrostedDirectional

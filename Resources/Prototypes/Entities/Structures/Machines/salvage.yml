@@ -75,7 +75,7 @@
   - type: ApcPowerReceiver
     powerLoad: 1000
 
-- type: weightedRandom
+- type: weightedRandomEntity
   id: RandomAsteroidPool
   weights:
     AsteroidSalvageSmall: 3

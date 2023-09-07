@@ -61,6 +61,19 @@ public sealed class DeviceListSystem : SharedDeviceListSystem
         return devices;
     }
 
+    /// <summary>
+    /// Checks if the given address is present in a device list
+    /// </summary>
+    /// <param name="uid">The entity uid that has the device list that should be checked for the address</param>
+    /// <param name="address">The address to check for</param>
+    /// <param name="deviceList">The device list component</param>
+    /// <returns>True if the address is present. False if not</returns>
+    public bool ExistsInDeviceList(EntityUid uid, string address, DeviceListComponent? deviceList = null)
+    {
+        var addresses = GetDeviceList(uid).Keys;
+        return addresses.Contains(address);
+    }
+
     protected override void UpdateShutdownSubscription(EntityUid uid, List<EntityUid> newDevices, List<EntityUid> oldDevices)
     {
         foreach (var device in newDevices)

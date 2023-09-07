@@ -9,6 +9,7 @@ namespace Content.IntegrationTests.Tests
 {
     public sealed class ContainerOcclusionTest
     {
+        [TestPrototypes]
         private const string Prototypes = @"
 - type: entity
   id: ContainerOcclusionA
@@ -33,9 +34,9 @@ namespace Content.IntegrationTests.Tests
         [Test]
         public async Task TestA()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { ExtraPrototypes = Prototypes });
-            var s = pairTracker.Pair.Server;
-            var c = pairTracker.Pair.Client;
+            await using var pair = await PoolManager.GetServerClient(new PoolSettings { Connected = true });
+            var s = pair.Server;
+            var c = pair.Client;
 
             var cEntities = c.ResolveDependency<IEntityManager>();
             var ent = s.ResolveDependency<IEntityManager>();
@@ -54,7 +55,7 @@ namespace Content.IntegrationTests.Tests
                 entStorage.Insert(dummy, container);
             });
 
-            await PoolManager.RunTicksSync(pairTracker.Pair, 5);
+            await pair.RunTicksSync(5);
 
             await c.WaitAssertion(() =>
             {
@@ -67,15 +68,15 @@ namespace Content.IntegrationTests.Tests
                 });
             });
 
-            await pairTracker.CleanReturnAsync();
+            await pair.CleanReturnAsync();
         }
 
         [Test]
         public async Task TestB()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { ExtraPrototypes = Prototypes });
-            var s = pairTracker.Pair.Server;
-            var c = pairTracker.Pair.Client;
+            await using var pair = await PoolManager.GetServerClient(new PoolSettings { Connected = true });
+            var s = pair.Server;
+            var c = pair.Client;
 
             var cEntities = c.ResolveDependency<IEntityManager>();
             var ent = s.ResolveDependency<IEntityManager>();
@@ -94,7 +95,7 @@ namespace Content.IntegrationTests.Tests
                 entStorage.Insert(dummy, container);
             });
 
-            await PoolManager.RunTicksSync(pairTracker.Pair, 5);
+            await pair.RunTicksSync(5);
 
             await c.WaitAssertion(() =>
             {
@@ -107,15 +108,15 @@ namespace Content.IntegrationTests.Tests
                 });
             });
 
-            await pairTracker.CleanReturnAsync();
+            await pair.CleanReturnAsync();
         }
 
         [Test]
         public async Task TestAb()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { ExtraPrototypes = Prototypes });
-            var s = pairTracker.Pair.Server;
-            var c = pairTracker.Pair.Client;
+            await using var pair = await PoolManager.GetServerClient(new PoolSettings { Connected = true });
+            var s = pair.Server;
+            var c = pair.Client;
 
             var cEntities = c.ResolveDependency<IEntityManager>();
             var ent = s.ResolveDependency<IEntityManager>();
@@ -136,7 +137,7 @@ namespace Content.IntegrationTests.Tests
                 entStorage.Insert(dummy, containerB);
             });
 
-            await PoolManager.RunTicksSync(pairTracker.Pair, 5);
+            await pair.RunTicksSync(5);
 
             await c.WaitAssertion(() =>
             {
@@ -149,7 +150,7 @@ namespace Content.IntegrationTests.Tests
                 });
             });
 
-            await pairTracker.CleanReturnAsync();
+            await pair.CleanReturnAsync();
         }
     }
 }

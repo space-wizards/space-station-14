@@ -64,9 +64,6 @@ reagent-desc-pulped-banana-peel = Pulped banana peels have some effectiveness ag
 reagent-name-siderlac = siderlac
 reagent-desc-siderlac = A powerful anti-caustic medicine derived from plants.
 
-reagent-name-spaceacillin = spaceacillin
-reagent-desc-spaceacillin = A theta-lactam antibiotic, effective against space diseases. Side-effects may include cancer. Phalanximine is recommended after ingestion.
-
 reagent-name-stellibinin = stellibinin
 reagent-desc-stellibinin = A natual anti-toxin with particular effectiveness against amatoxin.
 

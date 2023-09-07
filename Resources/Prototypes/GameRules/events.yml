@@ -34,12 +34,12 @@
   parent: BaseGameRule
   noSpawn: true
   components:
-    - type: StationEvent
-      weight: 1
-      reoccurrenceDelay: 5
-      earliestStart: 1
-      duration: 1
-    - type: BluespaceLockerRule
+  - type: StationEvent
+    weight: 1
+    reoccurrenceDelay: 5
+    earliestStart: 1
+    duration: 1
+  - type: BluespaceLockerRule
 
 - type: entity
   id: BreakerFlip
@@ -70,7 +70,7 @@
   noSpawn: true
   components:
   - type: StationEvent
-    weight: 1
+    weight: 5
     duration: 1
     earliestStart: 45
     minimumPlayers: 20
@@ -83,7 +83,7 @@
   noSpawn: true
   components:
   - type: StationEvent
-    weight: 5
+    weight: 7.5
     duration: 1
     earliestStart: 45
     minimumPlayers: 20
@@ -195,7 +195,7 @@
       path: /Audio/Announcements/power_off.ogg
       params:
        volume: -4
-    startDelay: 12
+    startDelay: 24
     duration: 60
     maxDuration: 120
   - type: PowerGridCheckRule
@@ -213,27 +213,35 @@
     - type: RandomSentienceRule
 
 - type: entity
-  id: SolarFlare
   parent: BaseGameRule
+  id: SolarFlare
   noSpawn: true
   components:
-    - type: StationEvent
-      weight: 10
-      startAnnouncement: station-event-solar-flare-start-announcement
-      endAnnouncement: station-event-solar-flare-end-announcement
-      startAudio: # Corvax-Announcements
-        path: /Audio/Corvax/Announcements/comms_blackout.ogg
-        params:
-          volume: -4
-      duration: 120
-      maxDuration: 240
-    - type: SolarFlareRule
-      onlyJamHeadsets: true
-      affectedChannels:
-        - Common
-        - Service
-      lightBreakChancePerSecond: 0.0003
-      doorToggleChancePerSecond: 0.001
+  - type: StationEvent
+    weight: 10
+    startAnnouncement: station-event-solar-flare-start-announcement
+    endAnnouncement: station-event-solar-flare-end-announcement
+    startAudio: # Corvax-Announcements
+      path: /Audio/Corvax/Announcements/comms_blackout.ogg
+      params:
+        volume: -4
+    duration: 120
+    maxDuration: 240
+  - type: SolarFlareRule
+    onlyJamHeadsets: true
+    affectedChannels:
+    - Common
+    extraChannels:
+    - Command
+    - Engineering
+    - Medical
+    - Science
+    - Security
+    - Service
+    - Supply
+    extraCount: 2
+    lightBreakChancePerSecond: 0.0003
+    doorToggleChancePerSecond: 0.001
 
 - type: entity
   id: VentClog
@@ -313,7 +321,7 @@
   - type: StationEvent
     earliestStart: 20
     minimumPlayers: 15
-    weight: 2
+    weight: 1
     duration: 60
   - type: VentCrittersRule
     entries:
@@ -374,7 +382,7 @@
     startAnnouncement: station-event-immovable-rod-start-announcement
     startAudio:
       path: /Audio/Announcements/attention.ogg
-    weight: 1
+    weight: 5
     duration: 1
     earliestStart: 45
     minimumPlayers: 20

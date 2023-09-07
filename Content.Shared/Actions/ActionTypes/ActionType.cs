@@ -6,7 +6,7 @@ namespace Content.Shared.Actions.ActionTypes;
 
 [ImplicitDataDefinitionForInheritors]
 [Serializable, NetSerializable]
-public abstract class ActionType : IEquatable<ActionType>, IComparable, ICloneable
+public abstract partial class ActionType : IEquatable<ActionType>, IComparable, ICloneable
 {
     /// <summary>
     ///     Icon representing this action in the UI.
@@ -247,6 +247,19 @@ public abstract class ActionType : IEquatable<ActionType>, IComparable, ICloneab
     public bool Equals(ActionType? other)
     {
         return CompareTo(other) == 0;
+    }
+
+    public static bool operator ==(ActionType? left, ActionType? right)
+    {
+        if (left is null)
+            return right is null;
+
+        return left.Equals(right);
+    }
+
+    public static bool operator !=(ActionType? left, ActionType? right)
+    {
+        return !(left == right);
     }
 
     public override int GetHashCode()

@@ -43,6 +43,7 @@
     drawdepth: Items
     noRot: false
   - type: Pullable
+  - type: DamageExaminable
 
 - type: entity
   name: "storage item"

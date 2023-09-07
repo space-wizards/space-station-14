@@ -17,6 +17,8 @@
     colliderFixtureId: EventHorizonCollider
     consumerFixtureId: EventHorizonConsumer
   - type: GravityWell # To make the singularity attract things.
+    baseRadialAcceleration: 10
+    maxRange: 4
   - type: Fixtures
     fixtures:
       EventHorizonCollider:
@@ -43,11 +45,16 @@
     energy: 180
     level: 1
     radsPerLevel: 2
+    energyLoss: 1
   - type: RandomWalk # To make the singularity move around.
+    maxSpeed: 2.5
+    minSpeed: 1.875
   - type: SingularityDistortion
-    intensity: 20
+    falloffPower: 2.529822
+    intensity: 3645
   - type: RadiationSource
     slope: 0.2 # its emit really far away
+    intensity: 2
   - type: PointLight
     enabled: true
     radius: 10

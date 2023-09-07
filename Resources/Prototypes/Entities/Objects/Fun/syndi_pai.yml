@@ -2,7 +2,7 @@
 
 - type: entity
   parent: BaseItem
-  id: SyndicatePersonalAI
+  id: SyndicatePersonalAIImperial
   name: syndicate personal ai device
   description: Your electronic pal who's fun to be with!
   components:

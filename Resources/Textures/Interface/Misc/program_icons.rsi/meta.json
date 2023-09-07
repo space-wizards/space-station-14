@@ -1,7 +1,7 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "Made with love, by Misha_Unity",
+    "copyright": "news_read by Misha_Unity, crew_manifest by Phill101",
     "size": {
       "x": 32,
       "y": 32
@@ -9,6 +9,9 @@
     "states": [
       {
         "name": "news_read"
+      },
+      {
+        "name": "crew_manifest"
       }
     ]
 }

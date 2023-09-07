@@ -76,7 +76,7 @@
     usesApcPower: true
   - type: WiresPanel
   - type: Wires
-    BoardName: "Airlock Control"
+    BoardName: wires-board-name-airlock
     LayoutId: Airlock
   - type: DoorSignalControl
   - type: DeviceNetwork
@@ -129,6 +129,7 @@
     mode: NoSprite
   - type: PaintableAirlock
     group: Standard
+  - type: AccessReader
   - type: StaticPrice
     price: 150
   placement:

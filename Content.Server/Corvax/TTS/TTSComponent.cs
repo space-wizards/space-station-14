@@ -1,4 +1,4 @@
-﻿using Content.Shared.Corvax.TTS;
+using Content.Shared.Corvax.TTS;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Corvax.TTS;
@@ -8,7 +8,7 @@ namespace Content.Server.Corvax.TTS;
 /// </summary>
 [RegisterComponent]
 // ReSharper disable once InconsistentNaming
-public sealed class TTSComponent : Component
+public sealed partial class TTSComponent : Component
 {
     /// <summary>
     /// Prototype of used voice for TTS.

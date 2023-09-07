@@ -6,7 +6,7 @@ namespace Content.Shared.NameIdentifier;
 public sealed class NameIdentifierGroupPrototype : IPrototype
 {
     [IdDataField]
-    public string ID { get; } = default!;
+    public string ID { get; private set; } = default!;
 
     /// <summary>
     ///     Should the identifier become the full name, or just append?

@@ -16,10 +16,11 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.ActionBlocking
     [TestOf(typeof(HandcuffComponent))]
     public sealed class HandCuffTest
     {
+        [TestPrototypes]
         private const string Prototypes = @"
 - type: entity
-  name: HumanDummy
-  id: HumanDummy
+  name: HumanHandcuffDummy
+  id: HumanHandcuffDummy
   components:
   - type: Cuffable
   - type: Hands
@@ -36,12 +37,8 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.ActionBlocking
         [Test]
         public async Task Test()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings
-            {
-                NoClient = true,
-                ExtraPrototypes = Prototypes
-            });
-            var server = pairTracker.Pair.Server;
+            await using var pair = await PoolManager.GetServerClient();
+            var server = pair.Server;
 
             EntityUid human;
             EntityUid otherHuman;
@@ -64,8 +61,8 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.ActionBlocking
                 var xformQuery = entityManager.GetEntityQuery<TransformComponent>();
 
                 // Spawn the entities
-                human = entityManager.SpawnEntity("HumanDummy", coordinates);
-                otherHuman = entityManager.SpawnEntity("HumanDummy", coordinates);
+                human = entityManager.SpawnEntity("HumanHandcuffDummy", coordinates);
+                otherHuman = entityManager.SpawnEntity("HumanHandcuffDummy", coordinates);
                 cuffs = entityManager.SpawnEntity("HandcuffsDummy", coordinates);
                 secondCuffs = entityManager.SpawnEntity("HandcuffsDummy", coordinates);
 
@@ -101,7 +98,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.ActionBlocking
                 Assert.That(cuffed.CuffedHandCount, Is.EqualTo(4), "Player doesn't have correct amount of hands cuffed");
             });
 
-            await pairTracker.CleanReturnAsync();
+            await pair.CleanReturnAsync();
         }
 
         private static void AddHand(EntityUid to, IServerConsoleHost host)

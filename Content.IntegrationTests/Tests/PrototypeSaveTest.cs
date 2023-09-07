@@ -29,20 +29,11 @@ namespace Content.IntegrationTests.Tests;
 [TestFixture]
 public sealed class PrototypeSaveTest
 {
-    private readonly HashSet<string> _ignoredPrototypes = new()
-    {
-        "Singularity", // physics collision uses "AllMask" (-1). The flag serializer currently fails to save this because this features un-named bits.
-        "constructionghost",
-        // Don't add to this list unless you have a good reason
-        // Or it is just temporary because tests stopped working and now master has too many broken entities.
-    };
-
     [Test]
     public async Task UninitializedSaveTest()
     {
-        // Apparently SpawnTest fails to clean  up properly. Due to the similarities, I'll assume this also fails.
-        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true, Dirty = true, Destructive = true });
-        var server = pairTracker.Pair.Server;
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
 
         var mapManager = server.ResolveDependency<IMapManager>();
         var entityMan = server.ResolveDependency<IEntityManager>();
@@ -81,15 +72,15 @@ public sealed class PrototypeSaveTest
             if (prototype.Abstract)
                 continue;
 
+            if (pair.IsTestPrototype(prototype))
+                continue;
+
             // Yea this test just doesn't work with this, it parents a grid to another grid and causes game logic to explode.
             if (prototype.Components.ContainsKey("MapGrid"))
                 continue;
 
             // Currently mobs and such can't be serialized, but they aren't flagged as serializable anyways.
             if (!prototype.MapSavable)
-                continue;
-
-            if (_ignoredPrototypes.Contains(prototype.ID))
                 continue;
 
             if (prototype.SetSuffix == "DEBUG")
@@ -162,10 +153,7 @@ public sealed class PrototypeSaveTest
                             var diff = compMapping.Except(protoMapping);
 
                             if (diff != null && diff.Children.Count != 0)
-                            {
-                                var modComps = string.Join(",", diff.Keys.Select(x => x.ToString()));
-                                Assert.Fail($"Prototype {prototype.ID} modifies component on spawn: {compName}. Modified fields: {modComps}");
-                            }
+                                Assert.Fail($"Prototype {prototype.ID} modifies component on spawn: {compName}. Modified yaml:\n{diff}");
                         }
                         else
                         {
@@ -184,17 +172,17 @@ public sealed class PrototypeSaveTest
                 }
             });
         });
-        await pairTracker.CleanReturnAsync();
+        await pair.CleanReturnAsync();
     }
 
-    private sealed class TestEntityUidContext : ISerializationContext,
+    public sealed class TestEntityUidContext : ISerializationContext,
         ITypeSerializer<EntityUid, ValueDataNode>
     {
         public SerializationManager.SerializerProvider SerializerProvider { get; }
         public bool WritingReadingPrototypes { get; set; }
 
         public string WritingComponent = string.Empty;
-        public EntityPrototype Prototype = default!;
+        public EntityPrototype? Prototype;
 
         public TestEntityUidContext()
         {
@@ -212,7 +200,7 @@ public sealed class PrototypeSaveTest
             IDependencyCollection dependencies, bool alwaysWrite = false,
             ISerializationContext? context = null)
         {
-            if (WritingComponent != "Transform" && !Prototype.NoSpawn)
+            if (WritingComponent != "Transform" && (Prototype?.NoSpawn == false))
             {
                 // Maybe this will be necessary in the future, but at the moment it just indicates that there is some
                 // issue, like a non-nullable entityUid data-field. If a component MUST have an entity uid to work with,
@@ -229,7 +217,7 @@ public sealed class PrototypeSaveTest
             SerializationHookContext hookCtx,
             ISerializationContext? context, ISerializationManager.InstantiationDelegate<EntityUid>? instanceProvider)
         {
-            return EntityUid.Invalid;
+            return EntityUid.Parse(node.Value);
         }
     }
 }
