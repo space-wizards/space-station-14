@@ -484,6 +484,10 @@ public abstract class SharedActionsSystem : EntitySystem
     #endregion
 
     #region AddRemoveActions
+    /// <summary>
+    ///     Add an action to an action holder.
+    ///     If the holder has no actions component, this will give them one.
+    /// </summary>
     public BaseActionComponent? AddAction(EntityUid holderId, ref EntityUid? actionId, string? actionPrototypeId, EntityUid? provider = null, ActionsComponent? holderComp = null)
     {
         if (Deleted(actionId))
@@ -502,11 +506,15 @@ public abstract class SharedActionsSystem : EntitySystem
     }
 
     /// <summary>
-    ///     Add an action to an action component. If the entity has no action component, this will give them one.
+    ///     Add an action to an action holder.
+    ///     If the holder has no actions component, this will give them one.
     /// </summary>
     /// <param name="holderId">Entity to receive the actions</param>
-    /// <param name="actionId">The action to add</param>
+    /// <param name="actionId">Action entity to add</param>
     /// <param name="provider">The entity that enables these actions (e.g., flashlight). May be null (innate actions).</param>
+    /// <param name="holder">Component of <see cref="holderId"/></param>
+    /// <param name="action">Component of <see cref="actionId"/></param>
+    /// <param name="actionContainer">Action container of <see cref="holderId"/></param>
     public virtual void AddAction(EntityUid holderId, EntityUid actionId, EntityUid? provider, ActionsComponent? holder = null, BaseActionComponent? action = null, bool dirty = true, IContainer? actionContainer = null)
     {
         action ??= GetActionData(actionId);
