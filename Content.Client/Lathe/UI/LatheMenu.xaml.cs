@@ -71,9 +71,10 @@ public sealed partial class LatheMenu : DefaultWindow
             if (!_prototypeManager.TryIndex(materialId, out MaterialPrototype? material))
                 continue;
 
+            var unit = Loc.GetString(material.Unit);
+            var amountText = Loc.GetString("lathe-menu-material-amount", ("amount", volume / 100), ("unit", unit));
             var name = Loc.GetString(material.Name);
-            var mat = Loc.GetString("lathe-menu-material-display",
-                ("material", name), ("amount", volume / 100));
+            var mat = Loc.GetString("lathe-menu-material-display", ("material", name), ("amount", amountText));
             var volumePerSheet = 0;
             var maxEjectableSheets = 0;
 
@@ -152,9 +153,10 @@ public sealed partial class LatheMenu : DefaultWindow
 
                 var adjustedAmount = SharedLatheSystem.AdjustMaterial(amount, prototype.ApplyMaterialDiscount, component.MaterialUseMultiplier);
 
-                sb.Append(Loc.GetString("lathe-menu-tooltip-display",
-                    ("amount", MathF.Round(adjustedAmount / 100f, 2)),
-                    ("material", Loc.GetString(proto.Name))));
+                var unit = Loc.GetString(proto.Unit);
+                var amountText = Loc.GetString("lathe-menu-material-amount", ("amount", MathF.Round(adjustedAmount / 100f)), ("unit", unit));
+                var name = Loc.GetString(proto.Name);
+                sb.Append(Loc.GetString("lathe-menu-tooltip-display", ("material", name), ("amount", amountText)));
             }
 
             var icon = prototype.Icon == null
