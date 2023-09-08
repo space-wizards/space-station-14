@@ -16,7 +16,7 @@
     - key: enum.CrayonUiKey.Key
       type: CrayonBoundUserInterface
   - type: Crayon
-    capacity: 5
+    capacity: 15
   - type: Food
   - type: SolutionContainerManager
     solutions:
