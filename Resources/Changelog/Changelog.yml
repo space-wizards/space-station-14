@@ -1,15 +1,4 @@
 Entries:
-- author: Vordenburg
-  changes:
-  - {message: Added new stamp sprites from TG Station., type: Add}
-  id: 4281
-  time: '2023-07-18T20:56:35.0000000+00:00'
-- author: Vordenburg
-  changes:
-  - {message: Airlocks which have had their bolt wire cut will no longer re-bolt when
-      powering back on., type: Fix}
-  id: 4282
-  time: '2023-07-18T20:56:52.0000000+00:00'
 - author: kseandi
   changes:
   - {message: Added machine frame completion popup., type: Add}
@@ -2991,3 +2980,15 @@ Entries:
   - {message: Bananium's radiation intensity increases in large stacks now., type: Tweak}
   id: 4780
   time: '2023-09-07T21:59:08.0000000+00:00'
+- author: notafet
+  changes:
+  - {message: Security techfabs now produce magazines instead of individual cartridges.,
+    type: Tweak}
+  id: 4781
+  time: '2023-09-08T02:16:20.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Advanced Laser Guns are now in the Tier 3 Portable Microfusion Weaponry
+      research., type: Tweak}
+  id: 4782
+  time: '2023-09-08T02:25:05.0000000+00:00'
