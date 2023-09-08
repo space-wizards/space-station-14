@@ -64,7 +64,7 @@
     weight: 4.5
     duration: 1
     earliestStart: 45
-    minimumPlayers: 30
+    minimumPlayers: 20
   - type: RandomSpawnRule
     prototype: SpawnPointGhostDragon
 
