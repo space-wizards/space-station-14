@@ -7,6 +7,10 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Objectives.Conditions;
 
+/// <summary>
+/// Requires a random person to be killed, who must be a head.
+/// If there are no heads it will fallback to any person.
+/// </summary>
 [DataDefinition]
 public sealed partial class KillRandomHeadCondition : KillPersonCondition
 {
@@ -15,18 +19,7 @@ public sealed partial class KillRandomHeadCondition : KillPersonCondition
     {
         RequireDead = true;
 
-        var allHumans = EntityManager.EntityQuery<MindContainerComponent>(true).Where(mc =>
-        {
-            var entity = EntityManagerExt.GetComponentOrNull<MindComponent>(EntityManager, (EntityUid?) mc.Mind)?.OwnedEntity;
-
-            if (entity == default)
-                return false;
-
-            return EntityManager.TryGetComponent(entity, out MobStateComponent? mobState) &&
-                   MobStateSystem.IsAlive(entity.Value, mobState) &&
-                   mc.Mind != mindId;
-        }).Select(mc => mc.Mind).ToList();
-
+        var allHumans = Minds.GetAliveHumansExcept(mindId);
         if (allHumans.Count == 0)
             return new DieCondition(); // I guess I'll die
 
@@ -39,6 +32,4 @@ public sealed partial class KillRandomHeadCondition : KillPersonCondition
 
         return new KillRandomHeadCondition { TargetMindId = IoCManager.Resolve<IRobustRandom>().Pick(allHeads) };
     }
-
-    public string Description => Loc.GetString("objective-condition-kill-head-description");
 }
