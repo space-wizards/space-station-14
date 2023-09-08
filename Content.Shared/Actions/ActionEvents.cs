@@ -2,6 +2,7 @@ using Content.Shared.Hands;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
 using Robust.Shared.Map;
+using Robust.Shared.Network;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Actions;
@@ -17,7 +18,8 @@ namespace Content.Shared.Actions;
 /// </remarks>
 public sealed class GetItemActionsEvent : EntityEventArgs
 {
-    private IEntityManager _entities;
+    private readonly IEntityManager _entities;
+    private readonly INetManager _net;
     public readonly SortedSet<EntityUid> Actions = new();
 
     /// <summary>
@@ -35,9 +37,10 @@ public sealed class GetItemActionsEvent : EntityEventArgs
     /// </summary>
     public bool InHands => SlotFlags == null;
 
-    public GetItemActionsEvent(IEntityManager entities, EntityUid user, SlotFlags? slotFlags = null)
+    public GetItemActionsEvent(IEntityManager entities, INetManager net, EntityUid user, SlotFlags? slotFlags = null)
     {
         _entities = entities;
+        _net = net;
         User = user;
         SlotFlags = slotFlags;
     }
@@ -46,7 +49,7 @@ public sealed class GetItemActionsEvent : EntityEventArgs
     {
         if (_entities.Deleted(actionId))
         {
-            if (string.IsNullOrWhiteSpace(prototypeId))
+            if (string.IsNullOrWhiteSpace(prototypeId) || _net.IsClient)
                 return;
 
             actionId = _entities.Spawn(prototypeId);
