@@ -10,31 +10,31 @@
               amount: 5
               doAfter: 1
             - tag: EVAModBoots
-              name: An EVA suit
+              name: Гражданские ботинки
               icon:
                 sprite: Objects/Specific/Modsuits/Construction/civillian.rsi
                 state: boots
               doAfter: 1
             - tag: EVAModGauntlets
-              name: An EVA helmet
+              name: Гражданские рукавицы
               icon:
                 sprite: Objects/Specific/Modsuits/Construction/civillian.rsi
                 state: Gauntlets
               doAfter: 1
             - tag: EVAModChestplate
-              name: purple crayon
+              name: Гражданский нагрудник
               icon:
                 sprite: Objects/Specific/Modsuits/Construction/civillian.rsi
                 state: Chestplate
               doAfter: 1
             - tag: EVAModHelmet
-              name: red crayon
+              name: Гражданский шлем
               icon:
                 sprite: Objects/Specific/Modsuits/Construction/civillian.rsi
                 state: Helmet
               doAfter: 1
             - tag: EVAModHardsuitcore
-              name: Civillian Hardcore
+              name: Гражданское ядро модсьюта
               icon:
                 sprite: Objects/Specific/Modsuits/Construction/civillian.rsi
                 state: Hardsuite-core
@@ -51,31 +51,31 @@
         - to: modsuitAtmos
           steps:
             - tag: AtmosModBoots
-              name: An Atmos suit
+              name: Атмосферные ботинки
               icon:
                 sprite: Objects/Specific/Modsuits/Construction/atmospheric_tech.rsi
                 state: boots
               doAfter: 1
             - tag: AtmosModGauntlets
-              name: Atmos Gauntlets
+              name: Атмосферные рукавицы
               icon:
                 sprite: Objects/Specific/Modsuits/Construction/atmospheric_tech.rsi
                 state: Gauntlets
               doAfter: 1
             - tag: AtmosModChestplate
-              name: Atmos Chestplate
+              name: Атмосферный нагрудник
               icon:
                 sprite: Objects/Specific/Modsuits/Construction/atmospheric_tech.rsi
                 state: Chestplate
               doAfter: 1
             - tag: AtmosModHelmet
-              name: Atmos Helmet
+              name: Атмосферный шлем
               icon:
                 sprite: Objects/Specific/Modsuits/Construction/atmospheric_tech.rsi
                 state: Helmet
               doAfter: 1
             - tag: AtmosModHardsuitcore
-              name: Atmos hardsuit core
+              name: Атмосферное ядро модсьюта
               icon:
                 sprite: Objects/Specific/Modsuits/Construction/atmospheric_tech.rsi
                 state: Hardsuit-core
@@ -92,31 +92,31 @@
         - to: modsuitMedical
           steps:
             - tag: MedicalModBoots
-              name: A Medical suit
+              name: Медицинские ботинки
               icon:
                 sprite: Objects/Specific/Modsuits/Construction/regularmedical.rsi
-                state: Boots
+                state: boots
               doAfter: 1
             - tag: MedicalModGauntlets
-              name: Medical Gauntlets
+              name: Медицинские рукавицы
               icon:
                 sprite: Objects/Specific/Modsuits/Construction/regularmedical.rsi
                 state: Gauntlets
               doAfter: 1
             - tag: MedicalModChestplate
-              name: Medical Chestplate
+              name: Медицинский нагрудник
               icon:
                 sprite: Objects/Specific/Modsuits/Construction/regularmedical.rsi
                 state: Chestplate
               doAfter: 1
             - tag: MedicalModHelmet
-              name: Medical Helmet
+              name: Медицинский шлем
               icon:
                 sprite: Objects/Specific/Modsuits/Construction/regularmedical.rsi
                 state: Helmet
               doAfter: 1
             - tag: MedicalModHardsuitcore
-              name: Medical hardsuit core
+              name: Медицинское ядро модсьюта
               icon:
                 sprite: Objects/Specific/Modsuits/Construction/regularmedical.rsi
                 state: Hardsuit-core
@@ -136,31 +136,31 @@
               amount: 5
               doAfter: 1
             - tag: RNDModBoots
-              name: A RND suit
+              name: Ботинки РНД
               icon:
                 sprite: Clothing/Objects/Specific/Modsuits/Construction/regularrnd.rsi
-                state: Boots
+                state: boots
               doAfter: 1
             - tag: RNDModGauntlets
-              name: RND Gauntlets
+              name: Рукавицы РНД
               icon:
                 sprite: Clothing/Objects/Specific/Modsuits/Construction/regularrnd.rsi
                 state: Gauntlets
               doAfter: 1
             - tag: RNDModChestplate
-              name: RND Chestplate
+              name: Нагрудник РНД
               icon:
                 sprite: Clothing/Objects/Specific/Modsuits/Construction/regularrnd.rsi
                 state: Chestplate
               doAfter: 1
             - tag: RNDModHelmet
-              name: RND Helmet
+              name: Шлем РНД
               icon:
                 sprite: Clothing/Objects/Specific/Modsuits/Construction/regularrnd.rsi
                 state: Helmet
               doAfter: 1
             - tag: RNDModHardsuitcore
-              name: RND hardsuit core
+              name: Ядро модсьюта РНД
               icon:
                 sprite: Clothing/Objects/Specific/Modsuits/Construction/regularrnd.rsi
                 state: Hardsuit-core
@@ -180,31 +180,31 @@
               amount: 5
               doAfter: 1
             - tag: EngineerModBoots
-              name: An Engineer suit
+              name: Инженерные ботинки
               icon:
                 sprite: Clothing/Objects/Specific/Modsuits/Construction/engineering.rsi
-                state: Boots
+                state: boots
               doAfter: 1
             - tag: EngineerModGauntlets
-              name: Engineer Gauntlets
+              name: Инженерные рукавицы
               icon:
                 sprite: Clothing/Objects/Specific/Modsuits/Construction/engineering.rsi
                 state: Gauntlets
               doAfter: 1
             - tag: EngineerModChestplate
-              name: Engineer Chestplate
+              name: Инженерный нагрудник
               icon:
                 sprite: Clothing/Objects/Specific/Modsuits/Construction/engineering.rsi
                 state: Chestplate
               doAfter: 1
             - tag: EngineerModHelmet
-              name: Engineer Helmet
+              name: Инженерный шлем
               icon:
                 sprite: Clothing/Objects/Specific/Modsuits/Construction/engineering.rsi
                 state: Helmet
               doAfter: 1
             - tag: EngineerModHardsuitcore
-              name: Engineer hardsuit core
+              name: Инженерное ядро модсьюта
               icon:
                 sprite: Clothing/Objects/Specific/Modsuits/Construction/engineering.rsi
                 state: Hardsuit-core

@@ -559,7 +559,7 @@
     state: Chestplate
   - type: Tag
     tags:
-    - MedicalModBoots
+    - MedicalModChestplate
 
 - type: entity
   parent: BaseItem
@@ -574,7 +574,7 @@
     state: Gauntlets
   - type: Tag
     tags:
-    - MedicalModBoots
+    - MedicalModGauntlets
 
 - type: entity
   parent: BaseItem
@@ -589,7 +589,7 @@
     state: Hardsuit-core
   - type: Tag
     tags:
-    - MedicalModBoots
+    - MedicalModHardsuitcore
 
 - type: entity
   parent: BaseItem
@@ -604,7 +604,7 @@
     state: Helmet
   - type: Tag
     tags:
-    - MedicalModBoots
+    - MedicalModHelmet
 
 - type: entity
   parent: BaseItem

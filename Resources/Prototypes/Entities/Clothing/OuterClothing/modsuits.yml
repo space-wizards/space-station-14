@@ -197,11 +197,11 @@
   - type: Armor
     modifiers:
       coefficients:
-        Caustic: 0.9
-        Radiation: 0.9
+        Caustic: 0.7
+        Radiation: 0.7
   - type: ClothingSpeedModifier
-    walkModifier: 0.75
-    sprintModifier: 0.75
+    walkModifier: 0.9
+    sprintModifier: 0.9
   - type: PointLight
     color: "#ebebeb"
     enabled: false
@@ -234,11 +234,11 @@
   - type: Armor
     modifiers:
       coefficients:
-        Caustic: 0.7
-        Radiation: 0.7
+        Caustic: 0.4
+        Radiation: 0.4
   - type: ClothingSpeedModifier
-    walkModifier: 0.85
-    sprintModifier: 0.85
+    walkModifier: 0.95
+    sprintModifier: 0.95
   - type: PointLight
     color: "#ebebeb"
     enabled: false
@@ -493,10 +493,14 @@
   - type: Armor
     modifiers:
       coefficients:
-        Heat: 0.85
+        Blunt: 0.95
+        Slash: 0.95
+        Shock: 0.95
+        Radiation: 0.8
+        Heat: 0.9
   - type: ClothingSpeedModifier
-    walkModifier: 0.75
-    sprintModifier: 0.75
+    walkModifier: 0.85
+    sprintModifier: 0.85
   - type: PointLight
     color: "#a0f1e8"
     enabled: false
@@ -526,10 +530,14 @@
   - type: Armor
     modifiers:
       coefficients:
-        Heat: 0.75
+        Blunt: 0.95
+        Slash: 0.95
+        Shock: 0.9
+        Radiation: 0.7
+        Heat: 0.8
   - type: ClothingSpeedModifier
-    walkModifier: 0.85
-    sprintModifier: 0.85
+    walkModifier: 0.9
+    sprintModifier: 0.9
   - type: PointLight
     color: "#a0f1e8"
     enabled: false
