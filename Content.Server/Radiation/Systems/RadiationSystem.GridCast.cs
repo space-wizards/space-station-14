@@ -3,6 +3,7 @@ using Content.Server.Radiation.Components;
 using Content.Server.Radiation.Events;
 using Content.Shared.Radiation.Components;
 using Content.Shared.Radiation.Systems;
+using Content.Shared.Stacks;
 using Robust.Shared.Collections;
 using Robust.Shared.Containers;
 using Robust.Shared.Map.Components;
@@ -15,7 +16,8 @@ namespace Content.Server.Radiation.Systems;
 // main algorithm that fire radiation rays to target
 public partial class RadiationSystem
 {
-    [Dependency] protected readonly SharedContainerSystem _container = default!;
+    [Dependency] private readonly SharedStackSystem _stack = default!;
+    [Dependency] private readonly SharedContainerSystem _container = default!;
 
     private EntityQuery<RadiationBlockingContainerComponent> _radiationBlockingContainers;
 
@@ -28,21 +30,22 @@ public partial class RadiationSystem
         var stopwatch = new Stopwatch();
         stopwatch.Start();
 
-        var sources = EntityQuery<RadiationSourceComponent, TransformComponent>();
+        var sources = EntityQueryEnumerator<RadiationSourceComponent, TransformComponent>();
         var destinations = EntityQuery<RadiationReceiverComponent, TransformComponent>();
         var resistanceQuery = GetEntityQuery<RadiationGridResistanceComponent>();
         var transformQuery = GetEntityQuery<TransformComponent>();
         var gridQuery = GetEntityQuery<MapGridComponent>();
+        var stackQuery = GetEntityQuery<StackComponent>();
 
         _radiationBlockingContainers = GetEntityQuery<RadiationBlockingContainerComponent>();
 
         // precalculate world positions for each source
         // so we won't need to calc this in cycle over and over again
-        var sourcesData = new ValueList<(RadiationSourceComponent, TransformComponent, Vector2)>();
-        foreach (var (source, sourceTrs) in sources)
+        var sourcesData = new ValueList<(EntityUid, RadiationSourceComponent, TransformComponent, Vector2)>();
+        while (sources.MoveNext(out var uid, out var source, out var sourceTrs))
         {
             var worldPos = _transform.GetWorldPosition(sourceTrs, transformQuery);
-            var data = (source, sourceTrs, worldPos);
+            var data = (uid, source, sourceTrs, worldPos);
             sourcesData.Add(data);
         }
 
@@ -54,12 +57,15 @@ public partial class RadiationSystem
             var destWorld = _transform.GetWorldPosition(destTrs, transformQuery);
 
             var rads = 0f;
-            foreach (var (source, sourceTrs, sourceWorld) in sourcesData)
+            foreach (var (uid, source, sourceTrs, sourceWorld) in sourcesData)
             {
+                stackQuery.TryGetComponent(uid, out var stack);
+                var intensity = source.Intensity * _stack.GetCount(uid, stack);
+
                 // send ray towards destination entity
-                var ray = Irradiate(sourceTrs.Owner, sourceTrs, sourceWorld,
+                var ray = Irradiate(uid, sourceTrs, sourceWorld,
                     destTrs.Owner, destTrs, destWorld,
-                    source.Intensity, source.Slope, saveVisitedTiles, resistanceQuery, transformQuery, gridQuery);
+                    intensity, source.Slope, saveVisitedTiles, resistanceQuery, transformQuery, gridQuery);
                 if (ray == null)
                     continue;
 
