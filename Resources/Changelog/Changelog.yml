@@ -1,70 +1,4 @@
 Entries:
-- author: Dygon
-  changes:
-  - {message: 'Using cells extracted from a changeling the Syndicate has found a way
-      to safely alter the DNA of their operators, agents can now purchase the DNA
-      scrambler implanter from the uplink.', type: Add}
-  - {message: 'The Syndicate succeeded in making their EMP devices even smaller, agents
-      can now purchase the EMP implanter from the uplink.', type: Add}
-  - {message: EMP grenades are now cheaper to purchase, type: Tweak}
-  id: 4272
-  time: '2023-07-17T19:48:10.0000000+00:00'
-- author: crazybrain
-  changes:
-  - {message: Fixed the warden's armored winter coat sprite., type: Fix}
-  id: 4273
-  time: '2023-07-17T22:52:47.0000000+00:00'
-- author: PJB3005
-  changes:
-  - {message: The Particle Accelerator should reliably scan parts again., type: Fix}
-  id: 4274
-  time: '2023-07-18T05:57:59.0000000+00:00'
-- author: PrPleGoo
-  changes:
-  - {message: Added onion goggles for the chef. It displays hunger icons for hungry/overfed
-      mobs. Can also be eaten., type: Add}
-  - {message: The chef's starting gear now includes the onion goggles, type: Tweak}
-  - {message: The beer goggles now display thirst icons for thirsty/overhydrated mobs.,
-    type: Tweak}
-  - {message: The bartender's starting gear now includes the beer goggles, type: Tweak}
-  id: 4275
-  time: '2023-07-18T06:01:22.0000000+00:00'
-- author: Chief-Engineer
-  changes:
-  - {message: Zombies have been removed as a round start game mode on secret., type: Remove}
-  id: 4276
-  time: '2023-07-18T09:21:08.0000000+00:00'
-- author: ArthurMousatov
-  changes:
-  - {message: Dead mobs now appear above puddles!, type: Fix}
-  id: 4277
-  time: '2023-07-18T11:14:00.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Fix trash bags., type: Fix}
-  id: 4278
-  time: '2023-07-18T11:44:00.0000000+00:00'
-- author: Chief-Engineer
-  changes:
-  - {message: Non-command role requirements have been modified., type: Tweak}
-  id: 4279
-  time: '2023-07-18T19:04:26.0000000+00:00'
-- author: PJB3005
-  changes:
-  - {message: Fixed the PA even more for real this time pinky promise I swear., type: Fix}
-  id: 4280
-  time: '2023-07-18T20:55:18.0000000+00:00'
-- author: Vordenburg
-  changes:
-  - {message: Added new stamp sprites from TG Station., type: Add}
-  id: 4281
-  time: '2023-07-18T20:56:35.0000000+00:00'
-- author: Vordenburg
-  changes:
-  - {message: Airlocks which have had their bolt wire cut will no longer re-bolt when
-      powering back on., type: Fix}
-  id: 4282
-  time: '2023-07-18T20:56:52.0000000+00:00'
 - author: kseandi
   changes:
   - {message: Added machine frame completion popup., type: Add}
@@ -2996,3 +2930,65 @@ Entries:
   - {message: Constructed hydroponics trays now start empty., type: Tweak}
   id: 4771
   time: '2023-09-05T20:15:06.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Revert 25% click attack buff., type: Tweak}
+  id: 4772
+  time: '2023-09-06T08:30:23.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Fixes crates requiring to be welded to deconstruct them., type: Fix}
+  id: 4773
+  time: '2023-09-06T18:18:14.0000000+00:00'
+- author: potato1234x
+  changes:
+  - {message: Added back the old glass tiles while keeping the new ones as a fancier
+      alternative., type: Add}
+  id: 4774
+  time: '2023-09-06T21:41:53.0000000+00:00'
+- author: Endecc
+  changes:
+  - {message: Secure crates are now craftable with 5 steel and 2 LV cable, type: Add}
+  id: 4775
+  time: '2023-09-07T00:25:25.0000000+00:00'
+- author: lzk228
+  changes:
+  - {message: Grog recipe now requires sugar., type: Tweak}
+  id: 4776
+  time: '2023-09-07T00:32:24.0000000+00:00'
+- author: Velcroboy
+  changes:
+  - {message: Chef Velcroboy has been in the kitchen messin around with the botanicals.
+      New recipes have been developed for some extra "special" brownies. Careful with
+      these..., type: Add}
+  id: 4777
+  time: '2023-09-07T01:21:14.0000000+00:00'
+- author: Varen
+  changes:
+  - {message: 'FTL transit on damaged shuttles is not lethal anymore, but passengers
+      should still hold on tight and remain inside the vehicle.', type: Tweak}
+  id: 4778
+  time: '2023-09-07T02:13:32.0000000+00:00'
+- author: Vasilis
+  changes:
+  - {message: Hyposprays can inject their solutions back into beakers/jugs/whatever
+      can hold the solution., type: Tweak}
+  id: 4779
+  time: '2023-09-07T16:49:02.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Bananium's radiation intensity increases in large stacks now., type: Tweak}
+  id: 4780
+  time: '2023-09-07T21:59:08.0000000+00:00'
+- author: notafet
+  changes:
+  - {message: Security techfabs now produce magazines instead of individual cartridges.,
+    type: Tweak}
+  id: 4781
+  time: '2023-09-08T02:16:20.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Advanced Laser Guns are now in the Tier 3 Portable Microfusion Weaponry
+      research., type: Tweak}
+  id: 4782
+  time: '2023-09-08T02:25:05.0000000+00:00'

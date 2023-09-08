@@ -69,7 +69,11 @@ namespace Content.Server.Atmos.EntitySystems
 
         private void OnGasTankSetPressure(EntityUid uid, GasTankComponent component, GasTankSetPressureMessage args)
         {
-            component.OutputPressure = args.Pressure;
+            var pressure = Math.Min(args.Pressure, component.MaxOutputPressure);
+
+            component.OutputPressure = pressure;
+
+            UpdateUserInterface(component, true);
         }
 
         public void UpdateUserInterface(GasTankComponent component, bool initialUpdate = false)

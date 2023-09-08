@@ -1179,6 +1179,18 @@
   id: FloorGlass
   name: tiles-glass-floor
   sprite: /Textures/Tiles/glass.png
+  baseTurf: Plating
+  isSubfloor: false
+  canCrowbar: true
+  footstepSounds:
+    collection: FootstepTile
+  itemDrop: SheetGlass1
+  heatCapacity: 10000
+
+- type: tile
+  id: FloorGlassAlt
+  name: tiles-glass-floor-alt
+  sprite: /Textures/Tiles/glass_alt.png
   variants: 4
   placementVariants:
   - 1.0
@@ -1197,6 +1209,18 @@
   id: FloorRGlass
   name: tiles-reinforced-glass-floor
   sprite: /Textures/Tiles/rglass.png
+  baseTurf: Plating
+  isSubfloor: false
+  canCrowbar: true
+  footstepSounds:
+    collection: FootstepTile
+  itemDrop: SheetRGlass1
+  heatCapacity: 10000
+
+- type: tile
+  id: FloorRGlassAlt
+  name: tiles-reinforced-glass-floor-alt
+  sprite: /Textures/Tiles/rglass_alt.png
   variants: 4
   placementVariants:
   - 1.0
