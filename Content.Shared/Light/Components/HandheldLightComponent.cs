@@ -1,6 +1,6 @@
-using Content.Shared.Actions.ActionTypes;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
@@ -35,8 +35,8 @@ public sealed partial class HandheldLightComponent : Component
     [DataField("addPrefix")]
     public bool AddPrefix = false;
 
-    [DataField("toggleActionId", customTypeSerializer: typeof(PrototypeIdSerializer<InstantActionPrototype>))]
-    public string ToggleActionId = "ToggleLight";
+    [DataField("toggleActionId", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    public string ToggleActionId = "ActionToggleLight";
 
     /// <summary>
     /// Whether or not the light can be toggled via standard interactions
@@ -46,7 +46,7 @@ public sealed partial class HandheldLightComponent : Component
     public bool ToggleOnInteract = true;
 
     [DataField("toggleAction")]
-    public InstantAction? ToggleAction;
+    public EntityUid? ToggleAction;
 
     public const int StatusLevels = 6;
 
