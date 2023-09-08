@@ -3,6 +3,7 @@ using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.GameTicking;
+using Content.Shared.Humanoid;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Mind.Components;
 using Content.Shared.Mobs.Components;
@@ -18,7 +19,7 @@ namespace Content.Shared.Mind;
 
 public abstract class SharedMindSystem : EntitySystem
 {
-    [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
+    [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly SharedPlayerSystem _playerSystem = default!;
 
@@ -88,7 +89,7 @@ public abstract class SharedMindSystem : EntitySystem
         if (!mindContainer.ShowExamineInfo || !args.IsInDetailsRange)
             return;
 
-        var dead = _mobStateSystem.IsDead(uid);
+        var dead = _mobState.IsDead(uid);
         var hasSession = CompOrNull<MindComponent>(mindContainer.Mind)?.Session;
 
         if (dead && !mindContainer.HasMind)
@@ -164,7 +165,7 @@ public abstract class SharedMindSystem : EntitySystem
         if (targetMobState == null)
             return true;
         // They might actually be alive.
-        return _mobStateSystem.IsDead(mind.OwnedEntity.Value, targetMobState);
+        return _mobState.IsDead(mind.OwnedEntity.Value, targetMobState);
     }
 
     public virtual void Visit(EntityUid mindId, EntityUid entity, MindComponent? mind = null)
@@ -399,6 +400,30 @@ public abstract class SharedMindSystem : EntitySystem
     public string? GetCharacterName(NetUserId userId)
     {
         return TryGetMind(userId, out _, out var mind) ? mind.CharacterName : null;
+    }
+
+    /// <summary>
+    /// Returns a list of every living humanoid player's minds, except for a single one which is exluded.
+    /// </summary>
+    public List<EntityUid> GetAliveHumansExcept(EntityUid exclude)
+    {
+        var mindQuery = EntityQuery<MindComponent>();
+
+        var allHumans = new List<EntityUid>();
+        // HumanoidAppearanceComponent is used to prevent mice, pAIs, etc from being chosen
+        var query = EntityQueryEnumerator<MindContainerComponent, MobStateComponent, HumanoidAppearanceComponent>();
+        while (query.MoveNext(out var uid, out var mc, out var mobState, out _))
+        {
+            // the player needs to have a mind and not be the excluded one
+            if (mc.Mind == null || mc.Mind == exclude)
+                continue;
+
+            // the player has to be alive
+            if (_mobState.IsAlive(uid, mobState))
+                allHumans.Add(mc.Mind.Value);
+        }
+
+        return allHumans;
     }
 }
 
