@@ -69,14 +69,14 @@ namespace Content.Server.VendingMachines
         {
             var price = 0.0;
 
-            foreach (var items in component.Items.Values)
+            foreach (var items in component.Inventories.Values)
             {
                 foreach (var item in items)
                 {
-                    if (!PrototypeManager.TryIndex<EntityPrototype>(item.ItemId, out var proto))
+                    if (!PrototypeManager.TryIndex<EntityPrototype>(item.Uids, out var proto))
                     {
                         _sawmill.Error(
-                            $"Unable to find entity prototype {item.ItemId} on {ToPrettyString(uid)} vending.");
+                            $"Unable to find entity prototype {item.Uids} on {ToPrettyString(uid)} vending.");
                         continue;
                     }
 
@@ -88,10 +88,15 @@ namespace Content.Server.VendingMachines
         }
 
         protected override void OnComponentInit(EntityUid uid,
-            VendingMachineInventoryComponent component,
+            VendingMachineInventoryComponent? component,
             ComponentInit args)
         {
             base.OnComponentInit(uid, component, args);
+
+            if (!Resolve(uid, ref component))
+            {
+                return;
+            }
 
             if (HasComp<ApcPowerReceiverComponent>(uid))
             {
@@ -271,13 +276,13 @@ namespace Content.Server.VendingMachines
                 return;
             }
 
-            if (string.IsNullOrEmpty(entry.ItemId))
+            if (string.IsNullOrEmpty(entry.Uids))
                 return;
 
             // Start Ejecting, and prevent users from ordering while anim playing
             vendComponent.Ejecting = true;
             vendComponent.Cooldown = _timing.CurTime + vendComponent.Delay;
-            vendComponent.NextItemToEject = entry.ItemId;
+            vendComponent.NextItemToEject = entry.Uids;
             vendComponent.ThrowNextItem = throwItem;
 
             entry.Amount--;
@@ -334,10 +339,10 @@ namespace Content.Server.VendingMachines
 
             if (forceEject)
             {
-                ejectComponent.NextItemToEject = item.ItemId;
+                ejectComponent.NextItemToEject = item.Uids;
                 ejectComponent.ThrowNextItem = throwItem;
 
-                var entry = GetEntry(uid, item.ItemId, item.TypeId, inventoryComponent);
+                var entry = GetEntry(uid, item.Uids, item.TypeId, inventoryComponent);
 
                 if (entry != null)
                     entry.Amount--;
@@ -346,7 +351,7 @@ namespace Content.Server.VendingMachines
             }
             else
             {
-                TryEjectVendorItem(uid, item.TypeId, item.ItemId, throwItem, ejectComponent);
+                TryEjectVendorItem(uid, item.TypeId, item.Uids, throwItem, ejectComponent);
             }
         }
 
@@ -429,14 +434,14 @@ namespace Content.Server.VendingMachines
             string entryId,
             string typeId)
         {
-            var items = inventoryComponent.Items.GetValueOrDefault(typeId);
+            var items = inventoryComponent.Inventories.GetValueOrDefault(typeId);
 
             if (items == null)
                 return null;
 
             foreach (var item in items)
             {
-                if (item.ItemId == entryId)
+                if (item.Uids == entryId)
                     return item;
             }
 

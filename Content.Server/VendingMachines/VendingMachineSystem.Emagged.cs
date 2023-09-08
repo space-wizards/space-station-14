@@ -8,7 +8,7 @@ public sealed partial class VendingMachineSystem
 {
     private void OnEmagged(EntityUid uid, VendingMachineInventoryComponent component, ref GotEmaggedEvent args)
     {
-        var emaggedItems = component.Items.GetValueOrDefault(VendingMachinesInventoryTypeNames.Emagged);
+        var emaggedItems = component.Inventories.GetValueOrDefault(VendingMachinesInventoryTypeNames.Emagged);
 
         if (emaggedItems == null)
         {

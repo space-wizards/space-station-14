@@ -8,7 +8,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Shared.VendingMachines.Components;
 
 [RegisterComponent, NetworkedComponent]
-public sealed class VendingMachineInventoryComponent : Component
+public sealed partial class VendingMachineInventoryComponent : Component
 {
     /// <summary>
     /// PrototypeID for the vending machine's inventory, see <see cref="VendingMachineInventoryPrototype"/>
@@ -30,9 +30,9 @@ public sealed class VendingMachineInventoryComponent : Component
     public EntityWhitelist? Whitelist = null;
 
     [ViewVariables]
-    public Dictionary<string, List<VendingMachineInventoryEntry>> Items = new();
+    public Dictionary<string, List<VendingMachineInventoryEntry>> Inventories = new();
 
-    public Container? Storage;
+    public Container Storage = default!;
 
     public bool Contraband;
 }

@@ -7,7 +7,10 @@ namespace Content.Shared.VendingMachines;
 public sealed class VendingMachineInventoryEntry
 {
     [ViewVariables(VVAccess.ReadWrite)]
-    public string ItemId;
+    public List<EntityUid> Uids;
+
+    [ViewVariables(VVAccess.ReadWrite)]
+    public string PrototypeId;
 
     [ViewVariables(VVAccess.ReadWrite)]
     public string TypeId;
@@ -15,11 +18,13 @@ public sealed class VendingMachineInventoryEntry
     [ViewVariables(VVAccess.ReadWrite)]
     public uint Amount;
 
-    public VendingMachineInventoryEntry(string itemId, string typeId, uint amount)
+    public VendingMachineInventoryEntry(string prototypeId, string typeId, uint amount)
     {
-        ItemId = itemId;
+        PrototypeId = prototypeId;
         TypeId = typeId;
         Amount = amount;
+
+        Uids = new List<EntityUid>();
     }
 }
 
@@ -68,7 +73,7 @@ public enum EjectWireKey : byte
     StatusKey,
 }
 
-public sealed class VendingMachineSelfDispenseEvent : InstantActionEvent
+public sealed partial class VendingMachineSelfDispenseEvent : InstantActionEvent
 {
 
 };

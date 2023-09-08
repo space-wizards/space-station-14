@@ -5,14 +5,14 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 namespace Content.Shared.VendingMachines.Components;
 
 [RegisterComponent, NetworkedComponent]
-public sealed class VendingMachineEjectComponent : Component
+public sealed partial class VendingMachineEjectComponent : Component
 {
     /// <summary>
     /// Used by the server to determine how long the vending machine stays in the "Deny" state.
     /// Used by the client to determine how long the deny animation should be played.
     /// </summary>
     [DataField("denyDelay")]
-    public readonly TimeSpan DenyDelay = TimeSpan.FromSeconds(2.0f);
+    public TimeSpan DenyDelay = TimeSpan.FromSeconds(2.0f);
 
     /// <summary>
     ///    Data for understanding when the deny eject action was performed
@@ -26,7 +26,7 @@ public sealed class VendingMachineEjectComponent : Component
     /// Used by the client to determine how long the deny animation should be played.
     /// </summary>
     [DataField("delay")]
-    public readonly TimeSpan Delay = TimeSpan.FromSeconds(1.2f);
+    public TimeSpan Delay = TimeSpan.FromSeconds(1.2f);
 
     /// <summary>
     ///    Data for understanding when the eject action was performed

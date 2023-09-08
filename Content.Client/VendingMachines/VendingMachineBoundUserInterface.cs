@@ -56,7 +56,7 @@ namespace Content.Client.VendingMachines
             if (selectedItem == null)
                 return;
 
-            SendMessage(new VendingMachineEjectMessage(selectedItem.TypeId, selectedItem.ItemId));
+            SendMessage(new VendingMachineEjectMessage(selectedItem.TypeId, selectedItem.Uids));
         }
 
         protected override void Dispose(bool disposing)

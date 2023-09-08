@@ -6,7 +6,7 @@ namespace Content.Shared.Broke;
 /// The component required for the operation of VendingMachine.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-public sealed class BrokeComponent : Component
+public sealed partial class BrokeComponent : Component
 {
     /// <summary>
     /// It is used as a flag indicating that the object is broken.
