@@ -134,7 +134,9 @@ public sealed class NpcFactionSystem : EntitySystem
         if (TryComp<FactionExceptionComponent>(entity, out var factionException))
         {
             // ignore anything from enemy faction that we are explicitly friendly towards
-            return hostiles.Where(target => !_factionException.IsIgnored(factionException, target));
+            return hostiles
+                .Union(_factionException.GetHostiles(entity, factionException))
+                .Where(target => !_factionException.IsIgnored(entity, target, factionException));
         }
 
         return hostiles;

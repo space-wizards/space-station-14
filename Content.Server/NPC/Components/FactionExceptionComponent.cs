@@ -10,8 +10,14 @@ namespace Content.Server.NPC.Components;
 public sealed partial class FactionExceptionComponent : Component
 {
     /// <summary>
-    /// List of entities that this NPC will refuse to attack
+    /// Hashset of entities that this NPC will refuse to attack
     /// </summary>
     [DataField("ignored")]
     public HashSet<EntityUid> Ignored = new();
+
+    /// <summary>
+    /// Hashset of entities that this NPC will attack, regardless of faction.
+    /// </summary>
+    [DataField("hostiles")]
+    public HashSet<EntityUid> Hostiles = new();
 }
