@@ -8,7 +8,7 @@ namespace Content.Server.Gateway.Components;
 /// Controlling gateway that links to other gateway destinations on the server.
 /// </summary>
 [RegisterComponent, Access(typeof(GatewaySystem))]
-public sealed class GatewayComponent : Component
+public sealed partial class GatewayComponent : Component
 {
     /// <summary>
     /// Sound to play when opening or closing the portal.

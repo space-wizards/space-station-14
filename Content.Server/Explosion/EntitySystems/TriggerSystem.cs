@@ -184,13 +184,13 @@ namespace Content.Server.Explosion.EntitySystems
 
         private void OnTriggerCollide(EntityUid uid, TriggerOnCollideComponent component, ref StartCollideEvent args)
         {
-            if (args.OurFixture.ID == component.FixtureID && (!component.IgnoreOtherNonHard || args.OtherFixture.Hard))
-                Trigger(component.Owner);
+            if (args.OurFixtureId == component.FixtureID && (!component.IgnoreOtherNonHard || args.OtherFixture.Hard))
+                Trigger(uid);
         }
 
         private void OnActivate(EntityUid uid, TriggerOnActivateComponent component, ActivateInWorldEvent args)
         {
-            Trigger(component.Owner, args.User);
+            Trigger(uid, args.User);
             args.Handled = true;
         }
 

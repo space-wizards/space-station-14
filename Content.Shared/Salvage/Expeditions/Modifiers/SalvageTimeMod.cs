@@ -7,13 +7,13 @@ public sealed class SalvageTimeMod : IPrototype, ISalvageMod
 {
     [IdDataField] public string ID { get; } = default!;
 
-    [DataField("desc")] public string Description { get; } = string.Empty;
+    [DataField("desc")] public string Description { get; private set; } = string.Empty;
 
     /// <summary>
     /// Cost for difficulty modifiers.
     /// </summary>
     [DataField("cost")]
-    public float Cost { get; }
+    public float Cost { get; private set; }
 
     [DataField("minDuration")]
     public int MinDuration = 630;

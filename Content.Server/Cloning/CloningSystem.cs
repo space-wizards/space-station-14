@@ -1,41 +1,40 @@
-using Content.Shared.GameTicking;
-using Content.Shared.Damage;
-using Content.Shared.Examine;
-using Content.Shared.Cloning;
+using Content.Server.Atmos.EntitySystems;
+using Content.Server.Chat.Systems;
+using Content.Server.Cloning.Components;
+using Content.Server.Construction;
+using Content.Server.DeviceLinking.Systems;
+using Content.Server.EUI;
+using Content.Server.Fluids.EntitySystems;
+using Content.Server.Humanoid;
+using Content.Server.Jobs;
+using Content.Server.Materials;
+using Content.Server.Popups;
+using Content.Server.Power.EntitySystems;
+using Content.Server.Traits.Assorted;
 using Content.Shared.Atmos;
 using Content.Shared.CCVar;
-using Content.Server.Cloning.Components;
-using Content.Server.Mind.Components;
-using Content.Server.Power.EntitySystems;
-using Content.Server.Atmos.EntitySystems;
-using Content.Server.EUI;
-using Content.Server.Humanoid;
 using Content.Shared.Chemistry.Components;
-using Content.Server.Fluids.EntitySystems;
-using Content.Server.Chat.Systems;
-using Content.Server.Construction;
-using Content.Server.DeviceLinking.Events;
-using Content.Server.DeviceLinking.Systems;
-using Content.Server.Materials;
-using Content.Server.Jobs;
+using Content.Shared.Cloning;
+using Content.Shared.Damage;
 using Content.Shared.DeviceLinking.Events;
 using Content.Shared.Emag.Components;
-using Content.Server.Mind;
+using Content.Shared.Emag.Systems;
+using Content.Shared.Examine;
+using Content.Shared.GameTicking;
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Prototypes;
-using Content.Shared.Zombies;
+using Content.Shared.Mind;
+using Content.Shared.Mind.Components;
 using Content.Shared.Mobs.Systems;
-using Robust.Server.GameObjects;
+using Content.Shared.Roles.Jobs;
 using Robust.Server.Containers;
+using Robust.Server.GameObjects;
 using Robust.Server.Player;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Random;
 using Robust.Shared.Configuration;
 using Robust.Shared.Containers;
 using Robust.Shared.Physics.Components;
-using Content.Shared.Emag.Systems;
-using Content.Server.Popups;
-using Content.Server.Traits.Assorted;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 
 namespace Content.Server.Cloning
 {
@@ -60,10 +59,11 @@ namespace Content.Server.Cloning
         [Dependency] private readonly IConfigurationManager _configManager = default!;
         [Dependency] private readonly MaterialStorageSystem _material = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
-        [Dependency] private readonly MindSystem _mindSystem = default!;
+        [Dependency] private readonly SharedMindSystem _mindSystem = default!;
         [Dependency] private readonly MetaDataSystem _metaSystem = default!;
+        [Dependency] private readonly SharedJobSystem _jobs = default!;
 
-        public readonly Dictionary<Mind.Mind, EntityUid> ClonesWaitingForMind = new();
+        public readonly Dictionary<MindComponent, EntityUid> ClonesWaitingForMind = new();
         public const float EasyModeCloningCost = 0.7f;
 
         public override void Initialize()
@@ -102,7 +102,7 @@ namespace Content.Server.Cloning
             args.AddPercentageUpgrade("cloning-pod-component-upgrade-biomass-requirement", component.BiomassRequirementMultiplier);
         }
 
-        internal void TransferMindToClone(Mind.Mind mind)
+        internal void TransferMindToClone(EntityUid mindId, MindComponent mind)
         {
             if (!ClonesWaitingForMind.TryGetValue(mind, out var entity) ||
                 !EntityManager.EntityExists(entity) ||
@@ -110,8 +110,8 @@ namespace Content.Server.Cloning
                 mindComp.Mind != null)
                 return;
 
-            _mindSystem.TransferTo(mind, entity, ghostCheckOverride: true);
-            _mindSystem.UnVisit(mind);
+            _mindSystem.TransferTo(mindId, entity, ghostCheckOverride: true, mind: mind);
+            _mindSystem.UnVisit(mindId, mind);
             ClonesWaitingForMind.Remove(mind);
         }
 
@@ -154,7 +154,7 @@ namespace Content.Server.Cloning
             args.PushMarkup(Loc.GetString("cloning-pod-biomass", ("number", _material.GetMaterialAmount(uid, component.RequiredMaterial))));
         }
 
-        public bool TryCloning(EntityUid uid, EntityUid bodyToClone, Mind.Mind mind, CloningPodComponent? clonePod, float failChanceModifier = 1)
+        public bool TryCloning(EntityUid uid, EntityUid bodyToClone, MindComponent mind, CloningPodComponent? clonePod, float failChanceModifier = 1)
         {
             if (!Resolve(uid, ref clonePod))
                 return false;
@@ -167,7 +167,7 @@ namespace Content.Server.Cloning
                 if (EntityManager.EntityExists(clone) &&
                     !_mobStateSystem.IsDead(clone) &&
                     TryComp<MindContainerComponent>(clone, out var cloneMindComp) &&
-                    (cloneMindComp.Mind == null || cloneMindComp.Mind == mind))
+                    (cloneMindComp.Mind == null || cloneMindComp.Mind == mind.Owner))
                     return false; // Mind already has clone
 
                 ClonesWaitingForMind.Remove(mind);
@@ -253,16 +253,16 @@ namespace Content.Server.Cloning
             clonePod.BodyContainer.Insert(mob);
             ClonesWaitingForMind.Add(mind, mob);
             UpdateStatus(uid, CloningPodStatus.NoMind, clonePod);
-            _euiManager.OpenEui(new AcceptCloningEui(mind, this), client);
+            var mindId = mind.Owner;
+            _euiManager.OpenEui(new AcceptCloningEui(mindId, mind, this), client);
 
             AddComp<ActiveCloningPodComponent>(uid);
 
-            // TODO: Ideally, components like this should be on a mind entity so this isn't neccesary.
-            // Remove this when 'mind entities' are added.
+            // TODO: Ideally, components like this should be components on the mind entity so this isn't necessary.
             // Add on special job components to the mob.
-            if (mind.CurrentJob != null)
+            if (_jobs.MindTryGetJob(mindId, out _, out var prototype))
             {
-                foreach (var special in mind.CurrentJob.Prototype.Special)
+                foreach (var special in prototype.Special)
                 {
                     if (special is AddComponentSpecial)
                         special.AfterEquip(mob);

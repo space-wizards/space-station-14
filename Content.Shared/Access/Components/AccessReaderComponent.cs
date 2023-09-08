@@ -10,7 +10,7 @@ namespace Content.Shared.Access.Components;
 ///     and allows checking if something or somebody is authorized with these access levels.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-public sealed class AccessReaderComponent : Component
+public sealed partial class AccessReaderComponent : Component
 {
     /// <summary>
     /// Whether or not the accessreader is enabled.

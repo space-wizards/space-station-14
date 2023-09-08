@@ -6,7 +6,7 @@ namespace Content.Server.Light.Components
     ///     Component that represents a handheld expendable light which can be activated and eventually dies over time.
     /// </summary>
     [RegisterComponent]
-    public sealed class ExpendableLightComponent : SharedExpendableLightComponent
+    public sealed partial class ExpendableLightComponent : SharedExpendableLightComponent
     {
         /// <summary>
         ///     Status of light, whether or not it is emitting light.

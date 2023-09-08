@@ -5,7 +5,7 @@ namespace Content.Client.Inventory;
 /// </summary>
 [RegisterComponent]
 [Access(typeof(ClientInventorySystem))]
-public sealed class InventorySlotsComponent : Component
+public sealed partial class InventorySlotsComponent : Component
 {
     [ViewVariables]
     public readonly Dictionary<string, ClientInventorySystem.SlotData> SlotData = new ();

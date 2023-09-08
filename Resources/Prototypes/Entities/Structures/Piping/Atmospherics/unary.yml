@@ -239,7 +239,7 @@
       key: enum.ThermomachineUiKey.Key
     - type: WiresPanel
     - type: Wires
-      BoardName: "Thermomachine"
+      BoardName: wires-board-name-thermomachine
       LayoutId: Thermomachine
     - type: WiresVisuals
     - type: NodeContainer
@@ -284,7 +284,7 @@
             True: { state: freezerOn }
             False: { state: freezerOff }
     - type: GasThermoMachine
-      mode: Freezer
+      coefficientOfPerformance: -64
     - type: ApcPowerReceiver
       powerDisabled: true #starts off
     - type: Machine
@@ -327,7 +327,7 @@
             True: { state: heaterOn }
             False: { state: heaterOff }
     - type: GasThermoMachine
-      mode: Heater
+      coefficientOfPerformance: 32
     - type: ApcPowerReceiver
       powerDisabled: true #starts off
     - type: Machine

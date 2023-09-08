@@ -1,7 +1,7 @@
 namespace Content.Server.Power.Components;
 
 [RegisterComponent]
-public sealed class RiggableComponent : Component
+public sealed partial class RiggableComponent : Component
 {
     public const string SolutionName = "battery";
 

@@ -7,7 +7,7 @@ namespace Content.Server.Gateway.Components;
 /// A gateway destination linked to by station gateway(s).
 /// </summary>
 [RegisterComponent, Access(typeof(GatewaySystem))]
-public sealed class GatewayDestinationComponent : Component
+public sealed partial class GatewayDestinationComponent : Component
 {
     /// <summary>
     /// Whether this destination is shown in the gateway ui.

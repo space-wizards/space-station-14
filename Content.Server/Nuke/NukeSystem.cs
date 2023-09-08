@@ -12,6 +12,7 @@ using Content.Shared.Maps;
 using Content.Shared.Nuke;
 using Content.Shared.Popups;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
@@ -291,7 +292,7 @@ public sealed class NukeSystem : EntitySystem
         // play alert sound if time is running out
         if (nuke.RemainingTime <= nuke.AlertSoundTime && !nuke.PlayedAlertSound)
         {
-            _sound.PlayGlobalOnStation(uid, _audio.GetSound(nuke.AlertSound));
+            _sound.PlayGlobalOnStation(uid, _audio.GetSound(nuke.AlertSound), new AudioParams{Volume = -5f});
             _sound.StopStationEventMusic(uid, StationEventMusicType.Nuke);
             nuke.PlayedAlertSound = true;
         }

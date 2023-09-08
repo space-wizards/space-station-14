@@ -11,7 +11,7 @@ using Robust.Shared.Player;
 
 namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators.Specific;
 
-public sealed class MedibotInjectOperator : HTNOperator
+public sealed partial class MedibotInjectOperator : HTNOperator
 {
     [Dependency] private readonly IEntityManager _entMan = default!;
     private SharedAudioSystem _audio = default!;

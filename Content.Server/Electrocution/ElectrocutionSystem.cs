@@ -51,6 +51,7 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
     [Dependency] private readonly SharedStunSystem _stun = default!;
     [Dependency] private readonly SharedStutteringSystem _stuttering = default!;
     [Dependency] private readonly TagSystem _tag = default!;
+    [Dependency] private readonly MetaDataSystem _metaData = default!;
 
     [ValidatePrototypeId<StatusEffectPrototype>]
     private const string StatusEffectKey = "Electrocution";
@@ -358,7 +359,7 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
 
         // This shows up in the power monitor.
         // Yes. Yes exactly.
-        MetaData(electrocutionEntity).EntityName = MetaData(uid).EntityName;
+        _metaData.SetEntityName(electrocutionEntity, MetaData(uid).EntityName);
 
         electrocutionNode.CableEntity = sourceUid;
         electrocutionNode.NodeName = node.Name;

@@ -12,7 +12,7 @@ namespace Content.Shared.Teleportation.Components;
 ///     Using it with both portals active deactivates both.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-public sealed class HandTeleporterComponent : Component
+public sealed partial class HandTeleporterComponent : Component
 {
     [ViewVariables, DataField("firstPortal")]
     public EntityUid? FirstPortal = null;
@@ -43,6 +43,6 @@ public sealed class HandTeleporterComponent : Component
 }
 
 [Serializable, NetSerializable]
-public sealed class TeleporterDoAfterEvent : SimpleDoAfterEvent
+public sealed partial class TeleporterDoAfterEvent : SimpleDoAfterEvent
 {
 }

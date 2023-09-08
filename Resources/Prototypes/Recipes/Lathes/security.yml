@@ -208,27 +208,6 @@
     Glass: 5
 
 - type: latheRecipe
-  id: CartridgeAnomalousParticleDelta
-  result: CartridgeAnomalousParticleDelta
-  completetime: 2
-  materials:
-    Plastic: 25
-
-- type: latheRecipe
-  id: CartridgeAnomalousParticleEpsilon
-  result: CartridgeAnomalousParticleEpsilon
-  completetime: 2
-  materials:
-    Plastic: 25
-
-- type: latheRecipe
-  id: CartridgeAnomalousParticleZeta
-  result: CartridgeAnomalousParticleZeta
-  completetime: 2
-  materials:
-    Plastic: 25
-
-- type: latheRecipe
   id: TargetHuman
   result: TargetHuman
   completetime: 5

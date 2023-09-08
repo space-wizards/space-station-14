@@ -5,7 +5,7 @@ namespace Content.Shared.Electrocution
 {
     [Access(typeof(SharedElectrocutionSystem))]
     [RegisterComponent, NetworkedComponent]
-    public sealed class InsulatedComponent : Component
+    public sealed partial class InsulatedComponent : Component
     {
         /// <summary>
         ///     Siemens coefficient. Zero means completely insulated.

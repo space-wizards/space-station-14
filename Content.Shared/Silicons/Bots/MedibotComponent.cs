@@ -10,7 +10,7 @@ namespace Content.Shared.Silicons.Bots;
 /// </summary>
 [RegisterComponent]
 [Access(typeof(MedibotSystem))]
-public sealed class MedibotComponent : Component
+public sealed partial class MedibotComponent : Component
 {
     /// <summary>
     /// Med the bot will inject when UNDER the standard med damage threshold.

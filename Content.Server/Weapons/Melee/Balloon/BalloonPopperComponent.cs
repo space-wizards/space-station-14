@@ -8,7 +8,7 @@ namespace Content.Server.Weapons.Melee.Balloon;
 /// This is used for weapons that pop balloons on attack.
 /// </summary>
 [RegisterComponent]
-public sealed class BalloonPopperComponent : Component
+public sealed partial class BalloonPopperComponent : Component
 {
     /// <summary>
     /// The tag that marks something as a balloon.

@@ -53,6 +53,7 @@ namespace Content.Server.Salvage
         [Dependency] private readonly ShuttleConsoleSystem _shuttleConsoles = default!;
         [Dependency] private readonly StationSystem _station = default!;
         [Dependency] private readonly UserInterfaceSystem _ui = default!;
+        [Dependency] private readonly MetaDataSystem _metaData = default!;
 
         private const int SalvageLocationPlaceAttempts = 25;
 

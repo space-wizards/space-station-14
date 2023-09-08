@@ -3,10 +3,10 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Repairable;
 
-public abstract class SharedRepairableSystem : EntitySystem
+public abstract partial class SharedRepairableSystem : EntitySystem
 {
     [Serializable, NetSerializable]
-    protected sealed class RepairFinishedEvent : SimpleDoAfterEvent
+    protected sealed partial class RepairFinishedEvent : SimpleDoAfterEvent
     {
     }
 }

@@ -674,12 +674,12 @@ namespace Content.Shared.Chemistry.Components
 
         [Serializable, NetSerializable]
         [DataDefinition]
-        public readonly struct ReagentQuantity: IComparable<ReagentQuantity>
+        public readonly partial struct ReagentQuantity: IComparable<ReagentQuantity>
         {
             [DataField("ReagentId", customTypeSerializer:typeof(PrototypeIdSerializer<ReagentPrototype>), required:true)]
-            public readonly string ReagentId;
+            public string ReagentId { get; init; }
             [DataField("Quantity", required:true)]
-            public readonly FixedPoint2 Quantity;
+            public FixedPoint2 Quantity { get; init; }
 
             public ReagentQuantity(string reagentId, FixedPoint2 quantity)
             {

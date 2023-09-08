@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using BenchmarkDotNet.Attributes;
 using Content.IntegrationTests;
+using Content.IntegrationTests.Pair;
 using Content.Server.Maps;
 using Robust.Server.GameObjects;
 using Robust.Shared;
@@ -17,7 +18,7 @@ namespace Content.Benchmarks;
 [Virtual]
 public class MapLoadBenchmark
 {
-    private PairTracker _pair = default!;
+    private TestPair _pair = default!;
     private MapLoaderSystem _mapLoader = default!;
     private IMapManager _mapManager = default!;
 
@@ -27,7 +28,7 @@ public class MapLoadBenchmark
         ProgramShared.PathOffset = "../../../../";
 
         _pair = PoolManager.GetServerClient().GetAwaiter().GetResult();
-        var server = _pair.Pair.Server;
+        var server = _pair.Server;
 
         Paths = server.ResolveDependency<IPrototypeManager>()
             .EnumeratePrototypes<GameMapPrototype>()
@@ -54,7 +55,7 @@ public class MapLoadBenchmark
     public async Task LoadMap()
     {
         var mapPath = Paths[Map];
-        var server = _pair.Pair.Server;
+        var server = _pair.Server;
         await server.WaitPost(() =>
         {
             var success = _mapLoader.TryLoad(new MapId(10), mapPath, out _);
@@ -66,7 +67,7 @@ public class MapLoadBenchmark
     [IterationCleanup]
     public void IterationCleanup()
     {
-        var server = _pair.Pair.Server;
+        var server = _pair.Server;
         server.WaitPost(() =>
         {
             _mapManager.DeleteMap(new MapId(10));

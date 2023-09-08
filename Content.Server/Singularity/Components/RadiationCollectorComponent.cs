@@ -7,7 +7,7 @@ namespace Content.Server.Singularity.Components
     /// </summary>
     [RegisterComponent]
     [Access(typeof(RadiationCollectorSystem))]
-    public sealed class RadiationCollectorComponent : Component
+    public sealed partial class RadiationCollectorComponent : Component
     {
         /// <summary>
         ///     How much joules will collector generate for each rad.

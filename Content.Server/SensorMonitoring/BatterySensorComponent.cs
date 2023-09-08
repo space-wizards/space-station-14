@@ -9,7 +9,7 @@ namespace Content.Server.SensorMonitoring;
 /// The entity should also have a <see cref="BatteryComponent"/> and <see cref="PowerNetworkBatteryComponent"/>.
 /// </remarks>
 [RegisterComponent]
-public sealed class BatterySensorComponent : Component
+public sealed partial class BatterySensorComponent : Component
 {
 }
 

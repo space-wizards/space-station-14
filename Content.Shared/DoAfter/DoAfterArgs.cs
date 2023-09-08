@@ -5,38 +5,38 @@ namespace Content.Shared.DoAfter;
 
 [Serializable, NetSerializable]
 [DataDefinition]
-public sealed class DoAfterArgs
+public sealed partial class DoAfterArgs
 {
     /// <summary>
     ///     The entity invoking do_after
     /// </summary>
     [DataField("user", required: true)]
-    public readonly EntityUid User;
+    public EntityUid User;
 
     /// <summary>
     ///     How long does the do_after require to complete
     /// </summary>
     [DataField("delay", required: true)]
-    public readonly TimeSpan Delay;
+    public TimeSpan Delay;
 
     /// <summary>
     ///     Applicable target (if relevant)
     /// </summary>
     [DataField("target")]
-    public readonly EntityUid? Target;
+    public EntityUid? Target;
 
     /// <summary>
     ///     Entity used by the User on the Target.
     /// </summary>
     [DataField("using")]
-    public readonly EntityUid? Used;
+    public EntityUid? Used;
 
     #region Event options
     /// <summary>
     ///     The event that will get raised when the DoAfter has finished. If null, this will simply raise a <see cref="SimpleDoAfterEvent"/>
     /// </summary>
     [DataField("event", required: true)]
-    public readonly DoAfterEvent Event = default!;
+    public DoAfterEvent Event = default!;
 
     /// <summary>
     ///     This option determines how frequently the DoAfterAttempt event will get raised. Defaults to never raising the
@@ -49,7 +49,7 @@ public sealed class DoAfterArgs
     ///     Entity which will receive the directed event. If null, no directed event will be raised.
     /// </summary>
     [DataField("eventTarget")]
-    public readonly EntityUid? EventTarget;
+    public EntityUid? EventTarget;
 
     /// <summary>
     /// Should the DoAfter event broadcast? If this is false, then <see cref="EventTarget"/> should be a valid entity.

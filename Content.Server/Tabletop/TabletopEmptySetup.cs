@@ -3,7 +3,7 @@ using JetBrains.Annotations;
 namespace Content.Server.Tabletop
 {
     [UsedImplicitly]
-    public sealed class TabletopEmptySetup : TabletopSetup
+    public sealed partial class TabletopEmptySetup : TabletopSetup
     {
         public override void SetupTabletop(TabletopSession session, IEntityManager entityManager)
         {

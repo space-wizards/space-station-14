@@ -8,7 +8,7 @@ namespace Content.Client.Light.Components;
 /// Component that represents a handheld expendable light which can be activated and eventually dies over time.
 /// </summary>
 [RegisterComponent]
-public sealed class ExpendableLightComponent : SharedExpendableLightComponent
+public sealed partial class ExpendableLightComponent : SharedExpendableLightComponent
 {
     /// <summary>
     /// The icon state used by expendable lights when the they have been completely expended.

@@ -1,4 +1,5 @@
-﻿using Content.Shared.Body.Components;
+﻿using System.Diagnostics.CodeAnalysis;
+using Content.Shared.Body.Components;
 using Content.Shared.Disposal.Components;
 using Content.Shared.DoAfter;
 using Content.Shared.DragDrop;
@@ -7,7 +8,6 @@ using Content.Shared.Item;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Throwing;
-using JetBrains.Annotations;
 using Robust.Shared.Audio;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
@@ -18,7 +18,7 @@ using Robust.Shared.Timing;
 namespace Content.Shared.Disposal;
 
 [Serializable, NetSerializable]
-public sealed class DisposalDoAfterEvent : SimpleDoAfterEvent
+public sealed partial class DisposalDoAfterEvent : SimpleDoAfterEvent
 {
 }
 
@@ -33,6 +33,10 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
 
     // Percentage
     public const float PressurePerSecond = 0.05f;
+
+    public abstract bool HasDisposals([NotNullWhen(true)] EntityUid? uid);
+
+    public abstract bool ResolveDisposals(EntityUid uid, [NotNullWhen(true)] ref SharedDisposalUnitComponent? component);
 
     /// <summary>
     /// Gets the current pressure state of a disposals unit.

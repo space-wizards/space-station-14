@@ -6,7 +6,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.Power.Components
 {
     [RegisterComponent]
-    public sealed class ChargerComponent : Component
+    public sealed partial class ChargerComponent : Component
     {
         [ViewVariables]
         public CellChargerStatus Status;

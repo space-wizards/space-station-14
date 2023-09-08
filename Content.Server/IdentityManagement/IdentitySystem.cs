@@ -19,6 +19,7 @@ public class IdentitySystem : SharedIdentitySystem
 {
     [Dependency] private readonly IdCardSystem _idCard = default!;
     [Dependency] private readonly IAdminLogManager _adminLog = default!;
+    [Dependency] private readonly MetaDataSystem _metaData = default!;
 
     private HashSet<EntityUid> _queuedIdentityUpdates = new();
 
@@ -98,7 +99,7 @@ public class IdentitySystem : SharedIdentitySystem
         if (name == Name(ident))
             return;
 
-        MetaData(ident).EntityName = name;
+        _metaData.SetEntityName(ident, name);
 
         _adminLog.Add(LogType.Identity, LogImpact.Medium, $"{ToPrettyString(uid)} changed identity to {name}");
         RaiseLocalEvent(new IdentityChangedEvent(uid, ident));

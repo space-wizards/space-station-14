@@ -101,6 +101,20 @@
     sprite: Clothing/OuterClothing/Suits/spaceninja.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Suits/spaceninja.rsi
+  - type: StealthClothing
+    visibility: 0.3
+    toggleAction:
+      # have to plan (un)cloaking ahead of time
+      useDelay: 5
+      name: action-name-toggle-phase-cloak
+      description: action-desc-toggle-phase-cloak
+      priority: -9
+      event: !type:ToggleStealthEvent
+  - type: PressureProtection
+    highPressureMultiplier: 0.6
+    lowPressureMultiplier: 1000
+  - type: TemperatureProtection
+    coefficient: 0.01
   - type: Armor
     modifiers:
       coefficients:

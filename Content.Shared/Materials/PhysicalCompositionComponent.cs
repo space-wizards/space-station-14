@@ -14,7 +14,7 @@ namespace Content.Shared.Materials;
 /// combination of the two systems.
 /// </remarks>
 [RegisterComponent]
-public sealed class PhysicalCompositionComponent : Component
+public sealed partial class PhysicalCompositionComponent : Component
 {
     /// <summary>
     /// The materials that "make up" this entity

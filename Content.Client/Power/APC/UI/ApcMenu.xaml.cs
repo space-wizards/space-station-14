@@ -17,7 +17,6 @@ namespace Content.Client.Power.APC.UI
     [GenerateTypedNameReferences]
     public sealed partial class ApcMenu : FancyWindow
     {
-        [Dependency] private readonly IEntityManager _entityManager = default!;
         public ApcMenu(ApcBoundUserInterface owner)
         {
             IoCManager.InjectDependencies(this);

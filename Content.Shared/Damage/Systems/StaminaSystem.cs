@@ -394,11 +394,10 @@ public sealed partial class StaminaSystem : EntitySystem
         component.Critical = true;
         component.StaminaDamage = component.CritThreshold;
 
-        var stunTime = TimeSpan.FromSeconds(6);
-        _stunSystem.TryParalyze(uid, stunTime, true);
+        _stunSystem.TryParalyze(uid, component.StunTime, true);
 
         // Give them buffer before being able to be re-stunned
-        component.NextUpdate = _timing.CurTime + stunTime + StamCritBufferTime;
+        component.NextUpdate = _timing.CurTime + component.StunTime + StamCritBufferTime;
         EnsureComp<ActiveStaminaComponent>(uid);
         Dirty(component);
         _adminLogger.Add(LogType.Stamina, LogImpact.Medium, $"{ToPrettyString(uid):user} entered stamina crit");

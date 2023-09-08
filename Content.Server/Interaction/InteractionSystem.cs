@@ -25,8 +25,6 @@ namespace Content.Server.Interaction
     [UsedImplicitly]
     public sealed partial class InteractionSystem : SharedInteractionSystem
     {
-        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-        [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
         [Dependency] private readonly SharedContainerSystem _container = default!;
         [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
@@ -36,6 +34,8 @@ namespace Content.Server.Interaction
             base.Initialize();
 
             SubscribeNetworkEvent<DragDropRequestEvent>(HandleDragDropRequestEvent);
+
+            SubscribeLocalEvent<BoundUserInterfaceCheckRangeEvent>(HandleUserInterfaceRangeCheck);
         }
 
         public override bool CanAccessViaStorage(EntityUid user, EntityUid target)
@@ -93,5 +93,20 @@ namespace Content.Server.Interaction
         }
 
         #endregion
+
+        private void HandleUserInterfaceRangeCheck(ref BoundUserInterfaceCheckRangeEvent ev)
+        {
+            if (ev.Player.AttachedEntity is not { } user)
+                return;
+
+            if (InRangeUnobstructed(user, ev.Target, ev.UserInterface.InteractionRange))
+            {
+                ev.Result = BoundUserInterfaceRangeResult.Pass;
+            }
+            else
+            {
+                ev.Result = BoundUserInterfaceRangeResult.Fail;
+            }
+        }
     }
 }

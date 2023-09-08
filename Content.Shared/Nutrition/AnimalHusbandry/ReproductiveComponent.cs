@@ -11,7 +11,7 @@ namespace Content.Shared.Nutrition.AnimalHusbandry;
 /// can create several "child" entities.
 /// </summary>
 [RegisterComponent]
-public sealed class ReproductiveComponent : Component
+public sealed partial class ReproductiveComponent : Component
 {
     /// <summary>
     /// The next time when breeding will be attempted.

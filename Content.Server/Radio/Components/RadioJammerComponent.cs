@@ -7,7 +7,7 @@ namespace Content.Server.Radio.Components;
 /// </summary>
 [RegisterComponent]
 [Access(typeof(JammerSystem))]
-public sealed class RadioJammerComponent : Component
+public sealed partial class RadioJammerComponent : Component
 {
     [DataField("range"), ViewVariables(VVAccess.ReadWrite)]
     public float Range = 8f;

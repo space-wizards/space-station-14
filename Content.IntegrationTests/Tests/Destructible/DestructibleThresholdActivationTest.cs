@@ -20,15 +20,15 @@ namespace Content.IntegrationTests.Tests.Destructible
         [Test]
         public async Task Test()
         {
-            await using var pairTracker = await PoolManager.GetServerClient();
-            var server = pairTracker.Pair.Server;
+            await using var pair = await PoolManager.GetServerClient();
+            var server = pair.Server;
 
             var sEntityManager = server.ResolveDependency<IEntityManager>();
             var sPrototypeManager = server.ResolveDependency<IPrototypeManager>();
             var sEntitySystemManager = server.ResolveDependency<IEntitySystemManager>();
             var audio = sEntitySystemManager.GetEntitySystem<SharedAudioSystem>();
 
-            var testMap = await PoolManager.CreateTestMap(pairTracker);
+            var testMap = await pair.CreateTestMap();
 
             EntityUid sDestructibleEntity = default;
             DamageableComponent sDamageableComponent = null;
@@ -288,7 +288,7 @@ namespace Content.IntegrationTests.Tests.Destructible
                     Assert.That(sTestThresholdListenerSystem.ThresholdsReached, Is.Empty);
                 });
             });
-            await pairTracker.CleanReturnAsync();
+            await pair.CleanReturnAsync();
         }
     }
 }

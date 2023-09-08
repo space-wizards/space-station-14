@@ -7,7 +7,7 @@ namespace Content.Shared.Atmos.Miasma;
 /// It may be expanded to food at some point, but it's just for mobs right now.
 /// </summary>
 [RegisterComponent]
-public sealed class PerishableComponent : Component
+public sealed partial class PerishableComponent : Component
 {
     /// <summary>
     /// How long it takes after death to start rotting.

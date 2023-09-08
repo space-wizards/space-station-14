@@ -22,7 +22,7 @@ namespace Content.Benchmarks
         {
             PoolManager.Startup(typeof(Program).Assembly);
             var pair = await PoolManager.GetServerClient();
-            var gameMaps = pair.Pair.Server.ResolveDependency<IPrototypeManager>().EnumeratePrototypes<GameMapPrototype>().ToList();
+            var gameMaps = pair.Server.ResolveDependency<IPrototypeManager>().EnumeratePrototypes<GameMapPrototype>().ToList();
             MapLoadBenchmark.MapsSource = gameMaps.Select(x => x.ID);
             await pair.CleanReturnAsync();
 

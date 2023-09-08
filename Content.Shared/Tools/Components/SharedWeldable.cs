@@ -2,7 +2,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Tools.Components;
 
-public abstract class SharedWeldableComponent : Component
+public abstract partial class SharedWeldableComponent : Component
 {
 
 }

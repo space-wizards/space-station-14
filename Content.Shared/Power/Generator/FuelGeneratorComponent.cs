@@ -1,19 +1,24 @@
 ﻿using Robust.Shared.GameStates;
-using Robust.Shared.Serialization;
 
 namespace Content.Shared.Power.Generator;
 
 /// <summary>
 /// This is used for generators that run off some kind of fuel.
 /// </summary>
-[RegisterComponent, NetworkedComponent, Access(typeof(SharedGeneratorSystem))]
-public sealed class FuelGeneratorComponent : Component
+/// <remarks>
+/// <para>
+/// Generators must be anchored to be able to run.
+/// </para>
+/// </remarks>
+/// <seealso cref="SharedGeneratorSystem"/>
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState, Access(typeof(SharedGeneratorSystem))]
+public sealed partial class FuelGeneratorComponent : Component
 {
     /// <summary>
-    /// The amount of fuel left in the generator.
+    /// Is the generator currently running?
     /// </summary>
-    [DataField("remainingFuel"), ViewVariables(VVAccess.ReadWrite)]
-    public float RemainingFuel;
+    [DataField("on"), ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
+    public bool On;
 
     /// <summary>
     /// The generator's target power.
@@ -26,6 +31,15 @@ public sealed class FuelGeneratorComponent : Component
     /// </summary>
     [DataField("maxTargetPower"), ViewVariables(VVAccess.ReadWrite)]
     public float MaxTargetPower = 30_000.0f;
+
+    /// <summary>
+    /// The minimum target power.
+    /// </summary>
+    /// <remarks>
+    /// Setting this to any value above 0 means that the generator can't idle without consuming some amount of fuel.
+    /// </remarks>
+    [DataField("minTargetPower"), ViewVariables(VVAccess.ReadWrite)]
+    public float MinTargetPower = 1_000;
 
     /// <summary>
     /// The "optimal" power at which the generator is considered to be at 100% efficiency.
@@ -44,44 +58,4 @@ public sealed class FuelGeneratorComponent : Component
     /// </summary>
     [DataField("fuelEfficiencyConstant")]
     public float FuelEfficiencyConstant = 1.3f;
-}
-
-/// <summary>
-/// Sent to the server to adjust the targeted power level.
-/// </summary>
-[Serializable, NetSerializable]
-public sealed class SetTargetPowerMessage : BoundUserInterfaceMessage
-{
-    public int TargetPower;
-
-    public SetTargetPowerMessage(int targetPower)
-    {
-        TargetPower = targetPower;
-    }
-}
-
-/// <summary>
-/// Contains network state for FuelGeneratorComponent.
-/// </summary>
-[Serializable, NetSerializable]
-public sealed class SolidFuelGeneratorComponentBuiState : BoundUserInterfaceState
-{
-    public float RemainingFuel;
-    public float TargetPower;
-    public float MaximumPower;
-    public float OptimalPower;
-
-    public SolidFuelGeneratorComponentBuiState(FuelGeneratorComponent component)
-    {
-        RemainingFuel = component.RemainingFuel;
-        TargetPower = component.TargetPower;
-        MaximumPower = component.MaxTargetPower;
-        OptimalPower = component.OptimalPower;
-    }
-}
-
-[Serializable, NetSerializable]
-public enum GeneratorComponentUiKey
-{
-    Key
 }

@@ -13,7 +13,7 @@ namespace Content.Shared.Weapons.Melee;
 /// When given to a mob lets them do unarmed attacks, or when given to an item lets someone wield it to do attacks.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-public sealed class MeleeWeaponComponent : Component
+public sealed partial class MeleeWeaponComponent : Component
 {
     // TODO: This is becoming bloated as shit.
     // This should just be its own component for alt attacks.

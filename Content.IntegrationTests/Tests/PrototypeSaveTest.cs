@@ -29,20 +29,11 @@ namespace Content.IntegrationTests.Tests;
 [TestFixture]
 public sealed class PrototypeSaveTest
 {
-    private readonly HashSet<string> _ignoredPrototypes = new()
-    {
-        "Singularity", // physics collision uses "AllMask" (-1). The flag serializer currently fails to save this because this features un-named bits.
-        "constructionghost",
-        // Don't add to this list unless you have a good reason
-        // Or it is just temporary because tests stopped working and now master has too many broken entities.
-    };
-
     [Test]
     public async Task UninitializedSaveTest()
     {
-        // Apparently SpawnTest fails to clean up properly. Due to the similarities, I'll assume this also fails.
-        await using var pairTracker = await PoolManager.GetServerClient();
-        var server = pairTracker.Pair.Server;
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
 
         var mapManager = server.ResolveDependency<IMapManager>();
         var entityMan = server.ResolveDependency<IEntityManager>();
@@ -81,7 +72,7 @@ public sealed class PrototypeSaveTest
             if (prototype.Abstract)
                 continue;
 
-            if (pairTracker.Pair.IsTestPrototype(prototype))
+            if (pair.IsTestPrototype(prototype))
                 continue;
 
             // Yea this test just doesn't work with this, it parents a grid to another grid and causes game logic to explode.
@@ -90,9 +81,6 @@ public sealed class PrototypeSaveTest
 
             // Currently mobs and such can't be serialized, but they aren't flagged as serializable anyways.
             if (!prototype.MapSavable)
-                continue;
-
-            if (_ignoredPrototypes.Contains(prototype.ID))
                 continue;
 
             if (prototype.SetSuffix == "DEBUG")
@@ -165,10 +153,7 @@ public sealed class PrototypeSaveTest
                             var diff = compMapping.Except(protoMapping);
 
                             if (diff != null && diff.Children.Count != 0)
-                            {
-                                var modComps = string.Join(",", diff.Keys.Select(x => x.ToString()));
-                                Assert.Fail($"Prototype {prototype.ID} modifies component on spawn: {compName}. Modified fields: {modComps}");
-                            }
+                                Assert.Fail($"Prototype {prototype.ID} modifies component on spawn: {compName}. Modified yaml:\n{diff}");
                         }
                         else
                         {
@@ -187,7 +172,7 @@ public sealed class PrototypeSaveTest
                 }
             });
         });
-        await pairTracker.CleanReturnAsync();
+        await pair.CleanReturnAsync();
     }
 
     public sealed class TestEntityUidContext : ISerializationContext,

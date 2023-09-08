@@ -10,10 +10,10 @@ namespace Content.Shared.Roles
     /// Abstract class for playtime and other requirements for role gates.
     /// </summary>
     [ImplicitDataDefinitionForInheritors]
-    public abstract class JobRequirement{}
+    public abstract partial class JobRequirement{}
 
     [UsedImplicitly]
-    public sealed class DepartmentTimeRequirement : JobRequirement
+    public sealed partial class DepartmentTimeRequirement : JobRequirement
     {
         /// <summary>
         /// Which department needs the required amount of time.
@@ -37,7 +37,7 @@ namespace Content.Shared.Roles
     }
 
     [UsedImplicitly]
-    public sealed class RoleTimeRequirement : JobRequirement
+    public sealed partial class RoleTimeRequirement : JobRequirement
     {
         /// <summary>
         /// What particular role they need the time requirement with.
@@ -53,7 +53,7 @@ namespace Content.Shared.Roles
     }
 
     [UsedImplicitly]
-    public sealed class OverallPlaytimeRequirement : JobRequirement
+    public sealed partial class OverallPlaytimeRequirement : JobRequirement
     {
         /// <inheritdoc cref="DepartmentTimeRequirement.Time"/>
         [DataField("time")] public TimeSpan Time;

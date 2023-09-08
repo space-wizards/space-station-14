@@ -44,8 +44,8 @@ namespace Content.IntegrationTests.Tests.Tag
         [Test]
         public async Task TagComponentTest()
         {
-            await using var pairTracker = await PoolManager.GetServerClient();
-            var server = pairTracker.Pair.Server;
+            await using var pair = await PoolManager.GetServerClient();
+            var server = pair.Server;
 
             var sEntityManager = server.ResolveDependency<IEntityManager>();
             var sPrototypeManager = server.ResolveDependency<IPrototypeManager>();
@@ -240,7 +240,7 @@ namespace Content.IntegrationTests.Tests.Tag
                     tagSystem.HasAllTags(sTagComponent, UnregisteredTag);
                 });
             });
-            await pairTracker.CleanReturnAsync();
+            await pair.CleanReturnAsync();
         }
     }
 }
