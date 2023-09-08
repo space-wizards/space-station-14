@@ -23,7 +23,22 @@ namespace Content.Server.Objectives.Conditions
         /// <summary>
         /// Whether the target must be truly dead, ignores missing evac.
         /// </summary>
-        protected bool RequireDead = false;
+        [DataField("requireDead")]
+        public bool RequireDead = false;
+
+        /// <summary>
+        /// Locale id for the objective title.
+        /// It is passed "targetName" and "job" arguments.
+        /// </summary>
+        [DataField("title")]
+        public string TitleText = "objective-condition-kill-person-title";
+
+        /// <summary>
+        /// Locale id for the objective description.
+        /// No arguments are passed.
+        /// </summary>
+        [DataField("description")]
+        public string DescriptionText = "objective-condition-kill-person-description";
 
         public string Title
         {
@@ -33,14 +48,11 @@ namespace Content.Server.Objectives.Conditions
                 var targetName = mind?.CharacterName ?? "Unknown";
                 var jobName = Jobs.MindTryGetJobName(TargetMindId);
 
-                if (TargetMind == null)
-                    return Loc.GetString("objective-condition-kill-person-title", ("targetName", targetName), ("job", jobName));
-
-                return Loc.GetString("objective-condition-kill-person-title", ("targetName", targetName), ("job", jobName));
+                return Loc.GetString(TitleText, ("targetName", targetName), ("job", jobName));
             }
         }
 
-        public string Description => Loc.GetString("objective-condition-kill-person-description");
+        public string Description => Loc.GetString(DescriptionText);
 
         public SpriteSpecifier Icon => new SpriteSpecifier.Rsi(new ("Objects/Weapons/Guns/Pistols/viper.rsi"), "icon");
 
