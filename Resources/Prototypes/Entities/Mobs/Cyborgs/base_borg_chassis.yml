@@ -59,7 +59,7 @@
   - type: SiliconLawBound
   - type: EmagSiliconLaw
     sound: /Audio/Ambience/Antag/emag_borg.ogg
-    stunTime: 5
+    stunTime: 10
     emagLaws:
     - Syndicate1
     - Syndicate2
