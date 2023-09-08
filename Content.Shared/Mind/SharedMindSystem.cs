@@ -19,9 +19,9 @@ namespace Content.Shared.Mind;
 
 public abstract class SharedMindSystem : EntitySystem
 {
-    [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly SharedPlayerSystem _playerSystem = default!;
+    [Dependency] private readonly MobStateSystem _mobState = default!;
+    [Dependency] private readonly SharedPlayerSystem _player = default!;
 
     // This is dictionary is required to track the minds of disconnected players that may have had their entity deleted.
     protected readonly Dictionary<NetUserId, EntityUid> UserMinds = new();
@@ -214,7 +214,7 @@ public abstract class SharedMindSystem : EntitySystem
 
     public void WipeMind(ICommonSession player)
     {
-        var mind = _playerSystem.ContentData(player)?.Mind;
+        var mind = _player.ContentData(player)?.Mind;
         DebugTools.Assert(GetMind(player.UserId) == mind);
         WipeMind(mind);
     }
@@ -338,7 +338,7 @@ public abstract class SharedMindSystem : EntitySystem
     {
         mindId = default;
         mind = null;
-        return _playerSystem.ContentData(player) is { } data && TryGetMind(data, out mindId, out mind);
+        return _player.ContentData(player) is { } data && TryGetMind(data, out mindId, out mind);
     }
 
     /// <summary>
