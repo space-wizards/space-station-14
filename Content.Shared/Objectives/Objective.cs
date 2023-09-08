@@ -1,5 +1,5 @@
 ﻿using Content.Shared.Mind;
-using Content.Shared.Objectives.Interfaces;
+using Content.Shared.Objectives.Components;
 
 namespace Content.Shared.Objectives
 {
@@ -8,33 +8,29 @@ namespace Content.Shared.Objectives
         [ViewVariables]
         public readonly EntityUid MindId;
         [ViewVariables]
-        public readonly MindComponent Mind;
-        [ViewVariables]
         public readonly ObjectivePrototype Prototype;
-        private readonly List<IObjectiveCondition> _conditions = new();
         [ViewVariables]
-        public IReadOnlyList<IObjectiveCondition> Conditions => _conditions;
+        public readonly List<EntityUid> Conditions = new();
 
-        public Objective(ObjectivePrototype prototype, EntityUid mindId, MindComponent mind)
+        public Objective(EntityUid mindId, ObjectivePrototype prototype, List<EntityUid> conditions)
         {
-            Prototype = prototype;
             MindId = mindId;
-            Mind = mind;
-            foreach (var condition in prototype.Conditions)
-            {
-                _conditions.Add(condition.GetAssigned(mindId, mind));
-            }
+            Prototype = prototype;
+            Conditions = conditions;
         }
 
         public bool Equals(Objective? other)
         {
             if (other is null) return false;
             if (ReferenceEquals(this, other)) return true;
-            if (!Equals(Mind, other.Mind) || !Equals(Prototype, other.Prototype)) return false;
+            if (!Equals(MindId, other.MindId) || !Equals(Prototype, other.Prototype)) return false;
             if (_conditions.Count != other._conditions.Count) return false;
+
             for (var i = 0; i < _conditions.Count; i++)
             {
-                if (!_conditions[i].Equals(other._conditions[i])) return false;
+                // just comparing condition entity ids here
+                // ideally compare the entities...
+                if (_conditions[i] != other._conditions[i]) return false;
             }
 
             return true;
