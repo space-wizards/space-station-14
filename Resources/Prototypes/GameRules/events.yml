@@ -169,8 +169,6 @@
   noSpawn: true
   components:
   - type: StationEvent
-    earliestStart: 30
-    minimumPlayers: 35
     weight: 5
     duration: 50
   - type: VentCrittersRule
