@@ -190,29 +190,35 @@ public sealed class AntagSelectionSystem : GameRuleSystem<GameRuleComponent>
     public void GiveAntagBagGear(EntityUid antag, string item)
     {
         var itemToSpawn = Spawn(item, new EntityCoordinates(antag, Vector2.Zero));
-        if (_inventory.TryGetSlotContainer(antag, "back", out var backSlot, out var slotDefinition))
+        if (_inventory.TryGetSlotContainer(antag, "back", out var backSlot, out var _))
         {
             var bag = backSlot.ContainedEntity;
             if (bag != null && HasComp<ContainerManagerComponent>(bag) && _storageSystem.CanInsert((EntityUid) bag, itemToSpawn, out var reason))
             {
                 _storageSystem.Insert((EntityUid) bag, itemToSpawn);
             }
-            else if (_inventory.TryGetSlotContainer(antag, "pocket1", out var pocket1slot, out var slotdef))
+            else if (_inventory.TryGetSlotContainer(antag, "jumpsuit", out var jumpsuit, out var _))
             {
-                if (pocket1slot.ContainedEntity == null)
+                if (jumpsuit.ContainedEntity != null)
                 {
-                    if (pocket1slot.CanInsert(itemToSpawn))
+                    if (_inventory.TryGetSlotContainer(antag, "pocket1", out var pocket1slot, out var _))
                     {
-                        pocket1slot.Insert(itemToSpawn);
-                    }
-                }
-                else if (_inventory.TryGetSlotContainer(antag, "pocket2", out var pocket2slot, out var slotdefs))
-                {
-                    if (pocket2slot.ContainedEntity == null)
-                    {
-                        if (pocket2slot.CanInsert(itemToSpawn))
+                        if (pocket1slot.ContainedEntity == null)
                         {
-                            pocket2slot.Insert(itemToSpawn);
+                            if (pocket1slot.CanInsert(itemToSpawn))
+                            {
+                                pocket1slot.Insert(itemToSpawn);
+                            }
+                        }
+                        else if (_inventory.TryGetSlotContainer(antag, "pocket2", out var pocket2slot, out var _))
+                        {
+                            if (pocket2slot.ContainedEntity == null)
+                            {
+                                if (pocket2slot.CanInsert(itemToSpawn))
+                                {
+                                    pocket2slot.Insert(itemToSpawn);
+                                }
+                            }
                         }
                     }
                 }
