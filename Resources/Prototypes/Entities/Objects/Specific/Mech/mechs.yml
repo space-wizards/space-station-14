@@ -9,25 +9,25 @@
   - type: MechAirFilter
     # everything except oxygen and nitrogen
     gases:
-    - 2
-    - 3
-    - 4
-    - 5
-    - 6
-    - 7
-    - 8
-    #- 9 TODO: fusion
+    - CarbonDioxide
+    - Plasma
+    - Tritium
+    - WaterVapor
+    - Miasma
+    - NitrousOxide
+    - Frezon
+    #- Helium3 TODO: fusion
     # remove everything except oxygen to maintain oxygen ratio
     overflowGases:
-    - 1
-    - 2
-    - 3
-    - 4
-    - 5
-    - 6
-    - 7
-    - 8
-    #- 9 TODO: fusion
+    - Nitrogen
+    - CarbonDioxide
+    - Plasma
+    - Tritium
+    - WaterVapor
+    - Miasma
+    - NitrousOxide
+    - Frezon
+    #- Helium3 TODO: fusion
   - type: MechAirIntake
   # for intake and filter to work
   - type: AtmosDevice
