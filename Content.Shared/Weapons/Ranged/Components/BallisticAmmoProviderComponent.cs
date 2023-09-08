@@ -53,4 +53,10 @@ public sealed partial class BallisticAmmoProviderComponent : Component
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("mayTransfer")]
     public bool MayTransfer = false;
+
+    /// <summary>
+    /// DoAfter delay for filling a bullet into another ballistic ammo provider.
+    /// </summary>
+    [DataField("fillDelay")]
+    public TimeSpan FillDelay = TimeSpan.FromSeconds(0.5);
 }
