@@ -61,10 +61,10 @@
   noSpawn: true
   components:
   - type: StationEvent
-    weight: 5
+    weight: 4.5
     duration: 1
     earliestStart: 45
-    minimumPlayers: 20
+    minimumPlayers: 30
   - type: RandomSpawnRule
     prototype: SpawnPointGhostDragon
 
@@ -103,7 +103,7 @@
     endAnnouncement: station-event-gas-leak-end-announcement
     earliestStart: 10
     minimumPlayers: 5
-    weight: 5
+    weight: 6.5
     startDelay: 20
   - type: GasLeakRule
 
@@ -127,7 +127,7 @@
   components:
   - type: StationEvent
     earliestStart: 30
-    weight: 7.5
+    weight: 6.5
     minimumPlayers: 10 #Enough to hopefully have at least one engineering guy
     startAnnouncement: station-event-meteor-swarm-start-announcement
     endAnnouncement: station-event-meteor-swarm-end-announcement
@@ -146,7 +146,7 @@
   components:
   - type: StationEvent
     earliestStart: 30
-    minimumPlayers: 35
+    minimumPlayers: 20
     weight: 5
     duration: 50
   - type: VentCrittersRule
@@ -314,7 +314,8 @@
   components:
   - type: StationEvent
     earliestStart: 50
-    weight: 5
+    minimumPlayers: 20
+    weight: 4
     duration: 1
   - type: ZombieRule
     minStartDelay: 0 #let them know immediately
@@ -330,8 +331,8 @@
   components:
   - type: StationEvent
     earliestStart: 45
-    weight: 5
-    minimumPlayers: 10
+    weight: 4
+    minimumPlayers: 20
     reoccurrenceDelay: 30
     duration: 1
   - type: LoneOpsSpawnRule
