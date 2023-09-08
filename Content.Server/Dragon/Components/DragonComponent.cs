@@ -36,14 +36,14 @@ namespace Content.Server.Dragon
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite), DataField("maxAccumulator")] public float RiftMaxAccumulator = 300f;
 
-        [DataField("spawnRiftActionId", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-        public string SpawnRiftActionId = "ActionSpawnRift";
+        [DataField("spawnRiftAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+        public string SpawnRiftAction = "ActionSpawnRift";
 
         /// <summary>
         /// Spawns a rift which can summon more mobs.
         /// </summary>
-        [DataField("spawnRiftAction")]
-        public EntityUid? SpawnRiftAction;
+        [DataField("spawnRiftActionEntity")]
+        public EntityUid? SpawnRiftActionEntity;
 
         [ViewVariables(VVAccess.ReadWrite), DataField("riftPrototype", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
         public string RiftPrototype = "CarpRift";

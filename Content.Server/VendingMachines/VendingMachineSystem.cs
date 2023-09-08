@@ -64,7 +64,7 @@ namespace Content.Server.VendingMachines
 
         private void OnComponentMapInit(EntityUid uid, VendingMachineComponent component, MapInitEvent args)
         {
-            _action.AddAction(uid, ref component.Action, component.ActionId, uid);
+            _action.AddAction(uid, ref component.ActionEntity, component.Action, uid);
             Dirty(uid, component);
         }
 

@@ -47,11 +47,11 @@ public sealed partial class BlockingComponent : Component
     [DataField("activeBlockModifier", required: true)]
     public DamageModifierSet ActiveBlockDamageModifier = default!;
 
-    [DataField("blockingToggleActionId", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string BlockingToggleActionId = "ActionToggleBlock";
+    [DataField("blockingToggleAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    public string BlockingToggleAction = "ActionToggleBlock";
 
-    [DataField("blockingToggleAction")]
-    public EntityUid? BlockingToggleAction;
+    [DataField("blockingToggleActionEntity")]
+    public EntityUid? BlockingToggleActionEntity;
 
     /// <summary>
     /// The sound to be played when you get hit while actively blocking

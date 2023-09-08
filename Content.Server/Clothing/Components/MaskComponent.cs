@@ -7,14 +7,14 @@ namespace Content.Server.Clothing.Components
     [RegisterComponent]
     public sealed partial class MaskComponent : Component
     {
-        [DataField("toggleActionId", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-        public string ToggleActionId = "ActionToggleMask";
+        [DataField("toggleAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+        public string ToggleAction = "ActionToggleMask";
 
         /// <summary>
         /// This mask can be toggled (pulled up/down)
         /// </summary>
-        [DataField("toggleAction")]
-        public EntityUid? ToggleAction;
+        [DataField("toggleActionEntity")]
+        public EntityUid? ToggleActionEntity;
 
         public bool IsToggled = false;
     }

@@ -14,7 +14,7 @@
     - state: nothing-unshaded
       shader: unshaded
   - type: ActionOnInteract
-    actionIds:
+    actions:
     - ActionRgbLight
   - type: Item
     inhandVisuals:

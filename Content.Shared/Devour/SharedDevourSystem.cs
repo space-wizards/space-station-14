@@ -1,5 +1,5 @@
-using Content.Server.Devour.Components;
 using Content.Shared.Actions;
+using Content.Shared.Devour.Components;
 using Content.Shared.DoAfter;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
@@ -31,7 +31,7 @@ public abstract class SharedDevourSystem : EntitySystem
         //I did it mom, I added ERP content into upstream. Legally!
         component.Stomach = _containerSystem.EnsureContainer<Container>(uid, "stomach");
 
-        _actionsSystem.AddAction(uid, ref component.DevourAction, component.DevourActionId);
+        _actionsSystem.AddAction(uid, ref component.DevourActionEntity, component.DevourAction);
     }
 
     /// <summary>

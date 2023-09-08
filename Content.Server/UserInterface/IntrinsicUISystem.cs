@@ -28,7 +28,7 @@ public sealed class IntrinsicUISystem : EntitySystem
 
         foreach (var entry in component.UIs)
         {
-            _actionsSystem.AddAction(uid, ref entry.ToggleAction, entry.ToggleActionId, null, actions);
+            _actionsSystem.AddAction(uid, ref entry.ToggleActionEntity, entry.ToggleAction, null, actions);
         }
     }
 

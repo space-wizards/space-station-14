@@ -58,11 +58,11 @@ public sealed partial class BorgSystem
     {
         var chassis = args.ChassisEnt;
 
-        var action = _actions.AddAction(chassis, ref component.ModuleSwapAction, component.ModuleSwapActionId, uid);
+        var action = _actions.AddAction(chassis, ref component.ModuleSwapActionEntity, component.ModuleSwapActionId, uid);
         if (action != null)
         {
             action.EntityIcon = uid;
-            Dirty(component.ModuleSwapAction!.Value, action);
+            Dirty(component.ModuleSwapActionEntity!.Value, action);
         }
 
         SelectModule(chassis, uid, moduleComp: component);

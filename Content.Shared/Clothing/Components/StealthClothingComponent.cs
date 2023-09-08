@@ -24,13 +24,13 @@ public sealed partial class StealthClothingComponent : Component
     [DataField("visibility"), ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public float Visibility;
 
-    [DataField("toggleActionId", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string ToggleActionId = "ActionTogglePhaseCloak";
+    [DataField("toggleAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    public string ToggleAction = "ActionTogglePhaseCloak";
 
     /// <summary>
     /// The action for enabling and disabling stealth.
     /// </summary>
-    [DataField("toggleAction")] public EntityUid? ToggleAction;
+    [DataField("toggleActionEntity")] public EntityUid? ToggleActionEntity;
 }
 
 /// <summary>

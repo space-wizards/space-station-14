@@ -143,7 +143,7 @@ namespace Content.Server.Ghost
                     eye.VisibilityMask &= ~(uint) VisibilityFlags.Ghost;
                 }
 
-                _actions.RemoveAction(uid, component.Action);
+                _actions.RemoveAction(uid, component.ActionEntity);
             }
         }
 
@@ -151,16 +151,16 @@ namespace Content.Server.Ghost
         {
             // TODO ghost: remove once ghosts are persistent and aren't deleted when returning to body
             var time = _gameTiming.CurTime;
-            var action = _actions.AddAction(uid, ref component.Action, component.ActionId);
+            var action = _actions.AddAction(uid, ref component.ActionEntity, component.Action);
             if (action?.UseDelay != null)
             {
                 action.Cooldown = (time, time + action.UseDelay.Value);
-                Dirty(component.Action!.Value, action);
+                Dirty(component.ActionEntity!.Value, action);
             }
 
-            _actions.AddAction(uid, ref component.ToggleLightingAction, component.ToggleLightingActionId);
-            _actions.AddAction(uid, ref component.ToggleFoVAction, component.ToggleFoVActionId);
-            _actions.AddAction(uid, ref component.ToggleGhostsAction, component.ToggleGhostsActionId);
+            _actions.AddAction(uid, ref component.ToggleLightingActionEntity, component.ToggleLightingAction);
+            _actions.AddAction(uid, ref component.ToggleFoVActionEntity, component.ToggleFoVAction);
+            _actions.AddAction(uid, ref component.ToggleGhostsActionEntity, component.ToggleGhostsAction);
         }
 
         private void OnGhostExamine(EntityUid uid, GhostComponent component, ExaminedEvent args)

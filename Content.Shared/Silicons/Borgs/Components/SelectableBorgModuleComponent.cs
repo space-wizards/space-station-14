@@ -11,13 +11,13 @@ namespace Content.Shared.Silicons.Borgs.Components;
 [RegisterComponent, NetworkedComponent, Access(typeof(SharedBorgSystem))]
 public sealed partial class SelectableBorgModuleComponent : Component
 {
-    [DataField("moduleSwapActionId", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    [DataField("moduleSwapAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string? ModuleSwapActionId = "ActionBorgSwapModule";
 
     /// <summary>
     /// The sidebar action for swapping to this module.
     /// </summary>
-    [DataField("moduleSwapAction")] public EntityUid? ModuleSwapAction;
+    [DataField("moduleSwapActionEntity")] public EntityUid? ModuleSwapActionEntity;
 }
 
 public sealed partial class BorgModuleActionSelectedEvent : InstantActionEvent

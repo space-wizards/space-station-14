@@ -32,11 +32,11 @@ namespace Content.Shared.CombatMode
 
         #endregion
 
-        [DataField("combatToggleActionId", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-        public string CombatToggleActionId = "ActionCombatModeToggle";
+        [DataField("combatToggleAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+        public string CombatToggleAction = "ActionCombatModeToggle";
 
-        [DataField("combatToggleAction")]
-        public EntityUid? CombatToggleAction;
+        [DataField("combatToggleActionEntity")]
+        public EntityUid? CombatToggleActionEntity;
 
         [ViewVariables(VVAccess.ReadWrite), DataField("isInCombatMode"), AutoNetworkedField]
         public bool IsInCombatMode;

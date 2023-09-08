@@ -31,16 +31,16 @@ public sealed class VocalSystem : EntitySystem
     private void OnMapInit(EntityUid uid, VocalComponent component, MapInitEvent args)
     {
         // try to add scream action when vocal comp added
-        _actions.AddAction(uid, ref component.ScreamAction, component.ScreamActionId);
+        _actions.AddAction(uid, ref component.ScreamActionEntity, component.ScreamAction);
         LoadSounds(uid, component);
     }
 
     private void OnShutdown(EntityUid uid, VocalComponent component, ComponentShutdown args)
     {
         // remove scream action when component removed
-        if (component.ScreamAction != null)
+        if (component.ScreamActionEntity != null)
         {
-            _actions.RemoveAction(uid, component.ScreamAction);
+            _actions.RemoveAction(uid, component.ScreamActionEntity);
         }
     }
 

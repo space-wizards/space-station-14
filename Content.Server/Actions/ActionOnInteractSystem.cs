@@ -24,10 +24,10 @@ public sealed class ActionOnInteractSystem : EntitySystem
 
     private void OnActivate(EntityUid uid, ActionOnInteractComponent component, ActivateInWorldEvent args)
     {
-        if (args.Handled || component.Actions == null)
+        if (args.Handled || component.ActionEntities == null)
             return;
 
-        var options = GetValidActions<InstantActionComponent>(component.Actions);
+        var options = GetValidActions<InstantActionComponent>(component.ActionEntities);
         if (options.Count == 0)
             return;
 
@@ -42,13 +42,13 @@ public sealed class ActionOnInteractSystem : EntitySystem
 
     private void OnAfterInteract(EntityUid uid, ActionOnInteractComponent component, AfterInteractEvent args)
     {
-        if (args.Handled || component.Actions == null)
+        if (args.Handled || component.ActionEntities == null)
             return;
 
         // First, try entity target actions
         if (args.Target != null)
         {
-            var entOptions = GetValidActions<EntityTargetActionComponent>(component.Actions, args.CanReach);
+            var entOptions = GetValidActions<EntityTargetActionComponent>(component.ActionEntities, args.CanReach);
             for (var i = entOptions.Count - 1; i >= 0; i--)
             {
                 var action = entOptions[i].Comp;
@@ -73,7 +73,7 @@ public sealed class ActionOnInteractSystem : EntitySystem
         }
 
         // else: try world target actions
-        var options = GetValidActions<WorldTargetActionComponent>(component.Actions, args.CanReach);
+        var options = GetValidActions<WorldTargetActionComponent>(component.ActionEntities, args.CanReach);
         for (var i = options.Count - 1; i >= 0; i--)
         {
             var action = options[i].Comp;

@@ -48,17 +48,17 @@
   - type: IntrinsicUI
     uis:
       - key: enum.SolarControlConsoleUiKey.Key
-        toggleActionId: ActionAGhostShowSolar
+        toggleAction: ActionAGhostShowSolar
       - key: enum.CommunicationsConsoleUiKey.Key
-        toggleActionId: ActionAGhostShowCommunications
+        toggleAction: ActionAGhostShowCommunications
       - key: enum.RadarConsoleUiKey.Key
-        toggleActionId: ActionAGhostShowRadar
+        toggleAction: ActionAGhostShowRadar
       - key: enum.CargoConsoleUiKey.Orders
-        toggleActionId: ActionAGhostShowCargo
+        toggleAction: ActionAGhostShowCargo
       - key: enum.CrewMonitoringUIKey.Key
-        toggleActionId: ActionAGhostShowCrewMonitoring
+        toggleAction: ActionAGhostShowCrewMonitoring
       - key: enum.GeneralStationRecordConsoleKey.Key
-        toggleActionId: ActionAGhostShowStationRecords
+        toggleAction: ActionAGhostShowStationRecords
   - type: SolarControlConsole # look ma i AM the computer!
   - type: CommunicationsConsole
     title: communicationsconsole-announcement-title-centcom

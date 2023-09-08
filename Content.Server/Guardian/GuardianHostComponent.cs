@@ -23,9 +23,9 @@ namespace Content.Server.Guardian
         /// </summary>
         [ViewVariables] public ContainerSlot GuardianContainer = default!;
 
-        [DataField("actionId", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-        public string ActionId = "ActionToggleGuardian";
+        [DataField("action", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+        public string Action = "ActionToggleGuardian";
 
-        [DataField("action")] public EntityUid? Action;
+        [DataField("actionEntity")] public EntityUid? ActionEntity;
     }
 }

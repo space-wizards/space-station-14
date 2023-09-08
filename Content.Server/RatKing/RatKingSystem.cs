@@ -29,8 +29,8 @@ namespace Content.Server.RatKing
 
         private void OnMapInit(EntityUid uid, RatKingComponent component, MapInitEvent args)
         {
-            _action.AddAction(uid, ref component.ActionRaiseArmy, component.ActionRaiseArmyId);
-            _action.AddAction(uid, ref component.ActionDomain, component.ActionDomainId);
+            _action.AddAction(uid, ref component.ActionRaiseArmyEntity, component.ActionRaiseArmy);
+            _action.AddAction(uid, ref component.ActionDomainEntity, component.ActionDomain);
         }
 
         /// <summary>

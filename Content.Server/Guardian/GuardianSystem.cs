@@ -94,7 +94,7 @@ namespace Content.Server.Guardian
 
         private void OnHostMapInit(EntityUid uid, GuardianHostComponent component, MapInitEvent args)
         {
-            _actionSystem.AddAction(uid, ref component.Action, component.ActionId);
+            _actionSystem.AddAction(uid, ref component.ActionEntity, component.Action);
         }
 
         private void OnHostShutdown(EntityUid uid, GuardianHostComponent component, ComponentShutdown args)
@@ -106,7 +106,7 @@ namespace Content.Server.Guardian
                 _bodySystem.GibBody(component.HostedGuardian.Value);
 
             EntityManager.QueueDeleteEntity(component.HostedGuardian.Value);
-            _actionSystem.RemoveAction(uid, component.Action);
+            _actionSystem.RemoveAction(uid, component.ActionEntity);
         }
 
         private void OnGuardianAttackAttempt(EntityUid uid, GuardianComponent component, AttackAttemptEvent args)

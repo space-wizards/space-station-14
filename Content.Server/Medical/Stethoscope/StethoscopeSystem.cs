@@ -99,7 +99,7 @@ namespace Content.Server.Medical.Stethoscope
 
         private void OnGetActions(EntityUid uid, StethoscopeComponent component, GetItemActionsEvent args)
         {
-            args.AddAction(ref component.Action, component.ActionId);
+            args.AddAction(ref component.ActionEntity, component.Action);
         }
 
         // construct the doafter and start it

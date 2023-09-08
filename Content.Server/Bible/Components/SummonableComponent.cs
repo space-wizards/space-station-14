@@ -25,11 +25,11 @@ namespace Content.Server.Bible.Components
         [ViewVariables]
         public EntityUid? Summon = null;
 
-        [DataField("summonActionId", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-        public string SummonActionId = "ActionBibleSummon";
+        [DataField("summonAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+        public string SummonAction = "ActionBibleSummon";
 
-        [DataField("summonAction")]
-        public EntityUid? SummonAction;
+        [DataField("summonActionEntity")]
+        public EntityUid? SummonActionEntity;
 
         /// Used for respawning
         [DataField("accumulator")]

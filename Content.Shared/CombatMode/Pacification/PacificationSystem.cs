@@ -32,7 +32,7 @@ public sealed class PacificationSystem : EntitySystem
             _combatSystem.SetCanDisarm(uid, false, combatMode);
 
         _combatSystem.SetInCombatMode(uid, false, combatMode);
-        _actionsSystem.SetEnabled(combatMode.CombatToggleAction, false);
+        _actionsSystem.SetEnabled(combatMode.CombatToggleActionEntity, false);
         _alertsSystem.ShowAlert(uid, AlertType.Pacified);
     }
 
@@ -44,7 +44,7 @@ public sealed class PacificationSystem : EntitySystem
         if (combatMode.CanDisarm != null)
             _combatSystem.SetCanDisarm(uid, true, combatMode);
 
-        _actionsSystem.SetEnabled(combatMode.CombatToggleAction, true);
+        _actionsSystem.SetEnabled(combatMode.CombatToggleActionEntity, true);
         _alertsSystem.ClearAlert(uid, AlertType.Pacified);
     }
 }

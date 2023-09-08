@@ -132,7 +132,7 @@ public abstract class SharedJetpackSystem : EntitySystem
 
     private void OnJetpackGetAction(EntityUid uid, JetpackComponent component, GetItemActionsEvent args)
     {
-        args.AddAction(ref component.ToggleAction, component.ToggleActionId);
+        args.AddAction(ref component.ToggleActionEntity, component.ToggleAction);
     }
 
     private bool IsEnabled(EntityUid uid)

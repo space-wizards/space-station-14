@@ -58,7 +58,7 @@ public sealed class ToggleableClothingSystem : EntitySystem
         if (!args.CanAccess || !args.CanInteract || component.ClothingUid == null || component.Container == null)
             return;
 
-        var text = component.VerbText ?? (component.ToggleAction == null ? null : Name(component.ToggleAction.Value));
+        var text = component.VerbText ?? (component.ActionEntity == null ? null : Name(component.ActionEntity.Value));
         if (text == null)
             return;
 
@@ -177,10 +177,10 @@ public sealed class ToggleableClothingSystem : EntitySystem
         // automatically be deleted.
 
         // remove action.
-        if (_actionsSystem.TryGetActionData(component.ToggleAction, out var action) &&
+        if (_actionsSystem.TryGetActionData(component.ActionEntity, out var action) &&
             action.AttachedEntity != null)
         {
-            _actionsSystem.RemoveAction(action.AttachedEntity.Value, component.ToggleAction);
+            _actionsSystem.RemoveAction(action.AttachedEntity.Value, component.ActionEntity);
         }
 
         if (component.ClothingUid != null)
@@ -201,10 +201,10 @@ public sealed class ToggleableClothingSystem : EntitySystem
             return;
 
         // remove action.
-        if (_actionsSystem.TryGetActionData(toggleComp.ToggleAction, out var action) &&
+        if (_actionsSystem.TryGetActionData(toggleComp.ActionEntity, out var action) &&
             action.AttachedEntity != null)
         {
-            _actionsSystem.RemoveAction(action.AttachedEntity.Value, toggleComp.ToggleAction);
+            _actionsSystem.RemoveAction(action.AttachedEntity.Value, toggleComp.ActionEntity);
         }
 
         RemComp(component.AttachedUid, toggleComp);
@@ -263,7 +263,7 @@ public sealed class ToggleableClothingSystem : EntitySystem
         if (component.ClothingUid == null || (args.SlotFlags & component.RequiredFlags) != component.RequiredFlags)
             return;
 
-        args.AddAction(ref component.ToggleAction, component.ActionId);
+        args.AddAction(ref component.ActionEntity, component.Action);
     }
 
     private void OnInit(EntityUid uid, ToggleableClothingComponent component, ComponentInit args)
@@ -283,9 +283,9 @@ public sealed class ToggleableClothingSystem : EntitySystem
             return;
         }
 
-        component.ToggleAction ??= Spawn(component.ActionId);
+        component.ActionEntity ??= Spawn(component.Action);
 
-        if (component.ClothingUid != null && component.ToggleAction != null)
+        if (component.ClothingUid != null && component.ActionEntity != null)
         {
             DebugTools.Assert(Exists(component.ClothingUid), "Toggleable clothing is missing expected entity.");
             DebugTools.Assert(TryComp(component.ClothingUid, out AttachedClothingComponent? comp), "Toggleable clothing is missing an attached component");
@@ -299,10 +299,10 @@ public sealed class ToggleableClothingSystem : EntitySystem
             component.Container.Insert(component.ClothingUid.Value, EntityManager, ownerTransform: xform);
         }
 
-        if (_actionsSystem.TryGetActionData(component.ToggleAction, out var action))
+        if (_actionsSystem.TryGetActionData(component.ActionEntity, out var action))
         {
             action.EntityIcon = component.ClothingUid;
-            _actionsSystem.Dirty(component.ToggleAction);
+            _actionsSystem.Dirty(component.ActionEntity);
         }
     }
 }

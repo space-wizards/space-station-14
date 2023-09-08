@@ -12,7 +12,7 @@
     - type: Clothing
       sprite: Clothing/Shoes/Boots/magboots.rsi
     - type: Magboots
-      toggleActionId: ActionToggleMagboots
+      toggleAction: ActionToggleMagboots
     - type: ClothingSpeedModifier
       walkModifier: 0.85
       sprintModifier: 0.8
@@ -42,7 +42,7 @@
   - type: Clothing
     sprite: Clothing/Shoes/Boots/magboots-advanced.rsi
   - type: Magboots
-    toggleActionId: ActionToggleMagbootsAdvanced
+    toggleAction: ActionToggleMagbootsAdvanced
   - type: ClothingSpeedModifier
     walkModifier: 1
     sprintModifier: 1
@@ -80,7 +80,7 @@
   - type: Clothing
     sprite: Clothing/Shoes/Boots/magboots-syndicate.rsi
   - type: Magboots
-    toggleActionId: ActionToggleMagbootsSyndie
+    toggleAction: ActionToggleMagbootsSyndie
   - type: ClothingSpeedModifier
     walkModifier: 0.95
     sprintModifier: 0.9

@@ -8,11 +8,11 @@ namespace Content.Shared.Clothing;
 [Access(typeof(SharedMagbootsSystem))]
 public sealed partial class MagbootsComponent : Component
 {
-    [DataField("toggleActionId", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>), required: true)]
-    public string? ToggleActionId;
+    [DataField("toggleAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>), required: true)]
+    public string? ToggleAction;
 
-    [DataField("toggleAction")]
-    public EntityUid? ToggleAction;
+    [DataField("toggleActionEntity")]
+    public EntityUid? ToggleActionEntity;
 
     [DataField("on"), AutoNetworkedField]
     public bool On;

@@ -94,10 +94,10 @@ namespace Content.Server.Atmos.Components
         [DataField("tankFragmentScale"), ViewVariables(VVAccess.ReadWrite)]
         public float TankFragmentScale = 2 * Atmospherics.OneAtmosphere;
 
-        [DataField("toggleActionId", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-        public string ToggleActionId = "ActionToggleInternals";
+        [DataField("toggleAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+        public string ToggleAction = "ActionToggleInternals";
 
-        [DataField("toggleAction")] public EntityUid? ToggleAction;
+        [DataField("toggleActionEntity")] public EntityUid? ToggleActionEntity;
 
         /// <summary>
         ///     Valve to release gas from tank

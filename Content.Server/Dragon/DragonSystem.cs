@@ -300,7 +300,7 @@ public sealed partial class DragonSystem : EntitySystem
 
     private void OnMapInit(EntityUid uid, DragonComponent component, MapInitEvent args)
     {
-        _actionsSystem.AddAction(uid, ref component.SpawnRiftAction, component.SpawnRiftActionId);
+        _actionsSystem.AddAction(uid, ref component.SpawnRiftActionEntity, component.SpawnRiftAction);
     }
 }
 

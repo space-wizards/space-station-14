@@ -21,12 +21,12 @@ public partial class IntrinsicUIEntry
     [DataField("key", required: true)]
     public Enum? Key { get; private set; }
 
-    [DataField("toggleActionId", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>), required: true)]
-    public string? ToggleActionId;
+    [DataField("toggleAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>), required: true)]
+    public string? ToggleAction;
 
     /// <summary>
     /// The action used for this BUI.
     /// </summary>
-    [DataField("toggleAction")]
-    public EntityUid? ToggleAction = new();
+    [DataField("toggleActionEntity")]
+    public EntityUid? ToggleActionEntity = new();
 }

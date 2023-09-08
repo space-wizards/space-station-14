@@ -59,7 +59,7 @@ namespace Content.Server.Abilities.Mime
 
         private void OnComponentMapInit(EntityUid uid, MimePowersComponent component, MapInitEvent args)
         {
-            _actionsSystem.AddAction(uid, ref component.InvisibleWallAction, component.InvisibleWallActionId, uid);
+            _actionsSystem.AddAction(uid, ref component.InvisibleWallActionEntity, component.InvisibleWallAction, uid);
         }
 
         /// <summary>
@@ -121,7 +121,7 @@ namespace Content.Server.Abilities.Mime
             RemComp<MutedComponent>(uid);
             _alertsSystem.ClearAlert(uid, AlertType.VowOfSilence);
             _alertsSystem.ShowAlert(uid, AlertType.VowBroken);
-            _actionsSystem.RemoveAction(uid, mimePowers.InvisibleWallAction);
+            _actionsSystem.RemoveAction(uid, mimePowers.InvisibleWallActionEntity);
         }
 
         /// <summary>
@@ -144,7 +144,7 @@ namespace Content.Server.Abilities.Mime
             AddComp<MutedComponent>(uid);
             _alertsSystem.ClearAlert(uid, AlertType.VowBroken);
             _alertsSystem.ShowAlert(uid, AlertType.VowOfSilence);
-            _actionsSystem.AddAction(uid, ref mimePowers.InvisibleWallAction, mimePowers.InvisibleWallActionId, uid);
+            _actionsSystem.AddAction(uid, ref mimePowers.InvisibleWallActionEntity, mimePowers.InvisibleWallAction, uid);
         }
     }
 }

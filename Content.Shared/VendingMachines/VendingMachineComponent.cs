@@ -105,13 +105,13 @@ namespace Content.Shared.VendingMachines
         /// <summary>
         ///     The action available to the player controlling the vending machine
         /// </summary>
-        [DataField("actionId", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+        [DataField("action", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
         [AutoNetworkedField]
-        public string? ActionId = "ActionVendingThrow";
+        public string? Action = "ActionVendingThrow";
 
-        [DataField("action")]
+        [DataField("actionEntity")]
         [AutoNetworkedField]
-        public EntityUid? Action;
+        public EntityUid? ActionEntity;
 
         public float NonLimitedEjectForce = 7.5f;
 

@@ -10,10 +10,10 @@ public sealed partial class JetpackComponent : Component
     [ViewVariables(VVAccess.ReadWrite), DataField("moleUsage")]
     public float MoleUsage = 0.012f;
 
-    [DataField("toggleActionId", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string? ToggleActionId = "ActionToggleJetpack";
+    [DataField("toggleAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    public string? ToggleAction = "ActionToggleJetpack";
 
-    [DataField("toggleAction")] public EntityUid? ToggleAction;
+    [DataField("toggleActionEntity")] public EntityUid? ToggleActionEntity;
 
     [ViewVariables(VVAccess.ReadWrite), DataField("acceleration")]
     public float Acceleration = 1f;

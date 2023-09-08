@@ -14,9 +14,9 @@ namespace Content.Server.Medical.Stethoscope.Components
         [DataField("delay")]
         public float Delay = 2.5f;
 
-        [DataField("actionId", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-        public string ActionId = "ActionStethoscope";
+        [DataField("action", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+        public string Action = "ActionStethoscope";
 
-        [DataField("action")] public EntityUid? Action;
+        [DataField("actionEntity")] public EntityUid? ActionEntity;
     }
 }

@@ -134,7 +134,7 @@
   - type: Dragon
     spawnsLeft: 2
     spawnsProto: MobCarpDragon
-    spawnRiftActionId: ActionSpawnRift
+    spawnRiftAction: ActionSpawnRift
   - type: GuideHelp
     guides:
     - MinorAntagonists

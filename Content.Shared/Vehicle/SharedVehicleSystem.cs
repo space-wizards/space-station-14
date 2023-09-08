@@ -134,12 +134,12 @@ public abstract partial class SharedVehicleSystem : EntitySystem
 
             if (TryComp<ActionsComponent>(args.BuckledEntity, out var actions) && TryComp<UnpoweredFlashlightComponent>(uid, out var flashlight))
             {
-                _actionsSystem.AddAction(args.BuckledEntity, ref flashlight.ToggleAction, flashlight.ToggleActionId, uid, actions);
+                _actionsSystem.AddAction(args.BuckledEntity, ref flashlight.ToggleActionEntity, flashlight.ToggleAction, uid, actions);
             }
 
             if (component.HornSound != null)
             {
-                _actionsSystem.AddAction(args.BuckledEntity, ref component.HornAction, component.HornActionId, uid, actions);
+                _actionsSystem.AddAction(args.BuckledEntity, ref component.HornActionEntity, component.HornAction, uid, actions);
             }
 
             _joints.ClearJoints(args.BuckledEntity);

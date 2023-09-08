@@ -8,8 +8,8 @@ public sealed partial class VoiceMaskerComponent : Component
 {
     [ViewVariables(VVAccess.ReadWrite)] public string LastSetName = "Unknown";
 
-    [DataField("actionId", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string ActionId = "ActionChangeVoiceMask";
+    [DataField("action", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    public string Action = "ActionChangeVoiceMask";
 
-    [DataField("action")] public EntityUid? Action;
+    [DataField("actionEntity")] public EntityUid? ActionEntity;
 }

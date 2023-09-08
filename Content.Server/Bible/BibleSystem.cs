@@ -180,7 +180,7 @@ namespace Content.Server.Bible
             if (component.AlreadySummoned)
                 return;
 
-            args.AddAction(ref component.SummonAction, component.SummonActionId);
+            args.AddAction(ref component.SummonActionEntity, component.SummonAction);
         }
 
         private void OnSummon(EntityUid uid, SummonableComponent component, SummonActionEvent args)
@@ -240,7 +240,7 @@ namespace Content.Server.Bible
                 Transform(familiar).AttachParent(component.Owner);
             }
             component.AlreadySummoned = true;
-            _actionsSystem.RemoveAction(user, component.SummonAction);
+            _actionsSystem.RemoveAction(user, component.SummonActionEntity);
         }
     }
 }

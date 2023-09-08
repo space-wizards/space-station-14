@@ -29,12 +29,12 @@ public sealed partial class SericultureSystem : EntitySystem
 
     private void OnCompMapInit(EntityUid uid, SericultureComponent comp, MapInitEvent args)
     {
-        _actionsSystem.AddAction(uid, ref comp.Action, comp.ActionProto, uid);
+        _actionsSystem.AddAction(uid, ref comp.ActionEntity, comp.Action, uid);
     }
 
     private void OnCompRemove(EntityUid uid, SericultureComponent comp, ComponentShutdown args)
     {
-        _actionsSystem.RemoveAction(uid, comp.Action);
+        _actionsSystem.RemoveAction(uid, comp.ActionEntity);
     }
 
     private void OnSericultureStart(EntityUid uid, SericultureComponent comp, SericultureActionEvent args)

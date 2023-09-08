@@ -24,12 +24,12 @@ public abstract class SharedCombatModeSystem : EntitySystem
 
     private void OnStartup(EntityUid uid, CombatModeComponent component, MapInitEvent args)
     {
-        _actionsSystem.AddAction(uid, ref component.CombatToggleAction, component.CombatToggleActionId);
+        _actionsSystem.AddAction(uid, ref component.CombatToggleActionEntity, component.CombatToggleAction);
     }
 
     private void OnShutdown(EntityUid uid, CombatModeComponent component, ComponentShutdown args)
     {
-        _actionsSystem.RemoveAction(uid, component.CombatToggleAction);
+        _actionsSystem.RemoveAction(uid, component.CombatToggleActionEntity);
     }
 
     private void OnActionPerform(EntityUid uid, CombatModeComponent component, ToggleCombatActionEvent args)
@@ -74,8 +74,8 @@ public abstract class SharedCombatModeSystem : EntitySystem
         component.IsInCombatMode = value;
         Dirty(entity, component);
 
-        if (component.CombatToggleAction != null)
-            _actionsSystem.SetToggled(component.CombatToggleAction, component.IsInCombatMode);
+        if (component.CombatToggleActionEntity != null)
+            _actionsSystem.SetToggled(component.CombatToggleActionEntity, component.IsInCombatMode);
     }
 
     public virtual void SetActiveZone(EntityUid entity, TargetingZone zone,

@@ -6,13 +6,13 @@ namespace Content.Server.RatKing
     [RegisterComponent]
     public sealed partial class RatKingComponent : Component
     {
-        [DataField("actionRaiseArmyId", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-        public string ActionRaiseArmyId = "ActionRatKingRaiseArmy";
+        [DataField("actionRaiseArmy", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+        public string ActionRaiseArmy = "ActionRatKingRaiseArmy";
 
         /// <summary>
         ///     The action for the Raise Army ability
         /// </summary>
-        [DataField("actionRaiseArmy")] public EntityUid? ActionRaiseArmy;
+        [DataField("actionRaiseArmyEntity")] public EntityUid? ActionRaiseArmyEntity;
 
         /// <summary>
         ///     The amount of hunger one use of Raise Army consumes
@@ -26,14 +26,14 @@ namespace Content.Server.RatKing
         [ViewVariables(VVAccess.ReadWrite), DataField("armyMobSpawnId", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
         public string ArmyMobSpawnId = "MobRatServant";
 
-        [DataField("actionDomainId", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-        public string ActionDomainId = "ActionRatKingDomain";
+        [DataField("actionDomain", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+        public string ActionDomain = "ActionRatKingDomain";
 
         /// <summary>
         ///     The action for the Domain ability
         /// </summary>
-        [DataField("actionDomain")]
-        public EntityUid? ActionDomain;
+        [DataField("actionDomainEntity")]
+        public EntityUid? ActionDomainEntity;
 
         /// <summary>
         ///     The amount of hunger one use of Domain consumes

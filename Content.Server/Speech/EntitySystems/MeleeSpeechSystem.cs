@@ -22,11 +22,11 @@ public sealed class MeleeSpeechSystem : SharedMeleeSpeechSystem
     }
     private void OnComponentMapInit(EntityUid uid, MeleeSpeechComponent component, MapInitEvent args)
     {
-        _actionSystem.AddAction(uid, ref component.ConfigureAction, component.ConfigureActionId, uid);
+        _actionSystem.AddAction(uid, ref component.ConfigureActionEntity, component.ConfigureAction, uid);
     }
     private void OnGetActions(EntityUid uid, MeleeSpeechComponent component, GetItemActionsEvent args)
     {
-        args.AddAction(ref component.ConfigureAction, component.ConfigureActionId);
+        args.AddAction(ref component.ConfigureActionEntity, component.ConfigureAction);
     }
     private void OnBattlecryChanged(EntityUid uid, MeleeSpeechComponent comp, MeleeSpeechBattlecryChangedMessage args)
     {

@@ -20,8 +20,8 @@ public sealed partial class SiliconLawBoundComponent : Component
     /// <summary>
     /// The action for toggling laws. Stored here so we can remove it later.
     /// </summary>
-    [DataField("providedAction")]
-    public EntityUid? ProvidedAction;
+    [DataField("viewLawsActionEntity")]
+    public EntityUid? ViewLawsActionEntity;
 
     /// <summary>
     /// The last entity that provided laws to this entity.

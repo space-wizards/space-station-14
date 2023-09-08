@@ -22,7 +22,7 @@ public sealed partial class VoiceMaskSystem
         var comp = EnsureComp<VoiceMaskComponent>(user);
         comp.VoiceName = component.LastSetName;
 
-        _actions.AddAction(user, ref component.Action, component.ActionId, uid);
+        _actions.AddAction(user, ref component.ActionEntity, component.Action, uid);
     }
 
     private void OnUnequip(EntityUid uid, VoiceMaskerComponent compnent, GotUnequippedEvent args)

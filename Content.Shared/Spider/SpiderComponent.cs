@@ -14,8 +14,8 @@ public sealed partial class SpiderComponent : Component
     public string WebPrototype = "SpiderWeb";
 
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("webActionName", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string WebActionName = "ActionSpiderWeb";
+    [DataField("webAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    public string WebAction = "ActionSpiderWeb";
 }
 
 public sealed partial class SpiderWebActionEvent : InstantActionEvent { }

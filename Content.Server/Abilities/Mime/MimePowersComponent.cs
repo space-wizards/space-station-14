@@ -22,10 +22,10 @@ namespace Content.Server.Abilities.Mime
         [DataField("wallPrototype", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
         public string WallPrototype = "ActionMimeInvisibleWall";
 
-        [DataField("invisibleWallActionId", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-        public string? InvisibleWallActionId;
+        [DataField("invisibleWallAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+        public string? InvisibleWallAction;
 
-        [DataField("invisibleWallAction")] public EntityUid? InvisibleWallAction;
+        [DataField("invisibleWallActionEntity")] public EntityUid? InvisibleWallActionEntity;
 
         // The vow zone lies below
         public bool VowBroken = false;

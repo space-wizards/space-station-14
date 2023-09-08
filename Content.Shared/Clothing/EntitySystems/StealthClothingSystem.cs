@@ -58,7 +58,7 @@ public sealed class StealthClothingSystem : EntitySystem
         if (ev.Cancelled)
             return;
 
-        args.AddAction(ref comp.ToggleAction, comp.ToggleActionId);
+        args.AddAction(ref comp.ToggleActionEntity, comp.ToggleAction);
     }
 
     /// <summary>

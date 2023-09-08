@@ -79,9 +79,9 @@ namespace Content.Client.Ghost
                 sprite.Visible = GhostVisibility;
             }
 
-            _actions.AddAction(uid, ref component.ToggleLightingAction, component.ToggleGhostsActionId);
-            _actions.AddAction(uid, ref component.ToggleFoVAction, component.ToggleFoVActionId);
-            _actions.AddAction(uid, ref component.ToggleGhostsAction, component.ToggleGhostsActionId);
+            _actions.AddAction(uid, ref component.ToggleLightingActionEntity, component.ToggleGhostsAction);
+            _actions.AddAction(uid, ref component.ToggleFoVActionEntity, component.ToggleFoVAction);
+            _actions.AddAction(uid, ref component.ToggleGhostsActionEntity, component.ToggleGhostsAction);
         }
 
         private void OnToggleLighting(EntityUid uid, GhostComponent component, ToggleLightingActionEvent args)
@@ -116,9 +116,9 @@ namespace Content.Client.Ghost
 
         private void OnGhostRemove(EntityUid uid, GhostComponent component, ComponentRemove args)
         {
-            _actions.RemoveAction(uid, component.ToggleLightingAction);
-            _actions.RemoveAction(uid, component.ToggleFoVAction);
-            _actions.RemoveAction(uid, component.ToggleGhostsAction);
+            _actions.RemoveAction(uid, component.ToggleLightingActionEntity);
+            _actions.RemoveAction(uid, component.ToggleFoVActionEntity);
+            _actions.RemoveAction(uid, component.ToggleGhostsActionEntity);
 
             if (uid != _playerManager.LocalPlayer?.ControlledEntity)
                 return;

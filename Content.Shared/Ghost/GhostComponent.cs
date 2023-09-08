@@ -14,20 +14,23 @@ public sealed partial class GhostComponent : Component
     [ViewVariables]
     public bool IsAttached;
 
-    [DataField("toggleLightingActionId", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string ToggleLightingActionId = "ActionToggleLighting";
+    [DataField("toggleLightingAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    public string ToggleLightingAction = "ActionToggleLighting";
 
-    [DataField("toggleLightingAction")] public EntityUid? ToggleLightingAction;
+    [DataField("toggleLightingActionEntity")]
+    public EntityUid? ToggleLightingActionEntity;
 
-    [DataField("toggleFovActionId", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string ToggleFoVActionId = "ActionToggleFov";
+    [DataField("toggleFovAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    public string ToggleFoVAction = "ActionToggleFov";
 
-    [DataField("toggleFovAction")] public EntityUid? ToggleFoVAction;
+    [DataField("toggleFovActionEntity")]
+    public EntityUid? ToggleFoVActionEntity;
 
-    [DataField("toggleGhostsActionId", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string ToggleGhostsActionId = "ActionToggleGhosts";
+    [DataField("toggleGhostsAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    public string ToggleGhostsAction = "ActionToggleGhosts";
 
-    [DataField("toggleGhostsAction")] public EntityUid? ToggleGhostsAction;
+    [DataField("toggleGhostsActionEntity")]
+    public EntityUid? ToggleGhostsActionEntity;
 
     [ViewVariables(VVAccess.ReadWrite), DataField("timeOfDeath", customTypeSerializer:typeof(TimeOffsetSerializer))]
     public TimeSpan TimeOfDeath = TimeSpan.Zero;
@@ -38,10 +41,10 @@ public sealed partial class GhostComponent : Component
     [DataField("booMaxTargets")]
     public int BooMaxTargets = 3;
 
-    [DataField("actionId", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string ActionId = "ActionGhostBoo";
+    [DataField("action", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    public string Action = "ActionGhostBoo";
 
-    [DataField("action")] public EntityUid? Action;
+    [DataField("actionEntity")] public EntityUid? ActionEntity;
 
     // TODO: instead of this funny stuff just give it access and update in system dirtying when needed
     [ViewVariables(VVAccess.ReadWrite)]

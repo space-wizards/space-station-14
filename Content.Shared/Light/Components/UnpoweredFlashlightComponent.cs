@@ -17,10 +17,10 @@ public sealed partial class UnpoweredFlashlightComponent : Component
 
     [ViewVariables] public bool LightOn = false;
 
-    [DataField("toggleActionId", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string? ToggleActionId = "ActionToggleLight";
+    [DataField("toggleAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    public string? ToggleAction = "ActionToggleLight";
 
-    [DataField("toggleAction")] public EntityUid? ToggleAction;
+    [DataField("toggleActionEntity")] public EntityUid? ToggleActionEntity;
 
     /// <summary>
     ///  <see cref="ColorPalettePrototype"/> ID that determines the list
