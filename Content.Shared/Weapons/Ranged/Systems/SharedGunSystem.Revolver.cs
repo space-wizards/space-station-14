@@ -64,7 +64,7 @@ public partial class SharedGunSystem
         // Need to copy across the state rather than the ref.
         for (var i = 0; i < component.AmmoSlots.Count; i++)
         {
-            component.AmmoSlots[i] = GetEntity(state.AmmoSlots[i]);
+            component.AmmoSlots[i] = EnsureEntity<RevolverAmmoProviderComponent>(state.AmmoSlots[i], uid);
             component.Chambers[i] = state.Chambers[i];
         }
 

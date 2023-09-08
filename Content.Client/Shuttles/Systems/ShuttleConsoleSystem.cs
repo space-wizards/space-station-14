@@ -44,7 +44,7 @@ namespace Content.Client.Shuttles.Systems
         {
             if (args.Current is not PilotComponentState state) return;
 
-            var console = GetEntity(state.Console);
+            var console = EnsureEntity<PilotComponent>(state.Console, uid);
 
             if (console == null)
             {
