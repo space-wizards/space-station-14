@@ -518,13 +518,14 @@
       - ForensicPad
       - ClothingEyesGlassesSecurity
       - RiotShield
-      - CartridgePistol
-      - CartridgeMagnum
       - ShellShotgun
       - ShellShotgunFlare
       - ShellTranquilizer
-      - CartridgeLightRifle
-      - CartridgeRifle
+      - MagazinePistol
+      - MagazinePistolSubMachineGun
+      - MagazinePistolSubMachineGunTopMounted
+      - MagazineRifle
+      - MagazineLightRifle
       - MagazineBoxPistol
       - MagazineBoxMagnum
       - MagazineBoxRifle
