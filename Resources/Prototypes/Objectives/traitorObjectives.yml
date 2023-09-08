@@ -37,7 +37,9 @@
     conditions:
     - RandomTraitorAliveCondition
   conditions:
-  - !type:KillRandomHeadCondition {}
+  - !type:KillRandomHeadCondition
+    description: objective-condition-kill-head-description
+    requireDead: true
   # killing 1 head is enough
   canBeDuplicate: false
 
