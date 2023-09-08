@@ -301,6 +301,30 @@ public partial class SharedGunSystem
         }
     }
 
+    public void RussianizeRevolver(EntityUid revolverUid, RevolverAmmoProviderComponent ammoDrinker)
+    {
+        for (int i = 0; i < ammoDrinker.Capacity; i++)
+        {
+            if (i == 0)
+            {
+                continue;
+            }
+            var thisSlot = ammoDrinker.AmmoSlots[i];
+            if (thisSlot == null)
+            {
+                ammoDrinker.Chambers[i] = null;
+            }
+            else
+            {
+                ammoDrinker.AmmoContainer.Remove(thisSlot.Value);
+                ammoDrinker.AmmoSlots[i] = null;
+            }
+        }
+        UpdateAmmoCount(revolverUid);
+        UpdateRevolverAppearance(revolverUid, ammoDrinker);
+        Dirty(revolverUid, ammoDrinker);
+    }
+
     private void UpdateRevolverAppearance(EntityUid uid, RevolverAmmoProviderComponent component)
     {
         if (!TryComp<AppearanceComponent>(uid, out var appearance))
