@@ -47,7 +47,7 @@
   - type: Temperature
     heatDamageThreshold: 400
     coldDamageThreshold: 285
-    currentTemperature: 310.15
+    currentTemperature: 319
     specificHeat: 46
     coldDamage:
       types:
@@ -55,6 +55,8 @@
     heatDamage:
       types:
         Heat : 0.1 #per second, scales with temperature & other constants
+  - type: ThermalRegulator
+    normalBodyTemperature: 319 # 46 °C
   - type: MovementSpeedModifier
     baseWalkSpeed : 2.7
     baseSprintSpeed : 4.5
