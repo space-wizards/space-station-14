@@ -86,7 +86,7 @@ public sealed class FlavorProfileSystem : EntitySystem
         var flavors = new HashSet<string>();
         foreach (var (reagent, quantity) in solution.GetReagentPrototypes(_prototypeManager))
         {
-            if (toIgnore != null && toIgnore.Contains(reagent.ID))
+            if (toIgnore != null && toIgnore.Any(s => reagent.ID.Contains(s)))
             {
                 continue;
             }
