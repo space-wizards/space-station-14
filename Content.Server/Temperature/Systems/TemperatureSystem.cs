@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Atmos.Components;
@@ -18,22 +16,22 @@ namespace Content.Server.Temperature.Systems;
 
 public sealed class TemperatureSystem : EntitySystem
 {
-    [Dependency] private readonly TransformSystem _transformSystem = default!;
-    [Dependency] private readonly DamageableSystem _damageableSystem = default!;
-    [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
-    [Dependency] private readonly AlertsSystem _alertsSystem = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly AlertsSystem _alertsSystem = default!;
+    [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
+    [Dependency] private readonly DamageableSystem _damageableSystem = default!;
+    [Dependency] private readonly TransformSystem _transformSystem = default!;
 
     /// <summary>
     ///     All the components that will have their damage updated at the end of the tick.
     ///     This is done because both AtmosExposed and Flammable call ChangeHeat in the same tick, meaning
     ///     that we need some mechanism to ensure it doesn't double dip on damage for both calls.
     /// </summary>
-    public HashSet<TemperatureComponent> ShouldUpdateDamage = new();
+    public HashSet<EntityUid> ShouldUpdateDamage = new();
 
     public float UpdateInterval = 1.0f;
 
-    private float _accumulatedFrametime;
+    private float _accumulatedFrameTime;
 
     public override void Initialize()
     {
@@ -57,20 +55,23 @@ public sealed class TemperatureSystem : EntitySystem
     {
         base.Update(frameTime);
 
-        _accumulatedFrametime += frameTime;
+        _accumulatedFrameTime += frameTime;
 
-        if (_accumulatedFrametime < UpdateInterval)
+        if (_accumulatedFrameTime < UpdateInterval)
             return;
-        _accumulatedFrametime -= UpdateInterval;
+        _accumulatedFrameTime -= UpdateInterval;
 
         if (!ShouldUpdateDamage.Any())
             return;
 
-        foreach (var comp in ShouldUpdateDamage)
+
+        foreach (var uid in ShouldUpdateDamage)
         {
             MetaDataComponent? metaData = null;
 
-            var uid = comp.Owner;
+            if (!TryComp<TemperatureComponent>(uid, out var comp))
+                return;
+
             if (Deleted(uid, metaData) || Paused(uid, metaData))
                 continue;
 
@@ -85,8 +86,8 @@ public sealed class TemperatureSystem : EntitySystem
         if (!Resolve(uid, ref temperature))
             return;
 
-        float lastTemp = temperature.CurrentTemperature;
-        float delta = temperature.CurrentTemperature - temp;
+        var lastTemp = temperature.CurrentTemperature;
+        var delta = temperature.CurrentTemperature - temp;
         temperature.CurrentTemperature = temp;
         RaiseLocalEvent(uid, new OnTemperatureChangeEvent(temperature.CurrentTemperature, lastTemp, delta),
                 true);
@@ -104,9 +105,9 @@ public sealed class TemperatureSystem : EntitySystem
                 heatAmount = ev.TemperatureDelta;
             }
 
-            float lastTemp = temperature.CurrentTemperature;
+            var lastTemp = temperature.CurrentTemperature;
             temperature.CurrentTemperature += heatAmount / temperature.HeatCapacity;
-            float delta = temperature.CurrentTemperature - lastTemp;
+            var delta = temperature.CurrentTemperature - lastTemp;
 
             RaiseLocalEvent(uid, new OnTemperatureChangeEvent(temperature.CurrentTemperature, lastTemp, delta),
                     true);
@@ -179,7 +180,7 @@ public sealed class TemperatureSystem : EntitySystem
 
     private void EnqueueDamage(EntityUid uid, TemperatureComponent component, OnTemperatureChangeEvent args)
     {
-        ShouldUpdateDamage.Add(component);
+        ShouldUpdateDamage.Add(uid);
     }
 
     private void ChangeDamage(EntityUid uid, TemperatureComponent temperature)
