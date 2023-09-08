@@ -495,7 +495,7 @@
   description: uplink-syndicate-hypospray-module-desc
   productEntity: BorgModuleHypospray
   cost:
-    Telecrystal: 5
+    Telecrystal: 7
   categories:
     - UplinkUtility
 
@@ -505,7 +505,7 @@
   description: uplink-syndicate-self-destruct-module-desc
   productEntity: BorgModuleSelfDestruct
   cost:
-    Telecrystal: 7
+    Telecrystal: 5
   categories:
     - UplinkUtility
 

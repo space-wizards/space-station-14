@@ -204,9 +204,9 @@
     spread: 75
 
 - type: entity
-  name: energy dagger
-  parent: EnergySword
+  parent: EnergySword  
   id: EnergyDaggerGeneric
+  name: energy dagger
   description: 'A shorter counterpart to the energy sword.'
   components:
   - type: EnergySword
