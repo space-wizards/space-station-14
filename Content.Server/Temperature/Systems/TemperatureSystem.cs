@@ -139,42 +139,66 @@ public sealed class TemperatureSystem : EntitySystem
 
     private void ServerAlert(EntityUid uid, AlertsComponent status, OnTemperatureChangeEvent args)
     {
-        switch (args.CurrentTemperature)
+        if (TryComp<TemperatureComponent>(uid, out var temperature))
         {
-            // Cold strong.
-            case <= 260:
+            var cold3 = temperature.ColdDamageThreshold;
+            var cold2 = cold3 + 20;
+            var cold1 = cold3 + 32;
+            var hot3 = temperature.HeatDamageThreshold;
+            var hot2 = hot3 - 20;
+            var hot1 = hot3 - 33;
+
+            if (temperature.ColdDamageThreshold + 32 >= temperature.HeatDamageThreshold - 32)
+            {
+                if (temperature.ColdDamageThreshold < temperature.HeatDamageThreshold)
+                {
+                    var range = temperature.HeatDamageThreshold - temperature.ColdDamageThreshold;
+                    cold2 = cold3 + range * 0.2f;
+                    cold1 = cold3 + range * 0.4f;
+                    hot1 = hot3 - range * 0.4f;
+                    hot2 = hot3 - range * 0.2f;
+                }
+                else
+                {
+                    _alertsSystem.ClearAlertCategory(uid, AlertCategory.Temperature);
+                    return;
+                }
+            }
+
+            // Dynamic variables can't be used in a Switch, so this has to be an If
+            //
+            // Dangerously cold
+            if (args.CurrentTemperature <= cold3)
+            {
                 _alertsSystem.ShowAlert(uid, AlertType.Cold, 3);
-                break;
-
-            // Cold mild.
-            case <= 280 and > 260:
+            }
+            // Cold warnings
+            else if (args.CurrentTemperature <= cold2 && args.CurrentTemperature > cold3)
+            {
                 _alertsSystem.ShowAlert(uid, AlertType.Cold, 2);
-                break;
-
-            // Cold weak.
-            case <= 292 and > 280:
+            }
+            else if (args.CurrentTemperature <= cold1 && args.CurrentTemperature > cold2)
+            {
                 _alertsSystem.ShowAlert(uid, AlertType.Cold, 1);
-                break;
-
-            // Safe.
-            case <= 327 and > 292:
+            }
+            // Safe
+            else if (args.CurrentTemperature <= hot1 && args.CurrentTemperature > cold1)
+            {
                 _alertsSystem.ClearAlertCategory(uid, AlertCategory.Temperature);
-                break;
-
-            // Heat weak.
-            case <= 335 and > 327:
+            }
+            // Hot warnings
+            else if (args.CurrentTemperature <= hot2 && args.CurrentTemperature > hot1)
+            {
                 _alertsSystem.ShowAlert(uid, AlertType.Hot, 1);
-                break;
-
-            // Heat mild.
-            case <= 360 and > 335:
+            }
+            else if (args.CurrentTemperature <= hot3 && args.CurrentTemperature > hot2)
+            {
                 _alertsSystem.ShowAlert(uid, AlertType.Hot, 2);
-                break;
-
-            // Heat strong.
-            case > 360:
+            } // Dangerously hot
+            else if (args.CurrentTemperature > hot3)
+            {
                 _alertsSystem.ShowAlert(uid, AlertType.Hot, 3);
-                break;
+            }
         }
     }
 
