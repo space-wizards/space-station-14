@@ -82,8 +82,7 @@ public sealed class TerminatorSystem : EntitySystem
             return;
         }
 
-        var rule = _terminatorRule.GetRule(target.Value);
-        _terminatorRule.AddMind(rule, mindId);
+        _terminatorRule.StartRule(mindId);
     }
 
     /// <summary>

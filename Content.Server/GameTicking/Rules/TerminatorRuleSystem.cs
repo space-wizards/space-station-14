@@ -24,21 +24,13 @@ public sealed class TerminatorRuleSystem : GameRuleSystem<TerminatorRuleComponen
     }
 
     /// <summary>
-    /// Finds an existing rule for a target, or starts a new rule and returns it.
+    /// Start a new rule with a single terminator.
     /// </summary>
-    public EntityUid GetRule(EntityUid target)
+    public EntityUid StartRule(EntityUid mind)
     {
-        var query = EntityQueryEnumerator<TerminatorRuleComponent>();
-        while (query.MoveNext(out var uid, out var rule))
-        {
-            if (rule.Target == target)
-                return uid;
-        }
-
-        // start a new rule
         GameTicker.StartGameRule("Terminator", out var ruleId);
         var comp = Comp<TerminatorRuleComponent>(ruleId);
-        comp.Target = target;
+        comp.Minds.Add(mind);
         return ruleId;
     }
 
