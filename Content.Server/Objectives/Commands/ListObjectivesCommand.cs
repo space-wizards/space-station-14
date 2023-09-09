@@ -13,7 +13,6 @@ namespace Content.Server.Objectives.Commands
     {
         [Dependency] private readonly IEntityManager _entities = default!;
         [Dependency] private readonly IPlayerManager _players = default!;
-        [Dependency] private readonly ObjectiveSystem _objective = default!;
 
         public override string Command => "lsobjectives";
 
@@ -40,11 +39,12 @@ namespace Content.Server.Objectives.Commands
                 shell.WriteLine("None.");
             }
 
+            var objective = _entities.System<ObjectiveSystem>();
             for (var i = 0; i < objectives.Count; i++)
             {
                 foreach (var condition in objectives[i].Conditions)
                 {
-                    var info = _objective.GetConditionInfo(condition, mindId, mind);
+                    var info = objective.GetConditionInfo(condition, mindId, mind);
                     shell.WriteLine($"- [{i}] {info.Title} ({info.Progress}%)");
                 }
             }
