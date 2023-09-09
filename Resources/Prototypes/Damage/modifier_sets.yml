@@ -213,8 +213,8 @@
     Blunt: 0.2
     Slash: 0.2
     Piercing: 0.1
-    # its better to light him on fire than shoot with lasers
-    Heat: 0.1
+    # fire and lasers burn it good
+    Heat: 1.0
     # zap
     Shock: 1.5
     Cold: 0.25
