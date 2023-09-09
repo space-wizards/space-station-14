@@ -1,4 +1,4 @@
-﻿namespace Content.Server.Magic.Events;
+﻿namespace Content.Shared.Magic;
 
 public interface ISpeakSpell // The speak n spell interface
 {
@@ -7,4 +7,3 @@ public interface ISpeakSpell // The speak n spell interface
     /// </summary>
     public string? Speech { get; }
 }
-

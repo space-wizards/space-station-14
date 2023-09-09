@@ -2,7 +2,7 @@
 using Content.Shared.Actions;
 using Content.Shared.Storage;
 
-namespace Content.Server.Magic.Events;
+namespace Content.Shared.Magic.Events;
 
 public sealed partial class WorldSpawnSpellEvent : WorldTargetActionEvent, ISpeakSpell
 {
@@ -30,4 +30,3 @@ public sealed partial class WorldSpawnSpellEvent : WorldTargetActionEvent, ISpea
     [DataField("speech")]
     public string? Speech { get; private set; }
 }
-
