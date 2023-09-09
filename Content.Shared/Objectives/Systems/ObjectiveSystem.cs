@@ -50,10 +50,10 @@ public sealed class ObjectiveSystem : EntitySystem
         // only check for duplicate prototypes if it's unique
         if (comp.Unique)
         {
-            var proto = _metaQuery.GetComponent(uid).PrototypeID;
+            var proto = _metaQuery.GetComponent(uid).EntityPrototype?.ID;
             foreach (var objective in mind.AllObjectives)
             {
-                if (_metaQuery.GetComponent(objective).PrototypeID == proto)
+                if (_metaQuery.GetComponent(objective).EntityPrototype?.ID == proto)
                     return false;
             }
         }
