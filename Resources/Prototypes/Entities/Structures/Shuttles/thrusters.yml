@@ -1,5 +1,5 @@
 - type: entity
-  id: BaseThruster
+  id: BaseThrusterDynamic
   parent: BaseStructureDynamic
   abstract: true
   components:
@@ -43,8 +43,50 @@
     mode: SnapgridCenter
 
 - type: entity
+  id: BaseThrusterStatic  # for when we dont want thrusters to be moveable such as pods and arrivals.
+  parent: BaseStructure
+  abstract: true
+  components:
+    - type: AmbientSound
+      enabled: false
+      range: 4
+      volume: -4
+      sound:
+        path: /Audio/Effects/shuttle_thruster.ogg
+    - type: Physics
+      bodyType: Static
+    - type: Rotatable
+      rotateWhileAnchored: true
+    - type: Thruster
+      damage:
+        types:
+          Heat: 40
+    - type: InteractionOutline
+    - type: Sprite
+    - type: Appearance
+    - type: ThrusterVisuals
+    - type: ApcPowerReceiver
+      powerLoad: 1500
+    - type: ExtensionCableReceiver
+    - type: Damageable
+      damageContainer: Inorganic
+      damageModifierSet: Metallic
+    - type: Destructible
+      thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 300  # Considering we need a lot of thrusters didn't want to make an individual one too tanky
+        behaviors:
+          - !type:DoActsBehavior
+            acts: ["Destruction"]
+    - type: StaticPrice
+      price: 300
+  placement:
+    mode: SnapgridCenter
+
+- type: entity
   id: Thruster
-  parent: [ BaseThruster, ConstructibleMachine ]
+  parent: [ BaseThrusterDynamic, ConstructibleMachine ]
   components:
   - type: Thruster
   - type: Machine
@@ -65,8 +107,30 @@
       offset: 0, 1
 
 - type: entity
+  id: BadThruster
+  parent: [ BaseThrusterStatic, ConstructibleMachine ]
+  components:
+  - type: Thruster
+  - type: Machine
+    board: BadThrusterMachineCircuitboard
+  - type: Sprite
+    sprite: Structures/Shuttles/thruster.rsi
+    layers:
+    - state: base
+      map: ["enum.ThrusterVisualLayers.Base"]
+    - state: thrust
+      map: ["enum.ThrusterVisualLayers.ThrustOn"]
+      shader: unshaded
+      visible: false
+    - state: thrust_burn_unshaded
+      map: ["enum.ThrusterVisualLayers.ThrustingUnshaded"]
+      shader: unshaded
+      visible: false
+      offset: 0, 1
+
+- type: entity
   id: DebugThruster
-  parent: BaseThruster
+  parent: BaseThrusterDynamic
   suffix: DEBUG
   components:
   - type: Thruster
@@ -91,7 +155,7 @@
 
 - type: entity
   id: Gyroscope
-  parent: [ BaseThruster, ConstructibleMachine ]
+  parent: [ BaseThrusterDynamic, ConstructibleMachine ]
   components:
   - type: Thruster
     thrusterType: Angular
@@ -135,7 +199,7 @@
 
 - type: entity
   id: DebugGyroscope
-  parent: BaseThruster
+  parent: BaseThrusterDynamic
   suffix: DEBUG
   components:
   - type: Thruster
