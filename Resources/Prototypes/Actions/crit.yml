@@ -1,34 +1,43 @@
 ﻿# Actions added to mobs in crit.
-- type: instantAction
-  id: CritSuccumb
+- type: entity
+  id: ActionCritSuccumb
   name: action-name-crit-succumb
   description: action-description-crit-succumb
-  itemIconStyle: NoItem
-  checkCanInteract: false
-  icon:
-    sprite: Mobs/Ghosts/ghost_human.rsi
-    state: icon
-  serverEvent: !type:CritSuccumbEvent
+  noSpawn: true
+  components:
+  - type: InstantAction
+    itemIconStyle: NoItem
+    checkCanInteract: false
+    icon:
+      sprite: Mobs/Ghosts/ghost_human.rsi
+      state: icon
+    event: !type:CritSuccumbEvent
 
-- type: instantAction
-  id: CritFakeDeath
+- type: entity
+  id: ActionCritFakeDeath
   name: action-name-crit-fake-death
   description: action-description-crit-fake-death
-  itemIconStyle: NoItem
-  checkCanInteract: false
-  icon:
-    sprite: Interface/Actions/actions_crit.rsi
-    state: fakedeath
-  serverEvent: !type:CritFakeDeathEvent
-  useDelay: 30
+  noSpawn: true
+  components:
+  - type: InstantAction
+    itemIconStyle: NoItem
+    checkCanInteract: false
+    icon:
+      sprite: Interface/Actions/actions_crit.rsi
+      state: fakedeath
+    event: !type:CritFakeDeathEvent
+    useDelay: 30
 
-- type: instantAction
-  id: CritLastWords
+- type: entity
+  id: ActionCritLastWords
   name: action-name-crit-last-words
   description: action-description-crit-last-words
-  itemIconStyle: NoItem
-  checkCanInteract: false
-  icon:
-    sprite: Interface/Actions/actions_crit.rsi
-    state: lastwords
-  serverEvent: !type:CritLastWordsEvent
+  noSpawn: true
+  components:
+  - type: InstantAction
+    itemIconStyle: NoItem
+    checkCanInteract: false
+    icon:
+      sprite: Interface/Actions/actions_crit.rsi
+      state: lastwords
+    event: !type:CritLastWordsEvent

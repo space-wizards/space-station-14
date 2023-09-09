@@ -1024,7 +1024,7 @@
   name: Invisible Wall
   components:
   - type: TimedDespawn
-    lifetime: 30
+    lifetime: 15
   - type: Tag
     tags:
       - Wall
