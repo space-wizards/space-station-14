@@ -135,3 +135,7 @@ ent-FoodGrape = виноград
     .suffix = { "" }
 ent-TrashBananiumPeel = бананиумовая кожура
     .desc = Кожура от странного банана.
+ent-FoodCocoaPod = стручок какао
+    .desc = Шоколада много не бывает!
+ent-TrashBananaPeelExplosiveUnarmed = банан
+    .desc = Есть что-то необычное в этом банане.

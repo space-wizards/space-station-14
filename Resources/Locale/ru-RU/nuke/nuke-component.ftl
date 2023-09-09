@@ -1,4 +1,4 @@
-nuke-component-cant-anchor = Похоже, что без диска болты заблокированы!
+nuke-component-cant-anchor-floor = Похоже, что без диска болты заблокированы!
 nuke-component-announcement-sender = Ядерная боеголовка
 nuke-component-announcement-armed = Внимание! Механизм самоуничтожения станции был активирован по координатам { $position }. До детонации { $time } секунд.
 nuke-component-announcement-unarmed = Механизм самоуничтожение станции деактивирован! Хорошего дня!
@@ -8,6 +8,7 @@ nuke-component-doafter-warning = Вы начинаете перебирать п
 # Nuke UI
 nuke-user-interface-title = Ядерная боеголовка
 nuke-user-interface-arm-button = ВЗВЕСТИ
+nuke-user-interface-disarm-button = ОБЕЗВРЕДИТЬ
 nuke-user-interface-anchor-button = ЗАКРЕПИТЬ
 nuke-user-interface-eject-button = ИЗВЛЕЧЬ
 
@@ -22,9 +23,9 @@ nuke-user-interface-status-error = ОШИБКА
 
 ## Lower status
 nuke-user-interface-second-status-await-disk = ОЖИДАНИЕ ДИСКА
-nuke-user-interface-second-status-time = ВРЕМЯ: { $time }
-nuke-user-interface-second-status-current-code = КОД: { $code }
-nuke-user-interface-second-status-cooldown-time = ОЖИДАНИЕ: { $time }
+nuke-user-interface-second-status-time = ВРЕМЯ: {$time}
+nuke-user-interface-second-status-current-code = КОД: {$code}
+nuke-user-interface-second-status-cooldown-time = ОЖИДАНИЕ: {$time}
 
 ## Nuke labels
 nuke-label-nanotrasen = NT-{$serial}
@@ -35,5 +36,5 @@ nuke-label-syndicate = SYN-{$serial}
 
 # Codes
 nuke-codes-message = [color=red]СОВЕРШЕННО СЕКРЕТНО![/color]
-nuke-codes-list = Код { $name }: { $code }
+nuke-codes-list = Код {$name}: {$code}
 nuke-codes-fax-paper-name = коды ядерной аутентификации

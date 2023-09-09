@@ -10,3 +10,6 @@ ent-InflatableWallStack1 = { ent-InflatableWallStack }
 ent-InflatableDoorStack1 = { ent-InflatableDoorStack }
     .suffix = 1
     .desc = { ent-InflatableDoorStack.desc }
+ent-InflatableWallStack5 = { ent-InflatableWallStack }
+    .suffix = 5
+    .desc = { ent-InflatableWallStack.desc }

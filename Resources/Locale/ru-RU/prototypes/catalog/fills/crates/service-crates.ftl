@@ -33,3 +33,7 @@ ent-CrateServiceBox = Ящик коробок
 
 ent-CrateServiceGuidebooks = ящик руководств
     .desc = Содержит руководства.
+
+ent-CrateTrashCartFilled = полная мусорная тележка
+    .desc = { ent-CrateBaseWeldable.desc }
+    .suffix = Полная

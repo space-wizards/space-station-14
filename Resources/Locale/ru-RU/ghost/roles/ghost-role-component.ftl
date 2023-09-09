@@ -21,6 +21,9 @@ ghost-role-information-slimes-name = Слайм
 ghost-role-information-slimes-description = Обычный слизень без особых потребностей и интересов. Он просто живет.
 ghost-role-information-angry-slimes-description = Все вокруг тебя раздражает твои инстинкты, уничтожь их!
 
+ghost-role-information-smile-name = Слайм под именем Смайл
+ghost-role-information-smile-description = Самое милое существо в мире. Улыбайся, слайм!
+
 ghost-role-information-punpun-name = Пун Пун
 ghost-role-information-punpun-description = Почётный член общины обезьян, ответственный за бар, и помогающий барменам во всём, чем может.
 
@@ -70,6 +73,12 @@ ghost-role-information-jonkbot-description = Искусственное вопл
 ghost-role-information-mimebot-name = Мимбот
 ghost-role-information-mimebot-description = Мимбот, ведёт себя как мим и не ведёт себя как грейтайдер.
 
+ghost-role-information-taxibot-name = ТаксиБот
+ghost-role-information-taxibot-description = Отвезите персонал станции к месту назначения.
+
+ghost-role-information-supplybot-name = КаргоБот
+ghost-role-information-supplybot-description = Доставляйте товары по станции.
+
 ghost-role-information-space-bear-name = Космический медведь
 ghost-role-information-space-bear-description = Вы медведь! Ведите себя соответствующе.
 
@@ -93,6 +102,9 @@ ghost-role-information-guardian-description = Слушайте своего хо
 
 ghost-role-information-holoparasite-name = Голопаразит
 ghost-role-information-holoparasite-description = Слушайте своего хозяина. Не танкуйте урон. Сильно стукайте врагов.
+
+ghost-role-information-holoclown-name = Холоклоун
+ghost-role-information-holoclown-description = Слушайтесь своего владельца. Используйте свои карманы и руки, чтобы помочь своему владельцу.
 
 ghost-role-information-ifrit-name = Ифрит
 ghost-role-information-ifrit-description = Слушайте своего хозяина. Не танкуйте урон. Сильно стукайте врагов.
@@ -145,6 +157,8 @@ ghost-role-information-centcom-official-description = Инспектируйте
 
 ghost-role-information-SyndicateAgent-name = Агент Синдиката
 ghost-role-information-SyndicateAgent-description = Кому-то нужно подкрепление. Вы, первый человек, которого синдикат сможет отправить к ним, помогите им.
+
+ghost-role-information-nukeop-rules = Вы оперативник синдиката, которому поручено уничтожить станцию. Cделайте все необходимое для выполнения этой задачи.
 
 ghost-role-information-LoneOps-name = Одинокий Оперативник
 ghost-role-information-LoneOps-description = Вы одинокий ядерный оперативник. Уничтожите станцию!

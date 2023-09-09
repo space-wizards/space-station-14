@@ -4,3 +4,7 @@ ent-NotekeeperCartridge = картридж Заметки
 ent-NetProbeCartridge = картридж NetProbe
     .desc = Программа для получения адресов и частот сетевых устройств
     .suffix = { "" }
+ent-NewsReadCartridge = картридж Новостей
+    .desc = Программа для чтения новостей
+ent-CrewManifestCartridge = картридж Манифеста экипажа
+    .desc = Программа для отображения списка членов экипажа

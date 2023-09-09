@@ -84,3 +84,12 @@ alerts-bleed-desc = Вы [color=red]истекаете кровью[/color].
 
 alerts-suit-power-name = Энергия костюма
 alerts-suit-power-desc = Каким уровнем энергии обладает ваш костюм космического ниндзя.
+
+alerts-pacified-name = [color=green]Pacified[/color]
+alerts-pacified-desc = Вы умиротворены; вы не сможете атаковать кого-либо напрямую.
+
+alerts-battery-name = Батарея
+alerts-battery-desc = Если батарея разрядится, вы не сможете использовать свои способности.
+
+alerts-no-battery-name = Нет батареи
+alerts-no-battery-desc = У вас нет батареи, в результате чего вы не можете заряжаться или использовать свои способности.

@@ -7,3 +7,6 @@ ent-AnomalyLocator = локатор аномалий
 ent-AnomalyLocatorEmpty = { ent-AnomalyLocator }
     .desc = { ent-AnomalyLocator.desc }
     .suffix = Пустой
+ent-AnomalyLocatorUnpowered = { ent-AnomalyLocator }
+    .desc = { ent-AnomalyLocator.desc }
+    .suffix = Борги

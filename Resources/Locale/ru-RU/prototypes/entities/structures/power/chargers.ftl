@@ -7,3 +7,6 @@ ent-WeaponCapacitorRecharger = зарядник
 ent-WallWeaponCapacitorRecharger = настенный зарядник
     .desc = { ent-PowerCellRecharger.desc }
     .suffix = { "" }
+ent-BorgCharger = станция подзарядки боргов
+    .desc = Стационарное зарядное устройство для различных боргов. На удивление просторный.
+    .suffix = { "" }
