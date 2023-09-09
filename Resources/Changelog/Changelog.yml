@@ -1,9 +1,4 @@
 Entries:
-- author: Jackal298
-  changes:
-  - {message: Added Machete and Pistol Crate to Expedition Rewards, type: Add}
-  id: 4284
-  time: '2023-07-18T21:09:14.0000000+00:00'
 - author: Flareguy
   changes:
   - {message: Added craftable improvised shotguns. Ammo not included., type: Add}
@@ -2993,3 +2988,9 @@ Entries:
   - {message: Fixed some sprites rotations!, type: Fix}
   id: 4783
   time: '2023-09-09T12:56:11.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Gauze is now more effective at treating slash and piercing damage.,
+    type: Tweak}
+  id: 4784
+  time: '2023-09-09T18:32:00.0000000+00:00'
