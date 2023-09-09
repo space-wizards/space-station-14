@@ -23,6 +23,6 @@ public sealed partial class PopupBehavior : IThresholdBehavior
     public void Execute(EntityUid uid, DestructibleSystem system, EntityUid? cause = null)
     {
         var popup = system.EntityManager.System<SharedPopupSystem>();
-        popup.PopupEntity(Loc.GetString(Popup), PopupType, uid);
+        popup.PopupEntity(Loc.GetString(Popup), uid, PopupType);
     }
 }
