@@ -20,6 +20,18 @@
 
 - type: entity
   parent: PartTerminator
+  id: TorsoTerminator
+  name: t-800 torso
+  components:
+  - type: Sprite
+    state: torso_m
+  - type: Icon
+    state: torso_m
+  - type: BodyPart
+    partType: Torso
+
+- type: entity
+  parent: PartTerminator
   id: HeadTerminator
   name: t-800 skull
   description: Its red eyes have powered down... for now.
@@ -36,3 +48,109 @@
   - type: Tag
     tags:
     - Head
+
+- type: entity
+  parent: PartTerminator
+  id: LeftArmTerminator
+  name: left t-800 arm
+  components:
+  - type: Sprite
+    state: l_arm
+  - type: Icon
+    state: l_arm
+  - type: BodyPart
+    partType: Arm
+    symmetry: Left
+
+- type: entity
+  parent: PartTerminator
+  id: RightArmTerminator
+  name: right t-800 arm
+  components:
+  - type: Sprite
+    state: r_arm
+  - type: Icon
+    state: r_arm
+  - type: BodyPart
+    partType: Arm
+    symmetry: Right
+
+- type: entity
+  parent: PartTerminator
+  id: LeftHandTerminator
+  name: left t-800 hand
+  components:
+  - type: Sprite
+    state: l_hand
+  - type: Icon
+    state: l_hand
+  - type: BodyPart
+    partType: Hand
+    symmetry: Left
+
+- type: entity
+  parent: PartTerminator
+  id: RightHandTerminator
+  name: right t-800 hand
+  components:
+  - type: Sprite
+    state: r_hand
+  - type: Icon
+    state: r_hand
+  - type: BodyPart
+    partType: Hand
+    symmetry: Right
+
+- type: entity
+  parent: PartTerminator
+  id: LeftLegTerminator
+  name: left t-800 leg
+  components:
+  - type: Sprite
+    state: l_leg
+  - type: Icon
+    state: l_leg
+  - type: BodyPart
+    partType: Leg
+    symmetry: Left
+  - type: MovementBodyPart
+
+- type: entity
+  parent: PartTerminator
+  id: RightLegTerminator
+  name: right t-800 leg
+  components:
+  - type: Sprite
+    state: r_leg
+  - type: Icon
+    state: r_leg
+  - type: BodyPart
+    partType: Leg
+    symmetry: Right
+  - type: MovementBodyPart
+
+- type: entity
+  parent: PartTerminator
+  id: LeftFootTerminator
+  name: left t-800 foot
+  components:
+  - type: Sprite
+    state: l_foot
+  - type: Icon
+    state: l_foot
+  - type: BodyPart
+    partType: Foot
+    symmetry: Left
+
+- type: entity
+  parent: PartTerminator
+  id: RightFootTerminator
+  name: right t-800 foot
+  components:
+  - type: Sprite
+    state: r_foot
+  - type: Icon
+    state: r_foot
+  - type: BodyPart
+    partType: Foot
+    symmetry: Right

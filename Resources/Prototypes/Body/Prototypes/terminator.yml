@@ -53,33 +53,33 @@
       connections:
       - torso
     torso:
-      part: TorsoSkeleton
+      part: TorsoTerminator
       connections:
       - left arm
       - right arm
       - left leg
       - right leg
     right arm:
-      part: RightArmSkeleton
+      part: RightArmTerminator
       connections:
       - right hand
     left arm:
-      part: LeftArmSkeleton
+      part: LeftArmTerminator
       connections:
       - left hand
     right hand:
-      part: RightHandSkeleton
+      part: RightHandTerminator
     left hand:
-      part: LeftHandSkeleton
+      part: LeftHandTerminator
     right leg:
-      part: RightLegSkeleton
+      part: RightLegTerminator
       connections:
       - right foot
     left leg:
-      part: LeftLegSkeleton
+      part: LeftLegTerminator
       connections:
       - left foot
     right foot:
-      part: RightFootSkeleton
+      part: RightFootTerminator
     left foot:
-      part: LeftFootSkeleton
+      part: LeftFootTerminator
