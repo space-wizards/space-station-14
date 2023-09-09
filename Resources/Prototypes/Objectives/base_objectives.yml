@@ -21,8 +21,8 @@
   parent: BaseObjective
   id: BaseLivingObjective
   components:
-  - type: IncompatibleConditionsRequirement
-    conditions:
+  - type: ObjectiveBlacklistRequirement
+    blacklist:
       components:
       - DieCondition
 
@@ -47,8 +47,8 @@
     icon:
       sprite: Objects/Weapons/Guns/Pistols/viper.rsi
       state: icon
-  - type: IncompatibleConditionsRequirement
-    conditions:
+  - type: ObjectiveBlacklistRequirement
+    blacklist:
       components:
       - SocialObjective
   - type: KillPersonCondition
@@ -62,8 +62,8 @@
   components:
   - type: Objective
     unique: false
-  - type: IncompatibleConditionsRequirement
-    conditions:
+  - type: ObjectiveBlacklistRequirement
+    blacklist:
       components:
       - KillPersonCondition
   - type: SocialObjective

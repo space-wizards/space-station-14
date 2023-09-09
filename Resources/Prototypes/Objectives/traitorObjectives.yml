@@ -57,8 +57,8 @@
     icon:
       sprite: Mobs/Ghosts/ghost_human.rsi
       state: icon
-  - type: IncompatibleConditionsRequirement
-    conditions:
+  - type: ObjectiveBlacklistRequirement
+    blacklist:
       components:
       - EscapeShuttleCondition
       - StealCondition
@@ -135,8 +135,8 @@
   parent: BaseTraitorStealObjective
   id: HyposprayStealObjective
   components:
-  - type: NotRoleRequirement
-    roleId: ChiefMedicalOfficer
+  - type: NotJobRequirement
+    job: ChiefMedicalOfficer
   - type: StealCondition
     prototype: Hypospray
     owner: job-name-cmo
@@ -148,8 +148,8 @@
   parent: BaseTraitorStealObjective
   id: BaseRDObjective
   components:
-  - type: NotRoleRequirement
-    roleId: ResearchDirector
+  - type: NotJobRequirement
+    job: ResearchDirector
   - type: StealCondition
     owner: job-name-rd
 
@@ -179,8 +179,8 @@
   - type: Objective
     # hos has a gun ce does not, higher difficulty than most
     difficulty: 3.5
-  - type: NotRoleRequirement
-    roleId: HeadOfSecurity
+  - type: NotJobRequirement
+    job: HeadOfSecurity
   - type: StealCondition
     prototype: BookSecretDocuments
     owner: job-name-hos
@@ -192,8 +192,8 @@
   parent: BaseTraitorStealObjective
   id: MagbootsStealObjective
   components:
-  - type: NotRoleRequirement
-    roleId: ChiefEngineer
+  - type: NotJobRequirement
+    job: ChiefEngineer
   - type: StealCondition
     prototype: ClothingShoesBootsMagAdv
     owner: job-name-ce
@@ -205,8 +205,8 @@
   parent: BaseTraitorStealObjective
   id: MagbootsStealObjective
   components:
-  - type: NotRoleRequirement
-    roleId: HeadOfPersonnel
+  - type: NotJobRequirement
+    job: HeadOfPersonnel
   - type: StealCondition
     prototype: FoodMeatCorgi
     owner: objective-Objective-steal-Ian
@@ -221,8 +221,8 @@
   - type: Objective
     # sorry ce but your jordans are not as high security as the caps gear
     difficulty: 3.5
-  - type: NotRoleRequirement
-    roleId: Captain
+  - type: NotJobRequirement
+    job: Captain
 
 - type: entity
   noSpawn: true
