@@ -1,6 +1,6 @@
 - type: entity
-  id: BaseThrusterDynamic
-  parent: BaseStructureDynamic
+  id: BaseThruster
+  parent: BaseStructure
   abstract: true
   components:
     - type: AmbientSound
@@ -45,6 +45,8 @@
 - type: entity
   id: BaseThrusterStatic  # for when we dont want thrusters to be moveable such as pods and arrivals.
   parent: BaseStructure
+  name: stationary thruster
+  description: A stationary thruster that allows a shuttle to move.
   abstract: true
   components:
     - type: AmbientSound
@@ -86,7 +88,7 @@
 
 - type: entity
   id: Thruster
-  parent: [ BaseThrusterDynamic, ConstructibleMachine ]
+  parent: [ BaseThruster, ConstructibleMachine ]
   components:
   - type: Thruster
   - type: Machine
@@ -109,6 +111,8 @@
 - type: entity
   id: ThrusterStatic
   parent: BaseThrusterStatic
+  name: stationary thruster
+  description: A stationary thruster that allows a shuttle to move.
   components:
   - type: Thruster
   - type: Sprite
@@ -128,7 +132,7 @@
 
 - type: entity
   id: DebugThruster
-  parent: BaseThrusterDynamic
+  parent: BaseThruster
   suffix: DEBUG
   components:
   - type: Thruster
@@ -153,7 +157,7 @@
 
 - type: entity
   id: Gyroscope
-  parent: [ BaseThrusterDynamic, ConstructibleMachine ]
+  parent: [ BaseThruster, ConstructibleMachine ]
   components:
   - type: Thruster
     thrusterType: Angular
@@ -197,7 +201,7 @@
 
 - type: entity
   id: DebugGyroscope
-  parent: BaseThrusterDynamic
+  parent: BaseThruster
   suffix: DEBUG
   components:
   - type: Thruster

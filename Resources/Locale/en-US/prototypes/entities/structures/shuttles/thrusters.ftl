@@ -1,14 +1,8 @@
-ent-BaseThrusterDynamic = thruster
+ent-BaseThruster = thruster
     .desc = A thruster that allows a shuttle to move.
 
-ent-BaseThrusterStatic = stationary thruster
-    .desc = A stationary thruster that allows a shuttle to move.
-
-ent-Thruster = { ent-BaseThrusterDynamic }
+ent-Thruster = { ent-BaseThruster }
     .desc = { ent-BaseThrusterDynamic.desc }
-
-ent-ThrusterStatic = { ent-BaseThrusterStatic }
-    .desc = { ent-BaseThrusterStatic.desc }
 
 ent-DebugThruster = debug thruster
     .desc = It goes nyooooooom. It doesn't need power nor space.
