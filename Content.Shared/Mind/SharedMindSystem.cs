@@ -252,28 +252,18 @@ public abstract class SharedMindSystem : EntitySystem
     }
 
     /// <summary>
-    /// Adds an objective to this mind.
+    /// Tries to create and add an objective from its prototype id.
     /// </summary>
-    public bool TryAddObjective(EntityUid mindId, MindComponent mind, ObjectivePrototype objectivePrototype)
+    /// <returns>Returns true if adding the objective succeeded.</returns>
+    public bool TryAddObjective(EntityUid mindId, MindComponent mind, string proto)
     {
-        if (!objectivePrototype.CanBeAssigned(mindId, mind))
+        var objective = TryCreateObjective(mindId, mind, proto);
+        if (objective == null)
             return false;
 
-        var objective = _objective.CreateObjective(mindId, mind, objectivePrototype);
-        // TODO: is this really a bad thing?
-        // - for escape and other unique ones it already checks in requirement
-        // - for kill, if you get 2 objectives to kill someone that can just mean you REALLY need that person dead, so not that bad?
-        // also would mean removing that sussy equal entityuid check in objective...
-        if (mind.Objectives.Contains(objective))
-            return false;
-
-        foreach (var condition in objective.Conditions)
-        {
-            var title = _objective.GetConditionTitle(condition, mindId, mind);
-            _adminLogger.Add(LogType.Mind, LogImpact.Low, $"'{title}' added to mind of {MindOwnerLoggingString(mind)}");
-        }
-
-        mind.Objectives.Add(objective);
+        var title = _objective.GetTitle(objective, mindId, mind);
+        _adminLogger.Add(LogType.Mind, LogImpact.Low, $"{proto} ({objective}) '{title}' added to mind of {MindOwnerLoggingString(mind)}");
+        mind.AllObjectives.Add(objective);
         return true;
     }
 
@@ -288,14 +278,10 @@ public abstract class SharedMindSystem : EntitySystem
 
         var objective = mind.Objectives[index];
 
-        foreach (var condition in objective.Conditions)
-        {
-            var title = _objective.GetConditionTitle(condition, mindId, mind);
-            _adminLogger.Add(LogType.Mind, LogImpact.Low, $"'{title}' removed from the mind of {MindOwnerLoggingString(mind)}");
-            Del(condition);
-        }
-
+        var title = _objective.GetTitle(objective, mindId, mind);
+        _adminLogger.Add(LogType.Mind, LogImpact.Low, $"'{title}' removed from the mind of {MindOwnerLoggingString(mind)}");
         mind.Objectives.Remove(objective);
+        Del(objective);
         return true;
     }
 
