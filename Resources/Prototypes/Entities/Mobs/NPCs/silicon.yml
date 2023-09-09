@@ -114,7 +114,8 @@
     speechVerb: Robotic
   - type: TypingIndicator
     proto: robot
-    
+  - type: ZombieImmune
+
 - type: entity
   parent: [ MobSiliconBase, BaseVehicle]
   id: MobSiliconBaseVehicle # for vehicles
@@ -137,7 +138,7 @@
     softness: 2
     mask: /Textures/Effects/LightMasks/cone.png
     autoRot: true
-    
+
 - type: entity
   parent: MobSiliconBaseVehicle
   id: MobTaxiBot
