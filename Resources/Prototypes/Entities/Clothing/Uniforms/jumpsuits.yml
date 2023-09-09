@@ -1294,7 +1294,7 @@
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitLoungewear
-  name: Loungewear
+  name: loungewear
   description: A long stretch of fabric that wraps around your body for comfort.
   components:
   - type: Sprite
