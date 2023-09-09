@@ -251,7 +251,7 @@
 
 - type: entity
   noSpawn: true
-  parent: BaseCaptainobjective
+  parent: BaseCaptainObjective
   id: StealNukeDiskObjective
   components:
   - type: ObjectiveObjective
