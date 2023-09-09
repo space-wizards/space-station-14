@@ -86,7 +86,7 @@ public sealed class MutationSystem : EntitySystem
     {
         SeedData result = b.Clone();
 
-        result.Chemicals = Random(0.5f) ? a.Chemicals : result.Chemicals;
+        CrossChemicals(ref result.Chemicals, a.Chemicals);
 
         CrossFloat(ref result.NutrientConsumption, a.NutrientConsumption);
         CrossFloat(ref result.WaterConsumption, a.WaterConsumption);
@@ -115,8 +115,9 @@ public sealed class MutationSystem : EntitySystem
         CrossBool(ref result.Bioluminescent, a.Bioluminescent);
         CrossBool(ref result.TurnIntoKudzu, a.TurnIntoKudzu);
         CrossBool(ref result.CanScream, a.CanScream);
-        result.ExudeGasses = Random(0.5f) ? a.ExudeGasses : result.ExudeGasses;
-        result.ConsumeGasses = Random(0.5f) ? a.ConsumeGasses : result.ConsumeGasses;
+        CrossGasses(ref result.ExudeGasses, a.ExudeGasses);
+        CrossGasses(ref result.ConsumeGasses, a.ConsumeGasses);
+
         result.BioluminescentColor = Random(0.5f) ? a.BioluminescentColor : result.BioluminescentColor;
 
         // Hybrids have a high chance of being seedless. Balances very
@@ -292,6 +293,70 @@ public sealed class MutationSystem : EntitySystem
         return color;
     }
 
+    private void CrossChemicals(ref Dictionary<string, SeedChemQuantity> val, Dictionary<string, SeedChemQuantity> other)
+    {
+        // Go through chemicals from the pollen in swab
+        foreach (var other_chem in other)
+        {
+            // if both have same chemical, randomly pick potency ratio from the two.
+            if (val.ContainsKey(other_chem.Key))
+            {
+                val[other_chem.Key] = Random(0.5f) ? other_chem.Value : val[other_chem.Key];
+            }
+            // if target plant doesn't have this chemical, has 50% chance to add it. 
+            else
+            {
+                if (Random(0.5f))
+                {
+                    val.Add(other_chem.Key, other_chem.Value);
+                }
+            }
+        }
+
+        // if the target plant has chemical that the pollen in swab does not, 50% chance to remove it.
+        foreach (var this_chem in val)
+        {
+            if (!other.ContainsKey(this_chem.Key))
+            {
+                if (Random(0.5f))
+                {
+                    val.Remove(this_chem.Key);
+                }
+            }
+        }
+    }
+
+    private void CrossGasses(ref Dictionary<Gas, float> val, Dictionary<Gas, float> other)
+    {
+        // Go through gasses from the pollen in swab
+        foreach (var other_gas in other)
+        {
+            // if both have same gas, randomly pick ammount from the two.
+            if (val.ContainsKey(other_gas.Key))
+            {
+                val[other_gas.Key] = Random(0.5f) ? other_gas.Value : val[other_gas.Key];
+            }
+            // if target plant doesn't have this gas, has 50% chance to add it.
+            else
+            {
+                if (Random(0.5f))
+                {
+                    val.Add(other_gas.Key, other_gas.Value);
+                }
+            }
+        }
+        // if the target plant has gas that the pollen in swab does not, 50% chance to remove it.
+        foreach (var this_gas in val)
+        {
+            if (!other.ContainsKey(this_gas.Key))
+            {
+                if (Random(0.5f))
+                {
+                    val.Remove(this_gas.Key);
+                }
+            }
+        }
+    }
     private void CrossFloat(ref float val, float other)
     {
         val = Random(0.5f) ? val : other;
