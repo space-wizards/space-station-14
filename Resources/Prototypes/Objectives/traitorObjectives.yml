@@ -1,241 +1,223 @@
-﻿- type: objective
-  id: CaptainIDStealObjective
-  issuer: syndicate
-  difficultyOverride: 2.75
-  requirements:
-    - !type:TraitorRequirement {}
-    - !type:IncompatibleConditionsRequirement
-      conditions:
-        - DieCondition
-    - !type:NotRoleRequirement
-      roleId: Captain
-  conditions:
-    - !type:StealCondition
-      prototype: CaptainIDCard
-
-- type: objective
-  id: KillRandomObjective
-  issuer: syndicate
-  requirements:
-    - !type:TraitorRequirement {}
-    - !type:IncompatibleConditionsRequirement
-        conditions:
-          - RandomTraitorAliveCondition
-  conditions:
-    - !type:KillRandomPersonCondition {}
-  canBeDuplicate: true
-
-# technically its still possible for KillRandomObjective to roll a head but this is guaranteed, so higher difficulty
-# this also will not count missing evac as killing as heads are higher profile, so you really need to do the dirty work
-- type: objective
-  id: KillRandomHeadObjective
-  issuer: syndicate
-  difficultyOverride: 3.0
-  requirements:
-  - !type:TraitorRequirement {}
-  - !type:IncompatibleConditionsRequirement
-    conditions:
-    - RandomTraitorAliveCondition
-  conditions:
-  - !type:KillRandomHeadCondition
-    description: objective-condition-kill-head-description
-    requireDead: true
-  # killing 1 head is enough
-  canBeDuplicate: false
-
-- type: objective
-  id: RandomTraitorAliveObjective
-  issuer: syndicate
-  requirements:
-    - !type:TraitorRequirement {}
-    - !type:IncompatibleConditionsRequirement
-        conditions:
-          - KillRandomPersonCondition
-    - !type:MultipleTraitorsRequirement
-  conditions:
-    - !type:RandomTraitorAliveCondition {}
-  canBeDuplicate: true
-
-- type: objective
-  id: DieObjective
-  issuer: syndicate
-  requirements:
-    - !type:TraitorRequirement {}
-    - !type:IncompatibleConditionsRequirement
-      conditions:
-        - StealCondition
-        - EscapeShuttleCondition
-  conditions:
-    - !type:DieCondition {}
-
-- type: objective
-  id: CMOHyposprayStealObjective
-  issuer: syndicate
-  difficultyOverride: 2.75
-  requirements:
-    - !type:TraitorRequirement {}
-    - !type:IncompatibleConditionsRequirement
-      conditions:
-        - DieCondition
-    - !type:NotRoleRequirement
-      roleId: ChiefMedicalOfficer
-  conditions:
-    - !type:StealCondition
-      prototype: Hypospray
-      owner: job-name-cmo
-
-- type: objective
-  id: RDHardsuitStealObjective
-  issuer: syndicate
-  difficultyOverride: 2.75
-  requirements:
-    - !type:TraitorRequirement {}
-    - !type:IncompatibleConditionsRequirement
-      conditions:
-        - DieCondition
-    - !type:NotRoleRequirement
-      roleId: ResearchDirector
-  conditions:
-    - !type:StealCondition
-      prototype: ClothingOuterHardsuitRd
-      owner: job-name-rd
-
-- type: objective
-  id: HandTeleporterStealObjective
-  issuer: syndicate
-  difficultyOverride: 2.75
-  requirements:
-  - !type:TraitorRequirement {}
-  - !type:IncompatibleConditionsRequirement
-    conditions:
-    - DieCondition
-  - !type:NotRoleRequirement
-    roleId: ResearchDirector
-  conditions:
-  - !type:StealCondition
-    prototype: HandTeleporter
-    owner: job-name-rd
-
-- type: objective
-  id: SecretDocumentsStealObjective
-  issuer: syndicate
-  difficultyOverride: 2.75
-  requirements:
-  - !type:TraitorRequirement {}
-  - !type:IncompatibleConditionsRequirement
-    conditions:
-    - DieCondition
-  - !type:NotRoleRequirement
-    roleId: HeadOfSecurity
-  conditions:
-  - !type:StealCondition
-    prototype: BookSecretDocuments
-    owner: job-name-hos
-
-- type: objective
-  id: NukeDiskStealObjective
-  issuer: syndicate
-  requirements:
-    - !type:TraitorRequirement {}
-    - !type:IncompatibleConditionsRequirement
-      conditions:
-        - DieCondition
-    - !type:NotRoleRequirement
-      roleId: Captain
-    - !type:NotRoleRequirement
-      roleId: HeadOfSecurity
-    - !type:NotRoleRequirement
-      roleId: HeadOfPersonnel
-    - !type:NotRoleRequirement
-      roleId: ChiefEngineer
-    - !type:NotRoleRequirement
-      roleId: ChiefMedicalOfficer
-    - !type:NotRoleRequirement
-      roleId: ResearchDirector
-  conditions:
-    - !type:StealCondition
-      prototype: NukeDisk
-      owner: objective-condition-steal-station
-
-- type: objective
-  id: MagbootsStealObjective
-  issuer: syndicate
-  difficultyOverride: 2.75
-  requirements:
-    - !type:TraitorRequirement {}
-    - !type:IncompatibleConditionsRequirement
-      conditions:
-        - DieCondition
-    - !type:NotRoleRequirement
-      roleId: ChiefEngineer
-  conditions:
-    - !type:StealCondition
-      prototype: ClothingShoesBootsMagAdv
-      owner: job-name-ce
-
-- type: objective
-  id: CorgiMeatStealObjective
-  issuer: syndicate
-  requirements:
-    - !type:TraitorRequirement {}
-    - !type:IncompatibleConditionsRequirement
-      conditions:
-        - DieCondition
-    - !type:NotRoleRequirement
-      roleId: HeadOfPersonnel
-  conditions:
-    - !type:StealCondition
-      prototype: FoodMeatCorgi
-      owner: objective-condition-steal-Ian
-
-- type: objective
-  id: CaptainGunStealObjective
-  issuer: syndicate
-  difficultyOverride: 2.75
-  requirements:
-    - !type:TraitorRequirement {}
-    - !type:IncompatibleConditionsRequirement
-      conditions:
-        - DieCondition
-    - !type:NotRoleRequirement
-      roleId: Captain
-  conditions:
-    - !type:StealCondition
-      prototype: WeaponAntiqueLaser
-      owner: job-name-captain
-
-- type: objective
-  id: CaptainJetpackStealObjective
-  issuer: syndicate
-  difficultyOverride: 2.75
-  requirements:
-    - !type:TraitorRequirement {}
-    - !type:IncompatibleConditionsRequirement
-      conditions:
-        - DieCondition
-    - !type:NotRoleRequirement
-      roleId: Captain
-  conditions:
-    - !type:StealCondition
-      prototype: JetpackCaptainFilled
+# state
 
 - type: objective
   id: EscapeShuttleObjective
   issuer: syndicate
   requirements:
-    - !type:TraitorRequirement {}
-    - !type:IncompatibleConditionsRequirement
-      conditions:
-        - DieCondition
+  - !type:TraitorRequirement {}
+  - !type:IncompatibleConditionsRequirement
+    conditions:
+      components:
+      - DieCondition
   conditions:
-    - !type:EscapeShuttleCondition {}
+  - EscapeShuttleCondition
+
+- type: objective
+  id: DieObjective
+  issuer: syndicate
+  requirements:
+  - !type:TraitorRequirement {}
+  - !type:IncompatibleConditionsRequirement
+    conditions:
+      components:
+      - StealCondition
+      - EscapeShuttleCondition
+  conditions:
+  - DieCondition
+
+# kill
+
+- type: objective
+  id: KillRandomObjective
+  issuer: syndicate
+  requirements:
+  - !type:TraitorRequirement {}
+  - !type:IncompatibleConditionsRequirement
+    conditions:
+      components:
+      - RandomTraitorAliveCondition
+  conditions:
+  - KillRandomPersonCondition
+  canBeDuplicate: true
+
+# technically its still possible for KillRandomObjective to roll a head but this is guaranteed, so higher difficulty
+- type: objective
+  id: KillRandomHeadObjective
+  issuer: syndicate
+  requirements:
+  - !type:TraitorRequirement {}
+  - !type:IncompatibleConditionsRequirement
+    conditions:
+      components:
+      - RandomTraitorAliveCondition
+  conditions:
+  - KillRandomHeadCondition
+  # killing 1 head is enough
+  canBeDuplicate: false
+
+# social
+
+- type: objective
+  id: RandomTraitorAliveObjective
+  issuer: syndicate
+  requirements:
+  - !type:TraitorRequirement {}
+  - !type:IncompatibleConditionsRequirement
+    conditions:
+      components:
+      - KillRandomPersonCondition
+  - !type:MultipleTraitorsRequirement
+  conditions:
+  - RandomTraitorAliveCondition
+  canBeDuplicate: true
 
 - type: objective
   id: RandomTraitorProgressObjective
   issuer: syndicate
   requirements:
-    - !type:TraitorRequirement {}
-    - !type:MultipleTraitorsRequirement
+  - !type:TraitorRequirement {}
+  - !type:MultipleTraitorsRequirement {}
   conditions:
-    - !type:RandomTraitorProgressCondition {}
+  - RandomTraitorProgressCondition
   canBeDuplicate: true
+
+# steal
+
+- type: objective
+  id: CMOHyposprayStealObjective
+  issuer: syndicate
+  requirements:
+  - !type:TraitorRequirement {}
+  - !type:IncompatibleConditionsRequirement
+    conditions:
+      components:
+      - DieCondition
+  - !type:NotRoleRequirement
+    roleId: ChiefMedicalOfficer
+  conditions:
+  - StealHyposprayCondition
+
+- type: objective
+  id: RDHardsuitStealObjective
+  issuer: syndicate
+  requirements:
+  - !type:TraitorRequirement {}
+  - !type:IncompatibleConditionsRequirement
+    conditions:
+      components:
+      - DieCondition
+  - !type:NotRoleRequirement
+    roleId: ResearchDirector
+  conditions:
+  - StealRDHardsuitCondition
+
+- type: objective
+  id: HandTeleporterStealObjective
+  issuer: syndicate
+  requirements:
+  - !type:TraitorRequirement {}
+  - !type:IncompatibleConditionsRequirement
+    conditions:
+      components:
+      - DieCondition
+  - !type:NotRoleRequirement
+    roleId: ResearchDirector
+  conditions:
+  - StealHandTeleporterCondition
+
+- type: objective
+  id: SecretDocumentsStealObjective
+  issuer: syndicate
+  requirements:
+  - !type:TraitorRequirement {}
+  - !type:IncompatibleConditionsRequirement
+    conditions:
+      components:
+      - DieCondition
+  - !type:NotRoleRequirement
+    roleId: HeadOfSecurity
+  conditions:
+  - StealSecretDocumentsCondition
+
+- type: objective
+  id: MagbootsStealObjective
+  issuer: syndicate
+  requirements:
+  - !type:TraitorRequirement {}
+  - !type:IncompatibleConditionsRequirement
+    conditions:
+      components:
+      - DieCondition
+  - !type:NotRoleRequirement
+    roleId: ChiefEngineer
+  conditions:
+  - StealMagbootsCondition
+
+- type: objective
+  id: CorgiMeatStealObjective
+  issuer: syndicate
+  requirements:
+  - !type:TraitorRequirement {}
+  - !type:IncompatibleConditionsRequirement
+    conditions:
+      components:
+      - DieCondition
+  - !type:NotRoleRequirement
+    roleId: HeadOfPersonnel
+  conditions:
+  - StealCorgiMeatCondition
+
+﻿- type: objective
+  id: CaptainIDStealObjective
+  issuer: syndicate
+  requirements:
+  - !type:TraitorRequirement {}
+  - !type:IncompatibleConditionsRequirement
+    conditions:
+      components:
+      - DieCondition
+  - !type:NotRoleRequirement
+    roleId: Captain
+  conditions:
+  - StealCaptainIdCondition
+
+- type: objective
+  id: NukeDiskStealObjective
+  issuer: syndicate
+  requirements:
+  - !type:TraitorRequirement {}
+  - !type:IncompatibleConditionsRequirement
+    conditions:
+      components:
+      - DieCondition
+  - !type:NotCommandRequirement
+  conditions:
+  - StealNukeDiskCondition
+
+- type: objective
+  id: CaptainGunStealObjective
+  issuer: syndicate
+  requirements:
+  - !type:TraitorRequirement {}
+  - !type:IncompatibleConditionsRequirement
+    conditions:
+      components:
+      - DieCondition
+  - !type:NotRoleRequirement
+    roleId: Captain
+  conditions:
+  - StealAntiqueLaser
+
+- type: objective
+  id: CaptainJetpackStealObjective
+  issuer: syndicate
+  requirements:
+  - !type:TraitorRequirement {}
+  - !type:IncompatibleConditionsRequirement
+    conditions:
+      components:
+      - DieCondition
+  - !type:NotRoleRequirement
+    roleId: Captain
+  conditions:
+  - StealJetpackCondition
