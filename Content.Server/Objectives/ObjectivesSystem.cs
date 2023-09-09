@@ -94,28 +94,25 @@ public sealed class ObjectivesSystem : EntitySystem
 
                     foreach (var objective in objectiveGroup)
                     {
-                        foreach (var condition in objective.Conditions)
+                        var objectiveInfo = _objective.GetInfo(objective, mindId, mind);
+                        var objectiveTitle = objectiveInfo.Title!;
+                        var progress = objectiveInfo.Progress!;
+                        if (progress > 0.99f)
                         {
-                            var conditionInfo = _objective.GetConditionInfo(condition, mindId, mind);
-                            var conditionTitle = conditionInfo.Title!;
-                            var progress = conditionInfo.Progress ?? 0f;
-                            if (progress > 0.99f)
-                            {
-                                result += "\n- " + Loc.GetString(
-                                    "objectives-condition-success",
-                                    ("condition", conditionTitle),
-                                    ("markupColor", "green")
-                                );
-                            }
-                            else
-                            {
-                                result += "\n- " + Loc.GetString(
-                                    "objectives-condition-fail",
-                                    ("condition", conditionTitle),
-                                    ("progress", (int) (progress * 100)),
-                                    ("markupColor", "red")
-                                );
-                            }
+                            result += "\n- " + Loc.GetString(
+                                "objectives-objective-success",
+                                ("objective", objectiveTitle),
+                                ("markupColor", "green")
+                            );
+                        }
+                        else
+                        {
+                            result += "\n- " + Loc.GetString(
+                                "objectives-objective-fail",
+                                ("objective", objectiveTitle),
+                                ("progress", (int) (progress * 100)),
+                                ("markupColor", "red")
+                            );
                         }
                     }
                 }
