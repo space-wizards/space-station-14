@@ -25,6 +25,6 @@ public sealed partial class PopupBehavior : IThresholdBehavior
         var popup = system.EntityManager.System<SharedPopupSystem>();
         // popup is placed at coords since the entity could be deleted after, no more popup then
         var coords = system.EntityManager.GetComponent<TransformComponent>(uid).Coordinates;
-        popup.PopupEntity(Loc.GetString(Popup), coords, PopupType);
+        popup.PopupCoordinates(Loc.GetString(Popup), coords, PopupType);
     }
 }
