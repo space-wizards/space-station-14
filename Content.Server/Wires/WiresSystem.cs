@@ -12,7 +12,6 @@ using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Tools;
 using Content.Shared.Tools.Components;
-using Content.Shared.Tools.Systems;
 using Content.Shared.Wires;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
@@ -50,7 +49,6 @@ public sealed class WiresSystem : SharedWiresSystem
 
         // this is a broadcast event
         SubscribeLocalEvent<WiresPanelComponent, WirePanelDoAfterEvent>(OnPanelDoAfter);
-        SubscribeLocalEvent<WiresPanelComponent, WeldableAttemptEvent>(OnWeldableAttempt);
         SubscribeLocalEvent<WiresComponent, ComponentStartup>(OnWiresStartup);
         SubscribeLocalEvent<WiresComponent, WiresActionMessage>(OnWiresActionMessage);
         SubscribeLocalEvent<WiresComponent, InteractUsingEvent>(OnInteractUsing);
@@ -672,14 +670,6 @@ public sealed class WiresSystem : SharedWiresSystem
         if (wiresPanelSecurityLevelPrototype?.WiresAccessible == false)
         {
             _uiSystem.TryCloseAll(uid, WiresUiKey.Key);
-        }
-    }
-
-    private void OnWeldableAttempt(EntityUid uid, WiresPanelComponent component, WeldableAttemptEvent args)
-    {
-        if (component.Open && !component.WeldingAllowed)
-        {
-            args.Cancel();
         }
     }
 
