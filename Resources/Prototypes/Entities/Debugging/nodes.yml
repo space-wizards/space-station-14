@@ -1,0 +1,63 @@
+# Debugging nodes:
+- type: entity
+  id: BaseDebugNode
+  abstract: true
+  suffix: DEBUG
+  components:
+  - type: Clickable
+  - type: Fixtures
+  - type: GraphNode
+  - type: InteractionOutline
+  - type: Tag
+    tags:
+    - Debug
+
+- type: entity
+  id: DebugNodeA
+  parent: BaseDebugNode
+  name: debug node
+  description: Type A debug node
+  suffix: DEBUG
+  components:
+  - type: Sprite
+    noRot: true
+    drawdepth: Effects #it needs to draw over stuff.
+    sprite: Structures/Specific/anomaly.rsi
+    layers:
+    - state: anom1
+      map: ["enum.AnomalyVisualLayers.Base"]
+
+
+- type: entity
+  id: DebugNodeB
+  parent: BaseDebugNode
+  name: debug node
+  description: Type B debug node
+  suffix: DEBUG
+  components:
+  - type: Sprite
+    noRot: true
+    drawdepth: Effects #it needs to draw over stuff.
+    sprite: Structures/Specific/anomaly.rsi
+    layers:
+    - state: anom2
+      map: ["enum.AnomalyVisualLayers.Base"]
+
+# Debugging tools:
+- type: entity
+  id: DebugNodeLinker
+  parent: BaseItem
+  name: node linker
+  description: Tool for debugging node graphs
+  suffix: DEBUG
+  components:
+  - type: Tag
+    tags:
+    - Debug
+  - type: DebugNodeLinker
+  - type: Sprite
+    sprite: Objects/Tools/multitool.rsi
+    layers:
+    - state: icon
+    - state: green-unlit
+      shader: unshaded
