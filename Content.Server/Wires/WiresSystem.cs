@@ -12,6 +12,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Tools;
 using Content.Shared.Tools.Components;
+using Content.Shared.Tools.Systems;
 using Content.Shared.Wires;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
@@ -49,6 +50,7 @@ public sealed class WiresSystem : SharedWiresSystem
 
         // this is a broadcast event
         SubscribeLocalEvent<WiresPanelComponent, WirePanelDoAfterEvent>(OnPanelDoAfter);
+        SubscribeLocalEvent<WiresPanelComponent, WeldableAttemptEvent>(OnWeldableAttempt);
         SubscribeLocalEvent<WiresComponent, ComponentStartup>(OnWiresStartup);
         SubscribeLocalEvent<WiresComponent, WiresActionMessage>(OnWiresActionMessage);
         SubscribeLocalEvent<WiresComponent, InteractUsingEvent>(OnInteractUsing);
@@ -59,7 +61,6 @@ public sealed class WiresSystem : SharedWiresSystem
         SubscribeLocalEvent<ActivatableUIRequiresPanelComponent, ActivatableUIOpenAttemptEvent>(OnAttemptOpenActivatableUI);
         SubscribeLocalEvent<ActivatableUIRequiresPanelComponent, PanelChangedEvent>(OnActivatableUIPanelChanged);
     }
-
     private void SetOrCreateWireLayout(EntityUid uid, WiresComponent? wires = null)
     {
         if (!Resolve(uid, ref wires))
@@ -642,14 +643,14 @@ public sealed class WiresSystem : SharedWiresSystem
     {
         component.Visible = visible;
         UpdateAppearance(uid, component);
-        Dirty(component);
+        Dirty(uid, component);
     }
 
     public void TogglePanel(EntityUid uid, WiresPanelComponent component, bool open)
     {
         component.Open = open;
         UpdateAppearance(uid, component);
-        Dirty(component);
+        Dirty(uid, component);
 
         var ev = new PanelChangedEvent(component.Open);
         RaiseLocalEvent(uid, ref ev);
@@ -664,11 +665,21 @@ public sealed class WiresSystem : SharedWiresSystem
 
         component.WiresAccessible = wiresPanelSecurityLevelPrototype.WiresAccessible;
         component.WiresPanelSecurityExamination = wiresPanelSecurityLevelPrototype.Examine;
-        Dirty(component);
+        component.WeldingAllowed = wiresPanelSecurityLevelPrototype.WeldingAllowed;
+
+        Dirty(uid, component);
 
         if (wiresPanelSecurityLevelPrototype?.WiresAccessible == false)
         {
             _uiSystem.TryCloseAll(uid, WiresUiKey.Key);
+        }
+    }
+
+    private void OnWeldableAttempt(EntityUid uid, WiresPanelComponent component, WeldableAttemptEvent args)
+    {
+        if (component.Open && !component.WeldingAllowed)
+        {
+            args.Cancel();
         }
     }
 
