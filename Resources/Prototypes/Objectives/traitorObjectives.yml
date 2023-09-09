@@ -209,7 +209,7 @@
     job: HeadOfPersonnel
   - type: StealCondition
     prototype: FoodMeatCorgi
-    owner: objective-Objective-steal-Ian
+    owner: objective-condition-steal-Ian
 
 ## cap
 
@@ -262,4 +262,4 @@
   - type: NotCommandRequirement
   - type: StealCondition
     prototype: NukeDisk
-    owner: objective-Objective-steal-station
+    owner: objective-condition-steal-station
