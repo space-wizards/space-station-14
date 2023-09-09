@@ -1,9 +1,4 @@
 Entries:
-- author: Flareguy
-  changes:
-  - {message: Added craftable improvised shotguns. Ammo not included., type: Add}
-  id: 4285
-  time: '2023-07-18T21:10:07.0000000+00:00'
 - author: notquitehadouken
   changes:
   - {message: Windows can go next to eachother, type: Fix}
@@ -2994,3 +2989,8 @@ Entries:
     type: Tweak}
   id: 4784
   time: '2023-09-09T18:32:00.0000000+00:00'
+- author: JoeHammad
+  changes:
+  - {message: Fingerless gloves are now available in the SecDrobe, type: Add}
+  id: 4785
+  time: '2023-09-09T18:59:03.0000000+00:00'
