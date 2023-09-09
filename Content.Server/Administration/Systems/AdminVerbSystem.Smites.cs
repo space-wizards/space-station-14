@@ -7,6 +7,7 @@ using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
 using Content.Server.Electrocution;
 using Content.Server.Explosion.EntitySystems;
+using Content.Server.GameTicking.Rules;
 using Content.Server.GhostKick;
 using Content.Server.Medical;
 using Content.Server.Nutrition.EntitySystems;
@@ -30,6 +31,7 @@ using Content.Shared.Database;
 using Content.Shared.Electrocution;
 using Content.Shared.Interaction.Components;
 using Content.Shared.Inventory;
+using Content.Shared.Mind.Components;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
@@ -73,6 +75,7 @@ public sealed partial class AdminVerbSystem
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly TabletopSystem _tabletopSystem = default!;
+    [Dependency] private readonly TerminatorRuleSystem _terminatorRule = default!;
     [Dependency] private readonly VomitSystem _vomitSystem = default!;
     [Dependency] private readonly WeldableSystem _weldableSystem = default!;
     [Dependency] private readonly SharedContentEyeSystem _eyeSystem = default!;
@@ -793,5 +796,27 @@ public sealed partial class AdminVerbSystem
             Message = Loc.GetString("admin-smite-super-speed-description"),
         };
         args.Verbs.Add(superSpeed);
+
+        Verb terminate = new()
+        {
+            Text = "Terminate",
+            Category = VerbCategory.Smite,
+            Icon = new SpriteSpecifier.Rsi(new ("Mobs/Species/Terminator/parts.rsi"), "skull_icon"),
+            Act = () =>
+            {
+                if (!TryComp<MindContainerComponent>(args.Target, out var mindContainer) || mindContainer.Mind == null)
+                    return;
+
+                var coords = Transform(args.Target).Coordinates;
+                var mindId = mindContainer.Mind.Value;
+                _terminatorRule.CreateSpawner(coords, mindId);
+
+                _popupSystem.PopupEntity(Loc.GetString("admin-smite-terminate-prompt"), args.Target,
+                    args.Target, PopupType.LargeCaution);
+            },
+            Impact = LogImpact.Extreme,
+            Message = Loc.GetString("admin-smite-terminate-description")
+        };
+        args.Verbs.Add(terminate);
     }
 }
