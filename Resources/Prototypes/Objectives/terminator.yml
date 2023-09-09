@@ -3,6 +3,8 @@
   parent: BaseObjective
   id: BaseTerminatorObjective
   components:
+  - type: Objective
+    issuer: skynet
   - type: RoleRequirement
     roles:
       components:
