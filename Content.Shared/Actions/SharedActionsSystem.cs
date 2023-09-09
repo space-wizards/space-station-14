@@ -612,7 +612,7 @@ public abstract class SharedActionsSystem : EntitySystem
 
     public IEnumerable<(EntityUid Id, BaseActionComponent Comp)> GetActions(EntityUid holderId, ActionsComponent? actions = null)
     {
-        if (!Resolve(holderId, ref actions))
+        if (!Resolve(holderId, ref actions, false))
             yield break;
 
         foreach (var actionId in actions.Actions)
