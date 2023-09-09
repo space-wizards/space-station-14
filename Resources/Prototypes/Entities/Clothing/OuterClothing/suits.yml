@@ -103,13 +103,6 @@
     sprite: Clothing/OuterClothing/Suits/spaceninja.rsi
   - type: StealthClothing
     visibility: 0.3
-    toggleAction:
-      # have to plan (un)cloaking ahead of time
-      useDelay: 5
-      name: action-name-toggle-phase-cloak
-      description: action-desc-toggle-phase-cloak
-      priority: -9
-      event: !type:ToggleStealthEvent
   - type: PressureProtection
     highPressureMultiplier: 0.6
     lowPressureMultiplier: 1000
@@ -122,6 +115,18 @@
         Slash: 0.6
         Piercing: 0.6
         Heat: 0.6
+
+- type: entity
+  id: ActionTogglePhaseCloak
+  name: action-name-toggle-phase-cloak
+  description: action-desc-toggle-phase-cloak
+  noSpawn: true
+  components:
+  - type: InstantAction
+    # have to plan (un)cloaking ahead of time
+    useDelay: 5
+    priority: -9
+    event: !type:ToggleStealthEvent
 
 - type: entity
   parent: ClothingOuterBase

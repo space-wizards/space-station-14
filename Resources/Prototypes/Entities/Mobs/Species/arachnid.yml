@@ -32,7 +32,7 @@
         Slash: 4
   # Fun
   - type: Sericulture
-    actionProto: SericultureAction
+    action: ActionSericulture
     productionLength: 3
     entityProduced: MaterialWebSilk1
     hungerCost: 9 # Should total to 12 total silk on full hunger

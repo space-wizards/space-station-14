@@ -1,4 +1,3 @@
-using System.Numerics;
 using Content.Server.Atmos.Components;
 using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
@@ -8,17 +7,17 @@ using Content.Server.UserInterface;
 using Content.Shared.Actions;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
-using Content.Shared.Toggleable;
 using Content.Shared.Examine;
+using Content.Shared.Toggleable;
+using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
+using Robust.Shared.Physics.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
-using Content.Shared.Verbs;
-using Robust.Shared.Physics.Systems;
 
 namespace Content.Server.Atmos.EntitySystems
 {
@@ -105,7 +104,7 @@ namespace Content.Server.Atmos.EntitySystems
 
         private void OnGetActions(EntityUid uid, GasTankComponent component, GetItemActionsEvent args)
         {
-            args.Actions.Add(component.ToggleAction);
+            args.AddAction(ref component.ToggleActionEntity, component.ToggleAction);
         }
 
         private void OnExamined(EntityUid uid, GasTankComponent component, ExaminedEvent args)
@@ -233,7 +232,7 @@ namespace Content.Server.Atmos.EntitySystems
             if (_internals.TryConnectTank(internals, component.Owner))
                 component.User = internals.Owner;
 
-            _actions.SetToggled(component.ToggleAction, component.IsConnected);
+            _actions.SetToggled(component.ToggleActionEntity, component.IsConnected);
 
             // Couldn't toggle!
             if (!component.IsConnected)
@@ -255,7 +254,7 @@ namespace Content.Server.Atmos.EntitySystems
             var internals = GetInternalsComponent(component);
             component.User = null;
 
-            _actions.SetToggled(component.ToggleAction, false);
+            _actions.SetToggled(component.ToggleActionEntity, false);
 
             _internals.DisconnectTank(internals);
             component.DisconnectStream?.Stop();
