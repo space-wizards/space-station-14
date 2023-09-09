@@ -148,6 +148,14 @@
             max: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  # for fire spreading around, the endoskeleton cannot burn
+  - type: Flammable
+    fireSpread: true
+    canResistFire: true
+    damage:
+      types:
+        Heat: 0
+  - type: CombatMode
   # now his only weapon, but it is stronger
   - type: MeleeWeapon
     damage:
