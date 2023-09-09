@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Based on skeleton sprites by EmoGarbage, modified by deltanedas (github).",
+  "states": [
+    {
+      "name": "skull_icon"
+    },
+    {
+      "name": "full"
+    },
+    {
+      "name": "head_m"
+    }
+  ]
+}
