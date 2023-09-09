@@ -254,7 +254,7 @@
   parent: BaseCaptainObjective
   id: StealNukeDiskObjective
   components:
-  - type: ObjectiveObjective
+  - type: Objective
     # high difficulty since the hardest item both to steal, and to not get caught down the road,
     # since anyone with a pinpointer can track you down and kill you
     # it's close to being a stealth loneop
