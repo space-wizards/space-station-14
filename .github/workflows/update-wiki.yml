@@ -3,7 +3,7 @@ name: Update Wiki
 on:
   workflow_dispatch:
   push:
-    branches: [ master, jsondump ]
+    branches: [ jsondump ]
     paths:
       - '.github/workflows/update-wiki.yml'
       - 'Content.Shared/Chemistry/**.cs'
