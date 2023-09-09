@@ -1,7 +1,9 @@
 ﻿using System.Linq;
 using Content.Shared.Mind;
+using Content.Shared.Objectives.Components;
 using Content.Shared.Objectives.Interfaces;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
 namespace Content.Shared.Objectives
 {
@@ -11,29 +13,23 @@ namespace Content.Shared.Objectives
     [Prototype("objective")]
     public sealed class ObjectivePrototype : IPrototype
     {
-        [ViewVariables]
-        [IdDataField]
+        [IdDataField, ViewVariables]
         public string ID { get; private set; } = default!;
 
-        [DataField("issuer")] public string Issuer { get; private set; } = "Unknown";
+        [DataField("issuer")]
+        public string Issuer = "Unknown";
 
         [ViewVariables]
-        public float Difficulty => _difficultyOverride ?? _conditions.Sum(c => c.Difficulty);
+        public float Difficulty => Conditions.Sum(c => GetDifficulty(c));
 
-        [DataField("conditions", serverOnly: true)]
-        private List<IObjectiveCondition> _conditions = new();
+        [DataField("conditions", serverOnly: true, customTypeSerializer: typeof(PrototypeIdListSerializer<EntityPrototype>))]
+        public List<string> Conditions = new();
+
         [DataField("requirements")]
         private List<IObjectiveRequirement> _requirements = new();
 
-        [ViewVariables]
-        public IReadOnlyList<IObjectiveCondition> Conditions => _conditions;
-
         [DataField("canBeDuplicate")]
-        public bool CanBeDuplicateAssignment { get; private set; }
-
-        [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("difficultyOverride")]
-        private float? _difficultyOverride = null;
+        public bool CanBeDuplicateAssignment;
 
         public bool CanBeAssigned(EntityUid mindId, MindComponent mind)
         {
@@ -55,9 +51,16 @@ namespace Content.Shared.Objectives
             return true;
         }
 
-        public Objective GetObjective(EntityUid mindId, MindComponent mind)
+        private float GetDifficulty(string id)
         {
-            return new Objective(this, mindId, mind);
+            var protoMan = IoCManager.Resolve<IPrototypeManager>();
+            if (!protoMan.TryIndex<EntityPrototype>(id, out var proto))
+                return 0f;
+
+            if (!proto.TryGetComponent<ObjectiveConditionComponent>(out var cond))
+                return 0f;
+
+            return cond.Difficulty;
         }
     }
 }
