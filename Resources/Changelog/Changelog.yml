@@ -1,11 +1,6 @@
 Entries:
 - author: Emisse
   changes:
-  - {message: Removed desword from nukie uplink., type: Remove}
-  id: 4288
-  time: '2023-07-18T22:23:53.0000000+00:00'
-- author: Emisse
-  changes:
   - {message: Captain's Sabre now has a chance to reflect projectiles., type: Tweak}
   id: 4289
   time: '2023-07-18T22:55:29.0000000+00:00'
@@ -2997,3 +2992,8 @@ Entries:
   - {message: Fixed the mime not getting the invisible wall action., type: Fix}
   id: 4787
   time: '2023-09-09T23:14:17.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Fixed not being able to use vehicle horns., type: Fix}
+  id: 4788
+  time: '2023-09-09T23:39:29.0000000+00:00'
