@@ -23,7 +23,7 @@ public sealed class ObjectiveSystem : EntitySystem
             if (!HasComp<ObjectiveConditionComponent>(cond))
             {
                 Del(cond);
-                Log.Error("Invalid objective condition prototype {id} from {proto.ID}");
+                Log.Error($"Invalid objective condition prototype {id} from {proto.ID}");
                 continue;
             }
 
@@ -32,7 +32,7 @@ public sealed class ObjectiveSystem : EntitySystem
             if (ev.Cancelled)
             {
                 Del(cond);
-                Log.Warning("Could not assign objective condition {id} from {proto.ID}");
+                Log.Warning($"Could not assign objective condition {id} from {proto.ID}");
                 continue;
             }
 
@@ -59,7 +59,7 @@ public sealed class ObjectiveSystem : EntitySystem
         var info = ev.Info;
         if (info.Title == null || info.Description == null || info.Icon == null || info.Progress == null)
         {
-            Log.Warning("An objective {objective.Prototype.Id} of {ToPrettyString(entity):player} has incomplete info: {condition.Title} {condition.Description} {condition.Progress}");
+            Log.Error($"An objective {objective.Prototype.Id} of {ToPrettyString(entity):player} has incomplete info: {condition.Title} {condition.Description} {condition.Progress}");
             info.Title ??= "!!!BROKEN OBJECTIVE!!!";
             info.Description ??= "!!! BROKEN OBJECTIVE DESCRIPTION!!!";
             info.Icon ??= new SpriteSpecifier.Rsi(new ("error.rsi"), "error.rsi");
