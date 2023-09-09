@@ -97,6 +97,7 @@
   id: BaseStealCondition
   components:
   - type: ObjectiveCondition
+    description: objective-condition-steal-description
     difficulty: 2.75
   - type: StealCondition
 

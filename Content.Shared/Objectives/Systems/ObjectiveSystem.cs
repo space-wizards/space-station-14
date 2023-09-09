@@ -7,6 +7,8 @@ namespace Content.Shared.Objectives.Systems;
 
 public sealed class ObjectiveSystem : EntitySystem
 {
+    [Dependency] private readonly SharedMindSystem _mind = default!;
+
     /// <summary>
     /// Creates a new Objective instance for storing on the mind.
     /// </summary>
@@ -59,7 +61,7 @@ public sealed class ObjectiveSystem : EntitySystem
         var info = ev.Info;
         if (info.Title == null || info.Description == null || info.Icon == null || info.Progress == null)
         {
-            Log.Error($"An objective {objective.Prototype.Id} of {ToPrettyString(entity):player} has incomplete info: {condition.Title} {condition.Description} {condition.Progress}");
+            Log.Error($"An objective {uid} of {_mind.MindOwnerLoggingString(mind)} has incomplete info: {info.Title} {info.Description} {info.Progress}");
             info.Title ??= "!!!BROKEN OBJECTIVE!!!";
             info.Description ??= "!!! BROKEN OBJECTIVE DESCRIPTION!!!";
             info.Icon ??= new SpriteSpecifier.Rsi(new ("error.rsi"), "error.rsi");
