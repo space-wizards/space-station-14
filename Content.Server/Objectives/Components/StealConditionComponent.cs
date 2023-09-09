@@ -25,4 +25,11 @@ public sealed partial class StealConditionComponent : Component
     /// </summary>
     [DataField("owner"), ViewVariables(VVAccess.ReadWrite)]
     public string? OwnerText;
+
+    /// <summary>
+    /// Locale id for the description.
+    /// Gets passed "itemName" as the name of the item.
+    /// </summary>
+    [DataField("description"), ViewVariables(VVAccess.ReadWrite)]
+    public string Description = "objective-condition-steal-description";
 }
