@@ -12,6 +12,7 @@ using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Actions;
 
@@ -54,6 +55,10 @@ public abstract class SharedActionsSystem : EntitySystem
         SubscribeLocalEvent<InstantActionComponent, GetActionDataEvent>(OnGetActionData);
         SubscribeLocalEvent<EntityTargetActionComponent, GetActionDataEvent>(OnGetActionData);
         SubscribeLocalEvent<WorldTargetActionComponent, GetActionDataEvent>(OnGetActionData);
+
+        SubscribeLocalEvent<InstantActionComponent, EntGotRemovedFromContainerMessage>(OnEntGotRemovedFromContainer);
+        SubscribeLocalEvent<EntityTargetActionComponent, EntGotRemovedFromContainerMessage>(OnEntGotRemovedFromContainer);
+        SubscribeLocalEvent<WorldTargetActionComponent, EntGotRemovedFromContainerMessage>(OnEntGotRemovedFromContainer);
 
         SubscribeAllEvent<RequestPerformActionEvent>(OnActionRequest);
     }
@@ -126,6 +131,21 @@ public abstract class SharedActionsSystem : EntitySystem
     private void OnGetActionData<T>(EntityUid uid, T component, ref GetActionDataEvent args) where T : BaseActionComponent
     {
         args.Action = component;
+    }
+
+    private void OnEntGotRemovedFromContainer<T>(EntityUid uid, T component, EntGotRemovedFromContainerMessage args) where T : BaseActionComponent
+    {
+        if (args.Container.ID != ProvidedActionContainerId)
+            return;
+
+        if (TryComp(component.AttachedEntity, out ActionsComponent? actions))
+        {
+            actions.Actions.Remove(uid);
+            Dirty(component.AttachedEntity.Value, actions);
+
+            if (TryGetActionData(uid, out var action))
+                action.AttachedEntity = null;
+        }
     }
 
     public BaseActionComponent? GetActionData(EntityUid? actionId)
@@ -637,25 +657,20 @@ public abstract class SharedActionsSystem : EntitySystem
         action ??= GetActionData(actionId);
 
         if (TryGetContainer(holderId, out var container) && container.Contains(actionId.Value))
-            container.Remove(actionId.Value);
+            QueueDel(actionId.Value);
 
         comp.Actions.Remove(actionId.Value);
 
         if (action != null)
         {
-            if (action.Provider != null &&
-                TryGetProvidedContainer(action.Provider.Value, out var providedContainer) &&
-                providedContainer.Contains(actionId.Value))
-            {
-                providedContainer.Remove(actionId.Value);
-            }
-
             action.AttachedEntity = null;
             Dirty(actionId.Value, action);
         }
 
         if (dirty)
             Dirty(holderId, comp);
+
+        DebugTools.Assert(Transform(actionId.Value).ParentUid.IsValid());
     }
 
     /// <summary>

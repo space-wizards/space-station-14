@@ -9,7 +9,6 @@ using Content.Shared.Popups;
 using Content.Shared.Strip;
 using Content.Shared.Verbs;
 using Robust.Shared.Containers;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 
@@ -23,7 +22,6 @@ public sealed class ToggleableClothingSystem : EntitySystem
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly SharedStrippableSystem _strippable = default!;
-    [Dependency] private readonly IPrototypeManager _proto = default!;
 
     private Queue<EntityUid> _toInsert = new();
 
@@ -282,8 +280,6 @@ public sealed class ToggleableClothingSystem : EntitySystem
             DebugTools.Assert(component.ClothingUid == ent, "Unexpected entity present inside of a toggleable clothing container.");
             return;
         }
-
-        component.ActionEntity ??= Spawn(component.Action);
 
         if (component.ClothingUid != null && component.ActionEntity != null)
         {
