@@ -10,8 +10,8 @@ namespace Content.Shared.Objectives;
 /// </summary>
 /// <remarks>
 /// All of these fields must eventually be set by condition event handlers.
-/// Everything but progress can be set to static data in yaml on <see cref="ObjectiveConditionComponent"/>.
+/// Everything but progress can be set to static data in yaml on <see cref="ObjectiveComponent"/>.
 /// If anything is null it will fallback to a very noticable fallback string/empty progress or the error sprite.
 /// </remarks>
 [Serializable, NetSerializable]
-public record struct ConditionInfo(string? Title, string? Description, SpriteSpecifier? Icon, float? Progress);
+public record struct ObjectiveInfo(string? Title, string? Description, SpriteSpecifier? Icon, float? Progress);

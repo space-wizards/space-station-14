@@ -57,20 +57,28 @@ public sealed class ObjectiveSystem : EntitySystem
     }
 
     /// <summary>
-    /// Spawns and assigns an objective to the mind.
-    /// If the objective could not be assigned the objective is deleted and false is returned.
+    /// Spawns and assigns an objective for a mind.
+    /// The objective is not added to the mind's objectives, mind system does that in TryAddObjective.
+    /// If the objective could not be assigned the objective is deleted and null is returned.
     /// </summary>
-    public bool TryAddObjective(string proto, EntityUid mindId, MindComponent mind)
+    public EntityUid? TryCreateObjective(EntityUid mindId, MindComponent mind, string proto)
     {
         var uid = Spawn(proto);
-        if (!HasComp<ObjectiveComponent>(uid))
+        if (!TryComp<ObjectiveComponent>(uid, out var comp))
         {
             Del(uid);
-            Log.Error($"Invalid objective prototype {proto}: missing ObjectiveComponent");
+            Log.Error($"Invalid objective prototype {proto}, missing ObjectiveComponent");
             return null;
         }
 
         Log.Debug($"Created objective {proto} ({uid}");
+
+        if (!CanBeAssigned(uid, mindId, mind, comp))
+        {
+            Del(uid);
+            Log.Warning($"Objective {uid} did not match the requirements for {_mind.MindOwnerLoggingString(mind)}, deleted it");
+            return null;
+        }
 
         var ev = new ObjectiveAssignedEvent(mindId, mind);
         RaiseLocalEvent(uid, ref ev);
@@ -81,19 +89,17 @@ public sealed class ObjectiveSystem : EntitySystem
             return false;
         }
 
-        mind.AllObjectives.Add(uid);
-
-        return true;
+        return uid;
     }
 
     /// <summary>
-    /// Get the title, description, icon and progress of an objective condition using <see cref="ObjectiveGetInfoEvent"/>.
+    /// Get the title, description, icon and progress of an objective using <see cref="ObjectiveGetInfoEvent"/>.
     /// Any null fields are logged and replaced with fallbacks so they will never be null.
     /// </summary>
     /// <param name="uid"/>ID of the condition entity</param>
     /// <param name="mindId"/>ID of the player's mind entity</param>
     /// <param name="mind"/>Mind component of the player's mind</param>
-    public ObjectiveInfo GetObjectiveInfo(EntityUid uid, EntityUid mindId, MindComponent? mind = null)
+    public ObjectiveInfo GetInfo(EntityUid uid, EntityUid mindId, MindComponent? mind = null)
     {
         if (!Resolve(mindId, ref mind))
             return new ObjectiveInfo(null, null, null, null);
@@ -117,7 +123,7 @@ public sealed class ObjectiveSystem : EntitySystem
     /// <summary>
     /// Helper for mind to get a condition's title easily
     /// </summary>
-    public string GetConditionTitle(EntityUid uid, EntityUid mindId, MindComponent? mind = null)
+    public string GetTitle(EntityUid uid, EntityUid mindId, MindComponent? mind = null)
     {
         return GetConditionInfo(uid, mindId, mind).Title!;
     }
