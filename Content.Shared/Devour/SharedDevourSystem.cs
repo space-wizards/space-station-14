@@ -1,10 +1,10 @@
-using Content.Shared.DoAfter;
-using Content.Shared.Mobs.Components;
-using Content.Shared.Mobs;
-using Robust.Shared.Containers;
-using Content.Server.Devour.Components;
 using Content.Shared.Actions;
+using Content.Shared.Devour.Components;
+using Content.Shared.DoAfter;
+using Content.Shared.Mobs;
+using Content.Shared.Mobs.Components;
 using Content.Shared.Popups;
+using Robust.Shared.Containers;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Devour;
@@ -21,18 +21,17 @@ public abstract class SharedDevourSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<DevourerComponent, ComponentStartup>(OnStartup);
+        SubscribeLocalEvent<DevourerComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<DevourerComponent, DevourActionEvent>(OnDevourAction);
     }
 
-    protected void OnStartup(EntityUid uid, DevourerComponent component, ComponentStartup args)
+    protected void OnMapInit(EntityUid uid, DevourerComponent component, MapInitEvent args)
     {
         //Devourer doesn't actually chew, since he sends targets right into his stomach.
         //I did it mom, I added ERP content into upstream. Legally!
         component.Stomach = _containerSystem.EnsureContainer<Container>(uid, "stomach");
 
-        if (component.DevourAction != null)
-            _actionsSystem.AddAction(uid, component.DevourAction, null);
+        _actionsSystem.AddAction(uid, ref component.DevourActionEntity, component.DevourAction);
     }
 
     /// <summary>
@@ -61,17 +60,17 @@ public abstract class SharedDevourSystem : EntitySystem
                     });
                     break;
                 default:
-                    _popupSystem.PopupEntity(Loc.GetString("devour-action-popup-message-fail-target-alive"), uid, uid);
+                    _popupSystem.PopupClient(Loc.GetString("devour-action-popup-message-fail-target-alive"), uid,uid);
                     break;
             }
 
             return;
         }
 
-        _popupSystem.PopupEntity(Loc.GetString("devour-action-popup-message-structure"), uid, uid);
+        _popupSystem.PopupClient(Loc.GetString("devour-action-popup-message-structure"), uid, uid);
 
         if (component.SoundStructureDevour != null)
-            _audioSystem.PlayPvs(component.SoundStructureDevour, uid, component.SoundStructureDevour.Params);
+            _audioSystem.PlayPredicted(component.SoundStructureDevour, uid, uid, component.SoundStructureDevour.Params);
 
         _doAfterSystem.TryStartDoAfter(new DoAfterArgs(uid, component.StructureDevourTime, new DevourDoAfterEvent(), uid, target: target, used: uid)
         {

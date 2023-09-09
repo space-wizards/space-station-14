@@ -123032,26 +123032,6 @@ entities:
     - pos: 9.543957,-1.1447365
       parent: 5350
       type: Transform
-    - toggleAction:
-        sound: null
-        itemIconStyle: BigItem
-        icon: Objects/Tools/flashlight.rsi/flashlight.png
-        iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
-        iconColor: '#FFFFFFFF'
-        name: action-name-toggle-light
-        description: action-description-toggle-light
-        keywords: []
-        enabled: True
-        useDelay: null
-        charges: null
-        checkCanInteract: True
-        clientExclusive: False
-        priority: 0
-        autoPopulate: True
-        autoRemove: True
-        temporary: False
-        event: !type:ToggleActionEvent {}
-      type: HandheldLight
     - containers:
         cellslot_cell_container: !type:ContainerSlot
           showEnts: False
@@ -123154,26 +123134,6 @@ entities:
     - pos: -6.544301,-3.1708417
       parent: 5350
       type: Transform
-    - toggleAction:
-        sound: null
-        itemIconStyle: BigItem
-        icon: Objects/Tools/flashlight.rsi/flashlight.png
-        iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
-        iconColor: '#FFFFFFFF'
-        name: action-name-toggle-light
-        description: action-description-toggle-light
-        keywords: []
-        enabled: True
-        useDelay: null
-        charges: null
-        checkCanInteract: True
-        clientExclusive: False
-        priority: 0
-        autoPopulate: True
-        autoRemove: True
-        temporary: False
-        event: !type:ToggleActionEvent {}
-      type: HandheldLight
     - containers:
         cellslot_cell_container: !type:ContainerSlot
           showEnts: False
@@ -123219,28 +123179,6 @@ entities:
     - pos: -29.551394,17.78557
       parent: 5350
       type: Transform
-    - toggleAction:
-        sound: null
-        itemIconStyle: BigItem
-        icon:
-          sprite: Objects/Tools/flashlight.rsi
-          state: flashlight
-        iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
-        iconColor: '#FFFFFFFF'
-        name: action-name-toggle-light
-        description: action-description-toggle-light
-        keywords: []
-        enabled: True
-        useDelay: null
-        charges: null
-        checkCanInteract: True
-        clientExclusive: False
-        priority: 0
-        autoPopulate: True
-        autoRemove: True
-        temporary: False
-        event: !type:ToggleActionEvent {}
-      type: HandheldLight
     - containers:
         cellslot_cell_container: !type:ContainerSlot
           showEnts: False
@@ -123283,26 +123221,6 @@ entities:
     - pos: -57.509872,-28.24864
       parent: 5350
       type: Transform
-    - toggleAction:
-        sound: null
-        itemIconStyle: BigItem
-        icon: Objects/Tools/flashlight.rsi/flashlight.png
-        iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
-        iconColor: '#FFFFFFFF'
-        name: action-name-toggle-light
-        description: action-description-toggle-light
-        keywords: []
-        enabled: True
-        useDelay: null
-        charges: null
-        checkCanInteract: True
-        clientExclusive: False
-        priority: 0
-        autoPopulate: True
-        autoRemove: True
-        temporary: False
-        event: !type:ToggleActionEvent {}
-      type: HandheldLight
   - uid: 17463
     components:
     - pos: -42.417267,-30.139824
@@ -123354,28 +123272,6 @@ entities:
     - pos: 25.524637,-37.41671
       parent: 5350
       type: Transform
-    - toggleAction:
-        sound: null
-        itemIconStyle: BigItem
-        icon:
-          sprite: Objects/Tools/flashlight.rsi
-          state: flashlight
-        iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
-        iconColor: '#FFFFFFFF'
-        name: action-name-toggle-light
-        description: action-description-toggle-light
-        keywords: []
-        enabled: True
-        useDelay: null
-        charges: null
-        checkCanInteract: True
-        clientExclusive: False
-        priority: 0
-        autoPopulate: True
-        autoRemove: True
-        temporary: False
-        event: !type:ToggleActionEvent {}
-      type: HandheldLight
     - canCollide: True
       type: Physics
 - proto: LampInterrogator

@@ -1,10 +1,10 @@
 using System.IO;
 using System.Linq;
 using Content.Shared.Actions;
-using Content.Shared.Actions.ActionTypes;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Player;
+using Robust.Shared.Containers;
 using Robust.Shared.ContentPack;
 using Robust.Shared.GameStates;
 using Robust.Shared.Input.Binding;
@@ -12,6 +12,7 @@ using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Serialization.Markdown;
 using Robust.Shared.Serialization.Markdown.Mapping;
 using Robust.Shared.Serialization.Markdown.Sequence;
+using Robust.Shared.Serialization.Markdown.Value;
 using Robust.Shared.Utility;
 using YamlDotNet.RepresentationModel;
 
@@ -20,14 +21,15 @@ namespace Content.Client.Actions
     [UsedImplicitly]
     public sealed class ActionsSystem : SharedActionsSystem
     {
-        public delegate void OnActionReplaced(ActionType existing, ActionType action);
+        public delegate void OnActionReplaced(EntityUid actionId);
 
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IResourceManager _resources = default!;
         [Dependency] private readonly ISerializationManager _serialization = default!;
+        [Dependency] private readonly MetaDataSystem _metaData = default!;
 
-        public event Action<ActionType>? ActionAdded;
-        public event Action<ActionType>? ActionRemoved;
+        public event Action<EntityUid>? ActionAdded;
+        public event Action<EntityUid>? ActionRemoved;
         public event OnActionReplaced? ActionReplaced;
         public event Action? ActionsUpdated;
         public event Action<ActionsComponent>? LinkActions;
@@ -35,7 +37,11 @@ namespace Content.Client.Actions
         public event Action? ClearAssignments;
         public event Action<List<SlotAssignment>>? AssignSlot;
 
-        public ActionsComponent? PlayerActions { get; private set; }
+        /// <summary>
+        ///     Queue of entities with <see cref="ActionsComponent"/> that needs to be updated after
+        ///     handling a state.
+        /// </summary>
+        private readonly Queue<EntityUid> _actionHoldersQueue = new();
 
         public override void Initialize()
         {
@@ -45,110 +51,90 @@ namespace Content.Client.Actions
             SubscribeLocalEvent<ActionsComponent, ComponentHandleState>(HandleComponentState);
         }
 
-        public override void Dirty(ActionType action)
+        public override void Dirty(EntityUid? actionId)
         {
-            if (_playerManager.LocalPlayer?.ControlledEntity != action.AttachedEntity)
+            var action = GetActionData(actionId);
+            if (_playerManager.LocalPlayer?.ControlledEntity != action?.AttachedEntity)
                 return;
 
-            base.Dirty(action);
+            base.Dirty(actionId);
             ActionsUpdated?.Invoke();
         }
 
         private void HandleComponentState(EntityUid uid, ActionsComponent component, ref ComponentHandleState args)
         {
-            if (args.Current is not ActionsComponentState state)
+            if (args.Current is not ActionsComponentState)
                 return;
 
-            state.SortedActions ??= new SortedSet<ActionType>(state.Actions);
-            var serverActions = state.SortedActions;
-            var removed = new List<ActionType>();
-
-            foreach (var act in component.Actions.ToList())
-            {
-                if (act.ClientExclusive)
-                    continue;
-
-                if (!serverActions.TryGetValue(act, out var serverAct))
-                {
-                    component.Actions.Remove(act);
-                    if (act.AutoRemove)
-                        removed.Add(act);
-
-                    continue;
-                }
-
-                act.CopyFrom(serverAct);
-            }
-
-            var added = new List<ActionType>();
-
-            // Anything that remains is a new action
-            foreach (var newAct in serverActions)
-            {
-                if (component.Actions.Contains(newAct))
-                    continue;
-
-                // We create a new action, not just sorting a reference to the state's action.
-                var action = (ActionType) newAct.Clone();
-                component.Actions.Add(action);
-                added.Add(action);
-            }
-
-            if (_playerManager.LocalPlayer?.ControlledEntity != uid)
-                return;
-
-            foreach (var action in removed)
-            {
-                ActionRemoved?.Invoke(action);
-            }
-
-            foreach (var action in added)
-            {
-                ActionAdded?.Invoke(action);
-            }
-
-            ActionsUpdated?.Invoke();
+            _actionHoldersQueue.Enqueue(uid);
         }
 
-        protected override void AddActionInternal(ActionsComponent comp, ActionType action)
+        protected override void AddActionInternal(EntityUid actionId, IContainer container)
         {
             // Sometimes the client receives actions from the server, before predicting that newly added components will add
             // their own shared actions. Just in case those systems ever decided to directly access action properties (e.g.,
             // action.Toggled), we will remove duplicates:
-            if (comp.Actions.TryGetValue(action, out var existing))
+            if (container.Contains(actionId))
             {
-                comp.Actions.Remove(existing);
-                ActionReplaced?.Invoke(existing, action);
+                ActionReplaced?.Invoke(actionId);
+            }
+            else
+            {
+                container.Insert(actionId);
+            }
+        }
+
+        public override void AddAction(EntityUid holderId, EntityUid actionId, EntityUid? provider, ActionsComponent? holder = null, BaseActionComponent? action = null, bool dirty = true, IContainer? actionContainer = null)
+        {
+            if (!Resolve(holderId, ref holder, false))
+                return;
+
+            action ??= GetActionData(actionId);
+            if (action == null)
+            {
+                Log.Warning($"No {nameof(BaseActionComponent)} found on entity {actionId}");
+                return;
             }
 
-            comp.Actions.Add(action);
+            dirty &= !action.ClientExclusive;
+            base.AddAction(holderId, actionId, provider, holder, action, dirty, actionContainer);
+
+            if (holderId == _playerManager.LocalPlayer?.ControlledEntity)
+                ActionAdded?.Invoke(actionId);
         }
 
-        public override void AddAction(EntityUid uid, ActionType action, EntityUid? provider, ActionsComponent? comp = null, bool dirty = true)
+        public override void RemoveAction(EntityUid holderId, EntityUid? actionId, ActionsComponent? comp = null, BaseActionComponent? action = null, bool dirty = true, ContainerManagerComponent? actionContainer = null)
         {
-            if (!Resolve(uid, ref comp, false))
+            if (GameTiming.ApplyingState)
                 return;
 
-            dirty &= !action.ClientExclusive;
-            base.AddAction(uid, action, provider, comp, dirty);
+            if (!Resolve(holderId, ref comp, false))
+                return;
 
-            if (uid == _playerManager.LocalPlayer?.ControlledEntity)
-                ActionAdded?.Invoke(action);
+            if (actionId == null)
+                return;
+
+            action ??= GetActionData(actionId);
+
+            if (action is { ClientExclusive: false })
+                return;
+
+            dirty &= !action?.ClientExclusive ?? true;
+            base.RemoveAction(holderId, actionId, comp, action, dirty, actionContainer);
+
+            if (_playerManager.LocalPlayer?.ControlledEntity != holderId)
+                return;
+
+            if (action == null || action.AutoRemove)
+                ActionRemoved?.Invoke(actionId.Value);
         }
 
-        public override void RemoveAction(EntityUid uid, ActionType action, ActionsComponent? comp = null, bool dirty = true)
+        public IEnumerable<(EntityUid Id, BaseActionComponent Comp)> GetClientActions()
         {
-            if (GameTiming.ApplyingState && !action.ClientExclusive)
-                return;
+            if (_playerManager.LocalPlayer?.ControlledEntity is not { } user)
+                return Enumerable.Empty<(EntityUid, BaseActionComponent)>();
 
-            if (!Resolve(uid, ref comp, false))
-                return;
-
-            dirty &= !action.ClientExclusive;
-            base.RemoveAction(uid, action, comp, dirty);
-
-            if (action.AutoRemove && uid == _playerManager.LocalPlayer?.ControlledEntity)
-                ActionRemoved?.Invoke(action);
+            return GetActions(user);
         }
 
         private void OnPlayerAttached(EntityUid uid, ActionsComponent component, PlayerAttachedEvent args)
@@ -163,20 +149,18 @@ namespace Content.Client.Actions
 
         public void UnlinkAllActions()
         {
-            PlayerActions = null;
             UnlinkActions?.Invoke();
         }
 
         public void LinkAllActions(ActionsComponent? actions = null)
         {
-             var player = _playerManager.LocalPlayer?.ControlledEntity;
-             if (player == null || !Resolve(player.Value, ref actions, false))
+             if (_playerManager.LocalPlayer?.ControlledEntity is not { } user ||
+                 !Resolve(user, ref actions, false))
              {
                  return;
              }
 
              LinkActions?.Invoke(actions);
-             PlayerActions = actions;
         }
 
         public override void Shutdown()
@@ -185,29 +169,30 @@ namespace Content.Client.Actions
             CommandBinds.Unregister<ActionsSystem>();
         }
 
-        public void TriggerAction(ActionType? action)
+        public void TriggerAction(EntityUid actionId, BaseActionComponent action)
         {
-            if (PlayerActions == null || action == null || _playerManager.LocalPlayer?.ControlledEntity is not { Valid: true } user)
+            if (_playerManager.LocalPlayer?.ControlledEntity is not { } user ||
+                !TryComp(user, out ActionsComponent? actions))
+            {
                 return;
+            }
 
             if (action.Provider != null && Deleted(action.Provider))
                 return;
 
-            if (action is not InstantAction instantAction)
-            {
+            if (action is not InstantActionComponent instantAction)
                 return;
-            }
 
             if (action.ClientExclusive)
             {
                 if (instantAction.Event != null)
                     instantAction.Event.Performer = user;
 
-                PerformAction(user, PlayerActions, instantAction, instantAction.Event, GameTiming.CurTime);
+                PerformAction(user, actions, actionId, instantAction, instantAction.Event, GameTiming.CurTime);
             }
             else
             {
-                var request = new RequestPerformActionEvent(instantAction);
+                var request = new RequestPerformActionEvent(actionId);
                 EntityManager.RaisePredictiveEvent(request);
             }
         }
@@ -239,7 +224,7 @@ namespace Content.Client.Actions
         /// </summary>
         public void LoadActionAssignments(string path, bool userData)
         {
-            if (PlayerActions == null)
+            if (_playerManager.LocalPlayer?.ControlledEntity is not { } user)
                 return;
 
             var file = new ResPath(path).ToRootedPath();
@@ -265,17 +250,13 @@ namespace Content.Client.Actions
                 if (!map.TryGet("action", out var actionNode))
                     continue;
 
-                var action = _serialization.Read<ActionType>(actionNode, notNullableOverride: true);
+                var action = _serialization.Read<BaseActionComponent>(actionNode, notNullableOverride: true);
+                var actionId = Spawn(null);
+                AddComp<Component>(actionId, action);
+                AddAction(user, actionId, null);
 
-                if (PlayerActions.Actions.TryGetValue(action, out var existingAction))
-                {
-                    existingAction.CopyFrom(action);
-                    action = existingAction;
-                }
-                else
-                {
-                    PlayerActions.Actions.Add(action);
-                }
+                if (map.TryGet<ValueDataNode>("name", out var nameNode))
+                    _metaData.SetEntityName(actionId, nameNode.Value);
 
                 if (!map.TryGet("assignments", out var assignmentNode))
                     continue;
@@ -284,7 +265,7 @@ namespace Content.Client.Actions
 
                 foreach (var index in nodeAssignments)
                 {
-                    var assignment = new SlotAssignment(index.Hotbar, index.Slot, action);
+                    var assignment = new SlotAssignment(index.Hotbar, index.Slot, actionId);
                     assignments.Add(assignment);
                 }
             }
@@ -292,6 +273,73 @@ namespace Content.Client.Actions
             AssignSlot?.Invoke(assignments);
         }
 
-        public record struct SlotAssignment(byte Hotbar, byte Slot, ActionType Action);
+        public override void Update(float frameTime)
+        {
+            base.Update(frameTime);
+
+            if (_actionHoldersQueue.Count == 0)
+                return;
+
+            var removed = new List<EntityUid>();
+            var added = new List<EntityUid>();
+            var query = GetEntityQuery<ActionsComponent>();
+            var queue = new Queue<EntityUid>(_actionHoldersQueue);
+            _actionHoldersQueue.Clear();
+
+            while (queue.TryDequeue(out var holderId))
+            {
+                if (!TryGetContainer(holderId, out var container) || container.ExpectedEntities.Count > 0)
+                {
+                    _actionHoldersQueue.Enqueue(holderId);
+                    continue;
+                }
+
+                if (!query.TryGetComponent(holderId, out var holder))
+                    continue;
+
+                removed.Clear();
+                added.Clear();
+
+                foreach (var (act, data) in holder.OldClientActions.ToList())
+                {
+                    if (data.ClientExclusive)
+                        continue;
+
+                    if (!container.Contains(act))
+                    {
+                        holder.OldClientActions.Remove(act);
+                        if (data.AutoRemove)
+                            removed.Add(act);
+                    }
+                }
+
+                // Anything that remains is a new action
+                foreach (var newAct in container.ContainedEntities)
+                {
+                    if (!holder.OldClientActions.ContainsKey(newAct))
+                        added.Add(newAct);
+
+                    if (TryGetActionData(newAct, out var serverData))
+                        holder.OldClientActions[newAct] = new ActionMetaData(serverData.ClientExclusive, serverData.AutoRemove);
+                }
+
+                if (_playerManager.LocalPlayer?.ControlledEntity != holderId)
+                    return;
+
+                foreach (var action in removed)
+                {
+                    ActionRemoved?.Invoke(action);
+                }
+
+                foreach (var action in added)
+                {
+                    ActionAdded?.Invoke(action);
+                }
+
+                ActionsUpdated?.Invoke();
+            }
+        }
+
+        public record struct SlotAssignment(byte Hotbar, byte Slot, EntityUid ActionId);
     }
 }

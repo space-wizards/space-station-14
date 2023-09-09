@@ -128,6 +128,8 @@
     contents:
       - id: ClothingOuterHardsuitEngineeringWhite
       - id: ClothingMaskBreath
+      - id: ClothingUniformJumpsuitChiefEngineerTurtle
+      - id: ClothingUniformJumpskirtChiefEngineerTurtle
       - id: OxygenTankFilled
       - id: NitrogenTankFilled
       - id: ClothingNeckCloakCe
@@ -157,6 +159,8 @@
       - id: ClothingBeltChiefEngineerFilled
       - id: ClothingHeadHatBeretEngineering
       - id: ClothingHandsGlovesColorYellow
+      - id: ClothingUniformJumpsuitChiefEngineerTurtle
+      - id: ClothingUniformJumpskirtChiefEngineerTurtle
       - id: CigarCase
         prob: 0.15
       - id: DoorRemoteEngineering

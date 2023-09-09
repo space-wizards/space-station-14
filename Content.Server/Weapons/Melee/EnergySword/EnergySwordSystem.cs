@@ -4,7 +4,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Item;
 using Content.Shared.Light;
-using Content.Shared.Light.Component;
+using Content.Shared.Light.Components;
 using Content.Shared.Temperature;
 using Content.Shared.Toggleable;
 using Content.Shared.Tools.Components;

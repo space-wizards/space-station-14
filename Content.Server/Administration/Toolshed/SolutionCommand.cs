@@ -59,7 +59,7 @@ public sealed class SolutionCommand : ToolshedCommand
         }
         else if (amount < 0)
         {
-            _solutionContainer.TryRemoveReagent(input.Owner, input.Solution, name.Value.ID, -amount);
+            _solutionContainer.RemoveReagent(input.Owner, input.Solution, name.Value.ID, -amount);
         }
 
         return input;

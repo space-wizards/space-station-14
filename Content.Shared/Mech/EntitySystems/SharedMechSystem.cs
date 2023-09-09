@@ -3,11 +3,9 @@ using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Actions;
-using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Destructible;
 using Content.Shared.DoAfter;
 using Content.Shared.FixedPoint;
-using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Components;
 using Content.Shared.Interaction.Events;
@@ -176,14 +174,12 @@ public abstract class SharedMechSystem : EntitySystem
         _mover.SetRelay(pilot, mech);
         _interaction.SetRelay(pilot, mech, irelay);
         rider.Mech = mech;
-        Dirty(rider);
+        Dirty(pilot, rider);
 
-        _actions.AddAction(pilot,
-            new InstantAction(_prototype.Index<InstantActionPrototype>(component.MechCycleAction)), mech);
-        _actions.AddAction(pilot, new InstantAction(_prototype.Index<InstantActionPrototype>(component.MechUiAction)),
+        _actions.AddAction(pilot, Spawn(component.MechCycleAction), mech);
+        _actions.AddAction(pilot, Spawn(component.MechUiAction),
             mech);
-        _actions.AddAction(pilot,
-            new InstantAction(_prototype.Index<InstantActionPrototype>(component.MechEjectAction)), mech);
+        _actions.AddAction(pilot, Spawn(component.MechEjectAction), mech);
     }
 
     private void RemoveUser(EntityUid mech, EntityUid pilot)
@@ -406,7 +402,7 @@ public abstract class SharedMechSystem : EntitySystem
     /// <param name="toInsert"></param>
     /// <param name="component"></param>
     /// <returns>Whether or not the entity was inserted</returns>
-    public virtual bool TryInsert(EntityUid uid, EntityUid? toInsert, MechComponent? component = null)
+    public bool TryInsert(EntityUid uid, EntityUid? toInsert, MechComponent? component = null)
     {
         if (!Resolve(uid, ref component))
             return false;
@@ -429,7 +425,7 @@ public abstract class SharedMechSystem : EntitySystem
     /// <param name="uid"></param>
     /// <param name="component"></param>
     /// <returns>Whether or not the pilot was ejected.</returns>
-    public virtual bool TryEject(EntityUid uid, MechComponent? component = null)
+    public bool TryEject(EntityUid uid, MechComponent? component = null)
     {
         if (!Resolve(uid, ref component))
             return false;

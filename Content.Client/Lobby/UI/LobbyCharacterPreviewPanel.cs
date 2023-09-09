@@ -82,8 +82,6 @@ namespace Content.Client.Lobby.UI
             AddChild(vBox);
 
             UpdateUI();
-
-            _preferencesManager.OnServerDataLoaded += UpdateUI;
         }
 
         public Button CharacterSetupButton { get; }
@@ -91,7 +89,6 @@ namespace Content.Client.Lobby.UI
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);
-            _preferencesManager.OnServerDataLoaded -= UpdateUI;
 
             if (!disposing) return;
             if (_previewDummy != null) _entityManager.DeleteEntity(_previewDummy.Value);
