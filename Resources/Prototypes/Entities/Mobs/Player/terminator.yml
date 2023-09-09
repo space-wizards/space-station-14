@@ -85,6 +85,7 @@
     damage:
       types:
         Blunt: 10
+        Structural: 10
   - type: RandomHumanoidAppearance
 
 - type: entity
@@ -161,5 +162,6 @@
     damage:
       types:
         Blunt: 15
+        Structural: 5
   - type: Puller
     needsHands: false
