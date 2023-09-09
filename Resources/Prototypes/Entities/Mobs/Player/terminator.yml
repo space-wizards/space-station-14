@@ -83,7 +83,7 @@
     baseWalkSpeed: 1.5
     baseSprintSpeed: 3.0
   - type: Sprite
-    sprite: Mobs/Silicon/terminator.rsi
+    sprite: Mobs/Species/Terminator.rsi/parts.rsi
     drawdepth: Mobs
   - type: MobState
     allowedStates:
