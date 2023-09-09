@@ -78,8 +78,7 @@ public sealed class TerminatorSystem : EntitySystem
 
         if (target == null)
         {
-            Log.Error("Terminator {ToPrettyString(uid):player} had no terminate objective.");
-            return;
+            Log.Error($"Terminator {ToPrettyString(uid):player} had no terminate objective.");
         }
 
         _terminatorRule.StartRule(mindId);
