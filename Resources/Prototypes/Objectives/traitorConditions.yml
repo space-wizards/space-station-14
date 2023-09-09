@@ -112,7 +112,7 @@
 - type: entity
   noSpawn: true
   parent: BaseStealCondition
-  id: StealRdHardsuitCondition
+  id: StealRDHardsuitCondition
   components:
   - type: StealCondition
     prototype: ClothingOuterHardsuitRd
