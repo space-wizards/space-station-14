@@ -40,7 +40,6 @@ public sealed partial class RevenantSystem
     [Dependency] private readonly MobThresholdSystem _mobThresholdSystem = default!;
     [Dependency] private readonly GhostSystem _ghost = default!;
     [Dependency] private readonly TileSystem _tile = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     private void InitializeAbilities()
     {
@@ -194,7 +193,7 @@ public sealed partial class RevenantSystem
         if (!_mobThresholdSystem.TryGetThresholdForState(args.Args.Target.Value, MobState.Dead, out var damage))
             return;
         DamageSpecifier dspec = new();
-        dspec.DamageDict.Add("Poison", damage.Value);
+        dspec.DamageDict.Add("Cold", damage.Value);
         _damage.TryChangeDamage(args.Args.Target, dspec, true, origin: uid);
 
         args.Handled = true;
@@ -215,7 +214,7 @@ public sealed partial class RevenantSystem
         var xform = Transform(uid);
         if (!_mapManager.TryGetGrid(xform.GridUid, out var map))
             return;
-        var tiles = map.GetTilesIntersecting(Box2.CenteredAround(_transform.GetWorldPosition(xform),
+        var tiles = map.GetTilesIntersecting(Box2.CenteredAround(xform.WorldPosition,
             new Vector2(component.DefileRadius * 2, component.DefileRadius))).ToArray();
 
         _random.Shuffle(tiles);

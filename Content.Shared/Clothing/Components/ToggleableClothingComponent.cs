@@ -1,4 +1,3 @@
-using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.Inventory;
 using Robust.Shared.Containers;
@@ -20,9 +19,11 @@ public sealed partial class ToggleableClothingComponent : Component
     /// <summary>
     ///     Action used to toggle the clothing on or off.
     /// </summary>
-    [DataField("actionId", customTypeSerializer: typeof(PrototypeIdSerializer<InstantActionPrototype>))]
-    public string ActionId = "ToggleSuitHelmet";
-    public InstantAction? ToggleAction = null;
+    [DataField("action", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    public string Action = "ActionToggleSuitPiece";
+
+    [DataField("actionEntity")]
+    public EntityUid? ActionEntity;
 
     /// <summary>
     ///     Default clothing entity prototype to spawn into the clothing container.
@@ -33,6 +34,7 @@ public sealed partial class ToggleableClothingComponent : Component
     /// <summary>
     ///     The inventory slot that the clothing is equipped to.
     /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)]
     [DataField("slot")]
     public string Slot = "head";
 
@@ -65,7 +67,7 @@ public sealed partial class ToggleableClothingComponent : Component
     public TimeSpan? StripDelay = TimeSpan.FromSeconds(3);
 
     /// <summary>
-    ///     Text shown in the toggle-clothing verb. Defaults to using the name of the <see cref="ToggleAction"/> action.
+    ///     Text shown in the toggle-clothing verb. Defaults to using the name of the <see cref="ActionEntity"/> action.
     /// </summary>
     [DataField("verbText")]
     public string? VerbText;

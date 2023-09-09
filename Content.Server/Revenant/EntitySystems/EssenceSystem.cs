@@ -1,6 +1,6 @@
-using Content.Server.Mind.Components;
 using Content.Server.Revenant.Components;
 using Content.Shared.Examine;
+using Content.Shared.Mind.Components;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Revenant.Components;

@@ -1,8 +1,8 @@
-using Content.Server.Mind;
-using Content.Server.Mind.Components;
-using Content.Server.Objectives.Interfaces;
 using Content.Shared.Humanoid;
+using Content.Shared.Mind;
+using Content.Shared.Mind.Components;
 using Content.Shared.Mobs.Components;
+using Content.Shared.Objectives.Interfaces;
 using Robust.Shared.Random;
 
 namespace Content.Server.Objectives.Conditions;

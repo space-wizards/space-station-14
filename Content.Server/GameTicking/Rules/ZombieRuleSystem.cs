@@ -4,7 +4,6 @@ using Content.Server.Actions;
 using Content.Server.Chat.Managers;
 using Content.Server.Chat.Systems;
 using Content.Server.GameTicking.Rules.Components;
-using Content.Server.Mind;
 using Content.Server.Popups;
 using Content.Server.Preferences.Managers;
 using Content.Server.Roles;
@@ -12,13 +11,14 @@ using Content.Server.RoundEnd;
 using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
 using Content.Server.Zombies;
-using Content.Shared.Actions.ActionTypes;
 using Content.Shared.CCVar;
 using Content.Shared.Humanoid;
+using Content.Shared.Mind;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Preferences;
+using Content.Shared.Roles;
 using Content.Shared.Zombies;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
@@ -44,8 +44,8 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
     [Dependency] private readonly ActionsSystem _action = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly ZombieSystem _zombie = default!;
-    [Dependency] private readonly MindSystem _mindSystem = default!;
-    [Dependency] private readonly RoleSystem _roles = default!;
+    [Dependency] private readonly SharedMindSystem _mindSystem = default!;
+    [Dependency] private readonly SharedRoleSystem _roles = default!;
     [Dependency] private readonly StationSystem _station = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
 
@@ -194,9 +194,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
     private void OnZombifySelf(EntityUid uid, ZombifyOnDeathComponent component, ZombifySelfActionEvent args)
     {
         _zombie.ZombifyEntity(uid);
-
-        var action = new InstantAction(_prototypeManager.Index<InstantActionPrototype>(ZombieRuleComponent.ZombifySelfActionPrototype));
-        _action.RemoveAction(uid, action);
+        _action.RemoveAction(uid, ZombieRuleComponent.ZombifySelfActionPrototype);
     }
 
     private float GetInfectedFraction(bool includeOffStation = true, bool includeDead = false)
@@ -317,14 +315,14 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
 
             totalInfected++;
 
-            _roles.MindAddRole(mindId, new ZombieRoleComponent { PrototypeId = component.PatientZeroPrototypeId });
+            _roles.MindAddRole(mindId, new InitialInfectedRoleComponent { PrototypeId = component.PatientZeroPrototypeId });
 
             var pending = EnsureComp<PendingZombieComponent>(ownedEntity);
             pending.GracePeriod = _random.Next(component.MinInitialInfectedGrace, component.MaxInitialInfectedGrace);
             EnsureComp<ZombifyOnDeathComponent>(ownedEntity);
             EnsureComp<IncurableZombieComponent>(ownedEntity);
             var inCharacterName = MetaData(ownedEntity).EntityName;
-            var action = new InstantAction(_prototypeManager.Index<InstantActionPrototype>(ZombieRuleComponent.ZombifySelfActionPrototype));
+            var action = Spawn(ZombieRuleComponent.ZombifySelfActionPrototype);
             _action.AddAction(mind.OwnedEntity.Value, action, null);
 
             var message = Loc.GetString("zombie-patientzero-role-greeting");

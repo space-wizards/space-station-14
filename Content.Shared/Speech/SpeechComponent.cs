@@ -39,6 +39,8 @@ namespace Content.Shared.Speech
             { "chat-speech-verb-suffix-exclamation-strong", "DefaultExclamationStrong" },
             { "chat-speech-verb-suffix-exclamation", "DefaultExclamation" },
             { "chat-speech-verb-suffix-question", "DefaultQuestion" },
+            { "chat-speech-verb-suffix-stutter", "DefaultStutter" },
+            { "chat-speech-verb-suffix-mumble", "DefaultMumble" },
         };
 
         [DataField("audioParams")]

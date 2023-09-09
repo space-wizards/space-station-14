@@ -37,3 +37,4 @@ id-card-access-level-maintenance = Maintenance
 id-card-access-level-external = External
 
 id-card-access-level-nuclear-operative = Nuclear Operative
+id-card-access-level-syndicate-agent = Syndicate Agent

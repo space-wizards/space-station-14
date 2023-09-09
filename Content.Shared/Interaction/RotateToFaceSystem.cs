@@ -85,7 +85,7 @@ namespace Content.Shared.Interaction
                 if (!Resolve(user, ref xform))
                     return false;
 
-                _transform.SetWorldRotation(xform, diffAngle);
+                xform.WorldRotation = diffAngle;
                 return true;
             }
 
@@ -101,7 +101,7 @@ namespace Content.Shared.Interaction
                         // (Since the user being buckled to it holds it down with their weight.)
                         // This is logically equivalent to RotateWhileAnchored.
                         // Barstools and office chairs have independent wheels, while regular chairs don't.
-                        _transform.SetWorldRotation(suid.Value, diffAngle);
+                        Transform(rotatable.Owner).WorldRotation = diffAngle;
                         return true;
                     }
                 }

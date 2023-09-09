@@ -45,7 +45,6 @@ namespace Content.Server.Hands.Systems
         [Dependency] private readonly StorageSystem _storageSystem = default!;
         [Dependency] private readonly ISharedPlayerManager _player = default!;
         [Dependency] private readonly IConfigurationManager _configuration = default!;
-        [Dependency] private readonly SharedTransformSystem _transform = default!;
 
         public override void Initialize()
         {
@@ -202,7 +201,7 @@ namespace Content.Server.Hands.Systems
                 throwEnt = splitStack.Value;
             }
 
-            var direction = coords.ToMapPos(EntityManager) - _transform.GetWorldPosition(player);
+            var direction = coords.ToMapPos(EntityManager) - Transform(player).WorldPosition;
             if (direction == Vector2.Zero)
                 return true;
 

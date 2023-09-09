@@ -73,6 +73,6 @@ void fragment() {
     mina = min(a, mina);
 
 	lowp float sampledLight = outline_fullbright ? 1.0 : sqrt(mix(0.0, 1.0, (lightSample.r * 0.34) + (lightSample.g * 0.5) + (lightSample.b * 0.16)) * light_boost);
-	COLOR = mix(col, outline_color * sampledLight, maxa - col.a);
+	COLOR = mix(col, outline_color * vec4(vec3(sampledLight), 1.0), maxa - col.a);
 	lightSample = vec3(1.0);
 }

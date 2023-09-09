@@ -16,7 +16,7 @@
   copyright: "Taken from /tg/station at commit 6665eec76c98a4f3f89bebcd10b34b47dcc0b8ae."
   source: "https://github.com/tgstation/tgstation/"
 
-- files: ["blue_circuit.png", "cropped_parallax.png", "eighties.png", "gold.png", "grass.png", "ironsand1.png", "ironsand2.png", "ironsand3.png", "ironsand4.png", "junglegrass.png", "lattice.png", "plating.png", "reinforced.png", "silver.png", "snow.png", "wood.png"]
+- files: ["blue_circuit.png", "cropped_parallax.png", "glass.png", "eighties.png", "gold.png", "grass.png", "ironsand1.png", "ironsand2.png", "ironsand3.png", "ironsand4.png", "junglegrass.png", "lattice.png", "plating.png", "rglass.png", "reinforced.png", "silver.png", "snow.png", "wood.png"]
   license: "CC-BY-SA-3.0"
   copyright: "tgstation commit 8abb19545828230d92ba18827feeb42a67a55d49, cropped_parallax modified from parallax."
   source: "https://github.com/tgstation/tgstation/"
@@ -31,12 +31,12 @@
   copyright: "Modified from plating.png by github user @Flareguy"
   source: "https://github.com/space-wizards/space-station-14/"
   
-- files: ["rglass.png"]
+- files: ["rglass_alt.png"]
   license: "CC-BY-SA-3.0"
   copyright: "tgstation commit 8abb19545828230d92ba18827feeb42a67a55d49, rglass modified by github user @notquitehadouken."
   source: "https://github.com/space-wizards/space-station-14/pull/17948"
 
-- files: ["glass.png"]
+- files: ["glass_alt.png"]
   license: "CC0-1.0"
   copyright: "Created by github user @notquitehadouken."
   source: "https://github.com/space-wizards/space-station-14/pull/17948"
