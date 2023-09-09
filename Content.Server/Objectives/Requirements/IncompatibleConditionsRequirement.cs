@@ -1,13 +1,18 @@
 ﻿using Content.Shared.Mind;
 using Content.Shared.Objectives.Interfaces;
+using Content.Shared.Whitelist;
 
 namespace Content.Server.Objectives.Requirements
 {
+    // TODO: event handled by system
     [DataDefinition]
     public sealed partial class IncompatibleConditionsRequirement : IObjectiveRequirement
     {
-        [DataField("conditions")]
-        private List<string> _incompatibleConditions = new();
+        /// <summary>
+        /// Blacklist for condition components that are not allowed to exist on any objective condition.
+        /// </summary>
+        [DataField("conditions"), ViewVariables(VVAccess.ReadWrite)]
+        public EntityWhitelist Conditions = new();
 
         public bool CanBeAssigned(EntityUid mindId, MindComponent mind)
         {
@@ -15,10 +20,8 @@ namespace Content.Server.Objectives.Requirements
             {
                 foreach (var condition in objective.Conditions)
                 {
-                    foreach (var incompatibleCondition in _incompatibleConditions)
-                    {
-                        if (incompatibleCondition == condition.GetType().Name) return false;
-                    }
+                    if (Conditions.IsValid(condition))
+                        return false;
                 }
             }
 

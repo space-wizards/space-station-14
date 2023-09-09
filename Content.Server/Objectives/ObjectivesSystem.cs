@@ -3,6 +3,7 @@
 using Content.Server.Mind;
 using Content.Shared.Mind;
 using Content.Shared.Objectives;
+using Content.Shared.Objectives.Systems;
 using Content.Shared.Random;
 using Content.Shared.Random.Helpers;
 using Robust.Shared.Prototypes;
@@ -17,6 +18,8 @@ public sealed class ObjectivesSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly MindSystem _mind = default!;
+    // yeah the naming here isnt ideal
+    [Dependency] private readonly ObjectiveSystem _objective = default!;
 
     public override void Initialize()
     {
@@ -93,12 +96,14 @@ public sealed class ObjectivesSystem : EntitySystem
                     {
                         foreach (var condition in objective.Conditions)
                         {
-                            var progress = condition.Progress;
+                            var conditionInfo = _objective.GetConditionInfo(condition, mindId, mind);
+                            var conditionTitle = conditionInfo.Title!;
+                            var progress = conditionInfo.Progress ?? 0f;
                             if (progress > 0.99f)
                             {
                                 result += "\n- " + Loc.GetString(
                                     "objectives-condition-success",
-                                    ("condition", condition.Title),
+                                    ("condition", conditionTitle),
                                     ("markupColor", "green")
                                 );
                             }
@@ -106,7 +111,7 @@ public sealed class ObjectivesSystem : EntitySystem
                             {
                                 result += "\n- " + Loc.GetString(
                                     "objectives-condition-fail",
-                                    ("condition", condition.Title),
+                                    ("condition", conditionTitle),
                                     ("progress", (int) (progress * 100)),
                                     ("markupColor", "red")
                                 );
