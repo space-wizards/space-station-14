@@ -15,11 +15,11 @@ public abstract class SharedSpiderSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<SpiderComponent, MapInitEvent>(OnSpiderMapInit);
+        SubscribeLocalEvent<SpiderComponent, ComponentStartup>(OnSpiderStartup);
         SubscribeLocalEvent<SpiderWebObjectComponent, ComponentStartup>(OnWebStartup);
     }
 
-    private void OnSpiderMapInit(EntityUid uid, SpiderComponent component, MapInitEvent args)
+    private void OnSpiderStartup(EntityUid uid, SpiderComponent component, ComponentStartup args)
     {
         if (_net.IsClient)
             return;

@@ -46,7 +46,6 @@ namespace Content.Server.Guardian
             SubscribeLocalEvent<GuardianComponent, PlayerDetachedEvent>(OnGuardianUnplayer);
 
             SubscribeLocalEvent<GuardianHostComponent, ComponentInit>(OnHostInit);
-            SubscribeLocalEvent<GuardianHostComponent, MapInitEvent>(OnHostMapInit);
             SubscribeLocalEvent<GuardianHostComponent, MoveEvent>(OnHostMove);
             SubscribeLocalEvent<GuardianHostComponent, MobStateChangedEvent>(OnHostStateChange);
             SubscribeLocalEvent<GuardianHostComponent, ComponentShutdown>(OnHostShutdown);
@@ -90,10 +89,6 @@ namespace Content.Server.Guardian
         private void OnHostInit(EntityUid uid, GuardianHostComponent component, ComponentInit args)
         {
             component.GuardianContainer = uid.EnsureContainer<ContainerSlot>("GuardianContainer");
-        }
-
-        private void OnHostMapInit(EntityUid uid, GuardianHostComponent component, MapInitEvent args)
-        {
             _actionSystem.AddAction(uid, ref component.ActionEntity, component.Action);
         }
 

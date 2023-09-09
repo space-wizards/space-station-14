@@ -17,12 +17,12 @@ public abstract class SharedCombatModeSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<CombatModeComponent, ComponentStartup>(OnStartup);
+        SubscribeLocalEvent<CombatModeComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<CombatModeComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<CombatModeComponent, ToggleCombatActionEvent>(OnActionPerform);
     }
 
-    private void OnStartup(EntityUid uid, CombatModeComponent component, ComponentStartup args)
+    private void OnMapInit(EntityUid uid, CombatModeComponent component, MapInitEvent args)
     {
         _actionsSystem.AddAction(uid, ref component.CombatToggleActionEntity, component.CombatToggleAction);
     }

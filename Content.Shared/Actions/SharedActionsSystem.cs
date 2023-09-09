@@ -554,6 +554,10 @@ public abstract class SharedActionsSystem : EntitySystem
 
     protected virtual void AddActionInternal(EntityUid holderId, EntityUid actionId, IContainer container, ActionsComponent holder)
     {
+        if (Prototype(holderId)?.ID == "WeaponTurretSyndicate")
+        {
+
+        }
         container.Insert(actionId);
         holder.Actions.Add(actionId);
         Dirty(holderId, holder);
