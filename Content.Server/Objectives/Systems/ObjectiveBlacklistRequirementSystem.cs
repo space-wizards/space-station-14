@@ -20,7 +20,7 @@ public sealed class ObjectiveBlacklistRequirementSystem : EntitySystem
         if (args.Cancelled)
             return;
 
-        foreach (var objective in args.AllObjectives)
+        foreach (var objective in args.Mind.AllObjectives)
         {
             if (comp.Blacklist.IsValid(objective, EntityManager))
             {
