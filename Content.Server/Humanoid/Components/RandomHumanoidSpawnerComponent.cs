@@ -11,6 +11,6 @@ namespace Content.Server.Humanoid.Components;
 [RegisterComponent]
 public sealed partial class RandomHumanoidSpawnerComponent : Component
 {
-    [DataField("settings", customTypeSerializer: typeof(PrototypeIdSerializer<RandomHumanoidSettingsPrototype>), required: true)]
-    public string SettingsPrototypeId = default!;
+    [DataField("settings", customTypeSerializer: typeof(PrototypeIdSerializer<RandomHumanoidSettingsPrototype>))]
+    public string? SettingsPrototypeId;
 }
