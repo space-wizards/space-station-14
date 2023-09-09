@@ -42,11 +42,8 @@ namespace Content.Server.Objectives.Commands
             var objective = _entities.System<ObjectiveSystem>();
             for (var i = 0; i < objectives.Count; i++)
             {
-                foreach (var condition in objectives[i].Conditions)
-                {
-                    var info = objective.GetConditionInfo(condition, mindId, mind);
-                    shell.WriteLine($"- [{i}] {info.Title} ({info.Progress}%)");
-                }
+                var info = objective.GetInfo(objectives[i], mindId, mind);
+                shell.WriteLine($"- [{i}] '{info.Title}' ({info.Progress}%)");
             }
         }
 
