@@ -1,7 +1,6 @@
 ﻿using Content.Server.Actions;
 using Content.Server.Chat.Systems;
 using Content.Server.Humanoid;
-using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Markings;
 using Content.Shared.Mobs;
@@ -36,18 +35,18 @@ public sealed class WaggingSystem : EntitySystem
 
     private void OnStartup(EntityUid uid, WaggingComponent component, ComponentStartup args)
     {
-        if (!_prototype.TryIndex<InstantActionPrototype>(component.Action, out var action))
+        if (string.IsNullOrWhiteSpace(component.Action))
             return;
 
-        _actions.AddAction(uid, new InstantAction(action), uid);
+        _actions.AddAction(uid, ref component.ActionEntity, component.Action, uid);
     }
 
     private void OnRemove(EntityUid uid, WaggingComponent component, ComponentRemove args)
     {
-        if (!_prototype.TryIndex<InstantActionPrototype>(component.Action, out var action))
+        if (string.IsNullOrWhiteSpace(component.Action))
             return;
 
-        _actions.RemoveAction(uid, new InstantAction(action));
+        _actions.RemoveAction(uid, component.ActionEntity);
     }
 
     private void OnToggleAction(EntityUid uid, WaggingComponent component, ToggleActionEvent args)

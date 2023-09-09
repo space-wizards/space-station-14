@@ -264,4 +264,4 @@
       iconOn: { sprite: Mobs/Customization/reptilian_parts.rsi, state: tail_smooth_behind }
       itemIconStyle: NoItem
       useDelay: 1 # emote spam
-      serverEvent: !type:ToggleActionEvent
+      event: !type:ToggleActionEvent
