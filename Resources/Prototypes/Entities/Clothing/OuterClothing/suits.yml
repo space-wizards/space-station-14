@@ -132,29 +132,6 @@
         disableEject: true
 
 - type: entity
-  id: ActionTogglePhaseCloak
-  name: action-name-toggle-phase-cloak
-  description: action-desc-toggle-phase-cloak
-  components:
-  - type: InstantAction
-      # have to plan (un)cloaking ahead of time
-      useDelay: 5
-      priority: -9
-      event: !type:ToggleStealthEvent
-
-- type: entity
-  id: ActionTogglePhaseCloak
-  name: action-name-toggle-phase-cloak
-  description: action-desc-toggle-phase-cloak
-  noSpawn: true
-  components:
-  - type: InstantAction
-    # have to plan (un)cloaking ahead of time
-    useDelay: 5
-    priority: -9
-    event: !type:ToggleStealthEvent
-
-- type: entity
   parent: ClothingOuterBase
   id: ClothingOuterSuitChicken
   name: chicken suit

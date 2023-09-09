@@ -1,12 +1,12 @@
-using Content.Shared.Actions;
-using Content.Shared.Actions.ActionTypes;
 using Content.Shared.DoAfter;
 using Content.Shared.Ninja.Systems;
 using Content.Shared.Toggleable;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Ninja.Components;
@@ -26,16 +26,13 @@ public sealed partial class NinjaGlovesComponent : Component
     public EntityUid? User;
 
     /// <summary>
-    /// The action for toggling ninja gloves abilities
+    /// The action id for toggling ninja gloves abilities
     /// </summary>
-    [DataField("toggleAction")]
-    public InstantAction ToggleAction = new()
-    {
-        DisplayName = "action-name-toggle-ninja-gloves",
-        Description = "action-desc-toggle-ninja-gloves",
-        Priority = -13,
-        Event = new ToggleActionEvent()
-    };
+    [DataField("toggleAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    public string ToggleAction = "ActionToggleNinjaGloves";
+
+    [DataField("toggleActionEntity")]
+    public EntityUid? ToggleActionEntity;
 
     /// <summary>
     /// The whitelist used for the emag provider to emag airlocks only (not regular doors).

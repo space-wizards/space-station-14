@@ -69,17 +69,7 @@
     sprite: Objects/Weapons/Melee/energykatana.rsi
   - type: EnergyKatana
   - type: DashAbility
-    dashAction:
-      icon:
-        sprite: Objects/Magic/magicactions.rsi
-        state: blink
-      itemIconStyle: NoItem
-      name: "action-name-katana-dash"
-      description: "action-desc-katana-dash"
-      priority: -12
-      event: !type:DashEvent
-      checkCanAccess: false
-      range: 0
+    dashAction: ActionEnergyKatanaDash
   - type: LimitedCharges
     maxCharges: 3
     charges: 3

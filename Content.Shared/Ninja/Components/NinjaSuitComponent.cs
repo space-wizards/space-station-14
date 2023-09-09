@@ -1,5 +1,4 @@
 using Content.Shared.Actions;
-using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Ninja.Systems;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
@@ -43,19 +42,13 @@ public sealed partial class NinjaSuitComponent : Component
     public TimeSpan DisableTime = TimeSpan.FromSeconds(5);
 
     /// <summary>
-    /// The action for creating throwing stars.
+    /// The action id for creating throwing stars.
     /// </summary>
-    [DataField("createThrowingStarAction")]
-    public InstantAction CreateThrowingStarAction = new()
-    {
-        UseDelay = TimeSpan.FromSeconds(0.5),
-        Icon = new SpriteSpecifier.Rsi(new ResPath("Objects/Weapons/Throwable/throwing_star.rsi"), "icon"),
-        ItemIconStyle = ItemActionIconStyle.NoItem,
-        DisplayName = "action-name-create-throwing-star",
-        Description = "action-desc-create-throwing-star",
-        Priority = -10,
-        Event = new CreateThrowingStarEvent()
-    };
+    [DataField("createThrowingStarAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    public string CreateThrowingStarAction = "ActionCreateThrowingStar";
+
+    [DataField("createThrowingStarActionEntity")]
+    public EntityUid? CreateThrowingStarActionEntity;
 
     /// <summary>
     /// Battery charge used to create a throwing star. Can do it 25 times on a small-capacity power cell.
@@ -70,19 +63,13 @@ public sealed partial class NinjaSuitComponent : Component
     public string ThrowingStarPrototype = "ThrowingStarNinja";
 
     /// <summary>
-    /// The action for recalling a bound energy katana
+    /// The action id for recalling a bound energy katana
     /// </summary>
-    [DataField("recallKatanaAction")]
-    public InstantAction RecallKatanaAction = new()
-    {
-        UseDelay = TimeSpan.FromSeconds(1),
-        Icon = new SpriteSpecifier.Rsi(new ResPath("Objects/Weapons/Melee/energykatana.rsi"), "icon"),
-        ItemIconStyle = ItemActionIconStyle.NoItem,
-        DisplayName = "action-name-recall-katana",
-        Description = "action-desc-recall-katana",
-        Priority = -11,
-        Event = new RecallKatanaEvent()
-    };
+    [DataField("recallKatanaAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    public string RecallKatanaAction = "ActionRecallKatana";
+
+    [DataField("recallKatanaActionEntity")]
+    public EntityUid? RecallKatanaActionEntity;
 
     /// <summary>
     /// Battery charge used per tile the katana teleported.
@@ -92,18 +79,13 @@ public sealed partial class NinjaSuitComponent : Component
     public float RecallCharge = 3.6f;
 
     /// <summary>
-    /// The action for creating an EMP burst
+    /// The action id for creating an EMP burst
     /// </summary>
-    [DataField("empAction")]
-    public InstantAction EmpAction = new()
-    {
-        Icon = new SpriteSpecifier.Rsi(new ResPath("Objects/Weapons/Grenades/empgrenade.rsi"), "icon"),
-        ItemIconStyle = ItemActionIconStyle.BigAction,
-        DisplayName = "action-name-em-burst",
-        Description = "action-desc-em-burst",
-        Priority = -13,
-        Event = new NinjaEmpEvent()
-    };
+    [DataField("empAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    public string EmpAction = "ActionNinjaEmp";
+
+    [DataField("empActionEntity")]
+    public EntityUid? EmpActionEntity;
 
     /// <summary>
     /// Battery charge used to create an EMP burst. Can do it 2 times on a small-capacity power cell.

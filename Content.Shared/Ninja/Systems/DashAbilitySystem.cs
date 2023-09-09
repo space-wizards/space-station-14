@@ -41,7 +41,7 @@ public sealed class DashAbilitySystem : EntitySystem
         if (ev.Cancelled)
             return;
 
-        args.Actions.Add(comp.DashAction);
+        args.AddAction(ref comp.DashActionEntity, comp.DashAction);
     }
 
     /// <summary>

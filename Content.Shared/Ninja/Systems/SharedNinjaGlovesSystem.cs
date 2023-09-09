@@ -70,7 +70,7 @@ public abstract class SharedNinjaGlovesSystem : EntitySystem
     private void OnGetItemActions(EntityUid uid, NinjaGlovesComponent comp, GetItemActionsEvent args)
     {
         if (HasComp<SpaceNinjaComponent>(args.User))
-            args.Actions.Add(comp.ToggleAction);
+            args.AddAction(ref comp.ToggleActionEntity, comp.ToggleAction);
     }
 
     /// <summary>

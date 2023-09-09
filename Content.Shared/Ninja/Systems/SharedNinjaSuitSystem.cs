@@ -52,9 +52,9 @@ public abstract class SharedNinjaSuitSystem : EntitySystem
         if (!HasComp<SpaceNinjaComponent>(args.User))
             return;
 
-        args.Actions.Add(comp.RecallKatanaAction);
-        args.Actions.Add(comp.CreateThrowingStarAction);
-        args.Actions.Add(comp.EmpAction);
+        args.AddAction(ref comp.RecallKatanaActionEntity, comp.RecallKatanaAction);
+        args.AddAction(ref comp.CreateThrowingStarActionEntity, comp.CreateThrowingStarAction);
+        args.AddAction(ref comp.EmpActionEntity, comp.EmpAction);
     }
 
     /// <summary>
