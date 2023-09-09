@@ -76,8 +76,8 @@
   - type: MobStateActions
     actions:
       Critical:
-      - CritSuccumb
-      - CritLastWords
+      - ActionCritSuccumb
+      - ActionCritLastWords
   - type: MobThresholds
     thresholds:
       0: Alive
@@ -123,11 +123,6 @@
       - Door
       tags:
       - Wall
-    devourAction:
-      event: !type:DevourActionEvent
-      icon: Interface/Actions/devour.png
-      name: action-name-devour
-      description: action-description-devour
   - type: Tag
     tags:
     - CannotSuicide
@@ -139,14 +134,7 @@
   - type: Dragon
     spawnsLeft: 2
     spawnsProto: MobCarpDragon
-    spawnRiftAction:
-      event: !type:DragonSpawnRiftActionEvent
-      icon:
-        sprite: Interface/Actions/carp_rift.rsi
-        state: icon
-      name: action-name-carp-rift
-      description: action-description-carp-rift
-      useDelay: 1
+    spawnRiftAction: ActionSpawnRift
   - type: GuideHelp
     guides:
     - MinorAntagonists
@@ -173,3 +161,26 @@
     damage:
       groups:
         Brute: 15
+
+- type: entity
+  id: ActionSpawnRift
+  name: action-name-carp-rift
+  description: action-description-carp-rift
+  noSpawn: true
+  components:
+  - type: InstantAction
+    icon:
+      sprite: Interface/Actions/carp_rift.rsi
+      state: icon
+    event: !type:DragonSpawnRiftActionEvent
+    useDelay: 1
+
+- type: entity
+  id: ActionDevour
+  name: action-name-devour
+  description: action-description-devour
+  noSpawn: true
+  components:
+  - type: EntityTargetAction
+    icon: Interface/Actions/devour.png
+    event: !type:DevourActionEvent

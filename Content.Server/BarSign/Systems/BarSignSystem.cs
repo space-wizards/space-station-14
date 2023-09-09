@@ -10,6 +10,7 @@ namespace Content.Server.BarSign.Systems
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
+        [Dependency] private readonly MetaDataSystem _metaData = default!;
 
         public override void Initialize()
         {
@@ -36,8 +37,8 @@ namespace Content.Server.BarSign.Systems
 
             var meta = Comp<MetaDataComponent>(uid);
             var name = newPrototype.Name != string.Empty ? newPrototype.Name : "barsign-component-name";
-            meta.EntityName = Loc.GetString(name);
-            meta.EntityDescription = Loc.GetString(newPrototype.Description);
+            _metaData.SetEntityName(uid, Loc.GetString(name), meta);
+            _metaData.SetEntityDescription(uid, Loc.GetString(newPrototype.Description), meta);
 
             component.CurrentSign = newPrototype.ID;
             Dirty(component);

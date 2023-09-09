@@ -53,20 +53,25 @@
         temperature: 293.15
     - type: Jetpack
       moleUsage: 0.00085
-      toggleAction:
-        icon:
-          sprite: Objects/Tanks/Jetpacks/blue.rsi
-          state: icon
-        iconOn:
-          sprite: Objects/Tanks/Jetpacks/blue.rsi
-          state: icon-on
-        name: action-name-jetpack-toggle
-        description: action-description-jetpack-toggle
-        useDelay: 1.0
-        event: !type:ToggleJetpackEvent
     - type: Appearance
     - type: StaticPrice
       price: 100
+
+- type: entity
+  id: ActionToggleJetpack
+  name: action-name-jetpack-toggle
+  description: action-description-jetpack-toggle
+  noSpawn: true
+  components:
+  - type: InstantAction
+    icon:
+      sprite: Objects/Tanks/Jetpacks/blue.rsi
+      state: icon
+    iconOn:
+      sprite: Objects/Tanks/Jetpacks/blue.rsi
+      state: icon-on
+    useDelay: 1.0
+    event: !type:ToggleJetpackEvent
 
 #Empty blue
 - type: entity

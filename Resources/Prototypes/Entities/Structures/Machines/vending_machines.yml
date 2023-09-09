@@ -64,7 +64,7 @@
       type: WiresBoundUserInterface
   - type: WiresPanel
   - type: Wires
-    BoardName: "Vending Machine"
+    BoardName: wires-board-name-vendingmachine
     LayoutId: Vending
   - type: Anchorable
   - type: TypingIndicator
@@ -1794,7 +1794,7 @@
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: AccessReader
-    access: [["NuclearOperative"]]
+    access: [["NuclearOperative"], ["SyndicateAgent"]]
 
 - type: entity
   parent: VendingMachine

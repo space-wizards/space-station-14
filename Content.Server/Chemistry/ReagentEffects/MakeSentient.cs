@@ -1,8 +1,7 @@
 using Content.Server.Ghost.Roles.Components;
-using Content.Server.Mind.Components;
 using Content.Server.Speech.Components;
 using Content.Shared.Chemistry.Reagent;
-using Content.Server.Ghost.Roles.Components;
+using Content.Shared.Mind.Components;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Chemistry.ReagentEffects;

@@ -112,6 +112,7 @@
   - type: TypingIndicator
     proto: robot
   - type: Speech
+    speechVerb: Robotic
     speechSounds: Pai
   - type: Construction
     graph: Cyborg

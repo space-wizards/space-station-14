@@ -34,6 +34,8 @@ namespace Content.Server.Interaction
             base.Initialize();
 
             SubscribeNetworkEvent<DragDropRequestEvent>(HandleDragDropRequestEvent);
+
+            SubscribeLocalEvent<BoundUserInterfaceCheckRangeEvent>(HandleUserInterfaceRangeCheck);
         }
 
         public override bool CanAccessViaStorage(EntityUid user, EntityUid target)
@@ -87,9 +89,25 @@ namespace Content.Server.Interaction
 
             var dropArgs = new DragDropTargetEvent(user.Value, msg.Dragged);
 
+            // trigger dragdrops on the target entity (what you are dropping onto)
             RaiseLocalEvent(msg.Target, ref dropArgs);
         }
 
         #endregion
+
+        private void HandleUserInterfaceRangeCheck(ref BoundUserInterfaceCheckRangeEvent ev)
+        {
+            if (ev.Player.AttachedEntity is not { } user)
+                return;
+
+            if (InRangeUnobstructed(user, ev.Target, ev.UserInterface.InteractionRange))
+            {
+                ev.Result = BoundUserInterfaceRangeResult.Pass;
+            }
+            else
+            {
+                ev.Result = BoundUserInterfaceRangeResult.Fail;
+            }
+        }
     }
 }

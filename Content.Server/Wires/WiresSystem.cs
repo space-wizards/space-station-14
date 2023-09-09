@@ -595,7 +595,7 @@ public sealed class WiresSystem : SharedWiresSystem
         _uiSystem.TrySetUiState(uid, WiresUiKey.Key, new WiresBoundUserInterfaceState(
             clientList.ToArray(),
             statuses.Select(p => new StatusEntry(p.key, p.value)).ToArray(),
-            wires.BoardName,
+            Loc.GetString(wires.BoardName),
             wires.SerialNumber,
             wires.WireSeed), ui: ui);
     }
