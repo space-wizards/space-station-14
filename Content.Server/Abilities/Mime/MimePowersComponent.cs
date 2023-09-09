@@ -20,10 +20,10 @@ namespace Content.Server.Abilities.Mime
         /// The wall prototype to use.
         /// </summary>
         [DataField("wallPrototype", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-        public string WallPrototype = "ActionMimeInvisibleWall";
+        public string WallPrototype = "WallInvisible";
 
         [DataField("invisibleWallAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-        public string? InvisibleWallAction;
+        public string? InvisibleWallAction = "ActionMimeInvisibleWall";
 
         [DataField("invisibleWallActionEntity")] public EntityUid? InvisibleWallActionEntity;
 

@@ -13,15 +13,17 @@ public sealed partial class ActionsComponent : Component
     /// </summary>
     [ViewVariables] public readonly Dictionary<EntityUid, ActionMetaData> OldClientActions = new();
 
+    [ViewVariables] public readonly HashSet<EntityUid> Actions = new();
+
     public override bool SendOnlyToOwner => true;
 }
 
 [Serializable, NetSerializable]
 public sealed class ActionsComponentState : ComponentState
 {
-    public readonly List<EntityUid> Actions;
+    public readonly HashSet<EntityUid> Actions;
 
-    public ActionsComponentState(List<EntityUid> actions)
+    public ActionsComponentState(HashSet<EntityUid> actions)
     {
         Actions = actions;
     }

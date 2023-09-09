@@ -47,7 +47,6 @@ namespace Content.Server.Ghost
 
             SubscribeLocalEvent<GhostComponent, ComponentStartup>(OnGhostStartup);
             SubscribeLocalEvent<GhostComponent, ComponentShutdown>(OnGhostShutdown);
-            SubscribeLocalEvent<GhostComponent, MapInitEvent>(OnGhostMapInit);
 
             SubscribeLocalEvent<GhostComponent, ExaminedEvent>(OnGhostExamine);
 
@@ -121,7 +120,20 @@ namespace Content.Server.Ghost
                 eye.VisibilityMask |= (uint) VisibilityFlags.Ghost;
             }
 
-            component.TimeOfDeath = _gameTiming.CurTime;
+            var time = _gameTiming.CurTime;
+            component.TimeOfDeath = time;
+
+            // TODO ghost: remove once ghosts are persistent and aren't deleted when returning to body
+            var action = _actions.AddAction(uid, ref component.ActionEntity, component.Action);
+            if (action?.UseDelay != null)
+            {
+                action.Cooldown = (time, time + action.UseDelay.Value);
+                Dirty(component.ActionEntity!.Value, action);
+            }
+
+            _actions.AddAction(uid, ref component.ToggleLightingActionEntity, component.ToggleLightingAction);
+            _actions.AddAction(uid, ref component.ToggleFoVActionEntity, component.ToggleFoVAction);
+            _actions.AddAction(uid, ref component.ToggleGhostsActionEntity, component.ToggleGhostsAction);
         }
 
         private void OnGhostShutdown(EntityUid uid, GhostComponent component, ComponentShutdown args)
@@ -145,22 +157,6 @@ namespace Content.Server.Ghost
 
                 _actions.RemoveAction(uid, component.ActionEntity);
             }
-        }
-
-        private void OnGhostMapInit(EntityUid uid, GhostComponent component, MapInitEvent args)
-        {
-            // TODO ghost: remove once ghosts are persistent and aren't deleted when returning to body
-            var time = _gameTiming.CurTime;
-            var action = _actions.AddAction(uid, ref component.ActionEntity, component.Action);
-            if (action?.UseDelay != null)
-            {
-                action.Cooldown = (time, time + action.UseDelay.Value);
-                Dirty(component.ActionEntity!.Value, action);
-            }
-
-            _actions.AddAction(uid, ref component.ToggleLightingActionEntity, component.ToggleLightingAction);
-            _actions.AddAction(uid, ref component.ToggleFoVActionEntity, component.ToggleFoVAction);
-            _actions.AddAction(uid, ref component.ToggleGhostsActionEntity, component.ToggleGhostsAction);
         }
 
         private void OnGhostExamine(EntityUid uid, GhostComponent component, ExaminedEvent args)
