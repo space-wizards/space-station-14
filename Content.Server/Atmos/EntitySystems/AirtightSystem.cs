@@ -53,7 +53,7 @@ namespace Content.Server.Atmos.EntitySystems
 
         private void OnAirtightPositionChanged(EntityUid uid, AirtightComponent airtight, ref AnchorStateChangedEvent args)
         {
-            var xform = Transform(uid);
+            var xform = args.Transform;
 
             if (!TryComp(xform.GridUid, out MapGridComponent? grid))
                 return;

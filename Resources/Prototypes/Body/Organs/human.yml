@@ -27,8 +27,8 @@
   - type: Organ
   - type: Input
     context: "ghost"
-  - type: InputMover
   - type: Brain
+  - type: BlockMovement
 
 - type: entity
   id: OrganHumanEyes

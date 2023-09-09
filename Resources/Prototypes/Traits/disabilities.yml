@@ -49,3 +49,11 @@
   description: trait-uncloneable-desc
   components:
     - type: Uncloneable
+
+- type: trait
+  id: WheelchairBound
+  name: trait-wheelchair-bound-name
+  description: trait-wheelchair-bound-desc
+  components:
+    - type: WheelchairBound
+    - type: LegsParalyzed

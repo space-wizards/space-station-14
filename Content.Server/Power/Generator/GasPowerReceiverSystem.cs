@@ -5,7 +5,6 @@ using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NodeContainer.Nodes;
 using Content.Server.Power.Components;
 using Content.Shared.Atmos;
-using Robust.Shared.Timing;
 
 namespace Content.Server.Power.Generator;
 
@@ -14,26 +13,18 @@ namespace Content.Server.Power.Generator;
 /// </summary>
 public sealed class GasPowerReceiverSystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
     [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
     {
-        SubscribeLocalEvent<GasPowerReceiverComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<GasPowerReceiverComponent, AtmosDeviceUpdateEvent>(OnDeviceUpdated);
-    }
-
-    private void OnMapInit(EntityUid uid, GasPowerReceiverComponent component, MapInitEvent args)
-    {
-        component.LastProcess = _gameTiming.CurTime;
     }
 
     private void OnDeviceUpdated(EntityUid uid, GasPowerReceiverComponent component, AtmosDeviceUpdateEvent args)
     {
-        var timeDelta =  (float)(_gameTiming.CurTime - component.LastProcess).TotalSeconds;
-        component.LastProcess = _gameTiming.CurTime;
+        var timeDelta = args.dt;
 
         if (!HasComp<AtmosDeviceComponent>(uid)
             || !TryComp<NodeContainerComponent>(uid, out var nodeContainer)

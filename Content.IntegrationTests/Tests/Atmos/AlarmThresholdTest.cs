@@ -24,16 +24,14 @@ namespace Content.IntegrationTests.Tests.Atmos
         [Test]
         public async Task TestAlarmThreshold()
         {
-            await using var pairTracker = await PoolManager.GetServerClient();
-            var server = pairTracker.Pair.Server;
+            await using var pair = await PoolManager.GetServerClient();
+            var server = pair.Server;
 
             var prototypeManager = server.ResolveDependency<IPrototypeManager>();
             AtmosAlarmThreshold threshold = default!;
 
-            await server.WaitPost(() =>
-            {
-                threshold = prototypeManager.Index<AtmosAlarmThreshold>("AlarmThresholdTestDummy");
-            });
+            var proto = prototypeManager.Index<AtmosAlarmThresholdPrototype>("AlarmThresholdTestDummy");
+            threshold = new(proto);
 
             await server.WaitAssertion(() =>
             {
@@ -136,7 +134,7 @@ namespace Content.IntegrationTests.Tests.Atmos
                     Assert.That(alarmType, Is.EqualTo(AtmosAlarmType.Normal));
                 }
             });
-            await pairTracker.CleanReturnAsync();
+            await pair.CleanReturnAsync();
         }
     }
 }

@@ -19,3 +19,12 @@
   copyright: "User Mystovski on freesound.org. Modified by LankLTE on github."
   source: "https://freesound.org/people/Mystovski/sounds/201111/"
 
+- files: ["genhit3.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from tgstation."
+  source: "https://github.com/tgstation/tgstation/blob/a7f525bce9a359ab5282fc754078cd4b5678a006/sound/weapons/genhit3.ogg"
+
+- files: ["star_hit.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Based on genhit3.ogg from tgstation, modified by deltanedas on github."
+  source: "https://github.com/deltanedas"

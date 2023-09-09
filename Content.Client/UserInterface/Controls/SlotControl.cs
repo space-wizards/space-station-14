@@ -195,7 +195,7 @@ namespace Content.Client.UserInterface.Controls
                 IoCManager.Resolve<IEntityManager>().DeleteEntity(tempQualifier.Owner);
             }
 
-            HoverSpriteView.Sprite = null;
+            HoverSpriteView.SetEntity(null);
         }
 
         private void OnButtonPressed(GUIBoundKeyEventArgs args)

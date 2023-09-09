@@ -28,6 +28,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
 using Content.Shared.Tag;
+using Content.Server.Storage.Components;
 
 namespace Content.Server.Nutrition.EntitySystems
 {
@@ -51,7 +52,6 @@ namespace Content.Server.Nutrition.EntitySystems
         [Dependency] private readonly ReactiveSystem _reaction = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly StackSystem _stack = default!;
-        [Dependency] private readonly TagSystem _tags = default!;
 
         public const float MaxFeedDistance = 1.0f;
 
@@ -116,6 +116,13 @@ namespace Content.Server.Nutrition.EntitySystems
                     forceFeed
                         ? Loc.GetString("food-system-cant-digest-other", ("entity", food))
                         : Loc.GetString("food-system-cant-digest", ("entity", food)), user, user);
+                return (false, true);
+            }
+
+            // Check for used storage on the food item
+            if (TryComp<ServerStorageComponent>(food, out var storageState) && storageState.StorageUsed != 0)
+            {
+                _popupSystem.PopupEntity(Loc.GetString("food-has-used-storage", ("food", food)), user, user);
                 return (false, true);
             }
 

@@ -57,9 +57,9 @@ namespace Content.Server.Atmos.EntitySystems
 
                 if (TryComp<FixturesComponent>(uid, out var fixtures))
                 {
-                    foreach (var fixture in fixtures.Fixtures.Values)
+                    foreach (var (id, fixture) in fixtures.Fixtures)
                     {
-                        _physics.AddCollisionMask(uid, fixture, (int) CollisionGroup.TableLayer, manager: fixtures);
+                        _physics.AddCollisionMask(uid, id, fixture, (int) CollisionGroup.TableLayer, manager: fixtures);
                     }
                 }
             }
@@ -70,15 +70,16 @@ namespace Content.Server.Atmos.EntitySystems
             }
         }
 
-        private void AddMobMovedByPressure(MovedByPressureComponent component, PhysicsComponent body)
+        private void AddMobMovedByPressure(EntityUid uid, MovedByPressureComponent component, PhysicsComponent body)
         {
-            if (!TryComp<FixturesComponent>(component.Owner, out var fixtures)) return;
+            if (!TryComp<FixturesComponent>(uid, out var fixtures))
+                return;
 
             _physics.SetBodyStatus(body, BodyStatus.InAir);
 
-            foreach (var fixture in fixtures.Fixtures.Values)
+            foreach (var (id, fixture) in fixtures.Fixtures)
             {
-                _physics.RemoveCollisionMask(body.Owner, fixture, (int) CollisionGroup.TableLayer, manager: fixtures);
+                _physics.RemoveCollisionMask(uid, id, fixture, (int) CollisionGroup.TableLayer, manager: fixtures);
             }
 
             // TODO: Make them dynamic type? Ehh but they still want movement so uhh make it non-predicted like weightless?
@@ -214,7 +215,7 @@ namespace Content.Server.Atmos.EntitySystems
             {
                 if (HasComp<MobStateComponent>(uid))
                 {
-                    AddMobMovedByPressure(component, physics);
+                    AddMobMovedByPressure(uid, component, physics);
                 }
 
                 if (maxForce > MovedByPressureComponent.ThrowForce)

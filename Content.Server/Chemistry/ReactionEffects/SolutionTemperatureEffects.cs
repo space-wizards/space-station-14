@@ -9,7 +9,7 @@ namespace Content.Server.Chemistry.ReactionEffects
     ///     Sets the temperature of the solution involved with the reaction to a new value.
     /// </summary>
     [DataDefinition]
-    public sealed class SetSolutionTemperatureEffect : ReagentEffect
+    public sealed partial class SetSolutionTemperatureEffect : ReagentEffect
     {
         /// <summary>
         ///     The temperature to set the solution to.
@@ -34,7 +34,7 @@ namespace Content.Server.Chemistry.ReactionEffects
     ///     Adjusts the temperature of the solution involved in the reaction.
     /// </summary>
     [DataDefinition]
-    public sealed class AdjustSolutionTemperatureEffect : ReagentEffect
+    public sealed partial class AdjustSolutionTemperatureEffect : ReagentEffect
     {
         /// <summary>
         ///     The change in temperature.
@@ -74,7 +74,7 @@ namespace Content.Server.Chemistry.ReactionEffects
     /// <summary>
     ///     Adjusts the thermal energy of the solution involved in the reaction.
     /// </summary>
-    public sealed class AdjustSolutionThermalEnergyEffect : ReagentEffect
+    public sealed partial class AdjustSolutionThermalEnergyEffect : ReagentEffect
     {
         /// <summary>
         ///     The change in energy.

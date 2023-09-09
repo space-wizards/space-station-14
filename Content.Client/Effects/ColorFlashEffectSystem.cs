@@ -2,11 +2,14 @@ using Content.Shared.Effects;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
 using Robust.Shared.Animations;
+using Robust.Shared.Player;
+using Robust.Shared.Timing;
 
 namespace Content.Client.Effects;
 
-public sealed class ColorFlashEffectSystem : EntitySystem
+public sealed class ColorFlashEffectSystem : SharedColorFlashEffectSystem
 {
+    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly AnimationPlayerSystem _animation = default!;
 
     /// <summary>
@@ -21,6 +24,14 @@ public sealed class ColorFlashEffectSystem : EntitySystem
 
         SubscribeAllEvent<ColorFlashEffectEvent>(OnColorFlashEffect);
         SubscribeLocalEvent<ColorFlashEffectComponent, AnimationCompletedEvent>(OnEffectAnimationCompleted);
+    }
+
+    public override void RaiseEffect(Color color, List<EntityUid> entities, Filter filter)
+    {
+        if (!_timing.IsFirstTimePredicted)
+            return;
+
+        OnColorFlashEffect(new ColorFlashEffectEvent(color, entities));
     }
 
     private void OnEffectAnimationCompleted(EntityUid uid, ColorFlashEffectComponent component, AnimationCompletedEvent args)

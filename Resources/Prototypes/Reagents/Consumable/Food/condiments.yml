@@ -89,6 +89,16 @@
   recognizable: true
 
 - type: reagent
+  id: Mustard
+  name: reagent-name-mustard
+  group: Foods
+  desc: reagent-desc-mustard
+  physicalDesc: reagent-physical-desc-thick
+  flavor: sour
+  color: "#ffdb58"
+  recognizable: true
+
+- type: reagent
   id: Vinaigrette
   name: reagent-name-vinaigrette
   group: Foods

@@ -14,10 +14,10 @@ namespace Content.Shared.Construction.Prototypes
 
         [ViewVariables]
         [IdDataField]
-        public string ID { get; } = default!;
+        public string ID { get; private set; } = default!;
 
         [DataField("start")]
-        public string? Start { get; }
+        public string? Start { get; private set; }
 
         [DataField("graph", priority: 0)]
         private List<ConstructionGraphNode> _graph = new();

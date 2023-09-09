@@ -2,6 +2,7 @@
   save: false
   name: BaseMob
   id: BaseMob
+  abstract: true
   components:
   - type: CombatMode
     canDisarm: true

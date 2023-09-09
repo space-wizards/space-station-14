@@ -8,10 +8,10 @@ using Content.Server.Mind;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Organ;
 using Content.Shared.Body.Part;
-using Content.Shared.Body.Prototypes;
 using Content.Shared.Body.Systems;
-using Content.Shared.Coordinates;
 using Content.Shared.Humanoid;
+using Content.Shared.Kitchen.Components;
+using Content.Shared.Mind;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Movement.Events;
 using Content.Shared.Random.Helpers;
@@ -30,7 +30,9 @@ public sealed class BodySystem : SharedBodySystem
     [Dependency] private readonly HumanoidAppearanceSystem _humanoidSystem = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly MindSystem _mindSystem = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly SharedMindSystem _mindSystem = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     public override void Initialize()
     {
@@ -58,7 +60,7 @@ public sealed class BodySystem : SharedBodySystem
             if (TryComp(slot.Child, out BodyPartComponent? child))
             {
                 child.ParentSlot = slot;
-                Dirty(slot.Child.Value);
+                Dirty(slot.Child.Value, child);
                 continue;
             }
 
@@ -75,7 +77,7 @@ public sealed class BodySystem : SharedBodySystem
             if (TryComp(slot.Child, out OrganComponent? child))
             {
                 child.ParentSlot = slot;
-                Dirty(slot.Child.Value);
+                Dirty(slot.Child.Value, child);
                 continue;
             }
 
@@ -101,19 +103,15 @@ public sealed class BodySystem : SharedBodySystem
         }
 
         child.ParentSlot = slot;
-        Dirty(slot.Child.Value);
+        Dirty(slot.Child.Value, child);
     }
 
     private void OnRelayMoveInput(EntityUid uid, BodyComponent component, ref MoveInputEvent args)
     {
-        if (_mobState.IsDead(uid) && _mindSystem.TryGetMind(uid, out var mind))
+        if (_mobState.IsDead(uid) && _mindSystem.TryGetMind(uid, out var mindId, out var mind))
         {
-            if (!mind.TimeOfDeath.HasValue)
-            {
-                mind.TimeOfDeath = _gameTiming.RealTime;
-            }
-
-            _ticker.OnGhostAttempt(mind, true);
+            mind.TimeOfDeath ??= _gameTiming.RealTime;
+            _ticker.OnGhostAttempt(mindId, true, mind: mind);
         }
     }
 
@@ -132,7 +130,8 @@ public sealed class BodySystem : SharedBodySystem
             return;
 
         // Don't microwave animals, kids
-        Transform(uid).AttachToGridOrMap();
+        _transform.AttachToGridOrMap(uid);
+        _appearance.SetData(args.Microwave, MicrowaveVisualState.Bloody, true);
         GibBody(uid, false, component);
 
         args.Handled = true;

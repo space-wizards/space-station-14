@@ -151,7 +151,7 @@ public sealed partial class GunSystem : SharedGunSystem
         if (gun.NextFire > Timing.CurTime)
             return;
 
-        var mousePos = _eyeManager.ScreenToMap(_inputManager.MouseScreenPosition);
+        var mousePos = _eyeManager.PixelToMap(_inputManager.MouseScreenPosition);
 
         if (mousePos.MapId == MapId.Nullspace)
         {
@@ -191,7 +191,7 @@ public sealed partial class GunSystem : SharedGunSystem
                 if (ent!.Value.IsClientSide())
                     Del(ent.Value);
                 else
-                    RemComp<AmmoComponent>(ent.Value);
+                    RemoveShootable(ent.Value);
                 continue;
             }
 
@@ -225,7 +225,7 @@ public sealed partial class GunSystem : SharedGunSystem
                     if (ent!.Value.IsClientSide())
                         Del(ent.Value);
                     else
-                        RemComp<AmmoComponent>(ent.Value);
+                        RemoveShootable(ent.Value);
                     break;
                 case HitscanPrototype:
                     Audio.PlayPredicted(gun.SoundGunshot, gunUid, user);

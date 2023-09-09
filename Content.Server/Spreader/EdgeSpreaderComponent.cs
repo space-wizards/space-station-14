@@ -5,6 +5,6 @@ namespace Content.Server.Spreader;
 /// This needs to be manually added and removed.
 /// </summary>
 [RegisterComponent, Access(typeof(SpreaderSystem))]
-public sealed class EdgeSpreaderComponent : Component
+public sealed partial class EdgeSpreaderComponent : Component
 {
 }

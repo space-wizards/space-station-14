@@ -15,7 +15,7 @@ using SixLabors.ImageSharp.Formats.Webp;
 
 namespace Content.MapRenderer
 {
-    internal class Program
+    internal sealed class Program
     {
         private const string NoMapsChosenMessage = "No maps were chosen";
         private static readonly Func<string, string> ChosenMapIdNotIntMessage = id => $"The chosen id is not a valid integer: {id}";
@@ -34,8 +34,8 @@ namespace Content.MapRenderer
             {
                 Console.WriteLine("Didn't specify any maps to paint! Loading the map list...");
 
-                await using var pairTracker = await PoolManager.GetServerClient();
-                var mapIds = pairTracker.Pair.Server
+                await using var pair = await PoolManager.GetServerClient();
+                var mapIds = pair.Server
                     .ResolveDependency<IPrototypeManager>()
                     .EnumeratePrototypes<GameMapPrototype>()
                     .Select(map => map.ID)
@@ -108,8 +108,8 @@ namespace Content.MapRenderer
                 Console.WriteLine("Retrieving map ids by map file names...");
 
                 Console.Write("Fetching map prototypes... ");
-                await using var pairTracker = await PoolManager.GetServerClient();
-                var mapPrototypes = pairTracker.Pair.Server
+                await using var pair = await PoolManager.GetServerClient();
+                var mapPrototypes = pair.Server
                     .ResolveDependency<IPrototypeManager>()
                     .EnumeratePrototypes<GameMapPrototype>()
                     .ToArray();
@@ -166,7 +166,7 @@ namespace Content.MapRenderer
                         Directory.CreateDirectory(directory);
 
                         var fileName = Path.GetFileNameWithoutExtension(map);
-                        var savePath = $"{directory}{Path.DirectorySeparatorChar}{fileName}-{i}.{arguments.Format.ToString()}";
+                        var savePath = $"{directory}{Path.DirectorySeparatorChar}{fileName}-{i}.{arguments.Format}";
 
                         Console.WriteLine($"Writing grid of size {grid.Width}x{grid.Height} to {savePath}");
 

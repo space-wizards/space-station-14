@@ -62,7 +62,12 @@ namespace Content.Server.Repairable
 
             // Add a penalty to how long it takes if the user is repairing itself
             if (args.User == args.Target)
+            {
+                if (!component.AllowSelfRepair)
+                    return;
+
                 delay *= component.SelfRepairPenalty;
+            }
 
             // Run the repairing doafter
             args.Handled = _toolSystem.UseTool(args.Used, args.User, uid, delay, component.QualityNeeded, new RepairFinishedEvent());

@@ -507,6 +507,9 @@
           Quantity: 7
         - ReagentId: Vitamin
           Quantity: 12
+  - type: Tag
+    tags:
+      - ClothMade
 # Tastes like bun, ectoplasm.
 
 - type: entity

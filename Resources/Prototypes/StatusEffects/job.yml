@@ -2,7 +2,7 @@
   id: JobIcon
   abstract: true
   priority: 1
-  locationPreference: Left
+  locationPreference: Right
 
 - type: statusIcon
   parent: JobIcon
@@ -17,6 +17,13 @@
   icon:
     sprite: Interface/Misc/job_icons.rsi
     state: QuarterMaster
+
+- type: statusIcon
+  parent: JobIcon
+  id: JobIconBorg
+  icon:
+    sprite: Interface/Misc/job_icons.rsi
+    state: Borg
 
 - type: statusIcon
   parent: JobIcon

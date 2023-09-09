@@ -8,6 +8,7 @@ nuke-component-doafter-warning = You start fiddling with wires and knobs in orde
 # Nuke UI
 nuke-user-interface-title = Nuclear Fission Explosive
 nuke-user-interface-arm-button = ARM
+nuke-user-interface-disarm-button = DISARM
 nuke-user-interface-anchor-button = ANCHOR
 nuke-user-interface-eject-button = EJECT
 

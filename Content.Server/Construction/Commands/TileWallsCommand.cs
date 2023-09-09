@@ -16,7 +16,10 @@ namespace Content.Server.Construction.Commands
         public string Description => "Puts an underplating tile below every wall on a grid.";
         public string Help => $"Usage: {Command} <gridId> | {Command}";
 
+        [ValidatePrototypeId<ContentTileDefinition>]
         public const string TilePrototypeId = "Plating";
+
+        [ValidatePrototypeId<TagPrototype>]
         public const string WallTag = "Wall";
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)

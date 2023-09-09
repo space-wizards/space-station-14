@@ -37,7 +37,7 @@
   - type: StorageFill
     contents:
       - id: MedicatedSuture
-        amount: 2
+      - id: Brutepack
       - id: Gauze
       - id: Bloodpack
       - id: SyringeTranexamicAcid
@@ -53,8 +53,6 @@
   components:
   - type: StorageFill
     contents:
-      - id: SyringeSpaceacillin
-        amount: 2
       - id: SyringeIpecac
         amount: 2
       - id: AntiPoisonMedipen

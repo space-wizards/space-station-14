@@ -6,8 +6,12 @@ using Content.Server.Ghost.Roles.Components;
 using Content.Server.Humanoid;
 using Content.Server.IdentityManagement;
 using Content.Server.Inventory;
+using Content.Server.Mind;
 using Content.Server.Mind.Commands;
-using Content.Server.Mind.Components;
+using Content.Server.NPC;
+using Content.Server.NPC.Components;
+using Content.Server.NPC.HTN;
+using Content.Server.NPC.Systems;
 using Content.Server.Nutrition.Components;
 using Content.Server.Roles;
 using Content.Server.Speech.Components;
@@ -16,12 +20,6 @@ using Content.Shared.CombatMode;
 using Content.Shared.Damage;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
-using Content.Server.Mind;
-using Content.Server.NPC;
-using Content.Server.NPC.Components;
-using Content.Server.NPC.HTN;
-using Content.Server.NPC.Systems;
-using Content.Server.RoundEnd;
 using Content.Shared.Humanoid;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
@@ -30,12 +28,10 @@ using Content.Shared.Movement.Systems;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Popups;
 using Content.Shared.Roles;
-using Content.Shared.Tools;
 using Content.Shared.Tools.Components;
 using Content.Shared.Weapons.Melee;
 using Content.Shared.Zombies;
 using Robust.Shared.Audio;
-using Robust.Shared.Utility;
 
 namespace Content.Server.Zombies
 {
@@ -57,6 +53,7 @@ namespace Content.Server.Zombies
         [Dependency] private readonly SharedCombatModeSystem _combat = default!;
         [Dependency] private readonly IChatManager _chatMan = default!;
         [Dependency] private readonly MindSystem _mind = default!;
+        [Dependency] private readonly SharedRoleSystem _roles = default!;
         [Dependency] private readonly MobThresholdSystem _mobThreshold = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
 
@@ -87,7 +84,7 @@ namespace Content.Server.Zombies
         public void ZombifyEntity(EntityUid target, MobStateComponent? mobState = null)
         {
             //Don't zombfiy zombies
-            if (HasComp<ZombieComponent>(target))
+            if (HasComp<ZombieComponent>(target) || HasComp<ZombieImmuneComponent>(target))
                 return;
 
             if (!Resolve(target, ref mobState, logMissing: false))
@@ -135,12 +132,15 @@ namespace Content.Server.Zombies
             {
                 //store some values before changing them in case the humanoid get cloned later
                 zombiecomp.BeforeZombifiedSkinColor = huApComp.SkinColor;
+                zombiecomp.BeforeZombifiedEyeColor = huApComp.EyeColor;
                 zombiecomp.BeforeZombifiedCustomBaseLayers = new(huApComp.CustomBaseLayers);
                 if (TryComp<BloodstreamComponent>(target, out var stream))
                     zombiecomp.BeforeZombifiedBloodReagent = stream.BloodReagent;
 
                 _humanoidAppearance.SetSkinColor(target, zombiecomp.SkinColor, verify: false, humanoid: huApComp);
-                _humanoidAppearance.SetBaseLayerColor(target, HumanoidVisualLayers.Eyes, zombiecomp.EyeColor, humanoid: huApComp);
+
+                // Messing with the eye layer made it vanish upon cloning, and also it didn't even appear right
+                huApComp.EyeColor = zombiecomp.EyeColor;
 
                 // this might not resync on clone?
                 _humanoidAppearance.SetBaseLayerId(target, HumanoidVisualLayers.Tail, zombiecomp.BaseLayerExternal, humanoid: huApComp);
@@ -217,11 +217,11 @@ namespace Content.Server.Zombies
             _identity.QueueIdentityUpdate(target);
 
             //He's gotta have a mind
-            var mindComp = EnsureComp<MindContainerComponent>(target);
-            if (_mind.TryGetMind(target, out var mind, mindComp) && _mind.TryGetSession(mind, out var session))
+            var hasMind = _mind.TryGetMind(target, out var mindId, out _);
+            if (hasMind && _mind.TryGetSession(mindId, out var session))
             {
                 //Zombie role for player manifest
-                _mind.AddRole(mind, new ZombieRole(mind, _protoManager.Index<AntagPrototype>(zombiecomp.ZombieRoleId)));
+                _roles.MindAddRole(mindId, new ZombieRoleComponent { PrototypeId = zombiecomp.ZombieRoleId });
 
                 //Greeting message for new bebe zombers
                 _chatMan.DispatchServerMessage(session, Loc.GetString("zombie-infection-greeting"));
@@ -237,7 +237,7 @@ namespace Content.Server.Zombies
                 _npc.WakeNPC(target, htn);
             }
 
-            if (!HasComp<GhostRoleMobSpawnerComponent>(target) && !mindComp.HasMind) //this specific component gives build test trouble so pop off, ig
+            if (!HasComp<GhostRoleMobSpawnerComponent>(target) && !hasMind) //this specific component gives build test trouble so pop off, ig
             {
                 //yet more hardcoding. Visit zombie.ftl for more information.
                 var ghostRole = EnsureComp<GhostRoleComponent>(target);
@@ -247,18 +247,10 @@ namespace Content.Server.Zombies
                 ghostRole.RoleRules = Loc.GetString("zombie-role-rules");
             }
 
-            //Goes through every hand, drops the items in it, then removes the hand
-            //may become the source of various bugs.
-            if (TryComp<HandsComponent>(target, out var hands))
+            if (TryComp<HandsComponent>(target, out var handsComp))
             {
-                foreach (var hand in _hands.EnumerateHands(target))
-                {
-                    _hands.SetActiveHand(target, hand, hands);
-                    _hands.DoDrop(target, hand, handsComp: hands);
-                    _hands.RemoveHand(target, hand.Name, hands);
-                }
-
-                RemComp(target, hands);
+                _hands.RemoveHands(target);
+                RemComp(target, handsComp);
             }
 
             // No longer waiting to become a zombie:

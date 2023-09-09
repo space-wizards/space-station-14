@@ -22,7 +22,6 @@ using Content.Shared.Speech.EntitySystems;
 using Content.Shared.StatusEffect;
 using Content.Shared.Stunnable;
 using Content.Shared.Tag;
-using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Melee.Events;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
@@ -52,8 +51,12 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
     [Dependency] private readonly SharedStunSystem _stun = default!;
     [Dependency] private readonly SharedStutteringSystem _stuttering = default!;
     [Dependency] private readonly TagSystem _tag = default!;
+    [Dependency] private readonly MetaDataSystem _metaData = default!;
 
+    [ValidatePrototypeId<StatusEffectPrototype>]
     private const string StatusEffectKey = "Electrocution";
+
+    [ValidatePrototypeId<DamageTypePrototype>]
     private const string DamageType = "Shock";
 
     // Yes, this is absurdly small for a reason.
@@ -356,7 +359,7 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
 
         // This shows up in the power monitor.
         // Yes. Yes exactly.
-        MetaData(electrocutionEntity).EntityName = MetaData(uid).EntityName;
+        _metaData.SetEntityName(electrocutionEntity, MetaData(uid).EntityName);
 
         electrocutionNode.CableEntity = sourceUid;
         electrocutionNode.NodeName = node.Name;

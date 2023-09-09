@@ -14,7 +14,6 @@ using Content.Shared.CartridgeLoader;
 using Content.Shared.CartridgeLoader.Cartridges;
 using Content.Server.CartridgeLoader;
 using Robust.Shared.Timing;
-using TerraFX.Interop.Windows;
 using Content.Server.Popups;
 using Content.Shared.Database;
 
@@ -233,7 +232,7 @@ public sealed class NewsSystem : EntitySystem
     {
         if (EntityManager.TryGetComponent<AccessReaderComponent>(device, out var accessReader) &&
             user.HasValue &&
-            _accessReader.IsAllowed(user.Value, accessReader))
+            _accessReader.IsAllowed(user.Value, device, accessReader))
         {
             return true;
         }

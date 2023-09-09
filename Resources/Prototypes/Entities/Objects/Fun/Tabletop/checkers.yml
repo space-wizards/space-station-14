@@ -13,11 +13,15 @@
     size: 338, 274
     setup:
       !type:TabletopCheckerSetup
-      boardPrototype: CheckerBoardTabletop
+      boardPrototype: &checkerboard CheckerBoardTabletop
+      prototypePieceWhite: &pieceWhite CheckerPieceWhite
+      prototypeCrownWhite: &crownWhite CheckerCrownWhite
+      prototypePieceBlack: &pieceBlack CheckerPieceBlack
+      prototypeCrownBlack: &crownBlack CheckerCrownBlack
 
 # Checkerboard tabletop item (item only visible in tabletop game)
 - type: entity
-  id: CheckerBoardTabletop
+  id: *checkerboard
   name: checkerboard
   parent: BaseBoardTabletop
   noSpawn: true
@@ -28,8 +32,8 @@
 
 # The pieces
 - type: entity
-  id: WhiteCheckerPiece
-  name: white piece
+  id: *pieceWhite
+  name: white checker piece
   parent: BaseTabletopPiece
   components:
     - type: Sprite
@@ -37,17 +41,17 @@
       state: w_checker_piece
 
 - type: entity
-  id: WhiteCheckerQueen
-  name: white queen
+  id: *crownWhite
+  name: white checker crown
   parent: BaseTabletopPiece
   components:
     - type: Sprite
       sprite: Objects/Fun/Tabletop/checker_pieces.rsi
-      state: w_checker_queen
+      state: w_checker_crown
 
 - type: entity
-  id: BlackCheckerPiece
-  name: black piece
+  id: *pieceBlack
+  name: black checker piece
   parent: BaseTabletopPiece
   components:
     - type: Sprite
@@ -55,10 +59,10 @@
       state: b_checker_piece
 
 - type: entity
-  id: BlackCheckerQueen
-  name: black queen
+  id: *crownBlack
+  name: black checker crown
   parent: BaseTabletopPiece
   components:
     - type: Sprite
       sprite: Objects/Fun/Tabletop/checker_pieces.rsi
-      state: b_checker_queen
+      state: b_checker_crown

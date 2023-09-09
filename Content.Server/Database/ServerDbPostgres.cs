@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
+using Content.Server.Administration.Logs;
 using Content.Shared.CCVar;
 using Microsoft.EntityFrameworkCore;
 using Robust.Shared.Configuration;
@@ -498,6 +499,21 @@ namespace Content.Server.Database
             var adminRanks = await db.DbContext.AdminRank.Include(a => a.Flags).ToArrayAsync(cancel);
 
             return (admins.Select(p => (p.a, p.LastSeenUserName)).ToArray(), adminRanks)!;
+        }
+
+        protected override IQueryable<AdminLog> StartAdminLogsQuery(ServerDbContext db, LogFilter? filter = null)
+        {
+            // https://learn.microsoft.com/en-us/ef/core/querying/sql-queries#passing-parameters
+            // Read the link above for parameterization before changing this method or you get the bullet
+            if (!string.IsNullOrWhiteSpace(filter?.Search))
+            {
+                return db.AdminLog.FromSql($"""
+SELECT a.admin_log_id, a.round_id, a.date, a.impact, a.json, a.message, a.type FROM admin_log AS a
+WHERE to_tsvector('english'::regconfig, a.message) @@ websearch_to_tsquery('english'::regconfig, {filter.Search})
+""");
+            }
+
+            return db.AdminLog;
         }
 
         private async Task<DbGuardImpl> GetDbImpl()

@@ -77,6 +77,9 @@ public sealed partial class PuddleSystem
         // spilling like 100u of reagent on someone at once!
         totalSplit = FixedPoint2.Min(totalSplit, component.MaxMeleeSpillAmount);
 
+        if (totalSplit == 0)
+            return;
+
         foreach (var hit in args.HitEntities)
         {
             if (!HasComp<ReactiveComponent>(hit))

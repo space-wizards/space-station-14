@@ -8,7 +8,7 @@ namespace Content.Shared.Access.Components;
 
 [RegisterComponent, NetworkedComponent]
 [Access(typeof(SharedIdCardConsoleSystem))]
-public sealed class IdCardConsoleComponent : Component
+public sealed partial class IdCardConsoleComponent : Component
 {
     public const int MaxFullNameLength = 30;
     public const int MaxJobTitleLength = 30;

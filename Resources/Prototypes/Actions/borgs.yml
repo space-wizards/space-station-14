@@ -1,0 +1,13 @@
+﻿- type: entity
+  id: ActionViewLaws
+  name: action-name-view-laws
+  description: action-description-view-laws
+  noSpawn: true
+  components:
+  - type: InstantAction
+    itemIconStyle: NoItem
+    icon:
+      sprite: Interface/Actions/actions_borg.rsi
+      state: state-laws
+    event: !type:ToggleLawsScreenEvent
+    useDelay: 0.5

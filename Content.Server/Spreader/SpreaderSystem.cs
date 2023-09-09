@@ -31,6 +31,7 @@ public sealed class SpreaderSystem : EntitySystem
 
     private readonly List<string> _spreaderGroups = new();
 
+    [ValidatePrototypeId<TagPrototype>]
     private const string IgnoredTag = "SpreaderIgnore";
 
     /// <inheritdoc/>

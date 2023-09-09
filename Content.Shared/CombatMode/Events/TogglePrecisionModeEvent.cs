@@ -2,6 +2,6 @@ using Content.Shared.Actions;
 
 namespace Content.Shared.CombatMode;
 
-public sealed class TogglePrecisionModeEvent : InstantActionEvent
+public sealed partial class TogglePrecisionModeEvent : InstantActionEvent
 {
 }

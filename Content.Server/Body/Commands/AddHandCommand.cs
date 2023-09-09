@@ -14,6 +14,7 @@ namespace Content.Server.Body.Commands
     [AdminCommand(AdminFlags.Fun)]
     sealed class AddHandCommand : IConsoleCommand
     {
+        [ValidatePrototypeId<EntityPrototype>]
         public const string DefaultHandPrototype = "LeftHandHuman";
 
         public string Command => "addhand";

@@ -14,7 +14,6 @@ namespace Content.Server.Atmos.EntitySystems
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
-        private readonly AtmosDeviceUpdateEvent _updateEvent = new();
         private readonly Stopwatch _simulationStopwatch = new();
 
         /// <summary>
@@ -337,7 +336,7 @@ namespace Content.Server.Atmos.EntitySystems
             var number = 0;
             while (atmosphere.CurrentRunAtmosDevices.TryDequeue(out var device))
             {
-                RaiseLocalEvent(device.Owner, _updateEvent, false);
+                RaiseLocalEvent(device.Owner, new AtmosDeviceUpdateEvent(AtmosTime * (int)AtmosphereProcessingState.NumStates), false);
                 device.LastProcess = time;
 
                 if (number++ < LagCheckIterations) continue;
@@ -509,5 +508,6 @@ namespace Content.Server.Atmos.EntitySystems
         Superconductivity,
         PipeNet,
         AtmosDevices,
+        NumStates
     }
 }

@@ -547,6 +547,13 @@
   physicalDesc: reagent-physical-desc-acrid
   flavor: medicine
   color: "#c8ff75"
+  plantMetabolism:
+    - !type:PlantAdjustToxins
+      amount: 6
+    - !type:PlantPhalanximine
+      conditions:
+      - !type:ReagentThreshold
+        min: 4
   metabolisms:
     Medicine:
       effects:
@@ -636,22 +643,6 @@
         damage:
           types:
             Caustic: -5
-
-- type: reagent
-  id: Spaceacillin
-  name: reagent-name-spaceacillin
-  group: Medicine
-  desc: reagent-desc-spaceacillin
-  physicalDesc: reagent-physical-desc-opaque
-  flavor: medicine
-  color: "#9942f5"
-  metabolisms:
-    Medicine:
-      effects:
-      - !type:HealthChange
-        damage:
-          types:
-            Cellular: 0.5
 
 - type: reagent
   id: Stellibinin

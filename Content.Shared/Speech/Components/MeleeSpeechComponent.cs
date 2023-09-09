@@ -1,21 +1,39 @@
-using Content.Shared.Speech.EntitySystems;
+using Content.Shared.Actions;
+using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Speech.Components;
 
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent]
 [AutoGenerateComponentState]
+
 public sealed partial class MeleeSpeechComponent : Component
 {
+    /// <summary>
+    /// The battlecry to be said when an entity attacks with this component
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("Battlecry")]
+    [AutoNetworkedField]
+    public string? Battlecry;
 
-	[ViewVariables(VVAccess.ReadWrite)]
-	[DataField("Battlecry")]
-	[AutoNetworkedField]
-	public string? Battlecry;
-
+    /// <summary>
+    /// The maximum amount of characters allowed in a battlecry
+    /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("MaxBattlecryLength")]
+    [AutoNetworkedField]
     public int MaxBattlecryLength = 12;
+
+    [DataField("configureAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    public string? ConfigureAction = "ActionConfigureMeleeSpeech";
+
+    /// <summary>
+    /// The action to open the battlecry UI
+    /// </summary>
+    [DataField("configureActionEntity")] public EntityUid? ConfigureActionEntity;
 }
 
 /// <summary>
@@ -35,7 +53,6 @@ public enum MeleeSpeechUiKey : byte
 public sealed class MeleeSpeechBoundUserInterfaceState : BoundUserInterfaceState
 {
     public string CurrentBattlecry { get; }
-
     public MeleeSpeechBoundUserInterfaceState(string currentBattlecry)
     {
         CurrentBattlecry = currentBattlecry;
@@ -51,3 +68,5 @@ public sealed class MeleeSpeechBattlecryChangedMessage : BoundUserInterfaceMessa
         Battlecry = battlecry;
     }
 }
+
+public sealed partial class MeleeSpeechConfigureActionEvent : InstantActionEvent { }

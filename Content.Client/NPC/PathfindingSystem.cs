@@ -173,7 +173,7 @@ namespace Content.Client.NPC
         private void DrawScreen(OverlayDrawArgs args, DrawingHandleScreen screenHandle)
         {
             var mousePos = _inputManager.MouseScreenPosition;
-            var mouseWorldPos = _eyeManager.ScreenToMap(mousePos);
+            var mouseWorldPos = _eyeManager.PixelToMap(mousePos);
             var aabb = new Box2(mouseWorldPos.Position - SharedPathfindingSystem.ChunkSizeVec, mouseWorldPos.Position + SharedPathfindingSystem.ChunkSizeVec);
             var xformQuery = _entManager.GetEntityQuery<TransformComponent>();
 
@@ -324,7 +324,7 @@ namespace Content.Client.NPC
         private void DrawWorld(OverlayDrawArgs args, DrawingHandleWorld worldHandle)
         {
             var mousePos = _inputManager.MouseScreenPosition;
-            var mouseWorldPos = _eyeManager.ScreenToMap(mousePos);
+            var mouseWorldPos = _eyeManager.PixelToMap(mousePos);
             var aabb = new Box2(mouseWorldPos.Position - Vector2.One / 4f, mouseWorldPos.Position + Vector2.One / 4f);
             var xformQuery = _entManager.GetEntityQuery<TransformComponent>();
 

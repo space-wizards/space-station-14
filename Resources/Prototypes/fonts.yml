@@ -11,6 +11,10 @@
   path: /Fonts/NotoSans/NotoSans-Bold.ttf
 
 - type: font
+  id: DefaultBoldItalic
+  path: /Fonts/NotoSans/NotoSans-BoldItalic.ttf
+
+- type: font
   id: NotoSansDisplay
   path: /Fonts/NotoSansDisplay/NotoSansDisplay-Regular.ttf
 

@@ -30,6 +30,32 @@
     - Trash
   - type: Appearance
   - type: PaperVisuals
+  - type: Flammable
+    fireSpread: true
+    canResistFire: false
+    alwaysCombustible: true
+    canExtinguish: false # Mwahaha! Let the world burn because of one piece of paper!
+    damage:
+      types:
+        Heat: 1
+  - type: FireVisuals
+    sprite: Effects/fire.rsi
+    normalState: fire
+  - type: Damageable
+    damageModifierSet: Wood
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 15
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+            Ash:
+              min: 1
+              max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
 
 - type: entity
   name: office paper
@@ -421,6 +447,7 @@
   - type: Stamp
     stampedName: stamp-component-stamped-name-default
     stampState: "paper_stamp-generic"
+    stampedColor: "#a23e3e"
     sound:
       path: /Audio/Items/Stamp/thick_stamp_sub.ogg
       params:
@@ -454,6 +481,7 @@
   components:
   - type: Stamp
     stampedName: stamp-component-stamped-name-captain
+    stampedColor: "#3681bb"
     stampState: "paper_stamp-cap"
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
@@ -466,6 +494,7 @@
   components:
   - type: Stamp
     stampedName: stamp-component-stamped-name-centcom
+    stampedColor: "#006600"
     stampState: "paper_stamp-centcom"
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
@@ -478,6 +507,7 @@
   components:
   - type: Stamp
     stampedName: stamp-component-stamped-name-chaplain
+    stampedColor: "#d70601"
     stampState: "paper_stamp-chaplain"
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
@@ -490,6 +520,7 @@
   components:
   - type: Stamp
     stampedName: stamp-component-stamped-name-clown
+    stampedColor: "#ff33cc"
     stampState: "paper_stamp-clown"
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
@@ -505,6 +536,7 @@
   components:
   - type: Stamp
     stampedName: stamp-component-stamped-name-ce
+    stampedColor: "#c69b17"
     stampState: "paper_stamp-ce"
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
@@ -517,6 +549,7 @@
   components:
   - type: Stamp
     stampedName: stamp-component-stamped-name-cmo
+    stampedColor: "#33ccff"
     stampState: "paper_stamp-cmo"
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
@@ -529,6 +562,7 @@
   components:
   - type: Stamp
     stampedName: stamp-component-stamped-name-hop
+    stampedColor: "#6ec0ea"
     stampState: "paper_stamp-hop"
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
@@ -541,6 +575,7 @@
   components:
   - type: Stamp
     stampedName: stamp-component-stamped-name-hos
+    stampedColor: "#cc0000"
     stampState: "paper_stamp-hos"
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
@@ -553,6 +588,7 @@
   components:
   - type: Stamp
     stampedName: stamp-component-stamped-name-mime
+    stampedColor: "#777777"
     stampState: "paper_stamp-mime"
     # TODO remove sound from mime's rubber stamp
   - type: Sprite
@@ -566,6 +602,7 @@
   components:
   - type: Stamp
     stampedName: stamp-component-stamped-name-qm
+    stampedColor: "#a23e3e"
     stampState: "paper_stamp-qm"
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
@@ -578,6 +615,7 @@
   components:
   - type: Stamp
     stampedName: stamp-component-stamped-name-rd
+    stampedColor: "#1f66a0"
     stampState: "paper_stamp-rd"
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
@@ -590,6 +628,7 @@
   components:
   - type: Stamp
     stampedName: stamp-component-stamped-name-trader
+    stampedColor: "#000000"
     stampState: "paper_stamp-trader"
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
@@ -602,6 +641,7 @@
   components:
   - type: Stamp
     stampedName: stamp-component-stamped-name-syndicate
+    stampedColor: "#850000"
     stampState: "paper_stamp-syndicate"
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
@@ -614,6 +654,7 @@
   components:
   - type: Stamp
     stampedName: stamp-component-stamped-name-warden
+    stampedColor: "#5b0000"
     stampState: "paper_stamp-warden"
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
@@ -626,6 +667,7 @@
   components:
   - type: Stamp
     stampedName: stamp-component-stamped-name-approved
+    stampedColor: "#00be00"
     stampState: "paper_stamp-ok"
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
@@ -638,6 +680,7 @@
   components:
   - type: Stamp
     stampedName: stamp-component-stamped-name-denied
+    stampedColor: "#a23e3e"
     stampState: "paper_stamp-deny"
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi

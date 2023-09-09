@@ -360,16 +360,6 @@
     Siderlac: 2
 
 - type: reaction
-  id: Spaceacillin
-  reactants:
-    Cryptobiolin:
-      amount: 1
-    Inaprovaline:
-      amount: 1
-  products:
-    Spaceacillin: 2
-
-- type: reaction
   id: Cognizine
   reactants:
     CarpoToxin:

@@ -9,7 +9,7 @@ namespace Content.Shared.Radiation.Components;
 /// </summary>
 [RegisterComponent]
 [Access(typeof(RadiationPulseSystem))]
-public sealed class RadiationPulseComponent : Component
+public sealed partial class RadiationPulseComponent : Component
 {
     /// <summary>
     ///     Timestamp when component was assigned to this entity.

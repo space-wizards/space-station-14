@@ -8,7 +8,7 @@ namespace Content.Server.Chemistry.Components.SolutionManager;
 ///     Fills a solution container randomly using a weighted random prototype
 /// </summary>
 [RegisterComponent, Access(typeof(SolutionRandomFillSystem))]
-public sealed class RandomFillSolutionComponent : Component
+public sealed partial class RandomFillSolutionComponent : Component
 {
     /// <summary>
     ///     Solution name which to add reagents to.

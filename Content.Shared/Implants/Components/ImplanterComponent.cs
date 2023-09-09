@@ -13,7 +13,7 @@ namespace Content.Shared.Implants.Components;
 /// </summary>
 //TODO: Rework drawing to work with implant cases when surgery is in
 [RegisterComponent, NetworkedComponent]
-public sealed class ImplanterComponent : Component
+public sealed partial class ImplanterComponent : Component
 {
     public const string ImplanterSlotId = "implanter_slot";
     public const string ImplantSlotId = "implant";

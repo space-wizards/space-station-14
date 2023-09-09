@@ -34,7 +34,7 @@ public sealed class DecalPlacementOverlay : Overlay
             return;
 
         var mouseScreenPos = _inputManager.MouseScreenPosition;
-        var mousePos = _eyeManager.ScreenToMap(mouseScreenPos);
+        var mousePos = _eyeManager.PixelToMap(mouseScreenPos);
 
         if (mousePos.MapId != args.MapId)
             return;

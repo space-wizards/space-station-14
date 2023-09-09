@@ -18,6 +18,10 @@ command-description-jobs-set =
     Sets the number of slots for the given job.
 command-description-jobs-amount =
     Returns the number of slots for the given job.
+command-description-laws-list =
+    Returns a list of all law bound entities.
+command-description-laws-get =
+    Returns all of the laws for a given entity.
 command-description-stations-list =
     Returns a list of all stations.
 command-description-stations-get =
@@ -54,5 +58,15 @@ command-description-tag-addmany =
     Adds a list of tags to the given entities.
 command-description-tag-rmmany =
     Removes a list of tags from the given entities.
+command-description-polymorph =
+    Polymorphs the input entity with the given prototype.
+command-description-unpolymorph =
+    Reverts a polymorph.
 command-description-solution-get =
-    Returns a solution stored in an entity's solution container.
+    Grabs the given solution off the given entity.
+command-description-solution-adjreagent =
+    Adjusts the given reagent on the given solution.
+command-description-mind-get =
+    Grabs the mind from the entity, if any.
+command-description-mind-control =
+    Assumes control of an entity with the given player.

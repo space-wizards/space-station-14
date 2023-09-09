@@ -5,6 +5,7 @@
   id: BaseMobOrganic
   noSpawn: true
   components:
+  - type: FloorOcclusion
   - type: LagCompensation
   - type: RangedDamageSound
     soundGroups:
@@ -198,6 +199,13 @@
     thermalRegulationTemperatureThreshold: 25
   - type: Internals
   - type: MobState
+  - type: Deathgasp
+  - type: MobStateActions
+    actions:
+      Critical:
+      - ActionCritSuccumb
+      - ActionCritFakeDeath
+      - ActionCritLastWords
   - type: MobThresholds
     thresholds:
       0: Alive
@@ -263,8 +271,7 @@
     attackRate: 1
     damage:
       types:
-        # Actually does 5 damage due to +25% damage bonus on all single target melee attacks
-        Blunt: 4
+        Blunt: 5
   - type: Pullable
   - type: DoAfter
   - type: CreamPied

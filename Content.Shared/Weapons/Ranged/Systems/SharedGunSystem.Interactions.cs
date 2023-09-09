@@ -1,6 +1,4 @@
 using Content.Shared.Actions;
-using Content.Shared.Actions.ActionTypes;
-using Content.Shared.CombatMode;
 using Content.Shared.Examine;
 using Content.Shared.Verbs;
 using Content.Shared.Weapons.Ranged.Components;
@@ -96,7 +94,7 @@ public abstract partial class SharedGunSystem
     }
 
     // TODO: Actions need doing for guns anyway.
-    private sealed class CycleModeEvent : InstantActionEvent
+    private sealed partial class CycleModeEvent : InstantActionEvent
     {
         public SelectiveFire Mode;
     }

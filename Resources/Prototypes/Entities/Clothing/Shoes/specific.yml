@@ -26,6 +26,7 @@
   - type: Tag
     tags:
     - ClownShoes
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingShoesBaseButcherable

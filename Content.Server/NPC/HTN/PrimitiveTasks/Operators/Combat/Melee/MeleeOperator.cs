@@ -10,7 +10,7 @@ namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators.Combat.Melee;
 /// <summary>
 /// Attacks the specified key in melee combat.
 /// </summary>
-public sealed class MeleeOperator : HTNOperator, IHtnConditionalShutdown
+public sealed partial class MeleeOperator : HTNOperator, IHtnConditionalShutdown
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
 
@@ -18,7 +18,7 @@ public sealed class MeleeOperator : HTNOperator, IHtnConditionalShutdown
     /// When to shut the task down.
     /// </summary>
     [DataField("shutdownState")]
-    public HTNPlanState ShutdownState { get; } = HTNPlanState.TaskFinished;
+    public HTNPlanState ShutdownState { get; private set; } = HTNPlanState.TaskFinished;
 
     /// <summary>
     /// Key that contains the target entity.
