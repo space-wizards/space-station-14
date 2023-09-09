@@ -105,3 +105,6 @@ ent-SeniorPhysicianIDCard = ID карта заведующего
     .desc = { ent-IDCardStandard.desc }
 ent-SeniorOfficerIDCard = ID карта инструктора СБ
     .desc = { ent-IDCardStandard.desc }
+ent-NukieAgentIDCard = { ent-PassengerIDCard.desc }
+    .desc = { ent-PassengerIDCard.desc }
+	.suffix = Ядерный оперативник
