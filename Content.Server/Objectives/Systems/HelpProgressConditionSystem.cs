@@ -33,7 +33,7 @@ public sealed class HelpProgressConditionSystem : EntitySystem
         if (!_target.GetTarget(uid, out var target))
             return;
 
-        args.Info.Progress = GetProgress(target);
+        args.Info.Progress = GetProgress(target.Value);
     }
 
     private void OnTraitorAssigned(EntityUid uid, RandomTraitorProgressComponent comp, ref ObjectiveAssignedEvent args)

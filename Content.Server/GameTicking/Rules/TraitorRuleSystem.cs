@@ -12,6 +12,7 @@ using Content.Shared.CCVar;
 using Content.Shared.Dataset;
 using Content.Shared.Mind;
 using Content.Shared.Mobs.Systems;
+using Content.Shared.Objectives.Components;
 using Content.Shared.PDA;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
@@ -288,11 +289,11 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
         for (var pick = 0; pick < maxPicks && maxDifficulty > difficulty; pick++)
         {
             var objective = _objectives.GetRandomObjective(mindId, mind, "TraitorObjectiveGroups");
-
             if (objective == null)
                 continue;
-            if (_mindSystem.TryAddObjective(mindId, mind, objective))
-                difficulty += objective.Difficulty;
+
+            _mindSystem.AddObjective(mindId, mind, objective.Value);
+            difficulty += Comp<ObjectiveComponent>(objective.Value).Difficulty;
         }
 
         return true;

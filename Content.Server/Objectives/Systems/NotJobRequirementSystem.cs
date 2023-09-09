@@ -7,7 +7,7 @@ namespace Content.Server.Objectives.Systems;
 /// <summary>
 /// Handles checking the job blacklist for this objective.
 /// </summary>
-public sealed class NotJobRequirementComponent : EntitySystem
+public sealed class NotJobRequirementSystem : EntitySystem
 {
     public override void Initialize()
     {

@@ -15,10 +15,10 @@ public sealed class EscapeShuttleConditionSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<EscapeShuttleConditionComponent, ConditionGetInfoEvent>(OnGetInfo);
+        SubscribeLocalEvent<EscapeShuttleConditionComponent, ObjectiveGetInfoEvent>(OnGetInfo);
     }
 
-    private void OnGetInfo(EntityUid uid, EscapeShuttleConditionComponent comp, ref ConditionGetInfoEvent args)
+    private void OnGetInfo(EntityUid uid, EscapeShuttleConditionComponent comp, ref ObjectiveGetInfoEvent args)
     {
         args.Info.Progress = GetProgress(args.MindId, args.Mind);
     }

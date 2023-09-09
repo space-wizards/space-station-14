@@ -261,10 +261,18 @@ public abstract class SharedMindSystem : EntitySystem
         if (objective == null)
             return false;
 
-        var title = _objective.GetTitle(objective.Value, mindId, mind);
-        _adminLogger.Add(LogType.Mind, LogImpact.Low, $"{proto} ({objective}) '{title}' added to mind of {MindOwnerLoggingString(mind)}");
-        mind.Objectives.Add(objective.Value);
+        AddObjective(mindId, mind, objective.Value);
         return true;
+    }
+
+    /// <summary>
+    /// Adds an objective that already exists, and is assumed to have had its requirements checked.
+    /// </summary>
+    public void AddObjective(EntityUid mindId, MindComponent mind, EntityUid objective)
+    {
+        var title = _objective.GetTitle(objective, mindId, mind);
+        _adminLogger.Add(LogType.Mind, LogImpact.Low, $"Objective ({objective}) '{title}' added to mind of {MindOwnerLoggingString(mind)}");
+        mind.Objectives.Add(objective);
     }
 
     /// <summary>

@@ -22,20 +22,20 @@ public sealed class KeepAliveConditionSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<KeepAliveConditionComponent, ConditionGetInfoEvent>(OnGetInfo);
+        SubscribeLocalEvent<KeepAliveConditionComponent, ObjectiveGetInfoEvent>(OnGetInfo);
 
-        SubscribeLocalEvent<RandomTraitorAliveComponent, ConditionAssignedEvent>(OnAssigned);
+        SubscribeLocalEvent<RandomTraitorAliveComponent, ObjectiveAssignedEvent>(OnAssigned);
     }
 
-    private void OnGetInfo(EntityUid uid, KeepAliveConditionComponent comp, ref ConditionGetInfoEvent args)
+    private void OnGetInfo(EntityUid uid, KeepAliveConditionComponent comp, ref ObjectiveGetInfoEvent args)
     {
-        if (_target.GetTarget(uid, out var target))
+        if (!_target.GetTarget(uid, out var target))
             return;
 
-        args.Info.Progress = GetProgress(target);
+        args.Info.Progress = GetProgress(target.Value);
     }
 
-    private void OnAssigned(EntityUid uid, RandomTraitorAliveComponent comp, ref ConditionAssignedEvent args)
+    private void OnAssigned(EntityUid uid, RandomTraitorAliveComponent comp, ref ObjectiveAssignedEvent args)
     {
         // invalid prototype
         if (!TryComp<TargetObjectiveComponent>(uid, out var target))

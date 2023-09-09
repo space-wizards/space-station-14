@@ -37,7 +37,7 @@ public sealed class KillPersonConditionSystem : EntitySystem
         if (!_target.GetTarget(uid, out var target))
             return;
 
-        args.Info.Progress = GetProgress(target, comp.RequireDead);
+        args.Info.Progress = GetProgress(target.Value, comp.RequireDead);
     }
 
     private void OnPersonAssigned(EntityUid uid, PickRandomPersonComponent comp, ref ObjectiveAssignedEvent args)

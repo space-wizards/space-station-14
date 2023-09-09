@@ -2,7 +2,7 @@
 ﻿using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Mind;
 using Content.Shared.Mind;
-using Content.Shared.Objectives;
+using Content.Shared.Objectives.Components;
 using Content.Shared.Objectives.Systems;
 using Content.Shared.Random;
 using Content.Shared.Random.Helpers;
@@ -88,7 +88,7 @@ public sealed class ObjectivesSystem : EntitySystem
 
                 result += Loc.GetString("objectives-with-objectives", ("title", title), ("agent", agent));
 
-                foreach (var objectiveGroup in objectives.GroupBy(o => o.Prototype.Issuer))
+                foreach (var objectiveGroup in objectives.GroupBy(o => Comp<ObjectiveComponent>(o).Issuer))
                 {
                     result += "\n" + Loc.GetString($"objective-issuer-{objectiveGroup.Key}");
 
@@ -122,11 +122,11 @@ public sealed class ObjectivesSystem : EntitySystem
         }
     }
 
-    public ObjectivePrototype? GetRandomObjective(EntityUid mindId, MindComponent mind, string objectiveGroupProto)
+    public EntityUid? GetRandomObjective(EntityUid mindId, MindComponent mind, string objectiveGroupProto)
     {
         if (!_prototypeManager.TryIndex<WeightedRandomPrototype>(objectiveGroupProto, out var groups))
         {
-            Log.Error("Tried to get a random objective, but can't index WeightedRandomPrototype " + objectiveGroupProto);
+            Log.Error($"Tried to get a random objective, but can't index WeightedRandomPrototype {objectiveGroupProto}");
             return null;
         }
 
@@ -139,15 +139,16 @@ public sealed class ObjectivesSystem : EntitySystem
 
             if (!_prototypeManager.TryIndex<WeightedRandomPrototype>(groupName, out var group))
             {
-                Log.Error("Couldn't index objective group prototype" + groupName);
+                Log.Error($"Couldn't index objective group prototype {groupName}");
                 return null;
             }
 
-            if (_prototypeManager.TryIndex<ObjectivePrototype>(group.Pick(_random), out var objective)
-                && objective.CanBeAssigned(mindId, mind))
+            var proto = group.Pick(_random);
+            var objective = _objective.TryCreateObjective(mindId, mind, proto);
+            if (objective != null)
                 return objective;
-            else
-                tries++;
+
+            tries++;
         }
 
         return null;

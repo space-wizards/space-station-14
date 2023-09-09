@@ -6,11 +6,11 @@ namespace Content.Server.Objectives.Components;
 /// Requires that there are a certain number of other traitors alive for this objective to be given.
 /// </summary>
 [RegisterComponent, Access(typeof(MultipleTraitorsRequirementSystem))]
-public sealed class MultipleTraitorsRequirementComponent : Component
+public sealed partial class MultipleTraitorsRequirementComponent : Component
 {
     /// <summary>
     /// Number of traitors, excluding yourself, that have to exist.
     /// </summary>
-    [DataField("traitors")]
+    [DataField("traitors"), ViewVariables(VVAccess.ReadWrite)]
     private int Traitors = 2;
 }

@@ -3,6 +3,7 @@ using Content.Server.Roles;
 using Content.Server.Roles.Jobs;
 using Content.Shared.CharacterInfo;
 using Content.Shared.Objectives;
+using Content.Shared.Objectives.Components;
 using Content.Shared.Objectives.Systems;
 
 namespace Content.Server.CharacterInfo;
@@ -38,11 +39,11 @@ public sealed class CharacterInfoSystem : EntitySystem
             foreach (var objective in mind.AllObjectives)
             {
                 // group objectives by their issuer
-                var issuer = objective.Prototype.Issuer;
+                var issuer = Comp<ObjectiveComponent>(objective).Issuer;
                 if (!objectives.ContainsKey(issuer))
                     objectives[issuer] = new List<ObjectiveInfo>();
 
-                var info = _objective.GetConditionInfo(objective, mindId, mind);
+                var info = _objective.GetInfo(objective, mindId, mind);
                 objectives[issuer].Add(info);
             }
 

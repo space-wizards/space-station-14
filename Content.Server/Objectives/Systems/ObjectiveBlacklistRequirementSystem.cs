@@ -20,7 +20,7 @@ public sealed class ObjectiveBlacklistRequirementSystem : EntitySystem
         if (args.Cancelled)
             return;
 
-        if (comp.Blacklist.IsAllowed(uid, EntityManager))
+        if (comp.Blacklist.IsValid(uid, EntityManager))
             args.Cancelled = true;
     }
 }

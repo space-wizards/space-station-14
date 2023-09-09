@@ -10,6 +10,6 @@ namespace Content.Server.Objectives.Components;
 [RegisterComponent, Access(typeof(ObjectiveBlacklistRequirementSystem))]
 public sealed partial class ObjectiveBlacklistRequirementComponent : Component
 {
-    [DataField("roles", required: true), ViewVariables(VVAccess.ReadWrite)]
-    public EntityWhitelist Roles = new();
+    [DataField("blacklist", required: true), ViewVariables(VVAccess.ReadWrite)]
+    public EntityWhitelist Blacklist = new();
 }

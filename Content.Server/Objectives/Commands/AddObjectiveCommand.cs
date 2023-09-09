@@ -40,7 +40,7 @@ namespace Content.Server.Objectives.Commands
 
             if (!IoCManager.Resolve<IPrototypeManager>()
                 .TryIndex<EntityPrototype>(args[1], out var proto) ||
-                !proto.HasComponent<ObjectiveComponent>())
+                !proto.TryGetComponent<ObjectiveComponent>(out _))
             {
                 shell.WriteLine($"Can't find matching objective prototype {args[1]}");
                 return;

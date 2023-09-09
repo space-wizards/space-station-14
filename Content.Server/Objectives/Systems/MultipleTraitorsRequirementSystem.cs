@@ -2,7 +2,7 @@ using Content.Server.GameTicking.Rules;
 using Content.Server.Objectives.Components;
 using Content.Shared.Objectives.Components;
 
-namespace Content.Server.Objective.Systems;
+namespace Content.Server.Objectives.Systems;
 
 /// <summary>
 /// Handles requiring multiple traitors being alive for the objective to be given.
@@ -18,7 +18,7 @@ public sealed class MultipleTraitorsRequirementSystem : EntitySystem
         SubscribeLocalEvent<MultipleTraitorsRequirementComponent, RequirementCheckEvent>(OnCheck);
     }
 
-    private void OnCheck(EntityUid uid, MultipleTraitorsRequirementComponent comp, RequirementCheckEvent args)
+    private void OnCheck(EntityUid uid, MultipleTraitorsRequirementComponent comp, ref RequirementCheckEvent args)
     {
         if (args.Cancelled)
             return;

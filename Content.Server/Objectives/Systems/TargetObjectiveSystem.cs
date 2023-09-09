@@ -1,6 +1,7 @@
 using Content.Server.Objectives.Components;
 using Content.Shared.Mind;
 using Content.Shared.Objectives.Components;
+using Content.Shared.Roles.Jobs;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Content.Server.Objectives.Systems;
@@ -10,6 +11,8 @@ namespace Content.Server.Objectives.Systems;
 /// </summary>
 public sealed class TargetObjectiveSystem : EntitySystem
 {
+    [Dependency] private readonly SharedJobSystem _job = default!;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -17,12 +20,12 @@ public sealed class TargetObjectiveSystem : EntitySystem
         SubscribeLocalEvent<TargetObjectiveComponent, ObjectiveGetInfoEvent>(OnGetInfo);
     }
 
-    private void OnGetInfo(EntityUid uid, TargetObjectiveComponent comp)
+    private void OnGetInfo(EntityUid uid, TargetObjectiveComponent comp, ref ObjectiveGetInfoEvent args)
     {
-        if (GetTarget(uid, out var target, comp))
+        if (!GetTarget(uid, out var target, comp))
             return;
 
-        args.Info.Title = GetTitle(target, comp.Title);
+        args.Info.Title = GetTitle(target.Value, comp.Title);
     }
 
     /// <summary>

@@ -1,7 +1,7 @@
 using Content.Server.Objectives.Components;
 using Content.Shared.Objectives.Components;
 
-namespace Content.Server.Objectives.System;
+namespace Content.Server.Objectives.Systems;
 
 /// <summary>
 /// Handles role requirement for objectives that require a certain (probably antagonist) role(s).
@@ -22,7 +22,7 @@ public sealed class RoleRequirementSystem : EntitySystem
 
         // this whitelist trick only works because roles are components on the mind and not entities
         // if that gets reworked then this will need changing
-        if (!comp.Roles.IsAllowed(args.MindId, EntityManager))
+        if (!comp.Roles.IsValid(args.MindId, EntityManager))
             args.Cancelled = true;
     }
 }

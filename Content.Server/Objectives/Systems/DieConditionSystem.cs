@@ -12,10 +12,10 @@ public sealed class DieConditionSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<DieConditionComponent, ConditionGetInfoEvent>(OnGetInfo);
+        SubscribeLocalEvent<DieConditionComponent, ObjectiveGetInfoEvent>(OnGetInfo);
     }
 
-    private void OnGetInfo(EntityUid uid, DieConditionComponent comp, ref ConditionGetInfoEvent args)
+    private void OnGetInfo(EntityUid uid, DieConditionComponent comp, ref ObjectiveGetInfoEvent args)
     {
         args.Info.Progress = _mind.IsCharacterDeadIc(args.Mind) ? 1f : 0f;
     }
