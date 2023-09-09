@@ -165,4 +165,5 @@ ghost-role-information-behonker-name = Behonker
 ghost-role-information-behonker-description = You are an antagonist, bring death and honks to those who do not follow the honkmother.
 
 ghost-role-information-terminator-name = Terminator
-ghost-role-information-terminator-description = You been been sent back in time to terminate a target with high importance to the future. You are an antagonist and may kill anyone that gets in your way, but the target is always top priority.
+ghost-role-information-terminator-description = You been been sent back in time to terminate a target with high importance to the future.
+ghost-role-information-terminator-rules = You are an antagonist and may kill anyone that tries to stop you, but killing the target is always your top priority.

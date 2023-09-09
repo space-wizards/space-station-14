@@ -47,15 +47,27 @@
   # only organ is an endoskeleton, which is transferred when flesh dies
   - type: Body
     prototype: TerminatorFlesh
-  # flesh dies where a normal human would take enough damage to go crit
-  # of course for a terminator that is still a lot of damage
+  # endoskeleton transformation when either you would get burned to crit or killed by any damage
   # you will become an endoskeleton as your last chance to kill the target
   - type: Destructible
     thresholds:
+    # the burn trigger is first incase of a bombing or nuking, it might well do over 200 damage but 100 burn is more important
     - trigger:
         !type:DamageTrigger
+        damageType: Burn
         damage: 100
       behaviors:
+      - !type:PopupBehavior
+        popup: terminator-endoskeleton-burn-popup
+        popupType: LargeCaution
+      - !type:GibBehavior
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:PopupBehavior
+        popup: terminator-endoskeleton-gib-popup
+        popupType: LargeCaution
       - !type:GibBehavior
   # faster than humans when damaged
   - type: SlowOnDamage
