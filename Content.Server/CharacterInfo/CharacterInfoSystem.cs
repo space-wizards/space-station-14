@@ -3,6 +3,7 @@ using Content.Server.Roles;
 using Content.Server.Roles.Jobs;
 using Content.Shared.CharacterInfo;
 using Content.Shared.Objectives;
+using Content.Shared.Objectives.Systems;
 
 namespace Content.Server.CharacterInfo;
 
@@ -10,6 +11,7 @@ public sealed class CharacterInfoSystem : EntitySystem
 {
     [Dependency] private readonly JobSystem _jobs = default!;
     [Dependency] private readonly MindSystem _minds = default!;
+    [Dependency] private readonly ObjectiveSystem _objective = default!;
     [Dependency] private readonly RoleSystem _roles = default!;
 
     public override void Initialize()
@@ -39,8 +41,8 @@ public sealed class CharacterInfoSystem : EntitySystem
                     conditions[objective.Prototype.Issuer] = new List<ConditionInfo>();
                 foreach (var condition in objective.Conditions)
                 {
-                    conditions[objective.Prototype.Issuer].Add(new ConditionInfo(condition.Title,
-                        condition.Description, condition.Icon, condition.Progress));
+                    var info = _objective.GetConditionInfo(condition, mindId, mind);
+                    conditions[objective.Prototype.Issuer].Add(info);
                 }
             }
 
