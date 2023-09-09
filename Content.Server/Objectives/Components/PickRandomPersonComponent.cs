@@ -3,9 +3,9 @@ using Content.Server.Objectives.Systems;
 namespace Content.Server.Objectives.Components;
 
 /// <summary>
-/// Sets the target for <see cref="KillPersonConditionComponent"/> to a random person.
+/// Sets the target for <see cref="TargetObjectiveComponent"/> to a random person.
 /// </summary>
 [RegisterComponent, Access(typeof(KillPersonConditionSystem))]
-public sealed partial class KillRandomPersonComponent : Component
+public sealed partial class PickRandomPersonComponent : Component
 {
 }

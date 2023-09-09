@@ -5,7 +5,7 @@ namespace Content.Server.Objectives.Components;
 /// <summary>
 /// Requires that there are a certain number of other traitors alive for this objective to be given.
 /// </summary>
-[RegisterComponent, Access(typeof(MultipleTraitorsRequirement))]
+[RegisterComponent, Access(typeof(MultipleTraitorsRequirementSystem))]
 public sealed class MultipleTraitorsRequirementComponent : Component
 {
     /// <summary>

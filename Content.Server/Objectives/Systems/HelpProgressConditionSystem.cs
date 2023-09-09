@@ -16,7 +16,7 @@ public sealed class HelpProgressConditionSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly ObjectiveSystem _objective = default!;
-    [Dependency] private readonly SharedJobSystem _job = default!;
+    [Dependency] private readonly TargetObjectiveSystem _target = default!;
     [Dependency] private readonly TraitorRuleSystem _traitorRule = default!;
 
     public override void Initialize()
@@ -30,16 +30,16 @@ public sealed class HelpProgressConditionSystem : EntitySystem
 
     private void OnGetInfo(EntityUid uid, HelpProgressConditionComponent comp, ref ObjectiveGetInfoEvent args)
     {
-        if (comp.Target == null)
+        if (!_target.GetTarget(uid, out var target))
             return;
 
-        args.Info.Title = GetTitle(comp.Target.Value);
+        args.Info.Progress = GetProgress(target);
     }
 
     private void OnTraitorAssigned(EntityUid uid, RandomTraitorProgressComponent comp, ref ObjectiveAssignedEvent args)
     {
         // invalid prototype
-        if (!TryComp<HelpProgressConditionComponent>(uid, out var help))
+        if (!TryComp<TargetObjectiveComponent>(uid, out var target))
         {
             args.Cancelled = true;
             return;
@@ -78,21 +78,7 @@ public sealed class HelpProgressConditionSystem : EntitySystem
             return;
         }
 
-        help.Target = _random.Pick(traitors);
-    }
-
-    // TODO: TargetedObjective, Title field
-    private string GetTitle(EntityUid target)
-    {
-        var targetName = "Unknown";
-        var jobName = _job.MindTryGetJobName(target);
-
-        if (TryComp<MindComponent>(target, out var mind) && mind.OwnedEntity != null)
-        {
-            targetName = Name(mind.OwnedEntity.Value);
-        }
-
-        return Loc.GetString("objective-condition-other-traitor-progress-title", ("targetName", targetName), ("job", jobName));
+        _target.SetTarget(uid, _random.Pick(traitors), target);
     }
 
     private float GetProgress(EntityUid target)

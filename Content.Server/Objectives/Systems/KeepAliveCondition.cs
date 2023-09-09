@@ -14,8 +14,8 @@ namespace Content.Server.Objectives.Systems;
 public sealed class KeepAliveConditionSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly SharedJobSystem _job = default!;
     [Dependency] private readonly SharedMindSystem _mind = default!;
+    [Dependency] private readonly TargetObjectiveSystem _target = default!;
     [Dependency] private readonly TraitorRuleSystem _traitorRule = default!;
 
     public override void Initialize()
@@ -29,18 +29,16 @@ public sealed class KeepAliveConditionSystem : EntitySystem
 
     private void OnGetInfo(EntityUid uid, KeepAliveConditionComponent comp, ref ConditionGetInfoEvent args)
     {
-        if (comp.Target == null)
+        if (_target.GetTarget(uid, out var target))
             return;
 
-        var target = comp.Target.Value;
-        args.Info.Title = GetTitle(target);
         args.Info.Progress = GetProgress(target);
     }
 
     private void OnAssigned(EntityUid uid, RandomTraitorAliveComponent comp, ref ConditionAssignedEvent args)
     {
         // invalid prototype
-        if (!TryComp<KeepAliveConditionComponent>(uid, out var alive))
+        if (!TryComp<TargetObjectiveComponent>(uid, out var target))
         {
             args.Cancelled = true;
             return;
@@ -55,20 +53,7 @@ public sealed class KeepAliveConditionSystem : EntitySystem
             return;
         }
 
-        alive.Target = _random.Pick(traitors).Id;
-    }
-
-    private string GetTitle(EntityUid target)
-    {
-        var targetName = "Unknown";
-        var jobName = _job.MindTryGetJobName(target);
-
-        if (TryComp<MindComponent>(target, out var mind) && mind.OwnedEntity != null)
-        {
-            targetName = Name(mind.OwnedEntity.Value);
-        }
-
-        return Loc.GetString("objective-condition-other-traitor-alive-title", ("targetName", targetName), ("job", jobName));
+        _target.SetTarget(uid, _random.Pick(traitors).Id, target);
     }
 
     private float GetProgress(EntityUid target)

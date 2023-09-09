@@ -21,17 +21,17 @@ public sealed class StealConditionSystem : EntitySystem
         containerQuery = GetEntityQuery<ContainerManagerComponent>();
         metaQuery = GetEntityQuery<MetaDataComponent>();
 
-        SubscribeLocalEvent<StealConditionComponent, ConditionAssignedEvent>(OnAssigned);
-        SubscribeLocalEvent<StealConditionComponent, ConditionGetInfoEvent>(OnGetInfo);
+        SubscribeLocalEvent<StealConditionComponent, ObjectiveAssignedEvent>(OnAssigned);
+        SubscribeLocalEvent<StealConditionComponent, ObjectiveGetInfoEvent>(OnGetInfo);
     }
 
-    private void OnAssigned(EntityUid uid, StealConditionComponent comp, ref ConditionAssignedEvent args)
+    private void OnAssigned(EntityUid uid, StealConditionComponent comp, ref ObjectiveAssignedEvent args)
     {
         // cancel if the item to steal doesn't exist
         args.Cancelled |= !_proto.HasIndex<EntityPrototype>(comp.Prototype);
     }
 
-    private void OnGetInfo(EntityUid uid, StealConditionComponent comp, ref ConditionGetInfoEvent args)
+    private void OnGetInfo(EntityUid uid, StealConditionComponent comp, ref ObjectiveGetInfoEvent args)
     {
         var proto = _proto.Index<EntityPrototype>(comp.Prototype);
         // nothing uses locale for it but might as well support it here incase

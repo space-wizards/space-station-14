@@ -7,8 +7,8 @@ namespace Content.Server.Objectives.Components;
 /// Requires that the objective entity has no blacklisted components.
 /// Lets you check for incompatible objectives.
 /// </summary>
-[RegisterComponent, Access(typeof(ObjectiveBlacklistSystem))]
-public sealed partial class ObjectiveBlacklistComponent : Component
+[RegisterComponent, Access(typeof(ObjectiveBlacklistRequirementSystem))]
+public sealed partial class ObjectiveBlacklistRequirementComponent : Component
 {
     [DataField("roles", required: true), ViewVariables(VVAccess.ReadWrite)]
     public EntityWhitelist Roles = new();

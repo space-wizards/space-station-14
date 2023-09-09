@@ -15,7 +15,7 @@ public sealed class ObjectiveBlacklistRequirementSystem : EntitySystem
         SubscribeLocalEvent<ObjectiveBlacklistRequirementComponent, RequirementCheckEvent>(OnCheck);
     }
 
-    private void OnCheck(EntityUid uid, ObjectiveBlacklistRequirement comp, ref RequirementCheckEvent args)
+    private void OnCheck(EntityUid uid, ObjectiveBlacklistRequirementComponent comp, ref RequirementCheckEvent args)
     {
         if (args.Cancelled)
             return;

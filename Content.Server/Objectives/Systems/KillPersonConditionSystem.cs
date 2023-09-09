@@ -19,32 +19,31 @@ public sealed class KillPersonConditionSystem : EntitySystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly SharedJobSystem _job = default!;
     [Dependency] private readonly SharedMindSystem _mind = default!;
+    [Dependency] private readonly TargetObjectiveSystem _target = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
-        SubscribeLocalEvent<KillPersonConditionComponent, ConditionGetInfoEvent>(OnGetInfo);
+        SubscribeLocalEvent<KillPersonConditionComponent, ObjectiveGetInfoEvent>(OnGetInfo);
 
-        SubscribeLocalEvent<KillRandomPersonComponent, ConditionAssignedEvent>(OnPersonAssigned);
+        SubscribeLocalEvent<PickRandomPersonComponent, ObjectiveAssignedEvent>(OnPersonAssigned);
 
-        SubscribeLocalEvent<KillRandomHeadComponent, ConditionAssignedEvent>(OnHeadAssigned);
+        SubscribeLocalEvent<PickRandomHeadComponent, ObjectiveAssignedEvent>(OnHeadAssigned);
     }
 
-    private void OnGetInfo(EntityUid uid, KillPersonConditionComponent comp, ref ConditionGetInfoEvent args)
+    private void OnGetInfo(EntityUid uid, KillPersonConditionComponent comp, ref ObjectiveGetInfoEvent args)
     {
-        if (comp.Target == null)
+        if (!_target.GetTarget(uid, out var target))
             return;
 
-        var target = comp.Target.Value;
-        args.Info.Title = GetTitle(target, comp.Title);
         args.Info.Progress = GetProgress(target, comp.RequireDead);
     }
 
-    private void OnPersonAssigned(EntityUid uid, KillRandomPersonComponent comp, ref ConditionAssignedEvent args)
+    private void OnPersonAssigned(EntityUid uid, PickRandomPersonComponent comp, ref ObjectiveAssignedEvent args)
     {
-        // invalid condition prototype
-        if (!TryComp<KillPersonConditionComponent>(uid, out var kill))
+        // invalid objective prototype
+        if (!TryComp<TargetObjectiveComponent>(uid, out var target))
         {
             args.Cancelled = true;
             return;
@@ -58,13 +57,13 @@ public sealed class KillPersonConditionSystem : EntitySystem
             return;
         }
 
-        kill.Target = _random.Pick(allHumans);
+        _target.SetTarget(uid, _random.Pick(allHumans), target);
     }
 
-    private void OnHeadAssigned(EntityUid uid, KillRandomHeadComponent comp, ref ConditionAssignedEvent args)
+    private void OnHeadAssigned(EntityUid uid, PickRandomHeadComponent comp, ref ObjectiveAssignedEvent args)
     {
-        // invalid condition prototype
-        if (!TryComp<KillPersonConditionComponent>(uid, out var kill))
+        // invalid prototype
+        if (!TryComp<TargetObjectiveComponent>(uid, out var target))
         {
             args.Cancelled = true;
             return;
@@ -89,19 +88,7 @@ public sealed class KillPersonConditionSystem : EntitySystem
         if (allHeads.Count == 0)
             allHeads = allHumans; // fallback to non-head target
 
-        kill.Target = _random.Pick(allHeads);
-    }
-
-    private string GetTitle(EntityUid target, string title)
-    {
-        var targetName = "Unknown";
-        if (TryComp<MindComponent>(target, out var mind) && mind.CharacterName != null)
-        {
-            targetName = mind.CharacterName;
-        }
-
-        var jobName = _job.MindTryGetJobName(target);
-        return Loc.GetString(title, ("targetName", targetName), ("job", jobName));
+        _target.SetTarget(uid, _random.Pick(allHeads), target);
     }
 
     private float GetProgress(EntityUid target, bool requireDead)
