@@ -7,7 +7,7 @@ ent-BaseThrusterStatic = stationary thruster
 ent-Thruster = { ent-BaseThrusterDynamic }
     .desc = { ent-BaseThrusterDynamic.desc }
 
-ent-BadThruster = { ent-BaseThrusterStatic }
+ent-ThrusterStatic = { ent-BaseThrusterStatic }
     .desc = { ent-BaseThrusterStatic.desc }
 
 ent-DebugThruster = debug thruster
