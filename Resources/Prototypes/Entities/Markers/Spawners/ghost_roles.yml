@@ -111,3 +111,21 @@
     - state: green
     - sprite: Mobs/Aliens/Carps/dragon.rsi
       state: alive
+
+- type: entity
+  parent: MarkerBase
+  id: SpawnPointGhostTerminator
+  noSpawn: true
+  name: terminator spawn point
+  components:
+  - type: GhostRole
+    name: ghost-role-information-terminator-name
+    description: ghost-role-information-terminator-description
+    rules: ghost-role-component-default-rules
+  - type: GhostRoleMobSpawner
+    prototype: MobHumanTerminator
+  - type: Sprite
+    layers:
+    - state: green
+    - sprite: Mobs/Species/Terminator/parts.rsi
+      state: full
