@@ -8,3 +8,6 @@ ent-BriefcaseSyndie = { ent-BriefcaseBrown }
     .desc = { ent-BriefcaseBrown.desc }
 ent-BriefcaseSyndieSniperBundleFilled = { ent-BriefcaseBrown }
     .desc = { ent-BriefcaseBrown.desc }
+ent-BriefcaseSyndieLobbyingBundleFilled = { ent-BriefcaseBrown }
+    .desc = { ent-BriefcaseBrown.desc }
+    .suffix = Деньги

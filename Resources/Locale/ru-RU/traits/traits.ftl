@@ -25,3 +25,12 @@ trait-uncloneable-desc = Вас невозможно клонировать
 
 trait-pirate-accent-name = Пиратский акцент
 trait-pirate-accent-desc = Вы не можете перестать говорить как пират!
+
+trait-archaic-accent-name = Акцент арахнида
+trait-archaic-accent-desc = Вы говорите так, как многие другие считают устаревшим
+
+trait-accentless-name = Без акцента
+trait-accentless-desc = У вас нет того акцента, который обычно бывает у представителей вашего вида.
+
+trait-wheelchair-bound-name = Инвалидная коляска
+trait-wheelchair-bound-desc = Вы не можете передвигаться без инвалидной коляски. Инвалидная коляска включена в вашу стоимость.

@@ -25,3 +25,6 @@ ent-ClothingHeadsetAltCargo = полноразмерная гарнитура К
 ent-ClothingHeadsetAltSyndicate = полноразмерная кроваво-красная гарнитура
     .desc = Модифицированный модульный интерком, надеваемый на голову, и содержащий ключ шифрования. Имеет 5 ячеек для ключей шифрования.
     .suffix = { "" }
+ent-ClothingHeadsetAltCentComFake = { ent-ClothingHeadsetAltCentCom }
+    .suffix = Фальшивый
+    .desc = { ent-ClothingHeadsetAltCentCom.desc }

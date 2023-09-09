@@ -34,3 +34,6 @@ ent-ClothingBeltUtilityEngineering = { ent-ClothingBeltUtility }
 ent-ClothingBeltMilitaryWebbingGrenadeFilled = гренадерский РПС
     .suffix = Заполненный
     .desc = Ременно-поясная система тактических ремней, которую носят абордажные группы.
+ent-ClothingBeltHolsterFilled = плечевая кобура
+    .suffix = Заполненный
+    .desc = Кобура для ношения пистолета и боеприпасов. ВНИМАНИЕ: Только для крутых.

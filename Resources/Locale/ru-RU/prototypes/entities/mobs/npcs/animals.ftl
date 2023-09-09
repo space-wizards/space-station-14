@@ -137,3 +137,6 @@ ent-MobClownSpider = клоун-паук
     .desc = Сочетает в себе две самые страшные вещи на свете - пауков и клоунов.
 ent-MobMonkeySyndicateAgent = { ent-MobMonkey }
     .desc = { ent-MobMonkey.desc }
+ent-MobMouseDead = { ent-MobMouse }
+    .suffix = Мёртвая
+    .desc = { ent-MobMouse.desc }

@@ -93,3 +93,5 @@ ent-FoodShakerEmpty = { ent-BaseFoodShaker }
     .suffix = Пустой
 ent-FoodCondimentBottleVinegar = бутылка уксуса
     .desc = Используется в кулинарии для усиления вкуса.
+ent-FoodCondimentPacketMustard = горчица
+    .desc = Приправа, приготовленная из измельченных семян горчицы.
