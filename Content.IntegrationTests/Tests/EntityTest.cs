@@ -202,10 +202,11 @@ namespace Content.IntegrationTests.Tests
         /// This test checks that spawning and deleting an entity doesn't somehow create other unrelated entities.
         /// </summary>
         /// <remarks>
-        /// Unless an entity is intentionally designed to spawn other entities (e.g., mob spawners), they should generally
-        /// not spawn "free" entities. Any entities that do get spawned should be parented to the spawned entity (e.g., in a container).
-        /// If an entity needs to spawn an entity somewhere in null-space, it should delete that entity when it is no longer required.
-        /// This test mainly exists to prevent "entity leak" bugs, where spawning some entity starts spawning unrelated entities in null space.
+        /// Unless an entity is intentionally designed to spawn other entities (e.g., mob spawners), they should
+        /// generally not spawn unrelated / detached entities. Any entities that do get spawned should be parented to
+        /// the spawned entity (e.g., in a container). If an entity needs to spawn an entity somewhere in null-space,
+        /// it should delete that entity when it is no longer required. This test mainly exists to prevent "entity leak"
+        /// bugs, where spawning some entity starts spawning unrelated entities in null space.
         /// </remarks>
         [Test]
         public async Task SpawnAndDeleteEntityCountTest()

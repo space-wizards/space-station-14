@@ -1,6 +1,5 @@
 using Content.Server.Spawners.Components;
 using Content.Server.Storage.Components;
-using Content.Shared.Prototypes;
 using Content.Shared.Storage;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
@@ -9,7 +8,6 @@ namespace Content.Server.Storage.EntitySystems;
 
 public sealed partial class StorageSystem
 {
-    [Dependency] private IPrototypeManager _prototype = default!;
     private void OnStorageFillMapInit(EntityUid uid, StorageFillComponent component, MapInitEvent args)
     {
         if (component.Contents.Count == 0)
@@ -30,8 +28,7 @@ public sealed partial class StorageSystem
         foreach (var item in spawnItems)
         {
             // No, you are not allowed to fill a container with entity spawners.
-            DebugTools.Assert(
-                !_prototype.Index<EntityPrototype>(item)
+            DebugTools.Assert(!_prototype.Index<EntityPrototype>(item)
                     .HasComponent(typeof(RandomSpawnerComponent)));
 
             var ent = EntityManager.SpawnEntity(item, coordinates);

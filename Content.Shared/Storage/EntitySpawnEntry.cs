@@ -119,7 +119,6 @@ public static class EntitySpawnCollection
                 if (diceRoll > cumulative)
                     continue;
 
-
                 if (entry.PrototypeId == null)
                     break;
 
