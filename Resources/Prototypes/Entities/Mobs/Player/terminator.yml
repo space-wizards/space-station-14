@@ -1,10 +1,12 @@
 - type: entity
   parent: MobHuman
   id: MobHumanTerminator
+  # uses random name generator dont worry
+  name: terminator
   components:
   - type: Terminator
     objectives:
-    - Terminate
+    - TerminateObjective
   # reduced barotrauma damage
   - type: Barotrauma
     damage:
@@ -114,6 +116,9 @@
   - type: Eye
   - type: Body
     prototype: TerminatorEndoskeleton
+  # lets it sit in the terminator flesh's brain slot
+  - type: Organ
+  - type: Brain
   - type: StatusEffects
     allowed:
     - Stun
