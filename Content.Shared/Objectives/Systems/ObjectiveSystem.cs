@@ -13,9 +13,13 @@ public sealed class ObjectiveSystem : EntitySystem
 {
     [Dependency] private readonly SharedMindSystem _mind = default!;
 
+    private EntityQuery<MetaDataComponent> _metaQuery;
+
     public override void Initialize()
     {
         base.Initialize();
+
+        _metaQuery = GetEntityQuery<MetaDataComponent>();
 
         SubscribeLocalEvent<ObjectiveComponent, ObjectiveGetInfoEvent>(OnGetInfo);
     }
@@ -46,9 +50,10 @@ public sealed class ObjectiveSystem : EntitySystem
         // only check for duplicate prototypes if it's unique
         if (comp.Unique)
         {
+            var proto = _metaQuery.GetComponent(uid).PrototypeID;
             foreach (var objective in mind.AllObjectives)
             {
-                if (objective.Prototype.ID == ID)
+                if (_metaQuery.GetComponent(objective).PrototypeID == proto)
                     return false;
             }
         }
@@ -86,7 +91,7 @@ public sealed class ObjectiveSystem : EntitySystem
         {
             Del(uid);
             Log.Warning($"Could not assign objective {uid}, deleted it");
-            return false;
+            return null;
         }
 
         return uid;
@@ -121,10 +126,10 @@ public sealed class ObjectiveSystem : EntitySystem
     }
 
     /// <summary>
-    /// Helper for mind to get a condition's title easily
+    /// Helper for mind to get a objective's title easily
     /// </summary>
     public string GetTitle(EntityUid uid, EntityUid mindId, MindComponent? mind = null)
     {
-        return GetConditionInfo(uid, mindId, mind).Title!;
+        return GetInfo(uid, mindId, mind).Title!;
     }
 }

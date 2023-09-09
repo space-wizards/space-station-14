@@ -257,13 +257,13 @@ public abstract class SharedMindSystem : EntitySystem
     /// <returns>Returns true if adding the objective succeeded.</returns>
     public bool TryAddObjective(EntityUid mindId, MindComponent mind, string proto)
     {
-        var objective = TryCreateObjective(mindId, mind, proto);
+        var objective = _objective.TryCreateObjective(mindId, mind, proto);
         if (objective == null)
             return false;
 
-        var title = _objective.GetTitle(objective, mindId, mind);
+        var title = _objective.GetTitle(objective.Value, mindId, mind);
         _adminLogger.Add(LogType.Mind, LogImpact.Low, $"{proto} ({objective}) '{title}' added to mind of {MindOwnerLoggingString(mind)}");
-        mind.AllObjectives.Add(objective);
+        mind.Objectives.Add(objective.Value);
         return true;
     }
 
