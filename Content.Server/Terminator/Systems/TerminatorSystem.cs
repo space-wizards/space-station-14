@@ -22,6 +22,7 @@ public sealed class TerminatorSystem : EntitySystem
     {
         base.Initialize();
 
+        SubscribeLocalEvent<TerminatorComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<TerminatorComponent, GhostRoleSpawnerUsedEvent>(OnSpawned);
         SubscribeLocalEvent<TerminatorComponent, MindAddedMessage>(OnMindAdded);
     }
@@ -34,7 +35,7 @@ public sealed class TerminatorSystem : EntitySystem
         comp.Target = target.Target;
     }
 
-    private void OnMapInit(EntityUid uid, TerminatedComponent comp, MapInitEvent args)
+    private void OnMapInit(EntityUid uid, TerminatorComponent comp, MapInitEvent args)
     {
         // cyborg doesn't need to breathe
         RemComp<RespiratorComponent>(uid);
