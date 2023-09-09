@@ -17,7 +17,7 @@ public sealed class TerminatorRuleSystem : GameRuleSystem<TerminatorRuleComponen
         SubscribeLocalEvent<TerminatorRuleComponent, ObjectivesTextGetInfoEvent>(OnObjectivesTextGetInfo);
     }
 
-    private void OnObjectivesTextGetInfo(EntityUid uid, TerminatorRuleComponent comp, ObjectivesTextGetInfoEvent args)
+    private void OnObjectivesTextGetInfo(EntityUid uid, TerminatorRuleComponent comp, ref ObjectivesTextGetInfoEvent args)
     {
         args.Minds = comp.Minds;
         args.AgentName = Loc.GetString("terminator-round-end-agent-name");
@@ -36,10 +36,10 @@ public sealed class TerminatorRuleSystem : GameRuleSystem<TerminatorRuleComponen
         }
 
         // start a new rule
-        GameTicker.StartGameRule("Terminator", out var uid);
-        var rule = Comp<TerminatorRuleComponent>(uid);
-        rule.Target = target;
-        return uid;
+        GameTicker.StartGameRule("Terminator", out var ruleId);
+        var comp = Comp<TerminatorRuleComponent>(ruleId);
+        comp.Target = target;
+        return ruleId;
     }
 
     /// <summary>
@@ -64,7 +64,7 @@ public sealed class TerminatorRuleSystem : GameRuleSystem<TerminatorRuleComponen
         if (target != null)
         {
             var comp = EnsureComp<TerminatorTargetComponent>(uid);
-            _terminator.SetTarget(uid, target, comp);
+            _terminator.SetTarget(uid, target.Value, comp);
         }
 
         return uid;
