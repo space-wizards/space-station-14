@@ -53,6 +53,30 @@
           Quantity: 5
 
 - type: entity
+  id: PuddleBlueTomato
+  parent: PuddleTemporary
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      puddle:
+        maxVol: 1000
+        reagents:
+        - ReagentId: SpaceLube
+          Quantity: 10
+
+- type: entity
+  id: PuddleBloodTomato
+  parent: PuddleTemporary
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      puddle:
+        maxVol: 1000
+        reagents:
+        - ReagentId: Blood
+          Quantity: 10
+
+- type: entity
   id: PuddleWatermelon
   parent: PuddleTemporary
   components:
