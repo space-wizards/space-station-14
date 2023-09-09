@@ -23,12 +23,12 @@ public sealed class HelpProgressConditionSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<HelpProgressConditionComponent, ConditionGetInfoEvent>(OnGetInfo);
+        SubscribeLocalEvent<HelpProgressConditionComponent, ObjectiveGetInfoEvent>(OnGetInfo);
 
-        SubscribeLocalEvent<RandomTraitorProgressComponent, ConditionAssignedEvent>(OnTraitorAssigned);
+        SubscribeLocalEvent<RandomTraitorProgressComponent, ObjectiveAssignedEvent>(OnTraitorAssigned);
     }
 
-    private void OnGetInfo(EntityUid uid, HelpProgressConditionComponent comp, ref ConditionGetInfoEvent args)
+    private void OnGetInfo(EntityUid uid, HelpProgressConditionComponent comp, ref ObjectiveGetInfoEvent args)
     {
         if (comp.Target == null)
             return;
@@ -36,7 +36,7 @@ public sealed class HelpProgressConditionSystem : EntitySystem
         args.Info.Title = GetTitle(comp.Target.Value);
     }
 
-    private void OnTraitorAssigned(EntityUid uid, RandomTraitorProgressComponent comp, ref ConditionAssignedEvent args)
+    private void OnTraitorAssigned(EntityUid uid, RandomTraitorProgressComponent comp, ref ObjectiveAssignedEvent args)
     {
         // invalid prototype
         if (!TryComp<HelpProgressConditionComponent>(uid, out var help))
@@ -61,11 +61,8 @@ public sealed class HelpProgressConditionSystem : EntitySystem
 
             foreach (var objective in mind.AllObjectives)
             {
-                foreach (var condition in objective.Conditions)
-                {
-                    if (HasComp<HelpProgressConditionComponent>(condition))
-                        removeList.Add(traitor);
-                }
+                if (HasComp<HelpProgressConditionComponent>(objective))
+                    removeList.Add(traitor);
             }
         }
 
@@ -107,14 +104,11 @@ public sealed class HelpProgressConditionSystem : EntitySystem
         {
             foreach (var objective in mind.AllObjectives)
             {
-                foreach (var condition in objective.Conditions)
-                {
-                    max++; // things can only be up to 100% complete yeah
+                max++; // things can only be up to 100% complete yeah
 
-                    // this has the potential to loop forever, anything setting target has to check that there is no HelpProgressCondition.
-                    var info = _objective.GetConditionInfo(condition, target, mind);
-                    total += info.Progress ?? 0f;
-                }
+                // this has the potential to loop forever, anything setting target has to check that there is no HelpProgressCondition.
+                var info = _objective.GetInfo(objective, target, mind);
+                total += info.Progress ?? 0f;
             }
         }
 
