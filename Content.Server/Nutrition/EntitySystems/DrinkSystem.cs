@@ -5,6 +5,7 @@ using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Chemistry.ReagentEffects;
 using Content.Server.Fluids.EntitySystems;
 using Content.Server.Forensics;
+using Content.Server.Hands.Systems;
 using Content.Server.Nutrition.Components;
 using Content.Server.Popups;
 using Content.Shared.Administration.Logs;
@@ -25,6 +26,7 @@ using Content.Shared.Nutrition;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Throwing;
 using Content.Shared.Verbs;
+using Robust.Server.Containers;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
@@ -51,6 +53,8 @@ public sealed class DrinkSystem : EntitySystem
     [Dependency] private readonly SharedInteractionSystem _interaction = default!;
     [Dependency] private readonly SolutionContainerSystem _solutionContainer = default!;
     [Dependency] private readonly StomachSystem _stomach = default!;
+    [Dependency] private readonly ContainerSystem _container = default!;
+    [Dependency] private readonly HandsSystem _hands = default!;
 
     public override void Initialize()
     {
@@ -267,6 +271,15 @@ public sealed class DrinkSystem : EntitySystem
         if (!EntityManager.HasComponent<BodyComponent>(target))
             return false;
 
+        // SS220-Bag-drinking-bugfix begin
+        if (_container.IsEntityInContainer(item) && !_hands.IsHolding(user, item, out var inHand))
+        {
+            _popup.PopupEntity(Loc.GetString("drink-component-try-use-drink-in-container",
+                ("entity", EntityManager.GetComponent<MetaDataComponent>(item).EntityName)), item, user);
+            return true;
+        }
+        // SS220-Bag-drinking-bugfix end
+
         if (!drink.Opened)
         {
             _popup.PopupEntity(Loc.GetString("drink-component-try-use-drink-not-open",
@@ -343,6 +356,11 @@ public sealed class DrinkSystem : EntitySystem
 
         if (!TryComp<BodyComponent>(args.Target, out var body))
             return;
+
+        // SS220-Bag-drinking-bugfix begin
+        if (_container.IsEntityInContainer(uid) && !_hands.IsHolding(args.User, args.Used, out var inHand))
+            return;
+        // SS220-Bag-drinking-bugfix end
 
         if (!_solutionContainer.TryGetSolution(args.Used, args.Solution, out var solution))
             return;

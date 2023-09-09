@@ -1,0 +1,1 @@
+drink-component-try-use-drink-in-container = Firstly, take { $entity } out of the container!

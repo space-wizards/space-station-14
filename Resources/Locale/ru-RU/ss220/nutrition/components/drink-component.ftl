@@ -1,0 +1,1 @@
+drink-component-try-use-drink-in-container = Сначала достаньте { $entity } из контейнера!
