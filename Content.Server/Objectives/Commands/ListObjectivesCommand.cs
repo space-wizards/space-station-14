@@ -2,6 +2,7 @@ using System.Linq;
 using Content.Server.Administration;
 using Content.Shared.Administration;
 using Content.Shared.Mind;
+using Content.Shared.Objectives.Systems;
 using Robust.Server.Player;
 using Robust.Shared.Console;
 
@@ -12,6 +13,7 @@ namespace Content.Server.Objectives.Commands
     {
         [Dependency] private readonly IEntityManager _entities = default!;
         [Dependency] private readonly IPlayerManager _players = default!;
+        [Dependency] private readonly ObjectiveSystem _objective = default!;
 
         public override string Command => "lsobjectives";
 
@@ -25,7 +27,7 @@ namespace Content.Server.Objectives.Commands
             }
 
             var minds = _entities.System<SharedMindSystem>();
-            if (!minds.TryGetMind(player, out _, out var mind))
+            if (!minds.TryGetMind(player, out var mindId, out var mind))
             {
                 shell.WriteError(LocalizationManager.GetString("shell-target-entity-does-not-have-message", ("missing", "mind")));
                 return;
@@ -40,7 +42,11 @@ namespace Content.Server.Objectives.Commands
 
             for (var i = 0; i < objectives.Count; i++)
             {
-                shell.WriteLine($"- [{i}] {objectives[i].Conditions[0].Title}");
+                foreach (var condition in objectives[i].Conditions)
+                {
+                    var info = _objective.GetConditionInfo(condition, mindId, mind);
+                    shell.WriteLine($"- [{i}] {info.Title} ({info.Progress}%)");
+                }
             }
         }
 
