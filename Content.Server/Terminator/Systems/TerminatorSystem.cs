@@ -1,5 +1,6 @@
 using Content.Server.GameTicking.Rules;
 using Content.Server.Ghost.Roles.Events;
+using Content.Server.Objectives.Components;
 using Content.Server.Objectives.Systems;
 using Content.Server.Roles;
 using Content.Shared.Terminator.Components;
@@ -41,11 +42,11 @@ public sealed class TerminatorSystem : SharedTerminatorSystem
         // give the player the role
         var mindId = mindContainer.Mind.Value;
         var mind = Comp<MindComponent>(mindId);
-        _role.MindAddRole(mindId, new RoleBriefing
+        _role.MindAddRole(mindId, new RoleBriefingComponent
         {
             Briefing = Loc.GetString("terminator-role-briefing")
         }, mind);
-        _role.MindAddRole(mindId, new TerminatorRole(), mind);
+        _role.MindAddRole(mindId, new TerminatorRoleComponent(), mind);
 
         // add the terminate objective
         foreach (var id in comp.Objectives)
@@ -55,7 +56,7 @@ public sealed class TerminatorSystem : SharedTerminatorSystem
 
         // set its target
         // if there are multiple kill objectives they will all get set to the same target
-        var target = args.Target;
+        var target = comp.Target;
         foreach (var objective in mind.AllObjectives)
         {
             if (!HasComp<KillPersonConditionComponent>(objective))
@@ -64,8 +65,8 @@ public sealed class TerminatorSystem : SharedTerminatorSystem
             // if its random this will see what it picked
             // if there is already a target set this will set it
             if (target != null)
-                _target.SetTarget(objective, target);
-            _target.GetTarget(objective, ref target);
+                _target.SetTarget(objective, target.Value);
+            _target.GetTarget(objective, out target);
         }
 
         if (target == null)
@@ -74,7 +75,18 @@ public sealed class TerminatorSystem : SharedTerminatorSystem
             return;
         }
 
-        var rule = _terminatorRule.GetRule(target);
+        var rule = _terminatorRule.GetRule(target.Value);
         _terminatorRule.AddMind(rule, mindId);
+    }
+
+    /// <summary>
+    /// Set the target of a terminator ghost role spawner.
+    /// </summary>
+    public void SetTarget(EntityUid uid, EntityUid target, TerminatorTargetComponent? comp = null)
+    {
+        if (!Resolve(uid, ref comp))
+            return;
+
+        comp.Target = target;
     }
 }

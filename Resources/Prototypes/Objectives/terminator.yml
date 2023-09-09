@@ -20,5 +20,5 @@
   - type: TargetObjective
     title: objective-condition-terminate-title
   - type: PickRandomPerson
-  - type: KillPersonObjective
+  - type: KillPersonCondition
     requireDead: true
