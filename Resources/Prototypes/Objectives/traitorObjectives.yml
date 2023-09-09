@@ -77,7 +77,7 @@
     description: objective-condition-kill-person-description
   - type: TargetObjective
     title: objective-condition-kill-person-title
-  - type: KillRandomPerson
+  - type: PickRandomPerson
 
 - type: entity
   noSpawn: true
@@ -92,7 +92,7 @@
     description: objective-condition-kill-head-description
   - type: TargetObjective
     title: objective-condition-kill-head-title
-  - type: KillRandomHead
+  - type: PickRandomHead
   - type: KillPersonCondition
     # don't count missing evac as killing as heads are higher profile, so you really need to do the dirty work
     # if ce flies a shittle to centcom you better find a way onto it
@@ -109,7 +109,7 @@
     description: objective-condition-other-traitor-alive-description
   - type: TargetObjective
     title: objective-condition-other-traitor-alive-title
-  - type: RandomTraitorAliveCondition
+  - type: RandomTraitorAlive
 
 - type: entity
   noSpawn: true
