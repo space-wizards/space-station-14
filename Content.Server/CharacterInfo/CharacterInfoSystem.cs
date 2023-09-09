@@ -29,7 +29,7 @@ public sealed class CharacterInfoSystem : EntitySystem
 
         var entity = args.SenderSession.AttachedEntity.Value;
 
-        var conditions = new Dictionary<string, List<ConditionInfo>>();
+        var objectives = new Dictionary<string, List<ObjectiveInfo>>();
         var jobTitle = "No Profession";
         string? briefing = null;
         if (_minds.TryGetMind(entity, out var mindId, out var mind))
@@ -37,13 +37,13 @@ public sealed class CharacterInfoSystem : EntitySystem
             // Get objectives
             foreach (var objective in mind.AllObjectives)
             {
-                if (!conditions.ContainsKey(objective.Prototype.Issuer))
-                    conditions[objective.Prototype.Issuer] = new List<ConditionInfo>();
-                foreach (var condition in objective.Conditions)
-                {
-                    var info = _objective.GetConditionInfo(condition, mindId, mind);
-                    conditions[objective.Prototype.Issuer].Add(info);
-                }
+                // group objectives by their issuer
+                var issuer = objective.Prototype.Issuer;
+                if (!objectives.ContainsKey(issuer))
+                    objectives[issuer] = new List<ObjectiveInfo>();
+
+                var info = _objective.GetConditionInfo(objective, mindId, mind);
+                objectives[issuer].Add(info);
             }
 
             if (_jobs.MindTryGetJobName(mindId, out var jobName))
@@ -53,6 +53,6 @@ public sealed class CharacterInfoSystem : EntitySystem
             briefing = _roles.MindGetBriefing(mindId);
         }
 
-        RaiseNetworkEvent(new CharacterInfoEvent(entity, jobTitle, conditions, briefing), args.SenderSession);
+        RaiseNetworkEvent(new CharacterInfoEvent(entity, jobTitle, objectives, briefing), args.SenderSession);
     }
 }
