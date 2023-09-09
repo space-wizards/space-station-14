@@ -5,7 +5,7 @@
   minPlayers: 0
   maxPlayers: 40
   stations:
-    Core:
+    Europa:
       stationProto: StandardNanotrasenStation
       components:
         - type: StationNameSetup
