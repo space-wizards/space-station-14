@@ -39,41 +39,42 @@ public sealed class MutationSystem : EntitySystem
         const int totalbits = 265;
 
         // Tolerances (55)
-        MutateFloat(ref seed.NutrientConsumption   , 0.05f , 1.2f , 5 , totalbits , severity);
-        MutateFloat(ref seed.WaterConsumption      , 3f    , 9f   , 5 , totalbits , severity);
-        MutateFloat(ref seed.IdealHeat             , 263f  , 323f , 5 , totalbits , severity);
-        MutateFloat(ref seed.HeatTolerance         , 2f    , 25f  , 5 , totalbits , severity);
-        MutateFloat(ref seed.IdealLight            , 0f    , 14f  , 5 , totalbits , severity);
-        MutateFloat(ref seed.LightTolerance        , 1f    , 5f   , 5 , totalbits , severity);
-        MutateFloat(ref seed.ToxinsTolerance       , 1f    , 10f  , 5 , totalbits , severity);
-        MutateFloat(ref seed.LowPressureTolerance  , 60f   , 100f , 5 , totalbits , severity);
-        MutateFloat(ref seed.HighPressureTolerance , 100f  , 140f , 5 , totalbits , severity);
-        MutateFloat(ref seed.PestTolerance         , 0f    , 15f  , 5 , totalbits , severity);
-        MutateFloat(ref seed.WeedTolerance         , 0f    , 15f  , 5 , totalbits , severity);
+        MutateFloat(ref seed.NutrientConsumption  , 0.05f, 1.2f, 5, totalbits, severity);
+        MutateFloat(ref seed.WaterConsumption     , 3f   , 9f  , 5, totalbits, severity);
+        MutateFloat(ref seed.IdealHeat            , 263f , 323f, 5, totalbits, severity);
+        MutateFloat(ref seed.HeatTolerance        , 2f   , 25f , 5, totalbits, severity);
+        MutateFloat(ref seed.IdealLight           , 0f   , 14f , 5, totalbits, severity);
+        MutateFloat(ref seed.LightTolerance       , 1f   , 5f  , 5, totalbits, severity);
+        MutateFloat(ref seed.ToxinsTolerance      , 1f   , 10f , 5, totalbits, severity);
+        MutateFloat(ref seed.LowPressureTolerance , 60f  , 100f, 5, totalbits, severity);
+        MutateFloat(ref seed.HighPressureTolerance, 100f , 140f, 5, totalbits, severity);
+        MutateFloat(ref seed.PestTolerance        , 0f   , 15f , 5, totalbits, severity);
+        MutateFloat(ref seed.WeedTolerance        , 0f   , 15f , 5, totalbits, severity);
 
         // Stats (30*2 = 60)
-        MutateFloat(ref seed.Endurance             , 50f   , 150f , 5 , totalbits , 2*severity);
-        MutateInt(ref seed.Yield                   , 3     , 10   , 5 , totalbits , 2*severity);
-        MutateFloat(ref seed.Lifespan              , 10f   , 80f  , 5 , totalbits , 2*severity);
-        MutateFloat(ref seed.Maturation            , 3f    , 8f   , 5 , totalbits , 2*severity);
-        MutateFloat(ref seed.Production            , 1f    , 10f  , 5 , totalbits , 2*severity);
-        MutateFloat(ref seed.Potency               , 30f   , 100f , 5 , totalbits , 2*severity);
+        MutateFloat(ref seed.Endurance            , 50f  , 150f, 5, totalbits, 2 * severity);
+        MutateInt(ref seed.Yield                  , 3    , 10  , 5, totalbits, 2 * severity);
+        MutateFloat(ref seed.Lifespan             , 10f  , 80f , 5, totalbits, 2 * severity);
+        MutateFloat(ref seed.Maturation           , 3f   , 8f  , 5, totalbits, 2 * severity);
+        MutateFloat(ref seed.Production           , 1f   , 10f , 5, totalbits, 2 * severity);
+        MutateFloat(ref seed.Potency              , 30f  , 100f, 5, totalbits, 2 * severity);
 
         // Kill the plant (30)
-        MutateBool(ref seed.Viable         , false , 30 , totalbits , severity);
+        MutateBool(ref seed.Viable        , false, 30, totalbits, severity);
 
         // Fun (90)
-        MutateBool(ref seed.Seedless       , true  , 10 , totalbits , severity);
-        MutateBool(ref seed.Slip           , true  , 10 , totalbits , severity);
-        MutateBool(ref seed.Sentient       , true  , 10 , totalbits , severity);
-        MutateBool(ref seed.Ligneous       , true  , 10 , totalbits , severity);
-        MutateBool(ref seed.Bioluminescent , true  , 10 , totalbits , severity);
+        MutateBool(ref seed.Seedless      , true , 10, totalbits, severity);
+        MutateBool(ref seed.Slip          , true , 10, totalbits, severity);
+        MutateBool(ref seed.Sentient      , true , 10, totalbits, severity);
+        MutateBool(ref seed.Ligneous      , true , 10, totalbits, severity);
+        MutateBool(ref seed.Bioluminescent, true , 10, totalbits, severity);
         // Kudzu disabled until superkudzu bug is fixed
-        // MutateBool(ref seed.TurnIntoKudzu  , true  , 5  , totalbits , severity);
-        MutateBool(ref seed.CanScream      , true  , 10 , totalbits , severity);
+        // MutateBool(ref seed.TurnIntoKudzu , true , 10, totalbits, severity);
+        MutateBool(ref seed.CanScream     , true , 10, totalbits, severity);
         seed.BioluminescentColor = RandomColor(seed.BioluminescentColor, 10, totalbits, severity);
+
         // ConstantUpgade (10)
-        MutateHarvestType(ref seed.HarvestRepeat   , 10 , totalbits , severity);
+        MutateHarvestType(ref seed.HarvestRepeat, 10, totalbits, severity);
 
         // Gas (5)
         MutateGasses(ref seed.ExudeGasses, 0.01f, 0.5f, 4, totalbits, severity);
@@ -119,6 +120,7 @@ public sealed class MutationSystem : EntitySystem
         CrossBool(ref result.Bioluminescent, a.Bioluminescent);
         // CrossBool(ref result.TurnIntoKudzu, a.TurnIntoKudzu);
         CrossBool(ref result.CanScream, a.CanScream);
+
         CrossGasses(ref result.ExudeGasses, a.ExudeGasses);
         CrossGasses(ref result.ConsumeGasses, a.ConsumeGasses);
 
@@ -143,7 +145,7 @@ public sealed class MutationSystem : EntitySystem
     private void MutateFloat(ref float val, float min, float max, int bits, int totalbits, float mult)
     {
         // Probability that a bit flip happens for this value.
-        float p = mult*bits/totalbits;
+        float p = mult * bits / totalbits;
         p = Math.Clamp(p, 0, 1);
         if (!Random(p))
         {
@@ -151,54 +153,28 @@ public sealed class MutationSystem : EntitySystem
         }
 
         // Starting number of bits that are high, between 0 and bits.
-        int n = (int)Math.Round((val - min) / (max - min) * bits);
+        int valInt = (int) MathF.Round((val - min) / (max - min) * bits);
         // val may be outside the range of min/max due to starting prototype values, so clamp
-        n = Math.Clamp(n, 0, bits);
+        valInt = Math.Clamp(valInt, 0, bits);
 
         // Probability that the bit flip increases n.
-        float p_increase = 1-(float)n/bits;
-        int np;
-        if (Random(p_increase))
+        float pIncrease = 1 - (float) valInt / bits;
+        int valIntMutated;
+        if (Random(pIncrease))
         {
-            np = n + 1;
+            valIntMutated = valInt + 1;
         }
         else
         {
-            np = n - 1;
+            valIntMutated = valInt - 1;
         }
 
         // Set value based on mutated thermometer code.
-        float nval = MathF.Min(MathF.Max((float)np/bits * (max - min) + min, min), max);
-        val = nval;
+        float valMutated = Math.Clamp((float) valIntMutated / bits * (max - min) + min, min, max);
+        val = valMutated;
     }
 
-    private void MutateInt(ref int n, int min, int max, int bits, int totalbits, float mult)
-    {
-        // Probability that a bit flip happens for this value.
-        float p = mult*bits/totalbits;
-        p = Math.Clamp(p, 0, 1);
-        if (!Random(p))
-        {
-            return;
-        }
-
-        // Probability that the bit flip increases n.
-        float p_increase = 1-(float)n/bits;
-        int np;
-        if (Random(p_increase))
-        {
-            np = n + 1;
-        }
-        else
-        {
-            np = n - 1;
-        }
-
-        np = Math.Min(Math.Max(np, min), max);
-        n = np;
-    }
-
-    private void MutateBool(ref bool val, bool polarity, int bits, int totalbits, float mult)
+    private void MutateInt(ref int val, int min, int max, int bits, int totalbits, float mult)
     {
         // Probability that a bit flip happens for this value.
         float p = mult * bits / totalbits;
@@ -208,21 +184,45 @@ public sealed class MutationSystem : EntitySystem
             return;
         }
 
-        val = polarity;
+        // Probability that the bit flip increases n.
+        float pIncrease = 1 - (float) val / bits;
+        int valMutated;
+        if (Random(pIncrease))
+        {
+            valMutated = val + 1;
+        }
+        else
+        {
+            valMutated = val - 1;
+        }
+
+        valMutated = Math.Clamp(valMutated, min, max);
+        val = valMutated;
+    }
+
+    private void MutateBool(ref bool val, bool polarity, int bits, int totalbits, float mult)
+    {
+        // Probability that a bit flip happens for this value.
+        float p = mult * bits / totalbits;
+        p = Math.Clamp(p, 0, 1);
+        if (Random(p))
+        {
+            val = polarity;
+        }
     }
 
     private void MutateHarvestType(ref HarvestType val, int bits, int totalbits, float mult)
     {
-        float p = mult * bits/totalbits;
+        float p = mult * bits / totalbits;
         p = Math.Clamp(p, 0, 1);
-        if (!Random(p))
-            return;
 
-        if (val == HarvestType.NoRepeat)
-            val = HarvestType.Repeat;
-
-        else if (val == HarvestType.Repeat)
-            val = HarvestType.SelfHarvest;
+        if (Random(p))
+        {
+            if (val == HarvestType.NoRepeat)
+                val = HarvestType.Repeat;
+            else if (val == HarvestType.Repeat)
+                val = HarvestType.SelfHarvest;
+        }
     }
 
     private void MutateGasses(ref Dictionary<Gas, float> gasses, float min, float max, int bits, int totalbits, float mult)
@@ -253,27 +253,27 @@ public sealed class MutationSystem : EntitySystem
             return;
 
         // Add a random amount of a random chemical to this set of chemicals
-        ReagentPrototype selected_chemical = _robustRandom.Pick(_allChemicals);
-        if (selected_chemical != null)
+        ReagentPrototype selectedChemical = _robustRandom.Pick(_allChemicals);
+        if (selectedChemical != null)
         {
-            string chemical_id = selected_chemical.ID;
+            string chemicalId = selectedChemical.ID;
             int amount = _robustRandom.Next(1, max);
-            SeedChemQuantity seed_chem_quantity = new SeedChemQuantity();
-            if (chemicals.ContainsKey(chemical_id))
+            SeedChemQuantity seedChemQuantity = new SeedChemQuantity();
+            if (chemicals.ContainsKey(chemicalId))
             {
-                seed_chem_quantity.Min = chemicals[chemical_id].Min;
-                seed_chem_quantity.Max = chemicals[chemical_id].Max + amount;
-                int potency = (int) Math.Ceiling(100.0f / (float) seed_chem_quantity.Max);
-                seed_chem_quantity.PotencyDivisor = potency;
-                chemicals[chemical_id] = seed_chem_quantity;
+                seedChemQuantity.Min = chemicals[chemicalId].Min;
+                seedChemQuantity.Max = chemicals[chemicalId].Max + amount;
+                int potency = (int) Math.Ceiling(100.0f / (float) seedChemQuantity.Max);
+                seedChemQuantity.PotencyDivisor = potency;
+                chemicals[chemicalId] = seedChemQuantity;
             }
             else
             {
-                seed_chem_quantity.Min = 1;
-                seed_chem_quantity.Max = 1 + amount;
-                int potency = (int) Math.Ceiling(100.0f / (float) seed_chem_quantity.Max);
-                seed_chem_quantity.PotencyDivisor = potency;
-                chemicals.Add(chemical_id, seed_chem_quantity);
+                seedChemQuantity.Min = 1;
+                seedChemQuantity.Max = 1 + amount;
+                int potency = (int) Math.Ceiling(100.0f / (float) seedChemQuantity.Max);
+                seedChemQuantity.PotencyDivisor = potency;
+                chemicals.Add(chemicalId, seedChemQuantity);
             }
         }
     }
@@ -305,7 +305,7 @@ public sealed class MutationSystem : EntitySystem
 
     private Color RandomColor(Color color, int bits, int totalbits, float mult)
     {
-        float p = mult*bits/totalbits;
+        float p = mult * bits / totalbits;
         if (Random(p))
         {
             var colors = new List<Color>{
@@ -405,7 +405,5 @@ public sealed class MutationSystem : EntitySystem
     }
 
     private bool Random(float p)
-    {
-        return _robustRandom.Prob(p);
-    }
+        => _robustRandom.Prob(p);
 }
