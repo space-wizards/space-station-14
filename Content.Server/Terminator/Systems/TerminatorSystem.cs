@@ -1,3 +1,4 @@
+using Content.Server.Body.Components;
 using Content.Server.GameTicking.Rules;
 using Content.Server.Ghost.Roles.Events;
 using Content.Server.Objectives.Components;
