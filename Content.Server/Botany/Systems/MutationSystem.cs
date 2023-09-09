@@ -145,9 +145,9 @@ public sealed class MutationSystem : EntitySystem
     private void MutateFloat(ref float val, float min, float max, int bits, int totalbits, float mult)
     {
         // Probability that a bit flip happens for this value.
-        float p = mult * bits / totalbits;
-        p = Math.Clamp(p, 0, 1);
-        if (!Random(p))
+        float probBitflip = mult * bits / totalbits;
+        probBitflip = Math.Clamp(probBitflip, 0, 1);
+        if (!Random(probBitflip))
         {
             return;
         }
@@ -158,9 +158,9 @@ public sealed class MutationSystem : EntitySystem
         valInt = Math.Clamp(valInt, 0, bits);
 
         // Probability that the bit flip increases n.
-        float pIncrease = 1 - (float) valInt / bits;
+        float probIncrease = 1 - (float) valInt / bits;
         int valIntMutated;
-        if (Random(pIncrease))
+        if (Random(probIncrease))
         {
             valIntMutated = valInt + 1;
         }
@@ -177,17 +177,17 @@ public sealed class MutationSystem : EntitySystem
     private void MutateInt(ref int val, int min, int max, int bits, int totalbits, float mult)
     {
         // Probability that a bit flip happens for this value.
-        float p = mult * bits / totalbits;
-        p = Math.Clamp(p, 0, 1);
-        if (!Random(p))
+        float probBitflip = mult * bits / totalbits;
+        probBitflip = Math.Clamp(probBitflip, 0, 1);
+        if (!Random(probBitflip))
         {
             return;
         }
 
         // Probability that the bit flip increases n.
-        float pIncrease = 1 - (float) val / bits;
+        float probIncrease = 1 - (float) val / bits;
         int valMutated;
-        if (Random(pIncrease))
+        if (Random(probIncrease))
         {
             valMutated = val + 1;
         }
@@ -203,9 +203,9 @@ public sealed class MutationSystem : EntitySystem
     private void MutateBool(ref bool val, bool polarity, int bits, int totalbits, float mult)
     {
         // Probability that a bit flip happens for this value.
-        float p = mult * bits / totalbits;
-        p = Math.Clamp(p, 0, 1);
-        if (Random(p))
+        float prob = mult * bits / totalbits;
+        prob = Math.Clamp(prob, 0, 1);
+        if (Random(prob))
         {
             val = polarity;
         }
@@ -213,10 +213,10 @@ public sealed class MutationSystem : EntitySystem
 
     private void MutateHarvestType(ref HarvestType val, int bits, int totalbits, float mult)
     {
-        float p = mult * bits / totalbits;
-        p = Math.Clamp(p, 0, 1);
+        float prob = mult * bits / totalbits;
+        prob = Math.Clamp(prob, 0, 1);
 
-        if (Random(p))
+        if (Random(prob))
         {
             if (val == HarvestType.NoRepeat)
                 val = HarvestType.Repeat;
@@ -227,9 +227,9 @@ public sealed class MutationSystem : EntitySystem
 
     private void MutateGasses(ref Dictionary<Gas, float> gasses, float min, float max, int bits, int totalbits, float mult)
     {
-        float p = mult * bits / totalbits;
-        p = Math.Clamp(p, 0, 1);
-        if (!Random(p))
+        float prob = mult * bits / totalbits;
+        prob = Math.Clamp(prob, 0, 1);
+        if (!Random(prob))
             return;
 
         // Add a random amount of a random gas to this gas dictionary
@@ -247,9 +247,9 @@ public sealed class MutationSystem : EntitySystem
 
     private void MutateChemicals(ref Dictionary<string, SeedChemQuantity> chemicals, int max, int bits, int totalbits, float mult)
     {
-        float p = mult * bits / totalbits;
-        p = Math.Clamp(p, 0, 1);
-        if (!Random(p))
+        float prob = mult * bits / totalbits;
+        prob = Math.Clamp(prob, 0, 1);
+        if (!Random(prob))
             return;
 
         // Add a random amount of a random chemical to this set of chemicals
@@ -305,8 +305,8 @@ public sealed class MutationSystem : EntitySystem
 
     private Color RandomColor(Color color, int bits, int totalbits, float mult)
     {
-        float p = mult * bits / totalbits;
-        if (Random(p))
+        float prob = mult * bits / totalbits;
+        if (Random(prob))
         {
             var colors = new List<Color>{
                 Color.White,
