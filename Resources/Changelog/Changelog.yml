@@ -1,10 +1,4 @@
 Entries:
-- author: Slava0135
-  changes:
-  - {message: now during power grid check event affected APCs can't be turned back
-      on, type: Tweak}
-  id: 4287
-  time: '2023-07-18T21:11:43.0000000+00:00'
 - author: Emisse
   changes:
   - {message: Removed desword from nukie uplink., type: Remove}
@@ -2994,3 +2988,12 @@ Entries:
   - {message: Crossing plants may now combine their produced chemicals., type: Tweak}
   id: 4786
   time: '2023-09-09T21:54:37.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Fixed action ordering., type: Fix}
+  - {message: Fixed not being able to wake up., type: Fix}
+  - {message: Fixed zombies not being able to toggle combat mode., type: Fix}
+  - {message: Fixed getting duplicate crit actions., type: Fix}
+  - {message: Fixed the mime not getting the invisible wall action., type: Fix}
+  id: 4787
+  time: '2023-09-09T23:14:17.0000000+00:00'
