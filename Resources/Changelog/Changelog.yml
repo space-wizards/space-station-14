@@ -1,9 +1,4 @@
 Entries:
-- author: notquitehadouken
-  changes:
-  - {message: Windows can go next to eachother, type: Fix}
-  id: 4286
-  time: '2023-07-18T21:11:28.0000000+00:00'
 - author: Slava0135
   changes:
   - {message: now during power grid check event affected APCs can't be turned back
@@ -2994,3 +2989,8 @@ Entries:
   - {message: Fingerless gloves are now available in the SecDrobe, type: Add}
   id: 4785
   time: '2023-09-09T18:59:03.0000000+00:00'
+- author: DrTeaSpoon
+  changes:
+  - {message: Crossing plants may now combine their produced chemicals., type: Tweak}
+  id: 4786
+  time: '2023-09-09T21:54:37.0000000+00:00'
