@@ -1,3 +1,3 @@
-ent-CrateCargoLuxuryHardsuit = { ent-CrateCargoLuxuryHardsuit }
-	.desc = { ent-CrateCargoLuxuryHardsuit.desc }
+ent-CrateCargoLuxuryHardsuit = роскошный ящик шахтёрского снаряжения
+	.desc = Наконец-то, скафандр, который достоин быть личным для Квартирмейстера. ЦентКом вас услышал, прекратите это запрашивать.
 	.suffix = Заполненный

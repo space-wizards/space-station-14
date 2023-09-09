@@ -1,5 +1,4 @@
 ﻿using Content.Shared.Actions;
-using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Mobs.Components;
 using Robust.Shared.Prototypes;
 
@@ -31,10 +30,10 @@ public sealed class MobStateActionsSystem : EntitySystem
 
             foreach (var item in acts)
             {
-                if (!_proto.TryIndex<InstantActionPrototype>(item, out var proto))
+                if (!_proto.TryIndex<EntityPrototype>(item, out var proto))
                     continue;
 
-                var instance = new InstantAction(proto);
+                var instance = Spawn(item);
                 if (state == args.OldMobState)
                 {
                     // Don't remove actions that would be getting readded anyway

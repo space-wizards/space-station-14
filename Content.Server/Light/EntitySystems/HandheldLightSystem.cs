@@ -2,7 +2,6 @@ using Content.Server.Actions;
 using Content.Server.Popups;
 using Content.Server.PowerCell;
 using Content.Shared.Actions;
-using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Light;
@@ -12,11 +11,8 @@ using Content.Shared.Toggleable;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
-using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
-using Robust.Shared.Player;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Light.EntitySystems
@@ -27,7 +23,6 @@ namespace Content.Server.Light.EntitySystems
         [Dependency] private readonly ActionsSystem _actions = default!;
         [Dependency] private readonly PopupSystem _popup = default!;
         [Dependency] private readonly PowerCellSystem _powerCell = default!;
-        [Dependency] private readonly IPrototypeManager _proto = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
@@ -77,14 +72,7 @@ namespace Content.Server.Light.EntitySystems
 
         private void OnGetActions(EntityUid uid, HandheldLightComponent component, GetItemActionsEvent args)
         {
-            if (component.ToggleAction == null
-                && _proto.TryIndex(component.ToggleActionId, out InstantActionPrototype? act))
-            {
-                component.ToggleAction = new(act);
-            }
-
-            if (component.ToggleAction != null)
-                args.Actions.Add(component.ToggleAction);
+            args.AddAction(ref component.ToggleActionEntity, component.ToggleAction);
         }
 
         private void OnToggleAction(EntityUid uid, HandheldLightComponent component, ToggleActionEvent args)
@@ -107,20 +95,12 @@ namespace Content.Server.Light.EntitySystems
 
         private void OnMapInit(EntityUid uid, HandheldLightComponent component, MapInitEvent args)
         {
-            if (component.ToggleAction == null
-                && _proto.TryIndex(component.ToggleActionId, out InstantActionPrototype? act))
-            {
-                component.ToggleAction = new(act);
-            }
-
-            if (component.ToggleAction != null)
-                _actions.AddAction(uid, component.ToggleAction, null);
+            _actions.AddAction(uid, ref component.ToggleActionEntity, component.ToggleAction);
         }
 
         private void OnShutdown(EntityUid uid, HandheldLightComponent component, ComponentShutdown args)
         {
-            if (component.ToggleAction != null)
-                _actions.RemoveAction(uid, component.ToggleAction);
+            _actions.RemoveAction(uid, component.ToggleActionEntity);
         }
 
         private byte? GetLevel(EntityUid uid, HandheldLightComponent component)
