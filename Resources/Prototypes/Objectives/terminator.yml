@@ -1,0 +1,24 @@
+- type: entity
+  abstract: true
+  parent: BaseObjective
+  id: BaseTerminatorObjective
+  components:
+  - type: RoleRequirement
+    roles:
+      components:
+      - TerminatorRole
+
+- type: entity
+  noSpawn: true
+  parent: [BaseTerminatorObjective, BaseKillObjective]
+  id: TerminateObjective
+  components:
+  - type: Objective
+    description: objective-condition-terminate-description
+    difficulty: 1
+    unique: false
+  - type: TargetObjective
+    title: objective-condition-terminate-title
+  - type: PickRandomPerson
+  - type: KillPersonObjective
+    requireDead: true
