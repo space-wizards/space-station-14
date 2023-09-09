@@ -1,0 +1,6 @@
+- type: entity
+  id: Terminator
+  parent: BaseGameRule
+  noSpawn: true
+  components:
+  - type: TerminatorRule
