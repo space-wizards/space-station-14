@@ -284,7 +284,7 @@ namespace Content.Client.Actions
                 return;
 
             var removed = new List<EntityUid>();
-            var added = new List<EntityUid>();
+            var added = new List<(EntityUid Id, BaseActionComponent Comp)>();
             var query = GetEntityQuery<ActionsComponent>();
             var queue = new Queue<EntityUid>(_actionHoldersQueue);
             _actionHoldersQueue.Clear();
@@ -319,11 +319,13 @@ namespace Content.Client.Actions
                 // Anything that remains is a new action
                 foreach (var newAct in holder.Actions)
                 {
-                    if (!holder.OldClientActions.ContainsKey(newAct))
-                        added.Add(newAct);
+                    if (!TryGetActionData(newAct, out var serverData))
+                        continue;
 
-                    if (TryGetActionData(newAct, out var serverData))
-                        holder.OldClientActions[newAct] = new ActionMetaData(serverData.ClientExclusive, serverData.AutoRemove);
+                    if (!holder.OldClientActions.ContainsKey(newAct))
+                        added.Add((newAct, serverData));
+
+                    holder.OldClientActions[newAct] = new ActionMetaData(serverData.ClientExclusive, serverData.AutoRemove);
                 }
 
                 if (_playerManager.LocalPlayer?.ControlledEntity != holderId)
@@ -334,9 +336,29 @@ namespace Content.Client.Actions
                     ActionRemoved?.Invoke(action);
                 }
 
+                added.Sort(static (a, b) =>
+                {
+                    if (a.Comp.Priority != b.Comp.Priority)
+                        return a.Comp.Priority - b.Comp.Priority;
+
+                    if (a.Comp.Provider != b.Comp.Provider)
+                    {
+                        if (a.Comp.Provider == null)
+                            return -1;
+
+                        if (b.Comp.Provider == null)
+                            return 1;
+
+                        // uid to int casting... it says "Do NOT use this in content". You can't tell me what to do.
+                        return (int) a.Comp.Provider - (int) b.Comp.Provider;
+                    }
+
+                    return 0;
+                });
+
                 foreach (var action in added)
                 {
-                    ActionAdded?.Invoke(action);
+                    ActionAdded?.Invoke(action.Item1);
                 }
 
                 ActionsUpdated?.Invoke();
