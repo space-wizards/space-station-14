@@ -630,18 +630,6 @@
       Steel: 5
 
 - type: entity
-  id: BadThrusterMachineCircuitboard
-  parent: BaseMachineCircuitboard
-  name: a pod thruster machine board
-  components:
-  - type: MachineBoard
-    prototype: BadThruster
-    requirements:
-      Capacitor: 4
-    materialRequirements:
-      Steel: 5
-
-- type: entity
   id: GyroscopeMachineCircuitboard
   parent: BaseMachineCircuitboard
   name: gyroscope machine board

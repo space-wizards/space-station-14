@@ -108,11 +108,9 @@
 
 - type: entity
   id: BadThruster
-  parent: [ BaseThrusterStatic, ConstructibleMachine ]
+  parent: BaseThrusterStatic
   components:
   - type: Thruster
-  - type: Machine
-    board: BadThrusterMachineCircuitboard
   - type: Sprite
     sprite: Structures/Shuttles/thruster.rsi
     layers:
