@@ -19,7 +19,6 @@ namespace Content.Server.Chemistry.ReagentEffectConditions
         [DataField("max")]
         public FixedPoint2 Max = FixedPoint2.MaxValue;
 
-        // TODO use ReagentId
         [DataField("reagent")]
         public string? Reagent;
 
@@ -30,8 +29,10 @@ namespace Content.Server.Chemistry.ReagentEffectConditions
                 return true; // No condition to apply.
 
             var quant = FixedPoint2.Zero;
-            if (args.Source != null)
-                quant = args.Source.GetTotalPrototypeQuantity(reagent);
+            if (args.Source != null && args.Source.ContainsReagent(reagent))
+            {
+                quant = args.Source.GetReagentQuantity(reagent);
+            }
 
             return quant >= Min && quant <= Max;
         }

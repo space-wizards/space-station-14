@@ -1,4 +1,5 @@
 using Content.Shared.Actions;
+using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Clothing.Components;
 using Content.Shared.DoAfter;
 using Content.Shared.IdentityManagement;
@@ -9,6 +10,7 @@ using Content.Shared.Popups;
 using Content.Shared.Strip;
 using Content.Shared.Verbs;
 using Robust.Shared.Containers;
+using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
@@ -58,7 +60,7 @@ public sealed class ToggleableClothingSystem : EntitySystem
         if (!args.CanAccess || !args.CanInteract || component.ClothingUid == null || component.Container == null)
             return;
 
-        var text = component.VerbText ?? (component.ActionEntity == null ? null : Name(component.ActionEntity.Value));
+        var text = component.VerbText ?? component.ToggleAction?.DisplayName;
         if (text == null)
             return;
 
@@ -177,11 +179,8 @@ public sealed class ToggleableClothingSystem : EntitySystem
         // automatically be deleted.
 
         // remove action.
-        if (_actionsSystem.TryGetActionData(component.ActionEntity, out var action) &&
-            action.AttachedEntity != null)
-        {
-            _actionsSystem.RemoveAction(action.AttachedEntity.Value, component.ActionEntity);
-        }
+        if (component.ToggleAction?.AttachedEntity != null)
+            _actionsSystem.RemoveAction(component.ToggleAction.AttachedEntity.Value, component.ToggleAction);
 
         if (component.ClothingUid != null)
             QueueDel(component.ClothingUid.Value);
@@ -201,11 +200,8 @@ public sealed class ToggleableClothingSystem : EntitySystem
             return;
 
         // remove action.
-        if (_actionsSystem.TryGetActionData(toggleComp.ActionEntity, out var action) &&
-            action.AttachedEntity != null)
-        {
-            _actionsSystem.RemoveAction(action.AttachedEntity.Value, toggleComp.ActionEntity);
-        }
+        if (toggleComp.ToggleAction?.AttachedEntity != null)
+            _actionsSystem.RemoveAction(toggleComp.ToggleAction.AttachedEntity.Value, toggleComp.ToggleAction);
 
         RemComp(component.AttachedUid, toggleComp);
     }
@@ -263,7 +259,8 @@ public sealed class ToggleableClothingSystem : EntitySystem
         if (component.ClothingUid == null || (args.SlotFlags & component.RequiredFlags) != component.RequiredFlags)
             return;
 
-        args.AddAction(ref component.ActionEntity, component.Action);
+        if (component.ToggleAction != null)
+            args.Actions.Add(component.ToggleAction);
     }
 
     private void OnInit(EntityUid uid, ToggleableClothingComponent component, ComponentInit args)
@@ -283,9 +280,13 @@ public sealed class ToggleableClothingSystem : EntitySystem
             return;
         }
 
-        component.ActionEntity ??= Spawn(component.Action);
+        if (component.ToggleAction == null
+            && _proto.TryIndex(component.ActionId, out InstantActionPrototype? act))
+        {
+            component.ToggleAction = new(act);
+        }
 
-        if (component.ClothingUid != null && component.ActionEntity != null)
+        if (component.ClothingUid != null && component.ToggleAction != null)
         {
             DebugTools.Assert(Exists(component.ClothingUid), "Toggleable clothing is missing expected entity.");
             DebugTools.Assert(TryComp(component.ClothingUid, out AttachedClothingComponent? comp), "Toggleable clothing is missing an attached component");
@@ -299,10 +300,10 @@ public sealed class ToggleableClothingSystem : EntitySystem
             component.Container.Insert(component.ClothingUid.Value, EntityManager, ownerTransform: xform);
         }
 
-        if (_actionsSystem.TryGetActionData(component.ActionEntity, out var action))
+        if (component.ToggleAction != null)
         {
-            action.EntityIcon = component.ClothingUid;
-            _actionsSystem.Dirty(component.ActionEntity);
+            component.ToggleAction.EntityIcon = component.ClothingUid;
+            _actionsSystem.Dirty(component.ToggleAction);
         }
     }
 }

@@ -80,7 +80,7 @@ namespace Content.Server.Chat
         /// <returns>Returns true if there was a blocked attempt</returns>
         private bool SuicideAttemptBlocked(EntityUid victim, SuicideEvent suicideEvent)
         {
-            RaiseLocalEvent(victim, suicideEvent, true);
+            RaiseLocalEvent(victim, suicideEvent, false);
 
             if (suicideEvent.AttemptBlocked)
                 return true;

@@ -180,27 +180,16 @@ public abstract partial class SharedToolSystem : EntitySystem
         if (!Resolve(tool, ref toolComponent))
             return false;
 
-        // check if the tool can do what's required
-        if (!toolComponent.Qualities.ContainsAll(toolQualitiesNeeded))
-            return false;
-
-        // check if the user allows using the tool
         var ev = new ToolUserAttemptUseEvent(target);
         RaiseLocalEvent(user, ref ev);
         if (ev.Cancelled)
             return false;
 
-        // check if the tool allows being used
-        var beforeAttempt = new ToolUseAttemptEvent(user);
-        RaiseLocalEvent(tool, beforeAttempt);
-        if (beforeAttempt.Cancelled)
+        if (!toolComponent.Qualities.ContainsAll(toolQualitiesNeeded))
             return false;
 
-        // check if the target allows using the tool
-        if (target != null && target != tool)
-        {
-            RaiseLocalEvent(target.Value, beforeAttempt);
-        }
+        var beforeAttempt = new ToolUseAttemptEvent(user);
+        RaiseLocalEvent(tool, beforeAttempt, false);
 
         return !beforeAttempt.Cancelled;
     }

@@ -3,16 +3,15 @@ using System.Linq;
 using Content.Server.Ghost;
 using Content.Server.Ghost.Roles;
 using Content.Server.Ghost.Roles.Components;
+using Content.Server.Mind;
 using Content.Server.Mind.Commands;
+using Content.Server.Mind.Components;
 using Content.Server.Players;
 using Content.Server.Roles;
+using Content.Server.Roles.Jobs;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.FixedPoint;
-using Content.Shared.Mind;
-using Content.Shared.Mind.Components;
-using Content.Shared.Roles;
-using Content.Shared.Roles.Jobs;
 using Robust.Server.Console;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
@@ -62,7 +61,7 @@ public sealed partial class MindTests
 
         await server.WaitAssertion(() =>
         {
-            var mindSystem = entMan.EntitySysManager.GetEntitySystem<SharedMindSystem>();
+            var mindSystem = entMan.EntitySysManager.GetEntitySystem<MindSystem>();
 
             var entity = entMan.SpawnEntity(null, new MapCoordinates());
             var mindComp = entMan.EnsureComponent<MindContainerComponent>(entity);
@@ -89,7 +88,7 @@ public sealed partial class MindTests
 
         await server.WaitAssertion(() =>
         {
-            var mindSystem = entMan.EntitySysManager.GetEntitySystem<SharedMindSystem>();
+            var mindSystem = entMan.EntitySysManager.GetEntitySystem<MindSystem>();
 
             var entity = entMan.SpawnEntity(null, new MapCoordinates());
             var mindComp = entMan.EnsureComponent<MindContainerComponent>(entity);
@@ -123,7 +122,7 @@ public sealed partial class MindTests
         EntityUid entity = default!;
         MindContainerComponent mindContainerComp = default!;
         EntityUid mindId = default!;
-        var mindSystem = entMan.EntitySysManager.GetEntitySystem<SharedMindSystem>();
+        var mindSystem = entMan.EntitySysManager.GetEntitySystem<MindSystem>();
         var damageableSystem = entMan.EntitySysManager.GetEntitySystem<DamageableSystem>();
 
         await server.WaitAssertion(() =>
@@ -177,7 +176,7 @@ public sealed partial class MindTests
 
         await server.WaitAssertion(() =>
         {
-            var mindSystem = entMan.EntitySysManager.GetEntitySystem<SharedMindSystem>();
+            var mindSystem = entMan.EntitySysManager.GetEntitySystem<MindSystem>();
 
             var entity = entMan.SpawnEntity(null, new MapCoordinates());
             var targetEntity = entMan.SpawnEntity(null, new MapCoordinates());
@@ -214,7 +213,7 @@ public sealed partial class MindTests
         var entMan = server.ResolveDependency<IServerEntityManager>();
 
         await pair.RunTicksSync(5);
-        var mindSystem = entMan.EntitySysManager.GetEntitySystem<SharedMindSystem>();
+        var mindSystem = entMan.EntitySysManager.GetEntitySystem<MindSystem>();
         var originalMind = GetMind(pair);
         var userId = originalMind.Comp.UserId;
 
@@ -270,8 +269,8 @@ public sealed partial class MindTests
 
         await server.WaitAssertion(() =>
         {
-            var mindSystem = entMan.EntitySysManager.GetEntitySystem<SharedMindSystem>();
-            var roleSystem = entMan.EntitySysManager.GetEntitySystem<SharedRoleSystem>();
+            var mindSystem = entMan.EntitySysManager.GetEntitySystem<MindSystem>();
+            var roleSystem = entMan.EntitySysManager.GetEntitySystem<RoleSystem>();
 
             var entity = entMan.SpawnEntity(null, new MapCoordinates());
             var mindComp = entMan.EnsureComponent<MindContainerComponent>(entity);
@@ -340,7 +339,7 @@ public sealed partial class MindTests
         var entMan = server.ResolveDependency<IServerEntityManager>();
         var playerMan = server.ResolveDependency<IPlayerManager>();
 
-        var mindSystem = entMan.EntitySysManager.GetEntitySystem<SharedMindSystem>();
+        var mindSystem = entMan.EntitySysManager.GetEntitySystem<MindSystem>();
         var ghostSystem = entMan.EntitySysManager.GetEntitySystem<GhostSystem>();
 
         EntityUid entity = default!;

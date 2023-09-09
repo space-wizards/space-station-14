@@ -10,6 +10,7 @@ public sealed class RehydratableSystem : EntitySystem
     [Dependency] private readonly SharedPopupSystem _popups = default!;
     [Dependency] private readonly SolutionContainerSystem _solutions = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     public override void Initialize()
     {
@@ -20,7 +21,7 @@ public sealed class RehydratableSystem : EntitySystem
 
     private void OnSolutionChange(EntityUid uid, RehydratableComponent comp, SolutionChangedEvent args)
     {
-        var quantity = _solutions.GetTotalPrototypeQuantity(uid, comp.CatalystPrototype);
+        var quantity = _solutions.GetReagentQuantity(uid, comp.CatalystPrototype);
         if (quantity != FixedPoint2.Zero && quantity >= comp.CatalystMinimum)
         {
             Expand(uid, comp);
@@ -36,7 +37,7 @@ public sealed class RehydratableSystem : EntitySystem
 
         var target = Spawn(randomMob, Transform(uid).Coordinates);
 
-        Transform(target).AttachToGridOrMap();
+        _transform.AttachToGridOrMap(target);
         var ev = new GotRehydratedEvent(target);
         RaiseLocalEvent(uid, ref ev);
 

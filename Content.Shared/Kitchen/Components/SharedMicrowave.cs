@@ -1,5 +1,4 @@
 using Content.Shared.Chemistry.Components;
-using Content.Shared.Chemistry.Reagent;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Kitchen.Components
@@ -28,8 +27,8 @@ namespace Content.Shared.Kitchen.Components
     [Serializable, NetSerializable]
     public sealed class MicrowaveVaporizeReagentIndexedMessage : BoundUserInterfaceMessage
     {
-        public ReagentQuantity ReagentQuantity;
-        public MicrowaveVaporizeReagentIndexedMessage(ReagentQuantity reagentQuantity)
+        public Solution.ReagentQuantity ReagentQuantity;
+        public MicrowaveVaporizeReagentIndexedMessage(Solution.ReagentQuantity reagentQuantity)
         {
             ReagentQuantity = reagentQuantity;
         }
@@ -71,8 +70,7 @@ namespace Content.Shared.Kitchen.Components
     {
         Idle,
         Cooking,
-        Broken,
-        Bloody
+        Broken
     }
 
     [NetSerializable, Serializable]

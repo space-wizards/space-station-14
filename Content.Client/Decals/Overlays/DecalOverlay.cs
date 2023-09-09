@@ -11,6 +11,7 @@ namespace Content.Client.Decals.Overlays
         private readonly SpriteSystem _sprites;
         private readonly IEntityManager _entManager;
         private readonly IPrototypeManager _prototypeManager;
+        private readonly SharedTransformSystem _transform;
 
         public override OverlaySpace Space => OverlaySpace.WorldSpaceBelowEntities;
 
@@ -24,6 +25,7 @@ namespace Content.Client.Decals.Overlays
             _sprites = sprites;
             _entManager = entManager;
             _prototypeManager = prototypeManager;
+            _transform = _entManager.System<SharedTransformSystem>();
         }
 
         protected override void Draw(in OverlayDrawArgs args)
@@ -44,7 +46,7 @@ namespace Content.Client.Decals.Overlays
                 if (xform.MapID != args.MapId)
                     continue;
 
-                var (_, worldRot, worldMatrix) = xform.GetWorldPositionRotationMatrix(xformQuery);
+                var (_, worldRot, worldMatrix) = _transform.GetWorldPositionRotationMatrix(xform, xformQuery);
 
                 handle.SetTransform(worldMatrix);
 

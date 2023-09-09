@@ -1,9 +1,11 @@
 using Content.Shared.Actions;
 using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.Item;
-using Content.Shared.Light.Components;
 using Content.Shared.Toggleable;
+using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
+using Robust.Shared.Player;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Light;
 
@@ -71,8 +73,8 @@ public abstract class SharedHandheldLightSystem : EntitySystem
             _clothingSys.SetEquippedPrefix(uid, prefix);
         }
 
-        if (component.ToggleActionEntity != null)
-            _actionSystem.SetToggled(component.ToggleActionEntity, component.Activated);
+        if (component.ToggleAction != null)
+            _actionSystem.SetToggled(component.ToggleAction, component.Activated);
 
         _appearance.SetData(uid, ToggleableLightVisuals.Enabled, component.Activated, appearance);
     }

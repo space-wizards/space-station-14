@@ -1,59 +1,47 @@
-﻿- type: entity
-  id: ActionFlashRune
+﻿- type: instantAction
+  id: FlashRune
   name: action-name-spell-rune-flash
   description: action-description-spell-rune-flash
-  noSpawn: true
-  components:
-  - type: InstantAction
-    useDelay: 10
-    itemIconStyle: BigAction
-    icon:
-      sprite: Objects/Magic/magicactions.rsi
-      state: spell_default
-    event: !type:InstantSpawnSpellEvent
-      prototype: FlashRune
+  useDelay: 10
+  itemIconStyle: BigAction
+  icon:
+    sprite: Objects/Magic/magicactions.rsi
+    state: spell_default
+  serverEvent: !type:InstantSpawnSpellEvent
+    prototype: FlashRune
 
-- type: entity
-  id: ActionExplosionRune
+- type: instantAction
+  id: ExplosionRune
   name: action-name-spell-rune-explosion
   description: action-description-spell-rune-explosion
-  noSpawn: true
-  components:
-  - type: InstantAction
-    useDelay: 20
-    itemIconStyle: BigAction
-    icon:
-      sprite: Objects/Magic/magicactions.rsi
-      state: spell_default
-    event: !type:InstantSpawnSpellEvent
-      prototype: ExplosionRune
+  useDelay: 20
+  itemIconStyle: BigAction
+  icon:
+    sprite: Objects/Magic/magicactions.rsi
+    state: spell_default
+  serverEvent: !type:InstantSpawnSpellEvent
+    prototype: ExplosionRune
 
-- type: entity
-  id: ActionIgniteRune
+- type: instantAction
+  id: IgniteRune
   name: action-name-spell-rune-ignite
   description: action-description-spell-rune-ignite
-  noSpawn: true
-  components:
-  - type: InstantAction
-    useDelay: 15
-    itemIconStyle: BigAction
-    icon:
-      sprite: Objects/Magic/magicactions.rsi
-      state: spell_default
-    event: !type:InstantSpawnSpellEvent
-      prototype: IgniteRune
+  useDelay: 15
+  itemIconStyle: BigAction
+  icon:
+    sprite: Objects/Magic/magicactions.rsi
+    state: spell_default
+  serverEvent: !type:InstantSpawnSpellEvent
+    prototype: IgniteRune
 
-- type: entity
-  id: ActionStunRune
+- type: instantAction
+  id: StunRune
   name: action-name-spell-rune-stun
   description: action-description-spell-rune-stun
-  noSpawn: true
-  components:
-  - type: InstantAction
-    useDelay: 10
-    itemIconStyle: BigAction
-    icon:
-      sprite: Objects/Magic/magicactions.rsi
-      state: spell_default
-    event: !type:InstantSpawnSpellEvent
-      prototype: StunRune
+  useDelay: 10
+  itemIconStyle: BigAction
+  icon:
+    sprite: Objects/Magic/magicactions.rsi
+    state: spell_default
+  serverEvent: !type:InstantSpawnSpellEvent
+    prototype: StunRune

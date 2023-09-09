@@ -1,7 +1,6 @@
 using Content.Server.Storage.Components;
 using Content.Shared.Construction;
 using Content.Shared.Examine;
-using Content.Shared.Tools.Systems;
 using JetBrains.Annotations;
 
 namespace Content.Server.Construction.Conditions
@@ -15,7 +14,10 @@ namespace Content.Server.Construction.Conditions
 
         public bool Condition(EntityUid uid, IEntityManager entityManager)
         {
-            return entityManager.System<WeldableSystem>().IsWelded(uid) == Welded;
+            if (!entityManager.TryGetComponent(uid, out EntityStorageComponent? entityStorageComponent))
+                return false;
+
+            return entityStorageComponent.IsWeldedShut == Welded;
         }
 
         public bool DoExamine(ExaminedEvent args)
@@ -23,12 +25,11 @@ namespace Content.Server.Construction.Conditions
             var entMan = IoCManager.Resolve<IEntityManager>();
             var entity = args.Examined;
 
-            if (!entMan.HasComponent<EntityStorageComponent>(entity))
-                return false;
+            if (!entMan.TryGetComponent(entity, out EntityStorageComponent? entityStorage)) return false;
 
             var metaData = entMan.GetComponent<MetaDataComponent>(entity);
 
-            if (entMan.System<WeldableSystem>().IsWelded(entity) != Welded)
+            if (entityStorage.IsWeldedShut != Welded)
             {
                 if (Welded)
                     args.PushMarkup(Loc.GetString("construction-examine-condition-door-weld", ("entityName", metaData.EntityName)) + "\n");

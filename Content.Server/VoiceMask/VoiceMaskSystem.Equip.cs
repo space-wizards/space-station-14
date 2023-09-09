@@ -1,6 +1,9 @@
 using Content.Server.Actions;
+using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
+using Content.Shared.Speech;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.VoiceMask;
 
@@ -9,6 +12,7 @@ public sealed partial class VoiceMaskSystem
 {
     [Dependency] private readonly InventorySystem _inventory = default!;
     [Dependency] private readonly ActionsSystem _actions = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
     private const string MaskSlot = "mask";
 
@@ -22,7 +26,12 @@ public sealed partial class VoiceMaskSystem
         var comp = EnsureComp<VoiceMaskComponent>(user);
         comp.VoiceName = component.LastSetName;
 
-        _actions.AddAction(user, ref component.ActionEntity, component.Action, uid);
+        if (!_prototypeManager.TryIndex<InstantActionPrototype>(component.Action, out var action))
+        {
+            throw new ArgumentException("Could not get voice masking prototype.");
+        }
+
+        _actions.AddAction(user, (InstantAction) action.Clone(), uid);
     }
 
     private void OnUnequip(EntityUid uid, VoiceMaskerComponent compnent, GotUnequippedEvent args)

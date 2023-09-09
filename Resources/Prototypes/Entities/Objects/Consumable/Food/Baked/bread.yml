@@ -631,7 +631,7 @@
 # Tastes like bread, butter.
 
 - type: entity
-  name: french toast
+  name: f toast
   parent: FoodBreadSliceBase
   id: FoodBreadFrenchToast
   description: A slice of bread soaked in a beaten egg mixture.

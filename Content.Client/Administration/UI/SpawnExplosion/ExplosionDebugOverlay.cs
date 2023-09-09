@@ -14,6 +14,7 @@ public sealed class ExplosionDebugOverlay : Overlay
     [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly IEyeManager _eyeManager = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
+    private readonly SharedTransformSystem _transform;
 
     public Dictionary<int, List<Vector2i>>? SpaceTiles;
     public Dictionary<EntityUid, Dictionary<int, List<Vector2i>>> Tiles = new();
@@ -35,6 +36,8 @@ public sealed class ExplosionDebugOverlay : Overlay
 
         var cache = IoCManager.Resolve<IResourceCache>();
         _font = new VectorFont(cache.GetResource<FontResource>("/Fonts/NotoSans/NotoSans-Regular.ttf"), 8);
+
+        _transform = _entityManager.System<SharedTransformSystem>();
     }
 
     protected override void Draw(in OverlayDrawArgs args)
@@ -68,7 +71,7 @@ public sealed class ExplosionDebugOverlay : Overlay
                 continue;
 
             var gridXform = xformQuery.GetComponent(grid.Owner);
-            var (_, _, matrix, invMatrix) = gridXform.GetWorldPositionRotationMatrixWithInv(xformQuery);
+            var (_, _, matrix, invMatrix) = _transform.GetWorldPositionRotationMatrixWithInv(gridXform, xformQuery);
             gridBounds = invMatrix.TransformBox(args.WorldBounds).Enlarged(grid.TileSize * 2);
             DrawText(handle, gridBounds, matrix, tileSets, grid.TileSize);
         }
@@ -136,7 +139,7 @@ public sealed class ExplosionDebugOverlay : Overlay
                 continue;
 
             var gridXform = xformQuery.GetComponent(grid.Owner);
-            var (_, _, worldMatrix, invWorldMatrix) = gridXform.GetWorldPositionRotationMatrixWithInv(xformQuery);
+            var (_, _, worldMatrix, invWorldMatrix) = _transform.GetWorldPositionRotationMatrixWithInv(gridXform, xformQuery);
             gridBounds = invWorldMatrix.TransformBox(args.WorldBounds).Enlarged(grid.TileSize * 2);
             handle.SetTransform(worldMatrix);
             DrawTiles(handle, gridBounds, tileSets, SpaceTileSize);

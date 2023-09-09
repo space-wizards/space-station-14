@@ -1,6 +1,5 @@
 using System.Linq;
 using Content.Server.Cargo.Components;
-using Content.Server.GameTicking.Events;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Events;
 using Content.Shared.Stacks;
@@ -42,8 +41,6 @@ public sealed partial class CargoSystem
         SubscribeLocalEvent<CargoPalletConsoleComponent, BoundUIOpenedEvent>(OnPalletUIOpen);
 
         SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestart);
-        SubscribeLocalEvent<RoundStartingEvent>(OnRoundStart);
-
         _cfgManager.OnValueChanged(CCVars.GridFill, SetGridFill);
     }
 
@@ -374,10 +371,7 @@ public sealed partial class CargoSystem
     {
         Reset();
         CleanupCargoShuttle();
-    }
 
-    private void OnRoundStart(RoundStartingEvent ev)
-    {
         if (_cfgManager.GetCVar(CCVars.GridFill))
             SetupCargoShuttle();
     }

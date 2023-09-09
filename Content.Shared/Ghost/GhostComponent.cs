@@ -1,8 +1,9 @@
 using Content.Shared.Actions;
+using Content.Shared.Actions.ActionTypes;
 using Robust.Shared.GameStates;
-using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Ghost;
 
@@ -14,23 +15,35 @@ public sealed partial class GhostComponent : Component
     [ViewVariables]
     public bool IsAttached;
 
-    [DataField("toggleLightingAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string ToggleLightingAction = "ActionToggleLighting";
+    public InstantAction ToggleLightingAction = new()
+    {
+        Icon = new SpriteSpecifier.Texture(new ("Interface/VerbIcons/light.svg.192dpi.png")),
+        DisplayName = "ghost-gui-toggle-lighting-manager-name",
+        Description = "ghost-gui-toggle-lighting-manager-desc",
+        ClientExclusive = true,
+        CheckCanInteract = false,
+        Event = new ToggleLightingActionEvent(),
+    };
 
-    [DataField("toggleLightingActionEntity")]
-    public EntityUid? ToggleLightingActionEntity;
+    public InstantAction ToggleFoVAction = new()
+    {
+        Icon = new SpriteSpecifier.Texture(new ("Interface/VerbIcons/vv.svg.192dpi.png")),
+        DisplayName = "ghost-gui-toggle-fov-name",
+        Description = "ghost-gui-toggle-fov-desc",
+        ClientExclusive = true,
+        CheckCanInteract = false,
+        Event = new ToggleFoVActionEvent(),
+    };
 
-    [DataField("toggleFovAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string ToggleFoVAction = "ActionToggleFov";
-
-    [DataField("toggleFovActionEntity")]
-    public EntityUid? ToggleFoVActionEntity;
-
-    [DataField("toggleGhostsAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string ToggleGhostsAction = "ActionToggleGhosts";
-
-    [DataField("toggleGhostsActionEntity")]
-    public EntityUid? ToggleGhostsActionEntity;
+    public InstantAction ToggleGhostsAction = new()
+    {
+        Icon = new SpriteSpecifier.Rsi(new ("Mobs/Ghosts/ghost_human.rsi"), "icon"),
+        DisplayName = "ghost-gui-toggle-ghost-visibility-name",
+        Description = "ghost-gui-toggle-ghost-visibility-desc",
+        ClientExclusive = true,
+        CheckCanInteract = false,
+        Event = new ToggleGhostsActionEvent(),
+    };
 
     [ViewVariables(VVAccess.ReadWrite), DataField("timeOfDeath", customTypeSerializer:typeof(TimeOffsetSerializer))]
     public TimeSpan TimeOfDeath = TimeSpan.Zero;
@@ -41,10 +54,16 @@ public sealed partial class GhostComponent : Component
     [DataField("booMaxTargets")]
     public int BooMaxTargets = 3;
 
-    [DataField("action", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string Action = "ActionGhostBoo";
-
-    [DataField("actionEntity")] public EntityUid? ActionEntity;
+    [DataField("action")]
+    public InstantAction Action = new()
+    {
+        UseDelay = TimeSpan.FromSeconds(120),
+        Icon = new SpriteSpecifier.Texture(new ("Interface/Actions/scream.png")),
+        DisplayName = "action-name-boo",
+        Description = "action-description-boo",
+        CheckCanInteract = false,
+        Event = new BooActionEvent(),
+    };
 
     // TODO: instead of this funny stuff just give it access and update in system dirtying when needed
     [ViewVariables(VVAccess.ReadWrite)]

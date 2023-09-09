@@ -297,14 +297,14 @@ public sealed class MobThresholdSystem : EntitySystem
     #region Private Implementation
 
     private void CheckThresholds(EntityUid target, MobStateComponent mobStateComponent,
-        MobThresholdsComponent thresholdsComponent, DamageableComponent damageableComponent, EntityUid? origin = null)
+        MobThresholdsComponent thresholdsComponent, DamageableComponent damageableComponent)
     {
         foreach (var (threshold, mobState) in thresholdsComponent.Thresholds.Reverse())
         {
             if (damageableComponent.TotalDamage < threshold)
                 continue;
 
-            TriggerThreshold(target, mobState, mobStateComponent, thresholdsComponent, origin);
+            TriggerThreshold(target, mobState, mobStateComponent, thresholdsComponent);
             break;
         }
     }
@@ -313,8 +313,7 @@ public sealed class MobThresholdSystem : EntitySystem
         EntityUid target,
         MobState newState,
         MobStateComponent? mobState = null,
-        MobThresholdsComponent? thresholds = null,
-        EntityUid? origin = null)
+        MobThresholdsComponent? thresholds = null)
     {
         if (!Resolve(target, ref mobState, ref thresholds) ||
             mobState.CurrentState == newState)
@@ -328,7 +327,7 @@ public sealed class MobThresholdSystem : EntitySystem
             Dirty(target, thresholds);
         }
 
-        _mobStateSystem.UpdateMobState(target, mobState, origin);
+        _mobStateSystem.UpdateMobState(target, mobState);
     }
 
     private void UpdateAlerts(EntityUid target, MobState currentMobState, MobThresholdsComponent? threshold = null,
@@ -375,7 +374,7 @@ public sealed class MobThresholdSystem : EntitySystem
     {
         if (!TryComp<MobStateComponent>(target, out var mobState))
             return;
-        CheckThresholds(target, mobState, thresholds, args.Damageable, args.Origin);
+        CheckThresholds(target, mobState, thresholds, args.Damageable);
         var ev = new MobThresholdChecked(target, mobState, thresholds, args.Damageable);
         RaiseLocalEvent(target, ref ev, true);
         UpdateAlerts(target, mobState.CurrentState, thresholds, args.Damageable);

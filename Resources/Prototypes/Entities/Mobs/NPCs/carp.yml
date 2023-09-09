@@ -75,8 +75,6 @@
         - DoorBumpOpener
     - type: ReplacementAccent
       accent: genericAggressive
-    - type: Speech
-      speechVerb: LargeMob
 
 - type: entity
   parent: BaseMobCarp

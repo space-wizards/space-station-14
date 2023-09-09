@@ -1,5 +1,5 @@
-﻿using Content.Shared.Mind;
-using Content.Shared.Objectives.Interfaces;
+﻿using Content.Server.Mind;
+using Content.Server.Objectives.Interfaces;
 
 namespace Content.Server.Objectives.Requirements
 {

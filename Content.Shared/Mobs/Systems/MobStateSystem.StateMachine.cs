@@ -32,7 +32,7 @@ public partial class MobStateSystem
 
         var ev = new UpdateMobStateEvent {Target = entity, Component = component, Origin = origin};
         RaiseLocalEvent(entity, ref ev);
-        ChangeState(entity, component, ev.State, origin: origin);
+        ChangeState(entity, component, ev.State);
     }
 
     /// <summary>

@@ -1,4 +1,3 @@
-using Content.Shared.DoAfter;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
@@ -14,8 +13,6 @@ namespace Content.Shared.Weapons.Ranged.Systems;
 
 public abstract partial class SharedGunSystem
 {
-    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
-
     protected virtual void InitializeBallistic()
     {
         SubscribeLocalEvent<BallisticAmmoProviderComponent, ComponentInit>(OnBallisticInit);
@@ -27,7 +24,6 @@ public abstract partial class SharedGunSystem
         SubscribeLocalEvent<BallisticAmmoProviderComponent, GetVerbsEvent<Verb>>(OnBallisticVerb);
         SubscribeLocalEvent<BallisticAmmoProviderComponent, InteractUsingEvent>(OnBallisticInteractUsing);
         SubscribeLocalEvent<BallisticAmmoProviderComponent, AfterInteractEvent>(OnBallisticAfterInteract);
-        SubscribeLocalEvent<BallisticAmmoProviderComponent, AmmoFillDoAfterEvent>(OnBallisticAmmoFillDoAfter);
         SubscribeLocalEvent<BallisticAmmoProviderComponent, UseInHandEvent>(OnBallisticUse);
     }
 
@@ -65,7 +61,7 @@ public abstract partial class SharedGunSystem
             args.Target == null ||
             args.Used == args.Target ||
             Deleted(args.Target) ||
-            !TryComp<BallisticAmmoProviderComponent>(args.Target, out var targetComponent) ||
+            !TryComp(args.Target, out BallisticAmmoProviderComponent? targetComponent) ||
             targetComponent.Whitelist == null)
         {
             return;
@@ -73,23 +69,7 @@ public abstract partial class SharedGunSystem
 
         args.Handled = true;
 
-        _doAfter.TryStartDoAfter(new DoAfterArgs(args.User, component.FillDelay, new AmmoFillDoAfterEvent(), used: uid, target: args.Target, eventTarget: uid)
-        {
-            BreakOnTargetMove = true,
-            BreakOnUserMove = true,
-            BreakOnDamage = false,
-            NeedHand = true
-        });
-    }
-
-    private void OnBallisticAmmoFillDoAfter(EntityUid uid, BallisticAmmoProviderComponent component, AmmoFillDoAfterEvent args)
-    {
-        if (Deleted(args.Target) ||
-            !TryComp<BallisticAmmoProviderComponent>(args.Target, out var target) ||
-            target.Whitelist == null)
-            return;
-
-        if (target.Entities.Count + target.UnspawnedCount == target.Capacity)
+        if (targetComponent.Entities.Count + targetComponent.UnspawnedCount == targetComponent.Capacity)
         {
             Popup(
                 Loc.GetString("gun-ballistic-transfer-target-full",
@@ -103,8 +83,8 @@ public abstract partial class SharedGunSystem
         {
             Popup(
                 Loc.GetString("gun-ballistic-transfer-empty",
-                    ("entity", uid)),
-                uid,
+                    ("entity", args.Used)),
+                args.Used,
                 args.User);
             return;
         }
@@ -116,25 +96,27 @@ public abstract partial class SharedGunSystem
         }
 
         List<(EntityUid? Entity, IShootable Shootable)> ammo = new();
-        var evTakeAmmo = new TakeAmmoEvent(1, ammo, Transform(uid).Coordinates, args.User);
-        RaiseLocalEvent(uid, evTakeAmmo);
+        var evTakeAmmo = new TakeAmmoEvent(1, ammo, Transform(args.Used).Coordinates, args.User);
+        RaiseLocalEvent(args.Used, evTakeAmmo);
 
         foreach (var (ent, _) in ammo)
         {
             if (ent == null)
                 continue;
 
-            if (!target.Whitelist.IsValid(ent.Value))
+            if (!targetComponent.Whitelist.IsValid(ent.Value))
             {
                 Popup(
                     Loc.GetString("gun-ballistic-transfer-invalid",
                         ("ammoEntity", ent.Value),
                         ("targetEntity", args.Target.Value)),
-                    uid,
+                    args.Used,
                     args.User);
 
-                // play sound to be cool
-                SimulateInsertAmmo(ent.Value, uid, Transform(uid).Coordinates);
+                // TODO: For better or worse, this will play a sound, but it's the
+                // more future-proof thing to do than copying the same code
+                // that OnBallisticInteractUsing has, sans sound.
+                SimulateInsertAmmo(ent.Value, args.Used, Transform(args.Used).Coordinates);
             }
             else
             {
@@ -144,11 +126,6 @@ public abstract partial class SharedGunSystem
             if (ent.Value.IsClientSide())
                 Del(ent.Value);
         }
-
-        // repeat if there is more space in the target and more ammo to fill it
-        var moreSpace = target.Entities.Count + target.UnspawnedCount < target.Capacity;
-        var moreAmmo = component.Entities.Count + component.UnspawnedCount > 0;
-        args.Repeat = moreSpace && moreAmmo;
     }
 
     private void OnBallisticVerb(EntityUid uid, BallisticAmmoProviderComponent component, GetVerbsEvent<Verb> args)
@@ -239,7 +216,7 @@ public abstract partial class SharedGunSystem
             {
                 entity = component.Entities[^1];
 
-                args.Ammo.Add((entity, EnsureShootable(entity)));
+                args.Ammo.Add((entity, EnsureComp<AmmoComponent>(entity)));
                 component.Entities.RemoveAt(component.Entities.Count - 1);
                 component.Container.Remove(entity);
             }
@@ -247,7 +224,7 @@ public abstract partial class SharedGunSystem
             {
                 component.UnspawnedCount--;
                 entity = Spawn(component.FillProto, args.Coordinates);
-                args.Ammo.Add((entity, EnsureShootable(entity)));
+                args.Ammo.Add((entity, EnsureComp<AmmoComponent>(entity)));
             }
         }
 
@@ -269,12 +246,4 @@ public abstract partial class SharedGunSystem
         Appearance.SetData(uid, AmmoVisuals.AmmoCount, GetBallisticShots(component), appearance);
         Appearance.SetData(uid, AmmoVisuals.AmmoMax, component.Capacity, appearance);
     }
-}
-
-/// <summary>
-/// DoAfter event for filling one ballistic ammo provider from another.
-/// </summary>
-[Serializable, NetSerializable]
-public sealed partial class AmmoFillDoAfterEvent : SimpleDoAfterEvent
-{
 }

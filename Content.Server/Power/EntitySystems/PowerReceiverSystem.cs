@@ -157,6 +157,25 @@ namespace Content.Server.Power.EntitySystems
         }
 
         /// <summary>
+        /// Return the fraction of the load power that is actually supplied to this receiver, e.g. 1
+        /// if full power and 0 if no power. Better at handling brownouts compared to IsPowered().
+        /// Handles always-powered devices correctly.
+        /// </summary>
+        public float SupplyFactor(EntityUid uid, ApcPowerReceiverComponent? receiver = null)
+        {
+            if (!Resolve(uid, ref receiver, false))
+                return 1f;
+
+            if (receiver.PowerDisabled)
+                return 0f;
+
+            if (!receiver.NeedsPower)
+                return 1f;
+
+            return receiver.NetworkLoad.ReceivingPower / receiver.Load;
+        }
+
+        /// <summary>
         /// Turn this machine on or off.
         /// Returns true if we turned it on, false if we turned it off.
         /// </summary>

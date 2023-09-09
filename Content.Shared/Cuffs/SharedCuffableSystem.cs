@@ -141,8 +141,7 @@ namespace Content.Shared.Cuffs
 
         private void OnCuffsRemovedFromContainer(EntityUid uid, CuffableComponent component, EntRemovedFromContainerMessage args)
         {
-            // ReSharper disable once ConditionalAccessQualifierIsNonNullableAccordingToAPIContract
-            if (args.Container.ID != component.Container?.ID)
+            if (args.Container.ID != component.Container.ID)
                 return;
 
             _handVirtualItem.DeleteInHandsMatching(uid, args.Entity);

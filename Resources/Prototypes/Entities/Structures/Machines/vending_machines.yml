@@ -1794,7 +1794,7 @@
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: AccessReader
-    access: [["NuclearOperative"], ["SyndicateAgent"]]
+    access: [["NuclearOperative"]]
 
 - type: entity
   parent: VendingMachine

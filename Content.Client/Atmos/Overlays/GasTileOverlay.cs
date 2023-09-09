@@ -19,6 +19,7 @@ namespace Content.Client.Atmos.Overlays
     public sealed class GasTileOverlay : Overlay
     {
         private readonly IEntityManager _entManager;
+        private readonly SharedTransformSystem _transform;
         private readonly IMapManager _mapManager;
 
         public override OverlaySpace Space => OverlaySpace.WorldSpaceEntities;
@@ -48,6 +49,7 @@ namespace Content.Client.Atmos.Overlays
         public GasTileOverlay(GasTileOverlaySystem system, IEntityManager entManager, IResourceCache resourceCache, IPrototypeManager protoMan, SpriteSystem spriteSys)
         {
             _entManager = entManager;
+            _transform = entManager.System<SharedTransformSystem>();
             _mapManager = IoCManager.Resolve<IMapManager>();
             _shader = protoMan.Index<ShaderPrototype>("unshaded").Instance();
             ZIndex = GasOverlayZIndex;
@@ -182,7 +184,7 @@ namespace Content.Client.Atmos.Overlays
 
             // TODO: WorldBounds callback.
             _mapManager.FindGridsIntersecting(args.MapId, args.WorldAABB, ref gridState,
-                static (EntityUid uid, MapGridComponent grid,
+                (EntityUid uid, MapGridComponent grid,
                     ref (Box2Rotated WorldBounds,
                         DrawingHandleWorld drawHandle,
                         int gasCount,
@@ -200,7 +202,7 @@ namespace Content.Client.Atmos.Overlays
                             return true;
                         }
 
-                    var (_, _, worldMatrix, invMatrix) = gridXform.GetWorldPositionRotationMatrixWithInv();
+                    var (_, _, worldMatrix, invMatrix) = _transform.GetWorldPositionRotationMatrixWithInv(gridXform);
                     state.drawHandle.SetTransform(worldMatrix);
                     var floatBounds = invMatrix.TransformBox(in state.WorldBounds).Enlarged(grid.TileSize);
                     var localBounds = new Box2i(

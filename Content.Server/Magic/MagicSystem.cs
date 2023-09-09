@@ -4,8 +4,10 @@ using Content.Server.Body.Systems;
 using Content.Server.Chat.Systems;
 using Content.Server.Doors.Systems;
 using Content.Server.Magic.Components;
+using Content.Server.Magic.Events;
 using Content.Server.Weapons.Ranged.Systems;
 using Content.Shared.Actions;
+using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Body.Components;
 using Content.Shared.Coordinates.Helpers;
 using Content.Shared.DoAfter;
@@ -13,7 +15,6 @@ using Content.Shared.Doors.Components;
 using Content.Shared.Doors.Systems;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Magic;
-using Content.Shared.Magic.Events;
 using Content.Shared.Maps;
 using Content.Shared.Physics;
 using Content.Shared.Spawners.Components;
@@ -21,8 +22,11 @@ using Content.Shared.Storage;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
+using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager;
+using Robust.Shared.Serialization.Manager.Exceptions;
 
 namespace Content.Server.Magic;
 
@@ -34,6 +38,7 @@ public sealed class MagicSystem : EntitySystem
     [Dependency] private readonly ISerializationManager _seriMan = default!;
     [Dependency] private readonly IComponentFactory _compFact = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly DoorBoltSystem _boltsSystem = default!;
     [Dependency] private readonly BodySystem _bodySystem = default!;
@@ -76,9 +81,23 @@ public sealed class MagicSystem : EntitySystem
     private void OnInit(EntityUid uid, SpellbookComponent component, ComponentInit args)
     {
         //Negative charges means the spell can be used without it running out.
-        foreach (var (id, charges) in component.SpellActions)
+        foreach (var (id, charges) in component.WorldSpells)
         {
-            var spell = Spawn(id);
+            var spell = new WorldTargetAction(_prototypeManager.Index<WorldTargetActionPrototype>(id));
+            _actionsSystem.SetCharges(spell, charges < 0 ? null : charges);
+            component.Spells.Add(spell);
+        }
+
+        foreach (var (id, charges) in component.InstantSpells)
+        {
+            var spell = new InstantAction(_prototypeManager.Index<InstantActionPrototype>(id));
+            _actionsSystem.SetCharges(spell, charges < 0 ? null : charges);
+            component.Spells.Add(spell);
+        }
+
+        foreach (var (id, charges) in component.EntitySpells)
+        {
+            var spell = new EntityTargetAction(_prototypeManager.Index<EntityTargetActionPrototype>(id));
             _actionsSystem.SetCharges(spell, charges < 0 ? null : charges);
             component.Spells.Add(spell);
         }
@@ -255,10 +274,11 @@ public sealed class MagicSystem : EntitySystem
 
         var transform = Transform(args.Performer);
 
-        if (transform.MapID != args.Target.GetMapId(EntityManager)) return;
+        if (transform.MapID != args.Target.GetMapId(EntityManager))
+            return;
 
         _transformSystem.SetCoordinates(args.Performer, args.Target);
-        transform.AttachToGridOrMap();
+        _transformSystem.AttachToGridOrMap(args.Performer, transform);
         _audio.PlayPvs(args.BlinkSound, args.Performer, AudioParams.Default.WithVolume(args.BlinkVolume));
         Speak(args);
         args.Handled = true;

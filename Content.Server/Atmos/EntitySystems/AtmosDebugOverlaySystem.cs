@@ -18,6 +18,7 @@ namespace Content.Server.Atmos.EntitySystems
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IConfigurationManager _configManager = default!;
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
+        [Dependency] private readonly SharedTransformSystem _transform = default!;
 
         /// <summary>
         ///     Players allowed to see the atmos debug overlay.
@@ -134,7 +135,7 @@ namespace Content.Server.Atmos.EntitySystems
 
                 var mapIsSpace = _atmosphereSystem.IsTileSpace(null, mapUid, Vector2i.Zero);
 
-                var worldBounds = Box2.CenteredAround(transform.WorldPosition,
+                var worldBounds = Box2.CenteredAround(_transform.GetWorldPosition(transform),
                     new Vector2(LocalViewRange, LocalViewRange));
 
                 foreach (var grid in _mapManager.FindGridsIntersecting(transform.MapID, worldBounds))

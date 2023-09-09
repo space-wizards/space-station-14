@@ -20,7 +20,7 @@ public sealed class NPCJukeSystem : EntitySystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly MeleeWeaponSystem _melee = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
 
     private EntityQuery<NPCMeleeCombatComponent> _npcMeleeQuery;
     private EntityQuery<NPCRangedCombatComponent> _npcRangedQuery;
@@ -156,19 +156,15 @@ public sealed class NPCJukeSystem : EntitySystem
                 if (cdRemaining < attackCooldown * 0.45f)
                     return;
 
-                // If we get whacky boss mobs might need nearestpos that's more of a PITA
-                // so will just use this for now.
-                var obstacleDirection = _transform.GetWorldPosition(melee.Target) - args.WorldPosition;
+                if (!_physics.TryGetNearestPoints(uid, melee.Target, out var pointA, out var pointB))
+                    return;
 
-                if (obstacleDirection == Vector2.Zero)
-                {
-                    obstacleDirection = _random.NextVector2();
-                }
+                var obstacleDirection = pointB - args.WorldPosition;
 
                 // If they're moving away then pursue anyway.
                 // If just hit then always back up a bit.
                 if (cdRemaining < attackCooldown * 0.90f &&
-                    _physicsQuery.TryGetComponent(melee.Target, out var targetPhysics) &&
+                    TryComp<PhysicsComponent>(melee.Target, out var targetPhysics) &&
                     Vector2.Dot(targetPhysics.LinearVelocity, obstacleDirection) > 0f)
                 {
                     return;
@@ -177,7 +173,6 @@ public sealed class NPCJukeSystem : EntitySystem
                 if (cdRemaining < TimeSpan.FromSeconds(1f / _melee.GetAttackRate(weaponUid, uid, weapon)) * 0.45f)
                     return;
 
-                // TODO: Probably add in our bounds and target bounds for ideal distance.
                 var idealDistance = weapon.Range * 4f;
                 var obstacleDistance = obstacleDirection.Length();
 

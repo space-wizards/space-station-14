@@ -1,8 +1,8 @@
 using Content.Server.Administration.Logs;
 using Content.Shared.Actions;
-using Content.Shared.Database;
 using Content.Shared.Speech.Components;
 using Content.Shared.Speech.EntitySystems;
+using Content.Shared.Database;
 using Robust.Server.GameObjects;
 
 namespace Content.Server.Speech.EntitySystems;
@@ -18,15 +18,17 @@ public sealed class MeleeSpeechSystem : SharedMeleeSpeechSystem
         SubscribeLocalEvent<MeleeSpeechComponent, MeleeSpeechBattlecryChangedMessage>(OnBattlecryChanged);
         SubscribeLocalEvent<MeleeSpeechComponent, MeleeSpeechConfigureActionEvent>(OnConfigureAction);
         SubscribeLocalEvent<MeleeSpeechComponent, GetItemActionsEvent>(OnGetActions);
-        SubscribeLocalEvent<MeleeSpeechComponent, MapInitEvent>(OnComponentMapInit);
+        SubscribeLocalEvent<MeleeSpeechComponent, ComponentInit>(OnComponentInit);
     }
-    private void OnComponentMapInit(EntityUid uid, MeleeSpeechComponent component, MapInitEvent args)
+    private void OnComponentInit(EntityUid uid, MeleeSpeechComponent component, ComponentInit args)
     {
-        _actionSystem.AddAction(uid, ref component.ConfigureActionEntity, component.ConfigureAction, uid);
+        if (component.ConfigureAction != null)
+            _actionSystem.AddAction(uid, component.ConfigureAction, uid);
     }
     private void OnGetActions(EntityUid uid, MeleeSpeechComponent component, GetItemActionsEvent args)
     {
-        args.AddAction(ref component.ConfigureActionEntity, component.ConfigureAction);
+        if (component.ConfigureAction != null)
+            args.Actions.Add(component.ConfigureAction);
     }
     private void OnBattlecryChanged(EntityUid uid, MeleeSpeechComponent comp, MeleeSpeechBattlecryChangedMessage args)
     {

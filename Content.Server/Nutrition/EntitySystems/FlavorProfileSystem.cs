@@ -84,9 +84,9 @@ public sealed class FlavorProfileSystem : EntitySystem
     private HashSet<string> GetFlavorsFromReagents(Solution solution, int desiredAmount, HashSet<string>? toIgnore = null)
     {
         var flavors = new HashSet<string>();
-        foreach (var (reagent, quantity) in solution.GetReagentPrototypes(_prototypeManager))
+        foreach (var reagent in solution.Contents)
         {
-            if (toIgnore != null && toIgnore.Contains(reagent.ID))
+            if (toIgnore != null && toIgnore.Contains(reagent.ReagentId))
             {
                 continue;
             }
@@ -96,14 +96,15 @@ public sealed class FlavorProfileSystem : EntitySystem
                 break;
             }
 
+            var proto = _prototypeManager.Index<ReagentPrototype>(reagent.ReagentId);
             // don't care if the quantity is negligible
-            if (quantity < reagent.FlavorMinimum)
+            if (reagent.Quantity < proto.FlavorMinimum)
             {
                 continue;
             }
 
-            if (reagent.Flavor != null)
-                flavors.Add(reagent.Flavor);
+            if (proto.Flavor != null)
+                flavors.Add(proto.Flavor);
         }
 
         return flavors;

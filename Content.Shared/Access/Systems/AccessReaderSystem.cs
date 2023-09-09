@@ -53,7 +53,7 @@ public sealed class AccessReaderSystem : EntitySystem
     {
         if (args.User == null) // AutoLink (and presumably future external linkers) have no user.
             return;
-        if (!HasComp<EmaggedComponent>(uid) && !IsAllowed(args.User.Value, uid, component))
+        if (!HasComp<EmaggedComponent>(uid) && !IsAllowed(args.User.Value, component))
             args.Cancel();
     }
 
@@ -65,62 +65,77 @@ public sealed class AccessReaderSystem : EntitySystem
     }
 
     /// <summary>
-    /// Searches the source for access tags
-    /// then compares it with the all targets accesses to see if it is allowed.
+    /// Finds all AccessReaderComponents in the container of the
+    /// required entity.
     /// </summary>
-    /// <param name="user">The entity that wants access.</param>
-    /// <param name="target">The entity to search for an access reader</param>
-    /// <param name="reader">Optional reader from the target entity</param>
-    public bool IsAllowed(EntityUid user, EntityUid target, AccessReaderComponent? reader = null)
+    /// <param name="target">The entity to search for a container</param>
+    /// <param name="accessReader"></param>
+    /// <param name="result"></param>
+    private bool FindAccessReadersInContainer(EntityUid target, AccessReaderComponent accessReader, out List<AccessReaderComponent> result)
     {
-        if (!Resolve(target, ref reader, false))
-            return true;
+        result = new();
+        if (accessReader.ContainerAccessProvider == null)
+            return false;
 
-        if (!reader.Enabled)
-            return true;
-
-        var accessSources = FindPotentialAccessItems(user);
-        var access = FindAccessTags(user, accessSources);
-        FindStationRecordKeys(user, out var stationKeys, accessSources);
-
-        return IsAllowed(access, stationKeys, target, reader);
-    }
-
-    /// <summary>
-    /// Check whether the given access permissions satisfy an access reader's requirements.
-    /// </summary>
-    public bool IsAllowed(
-        ICollection<string> access,
-        ICollection<StationRecordKey> stationKeys,
-        EntityUid target,
-        AccessReaderComponent reader)
-    {
-        if (!reader.Enabled)
-            return true;
-
-        if (reader.ContainerAccessProvider == null)
-            return IsAllowedInternal(access, stationKeys, reader);
-
-        if (!_containerSystem.TryGetContainer(target, reader.ContainerAccessProvider, out var container))
+        if (!_containerSystem.TryGetContainer(target, accessReader.ContainerAccessProvider, out var container))
             return false;
 
         foreach (var entity in container.ContainedEntities)
         {
-            if (!TryComp(entity, out AccessReaderComponent? containedReader))
-                continue;
-
-            if (IsAllowed(access, stationKeys, entity, containedReader))
-                return true;
+            if (TryComp<AccessReaderComponent>(entity, out var entityAccessReader))
+                result.Add(entityAccessReader);
         }
 
-        return false;
+        return result.Any();
     }
 
-    private bool IsAllowedInternal(ICollection<string> access, ICollection<StationRecordKey> stationKeys, AccessReaderComponent reader)
+    /// <summary>
+    /// Searches the source for access tags
+    /// then compares it with the all targets accesses to see if it is allowed.
+    /// </summary>
+    /// <param name="source">The entity that wants access.</param>
+    /// <param name="target">The entity to search for an access reader</param>
+    /// <param name="reader">Optional reader from the target entity</param>
+    public bool IsAllowed(EntityUid source, EntityUid target, AccessReaderComponent? reader = null)
     {
-        return !reader.Enabled
-               || AreAccessTagsAllowed(access, reader)
-               || AreStationRecordKeysAllowed(stationKeys, reader);
+        if (!Resolve(target, ref reader, false))
+            return true;
+
+        if (FindAccessReadersInContainer(target, reader, out var accessReaderList))
+        {
+            foreach (var access in accessReaderList)
+            {
+                if (IsAllowed(source, access))
+                    return true;
+            }
+
+            return false;
+        }
+
+        return IsAllowed(source, reader);
+    }
+    /// <summary>
+    /// Searches the given entity for access tags
+    /// then compares it with the readers access list to see if it is allowed.
+    /// </summary>
+    /// <param name="entity">The entity that wants access.</param>
+    /// <param name="reader">A reader from a different entity</param>
+    public bool IsAllowed(EntityUid entity, AccessReaderComponent reader)
+    {
+        // Access reader is totally disabled, so access is always allowed.
+        if (!reader.Enabled)
+            return true;
+
+        var allEnts = FindPotentialAccessItems(entity);
+
+        if (AreAccessTagsAllowed(FindAccessTags(entity, allEnts), reader))
+            return true;
+
+        if (FindStationRecordKeys(entity, out var recordKeys, allEnts)
+            && AreStationRecordKeysAllowed(recordKeys, reader))
+            return true;
+
+        return false;
     }
 
     /// <summary>
@@ -140,16 +155,7 @@ public sealed class AccessReaderSystem : EntitySystem
             return false;
         }
 
-        if (reader.AccessLists.Count == 0)
-            return true;
-
-        foreach (var set in reader.AccessLists)
-        {
-            if (set.IsSubsetOf(accessTags))
-                return true;
-        }
-
-        return false;
+        return reader.AccessLists.Count == 0 || reader.AccessLists.Any(a => a.IsSubsetOf(accessTags));
     }
 
     /// <summary>
@@ -157,13 +163,7 @@ public sealed class AccessReaderSystem : EntitySystem
     /// </summary>
     public bool AreStationRecordKeysAllowed(ICollection<StationRecordKey> keys, AccessReaderComponent reader)
     {
-        foreach (var key in reader.AccessKeys)
-        {
-            if (keys.Contains(key))
-                return true;
-        }
-
-        return false;
+        return keys.Any() && reader.AccessKeys.Any(keys.Contains);
     }
 
     /// <summary>

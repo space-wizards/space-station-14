@@ -1,5 +1,6 @@
 ﻿using Content.Shared.Containers.ItemSlots;
 using Robust.Shared.GameStates;
+using Robust.Shared.Serialization.TypeSerializers.Implementations;
 
 namespace Content.Shared.CartridgeLoader;
 
@@ -41,6 +42,6 @@ public sealed partial class CartridgeLoaderComponent : Component
     [DataField("diskSpace")]
     public int DiskSpace = 5;
 
-    [DataField("uiKey", required: true)]
+    [DataField("uiKey", required: true, customTypeSerializer: typeof(EnumSerializer))]
     public Enum UiKey = default!;
 }

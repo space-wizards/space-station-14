@@ -1,9 +1,10 @@
 using Content.Server.Actions;
 using Content.Server.Chat.Systems;
+using Content.Server.Humanoid;
 using Content.Server.Speech.Components;
+using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Chat.Prototypes;
 using Content.Shared.Humanoid;
-using Content.Shared.Speech;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
@@ -31,16 +32,21 @@ public sealed class VocalSystem : EntitySystem
     private void OnMapInit(EntityUid uid, VocalComponent component, MapInitEvent args)
     {
         // try to add scream action when vocal comp added
-        _actions.AddAction(uid, ref component.ScreamActionEntity, component.ScreamAction);
+        if (_proto.TryIndex(component.ScreamActionId, out InstantActionPrototype? proto))
+        {
+            component.ScreamAction = new InstantAction(proto);
+            _actions.AddAction(uid, component.ScreamAction, null);
+        }
+
         LoadSounds(uid, component);
     }
 
     private void OnShutdown(EntityUid uid, VocalComponent component, ComponentShutdown args)
     {
         // remove scream action when component removed
-        if (component.ScreamActionEntity != null)
+        if (component.ScreamAction != null)
         {
-            _actions.RemoveAction(uid, component.ScreamActionEntity);
+            _actions.RemoveAction(uid, component.ScreamAction);
         }
     }
 
@@ -70,7 +76,7 @@ public sealed class VocalSystem : EntitySystem
         if (args.Handled)
             return;
 
-        _chat.TryEmoteWithChat(uid, component.ScreamId);
+        _chat.TryEmoteWithChat(uid, component.ScreamActionId);
         args.Handled = true;
     }
 

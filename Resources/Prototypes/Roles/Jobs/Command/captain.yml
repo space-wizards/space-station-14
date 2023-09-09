@@ -31,7 +31,7 @@
   equipment:
     jumpsuit: ClothingUniformJumpsuitCaptain
     back: ClothingBackpackCaptainFilled
-    shoes: ClothingShoesBootsLaceup
+    shoes: ClothingShoesColorBlack
     head: ClothingHeadHatCaptain
     eyes: ClothingEyesGlassesSunglasses
     gloves: ClothingHandsGlovesCaptain

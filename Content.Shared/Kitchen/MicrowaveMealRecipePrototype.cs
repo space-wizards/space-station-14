@@ -33,7 +33,6 @@ namespace Content.Shared.Kitchen
 
         public string Name => Loc.GetString(_name);
 
-        // TODO Turn this into a ReagentQuantity[]
         public IReadOnlyDictionary<string, FixedPoint2> IngredientsReagents => _ingsReagents;
         public IReadOnlyDictionary<string, FixedPoint2> IngredientsSolids => _ingsSolids;
 

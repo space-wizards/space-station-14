@@ -17,8 +17,7 @@ entities:
   entities:
   - uid: 1
     components:
-    - name: NT Evac Raven
-      type: MetaData
+    - type: MetaData
     - pos: -0.546875,-0.53125
       parent: invalid
       type: Transform

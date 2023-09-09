@@ -33,21 +33,6 @@
 
 - type: entity
   parent: ClothingOuterWinterCoat
-  id: ClothingOuterWinterCoatToggleable
-  name: winter coat with hood
-  noSpawn: True
-  components:
-  - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHatHoodWinterDefault
-    slot: head
-  - type: ContainerContainer
-    containers:
-      toggleable-clothing: !type:ContainerSlot {}
-      storagebase: !type:Container
-        ents: []
-
-- type: entity
-  parent: ClothingOuterWinterCoatToggleable
   id: ClothingOuterWinterAtmos
   name: atmospherics winter coat
   components:
@@ -55,11 +40,9 @@
     sprite: Clothing/OuterClothing/WinterCoats/coatatmos.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/WinterCoats/coatatmos.rsi
-  - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHatHoodWinterEngineer
 
 - type: entity
-  parent: ClothingOuterWinterCoatToggleable
+  parent: ClothingOuterWinterCoat
   id: ClothingOuterWinterBar
   name: bartender winter coat
   components:
@@ -67,11 +50,9 @@
     sprite: Clothing/OuterClothing/WinterCoats/coatbar.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/WinterCoats/coatbar.rsi
-  - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHatHoodWinterBartender
 
 - type: entity
-  parent: ClothingOuterWinterCoatToggleable
+  parent: ClothingOuterWinterCoat
   id: ClothingOuterWinterCap
   name: captain's winter coat
   components:
@@ -79,11 +60,9 @@
     sprite: Clothing/OuterClothing/WinterCoats/coatcap.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/WinterCoats/coatcap.rsi
-  - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHatHoodWinterCaptain
 
 - type: entity
-  parent: ClothingOuterWinterCoatToggleable
+  parent: ClothingOuterWinterCoat
   id: ClothingOuterWinterCargo
   name: cargo winter coat
   components:
@@ -91,11 +70,9 @@
     sprite: Clothing/OuterClothing/WinterCoats/coatcargo.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/WinterCoats/coatcargo.rsi
-  - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHatHoodWinterCargo
 
 - type: entity
-  parent: ClothingOuterWinterCoatToggleable
+  parent: ClothingOuterWinterCoat
   id: ClothingOuterWinterCE
   name: chief engineer's winter coat
   components:
@@ -103,11 +80,9 @@
     sprite: Clothing/OuterClothing/WinterCoats/coatce.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/WinterCoats/coatce.rsi
-  - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHatHoodWinterCE
 
 - type: entity
-  parent: ClothingOuterWinterCoatToggleable
+  parent: ClothingOuterWinterCoat
   id: ClothingOuterWinterCentcom
   name: CentCom winter coat
   components:
@@ -115,8 +90,6 @@
     sprite: Clothing/OuterClothing/WinterCoats/coatcentcom.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/WinterCoats/coatcentcom.rsi
-  - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHatHoodWinterCentcom
 
 - type: entity
   parent: ClothingOuterWinterCoat
@@ -130,7 +103,7 @@
     sprite: Clothing/OuterClothing/WinterCoats/coatchef.rsi
 
 - type: entity
-  parent: ClothingOuterWinterCoatToggleable
+  parent: ClothingOuterWinterCoat
   id: ClothingOuterWinterChem
   name: chemistry winter coat
   components:
@@ -144,11 +117,9 @@
         Slash: 0.95
         Heat: 0.90
         Caustic: 0.75
-  - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHatHoodWinterChem
 
 - type: entity
-  parent: ClothingOuterWinterCoatToggleable
+  parent: ClothingOuterWinterCoat
   id: ClothingOuterWinterCMO
   name: chief medical officer's winter coat
   components:
@@ -162,8 +133,6 @@
         Slash: 0.95
         Heat: 0.90
         Caustic: 0.75
-  - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHatHoodWinterCMO
 
 - type: entity
   parent: ClothingOuterWinterCoat
@@ -176,7 +145,7 @@
     sprite: Clothing/OuterClothing/WinterCoats/coatclown.rsi
 
 - type: entity
-  parent: ClothingOuterWinterCoatToggleable
+  parent: ClothingOuterWinterCoat
   id: ClothingOuterWinterEngi
   name: engineering winter coat
   components:
@@ -184,11 +153,9 @@
     sprite: Clothing/OuterClothing/WinterCoats/coatengi.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/WinterCoats/coatengi.rsi
-  - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHatHoodWinterEngineer
 
 - type: entity
-  parent: ClothingOuterWinterCoatToggleable
+  parent: ClothingOuterWinterCoat
   id: ClothingOuterWinterGen
   name: genetics winter coat
   components:
@@ -202,11 +169,9 @@
         Slash: 0.95
         Heat: 0.90
         Caustic: 0.9
-  - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHatHoodWinterSci
 
 - type: entity
-  parent: ClothingOuterWinterCoatToggleable
+  parent: ClothingOuterWinterCoat
   id: ClothingOuterWinterHoP
   name: head of personnel's winter coat
   components:
@@ -214,11 +179,9 @@
     sprite: Clothing/OuterClothing/WinterCoats/coathop.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/WinterCoats/coathop.rsi
-  - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHatHoodWinterHOP
 
 - type: entity
-  parent: ClothingOuterWinterCoatToggleable
+  parent: ClothingOuterWinterCoat
   id: ClothingOuterWinterHoS
   name: head of security's winter coat
   components:
@@ -226,11 +189,9 @@
     sprite: Clothing/OuterClothing/WinterCoats/coathos.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/WinterCoats/coathos.rsi
-  - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHatHoodWinterHOS
 
 - type: entity
-  parent: ClothingOuterWinterCoatToggleable
+  parent: ClothingOuterWinterCoat
   id: ClothingOuterWinterHydro
   name: hydroponics winter coat
   components:
@@ -238,11 +199,9 @@
     sprite: Clothing/OuterClothing/WinterCoats/coathydro.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/WinterCoats/coathydro.rsi
-  - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHatHoodWinterHydro
 
 - type: entity
-  parent: ClothingOuterWinterCoatToggleable
+  parent: ClothingOuterWinterCoat
   id: ClothingOuterWinterJani
   name: janitorial winter coat
   components:
@@ -256,11 +215,9 @@
         Slash: 0.95
         Heat: 0.9
         Caustic: 0.9
-  - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHatHoodWinterJani
 
 - type: entity
-  parent: ClothingOuterWinterCoatToggleable
+  parent: ClothingOuterWinterCoat
   id: ClothingOuterWinterMed
   name: medical winter coat
   components:
@@ -274,11 +231,9 @@
         Slash: 0.95
         Heat: 0.90
         Caustic: 0.9
-  - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHatHoodWinterMed
 
 - type: entity
-  parent: ClothingOuterWinterCoatToggleable
+  parent: ClothingOuterWinterCoat
   id: ClothingOuterWinterMime
   name: mime winter coat
   components:
@@ -286,11 +241,9 @@
     sprite: Clothing/OuterClothing/WinterCoats/coatmime.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/WinterCoats/coatmime.rsi
-  - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHatHoodWinterMime
 
 - type: entity
-  parent: ClothingOuterWinterCoatToggleable
+  parent: ClothingOuterWinterCoat
   id: ClothingOuterWinterMiner
   name: mining winter coat
   components:
@@ -298,11 +251,9 @@
     sprite: Clothing/OuterClothing/WinterCoats/coatminer.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/WinterCoats/coatminer.rsi
-  - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHatHoodWinterMiner
 
 - type: entity
-  parent: ClothingOuterWinterCoatToggleable
+  parent: ClothingOuterWinterCoat
   id: ClothingOuterWinterPara
   name: paramedic winter coat
   components:
@@ -316,11 +267,9 @@
         Slash: 0.95
         Heat: 0.75
         Caustic: 0.9
-  - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHatHoodWinterPara
 
 - type: entity
-  parent: ClothingOuterWinterCoatToggleable
+  parent: ClothingOuterWinterCoat
   id: ClothingOuterWinterQM
   name: quartermaster's winter coat
   components:
@@ -328,12 +277,9 @@
     sprite: Clothing/OuterClothing/WinterCoats/coatqm.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/WinterCoats/coatqm.rsi
-  - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHatHoodWinterQM
-
 
 - type: entity
-  parent: ClothingOuterWinterCoatToggleable
+  parent: ClothingOuterWinterCoat
   id: ClothingOuterWinterRD
   name: research director's winter coat
   components:
@@ -347,11 +293,9 @@
         Slash: 0.95
         Heat: 0.90
         Caustic: 0.9
-  - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHatHoodWinterRD
 
 - type: entity
-  parent: ClothingOuterWinterCoatToggleable
+  parent: ClothingOuterWinterCoat
   id: ClothingOuterWinterRobo
   name: robotics winter coat
   components:
@@ -359,12 +303,9 @@
     sprite: Clothing/OuterClothing/WinterCoats/coatrobo.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/WinterCoats/coatrobo.rsi
-  - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHatHoodWinterRobo
-
 
 - type: entity
-  parent: ClothingOuterWinterCoatToggleable
+  parent: ClothingOuterWinterCoat
   id: ClothingOuterWinterSci
   name: science winter coat
   components:
@@ -378,11 +319,9 @@
         Slash: 0.95
         Heat: 0.90
         Caustic: 0.9
-  - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHatHoodWinterSci
 
 - type: entity
-  parent: ClothingOuterWinterCoatToggleable
+  parent: ClothingOuterWinterCoat
   id: ClothingOuterWinterSec
   name: security winter coat
   components:
@@ -390,11 +329,9 @@
     sprite: Clothing/OuterClothing/WinterCoats/coatsec.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/WinterCoats/coatsec.rsi
-  - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHatHoodWinterSec
 
 - type: entity
-  parent: ClothingOuterWinterCoatToggleable
+  parent: ClothingOuterWinterCoat
   id: ClothingOuterWinterViro
   name: virology winter coat
   components:
@@ -408,11 +345,9 @@
         Slash: 0.95
         Heat: 0.90
         Caustic: 0.9
-  - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHatHoodWinterSci
 
 - type: entity
-  parent: ClothingOuterWinterCoatToggleable
+  parent: ClothingOuterWinterCoat
   id: ClothingOuterWinterWarden
   name: warden's armored winter coat
   description: A sturdy, utilitarian winter coat designed to protect a warden from any brig-bound threats and hypothermic events.
@@ -428,11 +363,9 @@
         Slash: 0.70
         Piercing: 0.8 #slightly less bulletproof then warden's normal coat
         Heat: 0.70
-  - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHatHoodWinterWarden
 
 - type: entity
-  parent: ClothingOuterWinterCoatToggleable
+  parent: ClothingOuterWinterCoat
   id: ClothingOuterWinterSyndieCap
   name: syndicate's winter coat
   description: "The syndicate's winter coat is made of durable fabric, with gilded patterns, and coarse wool."
@@ -441,8 +374,6 @@
     sprite: Clothing/OuterClothing/WinterCoats/syndicate/coatsyndiecap.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/WinterCoats/syndicate/coatsyndiecap.rsi
-  - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHatHoodWinterSyndie
 
 - type: entity
   parent: ClothingOuterWinterWarden
@@ -454,11 +385,9 @@
     sprite: Clothing/OuterClothing/WinterCoats/syndicate/coatsyndiecaparmored.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/WinterCoats/syndicate/coatsyndiecaparmored.rsi
-  - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHatHoodWinterSyndie
 
 - type: entity
-  parent: ClothingOuterWinterCoatToggleable
+  parent: ClothingOuterWinterCoat
   id: ClothingOuterWinterSyndie
   name: syndicate's winter coat
   description: Insulated winter coat, looks like a merch from "Syndieland"
@@ -467,8 +396,6 @@
     sprite: Clothing/OuterClothing/WinterCoats/syndicate/wintercoatsyndie.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/WinterCoats/syndicate/wintercoatsyndie.rsi
-  - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHatHoodWinterSyndie
 
 - type: entity
   parent: ClothingOuterWinterCoat
@@ -481,30 +408,4 @@
   - type: Clothing
     sprite: Clothing/OuterClothing/WinterCoats/coatnomi.rsi
 
-- type: entity
-  parent: ClothingOuterWinterCoatToggleable
-  id: ClothingOuterWinterWeb
-  name: web winter coat
-  description: Feels like the inside of a cocoon, not that this would make you less afraid of being in one.
-  components:
-  - type: Sprite
-    sprite: Clothing/OuterClothing/WinterCoats/coatweb.rsi
-  - type: Clothing
-    sprite: Clothing/OuterClothing/WinterCoats/coatweb.rsi
-  - type: Construction
-    graph: WebObjects
-    node: coat
-  - type: FlavorProfile
-    flavors:
-      - cobwebs
-    ignoreReagents:
-      - Fiber
-  - type: SolutionContainerManager
-    solutions: # 15 (3 (fiber count of web) * 5 (to craft)) + 5 (magical crafting bonus)
-      food:
-        maxVol: 20
-        reagents:
-        - ReagentId: Fiber
-          Quantity: 20
-  - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHatHoodWinterWeb
+

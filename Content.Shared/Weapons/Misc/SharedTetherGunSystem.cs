@@ -45,24 +45,8 @@ public abstract partial class SharedTetherGunSystem : EntitySystem
 
         SubscribeLocalEvent<TetheredComponent, BuckleAttemptEvent>(OnTetheredBuckleAttempt);
         SubscribeLocalEvent<TetheredComponent, UpdateCanMoveEvent>(OnTetheredUpdateCanMove);
-        SubscribeLocalEvent<TetheredComponent, EntGotInsertedIntoContainerMessage>(OnTetheredContainerInserted);
 
         InitializeForce();
-    }
-
-    private void OnTetheredContainerInserted(EntityUid uid, TetheredComponent component, EntGotInsertedIntoContainerMessage args)
-    {
-        if (TryComp<TetherGunComponent>(component.Tetherer, out var tetherGun))
-        {
-            StopTether(component.Tetherer, tetherGun);
-            return;
-        }
-
-        if (TryComp<ForceGunComponent>(component.Tetherer, out var forceGun))
-        {
-            StopTether(component.Tetherer, forceGun);
-            return;
-        }
     }
 
     private void OnTetheredBuckleAttempt(EntityUid uid, TetheredComponent component, ref BuckleAttemptEvent args)
@@ -168,8 +152,7 @@ public abstract partial class SharedTetherGunSystem : EntitySystem
         if (HasComp<TetheredComponent>(target) || !TryComp<PhysicsComponent>(target, out var physics))
             return false;
 
-        if (physics.BodyType == BodyType.Static && !component.CanUnanchor ||
-            _container.IsEntityInContainer(target))
+        if (physics.BodyType == BodyType.Static && !component.CanUnanchor)
             return false;
 
         if (physics.Mass > component.MassLimit)

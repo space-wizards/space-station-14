@@ -1,14 +1,14 @@
 using Content.Shared.Actions;
+using Content.Shared.Actions.ActionTypes;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.VendingMachines
 {
-    [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+    [RegisterComponent, NetworkedComponent]
     public sealed partial class VendingMachineComponent : Component
     {
         /// <summary>
@@ -105,13 +105,8 @@ namespace Content.Shared.VendingMachines
         /// <summary>
         ///     The action available to the player controlling the vending machine
         /// </summary>
-        [DataField("action", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-        [AutoNetworkedField]
-        public string? Action = "ActionVendingThrow";
-
-        [DataField("actionEntity")]
-        [AutoNetworkedField]
-        public EntityUid? ActionEntity;
+        [DataField("action", customTypeSerializer: typeof(PrototypeIdSerializer<InstantActionPrototype>))]
+        public string? Action = "VendingThrow";
 
         public float NonLimitedEjectForce = 7.5f;
 

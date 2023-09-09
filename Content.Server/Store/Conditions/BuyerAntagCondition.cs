@@ -1,4 +1,5 @@
-using Content.Shared.Mind;
+using Content.Server.Mind;
+using Content.Server.Roles;
 using Content.Shared.Roles;
 using Content.Shared.Store;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Set;
@@ -27,12 +28,12 @@ public sealed partial class BuyerAntagCondition : ListingCondition
     public override bool Condition(ListingConditionArgs args)
     {
         var ent = args.EntityManager;
-        var minds = ent.System<SharedMindSystem>();
+        var minds = ent.System<MindSystem>();
 
         if (!minds.TryGetMind(args.Buyer, out var mindId, out var mind))
             return true;
 
-        var roleSystem = ent.System<SharedRoleSystem>();
+        var roleSystem = ent.System<RoleSystem>();
         var roles = roleSystem.MindGetAllRoles(mindId);
 
         if (Blacklist != null)

@@ -16,8 +16,7 @@ entities:
   entities:
   - uid: 2
     components:
-    - name: NT Evac Transit
-      type: MetaData
+    - type: MetaData
     - pos: -4.3957214,6.3308363
       parent: invalid
       type: Transform

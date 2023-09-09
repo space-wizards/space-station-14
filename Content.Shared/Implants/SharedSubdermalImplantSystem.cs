@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using Content.Shared.Actions;
+using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Implants.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
@@ -35,9 +36,9 @@ public abstract class SharedSubdermalImplantSystem : EntitySystem
         if (component.ImplantedEntity == null)
             return;
 
-        if (!string.IsNullOrWhiteSpace(component.ImplantAction))
+        if (component.ImplantAction != null)
         {
-            var action = Spawn(component.ImplantAction);
+            var action = new InstantAction(_prototypeManager.Index<InstantActionPrototype>(component.ImplantAction));
             _actionsSystem.AddAction(component.ImplantedEntity.Value, action, uid);
         }
 

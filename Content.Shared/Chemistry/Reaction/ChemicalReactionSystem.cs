@@ -136,9 +136,7 @@ namespace Content.Shared.Chemistry.Reaction
                 var reactantName = reactantData.Key;
                 var reactantCoefficient = reactantData.Value.Amount;
 
-                var reactantQuantity = solution.GetTotalPrototypeQuantity(reactantName);
-
-                if (reactantQuantity <= FixedPoint2.Zero)
+                if (!solution.TryGetReagent(reactantName, out var reactantQuantity))
                     return false;
 
                 if (reactantData.Value.Catalyst)
@@ -294,7 +292,7 @@ namespace Content.Shared.Chemistry.Reaction
             SortedSet<ReactionPrototype> reactions = new();
             foreach (var reactant in solution.Contents)
             {
-                if (_reactions.TryGetValue(reactant.Reagent.Prototype, out var reactantReactions))
+                if (_reactions.TryGetValue(reactant.ReagentId, out var reactantReactions))
                     reactions.UnionWith(reactantReactions);
             }
 

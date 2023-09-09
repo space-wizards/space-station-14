@@ -15,7 +15,6 @@ using Content.Shared.Atmos.Piping.Unary.Visuals;
 using Content.Shared.Atmos.Monitor;
 using Content.Shared.Atmos.Piping.Unary.Components;
 using Content.Shared.Audio;
-using Content.Shared.Tools.Systems;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 
@@ -26,11 +25,10 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
     {
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
         [Dependency] private readonly DeviceNetworkSystem _deviceNetSystem = default!;
-        [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
         [Dependency] private readonly SharedAmbientSoundSystem _ambientSoundSystem = default!;
         [Dependency] private readonly TransformSystem _transformSystem = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-        [Dependency] private readonly WeldableSystem _weldable = default!;
+        [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
 
         public override void Initialize()
         {
@@ -42,12 +40,11 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             SubscribeLocalEvent<GasVentScrubberComponent, AtmosAlarmEvent>(OnAtmosAlarm);
             SubscribeLocalEvent<GasVentScrubberComponent, PowerChangedEvent>(OnPowerChanged);
             SubscribeLocalEvent<GasVentScrubberComponent, DeviceNetworkPacketEvent>(OnPacketRecv);
-            SubscribeLocalEvent<GasVentScrubberComponent, WeldableChangedEvent>(OnWeldChanged);
         }
 
         private void OnVentScrubberUpdated(EntityUid uid, GasVentScrubberComponent scrubber, AtmosDeviceUpdateEvent args)
         {
-            if (_weldable.IsWelded(uid))
+            if (scrubber.Welded)
             {
                 return;
             }
@@ -186,12 +183,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                 return;
 
             _ambientSoundSystem.SetAmbience(uid, true);
-            if (_weldable.IsWelded(uid))
-            {
-                _ambientSoundSystem.SetAmbience(uid, false);
-                _appearance.SetData(uid, ScrubberVisuals.State, ScrubberState.Welded, appearance);
-            }
-            else if (!scrubber.Enabled)
+            if (!scrubber.Enabled)
             {
                 _ambientSoundSystem.SetAmbience(uid, false);
                 _appearance.SetData(uid, ScrubberVisuals.State, ScrubberState.Off, appearance);
@@ -204,11 +196,11 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             {
                 _appearance.SetData(uid, ScrubberVisuals.State, ScrubberState.Siphon, appearance);
             }
-        }
-
-        private void OnWeldChanged(EntityUid uid, GasVentScrubberComponent component, ref WeldableChangedEvent args)
-        {
-            UpdateState(uid, component);
+            else if (scrubber.Welded)
+            {
+                _ambientSoundSystem.SetAmbience(uid, false);
+                _appearance.SetData(uid, ScrubberVisuals.State, ScrubberState.Welded, appearance);
+            }
         }
     }
 }

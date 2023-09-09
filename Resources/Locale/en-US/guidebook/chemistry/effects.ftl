@@ -267,12 +267,6 @@ reagent-effect-guidebook-make-sentient =
         *[other] make
     } the metabolizer sentient
 
-reagent-effect-guidebook-make-polymorph =
-    { $chance ->
-        [1] Polymorphs
-        *[other] polymorph
-    } the metabolizer into a { $entityname }
-
 reagent-effect-guidebook-modify-bleed-amount =
     { $chance ->
         [1] { $deltasign ->

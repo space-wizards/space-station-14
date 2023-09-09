@@ -1,9 +1,7 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using System.Linq;
+﻿using System.Linq;
 using System.Numerics;
 using Content.Shared.Body.Components;
 using Content.Shared.Destructible;
-using Content.Shared.Foldable;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Item;
@@ -12,7 +10,6 @@ using Content.Shared.Movement.Events;
 using Content.Shared.Placeable;
 using Content.Shared.Popups;
 using Content.Shared.Storage.Components;
-using Content.Shared.Tools.Systems;
 using Content.Shared.Verbs;
 using Content.Shared.Wall;
 using Content.Shared.Whitelist;
@@ -30,32 +27,47 @@ namespace Content.Shared.Storage.EntitySystems;
 
 public abstract class SharedEntityStorageSystem : EntitySystem
 {
-    [Dependency] private   readonly IGameTiming _timing = default!;
-    [Dependency] private   readonly INetManager _net = default!;
-    [Dependency] private   readonly EntityLookupSystem _lookup = default!;
-    [Dependency] private   readonly PlaceableSurfaceSystem _placeableSurface = default!;
-    [Dependency] private   readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private   readonly SharedAudioSystem _audio = default!;
-    [Dependency] private   readonly SharedContainerSystem _container = default!;
-    [Dependency] private   readonly SharedInteractionSystem _interaction = default!;
-    [Dependency] private   readonly SharedJointSystem _joints = default!;
-    [Dependency] private   readonly SharedPhysicsSystem _physics = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly INetManager _net = default!;
+    [Dependency] private readonly EntityLookupSystem _lookup = default!;
+    [Dependency] private readonly PlaceableSurfaceSystem _placeableSurface = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly SharedContainerSystem _container = default!;
+    [Dependency] private readonly SharedInteractionSystem _interaction = default!;
+    [Dependency] private readonly SharedJointSystem _joints = default!;
+    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] protected readonly SharedPopupSystem Popup = default!;
-    [Dependency] private   readonly SharedTransformSystem _transform = default!;
-    [Dependency] private   readonly WeldableSystem _weldable = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     public const string ContainerName = "entity_storage";
 
-    protected void OnGetState(EntityUid uid, SharedEntityStorageComponent component, ref ComponentGetState args)
+    /// <inheritdoc/>
+    public override void Initialize()
+    {
+        SubscribeLocalEvent<SharedEntityStorageComponent, ComponentInit>(OnComponentInit);
+        SubscribeLocalEvent<SharedEntityStorageComponent, ComponentStartup>(OnComponentStartup);
+        SubscribeLocalEvent<SharedEntityStorageComponent, ActivateInWorldEvent>(OnInteract, after: new[] { typeof(LockSystem) });
+        SubscribeLocalEvent<SharedEntityStorageComponent, LockToggleAttemptEvent>(OnLockToggleAttempt);
+        SubscribeLocalEvent<SharedEntityStorageComponent, DestructionEventArgs>(OnDestruction);
+        SubscribeLocalEvent<SharedEntityStorageComponent, GetVerbsEvent<InteractionVerb>>(AddToggleOpenVerb);
+        SubscribeLocalEvent<SharedEntityStorageComponent, ContainerRelayMovementEntityEvent>(OnRelayMovement);
+
+        SubscribeLocalEvent<SharedEntityStorageComponent, ComponentGetState>(OnGetState);
+        SubscribeLocalEvent<SharedEntityStorageComponent, ComponentHandleState>(OnHandleState);
+    }
+
+    private void OnGetState(EntityUid uid, SharedEntityStorageComponent component, ref ComponentGetState args)
     {
         args.State = new EntityStorageComponentState(component.Open,
             component.Capacity,
             component.IsCollidableWhenOpen,
             component.OpenOnMove,
-            component.EnteringRange);
+            component.EnteringRange,
+            component.IsWeldedShut);
     }
 
-    protected void OnHandleState(EntityUid uid, SharedEntityStorageComponent component, ref ComponentHandleState args)
+    private void OnHandleState(EntityUid uid, SharedEntityStorageComponent component, ref ComponentHandleState args)
     {
         if (args.Current is not EntityStorageComponentState state)
             return;
@@ -64,6 +76,7 @@ public abstract class SharedEntityStorageSystem : EntitySystem
         component.IsCollidableWhenOpen = state.IsCollidableWhenOpen;
         component.OpenOnMove = state.OpenOnMove;
         component.EnteringRange = state.EnteringRange;
+        component.IsWeldedShut = state.IsWeldedShut;
     }
 
     protected virtual void OnComponentInit(EntityUid uid, SharedEntityStorageComponent component, ComponentInit args)
@@ -78,7 +91,7 @@ public abstract class SharedEntityStorageSystem : EntitySystem
         _appearance.SetData(uid, StorageVisuals.Open, component.Open);
     }
 
-    protected void OnInteract(EntityUid uid, SharedEntityStorageComponent component, ActivateInWorldEvent args)
+    private void OnInteract(EntityUid uid, SharedEntityStorageComponent component, ActivateInWorldEvent args)
     {
         if (args.Handled)
             return;
@@ -87,9 +100,7 @@ public abstract class SharedEntityStorageSystem : EntitySystem
         ToggleOpen(args.User, uid, component);
     }
 
-    public abstract bool ResolveStorage(EntityUid uid, [NotNullWhen(true)] ref SharedEntityStorageComponent? component);
-
-    protected void OnLockToggleAttempt(EntityUid uid, SharedEntityStorageComponent target, ref LockToggleAttemptEvent args)
+    private void OnLockToggleAttempt(EntityUid uid, SharedEntityStorageComponent target, ref LockToggleAttemptEvent args)
     {
         // Cannot (un)lock open lockers.
         if (target.Open)
@@ -100,7 +111,7 @@ public abstract class SharedEntityStorageSystem : EntitySystem
             args.Cancelled = true;
     }
 
-    protected void OnDestruction(EntityUid uid, SharedEntityStorageComponent component, DestructionEventArgs args)
+    private void OnDestruction(EntityUid uid, SharedEntityStorageComponent component, DestructionEventArgs args)
     {
         component.Open = true;
         Dirty(component);
@@ -116,7 +127,7 @@ public abstract class SharedEntityStorageSystem : EntitySystem
         }
     }
 
-    protected void OnRelayMovement(EntityUid uid, SharedEntityStorageComponent component, ref ContainerRelayMovementEntityEvent args)
+    private void OnRelayMovement(EntityUid uid, SharedEntityStorageComponent component, ref ContainerRelayMovementEntityEvent args)
     {
         if (!HasComp<HandsComponent>(args.Entity))
             return;
@@ -131,14 +142,7 @@ public abstract class SharedEntityStorageSystem : EntitySystem
         }
     }
 
-    protected void OnFoldAttempt(EntityUid uid, SharedEntityStorageComponent component, ref FoldAttemptEvent args)
-    {
-        if (args.Cancelled)
-            return;
-        args.Cancelled = component.Open || component.Contents.ContainedEntities.Count != 0;
-    }
-
-    protected void AddToggleOpenVerb(EntityUid uid, SharedEntityStorageComponent component, GetVerbsEvent<InteractionVerb> args)
+    private void AddToggleOpenVerb(EntityUid uid, SharedEntityStorageComponent component, GetVerbsEvent<InteractionVerb> args)
     {
         if (!args.CanAccess || !args.CanInteract)
             return;
@@ -165,7 +169,7 @@ public abstract class SharedEntityStorageSystem : EntitySystem
 
     public void ToggleOpen(EntityUid user, EntityUid target, SharedEntityStorageComponent? component = null)
     {
-        if (!ResolveStorage(target, ref component))
+        if (!Resolve(target, ref component))
             return;
 
         if (component.Open)
@@ -180,7 +184,7 @@ public abstract class SharedEntityStorageSystem : EntitySystem
 
     public void EmptyContents(EntityUid uid, SharedEntityStorageComponent? component = null)
     {
-        if (!ResolveStorage(uid, ref component))
+        if (!Resolve(uid, ref component))
             return;
 
         var uidXform = Transform(uid);
@@ -193,7 +197,7 @@ public abstract class SharedEntityStorageSystem : EntitySystem
 
     public void OpenStorage(EntityUid uid, SharedEntityStorageComponent? component = null)
     {
-        if (!ResolveStorage(uid, ref component))
+        if (!Resolve(uid, ref component))
             return;
 
         var beforeev = new StorageBeforeOpenEvent();
@@ -211,9 +215,8 @@ public abstract class SharedEntityStorageSystem : EntitySystem
 
     public void CloseStorage(EntityUid uid, SharedEntityStorageComponent? component = null)
     {
-        if (!ResolveStorage(uid, ref component))
+        if (!Resolve(uid, ref component))
             return;
-
         component.Open = false;
         Dirty(component);
 
@@ -251,7 +254,7 @@ public abstract class SharedEntityStorageSystem : EntitySystem
 
     public bool Insert(EntityUid toInsert, EntityUid container, SharedEntityStorageComponent? component = null)
     {
-        if (!ResolveStorage(container, ref component))
+        if (!Resolve(container, ref component))
             return false;
 
         if (component.Open)
@@ -268,10 +271,7 @@ public abstract class SharedEntityStorageSystem : EntitySystem
 
     public bool Remove(EntityUid toRemove, EntityUid container, SharedEntityStorageComponent? component = null, TransformComponent? xform = null)
     {
-        if (!Resolve(container, ref xform, false))
-            return false;
-
-        if (!ResolveStorage(container, ref component))
+        if (!Resolve(container, ref component, ref xform, false))
             return false;
 
         RemComp<InsideEntityStorageComponent>(toRemove);
@@ -283,7 +283,7 @@ public abstract class SharedEntityStorageSystem : EntitySystem
 
     public bool CanInsert(EntityUid container, SharedEntityStorageComponent? component = null)
     {
-        if (!ResolveStorage(container, ref component))
+        if (!Resolve(container, ref component))
             return false;
 
         if (component.Open)
@@ -317,16 +317,16 @@ public abstract class SharedEntityStorageSystem : EntitySystem
 
     public bool CanOpen(EntityUid user, EntityUid target, bool silent = false, SharedEntityStorageComponent? component = null)
     {
-        if (!ResolveStorage(target, ref component))
+        if (!Resolve(target, ref component))
             return false;
 
         if (!HasComp<HandsComponent>(user))
             return false;
 
-        if (_weldable.IsWelded(target))
+        if (component.IsWeldedShut)
         {
-            if (!silent && !component.Contents.Contains(user))
-                Popup.PopupClient(Loc.GetString("entity-storage-component-welded-shut-message"), target, user);
+            if (!silent && !component.Contents.Contains(user) && _net.IsServer)
+                Popup.PopupEntity(Loc.GetString("entity-storage-component-welded-shut-message"), target);
 
             return false;
         }
@@ -359,7 +359,7 @@ public abstract class SharedEntityStorageSystem : EntitySystem
 
     public bool AddToContents(EntityUid toAdd, EntityUid container, SharedEntityStorageComponent? component = null)
     {
-        if (!ResolveStorage(container, ref component))
+        if (!Resolve(container, ref component))
             return false;
 
         if (toAdd == container)
@@ -419,7 +419,7 @@ public abstract class SharedEntityStorageSystem : EntitySystem
 
     private void ModifyComponents(EntityUid uid, SharedEntityStorageComponent? component = null)
     {
-        if (!ResolveStorage(uid, ref component))
+        if (!Resolve(uid, ref component))
             return;
 
         if (!component.IsCollidableWhenOpen && TryComp<FixturesComponent>(uid, out var fixtures) &&

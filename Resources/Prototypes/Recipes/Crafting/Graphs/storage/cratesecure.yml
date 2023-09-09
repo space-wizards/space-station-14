@@ -8,8 +8,6 @@
           steps:
             - material: Steel
               amount: 5
-            - material: Cable
-              amount: 2
               doAfter: 5
 
 
@@ -21,14 +19,13 @@
             - tool: Screwing
               doAfter: 5
           conditions:
+            - !type:StorageWelded
+              welded: false
             - !type:Locked
               locked: false
           completed:
             - !type:SpawnPrototype
               prototype: SheetSteel1
               amount: 5
-            - !type:SpawnPrototype
-              prototype: CableApcStack1
-              amount: 2
             - !type:EmptyAllContainers
             - !type:DeleteEntity

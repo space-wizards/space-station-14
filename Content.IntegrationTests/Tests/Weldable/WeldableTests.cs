@@ -1,5 +1,5 @@
 using Content.IntegrationTests.Tests.Interaction;
-using Content.Shared.Tools.Components;
+using Content.Server.Tools.Components;
 
 namespace Content.IntegrationTests.Tests.Weldable;
 
@@ -16,7 +16,11 @@ public sealed class WeldableTests : InteractionTest
         await SpawnTarget(Locker);
         var comp = Comp<WeldableComponent>();
 
-        Assert.That(comp.IsWelded, Is.False);
+        Assert.Multiple(() =>
+        {
+            Assert.That(comp.Weldable, Is.True);
+            Assert.That(comp.IsWelded, Is.False);
+        });
 
         await Interact(Weld);
         Assert.That(comp.IsWelded, Is.True);

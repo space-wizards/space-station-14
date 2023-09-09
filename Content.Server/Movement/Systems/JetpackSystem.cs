@@ -32,17 +32,12 @@ public sealed class JetpackSystem : SharedJetpackSystem
                 continue;
 
             active.TargetTime = _timing.CurTime + TimeSpan.FromSeconds(active.EffectCooldown);
-            var usedAir = _gasTank.RemoveAir(gasTank, comp.MoleUsage);
+            var air = _gasTank.RemoveAir(gasTank, comp.MoleUsage);
 
-            if (usedAir == null)
-                continue;
-
-            var usedEnoughAir =
-                MathHelper.CloseTo(usedAir.TotalMoles, comp.MoleUsage, comp.MoleUsage/100);
-
-            if (!usedEnoughAir)
+            if (air == null || !MathHelper.CloseTo(air.TotalMoles, comp.MoleUsage, 0.001f))
             {
                 toDisable.Add((uid, comp));
+                continue;
             }
 
             _gasTank.UpdateUserInterface(gasTank);

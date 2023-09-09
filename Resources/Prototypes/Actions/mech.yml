@@ -1,40 +1,31 @@
-- type: entity
-  id: ActionMechCycleEquipment
+- type: instantAction
+  id: MechCycleEquipment
   name: action-name-mech-cycle
   description: action-description-mech-cycle
-  noSpawn: true
-  components:
-  - type: InstantAction
-    itemIconStyle: NoItem
-    icon:
-      sprite: Interface/Actions/actions_mecha.rsi
-      state: mech_cycle_equip_on
-    event: !type:MechToggleEquipmentEvent
-    useDelay: 0.5
+  itemIconStyle: NoItem
+  icon: 
+    sprite: Interface/Actions/actions_mecha.rsi
+    state: mech_cycle_equip_on
+  event: !type:MechToggleEquipmentEvent
+  useDelay: 0.5
 
-- type: entity
-  id: ActionMechOpenUI
+- type: instantAction
+  id: MechOpenUI
   name: action-name-mech-control-panel
   description: action-description-mech-control-panel
-  noSpawn: true
-  components:
-  - type: InstantAction
-    itemIconStyle: NoItem
-    icon:
-      sprite: Interface/Actions/actions_mecha.rsi
-      state: mech_view_stats
-    event: !type:MechOpenUiEvent
-    useDelay: 1
+  itemIconStyle: NoItem
+  icon: 
+    sprite: Interface/Actions/actions_mecha.rsi
+    state: mech_view_stats
+  event: !type:MechOpenUiEvent
+  useDelay: 1
 
-- type: entity
-  id: ActionMechEject
+- type: instantAction
+  id: MechEject
   name: action-name-mech-eject
   description: action-description-mech-eject
-  noSpawn: true
-  components:
-  - type: InstantAction
-    itemIconStyle: NoItem
-    icon:
-      sprite: Interface/Actions/actions_mecha.rsi
-      state: mech_eject
-    event: !type:MechEjectPilotEvent
+  itemIconStyle: NoItem
+  icon: 
+    sprite: Interface/Actions/actions_mecha.rsi
+    state: mech_eject
+  event: !type:MechEjectPilotEvent

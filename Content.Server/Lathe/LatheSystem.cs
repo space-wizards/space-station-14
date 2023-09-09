@@ -64,7 +64,7 @@ namespace Content.Server.Lathe
             if (!_prototypeManager.TryIndex<MaterialPrototype>(message.Material, out var material))
                 return;
 
-            var volume = 0;
+            int volume = 0;
 
             if (material.StackEntity != null)
             {
@@ -73,20 +73,14 @@ namespace Content.Server.Lathe
                     return;
 
                 var volumePerSheet = composition.MaterialComposition.FirstOrDefault(kvp => kvp.Key == message.Material).Value;
-                var sheetsToExtract = Math.Min(message.SheetsToExtract, _stack.GetMaxCount(material.StackEntity));
+                int sheetsToExtract = Math.Min(message.SheetsToExtract, _stack.GetMaxCount(material.StackEntity));
 
                 volume = sheetsToExtract * volumePerSheet;
             }
 
             if (volume > 0 && _materialStorage.TryChangeMaterialAmount(uid, message.Material, -volume))
             {
-                var mats = _materialStorage.SpawnMultipleFromMaterial(volume, material, Transform(uid).Coordinates, out _);
-                foreach (var mat in mats)
-                {
-                    if (TerminatingOrDeleted(mat))
-                        continue;
-                    _stack.TryMergeToContacts(mat);
-                }
+                _materialStorage.SpawnMultipleFromMaterial(volume, material, Transform(uid).Coordinates, out var overflow);
             }
         }
 

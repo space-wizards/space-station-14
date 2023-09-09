@@ -45,13 +45,14 @@ namespace Content.Server.Body.Systems
                     delta.Increment(stomach.UpdateInterval);
                     if (delta.Lifetime > stomach.DigestionDelay)
                     {
-                        if (stomachSolution.TryGetReagent(delta.ReagentQuantity.Reagent, out var reagent))
+                        if (stomachSolution.TryGetReagent(delta.ReagentId, out var quant))
                         {
-                            if (reagent.Quantity > delta.ReagentQuantity.Quantity)
-                                reagent = new(reagent.Reagent, delta.ReagentQuantity.Quantity);
+                            if (quant > delta.Quantity)
+                                quant = delta.Quantity;
 
-                            _solutionContainerSystem.RemoveReagent((stomach).Owner, stomachSolution, reagent);
-                            transferSolution.AddReagent(reagent);
+                            _solutionContainerSystem.TryRemoveReagent((stomach).Owner, stomachSolution,
+                                delta.ReagentId, quant);
+                            transferSolution.AddReagent(delta.ReagentId, quant);
                         }
 
                         queue.Add(delta);
@@ -115,7 +116,7 @@ namespace Content.Server.Body.Systems
             // Add each reagent to ReagentDeltas. Used to track how long each reagent has been in the stomach
             foreach (var reagent in solution.Contents)
             {
-                stomach.ReagentDeltas.Add(new StomachComponent.ReagentDelta(reagent));
+                stomach.ReagentDeltas.Add(new StomachComponent.ReagentDelta(reagent.ReagentId, reagent.Quantity));
             }
 
             return true;

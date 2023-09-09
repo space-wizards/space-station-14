@@ -4,7 +4,6 @@ using Content.Server.Explosion.EntitySystems;
 using Content.Server.Kitchen.Components;
 using Content.Server.Power.Components;
 using Content.Server.Stunnable.Components;
-using Content.Shared.Chemistry.Components;
 using Content.Shared.Database;
 using Content.Shared.Rejuvenate;
 
@@ -48,16 +47,24 @@ public sealed class RiggableSystem : EntitySystem
 
     private void OnSolutionChanged(EntityUid uid, RiggableComponent component, SolutionChangedEvent args)
     {
-        if (args.SolutionId != component.Solution)
-            return;
+        if (TryComp<BatteryComponent>(uid, out var battery))
+        {
+            IsRigged(uid, args);
+        }
 
-        var wasRigged = component.IsRigged;
-        var quantity = args.Solution.GetReagentQuantity(component.RequiredQuantity.Reagent);
-        component.IsRigged = quantity >= component.RequiredQuantity.Quantity;
-
-        if (component.IsRigged && !wasRigged)
+        if (component.IsRigged)
         {
             _adminLogger.Add(LogType.Explosion, LogImpact.Medium, $"{ToPrettyString(uid)} has been rigged up to explode when used.");
+        }
+    }
+
+    public void IsRigged(EntityUid uid, SolutionChangedEvent args)
+    {
+        if (TryComp<RiggableComponent>(uid, out var riggableComp))
+        {
+            riggableComp.IsRigged = _solutionsSystem.TryGetSolution(uid, RiggableComponent.SolutionName, out var solution)
+                                    && solution.TryGetReagent("Plasma", out var plasma)
+                                    && plasma >= 5;
         }
     }
 

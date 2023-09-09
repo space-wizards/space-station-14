@@ -1,11 +1,12 @@
-using System.Linq;
-using Content.Shared.FixedPoint;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Utility;
+using Content.Shared.Actions.ActionTypes;
+using Content.Shared.FixedPoint;
+using System.Linq;
 
 namespace Content.Shared.Store;
 
@@ -70,7 +71,7 @@ public partial class ListingData : IEquatable<ListingData>, ICloneable
     /// <summary>
     /// The action that is given when the listing is purchased.
     /// </summary>
-    [DataField("productAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    [DataField("productAction", customTypeSerializer: typeof(PrototypeIdSerializer<InstantActionPrototype>))]
     public string? ProductAction;
 
     /// <summary>

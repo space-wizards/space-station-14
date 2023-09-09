@@ -5,7 +5,6 @@ using Content.Server.PDA;
 using Content.Server.StationRecords.Systems;
 using Content.Shared.Access.Components;
 using Content.Shared.Administration;
-using Content.Shared.Mind;
 using Content.Shared.PDA;
 using Content.Shared.StationRecords;
 using Robust.Server.GameObjects;
@@ -46,7 +45,7 @@ public sealed class RenameCommand : IConsoleCommand
         var oldName = metadata.EntityName;
         entMan.System<MetaDataSystem>().SetEntityName(entityUid, name, metadata);
 
-        var minds = entMan.System<SharedMindSystem>();
+        var minds = entMan.System<MindSystem>();
 
         if (minds.TryGetMind(entityUid, out var mindId, out var mind))
         {

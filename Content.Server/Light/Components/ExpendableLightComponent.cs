@@ -1,4 +1,4 @@
-using Content.Shared.Light.Components;
+using Content.Shared.Light.Component;
 
 namespace Content.Server.Light.Components
 {

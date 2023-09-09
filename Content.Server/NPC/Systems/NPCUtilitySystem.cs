@@ -15,7 +15,6 @@ using Content.Shared.Hands.Components;
 using Content.Shared.Inventory;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Nutrition.Components;
-using Content.Shared.Tools.Systems;
 using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
@@ -43,7 +42,6 @@ public sealed class NPCUtilitySystem : EntitySystem
     [Dependency] private readonly PuddleSystem _puddle = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SolutionContainerSystem _solutions = default!;
-    [Dependency] private readonly WeldableSystem _weldable = default!;
 
     private EntityQuery<TransformComponent> _xformQuery;
 
@@ -197,7 +195,7 @@ public sealed class NPCUtilitySystem : EntitySystem
                 {
                     if (TryComp<EntityStorageComponent>(container.Owner, out var storageComponent))
                     {
-                        if (storageComponent is { Open: false } && _weldable.IsWelded(container.Owner))
+                        if (storageComponent is { IsWeldedShut: true, Open: false })
                         {
                             return 0.0f;
                         }

@@ -16,8 +16,7 @@ entities:
   entities:
   - uid: 2
     components:
-    - name: NT Evac Rod
-      type: MetaData
+    - type: MetaData
     - pos: -0.70836353,-1.958334
       parent: invalid
       type: Transform

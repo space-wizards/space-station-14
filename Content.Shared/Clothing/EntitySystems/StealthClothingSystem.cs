@@ -3,6 +3,7 @@ using Content.Shared.Clothing.Components;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Stealth;
 using Content.Shared.Stealth.Components;
+using Robust.Shared.GameStates;
 
 namespace Content.Shared.Clothing.EntitySystems;
 
@@ -58,7 +59,7 @@ public sealed class StealthClothingSystem : EntitySystem
         if (ev.Cancelled)
             return;
 
-        args.AddAction(ref comp.ToggleActionEntity, comp.ToggleAction);
+        args.Actions.Add(comp.ToggleAction);
     }
 
     /// <summary>

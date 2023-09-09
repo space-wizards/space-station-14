@@ -4,6 +4,7 @@ using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Construction;
 using Content.Server.Fluids.EntitySystems;
 using Content.Server.GameTicking;
+using Content.Server.Mind;
 using Content.Server.Nutrition.Components;
 using Content.Server.Popups;
 using Content.Server.Power.Components;
@@ -16,7 +17,6 @@ using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Materials;
-using Content.Shared.Mind;
 using Robust.Server.GameObjects;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
@@ -34,7 +34,7 @@ public sealed class MaterialReclaimerSystem : SharedMaterialReclaimerSystem
     [Dependency] private readonly SharedBodySystem _body = default!; //bobby
     [Dependency] private readonly PuddleSystem _puddle = default!;
     [Dependency] private readonly StackSystem _stack = default!;
-    [Dependency] private readonly SharedMindSystem _mind = default!;
+    [Dependency] private readonly MindSystem _mind = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -220,16 +220,14 @@ public sealed class MaterialReclaimerSystem : SharedMaterialReclaimerSystem
         if (!Resolve(reclaimer, ref reclaimerComponent, ref xform))
             return;
 
-        efficiency *= reclaimerComponent.Efficiency;
-
-        var totalChemicals = new Solution();
+        var overflow = new Solution();
+        var totalChemicals = new Dictionary<string, FixedPoint2>();
 
         if (Resolve(item, ref composition, false))
         {
             foreach (var (key, value) in composition.ChemicalComposition)
             {
-                // TODO use ReagentQuantity
-                totalChemicals.AddReagent(key, value * efficiency, false);
+                totalChemicals[key] = totalChemicals.GetValueOrDefault(key) + value;
             }
         }
 
@@ -240,15 +238,27 @@ public sealed class MaterialReclaimerSystem : SharedMaterialReclaimerSystem
             {
                 foreach (var quantity in solution.Contents)
                 {
-                    totalChemicals.AddReagent(quantity.Reagent.Prototype, quantity.Quantity * efficiency, false);
+                    totalChemicals[quantity.ReagentId] =
+                        totalChemicals.GetValueOrDefault(quantity.ReagentId) + quantity.Quantity;
                 }
             }
         }
 
-        _solutionContainer.TryTransferSolution(reclaimer, reclaimerComponent.OutputSolution, totalChemicals, totalChemicals.Volume);
-        if (totalChemicals.Volume > 0)
+        foreach (var (reagent, amount) in totalChemicals)
         {
-            _puddle.TrySpillAt(reclaimer, totalChemicals, out _, transformComponent: xform);
+            var outputAmount = amount * efficiency * reclaimerComponent.Efficiency;
+            _solutionContainer.TryAddReagent(reclaimer, reclaimerComponent.OutputSolution, reagent, outputAmount,
+                out var accepted);
+            var overflowAmount = outputAmount - accepted;
+            if (overflowAmount > 0)
+            {
+                overflow.AddReagent(reagent, overflowAmount);
+            }
+        }
+
+        if (overflow.Volume > 0)
+        {
+            _puddle.TrySpillAt(reclaimer, overflow, out _, transformComponent: xform);
         }
     }
 }

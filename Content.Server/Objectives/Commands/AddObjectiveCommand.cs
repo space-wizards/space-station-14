@@ -1,7 +1,6 @@
 ﻿using Content.Server.Administration;
+using Content.Server.Mind;
 using Content.Shared.Administration;
-using Content.Shared.Mind;
-using Content.Shared.Objectives;
 using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.Prototypes;
@@ -31,7 +30,7 @@ namespace Content.Server.Objectives.Commands
                 return;
             }
 
-            var minds = _entityManager.System<SharedMindSystem>();
+            var minds = _entityManager.System<MindSystem>();
             if (!minds.TryGetMind(data, out var mindId, out var mind))
             {
                 shell.WriteLine("Can't find the mind.");
@@ -45,7 +44,7 @@ namespace Content.Server.Objectives.Commands
                 return;
             }
 
-            var mindSystem = _entityManager.System<SharedMindSystem>();
+            var mindSystem = _entityManager.System<MindSystem>();
             if (!mindSystem.TryAddObjective(mindId, mind, objectivePrototype))
             {
                 shell.WriteLine("Objective requirements dont allow that objective to be added.");

@@ -4,7 +4,6 @@ using Content.Server.Ghost.Roles.Events;
 using Content.Server.Popups;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Actions;
-using Content.Shared.Bible;
 using Content.Shared.Damage;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
@@ -30,6 +29,7 @@ namespace Content.Server.Bible
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
         [Dependency] private readonly UseDelaySystem _delay = default!;
+        [Dependency] private readonly SharedTransformSystem _transform = default!;
 
         public override void Initialize()
         {
@@ -180,9 +180,8 @@ namespace Content.Server.Bible
             if (component.AlreadySummoned)
                 return;
 
-            args.AddAction(ref component.SummonActionEntity, component.SummonAction);
+            args.Actions.Add(component.SummonAction);
         }
-
         private void OnSummon(EntityUid uid, SummonableComponent component, SummonActionEvent args)
         {
             AttemptSummon(component, args.Performer, Transform(args.Performer));
@@ -237,10 +236,15 @@ namespace Content.Server.Bible
             if (HasComp<GhostRoleMobSpawnerComponent>(familiar))
             {
                 _popupSystem.PopupEntity(Loc.GetString("bible-summon-requested"), user, PopupType.Medium);
-                Transform(familiar).AttachParent(component.Owner);
+                _transform.SetParent(familiar, component.Owner);
             }
             component.AlreadySummoned = true;
-            _actionsSystem.RemoveAction(user, component.SummonActionEntity);
+            _actionsSystem.RemoveAction(user, component.SummonAction);
         }
+    }
+
+    public sealed partial class SummonActionEvent : InstantActionEvent
+    {
+
     }
 }

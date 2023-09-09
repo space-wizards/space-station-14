@@ -21,6 +21,7 @@ namespace Content.Client.Medical.CrewMonitoring
         private List<(DirectionIcon Icon, Vector2 Position)> _directionIcons = new();
         private readonly IEntityManager _entManager;
         private readonly IEyeManager _eye;
+        private readonly SharedTransformSystem _transform;
         private EntityUid? _stationUid;
         private CrewMonitoringButton? _trackedButton;
 
@@ -31,6 +32,7 @@ namespace Content.Client.Medical.CrewMonitoring
             RobustXamlLoader.Load(this);
             _eye = IoCManager.Resolve<IEyeManager>();
             _entManager = IoCManager.Resolve<IEntityManager>();
+            _transform = _entManager.System<SharedTransformSystem>();
             _stationUid = mapUid;
 
             if (_entManager.TryGetComponent<TransformComponent>(mapUid, out var xform))
@@ -193,7 +195,7 @@ namespace Content.Client.Medical.CrewMonitoring
                 // Apply the offset relative to the eye.
                 // For a station at 45 degrees rotation, the current eye rotation is -45 degrees.
                 // TODO: This feels sketchy. Is there something underlying wrong with eye rotation?
-                offsetAngle = -(_eye.CurrentEye.Rotation + xform.WorldRotation);
+                offsetAngle = -(_eye.CurrentEye.Rotation + _transform.GetWorldRotation(xform));
             }
 
             foreach (var (icon, pos) in _directionIcons)

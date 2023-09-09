@@ -203,9 +203,8 @@
   - type: StorageFill
     contents:
       - id: WeaponWaterBlaster
-        amount: 2
       - id: WeaponWaterPistol
-        amount: 4
+        amount: 5
 
 - type: entity
   id: CrateFunSyndicateSegway

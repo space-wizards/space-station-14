@@ -1,46 +1,33 @@
-﻿using Content.Shared.FixedPoint;
-using Content.Shared.Roles;
-using Content.Shared.Storage;
-using Robust.Shared.Network;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-
-namespace Content.Server.GameTicking.Rules.Components;
+﻿namespace Content.Server.GameTicking.Rules.Components;
 
 /// <summary>
-/// Gamerule that ends when a player gets a certain number of kills.
+///     Simple GameRule that will do a free-for-all death match.
+///     Kill everybody else to win.
 /// </summary>
 [RegisterComponent, Access(typeof(DeathMatchRuleSystem))]
 public sealed partial class DeathMatchRuleComponent : Component
 {
     /// <summary>
-    /// The number of points a player has to get to win.
-    /// </summary>
-    [DataField("killCap"), ViewVariables(VVAccess.ReadWrite)]
-    public FixedPoint2 KillCap = 31;
-
-    /// <summary>
     /// How long until the round restarts
     /// </summary>
     [DataField("restartDelay"), ViewVariables(VVAccess.ReadWrite)]
-    public TimeSpan RestartDelay = TimeSpan.FromSeconds(10f);
+    public float RestartDelay = 10f;
 
     /// <summary>
-    /// The person who won.
-    /// We store this here in case of some assist shenanigans.
+    /// How long after a person dies will the restart be checked
     /// </summary>
-    [DataField("victor")]
-    public NetUserId? Victor;
+    [DataField("deadCheckDelay"), ViewVariables(VVAccess.ReadWrite)]
+    public float DeadCheckDelay = 5f;
 
     /// <summary>
-    /// An entity spawned after a player is killed.
+    /// A timer for checking after a death
     /// </summary>
-    [DataField("rewardSpawns")]
-    public List<EntitySpawnEntry> RewardSpawns = new();
+    [DataField("deadCheckTimer"), ViewVariables(VVAccess.ReadWrite)]
+    public float? DeadCheckTimer;
 
     /// <summary>
-    /// The gear all players spawn with.
+    /// A timer for the restart.
     /// </summary>
-    [DataField("gear", customTypeSerializer: typeof(PrototypeIdSerializer<StartingGearPrototype>)), ViewVariables(VVAccess.ReadWrite)]
-    public string Gear = "DeathMatchGear";
+    [DataField("restartTimer"), ViewVariables(VVAccess.ReadWrite)]
+    public float? RestartTimer;
 }

@@ -8,7 +8,6 @@ using Content.Server.Storage.EntitySystems;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
-using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
@@ -118,7 +117,7 @@ namespace Content.Server.Chemistry.EntitySystems
             ClickSound(chemMaster);
         }
 
-        private void TransferReagents(ChemMasterComponent chemMaster, ReagentId id, FixedPoint2 amount, bool fromBuffer)
+        private void TransferReagents(ChemMasterComponent chemMaster, string reagentId, FixedPoint2 amount, bool fromBuffer)
         {
             var container = _itemSlotsSystem.GetItemOrNull(chemMaster.Owner, SharedChemMaster.InputSlotName);
             if (container is null ||
@@ -131,26 +130,26 @@ namespace Content.Server.Chemistry.EntitySystems
             if (fromBuffer) // Buffer to container
             {
                 amount = FixedPoint2.Min(amount, containerSolution.AvailableVolume);
-                amount = bufferSolution.RemoveReagent(id, amount);
-                _solutionContainerSystem.TryAddReagent(container.Value, containerSolution, id, amount, out var _);
+                amount = bufferSolution.RemoveReagent(reagentId, amount);
+                _solutionContainerSystem.TryAddReagent(container.Value, containerSolution, reagentId, amount, out var _);
             }
             else // Container to buffer
             {
-                amount = FixedPoint2.Min(amount, containerSolution.GetReagentQuantity(id));
-                _solutionContainerSystem.RemoveReagent(container.Value, containerSolution, id, amount);
-                bufferSolution.AddReagent(id, amount);
+                amount = FixedPoint2.Min(amount, containerSolution.GetReagentQuantity(reagentId));
+                _solutionContainerSystem.TryRemoveReagent(container.Value, containerSolution, reagentId, amount);
+                bufferSolution.AddReagent(reagentId, amount);
             }
 
             UpdateUiState(chemMaster, updateLabel: true);
         }
 
-        private void DiscardReagents(ChemMasterComponent chemMaster, ReagentId id, FixedPoint2 amount, bool fromBuffer)
+        private void DiscardReagents(ChemMasterComponent chemMaster, string reagentId, FixedPoint2 amount, bool fromBuffer)
         {
 
             if (fromBuffer)
             {
                 if (_solutionContainerSystem.TryGetSolution(chemMaster.Owner, SharedChemMaster.BufferSolutionName, out var bufferSolution))
-                    bufferSolution.RemoveReagent(id, amount);
+                    bufferSolution.RemoveReagent(reagentId, amount);
                 else
                     return;
             }
@@ -160,7 +159,7 @@ namespace Content.Server.Chemistry.EntitySystems
                 if (container is not null &&
                     _solutionContainerSystem.TryGetFitsInDispenser(container.Value, out var containerSolution))
                 {
-                    _solutionContainerSystem.RemoveReagent(container.Value, containerSolution, id, amount);
+                    _solutionContainerSystem.TryRemoveReagent(container.Value, containerSolution, reagentId, amount);
                 }
                 else
                     return;
@@ -350,21 +349,17 @@ namespace Content.Server.Chemistry.EntitySystems
                 return (Name(pill), quantity);
             })).ToList();
 
-            if (pills == null)
-                return null;
-
-            return new ContainerInfo(name, storage.StorageUsed, storage.StorageCapacityMax)
-            {
-                Entities = pills
-            };
+            return pills is null
+                ? null
+                : new ContainerInfo(name, false, storage.StorageUsed, storage.StorageCapacityMax, pills);
         }
 
         private static ContainerInfo BuildContainerInfo(string name, Solution solution)
         {
-            return new ContainerInfo(name, solution.Volume, solution.MaxVolume)
-            {
-                Reagents = solution.Contents
-            };
+            var reagents = solution.Contents
+                .Select(reagent => (reagent.ReagentId, reagent.Quantity)).ToList();
+
+            return new ContainerInfo(name, true, solution.Volume, solution.MaxVolume, reagents);
         }
     }
 }

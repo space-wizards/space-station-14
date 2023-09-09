@@ -33,15 +33,7 @@ namespace Content.Shared.Materials
         public string? StackEntity;
 
         [DataField("name")]
-        public string Name = string.Empty;
-
-        /// <summary>
-        /// Locale id for the unit of this material.
-        /// Lathe recipe tooltips and material storage display use this to let you change a material to sound nicer.
-        /// For example, 5 bars of gold is better than 5 sheets of gold.
-        /// </summary>
-        [DataField("unit")]
-        public string Unit = "materials-unit-sheet";
+        public string Name = "";
 
         [DataField("color")]
         public Color Color { get; private set; } = Color.Gray;

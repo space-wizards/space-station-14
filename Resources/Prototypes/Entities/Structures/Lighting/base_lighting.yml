@@ -314,7 +314,6 @@
     maxCharge: 30000
     startingCharge: 0
   - type: EmergencyLight
-  - type: RotatingLight
   - type: Sprite
     sprite: Structures/Wallmounts/Lighting/emergency_light.rsi
     layers:

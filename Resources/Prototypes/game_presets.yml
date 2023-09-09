@@ -59,11 +59,8 @@
     - dm
   name: death-match-title
   description: death-match-description
-  maxPlayers: 15
-  showInVote: true
-  supportedMaps: DeathMatchMapPool
   rules:
-    - DeathMatch31
+    - DeathMatch
 
 - type: gamePreset
   id: Nukeops

@@ -1,3 +1,4 @@
+using Content.Client.Tools.Components;
 using Content.Shared.Tools.Components;
 using Robust.Client.GameObjects;
 

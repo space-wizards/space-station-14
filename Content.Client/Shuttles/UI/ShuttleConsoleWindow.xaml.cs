@@ -21,6 +21,7 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
 {
     private readonly IEntityManager _entManager;
     private readonly IGameTiming _timing;
+    private readonly SharedTransformSystem _transform;
 
     private EntityUid? _shuttleUid;
 
@@ -51,6 +52,7 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
         RobustXamlLoader.Load(this);
         _entManager = IoCManager.Resolve<IEntityManager>();
         _timing = IoCManager.Resolve<IGameTiming>();
+        _transform = _entManager.System<SharedTransformSystem>();
 
         WorldRangeChange(RadarScreen.WorldRange);
         RadarScreen.WorldRangeChanged += WorldRangeChange;
@@ -323,7 +325,7 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
 
         FTLTimer.Text = GetFTLText();
 
-        var (_, worldRot, worldMatrix) = gridXform.GetWorldPositionRotationMatrix();
+        var (_, worldRot, worldMatrix) = _transform.GetWorldPositionRotationMatrix(gridXform);
         var worldPos = worldMatrix.Transform(gridBody.LocalCenter);
 
         // Get the positive reduced angle.

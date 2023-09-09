@@ -8,6 +8,8 @@ namespace Content.Shared.Hands.EntitySystems;
 
 public abstract partial class SharedHandsSystem : EntitySystem
 {
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
+
     private void InitializeDrop()
     {
         SubscribeLocalEvent<HandsComponent, EntRemovedFromContainerMessage>(HandleEntityRemoved);
@@ -98,12 +100,14 @@ public abstract partial class SharedHandsSystem : EntitySystem
             if (!isInContainer
                 || !_containerSystem.TryGetContainingContainer(userXform.ParentUid, uid, out var container, skipExistCheck: true)
                 || !container.Insert(entity, EntityManager, itemXform))
-                itemXform.AttachToGridOrMap();
+            {
+                _transform.AttachToGridOrMap(entity, itemXform);
+            }
             return true;
         }
 
         var target = targetDropLocation.Value.ToMap(EntityManager);
-        itemXform.WorldPosition = GetFinalDropCoordinates(uid, userXform.MapPosition, target);
+        _transform.SetWorldPosition(itemXform, GetFinalDropCoordinates(uid, userXform.MapPosition, target));
         return true;
     }
 

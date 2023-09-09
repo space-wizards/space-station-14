@@ -201,7 +201,7 @@ namespace Content.Server.RoundEnd
             RaiseLocalEvent(RoundEndSystemChangedEvent.Default);
         }
 
-        public void EndRound(TimeSpan? countdownTime = null)
+        public void EndRound()
         {
             if (_gameTicker.RunLevel != GameRunLevel.InRound) return;
             LastCountdownStart = null;
@@ -211,17 +211,17 @@ namespace Content.Server.RoundEnd
             _countdownTokenSource?.Cancel();
             _countdownTokenSource = new();
 
-            countdownTime ??= TimeSpan.FromSeconds(_cfg.GetCVar(CCVars.RoundRestartTime));
+            var countdownTime = TimeSpan.FromSeconds(_cfg.GetCVar(CCVars.RoundRestartTime));
             int time;
             string unitsLocString;
-            if (countdownTime.Value.TotalSeconds < 60)
+            if (countdownTime.TotalSeconds < 60)
             {
-                time = countdownTime.Value.Seconds;
+                time = countdownTime.Seconds;
                 unitsLocString = "eta-units-seconds";
             }
             else
             {
-                time = countdownTime.Value.Minutes;
+                time = countdownTime.Minutes;
                 unitsLocString = "eta-units-minutes";
             }
             _chatManager.DispatchServerAnnouncement(
@@ -229,7 +229,7 @@ namespace Content.Server.RoundEnd
                     "round-end-system-round-restart-eta-announcement",
                     ("time", time),
                     ("units", Loc.GetString(unitsLocString))));
-            Timer.Spawn(countdownTime.Value, AfterEndRoundRestart, _countdownTokenSource.Token);
+            Timer.Spawn(countdownTime, AfterEndRoundRestart, _countdownTokenSource.Token);
         }
 
         private void AfterEndRoundRestart()

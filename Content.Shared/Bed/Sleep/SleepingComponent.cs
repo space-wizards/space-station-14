@@ -25,6 +25,4 @@ public sealed partial class SleepingComponent : Component
 
     [DataField("cooldownEnd", customTypeSerializer:typeof(TimeOffsetSerializer))]
     public TimeSpan CoolDownEnd;
-
-    [DataField("wakeAction")] public EntityUid? WakeAction;
 }

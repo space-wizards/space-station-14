@@ -12,6 +12,7 @@ namespace Content.Server.Worldgen.Systems;
 public abstract class BaseWorldSystem : EntitySystem
 {
     [Dependency] private readonly WorldControllerSystem _worldController = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     /// <summary>
     ///     Gets a chunk's coordinates in chunk space as an integer value.
@@ -25,7 +26,7 @@ public abstract class BaseWorldSystem : EntitySystem
         if (!Resolve(ent, ref xform))
             throw new Exception("Failed to resolve transform, somehow.");
 
-        return WorldGen.WorldToChunkCoords(xform.WorldPosition).Floored();
+        return WorldGen.WorldToChunkCoords(_transform.GetWorldPosition(xform)).Floored();
     }
 
     /// <summary>
@@ -40,7 +41,7 @@ public abstract class BaseWorldSystem : EntitySystem
         if (!Resolve(ent, ref xform))
             throw new Exception("Failed to resolve transform, somehow.");
 
-        return WorldGen.WorldToChunkCoords(xform.WorldPosition);
+        return WorldGen.WorldToChunkCoords(_transform.GetWorldPosition(xform));
     }
 
     /// <summary>

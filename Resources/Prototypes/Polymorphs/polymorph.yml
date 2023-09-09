@@ -94,11 +94,3 @@
   revertOnCrit: false
   revertOnDeath: true
   revertOnEat: true
-
-- type: polymorph
-  id: TreeMorph
-  entity: FloraTree01
-  forced: true
-  transferName: true
-  revertOnDeath: true
-

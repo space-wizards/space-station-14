@@ -9,9 +9,10 @@ using Content.Shared.Administration.Notes;
 using Content.Shared.CCVar;
 using Content.Shared.Database;
 using Content.Shared.Players.PlayTimeTracking;
+using Robust.Server.Player;
+using Robust.Shared;
 using Robust.Shared.Configuration;
 using Robust.Shared.Network;
-using Robust.Shared.Players;
 
 namespace Content.Server.Administration.Notes;
 
@@ -32,27 +33,27 @@ public sealed class AdminNotesManager : IAdminNotesManager, IPostInjectInit
 
     private ISawmill _sawmill = default!;
 
-    public bool CanCreate(ICommonSession admin)
+    public bool CanCreate(IPlayerSession admin)
     {
         return CanEdit(admin);
     }
 
-    public bool CanDelete(ICommonSession admin)
+    public bool CanDelete(IPlayerSession admin)
     {
         return CanEdit(admin);
     }
 
-    public bool CanEdit(ICommonSession admin)
+    public bool CanEdit(IPlayerSession admin)
     {
         return _admins.HasAdminFlag(admin, AdminFlags.EditNotes);
     }
 
-    public bool CanView(ICommonSession admin)
+    public bool CanView(IPlayerSession admin)
     {
         return _admins.HasAdminFlag(admin, AdminFlags.ViewNotes);
     }
 
-    public async Task OpenEui(ICommonSession admin, Guid notedPlayer)
+    public async Task OpenEui(IPlayerSession admin, Guid notedPlayer)
     {
         var ui = new AdminNotesEui();
         _euis.OpenEui(ui, admin);
@@ -60,7 +61,7 @@ public sealed class AdminNotesManager : IAdminNotesManager, IPostInjectInit
         await ui.ChangeNotedPlayer(notedPlayer);
     }
 
-    public async Task OpenUserNotesEui(ICommonSession player)
+    public async Task OpenUserNotesEui(IPlayerSession player)
     {
         var ui = new UserNotesEui();
         _euis.OpenEui(ui, player);
@@ -68,7 +69,7 @@ public sealed class AdminNotesManager : IAdminNotesManager, IPostInjectInit
         await ui.UpdateNotes();
     }
 
-    public async Task AddAdminRemark(ICommonSession createdBy, Guid player, NoteType type, string message, NoteSeverity? severity, bool secret, DateTime? expiryTime)
+    public async Task AddAdminRemark(IPlayerSession createdBy, Guid player, NoteType type, string message, NoteSeverity? severity, bool secret, DateTime? expiryTime)
     {
         message = message.Trim();
 
@@ -178,7 +179,7 @@ public sealed class AdminNotesManager : IAdminNotesManager, IPostInjectInit
         };
     }
 
-    public async Task DeleteAdminRemark(int noteId, NoteType type, ICommonSession deletedBy)
+    public async Task DeleteAdminRemark(int noteId, NoteType type, IPlayerSession deletedBy)
     {
         var note = await GetAdminRemark(noteId, type);
         if (note == null)
@@ -214,7 +215,7 @@ public sealed class AdminNotesManager : IAdminNotesManager, IPostInjectInit
         NoteDeleted?.Invoke(note);
     }
 
-    public async Task ModifyAdminRemark(int noteId, NoteType type, ICommonSession editedBy, string message, NoteSeverity? severity, bool secret, DateTime? expiryTime)
+    public async Task ModifyAdminRemark(int noteId, NoteType type, IPlayerSession editedBy, string message, NoteSeverity? severity, bool secret, DateTime? expiryTime)
     {
         message = message.Trim();
 

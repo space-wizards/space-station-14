@@ -2,18 +2,17 @@ using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Server.Administration.Systems;
+using Content.Server.Mind;
 using Content.Server.MoMMI;
 using Content.Server.Preferences.Managers;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
 using Content.Shared.Chat;
 using Content.Shared.Database;
-using Content.Shared.Mind;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
-using Robust.Shared.Players;
 using Robust.Shared.Replays;
 using Robust.Shared.Utility;
 
@@ -85,7 +84,7 @@ namespace Content.Server.Chat.Managers
             _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Server announcement: {message}");
         }
 
-        public void DispatchServerMessage(ICommonSession player, string message, bool suppressLog = false)
+        public void DispatchServerMessage(IPlayerSession player, string message, bool suppressLog = false)
         {
             var wrappedMessage = Loc.GetString("chat-manager-server-wrap-message", ("message", FormattedMessage.EscapeText(message)));
             ChatMessageToOne(ChatChannel.Server, message, wrappedMessage, default, false, player.ConnectedClient);
@@ -117,7 +116,7 @@ namespace Content.Server.Chat.Managers
 
         public void SendAdminAlert(EntityUid player, string message)
         {
-            var mindSystem = _entityManager.System<SharedMindSystem>();
+            var mindSystem = _entityManager.System<MindSystem>();
             if (!mindSystem.TryGetMind(player, out var mindId, out var mind))
             {
                 SendAdminAlert(message);

@@ -1,17 +1,18 @@
 using System.Numerics;
 using Content.Server.Chemistry.Components;
 using Content.Server.Chemistry.Components.SolutionManager;
-using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Content.Shared.Physics;
 using Content.Shared.Spawners.Components;
 using Content.Shared.Throwing;
+using Content.Shared.Vapor;
 using JetBrains.Annotations;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Components;
+using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Prototypes;
@@ -26,7 +27,7 @@ namespace Content.Server.Chemistry.EntitySystems
         [Dependency] private readonly SharedPhysicsSystem _physics = default!;
         [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
         [Dependency] private readonly ThrowingSystem _throwing = default!;
-        [Dependency] private readonly ReactiveSystem _reactive = default!;
+        [Dependency] private readonly SharedTransformSystem _transform = default!;
 
         private const float ReactTime = 0.125f;
 
@@ -45,7 +46,7 @@ namespace Content.Server.Chemistry.EntitySystems
 
             foreach (var value in contents.Solutions.Values)
             {
-                _reactive.DoEntityReaction(args.OtherEntity, value, ReactionMethod.Touch);
+                value.DoEntityReaction(args.OtherEntity, ReactionMethod.Touch);
             }
 
             // Check for collision with a impassable object (e.g. wall) and stop
@@ -69,7 +70,7 @@ namespace Content.Server.Chemistry.EntitySystems
 
                 _throwing.TryThrow(vapor.Owner, dir, speed, user: user, pushbackRatio: ThrowingSystem.PushbackDefault * 10f);
 
-                var distance = (target.Position - vaporXform.WorldPosition).Length();
+                var distance = (target.Position - _transform.GetWorldPosition(vaporXform)).Length();
                 var time = (distance / physics.LinearVelocity.Length());
                 despawn.Lifetime = MathF.Min(aliveTime, time);
             }
@@ -120,18 +121,18 @@ namespace Content.Server.Chemistry.EntitySystems
                 foreach (var reagentQuantity in contents.Contents.ToArray())
                 {
                     if (reagentQuantity.Quantity == FixedPoint2.Zero) continue;
-                    var reagent = _protoManager.Index<ReagentPrototype>(reagentQuantity.Reagent.Prototype);
+                    var reagent = _protoManager.Index<ReagentPrototype>(reagentQuantity.ReagentId);
 
                     var reaction =
                         reagent.ReactionTile(tile, (reagentQuantity.Quantity / vapor.TransferAmount) * 0.25f);
 
                     if (reaction > reagentQuantity.Quantity)
                     {
-                        _sawmill.Error($"Tried to tile react more than we have for reagent {reagentQuantity}. Found {reaction} and we only have {reagentQuantity.Quantity}");
+                        _sawmill.Error($"Tried to tile react more than we have for reagent {reagentQuantity.ReagentId}. Found {reaction} and we only have {reagentQuantity.Quantity}");
                         reaction = reagentQuantity.Quantity;
                     }
 
-                    _solutionContainerSystem.RemoveReagent(vapor.Owner, contents, reagentQuantity.Reagent, reaction);
+                    _solutionContainerSystem.TryRemoveReagent(vapor.Owner, contents, reagentQuantity.ReagentId, reaction);
                 }
             }
 

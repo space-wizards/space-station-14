@@ -1,5 +1,4 @@
 using Content.Client.Hands.Systems;
-using Content.Shared.Actions;
 using Content.Shared.CombatMode;
 using Content.Shared.Targeting;
 using Content.Shared.CCVar;
@@ -18,29 +17,30 @@ public sealed class CombatModeSystem : SharedCombatModeSystem
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly IInputManager _inputManager = default!;
     [Dependency] private readonly IEyeManager _eye = default!;
-
-    /// <summary>
-    /// Raised whenever combat mode changes.
-    /// </summary>
-    public event Action<bool>? LocalPlayerCombatModeUpdated;
+    public event Action? LocalPlayerCombatModeUpdated;
 
     public override void Initialize()
     {
         base.Initialize();
 
-        SubscribeLocalEvent<CombatModeComponent, AfterAutoHandleStateEvent>(OnHandleState);
+        SubscribeLocalEvent<CombatModeComponent, ComponentHandleState>(OnHandleState);
 
         _cfg.OnValueChanged(CCVars.CombatModeIndicatorsPointShow, OnShowCombatIndicatorsChanged, true);
     }
 
-    private void OnHandleState(EntityUid uid, CombatModeComponent component, ref AfterAutoHandleStateEvent args)
+    private void OnHandleState(EntityUid uid, CombatModeComponent component, ref ComponentHandleState args)
     {
+        if (args.Current is not CombatModeComponentState state)
+            return;
+
+        component.IsInCombatMode = state.IsInCombatMode;
+        component.ActiveZone = state.TargetingZone;
         UpdateHud(uid);
     }
 
     public override void Shutdown()
     {
-        _cfg.UnsubValueChanged(CCVars.CombatModeIndicatorsPointShow, OnShowCombatIndicatorsChanged);
+        _cfg.OnValueChanged(CCVars.CombatModeIndicatorsPointShow, OnShowCombatIndicatorsChanged);
         _overlayManager.RemoveOverlay<CombatModeIndicatorsOverlay>();
 
         base.Shutdown();
@@ -61,9 +61,9 @@ public sealed class CombatModeSystem : SharedCombatModeSystem
         return IsInCombatMode(entity.Value);
     }
 
-    public override void SetInCombatMode(EntityUid entity, bool value, CombatModeComponent? component = null)
+    public override void SetInCombatMode(EntityUid entity, bool inCombatMode, CombatModeComponent? component = null)
     {
-        base.SetInCombatMode(entity, value, component);
+        base.SetInCombatMode(entity, inCombatMode, component);
         UpdateHud(entity);
     }
 
@@ -75,13 +75,12 @@ public sealed class CombatModeSystem : SharedCombatModeSystem
 
     private void UpdateHud(EntityUid entity)
     {
-        if (entity != _playerManager.LocalPlayer?.ControlledEntity || !Timing.IsFirstTimePredicted)
+        if (entity != _playerManager.LocalPlayer?.ControlledEntity)
         {
             return;
         }
 
-        var inCombatMode = IsInCombatMode();
-        LocalPlayerCombatModeUpdated?.Invoke(inCombatMode);
+        LocalPlayerCombatModeUpdated?.Invoke();
     }
 
     private void OnShowCombatIndicatorsChanged(bool isShow)

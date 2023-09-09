@@ -191,7 +191,7 @@ public sealed partial class GunSystem : SharedGunSystem
                 if (ent!.Value.IsClientSide())
                     Del(ent.Value);
                 else
-                    RemoveShootable(ent.Value);
+                    RemComp<AmmoComponent>(ent.Value);
                 continue;
             }
 
@@ -225,7 +225,7 @@ public sealed partial class GunSystem : SharedGunSystem
                     if (ent!.Value.IsClientSide())
                         Del(ent.Value);
                     else
-                        RemoveShootable(ent.Value);
+                        RemComp<AmmoComponent>(ent.Value);
                     break;
                 case HitscanPrototype:
                     Audio.PlayPredicted(gun.SoundGunshot, gunUid, user);
