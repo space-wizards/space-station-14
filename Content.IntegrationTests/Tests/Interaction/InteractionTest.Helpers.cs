@@ -1022,9 +1022,9 @@ public abstract partial class InteractionTest
         var message = new ClientFullInputCmdMessage(CTiming.CurTick, CTiming.TickFraction, funcId)
         {
             State = state,
-            Coordinates = SEntMan.GetCoordinates(coords),
+            Coordinates = CEntMan.GetCoordinates(coords),
             ScreenCoordinates = screen,
-            Uid = SEntMan.GetEntity(cursorEntity),
+            Uid = CEntMan.GetEntity(cursorEntity),
         };
 
         await Client.WaitPost(() => InputSystem.HandleInputCommand(ClientSession, key, message));

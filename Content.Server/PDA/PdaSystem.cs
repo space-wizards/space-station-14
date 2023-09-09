@@ -67,6 +67,10 @@ namespace Content.Server.PDA
 
         protected override void OnItemRemoved(EntityUid uid, PdaComponent pda, EntRemovedFromContainerMessage args)
         {
+            // TODO: This is super cursed just use compstates please.
+            if (MetaData(uid).EntityLifeStage >= EntityLifeStage.Terminating)
+                return;
+
             base.OnItemRemoved(uid, pda, args);
             UpdatePdaUi(uid, pda);
         }
@@ -136,7 +140,7 @@ namespace Content.Server.PDA
                 hasInstrument,
                 address);
 
-            _cartridgeLoader?.UpdateUiState(uid, state);
+            _cartridgeLoader.UpdateUiState(uid, state);
         }
 
         private void OnUiMessage(EntityUid uid, PdaComponent pda, PdaRequestUpdateInterfaceMessage msg)
