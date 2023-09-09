@@ -1,5 +1,5 @@
 # not quite human...
-﻿- type: body
+- type: body
   id: TerminatorFlesh
   name: terminator
   root: torso
@@ -43,7 +43,7 @@
       part: LeftFootHuman
 
 # TODO: terminator body parts
-﻿- type: body
+- type: body
   id: TerminatorEndoskeleton
   name: terminatorEndoskeleton
   root: torso
