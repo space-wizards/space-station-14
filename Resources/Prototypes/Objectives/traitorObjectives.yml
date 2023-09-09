@@ -167,7 +167,7 @@
   conditions:
   - StealCorgiMeatCondition
 
-﻿- type: objective
+- type: objective
   id: CaptainIDStealObjective
   issuer: syndicate
   requirements:
