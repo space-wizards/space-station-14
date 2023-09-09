@@ -261,9 +261,12 @@ public abstract class SharedEntityStorageSystem : EntitySystem
         }
 
         _joints.RecursiveClearJoints(toInsert);
+        if (!component.Contents.Insert(toInsert, EntityManager))
+            return false;
+
         var inside = EnsureComp<InsideEntityStorageComponent>(toInsert);
         inside.Storage = container;
-        return component.Contents.Insert(toInsert, EntityManager);
+        return true;
     }
 
     public bool Remove(EntityUid toRemove, EntityUid container, SharedEntityStorageComponent? component = null, TransformComponent? xform = null)

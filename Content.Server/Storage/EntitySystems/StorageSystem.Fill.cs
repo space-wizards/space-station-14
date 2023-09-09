@@ -1,20 +1,26 @@
+using Content.Server.Spawners.Components;
 using Content.Server.Storage.Components;
+using Content.Shared.Prototypes;
 using Content.Shared.Storage;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Storage.EntitySystems;
 
 public sealed partial class StorageSystem
 {
+    [Dependency] private IPrototypeManager _prototype = default!;
     private void OnStorageFillMapInit(EntityUid uid, StorageFillComponent component, MapInitEvent args)
     {
-        if (component.Contents.Count == 0) return;
+        if (component.Contents.Count == 0)
+            return;
 
         TryComp<ServerStorageComponent>(uid, out var serverStorageComp);
         TryComp<EntityStorageComponent>(uid, out var entityStorageComp);
 
         if (entityStorageComp == null && serverStorageComp == null)
         {
-            Logger.Error($"StorageFillComponent couldn't find any StorageComponent ({uid})");
+            Log.Error($"StorageFillComponent couldn't find any StorageComponent ({uid})");
             return;
         }
 
@@ -23,16 +29,21 @@ public sealed partial class StorageSystem
         var spawnItems = EntitySpawnCollection.GetSpawns(component.Contents, _random);
         foreach (var item in spawnItems)
         {
+            // No, you are not allowed to fill a container with entity spawners.
+            DebugTools.Assert(
+                !_prototype.Index<EntityPrototype>(item)
+                    .HasComponent(typeof(RandomSpawnerComponent)));
+
             var ent = EntityManager.SpawnEntity(item, coordinates);
 
             // handle depending on storage component, again this should be unified after ECS
-            if (entityStorageComp != null && _entityStorage.Insert(ent, uid))
+            if (_entityStorage.Insert(ent, uid))
                continue;
 
-            if (serverStorageComp != null && Insert(uid, ent, serverStorageComp, false))
+            if (Insert(uid, ent, serverStorageComp, false))
                 continue;
 
-            Logger.ErrorS("storage", $"Tried to StorageFill {item} inside {ToPrettyString(uid)} but can't.");
+            Log.Error($"Tried to StorageFill {item} inside {ToPrettyString(uid)} but can't.");
             EntityManager.DeleteEntity(ent);
         }
     }
