@@ -1,0 +1,16 @@
+using Content.Shared.Terminator.Systems;
+
+namespace Content.Shared.Terminator.Components;
+
+/// <summary>
+/// Sets <see cref="TerminatorComponent.Target"/> after the ghost role spawns.
+/// </summary>
+[RegisterComponent, Access(typeof(SharedTerminatorSystem))]
+public sealed partial class TerminatorTargetComponent : Component
+{
+    /// <summary>
+    /// The target to set after the ghost role spawns.
+    /// </summary>
+    [DataField("target")]
+    public EntityUid? Target;
+}
