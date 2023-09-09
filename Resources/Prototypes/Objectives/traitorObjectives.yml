@@ -203,7 +203,7 @@
 - type: entity
   noSpawn: true
   parent: BaseTraitorStealObjective
-  id: MagbootsStealObjective
+  id: CorgiMeatStealObjective
   components:
   - type: NotJobRequirement
     job: HeadOfPersonnel
