@@ -318,7 +318,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
 
             totalInfected++;
 
-            _roles.MindAddRole(mindId, new ZombieRoleComponent { PrototypeId = component.PatientZeroPrototypeId });
+            _roles.MindAddRole(mindId, new InitialInfectedRoleComponent { PrototypeId = component.PatientZeroPrototypeId });
 
             var pending = EnsureComp<PendingZombieComponent>(ownedEntity);
             pending.GracePeriod = _random.Next(component.MinInitialInfectedGrace, component.MaxInitialInfectedGrace);
