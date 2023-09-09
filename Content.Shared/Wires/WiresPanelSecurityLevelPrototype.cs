@@ -1,8 +1,9 @@
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Wires;
 
-[Prototype("WiresPanelSecurityLevel")]
+[Prototype("WiresPanelSecurityLevel"), Serializable, NetSerializable]
 public sealed class WiresPanelSecurityLevelPrototype : IPrototype
 {
     [IdDataField]

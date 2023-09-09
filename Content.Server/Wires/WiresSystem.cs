@@ -458,7 +458,8 @@ public sealed class WiresSystem : SharedWiresSystem
         if (!TryComp<ToolComponent>(args.Used, out var tool) || !TryComp<WiresPanelComponent>(uid, out var panel))
             return;
 
-        if (panel.Open && panel.WiresAccessible &&
+        if (panel.Open &&
+            panel.SecurityLevelPrototype?.WiresAccessible != false &&
             (_toolSystem.HasQuality(args.Used, "Cutting", tool) ||
             _toolSystem.HasQuality(args.Used, "Pulsing", tool)))
         {
@@ -661,10 +662,7 @@ public sealed class WiresSystem : SharedWiresSystem
         if (wiresPanelSecurityLevelPrototype == null)
             return;
 
-        component.WiresAccessible = wiresPanelSecurityLevelPrototype.WiresAccessible;
-        component.WiresPanelSecurityExamination = wiresPanelSecurityLevelPrototype.Examine;
-        component.WeldingAllowed = wiresPanelSecurityLevelPrototype.WeldingAllowed;
-
+        component.SecurityLevelPrototype = wiresPanelSecurityLevelPrototype;
         Dirty(uid, component);
 
         if (wiresPanelSecurityLevelPrototype?.WiresAccessible == false)

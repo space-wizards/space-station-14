@@ -29,25 +29,10 @@ public sealed partial class WiresPanelComponent : Component
     public SoundSpecifier ScrewdriverCloseSound = new SoundPathSpecifier("/Audio/Machines/screwdriverclose.ogg");
 
     /// <summary>
-    ///     A verbal description of the wire panel's current security level
+    ///     This prototype describes the current security features of the wire panel
     /// </summary>
     [AutoNetworkedField]
-    public string? WiresPanelSecurityExamination = default!;
-
-    /// <summary>
-    ///     Determines whether the wiring is accessible to hackers or not
-    /// </summary>
-    [AutoNetworkedField]
-    public bool WiresAccessible = true;
-
-    /// <summary>
-    ///     Determines whether the device can be welded shut or not
-    /// </summary>
-    /// <remarks>
-    ///     Should be set false when you need to weld/unweld something to/from the wire panel
-    /// </remarks>
-    [AutoNetworkedField]
-    public bool WeldingAllowed = true;
+    public WiresPanelSecurityLevelPrototype? SecurityLevelPrototype;
 }
 
 /// <summary>

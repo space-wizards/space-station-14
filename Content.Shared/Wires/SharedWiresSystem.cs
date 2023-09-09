@@ -23,16 +23,16 @@ public abstract class SharedWiresSystem : EntitySystem
         {
             args.PushMarkup(Loc.GetString("wires-panel-component-on-examine-open"));
 
-            if (component?.WiresPanelSecurityExamination != null)
+            if (component?.SecurityLevelPrototype?.Examine != null)
             {
-                args.PushMarkup(Loc.GetString(component.WiresPanelSecurityExamination));
+                args.PushMarkup(Loc.GetString(component.SecurityLevelPrototype.Examine));
             }
         }
     }
 
     private void OnWeldableAttempt(EntityUid uid, WiresPanelComponent component, WeldableAttemptEvent args)
     {
-        if (component.Open && !component.WeldingAllowed)
+        if (component.Open && component?.SecurityLevelPrototype?.WeldingAllowed == false)
         {
             args.Cancel();
         }

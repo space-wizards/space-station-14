@@ -149,8 +149,10 @@ public sealed class AirlockSystem : SharedAirlockSystem
 
     private void OnActivate(EntityUid uid, AirlockComponent component, ActivateInWorldEvent args)
     {
-        if (TryComp<WiresPanelComponent>(uid, out var panel) && panel.Open && panel.WiresAccessible
-            && TryComp<ActorComponent>(args.User, out var actor))
+        if (TryComp<WiresPanelComponent>(uid, out var panel) &&
+            panel.Open &&
+            panel.SecurityLevelPrototype?.WiresAccessible != false &&
+            TryComp<ActorComponent>(args.User, out var actor))
         {
             _wiresSystem.OpenUserInterface(uid, actor.PlayerSession);
             args.Handled = true;
