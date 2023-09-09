@@ -32,11 +32,17 @@
     - Muted
     - ForcedSleep
     - StaminaModifier
-  # low compared to humans, but high compared to laser resistance
+  - type: MobState
+    allowedStates:
+    - Alive
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+  # fire!!!!
   - type: Flammable
     damage:
       types:
-        Heat: 0.5
+        Heat: 2.0
   # slightly wider thresholds
   - type: Temperature
     heatDamageThreshold: 390
@@ -82,6 +88,8 @@
   - type: RandomHumanoidAppearance
 
 - type: entity
+  # no mob composition fuck everything
+  parent: BaseSimpleMob
   id: MobTerminatorEndoskeleton
   # you are now valid
   name: t-800 "terminator" endoskeleton
@@ -89,44 +97,21 @@
   components:
   - type: HumanoidAppearance
     species: Terminator
-  - type: Input
-    context: human
-  - type: InputMover
-  - type: Clickable
-  - type: CombatMode
-  - type: InteractionOutline
-  - type: Physics
-    bodyType: KinematicController
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape:
-          !type:PhysShapeCircle
-          radius: 0.25
-        density: 150
-        mask:
-        - MobMask
-        layer:
-        - MobLayer
   - type: MovementSpeedModifier
     baseWalkSpeed: 1.5
     baseSprintSpeed: 3.0
   - type: Sprite
     sprite: Mobs/Species/Terminator/parts.rsi
-    noRot: true
-    drawdepth: Mobs
   - type: MobState
     allowedStates:
     - Alive
   - type: MobThresholds
     thresholds:
       0: Alive
-  - type: ZombieImmune
   # incase some weird stuff happens and the crew adopts a terminator
   - type: Repairable
     doAfterDelay: 15
     allowSelfRepair: false
-  - type: DoAfter
   - type: Eye
   - type: Body
     prototype: TerminatorEndoskeleton
@@ -138,7 +123,6 @@
     - Stun
     - KnockedDown
     - SlowedDown
-  - type: Actions
   - type: TypingIndicator
     proto: robot # beep boop borp
   - type: Speech
@@ -171,8 +155,3 @@
         Blunt: 15
   - type: Puller
     needsHands: false
-  - type: Examiner
-  - type: Alerts
-  - type: Tag
-    tags:
-    - DoorBumpOpener

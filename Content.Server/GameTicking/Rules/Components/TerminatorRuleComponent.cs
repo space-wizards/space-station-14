@@ -18,5 +18,5 @@ public sealed partial class TerminatorRuleComponent : Component
     /// Minds of every terminator after this target.
     /// </summary>
     [DataField("minds")]
-    public List<EntityUid> Minds;
+    public List<EntityUid> Minds = new();
 }
