@@ -63,13 +63,16 @@ namespace Content.Client.Actions
 
         private void HandleComponentState(EntityUid uid, ActionsComponent component, ref ComponentHandleState args)
         {
-            if (args.Current is not ActionsComponentState)
+            if (args.Current is not ActionsComponentState state)
                 return;
+
+            component.Actions.Clear();
+            component.Actions.UnionWith(state.Actions);
 
             _actionHoldersQueue.Enqueue(uid);
         }
 
-        protected override void AddActionInternal(EntityUid actionId, IContainer container)
+        protected override void AddActionInternal(EntityUid holderId, EntityUid actionId, IContainer container, ActionsComponent holder)
         {
             // Sometimes the client receives actions from the server, before predicting that newly added components will add
             // their own shared actions. Just in case those systems ever decided to directly access action properties (e.g.,
@@ -80,7 +83,7 @@ namespace Content.Client.Actions
             }
             else
             {
-                container.Insert(actionId);
+                base.AddActionInternal(holderId, actionId, container, holder);
             }
         }
 
@@ -103,7 +106,7 @@ namespace Content.Client.Actions
                 ActionAdded?.Invoke(actionId);
         }
 
-        public override void RemoveAction(EntityUid holderId, EntityUid? actionId, ActionsComponent? comp = null, BaseActionComponent? action = null, bool dirty = true, ContainerManagerComponent? actionContainer = null)
+        public override void RemoveAction(EntityUid holderId, EntityUid? actionId, ActionsComponent? comp = null, BaseActionComponent? action = null, bool dirty = true)
         {
             if (GameTiming.ApplyingState)
                 return;
@@ -120,7 +123,7 @@ namespace Content.Client.Actions
                 return;
 
             dirty &= !action?.ClientExclusive ?? true;
-            base.RemoveAction(holderId, actionId, comp, action, dirty, actionContainer);
+            base.RemoveAction(holderId, actionId, comp, action, dirty);
 
             if (_playerManager.LocalPlayer?.ControlledEntity != holderId)
                 return;
@@ -305,7 +308,7 @@ namespace Content.Client.Actions
                     if (data.ClientExclusive)
                         continue;
 
-                    if (!container.Contains(act))
+                    if (!holder.Actions.Contains(act))
                     {
                         holder.OldClientActions.Remove(act);
                         if (data.AutoRemove)
@@ -314,7 +317,7 @@ namespace Content.Client.Actions
                 }
 
                 // Anything that remains is a new action
-                foreach (var newAct in container.ContainedEntities)
+                foreach (var newAct in holder.Actions)
                 {
                     if (!holder.OldClientActions.ContainsKey(newAct))
                         added.Add(newAct);
