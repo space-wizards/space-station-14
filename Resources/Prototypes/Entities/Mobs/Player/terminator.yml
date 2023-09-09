@@ -35,9 +35,12 @@
   - type: MobState
     allowedStates:
     - Alive
+    - Critical
   - type: MobThresholds
     thresholds:
       0: Alive
+      # used for health display its not possible to actually fall into crit
+      200: Critical
   # fire!!!!
   - type: Flammable
     damage:
@@ -106,9 +109,12 @@
   - type: MobState
     allowedStates:
     - Alive
+    - Critical
   - type: MobThresholds
     thresholds:
       0: Alive
+      # gibbed at 200 so cant go crit
+      200: Critical
   # incase some weird stuff happens and the crew adopts a terminator
   - type: Repairable
     doAfterDelay: 15
