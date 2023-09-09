@@ -101,7 +101,7 @@ public sealed class TemperatureSystem : EntitySystem
             if (!ignoreHeatResistance)
             {
                 var ev = new ModifyChangedTemperatureEvent(heatAmount);
-                RaiseLocalEvent(uid, ev, false);
+                RaiseLocalEvent(uid, ev);
                 heatAmount = ev.TemperatureDelta;
             }
 
