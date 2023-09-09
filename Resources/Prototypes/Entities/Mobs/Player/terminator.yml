@@ -1,0 +1,144 @@
+- type: entity
+  parent: MobHuman
+  id: MobHumanTerminator
+  components:
+  - type: Terminator
+    objectives:
+    - Terminate
+  # reduced barotrauma damage
+  - type: Barotrauma
+    damage:
+      types:
+        Blunt: 0.1
+  # 4x stamina, faster recovery
+  - type: Stamina
+    decay: 6
+    cooldown: 1
+    critThreshold: 400
+  # immune to space drugs, pax, temporary blindness
+  - type: StatusEffects
+    allowed:
+    - Stun
+    - KnockedDown
+    - SlowedDown
+    - Stutter
+    - Electrocution
+    - Drunk
+    - SlurredSpeech
+    - RatvarianLanguage
+    - PressureImmunity
+    - Muted
+    - ForcedSleep
+    - StaminaModifier
+  # low compared to humans, but high compared to laser resistance
+  - type: Flammable
+    damage:
+      types:
+        Heat: 0.5
+  # slightly wider thresholds
+  - type: Temperature
+    heatDamageThreshold: 390
+    coldDamageThreshold: 240
+  # take terminator flesh damage
+  - type: Damageable
+    damageModifierSet: CyberneticFlesh
+  # faster than humans when damaged
+  - type: SlowOnDamage
+    speedModifierThresholds:
+      70: 0.8
+      90: 0.6
+  # arnold is very strong
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 10
+  - type: RandomHumanoidAppearance
+
+- type: entity
+  id: MobTerminatorEndoskeleton
+  # you are now valid
+  name: t-800 "terminator" endoskeleton
+  description: The inner powerhouse of Skynet's infiltrator androids. Ridiculously hard alloy on the inside, unassuming flesh on the outside.
+  components:
+  - type: HumanoidAppearance
+    species: Terminator
+  - type: InputMover
+  - type: Clickable
+  - type: CombatMode
+  - type: InteractionOutline
+  - type: Physics
+    bodyType: KinematicController
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.25
+        density: 150
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 1.5
+    baseSprintSpeed: 3.0
+  - type: Sprite
+    sprite: Mobs/Silicon/terminator.rsi
+    drawdepth: Mobs
+  - type: MobState
+    allowedStates:
+    - Alive
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+  - type: ZombieImmune
+  # incase some weird stuff happens and the crew adopts a terminator
+  - type: Repairable
+    doAfterDelay: 15
+    allowSelfRepair: false
+  - type: DoAfter
+  - type: Eye
+  - type: Body
+  - type: StatusEffects
+    allowed:
+    - Stun
+    - KnockedDown
+    - SlowedDown
+  - type: Actions
+  - type: TypingIndicator
+    proto: robot # beep boop borp
+  - type: Speech
+    speechVerb: Robotic
+    speechSounds: Pai
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Cybernetic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:PlaySoundBehavior
+        # endoSKELETON
+        sound: /Audio/Effects/bone_rattle.ogg
+      # a keepsake or a gift for cargo
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          HeadTerminator:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  # now his only weapon, but it is stronger
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 15
+  - type: Puller
+    needsHands: false
+  - type: Examiner
+  - type: Alerts
+  - type: Tag
+    tags:
+    - DoorBumpOpener

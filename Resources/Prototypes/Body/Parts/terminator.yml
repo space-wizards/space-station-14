@@ -1,0 +1,38 @@
+- type: entity
+  abstract: true
+  parent: BaseItem
+  id: PartTerminator
+  name: t-800 body part
+  components:
+  - type: Sprite
+    sprite: Mobs/Species/Terminator/parts.rsi
+  - type: Icon
+    sprite: Mobs/Species/Terminator/parts.rsi
+  - type: Damageable
+    damageContainer: Cybernetic
+  - type: BodyPart
+  - type: ContainerContainer
+    containers:
+      bodypart: !type:Container
+        ents: []
+  - type: StaticPrice
+    price: 200
+
+- type: entity
+  parent: PartTerminator
+  id: HeadTerminator
+  name: t-800 skull
+  description: Its red eyes have powered down... for now.
+  components:
+  - type: Sprite
+    state: skull_icon
+  - type: Icon
+    state: skull_icon
+  - type: BodyPart
+    partType: Head
+  # killing a terminators worth big bucks
+  - type: StaticPrice
+    price: 2000
+  - type: Tag
+    tags:
+    - Head
