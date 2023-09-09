@@ -89,6 +89,8 @@
   components:
   - type: HumanoidAppearance
     species: Terminator
+  - type: Input
+    context: human
   - type: InputMover
   - type: Clickable
   - type: CombatMode

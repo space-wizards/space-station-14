@@ -33,6 +33,12 @@ public sealed class TerminatorSystem : EntitySystem
         comp.Target = target.Target;
     }
 
+    private void OnMapInit(EntityUid uid, TerminatedComponent comp, MapInitEvent args)
+    {
+        // cyborg doesn't need to breathe
+        RemComp<RespiratorComponent>(uid);
+    }
+
     private void OnMindAdded(EntityUid uid, TerminatorComponent comp, MindAddedMessage args)
     {
         if (!TryComp<MindContainerComponent>(uid, out var mindContainer) || mindContainer.Mind == null)
