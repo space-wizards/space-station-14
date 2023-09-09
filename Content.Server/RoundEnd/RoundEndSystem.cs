@@ -224,6 +224,30 @@ namespace Content.Server.RoundEnd
             Timer.Spawn(countdownTime.Value, AfterEndRoundRestart, _countdownTokenSource.Token);
         }
 
+        public void DoRoundEndBehavior(RoundEndBehavior behavior, TimeSpan time, string sender, string textCall, string textAnnounce)
+        {
+            switch (behavior)
+            {
+                case RoundEndBehavior.InstantEnd:
+                    EndRound();
+                    break;
+                case RoundEndBehavior.ShuttleCall:
+                    // Check is shuttle called or not. We should only dispatch announcement if it's already called
+                    if (IsRoundEndRequested())
+                    {
+                        _chatSystem.DispatchGlobalAnnouncement(Loc.GetString(textAnnounce),
+                            Loc.GetString(sender),
+                            colorOverride: Color.Gold);
+                    }
+                    else
+                    {
+                        RequestRoundEnd(time, null, false, textCall,
+                            Loc.GetString(sender));
+                    }
+                    break;
+            }
+        }
+
         private void AfterEndRoundRestart()
         {
             if (_gameTicker.RunLevel != GameRunLevel.PostRound) return;
@@ -266,4 +290,22 @@ namespace Content.Server.RoundEnd
     {
         public static RoundEndSystemChangedEvent Default { get; } = new();
     }
+
+    public enum RoundEndBehavior : byte
+{
+        /// <summary>
+        /// Instantly end round
+        /// </summary>
+        InstantEnd,
+
+        /// <summary>
+        /// Call shuttle with custom announcement
+        /// </summary>
+        ShuttleCall,
+
+        /// <summary>
+        /// Do nothing
+        /// </summary>
+        Nothing
+}
 }

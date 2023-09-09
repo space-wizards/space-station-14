@@ -5,6 +5,7 @@ using Content.Server.GameTicking;
 using Content.Server.GameTicking.Rules;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.StationEvents.Components;
+using Content.Server.RoundEnd;
 
 namespace Content.Server.StationEvents.Events;
 

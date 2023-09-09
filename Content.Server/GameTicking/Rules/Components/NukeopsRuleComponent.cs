@@ -1,4 +1,5 @@
 using Content.Server.NPC.Components;
+using Content.Server.RoundEnd;
 using Content.Server.StationEvents.Events;
 using Content.Shared.Dataset;
 using Content.Shared.Roles;
@@ -35,7 +36,7 @@ public sealed partial class NukeopsRuleComponent : Component
     /// </summary>
     [DataField("roundEndBehavior")]
     public RoundEndBehavior RoundEndBehavior = RoundEndBehavior.ShuttleCall;
-    
+
     /// <summary>
     /// Text for shuttle call if RoundEndBehavior is ShuttleCall.
     /// </summary>
@@ -228,22 +229,4 @@ public enum WinCondition : byte
     AllNukiesDead,
     SomeNukiesAlive,
     AllNukiesAlive
-}
-
-public enum RoundEndBehavior : byte
-{
-    /// <summary>
-    /// Instantly end round
-    /// </summary>
-    InstantEnd,
-
-    /// <summary>
-    /// Call shuttle with custom announcement
-    /// </summary>
-    ShuttleCall,
-
-    /// <summary>
-    /// Do nothing
-    /// </summary>
-    Nothing
 }

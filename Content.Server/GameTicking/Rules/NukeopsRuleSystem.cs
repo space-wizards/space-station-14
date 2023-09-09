@@ -476,33 +476,6 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
             _roundEndSystem.EndRound();
     }
 
-    private void DoRoundEndBehavior(NukeopsRuleComponent component)
-    {
-        switch (component.RoundEndBehavior)
-        {
-            case RoundEndBehavior.InstantEnd:
-                _roundEndSystem.EndRound();
-                break;
-            case RoundEndBehavior.ShuttleCall:
-                // Prevent it being called multiple times
-                component.RoundEndBehavior = RoundEndBehavior.Nothing;
-
-                // Check is shuttle called or not. We should only dispatch announcement if it's already called
-                if (_roundEndSystem.IsRoundEndRequested())
-                {
-                    _chatSystem.DispatchGlobalAnnouncement(Loc.GetString(component.RoundEndTextAnnouncement),
-                        Loc.GetString(component.RoundEndTextSender),
-                        colorOverride: Color.Gold);
-                }
-                else
-                {
-                    _roundEndSystem.RequestRoundEnd(component.EvacShuttleTime, null, false, component.RoundEndTextShuttleCall,
-                        Loc.GetString(component.RoundEndTextSender));
-                }
-                break;
-        }
-    }
-
     private void CheckRoundShouldEnd()
     {
         var query = EntityQueryEnumerator<NukeopsRuleComponent, GameRuleComponent>();
@@ -565,7 +538,11 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
                 : WinCondition.AllNukiesDead);
 
             SetWinType(uid, WinType.CrewMajor, nukeops, false);
-            DoRoundEndBehavior(nukeops);
+            _roundEndSystem.DoRoundEndBehavior(
+                nukeops.RoundEndBehavior, nukeops.EvacShuttleTime, nukeops.RoundEndTextSender, nukeops.RoundEndTextShuttleCall, nukeops.RoundEndTextAnnouncement);
+
+            // prevent it called multiple times
+            nukeops.RoundEndBehavior = RoundEndBehavior.Nothing;
         }
     }
 
