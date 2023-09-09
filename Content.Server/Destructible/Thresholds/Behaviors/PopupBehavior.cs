@@ -5,7 +5,7 @@ using Content.Shared.Popups;
 /// <summary>
 /// Shows a popup for everyone.
 /// </summary>
-[DataDefintion]
+[DataDefinition]
 public sealed partial class PopupBehavior : IThresholdBehavior
 {
     /// <summary>
@@ -20,7 +20,7 @@ public sealed partial class PopupBehavior : IThresholdBehavior
     [DataField("popupType")]
     public PopupType PopupType;
 
-    void Execute(EntityUid uid, DestructibleSystem system, EntityUid? cause = null)
+    public void Execute(EntityUid uid, DestructibleSystem system, EntityUid? cause = null)
     {
         var popup = system.EntityManager.System<SharedPopupSystem>();
         popup.PopupEntity(Loc.GetString(Popup), PopupType, uid);
