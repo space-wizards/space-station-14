@@ -1,7 +1,7 @@
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Objectives;
+using Content.Server.Terminator.Components;
 using Content.Server.Terminator.Systems;
-using Content.Shared.Terminator.Components;
 using Robust.Shared.Map;
 
 namespace Content.Server.GameTicking.Rules;

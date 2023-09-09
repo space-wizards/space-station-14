@@ -3,15 +3,14 @@ using Content.Server.Ghost.Roles.Events;
 using Content.Server.Objectives.Components;
 using Content.Server.Objectives.Systems;
 using Content.Server.Roles;
-using Content.Shared.Terminator.Components;
-using Content.Shared.Terminator.Systems;
+using Content.Server.Terminator.Components;
 using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
 using Content.Shared.Roles;
 
 namespace Content.Server.Terminator.Systems;
 
-public sealed class TerminatorSystem : SharedTerminatorSystem
+public sealed class TerminatorSystem : EntitySystem
 {
     [Dependency] private readonly SharedMindSystem _mind = default!;
     [Dependency] private readonly SharedRoleSystem _role = default!;

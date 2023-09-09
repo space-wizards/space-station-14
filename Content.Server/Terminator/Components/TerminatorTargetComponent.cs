@@ -1,11 +1,11 @@
-using Content.Shared.Terminator.Systems;
+using Content.Server.Terminator.Systems;
 
-namespace Content.Shared.Terminator.Components;
+namespace Content.Server.Terminator.Components;
 
 /// <summary>
 /// Sets <see cref="TerminatorComponent.Target"/> after the ghost role spawns.
 /// </summary>
-[RegisterComponent, Access(typeof(SharedTerminatorSystem))]
+[RegisterComponent, Access(typeof(TerminatorSystem))]
 public sealed partial class TerminatorTargetComponent : Component
 {
     /// <summary>

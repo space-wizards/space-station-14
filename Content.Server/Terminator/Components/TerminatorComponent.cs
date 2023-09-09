@@ -1,13 +1,13 @@
-using Content.Shared.Terminator.Systems;
+using Content.Server.Terminator.Systems;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
-namespace Content.Shared.Terminator.Components;
+namespace Content.Server.Terminator.Components;
 
 /// <summary>
-/// Main terminator component
+/// Main terminator component, handles the target, if any, and objectives.
 /// </summary>
-[RegisterComponent, Access(typeof(SharedTerminatorSystem))]
+[RegisterComponent, Access(typeof(TerminatorSystem))]
 public sealed partial class TerminatorComponent : Component
 {
     /// <summary>
