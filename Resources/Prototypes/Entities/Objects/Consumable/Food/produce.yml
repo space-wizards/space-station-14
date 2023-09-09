@@ -313,10 +313,11 @@
     sprite: Objects/Specific/Hydroponics/mimana.rsi
     heldPrefix: peel  
   - type: Slippery
-    launchForwardsMultiplier: 1.5
     slipSound:
+      path: /Audio/Effects/slip.ogg
       params:
-        volume: -100 #get it?
+        volume: -100
+    launchForwardsMultiplier: 1.6
 
 - type: entity
   name: bananium peel
