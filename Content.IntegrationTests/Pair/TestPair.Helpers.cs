@@ -35,11 +35,11 @@ public sealed partial class TestPair
 
         if (!Settings.Connected)
             return mapData;
-        
+
         await RunTicksSync(10);
         mapData.CMapUid = ToClientUid(mapData.MapUid);
         mapData.CGridUid = ToClientUid(mapData.GridUid);
-        mapData.GridCoords = new EntityCoordinates(mapData.CGridUid, 0, 0);
+        mapData.CGridCoords = new EntityCoordinates(mapData.CGridUid, 0, 0);
 
         return mapData;
     }
