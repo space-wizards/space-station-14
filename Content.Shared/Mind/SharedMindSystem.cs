@@ -9,6 +9,7 @@ using Content.Shared.Mind.Components;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Objectives;
+using Content.Shared.Objectives.Systems;
 using Content.Shared.Players;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
@@ -21,6 +22,7 @@ public abstract class SharedMindSystem : EntitySystem
 {
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
+    [Dependency] private readonly ObjectiveSystem _objective = default!;
     [Dependency] private readonly SharedPlayerSystem _player = default!;
 
     // This is dictionary is required to track the minds of disconnected players that may have had their entity deleted.
@@ -256,13 +258,19 @@ public abstract class SharedMindSystem : EntitySystem
     {
         if (!objectivePrototype.CanBeAssigned(mindId, mind))
             return false;
-        var objective = objectivePrototype.GetObjective(mindId, mind);
+
+        var objective = _objective.CreateObjective(mindId, mind, objectivePrototype);
+        // TODO: is this really a bad thing?
+        // - for escape and other unique ones it already checks in requirement
+        // - for kill, if you get 2 objectives to kill someone that can just mean you REALLY need that person dead, so not that bad?
+        // also would mean removing that sussy equal entityuid check in objective...
         if (mind.Objectives.Contains(objective))
             return false;
 
         foreach (var condition in objective.Conditions)
         {
-            _adminLogger.Add(LogType.Mind, LogImpact.Low, $"'{condition.Title}' added to mind of {MindOwnerLoggingString(mind)}");
+            var title = _objective.GetConditionTitle(condition, mindId, mind);
+            _adminLogger.Add(LogType.Mind, LogImpact.Low, $"'{title}' added to mind of {MindOwnerLoggingString(mind)}");
         }
 
         mind.Objectives.Add(objective);
@@ -270,10 +278,10 @@ public abstract class SharedMindSystem : EntitySystem
     }
 
     /// <summary>
-    /// Removes an objective to this mind.
+    /// Removes an objective from this mind.
     /// </summary>
     /// <returns>Returns true if the removal succeeded.</returns>
-    public bool TryRemoveObjective(MindComponent mind, int index)
+    public bool TryRemoveObjective(EntityUid mindId, MindComponent mind, int index)
     {
         if (index < 0 || index >= mind.Objectives.Count)
             return false;
@@ -282,7 +290,9 @@ public abstract class SharedMindSystem : EntitySystem
 
         foreach (var condition in objective.Conditions)
         {
-            _adminLogger.Add(LogType.Mind, LogImpact.Low, $"'{condition.Title}' removed from the mind of {MindOwnerLoggingString(mind)}");
+            var title = _objective.GetConditionTitle(condition, mindId, mind);
+            _adminLogger.Add(LogType.Mind, LogImpact.Low, $"'{title}' removed from the mind of {MindOwnerLoggingString(mind)}");
+            Del(condition);
         }
 
         mind.Objectives.Remove(objective);
