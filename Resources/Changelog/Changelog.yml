@@ -1,9 +1,4 @@
 Entries:
-- author: kseandi
-  changes:
-  - {message: Added machine frame completion popup., type: Add}
-  id: 4283
-  time: '2023-07-18T21:03:14.0000000+00:00'
 - author: Jackal298
   changes:
   - {message: Added Machete and Pistol Crate to Expedition Rewards, type: Add}
@@ -2992,3 +2987,9 @@ Entries:
       research., type: Tweak}
   id: 4782
   time: '2023-09-08T02:25:05.0000000+00:00'
+- author: SonicHDC
+  changes:
+  - {message: Added steel bench!, type: Add}
+  - {message: Fixed some sprites rotations!, type: Fix}
+  id: 4783
+  time: '2023-09-09T12:56:11.0000000+00:00'
