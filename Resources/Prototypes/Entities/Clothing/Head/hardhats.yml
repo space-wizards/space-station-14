@@ -16,7 +16,7 @@
     enabled: false
     mask: /Textures/Effects/LightMasks/cone.png
     autoRot: true
-    radius: 3
+    radius: 7
     netsync: false
   - type: Appearance
   - type: HandheldLight

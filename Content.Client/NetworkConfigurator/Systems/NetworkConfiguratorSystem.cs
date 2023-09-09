@@ -3,7 +3,6 @@ using Content.Client.Actions;
 using Content.Client.Items;
 using Content.Client.Message;
 using Content.Client.Stylesheets;
-using Content.Shared.Actions.ActionTypes;
 using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.DeviceNetwork.Systems;
 using Content.Shared.Input;
@@ -22,11 +21,11 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
 {
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IOverlayManager _overlay = default!;
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly ActionsSystem _actions = default!;
     [Dependency] private readonly IInputManager _inputManager = default!;
 
-    private const string Action = "ClearNetworkLinkOverlays";
+    [ValidatePrototypeId<EntityPrototype>]
+    private const string Action = "ActionClearNetworkLinkOverlays";
 
     public override void Initialize()
     {
@@ -71,7 +70,7 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
             if (!EntityQuery<NetworkConfiguratorActiveLinkOverlayComponent>().Any())
             {
                 _overlay.RemoveOverlay<NetworkConfiguratorLinkOverlay>();
-                _actions.RemoveAction(_playerManager.LocalPlayer.ControlledEntity.Value, _prototypeManager.Index<InstantActionPrototype>(Action));
+                _actions.RemoveAction(_playerManager.LocalPlayer.ControlledEntity.Value, Action);
             }
 
 
@@ -81,7 +80,7 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
         if (!_overlay.HasOverlay<NetworkConfiguratorLinkOverlay>())
         {
             _overlay.AddOverlay(new NetworkConfiguratorLinkOverlay());
-            _actions.AddAction(_playerManager.LocalPlayer.ControlledEntity.Value, new InstantAction(_prototypeManager.Index<InstantActionPrototype>(Action)), null);
+            _actions.AddAction(_playerManager.LocalPlayer.ControlledEntity.Value, Spawn(Action), null);
         }
 
         EnsureComp<NetworkConfiguratorActiveLinkOverlayComponent>(component.ActiveDeviceList.Value);
@@ -103,7 +102,7 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
 
         if (_playerManager.LocalPlayer?.ControlledEntity != null)
         {
-            _actions.RemoveAction(_playerManager.LocalPlayer.ControlledEntity.Value, _prototypeManager.Index<InstantActionPrototype>(Action));
+            _actions.RemoveAction(_playerManager.LocalPlayer.ControlledEntity.Value, Action);
         }
     }
 
