@@ -69,7 +69,7 @@ public sealed class RenameCommand : IConsoleCommand
                     && _entManager.TryGetComponent(idCard.Owner, out StationRecordKeyStorageComponent? keyStorage)
                     && keyStorage.Key != null)
                 {
-                    var origin = _entManager.GetEntity(keyStorage.Key.Value.OriginStation);
+                    var origin = keyStorage.Key.Value.OriginStation;
 
                     if (recordsSystem.TryGetRecord<GeneralStationRecord>(origin,
                             keyStorage.Key.Value,

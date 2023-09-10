@@ -73,18 +73,14 @@ public sealed class CrewManifestSystem : EntitySystem
     // wrt the amount of players readied up.
     private void AfterGeneralRecordCreated(AfterGeneralRecordCreatedEvent ev)
     {
-        var origin = GetEntity(ev.Key.OriginStation);
-
-        BuildCrewManifest(origin);
-        UpdateEuis(origin);
+        BuildCrewManifest(ev.Key.OriginStation);
+        UpdateEuis(ev.Key.OriginStation);
     }
 
     private void OnRecordModified(RecordModifiedEvent ev)
     {
-        var origin = GetEntity(ev.Key.OriginStation);
-
-        BuildCrewManifest(origin);
-        UpdateEuis(origin);
+        BuildCrewManifest(ev.Key.OriginStation);
+        UpdateEuis(ev.Key.OriginStation);
     }
 
     private void OnBoundUiClose(EntityUid uid, CrewManifestViewerComponent component, BoundUIClosedEvent ev)
@@ -217,15 +213,7 @@ public sealed class CrewManifestSystem : EntitySystem
         }
 
         entries.Entries = entries.Entries.OrderBy(e => e.JobTitle).ThenBy(e => e.Name).ToList();
-
-        if (_cachedEntries.ContainsKey(station))
-        {
-            _cachedEntries[station] = entries;
-        }
-        else
-        {
-            _cachedEntries.Add(station, entries);
-        }
+        _cachedEntries[station] = entries;
     }
 }
 
