@@ -88,11 +88,15 @@ public sealed class PAISystem : SharedPAISystem
         // randomly replace random characters from the old name
         var oldName = Name(uid);
         var name = new StringBuilder(oldName.Length);
+        var named = false;
         foreach (var character in oldName)
         {
             // only scramble the owner name, don't scramble "'s pAI"
             if (character == '\'')
+            {
+                named = true;
                 break;
+            }
 
             if (_random.Prob(comp.CharScrambleChance))
             {
@@ -107,7 +111,7 @@ public sealed class PAISystem : SharedPAISystem
         // if its named add 's pAI back to the scrambled name
         // since scrambling stops at '
         var val = name.ToString();
-        val = comp.LastUser == null
+        val = named
             ? val
             : Loc.GetString("pai-system-pai-name-raw", ("name", val));
         _metaData.SetEntityName(uid, val);
