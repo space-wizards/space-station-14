@@ -109,8 +109,16 @@ public abstract class SharedDoorPryingSystem : EntitySystem
 
         DoorPryingComponent? comp = null;
 
-        if (args.Used != null && Resolve(args.Used.Value, ref comp))
-            _audioSystem.PlayPredicted(comp.UseSound, args.Used.Value, args.User, comp.UseSound.Params.WithVariation(0.175f).AddVolume(-5f));
+        if (door.State == DoorState.Closed)
+        {
+            _adminLog.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(args.User)} pried {ToPrettyString(args.Target.Value)} open");
+            _doorSystem.StartOpening(args.Target.Value, door);
+        }
+        else if (door.State == DoorState.Open)
+        {
+            _adminLog.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(args.User)} pried {ToPrettyString(args.Target.Value)} closed");
+            _doorSystem.StartClosing(args.Target.Value, door);
+        }
     }
 }
 
