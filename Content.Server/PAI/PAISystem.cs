@@ -21,9 +21,9 @@ public sealed class PAISystem : SharedPAISystem
     [Dependency] private readonly ToggleableGhostRoleSystem _toggleableGhostRole = default!;
 
     /// <summary>
-    /// Possible symbols that can replace characters in the pai's owner name when microwaved.
+    /// Possible symbols that can be part of a scrambled pai's name.
     /// </summary>
-    private static readonly char[] SYMBOLS = new[] { '#', '~', '-', '@', '&', '^', '%', '$', '*'};
+    private static readonly char[] SYMBOLS = new[] { '#', '~', '-', '@', '&', '^', '%', '$', '*', ' '};
 
     public override void Initialize()
     {
@@ -85,35 +85,16 @@ public sealed class PAISystem : SharedPAISystem
 
     private void ScrambleName(EntityUid uid, PAIComponent comp)
     {
-        // randomly replace random characters from the old name
-        var oldName = Name(uid);
-        var name = new StringBuilder(oldName.Length);
-        var named = false;
-        foreach (var character in oldName)
+        // create a new random name
+        var len = _rand.Next(6, 18);
+        var name = new StringBuilder(len);
+        for (int i = 0; i < len; i++)
         {
-            // only scramble the owner name, don't scramble "'s pAI"
-            if (character == '\'')
-            {
-                named = true;
-                break;
-            }
-
-            if (_random.Prob(comp.CharScrambleChance))
-            {
-                name.Append(_random.Pick(SYMBOLS));
-            }
-            else
-            {
-                name.Append(character);
-            }
+            name.Append(_random.Pick(SYMBOLS));
         }
 
-        // if its named add 's pAI back to the scrambled name
-        // since scrambling stops at '
-        var val = name.ToString();
-        val = named
-            ? val
-            : Loc.GetString("pai-system-pai-name-raw", ("name", val));
+        // add 's pAI to the scrambled name
+        var val = Loc.GetString("pai-system-pai-name-raw", ("name", name.ToString()));
         _metaData.SetEntityName(uid, val);
     }
 
