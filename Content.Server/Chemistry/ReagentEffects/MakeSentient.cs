@@ -35,7 +35,7 @@ public sealed partial class MakeSentient : ReagentEffect
         }
 
         ghostRole = entityManager.AddComponent<GhostRoleComponent>(uid);
-        entityManager.AddComponent<GhostTakeoverAvailableComponent>(uid);
+        entityManager.EnsureComponent<GhostTakeoverAvailableComponent>(uid);
 
         var entityData = entityManager.GetComponent<MetaDataComponent>(uid);
         ghostRole.RoleName = entityData.EntityName;
