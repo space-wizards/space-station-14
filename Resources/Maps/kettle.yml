@@ -86047,26 +86047,6 @@ entities:
     - pos: -36.478657,44.624092
       parent: 82
       type: Transform
-    - toggleAction:
-        sound: null
-        itemIconStyle: BigItem
-        icon: Objects/Tools/flashlight.rsi/flashlight.png
-        iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
-        iconColor: '#FFFFFFFF'
-        name: action-name-toggle-light
-        description: action-description-toggle-light
-        keywords: []
-        enabled: True
-        useDelay: null
-        charges: null
-        checkCanInteract: True
-        clientExclusive: False
-        priority: 0
-        autoPopulate: True
-        autoRemove: True
-        temporary: False
-        event: !type:ToggleActionEvent {}
-      type: HandheldLight
   - uid: 6809
     components:
     - pos: -35.57489,40.472855

@@ -30,12 +30,6 @@
           Slash: 1
           Piercing: 1
           Heat: 1
-      blockingToggleAction:
-        name: action-name-blocking
-        description: action-description-blocking
-        icon: { sprite: Objects/Weapons/Melee/shields.rsi, state: teleriot-icon }
-        iconOn: Objects/Weapons/Melee/shields.rsi/teleriot-on.png
-        event: !type:ToggleActionEvent
     - type: Damageable
       damageContainer: Shield
     - type: Destructible
