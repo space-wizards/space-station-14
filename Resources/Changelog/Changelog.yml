@@ -1,11 +1,4 @@
 Entries:
-- author: Dygon
-  changes:
-  - {message: 'Water guns, pneumatic cannons and cap guns got extra safety measures,
-      clowns and monkeys will be able to use them again without accidentally blowing
-      them up.', type: Tweak}
-  id: 4294
-  time: '2023-07-19T21:22:08.0000000+00:00'
 - author: Ilya246
   changes:
   - {message: Added syndicate monkey reinforcement teleporter. Ook!, type: Add}
@@ -2994,3 +2987,8 @@ Entries:
   - {message: Revert a PR causing container issues., type: Fix}
   id: 4793
   time: '2023-09-10T11:46:36.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Replays now record ghost chat., type: Fix}
+  id: 4794
+  time: '2023-09-10T11:49:45.0000000+00:00'
