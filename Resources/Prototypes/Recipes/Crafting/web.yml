@@ -6,6 +6,7 @@
   targetNode: tile
   category: construction-category-tiles
   description: "Nice and smooth."
+  requiredTag: SpiderCraft
   icon:
     sprite: Objects/Tiles/web.rsi
     state: icon
@@ -19,6 +20,7 @@
   targetNode: coat
   category: construction-category-clothing
   description: "Surprisingly warm and durable."
+  requiredTag: SpiderCraft
   icon:
     sprite: Clothing/OuterClothing/WinterCoats/coatweb.rsi
     state: icon
@@ -32,6 +34,7 @@
   targetNode: jumpsuit
   category: construction-category-clothing
   description: "At least it's something."
+  requiredTag: SpiderCraft
   icon:
     sprite: Clothing/Uniforms/Jumpsuit/web.rsi
     state: icon
@@ -45,6 +48,7 @@
   targetNode: jumpskirt
   category: construction-category-clothing
   description: "At least it's something."
+  requiredTag: SpiderCraft
   icon:
     sprite: Clothing/Uniforms/Jumpskirt/web.rsi
     state: icon
@@ -58,7 +62,22 @@
   targetNode: cloth
   category: construction-category-materials
   description: "Feels just like cloth, strangely enough."
+  requiredTag: SpiderCraft
   icon:
     sprite: Objects/Materials/materials.rsi
     state: cloth_3
+  objectType: Item
+
+- type: construction
+  name: web shield
+  id: WebShield
+  graph: WebObjects
+  startNode: start
+  targetNode: shield
+  category: construction-category-clothing
+  description: "It's thick enough to handle a few blows, but probably not heat."
+  requiredTag: SpiderCraft
+  icon:
+    sprite: Objects/Weapons/Melee/web-shield.rsi
+    state: icon
   objectType: Item

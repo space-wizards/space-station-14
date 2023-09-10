@@ -256,8 +256,8 @@
           Slash: 0.5
           Piercing: 0.5
     - type: Construction
-      graph: MakeshiftShield
-      node: makeshiftShield
+      graph: WebObjects
+      node: shield
     - type: Destructible
       thresholds:
         - trigger:

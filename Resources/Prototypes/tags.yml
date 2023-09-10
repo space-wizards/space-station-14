@@ -26,7 +26,7 @@
   id: Balloon
 
 - type: Tag
-  id: BaseballBat 
+  id: BaseballBat
 
 - type: Tag
   id: BBQsauce
@@ -306,7 +306,7 @@
   id: CluwneHorn
 
 - type: Tag #Ohioans die happy
-  id: Corn 
+  id: Corn
 
 - type: Tag
   id: Coldsauce
@@ -913,6 +913,9 @@
   id: SpeedLoaderRifle
 
 - type: Tag
+  id: SpiderCraft
+
+- type: Tag
   id: SpreaderIgnore
 
 - type: Tag
@@ -998,7 +1001,7 @@
 
 - type: Tag
   id: WallmountSubstationElectronics
-  
+
 - type: Tag
   id: WeaponPistolCHIMPUpgradeKit
 

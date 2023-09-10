@@ -20,7 +20,7 @@ public sealed class ConstructionPrototype : IPrototype
     ///     Friendly name displayed in the construction GUI.
     /// </summary>
     [DataField("name")]
-    public string Name= string.Empty;
+    public string Name = string.Empty;
 
     /// <summary>
     ///     "Useful" description displayed in the construction GUI.
@@ -31,7 +31,7 @@ public sealed class ConstructionPrototype : IPrototype
     /// <summary>
     ///     The <see cref="ConstructionGraphPrototype"/> this construction will be using.
     /// </summary>
-    [DataField("graph", customTypeSerializer:typeof(PrototypeIdSerializer<ConstructionGraphPrototype>), required: true)]
+    [DataField("graph", customTypeSerializer: typeof(PrototypeIdSerializer<ConstructionGraphPrototype>), required: true)]
     public string Graph = string.Empty;
 
     /// <summary>
@@ -64,6 +64,13 @@ public sealed class ConstructionPrototype : IPrototype
     [DataField("canBuildInImpassable")]
     public bool CanBuildInImpassable { get; private set; }
 
+    /// <summary>
+    /// If not null, then this is used to check if the entity trying to construct this has the required tag.
+    /// If they don't have the tag, this construction is hidden.
+    /// </summary>
+    [DataField("requiredTag")]
+    public string? RequiredTag = null;
+
     [DataField("category")] public string Category { get; private set; } = "";
 
     [DataField("objectType")] public ConstructionType Type { get; private set; } = ConstructionType.Structure;
@@ -84,11 +91,11 @@ public sealed class ConstructionPrototype : IPrototype
     /// <summary>
     ///     Construction to replace this construction with when the current one is 'flipped'
     /// </summary>
-    [DataField("mirror", customTypeSerializer:typeof(PrototypeIdSerializer<ConstructionPrototype>))]
+    [DataField("mirror", customTypeSerializer: typeof(PrototypeIdSerializer<ConstructionPrototype>))]
     public string? Mirror;
 
     public IReadOnlyList<IConstructionCondition> Conditions => _conditions;
-    public IReadOnlyList<SpriteSpecifier> Layers => _layers ?? new List<SpriteSpecifier>{Icon};
+    public IReadOnlyList<SpriteSpecifier> Layers => _layers ?? new List<SpriteSpecifier> { Icon };
 }
 
 public enum ConstructionType
