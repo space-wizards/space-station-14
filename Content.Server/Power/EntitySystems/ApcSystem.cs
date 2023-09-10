@@ -120,7 +120,7 @@ public sealed class ApcSystem : EntitySystem
         ApcComponent? apc=null,
         PowerNetworkBatteryComponent? battery = null)
     {
-        if (!Resolve(uid, ref apc, ref battery))
+        if (!Resolve(uid, ref apc, ref battery, false))
             return;
 
         var newState = CalcChargeState(uid, battery.NetworkBattery);

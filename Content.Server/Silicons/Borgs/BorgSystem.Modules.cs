@@ -57,8 +57,14 @@ public sealed partial class BorgSystem
     private void OnSelectableInstalled(EntityUid uid, SelectableBorgModuleComponent component, ref BorgModuleInstalledEvent args)
     {
         var chassis = args.ChassisEnt;
-        component.ModuleSwapAction.EntityIcon = uid;
-        _actions.AddAction(chassis, component.ModuleSwapAction, uid);
+
+        var action = _actions.AddAction(chassis, ref component.ModuleSwapActionEntity, component.ModuleSwapActionId, uid);
+        if (action != null)
+        {
+            action.EntityIcon = uid;
+            Dirty(component.ModuleSwapActionEntity!.Value, action);
+        }
+
         SelectModule(chassis, uid, moduleComp: component);
     }
 
