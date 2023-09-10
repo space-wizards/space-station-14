@@ -101,6 +101,7 @@
 # social
 
 - type: entity
+  noSpawn: true
   parent: [BaseTraitorSocialObjective, BaseKeepAliveObjective]
   id: RandomTraitorAliveObjective
   components:
