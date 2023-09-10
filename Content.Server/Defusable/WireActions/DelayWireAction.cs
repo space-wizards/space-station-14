@@ -14,7 +14,7 @@ using Robust.Server.GameObjects;
 
 namespace Content.Server.Defusable.WireActions;
 
-public sealed class DelayWireAction : ComponentWireAction<DefusableComponent>
+public sealed partial class DelayWireAction : ComponentWireAction<DefusableComponent>
 {
     public override Color Color { get; set; } = Color.Yellow;
     public override string Name { get; set; } = "wire-name-bomb-delay";

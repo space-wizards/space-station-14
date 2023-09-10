@@ -7,8 +7,8 @@ namespace Content.Server.Defusable.Components;
 /// <summary>
 /// This is used for bombs that should be defused. The explosion configuration should be handled by <see cref="ExplosiveComponent"/>.
 /// </summary>
-[RegisterComponent, Access(typeof(DefusableSystem), Friend = AccessPermissions.ReadWriteExecute, Other = AccessPermissions.Read)]
-public sealed class DefusableComponent : Component
+[RegisterComponent, Access(typeof(DefusableSystem)]
+public sealed partial class DefusableComponent : Component
 {
     /// <summary>
     ///     The bomb will play this sound on bolt.

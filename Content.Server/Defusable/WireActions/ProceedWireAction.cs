@@ -11,7 +11,7 @@ using Content.Shared.Wires;
 
 namespace Content.Server.Defusable.WireActions;
 
-public sealed class ProceedWireAction : ComponentWireAction<DefusableComponent>
+public sealed partial class ProceedWireAction : ComponentWireAction<DefusableComponent>
 {
     public override Color Color { get; set; } = Color.Blue;
     public override string Name { get; set; } = "wire-name-bomb-proceed";

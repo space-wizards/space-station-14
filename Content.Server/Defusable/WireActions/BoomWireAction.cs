@@ -9,7 +9,7 @@ using Content.Shared.Wires;
 
 namespace Content.Server.Defusable.WireActions;
 
-public sealed class BoomWireAction : ComponentWireAction<DefusableComponent>
+public sealed partial class BoomWireAction : ComponentWireAction<DefusableComponent>
 {
     public override Color Color { get; set; } = Color.Red;
     public override string Name { get; set; } = "wire-name-bomb-boom";
