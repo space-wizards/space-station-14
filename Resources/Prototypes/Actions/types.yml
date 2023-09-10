@@ -144,6 +144,7 @@
     icon: Interface/Actions/harmOff.png
     iconOn: Interface/Actions/harm.png
     event: !type:ToggleCombatActionEvent
+    priority: -100
 
 - type: entity
   id: ActionCombatModeToggleOff
@@ -155,6 +156,7 @@
   - type: InstantAction
     enabled: false
     autoPopulate: false
+    priority: -100
 
 - type: entity
   id: ActionChangeVoiceMask

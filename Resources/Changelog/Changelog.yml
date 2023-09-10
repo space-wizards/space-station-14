@@ -1,40 +1,4 @@
 Entries:
-- author: kseandi
-  changes:
-  - {message: Added machine frame completion popup., type: Add}
-  id: 4283
-  time: '2023-07-18T21:03:14.0000000+00:00'
-- author: Jackal298
-  changes:
-  - {message: Added Machete and Pistol Crate to Expedition Rewards, type: Add}
-  id: 4284
-  time: '2023-07-18T21:09:14.0000000+00:00'
-- author: Flareguy
-  changes:
-  - {message: Added craftable improvised shotguns. Ammo not included., type: Add}
-  id: 4285
-  time: '2023-07-18T21:10:07.0000000+00:00'
-- author: notquitehadouken
-  changes:
-  - {message: Windows can go next to eachother, type: Fix}
-  id: 4286
-  time: '2023-07-18T21:11:28.0000000+00:00'
-- author: Slava0135
-  changes:
-  - {message: now during power grid check event affected APCs can't be turned back
-      on, type: Tweak}
-  id: 4287
-  time: '2023-07-18T21:11:43.0000000+00:00'
-- author: Emisse
-  changes:
-  - {message: Removed desword from nukie uplink., type: Remove}
-  id: 4288
-  time: '2023-07-18T22:23:53.0000000+00:00'
-- author: Emisse
-  changes:
-  - {message: Captain's Sabre now has a chance to reflect projectiles., type: Tweak}
-  id: 4289
-  time: '2023-07-18T22:55:29.0000000+00:00'
 - author: vanx
   changes:
   - {message: The Nuclear Operatives have found a reliable supplier of ammunition
@@ -2992,3 +2956,44 @@ Entries:
       research., type: Tweak}
   id: 4782
   time: '2023-09-08T02:25:05.0000000+00:00'
+- author: SonicHDC
+  changes:
+  - {message: Added steel bench!, type: Add}
+  - {message: Fixed some sprites rotations!, type: Fix}
+  id: 4783
+  time: '2023-09-09T12:56:11.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Gauze is now more effective at treating slash and piercing damage.,
+    type: Tweak}
+  id: 4784
+  time: '2023-09-09T18:32:00.0000000+00:00'
+- author: JoeHammad
+  changes:
+  - {message: Fingerless gloves are now available in the SecDrobe, type: Add}
+  id: 4785
+  time: '2023-09-09T18:59:03.0000000+00:00'
+- author: DrTeaSpoon
+  changes:
+  - {message: Crossing plants may now combine their produced chemicals., type: Tweak}
+  id: 4786
+  time: '2023-09-09T21:54:37.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Fixed action ordering., type: Fix}
+  - {message: Fixed not being able to wake up., type: Fix}
+  - {message: Fixed zombies not being able to toggle combat mode., type: Fix}
+  - {message: Fixed getting duplicate crit actions., type: Fix}
+  - {message: Fixed the mime not getting the invisible wall action., type: Fix}
+  id: 4787
+  time: '2023-09-09T23:14:17.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Fixed not being able to use vehicle horns., type: Fix}
+  id: 4788
+  time: '2023-09-09T23:39:29.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Monkeys can now bump doors open and strip mobs like people can., type: Tweak}
+  id: 4789
+  time: '2023-09-10T02:51:51.0000000+00:00'

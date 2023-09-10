@@ -710,5 +710,6 @@
     tags:
     - CannotSuicide
     - DoorBumpOpener
+    - VimPilot
   - type: Loadout
     prototypes: [ MobMonkeyGear ]

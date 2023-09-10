@@ -30,6 +30,9 @@
   - type: Access
     groups:
     - AllAccess
+    tags:
+    - NuclearOperative
+    - SyndicateAgent
   - type: UserInterface
     interfaces:
       - key: enum.SolarControlConsoleUiKey.Key
