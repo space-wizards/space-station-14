@@ -2,7 +2,8 @@
 ﻿using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Mind;
 using Content.Shared.Mind;
-using Content.Shared.Objectives;
+using Content.Shared.Objectives.Components;
+using Content.Shared.Objectives.Systems;
 using Content.Shared.Random;
 using Content.Shared.Random.Helpers;
 using Robust.Shared.Prototypes;
@@ -17,6 +18,8 @@ public sealed class ObjectivesSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly MindSystem _mind = default!;
+    // yeah the naming here isnt ideal
+    [Dependency] private readonly ObjectiveSystem _objective = default!;
 
     public override void Initialize()
     {
@@ -85,32 +88,31 @@ public sealed class ObjectivesSystem : EntitySystem
 
                 result += Loc.GetString("objectives-with-objectives", ("title", title), ("agent", agent));
 
-                foreach (var objectiveGroup in objectives.GroupBy(o => o.Prototype.Issuer))
+                foreach (var objectiveGroup in objectives.GroupBy(o => Comp<ObjectiveComponent>(o).Issuer))
                 {
                     result += "\n" + Loc.GetString($"objective-issuer-{objectiveGroup.Key}");
 
                     foreach (var objective in objectiveGroup)
                     {
-                        foreach (var condition in objective.Conditions)
+                        var objectiveInfo = _objective.GetInfo(objective, mindId, mind);
+                        var objectiveTitle = objectiveInfo.Title!;
+                        var progress = objectiveInfo.Progress!;
+                        if (progress > 0.99f)
                         {
-                            var progress = condition.Progress;
-                            if (progress > 0.99f)
-                            {
-                                result += "\n- " + Loc.GetString(
-                                    "objectives-condition-success",
-                                    ("condition", condition.Title),
-                                    ("markupColor", "green")
-                                );
-                            }
-                            else
-                            {
-                                result += "\n- " + Loc.GetString(
-                                    "objectives-condition-fail",
-                                    ("condition", condition.Title),
-                                    ("progress", (int) (progress * 100)),
-                                    ("markupColor", "red")
-                                );
-                            }
+                            result += "\n- " + Loc.GetString(
+                                "objectives-objective-success",
+                                ("objective", objectiveTitle),
+                                ("markupColor", "green")
+                            );
+                        }
+                        else
+                        {
+                            result += "\n- " + Loc.GetString(
+                                "objectives-objective-fail",
+                                ("objective", objectiveTitle),
+                                ("progress", (int) (progress * 100)),
+                                ("markupColor", "red")
+                            );
                         }
                     }
                 }
@@ -120,11 +122,11 @@ public sealed class ObjectivesSystem : EntitySystem
         }
     }
 
-    public ObjectivePrototype? GetRandomObjective(EntityUid mindId, MindComponent mind, string objectiveGroupProto)
+    public EntityUid? GetRandomObjective(EntityUid mindId, MindComponent mind, string objectiveGroupProto)
     {
         if (!_prototypeManager.TryIndex<WeightedRandomPrototype>(objectiveGroupProto, out var groups))
         {
-            Log.Error("Tried to get a random objective, but can't index WeightedRandomPrototype " + objectiveGroupProto);
+            Log.Error($"Tried to get a random objective, but can't index WeightedRandomPrototype {objectiveGroupProto}");
             return null;
         }
 
@@ -137,15 +139,16 @@ public sealed class ObjectivesSystem : EntitySystem
 
             if (!_prototypeManager.TryIndex<WeightedRandomPrototype>(groupName, out var group))
             {
-                Log.Error("Couldn't index objective group prototype" + groupName);
+                Log.Error($"Couldn't index objective group prototype {groupName}");
                 return null;
             }
 
-            if (_prototypeManager.TryIndex<ObjectivePrototype>(group.Pick(_random), out var objective)
-                && objective.CanBeAssigned(mindId, mind))
+            var proto = group.Pick(_random);
+            var objective = _objective.TryCreateObjective(mindId, mind, proto);
+            if (objective != null)
                 return objective;
-            else
-                tries++;
+
+            tries++;
         }
 
         return null;
