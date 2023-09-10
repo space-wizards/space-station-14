@@ -1,9 +1,4 @@
 Entries:
-- author: Emisse
-  changes:
-  - {message: Captain's Sabre now has a chance to reflect projectiles., type: Tweak}
-  id: 4289
-  time: '2023-07-18T22:55:29.0000000+00:00'
 - author: vanx
   changes:
   - {message: The Nuclear Operatives have found a reliable supplier of ammunition
@@ -2997,3 +2992,8 @@ Entries:
   - {message: Fixed not being able to use vehicle horns., type: Fix}
   id: 4788
   time: '2023-09-09T23:39:29.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Monkeys can now bump doors open and strip mobs like people can., type: Tweak}
+  id: 4789
+  time: '2023-09-10T02:51:51.0000000+00:00'
