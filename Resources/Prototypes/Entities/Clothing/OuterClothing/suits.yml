@@ -181,6 +181,9 @@
   - type: ContainerContainer
     containers:
       toggleable-clothing: !type:ContainerSlot {}
+  - type: Construction
+    graph: ClothingOuterSuitIan
+    node: suit
 
 - type: entity
   parent: ClothingOuterBase
