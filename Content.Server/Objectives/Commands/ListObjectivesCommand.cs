@@ -2,6 +2,7 @@ using System.Linq;
 using Content.Server.Administration;
 using Content.Shared.Administration;
 using Content.Shared.Mind;
+using Content.Shared.Objectives.Systems;
 using Robust.Server.Player;
 using Robust.Shared.Console;
 
@@ -25,7 +26,7 @@ namespace Content.Server.Objectives.Commands
             }
 
             var minds = _entities.System<SharedMindSystem>();
-            if (!minds.TryGetMind(player, out _, out var mind))
+            if (!minds.TryGetMind(player, out var mindId, out var mind))
             {
                 shell.WriteError(LocalizationManager.GetString("shell-target-entity-does-not-have-message", ("missing", "mind")));
                 return;
@@ -38,9 +39,11 @@ namespace Content.Server.Objectives.Commands
                 shell.WriteLine("None.");
             }
 
+            var objective = _entities.System<ObjectiveSystem>();
             for (var i = 0; i < objectives.Count; i++)
             {
-                shell.WriteLine($"- [{i}] {objectives[i].Conditions[0].Title}");
+                var info = objective.GetInfo(objectives[i], mindId, mind);
+                shell.WriteLine($"- [{i}] '{info.Title}' ({info.Progress}%)");
             }
         }
 
