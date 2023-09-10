@@ -4,6 +4,7 @@ using Content.Shared.CartridgeLoader;
 using Content.Shared.CartridgeLoader.Cartridges;
 using Content.Shared.CCVar;
 using Robust.Shared.Configuration;
+using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.CartridgeLoader.Cartridges;
@@ -78,14 +79,20 @@ public sealed class CrewManifestCartridgeSystem : EntitySystem
     {
         _unsecureViewersAllowed = unsecureViewersAllowed;
 
-        var allCartridgeLoaders = AllEntityQuery<CartridgeLoaderComponent>();
-
-        while (allCartridgeLoaders.MoveNext(out EntityUid loaderUid, out CartridgeLoaderComponent? comp))
+        var allCartridgeLoaders = AllEntityQuery<CartridgeLoaderComponent, ContainerManagerComponent>();
+        while (allCartridgeLoaders.MoveNext(out var loaderUid, out var comp, out var cont))
         {
             if (_unsecureViewersAllowed)
-                _cartridgeLoader?.InstallProgram(loaderUid, CartridgePrototypeName, false, comp);
-            else
-                _cartridgeLoader?.UninstallProgram(loaderUid, CartridgePrototypeName, comp);
+            {
+                _cartridgeLoader.InstallProgram(loaderUid, CartridgePrototypeName, false, comp);
+                return;
+            }
+
+            foreach (var program in _cartridgeLoader.GetInstalled(loaderUid, cont))
+            {
+                if (HasComp<CrewManifestCartridgeComponent>(program))
+                    _cartridgeLoader.UninstallProgram(loaderUid, program, comp);
+            }
         }
     }
 

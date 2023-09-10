@@ -113,8 +113,11 @@ namespace Content.Server.PDA
         /// <summary>
         /// Send new UI state to clients, call if you modify something like uplink.
         /// </summary>
-        public void UpdatePdaUi(EntityUid uid, PdaComponent pda)
+        public void UpdatePdaUi(EntityUid uid, PdaComponent? pda = null)
         {
+            if (!Resolve(uid, ref pda, false))
+                return;
+
             if (!_ui.TryGetUi(uid, PdaUiKey.Key, out var ui))
                 return;
 

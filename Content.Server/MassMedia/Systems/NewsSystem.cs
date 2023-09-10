@@ -16,6 +16,7 @@ using Content.Server.CartridgeLoader;
 using Robust.Shared.Timing;
 using Content.Server.Popups;
 using Content.Shared.Database;
+using Robust.Shared.Containers;
 
 namespace Content.Server.MassMedia.Systems;
 
@@ -24,7 +25,7 @@ public sealed class NewsSystem : EntitySystem
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
     [Dependency] private readonly RingerSystem _ringer = default!;
-    [Dependency] private readonly CartridgeLoaderSystem? _cartridgeLoaderSystem = default!;
+    [Dependency] private readonly CartridgeLoaderSystem _cartridgeLoaderSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
@@ -192,18 +193,15 @@ public sealed class NewsSystem : EntitySystem
 
     private void TryNotify()
     {
-        var query = EntityQueryEnumerator<CartridgeLoaderComponent, RingerComponent>();
+        var query = EntityQueryEnumerator<CartridgeLoaderComponent, RingerComponent, ContainerManagerComponent>();
 
-        while (query.MoveNext(out var owner, out var comp, out var ringer))
+        while (query.MoveNext(out var uid, out var comp, out var ringer, out var cont))
         {
-            foreach (var app in comp.InstalledPrograms)
-            {
-                if (EntityManager.TryGetComponent<NewsReadCartridgeComponent>(app, out var cartridge) && cartridge.NotificationOn)
-                {
-                    _ringer.RingerPlayRingtone(owner, ringer);
-                    break;
-                }
-            }
+            if (!_cartridgeLoaderSystem.HasProgram<NewsReadCartridgeComponent>(uid, comp, cont))
+                continue;
+
+            _ringer.RingerPlayRingtone(uid, ringer);
+            break;
         }
     }
 
