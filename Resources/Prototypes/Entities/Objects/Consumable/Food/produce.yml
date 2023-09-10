@@ -171,8 +171,8 @@
   - type: MeleeWeapon
     damage:
       types:
-        Heat: 7.5
-        Caustic: 7.5
+        Heat: 6
+        Caustic: 6
   - type: SolutionContainerManager
     solutions:
       food:
@@ -1311,7 +1311,7 @@
 
 - type: entity
   name: koibean
-  description: For those who can't stand seeing good old meat.
+  description: These beans seem a little bit fishy.
   id: FoodKoibean
   parent: ProduceBase
   components:
