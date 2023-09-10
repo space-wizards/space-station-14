@@ -24,6 +24,7 @@ using Content.Shared.Mobs.Components;
 using Content.Server.Station.Systems;
 using Content.Server.Shuttles.Systems;
 using Content.Shared.Mobs;
+using Robust.Server.Containers;
 
 namespace Content.Server.Antag;
 
@@ -43,6 +44,7 @@ public sealed class AntagSelectionSystem : GameRuleSystem<GameRuleComponent>
     [Dependency] private readonly StorageSystem _storageSystem = default!;
     [Dependency] private readonly StationSystem _stationSystem = default!;
     [Dependency] private readonly EmergencyShuttleSystem _emergencyShuttle = default!;
+    [Dependency] private readonly ContainerSystem _containerSystem = default!;
 
     /// <summary>
     /// Attempts to start the game rule by checking if there are enough players in lobby and readied.
@@ -205,7 +207,7 @@ public sealed class AntagSelectionSystem : GameRuleSystem<GameRuleComponent>
                     {
                         if (pocket1slot.ContainedEntity == null)
                         {
-                            if (pocket1slot.CanInsert(itemToSpawn))
+                            if (_containerSystem.CanInsert(itemToSpawn, pocket1slot))
                             {
                                 pocket1slot.Insert(itemToSpawn);
                             }
@@ -214,7 +216,7 @@ public sealed class AntagSelectionSystem : GameRuleSystem<GameRuleComponent>
                         {
                             if (pocket2slot.ContainedEntity == null)
                             {
-                                if (pocket2slot.CanInsert(itemToSpawn))
+                                if (_containerSystem.CanInsert(itemToSpawn, pocket2slot))
                                 {
                                     pocket2slot.Insert(itemToSpawn);
                                 }
