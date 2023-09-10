@@ -21,7 +21,7 @@ namespace Content.Shared.PAI
         /// The last person who activated this PAI.
         /// Used for assigning the name.
         /// </summary>
-        [DataField("lastUSer"), ViewVariables(VVAccess.ReadWrite)]
+        [DataField("lastUser"), ViewVariables(VVAccess.ReadWrite)]
         public EntityUid? LastUser;
 
         [DataField("midiActionId", serverOnly: true,
