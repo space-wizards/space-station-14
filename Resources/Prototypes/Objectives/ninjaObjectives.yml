@@ -10,7 +10,7 @@
   - type: RoleRequirement
     roles:
       components:
-      - TraitorRole
+      - NinjaRole
 
 - type: entity
   noSpawn: true
