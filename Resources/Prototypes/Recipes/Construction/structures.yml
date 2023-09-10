@@ -564,7 +564,7 @@
   id: Barricade
   graph: Barricade
   startNode: start
-  targetNode: barricadewooden
+  targetNode: barricadefull
   category: construction-category-structures
   description: An improvised barricade made out of wooden planks.
   icon:
