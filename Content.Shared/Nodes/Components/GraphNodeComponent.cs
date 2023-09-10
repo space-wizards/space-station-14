@@ -45,11 +45,17 @@ public sealed partial class GraphNodeComponent : Component
     public List<Edge> Edges = new(4);
 
     /// <summary>
+    /// The number of edges this node has that can be merged over.
+    /// </summary>
+    [ViewVariables]
+    public int NumMergeableEdges = 0;
+
+    /// <summary>
     /// The last time this node was processed for the purpose of splitting its group.
     /// </summary>
     [AutoNetworkedField]
     [ViewVariables]
-    public TimeSpan LastUpdate = default!;
+    public TimeSpan? LastUpdate = null;
 
     /// <summary>
     /// The color used to render this node in the debugging overlay.
@@ -86,8 +92,25 @@ public enum NodeFlags : byte
 
 /// <summary>
 /// </summary>
-public readonly record struct Edge(EntityUid Id, EdgeFlags Flags)
+[DataDefinition]
+public readonly partial struct Edge
 {
+    [ViewVariables]
+    public const EdgeFlags NullFlags = EdgeFlags.NoMerge;
+    [ViewVariables]
+    public const EdgeFlags DefaultFlags = EdgeFlags.None;
+
+    [DataField("id", required: true)]
+    public EntityUid Id { get; init; }
+    [DataField("flags")]
+    public EdgeFlags Flags { get; init; } = DefaultFlags;
+
+    public Edge(EntityUid id, EdgeFlags flags)
+    {
+        Id = id;
+        Flags = flags;
+    }
+
     public void Deconstruct(out EntityUid id, out EdgeFlags flags)
     {
         id = Id;
@@ -102,4 +125,5 @@ public enum EdgeFlags : byte
     None = 0,
     Auto = 1 << 0,
     Manual = 1 << 1,
+    NoMerge = 1 << 2,
 }

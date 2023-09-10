@@ -1,8 +1,10 @@
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
+using Content.Shared.Examine;
 using Content.Shared.Nodes.Components;
 using Content.Shared.Nodes.EntitySystems;
 using Content.Shared.Popups;
+using Content.Shared.Verbs;
 using Robust.Shared.Audio;
 
 namespace Content.Shared.Nodes.Debugging;
@@ -17,8 +19,32 @@ public sealed partial class DebugNodeLinkerSystem : EntitySystem
     {
         base.Initialize();
 
+        SubscribeLocalEvent<DebugNodeLinkerComponent, ExaminedEvent>(OnExamined);
+        SubscribeLocalEvent<DebugNodeLinkerComponent, GetVerbsEvent<AlternativeVerb>>(OnGetVerbs);
         SubscribeLocalEvent<DebugNodeLinkerComponent, AfterInteractEvent>(AfterInteract);
         SubscribeLocalEvent<DebugNodeLinkerComponent, UseInHandEvent>(OnUseInHand);
+    }
+
+    private void OnExamined(EntityUid uid, DebugNodeLinkerComponent comp, ExaminedEvent args)
+    {
+        args.PushText($"Currently {comp.Mode}ing nodes.");
+        args.PushText($"Resulting edges {((comp.Flags & EdgeFlags.NoMerge) == EdgeFlags.None ? "allow" : "disallow")} merging.");
+    }
+
+    private void OnGetVerbs(EntityUid uid, DebugNodeLinkerComponent comp, GetVerbsEvent<AlternativeVerb> args)
+    {
+        if (!args.CanAccess || !args.CanInteract || args.Hands == null)
+            return;
+
+        args.Verbs.Add(new AlternativeVerb()
+        {
+            Text = $"{((comp.Flags & EdgeFlags.NoMerge) != EdgeFlags.None ? "enable" : "disable")} merging",
+            Act = () =>
+            {
+                comp.Flags ^= EdgeFlags.NoMerge;
+                _audioSys.PlayPredicted(comp.ModeSound, uid, args.User, AudioParams.Default.WithVariation(0.125f).WithVolume(8f));
+            },
+        });
     }
 
     private void AfterInteract(EntityUid uid, DebugNodeLinkerComponent comp, AfterInteractEvent args)
@@ -35,7 +61,8 @@ public sealed partial class DebugNodeLinkerSystem : EntitySystem
         // Prompt the node to update its automatic edges:
         if (comp.Mode == DebugLinkerMode.Update)
         {
-            _nodeGraphSys.QueueEdgeUpdate(targetNodeId, targetNode);
+            if ((targetNode.Flags & NodeFlags.Edges) == NodeFlags.None)
+                _nodeGraphSys.QueueEdgeUpdate(targetNodeId, targetNode);
             _audioSys.PlayPredicted(comp.UpdateSound, uid, args.User, AudioParams.Default.WithVariation(0.125f).WithVolume(8f));
             _popupSys.PopupClient("updated", targetNodeId, args.User);
             return;
@@ -64,7 +91,7 @@ public sealed partial class DebugNodeLinkerSystem : EntitySystem
         {
             // Adds an edge between the selected node and the clicked node.
             case DebugLinkerMode.Link:
-                if (!_nodeGraphSys.TryAddEdge(savedNodeId, targetNodeId, node: savedNode, edge: targetNode))
+                if (!_nodeGraphSys.TryAddEdge(savedNodeId, targetNodeId, flags: comp.Flags, node: savedNode, edge: targetNode))
                     break;
 
                 _audioSys.PlayPredicted(comp.LinkSound, uid, args.User, AudioParams.Default.WithVariation(0.125f).WithVolume(8f));
@@ -92,7 +119,7 @@ public sealed partial class DebugNodeLinkerSystem : EntitySystem
         args.Handled = true;
         comp.Mode = comp.Mode.Next();
         comp.Node = null;
-        _popupSys.PopupClient(comp.Mode.ToString(), uid, args.User);
+        _popupSys.PopupClient($"{comp.Mode}ing", uid, args.User);
         _audioSys.PlayPredicted(comp.ModeSound, uid, args.User, AudioParams.Default.WithVariation(0.125f).WithVolume(8f));
     }
 }

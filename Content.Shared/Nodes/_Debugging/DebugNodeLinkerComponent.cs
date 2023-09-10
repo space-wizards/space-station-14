@@ -1,3 +1,4 @@
+using Content.Shared.Nodes.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 
@@ -7,6 +8,14 @@ namespace Content.Shared.Nodes.Debugging;
 public sealed partial class DebugNodeLinkerComponent : Component
 {
     /// <summary>
+    /// Whether or not this item is currently linking or unlinking graph nodes.
+    /// </summary>
+    [AutoNetworkedField]
+    [DataField("mode")]
+    [ViewVariables(VVAccess.ReadWrite)]
+    public DebugLinkerMode Mode = DebugLinkerMode.Link;
+
+    /// <summary>
     /// The node that this linker is attempting to link/unlink from another node.
     /// </summary>
     [AutoNetworkedField]
@@ -14,12 +23,12 @@ public sealed partial class DebugNodeLinkerComponent : Component
     public EntityUid? Node = null;
 
     /// <summary>
-    /// Whether or not this item is currently linking or unlinking graph nodes.
+    /// The flags used when manually creating an edge between nodes.
     /// </summary>
     [AutoNetworkedField]
-    [DataField("mode")]
-    [ViewVariables(VVAccess.ReadWrite)]
-    public DebugLinkerMode Mode = DebugLinkerMode.Link;
+    [DataField("edgeFlags")]
+    [ViewVariables]
+    public EdgeFlags Flags = EdgeFlags.None;
 
     /// <summary>
     /// The sound played when switching the linker mode.

@@ -181,8 +181,11 @@ public abstract partial class SharedNodeGraphSystem
         {
             var (_, node) = nodes[i];
 
-            foreach (var (edgeId, _) in node.Edges)
+            foreach (var (edgeId, edgeFlags) in node.Edges)
             {
+                if ((edgeFlags & EdgeFlags.NoMerge) != EdgeFlags.None)
+                    continue;
+
                 var edge = NodeQuery.GetComponent(edgeId);
                 if (edge.GraphProto != graphProto)
                     continue;
@@ -215,6 +218,9 @@ public abstract partial class SharedNodeGraphSystem
         {
             AddNode(graphId.Value, nodeId, graph: graph, node: node);
         }
+
+        if (graph.MergeNodes.Count > 0)
+            ResolveMerges(graphId.Value, TimeSpan.MinValue, graph);
     }
 
     protected void ResolveSplits(EntityUid graphId, TimeSpan curTime, NodeGraphComponent graph)
@@ -237,13 +243,16 @@ public abstract partial class SharedNodeGraphSystem
                         return;
                 }
 
-                foreach (var (edgeId, _) in node.Edges)
+                foreach (var (edgeId, edgeFlags) in node.Edges)
                 {
+                    if ((edgeFlags & EdgeFlags.NoMerge) != EdgeFlags.None)
+                        continue;
+
                     var edge = NodeQuery.GetComponent(edgeId);
                     if (edge.GraphId != node.GraphId)
                         continue;
 
-                    if (edge.LastUpdate >= curTime)
+                    if (edge.LastUpdate is { } && edge.LastUpdate >= curTime)
                         continue;
 
                     edge.LastUpdate = curTime;
@@ -280,8 +289,11 @@ public abstract partial class SharedNodeGraphSystem
                 var node = NodeQuery.GetComponent(nodeId);
                 ClearMerge(nodeId, node, curr);
 
-                foreach (var (edgeId, _) in node.Edges)
+                foreach (var (edgeId, edgeFlags) in node.Edges)
                 {
+                    if ((edgeFlags & EdgeFlags.NoMerge) != EdgeFlags.None)
+                        continue;
+
                     var edge = NodeQuery.GetComponent(edgeId);
                     if (edge.GraphId is not { } mergeId || mergeId == node.GraphId)
                         continue;
@@ -290,7 +302,7 @@ public abstract partial class SharedNodeGraphSystem
 
                     if (!GraphQuery.TryGetComponent(mergeId, out var merge))
                         continue;
-                    if (merge.LastUpdate >= curTime)
+                    if (merge.LastUpdate is { } && merge.LastUpdate >= curTime)
                         continue;
 
                     merge.LastUpdate = curTime;

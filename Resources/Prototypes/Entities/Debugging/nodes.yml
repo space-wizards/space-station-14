@@ -33,21 +33,19 @@
 # Debugging nodes:
 - type: entity
   id: BaseDebugNode
+  parent: BaseItem
   abstract: true
   suffix: DEBUG
   components:
-  - type: Clickable
-  - type: Fixtures
   - type: GraphNode
-  - type: InteractionOutline
   - type: Tag
     tags:
     - Debug
 
 - type: entity
-  id: DebugNodeA
+  id: DebugNodeA1
   parent: BaseDebugNode
-  name: debug node
+  name: debug node (type A)
   description: Type A debug node
   suffix: DEBUG
   components:
@@ -62,9 +60,22 @@
       map: ["enum.AnomalyVisualLayers.Base"]
 
 - type: entity
-  id: DebugNodeB
+  id: DebugNodeA2
+  parent: DebugNodeA1
+  name: debug node (autolinking type A)
+  description: Type A debug node with autolinker
+  suffix: DEBUG
+  components:
+  - type: DebugNodeAutolinker
+  - type: Sprite
+    layers:
+    - state: anom1-pulse
+      map: ["enum.AnomalyVisualLayers.Base"]
+
+- type: entity
+  id: DebugNodeB1
   parent: BaseDebugNode
-  name: debug node
+  name: debug node (type B)
   description: Type B debug node
   suffix: DEBUG
   components:
@@ -76,6 +87,19 @@
     sprite: Structures/Specific/anomaly.rsi
     layers:
     - state: anom2
+      map: ["enum.AnomalyVisualLayers.Base"]
+
+- type: entity
+  id: DebugNodeB2
+  parent: DebugNodeB1
+  name: debug node (autolinking type B)
+  description: Type B debug node with autolinker
+  suffix: DEBUG
+  components:
+  - type: DebugNodeAutolinker
+  - type: Sprite
+    layers:
+    - state: anom2-pulse
       map: ["enum.AnomalyVisualLayers.Base"]
 
 

@@ -48,7 +48,7 @@ public sealed partial class NodeGraphComponent : Component
     /// The last time this graph was processed merging with other graphs.
     /// </summary>
     [ViewVariables]
-    public TimeSpan LastUpdate = default!;
+    public TimeSpan? LastUpdate = null;
 
     /// <summary>
     /// The color used to represent this group in the debugging overlay.

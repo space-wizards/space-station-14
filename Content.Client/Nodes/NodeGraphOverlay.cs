@@ -24,13 +24,14 @@ public sealed partial class NodeGraphOverlay : Overlay
     private readonly IInputManager _inputMan = default!;
     private readonly IUserInterfaceManager _uiMan = default!;
     private readonly SharedTransformSystem _xformSys = default!;
+    private readonly Font _font = default!;
 
     public override OverlaySpace Space => OverlaySpace.WorldSpace | OverlaySpace.ScreenSpace;
     private readonly List<EntityUid> _visibleNodes = new();
     private readonly HashSet<EntityUid> _hoveredGraphs = new();
     private readonly HashSet<EntityUid> _hoveredNodes = new();
     private ScreenCoordinates _hoverPos = default!;
-    private readonly Font _font = default!;
+    private float _sinAlpha = 1f;
 
     public NodeGraphOverlay(IEntityManager entMan, IGameTiming gameTiming, IInputManager inputMan, IUserInterfaceManager uiMan, SharedTransformSystem xformSys, IResourceCache cache)
     {
@@ -47,6 +48,8 @@ public sealed partial class NodeGraphOverlay : Overlay
     {
         base.FrameUpdate(args);
 
+        _sinAlpha = MathF.Cos((float) _gameTiming.RealTime.TotalSeconds * 2f);
+        _sinAlpha *= _sinAlpha;
         _hoveredNodes.Clear();
         _hoveredGraphs.Clear();
         if (_uiMan.CurrentlyHovered is IViewportControl vp)
@@ -103,8 +106,6 @@ public sealed partial class NodeGraphOverlay : Overlay
 
     private void DrawWorld(in OverlayDrawArgs args)
     {
-        const float nodeSize = 8f / 32f;
-
         var map = args.Viewport.Eye?.Position.MapId ?? default;
         if (map == MapId.Nullspace)
             return;
@@ -112,8 +113,6 @@ public sealed partial class NodeGraphOverlay : Overlay
         var handle = args.WorldHandle;
         var mapId = args.MapId;
         var worldAABB = args.WorldAABB;
-        var errSin = MathF.Cos((float) _gameTiming.RealTime.TotalSeconds * 2f);
-        errSin *= errSin;
 
         var nodeQuery = _entMan.GetEntityQuery<GraphNodeComponent>();
         var linkQuery = _entMan.GetEntityQuery<DebugNodeAutolinkerComponent>();
@@ -140,9 +139,9 @@ public sealed partial class NodeGraphOverlay : Overlay
             var xform = xformQuery.GetComponent(uid);
 
             var nodePos = _xformSys.GetWorldPosition(xform);
-            var nodeColor = GetColor(node, _hoveredGraphs, errSin);
+            var nodeColor = GetColor(node);
 
-            handle.DrawRect(Box2.CenteredAround(nodePos, new Vector2(nodeSize, nodeSize)), nodeColor);
+            handle.DrawRect(Box2.CenteredAround(nodePos, new Vector2(NodeSize, NodeSize)), nodeColor);
             if (linkQuery.TryGetComponent(uid, out var linker))
             {
                 var rangeColor = nodeColor.WithAlpha(nodeColor.A * 0.5f);
@@ -155,7 +154,7 @@ public sealed partial class NodeGraphOverlay : Overlay
                 }
             }
 
-            foreach (var (edgeId, _) in node.Edges)
+            foreach (var (edgeId, edgeFlags) in node.Edges)
             {
                 if (!xformQuery.TryGetComponent(edgeId, out var edgeXform))
                     continue;
@@ -163,17 +162,17 @@ public sealed partial class NodeGraphOverlay : Overlay
                 if (edgeXform.MapID != mapId)
                     continue;
 
+                var canMerge = (edgeFlags & EdgeFlags.NoMerge) == EdgeFlags.None;
                 var edgePos = _xformSys.GetWorldPosition(edgeXform);
-                var midPos = (nodePos + edgePos) / 2f;
-                handle.DrawLine(nodePos, midPos, nodeColor); // Edges can form between different graphs so we only draw half of this one.
+                DrawHalfEdge(handle, nodePos, edgePos, nodeColor, canMerge: canMerge);
 
                 if (worldAABB.Contains(edgePos))
                     continue; // We'll get around to drawing the other half of the edge later.
 
                 // Edge node is OOB so we need to draw their half now.
                 var edge = nodeQuery.GetComponent(edgeId);
-                var edgeColor = GetColor(edge, _hoveredGraphs, errSin);
-                handle.DrawLine(edgePos, midPos, edgeColor);
+                var edgeColor = GetColor(edge);
+                DrawHalfEdge(handle, edgePos, nodePos, edgeColor, canMerge: canMerge);
             }
         }
     }
@@ -185,6 +184,7 @@ public sealed partial class NodeGraphOverlay : Overlay
         if (_hoveredNodes.Count <= 0)
             return;
 
+        var offset = new Vector2(0, 0);
         var sb = new StringBuilder();
         var nodeQuery = _entMan.GetEntityQuery<GraphNodeComponent>();
         foreach (var nodeId in _hoveredNodes)
@@ -196,25 +196,40 @@ public sealed partial class NodeGraphOverlay : Overlay
             sb.Append($"#Edges: {node.Edges.Count}\n");
             sb.Append($"GraphId: {node.GraphId}\n");
             sb.Append($"GraphType: {node.GraphProto}\n");
-            args.ScreenHandle.DrawString(_font, _hoverPos.Position, sb.ToString());
+            var size = args.ScreenHandle.DrawString(_font, _hoverPos.Position + offset, sb.ToString(), GetColor(node));
+            offset.Y += size.Y;
             sb.Clear();
         }
     }
 
-    private static Color GetColor(GraphNodeComponent node, HashSet<EntityUid> hoveredGraphs, float sinAlpha)
+    private Color GetColor(GraphNodeComponent node)
     {
         const float defaultAlpha = 0.5f;
         const float hoveredAlpha = 0.75f;
         const float unhoveredAlpha = 0.25f;
 
         float baseAlpha;
-        if (hoveredGraphs.Count <= 0)
+        if (_hoveredGraphs.Count <= 0)
             baseAlpha = defaultAlpha;
-        else if (node.GraphId is { } graphId && hoveredGraphs.Contains(graphId))
-            baseAlpha = hoveredAlpha * (1f + sinAlpha) * 0.5f;
+        else if (node.GraphId is { } graphId && _hoveredGraphs.Contains(graphId))
+            baseAlpha = hoveredAlpha * (1f + _sinAlpha) * 0.5f;
         else
             baseAlpha = unhoveredAlpha;
 
-        return node.DebugColor?.WithAlpha(baseAlpha) ?? NodeGraphComponent.DefaultColor.WithAlpha(baseAlpha * sinAlpha);
+        return node.DebugColor?.WithAlpha(baseAlpha) ?? NodeGraphComponent.DefaultColor.WithAlpha(baseAlpha * _sinAlpha);
+    }
+
+    private static void DrawHalfEdge(DrawingHandleWorld handle, Vector2 from, Vector2 to, Color color, bool canMerge)
+    {
+        var endPos = (from + to) / 2f;
+
+        if (!canMerge)
+        {
+            var shortPos = from + (to - from) * 0.45f;
+            handle.DrawLine(shortPos, endPos, Color.Black.WithAlpha(color.A));
+            endPos = shortPos;
+        }
+
+        handle.DrawLine(from, endPos, color);
     }
 }

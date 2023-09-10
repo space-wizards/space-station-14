@@ -1,3 +1,4 @@
+using Content.Shared.Nodes.Components;
 using Content.Shared.Nodes.EntitySystems;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
@@ -18,6 +19,8 @@ public sealed partial class NodeGraphSystem : SharedNodeGraphSystem
     {
         base.Initialize();
 
+        SubscribeLocalEvent<GraphNodeComponent, ComponentStartup>(OnComponentStartup);
+
         _overlayMan.AddOverlay(new NodeGraphOverlay(EntityManager, GameTiming, _inputMan, _uiMan, _xformSys, _rscCache));
     }
 
@@ -26,5 +29,11 @@ public sealed partial class NodeGraphSystem : SharedNodeGraphSystem
         _overlayMan.RemoveOverlay<NodeGraphOverlay>();
 
         base.Shutdown();
+    }
+
+    /// <remarks>Temporary replacement for client-side MapInit until I can figure that out.</remarks>
+    private void OnComponentStartup(EntityUid uid, GraphNodeComponent comp, ComponentStartup args)
+    {
+        QueueEdgeUpdate(uid, comp);
     }
 }

@@ -1,3 +1,4 @@
+using Content.Shared.Nodes.Components;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Nodes.Debugging;
@@ -23,4 +24,12 @@ public sealed partial class DebugNodeAutolinkerComponent : Component
     [DataField("hysteresisRange")]
     [ViewVariables(VVAccess.ReadWrite)]
     public float HysteresisRange = 1f;
+
+    /// <summary>
+    /// 
+    /// </summary>
+    [AutoNetworkedField]
+    [DataField("edgeFlags")]
+    [ViewVariables(VVAccess.ReadWrite)]
+    public EdgeFlags Flags = EdgeFlags.None;
 }

@@ -41,7 +41,7 @@ public sealed partial class DebugNodeAutolinkerSystem : EntitySystem
                 continue;
 
             args.Edges ??= new();
-            args.Edges.Add(nearId);
+            args.Edges.Add(nearId, comp.Flags);
         }
     }
 
@@ -60,6 +60,7 @@ public sealed partial class DebugNodeAutolinkerSystem : EntitySystem
         if (distance > range * range)
             return;
 
+        args.Flags |= comp.Flags;
         args.Wanted = true;
     }
 }

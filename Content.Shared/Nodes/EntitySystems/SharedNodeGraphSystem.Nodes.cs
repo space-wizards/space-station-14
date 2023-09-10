@@ -61,6 +61,16 @@ public abstract partial class SharedNodeGraphSystem
             CancelMerge(graphId, nodeId, graph);
     }
 
+    protected virtual void OnComponentInit(EntityUid uid, GraphNodeComponent comp, ComponentInit args)
+    {
+        comp.NumMergeableEdges = 0;
+        foreach (var (_, edgeFlags) in comp.Edges)
+        {
+            if ((edgeFlags & EdgeFlags.NoMerge) == EdgeFlags.None)
+                ++comp.NumMergeableEdges;
+        }
+    }
+
     protected virtual void OnMapInit(EntityUid uid, GraphNodeComponent comp, MapInitEvent args)
     {
         if ((comp.Flags & NodeFlags.Init) == NodeFlags.None)
@@ -80,8 +90,8 @@ public abstract partial class SharedNodeGraphSystem
 
         while (comp.Edges.Count > 0)
         {
-            var (edgeId, _) = comp.Edges[^1];
-            RemoveEdge(uid, edgeId, ^1, node: comp, edge: NodeQuery.GetComponent(edgeId));
+            var (edgeId, edgeFlags) = comp.Edges[^1];
+            RemoveEdge(uid, edgeId, ^1, edgeFlags, node: comp, edge: NodeQuery.GetComponent(edgeId));
         }
 
         if (comp.GraphId is { } graphId && GraphQuery.TryGetComponent(graphId, out var graph))
