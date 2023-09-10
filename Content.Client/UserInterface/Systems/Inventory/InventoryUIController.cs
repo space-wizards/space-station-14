@@ -27,7 +27,6 @@ public sealed class InventoryUIController : UIController, IOnStateEntered<Gamepl
 
     [UISystemDependency] private readonly ClientInventorySystem _inventorySystem = default!;
     [UISystemDependency] private readonly HandsSystem _handsSystem = default!;
-    [UISystemDependency] private readonly ContainerSystem _container = default!;
 
     private EntityUid? _playerUid;
     private InventorySlotsComponent? _playerInventory;
@@ -282,7 +281,7 @@ public sealed class InventoryUIController : UIController, IOnStateEntered<Gamepl
         var hoverEntity = _entities.SpawnEntity("hoverentity", MapCoordinates.Nullspace);
         var hoverSprite = _entities.GetComponent<SpriteComponent>(hoverEntity);
         var fits = _inventorySystem.CanEquip(player.Value, held, control.SlotName, out _, slotDef) &&
-                   _container.CanInsert(held, container);
+                   container.CanInsert(held, _entities);
 
         hoverSprite.CopyFrom(sprite);
         hoverSprite.Color = fits ? new Color(0, 255, 0, 127) : new Color(255, 0, 0, 127);

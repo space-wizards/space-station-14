@@ -181,7 +181,7 @@ public abstract partial class SharedHandsSystem : EntitySystem
             return false;
 
         // check can insert (including raising attempt events).
-        return _containerSystem.CanInsert(entity, handContainer);
+        return handContainer.CanInsert(entity, EntityManager);
     }
 
     /// <summary>
