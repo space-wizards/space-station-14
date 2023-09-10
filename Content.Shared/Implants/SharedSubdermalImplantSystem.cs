@@ -86,6 +86,28 @@ public abstract class SharedSubdermalImplantSystem : EntitySystem
     }
 
     /// <summary>
+    /// Add a list of implants to a person.
+    /// Logs any implant ids that don't have <see cref="SubdermalImplantComponent"/>.
+    /// </summary>
+    public void AddImplants(EntityUid uid, IEnumerable<String> implants)
+    {
+        var coords = Transform(uid).Coordinates;
+        foreach (var id in implants)
+        {
+            var ent = Spawn(id, coords);
+            if (TryComp<SubdermalImplantComponent>(ent, out var implant))
+            {
+                ForceImplant(uid, ent, implant);
+            }
+            else
+            {
+                Log.Warning($"Found invalid starting implant '{id}' on {uid} {ToPrettyString(uid):implanted}");
+                Del(ent);
+            }
+        }
+    }
+
+    /// <summary>
     /// Forces an implant into a person
     /// Good for on spawn related code or admin additions
     /// </summary>

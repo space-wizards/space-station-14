@@ -7,6 +7,7 @@
   - NuclearOperatives
   - Zombies
   - MinorAntagonists
+  - SpaceNinja
 
 - type: guideEntry
   id: Traitors
@@ -27,3 +28,8 @@
   id: MinorAntagonists
   name: guide-entry-minor-antagonists
   text: "/ServerInfo/Guidebook/Antagonist/MinorAntagonists.xml"
+
+- type: guideEntry
+  id: SpaceNinja
+  name: guide-entry-space-ninja
+  text: "/ServerInfo/Guidebook/Antagonist/SpaceNinja.xml"

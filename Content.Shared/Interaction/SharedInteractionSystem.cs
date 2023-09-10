@@ -380,6 +380,15 @@ namespace Content.Shared.Interaction
 
         public void InteractHand(EntityUid user, EntityUid target)
         {
+            // allow for special logic before main interaction
+            var ev = new BeforeInteractHandEvent(target);
+            RaiseLocalEvent(user, ev);
+            if (ev.Handled)
+            {
+                _adminLogger.Add(LogType.InteractHand, LogImpact.Low, $"{ToPrettyString(user):user} interacted with {ToPrettyString(target):target}, but it was handled by another system");
+                return;
+            }
+
             // all interactions should only happen when in range / unobstructed, so no range check is needed
             var message = new InteractHandEvent(user, target);
             RaiseLocalEvent(target, message, true);

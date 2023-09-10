@@ -70,6 +70,18 @@
 
 - type: entity
   parent: BaseGameRule
+  id: NinjaSpawn
+  noSpawn: true
+  components:
+  - type: StationEvent
+    weight: 10
+    duration: 1
+    earliestStart: 45
+    minimumPlayers: 15
+  - type: NinjaSpawnRule
+
+- type: entity
+  parent: BaseGameRule
   id: RevenantSpawn
   noSpawn: true
   components:

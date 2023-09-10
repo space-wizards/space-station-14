@@ -1,23 +1,4 @@
 Entries:
-- author: vanx
-  changes:
-  - {message: The Nuclear Operatives have found a reliable supplier of ammunition
-      and medical equipment. Check your uplink for new offers., type: Add}
-  id: 4290
-  time: '2023-07-19T06:05:54.0000000+00:00'
-- author: Ubaser
-  changes:
-  - {message: 'Nanotrasen has hired a group of architects to change up their selection
-      with the introduction of the new mid-pop space station, Core!', type: Add}
-  id: 4291
-  time: '2023-07-19T07:23:48.0000000+00:00'
-- author: TemporalOroboros
-  changes:
-  - {message: Singularities no longer bounce off of things they can eat., type: Fix}
-  - {message: 'Singularities will reach through the containment field to eat the emitters
-      less often, maybe never.', type: Fix}
-  id: 4292
-  time: '2023-07-19T08:01:27.0000000+00:00'
 - author: Slava0135
   changes:
   - {message: clowns now make funny sound when sleeping, type: Add}
@@ -2997,3 +2978,19 @@ Entries:
   - {message: Monkeys can now bump doors open and strip mobs like people can., type: Tweak}
   id: 4789
   time: '2023-09-10T02:51:51.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: 'Ian/Old Ian/Lisa yield corgi hide when butchered, which can be worn
+      as a hat or crafted into an ian suit.', type: Add}
+  id: 4790
+  time: '2023-09-10T03:04:33.0000000+00:00'
+- author: Flareguy
+  changes:
+  - {message: Added cobweb decorations for mappers to utilize., type: Add}
+  id: 4791
+  time: '2023-09-10T03:37:56.0000000+00:00'
+- author: arimah
+  changes:
+  - {message: Particle Accelerators can now be constructed again, type: Fix}
+  id: 4792
+  time: '2023-09-10T03:42:42.0000000+00:00'
