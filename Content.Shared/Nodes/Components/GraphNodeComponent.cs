@@ -41,9 +41,8 @@ public sealed partial class GraphNodeComponent : Component
     /// <remarks>
     /// Defaults to a capacity of 4 because the most common types of nodes are cardinally connected.
     /// </remarks>
-    [AutoNetworkedField]
     [DataField("edges")]
-    public HashSet<EntityUid> Edges = new(4);
+    public List<Edge> Edges = new(4);
 
     /// <summary>
     /// The last time this node was processed for the purpose of splitting its group.
@@ -83,4 +82,24 @@ public enum NodeFlags : byte
     /// Indicates that the node has lost an edge that may have split the parent graph.
     /// </summary>
     Split = 1 << 3,
+}
+
+/// <summary>
+/// </summary>
+public readonly record struct Edge(EntityUid Id, EdgeFlags Flags)
+{
+    public void Deconstruct(out EntityUid id, out EdgeFlags flags)
+    {
+        id = Id;
+        flags = Flags;
+    }
+}
+
+/// <summary>
+/// </summary>
+public enum EdgeFlags : byte
+{
+    None = 0,
+    Auto = 1 << 0,
+    Manual = 1 << 1,
 }

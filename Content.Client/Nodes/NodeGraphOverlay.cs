@@ -1,6 +1,7 @@
 using Content.Client.ContextMenu.UI;
 using Content.Client.Resources;
 using Content.Shared.Nodes.Components;
+using Content.Shared.Nodes.Debugging;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.ResourceManagement;
@@ -115,6 +116,7 @@ public sealed partial class NodeGraphOverlay : Overlay
         errSin *= errSin;
 
         var nodeQuery = _entMan.GetEntityQuery<GraphNodeComponent>();
+        var linkQuery = _entMan.GetEntityQuery<DebugNodeAutolinkerComponent>();
         var xformQuery = _entMan.GetEntityQuery<TransformComponent>();
         var nodeEnumerator = _entMan.EntityQueryEnumerator<GraphNodeComponent, TransformComponent>();
 
@@ -141,8 +143,19 @@ public sealed partial class NodeGraphOverlay : Overlay
             var nodeColor = GetColor(node, _hoveredGraphs, errSin);
 
             handle.DrawRect(Box2.CenteredAround(nodePos, new Vector2(nodeSize, nodeSize)), nodeColor);
+            if (linkQuery.TryGetComponent(uid, out var linker))
+            {
+                var rangeColor = nodeColor.WithAlpha(nodeColor.A * 0.5f);
+                handle.DrawCircle(nodePos, linker.BaseRange, rangeColor, filled: false);
 
-            foreach (var edgeId in node.Edges)
+                if (linker.HysteresisRange > 0f)
+                {
+                    rangeColor = rangeColor.WithAlpha(rangeColor.A * 0.5f);
+                    handle.DrawCircle(nodePos, linker.BaseRange + linker.HysteresisRange, rangeColor, filled: false);
+                }
+            }
+
+            foreach (var (edgeId, _) in node.Edges)
             {
                 if (!xformQuery.TryGetComponent(edgeId, out var edgeXform))
                     continue;

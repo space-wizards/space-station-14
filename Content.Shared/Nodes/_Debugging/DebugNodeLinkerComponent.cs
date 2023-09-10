@@ -1,6 +1,5 @@
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
-using Robust.Shared.Serialization;
 
 namespace Content.Shared.Nodes.Debugging;
 
@@ -20,7 +19,14 @@ public sealed partial class DebugNodeLinkerComponent : Component
     [AutoNetworkedField]
     [DataField("mode")]
     [ViewVariables(VVAccess.ReadWrite)]
-    public bool Mode = true;
+    public DebugLinkerMode Mode = DebugLinkerMode.Link;
+
+    /// <summary>
+    /// The sound played when switching the linker mode.
+    /// </summary>
+    [DataField("modeSound")]
+    [ViewVariables(VVAccess.ReadWrite)]
+    public SoundSpecifier ModeSound = new SoundPathSpecifier("/Audio/Machines/lightswitch.ogg");
 
     /// <summary>
     /// The sound played when selecting an initial node to link or unlink.
@@ -49,4 +55,39 @@ public sealed partial class DebugNodeLinkerComponent : Component
     [DataField("unlinkSound")]
     [ViewVariables(VVAccess.ReadWrite)]
     public SoundSpecifier UnlinkSound = new SoundPathSpecifier("/Audio/Machines/lightswitch.ogg");
+
+    /// <summary>
+    /// The sound played when prompting a node to update its automatic edges.
+    /// </summary>
+    [DataField("updateSound")]
+    [ViewVariables(VVAccess.ReadWrite)]
+    public SoundSpecifier UpdateSound = new SoundPathSpecifier("/Audio/Machines/lightswitch.ogg");
+
+    /// <summary>
+    /// The sound played when failing to link or unlink two nodes.
+    /// </summary>
+    [DataField("failSound")]
+    [ViewVariables(VVAccess.ReadWrite)]
+    public SoundSpecifier FailSound = new SoundPathSpecifier("/Audio/Machines/lightswitch.ogg");
+}
+
+public enum DebugLinkerMode : byte
+{
+    Link,
+    Unlink,
+    Update,
+}
+
+public static class DebugLinkerHelpers
+{
+    public static DebugLinkerMode Next(this DebugLinkerMode mode)
+    {
+        return mode switch
+        {
+            DebugLinkerMode.Link => DebugLinkerMode.Unlink,
+            DebugLinkerMode.Unlink => DebugLinkerMode.Update,
+            DebugLinkerMode.Update => DebugLinkerMode.Link,
+            _ => DebugLinkerMode.Link,
+        };
+    }
 }

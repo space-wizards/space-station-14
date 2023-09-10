@@ -32,6 +32,15 @@ public sealed partial class DebugNodeLinkerSystem : EntitySystem
         args.Handled = true;
         Dirty(uid, comp);
 
+        // Prompt the node to update its automatic edges:
+        if (comp.Mode == DebugLinkerMode.Update)
+        {
+            _nodeGraphSys.QueueEdgeUpdate(targetNodeId, targetNode);
+            _audioSys.PlayPredicted(comp.UpdateSound, uid, args.User, AudioParams.Default.WithVariation(0.125f).WithVolume(8f));
+            _popupSys.PopupClient("updated", targetNodeId, args.User);
+            return;
+        }
+
         // Selects the clicked node as the node to connect ot the next clicked node.
         if (comp.Node is not { } savedNodeId || !Exists(savedNodeId) || !TryComp<GraphNodeComponent>(savedNodeId, out var savedNode))
         {
@@ -54,23 +63,25 @@ public sealed partial class DebugNodeLinkerSystem : EntitySystem
         switch (comp.Mode)
         {
             // Adds an edge between the selected node and the clicked node.
-            case true:
+            case DebugLinkerMode.Link:
                 if (!_nodeGraphSys.TryAddEdge(savedNodeId, targetNodeId, node: savedNode, edge: targetNode))
-                    return;
+                    break;
 
                 _audioSys.PlayPredicted(comp.LinkSound, uid, args.User, AudioParams.Default.WithVariation(0.125f).WithVolume(8f));
                 _popupSys.PopupClient("edge created", targetNodeId, args.User);
-                break;
+                return;
 
             // Removes an edge between the selected node and the clicked node.
-            case false:
+            case DebugLinkerMode.Unlink:
                 if (!_nodeGraphSys.TryRemoveEdge(savedNodeId, targetNodeId, node: savedNode, edge: targetNode))
-                    return;
+                    break;
 
                 _audioSys.PlayPredicted(comp.UnlinkSound, uid, args.User, AudioParams.Default.WithVariation(0.125f).WithVolume(8f));
                 _popupSys.PopupClient("edge removed", targetNodeId, args.User);
-                break;
+                return;
         }
+
+        _audioSys.PlayPredicted(comp.FailSound, uid, args.User, AudioParams.Default.WithVariation(0.125f).WithVolume(8f));
     }
 
     private void OnUseInHand(EntityUid uid, DebugNodeLinkerComponent comp, UseInHandEvent args)
@@ -79,7 +90,9 @@ public sealed partial class DebugNodeLinkerSystem : EntitySystem
             return;
 
         args.Handled = true;
-        comp.Mode = !comp.Mode;
-        _popupSys.PopupClient(comp.Mode ? "linking" : "unlinking", uid, args.User);
+        comp.Mode = comp.Mode.Next();
+        comp.Node = null;
+        _popupSys.PopupClient(comp.Mode.ToString(), uid, args.User);
+        _audioSys.PlayPredicted(comp.ModeSound, uid, args.User, AudioParams.Default.WithVariation(0.125f).WithVolume(8f));
     }
 }

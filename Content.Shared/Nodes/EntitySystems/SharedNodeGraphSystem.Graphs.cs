@@ -1,4 +1,5 @@
 using Content.Shared.Nodes.Components;
+using Content.Shared.Nodes.Events;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Nodes.EntitySystems;
@@ -33,14 +34,14 @@ public abstract partial class SharedNodeGraphSystem
         if (!Resolve(graphId, ref graph) || !Resolve(nodeId, ref node))
             return;
 
+        (EntityUid Uid, NodeGraphComponent Comp)? oldGraph = null;
         if (node.GraphId is { } oldGraphId)
         {
-            if (oldGraphId == graphId || !GraphQuery.TryGetComponent(oldGraphId, out var oldGraph))
+            if (oldGraphId == graphId || !GraphQuery.TryGetComponent(oldGraphId, out var oldGraphComp))
                 return;
 
-            // TODO: Raise events (transfer nodes).
-
-            RemoveNode(oldGraphId, nodeId, graph: oldGraph, node: node);
+            oldGraph = (oldGraphId, oldGraphComp);
+            RemoveNode(oldGraphId, nodeId, nextGraph: (graphId, graph), graph: oldGraphComp, node: node);
         }
 
         Dirty(graphId, graph);
@@ -54,10 +55,13 @@ public abstract partial class SharedNodeGraphSystem
             QueueSplit(graphId, nodeId, graph);
         node.DebugColor = graph.DebugColor;
 
-        // TODO: Raise events (added).
+        var graphEv = new NodeAddedEvent(graphId, nodeId, oldGraph, graph, node);
+        RaiseLocalEvent(graphId, ref graphEv);
+        var nodeEv = new AddedToGraphEvent(nodeId, graphId, oldGraph, node, graph);
+        RaiseLocalEvent(nodeId, ref nodeEv);
     }
 
-    protected void RemoveNode(EntityUid graphId, EntityUid nodeId, NodeGraphComponent? graph = null, GraphNodeComponent? node = null)
+    protected void RemoveNode(EntityUid graphId, EntityUid nodeId, (EntityUid Uid, NodeGraphComponent Comp)? nextGraph = null, NodeGraphComponent? graph = null, GraphNodeComponent? node = null)
     {
         if (!Resolve(graphId, ref graph) || !Resolve(nodeId, ref node))
             return;
@@ -76,7 +80,10 @@ public abstract partial class SharedNodeGraphSystem
             CancelSplit(graphId, nodeId, graph);
         node.DebugColor = null;
 
-        // TODO: Raise events (removed).
+        var graphEv = new NodeRemovedEvent(graphId, nodeId, nextGraph, graph, node);
+        RaiseLocalEvent(graphId, ref graphEv);
+        var nodeEv = new RemovedFromGraphEvent(nodeId, graphId, nextGraph, node, graph);
+        RaiseLocalEvent(nodeId, ref nodeEv);
 
         if (graph.Nodes.Count <= 0)
             DelGraph(graphId, graph);
@@ -111,7 +118,13 @@ public abstract partial class SharedNodeGraphSystem
         if (graphId == mergeId)
             return;
 
-        // TODO: Raise merge events.
+        if (graph.Nodes.Count < merge.Nodes.Count)
+            (graphId, mergeId, graph, merge) = (mergeId, graphId, merge, graph);
+
+        var graphEv = new MergingEvent(graphId, mergeId, graph, merge);
+        RaiseLocalEvent(graphId, ref graphEv);
+        var mergeEv = new MergingIntoEvent(mergeId, graphId, merge, graph);
+        RaiseLocalEvent(mergeId, ref mergeEv);
 
         while (merge.Nodes.FirstOrNull() is { } nodeId)
         {
@@ -129,14 +142,28 @@ public abstract partial class SharedNodeGraphSystem
 
         var (splitId, split) = SpawnGraph(graph.GraphProto);
 
-        // TODO: Raise pre-split events events.
+        var preGraphEv = new SplittingEvent(graphId, splitId, nodes, graph, split);
+        RaiseLocalEvent(graphId, ref preGraphEv);
+        var preSplitEv = new SplittingFromEvent(splitId, graphId, nodes, split, graph);
+        RaiseLocalEvent(splitId, ref preSplitEv);
 
         foreach (var (nodeId, node) in nodes)
         {
             AddNode(splitId, nodeId, graph: split, node: node);
         }
 
-        // TODO: Raise post-split events.
+        if (graph.Nodes.Count > 0)
+        {
+            var postGraphEv = new SplitEvent(graphId, splitId, nodes, graph, split);
+            RaiseLocalEvent(graphId, ref postGraphEv);
+        }
+        if (split.Nodes.Count > 0)
+        {
+            var postSplitEv = new SplitFromEvent(splitId, graphId, nodes, split, graph);
+            RaiseLocalEvent(splitId, ref postSplitEv);
+        }
+        else
+            DelGraph(splitId, split);
     }
 
     protected void FloodSpawnGraph(EntityUid seedId, GraphNodeComponent seed)
@@ -154,7 +181,7 @@ public abstract partial class SharedNodeGraphSystem
         {
             var (_, node) = nodes[i];
 
-            foreach (var edgeId in node.Edges)
+            foreach (var (edgeId, _) in node.Edges)
             {
                 var edge = NodeQuery.GetComponent(edgeId);
                 if (edge.GraphProto != graphProto)
@@ -210,7 +237,7 @@ public abstract partial class SharedNodeGraphSystem
                         return;
                 }
 
-                foreach (var edgeId in node.Edges)
+                foreach (var (edgeId, _) in node.Edges)
                 {
                     var edge = NodeQuery.GetComponent(edgeId);
                     if (edge.GraphId != node.GraphId)
@@ -253,7 +280,7 @@ public abstract partial class SharedNodeGraphSystem
                 var node = NodeQuery.GetComponent(nodeId);
                 ClearMerge(nodeId, node, curr);
 
-                foreach (var edgeId in node.Edges)
+                foreach (var (edgeId, _) in node.Edges)
                 {
                     var edge = NodeQuery.GetComponent(edgeId);
                     if (edge.GraphId is not { } mergeId || mergeId == node.GraphId)

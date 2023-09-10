@@ -78,9 +78,10 @@ public abstract partial class SharedNodeGraphSystem
         if ((comp.Flags & NodeFlags.Edges) != NodeFlags.None)
             ClearEdgeUpdate(uid, comp);
 
-        while (comp.Edges.FirstOrNull() is { } edgeId)
+        while (comp.Edges.Count > 0)
         {
-            TryRemoveEdge(uid, edgeId, node: comp, edge: NodeQuery.GetComponent(edgeId));
+            var (edgeId, _) = comp.Edges[^1];
+            RemoveEdge(uid, edgeId, ^1, node: comp, edge: NodeQuery.GetComponent(edgeId));
         }
 
         if (comp.GraphId is { } graphId && GraphQuery.TryGetComponent(graphId, out var graph))
