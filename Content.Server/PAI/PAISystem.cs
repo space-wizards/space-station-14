@@ -1,15 +1,28 @@
+using Content.Server.Ghost.Roles;
 using Content.Server.Instruments;
+using Content.Server.Kitchen.Components;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Mind.Components;
 using Content.Shared.PAI;
+using Content.Shared.Popups;
 using Robust.Server.GameObjects;
+using Robust.Shared.Random;
+using System.Text;
 
 namespace Content.Server.PAI
 {
     public sealed class PAISystem : SharedPAISystem
     {
         [Dependency] private readonly InstrumentSystem _instrumentSystem = default!;
+        [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly MetaDataSystem _metaData = default!;
+        [Dependency] private readonly SharedPopupSystem _popup = default!;
+        [Dependency] private readonly ToggleableGhostRoleSystem _toggleableGhostRole = default!;
+
+        /// <summary>
+        /// Possible symbols that can replace characters in the pai's owner name when microwaved.
+        /// </summary>
+        private static readonly char[] SYMBOLS = new[] { '#', '~', '-', '@', '&', '^', '%', '$', '*'};
 
         public override void Initialize()
         {
@@ -18,6 +31,7 @@ namespace Content.Server.PAI
             SubscribeLocalEvent<PAIComponent, UseInHandEvent>(OnUseInHand);
             SubscribeLocalEvent<PAIComponent, MindAddedMessage>(OnMindAdded);
             SubscribeLocalEvent<PAIComponent, MindRemovedMessage>(OnMindRemoved);
+            SubscribeLocalEvent<PAIComponent, BeingMicrowavedEvent>(OnMicrowaved);
         }
 
         private void OnUseInHand(EntityUid uid, PAIComponent component, UseInHandEvent args)
@@ -46,6 +60,49 @@ namespace Content.Server.PAI
         {
             // Mind was removed, shutdown the PAI.
             PAITurningOff(uid);
+        }
+
+        private void OnMicrowaved(EntityUid uid, PAIComponent comp, BeingMicrowavedEvent args)
+        {
+            // name will always be scrambled whether it gets bricked or not, this is the reward
+            ScrambleName(uid, comp);
+
+            // randomly brick it
+            if (_random.Prob(comp.BrickChance))
+            {
+                _popup.PopupEntity(Loc.GetString(comp.BrickPopup), uid, PopupType.LargeCaution);
+                RemComp<PAIComponent>(uid);
+                _toggleableGhostRole.Wipe(uid);
+            }
+            else
+            {
+                // you are lucky...
+                _popup.PopupEntity(Loc.GetString(comp.ScramblePopup), uid, PopupType.Large);
+            }
+        }
+
+        private void ScrambleName(EntityUid uid, PAIComponent comp)
+        {
+            // randomly replace random characters from the old name
+            var oldName = Name(uid);
+            var name = new StringBuilder(oldName.Length);
+            foreach (var character in oldName)
+            {
+                // only scramble the owner name, don't scramble "'s pAI"
+                if (character == '\'')
+                    break;
+
+                if (_random.Prob(comp.CharScrambleChance))
+                {
+                    name.Append(_random.Pick(SYMBOLS));
+                }
+                else
+                {
+                    name.Append(character);
+                }
+            }
+
+            _metaData.SetEntityName(uid, name.ToString());
         }
 
         public void PAITurningOff(EntityUid uid)
