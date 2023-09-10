@@ -321,6 +321,27 @@
 
 - type: entity
   parent: MaterialBase
+  id: MaterialHideCorgi
+  name: corgi hide
+  description: Luxury pelt used in only the most elite fashion. Rumors say this is found when a corgi is sent to the nice farm.
+  components:
+  - type: Sprite
+    sprite: Objects/Materials/materials.rsi
+    state: corgihide
+  - type: Item
+    sprite: Clothing/Head/Misc/hides.rsi
+    heldPrefix: corgi
+  - type: Clothing
+    sprite: Clothing/Head/Misc/hides.rsi
+    equippedPrefix: corgi2
+    slots:
+    - HEAD
+  - type: Tag
+    tags:
+    - HideCorgi
+
+- type: entity
+  parent: MaterialBase
   id: MaterialDiamond
   name: refined diamond
   suffix: Full
@@ -415,7 +436,7 @@
       - bananium
       - bananium_1
   - type: RadiationSource
-    intensity: 0.3
+    intensity: 0.1
   - type: FlavorProfile
     flavors:
       - banana

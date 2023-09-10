@@ -1,16 +1,15 @@
+using System.Linq;
 using Content.Server.Actions;
 using Content.Server.Administration.Logs;
 using Content.Server.PDA.Ringer;
 using Content.Server.Stack;
 using Content.Server.Store.Components;
 using Content.Server.UserInterface;
-using Content.Shared.Actions.ActionTypes;
+using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Store;
-using Content.Shared.Database;
 using Robust.Server.GameObjects;
-using System.Linq;
 
 namespace Content.Server.Store.Systems;
 
@@ -162,10 +161,9 @@ public sealed partial class StoreSystem
         }
 
         //give action
-        if (listing.ProductAction != null)
+        if (!string.IsNullOrWhiteSpace(listing.ProductAction))
         {
-            var action = new InstantAction(_proto.Index<InstantActionPrototype>(listing.ProductAction));
-            _actions.AddAction(buyer, action, null);
+            _actions.AddAction(buyer, Spawn(listing.ProductAction), null);
         }
 
         //broadcast event

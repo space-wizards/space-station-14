@@ -34,3 +34,15 @@
   innerclothingskirt: ClothingUniformJumpskirtMime
   satchel: ClothingBackpackSatchelMimeFilled
   duffelbag: ClothingBackpackDuffelMimeFilled
+
+- type: entity
+  id: ActionMimeInvisibleWall
+  name: mime-invisible-wall
+  description: mime-invisible-wall-desc
+  noSpawn: true
+  components:
+  - type: InstantAction
+    priority: -1
+    useDelay: 30
+    icon: Structures/Walls/solid.rsi/full.png
+    event: !type:InvisibleWallActionEvent
