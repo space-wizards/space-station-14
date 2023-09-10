@@ -111,7 +111,7 @@ public abstract class SharedImplanterSystem : EntitySystem
                     continue;
 
                 //Don't remove a permanent implant and look for the next that can be drawn
-                if (!_container.CanRemove(implant, implantContainer))
+                if (!implantContainer.CanRemove(implant))
                 {
                     var implantName = Identity.Entity(implant, EntityManager);
                     var targetName = Identity.Entity(target, EntityManager);
