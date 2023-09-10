@@ -79,5 +79,5 @@
     description: objective-condition-terror-description
     icon:
       sprite: Objects/Fun/Instruments/otherinstruments.rsi
-      icon: red_phone
+      state: red_phone
   - type: TerrorCondition
