@@ -55,7 +55,7 @@ public sealed partial class DebugNodeLinkerSystem : EntitySystem
         {
             // Adds an edge between the selected node and the clicked node.
             case true:
-                if (!_nodeGraphSys.AddEdge(savedNodeId, targetNodeId, node: savedNode, edge: targetNode))
+                if (!_nodeGraphSys.TryAddEdge(savedNodeId, targetNodeId, node: savedNode, edge: targetNode))
                     return;
 
                 _audioSys.PlayPredicted(comp.LinkSound, uid, args.User, AudioParams.Default.WithVariation(0.125f).WithVolume(8f));
@@ -64,7 +64,7 @@ public sealed partial class DebugNodeLinkerSystem : EntitySystem
 
             // Removes an edge between the selected node and the clicked node.
             case false:
-                if (!_nodeGraphSys.RemoveEdge(savedNodeId, targetNodeId, node: savedNode, edge: targetNode))
+                if (!_nodeGraphSys.TryRemoveEdge(savedNodeId, targetNodeId, node: savedNode, edge: targetNode))
                     return;
 
                 _audioSys.PlayPredicted(comp.UnlinkSound, uid, args.User, AudioParams.Default.WithVariation(0.125f).WithVolume(8f));

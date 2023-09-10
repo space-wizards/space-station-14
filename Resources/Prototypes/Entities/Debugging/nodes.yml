@@ -1,3 +1,35 @@
+# Debugging graphs:
+- type: entity
+  id: BaseDebugGraph
+  abstract: true
+  noSpawn: true
+  suffix: DEBUG
+  components:
+  - type: NodeGraph
+
+- type: entity
+  id: DebugGraphA
+  parent: BaseDebugGraph
+  name: debug graph
+  description: Type A debug graph
+  suffix: DEBUG
+  components:
+  - type: NodeGraph
+    graphProto: DebugGraphA
+    color: "#00FF00"
+
+- type: entity
+  id: DebugGraphB
+  parent: BaseDebugGraph
+  name: debug graph
+  description: Type B debug graph
+  suffix: DEBUG
+  components:
+  - type: NodeGraph
+    graphProto: DebugGraphB
+    color: "#FFFFFF"
+
+
 # Debugging nodes:
 - type: entity
   id: BaseDebugNode
@@ -19,6 +51,8 @@
   description: Type A debug node
   suffix: DEBUG
   components:
+  - type: GraphNode
+    graphProto: DebugGraphA
   - type: Sprite
     noRot: true
     drawdepth: Effects #it needs to draw over stuff.
@@ -27,7 +61,6 @@
     - state: anom1
       map: ["enum.AnomalyVisualLayers.Base"]
 
-
 - type: entity
   id: DebugNodeB
   parent: BaseDebugNode
@@ -35,6 +68,8 @@
   description: Type B debug node
   suffix: DEBUG
   components:
+  - type: GraphNode
+    graphProto: DebugGraphB
   - type: Sprite
     noRot: true
     drawdepth: Effects #it needs to draw over stuff.
@@ -42,6 +77,7 @@
     layers:
     - state: anom2
       map: ["enum.AnomalyVisualLayers.Base"]
+
 
 # Debugging tools:
 - type: entity
