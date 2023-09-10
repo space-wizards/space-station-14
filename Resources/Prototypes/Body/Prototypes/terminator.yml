@@ -1,7 +1,7 @@
 # not quite human...
 - type: body
   id: TerminatorFlesh
-  name: terminator
+  name: exterminator
   root: torso
   slots:
     head:
