@@ -29610,13 +29610,6 @@ entities:
     - pos: -24.138485,-21.92873
       parent: 31
       type: Transform
-- proto: ClothingShoesSpaceNinja
-  entities:
-  - uid: 7377
-    components:
-    - pos: -39.472797,-7.725863
-      parent: 31
-      type: Transform
 - proto: ClothingUnderSocksCoder
   entities:
   - uid: 8146
