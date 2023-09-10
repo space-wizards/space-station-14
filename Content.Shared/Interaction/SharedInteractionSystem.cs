@@ -380,6 +380,15 @@ namespace Content.Shared.Interaction
 
         public void InteractHand(EntityUid user, EntityUid target)
         {
+            // allow for special logic before main interaction
+            var ev = new BeforeInteractHandEvent(target);
+            RaiseLocalEvent(user, ev);
+            if (ev.Handled)
+            {
+                _adminLogger.Add(LogType.InteractHand, LogImpact.Low, $"{ToPrettyString(user):user} interacted with {ToPrettyString(target):target}, but it was handled by another system");
+                return;
+            }
+
             // all interactions should only happen when in range / unobstructed, so no range check is needed
             var message = new InteractHandEvent(user, target);
             RaiseLocalEvent(target, message, true);
@@ -593,7 +602,7 @@ namespace Content.Shared.Interaction
                 fixtureB.FixtureCount > 0 &&
                 TryComp<TransformComponent>(origin, out var xformA))
             {
-                var (worldPosA, worldRotA) = _transform.GetWorldPositionRotation(xformA);
+                var (worldPosA, worldRotA) = xformA.GetWorldPositionRotation();
                 var xfA = new Transform(worldPosA, worldRotA);
                 var parentRotB = _transform.GetWorldRotation(otherCoordinates.EntityId);
                 var xfB = new Transform(targetPos.Position, parentRotB + otherAngle);
@@ -659,7 +668,7 @@ namespace Content.Shared.Interaction
             Ignored? predicate = null)
         {
             var transform = Transform(target);
-            var (position, rotation) = _transform.GetWorldPositionRotation(transform);
+            var (position, rotation) = transform.GetWorldPositionRotation();
             var mapPos = new MapCoordinates(position, transform.MapID);
             var combinedPredicate = GetPredicate(origin, target, mapPos, rotation, collisionMask, predicate);
 

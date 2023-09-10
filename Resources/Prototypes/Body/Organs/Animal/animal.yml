@@ -16,6 +16,10 @@
   name: lungs
   noSpawn: true
   components:
+  - type: Sprite
+    layers:
+    - state: lung-l
+    - state: lung-r
   - type: Organ
   - type: Lung
   - type: Metabolizer
@@ -38,6 +42,8 @@
   name: stomach
   noSpawn: true
   components:
+  - type: Sprite
+    state: stomach
   - type: Organ
   - type: SolutionContainerManager
     solutions:
@@ -57,6 +63,8 @@
   name: liver
   noSpawn: true
   components:
+  - type: Sprite
+    state: liver
   - type: Organ
   - type: Metabolizer
     maxReagents: 1
@@ -71,6 +79,8 @@
   name: heart
   noSpawn: true
   components:
+  - type: Sprite
+    state: heart-on
   - type: Organ
   - type: Metabolizer
     maxReagents: 2
@@ -86,6 +96,10 @@
   name: kidneys
   noSpawn: true
   components:
+  - type: Sprite
+    layers:
+    - state: kidney-l
+    - state: kidney-r
   - type: Organ
   - type: Metabolizer
     maxReagents: 5

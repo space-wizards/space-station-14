@@ -110,63 +110,77 @@
   - type: GuideHelp
     guides:
     - Robotics
+  - type: Speech
+    speechVerb: Robotic
+  - type: TypingIndicator
+    proto: robot
+  - type: ZombieImmune
 
 - type: entity
-  parent: MobSiliconBase
-  id: MobTaxiBot
-  name: taxibot
-  description: Give a ride?
+  parent: [ MobSiliconBase, BaseVehicle]
+  id: MobSiliconBaseVehicle # for vehicles
+  abstract: true
   components:
   - type: NoSlip
-  - type: Sprite
-    drawdepth: Mobs
-    sprite: Mobs/Silicon/Bots/taxibot.rsi
-    layers:
-    - state: taxibot
-      map: ["enum.VehicleVisualLayers.AutoAnimate"]
-    noRot: true
-  - type: IntrinsicRadioReceiver
-  - type: ActiveRadio
-    channels:
-    - Common
+  - type: GhostTakeoverAvailable
   - type: GhostRole
     makeSentient: true
-    name: ghost-role-information-taxibot-name
-    description: ghost-role-information-taxibot-description
-  - type: GhostTakeoverAvailable
-  - type: MovementSpeedModifier
-    weightlessModifier: 0
-    acceleration: 2
-    friction: 2
-    frictionNoInput: 6
-    baseWalkSpeed: 3
-    baseSprintSpeed: 6
-  - type: Strap
-    buckleOffset: "0, 0"
-    maxBuckleDistance: 1
-  - type: AmbientSound
-    sound: "/Audio/Effects/Vehicle/vehicleengineidle.ogg"
-    range: 10
-    volume: -10
-    enabled: true
-  - type: Construction
-    graph: TaxiBot
-    node: bot
   - type: UnpoweredFlashlight
-    toggleAction:
-      name: action-name-toggle-light
-      description: action-description-toggle-light
-      icon: { sprite: Objects/Tools/flashlight.rsi, state: flashlight }
-      iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
-      event: !type:ToggleActionEvent
   - type: PointLight
     enabled: false
     radius: 3.5
     softness: 2
     mask: /Textures/Effects/LightMasks/cone.png
     autoRot: true
-  - type: TypingIndicator
-    proto: robot
+
+- type: entity
+  parent: MobSiliconBaseVehicle
+  id: MobTaxiBot
+  name: taxibot
+  description: Give a ride?
+  components:
+  - type: Sprite
+    sprite: Mobs/Silicon/Bots/taxibot.rsi
+    layers:
+    - state: taxibot
+      map: ["enum.VehicleVisualLayers.AutoAnimate"]
+  - type: GhostRole
+    name: ghost-role-information-taxibot-name
+    description: ghost-role-information-taxibot-description
+  - type: Strap
+    buckleOffset: "0, 0"
+    maxBuckleDistance: 1
+  - type: Construction
+    graph: TaxiBot
+    node: bot
+
+- type: entity
+  parent: MobSiliconBaseVehicle
+  id: MobSupplyBot
+  name: supplybot
+  description: Delivers cargo!
+  components:
+  - type: Sprite
+    sprite: Mobs/Silicon/Bots/supplybot.rsi
+    layers:
+    - state: supplybot
+      map: ["enum.VehicleVisualLayers.AutoAnimate"]
+  - type: GhostRole
+    name: ghost-role-information-supplybot-name
+    description: ghost-role-information-supplybot-description
+  - type: Construction
+    graph: SupplyBot
+    node: bot
+  - type: Storage
+    capacity: 250
+  - type: UserInterface
+    interfaces:
+    - key: enum.StorageUiKey.Key
+      type: StorageBoundUserInterface
+  - type: ContainerContainer
+    containers:
+      storagebase: !type:Container
+        ents: []
 
 - type: entity
   parent: MobSiliconBase
@@ -178,11 +192,12 @@
     sound:
       collection: BikeHorn
   - type: Sprite
-    drawdepth: Mobs
     sprite: Mobs/Silicon/Bots/honkbot.rsi
     state: honkbot
   - type: Slippery
     launchForwardsMultiplier: 2
+  - type: Speech
+    speechVerb: Cluwne
   - type: StepTrigger
     intersectRatio: 0.2
   - type: Fixtures
@@ -225,11 +240,7 @@
     sound:
       collection: CluwneHorn
   - type: Sprite
-    drawdepth: Mobs
-    sprite: Mobs/Silicon/Bots/honkbot.rsi
     state: jonkbot
-  - type: Slippery
-    launchForwardsMultiplier: 2
   - type: Construction
     graph: JonkBot
     node: bot
@@ -258,7 +269,6 @@
   description: The creep of automation now threatening space janitors.
   components:
   - type: Sprite
-    drawdepth: Mobs
     sprite: Mobs/Silicon/Bots/cleanbot.rsi
     state: cleanbot
   - type: Construction
@@ -315,11 +325,8 @@
     emergencyMed: SpaceDrugs
     emergencyMedAmount: 25
   - type: Sprite
-    drawdepth: Mobs
     sprite: Mobs/Silicon/Bots/medibot.rsi
     state: medibot
-  - type: Speech
-    speechVerb: Robotic
   - type: HTN
     rootTask:
       task: MedibotCompound
@@ -347,7 +354,6 @@
     - key: enum.StrippingUiKey.Key
       type: StrippableBoundUserInterface
   - type: Sprite
-    drawdepth: Mobs
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: mimebot

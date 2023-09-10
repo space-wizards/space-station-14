@@ -16,7 +16,6 @@ namespace Content.Client.HealthOverlay
     {
         [Dependency] private readonly IEyeManager _eyeManager = default!;
         [Dependency] private readonly IEntityManager _entities = default!;
-        [Dependency] private readonly SharedTransformSystem _transform = default!;
 
         private readonly Dictionary<EntityUid, HealthOverlayGui> _guis = new();
         private EntityUid? _attachedEntity;
@@ -86,7 +85,7 @@ namespace Content.Client.HealthOverlay
                 var entity = mobState.Owner;
 
                 if (_entities.GetComponent<TransformComponent>(ent).MapID != _entities.GetComponent<TransformComponent>(entity).MapID ||
-                    !viewBox.Contains(_transform.GetWorldPosition(entity)))
+                    !viewBox.Contains(_entities.GetComponent<TransformComponent>(entity).WorldPosition))
                 {
                     if (_guis.TryGetValue(entity, out var oldGui))
                     {

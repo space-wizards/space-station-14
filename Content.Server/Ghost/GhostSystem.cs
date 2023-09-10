@@ -3,7 +3,6 @@ using System.Numerics;
 using Content.Server.GameTicking;
 using Content.Server.Ghost.Components;
 using Content.Server.Mind;
-using Content.Server.Mind.Components;
 using Content.Server.Roles.Jobs;
 using Content.Server.Visible;
 using Content.Server.Warps;
@@ -12,6 +11,8 @@ using Content.Shared.Administration;
 using Content.Shared.Examine;
 using Content.Shared.Follower;
 using Content.Shared.Ghost;
+using Content.Shared.Mind;
+using Content.Shared.Mind.Components;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Movement.Events;
@@ -30,7 +31,7 @@ namespace Content.Server.Ghost
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly GameTicker _ticker = default!;
-        [Dependency] private readonly MindSystem _mindSystem = default!;
+        [Dependency] private readonly SharedMindSystem _mindSystem = default!;
         [Dependency] private readonly SharedActionsSystem _actions = default!;
         [Dependency] private readonly VisibilitySystem _visibilitySystem = default!;
         [Dependency] private readonly EntityLookupSystem _lookup = default!;
@@ -39,7 +40,6 @@ namespace Content.Server.Ghost
         [Dependency] private readonly SharedPhysicsSystem _physics = default!;
         [Dependency] private readonly MindSystem _minds = default!;
         [Dependency] private readonly JobSystem _jobs = default!;
-        [Dependency] private readonly SharedTransformSystem _transform = default!;
 
         public override void Initialize()
         {
@@ -124,9 +124,16 @@ namespace Content.Server.Ghost
             component.TimeOfDeath = time;
 
             // TODO ghost: remove once ghosts are persistent and aren't deleted when returning to body
-            if (component.Action.UseDelay != null)
-                component.Action.Cooldown = (time, time + component.Action.UseDelay.Value);
-            _actions.AddAction(uid, component.Action, null);
+            var action = _actions.AddAction(uid, ref component.ActionEntity, component.Action);
+            if (action?.UseDelay != null)
+            {
+                action.Cooldown = (time, time + action.UseDelay.Value);
+                Dirty(component.ActionEntity!.Value, action);
+            }
+
+            _actions.AddAction(uid, ref component.ToggleLightingActionEntity, component.ToggleLightingAction);
+            _actions.AddAction(uid, ref component.ToggleFoVActionEntity, component.ToggleFoVAction);
+            _actions.AddAction(uid, ref component.ToggleGhostsActionEntity, component.ToggleGhostsAction);
         }
 
         private void OnGhostShutdown(EntityUid uid, GhostComponent component, ComponentShutdown args)
@@ -148,7 +155,7 @@ namespace Content.Server.Ghost
                     eye.VisibilityMask &= ~(uint) VisibilityFlags.Ghost;
                 }
 
-                _actions.RemoveAction(uid, component.Action);
+                _actions.RemoveAction(uid, component.ActionEntity);
             }
         }
 
@@ -206,8 +213,8 @@ namespace Content.Server.Ghost
 
         private void OnGhostWarpToTargetRequest(GhostWarpToTargetRequestEvent msg, EntitySessionEventArgs args)
         {
-            if (args.SenderSession.AttachedEntity is not { Valid: true } attached ||
-                !EntityManager.HasComponent<GhostComponent>(attached))
+            if (args.SenderSession.AttachedEntity is not {Valid: true} attached ||
+                !EntityManager.TryGetComponent(attached, out GhostComponent? ghost))
             {
                 Logger.Warning($"User {args.SenderSession.Name} tried to warp to {msg.Target} without being a ghost.");
                 return;
@@ -222,12 +229,13 @@ namespace Content.Server.Ghost
             if (TryComp(msg.Target, out WarpPointComponent? warp) && warp.Follow
                 || HasComp<MobStateComponent>(msg.Target))
             {
-                 _followerSystem.StartFollowingEntity(attached, msg.Target);
+                 _followerSystem.StartFollowingEntity(ghost.Owner, msg.Target);
                  return;
             }
 
-            _transform.SetCoordinates(attached, Transform(msg.Target).Coordinates);
-            _transform.AttachToGridOrMap(attached);
+            var xform = Transform(ghost.Owner);
+            xform.Coordinates = Transform(msg.Target).Coordinates;
+            xform.AttachToGridOrMap();
             if (TryComp(attached, out PhysicsComponent? physics))
                 _physics.SetLinearVelocity(attached, Vector2.Zero, body: physics);
         }

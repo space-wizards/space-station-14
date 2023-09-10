@@ -274,9 +274,9 @@ public sealed class BloodstreamSystem : EntitySystem
         for (var i = component.ChemicalSolution.Contents.Count - 1; i >= 0; i--)
         {
             var (reagentId, _) = component.ChemicalSolution.Contents[i];
-            if (reagentId != excludedReagentID)
+            if (reagentId.Prototype != excludedReagentID)
             {
-                _solutionContainerSystem.TryRemoveReagent(uid, component.ChemicalSolution, reagentId, quantity);
+                _solutionContainerSystem.RemoveReagent(uid, component.ChemicalSolution, reagentId, quantity);
             }
         }
 
