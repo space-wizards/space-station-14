@@ -12,8 +12,6 @@ namespace Content.Shared.Body.Systems;
 
 public partial class SharedBodySystem
 {
-    [Dependency] private readonly SharedContainerSystem _container = default!;
-
     private void InitializeOrgans()
     {
         SubscribeLocalEvent<OrganComponent, ComponentGetState>(OnOrganGetState);
@@ -37,7 +35,7 @@ public partial class SharedBodySystem
                slot.Child == null &&
                Resolve(organId.Value, ref organ, false) &&
                Containers.TryGetContainer(slot.Parent, BodyContainerId, out var container) &&
-               _container.CanInsert(organId.Value, container);
+               container.CanInsert(organId.Value);
     }
 
     private void OnOrganGetState(EntityUid uid, OrganComponent organ, ref ComponentGetState args)

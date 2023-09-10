@@ -753,10 +753,10 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
 
     public override bool CanInsert(EntityUid uid, SharedDisposalUnitComponent component, EntityUid entity)
     {
-        if (!base.CanInsert(uid, component, entity))
+        if (!base.CanInsert(uid, component, entity) || component is not SharedDisposalUnitComponent serverComp)
             return false;
 
-        return _containerSystem.CanInsert(entity, component.Container);
+        return serverComp.Container.CanInsert(entity);
     }
 
     /// <summary>

@@ -57,7 +57,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             if (!Resolve(uid, ref holder))
                 return false;
 
-            if (!_containerSystem.CanInsert(toInsert, holder.Container))
+            if (!holder.Container.CanInsert(toInsert))
             {
                 return false;
             }

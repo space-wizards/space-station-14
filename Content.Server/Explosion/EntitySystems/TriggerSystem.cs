@@ -236,7 +236,7 @@ namespace Content.Server.Explosion.EntitySystems
             if (user != null)
             {
                 // Check if entity is bomb/mod. grenade/etc
-                if (_container.TryGetContainer(uid, "payload", out BaseContainer? container) &&
+                if (_container.TryGetContainer(uid, "payload", out IContainer? container) &&
                     container.ContainedEntities.Count > 0 &&
                     TryComp(container.ContainedEntities[0], out ChemicalPayloadComponent? chemicalPayloadComponent))
                 {
