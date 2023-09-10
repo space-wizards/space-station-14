@@ -53,5 +53,5 @@ public sealed partial class PAIComponent : Component
     /// Chance for an individual character to be scrambled.
     /// </summary>
     [DataField("charScrambleChance")]
-    public float CharScrambleChance = 0.5f;
+    public float CharScrambleChance = 0.2f;
 }
