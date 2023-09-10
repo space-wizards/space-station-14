@@ -1,4 +1,3 @@
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Numerics;
 using System.Threading.Tasks;
@@ -14,7 +13,6 @@ using Robust.Server.Player;
 using Robust.Shared;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
-using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Threading;
 using Robust.Shared.Timing;
@@ -34,8 +32,8 @@ namespace Content.Server.Decals
         [Dependency] private readonly IGameTiming _timing = default!;
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
 
-        private readonly Dictionary<EntityUid, HashSet<Vector2i>> _dirtyChunks = new();
-        private readonly Dictionary<IPlayerSession, Dictionary<EntityUid, HashSet<Vector2i>>> _previousSentChunks = new();
+        private readonly Dictionary<NetEntity, HashSet<Vector2i>> _dirtyChunks = new();
+        private readonly Dictionary<IPlayerSession, Dictionary<NetEntity, HashSet<Vector2i>>> _previousSentChunks = new();
         private static readonly Vector2 _boundsMinExpansion = new(0.01f, 0.01f);
         private static readonly Vector2 _boundsMaxExpansion = new(1.01f, 1.01f);
 
@@ -260,8 +258,9 @@ namespace Content.Server.Decals
             }
         }
 
-        protected override void DirtyChunk(EntityUid id, Vector2i chunkIndices, DecalChunk chunk)
+        protected override void DirtyChunk(EntityUid uid, Vector2i chunkIndices, DecalChunk chunk)
         {
+            var id = GetNetEntity(uid);
             chunk.LastModified = _timing.CurTick;
             if(!_dirtyChunks.ContainsKey(id))
                 _dirtyChunks[id] = new HashSet<Vector2i>();
@@ -413,8 +412,8 @@ namespace Content.Server.Decals
 
             foreach (var ent in _dirtyChunks.Keys)
             {
-                if (TryComp(ent, out DecalGridComponent? decals))
-                    Dirty(decals);
+                if (TryGetEntity(ent, out var uid) && TryComp(uid, out DecalGridComponent? decals))
+                    Dirty(uid.Value, decals);
             }
 
             if (!PvsEnabled)
@@ -435,7 +434,6 @@ namespace Content.Server.Decals
 
         public void UpdatePlayer(IPlayerSession player)
         {
-            var xformQuery = GetEntityQuery<TransformComponent>();
             var chunksInRange = _chunking.GetChunksForSession(player, ChunkSize, _chunkIndexPool, _chunkViewerPool);
             var staleChunks = _chunkViewerPool.Get();
             var previouslySent = _previousSentChunks[player];
@@ -444,17 +442,15 @@ namespace Content.Server.Decals
             // Then, remove them from previousSentChunks (for stuff like grids out of range)
             // and also mark them as stale for networking.
 
-            foreach (var (gridId, oldIndices) in previouslySent)
+            foreach (var (netGrid, oldIndices) in previouslySent)
             {
-                var netGrid = GetNetEntity(gridId);
-
                 // Mark the whole grid as stale and flag for removal.
                 if (!chunksInRange.TryGetValue(netGrid, out var chunks))
                 {
-                    previouslySent.Remove(gridId);
+                    previouslySent.Remove(netGrid);
 
                     // Was the grid deleted?
-                    if (MapManager.IsGrid(gridId))
+                    if (!TryGetEntity(netGrid, out var gridId) || !MapManager.IsGrid(gridId.Value))
                         staleChunks[netGrid] = oldIndices;
                     else
                     {
@@ -489,11 +485,10 @@ namespace Content.Server.Decals
             var updatedChunks = _chunkViewerPool.Get();
             foreach (var (netGrid, gridChunks) in chunksInRange)
             {
-                var gridId = GetEntity(netGrid);
                 var newChunks = _chunkIndexPool.Get();
-                _dirtyChunks.TryGetValue(gridId, out var dirtyChunks);
+                _dirtyChunks.TryGetValue(netGrid, out var dirtyChunks);
 
-                if (!previouslySent.TryGetValue(gridId, out var previousChunks))
+                if (!previouslySent.TryGetValue(netGrid, out var previousChunks))
                     newChunks.UnionWith(gridChunks);
                 else
                 {
@@ -507,7 +502,7 @@ namespace Content.Server.Decals
                     _chunkIndexPool.Return(previousChunks);
                 }
 
-                previouslySent[gridId] = gridChunks;
+                previouslySent[netGrid] = gridChunks;
 
                 if (newChunks.Count == 0)
                     _chunkIndexPool.Return(newChunks);

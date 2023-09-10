@@ -15,7 +15,6 @@ using Robust.Server.Player;
 using Robust.Shared;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
-using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Threading;
 using Robust.Shared.Timing;
@@ -36,7 +35,7 @@ namespace Content.Server.Atmos.EntitySystems
         [Robust.Shared.IoC.Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
         [Robust.Shared.IoC.Dependency] private readonly ChunkingSystem _chunkingSys = default!;
 
-        private readonly Dictionary<IPlayerSession, Dictionary<EntityUid, HashSet<Vector2i>>> _lastSentChunks = new();
+        private readonly Dictionary<IPlayerSession, Dictionary<NetEntity, HashSet<Vector2i>>> _lastSentChunks = new();
 
         // Oh look its more duplicated decal system code!
         private ObjectPool<HashSet<Vector2i>> _chunkIndexPool =
@@ -299,17 +298,15 @@ namespace Content.Server.Atmos.EntitySystems
 
             var ev = new GasOverlayUpdateEvent();
 
-            foreach (var (grid, oldIndices) in previouslySent)
+            foreach (var (netGrid, oldIndices) in previouslySent)
             {
-                var netGrid = GetNetEntity(grid);
-
                 // Mark the whole grid as stale and flag for removal.
                 if (!chunksInRange.TryGetValue(netGrid, out var chunks))
                 {
-                    previouslySent.Remove(grid);
+                    previouslySent.Remove(netGrid);
 
                     // If grid was deleted then don't worry about sending it to the client.
-                    if (_mapManager.IsGrid(grid))
+                    if (!TryGetEntity(netGrid, out var gridId) || !_mapManager.IsGrid(gridId.Value))
                         ev.RemovedChunks[netGrid] = oldIndices;
                     else
                     {
@@ -336,16 +333,14 @@ namespace Content.Server.Atmos.EntitySystems
 
             foreach (var (netGrid, gridChunks) in chunksInRange)
             {
-                var grid = GetEntity(netGrid);
-
                 // Not all grids have atmospheres.
-                if (!TryComp(grid, out GasTileOverlayComponent? overlay))
+                if (!TryGetEntity(netGrid, out var grid) || !TryComp(grid, out GasTileOverlayComponent? overlay))
                     continue;
 
                 List<GasOverlayChunk> dataToSend = new();
                 ev.UpdatedChunks[netGrid] = dataToSend;
 
-                previouslySent.TryGetValue(grid, out var previousChunks);
+                previouslySent.TryGetValue(netGrid, out var previousChunks);
 
                 foreach (var index in gridChunks)
                 {
@@ -362,7 +357,7 @@ namespace Content.Server.Atmos.EntitySystems
                     dataToSend.Add(value);
                 }
 
-                previouslySent[grid] = gridChunks;
+                previouslySent[netGrid] = gridChunks;
                 if (previousChunks != null)
                 {
                     previousChunks.Clear();
