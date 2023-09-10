@@ -53,3 +53,24 @@
     - type: NpcFactionMember
       factions:
       - Syndicate
+
+# Space Ninja
+- type: entity
+  noSpawn: true
+  name: Space Ninja
+  parent: MobHuman
+  id: MobHumanSpaceNinja
+  components:
+  - type: Loadout
+    prototypes: [SpaceNinjaGear]
+  - type: NpcFactionMember
+    factions:
+    - Syndicate
+  - type: SpaceNinja
+  - type: AutoImplant
+    implants:
+    - MicroBombImplant
+  - type: RandomMetadata
+    nameSegments:
+    - names_ninja_title
+    - names_ninja
