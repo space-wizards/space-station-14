@@ -5,7 +5,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Atmos.Components;
 
 [RegisterComponent, NetworkedComponent]
-public sealed class GasAnalyzerComponent : Component
+public sealed partial class GasAnalyzerComponent : Component
 {
     [ViewVariables]
     public EntityUid? Target;

@@ -223,3 +223,21 @@
     amount: 2
   - !type:PlantAdjustPests
     amount: 2
+
+- type: reagent
+  id: Butter
+  name: reagent-name-butter
+  group: Foods
+  desc: reagent-desc-butter
+  physicalDesc: reagent-physical-desc-creamy
+  flavor: butter
+  color: yellow
+  meltingPoint: 32.0
+  boilingPoint: 100.0
+  recognizable: true
+  metabolisms:
+    Food:
+      effects:
+      - !type:AdjustReagent
+        reagent: Nutriment
+        amount: 0.75

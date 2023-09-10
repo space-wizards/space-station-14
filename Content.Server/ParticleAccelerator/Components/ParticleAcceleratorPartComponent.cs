@@ -1,7 +1,7 @@
 namespace Content.Server.ParticleAccelerator.Components;
 
 [RegisterComponent]
-public sealed class ParticleAcceleratorPartComponent : Component
+public sealed partial class ParticleAcceleratorPartComponent : Component
 {
     [ViewVariables]
     public EntityUid? Master;

@@ -11,7 +11,7 @@ namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators;
 /// <summary>
 /// Utilises a <see cref="UtilityQueryPrototype"/> to determine the best target and sets it to the Key.
 /// </summary>
-public sealed class UtilityOperator : HTNOperator
+public sealed partial class UtilityOperator : HTNOperator
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
 

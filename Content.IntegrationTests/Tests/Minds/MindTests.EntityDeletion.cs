@@ -1,7 +1,7 @@
 using System.Linq;
-using Content.Server.Ghost.Components;
-using Content.Server.Mind;
 using Content.Server.Players;
+using Content.Shared.Ghost;
+using Content.Shared.Mind;
 using Robust.Server.Console;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
@@ -21,17 +21,18 @@ public sealed partial class MindTests
     [Test]
     public async Task TestDeleteVisiting()
     {
-        await using var pairTracker = await SetupPair();
-        var server = pairTracker.Pair.Server;
+        await using var pair = await SetupPair();
+        var server = pair.Server;
 
         var entMan = server.ResolveDependency<IServerEntityManager>();
         var playerMan = server.ResolveDependency<IPlayerManager>();
 
-        var mindSystem = entMan.EntitySysManager.GetEntitySystem<MindSystem>();
+        var mindSystem = entMan.EntitySysManager.GetEntitySystem<SharedMindSystem>();
 
         EntityUid playerEnt = default;
         EntityUid visitEnt = default;
-        Mind mind = default!;
+        EntityUid mindId = default!;
+        MindComponent mind = default!;
         await server.WaitAssertion(() =>
         {
             var player = playerMan.ServerSessions.Single();
@@ -39,9 +40,10 @@ public sealed partial class MindTests
             playerEnt = entMan.SpawnEntity(null, MapCoordinates.Nullspace);
             visitEnt = entMan.SpawnEntity(null, MapCoordinates.Nullspace);
 
-            mind = mindSystem.CreateMind(player.UserId);
-            mindSystem.TransferTo(mind, playerEnt);
-            mindSystem.Visit(mind, visitEnt);
+            mindId = mindSystem.CreateMind(player.UserId);
+            mind = entMan.GetComponent<MindComponent>(mindId);
+            mindSystem.TransferTo(mindId, playerEnt);
+            mindSystem.Visit(mindId, visitEnt);
 
             Assert.Multiple(() =>
             {
@@ -50,9 +52,9 @@ public sealed partial class MindTests
             });
         });
 
-        await PoolManager.RunTicksSync(pairTracker.Pair, 5);
+        await pair.RunTicksSync(5);
         await server.WaitPost(() => entMan.DeleteEntity(visitEnt));
-        await PoolManager.RunTicksSync(pairTracker.Pair, 5);
+        await pair.RunTicksSync(5);
 
 #pragma warning disable NUnit2045 // Interdependent assertions.
         Assert.That(mind.VisitingEntity, Is.Null);
@@ -62,18 +64,18 @@ public sealed partial class MindTests
 
         // This used to throw so make sure it doesn't.
         await server.WaitPost(() => entMan.DeleteEntity(mind.OwnedEntity!.Value));
-        await PoolManager.RunTicksSync(pairTracker.Pair, 5);
+        await pair.RunTicksSync(5);
 
-        await pairTracker.CleanReturnAsync();
+        await pair.CleanReturnAsync();
     }
 
     // this is a variant of TestGhostOnDelete that just deletes the whole map.
     [Test]
     public async Task TestGhostOnDeleteMap()
     {
-        await using var pairTracker = await SetupPair();
-        var server = pairTracker.Pair.Server;
-        var testMap = await PoolManager.CreateTestMap(pairTracker);
+        await using var pair = await SetupPair(dirty: true);
+        var server = pair.Server;
+        var testMap = await pair.CreateTestMap();
         var coordinates = testMap.GridCoords;
 
         var entMan = server.ResolveDependency<IServerEntityManager>();
@@ -81,22 +83,24 @@ public sealed partial class MindTests
         var playerMan = server.ResolveDependency<IPlayerManager>();
         var player = playerMan.ServerSessions.Single();
 
-        var mindSystem = entMan.EntitySysManager.GetEntitySystem<MindSystem>();
+        var mindSystem = entMan.EntitySysManager.GetEntitySystem<SharedMindSystem>();
 
         EntityUid playerEnt = default;
-        Mind mind = default!;
+        EntityUid mindId = default!;
+        MindComponent mind = default!;
         await server.WaitAssertion(() =>
         {
             playerEnt = entMan.SpawnEntity(null, coordinates);
-            mind = player.ContentData()!.Mind!;
-            mindSystem.TransferTo(mind, playerEnt);
+            mindId = player.ContentData()!.Mind!.Value;
+            mind = entMan.GetComponent<MindComponent>(mindId);
+            mindSystem.TransferTo(mindId, playerEnt);
 
             Assert.That(mind.CurrentEntity, Is.EqualTo(playerEnt));
         });
 
-        await PoolManager.RunTicksSync(pairTracker.Pair, 5);
+        await pair.RunTicksSync(5);
         await server.WaitPost(() => mapManager.DeleteMap(testMap.MapId));
-        await PoolManager.RunTicksSync(pairTracker.Pair, 5);
+        await pair.RunTicksSync(5);
 
         await server.WaitAssertion(() =>
         {
@@ -106,7 +110,7 @@ public sealed partial class MindTests
 #pragma warning restore NUnit2045
         });
 
-        await pairTracker.CleanReturnAsync();
+        await pair.CleanReturnAsync();
     }
 
     /// <summary>
@@ -118,8 +122,8 @@ public sealed partial class MindTests
     public async Task TestGhostOnDelete()
     {
         // Client is needed to spawn session
-        await using var pairTracker = await SetupPair(dirty: true);
-        var server = pairTracker.Pair.Server;
+        await using var pair = await SetupPair(dirty: true);
+        var server = pair.Server;
 
         var entMan = server.ResolveDependency<IServerEntityManager>();
         var playerMan = server.ResolveDependency<IPlayerManager>();
@@ -130,11 +134,11 @@ public sealed partial class MindTests
 
         // Delete entity
         await server.WaitPost(() => entMan.DeleteEntity(player.AttachedEntity!.Value));
-        await PoolManager.RunTicksSync(pairTracker.Pair, 5);
+        await pair.RunTicksSync(5);
 
         Assert.That(entMan.HasComponent<GhostComponent>(player.AttachedEntity), "Player did not become a ghost");
 
-        await pairTracker.CleanReturnAsync();
+        await pair.CleanReturnAsync();
     }
 
     /// <summary>
@@ -150,13 +154,13 @@ public sealed partial class MindTests
     public async Task TestOriginalDeletedWhileGhostingKeepsGhost()
     {
         // Client is needed to spawn session
-        await using var pairTracker = await SetupPair();
-        var server = pairTracker.Pair.Server;
+        await using var pair = await SetupPair();
+        var server = pair.Server;
 
         var entMan = server.ResolveDependency<IServerEntityManager>();
         var playerMan = server.ResolveDependency<IPlayerManager>();
-        var mindSystem = entMan.EntitySysManager.GetEntitySystem<MindSystem>();
-        var mind = GetMind(pairTracker.Pair);
+        var mindSystem = entMan.EntitySysManager.GetEntitySystem<SharedMindSystem>();
+        var mind = GetMind(pair);
 
         var player = playerMan.ServerSessions.Single();
 #pragma warning disable NUnit2045 // Interdependent assertions.
@@ -169,34 +173,34 @@ public sealed partial class MindTests
         await server.WaitAssertion(() =>
         {
             ghost = entMan.SpawnEntity("MobObserver", MapCoordinates.Nullspace);
-            mindSystem.Visit(mind, ghost);
+            mindSystem.Visit(mind.Id, ghost);
         });
 
         Assert.Multiple(() =>
         {
             Assert.That(player.AttachedEntity, Is.EqualTo(ghost));
             Assert.That(entMan.HasComponent<GhostComponent>(player.AttachedEntity), "player is not a ghost");
-            Assert.That(mind.VisitingEntity, Is.EqualTo(player.AttachedEntity));
-            Assert.That(mind.OwnedEntity, Is.EqualTo(originalEntity));
+            Assert.That(mind.Comp.VisitingEntity, Is.EqualTo(player.AttachedEntity));
+            Assert.That(mind.Comp.OwnedEntity, Is.EqualTo(originalEntity));
         });
 
-        await PoolManager.RunTicksSync(pairTracker.Pair, 5);
+        await pair.RunTicksSync(5);
         await server.WaitAssertion(() => entMan.DeleteEntity(originalEntity));
-        await PoolManager.RunTicksSync(pairTracker.Pair, 5);
+        await pair.RunTicksSync(5);
         Assert.That(entMan.Deleted(originalEntity));
 
         // Check that the player is still in control of the ghost
-        mind = GetMind(pairTracker.Pair);
+        mind = GetMind(pair);
         Assert.That(!entMan.Deleted(ghost), "ghost has been deleted");
         Assert.Multiple(() =>
         {
             Assert.That(player.AttachedEntity, Is.EqualTo(ghost));
             Assert.That(entMan.HasComponent<GhostComponent>(player.AttachedEntity));
-            Assert.That(mind.VisitingEntity, Is.Null);
-            Assert.That(mind.OwnedEntity, Is.EqualTo(ghost));
+            Assert.That(mind.Comp.VisitingEntity, Is.Null);
+            Assert.That(mind.Comp.OwnedEntity, Is.EqualTo(ghost));
         });
 
-        await pairTracker.CleanReturnAsync();
+        await pair.CleanReturnAsync();
     }
 
     /// <summary>
@@ -208,22 +212,22 @@ public sealed partial class MindTests
     [Test]
     public async Task TestGhostToAghost()
     {
-        await using var pairTracker = await SetupPair();
-        var server = pairTracker.Pair.Server;
+        await using var pair = await SetupPair();
+        var server = pair.Server;
         var entMan = server.ResolveDependency<IServerEntityManager>();
         var playerMan = server.ResolveDependency<IPlayerManager>();
         var serverConsole = server.ResolveDependency<IServerConsoleHost>();
 
         var player = playerMan.ServerSessions.Single();
 
-        var ghost = await BecomeGhost(pairTracker.Pair);
+        var ghost = await BecomeGhost(pair);
 
         // Player is a normal ghost (not admin ghost).
         Assert.That(entMan.GetComponent<MetaDataComponent>(player.AttachedEntity!.Value).EntityPrototype?.ID, Is.Not.EqualTo("AdminObserver"));
 
         // Try to become an admin ghost
         await server.WaitAssertion(() => serverConsole.ExecuteCommand(player, "aghost"));
-        await PoolManager.RunTicksSync(pairTracker.Pair, 5);
+        await pair.RunTicksSync(5);
 
         Assert.That(entMan.Deleted(ghost), "old ghost was not deleted");
         Assert.Multiple(() =>
@@ -233,11 +237,13 @@ public sealed partial class MindTests
             Assert.That(entMan.GetComponent<MetaDataComponent>(player.AttachedEntity!.Value).EntityPrototype?.ID, Is.EqualTo("AdminObserver"));
         });
 
-        var mind = player.ContentData()?.Mind;
-        Assert.That(mind, Is.Not.Null);
+        var mindId = player.ContentData()?.Mind;
+        Assert.That(mindId, Is.Not.Null);
+
+        var mind = entMan.GetComponent<MindComponent>(mindId.Value);
         Assert.That(mind.VisitingEntity, Is.Null);
 
-        await pairTracker.CleanReturnAsync();
+        await pair.CleanReturnAsync();
     }
 
     /// <summary>
@@ -250,8 +256,8 @@ public sealed partial class MindTests
     public async Task TestGhostDeletedSpawnsNewGhost()
     {
         // Client is needed to spawn session
-        await using var pairTracker = await SetupPair();
-        var server = pairTracker.Pair.Server;
+        await using var pair = await SetupPair();
+        var server = pair.Server;
 
         var entMan = server.ResolveDependency<IServerEntityManager>();
         var playerMan = server.ResolveDependency<IPlayerManager>();
@@ -267,7 +273,7 @@ public sealed partial class MindTests
             entMan.DeleteEntity(player.AttachedEntity!.Value);
         });
 
-        await PoolManager.RunTicksSync(pairTracker.Pair, 5);
+        await pair.RunTicksSync(5);
 
         await server.WaitAssertion(() =>
         {
@@ -277,14 +283,14 @@ public sealed partial class MindTests
             Assert.That(entMan.HasComponent<GhostComponent>(ghost));
         });
 
-        await PoolManager.RunTicksSync(pairTracker.Pair, 5);
+        await pair.RunTicksSync(5);
 
         await server.WaitAssertion(() =>
         {
             serverConsole.ExecuteCommand(player, "aghost");
         });
 
-        await PoolManager.RunTicksSync(pairTracker.Pair, 5);
+        await pair.RunTicksSync(5);
 
         await server.WaitAssertion(() =>
         {
@@ -295,6 +301,6 @@ public sealed partial class MindTests
 #pragma warning restore NUnit2045
         });
 
-        await pairTracker.CleanReturnAsync();
+        await pair.CleanReturnAsync();
     }
 }

@@ -4,7 +4,7 @@ namespace Content.Shared.Atmos.Miasma;
 /// Entities inside this container will not rot.
 /// </summary>
 [RegisterComponent]
-public sealed class AntiRottingContainerComponent : Component
+public sealed partial class AntiRottingContainerComponent : Component
 {
 
 }

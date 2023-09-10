@@ -1,10 +1,10 @@
 using Content.Server.Light.Events;
-using Content.Server.Mind.Components;
 using Content.Shared.Actions;
 using Content.Shared.Decals;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Light;
-using Content.Shared.Light.Component;
+using Content.Shared.Light.Components;
+using Content.Shared.Mind.Components;
 using Content.Shared.Toggleable;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
@@ -45,7 +45,7 @@ namespace Content.Server.Light.EntitySystems
 
         private void OnGetActions(EntityUid uid, UnpoweredFlashlightComponent component, GetItemActionsEvent args)
         {
-            args.Actions.Add(component.ToggleAction);
+            args.AddAction(ref component.ToggleActionEntity, component.ToggleAction);
         }
 
         private void AddToggleLightVerbs(EntityUid uid, UnpoweredFlashlightComponent component, GetVerbsEvent<ActivationVerb> args)
@@ -66,7 +66,7 @@ namespace Content.Server.Light.EntitySystems
 
         private void OnMindAdded(EntityUid uid, UnpoweredFlashlightComponent component, MindAddedMessage args)
         {
-            _actionsSystem.AddAction(uid, component.ToggleAction, null);
+            _actionsSystem.AddAction(uid, ref component.ToggleActionEntity, component.ToggleAction);
         }
 
         private void OnGotEmagged(EntityUid uid, UnpoweredFlashlightComponent component, ref GotEmaggedEvent args)
@@ -97,7 +97,7 @@ namespace Content.Server.Light.EntitySystems
             _audioSystem.PlayPvs(flashlight.ToggleSound, uid);
 
             RaiseLocalEvent(uid, new LightToggleEvent(flashlight.LightOn), true);
-            _actionsSystem.SetToggled(flashlight.ToggleAction, flashlight.LightOn);
+            _actionsSystem.SetToggled(flashlight.ToggleActionEntity, flashlight.LightOn);
         }
     }
 }

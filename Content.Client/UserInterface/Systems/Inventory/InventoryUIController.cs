@@ -125,9 +125,8 @@ public sealed class InventoryUIController : UIController, IOnStateEntered<Gamepl
                 container.AddButton(button);
             }
 
-            var sprite = _entities.GetComponentOrNull<SpriteComponent>(data.HeldEntity);
             var showStorage = _entities.HasComponent<ClientStorageComponent>(data.HeldEntity);
-            var update = new SlotSpriteUpdate(data.SlotGroup, data.SlotName, sprite, showStorage);
+            var update = new SlotSpriteUpdate(data.HeldEntity, data.SlotGroup, data.SlotName, showStorage);
             SpriteUpdated(update);
         }
     }
@@ -151,9 +150,8 @@ public sealed class InventoryUIController : UIController, IOnStateEntered<Gamepl
                 _strippingWindow!.InventoryButtons.AddButton(button, data.ButtonOffset);
             }
 
-            var sprite = _entities.GetComponentOrNull<SpriteComponent>(data.HeldEntity);
             var showStorage = _entities.HasComponent<ClientStorageComponent>(data.HeldEntity);
-            var update = new SlotSpriteUpdate(data.SlotGroup, data.SlotName, sprite, showStorage);
+            var update = new SlotSpriteUpdate(data.HeldEntity, data.SlotGroup, data.SlotName, showStorage);
             SpriteUpdated(update);
         }
     }
@@ -288,7 +286,7 @@ public sealed class InventoryUIController : UIController, IOnStateEntered<Gamepl
         hoverSprite.CopyFrom(sprite);
         hoverSprite.Color = fits ? new Color(0, 255, 0, 127) : new Color(255, 0, 0, 127);
 
-        control.HoverSpriteView.Sprite = hoverSprite;
+        control.HoverSpriteView.SetEntity(hoverEntity);
     }
 
     private void AddSlot(SlotData data)
@@ -338,18 +336,18 @@ public sealed class InventoryUIController : UIController, IOnStateEntered<Gamepl
 
     private void SpriteUpdated(SlotSpriteUpdate update)
     {
-        var (group, name, sprite, showStorage) = update;
+        var (entity, group, name, showStorage) = update;
 
         if (_strippingWindow?.InventoryButtons.GetButton(update.Name) is { } inventoryButton)
         {
-            inventoryButton.SpriteView.Sprite = sprite;
+            inventoryButton.SpriteView.SetEntity(entity);
             inventoryButton.StorageButton.Visible = showStorage;
         }
 
         if (_slotGroups.GetValueOrDefault(group)?.GetButton(name) is not { } button)
             return;
 
-        button.SpriteView.Sprite = sprite;
+        button.SpriteView.SetEntity(entity);
         button.StorageButton.Visible = showStorage;
     }
 

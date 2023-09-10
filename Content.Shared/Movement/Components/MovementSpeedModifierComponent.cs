@@ -9,7 +9,7 @@ namespace Content.Shared.Movement.Components
     /// </summary>
     [RegisterComponent]
     [NetworkedComponent, Access(typeof(MovementSpeedModifierSystem))]
-    public sealed class MovementSpeedModifierComponent : Component
+    public sealed partial class MovementSpeedModifierComponent : Component
     {
         // Weightless
         public const float DefaultMinimumFrictionSpeed = 0.005f;

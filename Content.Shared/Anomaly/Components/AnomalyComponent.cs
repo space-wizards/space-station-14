@@ -15,7 +15,7 @@ namespace Content.Shared.Anomaly.Components;
 /// Anomalies and their related components were designed here: https://hackmd.io/@ss14-design/r1sQbkJOs
 /// </summary>
 [RegisterComponent, NetworkedComponent, Access(typeof(SharedAnomalySystem))]
-public sealed class AnomalyComponent : Component
+public sealed partial class AnomalyComponent : Component
 {
     /// <summary>
     /// How likely an anomaly is to grow more dangerous. Moves both up and down.
@@ -213,14 +213,14 @@ public sealed class AnomalyComponent : Component
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("animationTime")]
-    public readonly float AnimationTime = 2f;
+    public float AnimationTime = 2f;
 
     /// <summary>
     /// How far it goes in any direction.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("offset")]
-    public readonly Vector2 FloatingOffset = new(0, 0.15f);
+    public Vector2 FloatingOffset = new(0, 0.15f);
 
     public readonly string AnimationKey = "anomalyfloat";
     #endregion

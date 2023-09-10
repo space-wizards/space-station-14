@@ -22,7 +22,7 @@
     state: icon
   discipline: Experimental
   tier: 1
-  cost: 7500
+  cost: 5000
   recipeUnlocks:
   - AnomalyScanner
   - AnomalyLocator
@@ -38,7 +38,7 @@
     state: display
   discipline: Experimental
   tier: 1
-  cost: 10000
+  cost: 5000
   recipeUnlocks:
   - NodeScanner
   - BorgModuleArtifact
@@ -65,7 +65,7 @@
     state: icon
   discipline: Experimental
   tier: 1
-  cost: 10000
+  cost: 7500
   recipeUnlocks:
   - ClothingShoesBootsMag
 
@@ -79,7 +79,7 @@
     state: advanced_matter_bin
   discipline: Experimental
   tier: 2
-  cost: 15000
+  cost: 10000
   recipeUnlocks:
   - AdvancedCapacitorStockPart
   - AdvancedMatterBinStockPart
@@ -108,9 +108,6 @@
   cost: 10000
   recipeUnlocks:
   - WeaponPistolCHIMP
-  - CartridgeAnomalousParticleDelta
-  - CartridgeAnomalousParticleEpsilon
-  - CartridgeAnomalousParticleZeta
   technologyPrerequisites:
   - BasicAnomalousResearch
 

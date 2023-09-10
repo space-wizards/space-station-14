@@ -1,3 +1,5 @@
+using Content.Shared.Hands.Components;
+
 namespace Content.Shared.Inventory;
 
 public partial class InventorySystem

@@ -1,9 +1,11 @@
+using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+
 namespace Content.Server.Sericulture;
 
 [RegisterComponent]
-public sealed class SericultureComponent : Component
+public sealed partial class SericultureComponent : Component
 {
-
     [DataField("popupText")]
     public string PopupText = "sericulture-failure-hunger";
 
@@ -13,8 +15,10 @@ public sealed class SericultureComponent : Component
     [DataField("entityProduced", required: true)]
     public string EntityProduced = "";
 
-    [DataField("actionProto", required: true)]
-    public string ActionProto = "";
+    [DataField("action", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    public string Action = "ActionSericulture";
+
+    [DataField("actionEntity")] public EntityUid? ActionEntity;
 
     /// <summary>
     /// How long will it take to make.

@@ -72,6 +72,9 @@
   - type: TimerTriggerVisuals
     primingSound:
       path: /Audio/Effects/countdown.ogg
+  - type: GuideHelp
+    guides:
+    - Security
 
 - type: entity
   id: GrenadeFlashEffect
@@ -145,7 +148,7 @@
   - type: AnchorOnTrigger
     removeOnTrigger: true
   - type: TwoStageTrigger
-    triggerDelay: 10
+    triggerDelay: 10.45
     components:
       - type: AmbientSound
         enabled: true
@@ -191,15 +194,15 @@
     sound:
       path: /Audio/Effects/Grenades/Supermatter/whitehole_start.ogg
       volume: 5
-  - type: AmbientSound
-    enabled: false
-    volume: -5
-    range: 14
-    sound:
-      path: /Audio/Effects/Grenades/Supermatter/whitehole_loop.ogg
   - type: TwoStageTrigger
-    triggerDelay: 10
+    triggerDelay: 11.14
     components:
+      - type: AmbientSound
+        enabled: true
+        volume: -5
+        range: 14
+        sound:
+          path: /Audio/Effects/Grenades/Supermatter/whitehole_loop.ogg
       - type: GravityWell
         maxRange: 10
         baseRadialAcceleration: -180
@@ -219,9 +222,8 @@
         sound:
           path: /Audio/Effects/Grenades/Supermatter/supermatter_end.ogg
           params:
-            volume: 5
+            volume: 15
       - type: DeleteOnTrigger
-
 
 - type: entity
   name: the nuclear option

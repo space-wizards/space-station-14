@@ -6,7 +6,7 @@ using Content.Shared.Interaction;
 
 namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators.Interactions;
 
-public sealed class AltInteractOperator : HTNOperator
+public sealed partial class AltInteractOperator : HTNOperator
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
 

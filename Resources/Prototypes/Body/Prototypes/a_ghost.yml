@@ -6,8 +6,8 @@
     torso:
       part: TorsoHuman
       connections:
-      - right arm
       - left arm
+      - right arm
     right arm:
       part: RightArmHuman
       connections:

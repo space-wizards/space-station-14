@@ -4,6 +4,6 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Guardian;
 
 [Serializable, NetSerializable]
-public sealed class GuardianCreatorDoAfterEvent : SimpleDoAfterEvent
+public sealed partial class GuardianCreatorDoAfterEvent : SimpleDoAfterEvent
 {
 }

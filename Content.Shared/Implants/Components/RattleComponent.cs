@@ -5,7 +5,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Shared.Implants.Components;
 
 [RegisterComponent, NetworkedComponent]
-public sealed class RattleComponent : Component
+public sealed partial class RattleComponent : Component
 {
     // The radio channel the message will be sent to
     [DataField("radioChannel", customTypeSerializer: typeof(PrototypeIdSerializer<RadioChannelPrototype>))]

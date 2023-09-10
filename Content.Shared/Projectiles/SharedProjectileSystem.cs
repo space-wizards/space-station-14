@@ -1,4 +1,5 @@
 using System.Numerics;
+using Content.Shared.Damage;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
 using Content.Shared.Projectiles;
@@ -16,7 +17,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Projectiles;
 
-public abstract class SharedProjectileSystem : EntitySystem
+public abstract partial class SharedProjectileSystem : EntitySystem
 {
     public const string ProjectileFixture = "projectile";
 
@@ -132,7 +133,7 @@ public abstract class SharedProjectileSystem : EntitySystem
     }
 
     [Serializable, NetSerializable]
-    private sealed class RemoveEmbeddedProjectileEvent : DoAfterEvent
+    private sealed partial class RemoveEmbeddedProjectileEvent : DoAfterEvent
     {
         public override DoAfterEvent Clone() => this;
     }
@@ -152,13 +153,13 @@ public sealed class ImpactEffectEvent : EntityEventArgs
 }
 
 /// <summary>
-/// Raised when entity is just about to be hit with projectile but can reflect it
+/// Raised when an entity is just about to be hit with a projectile but can reflect it
 /// </summary>
 [ByRefEvent]
 public record struct ProjectileReflectAttemptEvent(EntityUid ProjUid, ProjectileComponent Component, bool Cancelled);
 
 /// <summary>
-/// Raised when projectile hits other entity
+/// Raised when a projectile hits an entity
 /// </summary>
 [ByRefEvent]
-public readonly record struct ProjectileHitEvent(EntityUid Target);
+public record struct ProjectileHitEvent(DamageSpecifier Damage, EntityUid Target, EntityUid? Shooter = null);

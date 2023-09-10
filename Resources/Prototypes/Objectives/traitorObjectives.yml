@@ -155,22 +155,6 @@
       prototype: NukeDisk
       owner: objective-condition-steal-station
 
-
-- type: objective
-  id: IDComputerBoardStealObjective
-  issuer: syndicate
-  requirements:
-    - !type:TraitorRequirement {}
-    - !type:IncompatibleConditionsRequirement
-      conditions:
-        - DieCondition
-    - !type:NotRoleRequirement
-      roleId: HeadOfPersonnel
-  conditions:
-    - !type:StealCondition
-      prototype: IDComputerCircuitboard
-      owner: job-name-hop
-
 - type: objective
   id: MagbootsStealObjective
   issuer: syndicate

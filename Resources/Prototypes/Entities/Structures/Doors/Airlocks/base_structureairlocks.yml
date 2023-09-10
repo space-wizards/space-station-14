@@ -75,7 +75,7 @@
     usesApcPower: true
   - type: WiresPanel
   - type: Wires
-    BoardName: "Airlock Control"
+    BoardName: wires-board-name-airlock
     LayoutId: Airlock
   - type: DoorSignalControl
   - type: DeviceNetwork

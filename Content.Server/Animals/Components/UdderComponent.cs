@@ -6,7 +6,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.Animals.Components
 {
     [RegisterComponent, Access(typeof(UdderSystem))]
-    internal sealed class UdderComponent : Component
+    internal sealed partial class UdderComponent : Component
     {
         /// <summary>
         ///     The reagent to produce.

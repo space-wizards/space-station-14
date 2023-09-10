@@ -12,13 +12,13 @@ public sealed class BiomeMarkerLayerPrototype : IBiomeMarkerLayer
     [IdDataField] public string ID { get; } = default!;
 
     [DataField("proto", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string Prototype { get; } = string.Empty;
+    public string Prototype { get; private set; } = string.Empty;
 
     /// <summary>
     /// Checks for the relevant entity for the tile before spawning. Useful for substituting walls with ore veins for example.
     /// </summary>
     [DataField("entityMask", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string? EntityMask { get; }
+    public string? EntityMask { get; private set; }
 
     /// <summary>
     /// Minimum radius between 2 points
@@ -40,5 +40,5 @@ public sealed class BiomeMarkerLayerPrototype : IBiomeMarkerLayer
 
     /// <inheritdoc />
     [DataField("size")]
-    public int Size { get; } = 128;
+    public int Size { get; private set; } = 128;
 }

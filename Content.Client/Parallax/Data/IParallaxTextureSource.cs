@@ -5,7 +5,7 @@ using Robust.Client.Graphics;
 namespace Content.Client.Parallax.Data
 {
     [ImplicitDataDefinitionForInheritors]
-    public interface IParallaxTextureSource
+    public partial interface IParallaxTextureSource
     {
         /// <summary>
         /// Generates or loads the texture.

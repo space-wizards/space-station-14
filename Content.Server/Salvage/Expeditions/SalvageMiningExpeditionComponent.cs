@@ -6,7 +6,7 @@ namespace Content.Server.Salvage.Expeditions;
 /// Tracks expedition data for <see cref="SalvageMissionType.Mining"/>
 /// </summary>
 [RegisterComponent, Access(typeof(SalvageSystem))]
-public sealed class SalvageMiningExpeditionComponent : Component
+public sealed partial class SalvageMiningExpeditionComponent : Component
 {
     /// <summary>
     /// Entities that were present on the shuttle and match the loot tax.

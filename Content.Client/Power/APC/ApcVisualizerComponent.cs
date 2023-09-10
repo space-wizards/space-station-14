@@ -4,7 +4,7 @@ namespace Content.Client.Power.APC;
 
 [RegisterComponent]
 [Access(typeof(ApcVisualizerSystem))]
-public sealed class ApcVisualsComponent : Component
+public sealed partial class ApcVisualsComponent : Component
 {
 #region Indicators
 
