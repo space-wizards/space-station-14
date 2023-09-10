@@ -9,6 +9,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Generic;
 namespace Content.Shared.Nutrition.Components;
 
 [RegisterComponent, NetworkedComponent, Access(typeof(HungerSystem))]
+[AutoGenerateComponentState]
 public sealed partial class HungerComponent : Component
 {
     /// <summary>
@@ -41,6 +42,7 @@ public sealed partial class HungerComponent : Component
     /// The current hunger threshold the entity is at
     /// </summary>
     [DataField("currentThreshold"), ViewVariables(VVAccess.ReadWrite)]
+    [AutoNetworkedField]
     public HungerThreshold CurrentThreshold;
 
     /// <summary>
@@ -103,41 +105,6 @@ public sealed partial class HungerComponent : Component
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan UpdateRate = TimeSpan.FromSeconds(1);
-}
-
-[Serializable, NetSerializable]
-public sealed class HungerComponentState : ComponentState
-{
-    public float CurrentHunger;
-
-    public float BaseDecayRate;
-
-    public float ActualDecayRate;
-
-    public HungerThreshold LastHungerThreshold;
-
-    public HungerThreshold CurrentThreshold;
-
-    public float StarvingSlowdownModifier;
-
-    public TimeSpan NextUpdateTime;
-
-    public HungerComponentState(float currentHunger,
-        float baseDecayRate,
-        float actualDecayRate,
-        HungerThreshold lastHungerThreshold,
-        HungerThreshold currentThreshold,
-        float starvingSlowdownModifier,
-        TimeSpan nextUpdateTime)
-    {
-        CurrentHunger = currentHunger;
-        BaseDecayRate = baseDecayRate;
-        ActualDecayRate = actualDecayRate;
-        LastHungerThreshold = lastHungerThreshold;
-        CurrentThreshold = currentThreshold;
-        StarvingSlowdownModifier = starvingSlowdownModifier;
-        NextUpdateTime = nextUpdateTime;
-    }
 }
 
 [Serializable, NetSerializable]

@@ -4,7 +4,6 @@ using Content.Shared.Movement.Systems;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Rejuvenate;
 using JetBrains.Annotations;
-using Robust.Shared.GameStates;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
@@ -20,7 +19,6 @@ public sealed class ThirstSystem : EntitySystem
     [Dependency] private readonly SharedJetpackSystem _jetpack = default!;
 
     private ISawmill _sawmill = default!;
-    private float _accumulatedFrameTime;
 
     public override void Initialize()
     {
@@ -28,33 +26,9 @@ public sealed class ThirstSystem : EntitySystem
 
         _sawmill = Logger.GetSawmill("thirst");
 
-        SubscribeLocalEvent<ThirstComponent, ComponentGetState>(OnGetState);
-        SubscribeLocalEvent<ThirstComponent, ComponentHandleState>(OnHandleState);
         SubscribeLocalEvent<ThirstComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshMovespeed);
         SubscribeLocalEvent<ThirstComponent, ComponentStartup>(OnComponentStartup);
         SubscribeLocalEvent<ThirstComponent, RejuvenateEvent>(OnRejuvenate);
-    }
-
-    private void OnGetState(EntityUid uid, ThirstComponent component, ref ComponentGetState args)
-    {
-        args.State = new ThirstComponentState(component.BaseDecayRate,
-            component.ActualDecayRate,
-            component.CurrentThirstThreshold,
-            component.LastThirstThreshold,
-            component.CurrentThirst,
-            component.NextUpdateTime);
-    }
-
-    private void OnHandleState(EntityUid uid, ThirstComponent component, ref ComponentHandleState args)
-    {
-        if (args.Current is not ThirstComponentState state)
-            return;
-        component.BaseDecayRate = state.BaseDecayRate;
-        component.ActualDecayRate = state.ActualDecayRate;
-        component.CurrentThirstThreshold = state.CurrentThirstThreshold;
-        component.LastThirstThreshold = state.LastThirstThreshold;
-        component.CurrentThirst = state.CurrentThirst;
-        component.NextUpdateTime = state.NextUpdateTime;
     }
 
     private void OnComponentStartup(EntityUid uid, ThirstComponent component, ComponentStartup args)

@@ -1,12 +1,12 @@
 using Content.Server.Nutrition.EntitySystems;
 using Content.Shared.Alert;
 using Robust.Shared.GameStates;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Nutrition.Components;
 
 [RegisterComponent, NetworkedComponent, Access(typeof(ThirstSystem))]
+[AutoGenerateComponentState]
 public sealed partial class ThirstComponent : Component
 {
     // Base stuff
@@ -19,6 +19,7 @@ public sealed partial class ThirstComponent : Component
 
     // Thirst
     [ViewVariables(VVAccess.ReadOnly)]
+    [AutoNetworkedField]
     public ThirstThreshold CurrentThirstThreshold;
 
     public ThirstThreshold LastThirstThreshold;
@@ -55,37 +56,6 @@ public sealed partial class ThirstComponent : Component
         {ThirstThreshold.Parched, AlertType.Parched},
         {ThirstThreshold.Dead, AlertType.Parched},
     };
-}
-
-[Serializable, NetSerializable]
-public sealed class ThirstComponentState : ComponentState
-{
-    public float BaseDecayRate;
-
-    public float ActualDecayRate;
-
-    public ThirstThreshold CurrentThirstThreshold;
-
-    public ThirstThreshold LastThirstThreshold;
-
-    public float CurrentThirst;
-
-    public TimeSpan NextUpdateTime;
-
-    public ThirstComponentState(float baseDecayRate,
-        float actualDecayRate,
-        ThirstThreshold currentThirstThreshold,
-        ThirstThreshold lastThirstThreshold,
-        float currentThirst,
-        TimeSpan nextUpdateTime)
-    {
-        BaseDecayRate = baseDecayRate;
-        ActualDecayRate = actualDecayRate;
-        CurrentThirstThreshold = currentThirstThreshold;
-        LastThirstThreshold = lastThirstThreshold;
-        CurrentThirst = currentThirst;
-        NextUpdateTime = nextUpdateTime;
-    }
 }
 
 [Flags]
