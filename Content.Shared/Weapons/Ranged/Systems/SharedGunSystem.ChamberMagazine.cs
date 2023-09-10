@@ -352,7 +352,7 @@ public abstract partial class SharedGunSystem
         {
             if (TryTakeChamberEntity(uid, out chamberEnt))
             {
-                args.Ammo.Add((chamberEnt.Value, EnsureComp<AmmoComponent>(chamberEnt.Value)));
+                args.Ammo.Add((chamberEnt.Value, EnsureShootable(chamberEnt.Value)));
             }
             // No ammo returned.
             else
@@ -406,7 +406,7 @@ public abstract partial class SharedGunSystem
         {
             // Shooting code won't eject it if it's still contained.
             chamberEnt = slot.ContainedEntity;
-            args.Ammo.Add((chamberEnt.Value, EnsureComp<AmmoComponent>(chamberEnt.Value)));
+            args.Ammo.Add((chamberEnt.Value, EnsureShootable(chamberEnt.Value)));
         }
     }
 }

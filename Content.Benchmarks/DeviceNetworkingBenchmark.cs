@@ -59,6 +59,7 @@ public class DeviceNetworkingBenchmark
     public async Task SetupAsync()
     {
         ProgramShared.PathOffset = "../../../../";
+        PoolManager.Startup(typeof(DeviceNetworkingBenchmark).Assembly);
         _pair = await PoolManager.GetServerClient();
         var server = _pair.Server;
 
@@ -91,6 +92,7 @@ public class DeviceNetworkingBenchmark
     public async Task Cleanup()
     {
         await _pair.DisposeAsync();
+        PoolManager.Shutdown();
     }
 
     [Benchmark(Baseline = true, Description = "Entity Events")]
