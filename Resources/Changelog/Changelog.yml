@@ -1,9 +1,4 @@
 Entries:
-- author: Ilya246
-  changes:
-  - {message: Added syndicate monkey reinforcement teleporter. Ook!, type: Add}
-  id: 4295
-  time: '2023-07-19T21:23:23.0000000+00:00'
 - author: Dygon
   changes:
   - {message: Disposable turret price lowered to 8 tc and rate of fire lowered by
@@ -2992,3 +2987,9 @@ Entries:
   - {message: Replays now record ghost chat., type: Fix}
   id: 4794
   time: '2023-09-10T11:49:45.0000000+00:00'
+- author: Interrobang01
+  changes:
+  - {message: Cognizine now works on monkeys., type: Fix}
+  - {message: Fixed Cognizine not working on player-controlled animals., type: Fix}
+  id: 4795
+  time: '2023-09-10T20:21:54.0000000+00:00'
