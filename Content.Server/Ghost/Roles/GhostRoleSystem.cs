@@ -308,7 +308,6 @@ namespace Content.Server.Ghost.Roles
         {
             if (role.Probability < 1f && !_random.Prob(role.Probability))
             {
-                RemComp<GhostTakeoverAvailableComponent>(uid);
                 RemComp<GhostRoleComponent>(uid);
                 return;
             }
