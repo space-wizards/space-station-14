@@ -172,12 +172,18 @@ public abstract class BaseActionComponentState : ComponentState
         Cooldown = component.Cooldown;
         UseDelay = component.UseDelay;
         Charges = component.Charges;
-        Provider = entManager.GetNetEntity(component.Provider);
-        EntityIcon = entManager.GetNetEntity(component.EntityIcon);
+
+        // TODO ACTION REFACTOR fix bugs
+        if (entManager.TryGetNetEntity(component.Provider, out var provider))
+            Provider = provider;
+        if (entManager.TryGetNetEntity(component.EntityIcon, out var icon))
+            EntityIcon = icon;
+        if (entManager.TryGetNetEntity(component.AttachedEntity, out var attached))
+            AttachedEntity = attached;
+
         CheckCanInteract = component.CheckCanInteract;
         ClientExclusive = component.ClientExclusive;
         Priority = component.Priority;
-        AttachedEntity = entManager.GetNetEntity(component.AttachedEntity);
         AutoPopulate = component.AutoPopulate;
         AutoRemove = component.AutoRemove;
         Temporary = component.Temporary;
