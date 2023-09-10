@@ -177,7 +177,7 @@ public abstract class SharedActionsSystem : EntitySystem
 
     protected bool TryGetContainer(
         EntityUid holderId,
-        [NotNullWhen(true)] out BaseContainer? container,
+        [NotNullWhen(true)] out IContainer? container,
         ContainerManagerComponent? containerManager = null)
     {
         return _containerSystem.TryGetContainer(holderId, ActionContainerId, out container, containerManager);
@@ -185,7 +185,7 @@ public abstract class SharedActionsSystem : EntitySystem
 
     protected bool TryGetProvidedContainer(
         EntityUid providerId,
-        [NotNullWhen(true)] out BaseContainer? container,
+        [NotNullWhen(true)] out IContainer? container,
         ContainerManagerComponent? containerManager = null)
     {
         return _containerSystem.TryGetContainer(providerId, ProvidedActionContainerId, out container, containerManager);
@@ -550,7 +550,7 @@ public abstract class SharedActionsSystem : EntitySystem
     /// <param name="holder">Component of <see cref="holderId"/></param>
     /// <param name="action">Component of <see cref="actionId"/></param>
     /// <param name="actionContainer">Action container of <see cref="holderId"/></param>
-    public virtual void AddAction(EntityUid holderId, EntityUid actionId, EntityUid? provider, ActionsComponent? holder = null, BaseActionComponent? action = null, bool dirty = true, BaseContainer? actionContainer = null)
+    public virtual void AddAction(EntityUid holderId, EntityUid actionId, EntityUid? provider, ActionsComponent? holder = null, BaseActionComponent? action = null, bool dirty = true, IContainer? actionContainer = null)
     {
         action ??= GetActionData(actionId);
         // TODO remove when action subscriptions are split up
@@ -572,7 +572,7 @@ public abstract class SharedActionsSystem : EntitySystem
             Dirty(holderId, holder);
     }
 
-    protected virtual void AddActionInternal(EntityUid holderId, EntityUid actionId, BaseContainer container, ActionsComponent holder)
+    protected virtual void AddActionInternal(EntityUid holderId, EntityUid actionId, IContainer container, ActionsComponent holder)
     {
         container.Insert(actionId);
         holder.Actions.Add(actionId);

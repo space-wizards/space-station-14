@@ -32,7 +32,7 @@ namespace Content.Shared.Interaction.Helpers
 
         public static bool InRangeUnOccluded(
             this EntityUid origin,
-            BaseContainer other,
+            IContainer other,
             float range = InteractionRange,
             Ignored? predicate = null,
             bool ignoreInsideBlocker = true)
@@ -90,7 +90,7 @@ namespace Content.Shared.Interaction.Helpers
 
         public static bool InRangeUnOccluded(
             this IComponent origin,
-            BaseContainer other,
+            IContainer other,
             float range = InteractionRange,
             Ignored? predicate = null,
             bool ignoreInsideBlocker = true)
@@ -130,7 +130,7 @@ namespace Content.Shared.Interaction.Helpers
 
         #region Containers
         public static bool InRangeUnOccluded(
-            this BaseContainer origin,
+            this IContainer origin,
             EntityUid other,
             float range = InteractionRange,
             Ignored? predicate = null,
@@ -143,7 +143,7 @@ namespace Content.Shared.Interaction.Helpers
         }
 
         public static bool InRangeUnOccluded(
-            this BaseContainer origin,
+            this IContainer origin,
             IComponent other,
             float range = InteractionRange,
             Ignored? predicate = null,
@@ -155,8 +155,8 @@ namespace Content.Shared.Interaction.Helpers
         }
 
         public static bool InRangeUnOccluded(
-            this BaseContainer origin,
-            BaseContainer other,
+            this IContainer origin,
+            IContainer other,
             float range = InteractionRange,
             Ignored? predicate = null,
             bool ignoreInsideBlocker = true)
@@ -169,7 +169,7 @@ namespace Content.Shared.Interaction.Helpers
         }
 
         public static bool InRangeUnOccluded(
-            this BaseContainer origin,
+            this IContainer origin,
             EntityCoordinates other,
             float range = InteractionRange,
             Ignored? predicate = null,
@@ -181,7 +181,7 @@ namespace Content.Shared.Interaction.Helpers
         }
 
         public static bool InRangeUnOccluded(
-            this BaseContainer origin,
+            this IContainer origin,
             MapCoordinates other,
             float range = InteractionRange,
             Ignored? predicate = null,
@@ -226,7 +226,7 @@ namespace Content.Shared.Interaction.Helpers
 
         public static bool InRangeUnOccluded(
             this EntityCoordinates origin,
-            BaseContainer other,
+            IContainer other,
             float range = InteractionRange,
             Ignored? predicate = null,
             bool ignoreInsideBlocker = true)
@@ -304,7 +304,7 @@ namespace Content.Shared.Interaction.Helpers
 
         public static bool InRangeUnOccluded(
             this MapCoordinates origin,
-            BaseContainer other,
+            IContainer other,
             float range = InteractionRange,
             Ignored? predicate = null,
             bool ignoreInsideBlocker = true)
