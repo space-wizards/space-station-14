@@ -1,10 +1,4 @@
 Entries:
-- author: vanx
-  changes:
-  - {message: The Nuclear Operatives have found a reliable supplier of ammunition
-      and medical equipment. Check your uplink for new offers., type: Add}
-  id: 4290
-  time: '2023-07-19T06:05:54.0000000+00:00'
 - author: Ubaser
   changes:
   - {message: 'Nanotrasen has hired a group of architects to change up their selection
@@ -2997,3 +2991,9 @@ Entries:
   - {message: Monkeys can now bump doors open and strip mobs like people can., type: Tweak}
   id: 4789
   time: '2023-09-10T02:51:51.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: 'Ian/Old Ian/Lisa yield corgi hide when butchered, which can be worn
+      as a hat or crafted into an ian suit.', type: Add}
+  id: 4790
+  time: '2023-09-10T03:04:33.0000000+00:00'
