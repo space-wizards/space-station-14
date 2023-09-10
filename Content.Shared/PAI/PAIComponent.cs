@@ -30,6 +30,30 @@ namespace Content.Shared.PAI
 
         [DataField("midiAction", serverOnly: true)] // server only, as it uses a server-BUI event !type
         public EntityUid? MidiAction;
+
+        /// <summary>
+        /// When microwaved there is this chance to brick the pai, kicking out its player and preventing it from being used again.
+        /// </summary>
+        [DataField("brickChance")]
+        public float BrickChance = 0.25f;
+
+        /// <summary>
+        /// Locale id for the popup shown when the pai gets bricked.
+        /// </summary>
+        [DataField("brickPopup")]
+        public string BrickPopup = "pai-component-brick-popup";
+
+        /// <summary>
+        /// Locale id for the popup shown when the pai is microwaved but does not get bricked.
+        /// </summary>
+        [DataField("scramblePopup")]
+        public string ScramblePopup = "pai-component-scramble-popup";
+
+        /// <summary>
+        /// Chance for an individual character to be scrambled.
+        /// </summary>
+        [DataField("charScrambleChance")]
+        public float CharScrambleChance = 0.5f;
     }
 }
 
