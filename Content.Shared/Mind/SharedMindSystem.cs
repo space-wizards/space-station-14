@@ -20,10 +20,10 @@ namespace Content.Shared.Mind;
 
 public abstract class SharedMindSystem : EntitySystem
 {
-    [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly SharedPlayerSystem _playerSystem = default!;
+    [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly ObjectiveSystem _objective = default!;
+    [Dependency] private readonly SharedPlayerSystem _player = default!;
 
     // This is dictionary is required to track the minds of disconnected players that may have had their entity deleted.
     protected readonly Dictionary<NetUserId, EntityUid> UserMinds = new();
@@ -91,7 +91,7 @@ public abstract class SharedMindSystem : EntitySystem
         if (!mindContainer.ShowExamineInfo || !args.IsInDetailsRange)
             return;
 
-        var dead = _mobStateSystem.IsDead(uid);
+        var dead = _mobState.IsDead(uid);
         var hasSession = CompOrNull<MindComponent>(mindContainer.Mind)?.Session;
 
         if (dead && !mindContainer.HasMind)
@@ -167,7 +167,7 @@ public abstract class SharedMindSystem : EntitySystem
         if (targetMobState == null)
             return true;
         // They might actually be alive.
-        return _mobStateSystem.IsDead(mind.OwnedEntity.Value, targetMobState);
+        return _mobState.IsDead(mind.OwnedEntity.Value, targetMobState);
     }
 
     public virtual void Visit(EntityUid mindId, EntityUid entity, MindComponent? mind = null)
@@ -216,7 +216,7 @@ public abstract class SharedMindSystem : EntitySystem
 
     public void WipeMind(ICommonSession player)
     {
-        var mind = _playerSystem.ContentData(player)?.Mind;
+        var mind = _player.ContentData(player)?.Mind;
         DebugTools.Assert(GetMind(player.UserId) == mind);
         WipeMind(mind);
     }
@@ -342,7 +342,7 @@ public abstract class SharedMindSystem : EntitySystem
     {
         mindId = default;
         mind = null;
-        return _playerSystem.ContentData(player) is { } data && TryGetMind(data, out mindId, out mind);
+        return _player.ContentData(player) is { } data && TryGetMind(data, out mindId, out mind);
     }
 
     /// <summary>
@@ -423,7 +423,7 @@ public abstract class SharedMindSystem : EntitySystem
                 continue;
 
             // the player has to be alive
-            if (_mobStateSystem.IsAlive(uid, mobState))
+            if (_mobState.IsAlive(uid, mobState))
                 allHumans.Add(mc.Mind.Value);
         }
 
