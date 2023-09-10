@@ -181,7 +181,7 @@ public sealed class TemperatureSystem : EntitySystem
                 _alertsSystem.ShowAlert(uid, type, 3);
                 break;
 
-            case <= 0.33f:
+            case <= 0.4f:
                 _alertsSystem.ShowAlert(uid, type, 2);
                 break;
 
