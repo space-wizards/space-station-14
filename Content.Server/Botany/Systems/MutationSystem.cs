@@ -148,9 +148,7 @@ public sealed class MutationSystem : EntitySystem
         float probBitflip = mult * bits / totalbits;
         probBitflip = Math.Clamp(probBitflip, 0, 1);
         if (!Random(probBitflip))
-        {
             return;
-        }
 
         // Starting number of bits that are high, between 0 and bits.
         // In other words, it's val mapped linearly from range [min, max] to range [0, bits], and then rounded.
@@ -183,9 +181,7 @@ public sealed class MutationSystem : EntitySystem
         float probBitflip = mult * bits / totalbits;
         probBitflip = Math.Clamp(probBitflip, 0, 1);
         if (!Random(probBitflip))
-        {
             return;
-        }
 
         // Probability that the bit flip increases n.
         // The higher the current value is, the lower the probability of increasing value is, and the higher the probability of decreasive it it.
