@@ -31,7 +31,7 @@ public abstract class SharedSiliconLawSystem : EntitySystem
             return;
         }
 
-        _audio.Play(component.EmagSound, Filter.Pvs(uid), uid, true);
+        _audio.PlayPredicted(component.EmagSound, Filter.Pvs(uid), uid, true);
         component.OwnerName = Name(args.UserUid);
         args.Handled = true;
     }
