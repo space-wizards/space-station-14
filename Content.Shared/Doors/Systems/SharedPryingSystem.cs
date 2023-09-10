@@ -100,26 +100,17 @@ public abstract class SharedDoorPryingSystem : EntitySystem
         _doAfterSystem.TryStartDoAfter(doAfterArgs, out id);
     }
 
-    void OnDoAfter(EntityUid uid, DoorComponent door, DoorPryDoAfterEvent args)
+    protected virtual void OnDoAfter(EntityUid uid, DoorComponent door, DoorPryDoAfterEvent args)
     {
         if (args.Cancelled)
             return;
         if (args.Target is null)
             return;
 
-        if (args.Used != null && TryComp<DoorPryingComponent>(args.Used.Value, out var comp))
-            _audioSystem.PlayPredicted(comp.UseSound, args.Used.Value, args.User, comp.UseSound.Params.WithVariation(0.175f).AddVolume(-5f));
+        DoorPryingComponent? comp = null;
 
-        if (door.State == DoorState.Closed)
-        {
-            _adminLog.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(args.User)} pried {ToPrettyString(args.Target.Value)} open");
-            _doorSystem.StartOpening(args.Target.Value, door);
-        }
-        else if (door.State == DoorState.Open)
-        {
-            _adminLog.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(args.User)} pried {ToPrettyString(args.Target.Value)} closed");
-            _doorSystem.StartClosing(args.Target.Value, door);
-        }
+        if (args.Used != null && Resolve(args.Used.Value, ref comp))
+            _audioSystem.PlayPredicted(comp.UseSound, args.Used.Value, args.User, comp.UseSound.Params.WithVariation(0.175f).AddVolume(-5f));
     }
 }
 

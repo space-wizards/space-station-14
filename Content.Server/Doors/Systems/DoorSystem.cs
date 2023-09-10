@@ -165,7 +165,7 @@ public sealed class DoorSystem : SharedDoorSystem
 
     private void OnBeforeDoorPry(EntityUid id, DoorComponent door, BeforePryEvent args)
     {
-        if (door.State == DoorState.Welded)
+        if (door.State == DoorState.Welded || !door.CanPry)
             args.Cancel();
         return;
 
