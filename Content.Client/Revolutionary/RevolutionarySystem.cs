@@ -1,21 +1,19 @@
 using Content.Shared.Revolutionary.Components;
 using Content.Client.Antag;
 using Content.Shared.StatusIcon.Components;
-using Content.Shared.Ghost;
-using Robust.Client.Player;
 
 namespace Content.Client.Revolutionary;
 
 /// <summary>
 /// Used for the client to get status icons from other revs.
 /// </summary>
-public sealed class RevolutionarySystem : AntagStatusIconSystem
+public sealed class RevolutionarySystem : AntagStatusIconSystem<RevolutionaryComponent>
 {
-    [Dependency] private readonly IPlayerManager _player = default!;
     public override void Initialize()
     {
         base.Initialize();
         SubscribeLocalEvent<RevolutionaryComponent, GetStatusIconsEvent>(GetRevIcon);
+        SubscribeLocalEvent<HeadRevolutionaryComponent, GetStatusIconsEvent>(GetHeadRevIcon);
     }
 
     /// <summary>
@@ -23,22 +21,13 @@ public sealed class RevolutionarySystem : AntagStatusIconSystem
     /// </summary>
     private void GetRevIcon(EntityUid uid, RevolutionaryComponent comp, ref GetStatusIconsEvent args)
     {
-        if (!HasComp<RevolutionaryComponent>(_player.LocalPlayer?.ControlledEntity))
+        if (!HasComp<HeadRevolutionaryComponent>(uid))
         {
-            if (HasComp<GhostComponent>(_player.LocalPlayer?.ControlledEntity))
-            {
-
-            }
-            else return;
+            GetStatusIcon(comp.RevStatusIcon, ref args);
         }
-
-        if (TryComp<HeadRevolutionaryComponent>(uid, out var head))
-        {
-            GetStatusIcon(comp.RevStatusIcon, comp.HeadRevStatusIcon, ref args);
-        }
-        else
-        {
-            GetStatusIcon(comp.RevStatusIcon, null, ref args);
-        }
+    }
+    private void GetHeadRevIcon(EntityUid uid, HeadRevolutionaryComponent comp, ref GetStatusIconsEvent args)
+    {
+        GetStatusIcon(comp.HeadRevStatusIcon, ref args);
     }
 }

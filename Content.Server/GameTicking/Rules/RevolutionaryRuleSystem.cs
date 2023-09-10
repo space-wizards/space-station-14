@@ -28,6 +28,7 @@ using Content.Server.Speech.Components;
 using Content.Server.Roles.Jobs;
 using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
+using Content.Shared.Zombies;
 
 namespace Content.Server.GameTicking.Rules;
 
@@ -230,7 +231,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
     {
         var stunTime = TimeSpan.FromSeconds(3);
         if (!HasComp<RevolutionaryComponent>(ev.Target) && !HasComp<MindShieldComponent>(ev.Target) && (HasComp<HumanoidAppearanceComponent>(ev.Target) || HasComp<MonkeyAccentComponent>(ev.Target))
-            && TryComp<MobStateComponent>(ev.Target, out var mobState) && mobState.CurrentState == MobState.Alive)
+            && TryComp<MobStateComponent>(ev.Target, out var mobState) && mobState.CurrentState == MobState.Alive && !HasComp<ZombieComponent>(ev.Target))
         {
             _npcFaction.AddFaction(ev.Target, "Revolutionary");
             EnsureComp<RevolutionaryComponent>(ev.Target);

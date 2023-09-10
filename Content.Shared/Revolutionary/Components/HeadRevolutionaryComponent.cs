@@ -1,4 +1,6 @@
 using Robust.Shared.GameStates;
+using Content.Shared.StatusIcon;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Revolutionary.Components;
 
@@ -8,4 +10,6 @@ namespace Content.Shared.Revolutionary.Components;
 [RegisterComponent, NetworkedComponent, Access(typeof(SharedRevolutionarySystem))]
 public sealed partial class HeadRevolutionaryComponent : Component
 {
+    [DataField("headRevStatusIcon", customTypeSerializer: typeof(PrototypeIdSerializer<StatusIconPrototype>))]
+    public string HeadRevStatusIcon = "HeadRevolutionaryFaction";
 }
