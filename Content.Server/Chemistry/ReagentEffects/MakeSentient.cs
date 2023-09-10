@@ -28,6 +28,8 @@ public sealed partial class MakeSentient : ReagentEffect
             return;
         }
 
+        // Stops from adding a ghost role to things that already have ghost roles
+        // The check for GhostTakeoverAvailableComponent may be redundant but it's hard to tell
         if (entityManager.TryGetComponent(uid, out GhostRoleComponent? ghostRole) ||
             entityManager.TryGetComponent(uid, out GhostTakeoverAvailableComponent? takeOver))
         {
