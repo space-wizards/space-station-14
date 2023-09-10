@@ -3,11 +3,13 @@ using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.GameTicking;
+using Content.Shared.Humanoid;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Mind.Components;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Objectives;
+using Content.Shared.Objectives.Systems;
 using Content.Shared.Players;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
@@ -21,6 +23,7 @@ public abstract class SharedMindSystem : EntitySystem
     [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly SharedPlayerSystem _playerSystem = default!;
+    [Dependency] private readonly ObjectiveSystem _objective = default!;
 
     // This is dictionary is required to track the minds of disconnected players that may have had their entity deleted.
     protected readonly Dictionary<NetUserId, EntityUid> UserMinds = new();
@@ -249,42 +252,44 @@ public abstract class SharedMindSystem : EntitySystem
     }
 
     /// <summary>
-    /// Adds an objective to this mind.
+    /// Tries to create and add an objective from its prototype id.
     /// </summary>
-    public bool TryAddObjective(EntityUid mindId, MindComponent mind, ObjectivePrototype objectivePrototype)
+    /// <returns>Returns true if adding the objective succeeded.</returns>
+    public bool TryAddObjective(EntityUid mindId, MindComponent mind, string proto)
     {
-        if (!objectivePrototype.CanBeAssigned(mindId, mind))
-            return false;
-        var objective = objectivePrototype.GetObjective(mindId, mind);
-        if (mind.Objectives.Contains(objective))
+        var objective = _objective.TryCreateObjective(mindId, mind, proto);
+        if (objective == null)
             return false;
 
-        foreach (var condition in objective.Conditions)
-        {
-            _adminLogger.Add(LogType.Mind, LogImpact.Low, $"'{condition.Title}' added to mind of {MindOwnerLoggingString(mind)}");
-        }
-
-        mind.Objectives.Add(objective);
+        AddObjective(mindId, mind, objective.Value);
         return true;
     }
 
     /// <summary>
-    /// Removes an objective to this mind.
+    /// Adds an objective that already exists, and is assumed to have had its requirements checked.
+    /// </summary>
+    public void AddObjective(EntityUid mindId, MindComponent mind, EntityUid objective)
+    {
+        var title = _objective.GetTitle(objective, mindId, mind);
+        _adminLogger.Add(LogType.Mind, LogImpact.Low, $"Objective ({objective}) '{title}' added to mind of {MindOwnerLoggingString(mind)}");
+        mind.Objectives.Add(objective);
+    }
+
+    /// <summary>
+    /// Removes an objective from this mind.
     /// </summary>
     /// <returns>Returns true if the removal succeeded.</returns>
-    public bool TryRemoveObjective(MindComponent mind, int index)
+    public bool TryRemoveObjective(EntityUid mindId, MindComponent mind, int index)
     {
         if (index < 0 || index >= mind.Objectives.Count)
             return false;
 
         var objective = mind.Objectives[index];
 
-        foreach (var condition in objective.Conditions)
-        {
-            _adminLogger.Add(LogType.Mind, LogImpact.Low, $"'{condition.Title}' removed from the mind of {MindOwnerLoggingString(mind)}");
-        }
-
+        var title = _objective.GetTitle(objective, mindId, mind);
+        _adminLogger.Add(LogType.Mind, LogImpact.Low, $"'{title}' removed from the mind of {MindOwnerLoggingString(mind)}");
         mind.Objectives.Remove(objective);
+        Del(objective);
         return true;
     }
 
