@@ -25,6 +25,7 @@ using Content.Shared.CCVar;
 using Content.Shared.Construction.EntitySystems;
 using Content.Shared.Random;
 using Content.Shared.Random.Helpers;
+using Content.Shared.Tools.Components;
 using Robust.Server.Maps;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Timing;
@@ -68,6 +69,7 @@ namespace Content.Server.Salvage
             SubscribeLocalEvent<SalvageMagnetComponent, RefreshPartsEvent>(OnRefreshParts);
             SubscribeLocalEvent<SalvageMagnetComponent, UpgradeExamineEvent>(OnUpgradeExamine);
             SubscribeLocalEvent<SalvageMagnetComponent, ExaminedEvent>(OnExamined);
+            SubscribeLocalEvent<SalvageMagnetComponent, ToolUseAttemptEvent>(OnToolUseAttempt);
             SubscribeLocalEvent<SalvageMagnetComponent, ComponentShutdown>(OnMagnetRemoval);
             SubscribeLocalEvent<GridRemovalEvent>(OnGridRemoval);
 
@@ -229,6 +231,15 @@ namespace Content.Server.Salvage
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        private void OnToolUseAttempt(EntityUid uid, SalvageMagnetComponent comp, ToolUseAttemptEvent args)
+        {
+            // prevent reconstruct exploit to "leak" wrecks or skip cooldowns
+            if (comp.MagnetState != MagnetState.Inactive)
+            {
+                args.Cancel();
             }
         }
 

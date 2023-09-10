@@ -1,15 +1,21 @@
-- type: instantAction
-  id: SpiderWebAction
-  icon: Interface/Actions/web.png
+- type: entity
+  id: ActionSpiderWeb
   name: spider-web-action-name
   description: spider-web-action-description
-  serverEvent: !type:SpiderWebActionEvent
-  useDelay: 25
+  noSpawn: true
+  components:
+  - type: InstantAction
+    icon: Interface/Actions/web.png
+    event: !type:SpiderWebActionEvent
+    useDelay: 25
 
-- type: instantAction
-  id: SericultureAction
-  icon: Interface/Actions/web.png
+- type: entity
+  id: ActionSericulture
   name: sericulture-action-name
   description: sericulture-action-description
-  serverEvent: !type:SericultureActionEvent
-  useDelay: 1
+  noSpawn: true
+  components:
+  - type: InstantAction
+    icon: Interface/Actions/web.png
+    event: !type:SericultureActionEvent
+    useDelay: 1
