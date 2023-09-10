@@ -1,7 +1,9 @@
-﻿using Content.Shared.Emag.Systems;
+using Content.Shared.Emag.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Silicons.Laws.Components;
 using Content.Shared.Wires;
+using Content.Shared.Audio;
+using Robust.Shared.Player;
 
 namespace Content.Shared.Silicons.Laws;
 
@@ -11,6 +13,7 @@ namespace Content.Shared.Silicons.Laws;
 public abstract class SharedSiliconLawSystem : EntitySystem
 {
     [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -28,6 +31,7 @@ public abstract class SharedSiliconLawSystem : EntitySystem
             return;
         }
 
+        _audio.Play(component.EmagSound, Filter.Pvs(uid), uid, true);
         component.OwnerName = Name(args.UserUid);
         args.Handled = true;
     }
