@@ -106,7 +106,7 @@ public sealed class PAISystem : SharedPAISystem
 
         // if its named add 's pAI back to the scrambled name
         // since scrambling stops at '
-        var val = name.ToString() : 
+        var val = name.ToString();
         val = comp.LastUser == null
             ? val
             : Loc.GetString("pai-system-pai-name", ("owner", val));
