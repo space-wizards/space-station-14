@@ -2,7 +2,7 @@ using Content.Server.GameTicking.Rules.Components;
 using Content.Server.StationEvents.Components;
 using Content.Server.Storage.Components;
 using Content.Server.Storage.EntitySystems;
-using Robust.Shared.Map;
+using Robust.Shared.Random;
 
 namespace Content.Server.StationEvents.Events;
 
@@ -17,6 +17,8 @@ public sealed class RandomEntityStorageSpawnRule : StationEventSystem<RandomEnti
         if (!TryGetRandomStation(out var station))
             return;
 
+        var validLockers = new List<(EntityUid, EntityStorageComponent, TransformComponent)>();
+
         var query = EntityQueryEnumerator<EntityStorageComponent, TransformComponent>();
         while (query.MoveNext(out var ent, out var storage, out var xform))
         {
@@ -26,12 +28,14 @@ public sealed class RandomEntityStorageSpawnRule : StationEventSystem<RandomEnti
             if (!_entityStorage.CanInsert(ent, storage) || storage.Open)
                 continue;
 
-            var spawn = Spawn(comp.Prototype, xform.Coordinates);
-            if (!_entityStorage.Insert(spawn, ent, storage))
-            {
-                Del(spawn);
-            }
-            return;
+            validLockers.Add((ent, storage, xform));
+        }
+
+        var (locker, storageComp, xformComp) = RobustRandom.Pick(validLockers);
+        var spawn = Spawn(comp.Prototype, xformComp.Coordinates);
+        if (!_entityStorage.Insert(spawn, locker, storageComp))
+        {
+            Del(spawn);
         }
     }
 }
