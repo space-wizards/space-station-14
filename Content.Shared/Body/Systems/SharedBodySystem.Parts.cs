@@ -171,7 +171,7 @@ public partial class SharedBodySystem
                Resolve(partId.Value, ref part, false) &&
                (slot.Type == null || slot.Type == part.PartType) &&
                Containers.TryGetContainer(slot.Parent, BodyContainerId, out var container) &&
-               container.CanInsert(partId.Value);
+               _container.CanInsert(partId.Value, container);
     }
 
     public virtual bool AttachPart(

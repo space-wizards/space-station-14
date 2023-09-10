@@ -103,12 +103,6 @@
       map: ["enum.VehicleVisualLayers.AutoAnimate"]
     noRot: true
   - type: UnpoweredFlashlight
-    toggleAction:
-      name: action-name-toggle-light
-      description: action-description-toggle-light
-      icon: { sprite: Objects/Tools/flashlight.rsi, state: flashlight }
-      iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
-      event: !type:ToggleActionEvent
   - type: PointLight
     enabled: false
     radius: 3.5
@@ -250,12 +244,6 @@
     buckleOffset: "0.1, -0.05"
     maxBuckleDistance: 1
   - type: UnpoweredFlashlight
-    toggleAction:
-      name: action-name-toggle-light
-      description: action-description-toggle-light
-      icon: { sprite: Objects/Tools/flashlight.rsi, state: flashlight }
-      iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
-      event: !type:ToggleActionEvent
   - type: PointLight
     enabled: false
     radius: 3.5
@@ -345,12 +333,6 @@
       baseWalkSpeed: 4.5
       baseSprintSpeed: 7
     - type: UnpoweredFlashlight
-      toggleAction:
-        name: action-name-toggle-light
-        description: action-description-toggle-light
-        icon: { sprite: Objects/Tools/flashlight.rsi, state: flashlight }
-        iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
-        event: !type:ToggleActionEvent
     - type: PointLight
       enabled: false
       radius: 3.5

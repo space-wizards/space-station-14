@@ -1,8 +1,8 @@
-using Content.Shared.Actions;
+﻿using Content.Shared.Actions;
 using Robust.Shared.Reflection;
 using Robust.Shared.Serialization;
 
-namespace Content.Server.UserInterface;
+namespace Content.Shared.UserInterface;
 
 public sealed partial class OpenUiActionEvent : InstantActionEvent, ISerializationHooks
 {

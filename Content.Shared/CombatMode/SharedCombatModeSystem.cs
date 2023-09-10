@@ -1,10 +1,7 @@
 using Content.Shared.Actions;
-using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Popups;
 using Content.Shared.Targeting;
 using Robust.Shared.Network;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.CombatMode;
@@ -13,7 +10,6 @@ public abstract class SharedCombatModeSystem : EntitySystem
 {
     [Dependency] protected readonly IGameTiming Timing = default!;
     [Dependency] private   readonly INetManager _netMan = default!;
-    [Dependency] private   readonly IPrototypeManager _protoMan = default!;
     [Dependency] private   readonly SharedActionsSystem _actionsSystem = default!;
     [Dependency] private   readonly SharedPopupSystem _popup = default!;
 
@@ -21,27 +17,19 @@ public abstract class SharedCombatModeSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<CombatModeComponent, ComponentStartup>(OnStartup);
+        SubscribeLocalEvent<CombatModeComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<CombatModeComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<CombatModeComponent, ToggleCombatActionEvent>(OnActionPerform);
     }
 
-    private void OnStartup(EntityUid uid, CombatModeComponent component, ComponentStartup args)
+    private void OnMapInit(EntityUid uid, CombatModeComponent component, MapInitEvent args)
     {
-        if (component.CombatToggleAction == null
-            && _protoMan.TryIndex(component.CombatToggleActionId, out InstantActionPrototype? toggleProto))
-        {
-            component.CombatToggleAction = new(toggleProto);
-        }
-
-        if (component.CombatToggleAction != null)
-            _actionsSystem.AddAction(uid, component.CombatToggleAction, null);
+        _actionsSystem.AddAction(uid, ref component.CombatToggleActionEntity, component.CombatToggleAction);
     }
 
     private void OnShutdown(EntityUid uid, CombatModeComponent component, ComponentShutdown args)
     {
-        if (component.CombatToggleAction != null)
-            _actionsSystem.RemoveAction(uid, component.CombatToggleAction);
+        _actionsSystem.RemoveAction(uid, component.CombatToggleActionEntity);
     }
 
     private void OnActionPerform(EntityUid uid, CombatModeComponent component, ToggleCombatActionEvent args)
@@ -86,8 +74,8 @@ public abstract class SharedCombatModeSystem : EntitySystem
         component.IsInCombatMode = value;
         Dirty(entity, component);
 
-        if (component.CombatToggleAction != null)
-            _actionsSystem.SetToggled(component.CombatToggleAction, component.IsInCombatMode);
+        if (component.CombatToggleActionEntity != null)
+            _actionsSystem.SetToggled(component.CombatToggleActionEntity, component.IsInCombatMode);
     }
 
     public virtual void SetActiveZone(EntityUid entity, TargetingZone zone,

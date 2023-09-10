@@ -79,3 +79,14 @@
   - type: Clothing
     slots:
     - Belt
+
+- type: entity
+  id: ActionBibleSummon
+  name: bible-summon-verb
+  description: bible-summon-verb-desc
+  noSpawn: true
+  components:
+  - type: InstantAction
+    icon: { sprite: Clothing/Head/Hats/witch.rsi, state: icon }
+    event: !type:SummonActionEvent
+    useDelay: 1

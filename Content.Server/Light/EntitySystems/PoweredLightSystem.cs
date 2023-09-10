@@ -246,7 +246,7 @@ namespace Content.Server.Light.EntitySystems
             ApcPowerReceiverComponent? powerReceiver = null,
             AppearanceComponent? appearance = null)
         {
-            if (!Resolve(uid, ref light, ref powerReceiver))
+            if (!Resolve(uid, ref light, ref powerReceiver, false))
                 return;
 
             // Optional component.

@@ -2,6 +2,7 @@ using Content.Server.GameTicking.Rules;
 using Content.Server.Zombies;
 using Content.Shared.Administration;
 using Content.Shared.Database;
+using Content.Shared.Humanoid;
 using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
 using Content.Shared.Verbs;
@@ -21,7 +22,7 @@ public sealed partial class AdminVerbSystem
     // All antag verbs have names so invokeverb works.
     private void AddAntagVerbs(GetVerbsEvent<Verb> args)
     {
-        if (!EntityManager.TryGetComponent(args.User, out ActorComponent? actor))
+        if (!TryComp<ActorComponent>(args.User, out var actor))
             return;
 
         var player = actor.PlayerSession;
@@ -29,8 +30,7 @@ public sealed partial class AdminVerbSystem
         if (!_adminManager.HasAdminFlag(player, AdminFlags.Fun))
             return;
 
-        var targetHasMind = TryComp(args.Target, out MindContainerComponent? targetMindComp);
-        if (!targetHasMind || targetMindComp == null)
+        if (!TryComp<MindContainerComponent>(args.Target, out var targetMindComp))
             return;
 
         Verb traitor = new()
@@ -43,7 +43,9 @@ public sealed partial class AdminVerbSystem
                 if (!_minds.TryGetSession(targetMindComp.Mind, out var session))
                     return;
 
-                _traitorRule.MakeTraitor(session);
+                // if its a monkey or mouse or something dont give uplink or objectives
+                var isHuman = HasComp<HumanoidAppearanceComponent>(args.Target);
+                _traitorRule.MakeTraitor(session, giveUplink: isHuman, giveObjectives: isHuman);
             },
             Impact = LogImpact.High,
             Message = Loc.GetString("admin-verb-make-traitor"),
