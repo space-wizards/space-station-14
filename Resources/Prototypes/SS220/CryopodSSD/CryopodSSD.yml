@@ -44,13 +44,13 @@
       direction: 0
     - type: InteractionOutline
     - type: Clickable
-    
-  
+
+
 - type: entity
   parent: BaseSSDConsole
   id: SSDStorageConsole
-    
-      
+
+
 - type: entity
   parent: [ SSDStorageConsole, BaseStructure ]
   id: CryopodSSD
@@ -66,6 +66,7 @@
       sprite: SS220/Structures/Machines/cryopodSSD.rsi
       state: icon
     - type: CryopodSSD
+      leaveAction: ActionCryopodSSDLeave
     - type: SSDStorageConsole
       isItReallyCryopod: true
     - type: ContainerContainer
@@ -74,7 +75,7 @@
         pod-body:
           !type:ContainerSlot
           showEnts: false
-          
+
 - type: entity
   id: CryoStoragePortal
   noSpawn: true

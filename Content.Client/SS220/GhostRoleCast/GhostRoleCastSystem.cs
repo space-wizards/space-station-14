@@ -22,17 +22,22 @@ namespace Content.Client.SS220.GhostRoleCast
         {
             base.Initialize();
 
-            SubscribeLocalEvent<GhostRoleCastComponent, ComponentInit>(OnGhostRoleCastInit);
+            SubscribeLocalEvent<GhostRoleCastComponent, ComponentStartup>(OnGhostRoleCastInit);
 
             SubscribeLocalEvent<GhostRoleCastComponent, ToggleGhostRoleCastActionEvent>(OnToggleGhostRoleCast);
             SubscribeLocalEvent<GhostRoleCastComponent, ToggleGhostRoleRemoveActionEvent>(OnToggleGhostRoleRemove);
             SubscribeLocalEvent<GhostRoleCastComponent, ToggleGhostRoleCastSettingsEvent>(OnToggleGhostRoleSettings);
         }
-        private void OnGhostRoleCastInit(EntityUid uid, GhostRoleCastComponent component, ComponentInit args)
+
+        private void OnGhostRoleCastInit(EntityUid uid, GhostRoleCastComponent component, ComponentStartup args)
         {
-            _actions.AddAction(uid, component.ToggleGhostRoleNameAction, null);
-            _actions.AddAction(uid, component.ToggleGhostRoleCastAction, null);
-            _actions.AddAction(uid, component.ToggleGhostRoleRemoveAction, null);
+            component.ToggleGhostRoleNameAction = Spawn(GhostRoleCastComponent.ToggleGhostRoleNameActionId);
+            component.ToggleGhostRoleCastAction = Spawn(GhostRoleCastComponent.ToggleGhostRoleCastActionId);
+            component.ToggleGhostRoleRemoveAction = Spawn(GhostRoleCastComponent.ToggleGhostRoleRemoveActionId);
+
+            _actions.AddAction(uid, ref component.ToggleGhostRoleNameAction, null);
+            _actions.AddAction(uid, ref component.ToggleGhostRoleCastAction, null);
+            _actions.AddAction(uid, ref component.ToggleGhostRoleRemoveAction, null);
         }
 
         private void OnToggleGhostRoleCast(EntityUid uid, GhostRoleCastComponent component, ToggleGhostRoleCastActionEvent args)

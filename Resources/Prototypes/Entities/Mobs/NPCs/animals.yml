@@ -809,6 +809,7 @@
         - MobMask
         layer:
         - MobLayer
+  - type: Stripping
   - type: Strippable
   - type: UserInterface
     interfaces:
@@ -942,9 +943,9 @@
   - type: MobStateActions
     actions:
       Critical:
-      - CritSuccumb
-      - CritFakeDeath
-      - CritLastWords
+      - ActionCritSuccumb
+      - ActionCritFakeDeath
+      - ActionCritLastWords
   - type: MobThresholds
     thresholds:
       0: Alive
@@ -983,6 +984,7 @@
     - Trash
     - VimPilot
     - Mouse
+    - DoorBumpOpener
   - type: Respirator
     damage:
       types:
@@ -1002,10 +1004,7 @@
     wilhelmProbability: 0.001
   # TODO: Remove CombatMode when Prototype Composition is added
   - type: CombatMode
-    combatToggleAction:
-      enabled: false
-      autoPopulate: false
-      name: action-name-combat
+    combatToggleAction: ActionCombatModeToggleOff
   - type: Bloodstream
     bloodMaxVolume: 50
   - type: CanEscapeInventory
@@ -1497,6 +1496,11 @@
   - type: Tag
     tags:
     - VimPilot
+    - DoorBumpOpener
+  # make the player a traitor once its taken
+  - type: AutoTraitor
+    giveUplink: false
+    giveObjectives: false
 
   # I have included a snake_hiss.ogg sound file so if you want to use that be my guest
 - type: entity
@@ -2286,9 +2290,9 @@
   - type: MobStateActions
     actions:
       Critical:
-      - CritSuccumb
-      - CritFakeDeath
-      - CritLastWords
+      - ActionCritSuccumb
+      - ActionCritFakeDeath
+      - ActionCritLastWords
   - type: MobThresholds
     thresholds:
       0: Alive

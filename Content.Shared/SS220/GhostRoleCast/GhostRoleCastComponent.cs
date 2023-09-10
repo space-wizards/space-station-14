@@ -1,7 +1,8 @@
 // © SS220, An EULA/CLA with a hosting restriction, full text: https://raw.githubusercontent.com/SerbiaStrong-220/space-station-14/master/CLA.txt
 
 using Content.Shared.Actions;
-using Content.Shared.Actions.ActionTypes;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.SS220.GhostRoleCast
@@ -13,46 +14,20 @@ namespace Content.Shared.SS220.GhostRoleCast
         public string GhostRoleDesc = "";
         public string GhostRoleRule = "";
 
-        public InstantAction ToggleGhostRoleNameAction = new()
-        {
-            Icon = new SpriteSpecifier.Texture(new("SS220/Interface/actions/GhostRoleSettings.png")),
-            DisplayName = "action-toggle-ghostrole-cast-settings-name",
-            Description = "action-toggle-ghostrole-cast-settings-desc",
-            ClientExclusive = true,
-            CheckCanInteract = false,
-            Priority = -7,
-            Event = new ToggleGhostRoleCastSettingsEvent(),
-        };
+        public const string ToggleGhostRoleNameActionId = "ActionToggleGhostRoleName";
+        public const string ToggleGhostRoleCastActionId = "ActionToggleGhostRoleCast";
+        public const string ToggleGhostRoleRemoveActionId = "ActionToggleGhostRoleRemove";
 
-        public EntityTargetAction ToggleGhostRoleCastAction = new()
-        {
-            Icon = new SpriteSpecifier.Texture(new("SS220/Interface/actions/GhostRoleCast.png")),
-            DisplayName = "action-toggle-ghostrole-cast-name",
-            Description = "action-toggle-ghostrole-cast-desc",
-            ClientExclusive = true,
-            CheckCanInteract = false,
-            Priority = -8,
-            Repeat = true,
-            DeselectOnMiss = false,
-            //CanTargetSelf = false,
-            Event = new ToggleGhostRoleCastActionEvent(),
-        };
 
-        public EntityTargetAction ToggleGhostRoleRemoveAction = new()
-        {
-            Icon = new SpriteSpecifier.Texture(new("SS220/Interface/actions/GhostRoleRemove.png")),
-            DisplayName = "action-toggle-ghostrole-remove-name",
-            Description = "action-toggle-ghostrole-remove-desc",
-            ClientExclusive = true,
-            CheckCanInteract = false,
-            Priority = -9,
-            Repeat = true,
-            DeselectOnMiss = false,
-            //CanTargetSelf = false,
-            Event = new ToggleGhostRoleRemoveActionEvent(),
-        };
+        [DataField("toggleGhostRoleNameAction")]
+        public EntityUid? ToggleGhostRoleNameAction;
+
+        [DataField("toggleGhostRoleCastAction")]
+        public EntityUid? ToggleGhostRoleCastAction;
+
+        [DataField("toggleGhostRoleRemoveAction")]
+        public EntityUid? ToggleGhostRoleRemoveAction;
     }
-
 
     public sealed partial class ToggleGhostRoleCastSettingsEvent : InstantActionEvent { };
     public sealed partial class ToggleGhostRoleCastActionEvent : EntityTargetActionEvent { };
