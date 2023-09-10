@@ -35,7 +35,7 @@ public sealed partial class PAIComponent : Component
     /// When microwaved there is this chance to brick the pai, kicking out its player and preventing it from being used again.
     /// </summary>
     [DataField("brickChance")]
-    public float BrickChance = 0.25f;
+    public float BrickChance = 0.5f;
 
     /// <summary>
     /// Locale id for the popup shown when the pai gets bricked.
@@ -48,10 +48,4 @@ public sealed partial class PAIComponent : Component
     /// </summary>
     [DataField("scramblePopup")]
     public string ScramblePopup = "pai-system-scramble-popup";
-
-    /// <summary>
-    /// Chance for an individual character to be scrambled.
-    /// </summary>
-    [DataField("charScrambleChance")]
-    public float CharScrambleChance = 0.2f;
 }
