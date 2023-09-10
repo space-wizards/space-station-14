@@ -491,7 +491,7 @@
   - type: Icon
     state: pda-cmo
   - type: HealthAnalyzer
-    scanDelay: 1
+    scanDelay: 0.5
     scanningEndSound:
       path: "/Audio/Items/Medical/healthscanner.ogg"
 
