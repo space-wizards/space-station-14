@@ -239,11 +239,8 @@ public partial class RadiationSystem
         if (_container.TryFindComponentsOnEntityContainerOrParent(uid, _radiationBlockingContainers, radblockingComps))
         {
             rads -= radblockingComps.Sum(x => x.RadResistance);
-
-            if (rads <= 0)
-                rads = 0;
         }
 
-        return rads;
+        return float.Max(rads, 0);
     }
 }
