@@ -27,9 +27,9 @@ public sealed class ObjectiveSystem : EntitySystem
     private void OnGetInfo(EntityUid uid, ObjectiveComponent comp, ref ObjectiveGetInfoEvent args)
     {
         if (comp.Title != null)
-            args.Info.Title = comp.Title;
+            args.Info.Title = Loc.GetString(comp.Title);
         if (comp.Description != null)
-            args.Info.Description = comp.Description;
+            args.Info.Description = Loc.GetString(comp.Description);
         if (comp.Icon != null)
             args.Info.Icon = comp.Icon;
     }
