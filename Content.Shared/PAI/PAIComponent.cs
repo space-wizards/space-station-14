@@ -41,13 +41,13 @@ public sealed partial class PAIComponent : Component
     /// Locale id for the popup shown when the pai gets bricked.
     /// </summary>
     [DataField("brickPopup")]
-    public string BrickPopup = "pai-component-brick-popup";
+    public string BrickPopup = "pai-system-brick-popup";
 
     /// <summary>
     /// Locale id for the popup shown when the pai is microwaved but does not get bricked.
     /// </summary>
     [DataField("scramblePopup")]
-    public string ScramblePopup = "pai-component-scramble-popup";
+    public string ScramblePopup = "pai-system-scramble-popup";
 
     /// <summary>
     /// Chance for an individual character to be scrambled.

@@ -154,5 +154,6 @@ public sealed class ToggleableGhostRoleSystem : EntitySystem
 
         RemCompDeferred<GhostTakeoverAvailableComponent>(uid);
         RemCompDeferred<GhostRoleComponent>(uid);
+        UpdateAppearance(uid, ToggleableGhostRoleStatus.Off);
     }
 }

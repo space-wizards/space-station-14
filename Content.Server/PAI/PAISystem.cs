@@ -71,8 +71,9 @@ public sealed class PAISystem : SharedPAISystem
         if (_random.Prob(comp.BrickChance))
         {
             _popup.PopupEntity(Loc.GetString(comp.BrickPopup), uid, PopupType.LargeCaution);
-            RemComp<PAIComponent>(uid);
             _toggleableGhostRole.Wipe(uid);
+            RemComp<PAIComponent>(uid);
+            RemComp<ToggleableGhostRoleComponent>(uid);
         }
         else
         {
