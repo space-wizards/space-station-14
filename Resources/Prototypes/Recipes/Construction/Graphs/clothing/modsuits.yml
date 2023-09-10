@@ -4,11 +4,8 @@
   graph:
     - node: start
       edges:
-        - to: ModsuitCivillian
+        - to: modsuitCivillian
           steps:
-            - material: Cloth
-              amount: 5
-              doAfter: 1
             - tag: EVAModBoots
               name: Гражданские ботинки
               icon:
@@ -39,7 +36,7 @@
                 sprite: Objects/Specific/Modsuits/Construction/civillian.rsi
                 state: Hardsuit-core
               doAfter: 1
-    - node: ModsuitCivillian
+    - node: modsuitCivillian
       entity: ClothingOuterModsuitCivillian
 
 - type: constructionGraph

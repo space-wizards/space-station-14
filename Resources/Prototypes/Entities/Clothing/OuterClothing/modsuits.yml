@@ -1,6 +1,6 @@
 - type: entity #в комментах у характеристик будут оригинальные значения.
   parent: ClothingOuterHardsuitBase
-  id: ClothingOuterModsuitBase
+  id: ClothingOuterModsuitBase #не маппить
   name: engineering modsuit
   description: A special suit that protects against hazardous, low pressure environments. Has radiation shielding.
   components:
@@ -69,8 +69,8 @@
         Caustic: 0.45
         Radiation: 0.3 
   - type: ClothingSpeedModifier
-    walkModifier: 0.75 #0.7
-    sprintModifier: 0.75 #0.7
+    walkModifier: 0.8 #0.7
+    sprintModifier: 0.8 #0.7
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetModsuitEngineering
   - type: UnpoweredFlashlight
@@ -186,8 +186,8 @@
         Radiation: 0.4 #0.5
         Heat: 0.15 #0.2
   - type: ClothingSpeedModifier
-    walkModifier: 0.75 #0.7
-    sprintModifier: 0.75 #0.7
+    walkModifier: 0.8 #0.7
+    sprintModifier: 0.8 #0.7
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetModsuitAtmos
   - type: Construction
@@ -630,18 +630,18 @@
   - type: Armor
     modifiers:
       coefficients:
-        Blunt: 0.85
-        Slash: 0.85
-        Shock: 0.85
-        Radiation: 0.6
-        Heat: 0.6
+        Blunt: 0.8
+        Slash: 0.8
+        Shock: 0.8
+        Radiation: 0.5
+        Heat: 0.35
   - type: ClothingSpeedModifier
-    walkModifier: 0.4
-    sprintModifier: 0.4
+    walkModifier: 0.6
+    sprintModifier: 0.6
   - type: PointLight
     color: "#9a26dd"
     enabled: false
-    radius: 4
+    radius: 7
     softness: 20
     autoRot: true
   - type: ToggleableClothing

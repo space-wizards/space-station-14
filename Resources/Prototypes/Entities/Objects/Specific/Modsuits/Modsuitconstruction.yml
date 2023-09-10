@@ -1,4 +1,4 @@
-- type: entity # оболочки
+- type: entity # оболочки  потом им найдётся применение
   parent: BaseItem
   id: FullMetalJacket
   name: FullMetalJacket #цельнометаллическая оболочка
@@ -896,7 +896,7 @@
 
 - type: entity
   parent: BaseItem
-  id: ModsuitEnhancedSomething
+  id: ModsuitEnhancedSomething # потом им найдётся применение
   name: AtmosModHelmet
   description: AtmosModHelmet
   components:

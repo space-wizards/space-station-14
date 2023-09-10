@@ -1,0 +1,217 @@
+- type: entity
+  name: y64362352
+  description: 6932050h
+  id: ModSuitStorageCE
+  parent: SuitStorageBase
+  suffix: Chief Engineer
+  components:
+  - type: StorageFill
+    contents:
+        - id: NitrogenTankFilled
+        - id: OxygenTankFilled
+        - id: JetpackVoidFilled
+        - id: ClothingShoesBootsMagAdv
+        - id: ClothingOuterModsuitCE
+        - id: ClothingMaskGasAtmos
+
+- type: entity
+  name: y64362352 #маппить обязательно ↑↓
+  description: 6932050h
+  id: ModSuitStorageCapSpace
+  parent: SuitStorageBase
+  suffix: Cap Space
+  components:
+  - type: StorageFill
+    contents:
+        - id: NitrogenTankFilled
+        - id: OxygenTankFilled
+        - id: ClothingOuterModsuitCapSpace
+        - id: ClothingMaskGasCaptain
+
+- type: entity
+  name: y64362352 #маппить необязательно ↓↓↓↓↓↓↓↓↓↓
+  description: 6932050h
+  id: ModSuitStorageCivillian
+  parent: SuitStorageBase
+  suffix: Civ suit
+  components:
+  - type: StorageFill
+    contents:
+        - id: NitrogenTankFilled
+        - id: OxygenTankFilled
+        - id: ClothingOuterModsuitCivillian
+        - id: ClothingMaskBreath
+
+- type: entity
+  name: y64362352
+  description: 6932050h
+  id: ModSuitStorageCMO
+  parent: SuitStorageBase
+  suffix: СMO
+  components:
+  - type: StorageFill
+    contents:
+        - id: NitrogenTankFilled
+        - id: OxygenTankFilled
+        - id: ClothingOuterModsuitCMO
+        - id: ClothingMaskBreath
+
+- type: entity
+  name: y64362352
+  description: 6932050h
+  id: ModSuitStorageRND
+  parent: SuitStorageBase
+  suffix: RND
+  components:
+  - type: StorageFill
+    contents:
+        - id: NitrogenTankFilled
+        - id: OxygenTankFilled
+        - id: ClothingOuterModsuitRND
+        - id: ClothingMaskBreath
+
+
+- type: entity
+  name: y64362352
+  description: 6932050h
+  id: ModSuitStorageMedical
+  parent: SuitStorageBase
+  suffix: Medical
+  components:
+  - type: StorageFill
+    contents:
+        - id: NitrogenTankFilled
+        - id: OxygenTankFilled
+        - id: ClothingOuterModsuitMedical
+        - id: ClothingMaskBreath
+
+- type: entity
+  name: y64362352
+  description: 6932050h
+  id: ModSuitStorageSecurity
+  parent: SuitStorageBase
+  suffix: Security
+  components:
+  - type: StorageFill
+    contents:
+        - id: NitrogenTankFilled
+        - id: OxygenTankFilled
+        - id: ClothingOuterModsuitSecurity
+        - id: ClothingMaskGasSecurity
+
+- type: entity
+  name: y64362352
+  description: 6932050h
+  id: ModSuitStorageBrigmedic
+  parent: SuitStorageBase
+  suffix: Brigmedic
+  components:
+  - type: StorageFill
+    contents:
+        - id: NitrogenTankFilled
+        - id: OxygenTankFilled
+        - id: ClothingOuterModsuitBrigmedic
+        - id: ClothingMaskGasSecurity
+
+- type: entity
+  name: y64362352
+  description: 6932050h
+  id: ModSuitStorageSalvage
+  parent: SuitStorageBase
+  suffix: Salvage
+  components:
+  - type: StorageFill
+    contents:
+        - id: NitrogenTankFilled
+        - id: OxygenTankFilled
+        - id: ClothingOuterModsuitSalvage
+        - id: ClothingMaskGasExplorer
+        - id: ClothingShoesBootsMag
+
+- type: entity
+  name: y64362352
+  description: 6932050h
+  id: ModSuitStorageEngineer
+  parent: SuitStorageBase
+  suffix: Engineer
+  components:
+  - type: StorageFill
+    contents:
+        - id: NitrogenTankFilled
+        - id: OxygenTankFilled
+        - id: ClothingOuterModsuitEngineer
+        - id: ClothingMaskGas
+        - id: ClothingShoesBootsMag
+
+- type: entity
+  name: y64362352
+  description: 6932050h
+  id: ModSuitStorageAtmos
+  parent: SuitStorageBase
+  suffix: Atmos
+  components:
+  - type: StorageFill
+    contents:
+        - id: NitrogenTankFilled
+        - id: OxygenTankFilled
+        - id: ClothingOuterModsuitAtmos
+        - id: ClothingMaskGasAtmos
+        - id: ClothingShoesBootsMag
+
+- type: entity
+  name: y64362352
+  description: 6932050h
+  id: ModSuitStorageHOS
+  parent: SuitStorageBase
+  suffix: HOS
+  components:
+  - type: StorageFill
+    contents:
+        - id: NitrogenTankFilled
+        - id: OxygenTankFilled
+        - id: ClothingOuterModsuitHOS
+        - id: ClothingMaskGasSwat
+        - id: JetpackSecurityFilled
+
+- type: entity
+  name: y64362352
+  description: 6932050h
+  id: ModSuitStorageCentcom
+  parent: SuitStorageBase
+  suffix: HOS
+  components:
+  - type: StorageFill
+    contents:
+        - id: NitrogenTankFilled
+        - id: OxygenTankFilled
+        - id: ClothingOuterModsuitCentcom
+        - id: ClothingMaskGasCentcom
+        - id: JetpackSecurityFilled
+
+- type: entity
+  name: y64362352
+  description: 6932050h
+  id: ModSuitStorageInterdyne
+  parent: SuitStorageBase
+  suffix: HOS
+  components:
+  - type: StorageFill
+    contents:
+        - id: NitrogenTankFilled
+        - id: OxygenTankFilled
+        - id: ClothingOuterModsuitInterdyne
+        - id: ClothingMaskBreath
+
+- type: entity
+  name: y64362352
+  description: 6932050h
+  id: ModSuitStorageBlueshield
+  parent: SuitStorageBase
+  suffix: HOS
+  components:
+  - type: StorageFill
+    contents:
+        - id: NitrogenTankFilled
+        - id: OxygenTankFilled
+        - id: ClothingOuterModsuitBlueshield
+        - id: ClothingMaskBreath
