@@ -320,7 +320,7 @@
   parent: MaterialBase
   id: MaterialHideCorgi
   name: corgi hide
-  description: Luxury pelt used in only the most elite fashion. Rumors say this is found when a cargo is sent to the nice farm.
+  description: Luxury pelt used in only the most elite fashion. Rumors say this is found when a corgi is sent to the nice farm.
   components:
   - type: Sprite
     sprite: Objects/Materials/materials.rsi
