@@ -33,7 +33,7 @@ public sealed class StickySystem : EntitySystem
         SubscribeLocalEvent<StickyComponent, StickyDoAfterEvent>(OnStickFinished);
         SubscribeLocalEvent<StickyComponent, AfterInteractEvent>(OnAfterInteract);
         SubscribeLocalEvent<StickyComponent, GetVerbsEvent<Verb>>(AddUnstickVerb);
-        
+
         SubscribeLocalEvent<TransferStickySurfaceOnSpawnBehaviorComponent, DestructionSpawnBehavior>(OnDestructionSpawnBehavior);
     }
 
@@ -41,7 +41,7 @@ public sealed class StickySystem : EntitySystem
     {
         if (!component.StickOnStart || component.StuckTo != null)
             return;
-        
+
         var stuck = false;
         foreach (var entity in _lookup.GetEntitiesIntersecting(Transform(uid).MapPosition))
         {
@@ -54,11 +54,7 @@ public sealed class StickySystem : EntitySystem
         }
 
         if (!stuck)
-        {
-            // entity was unable to stick on anything; draw it as unstuck
-            _appearance.SetData(uid, StickyVisuals.IsStuck, false);
             Log.Warning($"Stickable entity '{ToPrettyString(uid)}' was supposed to stick on other entity nearby when spawn but couldn't find anything to stick on");
-        }
     }
 
     private void OnAfterInteract(EntityUid uid, StickyComponent component, AfterInteractEvent args)
@@ -230,7 +226,7 @@ public sealed class StickySystem : EntitySystem
             return false;
         if (component.Blacklist != null && component.Blacklist.IsValid(entity))
             return false;
-        
+
         return true;
     }
 
