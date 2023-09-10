@@ -9,7 +9,6 @@ namespace Content.Client.CardboardBox;
 
 public sealed class CardboardBoxSystem : SharedCardboardBoxSystem
 {
-    [Dependency] private readonly ObjectPoolManager _pool = default!;
     [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
 
     public override void Initialize()
@@ -35,7 +34,7 @@ public sealed class CardboardBoxSystem : SharedCardboardBoxSystem
         //Any mob that can move should be surprised?
         //God mind rework needs to come faster so it can just check for mind
         //TODO: Replace with Mind Query when mind rework is in.
-        var mobMoverEntities = _pool.GetEntitySet();
+        var mobMoverEntities = new List<EntityUid>();
         var mover = GetEntity(msg.Mover);
 
         //Filter out entities in range to see that they're a mob and add them to the mobMoverEntities hash for faster lookup
@@ -62,6 +61,5 @@ public sealed class CardboardBoxSystem : SharedCardboardBoxSystem
             entTransform.AttachParent(mob);
         }
 
-        _pool.Return(mobMoverEntities);
     }
 }
