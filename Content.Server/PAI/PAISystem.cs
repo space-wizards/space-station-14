@@ -86,7 +86,7 @@ public sealed class PAISystem : SharedPAISystem
     private void ScrambleName(EntityUid uid, PAIComponent comp)
     {
         // create a new random name
-        var len = _rand.Next(6, 18);
+        var len = _random.Next(6, 18);
         var name = new StringBuilder(len);
         for (int i = 0; i < len; i++)
         {
