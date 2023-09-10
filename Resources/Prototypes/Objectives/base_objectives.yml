@@ -93,3 +93,11 @@
   - type: Objective
     description: objective-condition-steal-description
   - type: StealCondition
+
+# requires that the player not die, ignores being on emergency shuttle or cuffed
+- type: entity
+  abstract: true
+  parent: BaseObjective
+  id: BaseSurviveObjective
+  components:
+  - type: SurviveCondition

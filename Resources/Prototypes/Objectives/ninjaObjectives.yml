@@ -1,40 +1,83 @@
-- type: objective
-  id: StealResearchObjective
-  issuer: spiderclan
-  requirements:
-  - !type:NinjaRequirement {}
-  conditions:
-  - !type:StealResearchCondition {}
+- type: entity
+  abstract: true
+  parent: BaseObjective
+  id: BaseNinjaObjective
+  components:
+  - type: Objective
+    # difficulty isn't used all since objectives are picked
+    difficulty: 1.5
+    issuer: spiderclan
+  - type: RoleRequirement
+    roles:
+      components:
+      - TraitorRole
 
-- type: objective
+- type: entity
+  noSpawn: true
+  parent: BaseNinjaObjective
   id: DoorjackObjective
-  issuer: spiderclan
-  requirements:
-  - !type:NinjaRequirement {}
-  conditions:
-  - !type:DoorjackCondition {}
+  components:
+  - type: Objective
+    icon:
+      sprite: Objects/Tools/emag.rsi
+      state: icon
+  - type: NumberObjective
+    min: 15
+    max: 40
+    title: objective-condition-doorjack-title
+    description: objective-condition-doorjack-description
+  - type: DoorjackCondition
 
-- type: objective
+- type: entity
+  noSpawn: true
+  parent: BaseNinjaObjective
+  id: StealResearchObjective
+  components:
+  - type: Objective
+    description: objective-condition-steal-research-description
+    icon:
+      sprite: Structures/Machines/server.rsi
+      state: server
+  - type: NumberObjective
+    min: 5
+    max: 10
+    title: objective-condition-steal-research-title
+  - type: StealResearchCondition
+
+- type: entity
+  noSpawn: true
+  parent: BaseNinjaObjective
   id: SpiderChargeObjective
-  issuer: spiderclan
-  requirements:
-  - !type:NinjaRequirement {}
-  - !type:SpiderChargeTargetRequirement {}
-  conditions:
-  - !type:SpiderChargeCondition {}
+  components:
+  - type: Objective
+    description: objective-condition-spider-charge-description
+    icon:
+      sprite: Objects/Weapons/Bombs/spidercharge.rsi
+      state: icon
+  - type: SpiderChargeTargetRequirement
+  - type: SpiderChargeCondition
 
-- type: objective
-  id: TerrorObjective
-  issuer: spiderclan
-  requirements:
-  - !type:NinjaRequirement {}
-  conditions:
-  - !type:TerrorCondition {}
-
-- type: objective
+- type: entity
+  noSpawn: true
+  parent: [BaseNinjaObjective, BaseSurviveObjective]
   id: SurviveObjective
-  issuer: spiderclan
-  requirements:
-  - !type:NinjaRequirement {}
-  conditions:
-  - !type:SurviveCondition {}
+  components:
+  - type: Objective
+    title: objective-condition-survive-title
+    description: objective-condition-survive-description
+    icon:
+      sprite: Clothing/Mask/ninja.rsi
+      state: icon
+
+- type: entity
+  noSpawn: true
+  parent: BaseNinjaObjective
+  id: TerrorObjective
+  components:
+  - type: Objective
+    title: objective-condition-terror-title
+    description: objective-condition-terror-description
+    icon:
+      sprite: Objects/Fun/Instruments/otherinstruments.rsi
+      icon: red_phone
+  - type: TerrorCondition
