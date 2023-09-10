@@ -131,15 +131,13 @@ public sealed class DrinkSystem : EntitySystem
         if (_openable.IsClosed(uid, openable) || !args.IsInDetailsRange || !component.Examinable)
             return;
 
-        // put Empty / Xu after Opened
-        if (hasOpenable)
-            args.Message.AddMarkup(" - ");
+        // put Empty / Xu after Opened, or start a new line
+        args.Message.AddMarkup(hasOpenable ? " - " : "\n");
 
         var empty = IsEmpty(uid, component);
         if (empty)
         {
-            var text = Loc.GetString("drink-component-on-examine-is-empty");
-            args.Message.AddMarkup(text);
+            args.Message.AddMarkup(Loc.GetString("drink-component-on-examine-is-empty"));
             return;
         }
 

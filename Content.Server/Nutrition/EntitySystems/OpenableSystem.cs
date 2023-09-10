@@ -48,9 +48,8 @@ public sealed class OpenableSystem : EntitySystem
         if (!comp.Opened || !args.IsInDetailsRange)
             return;
 
-        // newline is prepended for splash and stuff
         var text = Loc.GetString(comp.ExamineText);
-        args.Message.AddMarkup($"\n{text}");
+        args.PushMarkup(text);
     }
 
     private void OnTransferAttempt(EntityUid uid, OpenableComponent comp, SolutionTransferAttemptEvent args)
