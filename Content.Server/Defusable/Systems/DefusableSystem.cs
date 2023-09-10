@@ -54,7 +54,7 @@ public sealed class DefusableSystem : SharedDefusableSystem
             Priority = 10,
             Act = () =>
             {
-                TryStartCountdown(uid, comp);
+                TryStartCountdown(uid, args.User, comp);
             }
         });
     }
@@ -116,7 +116,7 @@ public sealed class DefusableSystem : SharedDefusableSystem
 
     #region Public
 
-    public void TryStartCountdown(EntityUid uid, DefusableComponent comp)
+    public void TryStartCountdown(EntityUid uid, EntityUid user, DefusableComponent comp)
     {
         if (!comp.Usable)
         {
@@ -148,7 +148,7 @@ public sealed class DefusableSystem : SharedDefusableSystem
 
         _appearance.SetData(uid, DefusableVisuals.Active, comp.Activated);
         _adminLogger.Add(LogType.Explosion, LogImpact.High,
-            $"{ToPrettyString(uid):entity} has begun to countdown.");
+            $"{ToPrettyString(user):entity} begun a countdown on {ToPrettyString(uid):entity}");
 
         if (TryComp<WiresPanelComponent>(uid, out var wiresPanelComponent))
             _wiresSystem.TogglePanel(uid, wiresPanelComponent, false);
@@ -319,7 +319,7 @@ public sealed class DefusableSystem : SharedDefusableSystem
         }
         else
         {
-            TryStartCountdown(wire.Owner, comp);
+            TryStartCountdown(wire.Owner, user, comp);
             _adminLogger.Add(LogType.Explosion, LogImpact.High,
                 $"{ToPrettyString(user):user} pulsed the LIVE wire of {ToPrettyString(wire.Owner):entity} and begun the countdown.");
         }

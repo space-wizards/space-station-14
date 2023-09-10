@@ -104,7 +104,7 @@
       intensitySlope: 5
       maxIntensity: 4
     - type: Defusable
-      disposable: true
+      disposable: false
 
 - type: entity
   parent: BaseHardBomb
