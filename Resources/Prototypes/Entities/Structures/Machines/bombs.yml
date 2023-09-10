@@ -72,7 +72,7 @@
   description: A bomb for dummies, manual not included.
   components:
     - type: Wires
-      LayoutId: DefusableTraining
+      LayoutId: TrainingDefusable
       alwaysRandomize: true
     - type: Sprite
       sprite: Structures/Machines/bomb.rsi
@@ -94,6 +94,10 @@
           enum.WiresVisualLayers.MaintenancePanel:
             True: { visible: true }
             False: { visible: false }
+    - type: PointLight
+      color: "#0063C7"
+      radius: 1.1
+      softness: 1
     - type: Explosive
       explosionType: Default
       totalIntensity: 5.0
@@ -128,6 +132,10 @@
           enum.WiresVisualLayers.MaintenancePanel:
             True: { visible: true }
             False: { visible: false }
+    - type: PointLight
+      color: "#C7001B"
+      radius: 1.1
+      softness: 1
     - type: Explosive
       explosionType: HardBomb
       totalIntensity: 4000.0
