@@ -11,7 +11,7 @@ using Content.Shared.Database;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Light;
-using Content.Shared.Light.Component;
+using Content.Shared.Light.Components;
 using Content.Shared.Popups;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -246,7 +246,7 @@ namespace Content.Server.Light.EntitySystems
             ApcPowerReceiverComponent? powerReceiver = null,
             AppearanceComponent? appearance = null)
         {
-            if (!Resolve(uid, ref light, ref powerReceiver))
+            if (!Resolve(uid, ref light, ref powerReceiver, false))
                 return;
 
             // Optional component.

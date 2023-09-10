@@ -1,4 +1,3 @@
-using Content.Shared.Actions.ActionTypes;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
@@ -132,9 +131,6 @@ public partial class GunComponent : Component
     [ViewVariables(VVAccess.ReadWrite), DataField("selectedMode")]
     [AutoNetworkedField]
     public SelectiveFire SelectedMode = SelectiveFire.SemiAuto;
-
-    [DataField("selectModeAction")]
-    public InstantAction? SelectModeAction;
 
     /// <summary>
     /// Whether or not information about

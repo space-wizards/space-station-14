@@ -174,7 +174,7 @@ namespace Content.Server.Communications
 
             if (TryComp<AccessReaderComponent>(console, out var accessReaderComponent) && !HasComp<EmaggedComponent>(console))
             {
-                return _accessReaderSystem.IsAllowed(user, accessReaderComponent);
+                return _accessReaderSystem.IsAllowed(user, console, accessReaderComponent);
             }
             return true;
         }

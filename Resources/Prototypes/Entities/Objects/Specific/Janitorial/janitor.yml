@@ -417,6 +417,8 @@
       sound:
         path: /Audio/Ambience/Objects/drain.ogg
     - type: Drain
+    - type: DumpableSolution
+      solution: drainBuffer
     - type: Appearance
     - type: SolutionContainerVisuals
       maxFillLevels: 1
