@@ -111,7 +111,6 @@ public sealed class PAISystem : SharedPAISystem
             ? val
             : Loc.GetString("pai-system-pai-name", ("owner", val));
         _metaData.SetEntityName(uid, val);
-        name.ToString());
     }
 
     public void PAITurningOff(EntityUid uid)
