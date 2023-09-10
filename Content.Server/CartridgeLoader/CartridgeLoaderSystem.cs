@@ -37,16 +37,17 @@ public sealed class CartridgeLoaderSystem : SharedCartridgeLoaderSystem
     /// and use this method to update its state so the cartridge loaders state can be added to it.
     /// </remarks>
     /// <seealso cref="PDA.PdaSystem.UpdatePdaUserInterface"/>
-    public void UpdateUiState(EntityUid loaderUid, CartridgeLoaderUiState state, IPlayerSession? session = default!, CartridgeLoaderComponent? loader = default!)
+    public void UpdateUiState(EntityUid loaderUid, IPlayerSession? session, CartridgeLoaderComponent? loader)
     {
         if (!Resolve(loaderUid, ref loader))
             return;
 
-        state.ActiveUI = GetNetEntity(loader.ActiveProgram);
-        state.Programs = GetAvailablePrograms(loaderUid, loader);
+        if (!_userInterfaceSystem.TryGetUi(loaderUid, loader.UiKey, out var ui))
+            return;
 
-        if (_userInterfaceSystem.TryGetUi(loaderUid, loader.UiKey, out var ui))
-            _userInterfaceSystem.SetUiState(ui, state, session);
+        var programs = GetAvailablePrograms(loaderUid, loader);
+        var state = new CartridgeLoaderUiState(programs, GetNetEntity(loader.ActiveProgram));
+        _userInterfaceSystem.SetUiState(ui, state, session);
     }
 
     /// <summary>
@@ -80,11 +81,11 @@ public sealed class CartridgeLoaderSystem : SharedCartridgeLoaderSystem
         if (!Resolve(uid, ref loader))
             return new List<NetEntity>();
 
+        var available = GetNetEntityList(loader.InstalledPrograms);
+
         //Don't count a cartridge that has already been installed as available to avoid confusion
         if (loader.CartridgeSlot.HasItem && TryFindInstalled(Prototype(loader.CartridgeSlot.Item!.Value)?.ID, loader, out _))
-            return GetNetEntityList(loader.InstalledPrograms);
-
-        var available = GetNetEntityList(loader.InstalledPrograms);
+            return available;
 
         if (loader.CartridgeSlot.HasItem)
             available.Add(GetNetEntity(loader.CartridgeSlot.Item!.Value));
@@ -393,7 +394,7 @@ public sealed class CartridgeLoaderSystem : SharedCartridgeLoaderSystem
     /// <seealso cref="PDA.PdaSystem.UpdatePdaUserInterface"/>
     private void UpdateUserInterfaceState(EntityUid loaderUid, CartridgeLoaderComponent loader)
     {
-        UpdateUiState(loaderUid, new CartridgeLoaderUiState(), null, loader);
+        UpdateUiState(loaderUid, null, loader);
     }
 
     private void UpdateCartridgeInstallationStatus(EntityUid cartridgeUid, InstallationStatus installationStatus, CartridgeComponent? cartridgeComponent = default!)

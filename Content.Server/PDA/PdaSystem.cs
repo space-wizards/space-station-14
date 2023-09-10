@@ -12,6 +12,7 @@ using Content.Server.Station.Systems;
 using Content.Server.Store.Components;
 using Content.Server.Store.Systems;
 using Content.Shared.Access.Components;
+using Content.Shared.CartridgeLoader;
 using Content.Shared.Light.Components;
 using Content.Shared.PDA;
 using Robust.Server.GameObjects;
@@ -67,6 +68,9 @@ namespace Content.Server.PDA
 
         protected override void OnItemRemoved(EntityUid uid, PdaComponent pda, EntRemovedFromContainerMessage args)
         {
+            if (args.Container.ID != pda.IdSlot.ID && args.Container.ID != pda.PenSlot.ID)
+                return;
+
             // TODO: This is super cursed just use compstates please.
             if (MetaData(uid).EntityLifeStage >= EntityLifeStage.Terminating)
                 return;
@@ -111,7 +115,7 @@ namespace Content.Server.PDA
         /// </summary>
         public void UpdatePdaUi(EntityUid uid, PdaComponent pda)
         {
-            if (!_ui.TryGetUi(uid, PdaUiKey.Key, out _))
+            if (!_ui.TryGetUi(uid, PdaUiKey.Key, out var ui))
                 return;
 
             var address = GetDeviceNetAddress(uid);
@@ -123,8 +127,15 @@ namespace Content.Server.PDA
             // TODO: Update the level and name of the station with each call to UpdatePdaUi is only needed for latejoin players.
             // TODO: If someone can implement changing the level and name of the station when changing the PDA grid, this can be removed.
 
+            // TODO don't make this depend on cartridge loader!?!?
+            if (!TryComp(uid, out CartridgeLoaderComponent? loader))
+                return;
+
+            var programs = _cartridgeLoader.GetAvailablePrograms(uid, loader);
             var id = CompOrNull<IdCardComponent>(pda.ContainedId);
             var state = new PdaUpdateState(
+                programs,
+                GetNetEntity(loader.ActiveProgram),
                 pda.FlashlightOn,
                 pda.PenSlot.HasItem,
                 new PdaIdInfoText
@@ -140,7 +151,7 @@ namespace Content.Server.PDA
                 hasInstrument,
                 address);
 
-            _cartridgeLoader.UpdateUiState(uid, state);
+            _ui.SetUiState(ui, state);
         }
 
         private void OnUiMessage(EntityUid uid, PdaComponent pda, PdaRequestUpdateInterfaceMessage msg)
