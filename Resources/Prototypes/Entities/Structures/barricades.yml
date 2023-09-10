@@ -49,7 +49,7 @@
   parent: BaseBarricade
   components:
   - type: Construction
-    graph: BarricadeGraph
+    graph: Barricade
     node: barricadefull
   - type: Tag
     tags:

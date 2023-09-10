@@ -568,25 +568,8 @@
   category: construction-category-structures
   description: An improvised barricade made out of wooden planks.
   icon:
-    sprite: Structures/Walls/barricades.rsi
+    sprite: Structures/barricades.rsi
     state: barricade_full
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-    - !type:TileNotBlocked
-
-- type: construction
-  name: wooden barricade
-  id: Barricade
-  graph: Barricade
-  startNode: start
-  targetNode: barricadewooden
-  category: construction-category-structures
-  description: An improvised barricade made out of wooden planks.
-  icon:
-    sprite: Structures/Walls/barricades.rsi
-    state: barricadewooden
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
