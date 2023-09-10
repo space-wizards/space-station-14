@@ -28,7 +28,6 @@ using Content.Shared.Random.Helpers;
 using Robust.Server.Maps;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Timing;
-using Content.Shared.Tools.Components;
 
 namespace Content.Server.Salvage
 {
@@ -70,8 +69,6 @@ namespace Content.Server.Salvage
             SubscribeLocalEvent<SalvageMagnetComponent, UpgradeExamineEvent>(OnUpgradeExamine);
             SubscribeLocalEvent<SalvageMagnetComponent, ExaminedEvent>(OnExamined);
             SubscribeLocalEvent<SalvageMagnetComponent, ComponentShutdown>(OnMagnetRemoval);
-            SubscribeLocalEvent<SalvageMagnetComponent, ComponentStartup>(OnMagnetStartup);
-            SubscribeLocalEvent<SalvageMagnetComponent, InteractedWithToolAttemptEvent>(OnToolUsed);
             SubscribeLocalEvent<GridRemovalEvent>(OnGridRemoval);
 
             // Can't use RoundRestartCleanupEvent, I need to clean up before the grid, and components are gone to prevent the announcements
@@ -154,20 +151,13 @@ namespace Content.Server.Salvage
             }
         }
 
-        // SS220-Magnet-Disassembly-Fix
-        private void OnMagnetStartup(EntityUid uid, SalvageMagnetComponent component, ComponentStartup args)
-        {
-            var magnetTransform = Transform(uid);
-            component.GridUid = magnetTransform.GridUid;
-        }
-
         private void OnMagnetRemoval(EntityUid uid, SalvageMagnetComponent component, ComponentShutdown args)
         {
             if (component.MagnetState.StateType == MagnetStateType.Inactive)
                 return;
 
-            // SS220-Magnet-Disassembly-Fix
-            if (component.GridUid is not { } gridId || !_salvageGridStates.TryGetValue(gridId, out var salvageGridState))
+            var magnetTranform = Transform(uid);
+            if (magnetTranform.GridUid is not { } gridId || !_salvageGridStates.TryGetValue(gridId, out var salvageGridState))
                 return;
 
             salvageGridState.ActiveMagnets.Remove(uid);
@@ -184,26 +174,6 @@ namespace Content.Server.Salvage
             }
 
             component.MagnetState = MagnetState.Inactive;
-            component.GridUid = null; // SS220-Magnet-Disassembly-Fix
-        }
-
-        // SS220-Magnet-Disassembly-Fix
-        private void OnToolUsed(EntityUid uid, SalvageMagnetComponent component, InteractedWithToolAttemptEvent args)
-        {
-            if (component.MagnetState.StateType != MagnetStateType.CoolingDown &&
-                component.MagnetState.StateType != MagnetStateType.Holding)
-                return;
-
-            if (!TryComp<ToolComponent>(args.Tool, out var toolComponent))
-                return;
-
-            // Can't dissasemble magnet while it's cooling down/holding
-            // Main purpose of this is to avoid cooldown reset
-            if (toolComponent.Qualities.Contains("Prying"))
-            {
-                ShowPopup(uid, "salvage-system-announcement-too-hot-to-pry", args.User);
-                args.Cancel();
-            }
         }
 
         private void OnRefreshParts(EntityUid uid, SalvageMagnetComponent component, RefreshPartsEvent args)
@@ -227,7 +197,7 @@ namespace Content.Server.Salvage
             var gotGrid = false;
             var remainingTime = TimeSpan.Zero;
 
-            if (component.GridUid is { } gridId &&
+            if (Transform(uid).GridUid is { } gridId &&
                 _salvageGridStates.TryGetValue(gridId, out var salvageGridState))
             {
                 remainingTime = component.MagnetState.Until - salvageGridState.CurrentTime;
@@ -278,7 +248,7 @@ namespace Content.Server.Salvage
                 case MagnetStateType.Inactive:
                     ShowPopup(uid, "salvage-system-report-activate-success", user);
                     var magnetTransform = Transform(uid);
-                    var gridId = component.GridUid ?? throw new InvalidOperationException("Magnet had no grid associated");
+                    var gridId = magnetTransform.GridUid ?? throw new InvalidOperationException("Magnet had no grid associated");
                     if (!_salvageGridStates.TryGetValue(gridId, out var gridState))
                     {
                         gridState = new SalvageGridState();
