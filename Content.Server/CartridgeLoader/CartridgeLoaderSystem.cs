@@ -40,33 +40,54 @@ public sealed class CartridgeLoaderSystem : SharedCartridgeLoaderSystem
 
     public bool TryGetProgram<T>(
         EntityUid uid,
+        [NotNullWhen(true)] out EntityUid? programUid,
         [NotNullWhen(true)] out T? program,
+        bool installedOnly = false,
         CartridgeLoaderComponent? loader = null,
         ContainerManagerComponent? containerManager = null)
     {
         program = default;
+        programUid = null;
 
         if (!_containerSystem.TryGetContainer(uid, InstalledContainerId, out var container, containerManager))
             return false;
 
         foreach (var prog in container.ContainedEntities)
         {
-            if (TryComp(prog, out program))
-                return true;
+            if (!TryComp(prog, out program))
+                continue;
+
+            programUid = prog;
+            return true;
         }
 
-        if (!Resolve(uid, ref loader))
+        if (installedOnly)
             return false;
 
-        return TryComp(loader.CartridgeSlot.Item, out program);
+        if (!Resolve(uid, ref loader) || !TryComp(loader.CartridgeSlot.Item, out program))
+            return false;
+
+        programUid = loader.CartridgeSlot.Item;
+        return true;
+    }
+
+    public bool TryGetProgram<T>(
+        EntityUid uid,
+        [NotNullWhen(true)] out EntityUid? programUid,
+        bool installedOnly = false,
+        CartridgeLoaderComponent? loader = null,
+        ContainerManagerComponent? containerManager = null)
+    {
+        return TryGetProgram<T>(uid, out programUid, out _, installedOnly, loader, containerManager);
     }
 
     public bool HasProgram<T>(
         EntityUid uid,
+        bool installedOnly = false,
         CartridgeLoaderComponent? loader = null,
         ContainerManagerComponent? containerManager = null)
     {
-        return TryGetProgram<T>(uid, out _, loader, containerManager);
+        return TryGetProgram<T>(uid, out _, out _, installedOnly, loader, containerManager);
     }
 
     /// <summary>

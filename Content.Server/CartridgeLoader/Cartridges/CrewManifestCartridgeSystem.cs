@@ -88,11 +88,8 @@ public sealed class CrewManifestCartridgeSystem : EntitySystem
                 return;
             }
 
-            foreach (var program in _cartridgeLoader.GetInstalled(loaderUid, cont))
-            {
-                if (HasComp<CrewManifestCartridgeComponent>(program))
-                    _cartridgeLoader.UninstallProgram(loaderUid, program, comp);
-            }
+            if (_cartridgeLoader.TryGetProgram<CrewManifestCartridgeComponent>(loaderUid, out var program, true, comp, cont))
+                _cartridgeLoader.UninstallProgram(loaderUid, program.Value, comp);
         }
     }
 
