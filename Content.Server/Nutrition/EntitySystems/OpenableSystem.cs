@@ -1,4 +1,5 @@
 using Content.Server.Chemistry.EntitySystems;
+using Content.Server.Fluids.EntitySystems;
 using Content.Server.Nutrition.Components;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
@@ -23,7 +24,7 @@ public sealed class OpenableSystem : EntitySystem
 
         SubscribeLocalEvent<OpenableComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<OpenableComponent, UseInHandEvent>(OnUse);
-        SubscribeLocalEvent<OpenableComponent, ExaminedEvent>(OnExamined);
+        SubscribeLocalEvent<OpenableComponent, ExaminedEvent>(OnExamined, after: new[] { typeof(PuddleSystem) });
         SubscribeLocalEvent<OpenableComponent, SolutionTransferAttemptEvent>(OnTransferAttempt);
         SubscribeLocalEvent<OpenableComponent, MeleeHitEvent>(HandleIfClosed);
         SubscribeLocalEvent<OpenableComponent, AfterInteractEvent>(HandleIfClosed);
@@ -47,8 +48,9 @@ public sealed class OpenableSystem : EntitySystem
         if (!comp.Opened || !args.IsInDetailsRange)
             return;
 
+        // newline is prepended for splash and stuff
         var text = Loc.GetString(comp.ExamineText);
-        args.Message.AddMarkup(text);
+        args.Message.AddMarkup($"\n{text}");
     }
 
     private void OnTransferAttempt(EntityUid uid, OpenableComponent comp, SolutionTransferAttemptEvent args)

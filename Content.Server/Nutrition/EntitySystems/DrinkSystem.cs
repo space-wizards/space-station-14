@@ -139,7 +139,7 @@ public sealed class DrinkSystem : EntitySystem
         if (empty)
         {
             var text = Loc.GetString("drink-component-on-examine-is-empty");
-            args.Message.AddMarkup($"\n{text}");
+            args.Message.AddMarkup(text);
             return;
         }
 
