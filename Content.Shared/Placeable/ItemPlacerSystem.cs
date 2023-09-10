@@ -12,7 +12,6 @@ namespace Content.Shared.Placeable;
 /// </summary>
 public sealed class ItemPlacerSystem : EntitySystem
 {
-    [Dependency] private readonly ObjectPoolManager _pool = default!;
     [Dependency] private readonly PlaceableSurfaceSystem _placeableSurface = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
 
@@ -35,7 +34,6 @@ public sealed class ItemPlacerSystem : EntitySystem
         component.PlacedEntities.Clear();
         var ents = EnsureEntitySet<ItemPlacerComponent>(state.Entities, uid);
         component.PlacedEntities.UnionWith(ents);
-        _pool.Return(ents);
     }
 
     private void OnPlacerGetState(EntityUid uid, ItemPlacerComponent component, ref ComponentGetState args)

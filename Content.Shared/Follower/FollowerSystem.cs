@@ -21,7 +21,6 @@ namespace Content.Shared.Follower;
 
 public sealed class FollowerSystem : EntitySystem
 {
-    [Dependency] private readonly ObjectPoolManager _pool = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly TagSystem _tagSystem = default!;
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
@@ -57,7 +56,6 @@ public sealed class FollowerSystem : EntitySystem
         if (args.Current is not FollowedComponentState state)
             return;
 
-        _pool.Return(component.Following);
         component.Following = EnsureEntitySet<FollowedComponent>(state.Following, uid);
     }
 
