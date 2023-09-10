@@ -1,4 +1,5 @@
 using Content.Server.Ghost.Roles;
+using Content.Server.Ghost.Roles.Components;
 using Content.Server.Instruments;
 using Content.Server.Kitchen.Components;
 using Content.Shared.Interaction.Events;
@@ -103,7 +104,14 @@ public sealed class PAISystem : SharedPAISystem
             }
         }
 
-        _metaData.SetEntityName(uid, name.ToString());
+        // if its named add 's pAI back to the scrambled name
+        // since scrambling stops at '
+        var val = name.ToString() : 
+        val = comp.LastUser == null
+            ? val
+            : Loc.GetString("pai-system-pai-name", ("owner", val));
+        _metaData.SetEntityName(uid, val);
+        name.ToString());
     }
 
     public void PAITurningOff(EntityUid uid)
