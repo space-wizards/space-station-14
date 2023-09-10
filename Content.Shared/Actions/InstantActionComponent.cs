@@ -19,7 +19,7 @@ public sealed partial class InstantActionComponent : BaseActionComponent
 [Serializable, NetSerializable]
 public sealed class InstantActionComponentState : BaseActionComponentState
 {
-    public InstantActionComponentState(InstantActionComponent component) : base(component)
+    public InstantActionComponentState(InstantActionComponent component, IEntityManager entManager) : base(component, entManager)
     {
     }
 }

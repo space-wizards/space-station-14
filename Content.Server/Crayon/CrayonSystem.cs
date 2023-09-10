@@ -99,7 +99,7 @@ public sealed class CrayonSystem : SharedCrayonSystem
         if (component.UserInterface?.SubscribedSessions.Contains(actor.PlayerSession) == true)
         {
             // Tell the user interface the selected stuff
-            UserInterfaceSystem.SetUiState(component.UserInterface, new CrayonBoundUserInterfaceState(component.SelectedState, component.SelectableColor, component.Color));
+            _uiSystem.SetUiState(component.UserInterface, new CrayonBoundUserInterfaceState(component.SelectedState, component.SelectableColor, component.Color));
         }
 
         args.Handled = true;

@@ -147,7 +147,7 @@ public abstract partial class SharedFultonSystem : EntitySystem
 
         var ev = new FultonedDoAfterEvent();
         _doAfter.TryStartDoAfter(
-            new DoAfterArgs(args.User, component.ApplyFultonDuration, ev, args.Target, args.Target, args.Used)
+            new DoAfterArgs(EntityManager, args.User, component.ApplyFultonDuration, ev, args.Target, args.Target, args.Used)
             {
                 CancelDuplicate = true,
                 MovementThreshold = 0.5f,
@@ -188,7 +188,7 @@ public abstract partial class SharedFultonSystem : EntitySystem
     [Serializable, NetSerializable]
     protected sealed class FultonAnimationMessage : EntityEventArgs
     {
-        public EntityUid Entity;
-        public EntityCoordinates Coordinates;
+        public NetEntity Entity;
+        public NetCoordinates Coordinates;
     }
 }

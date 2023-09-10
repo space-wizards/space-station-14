@@ -60,11 +60,11 @@ public sealed class StepTriggerComponentState : ComponentState
 {
     public float IntersectRatio { get; }
     public float RequiredTriggerSpeed { get; }
-    public readonly HashSet<EntityUid> CurrentlySteppedOn;
-    public readonly HashSet<EntityUid> Colliding;
+    public readonly HashSet<NetEntity> CurrentlySteppedOn;
+    public readonly HashSet<NetEntity> Colliding;
     public readonly bool Active;
 
-    public StepTriggerComponentState(float intersectRatio, HashSet<EntityUid> currentlySteppedOn, HashSet<EntityUid> colliding, float requiredTriggerSpeed, bool active)
+    public StepTriggerComponentState(float intersectRatio, HashSet<NetEntity> currentlySteppedOn, HashSet<NetEntity> colliding, float requiredTriggerSpeed, bool active)
     {
         IntersectRatio = intersectRatio;
         CurrentlySteppedOn = currentlySteppedOn;

@@ -189,7 +189,7 @@ namespace Content.Server.Ghost
             if (args.SenderSession.AttachedEntity is not {Valid: true} entity ||
                 !EntityManager.HasComponent<GhostComponent>(entity))
             {
-                Logger.Warning($"User {args.SenderSession.Name} sent a {nameof(GhostWarpsRequestEvent)} without being a ghost.");
+                Log.Warning($"User {args.SenderSession.Name} sent a {nameof(GhostWarpsRequestEvent)} without being a ghost.");
                 return;
             }
 
@@ -204,7 +204,7 @@ namespace Content.Server.Ghost
                 !ghost.CanReturnToBody ||
                 !EntityManager.TryGetComponent(attached, out ActorComponent? actor))
             {
-                Logger.Warning($"User {args.SenderSession.Name} sent an invalid {nameof(GhostReturnToBodyRequest)}");
+                Log.Warning($"User {args.SenderSession.Name} sent an invalid {nameof(GhostReturnToBodyRequest)}");
                 return;
             }
 
@@ -216,25 +216,27 @@ namespace Content.Server.Ghost
             if (args.SenderSession.AttachedEntity is not {Valid: true} attached ||
                 !EntityManager.TryGetComponent(attached, out GhostComponent? ghost))
             {
-                Logger.Warning($"User {args.SenderSession.Name} tried to warp to {msg.Target} without being a ghost.");
+                Log.Warning($"User {args.SenderSession.Name} tried to warp to {msg.Target} without being a ghost.");
                 return;
             }
 
-            if (!EntityManager.EntityExists(msg.Target))
+            var target = GetEntity(msg.Target);
+
+            if (!EntityManager.EntityExists(target))
             {
-                Logger.Warning($"User {args.SenderSession.Name} tried to warp to an invalid entity id: {msg.Target}");
+                Log.Warning($"User {args.SenderSession.Name} tried to warp to an invalid entity id: {msg.Target}");
                 return;
             }
 
-            if (TryComp(msg.Target, out WarpPointComponent? warp) && warp.Follow
-                || HasComp<MobStateComponent>(msg.Target))
+            if (TryComp(target, out WarpPointComponent? warp) && warp.Follow
+                || HasComp<MobStateComponent>(target))
             {
-                 _followerSystem.StartFollowingEntity(ghost.Owner, msg.Target);
+                 _followerSystem.StartFollowingEntity(attached, target);
                  return;
             }
 
-            var xform = Transform(ghost.Owner);
-            xform.Coordinates = Transform(msg.Target).Coordinates;
+            var xform = Transform(attached);
+            xform.Coordinates = Transform(target).Coordinates;
             xform.AttachToGridOrMap();
             if (TryComp(attached, out PhysicsComponent? physics))
                 _physics.SetLinearVelocity(attached, Vector2.Zero, body: physics);
@@ -250,11 +252,13 @@ namespace Content.Server.Ghost
 
         private IEnumerable<GhostWarp> GetLocationWarps()
         {
-            foreach (var warp in EntityManager.EntityQuery<WarpPointComponent>(true))
+            var allQuery = AllEntityQuery<WarpPointComponent>();
+
+            while (allQuery.MoveNext(out var uid, out var warp))
             {
                 if (warp.Location != null)
                 {
-                    yield return new GhostWarp(warp.Owner, warp.Location, true);
+                    yield return new GhostWarp(GetNetEntity(uid), warp.Location, true);
                 }
             }
         }
@@ -273,7 +277,7 @@ namespace Content.Server.Ghost
                     var playerInfo = $"{EntityManager.GetComponent<MetaDataComponent>(attached).EntityName} ({jobName})";
 
                     if (_mobState.IsAlive(attached) || _mobState.IsCritical(attached))
-                        yield return new GhostWarp(attached, playerInfo, false);
+                        yield return new GhostWarp(GetNetEntity(attached), playerInfo, false);
                 }
             }
         }

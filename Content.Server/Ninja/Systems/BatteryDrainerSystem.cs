@@ -45,7 +45,7 @@ public sealed class BatteryDrainerSystem : SharedBatteryDrainerSystem
             return;
         }
 
-        var doAfterArgs = new DoAfterArgs(uid, comp.DrainTime, new DrainDoAfterEvent(), target: target, eventTarget: uid)
+        var doAfterArgs = new DoAfterArgs(EntityManager, uid, comp.DrainTime, new DrainDoAfterEvent(), target: target, eventTarget: uid)
         {
             BreakOnUserMove = true,
             MovementThreshold = 0.5f,

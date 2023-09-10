@@ -19,10 +19,12 @@ public sealed class ProjectileSystem : SharedProjectileSystem
 
     private void OnProjectileImpact(ImpactEffectEvent ev)
     {
-        if (Deleted(ev.Coordinates.EntityId))
+        var coords = GetCoordinates(ev.Coordinates);
+
+        if (Deleted(coords.EntityId))
             return;
 
-        var ent = Spawn(ev.Prototype, ev.Coordinates);
+        var ent = Spawn(ev.Prototype, coords);
 
         if (TryComp<SpriteComponent>(ent, out var sprite))
         {

@@ -3,6 +3,8 @@ using Content.Shared.Actions;
 using Content.Shared.CombatMode;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Players;
+using PlayerManager = Robust.Client.Player.PlayerManager;
 
 namespace Content.IntegrationTests.Tests.Actions;
 
@@ -23,30 +25,32 @@ public sealed class ActionsAddedTest
         var client = pair.Client;
         var sEntMan = server.ResolveDependency<IEntityManager>();
         var cEntMan = client.ResolveDependency<IEntityManager>();
-        var session = server.ResolveDependency<IPlayerManager>().ServerSessions.Single();
+        var clientSession = client.ResolveDependency<Robust.Client.Player.IPlayerManager>().LocalPlayer?.Session;
+        var serverSession = server.ResolveDependency<IPlayerManager>().ServerSessions.Single();
         var sActionSystem = server.System<SharedActionsSystem>();
         var cActionSystem = client.System<SharedActionsSystem>();
 
         // Dummy ticker is disabled - client should be in control of a normal mob.
-        Assert.NotNull(session.AttachedEntity);
-        var ent = session.AttachedEntity!.Value;
-        Assert.That(sEntMan.EntityExists(ent));
-        Assert.That(cEntMan.EntityExists(ent));
-        Assert.That(sEntMan.HasComponent<ActionsComponent>(ent));
-        Assert.That(cEntMan.HasComponent<ActionsComponent>(ent));
-        Assert.That(sEntMan.HasComponent<CombatModeComponent>(ent));
-        Assert.That(cEntMan.HasComponent<CombatModeComponent>(ent));
+        Assert.NotNull(serverSession.AttachedEntity);
+        var serverEnt = serverSession.AttachedEntity!.Value;
+        var clientEnt = clientSession!.AttachedEntity!.Value;
+        Assert.That(sEntMan.EntityExists(serverEnt));
+        Assert.That(cEntMan.EntityExists(clientEnt));
+        Assert.That(sEntMan.HasComponent<ActionsComponent>(serverEnt));
+        Assert.That(cEntMan.HasComponent<ActionsComponent>(clientEnt));
+        Assert.That(sEntMan.HasComponent<CombatModeComponent>(serverEnt));
+        Assert.That(cEntMan.HasComponent<CombatModeComponent>(clientEnt));
 
-        var sComp = sEntMan.GetComponent<ActionsComponent>(ent);
-        var cComp = cEntMan.GetComponent<ActionsComponent>(ent);
+        var sComp = sEntMan.GetComponent<ActionsComponent>(serverEnt);
+        var cComp = cEntMan.GetComponent<ActionsComponent>(clientEnt);
 
         // Mob should have a combat-mode action.
         // This action should have a non-null event both on the server & client.
         var evType = typeof(ToggleCombatActionEvent);
 
-        var sActions = sActionSystem.GetActions(ent).Where(
+        var sActions = sActionSystem.GetActions(serverEnt).Where(
             x => x.Comp is InstantActionComponent act && act.Event?.GetType() == evType).ToArray();
-        var cActions = cActionSystem.GetActions(ent).Where(
+        var cActions = cActionSystem.GetActions(clientEnt).Where(
             x => x.Comp is InstantActionComponent act && act.Event?.GetType() == evType).ToArray();
 
         Assert.That(sActions.Length, Is.EqualTo(1));
