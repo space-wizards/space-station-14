@@ -1,12 +1,4 @@
 Entries:
-- author: Dygon
-  changes:
-  - {message: Disposable turret price lowered to 8 tc and rate of fire lowered by
-      20%., type: Tweak}
-  - {message: Disposable turrets can now be turned back into a toolbox using a screwdriver
-      and repaired using a wrench., type: Tweak}
-  id: 4296
-  time: '2023-07-20T02:16:09.0000000+00:00'
 - author: FillerVK
   changes:
   - {message: Added psychologist's office at Box Station, type: Add}
@@ -2993,3 +2985,9 @@ Entries:
   - {message: Fixed Cognizine not working on player-controlled animals., type: Fix}
   id: 4795
   time: '2023-09-10T20:21:54.0000000+00:00'
+- author: Vasilis
+  changes:
+  - {message: All pda's with built in medical scanners now take one second to scan.,
+    type: Tweak}
+  id: 4796
+  time: '2023-09-10T23:01:05.0000000+00:00'
