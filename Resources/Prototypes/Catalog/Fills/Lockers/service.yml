@@ -19,6 +19,8 @@
         amount: 2
       - id: RagItem
         amound: 2
+      - id: RussianRevolver
+        prob: 0.985
 
 #- type: entity
 #  id: LockerFormalFilled

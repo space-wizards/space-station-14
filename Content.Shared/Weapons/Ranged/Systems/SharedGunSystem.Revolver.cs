@@ -301,28 +301,29 @@ public partial class SharedGunSystem
         }
     }
 
-    public void RussianizeRevolver(EntityUid revolverUid, RevolverAmmoProviderComponent ammoDrinker)
+    public void RussianizeRevolver(EntityUid revolverUid, RevolverAmmoProviderComponent component)
     {
-        for (int i = 0; i < ammoDrinker.Capacity; i++)
+        //removes all bullets except for one
+        for (int i = 0; i < component.Capacity; i++)
         {
             if (i == 0)
             {
                 continue;
             }
-            var thisSlot = ammoDrinker.AmmoSlots[i];
+            var thisSlot = component.AmmoSlots[i];
             if (thisSlot == null)
             {
-                ammoDrinker.Chambers[i] = null;
+                component.Chambers[i] = null;
             }
             else
             {
-                ammoDrinker.AmmoContainer.Remove(thisSlot.Value);
-                ammoDrinker.AmmoSlots[i] = null;
+                component.AmmoContainer.Remove(thisSlot.Value);
+                component.AmmoSlots[i] = null;
             }
         }
         UpdateAmmoCount(revolverUid);
-        UpdateRevolverAppearance(revolverUid, ammoDrinker);
-        Dirty(revolverUid, ammoDrinker);
+        UpdateRevolverAppearance(revolverUid, component);
+        Dirty(revolverUid, component);
     }
 
     private void UpdateRevolverAppearance(EntityUid uid, RevolverAmmoProviderComponent component)
@@ -401,7 +402,7 @@ public partial class SharedGunSystem
         Dirty(uid, component);
     }
 
-    private void Cycle(RevolverAmmoProviderComponent component, int count = 1)
+    public void Cycle(RevolverAmmoProviderComponent component, int count = 1)
     {
         component.CurrentIndex = (component.CurrentIndex + count) % component.Capacity;
     }
