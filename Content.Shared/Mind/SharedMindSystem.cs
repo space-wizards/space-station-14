@@ -14,6 +14,7 @@ using Content.Shared.Players;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Players;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Mind;
@@ -343,6 +344,19 @@ public abstract class SharedMindSystem : EntitySystem
         mindId = default;
         mind = null;
         return _player.ContentData(player) is { } data && TryGetMind(data, out mindId, out mind);
+    }
+
+    /// <summary>
+    /// Gets a role component from a player's mind.
+    /// </summary>
+    /// <returns>Whether a role was found</returns>
+    public bool TryGetRole<T>(EntityUid user, [NotNullWhen(true)] out T? role) where T : Component
+    {
+        role = null;
+        if (!TryComp<MindContainerComponent>(user, out var mindContainer) || mindContainer.Mind == null)
+            return false;
+
+        return TryComp(mindContainer.Mind, out role);
     }
 
     /// <summary>
