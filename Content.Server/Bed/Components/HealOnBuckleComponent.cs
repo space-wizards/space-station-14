@@ -17,5 +17,7 @@ namespace Content.Server.Bed.Components
         public float SleepMultiplier = 3f;
 
         public TimeSpan NextHealTime = TimeSpan.Zero; //Next heal
+
+        [DataField("sleepAction")] public EntityUid? SleepAction;
     }
 }

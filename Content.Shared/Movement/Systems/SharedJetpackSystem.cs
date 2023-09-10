@@ -132,7 +132,7 @@ public abstract class SharedJetpackSystem : EntitySystem
 
     private void OnJetpackGetAction(EntityUid uid, JetpackComponent component, GetItemActionsEvent args)
     {
-        args.Actions.Add(component.ToggleAction);
+        args.AddAction(ref component.ToggleActionEntity, component.ToggleAction);
     }
 
     private bool IsEnabled(EntityUid uid)
@@ -182,7 +182,7 @@ public abstract class SharedJetpackSystem : EntitySystem
         }
 
         Appearance.SetData(uid, JetpackVisuals.Enabled, enabled);
-        Dirty(component);
+        Dirty(uid, component);
     }
 
     public bool IsUserFlying(EntityUid uid)

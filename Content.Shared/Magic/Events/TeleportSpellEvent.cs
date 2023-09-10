@@ -1,7 +1,7 @@
 ﻿using Content.Shared.Actions;
 using Robust.Shared.Audio;
 
-namespace Content.Server.Magic.Events;
+namespace Content.Shared.Magic.Events;
 
 public sealed partial class TeleportSpellEvent : WorldTargetActionEvent, ISpeakSpell
 {
