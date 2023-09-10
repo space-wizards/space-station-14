@@ -109,7 +109,7 @@ public sealed class PAISystem : SharedPAISystem
         var val = name.ToString();
         val = comp.LastUser == null
             ? val
-            : Loc.GetString("pai-system-pai-name", ("owner", val));
+            : Loc.GetString("pai-system-pai-name-raw", ("name", val));
         _metaData.SetEntityName(uid, val);
     }
 
