@@ -1,11 +1,4 @@
 Entries:
-- author: TemporalOroboros
-  changes:
-  - {message: Singularities no longer bounce off of things they can eat., type: Fix}
-  - {message: 'Singularities will reach through the containment field to eat the emitters
-      less often, maybe never.', type: Fix}
-  id: 4292
-  time: '2023-07-19T08:01:27.0000000+00:00'
 - author: Slava0135
   changes:
   - {message: clowns now make funny sound when sleeping, type: Add}
@@ -2996,3 +2989,8 @@ Entries:
   - {message: Added cobweb decorations for mappers to utilize., type: Add}
   id: 4791
   time: '2023-09-10T03:37:56.0000000+00:00'
+- author: arimah
+  changes:
+  - {message: Particle Accelerators can now be constructed again, type: Fix}
+  id: 4792
+  time: '2023-09-10T03:42:42.0000000+00:00'
