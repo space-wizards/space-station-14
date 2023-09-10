@@ -48,7 +48,7 @@ public sealed class TerminatorSystem : EntitySystem
 
         // give the player the role, if they don't have it already (debug > control mob)
         var mindId = mindContainer.Mind.Value;
-        if (_role.MindHasRole(mindId))
+        if (_role.MindHasRole<RoleBriefingComponent>(mindId) || _role.MindHasRole<TerminatorRoleComponent>(mindId))
             return;
 
         var mind = Comp<MindComponent>(mindId);
