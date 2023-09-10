@@ -18,6 +18,7 @@ public sealed partial class MakeSentient : ReagentEffect
 
         // Let affected entities speak normally to make this effect different from, say, the "random sentience" event
         // This also works on entities that already have a mind
+        // We call this before the mind check to allow things like player-controlled mice to be able to benefit from the effect
         entityManager.RemoveComponent<ReplacementAccentComponent>(uid);
         entityManager.RemoveComponent<MonkeyAccentComponent>(uid);
 
