@@ -65,7 +65,8 @@ public sealed class DrinkSystem : EntitySystem
         SubscribeLocalEvent<DrinkComponent, UseInHandEvent>(OnUse, before: new[] { typeof(ServerInventorySystem) }, after: new[] { typeof(OpenableSystem) });
         SubscribeLocalEvent<DrinkComponent, AfterInteractEvent>(AfterInteract);
         SubscribeLocalEvent<DrinkComponent, GetVerbsEvent<AlternativeVerb>>(AddDrinkVerb);
-        SubscribeLocalEvent<DrinkComponent, ExaminedEvent>(OnExamined);
+        // put drink amount after opened
+        SubscribeLocalEvent<DrinkComponent, ExaminedEvent>(OnExamined, after: new[] { typeof(OpenableSystem) });
         SubscribeLocalEvent<DrinkComponent, ConsumeDoAfterEvent>(OnDoAfter);
 
         SubscribeLocalEvent<PressurizedDrinkComponent, LandEvent>(OnPressurizedDrinkLand);
@@ -126,25 +127,21 @@ public sealed class DrinkSystem : EntitySystem
 
     private void OnExamined(EntityUid uid, DrinkComponent component, ExaminedEvent args)
     {
-        var canOpen = TryComp<OpenableComponent>(uid, out var openable);
+        var hasOpenable = TryComp<OpenableComponent>(uid, out var openable);
         if (_openable.IsClosed(uid, openable) || !args.IsInDetailsRange || !component.Examinable)
             return;
 
+        // put Empty / Xu after Opened
+        if (hasOpenable)
+            args.Message.AddMarkup(" - ");
+
         var empty = IsEmpty(uid, component);
-        var color = empty ? "gray" : "yellow";
-        // only show the Opened text if it can be opened
-        if (empty || canOpen)
-        {
-            var openedText =
-                Loc.GetString(empty ? "drink-component-on-examine-is-empty" : "drink-component-on-examine-is-opened");
-            args.Message.AddMarkup($"\n{Loc.GetString("drink-component-on-examine-details-text", ("colorName", color), ("text", openedText))}");
-        }
-
         if (empty)
+        {
+            var text = Loc.GetString("drink-component-on-examine-is-empty");
+            args.Message.AddMarkup($"\n{text}");
             return;
-
-        // go between Opened and Xu / put Xu on a new line
-        args.Message.AddMarkup(canOpen ? " - " : "\n");
+        }
 
         if (TryComp<ExaminableSolutionComponent>(uid, out var comp))
         {

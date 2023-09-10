@@ -1,5 +1,6 @@
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Nutrition.Components;
+using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Nutrition.Components;
@@ -22,6 +23,7 @@ public sealed class OpenableSystem : EntitySystem
 
         SubscribeLocalEvent<OpenableComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<OpenableComponent, UseInHandEvent>(OnUse);
+        SubscribeLocalEvent<OpenableComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<OpenableComponent, SolutionTransferAttemptEvent>(OnTransferAttempt);
         SubscribeLocalEvent<OpenableComponent, MeleeHitEvent>(HandleIfClosed);
         SubscribeLocalEvent<OpenableComponent, AfterInteractEvent>(HandleIfClosed);
@@ -38,6 +40,15 @@ public sealed class OpenableSystem : EntitySystem
             return;
 
         args.Handled = TryOpen(uid, comp);
+    }
+
+    private void OnExamined(EntityUid uid, OpenableComponent comp, ExaminedEvent args)
+    {
+        if (!comp.Opened || !args.IsInDetailsRange)
+            return;
+
+        var text = Loc.GetString(comp.ExamineText);
+        args.Message.AddMarkup(text);
     }
 
     private void OnTransferAttempt(EntityUid uid, OpenableComponent comp, SolutionTransferAttemptEvent args)

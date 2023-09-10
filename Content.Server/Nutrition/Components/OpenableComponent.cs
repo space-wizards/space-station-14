@@ -25,6 +25,12 @@ public sealed partial class OpenableComponent : Component
     public bool OpenableByHand = true;
 
     /// <summary>
+    /// Text shown when examining and its open.
+    /// </summary>
+    [DataField("examineText"), ViewVariables(VVAccess.ReadWrite)]
+    public string ExamineText = "drink-component-on-examine-is-opened";
+
+    /// <summary>
     /// Sound played when opening.
     /// </summary>
     [DataField("sound")]
