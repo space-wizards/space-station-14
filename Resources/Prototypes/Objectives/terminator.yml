@@ -33,5 +33,8 @@
   - type: Objective
     title: objective-condition-shut-down-title
     description: objective-condition-shut-down-description
+    icon:
+      sprite: Mobs/Species/Terminator/parts.rsi
+      state: skull_icon
     difficulty: 1
   - type: DieCondition

@@ -2,7 +2,7 @@
   parent: MobHuman
   id: MobHumanTerminator
   # uses random name generator dont worry
-  name: terminator
+  name: exterminator
   components:
   - type: Terminator
     objectives:
