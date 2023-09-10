@@ -34,7 +34,7 @@ namespace Content.Server.Electrocution
                 return;
             }
 
-            if (!_entManager.EntitySysManager.GetEntitySystem<StatusEffectsSystem>().CanApplyEffect(uid, ElectrocutionStatusEffect))
+            if (!_entManager.EntitySysManager.GetEntitySystem<StatusEffectsSystem>().CanApplyEffect(uid.Value, ElectrocutionStatusEffect))
             {
                 shell.WriteError(Loc.GetString("electrocute-command-entity-cannot-be-electrocuted"));
                 return;
@@ -51,7 +51,7 @@ namespace Content.Server.Electrocution
             }
 
             _entManager.EntitySysManager.GetEntitySystem<ElectrocutionSystem>()
-                .TryDoElectrocution(uid, null, damage, TimeSpan.FromSeconds(seconds), refresh: true, ignoreInsulation: true);
+                .TryDoElectrocution(uid.Value, null, damage, TimeSpan.FromSeconds(seconds), refresh: true, ignoreInsulation: true);
         }
     }
 }

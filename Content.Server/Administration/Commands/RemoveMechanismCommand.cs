@@ -31,7 +31,7 @@ namespace Content.Server.Administration.Commands
 
             if (bodySystem.DropOrgan(entityUid))
             {
-                shell.WriteLine($"Removed organ {_entManager.ToPrettyString(entityUid)}");
+                shell.WriteLine($"Removed organ {_entManager.ToPrettyString(entityUid.Value)}");
             }
             else
             {

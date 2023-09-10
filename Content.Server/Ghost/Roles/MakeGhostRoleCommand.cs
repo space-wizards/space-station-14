@@ -52,14 +52,14 @@ namespace Content.Server.Ghost.Roles
                 return;
             }
 
-            if (_entManager.TryGetComponent(uid, out GhostTakeoverAvailableComponent? takeOver))
+            if (_entManager.HasComponent<GhostTakeoverAvailableComponent>(uid))
             {
                 shell.WriteLine($"Entity {metaData.EntityName} with id {uid} already has a {nameof(GhostTakeoverAvailableComponent)}");
                 return;
             }
 
-            ghostRole = _entManager.AddComponent<GhostRoleComponent>(uid);
-            _entManager.AddComponent<GhostTakeoverAvailableComponent>(uid);
+            ghostRole = _entManager.AddComponent<GhostRoleComponent>(uid.Value);
+            _entManager.AddComponent<GhostTakeoverAvailableComponent>(uid.Value);
             ghostRole.RoleName = name;
             ghostRole.RoleDescription = description;
             ghostRole.RoleRules = rules;

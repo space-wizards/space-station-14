@@ -32,7 +32,7 @@ public sealed partial class AnomalySystem
         if (!TryComp<AnomalyComponent>(uid, out var anomaly))
             return;
 
-        DoAnomalyPulse(uid, anomaly);
+        DoAnomalyPulse(uid.Value, anomaly);
     }
 
     [AdminCommand(AdminFlags.Fun)]
@@ -47,7 +47,7 @@ public sealed partial class AnomalySystem
         if (!HasComp<AnomalyComponent>(uid))
             return;
 
-        StartSupercriticalEvent(uid);
+        StartSupercriticalEvent(uid.Value);
     }
 
     private CompletionResult GetAnomalyCompletion(IConsoleShell shell, string[] args)

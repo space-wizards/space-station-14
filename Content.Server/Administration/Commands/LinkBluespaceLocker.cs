@@ -51,12 +51,12 @@ public sealed class LinkBluespaceLocker : IConsoleCommand
             return;
         }
 
-        _entManager.EnsureComponent<BluespaceLockerComponent>(originUid, out var originBluespaceComponent);
-        originBluespaceComponent.BluespaceLinks.Add(targetUid);
-        _entManager.EnsureComponent<BluespaceLockerComponent>(targetUid, out var targetBluespaceComponent);
+        _entManager.EnsureComponent<BluespaceLockerComponent>(originUid.Value, out var originBluespaceComponent);
+        originBluespaceComponent.BluespaceLinks.Add(targetUid.Value);
+        _entManager.EnsureComponent<BluespaceLockerComponent>(targetUid.Value, out var targetBluespaceComponent);
         if (bidirectional)
         {
-            targetBluespaceComponent.BluespaceLinks.Add(originUid);
+            targetBluespaceComponent.BluespaceLinks.Add(originUid.Value);
         }
         else if (targetBluespaceComponent.BluespaceLinks.Count == 0)
         {

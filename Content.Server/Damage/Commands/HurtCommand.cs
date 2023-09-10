@@ -104,10 +104,11 @@ namespace Content.Server.Damage.Commands
                 return;
             }
 
-            EntityUid target;
+            EntityUid? target;
+
             if (args.Length == 4)
             {
-                if (!NetEntity.TryParse(args[3], out var targetNet) || !_entManager.TryGetEntity(targetNet, out target) || !_entManager.EntityExists(target))
+                if (!_entManager.TryParseNetEntity(args[3], out target) || !_entManager.EntityExists(target))
                 {
                     shell.WriteLine(Loc.GetString("damage-command-error-euid", ("arg", args[3])));
                     return;
@@ -123,7 +124,7 @@ namespace Content.Server.Damage.Commands
                 return;
             }
 
-            if (!TryParseDamageArgs(shell, target, args, out var damageFunc))
+            if (!TryParseDamageArgs(shell, target.Value, args, out var damageFunc))
                 return;
 
             bool ignoreResistances;
@@ -140,7 +141,7 @@ namespace Content.Server.Damage.Commands
                 ignoreResistances = false;
             }
 
-            damageFunc(target, ignoreResistances);
+            damageFunc(target.Value, ignoreResistances);
         }
     }
 }

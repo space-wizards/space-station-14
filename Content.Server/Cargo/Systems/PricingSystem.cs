@@ -51,7 +51,7 @@ public sealed class PricingSystem : EntitySystem
 
         foreach (var gid in args)
         {
-            if (!NetEntity.TryParse(gid, out var gridIdNet) || !TryGetEntity(gridIdNet, out var gridId) || !gridId.IsValid())
+            if (!EntityManager.TryParseNetEntity(gid, out var gridId) || !gridId.Value.IsValid())
             {
                 shell.WriteError($"Invalid grid ID \"{gid}\".");
                 continue;

@@ -51,7 +51,7 @@ namespace Content.Server.Damage.Commands
                         return;
                     }
 
-                    entity = id;
+                    entity = id.Value;
                     break;
                 default:
                     shell.WriteLine(Help);

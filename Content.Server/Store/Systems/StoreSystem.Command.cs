@@ -39,7 +39,7 @@ public sealed partial class StoreSystem
             { args[1], id }
         };
 
-        TryAddCurrency(currency, uid, store);
+        TryAddCurrency(currency, uid.Value, store);
     }
 
     private CompletionResult AddCurrencyCommandCompletions(IConsoleShell shell, string[] args)

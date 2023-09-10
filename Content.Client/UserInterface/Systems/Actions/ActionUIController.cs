@@ -240,7 +240,7 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
             _actionsSystem.PerformAction(user, actionComp, actionId, action, action.Event, _timing.CurTime);
         }
         else
-            EntityManager.RaisePredictiveEvent(new RequestPerformActionEvent(actionId, coords));
+            EntityManager.RaisePredictiveEvent(new RequestPerformActionEvent(EntityManager.GetNetEntity(actionId), EntityManager.GetNetCoordinates(coords)));
 
         if (!action.Repeat)
             StopTargeting();
@@ -274,7 +274,7 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
             _actionsSystem.PerformAction(user, actionComp, actionId, action, action.Event, _timing.CurTime);
         }
         else
-            EntityManager.RaisePredictiveEvent(new RequestPerformActionEvent(actionId, args.EntityUid));
+            EntityManager.RaisePredictiveEvent(new RequestPerformActionEvent(EntityManager.GetNetEntity(actionId), EntityManager.GetNetEntity(args.EntityUid)));
 
         if (!action.Repeat)
             StopTargeting();
@@ -518,8 +518,6 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
 
     private bool MatchesFilter(BaseActionComponent action, Filters filter)
     {
-        var provider = EntityManager.GetEntity(action.Provider);
-
         return filter switch
         {
             Filters.Enabled => action.Enabled,
@@ -745,7 +743,7 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
     {
         if (_actionsSystem != null && _actionsSystem.TryGetActionData(_menuDragHelper.Dragged?.ActionId, out var action))
         {
-            var entIcon = EntityManager.GetEntity(action.EntityIcon);
+            var entIcon = action.EntityIcon;
 
             if (entIcon != null)
             {
@@ -964,7 +962,7 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
         SelectingTargetFor = actionId;
 
         // override "held-item" overlay
-        var provider = EntityManager.GetEntity(action.Provider);
+        var provider = action.Provider;
 
         if (action.TargetingIndicator && _overlays.TryGetOverlay<ShowHandItemOverlay>(out var handOverlay))
         {
@@ -987,7 +985,7 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
             return;
 
         Func<EntityUid, bool>? predicate = null;
-        var attachedEnt = EntityManager.GetEntity(entityAction.AttachedEntity);
+        var attachedEnt = entityAction.AttachedEntity;
 
         if (!entityAction.CanTargetSelf)
             predicate = e => e != attachedEnt;

@@ -79,10 +79,10 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
             return;
         }
 
-        var otherInstrument = Comp<InstrumentComponent>(secondUid);
+        var otherInstrument = Comp<InstrumentComponent>(secondUid.Value);
         otherInstrument.Playing = true;
         otherInstrument.Master = firstUid;
-        Dirty(secondUid, otherInstrument);
+        Dirty(secondUid.Value, otherInstrument);
     }
 
     private void OnMidiStart(InstrumentStartMidiEvent msg, EntitySessionEventArgs args)

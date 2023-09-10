@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using Content.Server.Access.Systems;
 using Content.Server.Administration;
 using Content.Server.Administration.Systems;
@@ -43,13 +44,13 @@ public sealed class RenameCommand : IConsoleCommand
             return;
 
         // Metadata
-        var metadata = _entManager.GetComponent<MetaDataComponent>(entityUid);
+        var metadata = _entManager.GetComponent<MetaDataComponent>(entityUid.Value);
         var oldName = metadata.EntityName;
-        _entManager.System<MetaDataSystem>().SetEntityName(entityUid, name, metadata);
+        _entManager.System<MetaDataSystem>().SetEntityName(entityUid.Value, name, metadata);
 
         var minds = _entManager.System<SharedMindSystem>();
 
-        if (minds.TryGetMind(entityUid, out var mindId, out var mind))
+        if (minds.TryGetMind(entityUid.Value, out var mindId, out var mind))
         {
             // Mind
             mind.CharacterName = name;
@@ -58,7 +59,7 @@ public sealed class RenameCommand : IConsoleCommand
         // Id Cards
         if (_entManager.TrySystem<IdCardSystem>(out var idCardSystem))
         {
-            if (idCardSystem.TryFindIdCard(entityUid, out var idCard))
+            if (idCardSystem.TryFindIdCard(entityUid.Value, out var idCard))
             {
                 idCardSystem.TryChangeFullName(idCard.Owner, name, idCard);
 
@@ -104,7 +105,7 @@ public sealed class RenameCommand : IConsoleCommand
     }
 
     private bool TryParseUid(string str, IConsoleShell shell,
-        IEntityManager entMan, out EntityUid entityUid)
+        IEntityManager entMan, [NotNullWhen(true)] out EntityUid? entityUid)
     {
         if (NetEntity.TryParse(str, out var entityUidNet) && _entManager.TryGetEntity(entityUidNet, out entityUid) && entMan.EntityExists(entityUid))
             return true;

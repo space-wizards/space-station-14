@@ -38,7 +38,7 @@ namespace Content.Server.Decals.Commands
             }
 
             var decalSystem = _entManager.System<DecalSystem>();
-            if (decalSystem.RemoveDecal(rawGridId, uid))
+            if (decalSystem.RemoveDecal(rawGridId.Value, uid))
             {
                 shell.WriteLine($"Successfully removed decal {uid}.");
                 return;

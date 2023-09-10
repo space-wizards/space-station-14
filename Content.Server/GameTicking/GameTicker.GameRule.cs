@@ -250,7 +250,7 @@ public sealed partial class GameTicker
             if (!NetEntity.TryParse(rule, out var ruleEntNet) || !TryGetEntity(ruleEntNet, out var ruleEnt))
                 continue;
 
-            EndGameRule(ruleEnt);
+            EndGameRule(ruleEnt.Value);
         }
     }
 

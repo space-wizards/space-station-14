@@ -62,7 +62,7 @@ namespace Content.Server.Body.Commands
                             return;
                         }
 
-                        entity = uid;
+                        entity = uid.Value;
                         hand = _entManager.SpawnEntity(DefaultHandPrototype, _entManager.GetComponent<TransformComponent>(entity).Coordinates);
                     }
                     else
@@ -99,7 +99,7 @@ namespace Content.Server.Body.Commands
                         return;
                     }
 
-                    entity = uid;
+                    entity = uid.Value;
 
                     if (!_protoManager.HasIndex<EntityPrototype>(args[1]))
                     {

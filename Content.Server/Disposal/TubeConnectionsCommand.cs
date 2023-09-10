@@ -51,7 +51,7 @@ namespace Content.Server.Disposal
                 return;
             }
 
-            _entities.System<DisposalTubeSystem>().PopupDirections(id, tube, player.AttachedEntity.Value);
+            _entities.System<DisposalTubeSystem>().PopupDirections(id.Value, tube, player.AttachedEntity.Value);
         }
     }
 }

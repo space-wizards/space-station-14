@@ -33,7 +33,7 @@ public partial class ArtifactSystem
 
         if (artifact.NodeTree.FirstOrDefault(n => n.Id == id) is { } node)
         {
-            EnterNode(uid, ref node);
+            EnterNode(uid.Value, ref node);
         }
     }
 
@@ -62,7 +62,7 @@ public partial class ArtifactSystem
         if (!TryComp<ArtifactComponent>(uid, out var artifact))
             return;
 
-        var pointSum = GetResearchPointValue(uid, artifact, true);
-        shell.WriteLine($"Max point value for {ToPrettyString(uid)} with {artifact.NodeTree.Count} nodes: {pointSum}");
+        var pointSum = GetResearchPointValue(uid.Value, artifact, true);
+        shell.WriteLine($"Max point value for {ToPrettyString(uid.Value)} with {artifact.NodeTree.Count} nodes: {pointSum}");
     }
 }

@@ -85,7 +85,7 @@ public sealed partial class AtmosphereSystem
                continue;
            }
 
-           var transform = Transform(euid);
+           var transform = Transform(euid.Value);
 
            foreach (var (indices, tileMain) in gridAtmosphere.Tiles)
            {

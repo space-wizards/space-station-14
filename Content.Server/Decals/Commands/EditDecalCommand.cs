@@ -65,7 +65,7 @@ Possible modes are:\n
                     return;
                 }
 
-                if (!decalSystem.SetDecalPosition(gridId, uid, new(gridId, new Vector2(x, y))))
+                if (!decalSystem.SetDecalPosition(gridId.Value, uid, new(gridId.Value, new Vector2(x, y))))
                 {
                     shell.WriteError("Failed changing decalposition.");
                 }
@@ -83,7 +83,7 @@ Possible modes are:\n
                     return;
                 }
 
-                if (!decalSystem.SetDecalColor(gridId, uid, color))
+                if (!decalSystem.SetDecalColor(gridId.Value, uid, color))
                 {
                     shell.WriteError("Failed changing decal color.");
                 }
@@ -95,7 +95,7 @@ Possible modes are:\n
                     return;
                 }
 
-                if (!decalSystem.SetDecalId(gridId, uid, args[3]))
+                if (!decalSystem.SetDecalId(gridId.Value, uid, args[3]))
                 {
                     shell.WriteError("Failed changing decal id.");
                 }
@@ -113,7 +113,7 @@ Possible modes are:\n
                     return;
                 }
 
-                if (!decalSystem.SetDecalRotation(gridId, uid, Angle.FromDegrees(degrees)))
+                if (!decalSystem.SetDecalRotation(gridId.Value, uid, Angle.FromDegrees(degrees)))
                 {
                     shell.WriteError("Failed changing decal rotation.");
                 }
@@ -131,7 +131,7 @@ Possible modes are:\n
                     return;
                 }
 
-                if (!decalSystem.SetDecalZIndex(gridId, uid, zIndex))
+                if (!decalSystem.SetDecalZIndex(gridId.Value, uid, zIndex))
                 {
                     shell.WriteError("Failed changing decal zIndex.");
                 }
@@ -149,7 +149,7 @@ Possible modes are:\n
                     return;
                 }
 
-                if (!decalSystem.SetDecalCleanable(gridId, uid, cleanable))
+                if (!decalSystem.SetDecalCleanable(gridId.Value, uid, cleanable))
                 {
                     shell.WriteError("Failed changing decal cleanable flag.");
                 }

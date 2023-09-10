@@ -31,7 +31,7 @@ namespace Content.Server.Administration.Commands
 
             if (bodySystem.DropPart(entityUid))
             {
-                shell.WriteLine($"Removed body part {_entManager.ToPrettyString(entityUid)}.");
+                shell.WriteLine($"Removed body part {_entManager.ToPrettyString(entityUid.Value)}.");
             }
             else
             {

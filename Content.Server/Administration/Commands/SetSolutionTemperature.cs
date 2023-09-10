@@ -54,7 +54,7 @@ namespace Content.Server.Administration.Commands
                 return;
             }
 
-            _entManager.System<SolutionContainerSystem>().SetTemperature(uid, solution, quantity);
+            _entManager.System<SolutionContainerSystem>().SetTemperature(uid.Value, solution, quantity);
         }
     }
 }

@@ -74,6 +74,6 @@ public sealed partial class TestPair
             return EntityUid.Invalid;
         }
 
-        return otherUid;
+        return otherUid.Value;
     }
 }

@@ -38,13 +38,13 @@ namespace Content.Server.Atmos.Commands
 
             var atmos = _entities.EntitySysManager.GetEntitySystem<AtmosphereSystem>();
 
-            if (atmos.HasAtmosphere(euid))
+            if (atmos.HasAtmosphere(euid.Value))
             {
                 shell.WriteLine("Grid already has an atmosphere.");
                 return;
             }
 
-            _entities.AddComponent<GridAtmosphereComponent>(euid);
+            _entities.AddComponent<GridAtmosphereComponent>(euid.Value);
 
             shell.WriteLine($"Added atmosphere to grid {euid}.");
         }

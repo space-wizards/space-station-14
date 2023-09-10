@@ -23,7 +23,7 @@ namespace Content.Server.Body.Commands
             var player = shell.Player as IPlayerSession;
 
             EntityUid bodyId;
-            EntityUid partUid;
+            EntityUid? partUid;
 
             switch (args.Length)
             {
@@ -68,7 +68,7 @@ namespace Content.Server.Body.Commands
                         return;
                     }
 
-                    bodyId = entityUid;
+                    bodyId = entityUid.Value;
                     break;
                 default:
                     shell.WriteLine(Help);
@@ -89,14 +89,14 @@ namespace Content.Server.Body.Commands
 
             if (!_entManager.TryGetComponent(partUid, out BodyPartComponent? part))
             {
-                shell.WriteLine($"Entity {_entManager.GetComponent<MetaDataComponent>(partUid).EntityName} with uid {args[0]} does not have a {nameof(BodyPartComponent)}.");
+                shell.WriteLine($"Entity {_entManager.GetComponent<MetaDataComponent>(partUid.Value).EntityName} with uid {args[0]} does not have a {nameof(BodyPartComponent)}.");
                 return;
             }
 
             var bodySystem = _entManager.System<BodySystem>();
             if (bodySystem.BodyHasChild(bodyId, partUid, body, part))
             {
-                shell.WriteLine($"Body part {_entManager.GetComponent<MetaDataComponent>(partUid).EntityName} with uid {partUid} is already attached to entity {_entManager.GetComponent<MetaDataComponent>(bodyId).EntityName} with uid {bodyId}");
+                shell.WriteLine($"Body part {_entManager.GetComponent<MetaDataComponent>(partUid.Value).EntityName} with uid {partUid} is already attached to entity {_entManager.GetComponent<MetaDataComponent>(bodyId).EntityName} with uid {bodyId}");
                 return;
             }
 
@@ -119,7 +119,7 @@ namespace Content.Server.Body.Commands
                 }
             }
 
-            shell.WriteLine($"Attached part {_entManager.ToPrettyString(partUid)} to {_entManager.ToPrettyString(bodyId)}");
+            shell.WriteLine($"Attached part {_entManager.ToPrettyString(partUid.Value)} to {_entManager.ToPrettyString(bodyId)}");
         }
     }
 }

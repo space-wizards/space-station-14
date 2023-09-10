@@ -32,7 +32,7 @@ public sealed class AddPolymorphActionCommand : IConsoleCommand
 
         var polySystem = _entityManager.EntitySysManager.GetEntitySystem<PolymorphSystem>();
 
-        _entityManager.EnsureComponent<PolymorphableComponent>(entityUid);
-        polySystem.CreatePolymorphAction(args[1], entityUid);
+        _entityManager.EnsureComponent<PolymorphableComponent>(entityUid.Value);
+        polySystem.CreatePolymorphAction(args[1], entityUid.Value);
     }
 }

@@ -27,6 +27,6 @@ public sealed class ClearBluespaceLockerLinks : IConsoleCommand
             return;
         }
 
-        _entityManager.RemoveComponent<BluespaceLockerComponent>(entityUid);
+        _entityManager.RemoveComponent<BluespaceLockerComponent>(entityUid.Value);
     }
 }

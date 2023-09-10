@@ -54,7 +54,7 @@ namespace Content.Client.Actions
         public override void Dirty(EntityUid? actionId)
         {
             var action = GetActionData(actionId);
-            if (_playerManager.LocalPlayer?.ControlledEntity != GetEntity(action.AttachedEntity))
+            if (_playerManager.LocalPlayer?.ControlledEntity != action?.AttachedEntity)
                 return;
 
             base.Dirty(actionId);
@@ -67,7 +67,7 @@ namespace Content.Client.Actions
                 return;
 
             component.Actions.Clear();
-            component.Actions.UnionWith(state.Actions);
+            component.Actions.UnionWith(GetEntitySet(state.Actions));
 
             _actionHoldersQueue.Enqueue(uid);
         }
@@ -180,7 +180,7 @@ namespace Content.Client.Actions
                 return;
             }
 
-            if (action.Provider != null && Deleted(GetEntity(action.Provider)))
+            if (action.Provider != null && Deleted(action.Provider))
                 return;
 
             if (action is not InstantActionComponent instantAction)
@@ -195,7 +195,7 @@ namespace Content.Client.Actions
             }
             else
             {
-                var request = new RequestPerformActionEvent(actionId);
+                var request = new RequestPerformActionEvent(GetNetEntity(actionId));
                 EntityManager.RaisePredictiveEvent(request);
             }
         }

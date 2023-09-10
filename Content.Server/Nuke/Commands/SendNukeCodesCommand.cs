@@ -32,7 +32,7 @@ namespace Content.Server.Nuke.Commands
                 return;
             }
 
-            _entityManager.System<NukeCodePaperSystem>().SendNukeCodes(uid);
+            _entityManager.System<NukeCodePaperSystem>().SendNukeCodes(uid.Value);
         }
 
         public CompletionResult GetCompletion(IConsoleShell shell, string[] args)

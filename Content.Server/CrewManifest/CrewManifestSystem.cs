@@ -265,7 +265,7 @@ public sealed class CrewManifestCommand : IConsoleCommand
 
         var crewManifestSystem = _entityManager.System<CrewManifestSystem>();
 
-        crewManifestSystem.OpenEui(uid, session);
+        crewManifestSystem.OpenEui(uid.Value, session);
     }
 
     public CompletionResult GetCompletion(IConsoleShell shell, string[] args)

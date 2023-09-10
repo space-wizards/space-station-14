@@ -22,8 +22,7 @@ namespace Content.Server.Atmos.Commands
             if (args.Length < 2)
                 return;
 
-            if (!NetEntity.TryParse(args[0], out var gridIdNet)
-                || !_entManager.TryGetEntity(gridIdNet, out var gridId)
+            if (!_entManager.TryParseNetEntity(args[0], out var gridId)
                 || !float.TryParse(args[1], out var temperature))
             {
                 return;
@@ -35,7 +34,7 @@ namespace Content.Server.Atmos.Commands
                 return;
             }
 
-            if (!gridId.IsValid() || !_mapManager.TryGetGrid(gridId, out var gridComp))
+            if (!gridId.Value.IsValid() || !_mapManager.TryGetGrid(gridId, out var gridComp))
             {
                 shell.WriteLine("Invalid grid ID.");
                 return;

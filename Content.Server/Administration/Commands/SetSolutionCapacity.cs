@@ -56,7 +56,7 @@ namespace Content.Server.Administration.Commands
             }
 
             var quantity = FixedPoint2.New(quantityFloat);
-            _entManager.System<SolutionContainerSystem>().SetCapacity(uid, solution, quantity);
+            _entManager.System<SolutionContainerSystem>().SetCapacity(uid.Value, solution, quantity);
         }
     }
 }

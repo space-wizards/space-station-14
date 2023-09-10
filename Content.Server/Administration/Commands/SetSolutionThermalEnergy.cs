@@ -62,7 +62,7 @@ namespace Content.Server.Administration.Commands
                 return;
             }
 
-            _entManager.System<SolutionContainerSystem>().SetThermalEnergy(uid, solution, quantity);
+            _entManager.System<SolutionContainerSystem>().SetThermalEnergy(uid.Value, solution, quantity);
         }
     }
 }
