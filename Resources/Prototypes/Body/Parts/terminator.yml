@@ -2,7 +2,7 @@
   abstract: true
   parent: BaseItem
   id: PartTerminator
-  name: t-800 body part
+  name: nt-800 body part
   components:
   - type: Sprite
     sprite: Mobs/Species/Terminator/parts.rsi
@@ -21,7 +21,7 @@
 - type: entity
   parent: PartTerminator
   id: TorsoTerminator
-  name: t-800 torso
+  name: nt-800 torso
   components:
   - type: Sprite
     state: torso_m
@@ -33,7 +33,7 @@
 - type: entity
   parent: PartTerminator
   id: HeadTerminator
-  name: t-800 skull
+  name: nt-800 skull
   description: Its red eyes have powered down... for now.
   components:
   - type: Sprite
@@ -52,7 +52,7 @@
 - type: entity
   parent: PartTerminator
   id: LeftArmTerminator
-  name: left t-800 arm
+  name: left nt-800 arm
   components:
   - type: Sprite
     state: l_arm
@@ -65,7 +65,7 @@
 - type: entity
   parent: PartTerminator
   id: RightArmTerminator
-  name: right t-800 arm
+  name: right nt-800 arm
   components:
   - type: Sprite
     state: r_arm
@@ -78,7 +78,7 @@
 - type: entity
   parent: PartTerminator
   id: LeftHandTerminator
-  name: left t-800 hand
+  name: left nt-800 hand
   components:
   - type: Sprite
     state: l_hand
@@ -91,7 +91,7 @@
 - type: entity
   parent: PartTerminator
   id: RightHandTerminator
-  name: right t-800 hand
+  name: right nt-800 hand
   components:
   - type: Sprite
     state: r_hand
@@ -104,7 +104,7 @@
 - type: entity
   parent: PartTerminator
   id: LeftLegTerminator
-  name: left t-800 leg
+  name: left nt-800 leg
   components:
   - type: Sprite
     state: l_leg
@@ -118,7 +118,7 @@
 - type: entity
   parent: PartTerminator
   id: RightLegTerminator
-  name: right t-800 leg
+  name: right nt-800 leg
   components:
   - type: Sprite
     state: r_leg
@@ -132,7 +132,7 @@
 - type: entity
   parent: PartTerminator
   id: LeftFootTerminator
-  name: left t-800 foot
+  name: left nt-800 foot
   components:
   - type: Sprite
     state: l_foot
@@ -145,7 +145,7 @@
 - type: entity
   parent: PartTerminator
   id: RightFootTerminator
-  name: right t-800 foot
+  name: right nt-800 foot
   components:
   - type: Sprite
     state: r_foot

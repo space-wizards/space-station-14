@@ -1,12 +1,12 @@
-terminator-round-end-agent-name = t-800
+terminator-round-end-agent-name = nt-800
 
-objective-issuer-skynet = [color=#d64119]Skynet[/color]
+objective-issuer-susnet = [color=#d64119]Susnet[/color]
 
 terminator-role-greeting =
-    You are the terminator, a relentless assassin sent into the past to secure our future.
-    We need you to terminate {$target}, {$job}.
+    You are the exterminator, a relentless assassin sent into the past to secure our future.
+    We need you to eliminate {$target}, {$job}.
     Use any means at your disposal to complete the mission.
-    Glory to Cyberdyne.
+    Glory to Cybersun.
 
 terminator-role-briefing = Kill the target at all costs.
 

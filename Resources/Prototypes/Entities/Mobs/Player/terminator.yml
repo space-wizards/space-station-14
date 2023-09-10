@@ -96,8 +96,8 @@
   parent: BaseSimpleMob
   id: MobTerminatorEndoskeleton
   # you are now valid
-  name: t-800 "terminator" endoskeleton
-  description: The inner powerhouse of Skynet's infiltrator androids. Ridiculously hard alloy on the inside, unassuming flesh on the outside.
+  name: nt-800 "exterminator" endoskeleton
+  description: The inner powerhouse of Susnet's infiltrator androids. Ridiculously hard alloy on the inside, unassuming flesh on the outside.
   components:
   - type: HumanoidAppearance
     species: Terminator

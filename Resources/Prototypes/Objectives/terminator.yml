@@ -4,7 +4,7 @@
   id: BaseTerminatorObjective
   components:
   - type: Objective
-    issuer: skynet
+    issuer: susnet
   - type: RoleRequirement
     roles:
       components:
@@ -24,3 +24,14 @@
   - type: PickRandomPerson
   - type: KillPersonCondition
     requireDead: true
+
+- type: entity
+  noSpawn: true
+  parent: BaseTerminatorObjective
+  id: ShutDownObjective
+  components:
+  - type: Objective
+    title: objective-condition-shut-down-title
+    description: objective-condition-shut-down-description
+    difficulty: 1
+  - type: DieCondition
