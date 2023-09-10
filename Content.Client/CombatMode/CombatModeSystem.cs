@@ -1,12 +1,10 @@
 using Content.Client.Hands.Systems;
-using Content.Shared.Actions;
+using Content.Shared.CCVar;
 using Content.Shared.CombatMode;
 using Content.Shared.Targeting;
-using Content.Shared.CCVar;
-using Robust.Client.Player;
-using Robust.Client.Input;
 using Robust.Client.Graphics;
-using Robust.Shared.GameStates;
+using Robust.Client.Input;
+using Robust.Client.Player;
 using Robust.Shared.Configuration;
 
 namespace Content.Client.CombatMode;

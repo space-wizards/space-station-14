@@ -1,9 +1,8 @@
-using Content.Shared.Actions;
-using Robust.Shared.Audio;
+﻿using Content.Shared.Actions;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
-namespace Content.Server.Magic.Events;
+namespace Content.Shared.Magic.Events;
 
 public sealed partial class ProjectileSpellEvent : WorldTargetActionEvent, ISpeakSpell
 {

@@ -246,6 +246,9 @@ namespace Content.Shared.Containers.ItemSlots
         /// </remarks>
         public bool CanInsert(EntityUid uid, EntityUid usedUid, EntityUid? user, ItemSlot slot, bool swap = false, EntityUid? popup = null)
         {
+            if (slot.ContainerSlot == null)
+                return false;
+
             if (slot.Locked)
                 return false;
 
@@ -265,7 +268,7 @@ namespace Content.Shared.Containers.ItemSlots
             if (ev.Cancelled)
                 return false;
 
-            return slot.ContainerSlot?.CanInsertIfEmpty(usedUid, EntityManager) ?? false;
+            return _containers.CanInsert(usedUid, slot.ContainerSlot, assumeEmpty: true);
         }
 
         /// <summary>
@@ -325,16 +328,16 @@ namespace Content.Shared.Containers.ItemSlots
 
         public bool CanEject(EntityUid uid, EntityUid? user, ItemSlot slot)
         {
-            if (slot.Locked || slot.Item == null)
+            if (slot.Locked || slot.ContainerSlot?.ContainedEntity is not {} item)
                 return false;
 
-            var ev = new ItemSlotEjectAttemptEvent(uid, slot.Item.Value, user, slot);
+            var ev = new ItemSlotEjectAttemptEvent(uid, item, user, slot);
             RaiseLocalEvent(uid, ref ev);
-            RaiseLocalEvent(slot.Item.Value, ref ev);
+            RaiseLocalEvent(item, ref ev);
             if (ev.Cancelled)
                 return false;
 
-            return slot.ContainerSlot?.CanRemove(slot.Item.Value, EntityManager) ?? false;
+            return _containers.CanRemove(item, slot.ContainerSlot);
         }
 
         /// <summary>
