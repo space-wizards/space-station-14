@@ -1,10 +1,4 @@
 Entries:
-- author: Ubaser
-  changes:
-  - {message: 'Nanotrasen has hired a group of architects to change up their selection
-      with the introduction of the new mid-pop space station, Core!', type: Add}
-  id: 4291
-  time: '2023-07-19T07:23:48.0000000+00:00'
 - author: TemporalOroboros
   changes:
   - {message: Singularities no longer bounce off of things they can eat., type: Fix}
@@ -2997,3 +2991,8 @@ Entries:
       as a hat or crafted into an ian suit.', type: Add}
   id: 4790
   time: '2023-09-10T03:04:33.0000000+00:00'
+- author: Flareguy
+  changes:
+  - {message: Added cobweb decorations for mappers to utilize., type: Add}
+  id: 4791
+  time: '2023-09-10T03:37:56.0000000+00:00'
