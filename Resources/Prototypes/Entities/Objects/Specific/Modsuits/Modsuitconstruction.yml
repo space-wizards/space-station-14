@@ -290,6 +290,9 @@
   - type: Sprite
     sprite: Objects/Specific/Modsuits/Construction/civillian.rsi
     state: boots
+  - type: Tag
+    tags:
+    - EVAModBoots
 
 - type: entity
   parent: BaseItem
@@ -302,6 +305,9 @@
   - type: Sprite
     sprite: Objects/Specific/Modsuits/Construction/civillian.rsi
     state: Chestplate
+  - type: Tag
+    tags:
+    - EVAModChestplate
 
 - type: entity
   parent: BaseItem
@@ -314,6 +320,9 @@
   - type: Sprite
     sprite: Objects/Specific/Modsuits/Construction/civillian.rsi
     state: Gauntlets
+  - type: Tag
+    tags:
+    - EVAModGauntlets
 
 - type: entity
   parent: BaseItem
@@ -326,6 +335,9 @@
   - type: Sprite
     sprite: Objects/Specific/Modsuits/Construction/civillian.rsi
     state: Hardsuit-core
+  - type: Tag
+    tags:
+    - EVAModHardsuitcore
 
 - type: entity
   parent: BaseItem
@@ -338,6 +350,9 @@
   - type: Sprite
     sprite: Objects/Specific/Modsuits/Construction/civillian.rsi
     state: Helmet
+  - type: Tag
+    tags:
+    - EVAModHelmet
 
 - type: entity
   parent: BaseItem
@@ -350,6 +365,9 @@
   - type: Sprite
     sprite: Objects/Specific/Modsuits/Construction/engineering.rsi
     state: boots
+  - type: Tag
+    tags:
+    - EngineerModBoots
 
 - type: entity
   parent: BaseItem
@@ -362,6 +380,9 @@
   - type: Sprite
     sprite: Objects/Specific/Modsuits/Construction/engineering.rsi
     state: Chestplate
+  - type: Tag
+    tags:
+    - EngineerModChestplate
 
 - type: entity
   parent: BaseItem
@@ -374,6 +395,9 @@
   - type: Sprite
     sprite: Objects/Specific/Modsuits/Construction/engineering.rsi
     state: Gauntlets
+  - type: Tag
+    tags:
+    - EngineerModGauntlets
 
 - type: entity
   parent: BaseItem
@@ -386,6 +410,9 @@
   - type: Sprite
     sprite: Objects/Specific/Modsuits/Construction/engineering.rsi
     state: Hardsuit-core
+  - type: Tag
+    tags:
+    - EngineerModHardsuitcore
 
 - type: entity
   parent: BaseItem
@@ -398,6 +425,9 @@
   - type: Sprite
     sprite: Objects/Specific/Modsuits/Construction/engineering.rsi
     state: Helmet
+  - type: Tag
+    tags:
+    - EngineerModHelmet
 
 - type: entity
   parent: BaseItem
@@ -410,6 +440,9 @@
   - type: Sprite
     sprite: Objects/Specific/Modsuits/Construction/hos.rsi
     state: boots
+  - type: Tag
+    tags:
+    - HOSModBoots
 
 - type: entity
   parent: BaseItem
@@ -422,6 +455,9 @@
   - type: Sprite
     sprite: Objects/Specific/Modsuits/Construction/hos.rsi
     state: Chestplate
+  - type: Tag
+    tags:
+    - HOSModChestplate
 
 - type: entity
   parent: BaseItem
@@ -434,6 +470,9 @@
   - type: Sprite
     sprite: Objects/Specific/Modsuits/Construction/hos.rsi
     state: Gauntlets
+  - type: Tag
+    tags:
+    - HOSModGauntlets
 
 - type: entity
   parent: BaseItem
@@ -446,6 +485,9 @@
   - type: Sprite
     sprite: Objects/Specific/Modsuits/Construction/hos.rsi
     state: Hardsuit-core
+  - type: Tag
+    tags:
+    - HOSModHardsuitcore
 
 - type: entity
   parent: BaseItem
@@ -458,6 +500,9 @@
   - type: Sprite
     sprite: Objects/Specific/Modsuits/Construction/hos.rsi
     state: Helmet
+  - type: Tag
+    tags:
+    - HOSModHelmet
 
 - type: entity
   parent: BaseItem
@@ -470,6 +515,9 @@
   - type: Sprite
     sprite: Objects/Specific/Modsuits/Construction/security.rsi
     state: boots
+  - type: Tag
+    tags:
+    - SecurityModBoots
 
 - type: entity
   parent: BaseItem
@@ -482,6 +530,9 @@
   - type: Sprite
     sprite: Objects/Specific/Modsuits/Construction/security.rsi
     state: Chestplate
+  - type: Tag
+    tags:
+    - SecurityModChestplate
 
 - type: entity
   parent: BaseItem
@@ -494,6 +545,9 @@
   - type: Sprite
     sprite: Objects/Specific/Modsuits/Construction/security.rsi
     state: Gauntlets
+  - type: Tag
+    tags:
+    - SecurityModGauntlets
 
 - type: entity
   parent: BaseItem
@@ -506,6 +560,9 @@
   - type: Sprite
     sprite: Objects/Specific/Modsuits/Construction/security.rsi
     state: Hardsuit-core
+  - type: Tag
+    tags:
+    - SecurityModHardsuitcore
 
 - type: entity
   parent: BaseItem
@@ -518,6 +575,9 @@
   - type: Sprite
     sprite: Objects/Specific/Modsuits/Construction/security.rsi
     state: Helmet
+  - type: Tag
+    tags:
+    - SecurityModHelmet
 
 - type: entity
   parent: BaseItem
@@ -530,6 +590,9 @@
   - type: Sprite
     sprite: Objects/Specific/Modsuits/Construction/brigmedic.rsi
     state: Helmet
+  - type: Tag
+    tags:
+    - BrigmedicModHelmet
 
 - type: entity
   parent: BaseItem
@@ -692,6 +755,9 @@
   - type: Sprite
     sprite: Objects/Specific/Modsuits/Construction/cmo.rsi
     state: boots
+  - type: Tag
+    tags:
+    - CMOModBoots
 
 - type: entity
   parent: BaseItem
@@ -704,6 +770,9 @@
   - type: Sprite
     sprite: Objects/Specific/Modsuits/Construction/cmo.rsi
     state: Chestplate
+  - type: Tag
+    tags:
+    - CMOModChestplate
 
 - type: entity
   parent: BaseItem
@@ -716,6 +785,9 @@
   - type: Sprite
     sprite: Objects/Specific/Modsuits/Construction/cmo.rsi
     state: Gauntlets
+  - type: Tag
+    tags:
+    - CMOModGauntlets
 
 - type: entity
   parent: BaseItem
@@ -728,6 +800,9 @@
   - type: Sprite
     sprite: Objects/Specific/Modsuits/Construction/cmo.rsi
     state: Hardsuit-core
+  - type: Tag
+    tags:
+    - CMOModHardsuitcore
 
 - type: entity
   parent: BaseItem
@@ -740,6 +815,9 @@
   - type: Sprite
     sprite: Objects/Specific/Modsuits/Construction/cmo.rsi
     state: Helmet
+  - type: Tag
+    tags:
+    - CMOModHelmet
 
 - type: entity
   parent: BaseItem
@@ -752,6 +830,9 @@
   - type: Sprite
     sprite: Objects/Specific/Modsuits/Construction/salvage.rsi
     state: boots
+  - type: Tag
+    tags:
+    - SalvageModBoots
 
 - type: entity
   parent: BaseItem
@@ -764,6 +845,9 @@
   - type: Sprite
     sprite: Objects/Specific/Modsuits/Construction/salvage.rsi
     state: Chestplate
+  - type: Tag
+    tags:
+    - SalvageModChestplate
 
 - type: entity
   parent: BaseItem
@@ -776,6 +860,9 @@
   - type: Sprite
     sprite: Objects/Specific/Modsuits/Construction/salvage.rsi
     state: Gauntlets
+  - type: Tag
+    tags:
+    - SalvageModGauntlets
 
 - type: entity
   parent: BaseItem
@@ -788,6 +875,9 @@
   - type: Sprite
     sprite: Objects/Specific/Modsuits/Construction/salvage.rsi
     state: Hardsuit-core
+  - type: Tag
+    tags:
+    - SalvageModHardsuitcore
 
 - type: entity
   parent: BaseItem
@@ -800,6 +890,9 @@
   - type: Sprite
     sprite: Objects/Specific/Modsuits/Construction/salvage.rsi
     state: Helmet
+  - type: Tag
+    tags:
+    - SalvageModHelmet
 
 - type: entity
   parent: BaseItem

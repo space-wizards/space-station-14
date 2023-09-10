@@ -37,7 +37,7 @@
               name: Гражданское ядро модсьюта
               icon:
                 sprite: Objects/Specific/Modsuits/Construction/civillian.rsi
-                state: Hardsuite-core
+                state: Hardsuit-core
               doAfter: 1
     - node: ModsuitCivillian
       entity: ClothingOuterModsuitCivillian
@@ -132,37 +132,34 @@
       edges:
         - to: modsuitRND
           steps:
-            - material: Cloth
-              amount: 5
-              doAfter: 1
             - tag: RNDModBoots
               name: Ботинки РНД
               icon:
-                sprite: Clothing/Objects/Specific/Modsuits/Construction/regularrnd.rsi
+                sprite: Objects/Specific/Modsuits/Construction/regularnd.rsi
                 state: boots
               doAfter: 1
             - tag: RNDModGauntlets
               name: Рукавицы РНД
               icon:
-                sprite: Clothing/Objects/Specific/Modsuits/Construction/regularrnd.rsi
+                sprite: Objects/Specific/Modsuits/Construction/regularnd.rsi
                 state: Gauntlets
               doAfter: 1
             - tag: RNDModChestplate
               name: Нагрудник РНД
               icon:
-                sprite: Clothing/Objects/Specific/Modsuits/Construction/regularrnd.rsi
+                sprite: Objects/Specific/Modsuits/Construction/regularnd.rsi
                 state: Chestplate
               doAfter: 1
             - tag: RNDModHelmet
               name: Шлем РНД
               icon:
-                sprite: Clothing/Objects/Specific/Modsuits/Construction/regularrnd.rsi
+                sprite: Objects/Specific/Modsuits/Construction/regularnd.rsi
                 state: Helmet
               doAfter: 1
             - tag: RNDModHardsuitcore
               name: Ядро модсьюта РНД
               icon:
-                sprite: Clothing/Objects/Specific/Modsuits/Construction/regularrnd.rsi
+                sprite: Objects/Specific/Modsuits/Construction/regularnd.rsi
                 state: Hardsuit-core
               doAfter: 1
     - node: modsuitRND
@@ -176,37 +173,34 @@
       edges:
         - to: modsuitEngineer
           steps:
-            - material: Cloth
-              amount: 5
-              doAfter: 1
             - tag: EngineerModBoots
               name: Инженерные ботинки
               icon:
-                sprite: Clothing/Objects/Specific/Modsuits/Construction/engineering.rsi
+                sprite: Objects/Specific/Modsuits/Construction/engineering.rsi
                 state: boots
               doAfter: 1
             - tag: EngineerModGauntlets
               name: Инженерные рукавицы
               icon:
-                sprite: Clothing/Objects/Specific/Modsuits/Construction/engineering.rsi
+                sprite: Objects/Specific/Modsuits/Construction/engineering.rsi
                 state: Gauntlets
               doAfter: 1
             - tag: EngineerModChestplate
               name: Инженерный нагрудник
               icon:
-                sprite: Clothing/Objects/Specific/Modsuits/Construction/engineering.rsi
+                sprite: Objects/Specific/Modsuits/Construction/engineering.rsi
                 state: Chestplate
               doAfter: 1
             - tag: EngineerModHelmet
               name: Инженерный шлем
               icon:
-                sprite: Clothing/Objects/Specific/Modsuits/Construction/engineering.rsi
+                sprite: Objects/Specific/Modsuits/Construction/engineering.rsi
                 state: Helmet
               doAfter: 1
             - tag: EngineerModHardsuitcore
               name: Инженерное ядро модсьюта
               icon:
-                sprite: Clothing/Objects/Specific/Modsuits/Construction/engineering.rsi
+                sprite: Objects/Specific/Modsuits/Construction/engineering.rsi
                 state: Hardsuit-core
               doAfter: 1
     - node: modsuitEngineer
@@ -220,35 +214,32 @@
       edges:
         - to: modsuitHOS
           steps:
-            - material: Cloth
-              amount: 5
-              doAfter: 1
             - tag: HOSModBoots
-              name: A HOS suit
+              name: Ботинки ГСБ
               icon:
                 sprite: Objects/Specific/Modsuits/Construction/hos.rsi
-                state: Boots
+                state: boots
               doAfter: 1
             - tag: HOSModGauntlets
-              name: HOS Gauntlets
+              name: Рукавицы ГСБ
               icon:
                 sprite: Objects/Specific/Modsuits/Construction/hos.rsi
                 state: Gauntlets
               doAfter: 1
             - tag: HOSModChestplate
-              name: HOS Chestplate
+              name: Нагрудник ГСБ
               icon:
                 sprite: Objects/Specific/Modsuits/Construction/hos.rsi
                 state: Chestplate
               doAfter: 1
             - tag: HOSModHelmet
-              name: HOS Helmet
+              name: Шлем ГСБ
               icon:
                 sprite: Objects/Specific/Modsuits/Construction/hos.rsi
                 state: Helmet
               doAfter: 1
             - tag: HOSModHardsuitcore
-              name: HOS hardsuit core
+              name: Ядро модсьюта ГСБ
               icon:
                 sprite: Objects/Specific/Modsuits/Construction/hos.rsi
                 state: Hardsuit-core
@@ -264,41 +255,79 @@
       edges:
         - to: modsuitSecurity
           steps:
-            - material: Cloth
-              amount: 5
-              doAfter: 1
             - tag: SecurityModBoots
-              name: A Security suit
+              name: Охранные ботинки
               icon:
-                sprite: Clothing/Objects/Specific/Modsuits/Construction/security.rsi
-                state: Boots
+                sprite: Objects/Specific/Modsuits/Construction/security.rsi
+                state: boots
               doAfter: 1
             - tag: SecurityModGauntlets
-              name: Security Gauntlets
+              name: Охранные рукавицы
               icon:
-                sprite: Clothing/Objects/Specific/Modsuits/Construction/security.rsi
+                sprite: Objects/Specific/Modsuits/Construction/security.rsi
                 state: Gauntlets
               doAfter: 1
             - tag: SecurityModChestplate
-              name: Security Chestplate
+              name: Охранный нагрудник
               icon:
-                sprite: Clothing/Objects/Specific/Modsuits/Construction/security.rsi
+                sprite: Objects/Specific/Modsuits/Construction/security.rsi
                 state: Chestplate
               doAfter: 1
             - tag: SecurityModHelmet
-              name: Security Helmet
+              name: Охранный шлем
               icon:
-                sprite: Clothing/Objects/Specific/Modsuits/Construction/security.rsi
+                sprite: Objects/Specific/Modsuits/Construction/security.rsi
                 state: Helmet
               doAfter: 1
             - tag: SecurityModHardsuitcore
-              name: Security hardsuit core
+              name: Охранное ядро модсьюта
               icon:
-                sprite: Clothing/Objects/Specific/Modsuits/Construction/security.rsi
+                sprite: Objects/Specific/Modsuits/Construction/security.rsi
                 state: Hardsuit-core
               doAfter: 1
     - node: modsuitSecurity
       entity: ClothingOuterModsuitSecurity
+
+- type: constructionGraph
+  id: ModsuitBrigmedic
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: modsuitBrigmedic
+          steps:
+            - tag: SecurityModBoots
+              name: Охранные ботинки
+              icon:
+                sprite: Objects/Specific/Modsuits/Construction/security.rsi
+                state: boots
+              doAfter: 1
+            - tag: SecurityModGauntlets
+              name: Охранные рукавицы
+              icon:
+                sprite: Objects/Specific/Modsuits/Construction/security.rsi
+                state: Gauntlets
+              doAfter: 1
+            - tag: SecurityModChestplate
+              name: Охранный нагрудник
+              icon:
+                sprite: Objects/Specific/Modsuits/Construction/security.rsi
+                state: Chestplate
+              doAfter: 1
+            - tag: BrigmedicModHelmet
+              name: Охранно-медицинский шлем
+              icon:
+                sprite: Objects/Specific/Modsuits/Construction/brigmedic.rsi
+                state: Helmet
+              doAfter: 1
+            - tag: SecurityModHardsuitcore
+              name: Охранное ядро модсьюта
+              icon:
+                sprite:   Objects/Specific/Modsuits/Construction/security.rsi
+                state: Hardsuit-core
+              doAfter: 1
+    - node: modsuitBrigmedic
+      entity: ClothingOuterModsuitBrigmedic
 
 - type: constructionGraph
   id: ModsuitCMO
@@ -308,37 +337,34 @@
       edges:
         - to: modsuitCMO
           steps:
-            - material: Cloth
-              amount: 5
-              doAfter: 1
             - tag: CMOModBoots
-              name: A CMO suit
+              name: Ботинки главного врача
               icon:
-                sprite: Clothing/Objects/Specific/Modsuits/Construction/cmo.rsi
-                state: Boots
+                sprite: Objects/Specific/Modsuits/Construction/cmo.rsi
+                state: boots
               doAfter: 1
             - tag: CMOModGauntlets
-              name: CMO Gauntlets
+              name: Рукавицы главного врача
               icon:
-                sprite: Clothing/Objects/Specific/Modsuits/Construction/cmo.rsi
+                sprite: Objects/Specific/Modsuits/Construction/cmo.rsi
                 state: Gauntlets
               doAfter: 1
             - tag: CMOModChestplate
-              name: CMO Chestplate
+              name: Нагрудник главного врача
               icon:
-                sprite: Clothing/Objects/Specific/Modsuits/Construction/cmo.rsi
+                sprite: Objects/Specific/Modsuits/Construction/cmo.rsi
                 state: Chestplate
               doAfter: 1
             - tag: CMOModHelmet
-              name: CMO Helmet
+              name: Шлем главного врача
               icon:
-                sprite: Clothing/Objects/Specific/Modsuits/Construction/cmo.rsi
+                sprite: Objects/Specific/Modsuits/Construction/cmo.rsi
                 state: Helmet
               doAfter: 1
             - tag: CMOModHardsuitcore
-              name: CMO hardsuit core
+              name: Ядро модсьюта главного врача
               icon:
-                sprite: Clothing/Objects/Specific/Modsuits/Construction/cmo.rsi
+                sprite: Objects/Specific/Modsuits/Construction/cmo.rsi
                 state: Hardsuit-core
               doAfter: 1
     - node: modsuitCMO
@@ -352,37 +378,34 @@
       edges:
         - to: modsuitSalvage
           steps:
-            - material: Cloth
-              amount: 5
-              doAfter: 1
             - tag: SalvageModBoots
               name: A Salvage suit
               icon:
-                sprite: Clothing/Objects/Specific/Modsuits/Construction/salvage.rsi
-                state: Boots
+                sprite: Objects/Specific/Modsuits/Construction/salvage.rsi
+                state: boots
               doAfter: 1
             - tag: SalvageModGauntlets
               name: Salvage Gauntlets
               icon:
-                sprite: Clothing/Objects/Specific/Modsuits/Construction/salvage.rsi
+                sprite: Objects/Specific/Modsuits/Construction/salvage.rsi
                 state: Gauntlets
               doAfter: 1
             - tag: SalvageModChestplate
               name: Salvage Chestplate
               icon:
-                sprite: Clothing/Objects/Specific/Modsuits/Construction/salvage.rsi
+                sprite: Objects/Specific/Modsuits/Construction/salvage.rsi
                 state: Chestplate
               doAfter: 1
             - tag: SalvageModHelmet
               name: Salvage Helmet
               icon:
-                sprite: Clothing/Objects/Specific/Modsuits/Construction/salvage.rsi
+                sprite: Objects/Specific/Modsuits/Construction/salvage.rsi
                 state: Helmet
               doAfter: 1
             - tag: SalvageModHardsuitcore
               name: Salvage hardsuit core
               icon:
-                sprite: Clothing/Objects/Specific/Modsuits/Construction/salvage.rsi
+                sprite: Objects/Specific/Modsuits/Construction/salvage.rsi
                 state: Hardsuit-core
               doAfter: 1
     - node: modsuitSalvage

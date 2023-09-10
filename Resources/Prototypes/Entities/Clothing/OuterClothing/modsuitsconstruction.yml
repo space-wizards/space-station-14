@@ -3,7 +3,7 @@
   id: ModsuitCivillian
   graph: ModsuitCivillian
   startNode: start
-  targetNode: ModsuitCivillian
+  targetNode: modsuitCivillian
   category: construction-category-clothing
   description: Civillian Modsuit.
   icon: { sprite: Clothing/OuterClothing/Modsuits/civillian.rsi, state: icon }
@@ -73,4 +73,37 @@
   category: construction-category-clothing
   description: McObamaBurger(Жак Морган)
   icon: { sprite: Clothing/OuterClothing/Modsuits/security-red.rsi, state: icon }
+  objectType: Item
+
+- type: construction
+  name: Модсьют Главного врача
+  id: ModsuitCMO
+  graph: ModsuitCMO
+  startNode: start
+  targetNode: modsuitCMO
+  category: construction-category-clothing
+  description: McObamaBurger(Жак Морган)
+  icon: { sprite: Clothing/OuterClothing/Modsuits/cmo.rsi, state: icon }
+  objectType: Item
+
+- type: construction
+  name: Модсьют Утилизатора
+  id: ModsuitSalvage
+  graph: ModsuitSalvage
+  startNode: start
+  targetNode: modsuitSalvage
+  category: construction-category-clothing
+  description: McObamaBurger(Жак Морган)
+  icon: { sprite: Clothing/OuterClothing/Modsuits/salvage.rsi, state: icon }
+  objectType: Item
+
+- type: construction
+  name: Модсьют Бригмедика
+  id: ModsuitBrigmedic
+  graph: ModsuitBrigmedic
+  startNode: start
+  targetNode: modsuitBrigmedic
+  category: construction-category-clothing
+  description: McObamaBurger(Жак Морган)
+  icon: { sprite: Clothing/OuterClothing/Modsuits/brigmedic.rsi, state: icon }
   objectType: Item

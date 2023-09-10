@@ -8,3 +8,73 @@
       amount: 2
     - id: SpeedLoaderMagnum
       amount: 4
+
+- type: entity
+  id: CrateModsuitEngineer
+  name: engi modsuit
+  description: 22
+  parent: CrateEngineeringSecure
+  components:
+  - type: StorageFill
+    contents:
+    - id: EngineerModHardsuitcore
+
+- type: entity
+  id: CrateModsuitAtmos
+  name: atmos modsuit
+  description: 22
+  parent: CrateEngineeringSecure
+  components:
+  - type: StorageFill
+    contents:
+    - id: AtmosModHardsuitcore
+
+- type: entity
+  id: CrateModsuitCivillian
+  name: civic modsuit
+  description: 22
+  parent: CrateEngineeringSecure
+  components:
+  - type: StorageFill
+    contents:
+    - id: EVAModHardsuitcore
+
+- type: entity
+  id: CrateModsuitMedical
+  name: medica modsuit
+  description: 22
+  parent: CrateMedicalSecure
+  components:
+  - type: StorageFill
+    contents:
+    - id: MedicalModHardsuitcore
+
+- type: entity
+  id: CrateModsuitRND
+  name: rnd modsuit
+  description: 22
+  parent: CrateScienceSecure
+  components:
+  - type: StorageFill
+    contents:
+    - id: RNDModHardsuitcore
+
+- type: entity
+  id: CrateModsuitSalvage
+  name: salvage modsuit
+  description: 22
+  parent: CrateSecure
+  components:
+  - type: StorageFill
+    contents:
+    - id: SalvageModHardsuitcore
+
+- type: entity
+  id: CrateModsuitSecurity
+  name: security modsuit
+  description: 22
+  parent: CrateSecurityRiot
+  components:
+  - type: StorageFill
+    contents:
+    - id: SecurityModHardsuitcore
