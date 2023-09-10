@@ -129206,28 +129206,6 @@ entities:
     - pos: 8.57457,-21.260563
       parent: 8364
       type: Transform
-    - toggleAction:
-        sound: null
-        itemIconStyle: BigItem
-        icon:
-          sprite: Objects/Tools/flashlight.rsi
-          state: flashlight
-        iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
-        iconColor: '#FFFFFFFF'
-        name: action-name-toggle-light
-        description: action-description-toggle-light
-        keywords: []
-        enabled: True
-        useDelay: null
-        charges: null
-        checkCanInteract: True
-        clientExclusive: False
-        priority: 0
-        autoPopulate: True
-        autoRemove: True
-        temporary: False
-        event: !type:ToggleActionEvent {}
-      type: HandheldLight
     - containers:
         cellslot_cell_container: !type:ContainerSlot
           showEnts: False
@@ -129388,28 +129366,6 @@ entities:
     - pos: -34.69555,-31.344677
       parent: 8364
       type: Transform
-    - toggleAction:
-        sound: null
-        itemIconStyle: BigItem
-        icon:
-          sprite: Objects/Tools/flashlight.rsi
-          state: flashlight
-        iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
-        iconColor: '#FFFFFFFF'
-        name: action-name-toggle-light
-        description: action-description-toggle-light
-        keywords: []
-        enabled: True
-        useDelay: null
-        charges: null
-        checkCanInteract: True
-        clientExclusive: False
-        priority: 0
-        autoPopulate: True
-        autoRemove: True
-        temporary: False
-        event: !type:ToggleActionEvent {}
-      type: HandheldLight
     - canCollide: True
       type: Physics
 - proto: LampInterrogator
