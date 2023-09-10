@@ -10,8 +10,6 @@ head-rev-role-greeting =
     Beware, this won't work on Security, Command, or those wearing sunglasses.
     Viva la revolución!
 
-head-rev-admin = Make Head Rev
-
 head-rev-initial = [color=#5e9cff]{$name}[/color] ([color=gray]{$username}[/color]) was one of the Head Revolutionaries.
 
 head-rev-initial-count = {$initialCount ->

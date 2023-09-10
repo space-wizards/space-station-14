@@ -10,4 +10,5 @@ admin-verb-text-make-traitor = Make Traitor
 admin-verb-text-make-zombie = Make Zombie
 admin-verb-text-make-nuclear-operative = Make Nuclear Operative
 admin-verb-text-make-pirate = Make Pirate
+admin-verb-text-make-head-rev = Make Head Rev
 admin-verb-text-make-space-ninja = Make Space Ninja

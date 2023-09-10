@@ -106,14 +106,14 @@ public sealed partial class AdminVerbSystem
 
         Verb headRev = new()
         {
-            Text = Loc.GetString("head-rev-admin"),
+            Text = Loc.GetString("admin-verb-text-make-head-rev"),
             Category = VerbCategory.Antag,
             Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/Misc/job_icons.rsi/HeadRevolutionary.png")),
             Act = () =>
             {
                 if (!_minds.TryGetMind(args.Target, out var mindId, out var mind))
                     return;
-  
+
                 _revolutionaryRule.OnHeadRevAdmin(mindId, mind);
             },
             Impact = LogImpact.High,
@@ -130,7 +130,7 @@ public sealed partial class AdminVerbSystem
             {
                 if (!_minds.TryGetMind(args.Target, out var mindId, out var mind))
                     return;
-              
+
                 _ninja.MakeNinja(mindId, mind);
             },
             Impact = LogImpact.High,
