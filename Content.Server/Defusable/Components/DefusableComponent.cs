@@ -7,11 +7,11 @@ namespace Content.Server.Defusable.Components;
 /// <summary>
 /// This is used for bombs that should be defused. The explosion configuration should be handled by <see cref="ExplosiveComponent"/>.
 /// </summary>
-[RegisterComponent, Access(typeof(DefusableSystem)]
+[RegisterComponent, Access(typeof(DefusableSystem))]
 public sealed partial class DefusableComponent : Component
 {
     /// <summary>
-    ///     The bomb will play this sound on bolt.
+    ///     The bomb will play this sound on defusal.
     /// </summary>
     [ViewVariables(VVAccess.ReadOnly), DataField("defusalSound")]
     public SoundSpecifier DefusalSound = new SoundPathSpecifier("/Audio/Misc/notice2.ogg");
