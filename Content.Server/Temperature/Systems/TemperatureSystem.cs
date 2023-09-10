@@ -2,6 +2,7 @@ using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
+using Content.Server.Body.Components;
 using Content.Server.Temperature.Components;
 using Content.Shared.Alert;
 using Content.Shared.Atmos;
@@ -139,66 +140,58 @@ public sealed class TemperatureSystem : EntitySystem
 
     private void ServerAlert(EntityUid uid, AlertsComponent status, OnTemperatureChangeEvent args)
     {
-        if (TryComp<TemperatureComponent>(uid, out var temperature))
+        AlertType type;
+        float threshold;
+        float idealTemp;
+
+        if (!TryComp<TemperatureComponent>(uid, out var temperature))
         {
-            var cold3 = temperature.ColdDamageThreshold;
-            var cold2 = cold3 + 20;
-            var cold1 = cold3 + 32;
-            var hot3 = temperature.HeatDamageThreshold;
-            var hot2 = hot3 - 20;
-            var hot1 = hot3 - 33;
+            _alertsSystem.ClearAlertCategory(uid, AlertCategory.Temperature);
+            return;
+        }
 
-            if (temperature.ColdDamageThreshold + 32 >= temperature.HeatDamageThreshold - 32)
-            {
-                if (temperature.ColdDamageThreshold < temperature.HeatDamageThreshold)
-                {
-                    var range = temperature.HeatDamageThreshold - temperature.ColdDamageThreshold;
-                    cold2 = cold3 + range * 0.2f;
-                    cold1 = cold3 + range * 0.4f;
-                    hot1 = hot3 - range * 0.4f;
-                    hot2 = hot3 - range * 0.2f;
-                }
-                else
-                {
-                    _alertsSystem.ClearAlertCategory(uid, AlertCategory.Temperature);
-                    return;
-                }
-            }
+        if (TryComp<ThermalRegulatorComponent>(uid, out var regulator) &&
+            regulator.NormalBodyTemperature > temperature.ColdDamageThreshold &&
+            regulator.NormalBodyTemperature < temperature.HeatDamageThreshold)
+        {
+            idealTemp = regulator.NormalBodyTemperature;
+        }
+        else
+        {
+            idealTemp = (temperature.ColdDamageThreshold + temperature.HeatDamageThreshold) / 2;
+        }
 
-            // Dynamic variables can't be used in a Switch, so this has to be an If
-            //
-            // Dangerously cold
-            if (args.CurrentTemperature <= cold3)
-            {
-                _alertsSystem.ShowAlert(uid, AlertType.Cold, 3);
-            }
-            // Cold warnings
-            else if (args.CurrentTemperature <= cold2 && args.CurrentTemperature > cold3)
-            {
-                _alertsSystem.ShowAlert(uid, AlertType.Cold, 2);
-            }
-            else if (args.CurrentTemperature <= cold1 && args.CurrentTemperature > cold2)
-            {
-                _alertsSystem.ShowAlert(uid, AlertType.Cold, 1);
-            }
-            // Safe
-            else if (args.CurrentTemperature <= hot1 && args.CurrentTemperature > cold1)
-            {
+        if (args.CurrentTemperature <= idealTemp)
+        {
+            type = AlertType.Cold;
+            threshold = temperature.ColdDamageThreshold;
+        }
+        else
+        {
+            type = AlertType.Hot;
+            threshold = temperature.HeatDamageThreshold;
+        }
+
+        // Calculates a scale where 1.0 is the ideal temperature and 0.0 is where temperature damage begins
+        // The cold and hot scales will differ in their range if the ideal temperature is not exactly halfway between the thresholds
+        var tempScale = (args.CurrentTemperature - threshold) / (idealTemp - threshold);
+        switch (tempScale)
+        {
+            case <= 0f:
+                _alertsSystem.ShowAlert(uid, type, 3);
+                break;
+
+            case <= 0.33f:
+                _alertsSystem.ShowAlert(uid, type, 2);
+                break;
+
+            case <= 0.66f:
+                _alertsSystem.ShowAlert(uid, type, 1);
+                break;
+
+            case > 0.66f:
                 _alertsSystem.ClearAlertCategory(uid, AlertCategory.Temperature);
-            }
-            // Hot warnings
-            else if (args.CurrentTemperature <= hot2 && args.CurrentTemperature > hot1)
-            {
-                _alertsSystem.ShowAlert(uid, AlertType.Hot, 1);
-            }
-            else if (args.CurrentTemperature <= hot3 && args.CurrentTemperature > hot2)
-            {
-                _alertsSystem.ShowAlert(uid, AlertType.Hot, 2);
-            } // Dangerously hot
-            else if (args.CurrentTemperature > hot3)
-            {
-                _alertsSystem.ShowAlert(uid, AlertType.Hot, 3);
-            }
+                break;
         }
     }
 
