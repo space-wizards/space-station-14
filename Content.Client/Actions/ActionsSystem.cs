@@ -72,7 +72,7 @@ namespace Content.Client.Actions
             _actionHoldersQueue.Enqueue(uid);
         }
 
-        protected override void AddActionInternal(EntityUid holderId, EntityUid actionId, IContainer container, ActionsComponent holder)
+        protected override void AddActionInternal(EntityUid holderId, EntityUid actionId, BaseContainer container, ActionsComponent holder)
         {
             // Sometimes the client receives actions from the server, before predicting that newly added components will add
             // their own shared actions. Just in case those systems ever decided to directly access action properties (e.g.,
@@ -87,7 +87,7 @@ namespace Content.Client.Actions
             }
         }
 
-        public override void AddAction(EntityUid holderId, EntityUid actionId, EntityUid? provider, ActionsComponent? holder = null, BaseActionComponent? action = null, bool dirty = true, IContainer? actionContainer = null)
+        public override void AddAction(EntityUid holderId, EntityUid actionId, EntityUid? provider, ActionsComponent? holder = null, BaseActionComponent? action = null, bool dirty = true, BaseContainer? actionContainer = null)
         {
             if (!Resolve(holderId, ref holder, false))
                 return;
