@@ -466,6 +466,7 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
             return true;
 
         TryComp<InstrumentComponent>(uid, out var localComp);
-        return localComp != null;
+        component = localComp;
+        return component != null;
     }
 }

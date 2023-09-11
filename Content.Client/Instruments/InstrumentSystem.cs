@@ -98,7 +98,8 @@ public sealed class InstrumentSystem : SharedInstrumentSystem
             return true;
 
         TryComp<InstrumentComponent>(uid, out var localComp);
-        return localComp != null;
+        component = localComp;
+        return component != null;
     }
 
     public override void SetupRenderer(EntityUid uid, bool fromStateChange, SharedInstrumentComponent? component = null)
