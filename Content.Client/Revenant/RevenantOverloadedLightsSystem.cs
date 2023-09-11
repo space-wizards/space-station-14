@@ -6,6 +6,8 @@ namespace Content.Client.Revenant;
 
 public sealed class RevenantOverloadedLightsSystem : SharedRevenantOverloadedLightsSystem
 {
+    [Dependency] private readonly SharedPointLightSystem _lights = default!;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -20,37 +22,37 @@ public sealed class RevenantOverloadedLightsSystem : SharedRevenantOverloadedLig
 
         var enumerator = EntityQueryEnumerator<RevenantOverloadedLightsComponent, PointLightComponent>();
 
-        while (enumerator.MoveNext(out var comp, out var light))
+        while (enumerator.MoveNext(out var uid, out var comp, out var light))
         {
             //this looks cool :HECK:
-            light.Energy = 2f * Math.Abs((float) Math.Sin(0.25 * Math.PI * comp.Accumulator));
+            _lights.SetEnergy(uid, 2f * Math.Abs((float) Math.Sin(0.25 * Math.PI * comp.Accumulator)), light);
         }
     }
 
     private void OnStartup(EntityUid uid, RevenantOverloadedLightsComponent component, ComponentStartup args)
     {
-        var light = EnsureComp<PointLightComponent>(uid);
+        var light = _lights.EnsureLight(uid);
         component.OriginalEnergy = light.Energy;
         component.OriginalEnabled = light.Enabled;
 
-        light.Enabled = component.OriginalEnabled;
-        Dirty(light);
+        _lights.SetEnabled(uid, component.OriginalEnabled, light);
+        Dirty(uid, light);
     }
 
     private void OnShutdown(EntityUid uid, RevenantOverloadedLightsComponent component, ComponentShutdown args)
     {
-        if (!TryComp<PointLightComponent>(component.Owner, out var light))
+        if (!_lights.TryGetLight(uid, out var light))
             return;
 
         if (component.OriginalEnergy == null)
         {
-            RemComp<PointLightComponent>(component.Owner);
+            RemComp(uid, light);
             return;
         }
 
-        light.Energy = component.OriginalEnergy.Value;
-        light.Enabled = component.OriginalEnabled;
-        Dirty(light);
+        _lights.SetEnergy(uid, component.OriginalEnergy.Value, light);
+        _lights.SetEnabled(uid, component.OriginalEnabled, light);
+        Dirty(uid, light);
     }
 
     protected override void OnZap(RevenantOverloadedLightsComponent component)

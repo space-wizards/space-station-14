@@ -12,7 +12,8 @@ using Content.Shared.Storage;
 using Robust.Client.UserInterface;
 using Robust.Shared.Containers;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
-using static Content.Shared.Storage.StorageComponent;
+using static Content.Shared.Storage.SharedStorageComponent;
+using Direction = Robust.Shared.Maths.Direction;
 
 namespace Content.Client.Storage.UI
 {
