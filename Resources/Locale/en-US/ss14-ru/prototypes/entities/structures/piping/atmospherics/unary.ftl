@@ -9,8 +9,7 @@ ent-GasVentScrubber = air scrubber
 ent-GasOutletInjector = air injector
     .desc = Has a valve and pump attached to it.
 ent-BaseGasThermoMachine = thermomachine
-
-  .desc = { ent-['BaseMachinePowered', 'ConstructibleMachine'].desc }
+    .desc = { ent-BaseMachinePowered.desc }
 ent-GasThermoMachineFreezer = freezer
     .desc = Cools gas in connected pipes.
 ent-GasThermoMachineFreezerEnabled = { ent-GasThermoMachineFreezer }
