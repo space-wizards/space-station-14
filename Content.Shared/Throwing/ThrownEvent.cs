@@ -3,7 +3,7 @@ using JetBrains.Annotations;
 namespace Content.Shared.Throwing;
 
 /// <summary>
-///     Raised when throwing the entity in your hands.
+///     Raised on thrown entity.
 /// </summary>
 [PublicAPI]
 public sealed class ThrownEvent : HandledEntityEventArgs
