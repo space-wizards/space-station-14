@@ -125,5 +125,26 @@ public enum EdgeFlags : byte
     None = 0,
     Auto = 1 << 0,
     Manual = 1 << 1,
-    NoMerge = 1 << 2,
+    Out = 1 << 2,
+    In = 1 << 3,
+    Dir = Out | In,
+    NoMerge = 1 << 4,
+}
+
+public static class EdgeHelpers
+{
+    public static EdgeFlags Invert(this EdgeFlags flags)
+    {
+        switch (flags & EdgeFlags.Dir)
+        {
+            case EdgeFlags.Out:
+                flags = (flags & ~EdgeFlags.Dir) | EdgeFlags.In;
+                break;
+            case EdgeFlags.In:
+                flags = (flags & ~EdgeFlags.Dir) | EdgeFlags.Out;
+                break;
+        }
+
+        return flags;
+    }
 }

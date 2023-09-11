@@ -14,7 +14,12 @@ public abstract partial class SharedNodeGraphSystem
     /// </remarks>
     protected (EntityUid GraphId, NodeGraphComponent Graph) SpawnGraph(string? graphProto)
     {
-        var graphId = Spawn(graphProto);
+        var graphId = EntityManager.CreateEntityUninitialized(graphProto, GraphRegistry);
+        var graph = GraphQuery.GetComponent(graphId);
+
+        graph.GraphProto = graphProto;
+        EntityManager.InitializeAndStartEntity(graphId);
+
         return (graphId, GraphQuery.GetComponent(graphId));
     }
 

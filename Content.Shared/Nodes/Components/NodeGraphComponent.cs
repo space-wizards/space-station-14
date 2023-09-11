@@ -18,10 +18,10 @@ public sealed partial class NodeGraphComponent : Component
     public static readonly Color DefaultColor = Color.Fuchsia;
 
     /// <summary>
-    /// The type of graph this node can be a part of.
+    /// The type of graph this graph can split/merge into.
     /// </summary>
-    [DataField("graphProto", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string GraphProto = default!;
+    [ViewVariables]
+    public string? GraphProto = default!;
 
     /// <summary>
     /// The set of all graph nodes in this graph.

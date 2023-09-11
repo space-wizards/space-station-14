@@ -1,4 +1,5 @@
 using Content.Shared.Nodes.Components;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using System.Collections.Concurrent;
@@ -10,9 +11,14 @@ namespace Content.Shared.Nodes.EntitySystems;
 /// </summary>
 public abstract partial class SharedNodeGraphSystem : EntitySystem
 {
+    [Dependency] protected readonly IComponentFactory CompFactory = default!;
     [Dependency] protected readonly IGameTiming GameTiming = default!;
     protected EntityQuery<NodeGraphComponent> GraphQuery = default!;
     protected EntityQuery<GraphNodeComponent> NodeQuery = default!;
+    protected EntityQuery<PolyNodeComponent> PolyQuery = default!;
+    protected EntityQuery<ProxyNodeComponent> ProxyQuery = default!;
+    protected ComponentRegistry GraphRegistry = default!;
+    protected ComponentRegistry ProxyRegistry = default!;
 
     protected HashSet<EntityUid> QueuedEdgeUpdates = new();
     protected HashSet<EntityUid> QueuedMergeGraphs = new();
@@ -24,10 +30,23 @@ public abstract partial class SharedNodeGraphSystem : EntitySystem
 
         GraphQuery = GetEntityQuery<NodeGraphComponent>();
         NodeQuery = GetEntityQuery<GraphNodeComponent>();
+        PolyQuery = GetEntityQuery<PolyNodeComponent>();
+        ProxyQuery = GetEntityQuery<ProxyNodeComponent>();
+        GraphRegistry = new()
+        {
+            { CompFactory.GetComponentName(typeof(NodeGraphComponent)), new(CompFactory.GetComponent<NodeGraphComponent>(), new()) },
+        };
+        ProxyRegistry = new()
+        {
+            { CompFactory.GetComponentName(typeof(ProxyNodeComponent)), new(CompFactory.GetComponent<ProxyNodeComponent>(), new()) },
+        };
 
+        SubscribeLocalEvent<PolyNodeComponent, ComponentStartup>(OnComponentStartup);
         SubscribeLocalEvent<GraphNodeComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<GraphNodeComponent, ComponentShutdown>(OnComponentShutdown);
         SubscribeLocalEvent<NodeGraphComponent, ComponentShutdown>(OnComponentShutdown);
+        SubscribeLocalEvent<PolyNodeComponent, ComponentShutdown>(OnComponentShutdown);
+        SubscribeLocalEvent<ProxyNodeComponent, ComponentShutdown>(OnComponentShutdown);
     }
 
     public override void Update(float frameTime)

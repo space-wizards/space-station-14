@@ -23,7 +23,7 @@ public sealed partial class DebugNodeAutolinkerSystem : EntitySystem
 
     private void OnUpdateEdges(EntityUid uid, DebugNodeAutolinkerComponent comp, ref UpdateEdgesEvent args)
     {
-        if (!_xformQuery.TryGetComponent(uid, out var xform))
+        if (!_xformQuery.TryGetComponent(args.HostId, out var xform))
             return;
 
         var epicenter = _xformSys.GetWorldPosition(xform);
@@ -50,9 +50,9 @@ public sealed partial class DebugNodeAutolinkerSystem : EntitySystem
         if (args.Wanted)
             return;
 
-        if (!_xformQuery.TryGetComponent(uid, out var xform))
+        if (!_xformQuery.TryGetComponent(args.NodeHostId, out var xform))
             return;
-        if (!_xformQuery.TryGetComponent(args.EdgeId, out var edgeXform))
+        if (!_xformQuery.TryGetComponent(args.EdgeHostId, out var edgeXform))
             return;
 
         var range = comp.BaseRange + MathF.Max(comp.HysteresisRange, 0f);

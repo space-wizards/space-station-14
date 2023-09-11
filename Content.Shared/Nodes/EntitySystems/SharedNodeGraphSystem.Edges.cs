@@ -146,12 +146,14 @@ public abstract partial class SharedNodeGraphSystem
 
     protected void SetEdge(EntityUid nodeId, EntityUid edgeId, Index idx, EdgeFlags newFlags, EdgeFlags oldFlags, GraphNodeComponent node, GraphNodeComponent edge)
     {
+        var newEdgeFlags = newFlags.Invert();
+        var oldEdgeFlags = oldFlags.Invert();
         SetHalfEdge(nodeId, edgeId, idx, newFlags, oldFlags, node, edge);
-        SetHalfEdge(edgeId, nodeId, GetEdgeIndex(edge, nodeId)!.Value, newFlags, oldFlags, edge, node);
+        SetHalfEdge(edgeId, nodeId, GetEdgeIndex(edge, nodeId)!.Value, newEdgeFlags, oldEdgeFlags, edge, node);
 
         var nodeEv = new EdgeChangedEvent(nodeId, edgeId, newFlags, oldFlags, node, edge);
         RaiseLocalEvent(nodeId, ref nodeEv);
-        var edgeEv = new EdgeChangedEvent(edgeId, nodeId, newFlags, oldFlags, edge, node);
+        var edgeEv = new EdgeChangedEvent(edgeId, nodeId, newEdgeFlags, oldEdgeFlags, edge, node);
         RaiseLocalEvent(edgeId, ref edgeEv);
     }
 
@@ -221,11 +223,15 @@ public abstract partial class SharedNodeGraphSystem
         if ((node.Flags & NodeFlags.Edges) != NodeFlags.None)
             ClearEdgeUpdate(nodeId, node);
 
-        var updateEv = new UpdateEdgesEvent(nodeId, node);
-        RaiseLocalEvent(nodeId, ref updateEv);
+        // Cache commonly derived autolinker values:
+        var hostId = GetNodeHost(nodeId, node);
 
+        // Collect edges the autolinkers want to have:
+        var updateEv = new UpdateEdgesEvent(nodeId, hostId, node);
+        RaiseLocalEvent(nodeId, ref updateEv);
         var newEdges = updateEv.Edges;
 
+        // Figure out what edges we have that we shouldn't.
         // For loop because the edges will be modified mid-iteration.
         for (var i = node.Edges.Count - 1; i >= 0; --i)
         {
@@ -236,7 +242,7 @@ public abstract partial class SharedNodeGraphSystem
                 newFlags |= outFlags | EdgeFlags.Auto;
 
             var edge = NodeQuery.GetComponent(edgeId);
-            if (CheckEdge(edgeId, nodeId, out var inFlags, edge, node))
+            if (CheckEdge(edgeId, nodeId, out var inFlags, node: edge, edge: node, edgeHostId: hostId))
                 newFlags |= inFlags | EdgeFlags.Auto;
 
             // Manually set edges shouldn't be messed with by the autolinker.
@@ -255,6 +261,7 @@ public abstract partial class SharedNodeGraphSystem
         if (newEdges is null || newEdges.Count <= 0)
             return;
 
+        // Add missing edges.
         foreach (var (edgeId, edgeFlags) in newEdges)
         {
             if (!NodeQuery.TryGetComponent(edgeId, out var edge))
@@ -264,16 +271,19 @@ public abstract partial class SharedNodeGraphSystem
             }
 
             var newFlags = edgeFlags | EdgeFlags.Auto;
-            if (CheckEdge(edgeId, nodeId, out var inFlags, edge, node))
+            if (CheckEdge(edgeId, nodeId, out var inFlags, node: edge, edge: node, edgeHostId: hostId))
                 newFlags |= inFlags;
 
             AddEdge(nodeId, edgeId, newFlags, node, edge);
         }
     }
 
-    protected bool CheckEdge(EntityUid nodeId, EntityUid edgeId, out EdgeFlags flags, GraphNodeComponent node, GraphNodeComponent edge)
+    protected bool CheckEdge(EntityUid nodeId, EntityUid edgeId, out EdgeFlags flags, GraphNodeComponent node, GraphNodeComponent edge, EntityUid? nodeHostId = null, EntityUid? edgeHostId = null)
     {
-        var checkEv = new CheckEdgeEvent(nodeId, edgeId, node, edge);
+        nodeHostId ??= GetNodeHost(nodeId, node);
+        edgeHostId ??= GetNodeHost(edgeId, edge);
+
+        var checkEv = new CheckEdgeEvent(nodeId, nodeHostId.Value, edgeId, edgeHostId.Value, node, edge);
         RaiseLocalEvent(nodeId, ref checkEv);
         flags = checkEv.Flags;
         return checkEv.Wanted;
