@@ -323,33 +323,33 @@ public sealed class MutationSystem : EntitySystem
     private void CrossChemicals(ref Dictionary<string, SeedChemQuantity> val, Dictionary<string, SeedChemQuantity> other)
     {
         // Go through chemicals from the pollen in swab
-        foreach (var other_chem in other)
+        foreach (var otherChem in other)
         {
             // if both have same chemical, randomly pick potency ratio from the two.
-            if (val.ContainsKey(other_chem.Key))
+            if (val.ContainsKey(otherChem.Key))
             {
-                val[other_chem.Key] = Random(0.5f) ? other_chem.Value : val[other_chem.Key];
+                val[otherChem.Key] = Random(0.5f) ? otherChem.Value : val[otherChem.Key];
             }
             // if target plant doesn't have this chemical, has 50% chance to add it. 
             else
             {
                 if (Random(0.5f))
                 {
-                    val.Add(other_chem.Key, other_chem.Value);
+                    val.Add(otherChem.Key, otherChem.Value);
                 }
             }
         }
 
         // if the target plant has chemical that the pollen in swab does not, 50% chance to remove it.
-        foreach (var this_chem in val)
+        foreach (var thisChem in val)
         {
-            if (!other.ContainsKey(this_chem.Key))
+            if (!other.ContainsKey(thisChem.Key))
             {
                 if (Random(0.5f))
                 {
                     if (val.Count > 1)
                     {
-                        val.Remove(this_chem.Key);
+                        val.Remove(thisChem.Key);
                     }
                 }
             }
@@ -359,30 +359,30 @@ public sealed class MutationSystem : EntitySystem
     private void CrossGasses(ref Dictionary<Gas, float> val, Dictionary<Gas, float> other)
     {
         // Go through gasses from the pollen in swab
-        foreach (var other_gas in other)
+        foreach (var otherGas in other)
         {
             // if both have same gas, randomly pick ammount from the two.
-            if (val.ContainsKey(other_gas.Key))
+            if (val.ContainsKey(otherGas.Key))
             {
-                val[other_gas.Key] = Random(0.5f) ? other_gas.Value : val[other_gas.Key];
+                val[otherGas.Key] = Random(0.5f) ? otherGas.Value : val[otherGas.Key];
             }
             // if target plant doesn't have this gas, has 50% chance to add it.
             else
             {
                 if (Random(0.5f))
                 {
-                    val.Add(other_gas.Key, other_gas.Value);
+                    val.Add(otherGas.Key, otherGas.Value);
                 }
             }
         }
         // if the target plant has gas that the pollen in swab does not, 50% chance to remove it.
-        foreach (var this_gas in val)
+        foreach (var thisGas in val)
         {
-            if (!other.ContainsKey(this_gas.Key))
+            if (!other.ContainsKey(thisGas.Key))
             {
                 if (Random(0.5f))
                 {
-                    val.Remove(this_gas.Key);
+                    val.Remove(thisGas.Key);
                 }
             }
         }
