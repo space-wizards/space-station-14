@@ -2,6 +2,7 @@
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Text;
@@ -60,6 +61,8 @@ public sealed class TTSManager
     private double _timeout = 1;
 
     private int _maxCachedCount = 200;
+    private string _apiUrl = string.Empty;
+    private string _apiToken = string.Empty;
 
     public void Initialize()
     {
@@ -73,6 +76,8 @@ public sealed class TTSManager
         {
             _timeout = val;
         });
+        _cfg.OnValueChanged(CCCVars.TTSApiUrl, v => _apiUrl = v, true);
+        _cfg.OnValueChanged(CCCVars.TTSApiToken, v => _apiToken = v, true);
     }
 
     /// <summary>
@@ -80,22 +85,9 @@ public sealed class TTSManager
     /// </summary>
     /// <param name="speaker">Identifier of speaker</param>
     /// <param name="text">SSML formatted text</param>
-    /// <returns>OGG audio bytes</returns>
-    /// <exception cref="Exception">Throws if url or token CCVar not set or http request failed</exception>
-    public async Task<byte[]> ConvertTextToSpeech(string speaker, string text)
+    /// <returns>OGG audio bytes or null if failed</returns>
+    public async Task<byte[]?> ConvertTextToSpeech(string speaker, string text)
     {
-        var url = _cfg.GetCVar(CCCVars.TTSApiUrl);
-        if (string.IsNullOrWhiteSpace(url))
-        {
-            throw new Exception("TTS Api url not specified");
-        }
-
-        var token = _cfg.GetCVar(CCCVars.TTSApiToken);
-        if (string.IsNullOrWhiteSpace(token))
-        {
-            throw new Exception("TTS Api token not specified");
-        }
-
         WantedCount.Inc();
         var cacheKey = GenerateCacheKey(speaker, text);
 
@@ -108,9 +100,11 @@ public sealed class TTSManager
                 return data;
             }
 
+            _sawmill.Debug($"Generate new audio for '{text}' speech by '{speaker}' speaker");
+
             var body = new GenerateVoiceRequest
             {
-                ApiToken = token,
+                ApiToken = _apiToken,
                 Text = text,
                 Speaker = speaker,
             };
@@ -119,10 +113,17 @@ public sealed class TTSManager
             try
             {
                 var cts = new CancellationTokenSource(TimeSpan.FromSeconds(_timeout));
-                var response = await _httpClient.PostAsJsonAsync(url, body, cts.Token);
+                var response = await _httpClient.PostAsJsonAsync(_apiUrl, body, cts.Token);
                 if (!response.IsSuccessStatusCode)
                 {
-                    throw new Exception($"TTS request returned bad status code: {response.StatusCode}");
+                    if (response.StatusCode == HttpStatusCode.TooManyRequests)
+                    {
+                        _sawmill.Warning("TTS request was rate limited");
+                        return null;
+                    }
+
+                    _sawmill.Error($"TTS request returned bad status code: {response.StatusCode}");
+                    return null;
                 }
 
                 var json =
@@ -147,20 +148,20 @@ public sealed class TTSManager
             catch (TaskCanceledException)
             {
                 RequestTimings.WithLabels("Timeout").Observe((DateTime.UtcNow - reqTime).TotalSeconds);
-                _sawmill.Error($"Timeout of request generation new sound for '{text}' speech by '{speaker}' speaker");
-                throw new Exception("TTS request timeout");
+                _sawmill.Error($"Timeout of request generation new audio for '{text}' speech by '{speaker}' speaker");
+                return null;
             }
             catch (Exception e)
             {
                 RequestTimings.WithLabels("Error").Observe((DateTime.UtcNow - reqTime).TotalSeconds);
                 _sawmill.Error(
                     $"Failed of request generation new sound for '{text}' speech by '{speaker}' speaker\n{e}");
-                throw new Exception("TTS request failed");
+                return null;
             }
         });
     }
 
-    public async Task<byte[]> ConvertTextToSpeechRadio(string speaker, string text)
+    public async Task<byte[]?> ConvertTextToSpeechRadio(string speaker, string text)
     {
         WantedRadioCount.Inc();
 
@@ -175,6 +176,8 @@ public sealed class TTSManager
             }
 
             var soundData = await ConvertTextToSpeech(speaker, text);
+            if (soundData == null)
+                return null;
 
             var reqTime = DateTime.UtcNow;
             try
