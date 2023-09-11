@@ -1,9 +1,8 @@
 using Content.Server.Communications;
 using Content.Server.DoAfter;
 using Content.Server.Mind;
-using Content.Server.Ninja.Systems;
+using Content.Server.Ninja.Events;
 using Content.Server.Power.Components;
-using Content.Server.Power.Events;
 using Content.Server.Roles;
 using Content.Shared.Communications;
 using Content.Shared.DoAfter;

@@ -1,7 +1,7 @@
 using Content.Server.Emp;
+using Content.Server.Ninja.Events;
 using Content.Server.Popups;
 using Content.Server.Power.Components;
-using Content.Server.Power.Events;
 using Content.Server.PowerCell;
 using Content.Shared.Actions;
 using Content.Shared.Clothing.EntitySystems;
