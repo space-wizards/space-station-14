@@ -162,8 +162,8 @@
 
 - type: entity
   id: ActionSpawnRift
-  name: action-name-carp-rift
-  description: action-description-carp-rift
+  name: Summon Carp Rift
+  description: Summons a carp rift that will periodically spawns carps.
   noSpawn: true
   components:
   - type: InstantAction
@@ -175,8 +175,8 @@
 
 - type: entity
   id: ActionDevour
-  name: action-name-devour
-  description: action-description-devour
+  name: "[color=red]Devour[/color]"
+  description: Attempt to break a structure with your jaws or swallow a creature.
   noSpawn: true
   components:
   - type: EntityTargetAction

@@ -67,8 +67,8 @@
 
 - type: entity
   id: ActionGhostBoo
-  name: action-name-boo
-  description: action-description-boo
+  name: Boo!
+  description: Scare your crew members because of boredom!
   noSpawn: true
   components:
   - type: InstantAction
@@ -79,8 +79,8 @@
 
 - type: entity
   id: ActionToggleLighting
-  name: ghost-gui-toggle-lighting-manager-name
-  description: ghost-gui-toggle-lighting-manager-desc
+  name: Toggle All Lighting
+  description: Toggle all light rendering to better observe dark areas.
   noSpawn: true
   components:
   - type: InstantAction
@@ -91,8 +91,8 @@
 
 - type: entity
   id: ActionToggleFov
-  name: ghost-gui-toggle-fov-name
-  description: ghost-gui-toggle-fov-desc
+  name: Toggle FoV
+  description: Toggles field-of-view in order to see what players see.
   noSpawn: true
   components:
   - type: InstantAction
@@ -103,8 +103,8 @@
 
 - type: entity
   id: ActionToggleGhosts
-  name: ghost-gui-toggle-ghost-visibility-name
-  description: ghost-gui-toggle-ghost-visibility-desc
+  name: Toggle Ghosts
+  description: Toggle the visibility of other ghosts.
   noSpawn: true
   components:
   - type: InstantAction
