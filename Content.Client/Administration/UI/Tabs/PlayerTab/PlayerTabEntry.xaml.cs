@@ -8,7 +8,7 @@ namespace Content.Client.Administration.UI.Tabs.PlayerTab;
 [GenerateTypedNameReferences]
 public sealed partial class PlayerTabEntry : ContainerButton
 {
-    public EntityUid? PlayerUid;
+    public NetEntity? PlayerEntity;
 
     public PlayerTabEntry(string username, string character, string identity, string job, string antagonist, StyleBox styleBox, bool connected)
     {
