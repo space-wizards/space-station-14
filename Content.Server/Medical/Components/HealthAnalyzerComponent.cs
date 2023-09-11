@@ -17,7 +17,7 @@ namespace Content.Server.Medical.Components
         [DataField("scanDelay")]
         public float ScanDelay = 0.8f;
 
-        public PlayerBoundUserInterface? UserInterface => Owner.GetUIOrNull(HealthAnalyzerUiKey.Key);
+        public BoundUserInterface? UserInterface => Owner.GetUIOrNull(HealthAnalyzerUiKey.Key);
 
         /// <summary>
         ///     Sound played on scanning begin

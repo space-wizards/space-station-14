@@ -17,10 +17,10 @@ namespace Content.Client.Access.UI
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         private readonly ISawmill _logMill = default!;
-        private readonly AccessOverriderBoundUserInterface _owner;
+        private readonly AccessOverriderClientBoundUserInterface _owner;
         private readonly Dictionary<string, Button> _accessButtons = new();
 
-        public AccessOverriderWindow(AccessOverriderBoundUserInterface owner, IPrototypeManager prototypeManager,
+        public AccessOverriderWindow(AccessOverriderClientBoundUserInterface owner, IPrototypeManager prototypeManager,
             List<string> accessLevels)
         {
             RobustXamlLoader.Load(this);

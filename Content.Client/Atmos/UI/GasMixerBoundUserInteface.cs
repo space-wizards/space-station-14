@@ -9,7 +9,7 @@ namespace Content.Client.Atmos.UI
     /// Initializes a <see cref="GasMixerWindow"/> and updates it when new server messages are received.
     /// </summary>
     [UsedImplicitly]
-    public sealed class GasMixerBoundUserInterface : BoundUserInterface
+    public sealed class GasMixerClientBoundUserInterface : ClientBoundUserInterface
     {
         [ViewVariables]
         private const float MaxPressure = Atmospherics.MaxOutputPressure;
@@ -17,7 +17,7 @@ namespace Content.Client.Atmos.UI
         [ViewVariables]
         private GasMixerWindow? _window;
 
-        public GasMixerBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
+        public GasMixerClientBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
         {
         }
 

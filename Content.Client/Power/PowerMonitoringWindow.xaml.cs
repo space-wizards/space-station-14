@@ -73,9 +73,9 @@ public sealed partial class PowerMonitoringWindow : DefaultWindow, IComputerWind
 }
 
 [UsedImplicitly]
-public sealed class PowerMonitoringConsoleBoundUserInterface : ComputerBoundUserInterface<PowerMonitoringWindow, PowerMonitoringConsoleBoundInterfaceState>
+public sealed class PowerMonitoringConsoleClientBoundUserInterface : ComputerClientBoundUserInterface<PowerMonitoringWindow, PowerMonitoringConsoleBoundInterfaceState>
 {
-    public PowerMonitoringConsoleBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
+    public PowerMonitoringConsoleClientBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
     {
     }
 }

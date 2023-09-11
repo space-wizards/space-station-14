@@ -12,9 +12,9 @@ namespace Content.Client.Gravity.UI
     {
         private readonly ButtonGroup _buttonGroup = new();
 
-        private readonly GravityGeneratorBoundUserInterface _owner;
+        private readonly GravityGeneratorClientBoundUserInterface _owner;
 
-        public GravityGeneratorWindow(GravityGeneratorBoundUserInterface owner)
+        public GravityGeneratorWindow(GravityGeneratorClientBoundUserInterface owner)
         {
             RobustXamlLoader.Load(this);
             IoCManager.InjectDependencies(this);

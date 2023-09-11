@@ -23,7 +23,7 @@ public sealed partial class EmergencyConsoleWindow : FancyWindow,
         RobustXamlLoader.Load(this);
     }
 
-    public void SetupComputerWindow(ComputerBoundUserInterfaceBase cb)
+    public void SetupComputerWindow(ComputerClientBoundUserInterfaceBase cb)
     {
         RepealAllButton.OnPressed += args =>
         {
@@ -39,17 +39,17 @@ public sealed partial class EmergencyConsoleWindow : FancyWindow,
         };
     }
 
-    private void OnRepealAllPressed(ComputerBoundUserInterfaceBase cb, BaseButton.ButtonEventArgs obj)
+    private void OnRepealAllPressed(ComputerClientBoundUserInterfaceBase cb, BaseButton.ButtonEventArgs obj)
     {
         cb.SendMessage(new EmergencyShuttleRepealAllMessage());
     }
 
-    private void OnRepealPressed(ComputerBoundUserInterfaceBase cb, BaseButton.ButtonEventArgs obj)
+    private void OnRepealPressed(ComputerClientBoundUserInterfaceBase cb, BaseButton.ButtonEventArgs obj)
     {
         cb.SendMessage(new EmergencyShuttleRepealMessage());
     }
 
-    private void OnAuthorizePressed(ComputerBoundUserInterfaceBase cb, BaseButton.ButtonEventArgs obj)
+    private void OnAuthorizePressed(ComputerClientBoundUserInterfaceBase cb, BaseButton.ButtonEventArgs obj)
     {
         cb.SendMessage(new EmergencyShuttleAuthorizeMessage());
     }

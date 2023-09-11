@@ -20,7 +20,7 @@ namespace Content.Client.ParticleAccelerator.UI
     {
         private readonly ShaderInstance _greyScaleShader;
 
-        private readonly ParticleAcceleratorBoundUserInterface _owner;
+        private readonly ParticleAcceleratorClientBoundUserInterface _owner;
 
         private readonly Label _drawLabel;
         private readonly FastNoiseLite _drawNoiseGenerator;
@@ -50,7 +50,7 @@ namespace Content.Client.ParticleAccelerator.UI
         private bool _shouldContinueAnimating;
         private int _maxStrength = 3;
 
-        public ParticleAcceleratorControlMenu(ParticleAcceleratorBoundUserInterface owner)
+        public ParticleAcceleratorControlMenu(ParticleAcceleratorClientBoundUserInterface owner)
         {
             SetSize = new Vector2(400, 320);
             _greyScaleShader = IoCManager.Resolve<IPrototypeManager>().Index<ShaderPrototype>("Greyscale").Instance();

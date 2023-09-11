@@ -18,7 +18,7 @@ namespace Content.Client.Access.UI
         [Dependency] private readonly ILogManager _logManager = default!;
         private readonly ISawmill _logMill = default!;
 
-        private readonly IdCardConsoleBoundUserInterface _owner;
+        private readonly IdCardConsoleClientBoundUserInterface _owner;
 
         private readonly Dictionary<string, Button> _accessButtons = new();
         private readonly List<string> _jobPrototypeIds = new();
@@ -27,7 +27,7 @@ namespace Content.Client.Access.UI
         private string? _lastJobTitle;
         private string? _lastJobProto;
 
-        public IdCardConsoleWindow(IdCardConsoleBoundUserInterface owner, IPrototypeManager prototypeManager,
+        public IdCardConsoleWindow(IdCardConsoleClientBoundUserInterface owner, IPrototypeManager prototypeManager,
             List<string> accessLevels)
         {
             RobustXamlLoader.Load(this);

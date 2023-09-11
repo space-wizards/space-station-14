@@ -24,7 +24,7 @@ namespace Content.Client.Wires.UI
     {
         [Dependency] private readonly IResourceCache _resourceCache = default!;
 
-        public WiresBoundUserInterface Owner { get; }
+        public WiresClientBoundUserInterface Owner { get; }
 
         private readonly Control _wiresHBox;
         private readonly Control _topContainer;
@@ -35,7 +35,7 @@ namespace Content.Client.Wires.UI
 
         public TextureButton CloseButton { get; set; }
 
-        public WiresMenu(WiresBoundUserInterface owner)
+        public WiresMenu(WiresClientBoundUserInterface owner)
         {
             IoCManager.InjectDependencies(this);
 

@@ -10,9 +10,9 @@ namespace Content.Client.Instruments.UI;
 [GenerateTypedNameReferences]
 public sealed partial class ChannelsMenu : DefaultWindow
 {
-    private readonly InstrumentBoundUserInterface _owner;
+    private readonly InstrumentClientBoundUserInterface _owner;
 
-    public ChannelsMenu(InstrumentBoundUserInterface owner) : base()
+    public ChannelsMenu(InstrumentClientBoundUserInterface owner) : base()
     {
         RobustXamlLoader.Load(this);
         _owner = owner;

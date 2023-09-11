@@ -8,7 +8,7 @@ namespace Content.Client.Arcade
 {
     public sealed class SpaceVillainArcadeMenu : DefaultWindow
     {
-        public SpaceVillainArcadeBoundUserInterface Owner { get; set; }
+        public SpaceVillainArcadeClientBoundUserInterface Owner { get; set; }
 
         private readonly Label _enemyNameLabel;
         private readonly Label _playerInfoLabel;
@@ -17,7 +17,7 @@ namespace Content.Client.Arcade
         private readonly Label _enemyActionLabel;
 
         private readonly Button[] _gameButtons = new Button[3]; //used to disable/enable all game buttons
-        public SpaceVillainArcadeMenu(SpaceVillainArcadeBoundUserInterface owner)
+        public SpaceVillainArcadeMenu(SpaceVillainArcadeClientBoundUserInterface owner)
         {
             MinSize = SetSize = new Vector2(300, 225);
             Title = Loc.GetString("spacevillain-menu-title");
@@ -102,10 +102,10 @@ namespace Content.Client.Arcade
 
         private sealed class ActionButton : Button
         {
-            private readonly SpaceVillainArcadeBoundUserInterface _owner;
+            private readonly SpaceVillainArcadeClientBoundUserInterface _owner;
             private readonly SharedSpaceVillainArcadeComponent.PlayerAction _playerAction;
 
-            public ActionButton(SpaceVillainArcadeBoundUserInterface owner, SharedSpaceVillainArcadeComponent.PlayerAction playerAction)
+            public ActionButton(SpaceVillainArcadeClientBoundUserInterface owner, SharedSpaceVillainArcadeComponent.PlayerAction playerAction)
             {
                 _owner = owner;
                 _playerAction = playerAction;

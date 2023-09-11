@@ -4,7 +4,7 @@ using Robust.Client.GameObjects;
 
 namespace Content.Client.SurveillanceCamera.UI;
 
-public sealed class SurveillanceCameraMonitorBoundUserInterface : BoundUserInterface
+public sealed class SurveillanceCameraMonitorClientBoundUserInterface : ClientBoundUserInterface
 {
     private readonly EyeLerpingSystem _eyeLerpingSystem;
     private readonly SurveillanceCameraMonitorSystem _surveillanceCameraMonitorSystem;
@@ -15,7 +15,7 @@ public sealed class SurveillanceCameraMonitorBoundUserInterface : BoundUserInter
     [ViewVariables]
     private EntityUid? _currentCamera;
 
-    public SurveillanceCameraMonitorBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
+    public SurveillanceCameraMonitorClientBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
     {
         _eyeLerpingSystem = EntMan.System<EyeLerpingSystem>();
         _surveillanceCameraMonitorSystem = EntMan.System<SurveillanceCameraMonitorSystem>();

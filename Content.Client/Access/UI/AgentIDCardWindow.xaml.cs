@@ -17,14 +17,14 @@ namespace Content.Client.Access.UI
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IEntitySystemManager _entitySystem = default!;
         private readonly SpriteSystem _spriteSystem;
-        private readonly AgentIDCardBoundUserInterface _bui;
+        private readonly AgentIdCardClientBoundUserInterface _bui;
 
         private const int JobIconColumnCount = 10;
 
         public event Action<string>? OnNameChanged;
         public event Action<string>? OnJobChanged;
 
-        public AgentIDCardWindow(AgentIDCardBoundUserInterface bui)
+        public AgentIDCardWindow(AgentIdCardClientBoundUserInterface bui)
         {
             RobustXamlLoader.Load(this);
             IoCManager.InjectDependencies(this);

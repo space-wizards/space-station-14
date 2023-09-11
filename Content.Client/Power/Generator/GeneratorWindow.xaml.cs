@@ -17,7 +17,7 @@ public sealed partial class GeneratorWindow : FancyWindow
     private readonly FuelGeneratorComponent? _component;
     private PortableGeneratorComponentBuiState? _lastState;
 
-    public GeneratorWindow(PortableGeneratorBoundUserInterface bui, EntityUid entity)
+    public GeneratorWindow(PortableGeneratorClientBoundUserInterface bui, EntityUid entity)
     {
         _entity = entity;
         RobustXamlLoader.Load(this);

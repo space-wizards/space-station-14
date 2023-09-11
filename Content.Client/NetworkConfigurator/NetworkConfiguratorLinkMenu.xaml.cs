@@ -22,13 +22,13 @@ public sealed partial class NetworkConfiguratorLinkMenu : FancyWindow
 
     private readonly List<SinkPortPrototype> _sinks = new();
 
-    private readonly NetworkConfiguratorBoundUserInterface _userInterface;
+    private readonly NetworkConfiguratorClientBoundUserInterface _userInterface;
 
     private (ButtonPosition position, string id, int index)? _selectedButton;
 
     private List<(string left, string right)>? _defaults;
 
-    public NetworkConfiguratorLinkMenu(NetworkConfiguratorBoundUserInterface userInterface)
+    public NetworkConfiguratorLinkMenu(NetworkConfiguratorClientBoundUserInterface userInterface)
     {
         _userInterface = userInterface;
         RobustXamlLoader.Load(this);

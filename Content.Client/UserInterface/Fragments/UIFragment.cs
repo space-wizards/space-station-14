@@ -18,7 +18,7 @@ public abstract partial class UIFragment
 {
     public abstract Control GetUIFragmentRoot();
 
-    public abstract void Setup(BoundUserInterface userInterface, EntityUid? fragmentOwner);
+    public abstract void Setup(ClientBoundUserInterface userInterface, EntityUid? fragmentOwner);
 
     public abstract void UpdateState(BoundUserInterfaceState state);
 

@@ -16,9 +16,9 @@ namespace Content.Client.Instruments.UI
     [GenerateTypedNameReferences]
     public sealed partial class InstrumentMenu : DefaultWindow
     {
-        private readonly InstrumentBoundUserInterface _owner;
+        private readonly InstrumentClientBoundUserInterface _owner;
 
-        public InstrumentMenu(InstrumentBoundUserInterface owner)
+        public InstrumentMenu(InstrumentClientBoundUserInterface owner)
         {
             RobustXamlLoader.Load(this);
 

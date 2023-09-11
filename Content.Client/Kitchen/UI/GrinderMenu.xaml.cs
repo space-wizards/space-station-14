@@ -16,11 +16,11 @@ namespace Content.Client.Kitchen.UI
     {
         private readonly IEntityManager _entityManager;
         private readonly IPrototypeManager _prototypeManager ;
-        private readonly ReagentGrinderBoundUserInterface _owner;
+        private readonly ReagentGrinderClientBoundUserInterface _owner;
 
         private readonly Dictionary<int, EntityUid> _chamberVisualContents = new();
 
-        public GrinderMenu(ReagentGrinderBoundUserInterface owner, IEntityManager entityManager, IPrototypeManager prototypeManager)
+        public GrinderMenu(ReagentGrinderClientBoundUserInterface owner, IEntityManager entityManager, IPrototypeManager prototypeManager)
         {
             RobustXamlLoader.Load(this);
             _entityManager = entityManager;
@@ -122,8 +122,8 @@ namespace Content.Client.Kitchen.UI
             {
                 foreach (var (reagent, quantity) in reagents)
                 {
-                    var reagentName = _prototypeManager.TryIndex(reagent.Prototype, out ReagentPrototype? proto) 
-                        ? Loc.GetString($"{quantity} {proto.LocalizedName}") 
+                    var reagentName = _prototypeManager.TryIndex(reagent.Prototype, out ReagentPrototype? proto)
+                        ? Loc.GetString($"{quantity} {proto.LocalizedName}")
                         : "???";
                     BeakerContentBox.BoxContents.AddItem(reagentName);
                 }

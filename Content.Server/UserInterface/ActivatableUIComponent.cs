@@ -12,7 +12,7 @@ namespace Content.Server.UserInterface
         [ViewVariables]
         public Enum? Key { get; set; }
 
-        [ViewVariables] public PlayerBoundUserInterface? UserInterface => (Key != null) ? Owner.GetUIOrNull(Key) : null;
+        [ViewVariables] public BoundUserInterface? UserInterface => (Key != null) ? Owner.GetUIOrNull(Key) : null;
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("inHandsOnly")]

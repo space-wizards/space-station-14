@@ -48,7 +48,7 @@ public sealed partial class AirAlarmWindow : FancyWindow
 
     private CheckBox _autoMode => AutoModeCheckBox;
 
-    public AirAlarmWindow(BoundUserInterface owner)
+    public AirAlarmWindow(ClientBoundUserInterface owner)
     {
         RobustXamlLoader.Load(this);
 

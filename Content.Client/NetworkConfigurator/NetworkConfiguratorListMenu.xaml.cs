@@ -9,8 +9,8 @@ namespace Content.Client.NetworkConfigurator;
 [GenerateTypedNameReferences]
 public sealed partial class NetworkConfiguratorListMenu : FancyWindow
 {
-    private readonly NetworkConfiguratorBoundUserInterface _ui;
-    public NetworkConfiguratorListMenu(NetworkConfiguratorBoundUserInterface ui)
+    private readonly NetworkConfiguratorClientBoundUserInterface _ui;
+    public NetworkConfiguratorListMenu(NetworkConfiguratorClientBoundUserInterface ui)
     {
         RobustXamlLoader.Load(this);
 

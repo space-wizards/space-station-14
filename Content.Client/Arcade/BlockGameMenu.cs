@@ -27,7 +27,7 @@ namespace Content.Client.Arcade
 
         private static readonly Vector2 BlockSize = new(15, 15);
 
-        private readonly BlockGameBoundUserInterface _owner;
+        private readonly BlockGameClientBoundUserInterface _owner;
 
         private readonly PanelContainer _mainPanel;
 
@@ -57,7 +57,7 @@ namespace Content.Client.Arcade
         private bool _isPlayer = false;
         private bool _gameOver = false;
 
-        public BlockGameMenu(BlockGameBoundUserInterface owner)
+        public BlockGameMenu(BlockGameClientBoundUserInterface owner)
         {
             Title = Loc.GetString("blockgame-menu-title");
             _owner = owner;

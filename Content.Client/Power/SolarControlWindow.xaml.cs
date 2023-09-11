@@ -24,7 +24,7 @@ namespace Content.Client.Power
             RobustXamlLoader.Load(this);
         }
 
-        public void SetupComputerWindow(ComputerBoundUserInterfaceBase cb)
+        public void SetupComputerWindow(ComputerClientBoundUserInterfaceBase cb)
         {
             PanelRotation.OnTextEntered += text =>
             {
@@ -162,9 +162,9 @@ namespace Content.Client.Power
     }
 
     [UsedImplicitly]
-    public sealed class SolarControlConsoleBoundUserInterface : ComputerBoundUserInterface<SolarControlWindow, SolarControlConsoleBoundInterfaceState>
+    public sealed class SolarControlConsoleClientBoundUserInterface : ComputerClientBoundUserInterface<SolarControlWindow, SolarControlConsoleBoundInterfaceState>
     {
-        public SolarControlConsoleBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
+        public SolarControlConsoleClientBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
         {
         }
     }

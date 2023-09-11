@@ -774,7 +774,7 @@ public abstract partial class InteractionTest
         await RunTicks(15);
     }
 
-    protected bool TryGetBui(Enum key, [NotNullWhen(true)] out BoundUserInterface? bui, NetEntity? target = null, bool shouldSucceed = true)
+    protected bool TryGetBui(Enum key, [NotNullWhen(true)] out ClientBoundUserInterface? bui, NetEntity? target = null, bool shouldSucceed = true)
     {
         bui = null;
         target ??= Target;

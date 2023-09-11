@@ -15,7 +15,7 @@ namespace Content.Client.UserInterface.Systems.Atmos.GasTank
     public sealed class GasTankWindow
         : BaseWindow
     {
-        private GasTankBoundUserInterface _owner;
+        private GasTankClientBoundUserInterface _owner;
         private readonly Label _lblName;
         private readonly BoxContainer _topContainer;
         private readonly Control _contentContainer;
@@ -27,7 +27,7 @@ namespace Content.Client.UserInterface.Systems.Atmos.GasTank
         private readonly RichTextLabel _lblInternals;
         private readonly Button _btnInternals;
 
-        public GasTankWindow(GasTankBoundUserInterface owner)
+        public GasTankWindow(GasTankClientBoundUserInterface owner)
         {
             TextureButton btnClose;
             _resourceCache = IoCManager.Resolve<IResourceCache>();

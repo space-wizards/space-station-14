@@ -17,7 +17,7 @@ namespace Content.Client.Power.APC.UI
     [GenerateTypedNameReferences]
     public sealed partial class ApcMenu : FancyWindow
     {
-        public ApcMenu(ApcBoundUserInterface owner)
+        public ApcMenu(ApcClientBoundUserInterface owner)
         {
             IoCManager.InjectDependencies(this);
             RobustXamlLoader.Load(this);

@@ -9,9 +9,9 @@ namespace Content.Client.Instruments.UI;
 [GenerateTypedNameReferences]
 public sealed partial class BandMenu : DefaultWindow
 {
-    private readonly InstrumentBoundUserInterface _owner;
+    private readonly InstrumentClientBoundUserInterface _owner;
 
-    public BandMenu(InstrumentBoundUserInterface owner) : base()
+    public BandMenu(InstrumentClientBoundUserInterface owner) : base()
     {
         RobustXamlLoader.Load(this);
 

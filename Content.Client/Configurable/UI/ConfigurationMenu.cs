@@ -13,14 +13,14 @@ namespace Content.Client.Configurable.UI
 {
     public sealed class ConfigurationMenu : DefaultWindow
     {
-        public ConfigurationBoundUserInterface Owner { get; }
+        public ConfigurationClientBoundUserInterface Owner { get; }
 
         private readonly BoxContainer _column;
         private readonly BoxContainer _row;
 
         private readonly List<(string  name, LineEdit input)> _inputs;
 
-        public ConfigurationMenu(ConfigurationBoundUserInterface owner)
+        public ConfigurationMenu(ConfigurationClientBoundUserInterface owner)
         {
             MinSize = SetSize = new Vector2(300, 250);
             Owner = owner;

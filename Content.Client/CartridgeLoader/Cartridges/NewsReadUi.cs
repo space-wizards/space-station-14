@@ -15,7 +15,7 @@ public sealed partial class NewsReadUi : UIFragment
         return _fragment!;
     }
 
-    public override void Setup(BoundUserInterface userInterface, EntityUid? fragmentOwner)
+    public override void Setup(ClientBoundUserInterface userInterface, EntityUid? fragmentOwner)
     {
         _fragment = new NewsReadUiFragment();
 
@@ -41,7 +41,7 @@ public sealed partial class NewsReadUi : UIFragment
             _fragment?.UpdateEmptyState(empty.NotificationOn);
     }
 
-    private void SendNewsReadMessage(NewsReadUiAction action, BoundUserInterface userInterface)
+    private void SendNewsReadMessage(NewsReadUiAction action, ClientBoundUserInterface userInterface)
     {
         var newsMessage = new NewsReadUiMessageEvent(action);
         var message = new CartridgeUiMessage(newsMessage);

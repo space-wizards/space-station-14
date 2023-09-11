@@ -7,7 +7,7 @@ namespace Content.Client.NetworkConfigurator;
 [GenerateTypedNameReferences]
 public sealed partial class NetworkConfiguratorDeviceList : ScrollContainer
 {
-    public void UpdateState(NetworkConfiguratorBoundUserInterface? ui, HashSet<(string address, string name)> devices)
+    public void UpdateState(NetworkConfiguratorClientBoundUserInterface? ui, HashSet<(string address, string name)> devices)
     {
         DeviceList.RemoveAllChildren();
 
@@ -17,7 +17,7 @@ public sealed partial class NetworkConfiguratorDeviceList : ScrollContainer
         }
     }
 
-    private static BoxContainer BuildDeviceListRow(NetworkConfiguratorBoundUserInterface? ui, (string address, string name) savedDevice)
+    private static BoxContainer BuildDeviceListRow(NetworkConfiguratorClientBoundUserInterface? ui, (string address, string name) savedDevice)
     {
         var row = new BoxContainer()
         {
