@@ -66,8 +66,9 @@ namespace Content.Client.Administration.UI.Tabs.AtmosTab
             var gasList = _gasData.ToList();
             var gasId = gasList[GasOptions.SelectedId].ID;
 
+            var ent = IoCManager.Resolve<IEntityManager>().GetNetEntity(gridIndex);
             IoCManager.Resolve<IClientConsoleHost>().ExecuteCommand(
-                $"fillgas {gridIndex} {gasId} {AmountSpin.Value}");
+                $"fillgas {gridIndex} {ent} {AmountSpin.Value}");
         }
     }
 }

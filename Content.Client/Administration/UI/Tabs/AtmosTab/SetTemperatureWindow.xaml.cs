@@ -46,8 +46,9 @@ namespace Content.Client.Administration.UI.Tabs.AtmosTab
                 return;
 
             var selectedGrid = _data[GridOptions.SelectedId];
+            var ent = IoCManager.Resolve<IEntityManager>().GetNetEntity(selectedGrid);
             IoCManager.Resolve<IClientConsoleHost>()
-                .ExecuteCommand($"settemp {TileXSpin.Value} {TileYSpin.Value} {IoCManager.Resolve<IEntityManager>().GetNetEntity(selectedGrid)} {TemperatureSpin.Value}");
+                .ExecuteCommand($"settemp {TileXSpin.Value} {TileYSpin.Value} {ent} {TemperatureSpin.Value}");
         }
     }
 }
