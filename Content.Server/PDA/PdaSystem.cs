@@ -53,7 +53,7 @@ namespace Content.Server.PDA
         {
             base.OnComponentInit(uid, pda, args);
 
-            if (!HasComp<ServerUserInterfaceComponent>(uid))
+            if (!HasComp<UserInterfaceComponent>(uid))
                 return;
 
             UpdateAlertLevel(uid, pda);

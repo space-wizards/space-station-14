@@ -108,7 +108,7 @@ public abstract partial class SharedBuckleSystem
     private void OnStrapContainerGettingInsertedAttempt(EntityUid uid, StrapComponent component, ContainerGettingInsertedAttemptEvent args)
     {
         // If someone is attempting to put this item inside of a backpack, ensure that it has no entities strapped to it.
-        if (HasComp<SharedStorageComponent>(args.Container.Owner) && component.BuckledEntities.Count != 0)
+        if (HasComp<StorageComponent>(args.Container.Owner) && component.BuckledEntities.Count != 0)
             args.Cancel();
     }
 
