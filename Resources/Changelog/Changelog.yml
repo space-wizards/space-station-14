@@ -1,9 +1,4 @@
 Entries:
-- author: Flareguy
-  changes:
-  - {message: Changed the roundstart traitor sound effect back to the old one., type: Tweak}
-  id: 4307
-  time: '2023-07-23T05:53:01.0000000+00:00'
 - author: Skarlet
   changes:
   - {message: Added Cap's Cap, type: Add}
@@ -2985,3 +2980,8 @@ Entries:
       alien artifacts that they contain, type: Add}
   id: 4806
   time: '2023-09-11T19:58:26.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Fixed "failed to insert into storage" messages being broken., type: Fix}
+  id: 4807
+  time: '2023-09-11T22:57:27.0000000+00:00'
