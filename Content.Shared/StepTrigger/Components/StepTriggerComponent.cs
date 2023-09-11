@@ -42,10 +42,17 @@ public sealed partial class StepTriggerComponent : Component
     public float RequiredTriggerSpeed = 3.5f;
 
     /// <summary>
-    /// If any entities occupy the blacklist on the same tile then steptrigger won't work.
+    ///     If any entities occupy the blacklist on the same tile then steptrigger won't work.
     /// </summary>
     [DataField("blacklist")]
     public EntityWhitelist? Blacklist;
+
+    /// <summary>
+    ///     If this is true, steptrigger will still occur on entities that are in air / weightless. They do not
+    ///     by default.
+    /// </summary>
+    [DataField("ignoreWeightless")]
+    public bool IgnoreWeightless = false;
 }
 
 [RegisterComponent]

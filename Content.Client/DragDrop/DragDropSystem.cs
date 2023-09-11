@@ -112,7 +112,7 @@ public sealed class DragDropSystem : SharedDragDropSystem
         base.Initialize();
         _sawmill = Logger.GetSawmill("drag_drop");
         UpdatesOutsidePrediction = true;
-        UpdatesAfter.Add(typeof(EyeUpdateSystem));
+        UpdatesAfter.Add(typeof(SharedEyeSystem));
 
         _cfgMan.OnValueChanged(CCVars.DragDropDeadZone, SetDeadZone, true);
 

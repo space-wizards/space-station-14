@@ -11,16 +11,16 @@ namespace Content.Client.UserInterface.Systems.Ghost.Controls
     [GenerateTypedNameReferences]
     public sealed partial class GhostTargetWindow : DefaultWindow
     {
-        private List<(string, EntityUid)> _warps = new();
+        private List<(string, NetEntity)> _warps = new();
 
-        public event Action<EntityUid>? WarpClicked;
+        public event Action<NetEntity>? WarpClicked;
 
         public GhostTargetWindow()
         {
             RobustXamlLoader.Load(this);
         }
 
-        public void UpdateWarps(IEnumerable<GhostWarp> warps, IEntityManager entManager)
+        public void UpdateWarps(IEnumerable<GhostWarp> warps)
         {
             // Server COULD send these sorted but how about we just use the client to do it instead
             _warps = warps
@@ -33,7 +33,7 @@ namespace Content.Client.UserInterface.Systems.Ghost.Controls
                         ? Loc.GetString("ghost-target-window-current-button", ("name", w.DisplayName))
                         : w.DisplayName;
 
-                    return (name, entManager.GetEntity(w.Entity));
+                    return (name, w.Entity);
                 })
                 .ToList();
         }

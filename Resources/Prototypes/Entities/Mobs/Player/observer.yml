@@ -10,9 +10,6 @@
   - type: MindContainer
   - type: Clickable
   - type: InteractionOutline
-  - type: Physics
-    bodyType: KinematicController
-    fixedRotation: true
   - type: Fixtures
     fixtures:
       fix1:
@@ -60,6 +57,10 @@
     baseSprintSpeed: 12
     baseWalkSpeed: 8
   - type: MovementIgnoreGravity
+  - type: Physics
+    bodyType: KinematicController
+    bodyStatus: InAir
+  - type: CanMoveInAir
   - type: Tag
     tags:
       - BypassInteractionRangeChecks

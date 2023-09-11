@@ -1,5 +1,5 @@
 - type: entity
-  parent: SimpleSpaceMobBase
+  parent: [ SimpleSpaceMobBase, FlyingMobBase ]
   id: BaseMobDragon
   suffix: ""
   name: space dragon
@@ -90,8 +90,6 @@
     groups:
     - id: Medicine
     - id: Poison
-  - type: MovementAlwaysTouching
-  - type: NoSlip
   - type: Butcherable
     spawned:
     - id: FoodMeatDragon

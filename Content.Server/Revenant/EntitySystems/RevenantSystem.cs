@@ -3,11 +3,11 @@ using Content.Server.Actions;
 using Content.Server.GameTicking;
 using Content.Server.Store.Components;
 using Content.Server.Store.Systems;
-using Content.Server.Visible;
 using Content.Shared.Alert;
 using Content.Shared.Damage;
 using Content.Shared.DoAfter;
 using Content.Shared.Examine;
+using Content.Shared.Eye;
 using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
 using Content.Shared.Maps;
@@ -31,18 +31,19 @@ public sealed partial class RevenantSystem : EntitySystem
     [Dependency] private readonly ActionsSystem _action = default!;
     [Dependency] private readonly AlertsSystem _alerts = default!;
     [Dependency] private readonly DamageableSystem _damage = default!;
-    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
+    [Dependency] private readonly GameTicker _ticker = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly PhysicsSystem _physics = default!;
+    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
+    [Dependency] private readonly SharedEyeSystem _eye = default!;
     [Dependency] private readonly StatusEffectsSystem _statusEffects = default!;
     [Dependency] private readonly SharedInteractionSystem _interact = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedStunSystem _stun = default!;
-    [Dependency] private readonly TagSystem _tag = default!;
     [Dependency] private readonly StoreSystem _store = default!;
+    [Dependency] private readonly TagSystem _tag = default!;
     [Dependency] private readonly VisibilitySystem _visibility = default!;
-    [Dependency] private readonly GameTicker _ticker = default!;
 
     [ValidatePrototypeId<EntityPrototype>]
     private const string RevenantShopId = "ActionRevenantShop";
@@ -83,7 +84,9 @@ public sealed partial class RevenantSystem : EntitySystem
 
         //ghost vision
         if (TryComp(uid, out EyeComponent? eye))
-            eye.VisibilityMask |= (uint) (VisibilityFlags.Ghost);
+        {
+            _eye.SetVisibilityMask(uid, eye.VisibilityMask | (int) (VisibilityFlags.Ghost), eye);
+        }
     }
 
     private void OnMapInit(EntityUid uid, RevenantComponent component, MapInitEvent args)
