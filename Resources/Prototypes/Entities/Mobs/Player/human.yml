@@ -17,6 +17,9 @@
     - type: NpcFactionMember
       factions:
       - Syndicate
+  - type: AutoImplant
+    implants:
+    - MicroBombImplant
 
 - type: entity
   parent: MobHumanSyndicateAgent
@@ -24,6 +27,9 @@
   suffix: NukeOps
   components:
     - type: NukeOperative
+  - type: AutoImplant
+    implants:
+    - MicroBombImplant
 
 # Nuclear Operative
 - type: entity
@@ -34,6 +40,9 @@
   components:
     - type: NukeOperative
     - type: RandomHumanoidAppearance
+  - type: AutoImplant
+    implants:
+    - MicroBombImplant
 
 - type: entity
   noSpawn: true
@@ -53,6 +62,9 @@
     - type: NpcFactionMember
       factions:
       - Syndicate
+  - type: AutoImplant
+    implants:
+    - MicroBombImplant
 
 # Space Ninja
 - type: entity

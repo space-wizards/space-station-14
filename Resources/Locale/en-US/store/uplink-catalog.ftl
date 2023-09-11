@@ -137,8 +137,6 @@ uplink-dna-scrambler-implanter-desc = A single use implant that can be activated
 uplink-emp-implanter-name = EMP Implanter
 uplink-emp-implanter-desc = Detonates a small EMP pulse on activation that drains nearby electronics of their power, can be used three times before the internal battery runs out.
 
-uplink-micro-bomb-implanter-name = Micro Bomb Implanter
-uplink-micro-bomb-implanter-desc = Explode on death or manual activation with this implant. Destroys the body with all equipment.
 
 uplink-macro-bomb-implanter-name = Macro Bomb Implanter
 uplink-macro-bomb-implanter-desc = Inject this and on death you'll create a large explosion. Huge team casualty cost, use at own risk. Replaces internal micro bomb.
@@ -152,9 +150,6 @@ uplink-deathrattle-implant-desc = A box containing enough deathrattle implants f
 # Bundles
 uplink-emp-kit-name = Electrical Disruptor Kit
 uplink-emp-kit-desc = The ultimate reversal on energy-based weaponry: Disables disablers, stuns stunbatons, discharges laser guns! Contains 3 EMP grenades and an EMP implanter. Note: Does not disrupt actual firearms.
-
-uplink-meds-bundle-name = Medical Bundle
-uplink-meds-bundle-desc = All you need to get your comrades back in the fight: mainly a combat medkit, a defibrillator and three combat medipens.
 
 uplink-ammo-bundle-name = Ammo Bundle
 uplink-ammo-bundle-desc = Reloading! Contains 4 magazines for the C-20r, 4 drums for the Bulldog, and 2 ammo boxes for the L6 SAW.
