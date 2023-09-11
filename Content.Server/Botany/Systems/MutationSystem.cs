@@ -204,9 +204,9 @@ public sealed class MutationSystem : EntitySystem
     private void MutateBool(ref bool val, bool polarity, int bits, int totalbits, float mult)
     {
         // Probability that a bit flip happens for this value.
-        float prob = mult * bits / totalbits;
-        prob = Math.Clamp(prob, 0, 1);
-        if (!Random(prob))
+        float probSet = mult * bits / totalbits;
+        probSet = Math.Clamp(probSet, 0, 1);
+        if (!Random(probSet))
             return;
 
         val = polarity;
@@ -214,10 +214,10 @@ public sealed class MutationSystem : EntitySystem
 
     private void MutateHarvestType(ref HarvestType val, int bits, int totalbits, float mult)
     {
-        float prob = mult * bits / totalbits;
-        prob = Math.Clamp(prob, 0, 1);
+        float probModify = mult * bits / totalbits;
+        probModify = Math.Clamp(probModify, 0, 1);
 
-        if (!Random(prob))
+        if (!Random(probModify))
             return;
 
         if (val == HarvestType.NoRepeat)
@@ -228,9 +228,9 @@ public sealed class MutationSystem : EntitySystem
 
     private void MutateGasses(ref Dictionary<Gas, float> gasses, float min, float max, int bits, int totalbits, float mult)
     {
-        float prob = mult * bits / totalbits;
-        prob = Math.Clamp(prob, 0, 1);
-        if (!Random(prob))
+        float probModify = mult * bits / totalbits;
+        probModify = Math.Clamp(probModify, 0, 1);
+        if (!Random(probModify))
             return;
 
         // Add a random amount of a random gas to this gas dictionary
@@ -248,9 +248,9 @@ public sealed class MutationSystem : EntitySystem
 
     private void MutateChemicals(ref Dictionary<string, SeedChemQuantity> chemicals, int max, int bits, int totalbits, float mult)
     {
-        float prob = mult * bits / totalbits;
-        prob = Math.Clamp(prob, 0, 1);
-        if (!Random(prob))
+        float probModify = mult * bits / totalbits;
+        probModify = Math.Clamp(probModify, 0, 1);
+        if (!Random(probModify))
             return;
 
         // Add a random amount of a random chemical to this set of chemicals
@@ -303,8 +303,8 @@ public sealed class MutationSystem : EntitySystem
 
     private Color RandomColor(Color color, int bits, int totalbits, float mult)
     {
-        float prob = mult * bits / totalbits;
-        if (Random(prob))
+        float probModify = mult * bits / totalbits;
+        if (Random(probModify))
         {
             var colors = new List<Color>{
                 Color.White,
