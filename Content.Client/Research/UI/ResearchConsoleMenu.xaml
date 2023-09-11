@@ -4,7 +4,7 @@
                       xmlns:customControls="clr-namespace:Content.Client.Administration.UI.CustomControls"
                       Title="{Loc 'research-console-menu-title'}"
                       MinSize="625 400"
-                      SetSize="700 550">
+                      SetSize="760 550"> <!-- Corvax-Localization -->
     <BoxContainer Orientation="Vertical"
                   HorizontalExpand="True"
                   VerticalExpand="True">

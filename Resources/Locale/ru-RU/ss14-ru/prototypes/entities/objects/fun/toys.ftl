@@ -133,5 +133,5 @@ ent-PlasticBanana = банан
     .suffix = Пластик
 ent-CrazyGlue = тюбик сумасшедшего клея
     .desc = Бутылка сумасшедшего клея производства компании Honk! Co.
-ent-CrazyGlueEmpty = пустой тюбик сумасшедшего клея
-    .desc = { ent-BaseItem.desc }
+ent-PlushieMoth = плюшевый ниан
+    .desc = Милый и пушистый плюшевый ниан. Развлекайтесь, бз!
