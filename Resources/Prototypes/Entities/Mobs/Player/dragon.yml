@@ -175,10 +175,11 @@
 
 - type: entity
   id: ActionDevour
-  name: action-name-devour
-  description: action-description-devour
+  name: "[color=red]Devour[/color]"
+  description: Attempt to break a structure with your jaws or swallow a creature.
   noSpawn: true
   components:
   - type: EntityTargetAction
-    icon: Interface/Actions/devour.png
+    icon: { sprite : Interface/Actions/devour.rsi, state: icon }
+    iconOn: { sprite : Interface/Actions/devour.rsi, state: icon-on }
     event: !type:DevourActionEvent
