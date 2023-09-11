@@ -59,7 +59,6 @@ public sealed class StunProviderSystem : SharedStunProviderSystem
         _electrocution.TryDoElectrocution(target, uid, comp.StunDamage, comp.StunTime, false, ignoreInsulation: true);
         // short cooldown to prevent instant stunlocking
         comp.NextStun = _timing.CurTime + comp.Cooldown;
-        Dirty(uid, comp);
 
         args.Handled = true;
     }
