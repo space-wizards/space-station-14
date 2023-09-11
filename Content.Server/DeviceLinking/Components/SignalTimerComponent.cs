@@ -34,9 +34,13 @@ public sealed partial class SignalTimerComponent : Component
     [DataField("startPort", customTypeSerializer: typeof(PrototypeIdSerializer<SourcePortPrototype>)), ViewVariables(VVAccess.ReadWrite)]
     public string StartPort = "Start";
 
+    [DataField("trigger", customTypeSerializer: typeof(PrototypeIdSerializer<SinkPortPrototype>)), ViewVariables(VVAccess.ReadWrite)]
+    public string Trigger = "Trigger";
+
     /// <summary>
     ///     If not null, this timer will play this sound when done.
     /// </summary>
     [DataField("doneSound"), ViewVariables(VVAccess.ReadWrite)]
     public SoundSpecifier? DoneSound;
 }
+

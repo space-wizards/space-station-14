@@ -1,4 +1,5 @@
 using Content.Server.DeviceLinking.Components;
+using Content.Server.DeviceLinking.Events;
 using Content.Server.UserInterface;
 using Content.Shared.Access.Systems;
 using Content.Shared.MachineLinking;
@@ -27,11 +28,13 @@ public sealed class SignalTimerSystem : EntitySystem
         SubscribeLocalEvent<SignalTimerComponent, SignalTimerTextChangedMessage>(OnTextChangedMessage);
         SubscribeLocalEvent<SignalTimerComponent, SignalTimerDelayChangedMessage>(OnDelayChangedMessage);
         SubscribeLocalEvent<SignalTimerComponent, SignalTimerStartMessage>(OnTimerStartMessage);
+        SubscribeLocalEvent<SignalTimerComponent, SignalReceivedEvent>(OnSignalReceived);
     }
 
     private void OnInit(EntityUid uid, SignalTimerComponent component, ComponentInit args)
     {
         _appearanceSystem.SetData(uid, TextScreenVisuals.ScreenText, component.Label);
+        _signalSystem.EnsureSinkPorts(uid, component.Trigger);
     }
 
     private void OnAfterActivatableUIOpen(EntityUid uid, SignalTimerComponent component, AfterActivatableUIOpenEvent args)
@@ -53,6 +56,8 @@ public sealed class SignalTimerSystem : EntitySystem
     public void Trigger(EntityUid uid, SignalTimerComponent signalTimer)
     {
         RemComp<ActiveSignalTimerComponent>(uid);
+        if (signalTimer.DoneSound != null)
+        _audio.PlayPvs(signalTimer.DoneSound, uid);
 
         _signalSystem.InvokePort(uid, signalTimer.TriggerPort);
 
@@ -85,10 +90,7 @@ public sealed class SignalTimerSystem : EntitySystem
                 continue;
 
             Trigger(uid, timer);
-
-            if (timer.DoneSound == null)
-                continue;
-            _audio.PlayPvs(timer.DoneSound, uid);
+            break;
         }
     }
 
@@ -129,7 +131,20 @@ public sealed class SignalTimerSystem : EntitySystem
     {
         if (!IsMessageValid(uid, args))
             return;
+        OnStartTimer(uid, component);
+    }
 
+    private void OnSignalReceived(EntityUid uid, SignalTimerComponent component, ref SignalReceivedEvent args)
+    {
+        RemComp<ActiveSignalTimerComponent>(uid);
+        if (args.Port == component.Trigger)
+        {
+            OnStartTimer(uid, component);
+        }
+    }
+
+    public void OnStartTimer(EntityUid uid, SignalTimerComponent component)
+    {
         TryComp<AppearanceComponent>(uid, out var appearance);
 
         if (!HasComp<ActiveSignalTimerComponent>(uid))

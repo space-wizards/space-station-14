@@ -25,6 +25,9 @@
     ports:
       - Start
       - Timer
+  - type: DeviceLinkSink
+    ports:
+      - Trigger
   - type: ActivatableUI
     key: enum.SignalTimerUiKey.Key
   - type: UserInterface
