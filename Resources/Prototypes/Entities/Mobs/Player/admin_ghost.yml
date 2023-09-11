@@ -87,8 +87,8 @@
 
 - type: entity
   id: ActionAGhostShowSolar
-  name: action-name-show-solar-console
-  description: action-description-show-solar-console
+  name: Solar Control Interface
+  description: View a solar control interface.
   noSpawn: true
   components:
   - type: InstantAction
@@ -100,8 +100,8 @@
 
 - type: entity
   id: ActionAGhostShowCommunications
-  name: action-name-show-communications-console
-  description: action-description-show-communications-console
+  name: Communications Interface
+  description: View a communications interface.
   noSpawn: true
   components:
   - type: InstantAction
@@ -113,8 +113,8 @@
 
 - type: entity
   id: ActionAGhostShowRadar
-  name: action-name-show-radar-console
-  description: action-description-show-radar-console
+  name: Mass Scanner Interface
+  description: View a mass scanner interface.
   noSpawn: true
   components:
   - type: InstantAction
@@ -126,8 +126,8 @@
 
 - type: entity
   id: ActionAGhostShowCargo
-  name: action-name-show-cargo-console
-  description: action-description-show-cargo-console
+  name: Cargo Ordering Interface
+  description: View a cargo ordering interface.
   noSpawn: true
   components:
   - type: InstantAction
@@ -139,8 +139,8 @@
 
 - type: entity
   id: ActionAGhostShowCrewMonitoring
-  name: action-name-show-crew-monitoring-console
-  description: action-description-crew-monitoring-console
+  name: Crew Monitoring Interface
+  description: View a crew monitoring interface.
   noSpawn: true
   components:
   - type: InstantAction
@@ -152,8 +152,8 @@
 
 - type: entity
   id: ActionAGhostShowStationRecords
-  name: action-name-show-station-records-console
-  description: action-description-station-records-console
+  name: Station Records Interface
+  description: View a station records Interface
   noSpawn: true
   components:
   - type: InstantAction
