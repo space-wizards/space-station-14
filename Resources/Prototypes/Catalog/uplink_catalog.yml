@@ -824,6 +824,9 @@
     Telecrystal: 2
   categories:
   - UplinkTools
+ conditions:
+ - !type:ListingLimitedStockCondition
+   stock: 10
 
 # Job Specific
 
