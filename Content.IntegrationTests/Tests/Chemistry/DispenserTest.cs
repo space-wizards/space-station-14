@@ -29,7 +29,7 @@ public sealed class DispenserTest : InteractionTest
 
         // Beaker is back in the player's hands
         Assert.That(Hands.ActiveHandEntity, Is.Not.Null);
-        AssertPrototype("Beaker", Hands.ActiveHandEntity);
+        AssertPrototype("Beaker", SEntMan.GetNetEntity(Hands.ActiveHandEntity));
 
         // Re-insert the beaker
         await Interact();
@@ -40,6 +40,6 @@ public sealed class DispenserTest : InteractionTest
         await ClickControl<ReagentDispenserWindow>(nameof(ReagentDispenserWindow.EjectButton));
         await RunTicks(5);
         Assert.That(Hands.ActiveHandEntity, Is.Not.Null);
-        AssertPrototype("Beaker", Hands.ActiveHandEntity);
+        AssertPrototype("Beaker", SEntMan.GetNetEntity(Hands.ActiveHandEntity));
     }
 }

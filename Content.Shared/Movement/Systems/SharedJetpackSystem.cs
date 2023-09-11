@@ -62,14 +62,14 @@ public abstract class SharedJetpackSystem : EntitySystem
         if (args.Current is not JetpackUserComponentState state)
             return;
 
-        component.Jetpack = state.Jetpack;
+        component.Jetpack = EnsureEntity<JetpackUserComponent>(state.Jetpack, uid);
     }
 
     private void OnJetpackUserGetState(EntityUid uid, JetpackUserComponent component, ref ComponentGetState args)
     {
         args.State = new JetpackUserComponentState()
         {
-            Jetpack = component.Jetpack,
+            Jetpack = GetNetEntity(component.Jetpack),
         };
     }
 
@@ -198,7 +198,7 @@ public abstract class SharedJetpackSystem : EntitySystem
     [Serializable, NetSerializable]
     protected sealed class JetpackUserComponentState : ComponentState
     {
-        public EntityUid Jetpack;
+        public NetEntity Jetpack;
     }
 }
 

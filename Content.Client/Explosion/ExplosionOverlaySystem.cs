@@ -4,6 +4,7 @@ using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 
 namespace Content.Client.Explosion;
 
@@ -39,7 +40,13 @@ public sealed class ExplosionOverlaySystem : EntitySystem
 
         component.Epicenter = state.Epicenter;
         component.SpaceTiles = state.SpaceTiles;
-        component.Tiles = state.Tiles;
+        component.Tiles.Clear();
+
+        foreach (var (nent, data) in state.Tiles)
+        {
+            component.Tiles[GetEntity(nent)] = data;
+        }
+
         component.Intensity = state.Intensity;
         component.ExplosionType = state.ExplosionType;
         component.SpaceMatrix = state.SpaceMatrix;

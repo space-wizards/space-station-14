@@ -96,7 +96,7 @@ public sealed class GhostUIController : UIController, IOnSystemChanged<GhostSyst
         if (Gui?.TargetWindow is not { } window)
             return;
 
-        window.UpdateWarps(msg.Warps);
+        window.UpdateWarps(msg.Warps, EntityManager);
         window.Populate();
     }
 
@@ -107,7 +107,7 @@ public sealed class GhostUIController : UIController, IOnSystemChanged<GhostSyst
 
     private void OnWarpClicked(EntityUid player)
     {
-        var msg = new GhostWarpToTargetRequestEvent(player);
+        var msg = new GhostWarpToTargetRequestEvent(EntityManager.GetNetEntity(player));
         _net.SendSystemNetworkMessage(msg);
     }
 

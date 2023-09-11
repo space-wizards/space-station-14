@@ -53980,13 +53980,6 @@ entities:
     - pos: 35.418114,-20.345602
       parent: 1
       type: Transform
-- proto: ClothingShoesSpaceNinja
-  entities:
-  - uid: 17753
-    components:
-    - pos: 15.335373,-42.41446
-      parent: 1
-      type: Transform
 - proto: ClothingUnderSocksCoder
   entities:
   - uid: 18359

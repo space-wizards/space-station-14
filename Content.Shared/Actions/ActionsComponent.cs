@@ -21,9 +21,9 @@ public sealed partial class ActionsComponent : Component
 [Serializable, NetSerializable]
 public sealed class ActionsComponentState : ComponentState
 {
-    public readonly HashSet<EntityUid> Actions;
+    public readonly HashSet<NetEntity> Actions;
 
-    public ActionsComponentState(HashSet<EntityUid> actions)
+    public ActionsComponentState(HashSet<NetEntity> actions)
     {
         Actions = actions;
     }

@@ -151,7 +151,7 @@ public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
             return;
         }
 
-        if (GetNinjaBattery(uid, out var _, out var battery))
+        if (GetNinjaBattery(uid, out _, out var battery))
         {
              var severity = ContentHelpers.RoundToLevels(MathF.Max(0f, battery.CurrentCharge), battery.MaxCharge, 8);
             _alerts.ShowAlert(uid, AlertType.SuitPower, (short) severity);
@@ -214,14 +214,12 @@ public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
         _role.MindAddRole(mindId, role, mind);
 
         // choose spider charge detonation point
-        // currently based on warp points, something better could be done (but would likely require mapping work)
         var warps = new List<EntityUid>();
-        var query = EntityQueryEnumerator<WarpPointComponent, TransformComponent>();
+        var query = EntityQueryEnumerator<BombingTargetComponent, WarpPointComponent, TransformComponent>();
         var map = Transform(uid).MapID;
-        while (query.MoveNext(out var warpUid, out var warp, out var xform))
+        while (query.MoveNext(out var warpUid, out _, out var warp, out var xform))
         {
-            // won't be asked to detonate the nuke disk or singularity or centcomm
-            if (warp.Location != null && !HasComp<PhysicsComponent>(warpUid) && xform.MapID == map)
+            if (warp.Location != null)
                 warps.Add(warpUid);
         }
 
