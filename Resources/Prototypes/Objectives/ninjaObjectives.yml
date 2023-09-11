@@ -1,0 +1,40 @@
+- type: objective
+  id: StealResearchObjective
+  issuer: spiderclan
+  requirements:
+  - !type:NinjaRequirement {}
+  conditions:
+  - !type:StealResearchCondition {}
+
+- type: objective
+  id: DoorjackObjective
+  issuer: spiderclan
+  requirements:
+  - !type:NinjaRequirement {}
+  conditions:
+  - !type:DoorjackCondition {}
+
+- type: objective
+  id: SpiderChargeObjective
+  issuer: spiderclan
+  requirements:
+  - !type:NinjaRequirement {}
+  - !type:SpiderChargeTargetRequirement {}
+  conditions:
+  - !type:SpiderChargeCondition {}
+
+- type: objective
+  id: TerrorObjective
+  issuer: spiderclan
+  requirements:
+  - !type:NinjaRequirement {}
+  conditions:
+  - !type:TerrorCondition {}
+
+- type: objective
+  id: SurviveObjective
+  issuer: spiderclan
+  requirements:
+  - !type:NinjaRequirement {}
+  conditions:
+  - !type:SurviveCondition {}

@@ -1,7 +1,9 @@
 using Content.Shared.Actions;
-using Content.Shared.Actions.ActionTypes;
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+
 namespace Content.Shared.Speech.Components;
 
 [RegisterComponent, NetworkedComponent]
@@ -25,23 +27,17 @@ public sealed partial class MeleeSpeechComponent : Component
     [AutoNetworkedField]
     public int MaxBattlecryLength = 12;
 
+    [DataField("configureAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    public string? ConfigureAction = "ActionConfigureMeleeSpeech";
+
     /// <summary>
     /// The action to open the battlecry UI
     /// </summary>
-    [DataField("configureAction")]
-    public InstantAction ConfigureAction = new()
-    {
-        UseDelay = TimeSpan.FromSeconds(1),
-        ItemIconStyle = ItemActionIconStyle.BigItem,
-        DisplayName = "melee-speech-config",
-        Description = "melee-speech-config-desc",
-        Priority = -20,
-        Event = new MeleeSpeechConfigureActionEvent(),
-    };
+    [DataField("configureActionEntity")] public EntityUid? ConfigureActionEntity;
 }
 
 /// <summary>
-/// Key representing which <see cref="BoundUserInterface"/> is currently open.
+/// Key representing which <see cref="PlayerBoundUserInterface"/> is currently open.
 /// Useful when there are multiple UI for an object. Here it's future-proofing only.
 /// </summary>
 [Serializable, NetSerializable]

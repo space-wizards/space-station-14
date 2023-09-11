@@ -25,8 +25,8 @@ internal sealed class BuckleSystem : SharedBuckleSystem
             return;
 
         component.Buckled = state.Buckled;
-        component.BuckledTo = state.BuckledTo;
-        component.LastEntityBuckledTo = state.LastEntityBuckledTo;
+        component.BuckledTo = EnsureEntity<BuckleComponent>(state.BuckledTo, uid);
+        component.LastEntityBuckledTo = EnsureEntity<BuckleComponent>(state.LastEntityBuckledTo, uid);
         component.DontCollide = state.DontCollide;
 
         ActionBlockerSystem.UpdateCanMove(uid);

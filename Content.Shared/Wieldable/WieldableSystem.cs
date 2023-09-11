@@ -170,7 +170,7 @@ public sealed class WieldableSystem : EntitySystem
         if (ev.Cancelled)
             return false;
 
-        var doargs = new DoAfterArgs(user, component.WieldTime, new WieldableDoAfterEvent(), used, used: used)
+        var doargs = new DoAfterArgs(EntityManager, user, component.WieldTime, new WieldableDoAfterEvent(), used, used: used)
         {
             BreakOnUserMove = false,
             BreakOnDamage = true

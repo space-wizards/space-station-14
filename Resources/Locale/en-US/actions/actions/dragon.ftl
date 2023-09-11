@@ -4,13 +4,6 @@ devour-action-popup-message-fail-target-alive = You can't consume creatures that
 
 dragon-spawn-action-popup-message-fail-no-eggs = You don't have the stamina to do that!
 
-
-action-name-devour = [color=red]Devour[/color]
-action-description-devour = Attempt to break a structure with your jaws or swallow a creature.
-
-action-name-carp-rift = Summon Carp Rift
-action-description-carp-rift = Summons a carp rift that will periodically spawns carps.
-
 # Rifts
 carp-rift-warning = A rift is causing an unnaturally large energy flux at {$location}. Stop it at all costs!
 carp-rift-duplicate = Cannot have 2 charging rifts at the same time!
