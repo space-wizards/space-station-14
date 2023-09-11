@@ -91,6 +91,8 @@ public sealed partial class ArtifactComponent : Component
             Volume = 3f
         }
     };
+
+    [DataField("activateActionEntity")] public EntityUid? ActivateActionEntity;
 }
 
 /// <summary>

@@ -31,7 +31,6 @@ namespace Content.Server.Construction
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
         [Dependency] private readonly EntityLookupSystem _lookupSystem = default!;
         [Dependency] private readonly StorageSystem _storageSystem = default!;
-        [Dependency] private readonly SharedTransformSystem _transform = default!;
 
         // --- WARNING! LEGACY CODE AHEAD! ---
         // This entire file contains the legacy code for initial construction.
@@ -248,7 +247,7 @@ namespace Content.Server.Construction
                 return null;
             }
 
-            var doAfterArgs = new DoAfterArgs(user, doAfterTime, new AwaitedDoAfterEvent(), null)
+            var doAfterArgs = new DoAfterArgs(EntityManager, user, doAfterTime, new AwaitedDoAfterEvent(), null)
             {
                 BreakOnDamage = true,
                 BreakOnTargetMove = false,
@@ -433,9 +432,11 @@ namespace Content.Server.Construction
                 _beingBuilt[args.SenderSession] = newSet;
             }
 
+            var location = GetCoordinates(ev.Location);
+
             foreach (var condition in constructionPrototype.Conditions)
             {
-                if (!condition.Condition(user, ev.Location, ev.Angle.GetCardinalDir()))
+                if (!condition.Condition(user, location, ev.Angle.GetCardinalDir()))
                 {
                     Cleanup();
                     return;
@@ -454,7 +455,7 @@ namespace Content.Server.Construction
                 return;
             }
 
-            var mapPos = ev.Location.ToMap(EntityManager);
+            var mapPos = location.ToMap(EntityManager);
             var predicate = GetPredicate(constructionPrototype.CanBuildInImpassable, mapPos);
 
             if (!_interactionSystem.InRangeUnobstructed(user, mapPos, predicate: predicate))
@@ -516,11 +517,11 @@ namespace Content.Server.Construction
             var xform = Transform(structure);
             var wasAnchored = xform.Anchored;
             xform.Anchored = false;
-            _transform.SetCoordinates(structure, xform, ev.Location);
+            xform.Coordinates = GetCoordinates(ev.Location);
             xform.LocalRotation = constructionPrototype.CanRotate ? ev.Angle : Angle.Zero;
             xform.Anchored = wasAnchored;
 
-            RaiseNetworkEvent(new AckStructureConstructionMessage(ev.Ack, structure));
+            RaiseNetworkEvent(new AckStructureConstructionMessage(ev.Ack, GetNetEntity(structure)));
             _adminLogger.Add(LogType.Construction, LogImpact.Low, $"{ToPrettyString(user):player} has turned a {ev.PrototypeName} construction ghost into {ToPrettyString(structure)} at {Transform(structure).Coordinates}");
             Cleanup();
         }

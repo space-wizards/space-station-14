@@ -2,6 +2,8 @@ using System.Linq;
 using System.Numerics;
 using Content.Server.GameTicking;
 using Content.Server.Ghost.Components;
+using Content.Server.Mind;
+using Content.Server.Roles.Jobs;
 using Content.Server.Visible;
 using Content.Server.Warps;
 using Content.Shared.Actions;
@@ -14,7 +16,6 @@ using Content.Shared.Mind.Components;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Movement.Events;
-using Content.Shared.Roles.Jobs;
 using Content.Shared.Storage.Components;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
@@ -37,9 +38,8 @@ namespace Content.Server.Ghost
         [Dependency] private readonly FollowerSystem _followerSystem = default!;
         [Dependency] private readonly MobStateSystem _mobState = default!;
         [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-        [Dependency] private readonly SharedMindSystem _minds = default!;
-        [Dependency] private readonly SharedJobSystem _jobs = default!;
-        [Dependency] private readonly SharedTransformSystem _transform = default!;
+        [Dependency] private readonly MindSystem _minds = default!;
+        [Dependency] private readonly JobSystem _jobs = default!;
 
         public override void Initialize()
         {
@@ -124,9 +124,16 @@ namespace Content.Server.Ghost
             component.TimeOfDeath = time;
 
             // TODO ghost: remove once ghosts are persistent and aren't deleted when returning to body
-            if (component.Action.UseDelay != null)
-                component.Action.Cooldown = (time, time + component.Action.UseDelay.Value);
-            _actions.AddAction(uid, component.Action, null);
+            var action = _actions.AddAction(uid, ref component.ActionEntity, component.Action);
+            if (action?.UseDelay != null)
+            {
+                action.Cooldown = (time, time + action.UseDelay.Value);
+                Dirty(component.ActionEntity!.Value, action);
+            }
+
+            _actions.AddAction(uid, ref component.ToggleLightingActionEntity, component.ToggleLightingAction);
+            _actions.AddAction(uid, ref component.ToggleFoVActionEntity, component.ToggleFoVAction);
+            _actions.AddAction(uid, ref component.ToggleGhostsActionEntity, component.ToggleGhostsAction);
         }
 
         private void OnGhostShutdown(EntityUid uid, GhostComponent component, ComponentShutdown args)
@@ -148,7 +155,7 @@ namespace Content.Server.Ghost
                     eye.VisibilityMask &= ~(uint) VisibilityFlags.Ghost;
                 }
 
-                _actions.RemoveAction(uid, component.Action);
+                _actions.RemoveAction(uid, component.ActionEntity);
             }
         }
 
@@ -182,7 +189,7 @@ namespace Content.Server.Ghost
             if (args.SenderSession.AttachedEntity is not {Valid: true} entity ||
                 !EntityManager.HasComponent<GhostComponent>(entity))
             {
-                Logger.Warning($"User {args.SenderSession.Name} sent a {nameof(GhostWarpsRequestEvent)} without being a ghost.");
+                Log.Warning($"User {args.SenderSession.Name} sent a {nameof(GhostWarpsRequestEvent)} without being a ghost.");
                 return;
             }
 
@@ -197,7 +204,7 @@ namespace Content.Server.Ghost
                 !ghost.CanReturnToBody ||
                 !EntityManager.TryGetComponent(attached, out ActorComponent? actor))
             {
-                Logger.Warning($"User {args.SenderSession.Name} sent an invalid {nameof(GhostReturnToBodyRequest)}");
+                Log.Warning($"User {args.SenderSession.Name} sent an invalid {nameof(GhostReturnToBodyRequest)}");
                 return;
             }
 
@@ -206,28 +213,31 @@ namespace Content.Server.Ghost
 
         private void OnGhostWarpToTargetRequest(GhostWarpToTargetRequestEvent msg, EntitySessionEventArgs args)
         {
-            if (args.SenderSession.AttachedEntity is not { Valid: true } attached ||
-                !EntityManager.HasComponent<GhostComponent>(attached))
+            if (args.SenderSession.AttachedEntity is not {Valid: true} attached ||
+                !EntityManager.TryGetComponent(attached, out GhostComponent? ghost))
             {
-                Logger.Warning($"User {args.SenderSession.Name} tried to warp to {msg.Target} without being a ghost.");
+                Log.Warning($"User {args.SenderSession.Name} tried to warp to {msg.Target} without being a ghost.");
                 return;
             }
 
-            if (!EntityManager.EntityExists(msg.Target))
+            var target = GetEntity(msg.Target);
+
+            if (!EntityManager.EntityExists(target))
             {
-                Logger.Warning($"User {args.SenderSession.Name} tried to warp to an invalid entity id: {msg.Target}");
+                Log.Warning($"User {args.SenderSession.Name} tried to warp to an invalid entity id: {msg.Target}");
                 return;
             }
 
-            if (TryComp(msg.Target, out WarpPointComponent? warp) && warp.Follow
-                || HasComp<MobStateComponent>(msg.Target))
+            if (TryComp(target, out WarpPointComponent? warp) && warp.Follow
+                || HasComp<MobStateComponent>(target))
             {
-                 _followerSystem.StartFollowingEntity(attached, msg.Target);
+                 _followerSystem.StartFollowingEntity(attached, target);
                  return;
             }
 
-            _transform.SetCoordinates(attached, Transform(msg.Target).Coordinates);
-            _transform.AttachToGridOrMap(attached);
+            var xform = Transform(attached);
+            xform.Coordinates = Transform(target).Coordinates;
+            xform.AttachToGridOrMap();
             if (TryComp(attached, out PhysicsComponent? physics))
                 _physics.SetLinearVelocity(attached, Vector2.Zero, body: physics);
         }
@@ -242,11 +252,13 @@ namespace Content.Server.Ghost
 
         private IEnumerable<GhostWarp> GetLocationWarps()
         {
-            foreach (var warp in EntityManager.EntityQuery<WarpPointComponent>(true))
+            var allQuery = AllEntityQuery<WarpPointComponent>();
+
+            while (allQuery.MoveNext(out var uid, out var warp))
             {
                 if (warp.Location != null)
                 {
-                    yield return new GhostWarp(warp.Owner, warp.Location, true);
+                    yield return new GhostWarp(GetNetEntity(uid), warp.Location, true);
                 }
             }
         }
@@ -265,7 +277,7 @@ namespace Content.Server.Ghost
                     var playerInfo = $"{EntityManager.GetComponent<MetaDataComponent>(attached).EntityName} ({jobName})";
 
                     if (_mobState.IsAlive(attached) || _mobState.IsCritical(attached))
-                        yield return new GhostWarp(attached, playerInfo, false);
+                        yield return new GhostWarp(GetNetEntity(attached), playerInfo, false);
                 }
             }
         }

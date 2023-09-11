@@ -58,3 +58,12 @@
           amount: 1
         - id: JugSilver
           amount: 1
+
+- type: entity
+  id: CratePlantBGone
+  parent: CrateGenericSteel
+  components:
+    - type: StorageFill
+      contents:
+        - id: JugPlantBGone
+          amount: 5

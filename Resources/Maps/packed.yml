@@ -62847,26 +62847,6 @@ entities:
     - pos: 10.438802,4.97286
       parent: 2
       type: Transform
-    - toggleAction:
-        sound: null
-        itemIconStyle: BigItem
-        icon: Objects/Tools/flashlight.rsi/flashlight.png
-        iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
-        iconColor: '#FFFFFFFF'
-        name: action-name-toggle-light
-        description: action-description-toggle-light
-        keywords: []
-        enabled: True
-        useDelay: null
-        charges: null
-        checkCanInteract: True
-        clientExclusive: False
-        priority: 0
-        autoPopulate: True
-        autoRemove: True
-        temporary: False
-        event: !type:ToggleActionEvent {}
-      type: HandheldLight
   - uid: 2722
     components:
     - pos: 20.544691,33.624443
@@ -62887,26 +62867,6 @@ entities:
     - pos: 32.49905,41.93212
       parent: 2
       type: Transform
-    - toggleAction:
-        sound: null
-        itemIconStyle: BigItem
-        icon: Objects/Tools/flashlight.rsi/flashlight.png
-        iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
-        iconColor: '#FFFFFFFF'
-        name: action-name-toggle-light
-        description: action-description-toggle-light
-        keywords: []
-        enabled: True
-        useDelay: null
-        charges: null
-        checkCanInteract: True
-        clientExclusive: False
-        priority: 0
-        autoPopulate: True
-        autoRemove: True
-        temporary: False
-        event: !type:ToggleActionEvent {}
-      type: HandheldLight
   - uid: 5474
     components:
     - pos: 67.5,37.5

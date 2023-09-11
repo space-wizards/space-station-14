@@ -36,7 +36,6 @@ namespace Content.Client.Chat.UI
         private readonly EntityUid _senderEntity;
         private readonly IChatManager _chatManager;
         private readonly IEntityManager _entityManager;
-        private readonly SharedTransformSystem _transform;
 
         private float _timeLeft = TotalTime;
 
@@ -48,43 +47,30 @@ namespace Content.Client.Chat.UI
         // man down
         public event Action<EntityUid, SpeechBubble>? OnDied;
 
-        public static SpeechBubble CreateSpeechBubble(SpeechType type,
-            string text,
-            EntityUid senderEntity,
-            IEyeManager eyeManager,
-            IChatManager chatManager,
-            IEntityManager entityManager,
-            SharedTransformSystem transform)
+        public static SpeechBubble CreateSpeechBubble(SpeechType type, string text, EntityUid senderEntity, IEyeManager eyeManager, IChatManager chatManager, IEntityManager entityManager)
         {
             switch (type)
             {
                 case SpeechType.Emote:
-                    return new TextSpeechBubble(text, senderEntity, eyeManager, chatManager, entityManager, transform, "emoteBox");
+                    return new TextSpeechBubble(text, senderEntity, eyeManager, chatManager, entityManager, "emoteBox");
 
                 case SpeechType.Say:
-                    return new TextSpeechBubble(text, senderEntity, eyeManager, chatManager, entityManager, transform, "sayBox");
+                    return new TextSpeechBubble(text, senderEntity, eyeManager, chatManager, entityManager, "sayBox");
 
                 case SpeechType.Whisper:
-                    return new TextSpeechBubble(text, senderEntity, eyeManager, chatManager, entityManager, transform, "whisperBox");
+                    return new TextSpeechBubble(text, senderEntity, eyeManager, chatManager, entityManager, "whisperBox");
 
                 default:
                     throw new ArgumentOutOfRangeException();
             }
         }
 
-        public SpeechBubble(string text,
-            EntityUid senderEntity,
-            IEyeManager eyeManager,
-            IChatManager chatManager,
-            IEntityManager entityManager,
-            SharedTransformSystem transform,
-            string speechStyleClass)
+        public SpeechBubble(string text, EntityUid senderEntity, IEyeManager eyeManager, IChatManager chatManager, IEntityManager entityManager, string speechStyleClass)
         {
             _chatManager = chatManager;
             _senderEntity = senderEntity;
             _eyeManager = eyeManager;
             _entityManager = entityManager;
-            _transform = transform;
 
             // Use text clipping so new messages don't overlap old ones being pushed up.
             RectClipContent = true;
@@ -142,7 +128,7 @@ namespace Content.Client.Chat.UI
             }
 
             var offset = (-_eyeManager.CurrentEye.Rotation).ToWorldVec() * -EntityVerticalOffset;
-            var worldPos = _transform.GetWorldPosition(xform) + offset;
+            var worldPos = xform.WorldPosition + offset;
 
             var lowerCenter = _eyeManager.WorldToScreen(worldPos) / UIScale;
             var screenPos = lowerCenter - new Vector2(ContentSize.X / 2, ContentSize.Y + _verticalOffsetAchieved);
@@ -178,14 +164,8 @@ namespace Content.Client.Chat.UI
 
     public sealed class TextSpeechBubble : SpeechBubble
     {
-        public TextSpeechBubble(string text,
-            EntityUid senderEntity,
-            IEyeManager eyeManager,
-            IChatManager chatManager,
-            IEntityManager entityManager,
-            SharedTransformSystem transform,
-            string speechStyleClass)
-            : base(text, senderEntity, eyeManager, chatManager, entityManager, transform, speechStyleClass)
+        public TextSpeechBubble(string text, EntityUid senderEntity, IEyeManager eyeManager, IChatManager chatManager, IEntityManager entityManager, string speechStyleClass)
+            : base(text, senderEntity, eyeManager, chatManager, entityManager, speechStyleClass)
         {
         }
 

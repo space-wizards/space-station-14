@@ -3,10 +3,17 @@ using Content.Server.Atmos.EntitySystems;
 using Content.Server.Construction;
 using Content.Server.Construction.Components;
 using Content.Server.Storage.Components;
-using Content.Server.Tools.Systems;
+using Content.Shared.Destructible;
+using Content.Shared.Foldable;
+using Content.Shared.Interaction;
+using Content.Shared.Lock;
+using Content.Shared.Movement.Events;
 using Content.Shared.Storage.Components;
 using Content.Shared.Storage.EntitySystems;
+using Content.Shared.Tools.Systems;
+using Content.Shared.Verbs;
 using Robust.Shared.Containers;
+using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 
 namespace Content.Server.Storage.EntitySystems;
@@ -21,9 +28,22 @@ public sealed class EntityStorageSystem : SharedEntityStorageSystem
     {
         base.Initialize();
 
+        /* CompRef things */
+        SubscribeLocalEvent<EntityStorageComponent, ComponentInit>(OnComponentInit);
+        SubscribeLocalEvent<EntityStorageComponent, ComponentStartup>(OnComponentStartup);
+        SubscribeLocalEvent<EntityStorageComponent, ActivateInWorldEvent>(OnInteract, after: new[] { typeof(LockSystem) });
+        SubscribeLocalEvent<EntityStorageComponent, LockToggleAttemptEvent>(OnLockToggleAttempt);
+        SubscribeLocalEvent<EntityStorageComponent, DestructionEventArgs>(OnDestruction);
+        SubscribeLocalEvent<EntityStorageComponent, GetVerbsEvent<InteractionVerb>>(AddToggleOpenVerb);
+        SubscribeLocalEvent<EntityStorageComponent, ContainerRelayMovementEntityEvent>(OnRelayMovement);
+        SubscribeLocalEvent<EntityStorageComponent, FoldAttemptEvent>(OnFoldAttempt);
+
+        SubscribeLocalEvent<EntityStorageComponent, ComponentGetState>(OnGetState);
+        SubscribeLocalEvent<EntityStorageComponent, ComponentHandleState>(OnHandleState);
+        /* CompRef things */
+
         SubscribeLocalEvent<EntityStorageComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<EntityStorageComponent, WeldableAttemptEvent>(OnWeldableAttempt);
-        SubscribeLocalEvent<EntityStorageComponent, WeldableChangedEvent>(OnWelded);
 
         SubscribeLocalEvent<InsideEntityStorageComponent, InhaleLocationEvent>(OnInsideInhale);
         SubscribeLocalEvent<InsideEntityStorageComponent, ExhaleLocationEvent>(OnInsideExhale);
@@ -52,7 +72,12 @@ public sealed class EntityStorageSystem : SharedEntityStorageSystem
 
     public override bool ResolveStorage(EntityUid uid, [NotNullWhen(true)] ref SharedEntityStorageComponent? component)
     {
-        return Resolve(uid, ref component);
+        if (component != null)
+            return true;
+
+        TryComp<EntityStorageComponent>(uid, out var storage);
+        component = storage;
+        return component != null;
     }
 
     private void OnWeldableAttempt(EntityUid uid, EntityStorageComponent component, WeldableAttemptEvent args)
@@ -69,12 +94,6 @@ public sealed class EntityStorageSystem : SharedEntityStorageSystem
             Popup.PopupEntity(msg, args.User, args.User);
             args.Cancel();
         }
-    }
-
-    private void OnWelded(EntityUid uid, EntityStorageComponent component, WeldableChangedEvent args)
-    {
-        component.IsWeldedShut = args.IsWelded;
-        Dirty(component);
     }
 
     protected override void TakeGas(EntityUid uid, SharedEntityStorageComponent component)

@@ -64,7 +64,7 @@ namespace Content.Server.Lathe
             if (!_prototypeManager.TryIndex<MaterialPrototype>(message.Material, out var material))
                 return;
 
-            int volume = 0;
+            var volume = 0;
 
             if (material.StackEntity != null)
             {
@@ -73,14 +73,20 @@ namespace Content.Server.Lathe
                     return;
 
                 var volumePerSheet = composition.MaterialComposition.FirstOrDefault(kvp => kvp.Key == message.Material).Value;
-                int sheetsToExtract = Math.Min(message.SheetsToExtract, _stack.GetMaxCount(material.StackEntity));
+                var sheetsToExtract = Math.Min(message.SheetsToExtract, _stack.GetMaxCount(material.StackEntity));
 
                 volume = sheetsToExtract * volumePerSheet;
             }
 
             if (volume > 0 && _materialStorage.TryChangeMaterialAmount(uid, message.Material, -volume))
             {
-                _materialStorage.SpawnMultipleFromMaterial(volume, material, Transform(uid).Coordinates, out var overflow);
+                var mats = _materialStorage.SpawnMultipleFromMaterial(volume, material, Transform(uid).Coordinates, out _);
+                foreach (var mat in mats)
+                {
+                    if (TerminatingOrDeleted(mat))
+                        continue;
+                    _stack.TryMergeToContacts(mat);
+                }
             }
         }
 
@@ -218,7 +224,7 @@ namespace Content.Server.Lathe
             var producing = component.CurrentRecipe ?? component.Queue.FirstOrDefault();
 
             var state = new LatheUpdateState(GetAvailableRecipes(uid, component), component.Queue, producing);
-            UserInterfaceSystem.SetUiState(ui, state);
+            _uiSys.SetUiState(ui, state);
         }
 
         private void OnGetRecipes(EntityUid uid, TechnologyDatabaseComponent component, LatheGetRecipesEvent args)

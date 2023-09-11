@@ -2,7 +2,6 @@ using Content.Server.Access;
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Construction;
-using Content.Server.Tools.Systems;
 using Content.Shared.Database;
 using Content.Shared.Doors;
 using Content.Shared.Doors.Components;
@@ -18,6 +17,7 @@ using Content.Shared.Tools;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
 using Content.Shared.DoAfter;
+using Content.Shared.Tools.Systems;
 
 namespace Content.Server.Doors.Systems;
 
@@ -139,7 +139,7 @@ public sealed class DoorSystem : SharedDoorSystem
         }
     }
 
-    private void OnWeldChanged(EntityUid uid, DoorComponent component, WeldableChangedEvent args)
+    private void OnWeldChanged(EntityUid uid, DoorComponent component, ref WeldableChangedEvent args)
     {
         if (component.State == DoorState.Closed)
             SetState(uid, DoorState.Welded, component);
@@ -276,4 +276,3 @@ public sealed class DoorSystem : SharedDoorSystem
         }
     }
 }
-

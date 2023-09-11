@@ -13,7 +13,6 @@ public sealed class GridDraggingSystem : SharedGridDraggingSystem
 {
     [Dependency] private readonly IConGroupController _admin = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     private readonly HashSet<ICommonSession> _draggers = new();
 
@@ -51,26 +50,35 @@ public sealed class GridDraggingSystem : SharedGridDraggingSystem
 
     private void OnRequestVelocity(GridDragVelocityRequest ev, EntitySessionEventArgs args)
     {
+        var grid = GetEntity(ev.Grid);
+
         if (args.SenderSession is not IPlayerSession playerSession ||
             !_admin.CanCommand(playerSession, CommandName) ||
-            !Exists(ev.Grid) ||
-            Deleted(ev.Grid)) return;
-
-        var gridBody = Comp<PhysicsComponent>(ev.Grid);
-        _physics.SetLinearVelocity(ev.Grid, ev.LinearVelocity, body: gridBody);
-        _physics.SetAngularVelocity(ev.Grid, 0f, body: gridBody);
-    }
-
-    private void OnRequestDrag(GridDragRequestPosition msg, EntitySessionEventArgs args)
-    {
-        if (args.SenderSession is not IPlayerSession playerSession ||
-            !_admin.CanCommand(playerSession, CommandName) ||
-            !Exists(msg.Grid) ||
-            Deleted(msg.Grid))
+            !Exists(grid) ||
+            Deleted(grid))
         {
             return;
         }
 
-        _transform.SetWorldPosition(msg.Grid, msg.WorldPosition);
+        var gridBody = Comp<PhysicsComponent>(grid);
+        _physics.SetLinearVelocity(grid, ev.LinearVelocity, body: gridBody);
+        _physics.SetAngularVelocity(grid, 0f, body: gridBody);
+    }
+
+    private void OnRequestDrag(GridDragRequestPosition msg, EntitySessionEventArgs args)
+    {
+        var grid = GetEntity(msg.Grid);
+
+        if (args.SenderSession is not IPlayerSession playerSession ||
+            !_admin.CanCommand(playerSession, CommandName) ||
+            !Exists(grid) ||
+            Deleted(grid))
+        {
+            return;
+        }
+
+        var gridXform = Transform(grid);
+
+        gridXform.WorldPosition = msg.WorldPosition;
     }
 }

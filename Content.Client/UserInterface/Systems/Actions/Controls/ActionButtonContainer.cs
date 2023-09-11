@@ -1,4 +1,3 @@
-using Content.Shared.Actions.ActionTypes;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 
@@ -30,7 +29,7 @@ public class ActionButtonContainer : GridContainer
         }
     }
 
-    public void SetActionData(params ActionType?[] actionTypes)
+    public void SetActionData(params EntityUid?[] actionTypes)
     {
         ClearActionData();
 
@@ -40,7 +39,7 @@ public class ActionButtonContainer : GridContainer
             if (action == null)
                 continue;
 
-            ((ActionButton) GetChild(i)).UpdateData(action);
+            ((ActionButton) GetChild(i)).UpdateData(action.Value);
         }
     }
 

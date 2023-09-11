@@ -48,7 +48,7 @@ namespace Content.Server.Administration.Commands
                 ? _entities.GetComponent<TransformComponent>(player.AttachedEntity.Value).Coordinates
                 : EntitySystem.Get<GameTicker>().GetObserverSpawnPoint();
             var ghost = _entities.SpawnEntity("AdminObserver", coordinates);
-            _entities.System<SharedTransformSystem>().AttachToGridOrMap(ghost);
+            _entities.GetComponent<TransformComponent>(ghost).AttachToGridOrMap();
 
             if (canReturn)
             {

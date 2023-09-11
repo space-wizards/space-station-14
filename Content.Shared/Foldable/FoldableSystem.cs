@@ -1,6 +1,4 @@
-using System.Linq;
 using Content.Shared.Buckle;
-using Content.Shared.Buckle.Components;
 using Content.Shared.Storage.Components;
 using Content.Shared.Verbs;
 using Robust.Shared.Containers;
@@ -91,69 +89,61 @@ public sealed class FoldableSystem : EntitySystem
             args.Cancel();
     }
 
-        public bool TryToggleFold(EntityUid uid, FoldableComponent comp)
+    public bool TryToggleFold(EntityUid uid, FoldableComponent comp)
+    {
+        return TrySetFolded(uid, comp, !comp.IsFolded);
+    }
+
+    public bool CanToggleFold(EntityUid uid, FoldableComponent? fold = null)
+    {
+        if (!Resolve(uid, ref fold))
+            return false;
+
+        // Can't un-fold in any container (locker, hands, inventory, whatever).
+        if (_container.IsEntityInContainer(uid))
+            return false;
+
+        var ev = new FoldAttemptEvent();
+        RaiseLocalEvent(uid, ref ev);
+        return !ev.Cancelled;
+    }
+
+    /// <summary>
+    /// Try to fold/unfold
+    /// </summary>
+    public bool TrySetFolded(EntityUid uid, FoldableComponent comp, bool state)
+    {
+        if (state == comp.IsFolded)
+            return false;
+
+        if (!CanToggleFold(uid, comp))
+            return false;
+
+        SetFolded(uid, comp, state);
+        return true;
+    }
+
+    #region Verb
+
+    private void AddFoldVerb(EntityUid uid, FoldableComponent component, GetVerbsEvent<AlternativeVerb> args)
+    {
+        if (!args.CanAccess || !args.CanInteract || args.Hands == null || !CanToggleFold(uid, component))
+            return;
+
+        AlternativeVerb verb = new()
         {
-            return TrySetFolded(uid, comp, !comp.IsFolded);
-        }
+            Act = () => TryToggleFold(uid, component),
+            Text = component.IsFolded ? Loc.GetString("unfold-verb") : Loc.GetString("fold-verb"),
+            Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/fold.svg.192dpi.png")),
 
-        public bool CanToggleFold(EntityUid uid, FoldableComponent? fold = null)
-        {
-            if (!Resolve(uid, ref fold))
-                return false;
+            // If the object is unfolded and they click it, they want to fold it, if it's folded, they want to pick it up
+            Priority = component.IsFolded ? 0 : 2,
+        };
 
-            // Can't un-fold in any container (locker, hands, inventory, whatever).
-            if (_container.IsEntityInContainer(uid))
-                return false;
+        args.Verbs.Add(verb);
+    }
 
-            // If an entity is buckled to the object we can't pick it up or fold it
-            if (TryComp(uid, out StrapComponent? strap) && strap.BuckledEntities.Any())
-                return false;
-
-            if (TryComp(uid, out SharedEntityStorageComponent? storage))
-            {
-                if (storage.Open || storage.Contents.ContainedEntities.Any())
-                    return false;
-            }
-
-            return true;
-        }
-
-        /// <summary>
-        /// Try to fold/unfold
-        /// </summary>
-        public bool TrySetFolded(EntityUid uid, FoldableComponent comp, bool state)
-        {
-            if (state == comp.IsFolded)
-                return false;
-
-            if (!CanToggleFold(uid, comp))
-                return false;
-
-            SetFolded(uid, comp, state);
-            return true;
-        }
-
-        #region Verb
-
-        private void AddFoldVerb(EntityUid uid, FoldableComponent component, GetVerbsEvent<AlternativeVerb> args)
-        {
-            if (!args.CanAccess || !args.CanInteract || args.Hands == null || !CanToggleFold(uid, component))
-                return;
-
-            AlternativeVerb verb = new()
-            {
-                Act = () => TryToggleFold(uid, component),
-                Text = component.IsFolded ? Loc.GetString("unfold-verb") : Loc.GetString("fold-verb"),
-                Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/fold.svg.192dpi.png")),
-
-                // If the object is unfolded and they click it, they want to fold it, if it's folded, they want to pick it up
-                Priority = component.IsFolded ? 0 : 2,
-            };
-
-            args.Verbs.Add(verb);
-        }
-
-        #endregion
+    #endregion
 
     [Serializable, NetSerializable]
     public enum FoldedVisuals : byte
@@ -161,3 +151,10 @@ public sealed class FoldableSystem : EntitySystem
         State
     }
 }
+
+/// <summary>
+/// Event raised on an entity to determine if it can be folded.
+/// </summary>
+/// <param name="Cancelled"></param>
+[ByRefEvent]
+public record struct FoldAttemptEvent(bool Cancelled = false);

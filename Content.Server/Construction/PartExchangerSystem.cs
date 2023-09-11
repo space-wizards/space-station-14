@@ -170,7 +170,7 @@ public sealed class PartExchangerSystem : EntitySystem
 
         component.AudioStream = _audio.PlayPvs(component.ExchangeSound, uid);
 
-        _doAfter.TryStartDoAfter(new DoAfterArgs(args.User, component.ExchangeDuration, new ExchangerDoAfterEvent(), uid, target: args.Target, used: uid)
+        _doAfter.TryStartDoAfter(new DoAfterArgs(EntityManager, args.User, component.ExchangeDuration, new ExchangerDoAfterEvent(), uid, target: args.Target, used: uid)
         {
             BreakOnDamage = true,
             BreakOnUserMove = true
