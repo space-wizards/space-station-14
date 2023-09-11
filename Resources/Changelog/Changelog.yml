@@ -1,10 +1,4 @@
 Entries:
-- author: Emisse
-  changes:
-  - {message: Beds and medical beds now heal blunt and cold specifically instead of
-      brute and burn groups., type: Tweak}
-  id: 4304
-  time: '2023-07-23T03:18:06.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Midround anomaly spawns no longer have a high chance of spawning in
@@ -2986,3 +2980,8 @@ Entries:
       based on what they actually contain.', type: Fix}
   id: 4803
   time: '2023-09-11T08:16:27.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Fixed error when equipping the energy katana as a space ninja., type: Fix}
+  id: 4804
+  time: '2023-09-11T09:04:03.0000000+00:00'
