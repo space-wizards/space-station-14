@@ -36,10 +36,12 @@ public sealed class VehicleSystem : SharedVehicleSystem
         if (args.Current is not RiderComponentState state)
             return;
 
-        if (TryComp(uid, out EyeComponent? eyeComp) && eyeComp.Target == component.Vehicle)
-            eyeComp.Target = state.Entity;
+        var entity = EnsureEntity<RiderComponent>(state.Entity, uid);
 
-        component.Vehicle = state.Entity;
+        if (TryComp(uid, out EyeComponent? eyeComp) && eyeComp.Target == component.Vehicle)
+            eyeComp.Target = entity;
+
+        component.Vehicle = entity;
     }
 
     private void OnVehicleAppearanceChange(EntityUid uid, VehicleComponent component, ref AppearanceChangeEvent args)

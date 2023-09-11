@@ -232,3 +232,15 @@
     - type: RandomMetadata
       nameSegments:
       - names_clown
+
+- type: entity
+  id: ActionToggleGuardian
+  name: action-name-guardian
+  description: action-description-guardian
+  noSpawn: true
+  components:
+  - type: InstantAction
+    icon: Interface/Actions/manifest.png
+    event: !type:GuardianToggleActionEvent
+    useDelay: 2
+    checkCanInteract: false

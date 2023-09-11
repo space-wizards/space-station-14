@@ -18,11 +18,6 @@ namespace Content.Server.Nuke.Commands
 
         [Dependency] private readonly IEntityManager _entityManager = default!;
 
-        public SendNukeCodesCommand()
-        {
-            IoCManager.InjectDependencies(this);
-        }
-
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length != 1)
@@ -31,13 +26,13 @@ namespace Content.Server.Nuke.Commands
                 return;
             }
 
-            if (!EntityUid.TryParse(args[0], out var uid))
+            if (!NetEntity.TryParse(args[0], out var uidNet) || !_entityManager.TryGetEntity(uidNet, out var uid))
             {
                 shell.WriteError(Loc.GetString("shell-entity-uid-must-be-number"));
                 return;
             }
 
-            _entityManager.System<NukeCodePaperSystem>().SendNukeCodes(uid);
+            _entityManager.System<NukeCodePaperSystem>().SendNukeCodes(uid.Value);
         }
 
         public CompletionResult GetCompletion(IConsoleShell shell, string[] args)

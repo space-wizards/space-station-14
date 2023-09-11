@@ -11,6 +11,7 @@ namespace Content.Client.UserInterface.Systems.Ghost.Controls.Roles
     [UsedImplicitly]
     public sealed class MakeGhostRoleEui : BaseEui
     {
+        [Dependency] private readonly IEntityManager _entManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IClientConsoleHost _consoleHost = default!;
 
@@ -32,7 +33,7 @@ namespace Content.Client.UserInterface.Systems.Ghost.Controls.Roles
                 return;
             }
 
-            _window.SetEntity(uiState.EntityUid);
+            _window.SetEntity(_entManager.GetEntity(uiState.EntityUid));
         }
 
         public override void Opened()
