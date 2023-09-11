@@ -60,7 +60,7 @@ namespace Content.Client.Preferences.UI
 
         private LineEdit _ageEdit => CAgeEdit;
         private LineEdit _nameEdit => CNameEdit;
-        private LineEdit _flavorTextEdit = null!;
+        private TextEdit _flavorTextEdit = null!;
         private Button _nameRandomButton => CNameRandomize;
         private Button _randomizeEverythingButton => CRandomizeEverything;
         private RichTextLabel _warningLabel => CWarningLabel;
@@ -858,7 +858,7 @@ namespace Content.Client.Preferences.UI
         {
             if(_flavorTextEdit != null)
             {
-                _flavorTextEdit.Text = Profile?.FlavorText ?? "";
+                _flavorTextEdit.TextRope = new Rope.Leaf(Profile?.FlavorText ?? "");
             }
         }
 
@@ -1239,7 +1239,6 @@ namespace Content.Client.Preferences.UI
                 {
                     Visible = false,
                     HorizontalExpand = true,
-                    TooltipDelay = 0.2f,
                     MouseFilter = MouseFilterMode.Stop,
                     Children =
                     {
@@ -1258,7 +1257,6 @@ namespace Content.Client.Preferences.UI
                 if (job.LocalizedDescription != null)
                 {
                     _jobTitle.ToolTip = job.LocalizedDescription;
-                    _jobTitle.TooltipDelay = 0.2f;
                 }
 
                 AddChild(new BoxContainer
@@ -1345,7 +1343,6 @@ namespace Content.Client.Preferences.UI
                 if (antag.Description != null)
                 {
                     _checkBox.ToolTip = Loc.GetString(antag.Description);
-                    _checkBox.TooltipDelay = 0.2f;
                 }
 
                 AddChild(new BoxContainer
@@ -1387,7 +1384,6 @@ namespace Content.Client.Preferences.UI
                 if (trait.Description is { } desc)
                 {
                     _checkBox.ToolTip = Loc.GetString(desc);
-                    _checkBox.TooltipDelay = 0.2f;
                 }
 
                 AddChild(new BoxContainer

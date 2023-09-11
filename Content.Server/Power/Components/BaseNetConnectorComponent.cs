@@ -13,6 +13,7 @@ namespace Content.Server.Power.Components
     }
 
     public abstract partial class BaseNetConnectorComponent<TNetType> : Component, IBaseNetConnectorComponent<TNetType>
+        where TNetType : class
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 
@@ -46,7 +47,10 @@ namespace Content.Server.Power.Components
         public void ClearNet()
         {
             if (_net != null)
+            {
                 RemoveSelfFromNet(_net);
+                _net = null;
+            }
         }
 
         protected abstract void AddSelfToNet(TNetType net);

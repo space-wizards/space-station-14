@@ -37,7 +37,7 @@ public sealed class DumpableSystem : EntitySystem
         if (!args.CanReach || args.Handled)
             return;
 
-        if (!HasComp<SharedDisposalUnitComponent>(args.Target) && !HasComp<PlaceableSurfaceComponent>(args.Target))
+        if (!_disposalUnitSystem.HasDisposals(args.Target) && !HasComp<PlaceableSurfaceComponent>(args.Target))
             return;
 
         StartDoAfter(uid, args.Target.Value, args.User, component);
@@ -72,7 +72,7 @@ public sealed class DumpableSystem : EntitySystem
         if (!TryComp<SharedStorageComponent>(uid, out var storage) || storage.StoredEntities == null || storage.StoredEntities.Count == 0)
             return;
 
-        if (HasComp<SharedDisposalUnitComponent>(args.Target))
+        if (_disposalUnitSystem.HasDisposals(args.Target))
         {
             UtilityVerb verb = new()
             {
@@ -81,7 +81,7 @@ public sealed class DumpableSystem : EntitySystem
                     StartDoAfter(uid, args.Target, args.User, dumpable);
                 },
                 Text = Loc.GetString("dump-disposal-verb-name", ("unit", args.Target)),
-                IconEntity = uid
+                IconEntity = GetNetEntity(uid)
             };
             args.Verbs.Add(verb);
         }
@@ -95,7 +95,7 @@ public sealed class DumpableSystem : EntitySystem
                     StartDoAfter(uid, args.Target, args.User, dumpable);
                 },
                 Text = Loc.GetString("dump-placeable-verb-name", ("surface", args.Target)),
-                IconEntity = uid
+                IconEntity = GetNetEntity(uid)
             };
             args.Verbs.Add(verb);
         }
@@ -108,7 +108,7 @@ public sealed class DumpableSystem : EntitySystem
 
         float delay = storage.StoredEntities.Count * (float) dumpable.DelayPerItem.TotalSeconds * dumpable.Multiplier;
 
-        _doAfterSystem.TryStartDoAfter(new DoAfterArgs(userUid, delay, new DumpableDoAfterEvent(), storageUid, target: targetUid, used: storageUid)
+        _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, userUid, delay, new DumpableDoAfterEvent(), storageUid, target: targetUid, used: storageUid)
         {
             BreakOnTargetMove = true,
             BreakOnUserMove = true,
@@ -142,7 +142,7 @@ public sealed class DumpableSystem : EntitySystem
 
         var dumped = false;
 
-        if (HasComp<SharedDisposalUnitComponent>(args.Args.Target.Value))
+        if (_disposalUnitSystem.HasDisposals(args.Args.Target.Value))
         {
             dumped = true;
 

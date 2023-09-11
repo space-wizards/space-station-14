@@ -3,7 +3,6 @@ using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
-using Content.Client.Items.Components;
 using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.IdentityManagement;
@@ -89,7 +88,7 @@ namespace Content.Client.Storage.UI
         /// </summary>
         public void BuildEntityList(StorageBoundUserInterfaceState state)
         {
-            var list = state.StoredEntities.ConvertAll(uid => new EntityListData(uid));
+            var list = state.StoredEntities.ConvertAll(nent => new EntityListData(_entityManager.GetEntity(nent)));
             EntityList.PopulateList(list);
 
             //Sets information about entire storage container current capacity

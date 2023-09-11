@@ -43,12 +43,12 @@ public sealed class ProjectileSystem : SharedProjectileSystem
             return;
         }
 
-        var ev = new ProjectileHitEvent(target);
+        var ev = new ProjectileHitEvent(component.Damage, target, component.Shooter);
         RaiseLocalEvent(uid, ref ev);
 
         var otherName = ToPrettyString(target);
         var direction = args.OurBody.LinearVelocity.Normalized();
-        var modifiedDamage = _damageableSystem.TryChangeDamage(target, component.Damage, component.IgnoreResistances, origin: component.Shooter);
+        var modifiedDamage = _damageableSystem.TryChangeDamage(target, ev.Damage, component.IgnoreResistances, origin: component.Shooter);
         var deleted = Deleted(target);
 
         if (modifiedDamage is not null && EntityManager.EntityExists(component.Shooter))
@@ -78,7 +78,7 @@ public sealed class ProjectileSystem : SharedProjectileSystem
 
         if (component.ImpactEffect != null && TryComp<TransformComponent>(uid, out var xform))
         {
-            RaiseNetworkEvent(new ImpactEffectEvent(component.ImpactEffect, xform.Coordinates), Filter.Pvs(xform.Coordinates, entityMan: EntityManager));
+            RaiseNetworkEvent(new ImpactEffectEvent(component.ImpactEffect, GetNetCoordinates(xform.Coordinates)), Filter.Pvs(xform.Coordinates, entityMan: EntityManager));
         }
     }
 }

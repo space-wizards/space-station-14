@@ -4,7 +4,7 @@ using Content.Shared.Clothing;
 using Content.Shared.Hands;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Light;
-using Content.Shared.Light.Component;
+using Content.Shared.Light.Components;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map.Components;
@@ -205,7 +205,7 @@ namespace Content.Client.Light
         public static Color GetCurrentRgbColor(TimeSpan curTime, TimeSpan offset, RgbLightControllerComponent rgb)
         {
             return Color.FromHsv(new Vector4(
-                (float) (((curTime.TotalSeconds - offset.TotalSeconds) * rgb.CycleRate + Math.Abs(rgb.Owner.GetHashCode() * 0.1)) % 1),
+                (float) (((curTime.TotalSeconds - offset.TotalSeconds) * rgb.CycleRate + Math.Abs(rgb.Owner.Id * 0.1)) % 1),
                 1.0f,
                 1.0f,
                 1.0f

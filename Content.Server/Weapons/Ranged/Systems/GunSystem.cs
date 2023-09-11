@@ -283,7 +283,7 @@ public sealed partial class GunSystem : SharedGunSystem
         // Do a throw
         if (!HasComp<ProjectileComponent>(uid))
         {
-            RemComp<AmmoComponent>(uid);
+            RemoveShootable(uid);
             // TODO: Someone can probably yeet this a billion miles so need to pre-validate input somewhere up the call stack.
             ThrowingSystem.TryThrow(uid, mapDirection, gun.ProjectileSpeed, user);
             return;
@@ -398,7 +398,7 @@ public sealed partial class GunSystem : SharedGunSystem
         // Lord
         // Forgive me for the shitcode I am about to do
         // Effects tempt me not
-        var sprites = new List<(EntityCoordinates coordinates, Angle angle, SpriteSpecifier sprite, float scale)>();
+        var sprites = new List<(NetCoordinates coordinates, Angle angle, SpriteSpecifier sprite, float scale)>();
         var gridUid = fromCoordinates.GetGridUid(EntityManager);
         var angle = mapDirection;
 
@@ -421,18 +421,27 @@ public sealed partial class GunSystem : SharedGunSystem
         {
             if (hitscan.MuzzleFlash != null)
             {
-                sprites.Add((fromCoordinates.Offset(angle.ToVec().Normalized() / 2), angle, hitscan.MuzzleFlash, 1f));
+                var coords = fromCoordinates.Offset(angle.ToVec().Normalized() / 2);
+                var netCoords = GetNetCoordinates(coords);
+
+                sprites.Add((netCoords, angle, hitscan.MuzzleFlash, 1f));
             }
 
             if (hitscan.TravelFlash != null)
             {
-                sprites.Add((fromCoordinates.Offset(angle.ToVec() * (distance + 0.5f) / 2), angle, hitscan.TravelFlash, distance - 1.5f));
+                var coords = fromCoordinates.Offset(angle.ToVec() * (distance + 0.5f) / 2);
+                var netCoords = GetNetCoordinates(coords);
+
+                sprites.Add((netCoords, angle, hitscan.TravelFlash, distance - 1.5f));
             }
         }
 
         if (hitscan.ImpactFlash != null)
         {
-            sprites.Add((fromCoordinates.Offset(angle.ToVec() * distance), angle.FlipPositive(), hitscan.ImpactFlash, 1f));
+            var coords = fromCoordinates.Offset(angle.ToVec() * distance);
+            var netCoords = GetNetCoordinates(coords);
+
+            sprites.Add((netCoords, angle.FlipPositive(), hitscan.ImpactFlash, 1f));
         }
 
         if (sprites.Count > 0)

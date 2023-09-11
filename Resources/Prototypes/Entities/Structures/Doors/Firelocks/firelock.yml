@@ -84,7 +84,7 @@
     - type: WiresVisuals
     - type: WiresPanel
     - type: Wires
-      BoardName: "Firelock Control"
+      BoardName: wires-board-name-firelock
       LayoutId: Firelock
     - type: UserInterface
       interfaces:

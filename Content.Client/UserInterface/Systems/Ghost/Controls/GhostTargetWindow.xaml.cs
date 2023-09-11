@@ -20,7 +20,7 @@ namespace Content.Client.UserInterface.Systems.Ghost.Controls
             RobustXamlLoader.Load(this);
         }
 
-        public void UpdateWarps(IEnumerable<GhostWarp> warps)
+        public void UpdateWarps(IEnumerable<GhostWarp> warps, IEntityManager entManager)
         {
             // Server COULD send these sorted but how about we just use the client to do it instead
             _warps = warps
@@ -33,7 +33,7 @@ namespace Content.Client.UserInterface.Systems.Ghost.Controls
                         ? Loc.GetString("ghost-target-window-current-button", ("name", w.DisplayName))
                         : w.DisplayName;
 
-                    return (name, w.Entity);
+                    return (name, entManager.GetEntity(w.Entity));
                 })
                 .ToList();
         }

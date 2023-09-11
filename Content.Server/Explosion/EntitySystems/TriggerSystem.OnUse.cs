@@ -140,7 +140,7 @@ public sealed partial class TriggerSystem
 
     private void OnTimerUse(EntityUid uid, OnUseTimerTriggerComponent component, UseInHandEvent args)
     {
-        if (args.Handled)
+        if (args.Handled || HasComp<AutomatedTimerComponent>(uid))
             return;
 
         HandleTimerTrigger(

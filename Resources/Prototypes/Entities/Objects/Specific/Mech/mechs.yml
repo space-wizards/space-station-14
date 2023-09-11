@@ -6,6 +6,22 @@
   - type: MobMover
   - type: Mech
   - type: MechAir
+  - type: MechAirFilter
+    # everything except oxygen and nitrogen
+    gases:
+    - 2
+    - 3
+    - 4
+    - 5
+    - 6
+    - 7
+    - 8
+    #- 9 TODO: fusion
+  - type: MechAirIntake
+  # for intake and filter to work
+  - type: AtmosDevice
+    requireAnchored: false
+    joinSystem: true
   - type: DoAfter
   - type: Repairable
     fuelCost: 25
@@ -38,7 +54,7 @@
   - type: Clickable
   - type: WiresPanel
   - type: Wires #we just want the panel
-    BoardName: Mech
+    BoardName: wires-board-name-mech
     LayoutId: Mech
   - type: Fixtures
     fixtures:

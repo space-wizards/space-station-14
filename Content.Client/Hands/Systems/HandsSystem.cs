@@ -47,8 +47,8 @@ namespace Content.Client.Hands.Systems
 
             SubscribeLocalEvent<HandsComponent, PlayerAttachedEvent>(HandlePlayerAttached);
             SubscribeLocalEvent<HandsComponent, PlayerDetachedEvent>(HandlePlayerDetached);
-            SubscribeLocalEvent<HandsComponent, ComponentAdd>(HandleCompAdd);
-            SubscribeLocalEvent<HandsComponent, ComponentRemove>(HandleCompRemove);
+            SubscribeLocalEvent<HandsComponent, ComponentStartup>(OnHandsStartup);
+            SubscribeLocalEvent<HandsComponent, ComponentShutdown>(OnHandsShutdown);
             SubscribeLocalEvent<HandsComponent, ComponentHandleState>(HandleComponentState);
             SubscribeLocalEvent<HandsComponent, VisualsChangedEvent>(OnVisualsChanged);
 
@@ -124,7 +124,7 @@ namespace Content.Client.Hands.Systems
         #region PickupAnimation
         private void HandlePickupAnimation(PickupAnimationEvent msg)
         {
-            PickupAnimation(msg.ItemUid, msg.InitialPosition, msg.FinalPosition, msg.InitialAngle);
+            PickupAnimation(GetEntity(msg.ItemUid), GetCoordinates(msg.InitialPosition), msg.FinalPosition, msg.InitialAngle);
         }
 
         public override void PickupAnimation(EntityUid item, EntityCoordinates initialPosition, Vector2 finalPosition, Angle initialAngle,
@@ -382,7 +382,7 @@ namespace Content.Client.Hands.Systems
             // update hands visuals if this item is in a hand (rather then inventory or other container).
             if (component.Hands.TryGetValue(args.ContainerId, out var hand))
             {
-                UpdateHandVisuals(uid, args.Item, hand, component);
+                UpdateHandVisuals(uid, GetEntity(args.Item), hand, component);
             }
         }
         #endregion
@@ -399,13 +399,13 @@ namespace Content.Client.Hands.Systems
             OnPlayerHandsRemoved?.Invoke();
         }
 
-        private void HandleCompAdd(EntityUid uid, HandsComponent component, ComponentAdd args)
+        private void OnHandsStartup(EntityUid uid, HandsComponent component, ComponentStartup args)
         {
             if (_playerManager.LocalPlayer?.ControlledEntity == uid)
                 OnPlayerHandsAdded?.Invoke(component);
         }
 
-        private void HandleCompRemove(EntityUid uid, HandsComponent component, ComponentRemove args)
+        private void OnHandsShutdown(EntityUid uid, HandsComponent component, ComponentShutdown args)
         {
             if (_playerManager.LocalPlayer?.ControlledEntity == uid)
                 OnPlayerHandsRemoved?.Invoke();
