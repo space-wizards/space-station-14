@@ -47,6 +47,11 @@ public sealed class NinjaSuitSystem : SharedNinjaSuitSystem
     // TODO: or put MaxCharge in shared along with powercellslot
     private void OnSuitInsertAttempt(EntityUid uid, NinjaSuitComponent comp, ContainerIsInsertingAttemptEvent args)
     {
+        // this is for handling battery upgrading, not stopping actions from being added
+        // if another container like ActionsContainer is specified, don't handle it
+        if (TryComp<PowerCellSlotComponent>(uid, out var slot) && args.Container.ID != slot.CellSlotId)
+            return;
+
         // no power cell for some reason??? allow it
         if (!_powerCell.TryGetBatteryFromSlot(uid, out var battery))
             return;
@@ -56,8 +61,6 @@ public sealed class NinjaSuitSystem : SharedNinjaSuitSystem
         {
             args.Cancel();
         }
-
-        // TODO: raise event on ninja telling it to update battery
     }
 
     private void OnEmpAttempt(EntityUid uid, NinjaSuitComponent comp, EmpAttemptEvent args)
