@@ -395,7 +395,9 @@ public sealed class FaxSystem : EntitySystem
         RaiseLocalEvent(uid, ref evAttempt, true);
         if (evAttempt.Cancelled)
         {
-            _popupSystem.PopupEntity(Loc.GetString(evAttempt.Reason), uid);
+            if (!string.IsNullOrEmpty(evAttempt.Reason))
+                _popupSystem.PopupEntity(Loc.GetString(evAttempt.Reason), uid);
+
             return;
         }
 
