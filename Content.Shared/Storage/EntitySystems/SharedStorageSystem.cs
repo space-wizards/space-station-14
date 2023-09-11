@@ -572,7 +572,7 @@ public abstract class SharedStorageSystem : EntitySystem
 
         if (!CanInsert(uid, toInsert.Value, out var reason, storageComp))
         {
-            _popupSystem.PopupClient(reason ?? Loc.GetString("comp-storage-cant-insert"), uid, player);
+            _popupSystem.PopupClient(Loc.GetString(reason ?? "comp-storage-cant-insert"), uid, player);
             return false;
         }
 
