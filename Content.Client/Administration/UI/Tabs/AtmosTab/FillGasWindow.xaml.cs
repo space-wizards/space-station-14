@@ -68,7 +68,7 @@ namespace Content.Client.Administration.UI.Tabs.AtmosTab
 
             var ent = IoCManager.Resolve<IEntityManager>().GetNetEntity(gridIndex);
             IoCManager.Resolve<IClientConsoleHost>().ExecuteCommand(
-                $"fillgas {gridIndex} {ent} {AmountSpin.Value}");
+                $"fillgas {ent} {gasId} {AmountSpin.Value}");
         }
     }
 }
