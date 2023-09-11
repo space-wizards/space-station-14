@@ -1,6 +1,6 @@
 ﻿using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
-using Content.Shared.NPC.Components;
+using Content.Shared.NPC;
 
 namespace Content.Shared.SSDIndicator;
 
