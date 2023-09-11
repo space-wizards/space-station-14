@@ -114,6 +114,7 @@
     speechVerb: Robotic
   - type: TypingIndicator
     proto: robot
+  - type: ZombieImmune
 
 - type: entity
   parent: [ MobSiliconBase, BaseVehicle]

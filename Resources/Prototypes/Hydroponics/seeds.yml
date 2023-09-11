@@ -306,9 +306,13 @@
   chemicals:
     Nutriment:
       Min: 1
-      Max: 10
-      PotencyDivisor: 10
+      Max: 7
+      PotencyDivisor: 14
     Vitamin:
+      Min: 1
+      Max: 3
+      PotencyDivisor: 33
+    Water:
       Min: 1
       Max: 4
       PotencyDivisor: 25

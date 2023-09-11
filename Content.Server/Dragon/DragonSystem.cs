@@ -48,7 +48,6 @@ public sealed partial class DragonSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<DragonComponent, ComponentStartup>(OnStartup);
-        SubscribeLocalEvent<DragonComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<DragonComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<DragonComponent, DragonSpawnRiftActionEvent>(OnDragonRift);
         SubscribeLocalEvent<DragonComponent, RefreshMovementSpeedModifiersEvent>(OnDragonMove);
@@ -296,10 +295,6 @@ public sealed partial class DragonSystem : EntitySystem
     private void OnStartup(EntityUid uid, DragonComponent component, ComponentStartup args)
     {
         Roar(component);
-    }
-
-    private void OnMapInit(EntityUid uid, DragonComponent component, MapInitEvent args)
-    {
         _actionsSystem.AddAction(uid, ref component.SpawnRiftActionEntity, component.SpawnRiftAction);
     }
 }
