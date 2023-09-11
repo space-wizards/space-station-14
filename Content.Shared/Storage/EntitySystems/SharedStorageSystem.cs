@@ -118,7 +118,7 @@ public abstract class SharedStorageSystem : EntitySystem
             UtilityVerb verb = new()
             {
                 Text = Loc.GetString("storage-component-transfer-verb"),
-                IconEntity = args.Using,
+                IconEntity = GetNetEntity(args.Using),
                 Act = () => TransferEntities(uid, args.Target, args.User, component, lockComponent, targetStorage, targetLock)
             };
 
@@ -202,7 +202,7 @@ public abstract class SharedStorageSystem : EntitySystem
             //If there's only one then let's be generous
             if (validStorables.Count > 1)
             {
-                var doAfterArgs = new DoAfterArgs(args.User, 0.2f * validStorables.Count, new AreaPickupDoAfterEvent(validStorables), uid, target: uid)
+                var doAfterArgs = new DoAfterArgs(EntityManager, args.User, 0.2f * validStorables.Count, new AreaPickupDoAfterEvent(GetNetEntityList(validStorables)), uid, target: uid)
                 {
                     BreakOnDamage = true,
                     BreakOnUserMove = true,
@@ -240,9 +240,9 @@ public abstract class SharedStorageSystem : EntitySystem
 
                 if (PlayerInsertEntityInWorld(uid, args.User, target, storageComp))
                 {
-                    RaiseNetworkEvent(new AnimateInsertingEntitiesEvent(uid,
-                        new List<EntityUid> { target },
-                        new List<EntityCoordinates> { position },
+                    RaiseNetworkEvent(new AnimateInsertingEntitiesEvent(GetNetEntity(uid),
+                        new List<NetEntity> { GetNetEntity(target) },
+                        new List<NetCoordinates> { GetNetCoordinates(position) },
                         new List<Angle> { transformOwner.LocalRotation }));
                 }
             }
@@ -259,8 +259,10 @@ public abstract class SharedStorageSystem : EntitySystem
         var successfullyInsertedAngles = new List<Angle>();
         _xformQuery.TryGetComponent(uid, out var xform);
 
-        foreach (var entity in args.Entities)
+        foreach (var netEntity in args.Entities)
         {
+            var entity = GetEntity(netEntity);
+
             // Check again, situation may have changed for some entities, but we'll still pick up any that are valid
             if (_containerSystem.IsEntityInContainer(entity)
                 || entity == args.Args.User
@@ -294,7 +296,11 @@ public abstract class SharedStorageSystem : EntitySystem
         if (successfullyInserted.Count > 0)
         {
             Audio.PlayPvs(component.StorageInsertSound, uid);
-            RaiseNetworkEvent(new AnimateInsertingEntitiesEvent(uid, successfullyInserted, successfullyInsertedPositions, successfullyInsertedAngles));
+            RaiseNetworkEvent(new AnimateInsertingEntitiesEvent(
+                GetNetEntity(uid),
+                GetNetEntityList(successfullyInserted),
+                GetNetCoordinatesList(successfullyInsertedPositions),
+                successfullyInsertedAngles));
         }
 
         args.Handled = true;
@@ -318,13 +324,15 @@ public abstract class SharedStorageSystem : EntitySystem
         if (args.Session.AttachedEntity is not EntityUid player)
             return;
 
-        if (!Exists(args.InteractedItemUID))
+        var entity = GetEntity(args.InteractedItemUID);
+
+        if (!Exists(entity))
         {
             Log.Error($"Player {args.Session} interacted with non-existent item {args.InteractedItemUID} stored in {ToPrettyString(uid)}");
             return;
         }
 
-        if (!_actionBlockerSystem.CanInteract(player, args.InteractedItemUID) || !storageComp.Container.Contains(args.InteractedItemUID))
+        if (!_actionBlockerSystem.CanInteract(player, entity) || !storageComp.Container.Contains(entity))
             return;
 
         // Does the player have hands?
@@ -334,7 +342,7 @@ public abstract class SharedStorageSystem : EntitySystem
         // If the user's active hand is empty, try pick up the item.
         if (hands.ActiveHandEntity == null)
         {
-            if (_sharedHandsSystem.TryPickupAnyHand(player, args.InteractedItemUID, handsComp: hands)
+            if (_sharedHandsSystem.TryPickupAnyHand(player, entity, handsComp: hands)
                 && storageComp.StorageRemoveSound != null)
                 Audio.PlayPredicted(storageComp.StorageRemoveSound, uid, player);
             {
@@ -343,7 +351,7 @@ public abstract class SharedStorageSystem : EntitySystem
         }
 
         // Else, interact using the held item
-        _interactionSystem.InteractUsing(player, hands.ActiveHandEntity.Value, args.InteractedItemUID, Transform(args.InteractedItemUID).Coordinates, checkCanInteract: false);
+        _interactionSystem.InteractUsing(player, hands.ActiveHandEntity.Value, entity, Transform(entity).Coordinates, checkCanInteract: false);
     }
 
     private void OnInsertItemMessage(EntityUid uid, StorageComponent storageComp, StorageComponent.StorageInsertItemMessage args)

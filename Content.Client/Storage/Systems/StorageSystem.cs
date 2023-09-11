@@ -31,11 +31,12 @@ public sealed class StorageSystem : SharedStorageSystem
     /// <param name="msg"></param>
     public void HandleAnimatingInsertingEntities(AnimateInsertingEntitiesEvent msg)
     {
-        TryComp(msg.Storage, out TransformComponent? transformComp);
+        TryComp(GetEntity(msg.Storage), out TransformComponent? transformComp);
 
         for (var i = 0; msg.StoredEntities.Count > i; i++)
         {
             var entity = GetEntity(msg.StoredEntities[i]);
+
             var initialPosition = msg.EntityPositions[i];
             if (EntityManager.EntityExists(entity) && transformComp != null)
             {

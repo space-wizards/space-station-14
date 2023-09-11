@@ -784,7 +784,7 @@ public abstract partial class InteractionTest
             return false;
         }
 
-        if (!CEntMan.TryGetComponent<UserInterfaceComponent>(target, out var ui))
+        if (!CEntMan.TryGetComponent<UserInterfaceComponent>(CEntMan.GetEntity(target), out var ui))
         {
             if (shouldSucceed)
                 Assert.Fail($"Entity {SEntMan.ToPrettyString(SEntMan.GetEntity(target.Value))} does not have a bui component");

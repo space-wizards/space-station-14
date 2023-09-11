@@ -20,8 +20,11 @@ namespace Content.Client.Storage
         [ViewVariables]
         private StorageWindow? _window;
 
+        [Dependency] private readonly IEntityManager _entManager = default!;
+
         public StorageBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
         {
+            IoCManager.InjectDependencies(this);
         }
 
         protected override void Open()
@@ -65,7 +68,7 @@ namespace Content.Client.Storage
 
             if (args.Event.Function == EngineKeyFunctions.UIClick)
             {
-                SendPredictedMessage(new StorageInteractWithItemEvent(entity));
+                SendPredictedMessage(new StorageInteractWithItemEvent(_entManager.GetNetEntity(entity)));
             }
             else if (EntMan.EntityExists(entity))
             {

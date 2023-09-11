@@ -96,8 +96,8 @@ namespace Content.Shared.Storage
     [Serializable, NetSerializable]
     public sealed class StorageInteractWithItemEvent : BoundUserInterfaceMessage
     {
-        public readonly EntityUid InteractedItemUID;
-        public StorageInteractWithItemEvent(EntityUid interactedItemUID)
+        public readonly NetEntity InteractedItemUID;
+        public StorageInteractWithItemEvent(NetEntity interactedItemUID)
         {
             InteractedItemUID = interactedItemUID;
         }
@@ -109,12 +109,12 @@ namespace Content.Shared.Storage
     [Serializable, NetSerializable]
     public sealed class AnimateInsertingEntitiesEvent : EntityEventArgs
     {
-        public readonly EntityUid Storage;
-        public readonly List<EntityUid> StoredEntities;
-        public readonly List<EntityCoordinates> EntityPositions;
+        public readonly NetEntity Storage;
+        public readonly List<NetEntity> StoredEntities;
+        public readonly List<NetCoordinates> EntityPositions;
         public readonly List<Angle> EntityAngles;
 
-        public AnimateInsertingEntitiesEvent(EntityUid storage, List<EntityUid> storedEntities, List<EntityCoordinates> entityPositions, List<Angle> entityAngles)
+        public AnimateInsertingEntitiesEvent(NetEntity storage, List<NetEntity> storedEntities, List<NetCoordinates> entityPositions, List<Angle> entityAngles)
         {
             Storage = storage;
             StoredEntities = storedEntities;
