@@ -17,3 +17,5 @@
       rule: Dragon
     - announcement: terror-revenant
       rule: RevenantSpawn
+    - announcement: terror-loneop
+      rule: LoneOpsSpawn
