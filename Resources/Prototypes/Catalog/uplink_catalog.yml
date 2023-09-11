@@ -781,10 +781,10 @@
   - UplinkTools
 
 - type: listing
-  id: UplinkSyndicateJawsOfLife
-  name: uplink-syndicate-jaws-of-life-name
-  description: uplink-syndicate-jaws-of-life-desc
-  productEntity: SyndicateJawsOfLife
+  id: UplinkJawsOfDeath
+  name: uplink-jaws-of-death-name
+  description: uplink-jaws-of-death-desc
+  productEntity: JawsOfDeath
   cost:
     Telecrystal: 2
   categories:

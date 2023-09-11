@@ -48,7 +48,7 @@
 - type: entity
   name: Jaws of death
   parent: JawsOfLife
-  id: SyndicateJawsOfLife
+  id: JawsOfDeath
   description: Useful for entering the station or its departments.
   components:
   - type: Sprite
