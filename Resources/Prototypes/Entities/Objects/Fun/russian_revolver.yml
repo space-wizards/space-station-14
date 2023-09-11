@@ -23,14 +23,8 @@
     whitelist:
       tags:
         - CartridgeMagnum
-    proto: CartridgeMagnum
-    capacity: 6
     chambers: [ True, True, True, True, True, True ]
     ammoSlots: [ null, null, null, null, null, null ]
-    soundEject:
-      path: /Audio/Weapons/Guns/MagOut/revolver_magout.ogg
-    soundInsert:
-      path: /Audio/Weapons/Guns/MagIn/revolver_magin.ogg
   - type: StaticPrice
     price: 500
   - type: RussianRevolver
