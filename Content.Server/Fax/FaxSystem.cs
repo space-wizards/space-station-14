@@ -391,6 +391,14 @@ public sealed class FaxSystem : EntitySystem
             !TryComp<PaperComponent>(sendEntity, out var paper))
             return;
 
+        var evAttempt = new SendFaxAttemptEvent(uid, sender, sendEntity.Value, paper.Content);
+        RaiseLocalEvent(uid, ref evAttempt, true);
+        if (evAttempt.Cancelled)
+        {
+            _popupSystem.PopupEntity(Loc.GetString(evAttempt.Reason), uid);
+            return;
+        }
+
         var payload = new NetworkPayload()
         {
             { DeviceNetworkConstants.Command, FaxConstants.FaxPrintCommand },
@@ -480,3 +488,6 @@ public sealed class FaxSystem : EntitySystem
         _audioSystem.PlayGlobal("/Audio/Machines/high_tech_confirm.ogg", Filter.Empty().AddPlayers(_adminManager.ActiveAdmins), false, AudioParams.Default.WithVolume(-8f));
     }
 }
+
+[ByRefEvent]
+public record struct SendFaxAttemptEvent(EntityUid Uid, EntityUid? Sender, EntityUid SendEntity, string Text, bool Cancelled = false, string Reason = "");
