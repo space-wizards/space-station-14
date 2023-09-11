@@ -205,7 +205,7 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
         if (!_tracking.TryGetTrackerTimes(player, out var playTimes))
         {
             // Sorry mate but your playtimes haven't loaded.
-            Logger.ErrorS("playtime", $"Playtimes weren't ready yet for {player} on roundstart!");
+            Log.Error($"Playtimes weren't ready yet for {player} on roundstart!");
             playTimes ??= new Dictionary<string, TimeSpan>();
         }
 
