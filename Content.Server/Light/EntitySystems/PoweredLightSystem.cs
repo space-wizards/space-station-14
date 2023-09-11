@@ -43,6 +43,7 @@ namespace Content.Server.Light.EntitySystems
         [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
         [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
+        [Dependency] private readonly PointLightSystem _pointLight = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
         [Dependency] private readonly InventorySystem _inventory = default!;
 
@@ -77,9 +78,10 @@ namespace Content.Server.Light.EntitySystems
 
         private void OnMapInit(EntityUid uid, PoweredLightComponent light, MapInitEvent args)
         {
+            // TODO: Use ContainerFill dog
             if (light.HasLampOnSpawn != null)
             {
-                var entity = EntityManager.SpawnEntity(light.HasLampOnSpawn, EntityManager.GetComponent<TransformComponent>(light.Owner).Coordinates);
+                var entity = EntityManager.SpawnEntity(light.HasLampOnSpawn, EntityManager.GetComponent<TransformComponent>(uid).Coordinates);
                 light.LightBulbContainer.Insert(entity);
             }
             // need this to update visualizers
@@ -145,7 +147,7 @@ namespace Content.Server.Light.EntitySystems
             }
 
             // removing a working bulb, so require a delay
-            _doAfterSystem.TryStartDoAfter(new DoAfterArgs(userUid, light.EjectBulbDelay, new PoweredLightDoAfterEvent(), uid, target: uid)
+            _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, userUid, light.EjectBulbDelay, new PoweredLightDoAfterEvent(), uid, target: uid)
             {
                 BreakOnUserMove = true,
                 BreakOnDamage = true,
@@ -253,7 +255,7 @@ namespace Content.Server.Light.EntitySystems
             ApcPowerReceiverComponent? powerReceiver = null,
             AppearanceComponent? appearance = null)
         {
-            if (!Resolve(uid, ref light, ref powerReceiver))
+            if (!Resolve(uid, ref light, ref powerReceiver, false))
                 return;
 
             // Optional component.
@@ -393,16 +395,16 @@ namespace Content.Server.Light.EntitySystems
 
             if (EntityManager.TryGetComponent(uid, out PointLightComponent? pointLight))
             {
-                pointLight.Enabled = value;
+                _pointLight.SetEnabled(uid, value, pointLight);
 
                 if (color != null)
-                    pointLight.Color = color.Value;
+                    _pointLight.SetColor(uid, color.Value, pointLight);
                 if (radius != null)
-                    pointLight.Radius = (float) radius;
+                    _pointLight.SetRadius(uid, (float) radius, pointLight);
                 if (energy != null)
-                    pointLight.Energy = (float) energy;
+                    _pointLight.SetEnergy(uid, (float) energy, pointLight);
                 if (softness != null)
-                    pointLight.Softness = (float) softness;
+                    _pointLight.SetSoftness(uid, (float) softness, pointLight);
             }
         }
 

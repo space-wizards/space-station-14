@@ -33,7 +33,7 @@ public sealed partial class ActivatableUISystem : EntitySystem
 
         SubscribeLocalEvent<ActivatableUIComponent, GetVerbsEvent<ActivationVerb>>(AddOpenUiVerb);
 
-        SubscribeLocalEvent<ServerUserInterfaceComponent, OpenUiActionEvent>(OnActionPerform);
+        SubscribeLocalEvent<UserInterfaceComponent, OpenUiActionEvent>(OnActionPerform);
 
         InitializePower();
     }
@@ -50,7 +50,7 @@ public sealed partial class ActivatableUISystem : EntitySystem
             ev.Cancel();
     }
 
-    private void OnActionPerform(EntityUid uid, ServerUserInterfaceComponent component, OpenUiActionEvent args)
+    private void OnActionPerform(EntityUid uid, UserInterfaceComponent component, OpenUiActionEvent args)
     {
         if (args.Handled || args.Key == null)
             return;

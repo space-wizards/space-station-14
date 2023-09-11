@@ -28,7 +28,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
 using Content.Shared.Tag;
-using Content.Server.Storage.Components;
+using Content.Shared.Storage;
 
 namespace Content.Server.Nutrition.EntitySystems
 {
@@ -120,7 +120,7 @@ namespace Content.Server.Nutrition.EntitySystems
             }
 
             // Check for used storage on the food item
-            if (TryComp<ServerStorageComponent>(food, out var storageState) && storageState.StorageUsed != 0)
+            if (TryComp<StorageComponent>(food, out var storageState) && storageState.StorageUsed != 0)
             {
                 _popupSystem.PopupEntity(Loc.GetString("food-has-used-storage", ("food", food)), user, user);
                 return (false, true);
@@ -170,7 +170,7 @@ namespace Content.Server.Nutrition.EntitySystems
                 _adminLogger.Add(LogType.Ingestion, LogImpact.Low, $"{ToPrettyString(target):target} is eating {ToPrettyString(food):food} {SolutionContainerSystem.ToPrettyString(foodSolution)}");
             }
 
-            var doAfterArgs = new DoAfterArgs(
+            var doAfterArgs = new DoAfterArgs(EntityManager,
                 user,
                 forceFeed ? foodComp.ForceFeedDelay : foodComp.Delay,
                 new ConsumeDoAfterEvent(foodSolution.Name, flavors),

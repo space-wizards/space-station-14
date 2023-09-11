@@ -35,12 +35,15 @@ namespace Content.Shared.Tabletop
             if (args.SenderSession is not { AttachedEntity: { } playerEntity } playerSession)
                 return;
 
-            if (!CanSeeTable(playerEntity, msg.TableUid) || !CanDrag(playerEntity, msg.MovedEntityUid, out _))
+            var table = GetEntity(msg.TableUid);
+            var moved = GetEntity(msg.MovedEntityUid);
+
+            if (!CanSeeTable(playerEntity, table) || !CanDrag(playerEntity, moved, out _))
                 return;
 
             // Move the entity and dirty it (we use the map ID from the entity so noone can try to be funny and move the item to another map)
-            var transform = EntityManager.GetComponent<TransformComponent>(msg.MovedEntityUid);
-            _transforms.SetParent(msg.MovedEntityUid, transform, _mapMan.GetMapEntityId(transform.MapID));
+            var transform = EntityManager.GetComponent<TransformComponent>(moved);
+            _transforms.SetParent(moved, transform, _mapMan.GetMapEntityId(transform.MapID));
             _transforms.SetLocalPositionNoLerp(transform, msg.Coordinates.Position);
         }
 
@@ -51,13 +54,13 @@ namespace Content.Shared.Tabletop
 
         private void OnDraggingPlayerChanged(TabletopDraggingPlayerChangedEvent msg, EntitySessionEventArgs args)
         {
-            var dragged = msg.DraggedEntityUid;
+            var dragged = GetEntity(msg.DraggedEntityUid);
 
             if (!TryComp(dragged, out TabletopDraggableComponent? draggableComponent))
                 return;
 
             draggableComponent.DraggingPlayer = msg.IsDragging ? args.SenderSession.UserId : null;
-            Dirty(draggableComponent);
+            Dirty(dragged, draggableComponent);
 
             if (!TryComp(dragged, out AppearanceComponent? appearance))
                 return;
@@ -89,8 +92,8 @@ namespace Content.Shared.Tabletop
         [Serializable, NetSerializable]
         public sealed class TabletopRequestTakeOut : EntityEventArgs
         {
-            public EntityUid Entity;
-            public EntityUid TableUid;
+            public NetEntity Entity;
+            public NetEntity TableUid;
         }
 
         #region Utility

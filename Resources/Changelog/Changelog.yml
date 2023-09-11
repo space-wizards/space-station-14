@@ -1,122 +1,4 @@
 Entries:
-- author: Slava0135
-  changes:
-  - {message: now during power grid check event affected APCs can't be turned back
-      on, type: Tweak}
-  id: 4287
-  time: '2023-07-18T21:11:43.0000000+00:00'
-- author: Emisse
-  changes:
-  - {message: Removed desword from nukie uplink., type: Remove}
-  id: 4288
-  time: '2023-07-18T22:23:53.0000000+00:00'
-- author: Emisse
-  changes:
-  - {message: Captain's Sabre now has a chance to reflect projectiles., type: Tweak}
-  id: 4289
-  time: '2023-07-18T22:55:29.0000000+00:00'
-- author: vanx
-  changes:
-  - {message: The Nuclear Operatives have found a reliable supplier of ammunition
-      and medical equipment. Check your uplink for new offers., type: Add}
-  id: 4290
-  time: '2023-07-19T06:05:54.0000000+00:00'
-- author: Ubaser
-  changes:
-  - {message: 'Nanotrasen has hired a group of architects to change up their selection
-      with the introduction of the new mid-pop space station, Core!', type: Add}
-  id: 4291
-  time: '2023-07-19T07:23:48.0000000+00:00'
-- author: TemporalOroboros
-  changes:
-  - {message: Singularities no longer bounce off of things they can eat., type: Fix}
-  - {message: 'Singularities will reach through the containment field to eat the emitters
-      less often, maybe never.', type: Fix}
-  id: 4292
-  time: '2023-07-19T08:01:27.0000000+00:00'
-- author: Slava0135
-  changes:
-  - {message: clowns now make funny sound when sleeping, type: Add}
-  id: 4293
-  time: '2023-07-19T08:55:50.0000000+00:00'
-- author: Dygon
-  changes:
-  - {message: 'Water guns, pneumatic cannons and cap guns got extra safety measures,
-      clowns and monkeys will be able to use them again without accidentally blowing
-      them up.', type: Tweak}
-  id: 4294
-  time: '2023-07-19T21:22:08.0000000+00:00'
-- author: Ilya246
-  changes:
-  - {message: Added syndicate monkey reinforcement teleporter. Ook!, type: Add}
-  id: 4295
-  time: '2023-07-19T21:23:23.0000000+00:00'
-- author: Dygon
-  changes:
-  - {message: Disposable turret price lowered to 8 tc and rate of fire lowered by
-      20%., type: Tweak}
-  - {message: Disposable turrets can now be turned back into a toolbox using a screwdriver
-      and repaired using a wrench., type: Tweak}
-  id: 4296
-  time: '2023-07-20T02:16:09.0000000+00:00'
-- author: FillerVK
-  changes:
-  - {message: Added psychologist's office at Box Station, type: Add}
-  id: 4297
-  time: '2023-07-20T06:50:47.0000000+00:00'
-- author: PixelTK
-  changes:
-  - {message: 'Arachnids have a few more appendages, chest markings, and now show
-      off their chelicerae.', type: Add}
-  - {message: Arachnids now have a few different organ sprites, type: Add}
-  - {message: Arachnids no longer have webs strapped to their appendages, type: Remove}
-  id: 4298
-  time: '2023-07-20T21:55:50.0000000+00:00'
-- author: Lank
-  changes:
-  - {message: Artifacts going insane at round-end can now be disabled per-server.,
-    type: Tweak}
-  id: 4299
-  time: '2023-07-21T08:49:11.0000000+00:00'
-- author: Riggle
-  changes:
-  - {message: admin notes have more options than before, type: Add}
-  - {message: admins can now select a severity when adding a note, type: Add}
-  - {message: watchlists and messages, type: Add}
-  - {message: expiring notes, type: Add}
-  - {message: 'notes now fade when they reach a certain age, adjustable in config',
-    type: Add}
-  - {message: bans automatically add a note, type: Add}
-  - {message: new and improved ban panel, type: Add}
-  id: 4300
-  time: '2023-07-21T11:38:53.0000000+00:00'
-- author: Errant
-  changes:
-  - {message: Nitrogen tank settings have been adjusted to avoid gas wastage, type: Tweak}
-  id: 4301
-  time: '2023-07-21T19:02:39.0000000+00:00'
-- author: JimGamemaster
-  changes:
-  - {message: Space Creatures can now float in space, type: Tweak}
-  id: 4302
-  time: '2023-07-21T20:10:21.0000000+00:00'
-- author: brainfood1183
-  changes:
-  - {message: Strait Jackets can now be used to restrain individuals., type: Add}
-  id: 4303
-  time: '2023-07-22T22:14:25.0000000+00:00'
-- author: Emisse
-  changes:
-  - {message: Beds and medical beds now heal blunt and cold specifically instead of
-      brute and burn groups., type: Tweak}
-  id: 4304
-  time: '2023-07-23T03:18:06.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Midround anomaly spawns no longer have a high chance of spawning in
-      escape pods., type: Fix}
-  id: 4305
-  time: '2023-07-23T03:57:13.0000000+00:00'
 - author: FillerVK
   changes:
   - {message: Departure Terminal update., type: Tweak}
@@ -2994,3 +2876,111 @@ Entries:
   - {message: Crossing plants may now combine their produced chemicals., type: Tweak}
   id: 4786
   time: '2023-09-09T21:54:37.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Fixed action ordering., type: Fix}
+  - {message: Fixed not being able to wake up., type: Fix}
+  - {message: Fixed zombies not being able to toggle combat mode., type: Fix}
+  - {message: Fixed getting duplicate crit actions., type: Fix}
+  - {message: Fixed the mime not getting the invisible wall action., type: Fix}
+  id: 4787
+  time: '2023-09-09T23:14:17.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Fixed not being able to use vehicle horns., type: Fix}
+  id: 4788
+  time: '2023-09-09T23:39:29.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Monkeys can now bump doors open and strip mobs like people can., type: Tweak}
+  id: 4789
+  time: '2023-09-10T02:51:51.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: 'Ian/Old Ian/Lisa yield corgi hide when butchered, which can be worn
+      as a hat or crafted into an ian suit.', type: Add}
+  id: 4790
+  time: '2023-09-10T03:04:33.0000000+00:00'
+- author: Flareguy
+  changes:
+  - {message: Added cobweb decorations for mappers to utilize., type: Add}
+  id: 4791
+  time: '2023-09-10T03:37:56.0000000+00:00'
+- author: arimah
+  changes:
+  - {message: Particle Accelerators can now be constructed again, type: Fix}
+  id: 4792
+  time: '2023-09-10T03:42:42.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Revert a PR causing container issues., type: Fix}
+  id: 4793
+  time: '2023-09-10T11:46:36.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Replays now record ghost chat., type: Fix}
+  id: 4794
+  time: '2023-09-10T11:49:45.0000000+00:00'
+- author: Interrobang01
+  changes:
+  - {message: Cognizine now works on monkeys., type: Fix}
+  - {message: Fixed Cognizine not working on player-controlled animals., type: Fix}
+  id: 4795
+  time: '2023-09-10T20:21:54.0000000+00:00'
+- author: Vasilis
+  changes:
+  - {message: All pda's with built in medical scanners now take one second to scan.,
+    type: Tweak}
+  id: 4796
+  time: '2023-09-10T23:01:05.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Made tooltips open faster and anchor bottom-left to mouse cursor instead
+      of top-left., type: Tweak}
+  id: 4797
+  time: '2023-09-11T03:53:36.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fix handheld crew monitor., type: Fix}
+  id: 4798
+  time: '2023-09-11T05:01:54.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix ghost warps., type: Fix}
+  id: 4799
+  time: '2023-09-11T05:43:25.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Make the role timer tooltip look much nicer., type: Tweak}
+  id: 4800
+  time: '2023-09-11T05:44:22.0000000+00:00'
+- author: Morb0
+  changes:
+  - {message: Added indicator near SSD players, type: Add}
+  id: 4801
+  time: '2023-09-11T05:52:56.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'Jetpacks, being weightless, and flying mobs can now pass over lava
+      & chasms unharmed (as well as other obstacles)', type: Add}
+  - {message: Observers are no longer affected by ice physics, type: Fix}
+  - {message: 'Step trigger (slipping, shards, etc) now by default won''t trigger
+      if the stepping entity is weightless or set as in air', type: Tweak}
+  id: 4802
+  time: '2023-09-11T06:03:17.0000000+00:00'
+- author: DrTeaSpoon
+  changes:
+  - {message: 'Fixed Tomatoes, Eggs, Watermelons and Flourbags not leaving puddles
+      based on what they actually contain.', type: Fix}
+  id: 4803
+  time: '2023-09-11T08:16:27.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Fixed error when equipping the energy katana as a space ninja., type: Fix}
+  id: 4804
+  time: '2023-09-11T09:04:03.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Storage (e.g. backpacks) is now predicted and using FancyWindow., type: Fix}
+  id: 4805
+  time: '2023-09-11T11:20:47.0000000+00:00'
