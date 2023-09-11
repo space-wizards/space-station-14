@@ -46,7 +46,7 @@
         Blunt: 10
 
 - type: entity
-  name: syndicate jaws of life
+  name: Jaws of death
   parent: JawsOfLife
   id: SyndicateJawsOfLife
   description: Useful for entering the station or its departments.
