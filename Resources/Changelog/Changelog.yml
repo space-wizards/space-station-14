@@ -1,9 +1,4 @@
 Entries:
-- author: Errant
-  changes:
-  - {message: Nitrogen tank settings have been adjusted to avoid gas wastage, type: Tweak}
-  id: 4301
-  time: '2023-07-21T19:02:39.0000000+00:00'
 - author: JimGamemaster
   changes:
   - {message: Space Creatures can now float in space, type: Tweak}
@@ -2981,3 +2976,8 @@ Entries:
   - {message: Make the role timer tooltip look much nicer., type: Tweak}
   id: 4800
   time: '2023-09-11T05:44:22.0000000+00:00'
+- author: Morb0
+  changes:
+  - {message: Added indicator near SSD players, type: Add}
+  id: 4801
+  time: '2023-09-11T05:52:56.0000000+00:00'
