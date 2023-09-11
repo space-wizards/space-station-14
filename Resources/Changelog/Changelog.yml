@@ -1,9 +1,4 @@
 Entries:
-- author: brainfood1183
-  changes:
-  - {message: Strait Jackets can now be used to restrain individuals., type: Add}
-  id: 4303
-  time: '2023-07-22T22:14:25.0000000+00:00'
 - author: Emisse
   changes:
   - {message: Beds and medical beds now heal blunt and cold specifically instead of
@@ -2985,3 +2980,9 @@ Entries:
       if the stepping entity is weightless or set as in air', type: Tweak}
   id: 4802
   time: '2023-09-11T06:03:17.0000000+00:00'
+- author: DrTeaSpoon
+  changes:
+  - {message: 'Fixed Tomatoes, Eggs, Watermelons and Flourbags not leaving puddles
+      based on what they actually contain.', type: Fix}
+  id: 4803
+  time: '2023-09-11T08:16:27.0000000+00:00'
