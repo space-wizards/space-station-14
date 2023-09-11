@@ -31,7 +31,8 @@ public sealed class RussianRevolverSystem : EntitySystem
         {
             return;
         }
-        if (ammoProvider.Chambers[ammoProvider.CurrentIndex] == true)
+        if (ammoProvider.Chambers[ammoProvider.CurrentIndex] == true ||
+            (TryComp(ammoProvider.AmmoSlots[ammoProvider.CurrentIndex], out CartridgeAmmoComponent? cartridge) && !cartridge.Spent))
         {
             _audio.PlayPvs(component.SoundLose, uid);
             ammoProvider.Chambers[ammoProvider.CurrentIndex] = false;
