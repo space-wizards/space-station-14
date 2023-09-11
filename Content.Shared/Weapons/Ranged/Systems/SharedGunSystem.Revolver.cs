@@ -301,7 +301,7 @@ public partial class SharedGunSystem
         }
     }
 
-    public void RussianizeRevolver(EntityUid revolverUid, RevolverAmmoProviderComponent component)
+    public void RouletteifyRevolver(EntityUid revolverUid, RevolverAmmoProviderComponent component)
     {
         //removes all bullets except for one
         for (int i = 0; i < component.Capacity; i++)

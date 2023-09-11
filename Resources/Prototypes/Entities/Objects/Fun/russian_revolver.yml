@@ -1,8 +1,8 @@
 - type: entity
   parent: BaseItem
   id: RussianRevolver
-  name: russian revolver
-  description: The single most dangerous weapon in the universe, it only works when pointed at the holder.
+  name: russian roulette revolver
+  description: A .45 magnum revolver, designed specifically to play Russian Roulette. Useless in combat.
   components:
   - type: Sprite
     sprite: Objects/Fun/russianrevolver.rsi

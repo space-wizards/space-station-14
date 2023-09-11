@@ -54,6 +54,6 @@ public sealed class RussianRevolverSystem : EntitySystem
         {
             return;
         }
-        _gunSystem.RussianizeRevolver(uid, ammoDrinker);
+        _gunSystem.RouletteifyRevolver(uid, ammoDrinker);
     }
 }
