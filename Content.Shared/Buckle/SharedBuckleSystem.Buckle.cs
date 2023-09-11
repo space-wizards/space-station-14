@@ -59,7 +59,7 @@ public abstract partial class SharedBuckleSystem
 
     private void OnBuckleComponentGetState(EntityUid uid, BuckleComponent component, ref ComponentGetState args)
     {
-        args.State = new BuckleComponentState(component.Buckled, component.BuckledTo, component.LastEntityBuckledTo, component.DontCollide);
+        args.State = new BuckleComponentState(component.Buckled, GetNetEntity(component.BuckledTo), GetNetEntity(component.LastEntityBuckledTo), component.DontCollide);
     }
 
     private void OnBuckleMove(EntityUid uid, BuckleComponent component, ref MoveEvent ev)

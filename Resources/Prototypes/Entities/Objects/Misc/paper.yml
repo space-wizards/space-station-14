@@ -477,6 +477,7 @@
   name: captain's rubber stamp
   parent: RubberStampBase
   id: RubberStampCaptain
+  suffix: DO NOT MAP
   components:
   - type: Stamp
     stampedName: stamp-component-stamped-name-captain
@@ -490,6 +491,7 @@
   name: CentCom rubber stamp
   parent: RubberStampBase
   id: RubberStampCentcom
+  suffix: DO NOT MAP
   components:
   - type: Stamp
     stampedName: stamp-component-stamped-name-centcom
@@ -503,6 +505,7 @@
   name: chaplain's rubber stamp
   parent: RubberStampBase
   id: RubberStampChaplain
+  suffix: DO NOT MAP
   components:
   - type: Stamp
     stampedName: stamp-component-stamped-name-chaplain
@@ -516,6 +519,7 @@
   name: clown's rubber stamp
   parent: RubberStampBase
   id: RubberStampClown
+  suffix: DO NOT MAP
   components:
   - type: Stamp
     stampedName: stamp-component-stamped-name-clown
@@ -532,6 +536,7 @@
   name: chief engineer's rubber stamp
   parent: RubberStampBase
   id: RubberStampCE
+  suffix: DO NOT MAP
   components:
   - type: Stamp
     stampedName: stamp-component-stamped-name-ce
@@ -545,6 +550,7 @@
   name: chief medical officer's rubber stamp
   parent: RubberStampBase
   id: RubberStampCMO
+  suffix: DO NOT MAP
   components:
   - type: Stamp
     stampedName: stamp-component-stamped-name-cmo
@@ -558,6 +564,7 @@
   name: head of personnel's rubber stamp
   parent: RubberStampBase
   id: RubberStampHop
+  suffix: DO NOT MAP
   components:
   - type: Stamp
     stampedName: stamp-component-stamped-name-hop
@@ -571,6 +578,7 @@
   name: head of security's rubber stamp
   parent: RubberStampBase
   id: RubberStampHos
+  suffix: DO NOT MAP
   components:
   - type: Stamp
     stampedName: stamp-component-stamped-name-hos
@@ -584,6 +592,7 @@
   name: mime's rubber stamp
   parent: RubberStampBase
   id: RubberStampMime
+  suffix: DO NOT MAP
   components:
   - type: Stamp
     stampedName: stamp-component-stamped-name-mime
@@ -598,6 +607,7 @@
   name: quartermaster's rubber stamp
   parent: RubberStampBase
   id: RubberStampQm
+  suffix: DO NOT MAP
   components:
   - type: Stamp
     stampedName: stamp-component-stamped-name-qm
@@ -611,6 +621,7 @@
   name: research director's rubber stamp
   parent: RubberStampBase
   id: RubberStampRd
+  suffix: DO NOT MAP
   components:
   - type: Stamp
     stampedName: stamp-component-stamped-name-rd
@@ -637,6 +648,7 @@
   name: syndicate rubber stamp
   parent: RubberStampBase
   id: RubberStampSyndicate
+  suffix: DO NOT MAP
   components:
   - type: Stamp
     stampedName: stamp-component-stamped-name-syndicate
@@ -650,6 +662,7 @@
   name: warden's rubber stamp
   parent: RubberStampBase
   id: RubberStampWarden
+  suffix: DO NOT MAP
   components:
   - type: Stamp
     stampedName: stamp-component-stamped-name-warden

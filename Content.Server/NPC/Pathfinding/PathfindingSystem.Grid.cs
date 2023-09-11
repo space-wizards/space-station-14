@@ -465,6 +465,14 @@ public sealed partial class PathfindingSystem
                         continue;
                     }
 
+                    var xform = xformQuery.GetComponent(ent);
+
+                    if (xform.ParentUid != grid.Owner ||
+                        grid.LocalToTile(xform.Coordinates) != tilePos)
+                    {
+                        continue;
+                    }
+
                     tileEntities.Add(ent);
                 }
 

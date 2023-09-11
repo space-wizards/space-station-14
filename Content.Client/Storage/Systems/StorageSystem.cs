@@ -35,11 +35,11 @@ public sealed class StorageSystem : SharedStorageSystem
 
         for (var i = 0; msg.StoredEntities.Count > i; i++)
         {
-            var entity = msg.StoredEntities[i];
+            var entity = GetEntity(msg.StoredEntities[i]);
             var initialPosition = msg.EntityPositions[i];
             if (EntityManager.EntityExists(entity) && transformComp != null)
             {
-                ReusableAnimations.AnimateEntityPickup(entity, initialPosition, transformComp.LocalPosition, msg.EntityAngles[i], EntityManager);
+                ReusableAnimations.AnimateEntityPickup(entity, GetCoordinates(initialPosition), transformComp.LocalPosition, msg.EntityAngles[i], EntityManager);
             }
         }
     }

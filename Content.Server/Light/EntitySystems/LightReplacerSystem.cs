@@ -2,7 +2,7 @@ using System.Linq;
 using Content.Server.Light.Components;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
-using Content.Shared.Light.Component;
+using Content.Shared.Light.Components;
 using Content.Shared.Popups;
 using Content.Shared.Storage;
 using JetBrains.Annotations;

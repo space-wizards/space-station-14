@@ -742,7 +742,7 @@ public sealed class WiresSystem : SharedWiresSystem
 
         if (_toolTime > 0f)
         {
-            var args = new DoAfterArgs(user, _toolTime, new WireDoAfterEvent(action, id), target, target: target, used: toolEntity)
+            var args = new DoAfterArgs(EntityManager, user, _toolTime, new WireDoAfterEvent(action, id), target, target: target, used: toolEntity)
             {
                 NeedHand = true,
                 BreakOnDamage = true,

@@ -5,10 +5,10 @@ namespace Content.Shared.CartridgeLoader;
 [Serializable, NetSerializable]
 public sealed class CartridgeLoaderUiMessage : BoundUserInterfaceMessage
 {
-    public readonly EntityUid CartridgeUid;
+    public readonly NetEntity CartridgeUid;
     public readonly CartridgeUiMessageAction Action;
 
-    public CartridgeLoaderUiMessage(EntityUid cartridgeUid, CartridgeUiMessageAction action)
+    public CartridgeLoaderUiMessage(NetEntity cartridgeUid, CartridgeUiMessageAction action)
     {
         CartridgeUid = cartridgeUid;
         Action = action;

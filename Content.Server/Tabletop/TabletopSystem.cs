@@ -46,16 +46,19 @@ namespace Content.Server.Tabletop
             if (args.SenderSession is not IPlayerSession playerSession)
                 return;
 
-            if (!TryComp(msg.TableUid, out TabletopGameComponent? tabletop) || tabletop.Session is not { } session)
-                return;
+            var table = GetEntity(msg.TableUid);
 
+            if (!TryComp(table, out TabletopGameComponent? tabletop) || tabletop.Session is not { } session)
+                return;
 
             if (!msg.Entity.IsValid())
                 return;
 
-            if (!TryComp(msg.Entity, out TabletopHologramComponent? hologram))
+            var entity = GetEntity(msg.Entity);
+
+            if (!TryComp(entity, out TabletopHologramComponent? hologram))
             {
-                _popupSystem.PopupEntity(Loc.GetString("tabletop-error-remove-non-hologram"), msg.TableUid, args.SenderSession);
+                _popupSystem.PopupEntity(Loc.GetString("tabletop-error-remove-non-hologram"), table, args.SenderSession);
                 return;
             }
 
@@ -64,7 +67,7 @@ namespace Content.Server.Tabletop
                 return;
 
             // Find the entity, remove it from the session and set it's position to the tabletop
-            session.Entities.TryGetValue(msg.Entity, out var result);
+            session.Entities.TryGetValue(entity, out var result);
             session.Entities.Remove(result);
             _entityManager.QueueDeleteEntity(result);
         }
@@ -106,7 +109,7 @@ namespace Content.Server.Tabletop
             if (args.SenderSession is not IPlayerSession playerSession)
                 return;
 
-            if (!TryComp(msg.TableUid, out TabletopGameComponent? tabletop) || tabletop.Session is not { } session)
+            if (!TryComp(GetEntity(msg.TableUid), out TabletopGameComponent? tabletop) || tabletop.Session is not { } session)
                 return;
 
             // Check if player is actually playing at this table
@@ -153,7 +156,7 @@ namespace Content.Server.Tabletop
 
         private void OnStopPlaying(TabletopStopPlayingEvent msg, EntitySessionEventArgs args)
         {
-            CloseSessionFor((IPlayerSession)args.SenderSession, msg.TableUid);
+            CloseSessionFor((IPlayerSession)args.SenderSession, GetEntity(msg.TableUid));
         }
 
         private void OnPlayerDetached(EntityUid uid, TabletopGamerComponent component, PlayerDetachedEvent args)

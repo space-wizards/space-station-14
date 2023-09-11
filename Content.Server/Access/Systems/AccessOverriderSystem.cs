@@ -46,7 +46,7 @@ public sealed class AccessOverriderSystem : SharedAccessOverriderSystem
         if (!_interactionSystem.InRangeUnobstructed(args.User, (EntityUid) args.Target))
             return;
 
-        var doAfterEventArgs = new DoAfterArgs(args.User, component.DoAfterTime, new AccessOverriderDoAfterEvent(), uid, target: args.Target, used: uid)
+        var doAfterEventArgs = new DoAfterArgs(EntityManager, args.User, component.DoAfterTime, new AccessOverriderDoAfterEvent(), uid, target: args.Target, used: uid)
         {
             BreakOnTargetMove = true,
             BreakOnUserMove = true,
@@ -260,6 +260,6 @@ public sealed class AccessOverriderSystem : SharedAccessOverriderSystem
             return true;
 
         var privilegedId = component.PrivilegedIdSlot.Item;
-        return privilegedId != null && _accessReader.IsAllowed(privilegedId.Value, reader);
+        return privilegedId != null && _accessReader.IsAllowed(privilegedId.Value, uid, reader);
     }
 }

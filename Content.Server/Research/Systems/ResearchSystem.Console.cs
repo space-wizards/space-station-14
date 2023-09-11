@@ -25,7 +25,7 @@ public sealed partial class ResearchSystem
         if (!this.IsPowered(uid, EntityManager))
             return;
 
-        if (TryComp<AccessReaderComponent>(uid, out var access) && !_accessReader.IsAllowed(ent, access))
+        if (TryComp<AccessReaderComponent>(uid, out var access) && !_accessReader.IsAllowed(ent, uid, access))
         {
             _popup.PopupEntity(Loc.GetString("research-console-no-access-popup"), ent);
             return;

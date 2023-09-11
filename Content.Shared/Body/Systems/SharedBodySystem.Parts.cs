@@ -26,7 +26,7 @@ public partial class SharedBodySystem
     private void OnPartGetState(EntityUid uid, BodyPartComponent part, ref ComponentGetState args)
     {
         args.State = new BodyPartComponentState(
-            part.Body,
+            GetNetEntity(part.Body),
             part.ParentSlot,
             part.Children,
             part.Organs,
@@ -41,7 +41,7 @@ public partial class SharedBodySystem
         if (args.Current is not BodyPartComponentState state)
             return;
 
-        part.Body = state.Body;
+        part.Body = EnsureEntity<BodyPartComponent>(state.Body, uid);
         part.ParentSlot = state.ParentSlot; // TODO use containers. This is broken and does not work.
         part.Children = state.Children; // TODO use containers. This is broken and does not work.
         part.Organs = state.Organs; // TODO end my suffering.
@@ -54,7 +54,7 @@ public partial class SharedBodySystem
     {
         if (part.ParentSlot is { } slot)
         {
-            slot.Child = null;
+            slot.SetChild(null, GetNetEntity(null));
             DirtyAllComponents(slot.Parent);
         }
 
@@ -73,7 +73,13 @@ public partial class SharedBodySystem
         if (!Resolve(parent, ref part, false))
             return null;
 
-        var slot = new BodyPartSlot(slotId, parent, partType);
+        var slot = new BodyPartSlot
+        {
+            Id = slotId,
+            Type = partType,
+            Parent = parent,
+            NetParent = GetNetEntity(parent),
+        };
         part.Children.Add(slotId, slot);
 
         return slot;
@@ -91,7 +97,12 @@ public partial class SharedBodySystem
             !Resolve(parentId.Value, ref parent, false))
             return false;
 
-        slot = new BodyPartSlot(id, parentId.Value, null);
+        slot = new BodyPartSlot
+        {
+            Id = id,
+            Parent = parentId.Value,
+            NetParent = GetNetEntity(parentId.Value),
+        };
         if (!parent.Children.TryAdd(id, slot))
         {
             slot = null;
@@ -171,7 +182,7 @@ public partial class SharedBodySystem
                Resolve(partId.Value, ref part, false) &&
                (slot.Type == null || slot.Type == part.PartType) &&
                Containers.TryGetContainer(slot.Parent, BodyContainerId, out var container) &&
-               container.CanInsert(partId.Value);
+               _container.CanInsert(partId.Value, container);
     }
 
     public virtual bool AttachPart(
@@ -191,7 +202,7 @@ public partial class SharedBodySystem
         if (!container.Insert(partId.Value))
             return false;
 
-        slot.Child = partId;
+        slot.SetChild(partId, GetNetEntity(partId));
         part.ParentSlot = slot;
 
         if (TryComp(slot.Parent, out BodyPartComponent? parentPart))
@@ -241,7 +252,7 @@ public partial class SharedBodySystem
 
         var oldBodyNullable = part.Body;
 
-        slot.Child = null;
+        slot.SetChild(null, null);
         part.ParentSlot = null;
         part.Body = null;
 

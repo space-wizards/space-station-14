@@ -90,7 +90,7 @@ namespace Content.Server.Tabletop
             session.Players[player] = new TabletopSessionPlayerData { Camera = camera };
 
             // Tell the gamer to open a viewport for the tabletop game
-            RaiseNetworkEvent(new TabletopPlayEvent(uid, camera, Loc.GetString(tabletop.BoardName), tabletop.Size), player.ConnectedClient);
+            RaiseNetworkEvent(new TabletopPlayEvent(GetNetEntity(uid), GetNetEntity(camera), Loc.GetString(tabletop.BoardName), tabletop.Size), player.ConnectedClient);
         }
 
         /// <summary>

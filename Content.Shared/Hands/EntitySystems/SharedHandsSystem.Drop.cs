@@ -8,6 +8,8 @@ namespace Content.Shared.Hands.EntitySystems;
 
 public abstract partial class SharedHandsSystem : EntitySystem
 {
+    [Dependency] private readonly SharedContainerSystem _container = default!;
+
     private void InitializeDrop()
     {
         SubscribeLocalEvent<HandsComponent, EntRemovedFromContainerMessage>(HandleEntityRemoved);
@@ -32,10 +34,10 @@ public abstract partial class SharedHandsSystem : EntitySystem
     /// </summary>
     public bool CanDropHeld(EntityUid uid, Hand hand, bool checkActionBlocker = true)
     {
-        if (hand.HeldEntity == null)
+        if (hand.Container?.ContainedEntity is not {} held)
             return false;
 
-        if (!hand.Container!.CanRemove(hand.HeldEntity.Value, EntityManager))
+        if (!_container.CanRemove(held, hand.Container))
             return false;
 
         if (checkActionBlocker && !_actionBlocker.CanDrop(uid))
@@ -110,7 +112,7 @@ public abstract partial class SharedHandsSystem : EntitySystem
     /// <summary>
     ///     Attempts to move a held item from a hand into a container that is not another hand, without dropping it on the floor in-between.
     /// </summary>
-    public bool TryDropIntoContainer(EntityUid uid, EntityUid entity, IContainer targetContainer, bool checkActionBlocker = true, HandsComponent? handsComp = null)
+    public bool TryDropIntoContainer(EntityUid uid, EntityUid entity, BaseContainer targetContainer, bool checkActionBlocker = true, HandsComponent? handsComp = null)
     {
         if (!Resolve(uid, ref handsComp))
             return false;
@@ -121,7 +123,7 @@ public abstract partial class SharedHandsSystem : EntitySystem
         if (!CanDropHeld(uid, hand, checkActionBlocker))
             return false;
 
-        if (!targetContainer.CanInsert(entity, EntityManager))
+        if (!_container.CanInsert(entity, targetContainer))
             return false;
 
         DoDrop(uid, hand, false, handsComp);
