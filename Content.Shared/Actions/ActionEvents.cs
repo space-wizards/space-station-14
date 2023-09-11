@@ -65,22 +65,22 @@ public sealed class GetItemActionsEvent : EntityEventArgs
 [Serializable, NetSerializable]
 public sealed class RequestPerformActionEvent : EntityEventArgs
 {
-    public readonly EntityUid Action;
-    public readonly EntityUid? EntityTarget;
-    public readonly EntityCoordinates? EntityCoordinatesTarget;
+    public readonly NetEntity Action;
+    public readonly NetEntity? EntityTarget;
+    public readonly NetCoordinates? EntityCoordinatesTarget;
 
-    public RequestPerformActionEvent(EntityUid action)
+    public RequestPerformActionEvent(NetEntity action)
     {
         Action = action;
     }
 
-    public RequestPerformActionEvent(EntityUid action, EntityUid entityTarget)
+    public RequestPerformActionEvent(NetEntity action, NetEntity entityTarget)
     {
         Action = action;
         EntityTarget = entityTarget;
     }
 
-    public RequestPerformActionEvent(EntityUid action, EntityCoordinates entityCoordinatesTarget)
+    public RequestPerformActionEvent(NetEntity action, NetCoordinates entityCoordinatesTarget)
     {
         Action = action;
         EntityCoordinatesTarget = entityCoordinatesTarget;

@@ -29,6 +29,7 @@ namespace Content.Server.Botany.Systems;
 
 public sealed class PlantHolderSystem : EntitySystem
 {
+    [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
     [Dependency] private readonly BotanySystem _botany = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly MutationSystem _mutation = default!;
@@ -36,10 +37,11 @@ public sealed class PlantHolderSystem : EntitySystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
-    [Dependency] private readonly TagSystem _tagSystem = default!;
+    [Dependency] private readonly SharedPointLightSystem _pointLight = default!;
     [Dependency] private readonly SolutionContainerSystem _solutionSystem = default!;
+    [Dependency] private readonly TagSystem _tagSystem = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
+
 
     public const float HydroponicsSpeedMultiplier = 1f;
     public const float HydroponicsConsumptionMultiplier = 2f;
@@ -856,9 +858,9 @@ public sealed class PlantHolderSystem : EntitySystem
         if (component.Seed != null && component.Seed.Bioluminescent)
         {
             var light = EnsureComp<PointLightComponent>(uid);
-            light.Radius = component.Seed.BioluminescentRadius;
-            light.Color = component.Seed.BioluminescentColor;
-            light.CastShadows = false; // this is expensive, and botanists make lots of plants
+            _pointLight.SetRadius(uid, component.Seed.BioluminescentRadius, light);
+            _pointLight.SetColor(uid, component.Seed.BioluminescentColor, light);
+            _pointLight.SetCastShadows(uid, false, light);
             Dirty(uid, light);
         }
         else

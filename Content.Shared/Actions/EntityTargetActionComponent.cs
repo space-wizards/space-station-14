@@ -27,7 +27,7 @@ public sealed class EntityTargetActionComponentState : BaseActionComponentState
     public EntityWhitelist? Whitelist;
     public bool CanTargetSelf;
 
-    public EntityTargetActionComponentState(EntityTargetActionComponent component) : base(component)
+    public EntityTargetActionComponentState(EntityTargetActionComponent component, IEntityManager entManager) : base(component, entManager)
     {
         Whitelist = component.Whitelist;
         CanTargetSelf = component.CanTargetSelf;

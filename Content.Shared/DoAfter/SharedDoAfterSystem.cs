@@ -100,7 +100,7 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
 
     private void OnDoAfterGetState(EntityUid uid, DoAfterComponent comp, ref ComponentGetState args)
     {
-        args.State = new DoAfterComponentState(comp);
+        args.State = new DoAfterComponentState(EntityManager, comp);
     }
 
     private void OnDoAfterHandleState(EntityUid uid, DoAfterComponent comp, ref ComponentHandleState args)
@@ -115,7 +115,18 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
         comp.DoAfters.Clear();
         foreach (var (id, doAfter) in state.DoAfters)
         {
-            comp.DoAfters.Add(id, new(doAfter));
+            var newDoAfter = new DoAfter(EntityManager, doAfter);
+            comp.DoAfters.Add(id, newDoAfter);
+
+            // Networking yay (if you have an easier way dear god please).
+            newDoAfter.UserPosition = EnsureCoordinates<DoAfterComponent>(newDoAfter.NetUserPosition, uid);
+            newDoAfter.InitialItem = EnsureEntity<DoAfterComponent>(newDoAfter.NetInitialItem, uid);
+
+            var doAfterArgs = newDoAfter.Args;
+            doAfterArgs.Target = EnsureEntity<DoAfterComponent>(doAfterArgs.NetTarget, uid);
+            doAfterArgs.Used = EnsureEntity<DoAfterComponent>(doAfterArgs.NetUsed, uid);
+            doAfterArgs.User = EnsureEntity<DoAfterComponent>(doAfterArgs.NetUser, uid);
+            doAfterArgs.EventTarget = EnsureEntity<DoAfterComponent>(doAfterArgs.NetEventTarget, uid);
         }
 
         comp.NextId = state.NextId;
@@ -194,6 +205,16 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
 
         id = new DoAfterId(args.User, comp.NextId++);
         var doAfter = new DoAfter(id.Value.Index, args, GameTiming.CurTime);
+
+        // Networking yay
+        doAfter.NetUserPosition = GetNetCoordinates(doAfter.UserPosition);
+        doAfter.NetInitialItem = GetNetEntity(doAfter.InitialItem);
+
+        // Networking yay
+        args.NetTarget = GetNetEntity(args.Target);
+        args.NetUsed = GetNetEntity(args.Used);
+        args.NetUser = GetNetEntity(args.User);
+        args.NetEventTarget = GetNetEntity(args.EventTarget);
 
         if (args.BreakOnUserMove || args.BreakOnTargetMove)
             doAfter.UserPosition = Transform(args.User).Coordinates;
@@ -322,7 +343,7 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
         }
 
         InternalCancel(doAfter, comp);
-        Dirty(comp);
+        Dirty(entity, comp);
     }
 
     private void InternalCancel(DoAfter doAfter, DoAfterComponent component)

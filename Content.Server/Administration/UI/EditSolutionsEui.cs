@@ -1,3 +1,4 @@
+using Content.Server.Administration.Systems;
 using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.EUI;
 using Content.Shared.Administration;
@@ -30,13 +31,13 @@ namespace Content.Server.Administration.UI
         public override void Closed()
         {
             base.Closed();
-            EntitySystem.Get<Systems.AdminVerbSystem>().OnEditSolutionsEuiClosed(Player);
+            _entityManager.System<AdminVerbSystem>().OnEditSolutionsEuiClosed(Player);
         }
 
         public override EuiStateBase GetNewState()
         {
             var solutions = _entityManager.GetComponentOrNull<SolutionContainerManagerComponent>(Target)?.Solutions;
-            return new EditSolutionsEuiState(Target, solutions);
+            return new EditSolutionsEuiState(_entityManager.GetNetEntity(Target), solutions);
         }
     }
 }
