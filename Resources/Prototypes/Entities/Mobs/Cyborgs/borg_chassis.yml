@@ -22,6 +22,8 @@
     noMindState: robot_e_r
   - type: Construction
     node: cyborg
+  - type: Speech
+    speechVerb: Robotic
 
 - type: entity
   id: BorgChassisMining

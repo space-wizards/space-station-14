@@ -418,6 +418,55 @@
   - type: Stack
     stackType: FloorTileLaundry
 
+# Concrete
+- type: entity
+  parent: FloorTileItemBase
+  id: FloorTileItemConcrete
+  name: concrete tile
+  components:
+  - type: Sprite
+    state: concrete
+  - type: Item
+    heldPrefix: generic
+  - type: FloorTile
+    outputs:
+    - Plating
+    - FloorConcrete
+  - type: Stack
+    stackType: FloorTileConcrete
+
+- type: entity
+  parent: FloorTileItemBase
+  id: FloorTileItemGrayConcrete
+  name: gray concrete tile
+  components:
+  - type: Sprite
+    state: grayconcrete
+  - type: Item
+    heldPrefix: generic
+  - type: FloorTile
+    outputs:
+    - Plating
+    - FloorGrayConcrete
+  - type: Stack
+    stackType: FloorTileGrayConcrete
+
+- type: entity
+  parent: FloorTileItemBase
+  id: FloorTileItemOldConcrete
+  name: old concrete tile
+  components:
+  - type: Sprite
+    state: oldconcrete
+  - type: Item
+    heldPrefix: generic
+  - type: FloorTile
+    outputs:
+    - Plating
+    - FloorOldConcrete
+  - type: Stack
+    stackType: FloorTileOldConcrete
+
 # Carpets
 - type: entity
   name: blue arcade floor
@@ -824,5 +873,5 @@
   - type: Stack
     stackType: FloorTileWeb
   - type: Construction
-    graph: TileWeb
-    node: webtile
+    graph: WebObjects
+    node: tile

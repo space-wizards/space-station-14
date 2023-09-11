@@ -2,6 +2,7 @@
 using Content.Shared.Buckle.Components;
 using Content.Shared.Destructible;
 using Content.Shared.DragDrop;
+using Content.Shared.Foldable;
 using Content.Shared.Interaction;
 using Content.Shared.Storage;
 using Content.Shared.Verbs;
@@ -31,6 +32,7 @@ public abstract partial class SharedBuckleSystem
 
         SubscribeLocalEvent<StrapComponent, DragDropTargetEvent>(OnStrapDragDropTarget);
         SubscribeLocalEvent<StrapComponent, CanDropTargetEvent>(OnCanDropTarget);
+        SubscribeLocalEvent<StrapComponent, FoldAttemptEvent>(OnAttemptFold);
 
         SubscribeLocalEvent<StrapComponent, MoveEvent>(OnStrapMoveEvent);
     }
@@ -50,7 +52,7 @@ public abstract partial class SharedBuckleSystem
 
     private void OnStrapGetState(EntityUid uid, StrapComponent component, ref ComponentGetState args)
     {
-        args.State = new StrapComponentState(component.Position, component.BuckleOffset, component.BuckledEntities, component.MaxBuckleDistance, component.OccupiedSize);
+        args.State = new StrapComponentState(component.Position, component.BuckleOffset, GetNetEntitySet(component.BuckledEntities), component.MaxBuckleDistance, component.OccupiedSize);
     }
 
     private void OnStrapHandleState(EntityUid uid, StrapComponent component, ref ComponentHandleState args)
@@ -61,7 +63,7 @@ public abstract partial class SharedBuckleSystem
         component.Position = state.Position;
         component.BuckleOffsetUnclamped = state.BuckleOffsetClamped;
         component.BuckledEntities.Clear();
-        component.BuckledEntities.UnionWith(state.BuckledEntities);
+        component.BuckledEntities.UnionWith(EnsureEntitySet<StrapComponent>(state.BuckledEntities, uid));
         component.MaxBuckleDistance = state.MaxBuckleDistance;
         component.OccupiedSize = state.OccupiedSize;
     }
@@ -106,7 +108,7 @@ public abstract partial class SharedBuckleSystem
     private void OnStrapContainerGettingInsertedAttempt(EntityUid uid, StrapComponent component, ContainerGettingInsertedAttemptEvent args)
     {
         // If someone is attempting to put this item inside of a backpack, ensure that it has no entities strapped to it.
-        if (HasComp<SharedStorageComponent>(args.Container.Owner) && component.BuckledEntities.Count != 0)
+        if (HasComp<StorageComponent>(args.Container.Owner) && component.BuckledEntities.Count != 0)
             args.Cancel();
     }
 
@@ -115,7 +117,7 @@ public abstract partial class SharedBuckleSystem
         if (args.Handled)
             return;
 
-        ToggleBuckle(args.User, args.User, uid);
+        args.Handled = ToggleBuckle(args.User, args.User, uid);
     }
 
     private void AddStrapVerbs(EntityUid uid, StrapComponent component, GetVerbsEvent<InteractionVerb> args)
@@ -197,6 +199,14 @@ public abstract partial class SharedBuckleSystem
     {
         args.CanDrop = StrapCanDragDropOn(uid, args.User, uid, args.Dragged, component);
         args.Handled = true;
+    }
+
+    private void OnAttemptFold(EntityUid uid, StrapComponent component, ref FoldAttemptEvent args)
+    {
+        if (args.Cancelled)
+            return;
+
+        args.Cancelled = component.BuckledEntities.Count != 0;
     }
 
     private void OnStrapDragDropTarget(EntityUid uid, StrapComponent component, ref DragDropTargetEvent args)

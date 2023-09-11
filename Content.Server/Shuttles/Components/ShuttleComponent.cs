@@ -16,7 +16,11 @@ namespace Content.Server.Shuttles.Components
         /// </summary>
         public const float BrakeCoefficient = 1.5f;
 
-        public const float MaxLinearVelocity = 20f;
+        /// <summary>
+        /// Maximum velocity assuming unupgraded, tier 1 thrusters
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float BaseMaxLinearVelocity = 20f;
 
         public const float MaxAngularVelocity = 4f;
 
@@ -25,6 +29,12 @@ namespace Content.Server.Shuttles.Components
         /// </summary>
         [ViewVariables]
         public readonly float[] LinearThrust = new float[4];
+
+        /// <summary>
+        /// The cached thrust available for each cardinal direction, if all thrusters are T1
+        /// </summary>
+        [ViewVariables]
+        public readonly float[] BaseLinearThrust = new float[4];
 
         /// <summary>
         /// The thrusters contributing to each direction for impulse.

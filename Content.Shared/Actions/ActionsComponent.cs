@@ -1,4 +1,3 @@
-using Content.Shared.Actions.ActionTypes;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 
@@ -9,10 +8,12 @@ namespace Content.Shared.Actions;
 [Access(typeof(SharedActionsSystem))]
 public sealed partial class ActionsComponent : Component
 {
-    [ViewVariables]
-    [Access(typeof(SharedActionsSystem), Other = AccessPermissions.ReadExecute)]
-    // FIXME Friends
-    public SortedSet<ActionType> Actions = new();
+    /// <summary>
+    ///     Handled on the client to track added and removed actions.
+    /// </summary>
+    [ViewVariables] public readonly Dictionary<EntityUid, ActionMetaData> OldClientActions = new();
+
+    [ViewVariables] public readonly HashSet<EntityUid> Actions = new();
 
     public override bool SendOnlyToOwner => true;
 }
@@ -20,16 +21,15 @@ public sealed partial class ActionsComponent : Component
 [Serializable, NetSerializable]
 public sealed class ActionsComponentState : ComponentState
 {
-    public readonly List<ActionType> Actions;
+    public readonly HashSet<NetEntity> Actions;
 
-    [NonSerialized]
-    public SortedSet<ActionType>? SortedActions;
-
-    public ActionsComponentState(List<ActionType> actions)
+    public ActionsComponentState(HashSet<NetEntity> actions)
     {
         Actions = actions;
     }
 }
+
+public readonly record struct ActionMetaData(bool ClientExclusive, bool AutoRemove);
 
 /// <summary>
 ///     Determines how the action icon appears in the hotbar for item actions.

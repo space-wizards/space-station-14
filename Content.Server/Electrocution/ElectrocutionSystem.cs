@@ -51,6 +51,7 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
     [Dependency] private readonly SharedStunSystem _stun = default!;
     [Dependency] private readonly SharedStutteringSystem _stuttering = default!;
     [Dependency] private readonly TagSystem _tag = default!;
+    [Dependency] private readonly MetaDataSystem _metaData = default!;
 
     [ValidatePrototypeId<StatusEffectPrototype>]
     private const string StatusEffectKey = "Electrocution";
@@ -302,16 +303,8 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
         }
     }
 
-        /// <param name="uid">Entity being electrocuted.</param>
-        /// <param name="sourceUid">Source entity of the electrocution.</param>
-        /// <param name="shockDamage">How much shock damage the entity takes.</param>
-        /// <param name="time">How long the entity will be stunned.</param>
-        /// <param name="refresh">Should <paramref>time</paramref> be refreshed (instead of accumilated) if the entity is already electrocuted?</param>
-        /// <param name="siemensCoefficient">How insulated the entity is from the shock. 0 means completely insulated, and 1 means no insulation.</param>
-        /// <param name="statusEffects">Status effects to apply to the entity.</param>
-        /// <param name="ignoreInsulation">Should the electrocution bypass the Insulated component?</param>
-        /// <returns>Whether the entity <see cref="uid"/> was stunned by the shock.</returns>
-        public bool TryDoElectrocution(
+        /// <inheritdoc/>
+        public override bool TryDoElectrocution(
             EntityUid uid, EntityUid? sourceUid, int shockDamage, TimeSpan time, bool refresh, float siemensCoefficient = 1f,
             StatusEffectsComponent? statusEffects = null, bool ignoreInsulation = false)
         {
@@ -358,7 +351,7 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
 
         // This shows up in the power monitor.
         // Yes. Yes exactly.
-        MetaData(electrocutionEntity).EntityName = MetaData(uid).EntityName;
+        _metaData.SetEntityName(electrocutionEntity, MetaData(uid).EntityName);
 
         electrocutionNode.CableEntity = sourceUid;
         electrocutionNode.NodeName = node.Name;

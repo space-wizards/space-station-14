@@ -147,6 +147,8 @@
   - type: FlavorProfile
     flavors:
       - banana
+  - type: Food
+    trash: TrashBananaPeel
   - type: SolutionContainerManager
     solutions:
       food:
@@ -165,26 +167,6 @@
       reagents:
       - ReagentId: JuiceBanana
         Quantity: 10
-  - type: SpawnItemsOnUse
-    items:
-    - id: FoodBananaPeeled
-    sound:
-      path: /Audio/Effects/unwrap.ogg
-
-- type: entity
-  name: banana
-  parent: FoodBanana
-  suffix: Peeled
-  id: FoodBananaPeeled
-  description: Rich in potassium.
-  components:
-  - type: Food
-    trash: TrashBananaPeel
-  - type: Sprite
-    sprite: Objects/Specific/Hydroponics/banana.rsi
-    state: peeled
-  - type: SpawnItemsOnUse
-    uses: 0
 
 - type: entity
   name: banana peel
@@ -478,8 +460,10 @@
         maxVol: 14
         reagents:
         - ReagentId: Nutriment
-          Quantity: 10
+          Quantity: 7
         - ReagentId: Vitamin
+          Quantity: 3
+        - ReagentId: Water
           Quantity: 4
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/tomato.rsi
@@ -516,11 +500,8 @@
       - !type:PlaySoundBehavior
         sound:
           collection: desecration
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          PuddleTomato:
-            min: 1
-            max: 1
+      - !type:SpillBehavior
+        solution: food
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
 
@@ -1132,11 +1113,8 @@
       - !type:PlaySoundBehavior
         sound:
           collection: desecration
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          PuddleWatermelon:
-            min: 1
-            max: 1
+      - !type:SpillBehavior
+        solution: food
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: SliceableFood
