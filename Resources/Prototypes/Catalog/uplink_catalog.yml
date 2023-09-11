@@ -245,7 +245,7 @@
   description: uplink-syndicate-bomb-desc
   productEntity: SyndicateBomb
   cost:
-    Telecrystal: 14
+    Telecrystal: 11
   categories:
     - UplinkExplosives
 
