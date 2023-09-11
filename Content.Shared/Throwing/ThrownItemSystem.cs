@@ -52,7 +52,7 @@ namespace Content.Shared.Throwing
             component.Thrower = EnsureEntity<ThrownItemComponent>(state.Thrower.Value, uid);
         }
 
-        private void ThrowItem(EntityUid uid, ThrownItemComponent component, ThrownEvent args)
+        private void ThrowItem(EntityUid uid, ThrownItemComponent component, ref ThrownEvent @event)
         {
             if (!EntityManager.TryGetComponent(uid, out FixturesComponent? fixturesComponent) ||
                 fixturesComponent.Fixtures.Count != 1 ||

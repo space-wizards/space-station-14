@@ -128,7 +128,7 @@ public sealed class ThrowingSystem : EntitySystem
         }
 
         var throwEvent = new ThrownEvent(user, uid);
-        RaiseLocalEvent(uid, throwEvent, true);
+        RaiseLocalEvent(uid, ref throwEvent, true);
         if (user != null)
             _adminLogger.Add(LogType.Throw, LogImpact.Low, $"{ToPrettyString(user.Value):user} threw {ToPrettyString(uid):entity}");
 

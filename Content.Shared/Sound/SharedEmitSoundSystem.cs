@@ -78,9 +78,9 @@ public abstract class SharedEmitSoundSystem : EntitySystem
             args.Handled = true;
     }
 
-    private void OnEmitSoundOnThrown(EntityUid uid, BaseEmitSoundComponent component, ThrownEvent args)
+    private void OnEmitSoundOnThrown(EntityUid uid, BaseEmitSoundComponent component, ref ThrownEvent @event)
     {
-        TryEmitSound(uid, component, args.User, false);
+        TryEmitSound(uid, component, @event.User, false);
     }
 
     private void OnEmitSoundOnActivateInWorld(EntityUid uid, EmitSoundOnActivateComponent component, ActivateInWorldEvent args)
