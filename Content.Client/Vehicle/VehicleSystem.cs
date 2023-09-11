@@ -45,7 +45,9 @@ public sealed class VehicleSystem : SharedVehicleSystem
         var entity = EnsureEntity<RiderComponent>(state.Entity, uid);
 
         if (TryComp(uid, out EyeComponent? eyeComp) && eyeComp.Target == component.Vehicle)
-            eyeComp.Target = entity;
+        {
+            _eye.SetTarget(uid, entity, eyeComp);
+        }
 
         component.Vehicle = entity;
     }

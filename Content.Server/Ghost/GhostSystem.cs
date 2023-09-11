@@ -4,7 +4,6 @@ using Content.Server.GameTicking;
 using Content.Server.Ghost.Components;
 using Content.Server.Mind;
 using Content.Server.Roles.Jobs;
-using Content.Server.Visible;
 using Content.Server.Warps;
 using Content.Shared.Actions;
 using Content.Shared.Administration;
