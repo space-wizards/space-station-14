@@ -74,6 +74,7 @@ public sealed class ExplosionOverlaySystem : EntitySystem
         var lightEntity = Spawn("ExplosionLight", component.Epicenter);
         var light = _lights.EnsureLight(lightEntity);
 
+        _lights.SetRadius(lightEntity, component.Intensity.Count, light);
         _lights.SetEnergy(lightEntity, component.Intensity.Count, light);
         _lights.SetColor(lightEntity, type.LightColor, light);
 
