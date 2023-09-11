@@ -49,3 +49,13 @@
       amount: 1
   products:
     Thrivenin: 2
+
+- type: reaction
+  id: Spaceacillin
+  reactants:
+    Inaprovaline:
+      amount: 1
+    Cryptobiolin:
+      amount: 1
+  products:
+    Spaceacillin: 2
