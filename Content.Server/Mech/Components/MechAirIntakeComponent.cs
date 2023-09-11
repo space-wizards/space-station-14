@@ -6,7 +6,7 @@ namespace Content.Server.Mech.Components;
 /// This is basically a siphon vent for mech but not using pump vent component because MechAir bad
 /// </summary>
 [RegisterComponent]
-public sealed class MechAirIntakeComponent : Component
+public sealed partial class MechAirIntakeComponent : Component
 {
     /// <summary>
     /// Target pressure change for a single atmos tick

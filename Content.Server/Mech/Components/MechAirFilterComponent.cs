@@ -6,7 +6,7 @@ namespace Content.Server.Mech.Components;
 /// This is basically a reverse scrubber for MechAir
 /// </summary>
 [RegisterComponent]
-public sealed class MechAirFilterComponent : Component
+public sealed partial class MechAirFilterComponent : Component
 {
     /// <summary>
     /// Gases that will be filtered out of internal air

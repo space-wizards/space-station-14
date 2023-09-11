@@ -36,6 +36,8 @@
   - type: Appearance
   - type: Drain
     autoDrain: false
+  - type: DumpableSolution
+    solution: drainBuffer
   - type: SolutionContainerVisuals
     maxFillLevels: 1
     fillBaseName: fill-

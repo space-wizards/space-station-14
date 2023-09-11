@@ -9,6 +9,7 @@ using Content.Server.Nutrition.EntitySystems;
 using Content.Server.Popups;
 using Content.Server.VoiceMask;
 using Content.Shared.Actions;
+using Content.Shared.Clothing;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.IdentityManagement.Components;
@@ -38,20 +39,20 @@ namespace Content.Server.Clothing
 
         private void OnGetActions(EntityUid uid, MaskComponent component, GetItemActionsEvent args)
         {
-            if (component.ToggleAction != null && !args.InHands)
-                args.Actions.Add(component.ToggleAction);
+            if (!args.InHands)
+                args.AddAction(ref component.ToggleActionEntity, component.ToggleAction);
         }
 
         private void OnToggleMask(EntityUid uid, MaskComponent mask, ToggleMaskEvent args)
         {
-            if (mask.ToggleAction == null)
+            if (mask.ToggleActionEntity == null)
                 return;
 
             if (!_inventorySystem.TryGetSlotEntity(args.Performer, "mask", out var existing) || !mask.Owner.Equals(existing))
                 return;
 
             mask.IsToggled ^= true;
-            _actionSystem.SetToggled(mask.ToggleAction, mask.IsToggled);
+            _actionSystem.SetToggled(mask.ToggleActionEntity, mask.IsToggled);
 
             // Pulling mask down can change identity, so we want to update that
             _identity.QueueIdentityUpdate(args.Performer);
@@ -67,11 +68,11 @@ namespace Content.Server.Clothing
         // set to untoggled when unequipped, so it isn't left in a 'pulled down' state
         private void OnGotUnequipped(EntityUid uid, MaskComponent mask, GotUnequippedEvent args)
         {
-            if (mask.ToggleAction == null)
+            if (mask.ToggleActionEntity == null)
                 return;
 
             mask.IsToggled = false;
-            _actionSystem.SetToggled(mask.ToggleAction, mask.IsToggled);
+            _actionSystem.SetToggled(mask.ToggleActionEntity, mask.IsToggled);
 
             ToggleMaskComponents(uid, mask, args.Equipee, true);
         }

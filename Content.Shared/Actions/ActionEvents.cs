@@ -1,8 +1,8 @@
-using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Hands;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
 using Robust.Shared.Map;
+using Robust.Shared.Network;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Actions;
@@ -18,7 +18,9 @@ namespace Content.Shared.Actions;
 /// </remarks>
 public sealed class GetItemActionsEvent : EntityEventArgs
 {
-    public SortedSet<ActionType> Actions = new();
+    private readonly IEntityManager _entities;
+    private readonly INetManager _net;
+    public readonly SortedSet<EntityUid> Actions = new();
 
     /// <summary>
     /// User equipping the item.
@@ -35,10 +37,25 @@ public sealed class GetItemActionsEvent : EntityEventArgs
     /// </summary>
     public bool InHands => SlotFlags == null;
 
-    public GetItemActionsEvent(EntityUid user, SlotFlags? slotFlags = null)
+    public GetItemActionsEvent(IEntityManager entities, INetManager net, EntityUid user, SlotFlags? slotFlags = null)
     {
+        _entities = entities;
+        _net = net;
         User = user;
         SlotFlags = slotFlags;
+    }
+
+    public void AddAction(ref EntityUid? actionId, string? prototypeId)
+    {
+        if (_entities.Deleted(actionId))
+        {
+            if (string.IsNullOrWhiteSpace(prototypeId) || _net.IsClient)
+                return;
+
+            actionId = _entities.Spawn(prototypeId);
+        }
+
+        Actions.Add(actionId.Value);
     }
 }
 
@@ -48,22 +65,22 @@ public sealed class GetItemActionsEvent : EntityEventArgs
 [Serializable, NetSerializable]
 public sealed class RequestPerformActionEvent : EntityEventArgs
 {
-    public readonly ActionType Action;
-    public readonly EntityUid? EntityTarget;
-    public readonly EntityCoordinates? EntityCoordinatesTarget;
+    public readonly NetEntity Action;
+    public readonly NetEntity? EntityTarget;
+    public readonly NetCoordinates? EntityCoordinatesTarget;
 
-    public RequestPerformActionEvent(InstantAction action)
+    public RequestPerformActionEvent(NetEntity action)
     {
         Action = action;
     }
 
-    public RequestPerformActionEvent(EntityTargetAction action, EntityUid entityTarget)
+    public RequestPerformActionEvent(NetEntity action, NetEntity entityTarget)
     {
         Action = action;
         EntityTarget = entityTarget;
     }
 
-    public RequestPerformActionEvent(WorldTargetAction action, EntityCoordinates entityCoordinatesTarget)
+    public RequestPerformActionEvent(NetEntity action, NetCoordinates entityCoordinatesTarget)
     {
         Action = action;
         EntityCoordinatesTarget = entityCoordinatesTarget;

@@ -18,7 +18,6 @@ namespace Content.Client.Administration.UI.CustomControls
     public sealed partial class PlayerListControl : BoxContainer
     {
         private readonly AdminSystem _adminSystem;
-        private readonly VerbSystem _verbSystem;
 
         private List<PlayerInfo> _playerList = new();
         private readonly List<PlayerInfo> _sortedPlayerList = new();
@@ -29,11 +28,14 @@ namespace Content.Client.Administration.UI.CustomControls
         public Func<PlayerInfo, string, string>? OverrideText;
         public Comparison<PlayerInfo>? Comparison;
 
+        private IEntityManager _entManager;
+        private IUserInterfaceManager _uiManager;
+
         public PlayerListControl()
         {
-            _adminSystem = EntitySystem.Get<AdminSystem>();
-            _verbSystem = EntitySystem.Get<VerbSystem>();
-            IoCManager.InjectDependencies(this);
+            _entManager = IoCManager.Resolve<IEntityManager>();
+            _uiManager = IoCManager.Resolve<IUserInterfaceManager>();
+            _adminSystem = _entManager.System<AdminSystem>();
             RobustXamlLoader.Load(this);
             // Fill the Option data
             PlayerListContainer.ItemPressed += PlayerListItemPressed;
@@ -56,9 +58,9 @@ namespace Content.Client.Administration.UI.CustomControls
                 if (OverrideText != null && args.Button.Children.FirstOrDefault()?.Children?.FirstOrDefault() is Label label)
                     label.Text = GetText(selectedPlayer);
             }
-            else if (args.Event.Function == EngineKeyFunctions.UseSecondary && selectedPlayer.EntityUid != null)
+            else if (args.Event.Function == EngineKeyFunctions.UseSecondary && selectedPlayer.NetEntity != null)
             {
-                IoCManager.Resolve<IUserInterfaceManager>().GetUIController<VerbMenuUIController>().OpenVerbMenu(selectedPlayer.EntityUid.Value);
+                _uiManager.GetUIController<VerbMenuUIController>().OpenVerbMenu(_entManager.GetEntity(selectedPlayer.NetEntity.Value));
             }
         }
 
