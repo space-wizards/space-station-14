@@ -35,17 +35,11 @@ public sealed class WaggingSystem : EntitySystem
 
     private void OnStartup(EntityUid uid, WaggingComponent component, ComponentStartup args)
     {
-        if (string.IsNullOrWhiteSpace(component.Action))
-            return;
-
         _actions.AddAction(uid, ref component.ActionEntity, component.Action, uid);
     }
 
     private void OnRemove(EntityUid uid, WaggingComponent component, ComponentRemove args)
     {
-        if (string.IsNullOrWhiteSpace(component.Action))
-            return;
-
         _actions.RemoveAction(uid, component.ActionEntity);
     }
 
