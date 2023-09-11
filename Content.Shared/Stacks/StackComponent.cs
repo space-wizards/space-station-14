@@ -5,7 +5,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Shared.Stacks
 {
     [RegisterComponent, NetworkedComponent]
-    public sealed class StackComponent : Component
+    public sealed partial class StackComponent : Component
     {
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("stackType", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<StackPrototype>))]
@@ -41,7 +41,7 @@ namespace Content.Shared.Stacks
         [DataField("lingering"), ViewVariables(VVAccess.ReadWrite)]
         public bool Lingering;
 
-        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("throwIndividually"), ViewVariables(VVAccess.ReadWrite)]
         public bool ThrowIndividually { get; set; } = false;
 
         [ViewVariables]
@@ -84,12 +84,15 @@ namespace Content.Shared.Stacks
     public sealed class StackComponentState : ComponentState
     {
         public int Count { get; }
-        public int MaxCount { get; }
+        public int? MaxCount { get; }
 
-        public StackComponentState(int count, int maxCount)
+        public bool Lingering;
+
+        public StackComponentState(int count, int? maxCount, bool lingering)
         {
             Count = count;
             MaxCount = maxCount;
+            Lingering = lingering;
         }
     }
 }

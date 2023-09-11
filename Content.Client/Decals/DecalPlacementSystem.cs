@@ -2,7 +2,6 @@ using System.Numerics;
 using Content.Client.Actions;
 using Content.Client.Decals.Overlays;
 using Content.Shared.Actions;
-using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Decals;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
@@ -10,7 +9,6 @@ using Robust.Client.Input;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Client.Decals;
 
@@ -22,6 +20,7 @@ public sealed class DecalPlacementSystem : EntitySystem
     [Dependency] private readonly IOverlayManager _overlay = default!;
     [Dependency] private readonly IPrototypeManager _protoMan = default!;
     [Dependency] private readonly InputSystem _inputSystem = default!;
+    [Dependency] private readonly MetaDataSystem _metaData = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SpriteSystem _sprite = default!;
 
@@ -71,7 +70,7 @@ public sealed class DecalPlacementSystem : EntitySystem
                     return false;
 
                 var decal = new Decal(coords.Position, _decalId, _decalColor, _decalAngle, _zIndex, _cleanable);
-                RaiseNetworkEvent(new RequestDecalPlacementEvent(decal, coords));
+                RaiseNetworkEvent(new RequestDecalPlacementEvent(decal, GetNetCoordinates(coords)));
 
                 return true;
             },
@@ -91,7 +90,7 @@ public sealed class DecalPlacementSystem : EntitySystem
 
                 _erasing = true;
 
-                RaiseNetworkEvent(new RequestDecalRemovalEvent(coords));
+                RaiseNetworkEvent(new RequestDecalRemovalEvent(GetNetCoordinates(coords)));
 
                 return true;
             }, (session, coords, uid) =>
@@ -129,7 +128,7 @@ public sealed class DecalPlacementSystem : EntitySystem
         args.Target = args.Target.Offset(new Vector2(-0.5f, -0.5f));
 
         var decal = new Decal(args.Target.Position, args.DecalId, args.Color, Angle.FromDegrees(args.Rotation), args.ZIndex, args.Cleanable);
-        RaiseNetworkEvent(new RequestDecalPlacementEvent(decal, args.Target));
+        RaiseNetworkEvent(new RequestDecalPlacementEvent(decal, GetNetCoordinates(args.Target)));
     }
 
     private void OnFillSlot(FillActionSlotEvent ev)
@@ -153,9 +152,10 @@ public sealed class DecalPlacementSystem : EntitySystem
             Cleanable = _cleanable,
         };
 
-        ev.Action = new WorldTargetAction()
+        var actionId = Spawn(null);
+        AddComp(actionId, new WorldTargetActionComponent
         {
-            DisplayName = $"{_decalId} ({_decalColor.ToHex()}, {(int) _decalAngle.Degrees})", // non-unique actions may be considered duplicates when saving/loading.
+            // non-unique actions may be considered duplicates when saving/loading.
             Icon = decalProto.Sprite,
             Repeat = true,
             ClientExclusive = true,
@@ -164,7 +164,11 @@ public sealed class DecalPlacementSystem : EntitySystem
             Range = -1,
             Event = actionEvent,
             IconColor = _decalColor,
-        };
+        });
+
+        _metaData.SetEntityName(actionId, $"{_decalId} ({_decalColor.ToHex()}, {(int) _decalAngle.Degrees})");
+
+        ev.Action = actionId;
     }
 
     public override void Shutdown()
@@ -193,25 +197,4 @@ public sealed class DecalPlacementSystem : EntitySystem
         else
             _inputSystem.SetEntityContextActive();
     }
-}
-
-public sealed class PlaceDecalActionEvent : WorldTargetActionEvent
-{
-    [DataField("decalId", customTypeSerializer:typeof(PrototypeIdSerializer<DecalPrototype>), required:true)]
-    public string DecalId = string.Empty;
-
-    [DataField("color")]
-    public Color Color;
-
-    [DataField("rotation")]
-    public double Rotation;
-
-    [DataField("snap")]
-    public bool Snap;
-
-    [DataField("zIndex")]
-    public int ZIndex;
-
-    [DataField("cleanable")]
-    public bool Cleanable;
 }

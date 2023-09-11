@@ -24,6 +24,7 @@ public sealed class WiresSystem : SharedWiresSystem
 {
     [Dependency] private readonly IPrototypeManager _protoMan = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly ActivatableUISystem _activatableUI = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly SharedToolSystem _toolSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
@@ -32,7 +33,6 @@ public sealed class WiresSystem : SharedWiresSystem
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly WiresSystem _wiresSystem = default!;
 
     // This is where all the wire layouts are stored.
     [ViewVariables] private readonly Dictionary<string, WireLayout> _layouts = new();
@@ -511,10 +511,7 @@ public sealed class WiresSystem : SharedWiresSystem
         if (args.Open == component.RequireOpen)
             return;
 
-        if (!TryComp<ActivatableUIComponent>(uid, out var ui) || ui.Key == null)
-            return;
-
-        _uiSystem.TryCloseAll(uid, ui.Key);
+        _activatableUI.CloseAll(uid);
     }
 
     private void OnMapInit(EntityUid uid, WiresComponent component, MapInitEvent args)
@@ -598,7 +595,7 @@ public sealed class WiresSystem : SharedWiresSystem
         _uiSystem.TrySetUiState(uid, WiresUiKey.Key, new WiresBoundUserInterfaceState(
             clientList.ToArray(),
             statuses.Select(p => new StatusEntry(p.key, p.value)).ToArray(),
-            wires.BoardName,
+            Loc.GetString(wires.BoardName),
             wires.SerialNumber,
             wires.WireSeed), ui: ui);
     }
@@ -745,7 +742,7 @@ public sealed class WiresSystem : SharedWiresSystem
 
         if (_toolTime > 0f)
         {
-            var args = new DoAfterArgs(user, _toolTime, new WireDoAfterEvent(action, id), target, target: target, used: toolEntity)
+            var args = new DoAfterArgs(EntityManager, user, _toolTime, new WireDoAfterEvent(action, id), target, target: target, used: toolEntity)
             {
                 NeedHand = true,
                 BreakOnDamage = true,

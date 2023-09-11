@@ -107,7 +107,7 @@ namespace Content.Client.Radiation.Overlays
             {
                 if (_entityManager.EntityExists(pulseEntity) &&
                     PulseQualifies(pulseEntity, currentEyeLoc) &&
-                    _entityManager.TryGetComponent<RadiationPulseComponent?>(pulseEntity, out var pulse))
+                    _entityManager.TryGetComponent(pulseEntity, out RadiationPulseComponent? pulse))
                 {
                     var shaderInstance = _pulses[pulseEntity];
                     shaderInstance.instance.CurrentMapCoords = _entityManager.GetComponent<TransformComponent>(pulseEntity).MapPosition;

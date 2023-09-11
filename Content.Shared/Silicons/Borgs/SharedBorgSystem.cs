@@ -30,7 +30,6 @@ public abstract partial class SharedBorgSystem : EntitySystem
         SubscribeLocalEvent<BorgChassisComponent, EntInsertedIntoContainerMessage>(OnInserted);
         SubscribeLocalEvent<BorgChassisComponent, EntRemovedFromContainerMessage>(OnRemoved);
         SubscribeLocalEvent<BorgChassisComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshMovementSpeedModifiers);
-        SubscribeLocalEvent<BorgChassisComponent, GetAccessTagsEvent>(OnGetAccessTags);
 
         InitializeRelay();
     }
@@ -69,7 +68,8 @@ public abstract partial class SharedBorgSystem : EntitySystem
 
     private void OnStartup(EntityUid uid, BorgChassisComponent component, ComponentStartup args)
     {
-        var containerManager = EnsureComp<ContainerManagerComponent>(uid);
+        if (!TryComp<ContainerManagerComponent>(uid, out var containerManager))
+            return;
 
         component.BrainContainer = Container.EnsureContainer<ContainerSlot>(uid, component.BrainContainerId, containerManager);
         component.ModuleContainer = Container.EnsureContainer<Container>(uid, component.ModuleContainerId, containerManager);
@@ -96,12 +96,4 @@ public abstract partial class SharedBorgSystem : EntitySystem
         var sprintDif = movement.BaseWalkSpeed / movement.BaseSprintSpeed;
         args.ModifySpeed(1f, sprintDif);
     }
-
-    private void OnGetAccessTags(EntityUid uid, BorgChassisComponent component, ref GetAccessTagsEvent args)
-    {
-        if (!component.HasPlayer)
-            return;
-        args.AddGroup(component.AccessGroup);
-    }
-
 }

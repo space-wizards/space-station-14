@@ -1,4 +1,5 @@
-﻿using Robust.Shared.Containers;
+﻿using Content.Shared.Humanoid.Prototypes;
+using Robust.Shared.Containers;
 using Robust.Shared.Enums;
 
 namespace Content.Shared.IdentityManagement.Components;
@@ -11,7 +12,7 @@ namespace Content.Shared.IdentityManagement.Components;
 ///     This is a <see cref="ContainerSlot"/> and not just a datum entity because we do sort of care that it gets deleted and sent with the user.
 /// </remarks>
 [RegisterComponent]
-public sealed class IdentityComponent : Component
+public sealed partial class IdentityComponent : Component
 {
     [ViewVariables]
     public ContainerSlot IdentityEntitySlot = default!;
@@ -24,17 +25,19 @@ public sealed class IdentityComponent : Component
 public sealed class IdentityRepresentation
 {
     public string TrueName;
-    public int TrueAge;
     public Gender TrueGender;
+
+    public string AgeString;
 
     public string? PresumedName;
     public string? PresumedJob;
 
-    public IdentityRepresentation(string trueName, int trueAge, Gender trueGender, string? presumedName=null, string? presumedJob=null)
+    public IdentityRepresentation(string trueName, Gender trueGender, string ageString, string? presumedName=null, string? presumedJob=null)
     {
         TrueName = trueName;
-        TrueAge = trueAge;
         TrueGender = trueGender;
+
+        AgeString = ageString;
 
         PresumedJob = presumedJob;
         PresumedName = presumedName;
@@ -54,13 +57,6 @@ public sealed class IdentityRepresentation
     /// </summary>
     public string ToStringUnknown()
     {
-        var ageString = TrueAge switch
-        {
-            <= 30 => Loc.GetString("identity-age-young"),
-            > 30 and <= 60 => Loc.GetString("identity-age-middle-aged"),
-            > 60 => Loc.GetString("identity-age-old")
-        };
-
         var genderString = TrueGender switch
         {
             Gender.Female => Loc.GetString("identity-gender-feminine"),
@@ -70,7 +66,7 @@ public sealed class IdentityRepresentation
 
         // i.e. 'young assistant man' or 'old cargo technician person' or 'middle-aged captain'
         return PresumedJob is null
-            ? $"{ageString} {genderString}"
-            : $"{ageString} {PresumedJob} {genderString}";
+            ? $"{AgeString} {genderString}"
+            : $"{AgeString} {PresumedJob} {genderString}";
     }
 }

@@ -465,6 +465,14 @@ public sealed partial class PathfindingSystem
                         continue;
                     }
 
+                    var xform = xformQuery.GetComponent(ent);
+
+                    if (xform.ParentUid != grid.Owner ||
+                        grid.LocalToTile(xform.Coordinates) != tilePos)
+                    {
+                        continue;
+                    }
+
                     tileEntities.Add(ent);
                 }
 
@@ -641,7 +649,7 @@ public sealed partial class PathfindingSystem
             }
         }
 
-        // _sawmill.Debug($"Built breadcrumbs in {sw.Elapsed.TotalMilliseconds}ms");
+        // Log.Debug($"Built breadcrumbs in {sw.Elapsed.TotalMilliseconds}ms");
         SendBreadcrumbs(chunk, grid.Owner);
     }
 
@@ -827,7 +835,7 @@ public sealed partial class PathfindingSystem
             }
         }
 
-        // _sawmill.Debug($"Built navmesh in {sw.Elapsed.TotalMilliseconds}ms");
+        // Log.Debug($"Built navmesh in {sw.Elapsed.TotalMilliseconds}ms");
         SendPolys(chunk, component.Owner, chunkPolys);
     }
 

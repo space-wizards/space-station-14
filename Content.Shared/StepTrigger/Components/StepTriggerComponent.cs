@@ -8,7 +8,7 @@ namespace Content.Shared.StepTrigger.Components;
 [RegisterComponent]
 [NetworkedComponent]
 [Access(typeof(StepTriggerSystem))]
-public sealed class StepTriggerComponent : Component
+public sealed partial class StepTriggerComponent : Component
 {
     /// <summary>
     ///     List of entities that are currently colliding with the entity.
@@ -50,7 +50,7 @@ public sealed class StepTriggerComponent : Component
 
 [RegisterComponent]
 [Access(typeof(StepTriggerSystem))]
-public sealed class StepTriggerActiveComponent : Component
+public sealed partial class StepTriggerActiveComponent : Component
 {
 
 }
@@ -60,11 +60,11 @@ public sealed class StepTriggerComponentState : ComponentState
 {
     public float IntersectRatio { get; }
     public float RequiredTriggerSpeed { get; }
-    public readonly HashSet<EntityUid> CurrentlySteppedOn;
-    public readonly HashSet<EntityUid> Colliding;
+    public readonly HashSet<NetEntity> CurrentlySteppedOn;
+    public readonly HashSet<NetEntity> Colliding;
     public readonly bool Active;
 
-    public StepTriggerComponentState(float intersectRatio, HashSet<EntityUid> currentlySteppedOn, HashSet<EntityUid> colliding, float requiredTriggerSpeed, bool active)
+    public StepTriggerComponentState(float intersectRatio, HashSet<NetEntity> currentlySteppedOn, HashSet<NetEntity> colliding, float requiredTriggerSpeed, bool active)
     {
         IntersectRatio = intersectRatio;
         CurrentlySteppedOn = currentlySteppedOn;

@@ -103,6 +103,8 @@
     contents:
       - id: ClothingOuterHardsuitEngineeringWhite
       - id: ClothingMaskBreath
+      - id: ClothingUniformJumpsuitChiefEngineerTurtle
+      - id: ClothingUniformJumpskirtChiefEngineerTurtle
       - id: OxygenTankFilled
       - id: NitrogenTankFilled
       - id: ClothingBeltChiefEngineerFilled
@@ -126,6 +128,8 @@
     contents:
       - id: ClothingBeltChiefEngineerFilled
       - id: ClothingHandsGlovesColorYellow
+      - id: ClothingUniformJumpsuitChiefEngineerTurtle
+      - id: ClothingUniformJumpskirtChiefEngineerTurtle
       - id: CigarCase
         prob: 0.15
       - id: DoorRemoteEngineering
@@ -146,15 +150,11 @@
       - id: ClothingHeadsetAltMedical
       - id: ClothingBackpackDuffelSurgeryFilled
       - id: ClothingOuterHardsuitMedical
-      - id: DiagnoserMachineCircuitboard
-      - id: VaccinatorMachineCircuitboard
       - id: Hypospray
       - id: HandheldCrewMonitor
       - id: DoorRemoteMedical
       - id: RubberStampCMO
       - id: MedicalTechFabCircuitboard
-      - id: MaterialBiomass
-        amount: 3
       - id: BoxEncryptionKeyMedical
 
 - type: entity
@@ -175,8 +175,6 @@
       - id: DoorRemoteMedical
       - id: RubberStampCMO
       - id: MedicalTechFabCircuitboard
-      - id: MaterialBiomass
-        amount: 3
       - id: BoxEncryptionKeyMedical
 
 - type: entity
@@ -193,10 +191,11 @@
       - id: ClothingOuterHardsuitRd
       - id: HandTeleporter
       - id: DoorRemoteResearch
+      - id: ClothingHandsGlovesColorPurple
+      - id: ClothingBeltUtilityFilled
       - id: RubberStampRd
       - id: ClothingHeadsetAltScience
       - id: BoxEncryptionKeyScience
-      - id: BoxEncryptionKeyRobo
 
 - type: entity
   id: LockerResearchDirectorFilled
@@ -211,10 +210,11 @@
       - id: ClothingHeadsetMedicalScience
       - id: HandTeleporter
       - id: DoorRemoteResearch
+      - id: ClothingHandsGlovesColorPurple
+      - id: ClothingBeltUtilityFilled
       - id: RubberStampRd
       - id: ClothingHeadsetAltScience
       - id: BoxEncryptionKeyScience
-      - id: BoxEncryptionKeyRobo
 
 - type: entity
   id: LockerHeadOfSecurityFilledHardsuit

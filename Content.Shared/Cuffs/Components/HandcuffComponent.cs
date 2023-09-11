@@ -10,7 +10,7 @@ namespace Content.Shared.Cuffs.Components;
 
 [RegisterComponent, NetworkedComponent]
 [Access(typeof(SharedCuffableSystem))]
-public sealed class HandcuffComponent : Component
+public sealed partial class HandcuffComponent : Component
 {
     /// <summary>
     ///     The time it takes to cuff an entity.

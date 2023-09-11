@@ -7,7 +7,7 @@ namespace Content.Shared.Examine
     ///     This component groups examine messages together
     /// </summary>
     [RegisterComponent]
-    public sealed class GroupExamineComponent : Component
+    public sealed partial class GroupExamineComponent : Component
     {
         /// <summary>
         ///     A list of ExamineGroups.
@@ -28,7 +28,7 @@ namespace Content.Shared.Examine
     }
 
     [DataDefinition]
-    public sealed class ExamineGroup
+    public sealed partial class ExamineGroup
     {
         /// <summary>
         ///     The title of the Examine Group. Localized string that gets added to the examine tooltip.
@@ -74,7 +74,7 @@ namespace Content.Shared.Examine
     ///     An entry used when showing examine details
     /// </summary>
     [Serializable, NetSerializable, DataDefinition]
-    public sealed class ExamineEntry
+    public sealed partial class ExamineEntry
     {
         /// <summary>
         ///     Which component does this entry relate to?

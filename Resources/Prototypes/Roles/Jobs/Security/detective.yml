@@ -22,14 +22,12 @@
   id: DetectiveGear
   equipment:
     jumpsuit: ClothingUniformJumpsuitDetective
-    back: ClothingBackpackSecurityFilled
+    back: ClothingBackpackSecurityFilledDetective
     shoes: ClothingShoesColorBlack
     head: ClothingHeadHatFedoraBrown
     id: DetectivePDA
     ears: ClothingHeadsetSecurity
-    pocket1: ForensicPad
-    pocket2: ForensicScanner
-    belt: ClothingBeltHolster
+    belt: ClothingBeltHolsterFilled
   innerclothingskirt: ClothingUniformJumpskirtDetective
-  satchel: ClothingBackpackSatchelSecurityFilled
-  duffelbag: ClothingBackpackDuffelSecurityFilled
+  satchel: ClothingBackpackSatchelSecurityFilledDetective
+  duffelbag: ClothingBackpackDuffelSecurityFilledDetective

@@ -18,6 +18,7 @@
       factions:
         - SimpleHostile
     - type: Speech
+      speechVerb: Cluwne
     - type: CombatMode
     - type: MobMover
     - type: InputMover

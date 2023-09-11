@@ -7,7 +7,7 @@ namespace Content.Server.PowerSink
     /// Absorbs power up to its capacity when anchored then explodes.
     /// </summary>
     [RegisterComponent]
-    public sealed class PowerSinkComponent : Component
+    public sealed partial class PowerSinkComponent : Component
     {
         /// <summary>
         /// When the power sink is nearing its explosion, warn the crew so they can look for it

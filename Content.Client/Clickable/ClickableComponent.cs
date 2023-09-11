@@ -7,7 +7,7 @@ using static Robust.Client.GameObjects.SpriteComponent;
 namespace Content.Client.Clickable
 {
     [RegisterComponent]
-    public sealed class ClickableComponent : Component
+    public sealed partial class ClickableComponent : Component
     {
         [Dependency] private readonly IClickMapManager _clickMapManager = default!;
 
@@ -131,7 +131,7 @@ namespace Content.Client.Clickable
         }
 
         [DataDefinition]
-        public sealed class DirBoundData
+        public sealed partial class DirBoundData
         {
             [DataField("all")] public Box2 All;
             [DataField("north")] public Box2 North;

@@ -4,6 +4,6 @@
 ///     Triggers when the artifact lands after being thrown.
 /// </summary>
 [RegisterComponent]
-public sealed class ArtifactLandTriggerComponent : Component
+public sealed partial class ArtifactLandTriggerComponent : Component
 {
 }

@@ -19,7 +19,6 @@ namespace Content.Shared.Throwing
     {
         [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
         [Dependency] private readonly SharedBroadphaseSystem _broadphase = default!;
-        [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
         [Dependency] private readonly FixtureSystem _fixtures = default!;
         [Dependency] private readonly SharedPhysicsSystem _physics = default!;
 
@@ -39,7 +38,7 @@ namespace Content.Shared.Throwing
 
         private void OnGetState(EntityUid uid, ThrownItemComponent component, ref ComponentGetState args)
         {
-            args.State = new ThrownItemComponentState(component.Thrower);
+            args.State = new ThrownItemComponentState(GetNetEntity(component.Thrower));
         }
 
         private void OnHandleState(EntityUid uid, ThrownItemComponent component, ref ComponentHandleState args)
@@ -50,7 +49,7 @@ namespace Content.Shared.Throwing
                 return;
             }
 
-            component.Thrower = state.Thrower.Value;
+            component.Thrower = EnsureEntity<ThrownItemComponent>(state.Thrower.Value, uid);
         }
 
         private void ThrowItem(EntityUid uid, ThrownItemComponent component, ThrownEvent args)
@@ -69,7 +68,7 @@ namespace Content.Shared.Throwing
 
         private void HandleCollision(EntityUid uid, ThrownItemComponent component, ref StartCollideEvent args)
         {
-            if (args.OtherFixture.Hard == false)
+            if (!args.OtherFixture.Hard)
                 return;
 
             if (args.OtherEntity == component.Thrower)
@@ -98,15 +97,20 @@ namespace Content.Shared.Throwing
                 StopThrow(message.Pulled.Owner, thrownItemComponent);
         }
 
-        private void StopThrow(EntityUid uid, ThrownItemComponent thrownItemComponent)
+        public void StopThrow(EntityUid uid, ThrownItemComponent thrownItemComponent)
         {
+            if (TryComp<PhysicsComponent>(uid, out var physics))
+            {
+                _physics.SetBodyStatus(physics, BodyStatus.OnGround);
+            }
+
             if (EntityManager.TryGetComponent(uid, out FixturesComponent? manager))
             {
                 var fixture = _fixtures.GetFixtureOrNull(uid, ThrowingFixture, manager: manager);
 
                 if (fixture != null)
                 {
-                    _fixtures.DestroyFixture(uid, fixture, manager: manager);
+                    _fixtures.DestroyFixture(uid, ThrowingFixture, fixture, manager: manager);
                 }
             }
 
@@ -116,8 +120,6 @@ namespace Content.Shared.Throwing
 
         public void LandComponent(EntityUid uid, ThrownItemComponent thrownItem, PhysicsComponent physics, bool playSound)
         {
-            _physics.SetBodyStatus(physics, BodyStatus.OnGround);
-
             if (thrownItem.Deleted || Deleted(uid))
                 return;
 

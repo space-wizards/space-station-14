@@ -1,10 +1,11 @@
 using Content.Server.Administration.Managers;
-using Content.Server.Ghost.Components;
 using Content.Shared.ActionBlocker;
+using Content.Shared.Ghost;
 using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
+using Content.Shared.UserInterface;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;

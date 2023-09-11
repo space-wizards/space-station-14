@@ -3,6 +3,10 @@
   parent: BaseGenerator
   suffix: DEBUG
   components:
+  - type: PowerSupplier
+    supplyRate: 300000
+    supplyRampRate: 50000
+    supplyRampTolerance: 500
   - type: Tag
     tags:
       - Debug

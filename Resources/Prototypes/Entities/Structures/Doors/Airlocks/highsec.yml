@@ -68,7 +68,7 @@
     usesApcPower: true
   - type: WiresPanel
   - type: Wires
-    BoardName: "HighSec Control"
+    BoardName: wires-board-name-highsec
     LayoutId: HighSec
     alwaysRandomize: true
   - type: UserInterface

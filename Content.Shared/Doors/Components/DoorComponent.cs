@@ -15,7 +15,7 @@ namespace Content.Shared.Doors.Components;
 
 [NetworkedComponent]
 [RegisterComponent]
-public sealed class DoorComponent : Component
+public sealed partial class DoorComponent : Component
 {
     /// <summary>
     /// The current state of the door -- whether it is open, closed, opening, or closing.
@@ -36,34 +36,34 @@ public sealed class DoorComponent : Component
     /// Closing time until impassable. Total time is this plus <see cref="CloseTimeTwo"/>.
     /// </summary>
     [DataField("closeTimeOne")]
-    public readonly TimeSpan CloseTimeOne = TimeSpan.FromSeconds(0.4f);
+    public TimeSpan CloseTimeOne = TimeSpan.FromSeconds(0.4f);
 
     /// <summary>
     /// Closing time until fully closed. Total time is this plus <see cref="CloseTimeOne"/>.
     /// </summary>
     [DataField("closeTimeTwo")]
-    public readonly TimeSpan CloseTimeTwo = TimeSpan.FromSeconds(0.2f);
+    public TimeSpan CloseTimeTwo = TimeSpan.FromSeconds(0.2f);
 
     /// <summary>
     /// Opening time until passable. Total time is this plus <see cref="OpenTimeTwo"/>.
     /// </summary>
     [DataField("openTimeOne")]
-    public readonly TimeSpan OpenTimeOne = TimeSpan.FromSeconds(0.4f);
+    public TimeSpan OpenTimeOne = TimeSpan.FromSeconds(0.4f);
 
     /// <summary>
     /// Opening time until fully open. Total time is this plus <see cref="OpenTimeOne"/>.
     /// </summary>
     [DataField("openTimeTwo")]
-    public readonly TimeSpan OpenTimeTwo = TimeSpan.FromSeconds(0.2f);
+    public TimeSpan OpenTimeTwo = TimeSpan.FromSeconds(0.2f);
 
     /// <summary>
     ///     Interval between deny sounds & visuals;
     /// </summary>
     [DataField("denyDuration")]
-    public readonly TimeSpan DenyDuration = TimeSpan.FromSeconds(0.45f);
+    public TimeSpan DenyDuration = TimeSpan.FromSeconds(0.45f);
 
     [DataField("emagDuration")]
-    public readonly TimeSpan EmagDuration = TimeSpan.FromSeconds(0.8f);
+    public TimeSpan EmagDuration = TimeSpan.FromSeconds(0.8f);
 
     /// <summary>
     ///     When the door is active, this is the time when the state will next update.
@@ -116,7 +116,7 @@ public sealed class DoorComponent : Component
     ///     again. Total stun time is actually given by this plus <see cref="OpenTimeOne"/>.
     /// </summary>
     [DataField("doorStunTime")]
-    public readonly TimeSpan DoorStunTime = TimeSpan.FromSeconds(2f);
+    public TimeSpan DoorStunTime = TimeSpan.FromSeconds(2f);
 
     [DataField("crushDamage")]
     public DamageSpecifier? CrushDamage;
@@ -126,14 +126,14 @@ public sealed class DoorComponent : Component
     /// stun, not whether it can close despite entities being in the way.
     /// </summary>
     [DataField("canCrush")]
-    public readonly bool CanCrush = true;
+    public bool CanCrush = true;
 
     /// <summary>
     /// Whether to check for colliding entities before closing. This may be overridden by other system by subscribing to
     /// <see cref="BeforeDoorClosedEvent"/>. For example, hacked airlocks will set this to false.
     /// </summary>
     [DataField("performCollisionCheck")]
-    public readonly bool PerformCollisionCheck = true;
+    public bool PerformCollisionCheck = true;
 
     /// <summary>
     /// List of EntityUids of entities we're currently crushing. Cleared in OnPartialOpen().
@@ -340,14 +340,14 @@ public enum DoorVisualLayers : byte
 public sealed class DoorComponentState : ComponentState
 {
     public readonly DoorState DoorState;
-    public readonly HashSet<EntityUid> CurrentlyCrushing;
+    public readonly HashSet<NetEntity> CurrentlyCrushing;
     public readonly TimeSpan? NextStateChange;
     public readonly bool Partial;
 
-    public DoorComponentState(DoorComponent door)
+    public DoorComponentState(DoorComponent door, HashSet<NetEntity> currentlyCrushing)
     {
         DoorState = door.State;
-        CurrentlyCrushing = door.CurrentlyCrushing;
+        CurrentlyCrushing = currentlyCrushing;
         NextStateChange = door.NextStateChange;
         Partial = door.Partial;
     }

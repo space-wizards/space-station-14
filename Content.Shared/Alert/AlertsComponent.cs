@@ -8,7 +8,7 @@ namespace Content.Shared.Alert;
 /// </summary>
 [RegisterComponent]
 [NetworkedComponent]
-public sealed class AlertsComponent : Component
+public sealed partial class AlertsComponent : Component
 {
     [ViewVariables] public Dictionary<AlertKey, AlertState> Alerts = new();
 

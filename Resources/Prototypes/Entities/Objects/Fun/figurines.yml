@@ -212,7 +212,7 @@
   parent: BaseFigurine
   id: ToyFigurineScientist
   name: scientist figurine
-  description: A figurine depicting a Scienist donning a labcoat.
+  description: A figurine depicting a Scientist donning a labcoat.
   components:
   - type: Sprite
     state: scientist

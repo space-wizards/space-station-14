@@ -52,7 +52,6 @@ namespace Content.Server.Nutrition.EntitySystems
         [Dependency] private readonly ReactiveSystem _reaction = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly StackSystem _stack = default!;
-        [Dependency] private readonly TagSystem _tags = default!;
 
         public const float MaxFeedDistance = 1.0f;
 
@@ -171,7 +170,7 @@ namespace Content.Server.Nutrition.EntitySystems
                 _adminLogger.Add(LogType.Ingestion, LogImpact.Low, $"{ToPrettyString(target):target} is eating {ToPrettyString(food):food} {SolutionContainerSystem.ToPrettyString(foodSolution)}");
             }
 
-            var doAfterArgs = new DoAfterArgs(
+            var doAfterArgs = new DoAfterArgs(EntityManager,
                 user,
                 forceFeed ? foodComp.ForceFeedDelay : foodComp.Delay,
                 new ConsumeDoAfterEvent(foodSolution.Name, flavors),

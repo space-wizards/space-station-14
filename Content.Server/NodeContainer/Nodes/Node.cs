@@ -10,7 +10,7 @@ namespace Content.Server.NodeContainer.Nodes
     ///     that they can "reach" and have the same <see cref="Node.NodeGroupID"/>.
     /// </summary>
     [ImplicitDataDefinitionForInheritors]
-    public abstract class Node
+    public abstract partial class Node
     {
         /// <summary>
         ///     An ID used as a criteria for combining into groups. Determines which <see cref="INodeGroup"/>
@@ -49,7 +49,7 @@ namespace Content.Server.NodeContainer.Nodes
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("needAnchored")]
-        public bool NeedAnchored { get; } = true;
+        public bool NeedAnchored { get; private set; } = true;
 
         public virtual void OnAnchorStateChanged(IEntityManager entityManager, bool anchored) { }
 

@@ -1,0 +1,84 @@
+# gloves
+- type: entity
+  id: ActionToggleNinjaGloves
+  name: action-name-toggle-ninja-gloves
+  description: action-desc-toggle-ninja-gloves
+  noSpawn: true
+  components:
+  - type: InstantAction
+    priority: -13
+    event: !type:ToggleActionEvent {}
+
+# suit
+- type: entity
+  id: ActionCreateThrowingStar
+  name: action-name-create-throwing-star
+  description: action-desc-create-throwing-star
+  noSpawn: true
+  components:
+  - type: InstantAction
+    useDelay: 0.5
+    icon:
+      sprite: Objects/Weapons/Throwable/throwing_star.rsi
+      state: icon
+    itemIconStyle: NoItem
+    priority: -10
+    event: !type:CreateThrowingStarEvent {}
+
+- type: entity
+  id: ActionRecallKatana
+  name: action-name-recall-katana
+  description: action-desc-recall-katana
+  noSpawn: true
+  components:
+  - type: InstantAction
+    useDelay: 1
+    icon:
+      sprite: Objects/Weapons/Melee/energykatana.rsi
+      state: icon
+    itemIconStyle: NoItem
+    priority: -11
+    event: !type:RecallKatanaEvent {}
+
+- type: entity
+  id: ActionNinjaEmp
+  name: action-name-em-burst
+  description: action-desc-em-burst
+  noSpawn: true
+  components:
+  - type: InstantAction
+    icon:
+      sprite: Objects/Weapons/Grenades/empgrenade.rsi
+      state: icon
+    itemIconStyle: BigAction
+    priority: -13
+    event: !type:NinjaEmpEvent {}
+
+- type: entity
+  id: ActionTogglePhaseCloak
+  name: action-name-toggle-phase-cloak
+  description: action-desc-toggle-phase-cloak
+  noSpawn: true
+  components:
+  - type: InstantAction
+    # have to plan (un)cloaking ahead of time
+    useDelay: 5
+    priority: -9
+    event: !type:ToggleStealthEvent
+
+# katana
+- type: entity
+  id: ActionEnergyKatanaDash
+  name: action-name-katana-dash
+  description: action-desc-katana-dash
+  noSpawn: true
+  components:
+  - type: WorldTargetAction
+    icon:
+      sprite: Objects/Magic/magicactions.rsi
+      state: blink
+    itemIconStyle: NoItem
+    priority: -12
+    event: !type:DashEvent
+    checkCanAccess: false
+    range: 0

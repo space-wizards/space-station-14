@@ -608,8 +608,6 @@
   - type: Tag
     tags:
     - Cooked
-  - type: Food
-    trash: FoodPlateSmall
   - type: Sprite
     layers:
     - state: plain-cooked
@@ -637,7 +635,6 @@
   - type: Food
   - type: Sprite
     layers:
-    - state: plate-meat
     - state: bacon-cooked
       map: [ "enum.DamageStateVisualLayers.Base" ]
   - type: RandomSprite
@@ -739,8 +736,6 @@
   - type: Tag
     tags:
     - Cooked
-  - type: Food
-    trash: FoodPlateSmall
   - type: Sprite
     layers:
     - state: chicken-fried

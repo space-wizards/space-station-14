@@ -48,7 +48,7 @@ namespace Content.Server.Chemistry.EntitySystems
             if (!args.CanAccess || !args.CanInteract || !component.CanChangeTransferAmount || args.Hands == null)
                 return;
 
-            if (!EntityManager.TryGetComponent<ActorComponent?>(args.User, out var actor))
+            if (!EntityManager.TryGetComponent(args.User, out ActorComponent? actor))
                 return;
 
             // Custom transfer verb

@@ -321,7 +321,7 @@ namespace Content.Server.Medical.SuitSensors
                 totalDamage = damageable.TotalDamage.Int();
 
             // finally, form suit sensor status
-            var status = new SuitSensorStatus(uid, userName, userJob);
+            var status = new SuitSensorStatus(GetNetEntity(uid), userName, userJob);
             switch (sensor.Mode)
             {
                 case SuitSensorMode.SensorBinary:
@@ -353,7 +353,7 @@ namespace Content.Server.Medical.SuitSensors
                         coordinates = EntityCoordinates.Invalid;
                     }
 
-                    status.Coordinates = coordinates;
+                    status.Coordinates = GetNetCoordinates(coordinates);
                     break;
             }
 
@@ -404,11 +404,11 @@ namespace Content.Server.Medical.SuitSensors
             payload.TryGetValue(SuitSensorConstants.NET_TOTAL_DAMAGE, out int? totalDamage);
             payload.TryGetValue(SuitSensorConstants.NET_COORDINATES, out EntityCoordinates? cords);
 
-            var status = new SuitSensorStatus(suitSensorUid, name, job)
+            var status = new SuitSensorStatus(GetNetEntity(suitSensorUid), name, job)
             {
                 IsAlive = isAlive.Value,
                 TotalDamage = totalDamage,
-                Coordinates = cords,
+                Coordinates = GetNetCoordinates(cords),
             };
             return status;
         }
