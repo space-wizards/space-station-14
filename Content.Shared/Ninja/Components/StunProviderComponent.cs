@@ -35,13 +35,13 @@ public sealed partial class StunProviderComponent : Component
     /// Time that someone is stunned for, stacks if done multiple times.
     /// </summary>
     [DataField("stunTime"), ViewVariables(VVAccess.ReadWrite)]
-    public TimeSpan StunTime = TimeSpan.FromSeconds(3);
+    public TimeSpan StunTime = TimeSpan.FromSeconds(5);
 
     /// <summary>
     /// How long stunning is disabled after stunning something.
     /// </summary>
     [DataField("cooldown"), ViewVariables(VVAccess.ReadWrite)]
-    public TimeSpan Cooldown = TimeSpan.FromSeconds(1);
+    public TimeSpan Cooldown = TimeSpan.FromSeconds(2);
 
     /// <summary>
     /// Locale string to popup when there is no power
