@@ -65,7 +65,7 @@ public sealed class CrewManifestSystem : EntitySystem
             return;
         }
 
-        OpenEui(message.Id, sessionCast);
+        OpenEui(GetEntity(message.Id), sessionCast);
     }
 
     // Not a big fan of this one. Rebuilds the crew manifest every time
@@ -213,15 +213,7 @@ public sealed class CrewManifestSystem : EntitySystem
         }
 
         entries.Entries = entries.Entries.OrderBy(e => e.JobTitle).ThenBy(e => e.Name).ToList();
-
-        if (_cachedEntries.ContainsKey(station))
-        {
-            _cachedEntries[station] = entries;
-        }
-        else
-        {
-            _cachedEntries.Add(station, entries);
-        }
+        _cachedEntries[station] = entries;
     }
 }
 
@@ -247,7 +239,7 @@ public sealed class CrewManifestCommand : IConsoleCommand
             return;
         }
 
-        if (!EntityUid.TryParse(args[0], out var uid))
+        if (!NetEntity.TryParse(args[0], out var uidNet) || !_entityManager.TryGetEntity(uidNet, out var uid))
         {
             shell.WriteLine($"{args[0]} is not a valid entity UID.");
             return;
@@ -261,7 +253,7 @@ public sealed class CrewManifestCommand : IConsoleCommand
 
         var crewManifestSystem = _entityManager.System<CrewManifestSystem>();
 
-        crewManifestSystem.OpenEui(uid, session);
+        crewManifestSystem.OpenEui(uid.Value, session);
     }
 
     public CompletionResult GetCompletion(IConsoleShell shell, string[] args)

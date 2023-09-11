@@ -119,7 +119,7 @@ namespace Content.Server.Ghost.Roles
             if (_openMakeGhostRoleUis.ContainsKey(session))
                 CloseEui(session);
 
-            var eui = _openMakeGhostRoleUis[session] = new MakeGhostRoleEui(uid);
+            var eui = _openMakeGhostRoleUis[session] = new MakeGhostRoleEui(EntityManager, GetNetEntity(uid));
             _euiManager.OpenEui(eui, session);
             eui.StateDirty();
         }

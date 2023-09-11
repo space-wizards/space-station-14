@@ -63,15 +63,18 @@ public sealed class FultonSystem : SharedFultonSystem
 
     private void OnFultonMessage(FultonAnimationMessage ev)
     {
-        if (Deleted(ev.Entity) || !TryComp<SpriteComponent>(ev.Entity, out var entSprite))
+        var entity = GetEntity(ev.Entity);
+        var coordinates = GetCoordinates(ev.Coordinates);
+
+        if (Deleted(entity) || !TryComp<SpriteComponent>(entity, out var entSprite))
             return;
 
-        var animationEnt = Spawn(null, ev.Coordinates);
+        var animationEnt = Spawn(null, coordinates);
         // TODO: Spawn fulton layer
         var sprite = AddComp<SpriteComponent>(animationEnt);
         _serManager.CopyTo(entSprite, ref sprite, notNullableOverride: true);
 
-        if (TryComp<AppearanceComponent>(ev.Entity, out var entAppearance))
+        if (TryComp<AppearanceComponent>(entity, out var entAppearance))
         {
             var appearance = AddComp<AppearanceComponent>(animationEnt);
             _serManager.CopyTo(entAppearance, ref appearance, notNullableOverride: true);

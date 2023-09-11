@@ -27,9 +27,9 @@ public sealed partial class LinkedEntityComponent : Component
 [Serializable, NetSerializable]
 public sealed class LinkedEntityComponentState : ComponentState
 {
-    public HashSet<EntityUid> LinkedEntities;
+    public HashSet<NetEntity> LinkedEntities;
 
-    public LinkedEntityComponentState(HashSet<EntityUid> linkedEntities)
+    public LinkedEntityComponentState(HashSet<NetEntity> linkedEntities)
     {
         LinkedEntities = linkedEntities;
     }
