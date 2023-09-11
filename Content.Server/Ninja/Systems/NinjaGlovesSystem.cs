@@ -23,11 +23,10 @@ namespace Content.Server.Ninja.Systems;
 public sealed class NinjaGlovesSystem : SharedNinjaGlovesSystem
 {
     [Dependency] private readonly EmagProviderSystem _emagProvider = default!;
-    [Dependency] private readonly SharedBatteryDrainerSystem _drainer = default!;
-    [Dependency] private readonly SharedStunProviderSystem _stunProvider = default!;
-    [Dependency] private readonly SpaceNinjaSystem _ninja = default!;
     [Dependency] private readonly CommsHackerSystem _commsHacker = default!;
     [Dependency] private readonly MindSystem _mind = default!;
+    [Dependency] private readonly SharedStunProviderSystem _stunProvider = default!;
+    [Dependency] private readonly SpaceNinjaSystem _ninja = default!;
 
     public override void Initialize()
     {
