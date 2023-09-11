@@ -244,3 +244,15 @@
     - type: HTN
       rootTask:
         task: SimpleHumanoidHostileCompound
+
+- type: entity
+  id: ActionToggleGuardian
+  name: Toggle Guardian
+  description: Either manifests the guardian or recalls it back into your body
+  noSpawn: true
+  components:
+  - type: InstantAction
+    icon: Interface/Actions/manifest.png
+    event: !type:GuardianToggleActionEvent
+    useDelay: 2
+    checkCanInteract: false

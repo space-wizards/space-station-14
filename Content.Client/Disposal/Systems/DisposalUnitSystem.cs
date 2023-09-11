@@ -46,7 +46,7 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
         component.Powered = state.Powered;
         component.Engaged = state.Engaged;
         component.RecentlyEjected.Clear();
-        component.RecentlyEjected.AddRange(state.RecentlyEjected);
+        component.RecentlyEjected.AddRange(EnsureEntityList<DisposalUnitComponent>(state.RecentlyEjected, uid));
     }
 
     public override bool HasDisposals(EntityUid? uid)
