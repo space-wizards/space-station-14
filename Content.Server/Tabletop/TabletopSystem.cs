@@ -21,7 +21,7 @@ namespace Content.Server.Tabletop
     public sealed partial class TabletopSystem : SharedTabletopSystem
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
-        [Dependency] private readonly IEntityManager _entityManager = default!;
+        [Dependency] private readonly EyeSystem _eye = default!;
         [Dependency] private readonly ViewSubscriberSystem _viewSubscriberSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
 
@@ -69,7 +69,7 @@ namespace Content.Server.Tabletop
             // Find the entity, remove it from the session and set it's position to the tabletop
             session.Entities.TryGetValue(entity, out var result);
             session.Entities.Remove(result);
-            _entityManager.QueueDeleteEntity(result);
+            QueueDel(result);
         }
 
         private void OnInteractUsing(EntityUid uid, TabletopGameComponent component, InteractUsingEvent args)
@@ -94,7 +94,7 @@ namespace Content.Server.Tabletop
             var meta = MetaData(handEnt);
             var protoId = meta.EntityPrototype?.ID;
 
-            var hologram = _entityManager.SpawnEntity(protoId, session.Position.Offset(-1, 0));
+            var hologram = Spawn(protoId, session.Position.Offset(-1, 0));
 
             // Make sure the entity can be dragged and can be removed, move it into the board game world and add it to the Entities hashmap
             EnsureComp<TabletopDraggableComponent>(hologram);
