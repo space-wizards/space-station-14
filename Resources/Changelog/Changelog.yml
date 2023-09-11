@@ -1,9 +1,4 @@
 Entries:
-- author: FillerVK
-  changes:
-  - {message: Added psychologist's office at Box Station, type: Add}
-  id: 4297
-  time: '2023-07-20T06:50:47.0000000+00:00'
 - author: PixelTK
   changes:
   - {message: 'Arachnids have a few more appendages, chest markings, and now show
@@ -2991,3 +2986,9 @@ Entries:
     type: Tweak}
   id: 4796
   time: '2023-09-10T23:01:05.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Made tooltips open faster and anchor bottom-left to mouse cursor instead
+      of top-left., type: Tweak}
+  id: 4797
+  time: '2023-09-11T03:53:36.0000000+00:00'
