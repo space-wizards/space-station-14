@@ -314,12 +314,10 @@ public partial class SharedGunSystem
             if (thisSlot == null)
             {
                 component.Chambers[i] = null;
+                continue;
             }
-            else
-            {
-                component.AmmoContainer.Remove(thisSlot.Value);
-                component.AmmoSlots[i] = null;
-            }
+            component.AmmoContainer.Remove(thisSlot.Value);
+            component.AmmoSlots[i] = null;
         }
         UpdateAmmoCount(revolverUid);
         UpdateRevolverAppearance(revolverUid, component);

@@ -3,20 +3,17 @@ using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Interaction;
 using Robust.Shared.Audio;
 using Content.Shared.Damage;
-using Content.Server.Stunnable;
+using Robust.Shared.Containers;
+using Robust.Server.GameObjects;
 
 namespace Content.Server.RussianRevolver;
 
 public sealed class RussianRevolverSystem : EntitySystem
 {
-    [Dependency]
-    private readonly SharedGunSystem _gunSystem = default!;
-    [Dependency]
-    private readonly SharedAudioSystem _audio = default!;
-    [Dependency]
-    private readonly DamageableSystem _damageable = default!;
-    [Dependency]
-    private readonly StunSystem _stun = default!;
+    [Dependency] private readonly SharedGunSystem _gunSystem = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly DamageableSystem _damageable = default!;
+    [Dependency] private readonly AppearanceSystem _appearance = default!;
     public override void Initialize()
     {
         base.Initialize();
@@ -36,11 +33,30 @@ public sealed class RussianRevolverSystem : EntitySystem
         {
             _audio.PlayPvs(component.SoundLose, uid);
             ammoProvider.Chambers[ammoProvider.CurrentIndex] = false;
+            if (!TryComp(uid, out ContainerManagerComponent? container))
+            {
+                return;
+            }
+            if (ammoProvider.AmmoSlots[ammoProvider.CurrentIndex] != null)
+            {
+                EntityUid? nullet = ammoProvider.AmmoSlots[ammoProvider.CurrentIndex];
+                if (nullet != null)
+                {
+                    EntityUid bullet = (EntityUid) nullet;
+                    if (TryComp(bullet, out CartridgeAmmoComponent? spentAmmo))
+                    {
+                        spentAmmo.Spent = true;
+                        _appearance.SetData(bullet, AmmoVisuals.Spent, true);
+                        Dirty(bullet, spentAmmo);
+                    }
+                }
+
+            }
             if (!TryComp(args.User, out DamageableComponent? damageMe))
             {
                 return;
             }
-            _damageable.TryChangeDamage(args.User, component.RussianRevolverDamage,
+            _damageable.TryChangeDamage(args.User, component.damage,
                 true, damageable: damageMe, origin: args.User);
         }
         else

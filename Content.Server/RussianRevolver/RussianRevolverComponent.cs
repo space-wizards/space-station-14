@@ -4,15 +4,16 @@ using Robust.Shared.Audio;
 namespace Content.Server.RussianRevolver;
 
 [RegisterComponent]
+[Access(typeof(RussianRevolverSystem))]
 public sealed partial class RussianRevolverComponent : Component
 {
-    [DataField("russianRevolverDamage", required: true)]
+    [DataField("damage", required: true)]
     [ViewVariables(VVAccess.ReadWrite)]
-    public DamageSpecifier RussianRevolverDamage = default!;
+    public DamageSpecifier damage = default!;
 
-    [ViewVariables(VVAccess.ReadWrite), DataField("soundWin")]
+    [DataField("soundWin"), ViewVariables(VVAccess.ReadWrite)]
     public SoundSpecifier? SoundWin = new SoundPathSpecifier("/Audio/Weapons/Guns/Empty/empty.ogg");
 
-    [ViewVariables(VVAccess.ReadWrite), DataField("soundLose")]
+    [DataField("soundLose"), ViewVariables(VVAccess.ReadWrite)]
     public SoundSpecifier? SoundLose = new SoundPathSpecifier("/Audio/Weapons/Guns/Gunshots/revolver.ogg");
 }
