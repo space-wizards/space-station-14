@@ -5,10 +5,11 @@ using Content.Shared.Radiation.Components;
 using Content.Shared.Radiation.Systems;
 using Content.Shared.Stacks;
 using Robust.Shared.Collections;
-using Robust.Shared.Map;
+using Robust.Shared.Containers;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+using System.Linq;
 
 namespace Content.Server.Radiation.Systems;
 
@@ -16,6 +17,9 @@ namespace Content.Server.Radiation.Systems;
 public partial class RadiationSystem
 {
     [Dependency] private readonly SharedStackSystem _stack = default!;
+    [Dependency] private readonly SharedContainerSystem _container = default!;
+
+    private EntityQuery<RadiationBlockingContainerComponent> _radiationBlockingContainers;
 
     private void UpdateGridcast()
     {
@@ -32,6 +36,8 @@ public partial class RadiationSystem
         var transformQuery = GetEntityQuery<TransformComponent>();
         var gridQuery = GetEntityQuery<MapGridComponent>();
         var stackQuery = GetEntityQuery<StackComponent>();
+
+        _radiationBlockingContainers = GetEntityQuery<RadiationBlockingContainerComponent>();
 
         // precalculate world positions for each source
         // so we won't need to calc this in cycle over and over again
@@ -71,6 +77,9 @@ public partial class RadiationSystem
                     rads += ray.Rads;
             }
 
+            // Apply modifier if the destination entity is hidden within a radiation blocking container
+            rads = GetAdjustedRadiationIntensity(dest.Owner, rads);
+
             receiversTotalRads.Add((dest, rads));
         }
 
@@ -89,7 +98,7 @@ public partial class RadiationSystem
 
             // also send an event with combination of total rad
             if (rads > 0)
-                IrradiateEntity(receiver.Owner, rads,GridcastUpdateRate);
+                IrradiateEntity(receiver.Owner, rads, GridcastUpdateRate);
         }
 
         // raise broadcast event that radiation system has updated
@@ -114,8 +123,13 @@ public partial class RadiationSystem
         // check if receiver is too far away
         if (dist > GridcastMaxDistance)
             return null;
+
         // will it even reach destination considering distance penalty
         var rads = incomingRads - slope * dist;
+
+        // Apply rad modifier if the source is enclosed within a radiation blocking container
+        rads = GetAdjustedRadiationIntensity(sourceUid, rads);
+
         if (rads <= MinIntensity)
             return null;
 
@@ -217,5 +231,16 @@ public partial class RadiationSystem
             ray.Blockers.Add(GetNetEntity(gridUid), blockers);
 
         return ray;
+    }
+
+    private float GetAdjustedRadiationIntensity(EntityUid uid, float rads)
+    {
+        var radblockingComps = new List<RadiationBlockingContainerComponent>();
+        if (_container.TryFindComponentsOnEntityContainerOrParent(uid, _radiationBlockingContainers, radblockingComps))
+        {
+            rads -= radblockingComps.Sum(x => x.RadResistance);
+        }
+
+        return float.Max(rads, 0);
     }
 }
