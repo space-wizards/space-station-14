@@ -1,5 +1,6 @@
 using Content.Shared.Ninja.Systems;
 using Content.Shared.Whitelist;
+using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
@@ -18,6 +19,12 @@ public sealed partial class StunProviderComponent : Component
     /// </summary>
     [DataField("batteryUid"), ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public EntityUid? BatteryUid;
+
+    /// <summary>
+    /// Sound played when stunning someone.
+    /// </summary>
+    [DataField("sound"), ViewVariables(VVAccess.ReadWrite)]
+    public SoundSpecifier Sound = new SoundCollectionSpecifier("sparks");
 
     /// <summary>
     /// Joules required in the battery to stun someone. Defaults to 10 uses on a small battery.
