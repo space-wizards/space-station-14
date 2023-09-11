@@ -8,12 +8,12 @@
     tags:
     - JawsOfLife
   - type: Sprite
-    sprite: Objects/Tools/jaws_of_life.rsi
+    sprite: Object/Tools/jaws/jaws_of_life.rsi
     state: jaws_pry
   - type: Item
     size: 50
   - type: Clothing
-    sprite: Objects/Tools/jaws_of_life.rsi
+    sprite: Object/Tools/jaws/jaws_of_life.rsi
     quickEquip: false
     slots:
       - Belt
@@ -30,13 +30,13 @@
     entries:
       - behavior: Prying
         sprite:
-          sprite: Objects/Tools/jaws_of_life.rsi
+          sprite: Object/Tools/jaws/jaws_of_life.rsi
           state: jaws_pry
         useSound: /Audio/Items/jaws_pry.ogg
         changeSound: /Audio/Items/change_jaws.ogg
       - behavior: Cutting
         sprite:
-          sprite: Objects/Tools/jaws_of_life.rsi
+          sprite: Object/Tools/jaws/jaws_of_life.rsi
           state: jaws_cutter
         useSound: /Audio/Items/jaws_cut.ogg
         changeSound: /Audio/Items/change_jaws.ogg
@@ -52,10 +52,12 @@
   description: Useful for entering the station or its departments.
   components:
   - type: Sprite
-    sprite: Objects/Tools/jaws_of_life.rsi
-    state: syn_jaws_pry
+    sprite: Object/Tools/jaws/jaws_of_death.rsi
+    state: jaws_pry
   - type: Item
     size: 35
+  - type: Clothing
+    sprite: Object/Tools/jaws/jaws_of_death.rsi
   - type: Tool
     qualities:
       - Prying
@@ -64,14 +66,14 @@
     entries:
       - behavior: Prying
         sprite:
-          sprite: Objects/Tools/jaws_of_life.rsi
-          state: syn_jaws_pry
+          sprite: Object/Tools/jaws/jaws_of_death.rsi
+          state: jaws_pry
         useSound: /Audio/Items/jaws_pry.ogg
         changeSound: /Audio/Items/change_jaws.ogg
       - behavior: Cutting
         sprite:
-          sprite: Objects/Tools/jaws_of_life.rsi
-          state: syn_jaws_cutter
+          sprite: Object/Tools/jaws/jaws_of_death.rsi
+          state: jaws_cutter
         useSound: /Audio/Items/jaws_cut.ogg
         changeSound: /Audio/Items/change_jaws.ogg
   - type: MeleeWeapon
