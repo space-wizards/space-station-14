@@ -102,4 +102,126 @@ public sealed class LoadoutSystem : EntitySystem
         // The server has more information about the inventory system than the client does and the client doesn't need to put loadouts in backpacks
         return failedLoadouts;
     }
+
+
+    /// <summary>
+    ///     Returns whether or not a loadout prototype has any whitelist requirements
+    /// </summary>
+    /// <param name="loadout">The loadout prototype to get information from</param>
+    public bool LoadoutWhitelistExists(LoadoutPrototype loadout)
+    {
+        return loadout.EntityWhitelist?.Components != null ||
+               loadout.EntityWhitelist?.Tags != null ||
+               loadout.JobWhitelist != null ||
+               loadout.SpeciesWhitelist != null;
+    }
+
+    /// <summary>
+    ///     Returns whether or not a loadout prototype has any blacklist requirements
+    /// </summary>
+    /// <param name="loadout">The loadout prototype to get information from</param>
+    public bool LoadoutBlacklistExists(LoadoutPrototype loadout)
+    {
+        return loadout.EntityBlacklist?.Components != null ||
+               loadout.EntityBlacklist?.Tags != null ||
+               loadout.JobBlacklist != null ||
+               loadout.SpeciesBlacklist != null;
+    }
+
+
+    /// <summary>
+    ///     Gets a string describing the whitelist requirements of a loadout prototype OR an empty string if there are no whitelist requirements
+    /// </summary>
+    /// <param name="loadout">The loadout prototype to get information from</param>
+    public string GetLoadoutWhitelistString(LoadoutPrototype loadout)
+    {
+        if (!LoadoutWhitelistExists(loadout))
+            return "";
+
+        var whitelist = new List<string> { Loc.GetString("humanoid-profile-editor-loadouts-whitelist") };
+
+
+        if (loadout.EntityWhitelist?.Components != null)
+        {
+            foreach (var component in loadout.EntityWhitelist.Components)
+            {
+                whitelist.Add(Loc.GetString("humanoid-profile-editor-loadouts-component", ("component", component)));
+            }
+        }
+
+        if (loadout.EntityWhitelist?.Tags != null)
+        {
+            foreach (var tag in loadout.EntityWhitelist.Tags)
+            {
+                whitelist.Add(Loc.GetString("humanoid-profile-editor-loadouts-tag", ("tag", tag)));
+            }
+        }
+
+        if (loadout.JobWhitelist != null)
+        {
+            foreach (var job in loadout.JobWhitelist)
+            {
+                whitelist.Add(Loc.GetString("humanoid-profile-editor-loadouts-job", ("job", job)));
+            }
+        }
+
+        if (loadout.SpeciesWhitelist != null)
+        {
+            foreach (var species in loadout.SpeciesWhitelist)
+            {
+                whitelist.Add(Loc.GetString("humanoid-profile-editor-loadouts-species", ("species", species)));
+            }
+        }
+
+
+        return string.Join("\n ", whitelist);
+    }
+
+    /// <summary>
+    ///     Gets a string describing the blacklist requirements of a loadout prototype OR an empty string if there are no blacklist requirements
+    /// </summary>
+    /// <param name="loadout">The loadout prototype to get information from</param>
+    public string GetLoadoutBlacklistString(LoadoutPrototype loadout)
+    {
+        if (!LoadoutBlacklistExists(loadout))
+            return "";
+
+        var blacklist = new List<string> { Loc.GetString("humanoid-profile-editor-loadouts-blacklist") };
+
+
+        if (loadout.EntityBlacklist?.Components != null)
+        {
+            foreach (var component in loadout.EntityBlacklist.Components)
+            {
+                blacklist.Add(Loc.GetString("humanoid-profile-editor-loadouts-component", ("component", component)));
+            }
+        }
+
+        if (loadout.EntityBlacklist?.Tags != null)
+        {
+            foreach (var tag in loadout.EntityBlacklist.Tags)
+            {
+                blacklist.Add(Loc.GetString("humanoid-profile-editor-loadouts-tag", ("tag", tag)));
+            }
+        }
+
+        if (loadout.JobBlacklist != null)
+        {
+            foreach (var job in loadout.JobBlacklist)
+            {
+                blacklist.Add(Loc.GetString("humanoid-profile-editor-loadouts-job", ("job", job)));
+            }
+        }
+
+        if (loadout.SpeciesBlacklist != null)
+        {
+            foreach (var species in loadout.SpeciesBlacklist)
+            {
+                blacklist.Add(Loc.GetString("humanoid-profile-editor-loadouts-species", ("species", species)));
+            }
+        }
+
+
+        return string.Join("\n ", blacklist);
+    }
 }

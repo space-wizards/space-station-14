@@ -7,6 +7,7 @@ using Content.Client.Players.PlayTimeTracking;
 using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.CCVar;
+using Content.Shared.Clothing;
 using Content.Shared.GameTicking;
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Markings;
@@ -1576,11 +1577,17 @@ namespace Content.Client.Preferences.UI
             {
                 Loadout = loadout;
 
+                // Dependencies
                 var entMan = IoCManager.Resolve<IEntityManager>();
-                var exists = IoCManager.Resolve<IPrototypeManager>().TryIndex<EntityPrototype>(loadout.Item!, out _);
-                var dummyLoadout = entMan.SpawnEntity(exists ? loadout.Item : "Error", MapCoordinates.Nullspace);
-                var sprite = entMan.GetComponent<SpriteComponent>(dummyLoadout);
+                var loadoutSystem = EntitySystem.Get<LoadoutSystem>();
 
+                // Does the loadout item entity exist?
+                var exists = IoCManager.Resolve<IPrototypeManager>().TryIndex<EntityPrototype>(loadout.Item!, out _);
+                // Spawn an Error entity if it doesn't exist, instead of crashing the client
+                var dummyLoadoutItem = entMan.SpawnEntity(exists ? loadout.Item : "Error", MapCoordinates.Nullspace);
+
+                // Get the sprite component of the dummy entity and create a sprite view for it
+                var sprite = entMan.GetComponent<SpriteComponent>(dummyLoadoutItem);
                 var previewLoadout = new SpriteView
                 {
                     Sprite = sprite,
@@ -1590,6 +1597,8 @@ namespace Content.Client.Preferences.UI
                     SizeFlagsStretchRatio = 1
                 };
 
+
+                // Create a checkbox to get the loadout
                 _checkBox = new CheckBox
                 {
                     Text = $"[{loadout.Cost}] {Loc.GetString(loadout.Name)}",
@@ -1598,55 +1607,27 @@ namespace Content.Client.Preferences.UI
                 _checkBox.OnToggled += OnCheckBoxToggled;
 
                 var tooltip = "";
+                // Add the loadout description to the tooltip if there is one
                 if (loadout.Description is { } desc)
                 {
                     tooltip += $"{Loc.GetString(desc)}";
-                    if (loadout.EntityWhitelist != null || loadout.JobWhitelist != null || loadout.EntityBlacklist != null || loadout.JobBlacklist != null) tooltip += "\n";
+                    if (loadoutSystem.LoadoutWhitelistExists(loadout) || loadoutSystem.LoadoutBlacklistExists(loadout))
+                        tooltip += "\n";
                 }
 
-                if (loadout.EntityWhitelist != null || loadout.JobWhitelist != null)
-                {
-                    tooltip += "Whitelist:";
-                    if (loadout.EntityWhitelist?.Components != null)
-                        foreach (var require in loadout.EntityWhitelist.Components)
-                            tooltip += $"\n - {require} (Component)";
-                    if (loadout.EntityWhitelist?.Tags != null)
-                        foreach (var require in loadout.EntityWhitelist.Tags)
-                            tooltip += $"\n - {require} (Tag)";
-                    if (loadout.EntityWhitelist?.RequireAll == true)
-                        tooltip += $"\n Require All: {loadout.EntityWhitelist.RequireAll}"; // This comes first because job whitelist has no effect on requireall
-                    if (loadout.JobWhitelist != null)
-                        foreach (var require in loadout.JobWhitelist)
-                            tooltip += $"\n - {require} (Job)";
-                    if (loadout.SpeciesWhitelist != null)
-                        foreach (var require in loadout.SpeciesWhitelist)
-                            tooltip += $"\n - {require} (Species)";
-                }
-                if (loadout.EntityBlacklist != null || loadout.JobBlacklist != null)
-                {
-                    tooltip += "Blacklist:";
-                    if (loadout.EntityBlacklist?.Components != null)
-                        foreach (var require in loadout.EntityBlacklist.Components)
-                            tooltip += $"\n - {require} (Component)";
-                    if (loadout.EntityBlacklist?.Tags != null)
-                        foreach (var require in loadout.EntityBlacklist.Tags)
-                            tooltip += $"\n - {require} (Tag)";
-                    if (loadout.EntityBlacklist?.RequireAll == true)
-                        tooltip += $"\n Require All: {loadout.EntityBlacklist.RequireAll}"; // This comes first because job whitelist has no effect on requireall
-                    if (loadout.JobBlacklist != null)
-                        foreach (var require in loadout.JobBlacklist)
-                            tooltip += $"\n - {require} (Job)";
-                    if (loadout.SpeciesBlacklist != null)
-                        foreach (var require in loadout.SpeciesBlacklist)
-                            tooltip += $"\n - {require} (Species)";
-                }
+                // Add the loadout whitelist and blacklist descriptions to the tooltip if there are any
+                tooltip += loadoutSystem.GetLoadoutWhitelistString(loadout);
+                tooltip += loadoutSystem.GetLoadoutBlacklistString(loadout);
 
+                // If the tooltip has any content, add it to the checkbox
                 if (tooltip != "")
                 {
                     _checkBox.ToolTip = tooltip;
                     _checkBox.TooltipDelay = 0.2f;
                 }
 
+
+                // Add the loadout preview and the checkbox to the control
                 AddChild(new BoxContainer
                 {
                     Orientation = LayoutOrientation.Horizontal,
