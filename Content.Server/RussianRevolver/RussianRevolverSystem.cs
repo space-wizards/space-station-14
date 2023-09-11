@@ -9,14 +9,11 @@ namespace Content.Server.RussianRevolver;
 
 public sealed class RussianRevolverSystem : EntitySystem
 {
-    [Dependency]
-    private readonly SharedGunSystem _gunSystem = default!;
-    [Dependency]
-    private readonly SharedAudioSystem _audio = default!;
-    [Dependency]
-    private readonly DamageableSystem _damageable = default!;
-    [Dependency]
-    private readonly StunSystem _stun = default!;
+    [Dependency] private readonly SharedGunSystem _gunSystem = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly DamageableSystem _damageable = default!;
+    [Dependency] private readonly StunSystem _stun = default!;
+
     public override void Initialize()
     {
         base.Initialize();
