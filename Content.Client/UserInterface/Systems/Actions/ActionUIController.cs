@@ -749,7 +749,7 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
             if (entIcon != null)
             {
                 _dragShadow.Texture = EntityManager.GetComponent<SpriteComponent>(entIcon.Value).Icon?
-                    .GetFrame(RSI.State.Direction.South, 0);
+                    .GetFrame(RsiDirection.South, 0);
             }
             else if (action.Icon != null)
             {

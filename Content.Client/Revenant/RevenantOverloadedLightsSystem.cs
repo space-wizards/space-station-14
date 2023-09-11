@@ -41,12 +41,12 @@ public sealed class RevenantOverloadedLightsSystem : SharedRevenantOverloadedLig
 
     private void OnShutdown(EntityUid uid, RevenantOverloadedLightsComponent component, ComponentShutdown args)
     {
-        if (!TryComp<SharedPointLightComponent>(uid, out var light))
+        if (!_lights.TryGetLight(uid, out var light))
             return;
 
         if (component.OriginalEnergy == null)
         {
-            RemComp<SharedPointLightComponent>(uid);
+            RemComp(uid, light);
             return;
         }
 
