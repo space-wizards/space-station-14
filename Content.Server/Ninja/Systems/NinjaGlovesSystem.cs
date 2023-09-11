@@ -85,7 +85,7 @@ public sealed class NinjaGlovesSystem : SharedNinjaGlovesSystem
         _stunProvider.SetNoPowerPopup(user, "ninja-no-power", stun);
         if (_ninja.GetNinjaBattery(user, out var battery, out var _))
         {
-            var ev = new BatteryChangedEvent(battery.Value, ninja.Suit.Value);
+            var ev = new NinjaBatteryChangedEvent(battery.Value, ninja.Suit.Value);
             RaiseLocalEvent(user, ref ev);
         }
 

@@ -69,7 +69,7 @@ public sealed class NinjaSuitSystem : SharedNinjaSuitSystem
         if (!HasComp<SpaceNinjaComponent>(user))
             return;
 
-        var ev = new BatteryChangedEvent(args.EntityUid, uid);
+        var ev = new NinjaBatteryChangedEvent(args.EntityUid, uid);
         RaiseLocalEvent(user, ref ev);
     }
 
