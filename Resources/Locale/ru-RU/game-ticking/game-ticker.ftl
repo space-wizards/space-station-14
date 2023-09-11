@@ -1,17 +1,18 @@
 game-ticker-restart-round = Перезапуск раунда...
 game-ticker-start-round = Раунд начинается...
-game-ticker-start-round-cannot-start-game-mode-fallback = Не удалось запустить режим { $failedGameMode }! Запускаем { $fallbackMode }...
-game-ticker-start-round-cannot-start-game-mode-restart = Не удалось запустить режим { $failedGameMode }! Перезапуск раунда...
+game-ticker-start-round-cannot-start-game-mode-fallback = Не удалось запустить режим {$failedGameMode}! Запускаем {$fallbackMode}...
+game-ticker-start-round-cannot-start-game-mode-restart = Не удалось запустить режим {$failedGameMode}! Перезапуск раунда...
+game-ticker-start-round-invalid-map = Выбранная карта {$map} не подходит для режима игры {$mode}. Игровой режим может работать не так, как задумано...
 game-ticker-unknown-role = Неизвестный
-game-ticker-delay-start = Начало раунда было отложено на { $seconds } секунд.
+game-ticker-delay-start = Начало раунда было отложено на {$seconds} секунд.
 game-ticker-pause-start = Начало раунда было приостановлено.
 game-ticker-pause-start-resumed = Отсчет начала раунда возобновлен.
 game-ticker-player-join-game-message = Добро пожаловать на Космическую Станцию 14! Если вы играете впервые, обязательно нажмите ESC на клавиатуре и прочитайте правила игры, а также не бойтесь просить помощи в LOOC чате или "Админ помощь".
 game-ticker-get-info-text = Привет и добро пожаловать в [color=white]Space Station 14![/color]
                             Текущий раунд: [color=white]#{ $roundId }[/color]
                             Текущее количество игроков: [color=white]{ $playerCount }[/color]
-                            Текущая карта: [color=white]{ $mapName }[/color]
-                            Текущий режим игры: [color=white]{ $gmTitle }[/color]
+                            Текущая карта: [color=white]{$mapName}[/color]
+                            Текущий режим игры: [color=white]{$gmTitle}[/color]
                             >[color=yellow]{ $desc }[/color]
 game-ticker-get-info-preround-text = Привет и добро пожаловать на [color=white]Космическую Станцию 14![/color]
                             Текущий раунд: [color=white]#{$roundId}[/color]
@@ -40,3 +41,4 @@ latejoin-arrival-announcement = {$character} ({$job}) {$gender ->
     } на станцию!
 latejoin-arrival-sender = Общее
 latejoin-arrivals-direction = Вскоре прибудет шаттл, который доставит вас на станцию.
+latejoin-arrivals-direction-time = Шаттл, который доставит вас на станцию, прибудет через {$time}.
