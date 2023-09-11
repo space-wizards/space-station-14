@@ -28,10 +28,6 @@
   - type: StaticPrice
     price: 500
   - type: RussianRevolver
-    soundLose:
-      path: /Audio/Weapons/Guns/Gunshots/revolver.ogg
-    soundWin:
-      path: /Audio/Weapons/Guns/Empty/empty.ogg
     damage:
       types:
         Piercing: 150
