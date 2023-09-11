@@ -1,10 +1,13 @@
 using Content.Shared.Examine;
 using Content.Shared.Tools.Systems;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Wires;
 
 public abstract class SharedWiresSystem : EntitySystem
 {
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -23,16 +26,19 @@ public abstract class SharedWiresSystem : EntitySystem
         {
             args.PushMarkup(Loc.GetString("wires-panel-component-on-examine-open"));
 
-            if (component?.SecurityLevelPrototype?.Examine != null)
+            if (_prototypeManager.TryIndex<WiresPanelSecurityLevelPrototype>(component.CurrentSecurityLevelID, out var securityLevelPrototype) &&
+                securityLevelPrototype.Examine != null)
             {
-                args.PushMarkup(Loc.GetString(component.SecurityLevelPrototype.Examine));
+                args.PushMarkup(Loc.GetString(securityLevelPrototype.Examine));
             }
         }
     }
 
     private void OnWeldableAttempt(EntityUid uid, WiresPanelComponent component, WeldableAttemptEvent args)
     {
-        if (component.Open && component?.SecurityLevelPrototype?.WeldingAllowed == false)
+        if (component.Open &&
+            _prototypeManager.TryIndex<WiresPanelSecurityLevelPrototype>(component.CurrentSecurityLevelID, out var securityLevelPrototype) &&
+            !securityLevelPrototype.WeldingAllowed)
         {
             args.Cancel();
         }

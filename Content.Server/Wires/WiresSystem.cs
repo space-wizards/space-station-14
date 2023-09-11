@@ -459,7 +459,8 @@ public sealed class WiresSystem : SharedWiresSystem
             return;
 
         if (panel.Open &&
-            panel.SecurityLevelPrototype?.WiresAccessible != false &&
+            _protoMan.TryIndex<WiresPanelSecurityLevelPrototype>(panel.CurrentSecurityLevelID, out var securityLevelPrototype) &&
+            securityLevelPrototype.WiresAccessible &&
             (_toolSystem.HasQuality(args.Used, "Cutting", tool) ||
             _toolSystem.HasQuality(args.Used, "Pulsing", tool)))
         {
@@ -657,15 +658,11 @@ public sealed class WiresSystem : SharedWiresSystem
 
     public void SetWiresPanelSecurityData(EntityUid uid, WiresPanelComponent component, string wiresPanelSecurityLevelID)
     {
-        var wiresPanelSecurityLevelPrototype = _protoMan.Index<WiresPanelSecurityLevelPrototype>(wiresPanelSecurityLevelID);
-
-        if (wiresPanelSecurityLevelPrototype == null)
-            return;
-
-        component.SecurityLevelPrototype = wiresPanelSecurityLevelPrototype;
+        component.CurrentSecurityLevelID = wiresPanelSecurityLevelID;
         Dirty(uid, component);
 
-        if (wiresPanelSecurityLevelPrototype?.WiresAccessible == false)
+        if (_protoMan.TryIndex<WiresPanelSecurityLevelPrototype>(component.CurrentSecurityLevelID, out var securityLevelPrototype) &&
+            securityLevelPrototype.WiresAccessible)
         {
             _uiSystem.TryCloseAll(uid, WiresUiKey.Key);
         }
