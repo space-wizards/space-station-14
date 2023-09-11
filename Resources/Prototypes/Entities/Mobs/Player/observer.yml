@@ -10,9 +10,6 @@
   - type: MindContainer
   - type: Clickable
   - type: InteractionOutline
-  - type: Physics
-    bodyType: KinematicController
-    fixedRotation: true
   - type: Fixtures
     fixtures:
       fix1:
@@ -60,6 +57,58 @@
     baseSprintSpeed: 12
     baseWalkSpeed: 8
   - type: MovementIgnoreGravity
+  - type: Physics
+    bodyType: KinematicController
+    bodyStatus: InAir
+  - type: CanMoveInAir
   - type: Tag
     tags:
       - BypassInteractionRangeChecks
+
+- type: entity
+  id: ActionGhostBoo
+  name: action-name-boo
+  description: action-description-boo
+  noSpawn: true
+  components:
+  - type: InstantAction
+    icon: Interface/Actions/scream.png
+    checkCanInteract: false
+    event: !type:BooActionEvent
+    useDelay: 120
+
+- type: entity
+  id: ActionToggleLighting
+  name: ghost-gui-toggle-lighting-manager-name
+  description: ghost-gui-toggle-lighting-manager-desc
+  noSpawn: true
+  components:
+  - type: InstantAction
+    icon: Interface/VerbIcons/light.svg.192dpi.png
+    clientExclusive: true
+    checkCanInteract: false
+    event: !type:ToggleLightingActionEvent
+
+- type: entity
+  id: ActionToggleFov
+  name: ghost-gui-toggle-fov-name
+  description: ghost-gui-toggle-fov-desc
+  noSpawn: true
+  components:
+  - type: InstantAction
+    icon: Interface/VerbIcons/vv.svg.192dpi.png
+    clientExclusive: true
+    checkCanInteract: false
+    event: !type:ToggleFoVActionEvent
+
+- type: entity
+  id: ActionToggleGhosts
+  name: ghost-gui-toggle-ghost-visibility-name
+  description: ghost-gui-toggle-ghost-visibility-desc
+  noSpawn: true
+  components:
+  - type: InstantAction
+    icon: { sprite: Mobs/Ghosts/ghost_human.rsi, state: icon }
+    clientExclusive: true
+    checkCanInteract: false
+    event: !type:ToggleGhostsActionEvent

@@ -54,7 +54,7 @@ namespace Content.Client.Storage
 
             if (args.Event.Function == EngineKeyFunctions.UIClick)
             {
-                SendMessage(new StorageInteractWithItemEvent(entity));
+                SendMessage(new StorageInteractWithItemEvent(EntMan.GetNetEntity(entity)));
             }
             else if (EntMan.EntityExists(entity))
             {
@@ -76,11 +76,11 @@ namespace Content.Client.Storage
             else if (args.Function == ContentKeyFunctions.ActivateItemInWorld)
             {
                 EntMan.EntityNetManager?.SendSystemNetworkMessage(
-                    new InteractInventorySlotEvent(entity, altInteract: false));
+                    new InteractInventorySlotEvent(EntMan.GetNetEntity(entity), altInteract: false));
             }
             else if (args.Function == ContentKeyFunctions.AltActivateItemInWorld)
             {
-                EntMan.RaisePredictiveEvent(new InteractInventorySlotEvent(entity, altInteract: true));
+                EntMan.RaisePredictiveEvent(new InteractInventorySlotEvent(EntMan.GetNetEntity(entity), altInteract: true));
             }
             else
             {

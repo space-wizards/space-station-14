@@ -487,9 +487,9 @@
   - type: Damageable
     damageModifierSet: Web
   - type: Sprite
-    sprite: Structures/Furniture/Web/table.rsi
+    sprite: Structures/Furniture/Tables/web.rsi
   - type: Icon
-    sprite: Structures/Furniture/Web/table.rsi
+    sprite: Structures/Furniture/Tables/web.rsi
   - type: Destructible
     thresholds:
     - trigger:
@@ -504,7 +504,7 @@
         path:
           "/Audio/Weapons/slash.ogg"
   - type: Construction
-    graph: TableWeb
+    graph: WebStructures
     node: table
 
 - type: entity

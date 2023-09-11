@@ -171,10 +171,12 @@ public sealed class ThrusterSystem : EntitySystem
         var direction = (int) args.NewRotation.GetCardinalDir() / 2;
 
         shuttleComponent.LinearThrust[oldDirection] -= component.Thrust;
+        shuttleComponent.BaseLinearThrust[oldDirection] -= component.BaseThrust;
         DebugTools.Assert(shuttleComponent.LinearThrusters[oldDirection].Contains(uid));
         shuttleComponent.LinearThrusters[oldDirection].Remove(uid);
 
         shuttleComponent.LinearThrust[direction] += component.Thrust;
+        shuttleComponent.BaseLinearThrust[direction] += component.BaseThrust;
         DebugTools.Assert(!shuttleComponent.LinearThrusters[direction].Contains(uid));
         shuttleComponent.LinearThrusters[direction].Add(uid);
     }
@@ -255,6 +257,7 @@ public sealed class ThrusterSystem : EntitySystem
                 var direction = (int) xform.LocalRotation.GetCardinalDir() / 2;
 
                 shuttleComponent.LinearThrust[direction] += component.Thrust;
+                shuttleComponent.BaseLinearThrust[direction] += component.BaseThrust;
                 DebugTools.Assert(!shuttleComponent.LinearThrusters[direction].Contains(uid));
                 shuttleComponent.LinearThrusters[direction].Add(uid);
 
@@ -353,6 +356,7 @@ public sealed class ThrusterSystem : EntitySystem
                 var direction = (int) angle.Value.GetCardinalDir() / 2;
 
                 shuttleComponent.LinearThrust[direction] -= component.Thrust;
+                shuttleComponent.BaseLinearThrust[direction] -= component.BaseThrust;
                 DebugTools.Assert(shuttleComponent.LinearThrusters[direction].Contains(uid));
                 shuttleComponent.LinearThrusters[direction].Remove(uid);
                 break;
@@ -550,9 +554,15 @@ public sealed class ThrusterSystem : EntitySystem
 
     private void OnRefreshParts(EntityUid uid, ThrusterComponent component, RefreshPartsEvent args)
     {
+        if (component.IsOn) // safely disable thruster to prevent negative thrust
+            DisableThruster(uid, component);
+
         var thrustRating = args.PartRatings[component.MachinePartThrust];
 
         component.Thrust = component.BaseThrust * MathF.Pow(component.PartRatingThrustMultiplier, thrustRating - 1);
+
+        if (component.Enabled && CanEnable(uid, component))
+            EnableThruster(uid, component);
     }
 
     private void OnUpgradeExamine(EntityUid uid, ThrusterComponent component, UpgradeExamineEvent args)

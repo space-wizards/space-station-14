@@ -69,7 +69,7 @@ namespace Content.Client.Atmos.UI
                     _ => GridIcon.OverrideDirection
                 };
 
-                GridIcon.SetEntity(msg.DeviceUid);
+                GridIcon.SetEntity(IoCManager.Resolve<IEntityManager>().GetEntity(msg.DeviceUid));
                 LeftPanel.RemoveAllChildren();
                 MiddlePanel.RemoveAllChildren();
                 RightPanel.RemoveAllChildren();

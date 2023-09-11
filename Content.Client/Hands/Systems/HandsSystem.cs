@@ -124,7 +124,7 @@ namespace Content.Client.Hands.Systems
         #region PickupAnimation
         private void HandlePickupAnimation(PickupAnimationEvent msg)
         {
-            PickupAnimation(msg.ItemUid, msg.InitialPosition, msg.FinalPosition, msg.InitialAngle);
+            PickupAnimation(GetEntity(msg.ItemUid), GetCoordinates(msg.InitialPosition), msg.FinalPosition, msg.InitialAngle);
         }
 
         public override void PickupAnimation(EntityUid item, EntityCoordinates initialPosition, Vector2 finalPosition, Angle initialAngle,
@@ -382,7 +382,7 @@ namespace Content.Client.Hands.Systems
             // update hands visuals if this item is in a hand (rather then inventory or other container).
             if (component.Hands.TryGetValue(args.ContainerId, out var hand))
             {
-                UpdateHandVisuals(uid, args.Item, hand, component);
+                UpdateHandVisuals(uid, GetEntity(args.Item), hand, component);
             }
         }
         #endregion

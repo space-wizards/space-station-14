@@ -325,8 +325,9 @@ namespace Content.Server.Disposal.Tube
                 args.Cancel();
             }
 
-            if (_uiSystem.TryGetUi(uid, SharedDisposalTaggerComponent.DisposalTaggerUiKey.Key, out var bui))
-                UserInterfaceSystem.SetUiState(bui, new SharedDisposalTaggerComponent.DisposalTaggerUserInterfaceState(tagger.Tag));
+            if (_uiSystem.TryGetUi(uid, DisposalTaggerUiKey.Key, out var bui))
+                _uiSystem.SetUiState(bui,
+                    new DisposalTaggerUserInterfaceState(tagger.Tag));
         }
 
         /// <summary>
@@ -335,11 +336,11 @@ namespace Content.Server.Disposal.Tube
         /// <returns>Returns a <see cref="SharedDisposalRouterComponent.DisposalRouterUserInterfaceState"/></returns>
         private void UpdateRouterUserInterface(EntityUid uid, DisposalRouterComponent router)
         {
-            var bui = _uiSystem.GetUiOrNull(uid, SharedDisposalTaggerComponent.DisposalTaggerUiKey.Key);
+            var bui = _uiSystem.GetUiOrNull(uid, DisposalTaggerUiKey.Key);
             if (router.Tags.Count <= 0)
             {
                 if (bui is not null)
-                    UserInterfaceSystem.SetUiState(bui, new SharedDisposalTaggerComponent.DisposalTaggerUserInterfaceState(""));
+                    _uiSystem.SetUiState(bui, new DisposalTaggerUserInterfaceState(""));
                 return;
             }
 
@@ -354,7 +355,7 @@ namespace Content.Server.Disposal.Tube
             taglist.Remove(taglist.Length - 2, 2);
 
             if (bui is not null)
-                UserInterfaceSystem.SetUiState(bui, new SharedDisposalTaggerComponent.DisposalTaggerUserInterfaceState(taglist.ToString()));
+                _uiSystem.SetUiState(bui, new DisposalTaggerUserInterfaceState(taglist.ToString()));
         }
 
         private void OnAnchorChange(EntityUid uid, DisposalTubeComponent component, ref AnchorStateChangedEvent args)
