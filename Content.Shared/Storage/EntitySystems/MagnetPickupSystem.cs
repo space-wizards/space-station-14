@@ -1,6 +1,7 @@
 using Content.Server.Storage.Components;
 using Content.Shared.Hands;
 using Content.Shared.Inventory;
+using Content.Shared.Stacks;
 using Robust.Shared.Map;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Player;
@@ -44,7 +45,7 @@ public sealed class MagnetPickupSystem : EntitySystem
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
-        var query = EntityQueryEnumerator<MagnetPickupComponent, ServerStorageComponent, TransformComponent>();
+        var query = EntityQueryEnumerator<MagnetPickupComponent, StorageComponent, TransformComponent>();
         var currentTime = _timing.CurTime;
 
         while (query.MoveNext(out var uid, out var comp, out var storage, out var xform))
@@ -66,7 +67,7 @@ public sealed class MagnetPickupSystem : EntitySystem
 
             var parentUid = xform.ParentUid;
             var playedSound = false;
-            var finalPos = xform.LocalPosition;
+            var finalCoords = xform.Coordinates;
             var moverCoords = _transform.GetMoverCoordinates(uid, xform);
 
             foreach (var near in _lookup.GetEntitiesInRange(uid, comp.Range, LookupFlags.Dynamic | LookupFlags.Sundries))
@@ -88,13 +89,14 @@ public sealed class MagnetPickupSystem : EntitySystem
                 var nearMap = nearXform.MapPosition;
                 var nearCoords = EntityCoordinates.FromMap(moverCoords.EntityId, nearMap, _transform, EntityManager);
 
-                var msg = new PickupAnimationEvent(near, nearCoords, finalPos, nearXform.LocalRotation);
-
-
-                RaiseNetworkEvent(msg, Filter.Pvs(uid));
-
-                if (!_storage.Insert(uid, near, storage, playSound: !playedSound))
+                if (!_storage.Insert(uid, near, out var stacked, storageComp: storage, playSound: !playedSound))
                     continue;
+
+                // Play pickup animation for either the stack entity or the original entity.
+                if (stacked != null)
+                    _storage.PlayPickupAnimation(stacked.Value, nearCoords, finalCoords, nearXform.LocalRotation);
+                else
+                    _storage.PlayPickupAnimation(near, nearCoords, finalCoords, nearXform.LocalRotation);
 
                 playedSound = true;
             }
