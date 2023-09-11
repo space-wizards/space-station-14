@@ -26,11 +26,12 @@ namespace Content.Server.Botany.Systems;
 
 public sealed partial class BotanySystem : EntitySystem
 {
-    [Dependency] private readonly AppearanceSystem _appearance = default!;
-    [Dependency] private readonly SharedHandsSystem _hands = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly IRobustRandom _robustRandom = default!;
+    [Dependency] private readonly AppearanceSystem _appearance = default!;
+    [Dependency] private readonly PopupSystem _popupSystem = default!;
+    [Dependency] private readonly SharedHandsSystem _hands = default!;
+    [Dependency] private readonly SharedPointLightSystem _light = default!;
     [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
     [Dependency] private readonly FixtureSystem _fixtureSystem = default!;
@@ -181,17 +182,17 @@ public sealed partial class BotanySystem : EntitySystem
 
             if (proto.Bioluminescent)
             {
-                var light = EnsureComp<PointLightComponent>(entity);
-                light.Radius = proto.BioluminescentRadius;
-                light.Color = proto.BioluminescentColor;
-                light.CastShadows = false; // this is expensive, and botanists make lots of plants
-                Dirty(light);
+                var light = _light.EnsureLight(entity);
+                _light.SetRadius(entity, proto.BioluminescentRadius, light);
+                _light.SetColor(entity, proto.BioluminescentColor, light);
+                // TODO: Ayo why you copy-pasting code between here and plantholder?
+                _light.SetCastShadows(entity, false, light); // this is expensive, and botanists make lots of plants
             }
 
             if (proto.Slip)
             {
                 var slippery = EnsureComp<SlipperyComponent>(entity);
-                EntityManager.Dirty(slippery);
+                Dirty(entity, slippery);
                 EnsureComp<StepTriggerComponent>(entity);
                 // Need a fixture with a slip layer in order to actually do the slipping
                 var fixtures = EnsureComp<FixturesComponent>(entity);
