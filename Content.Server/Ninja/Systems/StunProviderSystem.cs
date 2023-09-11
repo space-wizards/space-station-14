@@ -1,10 +1,11 @@
+using Content.Server.Power.EntitySystems;
+using Content.Server.Power.Events;
 using Content.Shared.Electrocution;
 using Content.Shared.Interaction;
 using Content.Shared.Ninja.Components;
 using Content.Shared.Ninja.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Whitelist;
-using Content.Server.Power.EntitySystems;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Ninja.Systems;
@@ -25,6 +26,7 @@ public sealed class StunProviderSystem : SharedStunProviderSystem
         base.Initialize();
 
         SubscribeLocalEvent<StunProviderComponent, BeforeInteractHandEvent>(OnBeforeInteractHand);
+        SubscribeLocalEvent<StunProviderComponent, BatteryChangedEvent>(OnBatteryChanged);
     }
 
     /// <summary>
@@ -56,5 +58,10 @@ public sealed class StunProviderSystem : SharedStunProviderSystem
         Dirty(uid, comp);
 
         args.Handled = true;
+    }
+
+    private void OnBatteryChanged(EntityUid uid, StunProviderComponent comp, ref BatteryChangedEvent args)
+    {
+        SetBattery(uid, args.Battery, comp);
     }
 }

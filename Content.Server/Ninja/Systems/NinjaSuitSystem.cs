@@ -1,6 +1,7 @@
 using Content.Server.Emp;
 using Content.Server.Popups;
 using Content.Server.Power.Components;
+using Content.Server.Power.Events;
 using Content.Server.PowerCell;
 using Content.Shared.Actions;
 using Content.Shared.Clothing.EntitySystems;
@@ -8,6 +9,7 @@ using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Ninja.Components;
 using Content.Shared.Ninja.Systems;
 using Content.Shared.Popups;
+using Content.Shared.PowerCell.Components;
 using Robust.Shared.Containers;
 
 namespace Content.Server.Ninja.Systems;
@@ -61,6 +63,14 @@ public sealed class NinjaSuitSystem : SharedNinjaSuitSystem
         {
             args.Cancel();
         }
+
+        // tell ninja abilities that use battery to update it so they don't use charge from the old one
+        var user = Transform(uid).ParentUid;
+        if (!HasComp<SpaceNinjaComponent>(user))
+            return;
+
+        var ev = new BatteryChangedEvent(args.EntityUid, uid);
+        RaiseLocalEvent(user, ref ev);
     }
 
     private void OnEmpAttempt(EntityUid uid, NinjaSuitComponent comp, EmpAttemptEvent args)

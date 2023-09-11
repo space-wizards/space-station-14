@@ -1,5 +1,6 @@
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
+using Content.Server.Power.Events;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
 using Content.Shared.Ninja.Components;
@@ -24,6 +25,7 @@ public sealed class BatteryDrainerSystem : SharedBatteryDrainerSystem
         base.Initialize();
 
         SubscribeLocalEvent<BatteryDrainerComponent, BeforeInteractHandEvent>(OnBeforeInteractHand);
+        SubscribeLocalEvent<BatteryDrainerComponent, BatteryChangedEvent>(OnBatteryChanged);
     }
 
     /// <summary>
@@ -54,6 +56,11 @@ public sealed class BatteryDrainerSystem : SharedBatteryDrainerSystem
         };
 
         _doAfter.TryStartDoAfter(doAfterArgs);
+    }
+
+    private void OnBatteryChanged(EntityUid uid, BatteryDrainerComponent comp, ref BatteryChangedEvent args)
+    {
+        SetBattery(uid, args.Battery, comp);
     }
 
     /// <inheritdoc/>

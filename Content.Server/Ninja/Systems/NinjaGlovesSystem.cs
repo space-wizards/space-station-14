@@ -3,6 +3,7 @@ using Content.Server.DoAfter;
 using Content.Server.Mind;
 using Content.Server.Ninja.Systems;
 using Content.Server.Power.Components;
+using Content.Server.Power.Events;
 using Content.Server.Roles;
 using Content.Shared.Communications;
 using Content.Shared.DoAfter;
@@ -73,6 +74,10 @@ public sealed class NinjaGlovesSystem : SharedNinjaGlovesSystem
 
     private void EnableGloves(EntityUid uid, NinjaGlovesComponent comp, EntityUid user, SpaceNinjaComponent ninja)
     {
+        // can't use abilities if suit is not equipped, this is checked elsewhere but just making sure to satisfy nullability
+        if (ninja.Suit == null)
+            return;
+
         comp.User = user;
         Dirty(uid, comp);
         _ninja.AssignGloves(user, uid, ninja);
@@ -82,8 +87,8 @@ public sealed class NinjaGlovesSystem : SharedNinjaGlovesSystem
         _stunProvider.SetNoPowerPopup(user, "ninja-no-power", stun);
         if (_ninja.GetNinjaBattery(user, out var battery, out var _))
         {
-            _drainer.SetBattery(user, battery, drainer);
-            _stunProvider.SetBattery(user, battery, stun);
+            var ev = new BatteryChangedEvent(battery.Value, ninja.Suit.Value);
+            RaiseLocalEvent(user, ref ev);
         }
 
         var emag = EnsureComp<EmagProviderComponent>(user);
