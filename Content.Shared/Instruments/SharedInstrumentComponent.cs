@@ -49,7 +49,7 @@ public sealed class InstrumentComponentState : ComponentState
 
     public bool RespectMidiLimits;
 
-    public EntityUid? Master;
+    public NetEntity? Master;
 
     public BitArray FilteredChannels = default!;
 }

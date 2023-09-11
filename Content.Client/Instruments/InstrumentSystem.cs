@@ -51,7 +51,7 @@ public sealed class InstrumentSystem : SharedInstrumentSystem
         component.AllowPercussion = state.AllowPercussion;
         component.AllowProgramChange = state.AllowProgramChange;
         component.RespectMidiLimits = state.RespectMidiLimits;
-        component.Master = state.Master;
+        component.Master = EnsureEntity<InstrumentComponent>(state.Master, uid);
         component.FilteredChannels = state.FilteredChannels;
 
         if (component.Playing)

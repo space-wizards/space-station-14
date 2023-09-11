@@ -71,7 +71,7 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
             AllowPercussion = component.AllowPercussion,
             AllowProgramChange = component.AllowProgramChange,
             RespectMidiLimits = component.RespectMidiLimits,
-            Master = component.Master,
+            Master = GetNetEntity(component.Master),
             FilteredChannels = component.FilteredChannels
         };
     }
