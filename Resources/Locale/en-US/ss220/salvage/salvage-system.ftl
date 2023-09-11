@@ -1,1 +1,0 @@
-salvage-system-announcement-too-hot-to-pry = The salvage magnet is too hot to pry open!

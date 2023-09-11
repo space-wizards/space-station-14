@@ -108,10 +108,6 @@ public abstract partial class SharedToolSystem : EntitySystem
         if (!CanStartToolUse(tool, user, target, toolQualitiesNeeded, toolComponent))
             return false;
 
-        // SS220-Magnet-Disassembly-Fix
-        if (!CanUseToolOnTarget(tool, user, target))
-            return false;
-
         var toolEvent = new ToolDoAfterEvent(doAfterEv, target);
         var doAfterArgs = new DoAfterArgs(user, delay / toolComponent.SpeedModifier, toolEvent, tool, target: target, used: tool)
         {
@@ -184,32 +180,30 @@ public abstract partial class SharedToolSystem : EntitySystem
         if (!Resolve(tool, ref toolComponent))
             return false;
 
+        // check if the tool can do what's required
+        if (!toolComponent.Qualities.ContainsAll(toolQualitiesNeeded))
+            return false;
+
+        // check if the user allows using the tool
         var ev = new ToolUserAttemptUseEvent(target);
         RaiseLocalEvent(user, ref ev);
         if (ev.Cancelled)
             return false;
 
-        if (!toolComponent.Qualities.ContainsAll(toolQualitiesNeeded))
+        // check if the tool allows being used
+        var beforeAttempt = new ToolUseAttemptEvent(user);
+        RaiseLocalEvent(tool, beforeAttempt);
+        if (beforeAttempt.Cancelled)
             return false;
 
-        var beforeAttempt = new ToolUseAttemptEvent(user);
-        RaiseLocalEvent(tool, beforeAttempt, false);
+        // check if the target allows using the tool
+        if (target != null && target != tool)
+        {
+            RaiseLocalEvent(target.Value, beforeAttempt);
+        }
 
         return !beforeAttempt.Cancelled;
     }
-
-    // SS220-Magnet-Disassembly-Fix begin
-    private bool CanUseToolOnTarget(EntityUid tool, EntityUid user, EntityUid? target)
-    {
-        if (target == null)
-            return true;
-
-        var targetAttempt = new InteractedWithToolAttemptEvent(user, target, tool);
-        RaiseLocalEvent((EntityUid) target, targetAttempt, false);
-
-        return !targetAttempt.Cancelled;
-    }
-    // SS220-Magnet-Disassembly-Fix end
 
     #region DoAfterEvents
 

@@ -2,7 +2,9 @@
 
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.SS220.CryopodSSD;
 
@@ -21,6 +23,12 @@ public sealed partial class CryopodSSDComponent : Component
     [ViewVariables(VVAccess.ReadWrite)] public TimeSpan EntityLiedInCryopodTime;
 
     [ViewVariables(VVAccess.ReadWrite)] public ContainerSlot BodyContainer = default!;
+
+    [DataField("leaveAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>), required: true)]
+    public string? LeaveAction;
+
+    [DataField("leaveActionEntity")]
+    public EntityUid? LeaveActionEntity;
 
     [Serializable, NetSerializable]
     public enum CryopodSSDVisuals : byte

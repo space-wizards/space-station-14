@@ -1,0 +1,45 @@
+- type: entity
+  id: ActionToggleGhostRoleName
+  name: action-toggle-ghostrole-cast-settings-name
+  description: action-toggle-ghostrole-cast-settings-desc
+  noSpawn: true
+  components:
+  - type: InstantAction
+    icon: SS220/Interface/actions/GhostRoleSettings.png
+    event: !type:ToggleGhostRoleCastSettingsEvent
+    useDelay: 1
+    clientExclusive: true
+    checkCanInteract: false
+    priority: -7
+
+- type: entity
+  id: ActionToggleGhostRoleCast
+  name: action-toggle-ghostrole-cast-name
+  description: action-toggle-ghostrole-cast-desc
+  noSpawn: true
+  components:
+  - type: EntityTargetAction
+    icon: SS220/Interface/actions/GhostRoleCast.png
+    event: !type:ToggleGhostRoleCastActionEvent
+    useDelay: 1
+    clientExclusive: true
+    checkCanInteract: false
+    repeat: true
+    deselectOnMiss: false
+    priority: -8
+
+- type: entity
+  id: ActionToggleGhostRoleRemove
+  name: action-toggle-ghostrole-remove-name
+  description: action-toggle-ghostrole-remove-desc
+  noSpawn: true
+  components:
+  - type: EntityTargetAction
+    icon: SS220/Interface/actions/GhostRoleRemove.png
+    event: !type:ToggleGhostRoleRemoveActionEvent
+    useDelay: 1
+    clientExclusive: true
+    checkCanInteract: false
+    repeat: true
+    deselectOnMiss: false
+    priority: -9

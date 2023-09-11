@@ -91,3 +91,14 @@
   - type: GuideHelp
     guides:
     - Botany
+
+- type: entity
+  parent: hydroponicsTray
+  id: HydroponicsTrayEmpty
+  suffix: Empty
+  components:
+  - type: PlantHolder
+    waterLevel: 0
+    nutritionLevel: 0
+    # for the lights to update immediately
+    updateSpriteAfterUpdate: true

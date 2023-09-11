@@ -1,2 +1,4 @@
-ent-DirectionalSignalSwitch.suffix = Directional
-ent-DirectionalSignalButton.suffix = Directional
+ent-DirectionalSignalSwitch = ent-SignalSwitch
+    .suffix = Directional
+ent-DirectionalSignalButton = ent-SignalButton
+    .suffix = Directional

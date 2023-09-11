@@ -28,14 +28,6 @@ namespace Content.Server.Salvage
         public EntityUid? AttachedEntity;
 
         /// <summary>
-        /// The EntityUid of the grid which this object is on, if any.
-        /// Gotta use this because on <see cref="ComponentShutdown"/>
-        /// transform component is already empty.
-        /// </summary>
-        [ViewVariables(VVAccess.ReadOnly)]
-        public EntityUid? GridUid; // SS220-Magnet-Disassembly-Fix
-
-        /// <summary>
         /// Current state of this magnet
         /// </summary>
         [ViewVariables(VVAccess.ReadOnly)]

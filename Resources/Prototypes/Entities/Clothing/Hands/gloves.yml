@@ -202,8 +202,18 @@
   components:
   - type: Sprite
     sprite: Clothing/Hands/Gloves/spaceninja.rsi
+    layers:
+    - state: icon
+      map: [ "enum.ToggleVisuals.Layer" ]
   - type: Clothing
     sprite: Clothing/Hands/Gloves/spaceninja.rsi
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.ToggleVisuals.Toggled:
+        enum.ToggleVisuals.Layer:
+          True: {state: icon-green}
+          False: {state: icon}
   - type: GloveHeatResistance
     heatResistance: 1400
   - type: Insulated
@@ -213,6 +223,9 @@
   - type: Thieving
     stripTimeReduction: 1
     stealthy: true
+  - type: NinjaGloves
+  # not actually electrified, just used to make stun ability work
+  - type: Electrified
 
 - type: entity
   parent: ClothingHandsBase

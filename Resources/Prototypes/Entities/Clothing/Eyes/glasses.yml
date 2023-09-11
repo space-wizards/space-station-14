@@ -176,6 +176,7 @@
       sprite: Clothing/Eyes/Glasses/science.rsi
     - type: SolutionScanner
 
+#SS220-Blueshield-begin
 - type: entity
   parent: ClothingEyesBase
   id: ClothingEyesGlassesBlueShield
@@ -189,3 +190,16 @@
   - type: FlashImmunity
   - type: EyeProtection
     protectionTime: 5
+#SS220-Blueshield-end
+
+- type: entity
+  parent: ClothingEyesBase
+  id: ClothingEyesVisorNinja
+  name: ninja visor
+  description: An advanced visor protecting a ninja's eyes from flashing lights.
+  components:
+  - type: Sprite
+    sprite: Clothing/Eyes/Glasses/ninjavisor.rsi
+  - type: Clothing
+    sprite: Clothing/Eyes/Glasses/ninjavisor.rsi
+  - type: FlashImmunity

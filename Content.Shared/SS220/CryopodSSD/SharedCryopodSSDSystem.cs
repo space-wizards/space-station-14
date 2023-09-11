@@ -1,7 +1,6 @@
 ﻿// © SS220, An EULA/CLA with a hosting restriction, full text: https://raw.githubusercontent.com/SerbiaStrong-220/space-station-14/master/CLA.txt
 
 using Content.Shared.Actions;
-using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Body.Components;
 using Content.Shared.Database;
@@ -13,7 +12,6 @@ using Content.Shared.Standing;
 using Content.Shared.Stunnable;
 using Content.Shared.Verbs;
 using Robust.Shared.Containers;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 
@@ -24,7 +22,6 @@ public abstract class SharedCryopodSSDSystem : EntitySystem
     [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
     [Dependency] private readonly StandingStateSystem _standingStateSystem = default!;
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
     [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
@@ -56,12 +53,7 @@ public abstract class SharedCryopodSSDSystem : EntitySystem
         var xform = Transform(target);
         cryopodSsdComponent.BodyContainer.Insert(target, transform: xform, force: true);
 
-        if (_prototypeManager.TryIndex<InstantActionPrototype>("CryopodSSDLeave", out var leaveAction))
-        {
-            _actionsSystem.AddAction(target, new InstantAction(leaveAction), uid);
-        }
-
-
+        _actionsSystem.AddAction(target, ref cryopodSsdComponent.LeaveActionEntity, cryopodSsdComponent.LeaveAction, uid);
         _standingStateSystem.Stand(target, force: true);
 
         cryopodSsdComponent.EntityLiedInCryopodTime = _gameTiming.CurTime;

@@ -22,7 +22,8 @@ namespace Content.Shared.Tools.Components
     }
 
     /// <summary>
-    ///     Attempt event called *before* any do afters to see if the tool usage should succeed or not.
+    /// Attempt event called *before* any do afters to see if the tool usage should succeed or not.
+    /// Raised on both the tool and then target.
     /// </summary>
     public sealed class ToolUseAttemptEvent : CancellableEntityEventArgs
     {
@@ -33,28 +34,6 @@ namespace Content.Shared.Tools.Components
             User = user;
         }
     }
-
-    // SS220-Magnet-Disassembly-Fix begin
-    /// <summary>
-    ///     Attempt event called *before* any do afters to see if the tool is allowed to perform interaction
-    ///     on a target entity.
-    /// </summary>
-    public sealed class InteractedWithToolAttemptEvent : CancellableEntityEventArgs
-    {
-        public EntityUid User { get; }
-
-        public EntityUid? Target { get; }
-
-        public EntityUid Tool { get; }
-
-        public InteractedWithToolAttemptEvent(EntityUid user, EntityUid? target, EntityUid tool)
-        {
-            User = user;
-            Target = target;
-            Tool = tool;
-        }
-    }
-    // SS220-Magnet-Disassembly-Fix end
 
     /// <summary>
     /// Event raised on the user of a tool to see if they can actually use it.

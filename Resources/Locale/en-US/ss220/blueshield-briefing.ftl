@@ -1,4 +1,5 @@
-ent-BlueshieldBriefing.desc = { ent-PaperNtForm.desc }
+ent-BlueshieldBriefing = Blueshield Mission Briefing
+    .desc = { ent-PaperNtForm.desc }
 
 blueshield-briefing-text = Blueshield Mission Briefing
  
