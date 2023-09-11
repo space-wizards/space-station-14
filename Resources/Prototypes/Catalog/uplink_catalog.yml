@@ -1313,6 +1313,16 @@
   - UplinkPointless
 
 - type: listing
+  id: UplinkCarpSuitBundle
+  name: uplink-carp-suit-bundle-name
+  description: uplink-carp-suit-bundle-desc
+  productEntity: ClothingBackpackDuffelSyndicateCarpSuit
+  cost:
+    Telecrystal: 4
+  categories:
+  - UplinkPointless
+
+- type: listing
   id: UplinkOperativeSuit
   name: uplink-operative-suit-name
   description: uplink-operative-suit-desc

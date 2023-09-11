@@ -60,7 +60,7 @@ public sealed class EscapeInventorySystem : EntitySystem
         }
 
         // Uncontested
-        if (HasComp<SharedStorageComponent>(container.Owner) || HasComp<InventoryComponent>(container.Owner) || HasComp<SecretStashComponent>(container.Owner))
+        if (HasComp<StorageComponent>(container.Owner) || HasComp<InventoryComponent>(container.Owner) || HasComp<SecretStashComponent>(container.Owner))
             AttemptEscape(uid, container.Owner, component);
     }
 
@@ -69,7 +69,7 @@ public sealed class EscapeInventorySystem : EntitySystem
         if (component.IsEscaping)
             return;
 
-        var doAfterEventArgs = new DoAfterArgs(user, component.BaseResistTime * multiplier, new EscapeInventoryEvent(), user, target: container)
+        var doAfterEventArgs = new DoAfterArgs(EntityManager, user, component.BaseResistTime * multiplier, new EscapeInventoryEvent(), user, target: container)
         {
             BreakOnTargetMove = false,
             BreakOnUserMove = true,

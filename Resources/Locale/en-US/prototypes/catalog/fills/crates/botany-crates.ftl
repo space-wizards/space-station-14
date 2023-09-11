@@ -12,4 +12,3 @@ ent-CrateHydroponicsSeeds = Seeds crate
 
 ent-CratePlantBGone = Bulk Plant-B-Gone crate
     .desc = From Monstano. "Unwanted Weeds, Meet Your Celestial Roundup!"
-	

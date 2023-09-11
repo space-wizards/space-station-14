@@ -61,9 +61,9 @@ public sealed class InstrumentComponentState : ComponentState
 [Serializable, NetSerializable]
 public sealed class InstrumentStopMidiEvent : EntityEventArgs
 {
-    public EntityUid Uid { get; }
+    public NetEntity Uid { get; }
 
-    public InstrumentStopMidiEvent(EntityUid uid)
+    public InstrumentStopMidiEvent(NetEntity uid)
     {
         Uid = uid;
     }
@@ -75,10 +75,10 @@ public sealed class InstrumentStopMidiEvent : EntityEventArgs
 [Serializable, NetSerializable]
 public sealed class InstrumentSetMasterEvent : EntityEventArgs
 {
-    public EntityUid Uid { get; }
-    public EntityUid? Master { get; }
+    public NetEntity Uid { get; }
+    public NetEntity? Master { get; }
 
-    public InstrumentSetMasterEvent(EntityUid uid, EntityUid? master)
+    public InstrumentSetMasterEvent(NetEntity uid, NetEntity? master)
     {
         Uid = uid;
         Master = master;
@@ -91,11 +91,11 @@ public sealed class InstrumentSetMasterEvent : EntityEventArgs
 [Serializable, NetSerializable]
 public sealed class InstrumentSetFilteredChannelEvent : EntityEventArgs
 {
-    public EntityUid Uid { get; }
+    public NetEntity Uid { get; }
     public int Channel { get; }
     public bool Value { get; }
 
-    public InstrumentSetFilteredChannelEvent(EntityUid uid, int channel, bool value)
+    public InstrumentSetFilteredChannelEvent(NetEntity uid, int channel, bool value)
     {
         Uid = uid;
         Channel = channel;
@@ -109,9 +109,9 @@ public sealed class InstrumentSetFilteredChannelEvent : EntityEventArgs
 [Serializable, NetSerializable]
 public sealed class InstrumentStartMidiEvent : EntityEventArgs
 {
-    public EntityUid Uid { get; }
+    public NetEntity Uid { get; }
 
-    public InstrumentStartMidiEvent(EntityUid uid)
+    public InstrumentStartMidiEvent(NetEntity uid)
     {
         Uid = uid;
     }
@@ -123,10 +123,10 @@ public sealed class InstrumentStartMidiEvent : EntityEventArgs
 [Serializable, NetSerializable]
 public sealed class InstrumentMidiEventEvent : EntityEventArgs
 {
-    public EntityUid Uid { get; }
+    public NetEntity Uid { get; }
     public RobustMidiEvent[] MidiEvent { get; }
 
-    public InstrumentMidiEventEvent(EntityUid uid, RobustMidiEvent[] midiEvent)
+    public InstrumentMidiEventEvent(NetEntity uid, RobustMidiEvent[] midiEvent)
     {
         Uid = uid;
         MidiEvent = midiEvent;

@@ -23,7 +23,7 @@ internal sealed partial class ToolshedVisualizeWindow : DefaultWindow
 
     protected override Vector2 ContentsMinimumSize => new(500, 700);
 
-    public void Update((string name, EntityUid entity)[] entities)
+    public void Update((string name, NetEntity entity)[] entities)
     {
         StatusLabel.Text = _loc.GetString("ui-bql-results-status", ("count", entities.Length));
         ItemList.RemoveAllChildren();

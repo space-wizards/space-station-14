@@ -18,6 +18,7 @@
   - type: ExaminableSolution
     solution: hypospray
   - type: Hypospray
+    onlyMobs: false
   - type: UseDelay
     delay: 0.5
   - type: StaticPrice
@@ -46,6 +47,7 @@
   - type: ExaminableSolution
     solution: hypospray
   - type: Hypospray
+    onlyMobs: false
   - type: UseDelay
     delay: 0.5
 
@@ -330,6 +332,7 @@
   - type: ExaminableSolution
     solution: hypospray
   - type: Hypospray
+    onlyMobs: false
   - type: UseDelay
     delay: 0.5
   - type: StaticPrice # A new shitcurity meta

@@ -123,7 +123,7 @@ public sealed partial class GeneralStationRecordConsoleWindow : DefaultWindow
             RecordContainer.RemoveAllChildren();
         }
     }
-    private void PopulateRecordListing(Dictionary<StationRecordKey, string> listing, StationRecordKey? selected)
+    private void PopulateRecordListing(Dictionary<(NetEntity, uint), string> listing, (NetEntity, uint)? selected)
     {
         RecordListing.Clear();
         RecordListing.ClearSelected();
@@ -134,7 +134,7 @@ public sealed partial class GeneralStationRecordConsoleWindow : DefaultWindow
         {
             var item = RecordListing.AddItem(name);
             item.Metadata = key;
-            if (selected != null && key.ID == selected.Value.ID)
+            if (selected != null && key.Item1 == selected.Value.Item1 && key.Item2 == selected.Value.Item2)
             {
                 item.Selected = true;
             }
