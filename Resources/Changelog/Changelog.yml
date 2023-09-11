@@ -1,12 +1,4 @@
 Entries:
-- author: PixelTK
-  changes:
-  - {message: 'Arachnids have a few more appendages, chest markings, and now show
-      off their chelicerae.', type: Add}
-  - {message: Arachnids now have a few different organ sprites, type: Add}
-  - {message: Arachnids no longer have webs strapped to their appendages, type: Remove}
-  id: 4298
-  time: '2023-07-20T21:55:50.0000000+00:00'
 - author: Lank
   changes:
   - {message: Artifacts going insane at round-end can now be disabled per-server.,
@@ -2992,3 +2984,8 @@ Entries:
       of top-left., type: Tweak}
   id: 4797
   time: '2023-09-11T03:53:36.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fix handheld crew monitor., type: Fix}
+  id: 4798
+  time: '2023-09-11T05:01:54.0000000+00:00'
