@@ -7,7 +7,6 @@
   - type: Sprite
     sprite: Objects/Specific/Research/rped.rsi
     state: icon
-    snapCardinals: true
   - type: Item
     sprite: Objects/Specific/Research/rped.rsi
     size: 50
