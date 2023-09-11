@@ -15,7 +15,7 @@ public sealed partial class NotekeeperUi : UIFragment
         return _fragment!;
     }
 
-    public override void Setup(ClientBoundUserInterface userInterface, EntityUid? fragmentOwner)
+    public override void Setup(BoundUserInterface userInterface, EntityUid? fragmentOwner)
     {
         _fragment = new NotekeeperUiFragment();
         _fragment.OnNoteRemoved += note => SendNotekeeperMessage(NotekeeperUiAction.Remove, note, userInterface);
@@ -30,7 +30,7 @@ public sealed partial class NotekeeperUi : UIFragment
         _fragment?.UpdateState(notekeepeerState.Notes);
     }
 
-    private void SendNotekeeperMessage(NotekeeperUiAction action, string note, ClientBoundUserInterface userInterface)
+    private void SendNotekeeperMessage(NotekeeperUiAction action, string note, BoundUserInterface userInterface)
     {
         var notekeeperMessage = new NotekeeperUiMessageEvent(action, note);
         var message = new CartridgeUiMessage(notekeeperMessage);

@@ -10,10 +10,10 @@ namespace Content.Client.Communications.UI
     [GenerateTypedNameReferences]
     public sealed partial class CommunicationsConsoleMenu : FancyWindow
     {
-        private CommunicationsConsoleClientBoundUserInterface Owner { get; set; }
+        private CommunicationsConsoleBoundUserInterface Owner { get; set; }
         private readonly CancellationTokenSource _timerCancelTokenSource = new();
 
-        public CommunicationsConsoleMenu(CommunicationsConsoleClientBoundUserInterface owner)
+        public CommunicationsConsoleMenu(CommunicationsConsoleBoundUserInterface owner)
         {
             IoCManager.InjectDependencies(this);
             RobustXamlLoader.Load(this);

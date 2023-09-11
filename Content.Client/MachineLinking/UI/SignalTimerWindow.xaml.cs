@@ -15,13 +15,13 @@ public sealed partial class SignalTimerWindow : DefaultWindow
     public event Action<string>? OnCurrentDelayMinutesChanged;
     public event Action<string>? OnCurrentDelaySecondsChanged;
 
-    private readonly SignalTimerClientBoundUserInterface _owner;
+    private readonly SignalTimerBoundUserInterface _owner;
 
     private TimeSpan? _triggerTime;
 
     private bool _timerStarted;
 
-    public SignalTimerWindow(SignalTimerClientBoundUserInterface owner)
+    public SignalTimerWindow(SignalTimerBoundUserInterface owner)
     {
         RobustXamlLoader.Load(this);
 

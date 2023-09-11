@@ -31,7 +31,7 @@ public sealed partial class LatheMenu : DefaultWindow
     /// </summary>
     private const int DEFAULT_SHEET_VOLUME = 100;
 
-    public LatheMenu(LatheClientBoundUserInterface owner)
+    public LatheMenu(LatheBoundUserInterface owner)
     {
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);

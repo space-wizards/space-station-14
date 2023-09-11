@@ -11,10 +11,10 @@ namespace Content.Client.Strip
         public LayoutContainer InventoryContainer = new();
         public BoxContainer HandsContainer = new() { Orientation = LayoutOrientation.Horizontal };
         public BoxContainer SnareContainer = new();
-        private StrippableClientBoundUserInterface _bui;
+        private StrippableBoundUserInterface _bui;
         public bool Dirty = true;
 
-        public StrippingMenu(string title, StrippableClientBoundUserInterface bui)
+        public StrippingMenu(string title, StrippableBoundUserInterface bui)
         {
             Title = title;
             _bui = bui;

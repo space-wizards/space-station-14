@@ -256,9 +256,9 @@ public sealed partial class SensorMonitoringWindow : FancyWindow, IComputerWindo
 
 [UsedImplicitly]
 public sealed class
-    SensorMonitoringConsoleClientBoundUserInterface : ComputerClientBoundUserInterface<SensorMonitoringWindow, ConsoleUIState>
+    SensorMonitoringConsoleBoundUserInterface : ComputerBoundUserInterface<SensorMonitoringWindow, ConsoleUIState>
 {
-    public SensorMonitoringConsoleClientBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
+    public SensorMonitoringConsoleBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
     {
     }
 }

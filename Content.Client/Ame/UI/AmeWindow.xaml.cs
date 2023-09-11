@@ -9,7 +9,7 @@ namespace Content.Client.Ame.UI
     [GenerateTypedNameReferences]
     public sealed partial class AmeWindow : DefaultWindow
     {
-        public AmeWindow(AmeControllerClientBoundUserInterface ui)
+        public AmeWindow(AmeControllerBoundUserInterface ui)
         {
             RobustXamlLoader.Load(this);
             IoCManager.InjectDependencies(this);

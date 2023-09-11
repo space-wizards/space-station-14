@@ -14,7 +14,7 @@ public sealed partial class NetProbeUi : UIFragment
         return _fragment!;
     }
 
-    public override void Setup(ClientBoundUserInterface userInterface, EntityUid? fragmentOwner)
+    public override void Setup(BoundUserInterface userInterface, EntityUid? fragmentOwner)
     {
         _fragment = new NetProbeUiFragment();
     }

@@ -13,9 +13,9 @@ namespace Content.Client.Research.UI
         private int[] _serverIds = Array.Empty<int>();
         private int _selectedServerId = -1;
 
-        private ResearchClientClientBoundUserInterface Owner { get; }
+        private ResearchClientBoundUserInterface Owner { get; }
 
-        public ResearchClientServerSelectionMenu(ResearchClientClientBoundUserInterface owner)
+        public ResearchClientServerSelectionMenu(ResearchClientBoundUserInterface owner)
         {
             RobustXamlLoader.Load(this);
             IoCManager.InjectDependencies(this);

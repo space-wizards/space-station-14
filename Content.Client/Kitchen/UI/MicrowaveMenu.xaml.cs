@@ -19,7 +19,7 @@ namespace Content.Client.Kitchen.UI
 
         private ButtonGroup CookTimeButtonGroup { get; }
 
-        public MicrowaveMenu(MicrowaveClientBoundUserInterface owner)
+        public MicrowaveMenu(MicrowaveBoundUserInterface owner)
         {
             RobustXamlLoader.Load(this);
 
