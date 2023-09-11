@@ -5,3 +5,7 @@
 - type: lobbyBackground
   id: NudeHopla
   background: /Textures/SS220/LobbyScreens/nude-hopla.jpg
+
+- type: lobbyBackground
+  id: Pizdec
+  background: /Textures/SS220/LobbyScreens/pizdec.png
