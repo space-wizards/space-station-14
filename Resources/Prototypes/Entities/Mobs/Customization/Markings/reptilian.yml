@@ -226,3 +226,40 @@
   sprites:
   - sprite: Mobs/Customization/reptilian_parts.rsi
     state: r_leg_tiger
+
+# Animated
+- type: marking
+  id: LizardTailSmoothAnimated
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: []
+  sprites:
+    - sprite: Mobs/Customization/reptilian_parts.rsi
+      state: tail_smooth_wagging
+
+- type: marking
+  id: LizardTailSpikesAnimated
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: []
+  sprites:
+    - sprite: Mobs/Customization/reptilian_parts.rsi
+      state: tail_spikes_wagging
+
+- type: marking
+  id: LizardTailLTigerAnimated
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: []
+  sprites:
+    - sprite: Mobs/Customization/reptilian_parts.rsi
+      state: tail_ltiger_wagging
+
+- type: marking
+  id: LizardTailDTigerAnimated
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: []
+  sprites:
+    - sprite: Mobs/Customization/reptilian_parts.rsi
+      state: tail_dtiger_wagging
