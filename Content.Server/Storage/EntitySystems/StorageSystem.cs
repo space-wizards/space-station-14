@@ -151,7 +151,7 @@ namespace Content.Server.Storage.EntitySystems
                 UtilityVerb verb = new()
                 {
                     Text = Loc.GetString("storage-component-transfer-verb"),
-                    IconEntity = args.Using,
+                    IconEntity = GetNetEntity(args.Using),
                     Act = () => TransferEntities(uid, args.Target, component, lockComponent, targetStorage, targetLock)
                 };
 
@@ -218,7 +218,7 @@ namespace Content.Server.Storage.EntitySystems
             // The last half of the if is because carpets exist and this is terrible
             if (storageComp.AreaInsert && (args.Target == null || !HasComp<ItemComponent>(args.Target.Value)))
             {
-                var validStorables = new List<EntityUid>();
+                var validStorables = new List<NetEntity>();
                 var itemQuery = GetEntityQuery<ItemComponent>();
 
                 foreach (var entity in _entityLookupSystem.GetEntitiesInRange(args.ClickLocation, storageComp.AreaInsertRadius, LookupFlags.Dynamic | LookupFlags.Sundries))
@@ -231,13 +231,13 @@ namespace Content.Server.Storage.EntitySystems
                         continue;
                     }
 
-                    validStorables.Add(entity);
+                    validStorables.Add(GetNetEntity(entity));
                 }
 
                 //If there's only one then let's be generous
                 if (validStorables.Count > 1)
                 {
-                    var doAfterArgs = new DoAfterArgs(args.User, 0.2f * validStorables.Count, new AreaPickupDoAfterEvent(validStorables), uid, target: uid)
+                    var doAfterArgs = new DoAfterArgs(EntityManager, args.User, 0.2f * validStorables.Count, new AreaPickupDoAfterEvent(validStorables), uid, target: uid)
                     {
                         BreakOnDamage = true,
                         BreakOnUserMove = true,
@@ -273,9 +273,9 @@ namespace Content.Server.Storage.EntitySystems
 
                     if (PlayerInsertEntityInWorld(uid, args.User, target, storageComp))
                     {
-                        RaiseNetworkEvent(new AnimateInsertingEntitiesEvent(uid,
-                            new List<EntityUid> { target },
-                            new List<EntityCoordinates> { position },
+                        RaiseNetworkEvent(new AnimateInsertingEntitiesEvent(GetNetEntity(uid),
+                            new List<NetEntity> { GetNetEntity(target) },
+                            new List<NetCoordinates> { GetNetCoordinates(position) },
                             new List<Angle> { transformOwner.LocalRotation }));
                     }
                 }
@@ -294,8 +294,10 @@ namespace Content.Server.Storage.EntitySystems
             var xformQuery = GetEntityQuery<TransformComponent>();
             xformQuery.TryGetComponent(uid, out var xform);
 
-            foreach (var entity in args.Entities)
+            foreach (var nent in args.Entities)
             {
+                var entity = GetEntity(nent);
+
                 // Check again, situation may have changed for some entities, but we'll still pick up any that are valid
                 if (_containerSystem.IsEntityInContainer(entity)
                     || entity == args.Args.User
@@ -329,7 +331,7 @@ namespace Content.Server.Storage.EntitySystems
             if (successfullyInserted.Count > 0)
             {
                 _audio.PlayPvs(component.StorageInsertSound, uid);
-                RaiseNetworkEvent(new AnimateInsertingEntitiesEvent(uid, successfullyInserted, successfullyInsertedPositions, successfullyInsertedAngles));
+                RaiseNetworkEvent(new AnimateInsertingEntitiesEvent(GetNetEntity(uid), GetNetEntityList(successfullyInserted), GetNetCoordinatesList(successfullyInsertedPositions), successfullyInsertedAngles));
             }
 
             args.Handled = true;
@@ -359,13 +361,15 @@ namespace Content.Server.Storage.EntitySystems
             if (args.Session.AttachedEntity is not EntityUid player)
                 return;
 
-            if (!Exists(args.InteractedItemUID))
+            var interacted = GetEntity(args.InteractedItemUID);
+
+            if (!Exists(interacted))
             {
-                Log.Error($"Player {args.Session} interacted with non-existent item {args.InteractedItemUID} stored in {ToPrettyString(uid)}");
+                Log.Error($"Player {args.Session} interacted with non-existent item {interacted} stored in {ToPrettyString(uid)}");
                 return;
             }
 
-            if (!_actionBlockerSystem.CanInteract(player, args.InteractedItemUID) || storageComp.Storage == null || !storageComp.Storage.Contains(args.InteractedItemUID))
+            if (!_actionBlockerSystem.CanInteract(player, interacted) || storageComp.Storage == null || !storageComp.Storage.Contains(interacted))
                 return;
 
             // Does the player have hands?
@@ -375,14 +379,14 @@ namespace Content.Server.Storage.EntitySystems
             // If the user's active hand is empty, try pick up the item.
             if (hands.ActiveHandEntity == null)
             {
-                if (_sharedHandsSystem.TryPickupAnyHand(player, args.InteractedItemUID, handsComp: hands)
+                if (_sharedHandsSystem.TryPickupAnyHand(player, interacted, handsComp: hands)
                     && storageComp.StorageRemoveSound != null)
                     _audio.Play(storageComp.StorageRemoveSound, Filter.Pvs(uid, entityManager: EntityManager), uid, true, AudioParams.Default);
                 return;
             }
 
             // Else, interact using the held item
-            _interactionSystem.InteractUsing(player, hands.ActiveHandEntity.Value, args.InteractedItemUID, Transform(args.InteractedItemUID).Coordinates, checkCanInteract: false);
+            _interactionSystem.InteractUsing(player, hands.ActiveHandEntity.Value, interacted, Transform(interacted).Coordinates, checkCanInteract: false);
         }
 
         private void OnInsertItemMessage(EntityUid uid, ServerStorageComponent storageComp, StorageInsertItemMessage args)
@@ -732,11 +736,11 @@ namespace Content.Server.Storage.EntitySystems
             if (storageComp.Storage == null)
                 return;
 
-            var state = new StorageBoundUserInterfaceState((List<EntityUid>) storageComp.Storage.ContainedEntities, storageComp.StorageUsed, storageComp.StorageCapacityMax);
+            var state = new StorageBoundUserInterfaceState(GetNetEntityList(storageComp.Storage.ContainedEntities.ToList()), storageComp.StorageUsed, storageComp.StorageCapacityMax);
 
             var bui = _uiSystem.GetUiOrNull(uid, StorageUiKey.Key);
             if (bui != null)
-                UserInterfaceSystem.SetUiState(bui, state);
+                _uiSystem.SetUiState(bui, state);
         }
 
         private void Popup(EntityUid _, EntityUid player, string message, ServerStorageComponent storageComp)

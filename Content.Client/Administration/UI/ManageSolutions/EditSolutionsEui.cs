@@ -12,9 +12,11 @@ namespace Content.Client.Administration.UI.ManageSolutions
     public sealed class EditSolutionsEui : BaseEui
     {
         private readonly EditSolutionsWindow _window;
+        private IEntityManager _entManager;
 
         public EditSolutionsEui()
         {
+            _entManager = IoCManager.Resolve<IEntityManager>();
             _window = new EditSolutionsWindow();
             _window.OnClose += () => SendMessage(new CloseEuiMessage());
         }
@@ -34,7 +36,7 @@ namespace Content.Client.Administration.UI.ManageSolutions
         public override void HandleState(EuiStateBase baseState)
         {
             var state = (EditSolutionsEuiState) baseState;
-            _window.SetTargetEntity(state.Target);
+            _window.SetTargetEntity(_entManager.GetEntity(state.Target));
             _window.UpdateSolutions(state.Solutions);
             _window.UpdateReagents();
         }

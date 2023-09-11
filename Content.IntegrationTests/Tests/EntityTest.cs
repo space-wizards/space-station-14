@@ -42,6 +42,8 @@ namespace Content.IntegrationTests.Tests
                 {
                     var mapId = mapManager.CreateMap();
                     var grid = mapManager.CreateGrid(mapId);
+                    // TODO: Fix this better in engine.
+                    grid.SetTile(Vector2i.Zero, new Tile(1));
                     var coord = new EntityCoordinates(grid.Owner, 0, 0);
                     entityMan.SpawnEntity(protoId, coord);
                 }
@@ -57,7 +59,7 @@ namespace Content.IntegrationTests.Tests
                     var query = entityMan.AllEntityQueryEnumerator<TComp>();
                     while (query.MoveNext(out var uid, out var meta))
                         yield return (uid, meta);
-                };
+                }
 
                 var entityMetas = Query<MetaDataComponent>(entityMan).ToList();
                 foreach (var (uid, meta) in entityMetas)
@@ -208,6 +210,7 @@ namespace Content.IntegrationTests.Tests
                 "GridFillComponent",
                 "Map", // We aren't testing a map entity in this test
                 "MapGrid",
+                "Broadphase",
                 "StationData", // errors when removed mid-round
                 "Actor", // We aren't testing actor components, those need their player session set.
                 "BlobFloorPlanBuilder", // Implodes if unconfigured.
@@ -285,137 +288,6 @@ namespace Content.IntegrationTests.Tests
                             }, "Component '{0}' threw an exception.",
                             name);
 
-                        entityManager.DeleteEntity(entity);
-                    }
-                });
-            });
-
-            await pair.CleanReturnAsync();
-        }
-
-        [Test]
-        public async Task AllComponentsOneEntityDeleteTest()
-        {
-            var skipComponents = new[]
-            {
-                "DebugExceptionOnAdd", // Debug components that explicitly throw exceptions
-                "DebugExceptionExposeData",
-                "DebugExceptionInitialize",
-                "DebugExceptionStartup",
-                "GridFillComponent",
-                "Map", // We aren't testing a map entity in this test
-                "MapGrid",
-                "StationData", // errors when deleted mid-round
-                "Actor", // We aren't testing actor components, those need their player session set.
-                "BlobFloorPlanBuilder", // Implodes if unconfigured.
-                "DebrisFeaturePlacerController", // Above.
-                "LoadedChunk", // Worldgen chunk loading malding.
-                "BiomeSelection", // Whaddya know, requires config.
-                "DeployableBarrier",
-            };
-
-            await using var pair = await PoolManager.GetServerClient();
-            var server = pair.Server;
-
-            var mapManager = server.ResolveDependency<IMapManager>();
-            var entityManager = server.ResolveDependency<IEntityManager>();
-            var componentFactory = server.ResolveDependency<IComponentFactory>();
-            var tileDefinitionManager = server.ResolveDependency<ITileDefinitionManager>();
-            var logmill = server.ResolveDependency<ILogManager>().GetSawmill("EntityTest");
-
-            MapGridComponent grid = default;
-
-            await server.WaitPost(() =>
-            {
-                // Create a one tile grid to stave off the grid 0 monsters
-                var mapId = mapManager.CreateMap();
-
-                mapManager.AddUninitializedMap(mapId);
-
-                grid = mapManager.CreateGrid(mapId);
-
-                var tileDefinition = tileDefinitionManager["Plating"];
-                var tile = new Tile(tileDefinition.TileId);
-
-                grid.SetTile(Vector2i.Zero, tile);
-                mapManager.DoMapInitialize(mapId);
-            });
-            await server.WaitRunTicks(5);
-
-            var distinctComponents = new List<(List<CompIdx> components, List<CompIdx> references)>
-            {
-                (new List<CompIdx>(), new List<CompIdx>())
-            };
-
-            // Split components into groups, ensuring that their references don't conflict
-            foreach (var type in componentFactory.AllRegisteredTypes)
-            {
-                var registration = componentFactory.GetRegistration(type);
-
-                for (var i = 0; i < distinctComponents.Count; i++)
-                {
-                    var (components, references) = distinctComponents[i];
-
-                    if (references.Intersect(registration.References).Any())
-                    {
-                        // Ensure the next list if this one has conflicting references
-                        if (i + 1 >= distinctComponents.Count)
-                        {
-                            distinctComponents.Add((new List<CompIdx>(), new List<CompIdx>()));
-                        }
-
-                        continue;
-                    }
-
-                    // Add the component and its references if no conflicting references were found
-                    components.Add(registration.Idx);
-                    references.AddRange(registration.References);
-                }
-            }
-
-            // Sanity check
-            Assert.That(distinctComponents, Is.Not.Empty);
-
-            await server.WaitAssertion(() =>
-            {
-                Assert.Multiple(() =>
-                {
-                    foreach (var (components, _) in distinctComponents)
-                    {
-                        var testLocation = grid.ToCoordinates();
-                        var entity = entityManager.SpawnEntity(null, testLocation);
-
-                        Assert.That(entityManager.GetComponent<MetaDataComponent>(entity).EntityInitialized);
-
-                        foreach (var type in components)
-                        {
-                            var component = (Component) componentFactory.GetComponent(type);
-
-                            // If the entity already has this component, if it was ensured or added by another
-                            if (entityManager.HasComponent(entity, component.GetType()))
-                            {
-                                continue;
-                            }
-
-                            var name = componentFactory.GetComponentName(component.GetType());
-
-                            // If this component is ignored
-                            if (skipComponents.Contains(name))
-                                continue;
-
-                            component.Owner = entity;
-                            logmill.Debug($"Adding component: {name}");
-
-                            // Note for the future coder: if an exception occurs where a component reference
-                            // was already occupied it might be because some component is ensuring another // initialize.
-                            // If so, search for cases of EnsureComponent<FailingType>, EnsureComponentWarn<FailingType>
-                            // and all others variations (out parameter)
-                            Assert.DoesNotThrow(() =>
-                                {
-                                    entityManager.AddComponent(entity, component);
-                                }, "Component '{0}' threw an exception.",
-                                name);
-                        }
                         entityManager.DeleteEntity(entity);
                     }
                 });

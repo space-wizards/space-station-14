@@ -31,6 +31,7 @@ namespace Content.Server.Communications
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly RoundEndSystem _roundEndSystem = default!;
         [Dependency] private readonly StationSystem _stationSystem = default!;
+        [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
         [Dependency] private readonly IConfigurationManager _cfg = default!;
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
 
@@ -151,7 +152,7 @@ namespace Content.Server.Communications
             }
 
             if (comp.UserInterface is not null)
-                UserInterfaceSystem.SetUiState(comp.UserInterface, new CommunicationsConsoleInterfaceState(
+                _uiSystem.SetUiState(comp.UserInterface, new CommunicationsConsoleInterfaceState(
                     CanAnnounce(comp),
                     CanCallOrRecall(comp),
                     levels,
@@ -174,7 +175,7 @@ namespace Content.Server.Communications
 
             if (TryComp<AccessReaderComponent>(console, out var accessReaderComponent) && !HasComp<EmaggedComponent>(console))
             {
-                return _accessReaderSystem.IsAllowed(user, accessReaderComponent);
+                return _accessReaderSystem.IsAllowed(user, console, accessReaderComponent);
             }
             return true;
         }

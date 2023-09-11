@@ -1,0 +1,47 @@
+- type: entity
+  name: spider clan charge
+  description: A modified C-4 charge supplied to you by the Spider Clan. Its explosive power has been juiced up, but only works in one specific area.
+  # not actually modified C-4! oh the horror!
+  parent: BaseItem
+  id: SpiderCharge
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Bombs/spidercharge.rsi
+    state: icon
+  - type: Item
+    sprite: Objects/Weapons/Bombs/spidercharge.rsi
+    size: 10
+  - type: SpiderCharge
+  - type: OnUseTimerTrigger
+    delay: 10
+    delayOptions: [5, 10, 30, 60]
+    initialBeepDelay: 0
+    beepSound: /Audio/Machines/Nuke/general_beep.ogg
+    startOnStick: true
+  - type: AutomatedTimer
+  - type: Sticky
+    stickDelay: 5
+    stickPopupStart: comp-sticky-start-stick-bomb
+    stickPopupSuccess: comp-sticky-success-stick-bomb
+    # can only stick it in target area, no reason to unstick
+    canUnstick: false
+    blacklist: # can't stick it to movable things, even if they are in the target area
+      components:
+      - Anchorable
+      - Item
+      - Body
+  - type: Explosive # Powerful explosion in a large radius. Will break underplating.
+    explosionType: DemolitionCharge
+    totalIntensity: 360
+    intensitySlope: 10
+    maxIntensity: 120
+    canCreateVacuum: true
+  - type: ExplodeOnTrigger
+  - type: StickyVisualizer
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.Trigger.TriggerVisuals.VisualState:
+        base:
+          Primed: { state: primed }
+          Unprimed: { state: complete }

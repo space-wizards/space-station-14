@@ -21,6 +21,7 @@ using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
+using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Client.Utility;
 using Robust.Shared.Configuration;
@@ -1239,7 +1240,6 @@ namespace Content.Client.Preferences.UI
                 {
                     Visible = false,
                     HorizontalExpand = true,
-                    TooltipDelay = 0.2f,
                     MouseFilter = MouseFilterMode.Stop,
                     Children =
                     {
@@ -1258,7 +1258,6 @@ namespace Content.Client.Preferences.UI
                 if (job.LocalizedDescription != null)
                 {
                     _jobTitle.ToolTip = job.LocalizedDescription;
-                    _jobTitle.TooltipDelay = 0.2f;
                 }
 
                 AddChild(new BoxContainer
@@ -1274,9 +1273,11 @@ namespace Content.Client.Preferences.UI
                 });
             }
 
-            public void LockRequirements(string requirements)
+            public void LockRequirements(FormattedMessage requirements)
             {
-                _lockStripe.ToolTip = requirements;
+                var tooltip = new Tooltip();
+                tooltip.SetMessage(requirements);
+                _lockStripe.TooltipSupplier = _ => tooltip;
                 _lockStripe.Visible = true;
                 _optionButton.Visible = false;
             }
@@ -1345,7 +1346,6 @@ namespace Content.Client.Preferences.UI
                 if (antag.Description != null)
                 {
                     _checkBox.ToolTip = Loc.GetString(antag.Description);
-                    _checkBox.TooltipDelay = 0.2f;
                 }
 
                 AddChild(new BoxContainer
@@ -1387,7 +1387,6 @@ namespace Content.Client.Preferences.UI
                 if (trait.Description is { } desc)
                 {
                     _checkBox.ToolTip = Loc.GetString(desc);
-                    _checkBox.TooltipDelay = 0.2f;
                 }
 
                 AddChild(new BoxContainer
