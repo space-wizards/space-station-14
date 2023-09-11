@@ -242,7 +242,7 @@ namespace Content.Server.Chat.Managers
 
         public void ChatMessageToOne(ChatChannel channel, string message, string wrappedMessage, EntityUid source, bool hideChat, INetChannel client, Color? colorOverride = null, bool recordReplay = false, string? audioPath = null, float audioVolume = 0)
         {
-            var msg = new ChatMessage(channel, message, wrappedMessage, source, hideChat, colorOverride, audioPath, audioVolume);
+            var msg = new ChatMessage(channel, message, wrappedMessage, _entityManager.GetNetEntity(source), hideChat, colorOverride, audioPath, audioVolume);
             _netManager.ServerSendMessage(new MsgChatMessage() { Message = msg }, client);
 
             if (!recordReplay)
@@ -260,7 +260,7 @@ namespace Content.Server.Chat.Managers
 
         public void ChatMessageToMany(ChatChannel channel, string message, string wrappedMessage, EntityUid source, bool hideChat, bool recordReplay, List<INetChannel> clients, Color? colorOverride = null, string? audioPath = null, float audioVolume = 0)
         {
-            var msg = new ChatMessage(channel, message, wrappedMessage, source, hideChat, colorOverride, audioPath, audioVolume);
+            var msg = new ChatMessage(channel, message, wrappedMessage, _entityManager.GetNetEntity(source), hideChat, colorOverride, audioPath, audioVolume);
             _netManager.ServerSendToMany(new MsgChatMessage() { Message = msg }, clients);
 
             if (!recordReplay)
@@ -290,7 +290,7 @@ namespace Content.Server.Chat.Managers
 
         public void ChatMessageToAll(ChatChannel channel, string message, string wrappedMessage, EntityUid source, bool hideChat, bool recordReplay, Color? colorOverride = null,  string? audioPath = null, float audioVolume = 0)
         {
-            var msg = new ChatMessage(channel, message, wrappedMessage, source, hideChat, colorOverride, audioPath, audioVolume);
+            var msg = new ChatMessage(channel, message, wrappedMessage, _entityManager.GetNetEntity(source), hideChat, colorOverride, audioPath, audioVolume);
             _netManager.ServerSendToAll(new MsgChatMessage() { Message = msg });
 
             if (!recordReplay)

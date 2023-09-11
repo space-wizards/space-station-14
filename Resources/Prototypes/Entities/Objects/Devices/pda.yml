@@ -143,7 +143,7 @@
   - type: Icon
     state: pda-internmed
   - type: HealthAnalyzer
-    scanDelay: 1.4
+    scanDelay: 1
     scanningEndSound:
       path: "/Audio/Items/Medical/healthscanner.ogg"
   - type: GuideHelp
@@ -510,7 +510,7 @@
   - type: Icon
     state: pda-medical
   - type: HealthAnalyzer
-    scanDelay: 1.2
+    scanDelay: 1
     scanningEndSound:
       path: "/Audio/Items/Medical/healthscanner.ogg"
   - type: GuideHelp
@@ -532,7 +532,7 @@
   - type: Icon
     state: pda-paramedic
   - type: HealthAnalyzer
-    scanDelay: 0.5
+    scanDelay: 1
     scanningEndSound:
       path: "/Audio/Items/Medical/healthscanner.ogg"
 

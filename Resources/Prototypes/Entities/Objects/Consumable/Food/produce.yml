@@ -460,8 +460,10 @@
         maxVol: 14
         reagents:
         - ReagentId: Nutriment
-          Quantity: 10
+          Quantity: 7
         - ReagentId: Vitamin
+          Quantity: 3
+        - ReagentId: Water
           Quantity: 4
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/tomato.rsi
@@ -498,11 +500,8 @@
       - !type:PlaySoundBehavior
         sound:
           collection: desecration
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          PuddleTomato:
-            min: 1
-            max: 1
+      - !type:SpillBehavior
+        solution: food
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
 
@@ -1114,11 +1113,8 @@
       - !type:PlaySoundBehavior
         sound:
           collection: desecration
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          PuddleWatermelon:
-            min: 1
-            max: 1
+      - !type:SpillBehavior
+        solution: food
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: SliceableFood
