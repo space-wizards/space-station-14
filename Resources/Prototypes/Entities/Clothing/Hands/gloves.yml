@@ -300,7 +300,7 @@
   - type: Clothing
     sprite: Clothing/Hands/Gloves/mercfingerless.rsi
   - type: Fiber
-    fiberMaterial: fibers-synthetic
+    fiberMaterial: fibers-insulative
     fiberColor: fibers-olive
 
 - type: entity
