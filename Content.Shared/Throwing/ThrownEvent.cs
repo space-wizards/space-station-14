@@ -11,12 +11,12 @@ public sealed class ThrownEvent : HandledEntityEventArgs
     /// <summary>
     ///     Entity that threw the item.
     /// </summary>
-    public EntityUid? User;
+    public readonly EntityUid? User;
 
     /// <summary>
     ///     Item that was thrown.
     /// </summary>
-    public EntityUid Thrown;
+    public readonly EntityUid Thrown;
 
     public ThrownEvent(EntityUid? user, EntityUid thrown)
     {
