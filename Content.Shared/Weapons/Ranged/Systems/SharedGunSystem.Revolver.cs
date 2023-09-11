@@ -316,6 +316,7 @@ public partial class SharedGunSystem
                 component.Chambers[i] = null;
                 continue;
             }
+            
             component.AmmoContainer.Remove(thisSlot.Value);
             component.AmmoSlots[i] = null;
         }
