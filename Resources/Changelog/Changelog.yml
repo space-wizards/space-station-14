@@ -1,9 +1,4 @@
 Entries:
-- author: FillerVK
-  changes:
-  - {message: Departure Terminal update., type: Tweak}
-  id: 4306
-  time: '2023-07-23T05:32:04.0000000+00:00'
 - author: Flareguy
   changes:
   - {message: Changed the roundstart traitor sound effect back to the old one., type: Tweak}
@@ -2984,3 +2979,9 @@ Entries:
   - {message: Storage (e.g. backpacks) is now predicted and using FancyWindow., type: Fix}
   id: 4805
   time: '2023-09-11T11:20:47.0000000+00:00'
+- author: chromiumboy
+  changes:
+  - {message: Artifact containers now heavily suppress the radioactivity of any irradiated
+      alien artifacts that they contain, type: Add}
+  id: 4806
+  time: '2023-09-11T19:58:26.0000000+00:00'
