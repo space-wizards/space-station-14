@@ -1,5 +1,5 @@
+using Content.Server.Ninja.Events;
 using Content.Server.Power.EntitySystems;
-using Content.Server.Power.Events;
 using Content.Shared.Electrocution;
 using Content.Shared.Interaction;
 using Content.Shared.Ninja.Components;
@@ -28,7 +28,7 @@ public sealed class StunProviderSystem : SharedStunProviderSystem
         base.Initialize();
 
         SubscribeLocalEvent<StunProviderComponent, BeforeInteractHandEvent>(OnBeforeInteractHand);
-        SubscribeLocalEvent<StunProviderComponent, BatteryChangedEvent>(OnBatteryChanged);
+        SubscribeLocalEvent<StunProviderComponent, NinjaBatteryChangedEvent>(OnBatteryChanged);
     }
 
     /// <summary>
@@ -63,7 +63,7 @@ public sealed class StunProviderSystem : SharedStunProviderSystem
         args.Handled = true;
     }
 
-    private void OnBatteryChanged(EntityUid uid, StunProviderComponent comp, ref BatteryChangedEvent args)
+    private void OnBatteryChanged(EntityUid uid, StunProviderComponent comp, ref NinjaBatteryChangedEvent args)
     {
         SetBattery(uid, args.Battery, comp);
     }
