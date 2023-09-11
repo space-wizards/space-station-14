@@ -1,4 +1,4 @@
-namespace Content.Server.NPC.Components;
+namespace Content.Shared.NPC.Components;
 
 /// <summary>
 /// Added to NPCs that are actively being updated.
