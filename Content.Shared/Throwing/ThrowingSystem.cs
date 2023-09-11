@@ -1,7 +1,7 @@
 using System.Numerics;
+using Content.Shared.Administration.Logs;
+using Content.Shared.Database;
 using Content.Shared.Gravity;
-using Content.Shared.Interaction;
-using Content.Shared.Movement.Components;
 using Content.Shared.Projectiles;
 using Content.Shared.Tag;
 using Robust.Shared.Map;
@@ -25,10 +25,10 @@ public sealed class ThrowingSystem : EntitySystem
     public const float FlyTime = 0.15f;
 
     [Dependency] private readonly SharedGravitySystem _gravity = default!;
-    [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly ThrownItemSystem _thrownSystem = default!;
+    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
 
     public void TryThrow(
         EntityUid uid,
@@ -127,8 +127,10 @@ public sealed class ThrowingSystem : EntitySystem
             _transform.SetLocalRotation(uid, angle + offset);
         }
 
+        var throwEvent = new ThrownEvent(user, uid);
+        RaiseLocalEvent(uid, throwEvent, true);
         if (user != null)
-            _interactionSystem.ThrownInteraction(user.Value, uid);
+            _adminLogger.Add(LogType.Throw, LogImpact.Low, $"{ToPrettyString(user.Value):user} threw {ToPrettyString(uid):entity}");
 
         var impulseVector = direction.Normalized() * strength * physics.Mass;
         _physics.ApplyLinearImpulse(uid, impulseVector, body: physics);
