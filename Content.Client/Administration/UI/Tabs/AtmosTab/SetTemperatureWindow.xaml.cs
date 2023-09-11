@@ -17,7 +17,7 @@ namespace Content.Client.Administration.UI.Tabs.AtmosTab
     [UsedImplicitly]
     public sealed partial class SetTemperatureWindow : DefaultWindow
     {
-        private List<EntityUid>? _data;
+        private List<NetEntity>? _data;
 
         protected override void EnteredTree()
         {
@@ -25,7 +25,7 @@ namespace Content.Client.Administration.UI.Tabs.AtmosTab
             var playerManager = IoCManager.Resolve<IPlayerManager>();
 
             var gridQuery = entManager.AllEntityQueryEnumerator<MapGridComponent>();
-            _data ??= new List<EntityUid>();
+            _data ??= new List<NetEntity>();
             _data.Clear();
 
             while (gridQuery.MoveNext(out var uid, out _))
@@ -33,7 +33,7 @@ namespace Content.Client.Administration.UI.Tabs.AtmosTab
                 var player = playerManager.LocalPlayer?.ControlledEntity;
                 var playerGrid = entManager.GetComponentOrNull<TransformComponent>(player)?.GridUid;
                 GridOptions.AddItem($"{uid} {(playerGrid == uid ? " (Current)" : "")}");
-                _data.Add(uid);
+                _data.Add(entManager.GetNetEntity(uid));
             }
 
             GridOptions.OnItemSelected += eventArgs => GridOptions.SelectId(eventArgs.Id);
@@ -46,9 +46,8 @@ namespace Content.Client.Administration.UI.Tabs.AtmosTab
                 return;
 
             var selectedGrid = _data[GridOptions.SelectedId];
-            var ent = IoCManager.Resolve<IEntityManager>().GetNetEntity(selectedGrid);
             IoCManager.Resolve<IClientConsoleHost>()
-                .ExecuteCommand($"settemp {TileXSpin.Value} {TileYSpin.Value} {ent} {TemperatureSpin.Value}");
+                .ExecuteCommand($"settemp {TileXSpin.Value} {TileYSpin.Value} {selectedGrid} {TemperatureSpin.Value}");
         }
     }
 }
