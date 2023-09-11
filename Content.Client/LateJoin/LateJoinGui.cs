@@ -257,9 +257,11 @@ namespace Content.Client.LateJoin
                         {
                             jobButton.Disabled = true;
 
-                            if (!string.IsNullOrEmpty(reason))
+                            if (!reason.IsEmpty)
                             {
-                                jobButton.ToolTip = reason;
+                                var tooltip = new Tooltip();
+                                tooltip.SetMessage(reason);
+                                jobButton.TooltipSupplier = _ => tooltip;
                             }
 
                             jobSelector.AddChild(new TextureRect
