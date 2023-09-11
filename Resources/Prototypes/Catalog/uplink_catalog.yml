@@ -826,7 +826,7 @@
   - UplinkTools
  conditions:
  - !type:ListingLimitedStockCondition
-   stock: 10
+    stock: 10
 
 # Job Specific
 
