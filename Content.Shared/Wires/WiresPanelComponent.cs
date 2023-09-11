@@ -31,7 +31,7 @@ public sealed partial class WiresPanelComponent : Component
     /// <summary>
     ///     This prototype describes the current security features of the wire panel
     /// </summary>
-    [DataField("currentSecurityLevelID")]
+    [DataField("securityLevel")]
     [ValidatePrototypeId<WiresPanelSecurityLevelPrototype>]
     [AutoNetworkedField]
     public string CurrentSecurityLevelID = "Level0";
