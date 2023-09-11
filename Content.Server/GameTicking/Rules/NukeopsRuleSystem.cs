@@ -114,11 +114,34 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
 
     private void OnSendFaxAttempt(ref SendFaxAttemptEvent ev)
     {
-        if (HasComp<EmaggedComponent>(ev.Uid))
-            return;
+        var query = EntityQueryEnumerator<NukeopsRuleComponent, GameRuleComponent>();
+        while (query.MoveNext(out var ruleUid, out var nukeops, out var gameRule))
+        {
+            if (!GameTicker.IsGameRuleAdded(ruleUid, gameRule))
+                continue;
 
-        ev.Cancelled = true;
-        ev.Reason = Loc.GetString("war-ops-fax-unavailable");
+            if (nukeops.NukieOutpost == null ||
+                nukeops.WarDeclaredTime == null ||
+                nukeops.WarNukieArriveDelay == null)
+                continue;
+
+            var mapOutpost = Transform(nukeops.NukieOutpost.Value).MapID;
+            var mapFax = Transform(ev.Uid).MapID;
+
+            if (mapOutpost != mapFax)
+            {
+                var timeAfterDeclaration = _gameTiming.CurTime.Subtract(nukeops.WarDeclaredTime.Value);
+                var timeRemain = nukeops.WarNukieArriveDelay.Value.Subtract(timeAfterDeclaration);
+                if (timeRemain > TimeSpan.Zero)
+                {
+                    if (HasComp<EmaggedComponent>(ev.Uid))
+                        continue;
+
+                    ev.Cancelled = true;
+                    ev.Reason = Loc.GetString("war-ops-fax-unavailable");
+                }
+            }
+        }
     }
 
     /// <summary>
