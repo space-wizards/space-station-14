@@ -38,7 +38,7 @@
       path: /Audio/Weapons/Guns/Gunshots/revolver.ogg
     soundWin:
       path: /Audio/Weapons/Guns/Empty/empty.ogg
-    russianRevolverDamage:
+    damage:
       types:
         Piercing: 150
         Bleed: 100

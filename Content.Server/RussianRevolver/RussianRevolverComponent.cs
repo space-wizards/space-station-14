@@ -6,7 +6,7 @@ namespace Content.Server.RussianRevolver;
 [RegisterComponent]
 public sealed partial class RussianRevolverComponent : Component
 {
-    [DataField("russianRevolverDamage", required: true)]
+    [DataField("damage", required: true)]
     [ViewVariables(VVAccess.ReadWrite)]
     public DamageSpecifier RussianRevolverDamage = default!;
 
