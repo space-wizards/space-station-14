@@ -1,9 +1,4 @@
 Entries:
-- author: JimGamemaster
-  changes:
-  - {message: Space Creatures can now float in space, type: Tweak}
-  id: 4302
-  time: '2023-07-21T20:10:21.0000000+00:00'
 - author: brainfood1183
   changes:
   - {message: Strait Jackets can now be used to restrain individuals., type: Add}
@@ -2981,3 +2976,12 @@ Entries:
   - {message: Added indicator near SSD players, type: Add}
   id: 4801
   time: '2023-09-11T05:52:56.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'Jetpacks, being weightless, and flying mobs can now pass over lava
+      & chasms unharmed (as well as other obstacles)', type: Add}
+  - {message: Observers are no longer affected by ice physics, type: Fix}
+  - {message: 'Step trigger (slipping, shards, etc) now by default won''t trigger
+      if the stepping entity is weightless or set as in air', type: Tweak}
+  id: 4802
+  time: '2023-09-11T06:03:17.0000000+00:00'
