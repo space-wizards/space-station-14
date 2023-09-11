@@ -643,11 +643,8 @@
       - !type:PlaySoundBehavior
         sound:
           collection: desecration
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          PuddleBlueTomato:
-            min: 1
-            max: 1
+      - !type:SpillBehavior
+        solution: food
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
 
@@ -685,11 +682,8 @@
       - !type:PlaySoundBehavior
         sound:
           collection: desecration
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          PuddleBloodTomato:
-            min: 1
-            max: 1
+      - !type:SpillBehavior
+        solution: food
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
 
