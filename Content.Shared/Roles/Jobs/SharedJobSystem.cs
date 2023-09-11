@@ -30,17 +30,17 @@ public abstract class SharedJobSystem : EntitySystem
     {
         base.Shutdown();
         _protoManager.PrototypesReloaded -= OnProtoReload;
-        _inverseTrackerLookup.Clear();
     }
 
     private void OnProtoReload(PrototypesReloadedEventArgs obj)
     {
-        _inverseTrackerLookup.Clear();
         SetupTrackerLookup();
     }
 
     private void SetupTrackerLookup()
     {
+        _inverseTrackerLookup.Clear();
+
         // This breaks if you have N trackers to 1 JobId but future concern.
         foreach (var job in _protoManager.EnumeratePrototypes<JobPrototype>())
         {
