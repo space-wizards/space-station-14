@@ -1,22 +1,4 @@
 Entries:
-- author: Lank
-  changes:
-  - {message: Artifacts going insane at round-end can now be disabled per-server.,
-    type: Tweak}
-  id: 4299
-  time: '2023-07-21T08:49:11.0000000+00:00'
-- author: Riggle
-  changes:
-  - {message: admin notes have more options than before, type: Add}
-  - {message: admins can now select a severity when adding a note, type: Add}
-  - {message: watchlists and messages, type: Add}
-  - {message: expiring notes, type: Add}
-  - {message: 'notes now fade when they reach a certain age, adjustable in config',
-    type: Add}
-  - {message: bans automatically add a note, type: Add}
-  - {message: new and improved ban panel, type: Add}
-  id: 4300
-  time: '2023-07-21T11:38:53.0000000+00:00'
 - author: Errant
   changes:
   - {message: Nitrogen tank settings have been adjusted to avoid gas wastage, type: Tweak}
@@ -2989,3 +2971,13 @@ Entries:
   - {message: Fix handheld crew monitor., type: Fix}
   id: 4798
   time: '2023-09-11T05:01:54.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix ghost warps., type: Fix}
+  id: 4799
+  time: '2023-09-11T05:43:25.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Make the role timer tooltip look much nicer., type: Tweak}
+  id: 4800
+  time: '2023-09-11T05:44:22.0000000+00:00'
