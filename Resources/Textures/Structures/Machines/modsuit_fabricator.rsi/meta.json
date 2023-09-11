@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/blob/master/icons/obj/machines/robotics.dmi",
+  "license": "AGPL3.0",
+  "copyright": "Taken from Tau Ceti at https://github.com/TauCetiStation/TauCetiClassic/pull/9991",
   "size": {
     "x": 32,
     "y": 32
@@ -20,22 +20,14 @@
       "name": "building",
       "delays": [
         [
-          0.25,
-          0.25,
-          0.25,
-          0.25,
-          0.25,
-          0.25,
-          0.25,
-          0.25,
-          0.25,
-          0.25,
-          0.25,
-          0.25,
-          0.25,
-          0.25,
-          0.25,
-          0.25
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5
         ]
       ]
     },
@@ -43,8 +35,6 @@
       "name": "inserting",
       "delays": [
         [
-          0.1,
-          0.1,
           0.1,
           0.1,
           0.1,

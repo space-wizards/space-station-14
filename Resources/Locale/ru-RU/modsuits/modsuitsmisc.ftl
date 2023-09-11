@@ -57,3 +57,6 @@ ent-ModSuitStorageInterdyne = { ent-ModSuitStorageCE }
 ent-ModSuitStorageBlueshield = { ent-ModSuitStorageCE }
     .desc = { ent-ModSuitStorageCE.desc }
     .suffix = ЦК , Модсьют , синий щит , блюшит , блюшилд
+ent-ModsuitFab = Фабрикатор модсьютов
+    .desc = Используется для фабрикации компонентов модсьютов.
+    .suffix = Модсьют
