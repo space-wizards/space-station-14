@@ -382,15 +382,15 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
         }
     }
 
-    private static readonly string[] OUTCOMES = new[]
-    {
-    // revs survived and heads survived... how
-    "rev-reverse-stalemate",
-    // revs won and heads died
-    "rev-won",
-    // revs lost and heads survived
-    "rev-lost",
-    // revs lost and heads died
-    "rev-stalemate"
-    };
+        private static readonly string[] OUTCOMES = new[]
+        {
+        // revs survived and heads survived... how
+        "rev-reverse-stalemate",
+        // revs won and heads died
+        "rev-won",
+        // revs lost and heads survived
+        "rev-lost",
+        // revs lost and heads died
+        "rev-stalemate"
+        };
 }
