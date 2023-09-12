@@ -117,12 +117,12 @@ namespace Content.Shared.Hands
     [Serializable, NetSerializable]
     public sealed class PickupAnimationEvent : EntityEventArgs
     {
-        public EntityUid ItemUid { get; }
-        public EntityCoordinates InitialPosition { get; }
+        public NetEntity ItemUid { get; }
+        public NetCoordinates InitialPosition { get; }
         public Vector2 FinalPosition { get; }
         public Angle InitialAngle { get; }
 
-        public PickupAnimationEvent(EntityUid itemUid, EntityCoordinates initialPosition,
+        public PickupAnimationEvent(NetEntity itemUid, NetCoordinates initialPosition,
             Vector2 finalPosition, Angle initialAngle)
         {
             ItemUid = itemUid;

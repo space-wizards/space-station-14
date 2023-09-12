@@ -1,7 +1,6 @@
 using System.Numerics;
 using Content.Client.Cooldown;
 using Content.Client.UserInterface.Systems.Inventory.Controls;
-using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Input;
@@ -192,7 +191,7 @@ namespace Content.Client.UserInterface.Controls
             var tempQualifier = HoverSpriteView.Sprite;
             if (tempQualifier != null)
             {
-                IoCManager.Resolve<IEntityManager>().DeleteEntity(tempQualifier.Owner);
+                IoCManager.Resolve<IEntityManager>().QueueDeleteEntity(tempQualifier.Owner);
             }
 
             HoverSpriteView.SetEntity(null);

@@ -105,7 +105,7 @@ public sealed class DrinkSystem : EntitySystem
         var total = 0f;
         foreach (var quantity in solution.Contents)
         {
-            var reagent = _proto.Index<ReagentPrototype>(quantity.ReagentId);
+            var reagent = _proto.Index<ReagentPrototype>(quantity.Reagent.Prototype);
             if (reagent.Metabolisms == null)
                 continue;
 
@@ -282,7 +282,7 @@ public sealed class DrinkSystem : EntitySystem
 
         var flavors = _flavorProfile.GetLocalizedFlavorsMessage(user, drinkSolution);
 
-        var doAfterEventArgs = new DoAfterArgs(
+        var doAfterEventArgs = new DoAfterArgs(EntityManager,
             user,
             forceDrink ? drink.ForceFeedDelay : drink.Delay,
             new ConsumeDoAfterEvent(drinkSolution.Name, flavors),

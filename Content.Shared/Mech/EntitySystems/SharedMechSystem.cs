@@ -3,11 +3,9 @@ using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Actions;
-using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Destructible;
 using Content.Shared.DoAfter;
 using Content.Shared.FixedPoint;
-using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Components;
 using Content.Shared.Interaction.Events;
@@ -19,7 +17,7 @@ using Content.Shared.Popups;
 using Content.Shared.Weapons.Melee;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
-using Robust.Shared.Prototypes;
+using Robust.Shared.Network;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 
@@ -31,7 +29,7 @@ namespace Content.Shared.Mech.EntitySystems;
 public abstract class SharedMechSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly IPrototypeManager _prototype = default!;
+    [Dependency] private readonly INetManager _net = default!;
     [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
     [Dependency] private readonly AccessReaderSystem _access = default!;
     [Dependency] private readonly SharedActionsSystem _actions = default!;
@@ -71,7 +69,7 @@ public abstract class SharedMechSystem : EntitySystem
             MaxIntegrity = component.MaxIntegrity,
             Energy = component.Energy,
             MaxEnergy = component.MaxEnergy,
-            CurrentSelectedEquipment = component.CurrentSelectedEquipment,
+            CurrentSelectedEquipment = GetNetEntity(component.CurrentSelectedEquipment),
             Broken = component.Broken
         };
     }
@@ -85,7 +83,7 @@ public abstract class SharedMechSystem : EntitySystem
         component.MaxIntegrity = state.MaxIntegrity;
         component.Energy = state.Energy;
         component.MaxEnergy = state.MaxEnergy;
-        component.CurrentSelectedEquipment = state.CurrentSelectedEquipment;
+        component.CurrentSelectedEquipment = EnsureEntity<MechComponent>(state.CurrentSelectedEquipment, uid);
         component.Broken = state.Broken;
     }
 
@@ -93,7 +91,7 @@ public abstract class SharedMechSystem : EntitySystem
     {
         args.State = new MechPilotComponentState
         {
-            Mech = component.Mech
+            Mech = GetNetEntity(component.Mech)
         };
     }
 
@@ -102,7 +100,7 @@ public abstract class SharedMechSystem : EntitySystem
         if (args.Current is not MechPilotComponentState state)
             return;
 
-        component.Mech = state.Mech;
+        component.Mech = EnsureEntity<MechPilotComponent>(state.Mech, uid);
     }
 
     #endregion
@@ -176,14 +174,15 @@ public abstract class SharedMechSystem : EntitySystem
         _mover.SetRelay(pilot, mech);
         _interaction.SetRelay(pilot, mech, irelay);
         rider.Mech = mech;
-        Dirty(rider);
+        Dirty(pilot, rider);
 
-        _actions.AddAction(pilot,
-            new InstantAction(_prototype.Index<InstantActionPrototype>(component.MechCycleAction)), mech);
-        _actions.AddAction(pilot, new InstantAction(_prototype.Index<InstantActionPrototype>(component.MechUiAction)),
+        if (_net.IsClient)
+            return;
+
+        _actions.AddAction(pilot, Spawn(component.MechCycleAction), mech);
+        _actions.AddAction(pilot, Spawn(component.MechUiAction),
             mech);
-        _actions.AddAction(pilot,
-            new InstantAction(_prototype.Index<InstantActionPrototype>(component.MechEjectAction)), mech);
+        _actions.AddAction(pilot, Spawn(component.MechEjectAction), mech);
     }
 
     private void RemoveUser(EntityUid mech, EntityUid pilot)
@@ -406,7 +405,7 @@ public abstract class SharedMechSystem : EntitySystem
     /// <param name="toInsert"></param>
     /// <param name="component"></param>
     /// <returns>Whether or not the entity was inserted</returns>
-    public virtual bool TryInsert(EntityUid uid, EntityUid? toInsert, MechComponent? component = null)
+    public bool TryInsert(EntityUid uid, EntityUid? toInsert, MechComponent? component = null)
     {
         if (!Resolve(uid, ref component))
             return false;
@@ -429,7 +428,7 @@ public abstract class SharedMechSystem : EntitySystem
     /// <param name="uid"></param>
     /// <param name="component"></param>
     /// <returns>Whether or not the pilot was ejected.</returns>
-    public virtual bool TryEject(EntityUid uid, MechComponent? component = null)
+    public bool TryEject(EntityUid uid, MechComponent? component = null)
     {
         if (!Resolve(uid, ref component))
             return false;
