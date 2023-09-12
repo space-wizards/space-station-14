@@ -56,7 +56,6 @@
           behaviors:
             - !type:DoActsBehavior
               acts: ["Destruction"]
-            - !type:ExplodeBehavior
             - !type:PlaySoundBehavior
               sound:
                 path: /Audio/Effects/metalbreak.ogg
