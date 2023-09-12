@@ -48,6 +48,17 @@
   - type: MobThresholds
     thresholds:
       0: Alive
+      100: Dead
+    healthAlert: BorgHealth
+    showOverlays: false
+  - type: HealthExaminable
+    examinableTypes:
+      - Blunt
+      - Slash
+      - Piercing
+      - Heat
+      - Shock
+    locPrefix: silicon
   - type: UserInterface
     interfaces:
     - key: enum.SiliconLawsUiKey.Key
