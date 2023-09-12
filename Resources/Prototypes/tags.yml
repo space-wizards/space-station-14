@@ -619,6 +619,9 @@
   id: Knife
 
 - type: Tag
+  id: LaserTechPart
+
+- type: Tag
   id: LavaBrig
 
 - type: Tag
