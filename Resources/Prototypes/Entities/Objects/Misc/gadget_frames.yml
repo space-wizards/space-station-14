@@ -103,3 +103,29 @@
   - type: Construction
     graph: WeaponLaserCannon
     node: wiresMissing
+
+- type: entity
+  parent: BaseItem
+  id: LaserCarbineFrame
+  name: laser rifle
+  description: The incomplete frame of a laser rifle.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Battery/laser_gun.rsi
+    layers:
+    - state: frame_0
+      map: [ "enum.ConstructionVisuals.Layer" ]
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.ConstructionVisuals.Key:
+        enum.ConstructionVisuals.Layer:
+          wiresMissing: { state: frame_0 }
+          casterMissing: { state: frame_1 }
+          casterUnsecured: { state: frame_2 }
+          caseMissing: { state: frame_2 }
+  - type: Item
+    size: 50
+  - type: Construction
+    graph: WeaponLaserCarbine
+    node: wiresMissing
