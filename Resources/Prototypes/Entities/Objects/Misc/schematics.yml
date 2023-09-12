@@ -1,0 +1,31 @@
+- type: entity
+  parent: BaseItem
+  id: BaseSchematic
+  name: schematic
+  abstract: true
+  components:
+  - type: StartItemConstructionOnActivate
+  - type: Item
+    size: 10
+  - type: Sprite
+    sprite: Objects/Misc/schematics.rsi
+
+- type: entity
+  id: SchematicFoldable
+  abstract: true
+  components:
+  - type: Foldable
+    folded: true
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.FoldedVisuals.State:
+        foldedLayer:
+          True: {visible: true}
+          False: {visible: false}
+        unfoldedLayer:
+          True: {visible: false}
+          False: {visible: true}
+        planLayer:
+          True: {visible: false}
+          False: {visible: true}
