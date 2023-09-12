@@ -1,5 +1,4 @@
-﻿using Content.Shared.Mind;
-using Content.Shared.Mind.Components;
+﻿using Content.Shared.Mind.Components;
 using Content.Shared.NPC;
 
 namespace Content.Shared.SSDIndicator;
@@ -18,7 +17,10 @@ public sealed class SSDIndicatorSystem : EntitySystem
 
     private void OnInit(EntityUid uid, SSDIndicatorComponent component, ComponentInit args)
     {
-        component.IsSSD = HasComp<MindComponent>(uid);
+        if (HasComp<ActiveNPCComponent>(uid))
+            return;
+
+        component.IsSSD = !HasComp<MindContainerComponent>(uid);
     }
 
     private void OnMindAdded(EntityUid uid, SSDIndicatorComponent component, MindAddedMessage args)
