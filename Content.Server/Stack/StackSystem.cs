@@ -1,7 +1,7 @@
-using Content.Server.Storage.Components;
 using Content.Server.Storage.EntitySystems;
 using Content.Shared.Popups;
 using Content.Shared.Stacks;
+using Content.Shared.Storage;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Server.Containers;
@@ -163,9 +163,9 @@ namespace Content.Server.Stack
                 return;
 
             if (_container.TryGetContainingContainer(uid, out var container) &&
-                TryComp<ServerStorageComponent>(container.Owner, out var storage))
+                TryComp<StorageComponent>(container.Owner, out var storage))
             {
-                _storage.UpdateStorageUI(container.Owner, storage);
+                _storage.UpdateUI(container.Owner, storage);
             }
 
             Hands.PickupOrDrop(userUid, split);

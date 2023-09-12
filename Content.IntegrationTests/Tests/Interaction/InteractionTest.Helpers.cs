@@ -18,7 +18,6 @@ using Content.Shared.Construction.Prototypes;
 using Content.Shared.DoAfter;
 using Content.Shared.Gravity;
 using Content.Shared.Item;
-using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.GameObjects;
@@ -785,9 +784,7 @@ public abstract partial class InteractionTest
             return false;
         }
 
-        var clientTarget = CEntMan.GetEntity(target);
-
-        if (!CEntMan.TryGetComponent<ClientUserInterfaceComponent>(clientTarget, out var ui))
+        if (!CEntMan.TryGetComponent<UserInterfaceComponent>(CEntMan.GetEntity(target), out var ui))
         {
             if (shouldSucceed)
                 Assert.Fail($"Entity {SEntMan.ToPrettyString(SEntMan.GetEntity(target.Value))} does not have a bui component");

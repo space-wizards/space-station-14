@@ -6,12 +6,12 @@ using JetBrains.Annotations;
 using Robust.Client.Audio.Midi;
 using Robust.Shared.Audio.Midi;
 using Robust.Shared.Configuration;
+using Robust.Shared.GameStates;
 using Robust.Shared.Network;
 using Robust.Shared.Timing;
 
 namespace Content.Client.Instruments;
 
-[UsedImplicitly]
 public sealed class InstrumentSystem : SharedInstrumentSystem
 {
     [Dependency] private readonly IClientNetManager _netManager = default!;
@@ -37,6 +37,27 @@ public sealed class InstrumentSystem : SharedInstrumentSystem
         SubscribeNetworkEvent<InstrumentStopMidiEvent>(OnMidiStop);
 
         SubscribeLocalEvent<InstrumentComponent, ComponentShutdown>(OnShutdown);
+        SubscribeLocalEvent<InstrumentComponent, ComponentHandleState>(OnHandleState);
+    }
+
+    private void OnHandleState(EntityUid uid, SharedInstrumentComponent component, ref ComponentHandleState args)
+    {
+        if (args.Current is not InstrumentComponentState state)
+            return;
+
+        component.Playing = state.Playing;
+        component.InstrumentProgram = state.InstrumentProgram;
+        component.InstrumentBank = state.InstrumentBank;
+        component.AllowPercussion = state.AllowPercussion;
+        component.AllowProgramChange = state.AllowProgramChange;
+        component.RespectMidiLimits = state.RespectMidiLimits;
+        component.Master = EnsureEntity<InstrumentComponent>(state.Master, uid);
+        component.FilteredChannels = state.FilteredChannels;
+
+        if (component.Playing)
+            SetupRenderer(uid, true, component);
+        else
+            EndRenderer(uid, true, component);
     }
 
     public override void Shutdown()
@@ -71,9 +92,19 @@ public sealed class InstrumentSystem : SharedInstrumentSystem
         RaiseNetworkEvent(new InstrumentSetFilteredChannelEvent(GetNetEntity(uid), channel, value));
     }
 
+    public override bool ResolveInstrument(EntityUid uid, ref SharedInstrumentComponent? component)
+    {
+        if (component is not null)
+            return true;
+
+        TryComp<InstrumentComponent>(uid, out var localComp);
+        component = localComp;
+        return component != null;
+    }
+
     public override void SetupRenderer(EntityUid uid, bool fromStateChange, SharedInstrumentComponent? component = null)
     {
-        if (!Resolve(uid, ref component))
+        if (!ResolveInstrument(uid, ref component))
             return;
 
         if (component is not InstrumentComponent instrument)
@@ -156,7 +187,7 @@ public sealed class InstrumentSystem : SharedInstrumentSystem
 
     public override void EndRenderer(EntityUid uid, bool fromStateChange, SharedInstrumentComponent? component = null)
     {
-        if (!Resolve(uid, ref component, false))
+        if (!ResolveInstrument(uid, ref component))
             return;
 
         if (component is not InstrumentComponent instrument)

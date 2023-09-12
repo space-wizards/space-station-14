@@ -2,7 +2,6 @@
 
 using Content.Server.Administration.Logs;
 using Content.Server.Pulling;
-using Content.Server.Storage.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.DragDrop;
 using Content.Shared.Input;
@@ -46,17 +45,17 @@ namespace Content.Server.Interaction
             if (!_container.TryGetContainingContainer(target, out var container))
                 return false;
 
-            if (!TryComp(container.Owner, out ServerStorageComponent? storage))
+            if (!TryComp(container.Owner, out StorageComponent? storage))
                 return false;
 
-            if (storage.Storage?.ID != container.ID)
+            if (storage.Container?.ID != container.ID)
                 return false;
 
             if (!TryComp(user, out ActorComponent? actor))
                 return false;
 
             // we don't check if the user can access the storage entity itself. This should be handed by the UI system.
-            return _uiSystem.SessionHasOpenUi(container.Owner, SharedStorageComponent.StorageUiKey.Key, actor.PlayerSession);
+            return _uiSystem.SessionHasOpenUi(container.Owner, StorageComponent.StorageUiKey.Key, actor.PlayerSession);
         }
 
         #region Drag drop

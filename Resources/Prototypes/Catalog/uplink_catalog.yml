@@ -239,6 +239,16 @@
   categories:
   - UplinkExplosives
 
+- type: listing
+  id: UplinkSyndicateBomb
+  name: uplink-syndicate-bomb-name
+  description: uplink-syndicate-bomb-desc
+  productEntity: SyndicateBomb
+  cost:
+    Telecrystal: 11
+  categories:
+    - UplinkExplosives
+
 # Ammo
 
 - type: listing
