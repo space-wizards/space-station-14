@@ -1,10 +1,4 @@
 Entries:
-- author: Skarlet
-  changes:
-  - {message: Added Cap's Cap, type: Add}
-  - {message: Changed Hop Cap's description, type: Tweak}
-  id: 4308
-  time: '2023-07-23T19:15:53.0000000+00:00'
 - author: Errant
   changes:
   - {message: Emergency and Double oxygen tanks that spawn empty now have the same
@@ -2985,3 +2979,9 @@ Entries:
   - {message: Fixed "failed to insert into storage" messages being broken., type: Fix}
   id: 4807
   time: '2023-09-11T22:57:27.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Added automatic area pickups to ore bags., type: Add}
+  - {message: Fix stackable items not playing the pickup animation on pickup., type: Fix}
+  id: 4808
+  time: '2023-09-12T12:34:04.0000000+00:00'
