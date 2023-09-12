@@ -118,8 +118,11 @@ public sealed class FoodSystem : EntitySystem
         if (!IsDigestibleBy(food, foodComp, stomachs))
             return (false, false);
 
+        if (!TryGetRequiredUtensils(args.User, component, out _))
+            return;
+
         // Check for used storage on the food item
-        if (TryComp<ServerStorageComponent>(food, out var storageState) && storageState.StorageUsed != 0)
+        if (TryComp<StorageComponent>(food, out var storageState) && storageState.StorageUsed != 0)
         {
             _popup.PopupEntity(Loc.GetString("food-has-used-storage", ("food", food)), user, user);
             return (false, true);
@@ -151,68 +154,7 @@ public sealed class FoodSystem : EntitySystem
             return (false, true);
         }
 
-        //Suppresses self-eating
-        if (food == user || _mobState.IsAlive(food)) // Suppresses eating alive mobs
-            return (false, false);
-
-        // Target can't be fed or they're already eating
-        if (!TryComp<BodyComponent>(target, out var body))
-            return (false, false);
-
-        if (!_solutionContainer.TryGetSolution(food, foodComp.SolutionName, out var foodSolution) || foodSolution.Name == null)
-            return (false, false);
-
-        if (!_body.TryGetBodyOrganComponents<StomachComponent>(target, out var stomachs, body))
-            return (false, false);
-
         var forceFeed = user != target;
-
-        // Check for special digestibles
-        if (!IsDigestibleBy(food, foodComp, stomachs))
-        {
-            _popup.PopupEntity(
-                forceFeed
-                    ? Loc.GetString("food-system-cant-digest-other", ("entity", food))
-                    : Loc.GetString("food-system-cant-digest", ("entity", food)), user, user);
-            return (false, true);
-        }
-
-        // Check for used storage on the food item
-        if (TryComp<StorageComponent>(food, out var storageState) && storageState.StorageUsed != 0)
-        {
-            _popup.PopupEntity(Loc.GetString("food-has-used-storage", ("food", food)), user, user);
-            return (false, true);
-        }
-
-        var flavors = _flavorProfile.GetLocalizedFlavorsMessage(food, user, foodSolution);
-
-        if (foodComp.UsesRemaining <= 0)
-        {
-            _popup.PopupEntity(Loc.GetString("food-system-try-use-food-is-empty", ("entity", food)), user, user);
-            DeleteAndSpawnTrash(foodComp, food, user);
-            return (false, true);
-        }
-
-        if (IsMouthBlocked(target, user))
-            return (false, true);
-
-        if (!_interaction.InRangeUnobstructed(user, food, popup: true))
-            return (false, true);
-
-        if (!_interaction.InRangeUnobstructed(user, target, MaxFeedDistance, popup: true))
-            return (false, true);
-
-        // TODO make do-afters account for fixtures in the range check.
-        if (!Transform(user).MapPosition.InRange(Transform(target).MapPosition, MaxFeedDistance))
-        {
-            var message = Loc.GetString("interaction-system-user-interaction-cannot-reach");
-            _popup.PopupEntity(message, user, user);
-            return (false, true);
-        }
-
-        if (!TryGetRequiredUtensils(user, foodComp, out _))
-            return (false, true);
-
         if (forceFeed)
         {
             var userName = Identity.Entity(user, EntityManager);
