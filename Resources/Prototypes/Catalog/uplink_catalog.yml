@@ -239,16 +239,6 @@
   categories:
   - UplinkExplosives
 
-- type: listing
-  id: UplinkSyndicateBomb
-  name: uplink-syndicate-bomb-name
-  description: uplink-syndicate-bomb-desc
-  productEntity: SyndicateBomb
-  cost:
-    Telecrystal: 11
-  categories:
-    - UplinkExplosives
-
 # Ammo
 
 - type: listing
@@ -626,24 +616,24 @@
         components:
           - SurplusBundle
 
-#- type: listing [TODO: make more interesting before putting it back on sale]
-#  id: UplinkMedsBundle
-#  name: uplink-meds-bundle-name
-#  description: uplink-meds-bundle-desc
-#  productEntity: ClothingBackpackDuffelSyndicateMedicalBundleFilled
-#  cost:
-#    Telecrystal: 20
-#  categories:
-#  - UplinkBundles
-#  conditions:
-#    - !type:StoreWhitelistCondition
-#      whitelist:
-#        tags:
-#          - NukeOpsUplink
-#    - !type:BuyerWhitelistCondition
-#      blacklist:
-#        components:
-#          - SurplusBundle
+- type: listing
+  id: UplinkMedsBundle
+  name: uplink-meds-bundle-name
+  description: uplink-meds-bundle-desc
+  productEntity: ClothingBackpackDuffelSyndicateMedicalBundleFilled
+  cost:
+    Telecrystal: 20
+  categories:
+  - UplinkBundles
+  conditions:
+    - !type:StoreWhitelistCondition
+      whitelist:
+        tags:
+          - NukeOpsUplink
+    - !type:BuyerWhitelistCondition
+      blacklist:
+        components:
+          - SurplusBundle
 
 - type: listing
   id: UplinkSniperBundle
