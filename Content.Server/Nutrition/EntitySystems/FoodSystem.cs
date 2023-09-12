@@ -118,8 +118,8 @@ public sealed class FoodSystem : EntitySystem
         if (!IsDigestibleBy(food, foodComp, stomachs))
             return (false, false);
 
-        if (!TryGetRequiredUtensils(args.User, component, out _))
-            return;
+        if (!TryGetRequiredUtensils(user, foodComp, out _))
+            return (false, false);
 
         // Check for used storage on the food item
         if (TryComp<StorageComponent>(food, out var storageState) && storageState.StorageUsed != 0)
