@@ -14,7 +14,6 @@
           type: WiresBoundUserInterface
     - type: Wires
       LayoutId: Defusable
-      alwaysRandomize: true
     - type: Defusable
     - type: Explosive
       explosionType: Default
@@ -23,10 +22,10 @@
       maxIntensity: 4
     - type: ExplodeOnTrigger
     - type: OnUseTimerTrigger
-      delay: 90
-      delayOptions: [90, 120, 150, 180, 210, 240, 270, 300]
+      delay: 120 #Once training bombs are actually mapped, consider bumping this down to 100 seconds. 90 like in SS13 is a probably a bit too fast factoring in the lack of byond's lag + pixel movement.
+      delayOptions: [120, 150, 180, 210, 240, 270, 300]
       initialBeepDelay: 0
-      beepSound: /Audio/Machines/Nuke/general_beep.ogg
+      beepSound: /Audio/Machines/timer.ogg
     - type: Anchorable
       delay: 5
     - type: Physics
@@ -72,8 +71,7 @@
   description: A bomb for dummies, manual not included.
   components:
     - type: Wires
-      LayoutId: TrainingDefusable
-      alwaysRandomize: true
+      LayoutId: Defusable
     - type: Sprite
       sprite: Structures/Machines/bomb.rsi
       layers:

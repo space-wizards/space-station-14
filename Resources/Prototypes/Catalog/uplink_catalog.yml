@@ -241,8 +241,8 @@
 
 - type: listing
   id: UplinkSyndicateBomb
-  name: uplink-syndicate-bomb-name
-  description: uplink-syndicate-bomb-desc
+  name: uplink-exploding-syndicate-bomb-name
+  description: uplink-exploding-syndicate-bomb-desc
   productEntity: SyndicateBomb
   cost:
     Telecrystal: 11
