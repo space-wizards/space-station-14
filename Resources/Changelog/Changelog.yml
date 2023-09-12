@@ -1,10 +1,4 @@
 Entries:
-- author: Errant
-  changes:
-  - {message: Emergency and Double oxygen tanks that spawn empty now have the same
-      internal volume as filled ones., type: Fix}
-  id: 4309
-  time: '2023-07-23T19:17:32.0000000+00:00'
 - author: deltanedas
   changes:
   - {message: Salt is now white instead of red., type: Tweak}
@@ -2985,3 +2979,8 @@ Entries:
   - {message: Fix stackable items not playing the pickup animation on pickup., type: Fix}
   id: 4808
   time: '2023-09-12T12:34:04.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix lights not always updating., type: Fix}
+  id: 4809
+  time: '2023-09-12T14:35:08.0000000+00:00'
