@@ -173,3 +173,14 @@
   category: construction-category-weapons
   icon: { sprite: Objects/Weapons/Guns/Battery/laser_cannon.rsi , state: icon }
   objectType: Item
+
+- type: construction
+  hide: true
+  name: retro laser blaster
+  id: WeaponLaserGun
+  graph: WeaponLaserGun
+  startNode: start
+  targetNode: retrolaserblaster
+  category: construction-category-weapons
+  icon: { sprite: Objects/Weapons/Guns/Battery/laser_retro.rsi, state: icon }
+  objectType: Item
