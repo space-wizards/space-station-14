@@ -1,5 +1,5 @@
-﻿using Robust.Shared.GameStates;
-using Robust.Shared.Prototypes;
+﻿using Content.Shared.Chat.Prototypes;
+using Robust.Shared.GameStates;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Wagging;
@@ -8,11 +8,8 @@ namespace Content.Server.Wagging;
 [Access(typeof(WaggingSystem))]
 public sealed partial class WaggingComponent : Component
 {
-    [DataField("action", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string Action = "ActionToggleWagging";
-
-    [DataField("invisibleWallActionEntity")]
-    public EntityUid? ActionEntity;
+    [DataField("emote", customTypeSerializer: typeof(PrototypeIdSerializer<EmotePrototype>))]
+    public string EmoteId = "WagTail";
 
     [ViewVariables]
     public bool Wagging = false;

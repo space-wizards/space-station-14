@@ -1,0 +1,14 @@
+- type: emote
+  id: WagTail
+  chatMessages: [wags tail]
+  chatTriggers:
+    - wag
+    - wag.
+    - wags
+    - wags.
+    - wagging
+    - wagging.
+    - wag tail
+    - wag tail.
+    - wags tail
+    - wags tail.
