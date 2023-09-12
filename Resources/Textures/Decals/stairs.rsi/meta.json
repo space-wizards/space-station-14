@@ -8,7 +8,88 @@
     },
     "states": [
         {
-            "name": "busha1"
+            "name": "material_e"
+        },
+        {
+            "name": "material_n"
+        },
+        {
+            "name": "material_s"
+        },
+        {
+            "name": "material_w"
+        },
+        {
+            "name": "stairs_e"
+        },
+        {
+            "name": "stairs_n"
+        },
+        {
+            "name": "stairs_s"
+        },
+        {
+            "name": "stairs_w"
+        },
+        {
+            "name": "stairs_l_e"
+        },
+        {
+            "name": "stairs_l_n"
+        },
+        {
+            "name": "stairs_l_s"
+        },
+        {
+            "name": "stairs_l_w"
+        },
+        {
+            "name": "stairs_m_e"
+        },
+        {
+            "name": "stairs_m_n"
+        },
+        {
+            "name": "stairs_m_s"
+        },
+        {
+            "name": "stairs_m_w"
+        },
+        {
+            "name": "stairs_r_e"
+        },
+        {
+            "name": "stairs_r_n"
+        },
+        {
+            "name": "stairs_r_s"
+        },
+        {
+            "name": "stairs_r_w"
+        },
+        {
+            "name": "stone_e"
+        },
+        {
+            "name": "stone_n"
+        },
+        {
+            "name": "stone_s"
+        },
+        {
+            "name": "stone_w"
+        },
+        {
+            "name": "wood_e"
+        },
+        {
+            "name": "wood_n"
+        },
+        {
+            "name": "wood_s"
+        },
+        {
+            "name": "wood_w"
         }
     ]
 }
