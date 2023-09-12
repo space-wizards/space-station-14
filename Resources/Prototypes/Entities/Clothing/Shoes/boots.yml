@@ -23,7 +23,8 @@
     whitelist:
       tags:
         - Knife
-  
+        - Sidearm
+
 - type: entity
   parent: ClothingShoesBaseButcherable
   id: ClothingShoesBootsSalvage
@@ -60,6 +61,7 @@
     whitelist:
       tags:
         - Knife
+        - Sidearm
 
 - type: entity
   parent: ClothingShoesStorageBase
@@ -75,6 +77,7 @@
     whitelist:
       tags:
         - Knife
+        - Sidearm
 
 - type: entity
   parent: ClothingShoesBaseButcherable
