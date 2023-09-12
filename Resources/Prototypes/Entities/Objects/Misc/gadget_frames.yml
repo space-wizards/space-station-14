@@ -25,3 +25,29 @@
   - type: Construction
     graph: WeaponProtoKineticAccelerator
     node: wiringMissing
+
+- type: entity
+  parent: BaseItem
+  id: AdvancedLaserFrame
+  name: advanced laser pistol frame
+  description: The incomplete frame of an advanced laser pistol.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Battery/advancedlasergun.rsi
+    layers:
+    - state: frame_0
+      map: [ "enum.ConstructionVisuals.Layer" ]
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.ConstructionVisuals.Key:
+        enum.ConstructionVisuals.Layer:
+          wiresMissing: { state: frame_0 }
+          casterMissing: { state: frame_1 }
+          casterUnsecured: { state: frame_2 }
+          caseMissing: { state: frame_2 }
+  - type: Item
+    size: 30
+  - type: Construction
+    graph: WeaponAdvancedLaser
+    node: wiresMissing
