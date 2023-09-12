@@ -22,3 +22,8 @@
   id: SecurityWhistle
   description: Sound of it make you feel fear.
   components:
+  - type: Sprite
+    sprite: Objects/Fun/whistle.rsi
+    state: securityWhistle
+  - type: Item
+    icon: Objects/Fun/whistle.rsi
