@@ -110,9 +110,19 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
             ev.AddLine(Loc.GetString("head-rev-initial-count", ("initialCount", headrev.HeadRevs.Count)));
             foreach (var player in headrev.HeadRevs)
             {
-                ev.AddLine(Loc.GetString("head-rev-initial",
+                if (_mindSystem.TryGetSession(player.Value, out var session))
+                {
+                    var username = session.Name;
+                    ev.AddLine(Loc.GetString("head-rev-initial",
+                    ("name", player.Key),
+                    ("username", username)));
+                }
+                else
+                {
+                    ev.AddLine(Loc.GetString("head-rev-initial",
                     ("name", player.Key),
                     ("username", player.Value)));
+                }
             }
             break;
         }
@@ -162,7 +172,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
                 }
                 if (_mindSystem.TryGetSession(mindId, out var session) && comp != null)
                 {
-                    comp.HeadRevs.Add(inCharacterName, session.Name);
+                    comp.HeadRevs.Add(inCharacterName, mindId);
                 }
             }
             _antagSelectionSystem.GiveAntagBagGear(headRev, "RevFlash");
@@ -258,11 +268,6 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
 
     public void OnHeadRevAdmin(EntityUid mindId, MindComponent mind)
     {
-        var revRule = EntityQuery<RevolutionaryRuleComponent>().FirstOrDefault();
-        if (revRule == null)
-        {
-            GameTicker.StartGameRule("Revolutionary");
-        }
         if (mind.OwnedEntity != null)
         {
             var player = new List<EntityUid>();

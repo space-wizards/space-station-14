@@ -24,10 +24,10 @@ public sealed partial class RevolutionaryRuleComponent : Component
     public TimeSpan TimerWait = TimeSpan.FromSeconds(20);
 
     /// <summary>
-    /// Stores player username and their ingame name for endscreen.
+    /// Stores players minds
     /// </summary>
     [DataField("headRevs")]
-    public Dictionary<string, string> HeadRevs = new();
+    public Dictionary<string, EntityUid> HeadRevs = new();
 
     [DataField("headRevPrototypeId", customTypeSerializer: typeof(PrototypeIdSerializer<AntagPrototype>))]
     public string HeadRevPrototypeId = "HeadRev";

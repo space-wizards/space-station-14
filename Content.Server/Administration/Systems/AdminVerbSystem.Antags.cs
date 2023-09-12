@@ -1,3 +1,4 @@
+using Content.Server.GameTicking;
 using Content.Server.GameTicking.Rules;
 using Content.Server.Ninja.Systems;
 using Content.Server.Zombies;
@@ -9,6 +10,8 @@ using Content.Shared.Mind.Components;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Shared.Utility;
+using Content.Server.GameTicking.Rules.Components;
+using System.Linq;
 
 namespace Content.Server.Administration.Systems;
 
@@ -21,6 +24,8 @@ public sealed partial class AdminVerbSystem
     [Dependency] private readonly PiratesRuleSystem _piratesRule = default!;
     [Dependency] private readonly RevolutionaryRuleSystem _revolutionaryRule = default!;
     [Dependency] private readonly SharedMindSystem _minds = default!;
+    [Dependency] private readonly GameTicker _gameTicker = default!;
+
 
     // All antag verbs have names so invokeverb works.
     private void AddAntagVerbs(GetVerbsEvent<Verb> args)
@@ -113,7 +118,11 @@ public sealed partial class AdminVerbSystem
             {
                 if (!_minds.TryGetMind(args.Target, out var mindId, out var mind))
                     return;
-
+                var revRule = EntityQuery<RevolutionaryRuleComponent>().FirstOrDefault();
+                if (revRule == null)
+                {
+                    _gameTicker.StartGameRule("Revolutionary");
+                }
                 _revolutionaryRule.OnHeadRevAdmin(mindId, mind);
             },
             Impact = LogImpact.High,
