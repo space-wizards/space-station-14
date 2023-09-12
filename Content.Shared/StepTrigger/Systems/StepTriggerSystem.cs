@@ -1,3 +1,4 @@
+using Content.Shared.Gravity;
 using Content.Shared.StepTrigger.Components;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map.Components;
@@ -10,6 +11,7 @@ namespace Content.Shared.StepTrigger.Systems;
 public sealed class StepTriggerSystem : EntitySystem
 {
     [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
+    [Dependency] private readonly SharedGravitySystem _gravity = default!;
 
     public override void Initialize()
     {
@@ -119,6 +121,13 @@ public sealed class StepTriggerSystem : EntitySystem
     private bool CanTrigger(EntityUid uid, EntityUid otherUid, StepTriggerComponent component)
     {
         if (!component.Active || component.CurrentlySteppedOn.Contains(otherUid))
+            return false;
+
+        // Can't trigger if we don't ignore weightless entities
+        // and the entity is flying or currently weightless
+        // Makes sense simulation wise to have this be part of steptrigger directly IMO
+        if (!component.IgnoreWeightless && TryComp<PhysicsComponent>(otherUid, out var physics) &&
+            (physics.BodyStatus == BodyStatus.InAir || _gravity.IsWeightless(otherUid, physics)))
             return false;
 
         var msg = new StepTriggerAttemptEvent { Source = uid, Tripper = otherUid };

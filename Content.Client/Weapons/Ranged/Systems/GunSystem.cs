@@ -312,8 +312,8 @@ public sealed partial class GunSystem : SharedGunSystem
         light.NetSyncEnabled = false;
         Lights.SetEnabled(uid, true, light);
         Lights.SetRadius(uid, 2f, light);
-        light.Color = Color.FromHex("#cc8e2b");
-        light.Energy = 5f;
+        Lights.SetColor(uid, Color.FromHex("#cc8e2b"), light);
+        Lights.SetEnergy(uid, 5f, light);
 
         var animTwo = new Animation()
         {

@@ -1,6 +1,6 @@
 - type: entity
   name: behonker
-  parent: SimpleSpaceMobBase
+  parent: [ SimpleSpaceMobBase, FlyingMobBase ]
   id: BaseMobBehonker
   abstract: true
   description: A floating demon aspect of the honkmother.
@@ -70,8 +70,6 @@
       groups:
         - id: Medicine
         - id: Poison
-    - type: MovementAlwaysTouching
-    - type: NoSlip
     - type: Butcherable
       spawned:
         - id: MaterialBananium1

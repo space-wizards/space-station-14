@@ -25,8 +25,8 @@
 
 - type: entity
   id: ActionBorgSwapModule
-  name: action-name-swap-module
-  description: action-desc-swap-module
+  name: Swap Module
+  description: Select this module, enabling you to use the tools it provides.
   noSpawn: true
   components:
   - type: InstantAction
