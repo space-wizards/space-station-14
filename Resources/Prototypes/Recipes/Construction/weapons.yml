@@ -154,6 +154,17 @@
 
 - type: construction
   hide: true
+  name: laser rifle
+  id: WeaponLaserCarbine
+  graph: WeaponLaserCarbine
+  startNode: start
+  targetNode: laserrifle
+  category: construction-category-weapons
+  icon: { sprite: Objects/Weapons/Guns/Battery/laser_gun.rsi , state: icon }
+  objectType: Item
+
+- type: construction
+  hide: true
   name: laser cannon
   id: WeaponLaserCannon
   graph: WeaponLaserCannon
