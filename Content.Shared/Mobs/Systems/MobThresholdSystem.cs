@@ -1,4 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.Alert;
 using Content.Shared.Damage;
@@ -34,6 +34,10 @@ public sealed class MobThresholdSystem : EntitySystem
         args.State = new MobThresholdsComponentState(thresholds,
             component.TriggersAlerts,
             component.CurrentThresholdState,
+            component.HealthAlert,
+            component.CritAlert,
+            component.DeadAlert,
+            component.ShowOverlays,
             component.AllowRevives);
     }
 
@@ -341,28 +345,32 @@ public sealed class MobThresholdSystem : EntitySystem
         if (!threshold.TriggersAlerts)
             return;
 
+        var healthAlert = threshold.HealthAlert;
+        var critAlert = threshold.CritAlert;
+        var deadAlert = threshold.DeadAlert;
+
         switch (currentMobState)
         {
             case MobState.Alive:
             {
-                var severity = _alerts.GetMinSeverity(AlertType.HumanHealth);
+                var severity = _alerts.GetMinSeverity(healthAlert);
                 if (TryGetIncapPercentage(target, damageable.TotalDamage, out var percentage))
                 {
                     severity = (short) MathF.Floor(percentage.Value.Float() *
-                                                   _alerts.GetSeverityRange(AlertType.HumanHealth));
-                    severity += _alerts.GetMinSeverity(AlertType.HumanHealth);
+                                                   _alerts.GetSeverityRange(healthAlert));
+                    severity += _alerts.GetMinSeverity(healthAlert);
                 }
-                _alerts.ShowAlert(target, AlertType.HumanHealth, severity);
+                _alerts.ShowAlert(target, healthAlert, severity);
                 break;
             }
             case MobState.Critical:
             {
-                _alerts.ShowAlert(target, AlertType.HumanCrit);
+                _alerts.ShowAlert(target, critAlert);
                 break;
             }
             case MobState.Dead:
             {
-                _alerts.ShowAlert(target, AlertType.HumanDead);
+                _alerts.ShowAlert(target, deadAlert);
                 break;
             }
             case MobState.Invalid:
