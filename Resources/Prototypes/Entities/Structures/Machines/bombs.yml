@@ -45,21 +45,6 @@
           layer:
             - MachineLayer
     - type: WiresPanel
-    - type: Damageable
-      damageContainer: Inorganic
-      damageModifierSet: Metallic
-    - type: Destructible
-      thresholds:
-        - trigger:
-            !type:DamageTrigger
-            damage: 100
-          behaviors:
-            - !type:DoActsBehavior
-              acts: ["Destruction"]
-            - !type:ExplodeBehavior
-            - !type:PlaySoundBehavior
-              sound:
-                path: /Audio/Effects/metalbreak.ogg
     - type: GuideHelp
       openOnActivation: true
       guides:
