@@ -1,7 +1,7 @@
 ﻿- type: entity
   id: ActionFireball
-  name: action-name-spell-fireball
-  description: action-description-spell-fireball
+  name: Fireball
+  description: Fires an explosive fireball towards the clicked location.
   noSpawn: true
   components:
   - type: WorldTargetAction

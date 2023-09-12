@@ -61,10 +61,10 @@ public sealed partial class CardboardBoxComponent : Component
 [Serializable, NetSerializable]
 public sealed class PlayBoxEffectMessage : EntityEventArgs
 {
-    public EntityUid Source;
-    public EntityUid Mover;
+    public NetEntity Source;
+    public NetEntity Mover;
 
-    public PlayBoxEffectMessage(EntityUid source, EntityUid mover)
+    public PlayBoxEffectMessage(NetEntity source, NetEntity mover)
     {
         Source = source;
         Mover = mover;

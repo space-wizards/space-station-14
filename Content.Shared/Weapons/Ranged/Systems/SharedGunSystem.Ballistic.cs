@@ -29,6 +29,29 @@ public abstract partial class SharedGunSystem
         SubscribeLocalEvent<BallisticAmmoProviderComponent, AfterInteractEvent>(OnBallisticAfterInteract);
         SubscribeLocalEvent<BallisticAmmoProviderComponent, AmmoFillDoAfterEvent>(OnBallisticAmmoFillDoAfter);
         SubscribeLocalEvent<BallisticAmmoProviderComponent, UseInHandEvent>(OnBallisticUse);
+
+        SubscribeLocalEvent<BallisticAmmoProviderComponent, ComponentGetState>(OnBallisticGetState);
+        SubscribeLocalEvent<BallisticAmmoProviderComponent, ComponentHandleState>(OnBallisticHandleState);
+    }
+
+    private void OnBallisticGetState(EntityUid uid, BallisticAmmoProviderComponent component, ref ComponentGetState args)
+    {
+        args.State = new BallisticAmmoProviderComponentState()
+        {
+            UnspawnedCount = component.UnspawnedCount,
+            Cycleable = component.Cycleable,
+            Entities = GetNetEntityList(component.Entities),
+        };
+    }
+
+    private void OnBallisticHandleState(EntityUid uid, BallisticAmmoProviderComponent component, ref ComponentHandleState args)
+    {
+        if (args.Current is not BallisticAmmoProviderComponentState state)
+            return;
+
+        component.UnspawnedCount = state.UnspawnedCount;
+        component.Cycleable = state.Cycleable;
+        component.Entities = EnsureEntityList<BallisticAmmoProviderComponent>(state.Entities, uid);
     }
 
     private void OnBallisticUse(EntityUid uid, BallisticAmmoProviderComponent component, UseInHandEvent args)
@@ -73,7 +96,7 @@ public abstract partial class SharedGunSystem
 
         args.Handled = true;
 
-        _doAfter.TryStartDoAfter(new DoAfterArgs(args.User, component.FillDelay, new AmmoFillDoAfterEvent(), used: uid, target: args.Target, eventTarget: uid)
+        _doAfter.TryStartDoAfter(new DoAfterArgs(EntityManager, args.User, component.FillDelay, new AmmoFillDoAfterEvent(), used: uid, target: args.Target, eventTarget: uid)
         {
             BreakOnTargetMove = true,
             BreakOnUserMove = true,
@@ -141,7 +164,7 @@ public abstract partial class SharedGunSystem
                 SimulateInsertAmmo(ent.Value, args.Target.Value, Transform(args.Target.Value).Coordinates);
             }
 
-            if (ent.Value.IsClientSide())
+            if (IsClientSide(ent.Value))
                 Del(ent.Value);
         }
 
@@ -268,6 +291,14 @@ public abstract partial class SharedGunSystem
 
         Appearance.SetData(uid, AmmoVisuals.AmmoCount, GetBallisticShots(component), appearance);
         Appearance.SetData(uid, AmmoVisuals.AmmoMax, component.Capacity, appearance);
+    }
+
+    [Serializable, NetSerializable]
+    private sealed class BallisticAmmoProviderComponentState : ComponentState
+    {
+        public int UnspawnedCount;
+        public List<NetEntity> Entities = new();
+        public bool Cycleable = true;
     }
 }
 

@@ -42,6 +42,8 @@ namespace Content.IntegrationTests.Tests
                 {
                     var mapId = mapManager.CreateMap();
                     var grid = mapManager.CreateGrid(mapId);
+                    // TODO: Fix this better in engine.
+                    grid.SetTile(Vector2i.Zero, new Tile(1));
                     var coord = new EntityCoordinates(grid.Owner, 0, 0);
                     entityMan.SpawnEntity(protoId, coord);
                 }
@@ -57,7 +59,7 @@ namespace Content.IntegrationTests.Tests
                     var query = entityMan.AllEntityQueryEnumerator<TComp>();
                     while (query.MoveNext(out var uid, out var meta))
                         yield return (uid, meta);
-                };
+                }
 
                 var entityMetas = Query<MetaDataComponent>(entityMan).ToList();
                 foreach (var (uid, meta) in entityMetas)
