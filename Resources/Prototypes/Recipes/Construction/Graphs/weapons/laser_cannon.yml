@@ -1,0 +1,95 @@
+- type: constructionGraph
+  id: WeaponLaserCannon
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: wiresMissing
+      steps:
+      - material: Steel
+        amount: 6
+        doAfter: 2
+
+  - node: wiresMissing
+    entity: LaserCannonFrame
+    actions:
+    - !type:AppearanceChange
+    edges:
+    - to: casterMissing
+      steps:
+      - material: Cable
+        amount: 4
+        doAfter: 1
+
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 6
+      - !type:DeleteEntity {}
+      steps:
+      - tool: Welding
+        doAfter: 2
+
+  - node: casterMissing
+    actions:
+    - !type:AppearanceChange
+    edges:
+    - to: casterUnsecured
+      steps:
+      - tag: LaserTechPart
+        store: caster
+        name: a ray caster
+
+    - to: wiresMissing
+      completed:
+      - !type:SpawnPrototype
+        prototype: CableApcStack1
+        amount: 4
+      steps:
+      - tool: Cutting
+        doAfter: 1
+
+  - node: casterUnsecured
+    actions:
+    - !type:AppearanceChange
+    edges:
+    - to: caseMissing
+      steps:
+      - tool: Screwing
+        doAfter: 1
+
+    - to: casterMissing
+      completed:
+        - !type:EmptyContainer
+          container: caster
+      steps:
+      - tool: Prying
+        doAfter: 0.5
+
+  - node: caseMissing
+    entity: LaserCannonFrame
+    actions:
+    - !type:AppearanceChange
+    edges:
+    - to: lasercannon
+      steps:
+      - material: Plasteel
+        amount: 5
+        doAfter: 1
+    - to: casterUnsecured
+      steps:
+      - tool: Screwing
+        doAfter: 1
+
+  - node: lasercannon
+    entity: WeaponLaserCannonEmpty
+    edges:
+    - to: caseMissing
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetPlasteel
+        amount: 5
+      steps:
+      - tool: Screwing
+        doAfter: 1
