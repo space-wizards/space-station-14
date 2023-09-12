@@ -82,8 +82,8 @@
 
 - type: entity
   id: ActionBibleSummon
-  name: bible-summon-verb
-  description: bible-summon-verb-desc
+  name: Summon familiar
+  description: Summon a familiar that will aid you and gain humanlike intelligence once inhabited by a soul.
   noSpawn: true
   components:
   - type: InstantAction

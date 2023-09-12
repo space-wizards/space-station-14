@@ -60,8 +60,8 @@
 
 - type: entity
   id: ActionToggleJetpack
-  name: action-name-jetpack-toggle
-  description: action-description-jetpack-toggle
+  name: Toggle jetpack
+  description: Toggles the jetpack, giving you movement outside the station.
   noSpawn: true
   components:
   - type: InstantAction
