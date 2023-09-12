@@ -129,3 +129,28 @@
   - type: Construction
     graph: WeaponLaserCarbine
     node: wiresMissing
+
+- type: entity
+  parent: BaseItem
+  id: LaserGunFrame
+  name: retro laser blaster frame
+  description: The incomplete frame of a retro laser blaster.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Battery/laser_retro.rsi
+    layers:
+    - state: frame_0
+      map: [ "enum.ConstructionVisuals.Layer" ]
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.ConstructionVisuals.Key:
+        enum.ConstructionVisuals.Layer:
+          wiresMissing: { state: frame_0 }
+          casterMissing: { state: frame_1 }
+          casterUnsecured: { state: frame_2 }
+  - type: Item
+    size: 10
+  - type: Construction
+    graph: WeaponLaserGun
+    node: wiresMissing
