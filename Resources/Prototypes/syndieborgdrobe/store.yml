@@ -1,0 +1,50 @@
+- type: storePreset
+  id: BorgDrobeUplink
+  storeName: BorgDrobeUplink
+  categories:
+  - BorgDrobeBorg
+  currencyWhitelist:
+  - Telecrystal
+
+- type: storeCategory
+  id: BorgDrobeBorg
+  name: store-category-ert-uplink-melee
+
+- type: listing
+  id: BorgDrobeUplinkSaboteur
+  name: borgdrobe-uplink-borg-saboteur-name
+  description: borgdrobe-uplink-borg-saboteur-desc
+  productEntity: ClothingMaskJoy
+  cost:
+    Telecrystal: 25
+  categories:
+  - BorgDrobeBorg
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+- type: listing
+  id: BorgDrobeUplinkMedical
+  name: borgdrobe-uplink-borg-medical-name
+  description: borgdrobe-uplink-borg-medical-desc
+  productEntity: MobHuman
+  cost:
+    Telecrystal: 30
+  categories:
+  - BorgDrobeBorg
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+- type: listing
+  id: BorgDrobeUplinkAssault
+  name: borgdrobe-uplink-borg-assault-name
+  description: borgdrobe-uplink-borg-assault-desc
+  productEntity: ClothingMaskBreath
+  cost:
+    Telecrystal: 80
+  categories:
+  - BorgDrobeBorg
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
