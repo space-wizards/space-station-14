@@ -17,3 +17,14 @@
     - type: Tag
       tags:
         - HideContextMenu
+        
+        
+- type: entity
+  parent: Exclamation
+  id: WhistleExclamation
+  noSpawn: true
+  components:
+    - type: Sprite
+      offset: 0, 1
+    - type: TimedDespawn
+      lifetime: 0.8
