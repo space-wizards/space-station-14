@@ -96,3 +96,25 @@
   - !type:DoorBoltLightWireAction
   - !type:DoorTimingWireAction
   - !type:DoorSafetyWireAction
+
+- type: wireLayout
+  id: Defusable
+  dummyWires: 3
+  wires:
+    - !type:ActivateWireAction
+    - !type:BoltWireAction
+    - !type:DelayWireAction
+    - !type:ProceedWireAction
+    - !type:BoomWireAction
+    - !type:BoomWireAction
+    - !type:BoomWireAction
+
+- type: wireLayout
+  id: TrainingDefusable
+  dummyWires: 0
+  wires:
+    - !type:ActivateWireAction
+    - !type:BoltWireAction
+    - !type:DelayWireAction
+    - !type:ProceedWireAction
+    - !type:BoomWireAction
