@@ -196,17 +196,6 @@
   - type: IdentityBlocker
 
 - type: entity
-  parent: ClothingMaskJoy
-  id: ClothingMaskTroll
-  name: troll mask
-  description: Problem?
-  components:
-  - type: Sprite
-    sprite: Clothing/Mask/troll.rsi
-  - type: Clothing
-    sprite: Clothing/Mask/troll.rsi
-
-- type: entity
   parent: ClothingMaskBase
   id: ClothingMaskMime
   name: mime mask
