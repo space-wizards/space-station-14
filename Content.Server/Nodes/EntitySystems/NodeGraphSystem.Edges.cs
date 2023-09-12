@@ -1,10 +1,11 @@
-using Content.Shared.Nodes.Components;
-using Content.Shared.Nodes.Events;
+using Content.Server.Nodes.Components;
+using Content.Server.Nodes.Events;
+using Content.Shared.Nodes;
 using Robust.Shared.Utility;
 
-namespace Content.Shared.Nodes.EntitySystems;
+namespace Content.Server.Nodes.EntitySystems;
 
-public abstract partial class SharedNodeGraphSystem
+public sealed partial class NodeGraphSystem
 {
     /// <summary>
     /// Checks whether an edge exists between two nodes.
@@ -12,7 +13,7 @@ public abstract partial class SharedNodeGraphSystem
     /// <returns>True if an edge exists between <paramref name="nodeId"/> and <paramref name="edgeId"/>; False otherwise.</returns>
     public bool HasEdge(EntityUid nodeId, EntityUid edgeId, GraphNodeComponent? node = null)
     {
-        if (!Resolve(nodeId, ref node))
+        if (!_nodeQuery.Resolve(nodeId, ref node))
             return false;
 
         return GetEdgeIndex(node, edgeId) is { };
@@ -27,7 +28,7 @@ public abstract partial class SharedNodeGraphSystem
     /// <returns>True if the edge was added/enforced; False otherwise.</returns>
     public bool TryAddEdge(EntityUid nodeId, EntityUid edgeId, EdgeFlags flags = Edge.DefaultFlags, GraphNodeComponent? node = null, GraphNodeComponent? edge = null)
     {
-        if (!Resolve(nodeId, ref node) || !Resolve(edgeId, ref edge))
+        if (!_nodeQuery.Resolve(nodeId, ref node) || !_nodeQuery.Resolve(edgeId, ref edge))
             return false;
 
         if (GetEdgeIndex(node, edgeId) is { } edgeIdx)
@@ -44,9 +45,16 @@ public abstract partial class SharedNodeGraphSystem
         return true;
     }
 
+    /// <summary>
+    /// Attempts to remove an externally managed edge between two nodes. Fails if doing so is impossible or if no such edge exists.
+    /// </summary>
+    /// <remarks>
+    /// Will fallback to autolinker edges through prompting an edge update if necessary.
+    /// </remarks>
+    /// <returns>True if the edge was removed/relaxed; False otherwise.</returns>
     public bool TryRemoveEdge(EntityUid nodeId, EntityUid edgeId, GraphNodeComponent? node = null, GraphNodeComponent? edge = null)
     {
-        if (!Resolve(nodeId, ref node) || !Resolve(edgeId, ref edge))
+        if (!_nodeQuery.Resolve(nodeId, ref node) || !_nodeQuery.Resolve(edgeId, ref edge))
             return false;
 
         if (GetEdgeIndex(node, edgeId) is not { } edgeIdx)
@@ -68,13 +76,23 @@ public abstract partial class SharedNodeGraphSystem
         return true;
     }
 
+    /// <summary>
+    /// Attempts to set the state of an edge between two nodes.
+    /// </summary>
+    /// <remarks>
+    /// Will override the state of any manually created or autolinker edges that already exist between the nodes.
+    /// </remarks>
+    /// <returns>True if the edge was created/changed; False otherwise.</returns>
     public bool TrySetEdge(EntityUid nodeId, EntityUid edgeId, EdgeFlags flags, GraphNodeComponent? node = null, GraphNodeComponent? edge = null)
     {
-        if (!Resolve(nodeId, ref node) || !Resolve(edgeId, ref edge))
+        if (!_nodeQuery.Resolve(nodeId, ref node) || !_nodeQuery.Resolve(edgeId, ref edge))
             return false;
 
         if (GetEdgeIndex(node, edgeId) is not { } edgeIdx)
-            return false;
+        {
+            AddEdge(nodeId, edgeId, flags | EdgeFlags.Manual, node, edge);
+            return true;
+        }
 
         var oldFlags = node.Edges[edgeIdx].Flags;
         if (((flags ^ oldFlags) & ~EdgeFlags.Manual) == EdgeFlags.None)
@@ -84,31 +102,42 @@ public abstract partial class SharedNodeGraphSystem
         return true;
     }
 
+    /// <summary>
+    /// Queues the node to have its autolinker edges recalculated on the next update tick.
+    /// </summary>
     public void QueueEdgeUpdate(EntityUid nodeId, GraphNodeComponent? node = null)
     {
-        if (!Resolve(nodeId, ref node))
+        if (!_nodeQuery.Resolve(nodeId, ref node))
             return;
 
         if ((node.Flags & NodeFlags.Edges) != NodeFlags.None)
             return;
 
         node.Flags |= NodeFlags.Edges;
-        QueuedEdgeUpdates.Add(nodeId);
+        _queuedEdgeUpdates.Add(nodeId);
     }
 
+    /// <summary>
+    /// Removes the node from the autolinker update queue.
+    /// </summary>
     public void ClearEdgeUpdate(EntityUid nodeId, GraphNodeComponent? node = null)
     {
-        if (!Resolve(nodeId, ref node))
+        if (!_nodeQuery.Resolve(nodeId, ref node))
             return;
 
         if ((node.Flags & NodeFlags.Edges) == NodeFlags.None)
             return;
 
         node.Flags &= ~NodeFlags.Edges;
-        QueuedEdgeUpdates.Remove(nodeId);
+        _queuedEdgeUpdates.Remove(nodeId);
     }
 
-    protected static Index? GetEdgeIndex(GraphNodeComponent node, EntityUid checkId)
+
+    /// <summary>
+    /// Gets the index of the nodes edge to the given other node.
+    /// </summary>
+    /// <returns>The index (for <see cref="GraphNodeComponent.Edges"/>) of the edge to the given node; null if such an edge does not exist.</returns>
+    private static Index? GetEdgeIndex(GraphNodeComponent node, EntityUid checkId)
     {
         for (var i = 0; i < node.Edges.Count; ++i)
         {
@@ -120,7 +149,10 @@ public abstract partial class SharedNodeGraphSystem
         return null;
     }
 
-    protected void AddEdge(EntityUid nodeId, EntityUid edgeId, EdgeFlags flags, GraphNodeComponent node, GraphNodeComponent edge)
+    /// <summary>
+    /// Adds an edge between two nodes.
+    /// </summary>
+    private void AddEdge(EntityUid nodeId, EntityUid edgeId, EdgeFlags flags, GraphNodeComponent node, GraphNodeComponent edge)
     {
         DebugTools.Assert(nodeId != edgeId, $"Graph node {ToPrettyString(nodeId)} attempted to form an edge with itself.");
 
@@ -133,7 +165,10 @@ public abstract partial class SharedNodeGraphSystem
         RaiseLocalEvent(edgeId, ref edgeEv);
     }
 
-    protected void RemoveEdge(EntityUid nodeId, EntityUid edgeId, Index idx, EdgeFlags flags, GraphNodeComponent node, GraphNodeComponent edge)
+    /// <summary>
+    /// Removes an edge between two nodes.
+    /// </summary>
+    private void RemoveEdge(EntityUid nodeId, EntityUid edgeId, Index idx, EdgeFlags flags, GraphNodeComponent node, GraphNodeComponent edge)
     {
         RemoveHalfEdge(nodeId, edgeId, idx, flags, node, edge);
         RemoveHalfEdge(edgeId, edgeId, GetEdgeIndex(edge, nodeId)!.Value, flags, edge, node);
@@ -144,8 +179,14 @@ public abstract partial class SharedNodeGraphSystem
         RaiseLocalEvent(edgeId, ref edgeEv);
     }
 
-    protected void SetEdge(EntityUid nodeId, EntityUid edgeId, Index idx, EdgeFlags newFlags, EdgeFlags oldFlags, GraphNodeComponent node, GraphNodeComponent edge)
+    /// <summary>
+    /// Changes the state of an edge between two nodes.
+    /// </summary>
+    private void SetEdge(EntityUid nodeId, EntityUid edgeId, Index idx, EdgeFlags newFlags, EdgeFlags oldFlags, GraphNodeComponent node, GraphNodeComponent edge)
     {
+        if (newFlags == oldFlags)
+            return;
+
         var newEdgeFlags = newFlags.Invert();
         var oldEdgeFlags = oldFlags.Invert();
         SetHalfEdge(nodeId, edgeId, idx, newFlags, oldFlags, node, edge);
@@ -157,19 +198,28 @@ public abstract partial class SharedNodeGraphSystem
         RaiseLocalEvent(edgeId, ref edgeEv);
     }
 
-    protected void AddHalfEdge(EntityUid nodeId, EntityUid edgeId, EdgeFlags flags, GraphNodeComponent node, GraphNodeComponent edge)
+    /// <summary>
+    /// Handles one half of the state changes involved in adding an edge between two nodes.
+    /// </summary>
+    private void AddHalfEdge(EntityUid nodeId, EntityUid edgeId, EdgeFlags flags, GraphNodeComponent node, GraphNodeComponent edge)
     {
         node.Edges.Add(new Edge(edgeId, flags));
         OnHalfEdgeChanged(nodeId, edgeId, flags, Edge.NullFlags, node, edge);
     }
 
-    protected void RemoveHalfEdge(EntityUid nodeId, EntityUid edgeId, Index idx, EdgeFlags oldFlags, GraphNodeComponent node, GraphNodeComponent edge)
+    /// <summary>
+    /// Handles one half of the state changes involved in removing an edge between two nodes.
+    /// </summary>
+    private void RemoveHalfEdge(EntityUid nodeId, EntityUid edgeId, Index idx, EdgeFlags oldFlags, GraphNodeComponent node, GraphNodeComponent edge)
     {
         node.Edges.RemoveSwap(idx.IsFromEnd ? node.Edges.Count - idx.Value : idx.Value);
         OnHalfEdgeChanged(nodeId, edgeId, Edge.NullFlags, oldFlags, node, edge);
     }
 
-    protected void SetHalfEdge(EntityUid nodeId, EntityUid edgeId, Index idx, EdgeFlags newFlags, EdgeFlags oldFlags, GraphNodeComponent node, GraphNodeComponent edge)
+    /// <summary>
+    /// Handles one half of the state changes involved in changing the state of an edge between two nodes.
+    /// </summary>
+    private void SetHalfEdge(EntityUid nodeId, EntityUid edgeId, Index idx, EdgeFlags newFlags, EdgeFlags oldFlags, GraphNodeComponent node, GraphNodeComponent edge)
     {
         if (newFlags == oldFlags)
             return;
@@ -178,7 +228,10 @@ public abstract partial class SharedNodeGraphSystem
         OnHalfEdgeChanged(nodeId, edgeId, newFlags, oldFlags, node, edge);
     }
 
-    protected void OnHalfEdgeChanged(EntityUid nodeId, EntityUid _, EdgeFlags newFlags, EdgeFlags oldFlags, GraphNodeComponent node, GraphNodeComponent edge)
+    /// <summary>
+    /// Handles general node state changes triggered when an edge of that node changes.
+    /// </summary>
+    private void OnHalfEdgeChanged(EntityUid nodeId, EntityUid _, EdgeFlags newFlags, EdgeFlags oldFlags, GraphNodeComponent node, GraphNodeComponent edge)
     {
         var deltaFlags = newFlags ^ oldFlags;
         if (deltaFlags == EdgeFlags.None)
@@ -202,7 +255,7 @@ public abstract partial class SharedNodeGraphSystem
             {
                 // Couldn't be merged over, now can.
                 ++node.NumMergeableEdges;
-                if (edge.GraphId is not { } graphId2 || graphId2 == node.GraphId || node.GraphProto != edge.GraphProto || !GraphQuery.TryGetComponent(graphId2, out var graph))
+                if (edge.GraphId is not { } graphId2 || graphId2 == node.GraphId || node.GraphProto != edge.GraphProto)
                     return;
 
                 if (node.NumMergeableEdges == 1)
@@ -210,7 +263,7 @@ public abstract partial class SharedNodeGraphSystem
                     if ((node.Flags & NodeFlags.Split) != NodeFlags.None)
                         ClearSplit(nodeId, node);
 
-                    AddNode(graphId2, nodeId, graph: graph, node: node);
+                    AddNode(graphId2, nodeId, graph: _graphQuery.GetComponent(graphId2), node: node);
                 }
                 else
                     MarkMerge(nodeId, node);
@@ -218,7 +271,11 @@ public abstract partial class SharedNodeGraphSystem
         }
     }
 
-    protected void UpdateEdges(EntityUid nodeId, GraphNodeComponent node)
+
+    /// <summary>
+    /// Updates the autolinker-generated edges associated with a node.
+    /// </summary>
+    private void UpdateEdges(EntityUid nodeId, GraphNodeComponent node)
     {
         if ((node.Flags & NodeFlags.Edges) != NodeFlags.None)
             ClearEdgeUpdate(nodeId, node);
@@ -239,11 +296,11 @@ public abstract partial class SharedNodeGraphSystem
 
             var newFlags = EdgeFlags.None;
             if (newEdges?.Remove(edgeId, out var outFlags) == true)
-                newFlags |= outFlags | EdgeFlags.Auto;
+                newFlags |= outFlags | EdgeFlags.Auto | EdgeFlags.Out;
 
-            var edge = NodeQuery.GetComponent(edgeId);
-            if (CheckEdge(edgeId, nodeId, out var inFlags, node: edge, edge: node, edgeHostId: hostId))
-                newFlags |= inFlags | EdgeFlags.Auto;
+            var edge = _nodeQuery.GetComponent(edgeId);
+            if (CheckEdge(edgeId, nodeId, edgeFlags.Invert(), out var inFlags, node: edge, edge: node, edgeHostId: hostId))
+                newFlags |= inFlags | EdgeFlags.Auto | EdgeFlags.In;
 
             // Manually set edges shouldn't be messed with by the autolinker.
             if ((edgeFlags & EdgeFlags.Manual) != EdgeFlags.None)
@@ -264,26 +321,30 @@ public abstract partial class SharedNodeGraphSystem
         // Add missing edges.
         foreach (var (edgeId, edgeFlags) in newEdges)
         {
-            if (!NodeQuery.TryGetComponent(edgeId, out var edge))
+            if (!_nodeQuery.TryGetComponent(edgeId, out var edge))
             {
                 Log.Error($"Autolinker attempted to form an edge between graph node {ToPrettyString(nodeId)} and non-node {ToPrettyString(edgeId)}.");
                 continue;
             }
 
-            var newFlags = edgeFlags | EdgeFlags.Auto;
-            if (CheckEdge(edgeId, nodeId, out var inFlags, node: edge, edge: node, edgeHostId: hostId))
-                newFlags |= inFlags;
+            var newFlags = edgeFlags | EdgeFlags.Auto | EdgeFlags.Out;
+            if (CheckEdge(edgeId, nodeId, null, out var inFlags, node: edge, edge: node, edgeHostId: hostId))
+                newFlags |= inFlags | EdgeFlags.In;
 
             AddEdge(nodeId, edgeId, newFlags, node, edge);
         }
     }
 
-    protected bool CheckEdge(EntityUid nodeId, EntityUid edgeId, out EdgeFlags flags, GraphNodeComponent node, GraphNodeComponent edge, EntityUid? nodeHostId = null, EntityUid? edgeHostId = null)
+    /// <summary>
+    /// Checks whether a node wants an edge to exist between it and another node.
+    /// </summary>
+    /// <returns>True if the node wants the edge to exist; False otherwise.</returns>
+    private bool CheckEdge(EntityUid nodeId, EntityUid edgeId, EdgeFlags? oldFlags, out EdgeFlags flags, GraphNodeComponent node, GraphNodeComponent edge, EntityUid? nodeHostId = null, EntityUid? edgeHostId = null)
     {
         nodeHostId ??= GetNodeHost(nodeId, node);
         edgeHostId ??= GetNodeHost(edgeId, edge);
 
-        var checkEv = new CheckEdgeEvent(nodeId, nodeHostId.Value, edgeId, edgeHostId.Value, node, edge);
+        var checkEv = new CheckEdgeEvent(nodeId, nodeHostId.Value, edgeId, edgeHostId.Value, node, edge, oldFlags);
         RaiseLocalEvent(nodeId, ref checkEv);
         flags = checkEv.Flags;
         return checkEv.Wanted;

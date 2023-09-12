@@ -1,8 +1,12 @@
-using Content.Shared.Nodes.Components;
-using Content.Shared.Nodes.Events;
+using Content.Server.Nodes.Components;
+using Content.Server.Nodes.Components.Debugging;
+using Content.Server.Nodes.Events;
 
-namespace Content.Shared.Nodes.Debugging;
+namespace Content.Server.Nodes.EntitySystems.Debugging;
 
+/// <summary>
+/// The system that handles the behaviour of the debug autolinker.
+/// </summary>
 public sealed partial class DebugNodeAutolinkerSystem : EntitySystem
 {
     [Dependency] private readonly EntityLookupSystem _lookupSys = default!;
@@ -21,6 +25,10 @@ public sealed partial class DebugNodeAutolinkerSystem : EntitySystem
         SubscribeLocalEvent<DebugNodeAutolinkerComponent, CheckEdgeEvent>(OnCheckEdge);
     }
 
+
+    /// <summary>
+    /// Links any nodes with the debug autolinker to any other compatible nodes within range.
+    /// </summary>
     private void OnUpdateEdges(EntityUid uid, DebugNodeAutolinkerComponent comp, ref UpdateEdgesEvent args)
     {
         if (!_xformQuery.TryGetComponent(args.HostId, out var xform))
@@ -33,7 +41,9 @@ public sealed partial class DebugNodeAutolinkerSystem : EntitySystem
         {
             if (nearId == uid)
                 continue;
-            if (!_nodeQuery.HasComponent(nearId))
+            if (!_nodeQuery.TryGetComponent(nearId, out var edge))
+                continue;
+            if (!comp.AllowBridging && edge.GraphProto != args.Node.GraphProto)
                 continue;
 
             var distance = (epicenter - _xformSys.GetWorldPosition(nearId)).LengthSquared();
@@ -45,9 +55,15 @@ public sealed partial class DebugNodeAutolinkerSystem : EntitySystem
         }
     }
 
+    /// <summary>
+    /// Maintains edges between nodes with the debug autolinker and other compatible nodes until they move out of range.
+    /// </summary>
     private void OnCheckEdge(EntityUid uid, DebugNodeAutolinkerComponent comp, ref CheckEdgeEvent args)
     {
         if (args.Wanted)
+            return;
+
+        if (!comp.AllowBridging && args.Edge.GraphProto != args.Node.GraphProto)
             return;
 
         if (!_xformQuery.TryGetComponent(args.NodeHostId, out var xform))

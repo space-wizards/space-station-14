@@ -1,7 +1,7 @@
 using Content.Client.ContextMenu.UI;
+using Content.Client.Nodes.Components;
 using Content.Client.Resources;
-using Content.Shared.Nodes.Components;
-using Content.Shared.Nodes.Debugging;
+using Content.Shared.Nodes;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.ResourceManagement;
@@ -13,9 +13,9 @@ using Robust.Shared.Timing;
 using System.Numerics;
 using System.Text;
 
-namespace Content.Client.Nodes;
+namespace Content.Client.Nodes.Overlays;
 
-public sealed partial class NodeGraphOverlay : Overlay
+public sealed partial class DebugNodeVisualsOverlay : Overlay
 {
     private const float NodeSize = 8f / 32f;
 
@@ -24,6 +24,9 @@ public sealed partial class NodeGraphOverlay : Overlay
     private readonly IInputManager _inputMan = default!;
     private readonly IUserInterfaceManager _uiMan = default!;
     private readonly SharedTransformSystem _xformSys = default!;
+    private readonly EntityQuery<GraphNodeComponent> _nodeQuery = default!;
+    private readonly EntityQuery<NodeGraphComponent> _graphQuery = default!;
+    private readonly EntityQuery<TransformComponent> _xformQuery = default!;
     private readonly Font _font = default!;
 
     public override OverlaySpace Space => OverlaySpace.WorldSpace | OverlaySpace.ScreenSpace;
@@ -33,16 +36,22 @@ public sealed partial class NodeGraphOverlay : Overlay
     private ScreenCoordinates _hoverPos = default!;
     private float _sinAlpha = 1f;
 
-    public NodeGraphOverlay(IEntityManager entMan, IGameTiming gameTiming, IInputManager inputMan, IUserInterfaceManager uiMan, SharedTransformSystem xformSys, IResourceCache cache)
+
+    public DebugNodeVisualsOverlay(IEntityManager entMan, IGameTiming gameTiming, IInputManager inputMan, IUserInterfaceManager uiMan, IResourceCache cache)
     {
         _entMan = entMan;
         _gameTiming = gameTiming;
         _inputMan = inputMan;
         _uiMan = uiMan;
-        _xformSys = xformSys;
 
+        _xformSys = _entMan.System<SharedTransformSystem>();
+
+        _nodeQuery = _entMan.GetEntityQuery<GraphNodeComponent>();
+        _graphQuery = _entMan.GetEntityQuery<NodeGraphComponent>();
+        _xformQuery = _entMan.GetEntityQuery<TransformComponent>();
         _font = cache.GetFont("/Fonts/NotoSans/NotoSans-Regular.ttf", 12);
     }
+
 
     protected override void FrameUpdate(FrameEventArgs args)
     {
@@ -81,7 +90,7 @@ public sealed partial class NodeGraphOverlay : Overlay
         {
             if (element.Entity is not { } hoveredEntity)
                 return;
-            if (!_entMan.TryGetComponent<GraphNodeComponent>(hoveredEntity, out var hoveredNode))
+            if (!_nodeQuery.TryGetComponent(hoveredEntity, out var hoveredNode))
                 return;
 
             _hoveredNodes.Add(hoveredEntity);
@@ -114,13 +123,9 @@ public sealed partial class NodeGraphOverlay : Overlay
         var mapId = args.MapId;
         var worldAABB = args.WorldAABB;
 
-        var nodeQuery = _entMan.GetEntityQuery<GraphNodeComponent>();
-        var linkQuery = _entMan.GetEntityQuery<DebugNodeAutolinkerComponent>();
-        var xformQuery = _entMan.GetEntityQuery<TransformComponent>();
-        var nodeEnumerator = _entMan.EntityQueryEnumerator<GraphNodeComponent, TransformComponent>();
-
         // Render visible edges:
         _visibleNodes.Clear();
+        var nodeEnumerator = _entMan.EntityQueryEnumerator<GraphNodeComponent, TransformComponent>();
         while (nodeEnumerator.MoveNext(out var uid, out var _, out var xform))
         {
             if (xform.MapID != mapId)
@@ -135,28 +140,16 @@ public sealed partial class NodeGraphOverlay : Overlay
 
         foreach (var uid in _visibleNodes)
         {
-            var node = nodeQuery.GetComponent(uid);
-            var xform = xformQuery.GetComponent(uid);
+            var node = _nodeQuery.GetComponent(uid);
+            var xform = _xformQuery.GetComponent(uid);
 
             var nodePos = _xformSys.GetWorldPosition(xform);
             var nodeColor = GetColor(node);
 
             handle.DrawRect(Box2.CenteredAround(nodePos, new Vector2(NodeSize, NodeSize)), nodeColor);
-            if (linkQuery.TryGetComponent(uid, out var linker))
-            {
-                var rangeColor = nodeColor.WithAlpha(nodeColor.A * 0.5f);
-                handle.DrawCircle(nodePos, linker.BaseRange, rangeColor, filled: false);
-
-                if (linker.HysteresisRange > 0f)
-                {
-                    rangeColor = rangeColor.WithAlpha(rangeColor.A * 0.5f);
-                    handle.DrawCircle(nodePos, linker.BaseRange + linker.HysteresisRange, rangeColor, filled: false);
-                }
-            }
-
             foreach (var (edgeId, edgeFlags) in node.Edges)
             {
-                if (!xformQuery.TryGetComponent(edgeId, out var edgeXform))
+                if (!_xformQuery.TryGetComponent(edgeId, out var edgeXform))
                     continue;
 
                 if (edgeXform.MapID != mapId)
@@ -170,7 +163,7 @@ public sealed partial class NodeGraphOverlay : Overlay
                     continue; // We'll get around to drawing the other half of the edge later.
 
                 // Edge node is OOB so we need to draw their half now.
-                var edge = nodeQuery.GetComponent(edgeId);
+                var edge = _nodeQuery.GetComponent(edgeId);
                 var edgeColor = GetColor(edge);
                 DrawHalfEdge(handle, edgePos, nodePos, edgeColor, canMerge: canMerge);
             }
@@ -186,18 +179,28 @@ public sealed partial class NodeGraphOverlay : Overlay
 
         var offset = new Vector2(0, 0);
         var sb = new StringBuilder();
-        var nodeQuery = _entMan.GetEntityQuery<GraphNodeComponent>();
         foreach (var nodeId in _hoveredNodes)
         {
-            if (!nodeQuery.TryGetComponent(nodeId, out var node))
+            if (!_nodeQuery.TryGetComponent(nodeId, out var node))
                 continue;
 
+            // Node data:
             sb.Append($"NodeId: {nodeId}\n");
-            sb.Append($"#Edges: {node.Edges.Count}\n");
-            sb.Append($"GraphId: {node.GraphId}\n");
+            sb.Append($"Edges: {node.Edges.Count}\n");
             sb.Append($"GraphType: {node.GraphProto}\n");
+
+            // Graph data:
+            if (_graphQuery.TryGetComponent(node.GraphId, out var graph))
+            {
+                sb.Append($"GraphId: {node.GraphId}\n");
+                sb.Append($"GraphSize: {graph.Size}");
+            }
+            else
+                sb.Append($"GraphId: INVALID");
+
             var size = args.ScreenHandle.DrawString(_font, _hoverPos.Position + offset, sb.ToString(), GetColor(node));
             offset.Y += size.Y;
+
             sb.Clear();
         }
     }
@@ -216,7 +219,10 @@ public sealed partial class NodeGraphOverlay : Overlay
         else
             baseAlpha = unhoveredAlpha;
 
-        return node.DebugColor?.WithAlpha(baseAlpha) ?? NodeGraphComponent.DefaultColor.WithAlpha(baseAlpha * _sinAlpha);
+        if (_graphQuery.TryGetComponent(node.GraphId, out var graph))
+            return graph.VisColor.WithAlpha(baseAlpha);
+
+        return NodeGraphComponent.DefaultColor.WithAlpha(baseAlpha * _sinAlpha);
     }
 
     private static void DrawHalfEdge(DrawingHandleWorld handle, Vector2 from, Vector2 to, Color color, bool canMerge)

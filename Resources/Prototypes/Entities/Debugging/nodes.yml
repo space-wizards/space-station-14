@@ -6,9 +6,13 @@
   suffix: DEBUG
   components:
   - type: NodeGraph
+  - type: Tag
+    tags:
+    - Debug
 
 - type: entity
   id: DebugGraphA
+  noSpawn: true
   parent: BaseDebugGraph
   name: debug graph
   description: Type A debug graph
@@ -20,6 +24,7 @@
 
 - type: entity
   id: DebugGraphB
+  noSpawn: true
   parent: BaseDebugGraph
   name: debug graph
   description: Type B debug graph
@@ -33,8 +38,8 @@
 # Debugging nodes:
 - type: entity
   id: BaseDebugNode
-  parent: BaseItem
   abstract: true
+  noSpawn: true
   suffix: DEBUG
   components:
   - type: GraphNode
@@ -43,8 +48,8 @@
     - Debug
 
 - type: entity
-  id: DebugNodeA1
-  parent: BaseDebugNode
+  id: DebugNodeA
+  parent: [ BaseDebugNode, BaseItem ]
   name: debug node (type A)
   description: Type A debug node
   suffix: DEBUG
@@ -60,8 +65,8 @@
       map: ["enum.AnomalyVisualLayers.Base"]
 
 - type: entity
-  id: DebugNodeA2
-  parent: DebugNodeA1
+  id: DebugNodeAAuto
+  parent: DebugNodeA
   name: debug node (autolinking type A)
   description: Type A debug node with autolinker
   suffix: DEBUG
@@ -73,8 +78,46 @@
       map: ["enum.AnomalyVisualLayers.Base"]
 
 - type: entity
-  id: DebugNodeB1
+  id: DebugNodeAProxy
+  noSpawn: true
   parent: BaseDebugNode
+  name: debug node (proxy type A)
+  description: Type A debug proxy node
+  suffix: DEBUG
+  components:
+  - type: GraphNode
+    graphProto: DebugGraphA
+  - type: DebugNodeAutolinker
+  - type: ProxyNode
+
+- type: entity
+  id: DebugNodeAPoly
+  parent: BaseItem
+  name: debug node container (type A)
+  description: Type A debug poly node
+  suffix: DEBUG
+  components:
+  - type: PolyNode
+    proxies:
+      debug: DebugNodeAProxy
+  - type: Sprite
+    drawdepth: Objects
+    sprite: Structures/Storage/Crates/artifact.rsi
+    layers:
+    - state: artifact_container
+      map: ["enum.StorageVisualLayers.Base"]
+    - state: artifact_container_door
+      map: ["enum.StorageVisualLayers.Door"]
+    - state: locked
+      map: ["enum.StorageVisualLayers.Lock"]
+      shader: unshaded
+  - type: Tag
+    tags:
+    - Debug
+
+- type: entity
+  id: DebugNodeB
+  parent: [ BaseDebugNode, BaseItem ]
   name: debug node (type B)
   description: Type B debug node
   suffix: DEBUG
@@ -90,8 +133,8 @@
       map: ["enum.AnomalyVisualLayers.Base"]
 
 - type: entity
-  id: DebugNodeB2
-  parent: DebugNodeB1
+  id: DebugNodeBAuto
+  parent: DebugNodeB
   name: debug node (autolinking type B)
   description: Type B debug node with autolinker
   suffix: DEBUG
@@ -101,6 +144,66 @@
     layers:
     - state: anom2-pulse
       map: ["enum.AnomalyVisualLayers.Base"]
+
+- type: entity
+  id: DebugNodeBProxy
+  noSpawn: true
+  parent: BaseDebugNode
+  name: debug node (proxy type B)
+  description: Type B debug proxy node
+  suffix: DEBUG
+  components:
+  - type: GraphNode
+    graphProto: DebugGraphB
+  - type: DebugNodeAutolinker
+  - type: ProxyNode
+
+- type: entity
+  id: DebugNodeBPoly
+  parent: BaseItem
+  name: debug node container (type B)
+  description: Type B debug poly node
+  suffix: DEBUG
+  components:
+  - type: PolyNode
+    proxies:
+      debug: DebugNodeBProxy
+  - type: Sprite
+    noRot: true
+    sprite: Structures/Machines/Anomaly/anomaly_vessel.rsi
+    layers:
+    - state: base
+    - state: powered-1
+      shader: unshaded
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: Tag
+    tags:
+    - Debug
+
+- type: entity
+  id: DebugNodeABPoly
+  parent: BaseItem
+  name: debug node container (type AB)
+  description: Type B debug poly node
+  suffix: DEBUG
+  components:
+  - type: PolyNode
+    proxies:
+      debugA: DebugNodeAProxy
+      debugB: DebugNodeBProxy
+  - type: Sprite
+    noRot: true
+    sprite: Structures/Storage/Crates/generic.rsi
+    layers:
+    - state: base
+      map: ["enum.StorageVisualLayers.Base"]
+    - state: closed
+      map: ["enum.StorageVisualLayers.Door"]
+  - type: Tag
+    tags:
+    - Debug
 
 
 # Debugging tools:

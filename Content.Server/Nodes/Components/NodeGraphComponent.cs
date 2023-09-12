@@ -1,34 +1,34 @@
-using Content.Shared.Nodes.EntitySystems;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Content.Server.Nodes.EntitySystems;
 
-namespace Content.Shared.Nodes.Components;
+namespace Content.Server.Nodes.Components;
 
 /// <summary>
 /// </summary>
-[Access(typeof(SharedNodeGraphSystem))]
+[Access(typeof(NodeGraphSystem))]
 [RegisterComponent]
 public sealed partial class NodeGraphComponent : Component
 {
-    /// <summary>
-    /// The default color used to visualize node graphs in the debugging overlay.
-    /// </summary>
-    [Access(typeof(SharedNodeGraphSystem), Other = AccessPermissions.ReadExecute)]
-    [ViewVariables]
-    public static readonly Color DefaultColor = Color.Fuchsia;
+    /// <inheritdoc />
+    /// <remarks>Node graphs are mostly server only, but there's a debugging overlay that shows them. As a result, which clients get the graph state depends on who has debugging access.</remarks>
+    public override bool SessionSpecific => true;
 
     /// <summary>
-    /// The type of graph this graph can split/merge into.
+    /// The color used to represent this graph in the debugging overlay. Alpha is ignored.
+    /// </summary>
+    [DataField("color", required: true)]
+    [ViewVariables(VVAccess.ReadWrite)]
+    public Color DebugColor = default!;
+
+
+    /// <summary>
+    /// The type of graph this graph can split/merge into. Overridden with the entity prototype of the graph.
     /// </summary>
     [ViewVariables]
-    public string? GraphProto = default!;
+    public string GraphProto = default!;
 
     /// <summary>
     /// The set of all graph nodes in this graph.
     /// </summary>
-    /// <remarks>
-    /// Not networked because we don't want to spam each client with nodes they don't need to know about.
-    /// </remarks>
     [ViewVariables]
     public HashSet<EntityUid> Nodes = new();
 
@@ -48,12 +48,5 @@ public sealed partial class NodeGraphComponent : Component
     /// The last time this graph was processed merging with other graphs.
     /// </summary>
     [ViewVariables]
-    public TimeSpan? LastUpdate = null;
-
-    /// <summary>
-    /// The color used to represent this group in the debugging overlay.
-    /// </summary>
-    [DataField("color", required: true)]
-    [ViewVariables(VVAccess.ReadWrite)]
-    public Color? DebugColor = null;
+    public UpdateIter? LastUpdate = null;
 }

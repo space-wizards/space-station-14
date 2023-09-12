@@ -1,23 +1,30 @@
+using Content.Server.Nodes.Components;
+using Content.Server.Nodes.Components.Debugging;
+using Content.Server.Popups;
+using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
-using Content.Shared.Examine;
-using Content.Shared.Nodes.Components;
-using Content.Shared.Nodes.EntitySystems;
-using Content.Shared.Popups;
+using Content.Shared.Nodes;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio;
 
-namespace Content.Shared.Nodes.Debugging;
+namespace Content.Server.Nodes.EntitySystems.Debugging;
 
+/// <summary>
+/// The system that handles the behaviour of the debug linker tool.
+/// </summary>
 public sealed partial class DebugNodeLinkerSystem : EntitySystem
 {
     [Dependency] private readonly SharedAudioSystem _audioSys = default!;
-    [Dependency] private readonly SharedNodeGraphSystem _nodeGraphSys = default!;
-    [Dependency] private readonly SharedPopupSystem _popupSys = default!;
+    [Dependency] private readonly NodeGraphSystem _nodeGraphSys = default!;
+    [Dependency] private readonly PopupSystem _popupSys = default!;
+    private EntityQuery<GraphNodeComponent> _nodeQuery = default!;
 
     public override void Initialize()
     {
         base.Initialize();
+
+        _nodeQuery = GetEntityQuery<GraphNodeComponent>();
 
         SubscribeLocalEvent<DebugNodeLinkerComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<DebugNodeLinkerComponent, GetVerbsEvent<AlternativeVerb>>(OnGetVerbs);
@@ -25,12 +32,18 @@ public sealed partial class DebugNodeLinkerSystem : EntitySystem
         SubscribeLocalEvent<DebugNodeLinkerComponent, UseInHandEvent>(OnUseInHand);
     }
 
+    /// <summary>
+    /// Adds the currently active mode and edge flags of the linker tool to the examine text.
+    /// </summary>
     private void OnExamined(EntityUid uid, DebugNodeLinkerComponent comp, ExaminedEvent args)
     {
         args.PushText($"Currently {comp.Mode}ing nodes.");
         args.PushText($"Resulting edges {((comp.Flags & EdgeFlags.NoMerge) == EdgeFlags.None ? "allow" : "disallow")} merging.");
     }
 
+    /// <summary>
+    /// Adds a verb to swap whether edges the linker tool creates can be merged across.
+    /// </summary>
     private void OnGetVerbs(EntityUid uid, DebugNodeLinkerComponent comp, GetVerbsEvent<AlternativeVerb> args)
     {
         if (!args.CanAccess || !args.CanInteract || args.Hands == null)
@@ -47,12 +60,15 @@ public sealed partial class DebugNodeLinkerSystem : EntitySystem
         });
     }
 
+    /// <summary>
+    /// Handles linking nodes, unlinking nodes, marking nodes for the previous, and prompting node autolinker updates.
+    /// </summary>
     private void AfterInteract(EntityUid uid, DebugNodeLinkerComponent comp, AfterInteractEvent args)
     {
         if (args.Handled)
             return;
 
-        if (args.Target is not { } targetNodeId || !TryComp<GraphNodeComponent>(targetNodeId, out var targetNode))
+        if (args.Target is not { } targetNodeId || !_nodeQuery.TryGetComponent(targetNodeId, out var targetNode))
             return;
 
         args.Handled = true;
@@ -69,7 +85,7 @@ public sealed partial class DebugNodeLinkerSystem : EntitySystem
         }
 
         // Selects the clicked node as the node to connect ot the next clicked node.
-        if (comp.Node is not { } savedNodeId || !Exists(savedNodeId) || !TryComp<GraphNodeComponent>(savedNodeId, out var savedNode))
+        if (comp.Node is not { } savedNodeId || !Exists(savedNodeId) || !_nodeQuery.TryGetComponent(savedNodeId, out var savedNode))
         {
             comp.Node = targetNodeId;
             _audioSys.PlayPredicted(comp.MarkSound, uid, args.User, AudioParams.Default.WithVariation(0.125f).WithVolume(8f));
@@ -91,7 +107,9 @@ public sealed partial class DebugNodeLinkerSystem : EntitySystem
         {
             // Adds an edge between the selected node and the clicked node.
             case DebugLinkerMode.Link:
-                if (!_nodeGraphSys.TryAddEdge(savedNodeId, targetNodeId, flags: comp.Flags, node: savedNode, edge: targetNode))
+                if (_nodeGraphSys.HasEdge(savedNodeId, targetNodeId, savedNode)
+                    ? !_nodeGraphSys.TrySetEdge(savedNodeId, targetNodeId, flags: comp.Flags, node: savedNode, edge: targetNode)
+                    : !_nodeGraphSys.TryAddEdge(savedNodeId, targetNodeId, flags: comp.Flags, node: savedNode, edge: targetNode))
                     break;
 
                 _audioSys.PlayPredicted(comp.LinkSound, uid, args.User, AudioParams.Default.WithVariation(0.125f).WithVolume(8f));
@@ -111,6 +129,9 @@ public sealed partial class DebugNodeLinkerSystem : EntitySystem
         _audioSys.PlayPredicted(comp.FailSound, uid, args.User, AudioParams.Default.WithVariation(0.125f).WithVolume(8f));
     }
 
+    /// <summary>
+    /// Handles rotating the linker tool mode.
+    /// </summary>
     private void OnUseInHand(EntityUid uid, DebugNodeLinkerComponent comp, UseInHandEvent args)
     {
         if (args.Handled)
