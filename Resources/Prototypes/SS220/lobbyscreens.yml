@@ -9,3 +9,7 @@
 - type: lobbyBackground
   id: Pizdec
   background: /Textures/SS220/LobbyScreens/pizdec.png
+
+- type: lobbyBackground
+  id: NukeArt
+  background: /Textures/SS220/LobbyScreens/nukeart.png
