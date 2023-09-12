@@ -1,9 +1,4 @@
 Entries:
-- author: deltanedas
-  changes:
-  - {message: Salt is now white instead of red., type: Tweak}
-  id: 4310
-  time: '2023-07-23T19:17:46.0000000+00:00'
 - author: JoeHammad
   changes:
   - {message: Due to ERT's lackluster performance CentCom has decided to slightly
@@ -2984,3 +2979,10 @@ Entries:
   - {message: Fix lights not always updating., type: Fix}
   id: 4809
   time: '2023-09-12T14:35:08.0000000+00:00'
+- author: JoeHammad
+  changes:
+  - {message: 'Nukies now start with a microbomb implant in their backpack, remember
+      to communicate if you''re gonna use it!', type: Add}
+  - {message: The microbomb implanter has been removed from the nukie uplink, type: Remove}
+  id: 4810
+  time: '2023-09-12T15:09:33.0000000+00:00'
