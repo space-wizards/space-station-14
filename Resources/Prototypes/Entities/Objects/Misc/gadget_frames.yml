@@ -51,3 +51,29 @@
   - type: Construction
     graph: WeaponAdvancedLaser
     node: wiresMissing
+
+- type: entity
+  parent: BaseItem
+  id: AntiqueLaserFrame
+  name: antique laser pistol frame
+  description: The incomplete frame of an antique laser pistol.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Battery/antiquelasergun.rsi
+    layers:
+    - state: frame_0
+      map: [ "enum.ConstructionVisuals.Layer" ]
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.ConstructionVisuals.Key:
+        enum.ConstructionVisuals.Layer:
+          wiresMissing: { state: frame_0 }
+          casterMissing: { state: frame_1 }
+          casterUnsecured: { state: frame_2 }
+          caseMissing: { state: frame_2 }
+  - type: Item
+    size: 10
+  - type: Construction
+    graph: WeaponAntiqueLaser
+    node: wiresMissing
