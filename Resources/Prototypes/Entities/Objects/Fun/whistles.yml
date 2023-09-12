@@ -13,5 +13,6 @@
   - type: UseDelay
     delay: 1
   - type: Whistle
+    sound: /Audio/Items/whistle.ogg
     exclamateOnePerson: true
     loudWhistleDistance: 4
