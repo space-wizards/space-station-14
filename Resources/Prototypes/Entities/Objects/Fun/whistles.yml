@@ -16,3 +16,9 @@
     sound: /Audio/Items/whistle.ogg
     exclamateOnePerson: true
     loudWhistleDistance: 4
+
+- type: entity
+  parent: BaseWhistle
+  id: SecurityWhistle
+  description: Sound of it make you feel fear.
+  components:
