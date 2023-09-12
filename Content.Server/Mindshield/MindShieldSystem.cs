@@ -10,6 +10,7 @@ using Content.Server.Roles;
 using Content.Shared.Implants.Components;
 
 namespace Content.Server.Mindshield;
+
 /// <summary>
 /// System used for checking if the implanted is a Rev or Head Rev.
 /// </summary>
@@ -35,7 +36,7 @@ public sealed class MindShieldSystem : EntitySystem
     {
         if (_tag.HasTag(ev.Implant, "MindShield") && ev.Implanted != null)
         {
-            EnsureComp<MindShieldComponent>((EntityUid) ev.Implanted);
+            EnsureComp<MindShieldComponent>(ev.Implanted.Value);
             MindShieldRemovalCheck(ev.Implanted, ev.Implant);
         }
     }

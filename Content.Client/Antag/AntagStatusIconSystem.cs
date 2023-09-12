@@ -26,14 +26,9 @@ public abstract class AntagStatusIconSystem<T> : SharedStatusIconSystem
     /// <param name="args">The GetStatusIcon event.</param>
     protected virtual void GetStatusIcon(string antagStatusIcon, ref GetStatusIconsEvent args)
     {
-        if (!HasComp<T>(_player.LocalPlayer?.ControlledEntity))
-        {
-            if (HasComp<GhostComponent>(_player.LocalPlayer?.ControlledEntity))
-            {
-
-            }
-            else return;
-        }
+        var ent = _player.LocalPlayer?.ControlledEntity;
+        if (!HasComp<T>(ent) && !HasComp<GhostComponent>(ent))
+            return;
 
         args.StatusIcons.Add(_prototype.Index<StatusIconPrototype>(antagStatusIcon));
     }

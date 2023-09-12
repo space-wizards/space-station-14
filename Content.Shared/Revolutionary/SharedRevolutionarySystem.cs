@@ -17,6 +17,9 @@ public sealed class SharedRevolutionarySystem : EntitySystem
         SubscribeLocalEvent<MindShieldComponent, ComponentInit>(MindShieldImplanted);
     }
 
+    /// <summary>
+    /// When the mindshield is implanted in the rev it will popup saying they were deconverted. In Head Revs it will remove the mindshield component.
+    /// </summary>
     private void MindShieldImplanted(EntityUid uid, MindShieldComponent comp, ComponentInit init)
     {
         if (HasComp<RevolutionaryComponent>(uid) && !HasComp<HeadRevolutionaryComponent>(uid))

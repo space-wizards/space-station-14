@@ -12,4 +12,11 @@ public sealed partial class HeadRevolutionaryComponent : Component
 {
     [DataField("headRevStatusIcon", customTypeSerializer: typeof(PrototypeIdSerializer<StatusIconPrototype>))]
     public string HeadRevStatusIcon = "HeadRevolutionaryFaction";
+
+    /// <summary>
+    /// How long the stun will last after the user is converted.
+    /// </summary>
+    [DataField("stunTime")]
+    [ViewVariables(VVAccess.ReadWrite)]
+    public TimeSpan StunTime = TimeSpan.FromSeconds(3);
 }

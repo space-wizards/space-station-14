@@ -4,7 +4,6 @@ using Content.Server.Roles.Jobs;
 using Content.Server.Preferences.Managers;
 using Content.Shared.Humanoid;
 using Content.Shared.Preferences;
-using Content.Server.Roles;
 using Robust.Server.Player;
 using System.Linq;
 using Content.Server.Mind;
@@ -12,7 +11,6 @@ using Content.Server.Players;
 using Robust.Shared.Random;
 using Robust.Shared.Map;
 using System.Numerics;
-using Robust.Shared.Prototypes;
 using Content.Shared.Inventory;
 using Content.Server.Storage.EntitySystems;
 using Robust.Shared.Audio;
@@ -33,18 +31,15 @@ public sealed class AntagSelectionSystem : GameRuleSystem<GameRuleComponent>
     [Dependency] private readonly IChatManager _chatManager = default!;
     [Dependency] private readonly IServerPreferencesManager _prefs = default!;
     [Dependency] private readonly IPlayerManager _playerSystem = default!;
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly EntityManager _entityManager = default!;
     [Dependency] private readonly AudioSystem _audioSystem = default!;
+    [Dependency] private readonly ContainerSystem _containerSystem = default!;
     [Dependency] private readonly JobSystem _jobs = default!;
     [Dependency] private readonly MindSystem _mindSystem = default!;
     [Dependency] private readonly InventorySystem _inventory = default!;
-    [Dependency] private readonly RoleSystem _roleSystem = default!;
     [Dependency] private readonly StorageSystem _storageSystem = default!;
     [Dependency] private readonly StationSystem _stationSystem = default!;
     [Dependency] private readonly EmergencyShuttleSystem _emergencyShuttle = default!;
-    [Dependency] private readonly ContainerSystem _containerSystem = default!;
 
     /// <summary>
     /// Attempts to start the game rule by checking if there are enough players in lobby and readied.
@@ -84,7 +79,6 @@ public sealed class AntagSelectionSystem : GameRuleSystem<GameRuleComponent>
     /// <param name="greetingColor">The color of the message for the antag greeting in hex.</param>
     /// <param name="chosen">A list of all the antags chosen in case you need to add stuff after.</param>
     /// <param name="includeHeads">Whether or not heads can be chosen as antags for this gamemode.</param>
-
     public void EligiblePlayers(string antagPrototype, int maxAntags, int antagsPerPlayer, SoundSpecifier antagSound, string antagGreeting, string greetingColor,
         out List<EntityUid> chosen, bool includeHeads = false)
     {
@@ -137,7 +131,7 @@ public sealed class AntagSelectionSystem : GameRuleSystem<GameRuleComponent>
             }
             if (mind != null && mind.OwnedEntity != null)
             {
-                chosen.Add((EntityUid) mind.OwnedEntity);
+                chosen.Add(mind.OwnedEntity.Value);
                 _audioSystem.PlayGlobal(antagSound, mind.OwnedEntity.Value);
                 if (mind.Session != null)
                 {
@@ -188,16 +182,15 @@ public sealed class AntagSelectionSystem : GameRuleSystem<GameRuleComponent>
     /// </summary>
     /// <param name="antag">The entity that you want to spawn an item on</param>
     /// <param name="item">The prototype ID that you want to spawn in the bag.</param>
-
     public void GiveAntagBagGear(EntityUid antag, string item)
     {
         var itemToSpawn = Spawn(item, new EntityCoordinates(antag, Vector2.Zero));
         if (_inventory.TryGetSlotContainer(antag, "back", out var backSlot, out var _))
         {
             var bag = backSlot.ContainedEntity;
-            if (bag != null && HasComp<ContainerManagerComponent>(bag) && _storageSystem.CanInsert((EntityUid) bag, itemToSpawn, out var reason))
+            if (bag != null && HasComp<ContainerManagerComponent>(bag) && _storageSystem.CanInsert(bag.Value, itemToSpawn, out var reason))
             {
-                _storageSystem.Insert((EntityUid) bag, itemToSpawn);
+                _storageSystem.Insert(bag.Value, itemToSpawn);
             }
             else if (_inventory.TryGetSlotContainer(antag, "jumpsuit", out var jumpsuit, out var _))
             {

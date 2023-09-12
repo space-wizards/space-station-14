@@ -23,7 +23,6 @@ using Content.Shared.Mindshield.Components;
 using Content.Server.Administration.Logs;
 using Content.Shared.Database;
 using Content.Server.Antag;
-using Robust.Server.GameObjects;
 using Content.Server.Speech.Components;
 using Content.Server.Roles.Jobs;
 using Content.Shared.Mind;
@@ -42,7 +41,6 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
     [Dependency] private readonly IChatManager _chatManager = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly AntagSelectionSystem _antagSelectionSystem = default!;
-    [Dependency] private readonly AudioSystem _audioSystem = default!;
     [Dependency] private readonly ChatSystem _chat = default!;
     [Dependency] private readonly JobSystem _jobSystem = default!;
     [Dependency] private readonly MindSystem _mindSystem = default!;
@@ -86,33 +84,20 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
 
     private void OnRoundEndText(RoundEndTextAppendEvent ev)
     {
-        var revsLost = CheckRevsLose();
-        var commandLost = CheckCommandLose();
         var query = AllEntityQuery<RevolutionaryRuleComponent>();
         while (query.MoveNext(out var headrev))
         {
-            if (commandLost && !revsLost)
-            {
-                ev.AddLine(Loc.GetString("rev-won"));
-            }
-            else if (!commandLost && revsLost)
-            {
-                ev.AddLine(Loc.GetString("rev-lost"));
-            }
-            else if (commandLost && revsLost)
-            {
-                ev.AddLine(Loc.GetString("rev-stalemate"));
-            }
-            else if (!commandLost && !revsLost)
-            {
-                ev.AddLine(Loc.GetString("rev-reverse-stalemate"));
-            }
+            var revsLost = CheckRevsLose();
+            var commandLost = CheckCommandLose();
+            int mask = (commandLost ? 1 : 0) | (revsLost ? 2 : 0);
+            ev.AddLine(Loc.GetString(OUTCOMES[mask]));
             ev.AddLine(Loc.GetString("head-rev-initial-count", ("initialCount", headrev.HeadRevs.Count)));
             foreach (var player in headrev.HeadRevs)
             {
-                if (_mindSystem.TryGetSession(player.Value, out var session))
+                _mindSystem.TryGetSession(player.Value, out var session);
+                var username = session?.Name;
+                if (username != null)
                 {
-                    var username = session.Name;
                     ev.AddLine(Loc.GetString("head-rev-initial",
                     ("name", player.Key),
                     ("username", username)));
@@ -120,8 +105,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
                 else
                 {
                     ev.AddLine(Loc.GetString("head-rev-initial",
-                    ("name", player.Key),
-                    ("username", player.Value)));
+                    ("name", player.Key)));
                 }
             }
             break;
@@ -175,7 +159,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
                     comp.HeadRevs.Add(inCharacterName, mindId);
                 }
             }
-            _antagSelectionSystem.GiveAntagBagGear(headRev, "RevFlash");
+            _antagSelectionSystem.GiveAntagBagGear(headRev, "Flash");
             _antagSelectionSystem.GiveAntagBagGear(headRev, "ClothingEyesGlassesSunglasses");
             EnsureComp<RevolutionaryComponent>(headRev);
             EnsureComp<HeadRevolutionaryComponent>(headRev);
@@ -239,8 +223,8 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
     /// </summary>
     public void OnPostFlash(EntityUid uid, HeadRevolutionaryComponent comp, ref AfterFlashedEvent ev)
     {
-        var stunTime = TimeSpan.FromSeconds(3);
-        if (!HasComp<RevolutionaryComponent>(ev.Target) && !HasComp<MindShieldComponent>(ev.Target) && (HasComp<HumanoidAppearanceComponent>(ev.Target) || HasComp<MonkeyAccentComponent>(ev.Target))
+        var stunTime = comp.StunTime;
+        if (!HasComp<RevolutionaryComponent>(ev.Target) && !HasComp<MindShieldComponent>(ev.Target) && (HasComp<HumanoidAppearanceComponent>(ev.Target) || HasComp<AlwaysRevolutionaryConvertibleComponent>(ev.Target))
             && TryComp<MobStateComponent>(ev.Target, out var mobState) && mobState.CurrentState == MobState.Alive && !HasComp<ZombieComponent>(ev.Target))
         {
             _npcFaction.AddFaction(ev.Target, "Revolutionary");
@@ -271,7 +255,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
         if (mind.OwnedEntity != null)
         {
             var player = new List<EntityUid>();
-            player.Add((EntityUid) mind.OwnedEntity);
+            player.Add(mind.OwnedEntity.Value);
             InitialAssignCommandStaff();
             GiveHeadRev(player, "Rev", null);
         }
@@ -287,6 +271,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
         if (ev.NewMobState == MobState.Dead || ev.NewMobState == MobState.Invalid)
             CheckCommandLose();
     }
+
     /// <summary>
     /// Checks if all of command is dead and if so will remove all sec and command jobs if there were any left.
     /// </summary>
@@ -311,23 +296,26 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
         {
             if (commandLost == false)
             {
-                foreach (var command in commandList)
+                if (commandList.Count != 0)
                 {
-                    if (TryComp<CommandStaffComponent>(command, out var comp))
+                    foreach (var command in commandList)
                     {
-                        comp.HeadsDied = true;
-                    }
-                }
-                foreach (var station in _stationSystem.GetStations())
-                {
-                    var jobs = _stationJobs.GetJobs(station).Keys.ToList();
-                    _chat.DispatchStationAnnouncement(station, Loc.GetString("rev-all-heads-dead"), "Revolutionary", colorOverride: Color.FromHex("#5e9cff"));
-                    foreach (var job in jobs)
-                    {
-                        var currentJob = job.Replace(" ", "");
-                        if (headJobs.Roles.Contains(currentJob) || secJobs.Roles.Contains(currentJob))
+                        if (TryComp<CommandStaffComponent>(command, out var comp))
                         {
-                            _stationJobs.TrySetJobSlot(station, job, 0);
+                            comp.HeadsDied = true;
+                        }
+                    }
+                    foreach (var station in _stationSystem.GetStations())
+                    {
+                        var jobs = _stationJobs.GetJobs(station).Keys.ToList();
+                        _chat.DispatchStationAnnouncement(station, Loc.GetString("rev-all-heads-dead"), "Revolutionary", colorOverride: Color.FromHex("#5e9cff"));
+                        foreach (var job in jobs)
+                        {
+                            var currentJob = job.Replace(" ", "");
+                            if (headJobs.Roles.Contains(currentJob) || secJobs.Roles.Contains(currentJob))
+                            {
+                                _stationJobs.TrySetJobSlot(station, job, 0);
+                            }
                         }
                     }
                 }
@@ -384,9 +372,20 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
         if (_mindSystem.TryGetMind(ev.Player, out var mindId, out var mind) && HasComp<PendingClockInComponent>(mind.OwnedEntity) && ev.Player.AttachedEntity != null)
         {
             var list = new List<EntityUid>();
-            list.Add((EntityUid) ev.Player.AttachedEntity);
+            list.Add(ev.Player.AttachedEntity.Value);
             AssignCommandStaff(list, true);
         }
     }
 
+
+    private static readonly string[] OUTCOMES = new[] {
+    // revs survived and heads survived... how
+    "rev-reverse-stalemate",
+    // revs won and heads died
+    "rev-won",
+    // revs lost and heads survived
+    "rev-lost",
+    // revs lost and heads died
+    "rev-stalemate"
+    };
 }
