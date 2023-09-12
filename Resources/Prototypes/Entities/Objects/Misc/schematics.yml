@@ -29,3 +29,22 @@
         planLayer:
           True: {visible: false}
           False: {visible: true}
+
+- type: entity
+  parent: [ BaseSchematic, SchematicFoldable]
+  id: SchematicProtoKineticAccelerator
+  name: proto-kinetic accelerator schematic
+  description: A schematic for building a proto-kinetic accelerator using a proto-kinetic charger. The first step is to build a frame for the device using steel. #automate this maybe
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/schematics.rsi
+    layers:
+    - state: sheet-folded_nanotrasen
+      map: ["foldedLayer"]
+      visible: false
+    - state: sheet-unfolded_nanotrasen
+      map: ["unfoldedLayer"]
+    - state: plan_pka
+      map: ["planLayer"]
+  - type: StartItemConstructionOnActivate
+    prototype: WeaponProtoKineticAccelerator

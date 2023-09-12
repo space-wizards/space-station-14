@@ -12,6 +12,7 @@
         { "name": "sheet-unfolded_syndicate" },
         { "name": "sheet-folded_syndicate" },
         { "name": "sheet-unfolded_cybersun" },
-        { "name": "sheet-folded_cybersun" }
+        { "name": "sheet-folded_cybersun" },
+        { "name": "plan_pka" }
     ]
 }
