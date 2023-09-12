@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "icon by RiceMar1244 based on tgstation at https://github.com/tgstation/tgstation/commit/8b7f8ba6a3327c7381967c550f185dffafd11a57; inhand, wield, and belt equip sprites by RiceMar1244",
+  "copyright": "icon by RiceMar1244 based on tgstation at https://github.com/tgstation/tgstation/commit/8b7f8ba6a3327c7381967c550f185dffafd11a57; inhand, wield, belt equip, and construction frame sprites by RiceMar1244",
   "size": {
     "x": 32,
     "y": 32
@@ -38,6 +38,15 @@
         {
             "name": "equipped-BELT",
             "directions": 4
+        },
+        { "name": "frame_0" },
+        { "name": "frame_1" },
+        { "name": "frame_2" },
+        { "name": "frame_3" },
+        { "name": "frame_4" },
+        {
+            "name": "frame_5",
+            "delays": [ [ 0.1, 0.1 ] ]
         }
     ]
 }
