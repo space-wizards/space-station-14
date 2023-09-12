@@ -142,7 +142,7 @@
   objectType: Item
 
 - type: construction
-  hide: false
+  hide: true
   name: antique laser pistol
   id: WeaponAntiqueLaser
   graph: WeaponAntiqueLaser
