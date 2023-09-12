@@ -78,6 +78,8 @@
     states:
       Alive:
         Base: regalrat
+      Critical:
+        Base: critical
       Dead:
         Base: dead
   - type: GhostRole
@@ -283,7 +285,9 @@
   noSpawn: true
   components:
   - type: InstantAction
-    icon: Interface/Actions/ratKingArmy.png
+    icon:
+      sprite: Interface/Actions/actions_rat_king.rsi
+      state: ratKingArmy
     itemIconStyle: NoItem
     event: !type:RatKingRaiseArmyActionEvent
     useDelay: 4
@@ -295,7 +299,9 @@
   noSpawn: true
   components:
   - type: InstantAction
-    useDelay: 10
-    icon: Interface/Actions/ratKingDomain.png
+    useDelay: 6
+    icon:
+      sprite: Interface/Actions/actions_rat_king.rsi
+      state: ratKingDomain
     itemIconStyle: NoItem
     event: !type:RatKingDomainActionEvent
