@@ -24,7 +24,7 @@
   - type: WiresPanel
     securityLevel: Level2
   - type: Construction
-    node: airlockMedSecurity 
+    node: airlockMedSecurity
 
 - type: entity
   parent: Airlock
