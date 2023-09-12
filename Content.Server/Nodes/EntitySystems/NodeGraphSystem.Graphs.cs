@@ -15,11 +15,12 @@ public sealed partial class NodeGraphSystem
     /// </remarks>
     private (EntityUid GraphId, NodeGraphComponent Graph) SpawnGraph(string graphProto)
     {
-        var graphId = EntityManager.Spawn(graphProto);
-        var graph = EnsureComp<NodeGraphComponent>(graphId);
+        var graphId = EntityManager.CreateEntityUninitialized(graphProto);
 
+        var graph = _graphQuery.GetComponent(graphId);
         graph.GraphProto = graphProto;
 
+        EntityManager.InitializeAndStartEntity(graphId);
         return (graphId, graph);
     }
 
@@ -56,6 +57,8 @@ public sealed partial class NodeGraphSystem
 
         node.GraphId = graphId;
         graph.Nodes.Add(nodeId);
+        Dirty(graphId, graph);
+        Dirty(nodeId, node);
 
         if ((node.Flags & NodeFlags.Merge) != NodeFlags.None)
             QueueMerge(graphId, nodeId, graph);
@@ -81,6 +84,8 @@ public sealed partial class NodeGraphSystem
 
         graph.Nodes.Remove(nodeId);
         node.GraphId = null;
+        Dirty(graphId, graph);
+        Dirty(nodeId, node);
 
         if ((node.Flags & NodeFlags.Merge) != NodeFlags.None)
             CancelMerge(graphId, nodeId, graph);

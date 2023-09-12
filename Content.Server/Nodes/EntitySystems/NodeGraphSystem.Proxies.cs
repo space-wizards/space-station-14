@@ -43,8 +43,8 @@ public sealed partial class NodeGraphSystem
         if (!_proxyQuery.TryGetComponent(proxyId, out var proxy))
             return;
 
-        Dirty(proxyId, proxy);
         proxy.ProxyFor = null;
+        Dirty(proxyId, proxy);
     }
 
     /// <summary>

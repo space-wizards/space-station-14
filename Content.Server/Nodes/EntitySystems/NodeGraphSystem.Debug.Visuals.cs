@@ -1,4 +1,5 @@
 using Content.Server.Nodes.Components;
+using Content.Server.Nodes.Events.Debug;
 using Content.Shared.Nodes;
 using Robust.Server.GameStates;
 using Robust.Server.Player;
@@ -11,7 +12,7 @@ namespace Content.Server.Nodes.EntitySystems;
 public sealed partial class NodeGraphSystem
 {
     /// <summary>The set of players that are receiving node debug info and a filter for which graphs they are receiving that info for.</summary>
-    private readonly Dictionary<IPlayerSession, GraphFilter?> _visSessions = new();
+    private readonly Dictionary<IPlayerSession, GraphFilter> _visSessions = new();
     /// <summary>Whether we are currently sending node debug info to players.</summary>
     private bool _sendingVisState = false;
 
@@ -19,23 +20,29 @@ public sealed partial class NodeGraphSystem
     private void UpdateDebugVisuals()
     {
         var shouldSendVisState = _visSessions.Count > 0;
-        if (_sendingVisState == shouldSendVisState)
-            return;
-
-
         _sendingVisState = shouldSendVisState;
 
         var graphs = EntityQueryEnumerator<NodeGraphComponent>();
-        while (graphs.MoveNext(out var _, out var graph))
+        while (graphs.MoveNext(out var graphId, out var graph))
         {
             graph.NetSyncEnabled = shouldSendVisState;
+
+            if (shouldSendVisState)
+                Dirty(graphId, graph);
         }
 
         var nodes = EntityQueryEnumerator<GraphNodeComponent>();
-        while (nodes.MoveNext(out var _, out var node))
+        while (nodes.MoveNext(out var nodeId, out var node))
         {
             node.NetSyncEnabled = shouldSendVisState;
+
+            if (shouldSendVisState)
+                Dirty(nodeId, node);
         }
+
+        // Raise events in case anyone else would like to get in on the action.
+        var ev = new NodeVisViewersChanged(shouldSendVisState);
+        RaiseLocalEvent(ref ev);
     }
 
 
@@ -44,15 +51,27 @@ public sealed partial class NodeGraphSystem
     /// <summary>Starts sending the visual state of nodes to a player.</summary>
     public void StartSendingNodeVis(IPlayerSession session)
     {
-        RaiseNetworkEvent(new EnableNodeVisMsg(enabled: true), session);
-        _visSessions[session] = null;
-    }
+        if (_visSessions.TryGetValue(session, out var filter))
+        {
+            _visSessions[session] = new GraphFilter()
+            {
+                Default = true,
+                Uids = filter.Uids,
+                Prototypes = filter.Prototypes,
+            };
+        }
+        else
+        {
+            _visSessions[session] = new GraphFilter()
+            {
+                Default = true,
+                Uids = null,
+                Prototypes = null,
+            };
+        }
 
-    /// <summary>Stops sending the visual state of nodes to a player.</summary>
-    public void StopSendingNodeVis(IPlayerSession session)
-    {
-        RaiseNetworkEvent(new EnableNodeVisMsg(enabled: false), session);
-        _visSessions.Remove(session);
+        UpdateDebugVisuals();
+        RaiseNetworkEvent(new EnableNodeVisMsg(enabled: true), session);
     }
 
     /// <summary>Starts sending the visual state of specific graphs to a player.</summary>
@@ -61,46 +80,35 @@ public sealed partial class NodeGraphSystem
         if (uids.Count <= 0)
             return;
 
-        RaiseNetworkEvent(new EnableNodeVisMsg(enabled: true), session);
 
-        if (!_visSessions.TryGetValue(session, out var filterOrNull) || filterOrNull is not { } filter || filter.Uids is null)
+        if (_visSessions.TryGetValue(session, out var filter))
         {
             _visSessions[session] = new GraphFilter()
             {
+                Default = false,
                 Uids = new(uids.Select(uid => KeyValuePair.Create(uid, true))),
-                Prototypes = filterOrNull?.Prototypes,
+                Prototypes = null,
             };
-            return;
         }
-
-        foreach (var uid in uids)
-        {
-            filter.Uids[uid] = true;
-        }
-    }
-
-    /// <summary>Stops sending the visual state of specific graphs to a player.</summary>
-    public void StopSendingNodeVis(IPlayerSession session, List<EntityUid> uids)
-    {
-        if (uids.Count <= 0)
-            return;
-
-        RaiseNetworkEvent(new EnableNodeVisMsg(enabled: false), session);
-
-        if (!_visSessions.TryGetValue(session, out var filterOrNull) || filterOrNull is not { } filter || filter.Uids is null)
+        else if (filter.Uids is null)
         {
             _visSessions[session] = new GraphFilter()
             {
-                Uids = new(uids.Select(uid => KeyValuePair.Create(uid, false))),
-                Prototypes = filterOrNull?.Prototypes,
+                Default = filter.Default,
+                Uids = new(uids.Select(uid => KeyValuePair.Create(uid, true))),
+                Prototypes = filter.Prototypes,
             };
-            return;
+        }
+        else
+        {
+            foreach (var uid in uids)
+            {
+                filter.Uids[uid] = true;
+            }
         }
 
-        foreach (var uid in uids)
-        {
-            filter.Uids[uid] = false;
-        }
+        UpdateDebugVisuals();
+        RaiseNetworkEvent(new EnableNodeVisMsg(enabled: true), session);
     }
 
     /// <summary>Stops sending the visual state of specific types of graphs to a player.</summary>
@@ -109,22 +117,74 @@ public sealed partial class NodeGraphSystem
         if (prototypes.Count <= 0)
             return;
 
-        RaiseNetworkEvent(new EnableNodeVisMsg(enabled: true), session);
 
-        if (!_visSessions.TryGetValue(session, out var filterOrNull) || filterOrNull is not { } filter || filter.Prototypes is null)
+        if (_visSessions.TryGetValue(session, out var filter))
         {
             _visSessions[session] = new GraphFilter()
             {
-                Uids = filterOrNull?.Uids,
-                Prototypes = new(prototypes),
+                Default = false,
+                Uids = null,
+                Prototypes = new(prototypes.Select(prototype => KeyValuePair.Create(prototype, true))),
             };
-            return;
+        }
+        else if (filter.Prototypes is null)
+        {
+            _visSessions[session] = new GraphFilter()
+            {
+                Default = filter.Default,
+                Uids = filter.Uids,
+                Prototypes = new(prototypes.Select(prototype => KeyValuePair.Create(prototype, true))),
+            };
+        }
+        else
+        {
+            foreach (var prototype in prototypes)
+            {
+                filter.Prototypes[prototype] = true;
+            }
         }
 
-        foreach (var prototype in prototypes)
+        UpdateDebugVisuals();
+        RaiseNetworkEvent(new EnableNodeVisMsg(enabled: true), session);
+    }
+
+    /// <summary>Stops sending the visual state of nodes to a player.</summary>
+    public void StopSendingNodeVis(IPlayerSession session)
+    {
+        _visSessions.Remove(session);
+
+        UpdateDebugVisuals();
+        RaiseNetworkEvent(new EnableNodeVisMsg(enabled: false), session);
+    }
+
+    /// <summary>Stops sending the visual state of specific graphs to a player.</summary>
+    public void StopSendingNodeVis(IPlayerSession session, List<EntityUid> uids)
+    {
+        if (uids.Count <= 0)
+            return;
+
+        if (!_visSessions.TryGetValue(session, out var filter))
+            return;
+
+        if (filter.Uids is null)
         {
-            filter.Prototypes.Add(prototype);
+            _visSessions[session] = new GraphFilter()
+            {
+                Default = filter.Default,
+                Uids = new(uids.Select(uid => KeyValuePair.Create(uid, false))),
+                Prototypes = filter.Prototypes,
+            };
         }
+        else
+        {
+            foreach (var uid in uids)
+            {
+                filter.Uids[uid] = false;
+            }
+        }
+
+
+        UpdateDebugVisuals();
     }
 
     /// <summary>Stops sending the visual state of specific types of graphs to a player.</summary>
@@ -133,15 +193,27 @@ public sealed partial class NodeGraphSystem
         if (prototypes.Count <= 0)
             return;
 
-        RaiseNetworkEvent(new EnableNodeVisMsg(enabled: false), session);
-
-        if (!_visSessions.TryGetValue(session, out var filterOrNull) || filterOrNull is not { } filter || filter.Prototypes is null)
+        if (!_visSessions.TryGetValue(session, out var filter))
             return;
 
-        foreach (var prototype in prototypes)
+        if (filter.Prototypes is null)
         {
-            filter.Prototypes.Remove(prototype);
+            _visSessions[session] = new GraphFilter()
+            {
+                Default = filter.Default,
+                Uids = filter.Uids,
+                Prototypes = new(prototypes.Select(prototype => KeyValuePair.Create(prototype, false))),
+            };
         }
+        else
+        {
+            foreach (var prototype in prototypes)
+            {
+                filter.Prototypes[prototype] = false;
+            }
+        }
+
+        UpdateDebugVisuals();
     }
 
     #endregion Command Hooks
@@ -154,18 +226,12 @@ public sealed partial class NodeGraphSystem
     {
         if (!_sendingVisState)
             return;
-        if (!_visSessions.TryGetValue(args.Session, out var filterOrNull))
+        if (!_visSessions.TryGetValue(args.Session, out var filter))
             return;
 
         var graphs = EntityQueryEnumerator<NodeGraphComponent>();
         while (graphs.MoveNext(out var uid, out var graph))
         {
-            if (filterOrNull is not { } filter)
-            {
-                args.Entities.Add(uid);
-                continue;
-            }
-
             if (filter.Uids?.TryGetValue(uid, out var shouldAdd) == true)
             {
                 if (shouldAdd)
@@ -173,7 +239,14 @@ public sealed partial class NodeGraphSystem
                 continue;
             }
 
-            if (filter.Prototypes?.Contains(graph.GraphProto) != false)
+            if (filter.Prototypes?.TryGetValue(graph.GraphProto, out shouldAdd) == true)
+            {
+                if (shouldAdd)
+                    args.Entities.Add(uid);
+                continue;
+            }
+
+            if (filter.Default)
                 args.Entities.Add(uid);
         }
     }
@@ -188,14 +261,11 @@ public sealed partial class NodeGraphSystem
         if (args.Player is not IPlayerSession session)
             return;
 
-        if (!_visSessions.TryGetValue(session, out var filterOrNull))
+        if (!_visSessions.TryGetValue(session, out var filter))
         {
             args.Cancelled = true;
             return;
         }
-
-        if (filterOrNull is not { } filter)
-            return;
 
         if (filter.Uids?.TryGetValue(uid, out var shouldSend) == true)
         {
@@ -203,7 +273,13 @@ public sealed partial class NodeGraphSystem
             return;
         }
 
-        args.Cancelled = filter.Prototypes?.Contains(comp.GraphProto) == false;
+        if (filter.Prototypes?.TryGetValue(comp.GraphProto, out shouldSend) == true)
+        {
+            args.Cancelled = !shouldSend;
+            return;
+        }
+
+        args.Cancelled = !filter.Default;
     }
 
     /// <summary>Ensures that only players visualizing node graphs can see their state.</summary>
@@ -216,14 +292,11 @@ public sealed partial class NodeGraphSystem
         if (args.Player is not IPlayerSession session)
             return;
 
-        if (!_visSessions.TryGetValue(session, out var filterOrNull))
+        if (!_visSessions.TryGetValue(session, out var filter))
         {
             args.Cancelled = true;
             return;
         }
-
-        if (filterOrNull is not { } filter)
-            return;
 
         if (filter.Uids?.TryGetValue(comp.GraphId ?? EntityUid.Invalid, out var shouldSend) == true)
         {
@@ -231,7 +304,13 @@ public sealed partial class NodeGraphSystem
             return;
         }
 
-        args.Cancelled = filter.Prototypes?.Contains(comp.GraphProto) == false;
+        if (filter.Prototypes?.TryGetValue(comp.GraphProto, out shouldSend) == true)
+        {
+            args.Cancelled = !shouldSend;
+            return;
+        }
+
+        args.Cancelled = !filter.Default;
     }
 
     /// <summary>Ensures that only players visualizing node graphs can see their state.</summary>
@@ -275,6 +354,10 @@ public sealed partial class NodeGraphSystem
     private readonly struct GraphFilter
     {
         /// <summary>
+        /// Whether node graphs not specified below are rendered by default.
+        /// </summary>
+        public bool Default { get; init; }
+        /// <summary>
         /// The set of specific graph ids that are or are not being sent to this session.
         /// Overrides the prototype filter for these specific graphs.
         /// </summary>
@@ -284,6 +367,6 @@ public sealed partial class NodeGraphSystem
         /// The set of specific graph prototypes that are being sent to this session.
         /// If null assumed to be all types of graphs.
         /// </summary>
-        public HashSet<string>? Prototypes { get; init; }
+        public Dictionary<string, bool>? Prototypes { get; init; }
     }
 }

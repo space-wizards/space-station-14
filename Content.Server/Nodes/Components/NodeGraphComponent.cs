@@ -1,11 +1,12 @@
 using Content.Server.Nodes.EntitySystems;
+using Robust.Shared.GameStates;
 
 namespace Content.Server.Nodes.Components;
 
 /// <summary>
 /// </summary>
 [Access(typeof(NodeGraphSystem))]
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent]
 public sealed partial class NodeGraphComponent : Component
 {
     /// <inheritdoc />

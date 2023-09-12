@@ -2,13 +2,14 @@ using Content.Server.Nodes.EntitySystems;
 using Content.Shared.Nodes;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.GameStates;
 
 namespace Content.Server.Nodes.Components;
 
 /// <summary>
 /// </summary>
 [Access(typeof(NodeGraphSystem))]
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent]
 public sealed partial class GraphNodeComponent : Component
 {
     /// <inheritdoc />
@@ -59,6 +60,7 @@ public sealed partial class GraphNodeComponent : Component
 
 /// <summary>
 /// </summary>
+[Flags]
 public enum NodeFlags : byte
 {
     /// <summary></summary>
@@ -124,7 +126,7 @@ public readonly partial struct Edge
 
     public override string ToString()
     {
-        return $"{Id}: {(byte) Flags:b8}";
+        return $"{Id}: {Flags:F}";
     }
 }
 

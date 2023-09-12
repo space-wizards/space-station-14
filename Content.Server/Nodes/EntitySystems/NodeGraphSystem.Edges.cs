@@ -204,6 +204,8 @@ public sealed partial class NodeGraphSystem
     private void AddHalfEdge(EntityUid nodeId, EntityUid edgeId, EdgeFlags flags, GraphNodeComponent node, GraphNodeComponent edge)
     {
         node.Edges.Add(new Edge(edgeId, flags));
+        Dirty(nodeId, node);
+
         OnHalfEdgeChanged(nodeId, edgeId, flags, Edge.NullFlags, node, edge);
     }
 
@@ -213,6 +215,8 @@ public sealed partial class NodeGraphSystem
     private void RemoveHalfEdge(EntityUid nodeId, EntityUid edgeId, Index idx, EdgeFlags oldFlags, GraphNodeComponent node, GraphNodeComponent edge)
     {
         node.Edges.RemoveSwap(idx.IsFromEnd ? node.Edges.Count - idx.Value : idx.Value);
+        Dirty(nodeId, node);
+
         OnHalfEdgeChanged(nodeId, edgeId, Edge.NullFlags, oldFlags, node, edge);
     }
 
@@ -221,10 +225,9 @@ public sealed partial class NodeGraphSystem
     /// </summary>
     private void SetHalfEdge(EntityUid nodeId, EntityUid edgeId, Index idx, EdgeFlags newFlags, EdgeFlags oldFlags, GraphNodeComponent node, GraphNodeComponent edge)
     {
-        if (newFlags == oldFlags)
-            return;
-
         node.Edges[idx] = new Edge(edgeId, newFlags);
+        Dirty(nodeId, node);
+
         OnHalfEdgeChanged(nodeId, edgeId, newFlags, oldFlags, node, edge);
     }
 

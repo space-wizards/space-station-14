@@ -5,6 +5,7 @@ namespace Content.Shared.Nodes;
 /// <summary>
 /// Bitflags that represent the (non endpoint) state for a graph edge between two nodes.
 /// </summary>
+[Flags]
 [Serializable, NetSerializable]
 public enum EdgeFlags : byte
 {
@@ -68,6 +69,11 @@ public readonly record struct EdgeVisState(EntityUid Id, EdgeFlags Flags)
     {
         id = Id;
         flags = Flags;
+    }
+
+    public override string ToString()
+    {
+        return $"{Id}: {Flags:F}";
     }
 };
 
