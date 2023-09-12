@@ -23,7 +23,6 @@ using Content.Shared.Mindshield.Components;
 using Content.Server.Administration.Logs;
 using Content.Shared.Database;
 using Content.Server.Antag;
-using Content.Server.Speech.Components;
 using Content.Server.Roles.Jobs;
 using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
@@ -84,11 +83,11 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
 
     private void OnRoundEndText(RoundEndTextAppendEvent ev)
     {
+        var revsLost = CheckRevsLose();
+        var commandLost = CheckCommandLose();
         var query = AllEntityQuery<RevolutionaryRuleComponent>();
         while (query.MoveNext(out var headrev))
         {
-            var revsLost = CheckRevsLose();
-            var commandLost = CheckCommandLose();
             int mask = (commandLost ? 1 : 0) | (revsLost ? 2 : 0);
             ev.AddLine(Loc.GetString(OUTCOMES[mask]));
             ev.AddLine(Loc.GetString("head-rev-initial-count", ("initialCount", headrev.HeadRevs.Count)));
@@ -383,8 +382,8 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
         }
     }
 
-
-    private static readonly string[] OUTCOMES = new[] {
+    private static readonly string[] OUTCOMES = new[]
+    {
     // revs survived and heads survived... how
     "rev-reverse-stalemate",
     // revs won and heads died
