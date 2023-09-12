@@ -17,8 +17,8 @@
 
 - type: entity
   id: ActionToggleMask
-  name: action-name-mask
-  description: action-description-mask-toggle
+  name: Toggle Mask
+  description: Handy, but prevents insertion of pie into your pie hole.
   noSpawn: true
   components:
   - type: InstantAction

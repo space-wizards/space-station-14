@@ -3,8 +3,13 @@
   parent: BaseItem
   id: Crayon
   name: crayon
-  description: "A colourful crayon. Looks tasty. Mmmm..."
+  description: A colourful crayon. Looks tasty. Mmmm...
   components:
+  - type: Sprite
+    sprite: Objects/Fun/crayons.rsi
+  - type: Item
+    sprite: Objects/Fun/crayons.rsi
+    size: 1
   - type: Tag
     tags:
     - Write
@@ -35,11 +40,8 @@
   name: white crayon
   components:
   - type: Sprite
-    sprite: Objects/Fun/crayons.rsi
     state: white
   - type: Item
-    sprite: Objects/Fun/crayons.rsi
-    size: 1
     heldPrefix: white
   - type: Crayon
     color: white
@@ -57,11 +59,8 @@
   name: mime crayon
   components:
   - type: Sprite
-    sprite: Objects/Fun/crayons.rsi
     state: mime
   - type: Item
-    sprite: Objects/Fun/crayons.rsi
-    size: 1
     heldPrefix: mime
   - type: Crayon
     color: white
@@ -79,11 +78,8 @@
   name: rainbow crayon
   components:
   - type: Sprite
-    sprite: Objects/Fun/crayons.rsi
     state: rainbow
   - type: Item
-    sprite: Objects/Fun/crayons.rsi
-    size: 1
     heldPrefix: rainbow
   - type: Crayon
     color: Red
@@ -102,11 +98,8 @@
   name: black crayon
   components:
   - type: Sprite
-    sprite: Objects/Fun/crayons.rsi
     state: black
   - type: Item
-    sprite: Objects/Fun/crayons.rsi
-    size: 1
     heldPrefix: black
   - type: Crayon
     color: black
@@ -124,11 +117,8 @@
   name: red crayon
   components:
   - type: Sprite
-    sprite: Objects/Fun/crayons.rsi
     state: red
   - type: Item
-    sprite: Objects/Fun/crayons.rsi
-    size: 1
     heldPrefix: red
   - type: Crayon
     color: red
@@ -146,11 +136,8 @@
   name: orange crayon
   components:
   - type: Sprite
-    sprite: Objects/Fun/crayons.rsi
     state: orange
   - type: Item
-    sprite: Objects/Fun/crayons.rsi
-    size: 1
     heldPrefix: orange
   - type: Crayon
     color: orange
@@ -168,11 +155,8 @@
   name: yellow crayon
   components:
   - type: Sprite
-    sprite: Objects/Fun/crayons.rsi
     state: yellow
   - type: Item
-    sprite: Objects/Fun/crayons.rsi
-    size: 1
     heldPrefix: yellow
   - type: Crayon
     color: yellow
@@ -190,11 +174,8 @@
   name: green crayon
   components:
   - type: Sprite
-    sprite: Objects/Fun/crayons.rsi
     state: green
   - type: Item
-    sprite: Objects/Fun/crayons.rsi
-    size: 1
     heldPrefix: green
   - type: Crayon
     color: green
@@ -212,11 +193,8 @@
   name: blue crayon
   components:
   - type: Sprite
-    sprite: Objects/Fun/crayons.rsi
     state: blue
   - type: Item
-    sprite: Objects/Fun/crayons.rsi
-    size: 1
     heldPrefix: blue
   - type: Crayon
     color: lightblue
@@ -234,11 +212,8 @@
   name: purple crayon
   components:
   - type: Sprite
-    sprite: Objects/Fun/crayons.rsi
     state: purple
   - type: Item
-    sprite: Objects/Fun/crayons.rsi
-    size: 1
     heldPrefix: purple
   - type: Crayon
     color: purple
@@ -254,7 +229,7 @@
   parent: BoxCardboard
   id: CrayonBox
   name: crayon box
-  description: "It's a box of crayons."
+  description: It's a box of crayons.
   components:
   - type: Sprite
     sprite: Objects/Fun/crayons.rsi

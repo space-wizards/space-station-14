@@ -100,8 +100,8 @@
 
 - type: entity
   id: ActionPAIPlayMidi
-  name: action-name-pai-play-midi
-  description: action-description-pai-play-midi
+  name: Play MIDI
+  description: Open your portable MIDI interface to soothe your owner.
   noSpawn: true
   components:
   - type: InstantAction

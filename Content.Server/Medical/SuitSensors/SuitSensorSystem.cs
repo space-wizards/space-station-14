@@ -398,17 +398,17 @@ namespace Content.Server.Medical.SuitSensors
             if (!payload.TryGetValue(SuitSensorConstants.NET_NAME, out string? name)) return null;
             if (!payload.TryGetValue(SuitSensorConstants.NET_JOB, out string? job)) return null;
             if (!payload.TryGetValue(SuitSensorConstants.NET_IS_ALIVE, out bool? isAlive)) return null;
-            if (!payload.TryGetValue(SuitSensorConstants.NET_SUIT_SENSOR_UID, out EntityUid suitSensorUid)) return null;
+            if (!payload.TryGetValue(SuitSensorConstants.NET_SUIT_SENSOR_UID, out NetEntity suitSensorUid)) return null;
 
             // try get total damage and cords (optionals)
             payload.TryGetValue(SuitSensorConstants.NET_TOTAL_DAMAGE, out int? totalDamage);
-            payload.TryGetValue(SuitSensorConstants.NET_COORDINATES, out EntityCoordinates? cords);
+            payload.TryGetValue(SuitSensorConstants.NET_COORDINATES, out NetCoordinates? coords);
 
-            var status = new SuitSensorStatus(GetNetEntity(suitSensorUid), name, job)
+            var status = new SuitSensorStatus(suitSensorUid, name, job)
             {
                 IsAlive = isAlive.Value,
                 TotalDamage = totalDamage,
-                Coordinates = GetNetCoordinates(cords),
+                Coordinates = coords,
             };
             return status;
         }

@@ -18,7 +18,6 @@ using Content.Shared.Construction.Prototypes;
 using Content.Shared.DoAfter;
 using Content.Shared.Gravity;
 using Content.Shared.Item;
-using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.GameObjects;
@@ -173,7 +172,7 @@ public abstract partial class InteractionTest
         {
             var playerEnt = SEntMan.GetEntity(Player);
 
-            Assert.That(HandSys.TryPickup(playerEnt, item, Hands.ActiveHand, false, false, false, Hands));
+            Assert.That(HandSys.TryPickup(playerEnt, item, Hands.ActiveHand, false, false, Hands));
 
             // turn on welders
             if (enableWelder && SEntMan.TryGetComponent(item, out welder) && !welder.Lit)
@@ -214,7 +213,7 @@ public abstract partial class InteractionTest
 
         await Server.WaitPost(() =>
         {
-            Assert.That(HandSys.TryPickup(SEntMan.GetEntity(Player), uid.Value, Hands.ActiveHand, false, false, false, Hands, item));
+            Assert.That(HandSys.TryPickup(SEntMan.GetEntity(Player), uid.Value, Hands.ActiveHand, false, false, Hands, item));
         });
 
         await RunTicks(1);
@@ -785,9 +784,7 @@ public abstract partial class InteractionTest
             return false;
         }
 
-        var clientTarget = CEntMan.GetEntity(target);
-
-        if (!CEntMan.TryGetComponent<ClientUserInterfaceComponent>(clientTarget, out var ui))
+        if (!CEntMan.TryGetComponent<UserInterfaceComponent>(CEntMan.GetEntity(target), out var ui))
         {
             if (shouldSucceed)
                 Assert.Fail($"Entity {SEntMan.ToPrettyString(SEntMan.GetEntity(target.Value))} does not have a bui component");
