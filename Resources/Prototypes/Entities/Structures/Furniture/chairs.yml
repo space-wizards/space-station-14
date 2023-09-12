@@ -24,7 +24,7 @@
     noRot: true
   - type: Strap
     position: Stand
-    buckleOffset: "0,0.15"
+    buckleOffset: "0,-0.05"
   - type: Pullable
   - type: Damageable
     damageContainer: Inorganic
@@ -249,7 +249,7 @@
 
 - type: entity
   name: web chair
-  id: WebChair
+  id: ChairWeb
   description: For true web developers.
   parent: SeatBase
   components:
@@ -260,7 +260,7 @@
   - type: Anchorable
   - type: Rotatable
   - type: Sprite
-    sprite: Structures/Furniture/Web/chair.rsi
+    sprite: Structures/Web/chair.rsi
     state: icon
   - type: MeleeSound
     soundGroups:
@@ -285,6 +285,9 @@
           MaterialWebSilk:
             min: 1
             max: 1
+  - type: Construction
+    graph: WebStructures
+    node: chair
 
 - type: entity
   parent: [SeatBase, BaseFoldable]
@@ -321,3 +324,19 @@
   components:
   - type: Foldable
     folded: true
+
+- type: entity
+  name: steel bench
+  id: SteelBench
+  parent: SeatBase
+  description: A long chair made for a metro. Really standard design.
+  components:
+  - type: Transform
+    anchored: true
+  - type: Physics
+    bodyType: Static
+  - type: Anchorable
+  - type: Rotatable
+  - type: Sprite
+    state: steel-bench
+ 

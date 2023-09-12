@@ -7,3 +7,16 @@
   - type: Sprite
     state: pink
   - type: NavMapBeacon
+
+- type: entity
+  parent: WarpPoint
+  id: WarpPointBombing
+  name: warp point
+  suffix: ninja bombing target
+  components:
+  - type: BombingTarget
+  - type: Sprite
+    layers:
+    - state: pink
+    - sprite: Objects/Weapons/Bombs/spidercharge.rsi
+      state: icon

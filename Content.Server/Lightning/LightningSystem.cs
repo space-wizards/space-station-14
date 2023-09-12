@@ -16,7 +16,6 @@ public sealed class LightningSystem : SharedLightningSystem
     [Dependency] private readonly PhysicsSystem _physics = default!;
     [Dependency] private readonly BeamSystem _beam = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     public override void Initialize()
     {
@@ -98,7 +97,7 @@ public sealed class LightningSystem : SharedLightningSystem
         for (int i = 0; i < directions; i++)
         {
             var direction = (Direction) i;
-            var (targetPos, targetRot) = _transform.GetWorldPositionRotation(targetXForm, xformQuery);
+            var (targetPos, targetRot) = targetXForm.GetWorldPositionRotation(xformQuery);
             var dirRad = direction.ToAngle() + targetRot;
             var ray = new CollisionRay(targetPos, dirRad.ToVec(), component.CollisionMask);
             var rayCastResults = _physics.IntersectRay(targetXForm.MapID, ray, component.MaxLength, target, false).ToList();

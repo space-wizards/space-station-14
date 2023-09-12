@@ -1,9 +1,9 @@
-using Content.Server.Mind;
-using Content.Server.Objectives.Interfaces;
-using Content.Server.Roles.Jobs;
 using Content.Server.Shuttles.Systems;
 using Content.Shared.CCVar;
+using Content.Shared.Mind;
 using Content.Shared.Mobs.Systems;
+using Content.Shared.Objectives.Interfaces;
+using Content.Shared.Roles.Jobs;
 using Robust.Shared.Configuration;
 using Robust.Shared.Utility;
 
@@ -13,8 +13,8 @@ namespace Content.Server.Objectives.Conditions
     {
         // TODO refactor all of this to be ecs
         protected IEntityManager EntityManager => IoCManager.Resolve<IEntityManager>();
-        protected MindSystem Minds => EntityManager.System<MindSystem>();
-        protected JobSystem Jobs => EntityManager.System<JobSystem>();
+        protected SharedMindSystem Minds => EntityManager.System<SharedMindSystem>();
+        protected SharedJobSystem Jobs => EntityManager.System<SharedJobSystem>();
         protected MobStateSystem MobStateSystem => EntityManager.System<MobStateSystem>();
         protected EntityUid? TargetMindId;
         protected MindComponent? TargetMind => EntityManager.GetComponentOrNull<MindComponent>(TargetMindId);
@@ -52,7 +52,7 @@ namespace Content.Server.Objectives.Conditions
                     return 1f;
 
                 var entMan = IoCManager.Resolve<EntityManager>();
-                var mindSystem = entMan.System<MindSystem>();
+                var mindSystem = entMan.System<SharedMindSystem>();
                 if (mindSystem.IsCharacterDeadIc(TargetMind))
                     return 1f;
 

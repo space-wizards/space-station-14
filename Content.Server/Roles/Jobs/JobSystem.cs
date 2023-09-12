@@ -1,10 +1,9 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using System.Globalization;
+﻿using System.Globalization;
 using Content.Server.Chat.Managers;
 using Content.Server.Mind;
-using Content.Server.Players;
+using Content.Shared.Mind;
 using Content.Shared.Roles;
-using Robust.Server.Player;
+using Content.Shared.Roles.Jobs;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Roles.Jobs;
@@ -12,20 +11,23 @@ namespace Content.Server.Roles.Jobs;
 /// <summary>
 ///     Handles the job data on mind entities.
 /// </summary>
-public sealed class JobSystem : EntitySystem
+public sealed class JobSystem : SharedJobSystem
 {
     [Dependency] private readonly IChatManager _chat = default!;
     [Dependency] private readonly MindSystem _mind = default!;
     [Dependency] private readonly RoleSystem _roles = default!;
-    [Dependency] private readonly IPrototypeManager _prototypes = default!;
 
     public override void Initialize()
     {
+        base.Initialize();
         SubscribeLocalEvent<MindComponent, MindRoleAddedEvent>(MindOnDoGreeting);
     }
 
     private void MindOnDoGreeting(EntityUid mindId, MindComponent component, ref MindRoleAddedEvent args)
     {
+        if (args.Silent)
+            return;
+
         if (!_mind.TryGetSession(mindId, out var session))
             return;
 
@@ -47,60 +49,5 @@ public sealed class JobSystem : EntitySystem
             return;
 
         _roles.MindAddRole(mindId, new JobComponent { PrototypeId = jobPrototypeId });
-    }
-
-    public bool MindHasJobWithId(EntityUid? mindId, string prototypeId)
-    {
-        return CompOrNull<JobComponent>(mindId)?.PrototypeId == prototypeId;
-    }
-
-    public bool MindTryGetJob(
-        [NotNullWhen(true)] EntityUid? mindId,
-        [NotNullWhen(true)] out JobComponent? comp,
-        [NotNullWhen(true)] out JobPrototype? prototype)
-    {
-        comp = null;
-        prototype = null;
-
-        return TryComp(mindId, out comp) &&
-               comp.PrototypeId != null &&
-               _prototypes.TryIndex(comp.PrototypeId, out prototype);
-    }
-
-    /// <summary>
-    ///     Tries to get the job name for this mind.
-    ///     Returns unknown if not found.
-    /// </summary>
-    public bool MindTryGetJobName([NotNullWhen(true)] EntityUid? mindId, out string name)
-    {
-        if (MindTryGetJob(mindId, out _, out var prototype))
-        {
-            name = prototype.LocalizedName;
-            return true;
-        }
-
-        name = Loc.GetString("generic-unknown-title");
-        return false;
-    }
-
-    /// <summary>
-    ///     Tries to get the job name for this mind.
-    ///     Returns unknown if not found.
-    /// </summary>
-    public string MindTryGetJobName([NotNullWhen(true)] EntityUid? mindId)
-    {
-        MindTryGetJobName(mindId, out var name);
-        return name;
-    }
-
-    public bool CanBeAntag(IPlayerSession player)
-    {
-        if (player.ContentData() is not { Mind: { } mindId })
-            return false;
-
-        if (!MindTryGetJob(mindId, out _, out var prototype))
-            return true;
-
-        return prototype.CanBeAntag;
     }
 }

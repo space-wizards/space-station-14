@@ -23,7 +23,7 @@ public abstract partial class SharedFultonSystem : EntitySystem
     [Dependency] private   readonly MetaDataSystem _metadata = default!;
     [Dependency] protected readonly SharedAudioSystem Audio = default!;
     [Dependency] private   readonly SharedDoAfterSystem _doAfter = default!;
-    [Dependency] private   readonly SharedFoldableSystem _foldable = default!;
+    [Dependency] private   readonly FoldableSystem _foldable = default!;
     [Dependency] private   readonly SharedPopupSystem _popup = default!;
     [Dependency] private   readonly SharedStackSystem _stack = default!;
     [Dependency] protected readonly SharedTransformSystem TransformSystem = default!;
@@ -105,7 +105,7 @@ public abstract partial class SharedFultonSystem : EntitySystem
 
     private void OnFultonInteract(EntityUid uid, FultonComponent component, AfterInteractEvent args)
     {
-        if (args.Target == null || args.Handled)
+        if (args.Target == null || args.Handled || !args.CanReach)
             return;
 
         if (TryComp<FultonBeaconComponent>(args.Target, out var beacon))
@@ -147,7 +147,7 @@ public abstract partial class SharedFultonSystem : EntitySystem
 
         var ev = new FultonedDoAfterEvent();
         _doAfter.TryStartDoAfter(
-            new DoAfterArgs(args.User, component.ApplyFultonDuration, ev, args.Target, args.Target, args.Used)
+            new DoAfterArgs(EntityManager, args.User, component.ApplyFultonDuration, ev, args.Target, args.Target, args.Used)
             {
                 CancelDuplicate = true,
                 MovementThreshold = 0.5f,
@@ -188,7 +188,7 @@ public abstract partial class SharedFultonSystem : EntitySystem
     [Serializable, NetSerializable]
     protected sealed class FultonAnimationMessage : EntityEventArgs
     {
-        public EntityUid Entity;
-        public EntityCoordinates Coordinates;
+        public NetEntity Entity;
+        public NetCoordinates Coordinates;
     }
 }

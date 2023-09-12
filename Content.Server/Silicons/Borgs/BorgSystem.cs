@@ -2,8 +2,6 @@
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Server.Hands.Systems;
-using Content.Server.Mind;
-using Content.Server.Mind.Components;
 using Content.Server.PowerCell;
 using Content.Server.UserInterface;
 using Content.Shared.Access.Systems;
@@ -11,6 +9,8 @@ using Content.Shared.Alert;
 using Content.Shared.Database;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
+using Content.Shared.Mind;
+using Content.Shared.Mind.Components;
 using Content.Shared.Movement.Systems;
 using Content.Shared.PowerCell;
 using Content.Shared.PowerCell.Components;
@@ -20,8 +20,8 @@ using Content.Shared.Silicons.Borgs.Components;
 using Content.Shared.Throwing;
 using Content.Shared.Wires;
 using Robust.Server.GameObjects;
-using Robust.Server.Player;
 using Robust.Shared.Containers;
+using Robust.Shared.Players;
 using Robust.Shared.Random;
 
 namespace Content.Server.Silicons.Borgs;
@@ -38,7 +38,7 @@ public sealed partial class BorgSystem : SharedBorgSystem
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly HandsSystem _hands = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
-    [Dependency] private readonly MindSystem _mind = default!;
+    [Dependency] private readonly SharedMindSystem _mind = default!;
     [Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifier = default!;
     [Dependency] private readonly PowerCellSystem _powerCell = default!;
     [Dependency] private readonly ThrowingSystem _throwing = default!;
@@ -302,7 +302,7 @@ public sealed partial class BorgSystem : SharedBorgSystem
     /// Checks that a player has fulfilled the requirements for the borg job.
     /// If they don't have enough hours, they cannot be placed into a chassis.
     /// </summary>
-    public bool CanPlayerBeBorgged(IPlayerSession session)
+    public bool CanPlayerBeBorgged(ICommonSession session)
     {
         if (_banManager.GetJobBans(session.UserId)?.Contains(BorgJobId) == true)
             return false;

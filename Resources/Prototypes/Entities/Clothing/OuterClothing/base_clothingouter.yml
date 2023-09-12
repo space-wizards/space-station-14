@@ -68,6 +68,7 @@
         Heat: 0.90
         Radiation: 0.25
   - type: ToggleableClothing
+    slot: head
   - type: ContainerContainer
     containers:
       toggleable-clothing: !type:ContainerSlot {}

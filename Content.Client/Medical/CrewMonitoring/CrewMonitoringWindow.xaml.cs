@@ -21,7 +21,6 @@ namespace Content.Client.Medical.CrewMonitoring
         private List<(DirectionIcon Icon, Vector2 Position)> _directionIcons = new();
         private readonly IEntityManager _entManager;
         private readonly IEyeManager _eye;
-        private readonly SharedTransformSystem _transform;
         private EntityUid? _stationUid;
         private CrewMonitoringButton? _trackedButton;
 
@@ -32,7 +31,6 @@ namespace Content.Client.Medical.CrewMonitoring
             RobustXamlLoader.Load(this);
             _eye = IoCManager.Resolve<IEyeManager>();
             _entManager = IoCManager.Resolve<IEntityManager>();
-            _transform = _entManager.System<SharedTransformSystem>();
             _stationUid = mapUid;
 
             if (_entManager.TryGetComponent<TransformComponent>(mapUid, out var xform))
@@ -66,15 +64,18 @@ namespace Content.Client.Medical.CrewMonitoring
             // add a row for each sensor
             foreach (var sensor in stSensors.OrderBy(a => a.Name))
             {
+                var sensorEntity = _entManager.GetEntity(sensor.SuitSensorUid);
+                var coordinates = _entManager.GetCoordinates(sensor.Coordinates);
+
                 // add button with username
                 var nameButton = new CrewMonitoringButton()
                 {
-                    SuitSensorUid = sensor.SuitSensorUid,
-                    Coordinates = sensor.Coordinates,
+                    SuitSensorUid = sensorEntity,
+                    Coordinates = coordinates,
                     Text = sensor.Name,
                     Margin = new Thickness(5f, 5f),
                 };
-                if (sensor.SuitSensorUid == _trackedButton?.SuitSensorUid)
+                if (sensorEntity == _trackedButton?.SuitSensorUid)
                     nameButton.AddStyleClass(StyleNano.StyleClassButtonColorGreen);
                 SetColorLabel(nameButton.Label, sensor.TotalDamage, sensor.IsAlive);
                 SensorsTable.AddChild(nameButton);
@@ -115,10 +116,10 @@ namespace Content.Client.Medical.CrewMonitoring
                 SensorsTable.AddChild(box);
                 _rowsContent.Add(box);
 
-                if (sensor.Coordinates != null && NavMap.Visible)
+                if (coordinates != null && NavMap.Visible)
                 {
-                    NavMap.TrackedCoordinates.TryAdd(sensor.Coordinates.Value,
-                        (true, sensor.SuitSensorUid == _trackedButton?.SuitSensorUid ? StyleNano.PointGreen : StyleNano.PointRed));
+                    NavMap.TrackedCoordinates.TryAdd(coordinates.Value,
+                        (true, sensorEntity == _trackedButton?.SuitSensorUid ? StyleNano.PointGreen : StyleNano.PointRed));
 
                     nameButton.OnButtonUp += args =>
                     {
@@ -126,8 +127,8 @@ namespace Content.Client.Medical.CrewMonitoring
                             //Make previous point red
                             NavMap.TrackedCoordinates[_trackedButton.Coordinates.Value] = (true, StyleNano.PointRed);
 
-                        NavMap.TrackedCoordinates[sensor.Coordinates.Value] = (true, StyleNano.PointGreen);
-                        NavMap.CenterToCoordinates(sensor.Coordinates.Value);
+                        NavMap.TrackedCoordinates[coordinates.Value] = (true, StyleNano.PointGreen);
+                        NavMap.CenterToCoordinates(coordinates.Value);
 
                         nameButton.AddStyleClass(StyleNano.StyleClassButtonColorGreen);
                         if (_trackedButton != null)
@@ -147,7 +148,7 @@ namespace Content.Client.Medical.CrewMonitoring
 
         private BoxContainer GetPositionBox(SuitSensorStatus sensor, Vector2 monitorCoordsInStationSpace, bool snap, float precision)
         {
-            EntityCoordinates? coordinates = sensor.Coordinates;
+            EntityCoordinates? coordinates = _entManager.GetCoordinates(sensor.Coordinates);
             var box = new BoxContainer() { Orientation = LayoutOrientation.Horizontal };
 
             if (coordinates == null || _stationUid == null)
@@ -195,7 +196,7 @@ namespace Content.Client.Medical.CrewMonitoring
                 // Apply the offset relative to the eye.
                 // For a station at 45 degrees rotation, the current eye rotation is -45 degrees.
                 // TODO: This feels sketchy. Is there something underlying wrong with eye rotation?
-                offsetAngle = -(_eye.CurrentEye.Rotation + _transform.GetWorldRotation(xform));
+                offsetAngle = -(_eye.CurrentEye.Rotation + xform.WorldRotation);
             }
 
             foreach (var (icon, pos) in _directionIcons)

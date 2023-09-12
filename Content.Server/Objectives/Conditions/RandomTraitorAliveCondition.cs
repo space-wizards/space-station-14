@@ -1,8 +1,8 @@
 using System.Linq;
 using Content.Server.GameTicking.Rules;
-using Content.Server.Mind;
-using Content.Server.Objectives.Interfaces;
-using Content.Server.Roles.Jobs;
+using Content.Shared.Mind;
+using Content.Shared.Objectives.Interfaces;
+using Content.Shared.Roles.Jobs;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 
@@ -17,7 +17,7 @@ namespace Content.Server.Objectives.Conditions
         {
             var entityMgr = IoCManager.Resolve<IEntityManager>();
 
-            var traitors = entityMgr.System<TraitorRuleSystem>().GetOtherTraitorMindsAliveAndConnected(mind).ToList();
+            var traitors = Enumerable.ToList<(EntityUid Id, MindComponent Mind)>(entityMgr.System<TraitorRuleSystem>().GetOtherTraitorMindsAliveAndConnected(mind));
 
             if (traitors.Count == 0)
                 return new EscapeShuttleCondition(); //You were made a traitor by admins, and are the first/only.
@@ -30,7 +30,7 @@ namespace Content.Server.Objectives.Conditions
             {
                 var targetName = string.Empty;
                 var ents = IoCManager.Resolve<IEntityManager>();
-                var jobs = ents.System<JobSystem>();
+                var jobs = ents.System<SharedJobSystem>();
                 var jobName = jobs.MindTryGetJobName(_targetMind);
 
                 if (_targetMind == null)
@@ -55,7 +55,7 @@ namespace Content.Server.Objectives.Conditions
             get
             {
                 var entityManager = IoCManager.Resolve<EntityManager>();
-                var mindSystem = entityManager.System<MindSystem>();
+                var mindSystem = entityManager.System<SharedMindSystem>();
                 return !entityManager.TryGetComponent(_targetMind, out MindComponent? mind) ||
                        !mindSystem.IsCharacterDeadIc(mind)
                     ? 1f

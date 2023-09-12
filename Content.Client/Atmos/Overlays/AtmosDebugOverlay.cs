@@ -17,7 +17,6 @@ namespace Content.Client.Atmos.Overlays
 
         [Dependency] private readonly IEntityManager _entManager = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
-        private readonly SharedTransformSystem _transform;
 
         public override OverlaySpace Space => OverlaySpace.WorldSpace;
 
@@ -26,7 +25,6 @@ namespace Content.Client.Atmos.Overlays
             IoCManager.InjectDependencies(this);
 
             _atmosDebugOverlaySystem = system;
-            _transform = _entManager.System<SharedTransformSystem>();
         }
 
         protected override void Draw(in OverlayDrawArgs args)
@@ -49,7 +47,7 @@ namespace Content.Client.Atmos.Overlays
                     !_entManager.TryGetComponent<TransformComponent>(mapGrid.Owner, out var xform))
                     continue;
 
-                drawHandle.SetTransform(_transform.GetWorldMatrix(xform));
+                drawHandle.SetTransform(xform.WorldMatrix);
 
                 for (var pass = 0; pass < 2; pass++)
                 {

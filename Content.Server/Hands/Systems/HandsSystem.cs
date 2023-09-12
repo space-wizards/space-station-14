@@ -1,8 +1,8 @@
+using System.Linq;
 using System.Numerics;
 using Content.Server.Popups;
 using Content.Server.Pulling;
 using Content.Server.Stack;
-using Content.Server.Storage.Components;
 using Content.Server.Storage.EntitySystems;
 using Content.Server.Stunnable;
 using Content.Shared.ActionBlocker;
@@ -16,6 +16,7 @@ using Content.Shared.Inventory;
 using Content.Shared.Physics.Pull;
 using Content.Shared.Pulling.Components;
 using Content.Shared.Stacks;
+using Content.Shared.Storage;
 using Content.Shared.Throwing;
 using JetBrains.Annotations;
 using Robust.Server.Player;
@@ -30,8 +31,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.Hands.Systems
 {
-    [UsedImplicitly]
-    internal sealed class HandsSystem : SharedHandsSystem
+    public sealed class HandsSystem : SharedHandsSystem
     {
         [Dependency] private readonly InventorySystem _inventorySystem = default!;
         [Dependency] private readonly StackSystem _stackSystem = default!;
@@ -45,7 +45,6 @@ namespace Content.Server.Hands.Systems
         [Dependency] private readonly StorageSystem _storageSystem = default!;
         [Dependency] private readonly ISharedPlayerManager _player = default!;
         [Dependency] private readonly IConfigurationManager _configuration = default!;
-        [Dependency] private readonly SharedTransformSystem _transform = default!;
 
         public override void Initialize()
         {
@@ -106,7 +105,7 @@ namespace Content.Server.Hands.Systems
             if (exclude != null)
                 filter = filter.RemoveWhereAttachedEntity(entity => entity == exclude);
 
-            RaiseNetworkEvent(new PickupAnimationEvent(item, initialPosition, finalPosition, initialAngle), filter);
+            RaiseNetworkEvent(new PickupAnimationEvent(GetNetEntity(item), GetNetCoordinates(initialPosition), finalPosition, initialAngle), filter);
         }
 
         protected override void HandleEntityRemoved(EntityUid uid, HandsComponent hands, EntRemovedFromContainerMessage args)
@@ -179,7 +178,7 @@ namespace Content.Server.Hands.Systems
         #endregion
 
         #region interactions
-        private bool HandleThrowItem(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
+        private bool HandleThrowItem(ICommonSession? session, EntityCoordinates coordinates, EntityUid entity)
         {
             if (session is not IPlayerSession playerSession)
                 return false;
@@ -202,7 +201,7 @@ namespace Content.Server.Hands.Systems
                 throwEnt = splitStack.Value;
             }
 
-            var direction = coords.ToMapPos(EntityManager) - _transform.GetWorldPosition(player);
+            var direction = coordinates.ToMapPos(EntityManager) - Transform(player).WorldPosition;
             if (direction == Vector2.Zero)
                 return true;
 
@@ -253,7 +252,7 @@ namespace Content.Server.Hands.Systems
                 return;
 
             if (!_inventorySystem.TryGetSlotEntity(plyEnt, equipmentSlot, out var slotEntity) ||
-                !TryComp(slotEntity, out ServerStorageComponent? storageComponent))
+                !TryComp(slotEntity, out StorageComponent? storageComponent))
             {
                 if (_inventorySystem.HasSlot(plyEnt, equipmentSlot))
                 {
@@ -288,16 +287,17 @@ namespace Content.Server.Hands.Systems
             {
                 _storageSystem.PlayerInsertHeldEntity(slotEntity.Value, plyEnt, storageComponent);
             }
-            else if (storageComponent.StoredEntities != null)
+            else
             {
-                if (storageComponent.StoredEntities.Count == 0)
+                if (!storageComponent.Container.ContainedEntities.Any())
                 {
                     _popupSystem.PopupEntity(Loc.GetString("hands-system-empty-equipment-slot", ("slotName", equipmentSlot)), plyEnt,  session);
                 }
                 else
                 {
-                    var lastStoredEntity = storageComponent.StoredEntities[^1];
-                    if (storageComponent.Remove(lastStoredEntity))
+                    var lastStoredEntity = storageComponent.Container.ContainedEntities[^1];
+
+                    if (storageComponent.Container.Remove(lastStoredEntity))
                     {
                         PickupOrDrop(plyEnt, lastStoredEntity, animateUser: true, handsComp: hands);
                     }

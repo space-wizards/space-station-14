@@ -45,7 +45,6 @@ public sealed class ClimbSystem : SharedClimbSystem
     [Dependency] private readonly InteractionSystem _interactionSystem = default!;
     [Dependency] private readonly StunSystem _stunSystem = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     private const string ClimbingFixtureName = "climb";
     private const int ClimbingCollisionGroup = (int) (CollisionGroup.TableLayer | CollisionGroup.LowImpassable);
@@ -129,7 +128,7 @@ public sealed class ClimbSystem : SharedClimbSystem
         if (climbing.IsClimbing)
             return true;
 
-        var args = new DoAfterArgs(user, comp.ClimbDelay, new ClimbDoAfterEvent(), entityToMove, target: climbable, used: entityToMove)
+        var args = new DoAfterArgs(EntityManager, user, comp.ClimbDelay, new ClimbDoAfterEvent(), entityToMove, target: climbable, used: entityToMove)
         {
             BreakOnTargetMove = true,
             BreakOnUserMove = true,
@@ -395,8 +394,8 @@ public sealed class ClimbSystem : SharedClimbSystem
         if (!Resolve(uid, ref physics, ref climbing, false))
             return;
 
-        var from = _transform.GetWorldPosition(uid);
-        var to = _transform.GetWorldPosition(target);
+        var from = Transform(uid).WorldPosition;
+        var to = Transform(target).WorldPosition;
         var (x, y) = (to - from).Normalized();
 
         if (MathF.Abs(x) < 0.6f) // user climbed mostly vertically so lets make it a clean straight line

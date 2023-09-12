@@ -21,7 +21,6 @@ namespace Content.Client.Pinpointer.UI;
 public sealed class NavMapControl : MapGridControl
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
-    private readonly SharedTransformSystem _transform;
 
     public EntityUid? MapUid;
 
@@ -332,7 +331,7 @@ public sealed class NavMapControl : MapGridControl
 
                 if (mapPos.MapId != MapId.Nullspace)
                 {
-                    var position = _transform.GetInvWorldMatrix(xform).Transform(mapPos.Position) - offset;
+                    var position = xform.InvWorldMatrix.Transform(mapPos.Position) - offset;
                     position = Scale(new Vector2(position.X, -position.Y));
 
                     handle.DrawCircle(position, MinimapScale / 2f, value.Color);

@@ -1,5 +1,5 @@
-using Content.Server.Mind;
-using Content.Server.Players;
+using Content.Shared.Mind;
+using Content.Shared.Players;
 using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.Network;
@@ -24,7 +24,7 @@ namespace Content.Server.GameTicking.Commands
             var playerMgr = IoCManager.Resolve<IPlayerManager>();
             var sysMan = IoCManager.Resolve<IEntitySystemManager>();
             var ticker = sysMan.GetEntitySystem<GameTicker>();
-            var mind = sysMan.GetEntitySystem<MindSystem>();
+            var mind = sysMan.GetEntitySystem<SharedMindSystem>();
 
             NetUserId userId;
             if (args.Length == 0)

@@ -16,7 +16,6 @@ public abstract partial class SharedBodySystem : EntitySystem
     [Dependency] protected readonly DamageableSystem Damageable = default!;
     [Dependency] protected readonly StandingStateSystem Standing = default!;
     [Dependency] protected readonly MovementSpeedModifierSystem Movement = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     public override void Initialize()
     {
