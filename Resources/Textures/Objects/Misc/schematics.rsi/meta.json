@@ -1,0 +1,17 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Schematic sheet sprites by RiceMar1244",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        { "name": "sheet-unfolded_nanotrasen" },
+        { "name": "sheet-folded_nanotrasen" },
+        { "name": "sheet-unfolded_syndicate" },
+        { "name": "sheet-folded_syndicate" },
+        { "name": "sheet-unfolded_cybersun" },
+        { "name": "sheet-folded_cybersun" }
+    ]
+}
