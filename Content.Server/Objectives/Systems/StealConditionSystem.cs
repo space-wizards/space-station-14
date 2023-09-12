@@ -39,6 +39,7 @@ public sealed class StealConditionSystem : EntitySystem
         args.Info.Title = comp.OwnerText == null
             ? Loc.GetString("objective-condition-steal-title-no-owner", ("itemName", name))
             : Loc.GetString("objective-condition-steal-title", ("owner", Loc.GetString(comp.OwnerText)), ("itemName", name));
+        args.Info.Description = Loc.GetString("objective-condition-steal-description", ("itemName", name));
         args.Info.Icon = new SpriteSpecifier.EntityPrototype(comp.Prototype);
         args.Info.Progress = GetProgress(args.Mind, comp.Prototype);
     }
