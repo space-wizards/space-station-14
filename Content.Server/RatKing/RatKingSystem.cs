@@ -9,7 +9,8 @@ using Robust.Server.GameObjects;
 
 namespace Content.Server.RatKing
 {
-    public sealed class RatKingSystem : EntitySystem
+    /// <inheritdoc/>
+    public sealed class RatKingSystem : SharedRatKingSystem
     {
         [Dependency] private readonly ActionsSystem _action = default!;
         [Dependency] private readonly AtmosphereSystem _atmos = default!;

@@ -278,6 +278,13 @@
     guides:
     - MinorAntagonists
 
+- type: weightedRandomEntity
+  id: RatKingLoot
+  weights:
+    RandomSpawner100: 61 #garbage
+    FoodCheese: 33 #food
+    IngotGold1: 5 #loot
+
 - type: entity
   id: ActionRatKingRaiseArmy
   name: Raise Army
