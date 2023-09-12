@@ -1,0 +1,14 @@
+- type: entity
+  parent: BaseItem
+  id: ProtoKineticCharger
+  name: proto-kinetic charger
+  description: #todo
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/protokinetic_charger.rsi
+    state: icon
+  - type: Item
+    size: 5
+  - type: Tag
+    tags:
+      - ProtoKineticTechPart
