@@ -1,0 +1,17 @@
+- type: entity
+  abstract: true
+  parent: BaseItem
+  id: BaseWhistle   
+  name: whistle
+  description: Someone forgot to turn off kettle?
+  components:
+  - type: Item
+    size: 2
+  - type: Clothing
+    quickEquip: false
+    slots: neck
+  - type: UseDelay
+    delay: 1
+  - type: Whistle
+    exclamateOnePerson: true
+    loudWhistleDistance: 4
