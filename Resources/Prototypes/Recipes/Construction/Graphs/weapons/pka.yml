@@ -1,0 +1,123 @@
+- type: constructionGraph
+  id: WeaponProtoKineticAccelerator
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: wiringMissing
+      steps:
+      - material: Steel
+        amount: 5
+        doAfter: 2
+
+  - node: wiringMissing
+    entity: ProtoKineticAcceleratorFrame
+    actions:
+    - !type:AppearanceChange
+    edges:
+    - to: platingUnwelded
+      steps:
+      - material: Cable
+        amount: 2
+        doAfter: 0.5
+
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 5
+      - !type:DeleteEntity {}
+      steps:
+      - tool: Welding
+        doAfter: 1
+
+  - node: platingUnwelded
+    actions:
+    - !type:AppearanceChange
+    edges:
+    - to: lightMissing
+      steps:
+      - tool: Welding
+        doAfter: 2
+
+    - to: wiringMissing
+      completed:
+      - !type:SpawnPrototype
+        prototype: CableApcStack1
+        amount: 2
+      steps:
+      - tool: Cutting
+        doAfter: 1
+
+  - node: lightMissing
+    actions:
+    - !type:AppearanceChange
+    edges:
+    - to: lightUnscrewed
+      steps:
+      - material: Glass
+        amount: 2
+        doAfter: 0.5
+
+    - to: platingUnwelded
+      steps:
+      - tool: Welding
+        doAfter: 2
+
+  - node: lightUnscrewed
+    actions:
+    - !type:AppearanceChange
+    edges:
+    - to: chargerMissing
+      steps:
+      - tool: Screwing
+        doAfter: 0.5
+
+    - to: lightMissing
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetGlass1
+        amount: 2
+      steps:
+      - tool: Cutting
+
+  - node: chargerMissing
+    actions:
+    - !type:AppearanceChange
+    edges:
+    - to: panelUnscrewed
+      steps:
+      - tag: ProtoKineticTechPart
+        store: charger
+        name: a proto-kinetic charger
+
+    - to: lightUnscrewed
+      steps:
+      - tool: Screwing
+        doAfter: 0.5
+
+  - node: panelUnscrewed
+    entity: ProtoKineticAcceleratorFrame
+    actions:
+    - !type:AppearanceChange
+    edges:
+    - to: pka
+      steps:
+      - tool: Screwing
+        doAfter: 0.5
+
+    - to: chargerMissing
+      completed:
+        - !type:EmptyContainer
+          container: charger
+      steps:
+      - tool: Prying
+        doAfter: 0.5
+
+  - node: pka
+    entity: WeaponProtoKineticAccelerator
+    edges:
+    - to: panelUnscrewed
+      steps:
+      - tool: Screwing
+        doAfter: 0.5

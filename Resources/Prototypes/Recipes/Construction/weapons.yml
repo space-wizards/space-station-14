@@ -118,3 +118,14 @@
   description: Crude and falling apart. Why would you make this?
   icon: { sprite: Objects/Weapons/Melee/shields.rsi, state: makeshift-icon }
   objectType: Item
+
+- type: construction
+  hide: true
+  name: proto-kinetic accelerator
+  id: WeaponProtoKineticAccelerator
+  graph: WeaponProtoKineticAccelerator
+  startNode: start
+  targetNode: pka
+  category: construction-category-weapons
+  icon: { sprite: Objects/Weapons/Guns/Basic/kinetic_accelerator.rsi, state: icon }
+  objectType: Item

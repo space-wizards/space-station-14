@@ -1,0 +1,27 @@
+- type: entity
+  parent: BaseItem
+  id: ProtoKineticAcceleratorFrame
+  name: proto-kinetic accelerator frame
+  description: The incomplete frame of a proto-kinetic accelerator.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Basic/kinetic_accelerator.rsi
+    layers:
+    - state: frame_0
+      map: [ "enum.ConstructionVisuals.Layer" ]
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.ConstructionVisuals.Key:
+        enum.ConstructionVisuals.Layer:
+          wiringMissing: { state: frame_0 }
+          platingUnwelded: { state: frame_1 }
+          lightMissing: { state: frame_2 }
+          lightUnscrewed: { state: frame_3 }
+          chargerMissing: { state: frame_4 }
+          panelUnscrewed: { state: frame_5 }
+  - type: Item
+    size: 30
+  - type: Construction
+    graph: WeaponProtoKineticAccelerator
+    node: wiringMissing
