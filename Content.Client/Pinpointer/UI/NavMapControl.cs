@@ -2,6 +2,7 @@ using System.Numerics;
 using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Pinpointer;
+using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
@@ -21,6 +22,7 @@ namespace Content.Client.Pinpointer.UI;
 public sealed class NavMapControl : MapGridControl
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
+    private SharedTransformSystem _transform;
 
     public EntityUid? MapUid;
 
