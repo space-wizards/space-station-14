@@ -22,8 +22,8 @@
       maxIntensity: 4
     - type: ExplodeOnTrigger
     - type: OnUseTimerTrigger
-      delay: 120 #Once training bombs are actually mapped, consider bumping this down to 100 seconds. 90 like in SS13 is a probably a bit too fast factoring in the lack of byond's lag + pixel movement.
-      delayOptions: [120, 150, 180, 210, 240, 270, 300]
+      delay: 100 #Once training bombs are actually mapped, consider bumping this down to 100 seconds. 90 like in SS13 is a probably a bit too fast factoring in the lack of byond's lag + pixel movement.
+      delayOptions: [100, 130, 160, 190, 220, 250, 270]
       initialBeepDelay: 0
       beepSound: /Audio/Machines/timer.ogg
     - type: Anchorable
