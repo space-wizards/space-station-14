@@ -1,10 +1,4 @@
 Entries:
-- author: JoeHammad
-  changes:
-  - {message: Due to ERT's lackluster performance CentCom has decided to slightly
-      upgrade their arsenal, type: Tweak}
-  id: 4311
-  time: '2023-07-24T03:01:29.0000000+00:00'
 - author: Derby
   changes:
   - {message: Added 22 new figurines to collect and play with!, type: Add}
@@ -2986,3 +2980,8 @@ Entries:
   - {message: The microbomb implanter has been removed from the nukie uplink, type: Remove}
   id: 4810
   time: '2023-09-12T15:09:33.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Fixed ninja suit not having any actions., type: Fix}
+  id: 4811
+  time: '2023-09-12T20:54:19.0000000+00:00'
