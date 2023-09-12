@@ -1,9 +1,4 @@
 Entries:
-- author: Derby
-  changes:
-  - {message: Added 22 new figurines to collect and play with!, type: Add}
-  id: 4312
-  time: '2023-07-24T03:06:08.0000000+00:00'
 - author: Tunguso4ka
   changes:
   - {message: Added coffin to bury your fellow spessmen with honor., type: Add}
@@ -2985,3 +2980,9 @@ Entries:
   - {message: Fixed ninja suit not having any actions., type: Fix}
   id: 4811
   time: '2023-09-12T20:54:19.0000000+00:00'
+- author: AndrewEyeke
+  changes:
+  - {message: Nuclear Operatives will be able to buy carps. They are limited to 10
+      per operative., type: Add}
+  id: 4812
+  time: '2023-09-12T21:50:03.0000000+00:00'
