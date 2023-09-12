@@ -140,3 +140,14 @@
   category: construction-category-weapons
   icon: { sprite: Objects/Weapons/Guns/Battery/advancedlasergun.rsi , state: icon }
   objectType: Item
+
+- type: construction
+  hide: false
+  name: antique laser pistol
+  id: WeaponAntiqueLaser
+  graph: WeaponAntiqueLaser
+  startNode: start
+  targetNode: antiquelaserpistol
+  category: construction-category-weapons
+  icon: { sprite: Objects/Weapons/Guns/Battery/antiquelasergun.rsi , state: icon }
+  objectType: Item
