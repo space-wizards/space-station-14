@@ -88,7 +88,7 @@ namespace Content.Client.Storage.UI
         /// </summary>
         public void BuildEntityList(StorageBoundUserInterfaceState state)
         {
-            var list = state.StoredEntities.ConvertAll(uid => new EntityListData(uid));
+            var list = state.StoredEntities.ConvertAll(nent => new EntityListData(_entityManager.GetEntity(nent)));
             EntityList.PopulateList(list);
 
             //Sets information about entire storage container current capacity

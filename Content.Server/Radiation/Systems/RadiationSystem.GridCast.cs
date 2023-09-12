@@ -122,7 +122,7 @@ public partial class RadiationSystem
         // create a new radiation ray from source to destination
         // at first we assume that it doesn't hit any radiation blockers
         // and has only distance penalty
-        var ray = new RadiationRay(mapId, sourceUid, sourceWorld, destUid, destWorld, rads);
+        var ray = new RadiationRay(mapId, GetNetEntity(sourceUid), sourceWorld, GetNetEntity(destUid), destWorld, rads);
 
         // if source and destination on the same grid it's possible that
         // between them can be another grid (ie. shuttle in center of donut station)
@@ -214,7 +214,7 @@ public partial class RadiationSystem
 
         // save data for debug if needed
         if (saveVisitedTiles && blockers.Count > 0)
-            ray.Blockers.Add(gridUid, blockers);
+            ray.Blockers.Add(GetNetEntity(gridUid), blockers);
 
         return ray;
     }
