@@ -129,3 +129,14 @@
   category: construction-category-weapons
   icon: { sprite: Objects/Weapons/Guns/Basic/kinetic_accelerator.rsi, state: icon }
   objectType: Item
+
+- type: construction
+  hide: true
+  name: advanced laser pistol
+  id: WeaponAdvancedLaser
+  graph: WeaponAdvancedLaser
+  startNode: start
+  targetNode: advancedlaserpistol
+  category: construction-category-weapons
+  icon: { sprite: Objects/Weapons/Guns/Battery/advancedlasergun.rsi , state: icon }
+  objectType: Item
