@@ -147,6 +147,9 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
     {
         foreach (var headRev in chosen)
         {
+            if (HasComp<CommandStaffComponent>(headRev))
+                RemComp<CommandStaffComponent>(headRev);
+
             var inCharacterName = MetaData(headRev).EntityName;
             if (_mindSystem.TryGetMind(headRev, out var mindId, out var mind))
             {
@@ -252,18 +255,21 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
 
     public void OnHeadRevAdmin(EntityUid mindId, MindComponent mind)
     {
-        if (mind.OwnedEntity != null)
+        if (!HasComp<HeadRevolutionaryComponent>(mind.OwnedEntity))
         {
-            var player = new List<EntityUid>();
-            player.Add(mind.OwnedEntity.Value);
-            InitialAssignCommandStaff();
-            GiveHeadRev(player, "Rev", null);
-        }
-        if (mind.Session != null)
-        {
-            var message = Loc.GetString("head-rev-role-greeting");
-            var wrappedMessage = Loc.GetString("chat-manager-server-wrap-message", ("message", message));
-            _chatManager.ChatMessageToOne(Shared.Chat.ChatChannel.Server, message, wrappedMessage, default, false, mind.Session.ConnectedClient, Color.FromHex("#5e9cff"));
+            if (mind.OwnedEntity != null)
+            {
+                var player = new List<EntityUid>();
+                player.Add(mind.OwnedEntity.Value);
+                InitialAssignCommandStaff();
+                GiveHeadRev(player, "Rev", null);
+            }
+            if (mind.Session != null)
+            {
+                var message = Loc.GetString("head-rev-role-greeting");
+                var wrappedMessage = Loc.GetString("chat-manager-server-wrap-message", ("message", message));
+                _chatManager.ChatMessageToOne(Shared.Chat.ChatChannel.Server, message, wrappedMessage, default, false, mind.Session.ConnectedClient, Color.FromHex("#5e9cff"));
+            }
         }
     }
     private void OnCommandMobStateChanged(EntityUid uid, CommandStaffComponent comp, MobStateChangedEvent ev)
