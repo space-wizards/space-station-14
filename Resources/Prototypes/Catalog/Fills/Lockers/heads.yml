@@ -291,7 +291,6 @@
       - id: BoxEncryptionKeySecurity
       - id: HoloprojectorSecurity
       - id: BookSecretDocuments
-      - id: TelescopicShield
 
 - type: entity
   id: LockerHeadOfSecurityFilled
@@ -322,4 +321,3 @@
       - id: BoxEncryptionKeySecurity
       - id: HoloprojectorSecurity
       - id: BookSecretDocuments
-      - id: TelescopicShield
