@@ -17,7 +17,7 @@ namespace Content.Client.UserInterface.Systems.Ghost.Controls.Roles
             EntryContainer.DisposeAllChildren();
         }
 
-        public void AddEntry(string name, string description, bool hasAccess, string? reason, IEnumerable<GhostRoleInfo> roles, SpriteSystem spriteSystem)
+        public void AddEntry(string name, string description, bool hasAccess, FormattedText? reason, IEnumerable<GhostRoleInfo> roles, SpriteSystem spriteSystem)
         {
             NoRolesMessage.Visible = false;
 

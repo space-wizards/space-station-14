@@ -1309,12 +1309,13 @@ namespace Content.Client.Preferences.UI
                 Antag = antag;
 
                 var requirements = IoCManager.Resolve<JobRequirementsManager>();
-                var description = antag.Description;
+                var description = Loc.GetString(antag.Description);
                 _checkBox = new CheckBox {Text = Loc.GetString(antag.Name)};
 
                 if (antag.Requirements != null && !requirements.CheckRoleTime(antag.Requirements, out var reason))
                 {
-                    description = Loc.GetString(reason);
+                    description = reason;
+                    // TODO: replace yes/no control with lock icon
                     _checkBox.Disabled = true;
                     Disable = true;
                 }
@@ -1323,7 +1324,9 @@ namespace Content.Client.Preferences.UI
 
                 if (description != null)
                 {
-                    _checkBox.ToolTip = Loc.GetString(description);
+                    var tooltip = new Tooltip();
+                    tooltip.SetMessage(description);
+                    _checkBox.TooltipSupplier = _ => tooltip;
                 }
 
                 AddChild(new BoxContainer

@@ -97,25 +97,13 @@ public sealed class JobRequirementsManager
         }
 
         var player = _playerManager.LocalPlayer?.Session;
-
         if (player == null)
             return true;
 
-        var reasonBuilder = new StringBuilder();
-
-        foreach (var requirement in job.Requirements)
-        {
-            if (JobRequirements.TryRequirementMet(requirement, _roles, out var jobReason, _entManager, _prototypes))
-                continue;
-
-            reasonBuilder.AppendLine(jobReason.ToMarkup());
-        }
-
-        reason = reasonBuilder.Length == 0 ? null : FormattedMessage.FromMarkup(reasonBuilder.ToString().Trim());
-        return reason == null;
+        return CheckRoleTime(jo.Requirements, out var reason);
     }
 
-    public bool CheckRoleTime(HashSet<JobRequirement>? requirements, [NotNullWhen(false)] out string? reason)
+    public bool CheckRoleTime(HashSet<JobRequirement>? requirements, [NotNullWhen(false)] out FormattedMessage? reason)
     {
         reason = null;
 
@@ -125,13 +113,13 @@ public sealed class JobRequirementsManager
         var reasons = new List<string>();
         foreach (var requirement in requirements)
         {
-            if (JobRequirements.TryRequirementMet(requirement, _roles, out reason, _prototypes))
+            if (JobRequirements.TryRequirementMet(requirement, _roles, out var jobReason, _entManager, _prototypes))
                 continue;
 
-            reasons.Add(reason);
+            reasons.Add(jobReason);
         }
 
-        reason = reasons.Count == 0 ? null : reasons.Join("\n");
+        reason = reasons.Count == 0 ? null : FormattedMessage.FromMarkup(reasons.Join("\n"));
         return reason == null;
     }
 }

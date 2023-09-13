@@ -15,7 +15,7 @@ namespace Content.Client.UserInterface.Systems.Ghost.Controls.Roles
         public event Action<GhostRoleInfo>? OnRoleSelected;
         public event Action<GhostRoleInfo>? OnRoleFollow;
 
-        public GhostRolesEntry(string name, string description, bool hasAccess, string? reason, IEnumerable<GhostRoleInfo> roles, SpriteSystem spriteSystem)
+        public GhostRolesEntry(string name, string description, bool hasAccess, FormattedText? reason, IEnumerable<GhostRoleInfo> roles, SpriteSystem spriteSystem)
         {
             RobustXamlLoader.Load(this);
             _spriteSystem = spriteSystem;
@@ -35,7 +35,9 @@ namespace Content.Client.UserInterface.Systems.Ghost.Controls.Roles
 
                     if (!string.IsNullOrEmpty(reason))
                     {
-                        button.RequestButton.ToolTip = reason;
+                        var tooltip = new Tooltip();
+                        tooltip.SetMessage(reason);
+                        button.RequestButton.ToolTipSupplier = _ => tooltip;
                     }
 
                     button.RequestButton.AddChild(new TextureRect
