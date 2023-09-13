@@ -1,6 +1,5 @@
+using Content.Shared.DeviceLinking;
 using Content.Shared.Doors.Systems;
-using Content.Shared.MachineLinking;
-using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
@@ -12,7 +11,7 @@ namespace Content.Shared.Doors.Components;
 /// </summary>
 [RegisterComponent, NetworkedComponent]
 [Access(typeof(SharedAirlockSystem), Friend = AccessPermissions.ReadWriteExecute, Other = AccessPermissions.Read)]
-public sealed class AirlockComponent : Component
+public sealed partial class AirlockComponent : Component
 {
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("safety")]
@@ -28,7 +27,7 @@ public sealed class AirlockComponent : Component
     /// so this default is closer to 6 effectively on e.g. jaws (9 seconds when applied to other default.)
     /// </summary>
     [DataField("poweredPryModifier")]
-    public readonly float PoweredPryModifier = 9f;
+    public float PoweredPryModifier = 9f;
 
     /// <summary>
     /// Whether the maintenance panel should be visible even if the airlock is opened.
@@ -65,7 +64,7 @@ public sealed class AirlockComponent : Component
     /// <summary>
     /// The receiver port for turning off automatic closing.
     /// </summary>
-    [DataField("autoClosePort", customTypeSerializer: typeof(PrototypeIdSerializer<ReceiverPortPrototype>))]
+    [DataField("autoClosePort", customTypeSerializer: typeof(PrototypeIdSerializer<SinkPortPrototype>))]
     public string AutoClosePort = "AutoClose";
 
     #region Graphics

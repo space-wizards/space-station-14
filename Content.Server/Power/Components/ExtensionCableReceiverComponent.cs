@@ -4,7 +4,7 @@ namespace Content.Server.Power.Components
 {
     [RegisterComponent]
     [Access(typeof(ExtensionCableSystem))]
-    public sealed class ExtensionCableReceiverComponent : Component
+    public sealed partial class ExtensionCableReceiverComponent : Component
     {
         [ViewVariables]
         public ExtensionCableProviderComponent? Provider { get; set; }

@@ -1,9 +1,7 @@
-﻿using System.Linq;
-using Content.Server.Anomaly;
+﻿using Content.Server.Anomaly;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Station.Components;
 using Content.Server.StationEvents.Components;
-using Robust.Shared.Random;
 
 namespace Content.Server.StationEvents.Events;
 
@@ -30,13 +28,9 @@ public sealed class AnomalySpawnRule : StationEventSystem<AnomalySpawnRuleCompon
         if (!TryComp<StationDataComponent>(chosenStation, out var stationData))
             return;
 
-        EntityUid? grid = null;
-        foreach (var g in stationData.Grids.Where(HasComp<BecomesStationComponent>))
-        {
-            grid = g;
-        }
+        var grid = StationSystem.GetLargestGrid(stationData);
 
-        if (grid is not { })
+        if (grid is null)
             return;
 
         var amountToSpawn = Math.Max(1, (int) MathF.Round(GetSeverityModifier() / 2));

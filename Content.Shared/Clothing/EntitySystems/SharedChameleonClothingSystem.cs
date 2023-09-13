@@ -13,6 +13,7 @@ public abstract class SharedChameleonClothingSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly SharedItemSystem _itemSystem = default!;
     [Dependency] private readonly ClothingSystem _clothingSystem = default!;
+    [Dependency] private readonly MetaDataSystem _metaData = default!;
 
     public override void Initialize()
     {
@@ -46,8 +47,8 @@ public abstract class SharedChameleonClothingSystem : EntitySystem
 
         // copy name and description
         var meta = MetaData(uid);
-        meta.EntityName = proto.Name;
-        meta.EntityDescription = proto.Description;
+        _metaData.SetEntityName(uid, proto.Name, meta);
+        _metaData.SetEntityDescription(uid, proto.Description, meta);
 
         // item sprite logic
         if (TryComp(uid, out ItemComponent? item) &&

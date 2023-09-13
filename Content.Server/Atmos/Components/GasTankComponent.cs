@@ -1,11 +1,12 @@
-using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Atmos;
 using Robust.Shared.Audio;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Atmos.Components
 {
     [RegisterComponent]
-    public sealed class GasTankComponent : Component, IGasMixtureHolder
+    public sealed partial class GasTankComponent : Component, IGasMixtureHolder
     {
         public const float MaxExplosionRange = 80f;
         private const float DefaultLowPressure = 0f;
@@ -32,24 +33,32 @@ namespace Content.Server.Atmos.Components
         public IPlayingAudioStream? ConnectStream;
         public IPlayingAudioStream? DisconnectStream;
 
-        [DataField("air")] public GasMixture Air { get; set; } = new();
+        [DataField("air"), ViewVariables(VVAccess.ReadWrite)]
+        public GasMixture Air { get; set; } = new();
 
         /// <summary>
         ///     Pressure at which tank should be considered 'low' such as for internals.
         /// </summary>
-        [DataField("tankLowPressure")]
-        public float TankLowPressure { get; set; } = DefaultLowPressure;
+        [DataField("tankLowPressure"), ViewVariables(VVAccess.ReadWrite)]
+        public float TankLowPressure = DefaultLowPressure;
 
         /// <summary>
         ///     Distributed pressure.
         /// </summary>
-        [DataField("outputPressure")]
-        public float OutputPressure { get; set; } = DefaultOutputPressure;
+        [DataField("outputPressure"), ViewVariables(VVAccess.ReadWrite)]
+        public float OutputPressure = DefaultOutputPressure;
+
+        /// <summary>
+        ///     The maximum allowed output pressure.
+        /// </summary>
+        [DataField("maxOutputPressure"), ViewVariables(VVAccess.ReadWrite)]
+        public float MaxOutputPressure = 3 * DefaultOutputPressure;
 
         /// <summary>
         ///     Tank is connected to internals.
         /// </summary>
-        [ViewVariables] public bool IsConnected => User != null;
+        [ViewVariables]
+        public bool IsConnected => User != null;
 
         [ViewVariables]
         public EntityUid? User;
@@ -64,28 +73,49 @@ namespace Content.Server.Atmos.Components
         /// <summary>
         ///     Pressure at which tanks start leaking.
         /// </summary>
-        [DataField("tankLeakPressure")]
-        public float TankLeakPressure { get; set; }     = 30 * Atmospherics.OneAtmosphere;
+        [DataField("tankLeakPressure"), ViewVariables(VVAccess.ReadWrite)]
+        public float TankLeakPressure = 30 * Atmospherics.OneAtmosphere;
 
         /// <summary>
         ///     Pressure at which tank spills all contents into atmosphere.
         /// </summary>
-        [DataField("tankRupturePressure")]
-        public float TankRupturePressure { get; set; }  = 40 * Atmospherics.OneAtmosphere;
+        [DataField("tankRupturePressure"), ViewVariables(VVAccess.ReadWrite)]
+        public float TankRupturePressure = 40 * Atmospherics.OneAtmosphere;
 
         /// <summary>
         ///     Base 3x3 explosion.
         /// </summary>
-        [DataField("tankFragmentPressure")]
-        public float TankFragmentPressure { get; set; } = 50 * Atmospherics.OneAtmosphere;
+        [DataField("tankFragmentPressure"), ViewVariables(VVAccess.ReadWrite)]
+        public float TankFragmentPressure = 50 * Atmospherics.OneAtmosphere;
 
         /// <summary>
         ///     Increases explosion for each scale kPa above threshold.
         /// </summary>
-        [DataField("tankFragmentScale")]
-        public float TankFragmentScale { get; set; }    = 2 * Atmospherics.OneAtmosphere;
+        [DataField("tankFragmentScale"), ViewVariables(VVAccess.ReadWrite)]
+        public float TankFragmentScale = 2 * Atmospherics.OneAtmosphere;
 
-        [DataField("toggleAction", required: true)]
-        public InstantAction ToggleAction = new();
+        [DataField("toggleAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+        public string ToggleAction = "ActionToggleInternals";
+
+        [DataField("toggleActionEntity")] public EntityUid? ToggleActionEntity;
+
+        /// <summary>
+        ///     Valve to release gas from tank
+        /// </summary>
+        [DataField("isValveOpen"), ViewVariables(VVAccess.ReadWrite)]
+        public bool IsValveOpen = false;
+
+        /// <summary>
+        ///     Gas release rate in L/s
+        /// </summary>
+        [DataField("valveOutputRate"), ViewVariables(VVAccess.ReadWrite)]
+        public float ValveOutputRate = 100f;
+
+        [DataField("valveSound"), ViewVariables(VVAccess.ReadWrite)]
+        public SoundSpecifier ValveSound =
+            new SoundCollectionSpecifier("valveSqueak")
+            {
+                Params = AudioParams.Default.WithVolume(-5f),
+            };
     }
 }

@@ -9,7 +9,7 @@ namespace Content.Server.Medical.SuitSensors
     /// </summary>
     [RegisterComponent]
     [Access(typeof(SuitSensorSystem))]
-    public sealed class SuitSensorComponent : Component
+    public sealed partial class SuitSensorComponent : Component
     {
         /// <summary>
         ///     Choose a random sensor mode when item is spawned.

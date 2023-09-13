@@ -10,17 +10,6 @@
         Piercing: 16
 
 - type: entity
-  id: BulletPistolHighVelocity
-  name: bullet (.35 auto high-velocity)
-  parent: BaseBulletHighVelocity
-  noSpawn: true
-  components:
-  - type: Projectile
-    damage:
-      types:
-        Piercing: 19
-
-- type: entity
   id: BulletPistolPractice
   name: bullet (.35 auto practice)
   parent: BaseBulletPractice

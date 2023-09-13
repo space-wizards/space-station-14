@@ -54,7 +54,7 @@ public sealed partial class BiomeComponent : Component
     /// Currently active chunks
     /// </summary>
     [DataField("loadedChunks")]
-    public readonly HashSet<Vector2i> LoadedChunks = new();
+    public HashSet<Vector2i> LoadedChunks = new();
 
     #region Markers
 
@@ -68,7 +68,7 @@ public sealed partial class BiomeComponent : Component
     /// Track what markers we've loaded already to avoid double-loading.
     /// </summary>
     [DataField("loadedMarkers", customTypeSerializer:typeof(PrototypeIdDictionarySerializer<HashSet<Vector2i>, BiomeMarkerLayerPrototype>))]
-    public readonly Dictionary<string, HashSet<Vector2i>> LoadedMarkers = new();
+    public Dictionary<string, HashSet<Vector2i>> LoadedMarkers = new();
 
     [DataField("markerLayers", customTypeSerializer: typeof(PrototypeIdListSerializer<BiomeMarkerLayerPrototype>))]
     public List<string> MarkerLayers = new();

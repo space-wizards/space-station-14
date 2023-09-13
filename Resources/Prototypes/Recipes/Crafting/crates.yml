@@ -21,6 +21,17 @@
   objectType: Structure
 
 - type: construction
+  name: secure crate
+  id: CrateSecure
+  graph: CrateSecure
+  startNode: start
+  targetNode: cratesecure
+  category: construction-category-storage
+  description: A secure metal crate for storing things. Requires no special access, can be configured with an Access Configurator.
+  icon: { sprite: Structures/Storage/Crates/secure.rsi, state: icon }
+  objectType: Structure
+
+- type: construction
   name: plastic crate
   id: CratePlastic
   graph: CratePlastic
@@ -52,3 +63,14 @@
   description: A small box for storing things.
   icon: { sprite: Objects/Storage/boxes.rsi, state: box }
   objectType: Item
+
+- type: construction
+  name: coffin
+  id: CrateCoffin
+  graph: CrateCoffin
+  startNode: start
+  targetNode: cratecoffin
+  category: construction-category-storage
+  description: A coffin for storing corpses.
+  icon: { sprite: Structures/Storage/Crates/coffin.rsi, state: base }
+  objectType: Structure

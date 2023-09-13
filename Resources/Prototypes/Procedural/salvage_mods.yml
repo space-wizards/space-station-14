@@ -75,8 +75,8 @@
 - type: salvageTimeMod
   id: RushTime
   desc: Rush
-  minDuration: 720
-  maxDuration: 780
+  minDuration: 420
+  maxDuration: 465
   cost: 1
 
 # Misc mods

@@ -13,9 +13,13 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
+    private EntityQuery<TransformComponent> _xformQuery;
+
     public override void Initialize()
     {
         base.Initialize();
+        _xformQuery = GetEntityQuery<TransformComponent>();
+
         SubscribeLocalEvent<PinpointerComponent, ActivateInWorldEvent>(OnActivate);
         SubscribeLocalEvent<FTLCompletedEvent>(OnLocateTarget);
     }
@@ -71,7 +75,7 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
         {
             if (!EntityManager.ComponentFactory.TryGetRegistration(component.Component, out var reg))
             {
-                Logger.Error($"Unable to find component registration for {component.Component} for pinpointer!");
+                Log.Error($"Unable to find component registration for {component.Component} for pinpointer!");
                 DebugTools.Assert(false);
                 return;
             }
@@ -100,10 +104,7 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
     /// </summary>
     private EntityUid? FindTargetFromComponent(EntityUid uid, Type whitelist, TransformComponent? transform = null)
     {
-        var xformQuery = GetEntityQuery<TransformComponent>();
-
-        if (transform == null)
-            xformQuery.TryGetComponent(uid, out transform);
+        _xformQuery.Resolve(uid, ref transform, false);
 
         if (transform == null)
             return null;
@@ -111,15 +112,15 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
         // sort all entities in distance increasing order
         var mapId = transform.MapID;
         var l = new SortedList<float, EntityUid>();
-        var worldPos = _transform.GetWorldPosition(transform, xformQuery);
+        var worldPos = _transform.GetWorldPosition(transform);
 
-        foreach (var comp in EntityManager.GetAllComponents(whitelist))
+        foreach (var (otherUid, _) in EntityManager.GetAllComponents(whitelist))
         {
-            if (!xformQuery.TryGetComponent(comp.Owner, out var compXform) || compXform.MapID != mapId)
+            if (!_xformQuery.TryGetComponent(otherUid, out var compXform) || compXform.MapID != mapId)
                 continue;
 
-            var dist = (_transform.GetWorldPosition(compXform, xformQuery) - worldPos).LengthSquared();
-            l.TryAdd(dist, comp.Owner);
+            var dist = (_transform.GetWorldPosition(compXform) - worldPos).LengthSquared();
+            l.TryAdd(dist, otherUid);
         }
 
         // return uid with a smallest distance

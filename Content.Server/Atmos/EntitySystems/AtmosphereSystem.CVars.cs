@@ -21,6 +21,12 @@ namespace Content.Server.Atmos.EntitySystems
         public bool ExcitedGroupsSpaceIsAllConsuming { get; private set; }
         public float AtmosMaxProcessTime { get; private set; }
         public float AtmosTickRate { get; private set; }
+
+        /// <summary>
+        /// Time between each atmos sub-update.  If you are writing an atmos device, use AtmosDeviceUpdateEvent.dt
+        /// instead of this value, because atmos devices do not update each are sub-update and sometimes are skipped to
+        /// meet the tick deadline.
+        /// </summary>
         public float AtmosTime => 1f / AtmosTickRate;
 
         private void InitializeCVars()

@@ -3,7 +3,7 @@
 namespace Content.Server.Mech.Components;
 
 [RegisterComponent]
-public sealed class MechAirComponent : Component
+public sealed partial class MechAirComponent : Component
 {
     //TODO: this doesn't support a tank implant for mechs or anything like that
     [ViewVariables(VVAccess.ReadWrite)]

@@ -417,7 +417,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
                     var startNodeY = rand.Next(lower, upper + 1);
                     var startNode = new Vector2i(startNodeX, startNodeY);
                     frontier.Clear();
-                    frontier.Add(startNode);
+                    frontier.Add(startNode + chunk);
 
                     while (groupCount > 0 && frontier.Count > 0)
                     {
@@ -434,40 +434,39 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
                                     continue;
 
                                 var neighbor = new Vector2i(x + node.X, y + node.Y);
+                                var chunkOffset = neighbor - chunk;
 
                                 // Check if it's inbounds.
-                                if (neighbor.X < lower ||
-                                    neighbor.Y < lower ||
-                                    neighbor.X > upper ||
-                                    neighbor.Y > upper)
+                                if (chunkOffset.X < lower ||
+                                    chunkOffset.Y < lower ||
+                                    chunkOffset.X > upper ||
+                                    chunkOffset.Y > upper)
                                 {
                                     continue;
                                 }
+
+                                if (!spawnSet.Add(neighbor))
+                                    continue;
 
                                 frontier.Add(neighbor);
                             }
                         }
 
-                        var actualNode = node + chunk;
-
-                        if (!spawnSet.Add(actualNode))
-                            continue;
-
                         // Check if it's a valid spawn, if so then use it.
-                        var enumerator = grid.GetAnchoredEntitiesEnumerator(actualNode);
+                        var enumerator = grid.GetAnchoredEntitiesEnumerator(node);
 
                         if (enumerator.MoveNext(out _))
                             continue;
 
                         // Check if mask matches.
-                        TryGetEntity(actualNode, component.Layers, noiseCopy, grid, out var proto);
+                        TryGetEntity(node, component.Layers, noiseCopy, grid, out var proto);
 
                         if (proto != layerProto.EntityMask)
                         {
                             continue;
                         }
 
-                        var chunkOrigin = SharedMapSystem.GetChunkIndices(actualNode, ChunkSize) * ChunkSize;
+                        var chunkOrigin = SharedMapSystem.GetChunkIndices(node, ChunkSize) * ChunkSize;
 
                         if (!pending.TryGetValue(chunkOrigin, out var pendingMarkers))
                         {
@@ -482,7 +481,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
                         }
 
                         // Log.Info($"Added node at {actualNode} for chunk {chunkOrigin}");
-                        layerMarkers.Add(actualNode);
+                        layerMarkers.Add(node);
                         groupCount--;
                     }
                 }

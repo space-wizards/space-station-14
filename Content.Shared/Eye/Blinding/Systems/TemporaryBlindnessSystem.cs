@@ -1,9 +1,11 @@
 using Content.Shared.Eye.Blinding.Components;
+using Content.Shared.StatusEffect;
 
 namespace Content.Shared.Eye.Blinding.Systems;
 
 public sealed class TemporaryBlindnessSystem : EntitySystem
 {
+    [ValidatePrototypeId<StatusEffectPrototype>]
     public const string BlindingStatusEffect = "TemporaryBlindness";
 
     [Dependency] private readonly BlindableSystem _blindableSystem = default!;

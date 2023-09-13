@@ -31,9 +31,8 @@ namespace Content.Client.Atmos.EntitySystems
         public override void Shutdown()
         {
             base.Shutdown();
-            _overlayMan.RemoveOverlay(_overlay);
+            _overlayMan.RemoveOverlay<GasTileOverlay>();
         }
-
 
         private void OnHandleState(EntityUid gridUid, GasTileOverlayComponent comp, ref ComponentHandleState args)
         {
@@ -66,8 +65,10 @@ namespace Content.Client.Atmos.EntitySystems
 
         private void HandleGasOverlayUpdate(GasOverlayUpdateEvent ev)
         {
-            foreach (var (grid, removedIndicies) in ev.RemovedChunks)
+            foreach (var (nent, removedIndicies) in ev.RemovedChunks)
             {
+                var grid = GetEntity(nent);
+
                 if (!TryComp(grid, out GasTileOverlayComponent? comp))
                     continue;
 
@@ -77,8 +78,10 @@ namespace Content.Client.Atmos.EntitySystems
                 }
             }
 
-            foreach (var (grid, gridData) in ev.UpdatedChunks)
+            foreach (var (nent, gridData) in ev.UpdatedChunks)
             {
+                var grid = GetEntity(nent);
+
                 if (!TryComp(grid, out GasTileOverlayComponent? comp))
                     continue;
 

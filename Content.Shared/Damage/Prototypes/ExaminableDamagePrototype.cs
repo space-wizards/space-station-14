@@ -9,7 +9,7 @@ namespace Content.Shared.Damage.Prototypes;
 public sealed class ExaminableDamagePrototype : IPrototype
 {
     [IdDataField]
-    public string ID { get; } = default!;
+    public string ID { get; private set; } = default!;
 
     /// <summary>
     ///     List of damage messages IDs sorted by severity.

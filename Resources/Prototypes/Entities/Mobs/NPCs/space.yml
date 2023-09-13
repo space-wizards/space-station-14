@@ -6,8 +6,9 @@
   description: It looks friendly. Why don't you give it a hug?
   components:
   - type: HTN
-    rootTask: SimpleHostileCompound
-  - type: Faction
+    rootTask:
+      task: SimpleHostileCompound
+  - type: NpcFactionMember
     factions:
     - SimpleHostile
   - type: Sprite
@@ -33,9 +34,10 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      150: Dead
+      100: Dead
   - type: Stamina
-    excess: 150
+    critThreshold: 150
+  - type: MovementAlwaysTouching
   - type: Bloodstream
     bloodMaxVolume: 300
     bloodReagent: Cryoxadone
@@ -64,6 +66,8 @@
     energy: 2
     color: "#4faffb"
   - type: GhostTakeoverAvailable
+  - type: Speech
+    speechVerb: LargeMob
 
 - type: entity
   name: space bear
@@ -161,7 +165,7 @@
       Dead:
         Base: kangaroo-space-dead
   - type: Stamina
-    excess: 180
+    critThreshold: 180
   - type: Inventory
     speciesId: kangaroo
     templateId: spacekangaroo
@@ -179,9 +183,6 @@
     interfaces:
     - key: enum.StrippingUiKey.Key
       type: StrippableBoundUserInterface
-    radius: 1.2
-    energy: 2
-    color: "#4faffb"
   - type: GhostRole
     prob: 0.25
     name: ghost-role-information-space-kangaroo-name
@@ -216,9 +217,9 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      130: Dead
+      90: Dead
   - type: Stamina
-    excess: 150
+    critThreshold: 150
   - type: DamageStateVisuals
     states:
       Alive:
@@ -282,6 +283,8 @@
     prob: 0.30
     name: ghost-role-information-space-spider-name
     description: ghost-role-information-space-spider-description
+  - type: Speech
+    speechVerb: Arachnid
 
 - type: entity
   id: MobSpiderSpaceSalvage

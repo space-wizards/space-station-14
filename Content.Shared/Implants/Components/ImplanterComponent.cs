@@ -8,12 +8,12 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 
 namespace Content.Shared.Implants.Components;
 /// <summary>
-/// Implanters are used to implant or extract implants from an entity
+/// Implanters are used to implant or extract implants from an entity.
 /// Some can be single use (implant only) or some can draw out an implant
 /// </summary>
 //TODO: Rework drawing to work with implant cases when surgery is in
 [RegisterComponent, NetworkedComponent]
-public sealed class ImplanterComponent : Component
+public sealed partial class ImplanterComponent : Component
 {
     public const string ImplanterSlotId = "implanter_slot";
     public const string ImplantSlotId = "implant";

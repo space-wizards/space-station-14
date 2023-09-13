@@ -1,0 +1,95 @@
+﻿{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from https://github.com/tgstation/tgstation/blob/2ddbdca1b7fb5cb85cbdcd566a489cbc4794edcf/icons/obj/stairs.dmi and https://github.com/tgstation/tgstation/blob/b2dda940c5abb74d1a53d21c371788edffd0db5b/icons/turf/floors.dmi",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "material_e"
+        },
+        {
+            "name": "material_n"
+        },
+        {
+            "name": "material_s"
+        },
+        {
+            "name": "material_w"
+        },
+        {
+            "name": "stairs_e"
+        },
+        {
+            "name": "stairs_n"
+        },
+        {
+            "name": "stairs_s"
+        },
+        {
+            "name": "stairs_w"
+        },
+        {
+            "name": "stairs_l_e"
+        },
+        {
+            "name": "stairs_l_n"
+        },
+        {
+            "name": "stairs_l_s"
+        },
+        {
+            "name": "stairs_l_w"
+        },
+        {
+            "name": "stairs_m_e"
+        },
+        {
+            "name": "stairs_m_n"
+        },
+        {
+            "name": "stairs_m_s"
+        },
+        {
+            "name": "stairs_m_w"
+        },
+        {
+            "name": "stairs_r_e"
+        },
+        {
+            "name": "stairs_r_n"
+        },
+        {
+            "name": "stairs_r_s"
+        },
+        {
+            "name": "stairs_r_w"
+        },
+        {
+            "name": "stone_e"
+        },
+        {
+            "name": "stone_n"
+        },
+        {
+            "name": "stone_s"
+        },
+        {
+            "name": "stone_w"
+        },
+        {
+            "name": "wood_e"
+        },
+        {
+            "name": "wood_n"
+        },
+        {
+            "name": "wood_s"
+        },
+        {
+            "name": "wood_w"
+        }
+    ]
+}

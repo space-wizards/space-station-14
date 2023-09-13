@@ -130,7 +130,26 @@
     {
       "name": "body_tiger",
       "directions": 4
-	
+	},
+	{
+	  "name": "head_tiger",
+	  "directions": 4
+	},
+	{
+	  "name": "l_arm_tiger",
+	  "directions": 4
+	},
+	{
+	  "name": "l_leg_tiger",
+	  "directions": 4
+	},
+	{
+	  "name": "r_arm_tiger",
+	  "directions": 4
+	},
+	{
+	  "name": "r_leg_tiger",
+	  "directions": 4
     }
   ]
 }

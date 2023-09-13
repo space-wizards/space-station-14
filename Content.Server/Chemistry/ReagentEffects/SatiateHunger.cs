@@ -10,7 +10,7 @@ namespace Content.Server.Chemistry.ReagentEffects
     /// Attempts to find a HungerComponent on the target,
     /// and to update it's hunger values.
     /// </summary>
-    public sealed class SatiateHunger : ReagentEffect
+    public sealed partial class SatiateHunger : ReagentEffect
     {
         private const float DefaultNutritionFactor = 3.0f;
 

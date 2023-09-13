@@ -44,7 +44,8 @@ namespace Content.Server.GameTicking
 
         private string GetInfoText()
         {
-            if (Preset == null)
+            var preset = CurrentPreset ?? Preset;
+            if (preset == null)
             {
                 return string.Empty;
             }
@@ -72,8 +73,8 @@ namespace Content.Server.GameTicking
                 stationNames.Append(Loc.GetString("game-ticker-no-map-selected"));
             }
 
-            var gmTitle = Loc.GetString(Preset.ModeTitle);
-            var desc = Loc.GetString(Preset.Description);
+            var gmTitle = Loc.GetString(preset.ModeTitle);
+            var desc = Loc.GetString(preset.Description);
             return Loc.GetString(RunLevel == GameRunLevel.PreRoundLobby ? "game-ticker-get-info-preround-text" : "game-ticker-get-info-text",
                 ("roundId", RoundId), ("playerCount", playerCount), ("readyCount", readyCount), ("mapName", stationNames.ToString()),("gmTitle", gmTitle),("desc", desc));
         }

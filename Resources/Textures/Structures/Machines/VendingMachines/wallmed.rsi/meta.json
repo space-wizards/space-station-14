@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from baystation at https://github.com/Baystation12/Baystation12/commit/f200ae08d71ecbc91412ee650a334981892f5177",
+  "copyright": "Taken from /tg/station at commit 6665eec76c98a4f3f89bebcd10b34b47dcc0b8ae, off.png taken from /tg/station commit ede31369cfa5ea1bed9262b5ef4bbef85f60fe26 and edited by @Flareguy",
   "size": {
     "x": 32,
     "y": 32
@@ -11,17 +11,25 @@
       "name": "broken"
     },
     {
+      "name": "panel"
+    },
+    {
       "name": "deny-unshaded",
       "delays": [
         [
-          0.1,
           0.1,
           0.1
         ]
       ]
     },
     {
-      "name": "normal-unshaded"
+      "name": "normal-unshaded",
+      "delays": [
+        [
+          0.1,
+          0.1
+        ]
+      ]
     },
     {
       "name": "off"

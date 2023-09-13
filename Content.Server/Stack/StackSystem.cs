@@ -1,7 +1,7 @@
-using Content.Server.Storage.Components;
 using Content.Server.Storage.EntitySystems;
 using Content.Shared.Popups;
 using Content.Shared.Stacks;
+using Content.Shared.Storage;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Server.Containers;
@@ -38,7 +38,7 @@ namespace Content.Server.Stack
             base.SetCount(uid, amount, component);
 
             // Queue delete stack if count reaches zero.
-            if (component.Count <= 0)
+            if (component.Count <= 0 && !component.Lingering)
                 QueueDel(uid);
         }
 
@@ -50,14 +50,14 @@ namespace Content.Server.Stack
             if (!Resolve(uid, ref stack))
                 return null;
 
+            // Try to remove the amount of things we want to split from the original stack...
+            if (!Use(uid, amount, stack))
+                return null;
+
             // Get a prototype ID to spawn the new entity. Null is also valid, although it should rarely be picked...
             var prototype = _prototypeManager.TryIndex<StackPrototype>(stack.StackTypeId, out var stackType)
                 ? stackType.Spawn
                 : Prototype(uid)?.ID;
-
-            // Try to remove the amount of things we want to split from the original stack...
-            if (!Use(uid, amount, stack))
-                return null;
 
             // Set the output parameter in the event instance to the newly split stack.
             var entity = Spawn(prototype, spawnPosition);
@@ -163,9 +163,9 @@ namespace Content.Server.Stack
                 return;
 
             if (_container.TryGetContainingContainer(uid, out var container) &&
-                TryComp<ServerStorageComponent>(container.Owner, out var storage))
+                TryComp<StorageComponent>(container.Owner, out var storage))
             {
-                _storage.UpdateStorageUI(container.Owner, storage);
+                _storage.UpdateUI(container.Owner, storage);
             }
 
             Hands.PickupOrDrop(userUid, split);

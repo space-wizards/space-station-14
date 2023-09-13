@@ -4,17 +4,18 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Throwing
 {
     [RegisterComponent, NetworkedComponent]
-    public sealed class ThrownItemComponent : Component
+    public sealed partial class ThrownItemComponent : Component
     {
+        [ViewVariables(VVAccess.ReadWrite), DataField("thrower")]
         public EntityUid? Thrower { get; set; }
     }
 
     [Serializable, NetSerializable]
     public sealed class ThrownItemComponentState : ComponentState
     {
-        public EntityUid? Thrower { get; }
+        public NetEntity? Thrower { get; }
 
-        public ThrownItemComponentState(EntityUid? thrower)
+        public ThrownItemComponentState(NetEntity? thrower)
         {
             Thrower = thrower;
         }

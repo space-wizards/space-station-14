@@ -5,7 +5,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.Chemistry.ReagentEffectConditions
 {
-    public sealed class MobStateCondition : ReagentEffectCondition
+    public sealed partial class MobStateCondition : ReagentEffectCondition
     {
 
 

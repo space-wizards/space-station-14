@@ -9,32 +9,34 @@ namespace Content.Shared.DrawDepth
         /// <summary>
         ///     This is for sub-floors, the floors you see after prying off a tile.
         /// </summary>
-        LowFloors = DrawDepthTag.Default - 10,
+        LowFloors = DrawDepthTag.Default - 11,
 
         // various entity types that require different
         // draw depths, as to avoid hiding
         #region SubfloorEntities
-        ThickPipe = DrawDepthTag.Default - 9,
-        ThickWire = DrawDepthTag.Default - 8,
-        ThinPipe = DrawDepthTag.Default - 7,
-        ThinWire = DrawDepthTag.Default - 6,
+        ThickPipe = DrawDepthTag.Default - 10,
+        ThickWire = DrawDepthTag.Default - 9,
+        ThinPipe = DrawDepthTag.Default - 8,
+        ThinWire = DrawDepthTag.Default - 7,
         #endregion
 
         /// <summary>
         ///     Things that are beneath regular floors.
         /// </summary>
-        BelowFloor = DrawDepthTag.Default - 6,
+        BelowFloor = DrawDepthTag.Default - 7,
 
         /// <summary>
         ///     Used for entities like carpets.
         /// </summary>
-        FloorTiles = DrawDepthTag.Default - 5,
+        FloorTiles = DrawDepthTag.Default - 6,
 
         /// <summary>
         ///     Things that are actually right on the floor, like puddles. This does not mean objects like
         ///     tables, even though they are technically "on the floor".
         /// </summary>
-        FloorObjects = DrawDepthTag.Default - 4,
+        FloorObjects = DrawDepthTag.Default - 5,
+
+        DeadMobs = DrawDepthTag.Default - 4,
 
         /// <summary>
         ///     Allows small mobs like mice and drones to render under tables and chairs but above puddles and vents
@@ -73,25 +75,32 @@ namespace Content.Shared.DrawDepth
         Items = DrawDepthTag.Default + 3,
 
         Mobs = DrawDepthTag.Default + 4,
+		
+        OverMobs = DrawDepthTag.Default + 5,
 
-        Doors = DrawDepthTag.Default + 5,
+        Doors = DrawDepthTag.Default + 6,
+
+        /// <summary>
+        /// Blast doors and shutters which go over the usual doors.
+        /// </summary>
+        BlastDoors = DrawDepthTag.Default + 7,
 
         /// <summary>
         /// Stuff that needs to draw over most things, but not effects, like Kudzu.
         /// </summary>
-        Overdoors = DrawDepthTag.Default + 6,
+        Overdoors = DrawDepthTag.Default + 8,
 
         /// <summary>
         ///     Explosions, fire, melee swings. Whatever.
         /// </summary>
-        Effects = DrawDepthTag.Default + 7,
+        Effects = DrawDepthTag.Default + 9,
 
-        Ghosts = DrawDepthTag.Default + 8,
+        Ghosts = DrawDepthTag.Default + 10,
 
         /// <summary>
         ///    Use this selectively if it absolutely needs to be drawn above (almost) everything else. Examples include
         ///    the pointing arrow, the drag & drop ghost-entity, and some debug tools.
         /// </summary>
-        Overlays = DrawDepthTag.Default + 9,
+        Overlays = DrawDepthTag.Default + 11,
     }
 }

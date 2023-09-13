@@ -13,7 +13,7 @@ namespace Content.Client.IconSmoothing
     ///     Any objects with the same <c>key</c> will connect.
     /// </remarks>
     [RegisterComponent]
-    public sealed class IconSmoothComponent : Component
+    public sealed partial class IconSmoothComponent : Component
     {
         [ViewVariables(VVAccess.ReadWrite), DataField("enabled")]
         public bool Enabled = true;
@@ -24,13 +24,13 @@ namespace Content.Client.IconSmoothing
         ///     We will smooth with other objects with the same key.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite), DataField("key")]
-        public string? SmoothKey { get; }
+        public string? SmoothKey { get; private set; }
 
         /// <summary>
         ///     Prepended to the RSI state.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite), DataField("base")]
-        public string StateBase { get; } = string.Empty;
+        public string StateBase { get; private set; } = string.Empty;
 
         [DataField("shader", customTypeSerializer:typeof(PrototypeIdSerializer<ShaderPrototype>))]
         public string? Shader;
