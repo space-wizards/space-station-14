@@ -1,10 +1,4 @@
 Entries:
-- author: deltanedas
-  changes:
-  - {message: 'The space dragon event now only spawns a dragon when a ghost takes
-      the role, and in a random location.', type: Tweak}
-  id: 4316
-  time: '2023-07-25T00:32:12.0000000+00:00'
 - author: PJB3005
   changes:
   - {message: Observers move faster now., type: Tweak}
@@ -2985,3 +2979,8 @@ Entries:
   - {message: Fix fultons being toggleable by any entity., type: Fix}
   id: 4815
   time: '2023-09-13T08:01:22.0000000+00:00'
+- author: Nairodian
+  changes:
+  - {message: Security Barriers can now be ordered by cargo., type: Tweak}
+  id: 4816
+  time: '2023-09-13T08:56:16.0000000+00:00'
