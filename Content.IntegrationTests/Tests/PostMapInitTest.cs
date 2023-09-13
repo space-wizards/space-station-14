@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -56,6 +56,7 @@ namespace Content.IntegrationTests.Tests
             "Origin",
             "CentComm",
             "Box",
+            "Europa",
             "Barratry",
             "Saltern",
             "Core",
