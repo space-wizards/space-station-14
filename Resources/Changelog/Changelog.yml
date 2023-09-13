@@ -1,9 +1,4 @@
 Entries:
-- author: Phill101
-  changes:
-  - {message: Added bleeding status icon, type: Add}
-  id: 4319
-  time: '2023-07-25T21:28:35.0000000+00:00'
 - author: Jackal298
   changes:
   - {message: fixed spirete modular receiver and rifle stock, type: Fix}
@@ -2984,3 +2979,8 @@ Entries:
   - {message: Training bombs are now available for purchase at cargo., type: Add}
   id: 4818
   time: '2023-09-13T16:54:48.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: 'Ninjas can spawn from 30 mins in, instead of 45.', type: Tweak}
+  id: 4819
+  time: '2023-09-13T22:02:33.0000000+00:00'
