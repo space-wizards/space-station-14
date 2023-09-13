@@ -141,7 +141,10 @@
         damage: 50
       behaviors:
       - !type:PlaySoundBehavior
-        sound: /Audio/Machines/warning_buzzer.ogg
+        sound:
+          path: /Audio/Machines/warning_beep.ogg
+          params:
+            volume: 10
     - trigger:
         !type:DamageTrigger
         damage: 100
