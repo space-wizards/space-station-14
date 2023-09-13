@@ -105451,31 +105451,43 @@ entities:
       type: Transform
   - uid: 3831
     components:
+    - name: Engi SMES 4
+      type: MetaData
     - pos: 8.5,-29.5
       parent: 1
       type: Transform
   - uid: 3832
     components:
+    - name: Engi SMES 2
+      type: MetaData
     - pos: 6.5,-29.5
       parent: 1
       type: Transform
   - uid: 6507
     components:
+    - name: Engi SMES 1
+      type: MetaData
     - pos: 5.5,-29.5
       parent: 1
       type: Transform
   - uid: 6575
     components:
+    - name: Engi SMES 3
+      type: MetaData
     - pos: 7.5,-29.5
       parent: 1
       type: Transform
   - uid: 8011
     components:
+    - name: North West Solars SMES
+      type: MetaData
     - pos: -39.5,55.5
       parent: 1
       type: Transform
   - uid: 14044
     components:
+    - name: North East Solars SMES
+      type: MetaData
     - pos: 36.5,55.5
       parent: 1
       type: Transform
