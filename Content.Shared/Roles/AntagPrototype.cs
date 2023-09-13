@@ -21,15 +21,9 @@ public sealed class AntagPrototype : IPrototype
     public string Name { get; private set; } = "";
 
     /// <summary>
-    ///     The description of this antag shown in a tooltip.
+    ///     The antag's objective, shown in a tooltip in the antag preference menu or as a ghost role description.
     /// </summary>
-    [DataField("description")]
-    public string? Description { get; private set; }
-
-    /// <summary>
-    ///     The antag's objective, displayed at round-start to the player.
-    /// </summary>
-    [DataField("objective")]
+    [DataField("objective", required: true)]
     public string Objective { get; private set; } = "";
 
     /// <summary>
