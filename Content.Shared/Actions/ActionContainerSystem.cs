@@ -27,7 +27,7 @@ public sealed class ActionContainerSystem : EntitySystem
     }
 
     /// <summary>
-    /// Adds a new action to the given action container.
+    /// Spawns a new action entity and adds it to the given container.
     /// </summary>
     public EntityUid? AddAction(EntityUid uid, string actionPrototypeId, ActionsContainerComponent? comp = null)
     {
@@ -36,7 +36,11 @@ public sealed class ActionContainerSystem : EntitySystem
         return result;
     }
 
-    /// <inheritdoc cref="EnsureAction(Robust.Shared.GameObjects.EntityUid,ref System.Nullable{Robust.Shared.GameObjects.EntityUid},out Content.Shared.Actions.BaseActionComponent?,string?,Content.Shared.Actions.ActionsContainerComponent?)"/>
+    /// <summary>
+    /// Ensures that a given entityUid refers to a valid entity action contained by the given container.
+    /// If the entity does not exist, it will attempt to spawn a new action.
+    /// Returns false if the given entity exists, but is not in a valid state.
+    /// </summary>
     public bool EnsureAction(EntityUid uid,
         [NotNullWhen(true)] ref EntityUid? actionId,
         string actionPrototypeId,
@@ -45,10 +49,7 @@ public sealed class ActionContainerSystem : EntitySystem
         return EnsureAction(uid, ref actionId, out _, actionPrototypeId, comp);
     }
 
-    /// <summary>
-    /// Ensures that a given entityUid refers to a valid entity action contained by the given container.
-    /// If the entity does not exist, it will attempt to spawn a new action.
-    /// </summary>
+    /// <inheritdoc cref="EnsureAction(Robust.Shared.GameObjects.EntityUid,ref System.Nullable{Robust.Shared.GameObjects.EntityUid},string?,Content.Shared.Actions.ActionsContainerComponent?)"/>
     public bool EnsureAction(EntityUid uid,
         [NotNullWhen(true)] ref EntityUid? actionId,
         [NotNullWhen(true)] out BaseActionComponent? action,
@@ -116,9 +117,10 @@ public sealed class ActionContainerSystem : EntitySystem
             return false;
         }
 
-        // Entity insert events will have updated the component.
+        // Container insert events should have updated the component's fields:
         DebugTools.Assert(comp.Container.Contains(actionId));
         DebugTools.Assert(action.Container == uid);
+
         return true;
     }
 
@@ -146,7 +148,7 @@ public sealed class ActionContainerSystem : EntitySystem
         data.Container = uid;
         Dirty(uid, component);
 
-        var ev = new ActionAddedEvent(args.Entity);
+        var ev = new ActionAddedEvent(args.Entity, data);
         RaiseLocalEvent(uid, ref ev);
     }
 
@@ -159,12 +161,23 @@ public sealed class ActionContainerSystem : EntitySystem
         DebugTools.Assert(Terminating(args.Entity)
                           || _netMan.IsServer // I love gibbing code
                           || _timing.ApplyingState);
+
         if (!_actions.TryGetActionData(args.Entity, out var data, false))
             return;
 
         // No event - the only entity that should care about this is the entity that the action was provided to.
         if (data.AttachedEntity != null)
             _actions.RemoveAction(data.AttachedEntity.Value, args.Entity, null, data);
+
+        var ev = new ActionRemovedEvent(args.Entity, data);
+        RaiseLocalEvent(uid, ref ev);
+
+        if (_netMan.IsServer)
+        {
+            // TODO Actions
+            // log an error or warning here once gibbing code is fixed.
+            QueueDel(uid);
+        }
     }
 }
 
@@ -175,9 +188,27 @@ public sealed class ActionContainerSystem : EntitySystem
 public readonly struct ActionAddedEvent
 {
     public readonly EntityUid Action;
+    public readonly BaseActionComponent Component;
 
-    public ActionAddedEvent(EntityUid action)
+    public ActionAddedEvent(EntityUid action, BaseActionComponent component)
     {
         Action = action;
+        Component = component;
+    }
+}
+
+/// <summary>
+/// Raised directed at an action container when an action entity gets removed.
+/// </summary>
+[ByRefEvent]
+public readonly struct ActionRemovedEvent
+{
+    public readonly EntityUid Action;
+    public readonly BaseActionComponent Component;
+
+    public ActionRemovedEvent(EntityUid action, BaseActionComponent component)
+    {
+        Action = action;
+        Component = component;
     }
 }
