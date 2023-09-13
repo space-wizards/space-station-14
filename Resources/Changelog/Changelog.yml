@@ -1,9 +1,4 @@
 Entries:
-- author: Jackal298
-  changes:
-  - {message: fixed spirete modular receiver and rifle stock, type: Fix}
-  id: 4320
-  time: '2023-07-25T21:29:56.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Non-human zombies now are the proper color and zombies can now identify
@@ -2984,3 +2979,8 @@ Entries:
   - {message: 'Ninjas can spawn from 30 mins in, instead of 45.', type: Tweak}
   id: 4819
   time: '2023-09-13T22:02:33.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix storage windows not closing upon gamestate change., type: Fix}
+  id: 4820
+  time: '2023-09-13T22:03:45.0000000+00:00'
