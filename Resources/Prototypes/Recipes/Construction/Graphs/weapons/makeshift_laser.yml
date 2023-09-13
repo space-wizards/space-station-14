@@ -1,0 +1,77 @@
+- type: constructionGraph
+  id: WeaponMakeshiftLaser
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: casterMissing
+      steps:
+      - material: Steel
+        amount: 3
+        doAfter: 2
+
+  - node: casterMissing
+    entity: MakeshiftLaserFrame
+    actions:
+    - !type:AppearanceChange
+    edges:
+    - to: casterUnsecured
+      steps:
+      - tag: LaserTechPart
+        store: caster
+        name: a ray caster
+
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 3
+      - !type:DeleteEntity {}
+      steps:
+      - tool: Screwing
+        doAfter: 1
+
+  - node: casterUnsecured
+    actions:
+    - !type:AppearanceChange
+    edges:
+    - to: wiresMissing
+      steps:
+      - tool: Screwing
+        doAfter: 1
+
+    - to: casterMissing
+      completed:
+        - !type:EmptyContainer
+          container: caster
+      steps:
+      - tool: Prying
+        doAfter: 0.5
+
+  - node: wiresMissing
+    entity: MakeshiftLaserFrame
+    actions:
+    - !type:AppearanceChange
+    edges:
+    - to: makeshiftlaserpistol
+      steps:
+      - material: Cable
+        amount: 2
+        doAfter: 0.5
+
+    - to: casterUnsecured
+      steps:
+      - tool: Screwing
+        doAfter: 1
+
+  - node: makeshiftlaserpistol
+    entity: WeaponMakeshiftLaserEmpty
+    edges:
+    - to: wiresMissing
+      completed:
+      - !type:SpawnPrototype
+        prototype: CableApcStack1
+        amount: 2
+      steps:
+      - tool: Cutting
+        doAfter: 0.5
