@@ -1,3 +1,4 @@
+using Content.Shared.Gravity;
 using Content.Shared.StepTrigger.Components;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map.Components;
@@ -10,6 +11,7 @@ namespace Content.Shared.StepTrigger.Systems;
 public sealed class StepTriggerSystem : EntitySystem
 {
     [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
+    [Dependency] private readonly SharedGravitySystem _gravity = default!;
 
     public override void Initialize()
     {
@@ -121,6 +123,13 @@ public sealed class StepTriggerSystem : EntitySystem
         if (!component.Active || component.CurrentlySteppedOn.Contains(otherUid))
             return false;
 
+        // Can't trigger if we don't ignore weightless entities
+        // and the entity is flying or currently weightless
+        // Makes sense simulation wise to have this be part of steptrigger directly IMO
+        if (!component.IgnoreWeightless && TryComp<PhysicsComponent>(otherUid, out var physics) &&
+            (physics.BodyStatus == BodyStatus.InAir || _gravity.IsWeightless(otherUid, physics)))
+            return false;
+
         var msg = new StepTriggerAttemptEvent { Source = uid, Tripper = otherUid };
 
         RaiseLocalEvent(uid, ref msg, true);
@@ -171,18 +180,14 @@ public sealed class StepTriggerSystem : EntitySystem
         component.RequiredTriggerSpeed = state.RequiredTriggerSpeed;
         component.IntersectRatio = state.IntersectRatio;
         component.Active = state.Active;
+        var stepped = EnsureEntitySet<StepTriggerComponent>(state.CurrentlySteppedOn, uid);
+        var colliding = EnsureEntitySet<StepTriggerComponent>(state.CurrentlySteppedOn, uid);
 
-        if (!component.CurrentlySteppedOn.SetEquals(state.CurrentlySteppedOn))
-        {
-            component.CurrentlySteppedOn.Clear();
-            component.CurrentlySteppedOn.UnionWith(state.CurrentlySteppedOn);
-        }
+        component.CurrentlySteppedOn.Clear();
+        component.CurrentlySteppedOn.UnionWith(stepped);
 
-        if (!component.Colliding.SetEquals(state.Colliding))
-        {
-            component.Colliding.Clear();
-            component.Colliding.UnionWith(state.Colliding);
-        }
+        component.Colliding.Clear();
+        component.Colliding.UnionWith(colliding);
 
         if (component.Colliding.Count > 0)
         {
@@ -194,12 +199,12 @@ public sealed class StepTriggerSystem : EntitySystem
         }
     }
 
-    private static void TriggerGetState(EntityUid uid, StepTriggerComponent component, ref ComponentGetState args)
+    private void TriggerGetState(EntityUid uid, StepTriggerComponent component, ref ComponentGetState args)
     {
         args.State = new StepTriggerComponentState(
             component.IntersectRatio,
-            component.CurrentlySteppedOn,
-            component.Colliding,
+            GetNetEntitySet(component.CurrentlySteppedOn),
+            GetNetEntitySet(component.Colliding),
             component.RequiredTriggerSpeed,
             component.Active);
     }
