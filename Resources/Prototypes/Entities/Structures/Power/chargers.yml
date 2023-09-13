@@ -112,6 +112,7 @@
   components:
   - type: Sprite
     sprite: Structures/Power/wall_recharger.rsi
+    noRot: false
     layers:
     - map: ["enum.PowerChargerVisualLayers.Base"]
       state: "empty"
