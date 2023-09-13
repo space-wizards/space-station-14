@@ -52,8 +52,6 @@ namespace Content.Client.Hands.Systems
             SubscribeLocalEvent<HandsComponent, ComponentHandleState>(HandleComponentState);
             SubscribeLocalEvent<HandsComponent, VisualsChangedEvent>(OnVisualsChanged);
 
-            SubscribeNetworkEvent<PickupAnimationEvent>(HandlePickupAnimation);
-
             OnHandSetActive += OnHandActivated;
         }
 
@@ -118,30 +116,6 @@ namespace Content.Client.Hands.Systems
             {
                 SetActiveHand(uid, component.Hands[state.ActiveHand!], component);
             }
-        }
-        #endregion
-
-        #region PickupAnimation
-        private void HandlePickupAnimation(PickupAnimationEvent msg)
-        {
-            PickupAnimation(GetEntity(msg.ItemUid), GetCoordinates(msg.InitialPosition), msg.FinalPosition, msg.InitialAngle);
-        }
-
-        public override void PickupAnimation(EntityUid item, EntityCoordinates initialPosition, Vector2 finalPosition, Angle initialAngle,
-            EntityUid? exclude)
-        {
-            PickupAnimation(item, initialPosition, finalPosition, initialAngle);
-        }
-
-        public void PickupAnimation(EntityUid item, EntityCoordinates initialPosition, Vector2 finalPosition, Angle initialAngle)
-        {
-            if (!_gameTiming.IsFirstTimePredicted)
-                return;
-
-            if (finalPosition.EqualsApprox(initialPosition.Position, tolerance: 0.1f))
-                return;
-
-            ReusableAnimations.AnimateEntityPickup(item, initialPosition, finalPosition, initialAngle);
         }
         #endregion
 

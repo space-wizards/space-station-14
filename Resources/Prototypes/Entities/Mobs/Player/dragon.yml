@@ -162,8 +162,8 @@
 
 - type: entity
   id: ActionSpawnRift
-  name: action-name-carp-rift
-  description: action-description-carp-rift
+  name: Summon Carp Rift
+  description: Summons a carp rift that will periodically spawns carps.
   noSpawn: true
   components:
   - type: InstantAction
