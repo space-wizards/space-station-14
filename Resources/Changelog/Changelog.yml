@@ -1,9 +1,4 @@
 Entries:
-- author: AjexRose
-  changes:
-  - {message: Central Command has given the command locked crates a new look, type: Tweak}
-  id: 4318
-  time: '2023-07-25T20:18:02.0000000+00:00'
 - author: Phill101
   changes:
   - {message: Added bleeding status icon, type: Add}
@@ -2984,3 +2979,8 @@ Entries:
   - {message: Fix shuttles docking with planetmaps., type: Fix}
   id: 4817
   time: '2023-09-13T12:06:15.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Training bombs are now available for purchase at cargo., type: Add}
+  id: 4818
+  time: '2023-09-13T16:54:48.0000000+00:00'
