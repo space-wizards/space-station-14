@@ -71,7 +71,7 @@
 - type: cargoProduct
   id: SecurityBarrier
   icon:
-    sprite: Objects\Specific\Security\barrier.rsi
+    sprite: Objects/Specific/Security/barrier.rsi
     state: idle
   product: DeployableBarrier
   cost: 1000
