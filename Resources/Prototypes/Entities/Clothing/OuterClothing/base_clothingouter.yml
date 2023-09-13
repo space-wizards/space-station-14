@@ -94,3 +94,18 @@
     sprintModifier: 0.8
   - type: Item
     size: 80
+
+- type: entity
+  parent: ClothingOuterBase
+  id: ClothingOuterBaseToggleable
+  name: hoodie with hood
+  noSpawn: True
+  components:
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHatHoodWinterDefault
+    slot: head
+  - type: ContainerContainer
+    containers:
+      toggleable-clothing: !type:ContainerSlot {}
+      storagebase: !type:Container
+        ents: []
