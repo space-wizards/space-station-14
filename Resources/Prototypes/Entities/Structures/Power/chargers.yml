@@ -14,8 +14,7 @@
     slotId: charger_slot
   - type: PowerCellSlot
     cellSlotId: charger_slot
-    # this is a charger...
-    fitsInCharger: false
+    # fitsInCharger is true i dont think this will ever affect anything negatively but it lets it function
   - type: Anchorable
     delay: 1
   - type: Destructible
