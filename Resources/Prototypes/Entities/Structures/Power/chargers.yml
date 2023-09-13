@@ -12,9 +12,6 @@
   - type: Appearance
   - type: Charger
     slotId: charger_slot
-  - type: PowerCellSlot
-    cellSlotId: charger_slot
-    # fitsInCharger is true i dont think this will ever affect anything negatively but it lets it function
   - type: Anchorable
     delay: 1
   - type: Destructible
@@ -45,6 +42,12 @@
   components:
   - type: Sprite
     drawdepth: SmallObjects
+    layers:
+    - map: ["enum.PowerChargerVisualLayers.Base"]
+      state: "empty"
+    - map: ["enum.PowerChargerVisualLayers.Light"]
+      state: "light-off"
+      shader: "unshaded"
   - type: Fixtures
     fixtures:
       fix1:
@@ -68,14 +71,11 @@
   components:
   - type: Sprite
     sprite: Structures/Power/cell_recharger.rsi
-    layers:
-    - map: ["enum.PowerChargerVisualLayers.Base"]
-      state: "empty"
-    - map: ["enum.PowerChargerVisualLayers.Light"]
-      state: "light-off"
-      shader: "unshaded"
   - type: Machine
     board: CellRechargerCircuitboard
+  - type: PowerCellSlot
+    cellSlotId: charger_slot
+    # fitsInCharger is true i dont think this will ever affect anything negatively but it lets it function
   - type: ItemSlots
     slots:
       charger_slot:
@@ -86,7 +86,7 @@
           - PowerCell
 
 - type: entity
-  parent: PowerCellRecharger
+  parent: BaseItemRecharger
   id: WeaponCapacitorRecharger
   name: recharger
   components:
@@ -94,6 +94,7 @@
     sprite: Structures/Power/recharger.rsi
   - type: Machine
     board: WeaponCapacitorRechargerCircuitboard
+  # no powercellslot since stun baton etc arent powercells
   - type: ItemSlots
     slots:
       charger_slot:
