@@ -189,6 +189,7 @@
       - id: MaterialBiomass
         amount: 3
       - id: BoxEncryptionKeyMedical
+      - id: CMOModHardsuitcore #Edited in Imperial Space by @sentryprimies in the name of modsuits
 
 - type: entity
   id: LockerChiefMedicalOfficerFilled
@@ -216,6 +217,7 @@
       - id: MaterialBiomass
         amount: 3
       - id: BoxEncryptionKeyMedical
+      - id: CMOModHardsuitcore #Edited in Imperial Space by @sentryprimies in the name of modsuits
 
 - type: entity
   id: LockerResearchDirectorFilledHardsuit
@@ -288,6 +290,7 @@
       - id: JetpackSecurityFilled
       - id: BoxEncryptionKeySecurity
       - id: HoloprojectorSecurity
+      - id: HOSModHardsuitcore #Edited in Imperial Space by @sentryprimies in the name of modsuits
 
 - type: entity
   id: LockerHeadOfSecurityFilled
@@ -316,3 +319,4 @@
       - id: SecurityTechFabCircuitboard
       - id: BoxEncryptionKeySecurity
       - id: HoloprojectorSecurity
+      - id: HOSModHardsuitcore #Edited in Imperial Space by @sentryprimies in the name of modsuits
