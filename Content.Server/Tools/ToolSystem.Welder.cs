@@ -152,6 +152,8 @@ namespace Content.Server.Tools
             // Optional components.
             Resolve(uid, ref item, ref appearance, false);
 
+            _light.ResolveLight(uid, ref light);
+
             welder.Lit = false;
 
             // Logging
