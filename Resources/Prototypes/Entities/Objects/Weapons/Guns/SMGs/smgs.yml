@@ -300,3 +300,51 @@
         whitelist:
           tags:
             - CartridgeMagnum
+
+- type: entity
+  name: C-SAR Burst Rifle
+  parent: BaseWeaponSubMachineGun
+  id: WeaponSubMachineGunCSAR
+  description: An 11th generation .25 caseless burst rifle. Custom made for a certain Julius.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/SMGs/csar.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-0
+      map: ["enum.GunVisualLayers.Mag"]
+  - type: Clothing
+    sprite: Objects/Weapons/Guns/SMGs/csar.rsi
+  - type: Gun
+    minAngle: 0
+    maxAngle: 40
+    fireRate: 6
+    angleIncrease: 4
+    angleDecay: 20
+    selectedMode: Burst
+    availableModes:
+    - Burst
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        startingItem: MagazineCaselessRifle
+        insertSound: /Audio/Weapons/Guns/MagIn/smg_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/smg_magout.ogg
+        priority: 2
+        whitelist:
+          tags:
+            - MagazineCaselessRifle
+      gun_chamber:
+        name: Chamber
+        startingItem: CartridgeCaselessRifle
+        priority: 1
+        whitelist:
+          tags:
+            - CartridgeCaselessRifle
+  - type: MagazineVisuals
+    magState: mag
+    steps: 6
+    zeroVisible: true
+  - type: Appearance

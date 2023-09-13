@@ -128,6 +128,18 @@
         amount: 2
 
 - type: entity
+  parent: ClothingBackpackDuffelSyndicateBundle
+  id: ClothingBackpackDuffelSyndicateFilledCSAR
+  name: C-SAR bundle
+  description: "A brand new, top of the line Cybersun Specialist Automatic Rifle, and 3 spare magazines."
+  components:
+  - type: StorageFill
+    contents:
+      - id: WeaponSubMachineGunCSAR
+      - id: MagazineCaselessRifle
+        amount: 2
+
+- type: entity
   parent: ClothingBackpackDuffelSyndicateAmmo
   id: ClothingBackpackDuffelSyndicateAmmoFilled
   name: ammo bundle
@@ -329,3 +341,4 @@
       - id: ClothingHandsGlovesLatex
       - id: SyringeTranexamicAcid
       - id: SyringeHyronalin
+

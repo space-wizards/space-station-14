@@ -169,6 +169,9 @@ uplink-c20r-bundle-desc = Old faithful: The classic C-20r Submachine Gun, bundle
 uplink-buldog-bundle-name = Bulldog Bundle
 uplink-buldog-bundle-desc = Lean and mean: Contains the popular Bulldog Shotgun, a 12g beanbag drum and three 12g buckshot drums.
 
+uplink-csar-bundle-name = C-SAR Bundle
+uplink-csar-bundle-desc = A brand new, top of the line Cybersun Specialist Automatic Rifle, and 3 spare magazines.
+
 uplink-grenade-launcher-bundle-name = China-Lake Bundle
 uplink-grenade-launcher-bundle-desc = An old China-Lake grenade launcher bundled with 11 rounds of various destruction capability.
 

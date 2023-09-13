@@ -679,6 +679,17 @@
   - UplinkBundles
 
 - type: listing
+  id: UplinkCSARBundle
+  name: uplink-csar-bundle-name
+  description: uplink-csar-bundle-desc
+  icon: { sprite: /Textures/Objects/Weapons/Guns/SMGs/csar.rsi, state: icon }
+  productEntity: ClothingBackpackDuffelSyndicateFilledCSAR
+  cost:
+    Telecrystal: 23
+  categories:
+  - UplinkBundles
+
+- type: listing
   id: UplinkGrenadeLauncherBundle
   name: uplink-grenade-launcher-bundle-name
   description: uplink-grenade-launcher-bundle-desc
