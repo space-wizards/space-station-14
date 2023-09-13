@@ -49,7 +49,8 @@
     thresholds:
       0: Alive
       100: Dead
-    healthAlert: BorgHealth
+    stateAlertDict:
+      Alive: BorgHealth
     showOverlays: false
   - type: HealthExaminable
     examinableTypes:

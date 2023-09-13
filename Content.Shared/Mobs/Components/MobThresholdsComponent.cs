@@ -10,7 +10,7 @@ namespace Content.Shared.Mobs.Components;
 [Access(typeof(MobThresholdSystem))]
 public sealed partial class MobThresholdsComponent : Component
 {
-    [DataField("thresholds", required:true)]
+    [DataField("thresholds", required: true)]
     public SortedDictionary<FixedPoint2, MobState> Thresholds = new();
 
     [DataField("triggersAlerts")]
@@ -23,14 +23,13 @@ public sealed partial class MobThresholdsComponent : Component
     /// The health alert that should be displayed for player controlled entities.
     /// Used for alternate health alerts (silicons, for example)
     /// </summary>
-    [DataField("healthAlert")]
-    public AlertType HealthAlert = AlertType.HumanHealth;
-
-    [DataField("critAlert")]
-    public AlertType CritAlert = AlertType.HumanCrit;
-
-    [DataField("deadAlert")]
-    public AlertType DeadAlert = AlertType.HumanDead;
+    [DataField("stateAlertDict")]
+    public Dictionary<MobState, AlertType> StateAlertDict = new()
+    {
+        {MobState.Alive, AlertType.HumanHealth},
+        {MobState.Critical, AlertType.HumanCrit},
+        {MobState.Dead, AlertType.HumanDead},
+    };
 
     /// <summary>
     /// Whether or not this entity should display damage overlays (robots don't feel pain, black out etc.)
@@ -54,25 +53,24 @@ public sealed class MobThresholdsComponentState : ComponentState
 
     public MobState CurrentThresholdState;
 
-    public AlertType HealthAlert = AlertType.HumanHealth;
-
-    public AlertType CritAlert = AlertType.HumanCrit;
-
-    public AlertType DeadAlert = AlertType.HumanDead;
+    public Dictionary<MobState, AlertType> StateAlertDict = new()
+    {
+        {MobState.Alive, AlertType.HumanHealth},
+        {MobState.Critical, AlertType.HumanCrit},
+        {MobState.Dead, AlertType.HumanDead},
+    };
 
     public bool ShowOverlays;
 
     public bool AllowRevives;
 
     public MobThresholdsComponentState(Dictionary<FixedPoint2, MobState> unsortedThresholds, bool triggersAlerts, MobState currentThresholdState,
-        AlertType healthAlert, AlertType critAlert, AlertType deadAlert, bool showOverlays, bool allowRevives)
+        Dictionary<MobState, AlertType> stateAlertDict, bool showOverlays, bool allowRevives)
     {
         UnsortedThresholds = unsortedThresholds;
         TriggersAlerts = triggersAlerts;
         CurrentThresholdState = currentThresholdState;
-        HealthAlert = healthAlert;
-        CritAlert = critAlert;
-        DeadAlert = deadAlert;
+        StateAlertDict = stateAlertDict;
         ShowOverlays = showOverlays;
         AllowRevives = allowRevives;
     }

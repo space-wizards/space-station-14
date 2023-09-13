@@ -84,9 +84,7 @@ public sealed class DamageOverlayUiController : UIController
 
         if (!thresholds.ShowOverlays)
         {
-            _overlay.BruteLevel = 0;
-            _overlay.CritLevel = 0;
-            _overlay.DeadLevel = 0;
+            ClearOverlay();
             return; //this entity intentionally has no overlays
         }
 

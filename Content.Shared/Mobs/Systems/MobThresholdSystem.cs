@@ -5,6 +5,7 @@ using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
 using Content.Shared.Mobs.Components;
 using Robust.Shared.GameStates;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Mobs.Systems;
 
@@ -34,9 +35,7 @@ public sealed class MobThresholdSystem : EntitySystem
         args.State = new MobThresholdsComponentState(thresholds,
             component.TriggersAlerts,
             component.CurrentThresholdState,
-            component.HealthAlert,
-            component.CritAlert,
-            component.DeadAlert,
+            component.StateAlertDict,
             component.ShowOverlays,
             component.AllowRevives);
     }
@@ -345,9 +344,14 @@ public sealed class MobThresholdSystem : EntitySystem
         if (!threshold.TriggersAlerts)
             return;
 
-        var healthAlert = threshold.HealthAlert;
-        var critAlert = threshold.CritAlert;
-        var deadAlert = threshold.DeadAlert;
+        var dict = threshold.StateAlertDict;
+        var healthAlert = AlertType.HumanHealth;
+        var critAlert = AlertType.HumanCrit;
+        var deadAlert = AlertType.HumanDead;
+
+        dict.TryGetValue(MobState.Alive, out healthAlert);
+        dict.TryGetValue(MobState.Critical, out critAlert);
+        dict.TryGetValue(MobState.Dead, out deadAlert);
 
         switch (currentMobState)
         {
