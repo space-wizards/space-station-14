@@ -26,4 +26,16 @@ public abstract class SharedWiresSystem : EntitySystem
             }
         }
     }
+
+    /// <summary>
+    /// If the entity has a wire panel, returns whether it is closed.
+    /// Otherwise returns false as it has no panel to close.
+    /// </summary>
+    public bool IsClosed(EntityUid uid, WiresPanelComponent? comp = null)
+    {
+        if (!Resolve(uid, ref comp, false))
+            return false;
+
+        return !comp.Open;
+    }
 }
