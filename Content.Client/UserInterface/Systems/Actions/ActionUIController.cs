@@ -961,6 +961,7 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
         StopTargeting();
 
         SelectingTargetFor = actionId;
+        // TODO inform the server
         action.Toggled = true;
 
         // override "held-item" overlay
@@ -1018,6 +1019,7 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
         var oldAction = SelectingTargetFor;
         if (_actionsSystem != null && _actionsSystem.TryGetActionData(oldAction, out var action))
         {
+            // TODO inform the server
             action.Toggled = false;
         }
 
