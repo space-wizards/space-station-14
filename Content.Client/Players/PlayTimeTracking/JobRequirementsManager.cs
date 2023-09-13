@@ -120,27 +120,18 @@ public sealed class JobRequirementsManager
         reason = null;
 
         if (requirements == null)
-        {
             return true;
-        }
 
-        var reasonBuilder = new StringBuilder();
-
-        var first = true;
+        var reasons = new List<string>();
         foreach (var requirement in requirements)
         {
             if (JobRequirements.TryRequirementMet(requirement, _roles, out reason, _prototypes))
-            {
                 continue;
-            }
-            if (!first)
-                reasonBuilder.Append('\n');
-            first = false;
 
-            reasonBuilder.AppendLine(reason);
+            reasons.Add(reason);
         }
 
-        reason = reasonBuilder.Length == 0 ? null : reasonBuilder.ToString();
+        reason = reasons.Count == 0 ? null : reasons.Join("\n");
         return reason == null;
     }
 }
