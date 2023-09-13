@@ -59,7 +59,7 @@ public sealed class IntrinsicUISystem : EntitySystem
         return true;
     }
 
-    private BoundUserInterface? GetUIOrNull(EntityUid uid, Enum? key, IntrinsicUIComponent? component = null)
+    private PlayerBoundUserInterface? GetUIOrNull(EntityUid uid, Enum? key, IntrinsicUIComponent? component = null)
     {
         if (!Resolve(uid, ref component))
             return null;

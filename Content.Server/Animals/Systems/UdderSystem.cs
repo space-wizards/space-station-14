@@ -66,7 +66,7 @@ namespace Content.Server.Animals.Systems
             if (!Resolve(uid, ref udder))
                 return;
 
-            var doargs = new DoAfterArgs(userUid, 5, new MilkingDoAfterEvent(), uid, uid, used: containerUid)
+            var doargs = new DoAfterArgs(EntityManager, userUid, 5, new MilkingDoAfterEvent(), uid, uid, used: containerUid)
             {
                 BreakOnUserMove = true,
                 BreakOnDamage = true,

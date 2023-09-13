@@ -169,6 +169,6 @@ public sealed class MechComponentState : ComponentState
     public FixedPoint2 MaxIntegrity;
     public FixedPoint2 Energy;
     public FixedPoint2 MaxEnergy;
-    public EntityUid? CurrentSelectedEquipment;
+    public NetEntity? CurrentSelectedEquipment;
     public bool Broken;
 }

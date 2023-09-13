@@ -49,7 +49,7 @@ public abstract partial class SharedProjectileSystem : EntitySystem
 
         args.Handled = true;
 
-        _doAfter.TryStartDoAfter(new DoAfterArgs(args.User, component.RemovalTime.Value,
+        _doAfter.TryStartDoAfter(new DoAfterArgs(EntityManager, args.User, component.RemovalTime.Value,
             new RemoveEmbeddedProjectileEvent(), eventTarget: uid, target: uid)
         {
             DistanceThreshold = SharedInteractionSystem.InteractionRange,
@@ -143,9 +143,9 @@ public abstract partial class SharedProjectileSystem : EntitySystem
 public sealed class ImpactEffectEvent : EntityEventArgs
 {
     public string Prototype;
-    public EntityCoordinates Coordinates;
+    public NetCoordinates Coordinates;
 
-    public ImpactEffectEvent(string prototype, EntityCoordinates coordinates)
+    public ImpactEffectEvent(string prototype, NetCoordinates coordinates)
     {
         Prototype = prototype;
         Coordinates = coordinates;
