@@ -132,6 +132,31 @@
 
 - type: entity
   parent: BaseItem
+  id: MakeshiftLaserFrame
+  name: makeshift laser pistol frame
+  description: The incomplete frame of a makeshift laser pistol.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Battery/makeshift.rsi
+    layers:
+    - state: frame_0
+      map: [ "enum.ConstructionVisuals.Layer" ]
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.ConstructionVisuals.Key:
+        enum.ConstructionVisuals.Layer:
+          casterMissing: { state: frame_0 }
+          casterUnsecured: { state: frame_1 }
+          wiresMissing: { state: frame_1 }
+  - type: Item
+    size: 10
+  - type: Construction
+    graph: WeaponMakeshiftLaser
+    node: casterMissing
+
+- type: entity
+  parent: BaseItem
   id: LaserGunFrame
   name: retro laser blaster frame
   description: The incomplete frame of a retro laser blaster.
