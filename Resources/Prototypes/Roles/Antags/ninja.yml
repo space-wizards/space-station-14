@@ -7,9 +7,3 @@
   requirements:
   - !type:OverallPlaytimeRequirement
     time: 72000 # 20h overall
-  - !type:DepartmentTimeRequirement
-    department: Security
-    time: 1800 # 30m in security so you probably know how stuns work
-  - !type:DepartmentTimeRequirement
-    department: Engineering
-    time: 3600 # 1h in engineering so you probably know how to use tools
