@@ -290,6 +290,7 @@
       - id: JetpackSecurityFilled
       - id: BoxEncryptionKeySecurity
       - id: HoloprojectorSecurity
+      - id: BookSecretDocuments
       - id: HOSModHardsuitcore #Edited in Imperial Space by @sentryprimies in the name of modsuits
 
 - type: entity
@@ -319,4 +320,5 @@
       - id: SecurityTechFabCircuitboard
       - id: BoxEncryptionKeySecurity
       - id: HoloprojectorSecurity
+      - id: BookSecretDocuments
       - id: HOSModHardsuitcore #Edited in Imperial Space by @sentryprimies in the name of modsuits
