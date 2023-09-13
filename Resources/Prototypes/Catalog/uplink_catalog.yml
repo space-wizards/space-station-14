@@ -815,8 +815,10 @@
   categories:
   - UplinkTools
   conditions:
-  - !type:ListingLimitedStockCondition
-    stock: 10
+  - !type:StoreWhitelistCondition
+    blacklist:
+      tags:
+      - NukeOpsUplink
 
 # Job Specific
 
