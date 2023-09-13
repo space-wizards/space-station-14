@@ -5,7 +5,7 @@ accent-words-cat-3 = Mrrrow!
 accent-words-cat-4 = Hhsss!
 accent-words-cat-5 = Brrow.
 accent-words-cat-6 = Meow?
-accent-words-cat-7 = Miau
+accent-words-cat-7 = Miau.
 
 # Dog accent
 accent-words-dog-1 = Bark!
