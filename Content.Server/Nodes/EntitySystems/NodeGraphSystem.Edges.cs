@@ -20,6 +20,19 @@ public sealed partial class NodeGraphSystem
     }
 
     /// <summary>
+    /// Gets the edge flags for an edge between two nodes if such exists.
+    /// </summary>
+    /// <returns>The edge flags for some edge between <paramref name="nodeId"/> and <paramref name="edgeId"/>; null if no such edge exists.</returns>
+    public EdgeFlags? GetEdgeOrNull(EntityUid nodeId, EntityUid edgeId, GraphNodeComponent? node = null)
+    {
+        if (!_nodeQuery.Resolve(nodeId, ref node))
+            return null;
+
+        return GetEdgeIndex(node, edgeId) is { } index ? node.Edges[index].Flags : null;
+    }
+
+
+    /// <summary>
     /// Attempts to add an externally managed edge between two nodes. Fails if doing so is impossible or if such an edge already exists.
     /// </summary>
     /// <remarks>
@@ -95,10 +108,10 @@ public sealed partial class NodeGraphSystem
         }
 
         var oldFlags = node.Edges[edgeIdx].Flags;
-        if (((flags ^ oldFlags) & ~EdgeFlags.Manual) == EdgeFlags.None)
-            return false;
+        if (((oldFlags & EdgeFlags.Manual) != EdgeFlags.None) && (((flags ^ oldFlags) & ~EdgeFlags.SourceMask) == EdgeFlags.None))
+            return true;
 
-        SetEdge(nodeId, edgeId, edgeIdx, flags | EdgeFlags.Manual, oldFlags, node, edge);
+        SetEdge(nodeId, edgeId, edgeIdx, flags | EdgeFlags.Manual | (oldFlags & EdgeFlags.SourceMask), oldFlags, node, edge);
         return true;
     }
 

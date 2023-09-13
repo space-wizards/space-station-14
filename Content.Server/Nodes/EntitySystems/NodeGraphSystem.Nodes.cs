@@ -10,7 +10,7 @@ public sealed partial class NodeGraphSystem
     /// <summary>
     /// Marks a graph node as the location of a potential split in the graph.
     /// </summary>
-    private void MarkSplit(EntityUid nodeId, GraphNodeComponent node, NodeGraphComponent? graph = null)
+    public void MarkSplit(EntityUid nodeId, GraphNodeComponent node, NodeGraphComponent? graph = null)
     {
         if ((node.Flags & NodeFlags.Split) != NodeFlags.None)
             return;
@@ -24,7 +24,7 @@ public sealed partial class NodeGraphSystem
     /// <summary>
     /// Marks a graph node as the location of a potential merge between two graphs.
     /// </summary>
-    private void MarkMerge(EntityUid nodeId, GraphNodeComponent node, NodeGraphComponent? graph = null)
+    public void MarkMerge(EntityUid nodeId, GraphNodeComponent node, NodeGraphComponent? graph = null)
     {
         if ((node.Flags & NodeFlags.Merge) != NodeFlags.None)
             return;
@@ -38,7 +38,7 @@ public sealed partial class NodeGraphSystem
     /// <summary>
     /// Clears a graph node as the location of a potential split in the graph.
     /// </summary>
-    private void ClearSplit(EntityUid nodeId, GraphNodeComponent node, NodeGraphComponent? graph = null)
+    public void ClearSplit(EntityUid nodeId, GraphNodeComponent node, NodeGraphComponent? graph = null)
     {
         if ((node.Flags & NodeFlags.Split) == NodeFlags.None)
             return;
@@ -52,7 +52,7 @@ public sealed partial class NodeGraphSystem
     /// <summary>
     /// Clears a graph node as the location of a potential merge between two or more graphs.
     /// </summary>
-    private void ClearMerge(EntityUid nodeId, GraphNodeComponent node, NodeGraphComponent? graph = null)
+    public void ClearMerge(EntityUid nodeId, GraphNodeComponent node, NodeGraphComponent? graph = null)
     {
         if ((node.Flags & NodeFlags.Merge) == NodeFlags.None)
             return;

@@ -36,6 +36,72 @@ public sealed partial class NodeGraphSystem
     }
 
     /// <summary>
+    /// Floodfills connected, uninitialized nodes with a new graph.
+    /// </summary>
+    private void FloodSpawnGraph(EntityUid seedId, GraphNodeComponent seed)
+    {
+        var graphProto = seed.GraphProto;
+        EntityUid? graphId = null;
+        NodeGraphComponent? graph = null;
+
+        seed.Flags |= NodeFlags.Init;
+        var nodes = new List<(EntityUid NodeId, GraphNodeComponent Nodes)>()
+        {
+            (seedId, seed),
+        };
+        for (var i = 0; i < nodes.Count; ++i)
+        {
+            var (_, node) = nodes[i];
+
+            foreach (var (edgeId, edgeFlags) in node.Edges)
+            {
+                if ((edgeFlags & EdgeFlags.NoMerge) != EdgeFlags.None)
+                    continue;
+
+                var edge = _nodeQuery.GetComponent(edgeId);
+                // Edge node is incompatible. We can't merge with it.
+                if (edge.GraphProto != graphProto)
+                    continue;
+
+                // Update node edges as necessary so the floodfill actually propagates past the initial node:
+                if ((edge.Flags & NodeFlags.Init) == NodeFlags.None)
+                    UpdateEdges(edgeId, edge);
+
+                // We have encountered a mergeable edge leading to some compatible graph:
+                if (edge.GraphId is { } edgeGraphId)
+                {
+                    if (edgeGraphId == graphId)
+                        continue; // Tis the graph we are using to floodfill, don't bother propagating into it b/c we'd just add it to its own graph.
+
+                    // Floodfill using largest adjacent extant graph if possible to minimize node handoffs. 
+                    var edgeGraph = _graphQuery.GetComponent(edgeGraphId);
+                    if (graph is null || graph.Nodes.Count < edgeGraph.Nodes.Count)
+                        (graphId, graph) = (edgeGraphId, edgeGraph);
+                    continue;
+                }
+
+                // Edge node has already been propagated to so don't for(;;) the BFS.
+                if ((edge.Flags & NodeFlags.Init) != NodeFlags.None)
+                    continue;
+
+                edge.Flags |= NodeFlags.Init;
+                nodes.Add((edgeId, edge));
+            }
+        }
+
+        // If we didn't find an extant graph to extend make a new one.
+        if (graphId is null || graph is null)
+            (graphId, graph) = SpawnGraph(graphProto);
+
+        // Add all connected, compatible nodes into the new graph (at least 1 due to seed).
+        foreach (var (nodeId, node) in nodes)
+        {
+            AddNode(graphId.Value, nodeId, graph: graph, node: node);
+        }
+    }
+
+
+    /// <summary>
     /// Adds a node to a graph.
     /// </summary>
     private void AddNode(EntityUid graphId, EntityUid nodeId, NodeGraphComponent? graph = null, GraphNodeComponent? node = null)
@@ -101,6 +167,7 @@ public sealed partial class NodeGraphSystem
             DelGraph(graphId, graph);
     }
 
+
     /// <summary>
     /// Queues a graph to be checked for splits at a given node.
     /// </summary>
@@ -136,6 +203,7 @@ public sealed partial class NodeGraphSystem
         if (graph.MergeNodes.Remove(nodeId) && graph.MergeNodes.Count <= 0)
             _queuedMergeGraphs.Remove(graphId);
     }
+
 
     /// <summary>
     /// Merges the smaller of two graphs into the larger.
@@ -186,81 +254,15 @@ public sealed partial class NodeGraphSystem
             return null;
         }
 
-        if (graph.Nodes.Count > 0)
-        {
-            var postGraphEv = new SplitEvent(graphId, splitId, nodes, graph, split);
-            RaiseLocalEvent(graphId, ref postGraphEv);
-        }
+        // If all of the nodes were moved out of the old graph it's being deleted.
+        var postGraphEv = new SplitEvent(graphId, splitId, nodes, graph, split);
+        RaiseLocalEvent(graphId, ref postGraphEv);
 
         var postSplitEv = new SplitFromEvent(splitId, graphId, nodes, split, graph);
         RaiseLocalEvent(splitId, ref postSplitEv);
         return (splitId, split);
     }
 
-    /// <summary>
-    /// Floodfills connected, uninitialized nodes with a new graph.
-    /// </summary>
-    private void FloodSpawnGraph(EntityUid seedId, GraphNodeComponent seed)
-    {
-        var graphProto = seed.GraphProto;
-        EntityUid? graphId = null;
-        NodeGraphComponent? graph = null;
-
-        seed.Flags |= NodeFlags.Init;
-        var nodes = new List<(EntityUid NodeId, GraphNodeComponent Nodes)>()
-        {
-            (seedId, seed),
-        };
-        for (var i = 0; i < nodes.Count; ++i)
-        {
-            var (_, node) = nodes[i];
-
-            foreach (var (edgeId, edgeFlags) in node.Edges)
-            {
-                if ((edgeFlags & EdgeFlags.NoMerge) != EdgeFlags.None)
-                    continue;
-
-                var edge = _nodeQuery.GetComponent(edgeId);
-                // Edge node is incompatible. We can't merge with it.
-                if (edge.GraphProto != graphProto)
-                    continue;
-
-                // Update node edges as necessary so the floodfill actually propagates past the initial node:
-                if ((edge.Flags & NodeFlags.Init) == NodeFlags.None)
-                    UpdateEdges(edgeId, edge);
-
-                // We have encountered a mergeable edge leading to some compatible graph:
-                if (edge.GraphId is { } edgeGraphId)
-                {
-                    if (edgeGraphId == graphId)
-                        continue; // Tis the graph we are using to floodfill, don't bother propagating into it b/c we'd just add it to its own graph.
-
-                    // Floodfill using largest adjacent extant graph if possible to minimize node handoffs. 
-                    var edgeGraph = _graphQuery.GetComponent(edgeGraphId);
-                    if (graph is null || graph.Nodes.Count < edgeGraph.Nodes.Count)
-                        (graphId, graph) = (edgeGraphId, edgeGraph);
-                    continue;
-                }
-
-                // Edge node has already been propagated to so don't for(;;) the BFS.
-                if ((edge.Flags & NodeFlags.Init) != NodeFlags.None)
-                    continue;
-
-                edge.Flags |= NodeFlags.Init;
-                nodes.Add((edgeId, edge));
-            }
-        }
-
-        // If we didn't find an extant graph to extend make a new one.
-        if (graphId is null || graph is null)
-            (graphId, graph) = SpawnGraph(graphProto);
-
-        // Add all connected, compatible nodes into the new graph (at least 1 due to seed).
-        foreach (var (nodeId, node) in nodes)
-        {
-            AddNode(graphId.Value, nodeId, graph: graph, node: node);
-        }
-    }
 
     /// <summary>
     /// Merges connected, compatible graphs into one large graph.
@@ -397,7 +399,11 @@ public sealed partial class NodeGraphSystem
     /// </summary>
     private void OnComponentInit(EntityUid uid, NodeGraphComponent comp, ComponentInit args)
     {
+        DebugTools.Assert(comp.GraphProto != default, $"Node graph {uid} spawned without having its type set.");
+
         comp.NetSyncEnabled = _sendingVisState;
+
+        _graphsByProto.GetOrNew(comp.GraphProto).Add(uid);
     }
 
     /// <summary>
@@ -405,32 +411,32 @@ public sealed partial class NodeGraphSystem
     /// </summary>
     private void OnComponentShutdown(EntityUid uid, NodeGraphComponent comp, ComponentShutdown args)
     {
+        if (_graphsByProto.TryGetValue(comp.GraphProto, out var set))
+            set.Remove(uid);
+
         if (comp.Nodes.Count <= 0)
             return;
 
         Log.Error($"Node graph {ToPrettyString(uid)} was shut down while still containing graph nodes; this should never happen.");
 
-        (EntityUid Id, GraphNodeComponent Comp)? lastNode = null;
+        // Shuffle all of the nodes into the replacement...
+        var (subId, sub) = SpawnGraph(comp.GraphProto);
         while (comp.Nodes.FirstOrNull() is { } nodeId)
         {
             var node = _nodeQuery.GetComponent(nodeId);
-            RemoveNode(uid, nodeId, graph: comp, node: node);
-            node.Flags &= ~NodeFlags.Init; // Reset initialized state so we can be floodfilled with a valid graph.
-            lastNode = (nodeId, node);
+
+            AddNode(subId, nodeId, graph: sub, node: node);
+            RemoveNode(uid, nodeId, graph: comp, node: node); // To be sure...
         }
 
-        if (lastNode is { } seed)
-        {
-            FloodSpawnGraph(seed.Id, seed.Comp);
-            Log.Debug($"Rebuilt graph for nodes of deleted graph {ToPrettyString(uid)}; the new graph is {ToPrettyString(seed.Comp.GraphId!.Value)}.");
-        }
+        Log.Debug($"Rebuilt graph for nodes of deleted graph {ToPrettyString(uid)}; the new graph is {ToPrettyString(subId)}.");
 
         DebugTools.Assert(comp.MergeNodes.Count <= 0, "Shut down node graph contained merge nodes after purging nodes.");
         DebugTools.Assert(comp.SplitNodes.Count <= 0, "Show down node graph contained split nodes after purging nodes.");
     }
 
     /// <remarks>
-    /// Since graphs should never be naturally deleted except by being emptied of nodes this should be unreachable unless badmins manually delete one.
+    /// Since graphs should never be naturally deleted except by being emptied of nodes this should always be a noop unless badmins manually delete one.
     /// In that case we don't want there to be any nodes left with a null graph so yeet all the nodes too.
     /// </remarks>
     private void OnEntityTerminating(EntityUid uid, NodeGraphComponent comp, ref EntityTerminatingEvent args)

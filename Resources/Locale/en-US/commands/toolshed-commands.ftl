@@ -70,3 +70,23 @@ command-description-mind-get =
     Grabs the mind from the entity, if any.
 command-description-mind-control =
     Assumes control of an entity with the given player.
+command-description-graphedge-add =
+    Adds an externally managed node graph edge between a node and one or more other nodes.
+command-description-graphedge-exists =
+    Checks whether a node graph edge exists between a node and one or more other nodes.
+command-description-graphedge-get =
+    Gets the state(s) of the node graph edge(s) between a node and one or more other nodes.
+command-description-graphedge-remove =
+    Removes an externally managed node graph edge between a node and one or more other nodes.
+command-description-graphedge-set =
+    Sets the state(s) of the node graph edge(s) between a node and one or more other nodes.
+command-description-graphnode-fix =
+    Recalculates the edges of one, multiple, or all graph nodes.
+command-description-nodegraph-fix =
+    Recalculates the connectivity of one, multiple, or all node graphs. May filter by graph prototype.
+command-description-nodevis-show =
+    Enables node debug visualization for one, multiple, or all node graphs or types of node graphs.
+command-description-nodevis-hide =
+    Disables node debug visualization for one, multiple, or all node graphs or types of node graphs.
+command-description-nodevis-refresh =
+    Updates node debug visualization data for one, multiple, or all node graphs or types of node graphs.

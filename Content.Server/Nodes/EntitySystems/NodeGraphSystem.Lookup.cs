@@ -5,6 +5,14 @@ namespace Content.Server.Nodes.EntitySystems;
 public sealed partial class NodeGraphSystem
 {
     /// <summary>
+    /// Returns an enumerable over all extant graphs of a given type.
+    /// </summary>
+    public IEnumerable<EntityUid> GetGraphsByType(string graphProto)
+    {
+        return _graphsByProto.TryGetValue(graphProto, out var graphs) ? graphs : new();
+    }
+
+    /// <summary>
     /// Gets the proxy node attached to a polynode by a certain key.
     /// </summary>
     public bool TryGetProxyNode(EntityUid polyId, string proxyKey, out EntityUid proxyId, PolyNodeComponent? poly = null)

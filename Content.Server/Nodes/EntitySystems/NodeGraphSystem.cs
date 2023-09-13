@@ -16,6 +16,8 @@ public sealed partial class NodeGraphSystem : EntitySystem
     private EntityQuery<PolyNodeComponent> _polyQuery = default!;
     private EntityQuery<ProxyNodeComponent> _proxyQuery = default!;
 
+    private readonly Dictionary<string, HashSet<EntityUid>> _graphsByProto = new();
+
     /// <summary></summary>
     private readonly HashSet<EntityUid> _queuedEdgeUpdates = new();
     /// <summary></summary>
