@@ -1,10 +1,11 @@
 using Content.Server.Administration.Managers;
-using Content.Server.Ghost.Components;
 using Content.Shared.ActionBlocker;
+using Content.Shared.Ghost;
 using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
+using Content.Shared.UserInterface;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
@@ -32,7 +33,7 @@ public sealed partial class ActivatableUISystem : EntitySystem
 
         SubscribeLocalEvent<ActivatableUIComponent, GetVerbsEvent<ActivationVerb>>(AddOpenUiVerb);
 
-        SubscribeLocalEvent<ServerUserInterfaceComponent, OpenUiActionEvent>(OnActionPerform);
+        SubscribeLocalEvent<UserInterfaceComponent, OpenUiActionEvent>(OnActionPerform);
 
         InitializePower();
     }
@@ -49,7 +50,7 @@ public sealed partial class ActivatableUISystem : EntitySystem
             ev.Cancel();
     }
 
-    private void OnActionPerform(EntityUid uid, ServerUserInterfaceComponent component, OpenUiActionEvent args)
+    private void OnActionPerform(EntityUid uid, UserInterfaceComponent component, OpenUiActionEvent args)
     {
         if (args.Handled || args.Key == null)
             return;

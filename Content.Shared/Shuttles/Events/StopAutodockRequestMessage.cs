@@ -8,5 +8,5 @@ namespace Content.Shared.Shuttles.Events;
 [Serializable, NetSerializable]
 public sealed class StopAutodockRequestMessage : BoundUserInterfaceMessage
 {
-    public EntityUid DockEntity;
+    public NetEntity DockEntity;
 }

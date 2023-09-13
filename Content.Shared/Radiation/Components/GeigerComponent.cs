@@ -91,7 +91,7 @@ public sealed class GeigerComponentState : ComponentState
     public float CurrentRadiation;
     public GeigerDangerLevel DangerLevel;
     public bool IsEnabled;
-    public EntityUid? User;
+    public NetEntity? User;
 }
 
 [Serializable, NetSerializable]

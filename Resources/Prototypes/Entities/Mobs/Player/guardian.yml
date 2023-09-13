@@ -89,6 +89,11 @@
       damage:
         types:
           Blunt: 20
+    - type: MeleeSpeech
+    - type: UserInterface
+      interfaces:
+      - key: enum.MeleeSpeechUiKey.Key
+        type: MeleeSpeechBoundUserInterface
     - type: Actions
     - type: Guardian
     - type: InteractionPopup
@@ -171,6 +176,8 @@
     - type: FootstepModifier
       footstepSoundCollection:
         collection: FootstepClown
+    - type: Speech
+      speechVerb: Cluwne
     - type: TypingIndicator
       proto: holo
     - type: RandomSprite
@@ -225,3 +232,15 @@
     - type: RandomMetadata
       nameSegments:
       - names_clown
+
+- type: entity
+  id: ActionToggleGuardian
+  name: Toggle Guardian
+  description: Either manifests the guardian or recalls it back into your body
+  noSpawn: true
+  components:
+  - type: InstantAction
+    icon: Interface/Actions/manifest.png
+    event: !type:GuardianToggleActionEvent
+    useDelay: 2
+    checkCanInteract: false

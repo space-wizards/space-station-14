@@ -23,7 +23,7 @@
     damageContainer: Biological
     damageModifierSet: Moth
   - type: Speech
-    speechVerb: Insect
+    speechVerb: Moth
   - type: TypingIndicator
     proto: moth
   - type: Butcherable

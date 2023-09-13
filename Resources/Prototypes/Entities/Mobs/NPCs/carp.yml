@@ -1,7 +1,7 @@
 - type: entity
   name: space carp
   id: BaseMobCarp
-  parent: SimpleSpaceMobBase
+  parent: [ SimpleSpaceMobBase, FlyingMobBase ]
   description: It's a space carp.
   abstract: true
   components:
@@ -39,10 +39,9 @@
     - type: MobThresholds
       thresholds:
         0: Alive
-        100: Dead
+        50: Dead
     - type: Stamina
       critThreshold: 100
-    - type: MovementAlwaysTouching
     - type: DamageStateVisuals
       states:
         Alive:
@@ -68,13 +67,14 @@
           Slash: 10
     - type: TypingIndicator
       proto: alien
-    - type: NoSlip
     - type: Tag
       tags:
         - Carp
         - DoorBumpOpener
     - type: ReplacementAccent
       accent: genericAggressive
+    - type: Speech
+      speechVerb: LargeMob
 
 - type: entity
   parent: BaseMobCarp

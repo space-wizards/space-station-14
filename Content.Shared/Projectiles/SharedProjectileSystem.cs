@@ -1,4 +1,5 @@
 using System.Numerics;
+using Content.Shared.Damage;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
 using Content.Shared.Projectiles;
@@ -48,7 +49,7 @@ public abstract partial class SharedProjectileSystem : EntitySystem
 
         args.Handled = true;
 
-        _doAfter.TryStartDoAfter(new DoAfterArgs(args.User, component.RemovalTime.Value,
+        _doAfter.TryStartDoAfter(new DoAfterArgs(EntityManager, args.User, component.RemovalTime.Value,
             new RemoveEmbeddedProjectileEvent(), eventTarget: uid, target: uid)
         {
             DistanceThreshold = SharedInteractionSystem.InteractionRange,
@@ -142,9 +143,9 @@ public abstract partial class SharedProjectileSystem : EntitySystem
 public sealed class ImpactEffectEvent : EntityEventArgs
 {
     public string Prototype;
-    public EntityCoordinates Coordinates;
+    public NetCoordinates Coordinates;
 
-    public ImpactEffectEvent(string prototype, EntityCoordinates coordinates)
+    public ImpactEffectEvent(string prototype, NetCoordinates coordinates)
     {
         Prototype = prototype;
         Coordinates = coordinates;
@@ -152,13 +153,13 @@ public sealed class ImpactEffectEvent : EntityEventArgs
 }
 
 /// <summary>
-/// Raised when entity is just about to be hit with projectile but can reflect it
+/// Raised when an entity is just about to be hit with a projectile but can reflect it
 /// </summary>
 [ByRefEvent]
 public record struct ProjectileReflectAttemptEvent(EntityUid ProjUid, ProjectileComponent Component, bool Cancelled);
 
 /// <summary>
-/// Raised when projectile hits other entity
+/// Raised when a projectile hits an entity
 /// </summary>
 [ByRefEvent]
-public readonly record struct ProjectileHitEvent(EntityUid Target);
+public record struct ProjectileHitEvent(DamageSpecifier Damage, EntityUid Target, EntityUid? Shooter = null);

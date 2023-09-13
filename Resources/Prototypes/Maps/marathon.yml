@@ -47,6 +47,7 @@
             SeniorResearcher: [ 1, 1 ]        
             Scientist: [ 3, 3 ]
             ResearchAssistant: [ 3, 3 ] 
+            Borg: [ 2, 2 ]
             #security
             HeadOfSecurity: [ 1, 1 ]
             Warden: [ 1, 1 ]

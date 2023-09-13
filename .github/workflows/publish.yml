@@ -16,13 +16,13 @@ jobs:
     - name: Install dependencies
       run: sudo apt-get install -y python3-paramiko
 
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3.6.0
       with:
         submodules: 'recursive'
     - name: Setup .NET Core
-      uses: actions/setup-dotnet@v3
+      uses: actions/setup-dotnet@v3.2.0
       with:
-        dotnet-version: 6.0.100
+        dotnet-version: 7.0.x
 
     - name: Get Engine Tag
       run: |

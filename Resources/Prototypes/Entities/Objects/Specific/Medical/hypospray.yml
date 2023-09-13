@@ -18,6 +18,7 @@
   - type: ExaminableSolution
     solution: hypospray
   - type: Hypospray
+    onlyMobs: false
   - type: UseDelay
     delay: 0.5
   - type: StaticPrice
@@ -46,8 +47,23 @@
   - type: ExaminableSolution
     solution: hypospray
   - type: Hypospray
+    onlyMobs: false
   - type: UseDelay
     delay: 0.5
+
+- type: entity
+  name: experimental hypospray
+  suffix: Admeme
+  parent: SyndiHypo
+  description: The ultimate application of bluespace technology and rapid chemical administration.
+  id: AdminHypo
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        hypospray:
+          maxVol: 3000
+    - type: UseDelay
+      delay: 0.0
 
 - type: entity
   name: chemical medipen
@@ -316,6 +332,7 @@
   - type: ExaminableSolution
     solution: hypospray
   - type: Hypospray
+    onlyMobs: false
   - type: UseDelay
     delay: 0.5
   - type: StaticPrice # A new shitcurity meta
