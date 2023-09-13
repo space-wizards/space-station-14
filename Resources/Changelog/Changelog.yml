@@ -1,9 +1,4 @@
 Entries:
-- author: PJB3005
-  changes:
-  - {message: Observers move faster now., type: Tweak}
-  id: 4317
-  time: '2023-07-25T00:33:01.0000000+00:00'
 - author: AjexRose
   changes:
   - {message: Central Command has given the command locked crates a new look, type: Tweak}
@@ -2984,3 +2979,8 @@ Entries:
   - {message: Security Barriers can now be ordered by cargo., type: Tweak}
   id: 4816
   time: '2023-09-13T08:56:16.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix shuttles docking with planetmaps., type: Fix}
+  id: 4817
+  time: '2023-09-13T12:06:15.0000000+00:00'
