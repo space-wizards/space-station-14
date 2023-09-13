@@ -1,60 +1,4 @@
 Entries:
-- author: Skarlet
-  changes:
-  - {message: Added Cap's Cap, type: Add}
-  - {message: Changed Hop Cap's description, type: Tweak}
-  id: 4308
-  time: '2023-07-23T19:15:53.0000000+00:00'
-- author: Errant
-  changes:
-  - {message: Emergency and Double oxygen tanks that spawn empty now have the same
-      internal volume as filled ones., type: Fix}
-  id: 4309
-  time: '2023-07-23T19:17:32.0000000+00:00'
-- author: deltanedas
-  changes:
-  - {message: Salt is now white instead of red., type: Tweak}
-  id: 4310
-  time: '2023-07-23T19:17:46.0000000+00:00'
-- author: JoeHammad
-  changes:
-  - {message: Due to ERT's lackluster performance CentCom has decided to slightly
-      upgrade their arsenal, type: Tweak}
-  id: 4311
-  time: '2023-07-24T03:01:29.0000000+00:00'
-- author: Derby
-  changes:
-  - {message: Added 22 new figurines to collect and play with!, type: Add}
-  id: 4312
-  time: '2023-07-24T03:06:08.0000000+00:00'
-- author: Tunguso4ka
-  changes:
-  - {message: Added coffin to bury your fellow spessmen with honor., type: Add}
-  id: 4313
-  time: '2023-07-24T03:13:10.0000000+00:00'
-- author: Flareguy
-  changes:
-  - {message: 'The Syndicate has supplied traitors with a much newer, much scarier
-      model of the Python chambered in classic .357.', type: Tweak}
-  - {message: The Mateba now fires faster and uses .357., type: Tweak}
-  id: 4314
-  time: '2023-07-24T23:02:15.0000000+00:00'
-- author: Dygon
-  changes:
-  - {message: Cigarettes can be injected again., type: Tweak}
-  id: 4315
-  time: '2023-07-24T23:02:30.0000000+00:00'
-- author: deltanedas
-  changes:
-  - {message: 'The space dragon event now only spawns a dragon when a ghost takes
-      the role, and in a random location.', type: Tweak}
-  id: 4316
-  time: '2023-07-25T00:32:12.0000000+00:00'
-- author: PJB3005
-  changes:
-  - {message: Observers move faster now., type: Tweak}
-  id: 4317
-  time: '2023-07-25T00:33:01.0000000+00:00'
 - author: AjexRose
   changes:
   - {message: Central Command has given the command locked crates a new look, type: Tweak}
@@ -2985,3 +2929,58 @@ Entries:
   - {message: Fixed "failed to insert into storage" messages being broken., type: Fix}
   id: 4807
   time: '2023-09-11T22:57:27.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Added automatic area pickups to ore bags., type: Add}
+  - {message: Fix stackable items not playing the pickup animation on pickup., type: Fix}
+  id: 4808
+  time: '2023-09-12T12:34:04.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix lights not always updating., type: Fix}
+  id: 4809
+  time: '2023-09-12T14:35:08.0000000+00:00'
+- author: JoeHammad
+  changes:
+  - {message: 'Nukies now start with a microbomb implant in their backpack, remember
+      to communicate if you''re gonna use it!', type: Add}
+  - {message: The microbomb implanter has been removed from the nukie uplink, type: Remove}
+  id: 4810
+  time: '2023-09-12T15:09:33.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Fixed ninja suit not having any actions., type: Fix}
+  id: 4811
+  time: '2023-09-12T20:54:19.0000000+00:00'
+- author: AndrewEyeke
+  changes:
+  - {message: Nuclear Operatives will be able to buy carps. They are limited to 10
+      per operative., type: Add}
+  id: 4812
+  time: '2023-09-12T21:50:03.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix eye not updating correctly when stopping riding (e.g. leaving vehicles).,
+    type: Fix}
+  id: 4813
+  time: '2023-09-13T04:25:35.0000000+00:00'
+- author: Doru991
+  changes:
+  - {message: Welders can be toggled off again., type: Fix}
+  id: 4814
+  time: '2023-09-13T04:35:05.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix fultons being toggleable by any entity., type: Fix}
+  id: 4815
+  time: '2023-09-13T08:01:22.0000000+00:00'
+- author: Nairodian
+  changes:
+  - {message: Security Barriers can now be ordered by cargo., type: Tweak}
+  id: 4816
+  time: '2023-09-13T08:56:16.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix shuttles docking with planetmaps., type: Fix}
+  id: 4817
+  time: '2023-09-13T12:06:15.0000000+00:00'

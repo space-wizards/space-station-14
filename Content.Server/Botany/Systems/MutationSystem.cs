@@ -320,7 +320,10 @@ public sealed class MutationSystem : EntitySystem
             {
                 if (Random(0.5f))
                 {
-                    val.Remove(this_chem.Key);
+                    if (val.Count > 1)
+                    {
+                        val.Remove(this_chem.Key);
+                    }
                 }
             }
         }

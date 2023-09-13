@@ -96,7 +96,7 @@ public sealed class PartExchangerSystem : EntitySystem
         //put the unused parts back into rped. (this also does the "swapping")
         foreach (var (unused, _) in machineParts)
         {
-            _storage.Insert(storageUid, unused, playSound: false);
+            _storage.Insert(storageUid, unused, out _, playSound: false);
         }
         _construction.RefreshParts(uid, machine);
     }
@@ -146,7 +146,7 @@ public sealed class PartExchangerSystem : EntitySystem
         //put the unused parts back into rped. (this also does the "swapping")
         foreach (var (unused, _) in machineParts)
         {
-            _storage.Insert(storageEnt, unused, playSound: false);
+            _storage.Insert(storageEnt, unused, out _, playSound: false);
         }
     }
 

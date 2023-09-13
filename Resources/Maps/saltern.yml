@@ -34158,14 +34158,6 @@ entities:
     - destinationAddress: Science
       name: Science
       type: FaxMachine
-  - uid: 7954
-    components:
-    - pos: -17.5,11.5
-      parent: 31
-      type: Transform
-    - destinationAddress: Permanent Cell
-      name: Permanent Cell
-      type: FaxMachine
   - uid: 8323
     components:
     - pos: 9.5,-28.5
@@ -52526,11 +52518,6 @@ entities:
     - pos: 7.361776,-3.3478336
       parent: 31
       type: Transform
-  - uid: 9712
-    components:
-    - pos: -16.864128,11.363559
-      parent: 31
-      type: Transform
   - uid: 9759
     components:
     - rot: 3.141592653589793 rad
@@ -52671,12 +52658,6 @@ entities:
   - uid: 2355
     components:
     - pos: -23.709803,-6.4905295
-      parent: 31
-      type: Transform
-  - uid: 6995
-    components:
-    - rot: -1.5707963267948966 rad
-      pos: -16.893642,11.245564
       parent: 31
       type: Transform
   - uid: 8744
@@ -61819,12 +61800,6 @@ entities:
     - pos: 25.5,0.5
       parent: 31
       type: Transform
-  - uid: 631
-    components:
-    - rot: 3.141592653589793 rad
-      pos: -17.5,11.5
-      parent: 31
-      type: Transform
   - uid: 765
     components:
     - pos: -3.5,18.5
@@ -63525,6 +63500,13 @@ entities:
     - pos: -30.5,13.5
       parent: 31
       type: Transform
+- proto: TrainingBomb
+  entities:
+  - uid: 631
+    components:
+    - pos: -13.5,20.5
+      parent: 31
+      type: Transform
 - proto: TrashBag
   entities:
   - uid: 798
@@ -64054,6 +64036,15 @@ entities:
     - flags: SessionSpecific
       type: MetaData
     - pos: 19.5,-24.5
+      parent: 31
+      type: Transform
+- proto: VendingMachineSustenance
+  entities:
+  - uid: 7377
+    components:
+    - flags: SessionSpecific
+      type: MetaData
+    - pos: -17.5,11.5
       parent: 31
       type: Transform
 - proto: VendingMachineTankDispenserEVA
@@ -72313,6 +72304,13 @@ entities:
       parent: 31
       type: Transform
     - location: security
+      type: WarpPoint
+  - uid: 6995
+    components:
+    - pos: 48.5,8.5
+      parent: 31
+      type: Transform
+    - location: ame
       type: WarpPoint
   - uid: 7256
     components:
