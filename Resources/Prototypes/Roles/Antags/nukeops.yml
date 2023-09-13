@@ -12,7 +12,7 @@
     time: 18000 # 5h
   - !type:DepartmentTimeRequirement
     department: Command
-    time: 18000 # 5h
+    time: 3600 # 1h
 
 - type: antag
   id: NukeopsMedic
