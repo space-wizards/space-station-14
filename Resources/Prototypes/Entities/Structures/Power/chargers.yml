@@ -86,7 +86,7 @@
           - PowerCell
 
 - type: entity
-  parent: BaseItemRecharger
+  parent: PowerCellRecharger
   id: WeaponCapacitorRecharger
   name: recharger
   components:
