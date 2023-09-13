@@ -21,11 +21,11 @@ public abstract class SharedDevourSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<DevourerComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<DevourerComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<DevourerComponent, DevourActionEvent>(OnDevourAction);
     }
 
-    protected void OnMapInit(EntityUid uid, DevourerComponent component, MapInitEvent args)
+    protected void OnStartup(EntityUid uid, DevourerComponent component, ComponentStartup args)
     {
         //Devourer doesn't actually chew, since he sends targets right into his stomach.
         //I did it mom, I added ERP content into upstream. Legally!
@@ -53,7 +53,7 @@ public abstract class SharedDevourSystem : EntitySystem
                 case MobState.Critical:
                 case MobState.Dead:
 
-                    _doAfterSystem.TryStartDoAfter(new DoAfterArgs(uid, component.DevourTime, new DevourDoAfterEvent(), uid, target: target, used: uid)
+                    _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, uid, component.DevourTime, new DevourDoAfterEvent(), uid, target: target, used: uid)
                     {
                         BreakOnTargetMove = true,
                         BreakOnUserMove = true,
@@ -72,7 +72,7 @@ public abstract class SharedDevourSystem : EntitySystem
         if (component.SoundStructureDevour != null)
             _audioSystem.PlayPredicted(component.SoundStructureDevour, uid, uid, component.SoundStructureDevour.Params);
 
-        _doAfterSystem.TryStartDoAfter(new DoAfterArgs(uid, component.StructureDevourTime, new DevourDoAfterEvent(), uid, target: target, used: uid)
+        _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, uid, component.StructureDevourTime, new DevourDoAfterEvent(), uid, target: target, used: uid)
         {
             BreakOnTargetMove = true,
             BreakOnUserMove = true,

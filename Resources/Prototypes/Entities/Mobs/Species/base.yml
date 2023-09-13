@@ -312,6 +312,7 @@
     deathPenalty: 0.01 # However they really ought to be living and intact, otherwise they're worth 100x less.
   - type: ContentEye
   - type: SleepEmitSound
+  - type: SSDIndicator
 
 - type: entity
   save: false

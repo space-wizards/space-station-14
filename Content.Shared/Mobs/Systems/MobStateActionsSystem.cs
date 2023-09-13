@@ -1,6 +1,6 @@
 ﻿using Content.Shared.Actions;
 using Content.Shared.Mobs.Components;
-using Robust.Shared.Prototypes;
+using Robust.Shared.Network;
 
 namespace Content.Shared.Mobs.Systems;
 
@@ -9,7 +9,7 @@ namespace Content.Shared.Mobs.Systems;
 /// </summary>
 public sealed class MobStateActionsSystem : EntitySystem
 {
-    [Dependency] private readonly IPrototypeManager _proto = default!;
+    [Dependency] private readonly INetManager _net = default!;
     [Dependency] private readonly SharedActionsSystem _actions = default!;
 
     /// <inheritdoc/>
@@ -20,6 +20,9 @@ public sealed class MobStateActionsSystem : EntitySystem
 
     private void OnMobStateChanged(EntityUid uid, MobStateActionsComponent component, MobStateChangedEvent args)
     {
+        if (_net.IsClient)
+            return;
+
         if (!TryComp<ActionsComponent>(uid, out var action))
             return;
 
@@ -30,10 +33,6 @@ public sealed class MobStateActionsSystem : EntitySystem
 
             foreach (var item in acts)
             {
-                if (!_proto.TryIndex<EntityPrototype>(item, out var proto))
-                    continue;
-
-                var instance = Spawn(item);
                 if (state == args.OldMobState)
                 {
                     // Don't remove actions that would be getting readded anyway
@@ -41,11 +40,11 @@ public sealed class MobStateActionsSystem : EntitySystem
                         && value.Contains(item))
                         continue;
 
-                    _actions.RemoveAction(uid, instance, action);
+                    _actions.RemoveAction(uid, item, action);
                 }
                 else if (state == args.NewMobState)
                 {
-                    _actions.AddAction(uid, instance, null, action);
+                    _actions.AddAction(uid, Spawn(item), null, action);
                 }
             }
         }

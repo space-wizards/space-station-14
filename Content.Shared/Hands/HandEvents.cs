@@ -114,16 +114,24 @@ namespace Content.Shared.Hands
         }
     }
 
+    /// <summary>
+    /// Plays a clientside pickup animation by copying the specified entity.
+    /// </summary>
     [Serializable, NetSerializable]
     public sealed class PickupAnimationEvent : EntityEventArgs
     {
-        public EntityUid ItemUid { get; }
-        public EntityCoordinates InitialPosition { get; }
-        public Vector2 FinalPosition { get; }
-        public Angle InitialAngle { get; }
+        /// <summary>
+        /// Entity to be copied for the clientside animation.
+        /// </summary>
+        public readonly NetEntity ItemUid;
+        public readonly NetCoordinates InitialPosition;
+        public readonly NetCoordinates FinalPosition;
+        public readonly Angle InitialAngle;
 
-        public PickupAnimationEvent(EntityUid itemUid, EntityCoordinates initialPosition,
-            Vector2 finalPosition, Angle initialAngle)
+        public PickupAnimationEvent(NetEntity itemUid,
+            NetCoordinates initialPosition,
+            NetCoordinates finalPosition,
+            Angle initialAngle)
         {
             ItemUid = itemUid;
             FinalPosition = finalPosition;

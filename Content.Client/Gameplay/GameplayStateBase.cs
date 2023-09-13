@@ -174,9 +174,13 @@ namespace Content.Client.Gameplay
                     EntityCoordinates.FromMap(_mapManager, mousePosWorld);
             }
 
-            var message = new FullInputCmdMessage(_timing.CurTick, _timing.TickFraction, funcId, kArgs.State,
-                coordinates , kArgs.PointerLocation,
-                entityToClick ?? default); // TODO make entityUid nullable
+            var message = new ClientFullInputCmdMessage(_timing.CurTick, _timing.TickFraction, funcId)
+            {
+                State = kArgs.State,
+                Coordinates = coordinates,
+                ScreenCoordinates = kArgs.PointerLocation,
+                Uid = entityToClick ?? default,
+            }; // TODO make entityUid nullable
 
             // client side command handlers will always be sent the local player session.
             var session = _playerManager.LocalPlayer?.Session;

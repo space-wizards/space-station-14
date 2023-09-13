@@ -278,8 +278,8 @@
 
 - type: entity
   id: ActionRatKingRaiseArmy
-  name: rat-king-raise-army-name
-  description: rat-king-raise-army-description
+  name: Raise Army
+  description: Spend some hunger to summon an allied rat to help defend you.
   noSpawn: true
   components:
   - type: InstantAction
@@ -290,8 +290,8 @@
 
 - type: entity
   id: ActionRatKingDomain
-  name: rat-king-domain-name
-  description: rat-king-domain-description
+  name: Rat King's Domain
+  description: Spend some hunger to release a cloud of miasma into the air.
   noSpawn: true
   components:
   - type: InstantAction
