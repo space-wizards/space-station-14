@@ -73,7 +73,7 @@
   id: MobReptilianHeadFemale
   baseSprite:
     sprite: Mobs/Species/Reptilian/parts.rsi
-    state: 
+    state: head_f
 
 - type: humanoidBaseSprite
   id: MobReptilianTorso
