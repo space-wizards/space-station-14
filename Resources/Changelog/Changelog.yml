@@ -1,11 +1,4 @@
 Entries:
-- author: Flareguy
-  changes:
-  - {message: 'The Syndicate has supplied traitors with a much newer, much scarier
-      model of the Python chambered in classic .357.', type: Tweak}
-  - {message: The Mateba now fires faster and uses .357., type: Tweak}
-  id: 4314
-  time: '2023-07-24T23:02:15.0000000+00:00'
 - author: Dygon
   changes:
   - {message: Cigarettes can be injected again., type: Tweak}
@@ -2987,3 +2980,8 @@ Entries:
     type: Fix}
   id: 4813
   time: '2023-09-13T04:25:35.0000000+00:00'
+- author: Doru991
+  changes:
+  - {message: Welders can be toggled off again., type: Fix}
+  id: 4814
+  time: '2023-09-13T04:35:05.0000000+00:00'
