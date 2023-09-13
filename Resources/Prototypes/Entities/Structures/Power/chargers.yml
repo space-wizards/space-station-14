@@ -33,7 +33,7 @@
         sound:
           path: /Audio/Effects/metalbreak.ogg
   - type: StaticPrice
-    price: 15
+    price: 25
 
 - type: entity
   abstract: true
