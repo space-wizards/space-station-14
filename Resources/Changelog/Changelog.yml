@@ -1,16 +1,4 @@
 Entries:
-- author: Tunguso4ka
-  changes:
-  - {message: Added coffin to bury your fellow spessmen with honor., type: Add}
-  id: 4313
-  time: '2023-07-24T03:13:10.0000000+00:00'
-- author: Flareguy
-  changes:
-  - {message: 'The Syndicate has supplied traitors with a much newer, much scarier
-      model of the Python chambered in classic .357.', type: Tweak}
-  - {message: The Mateba now fires faster and uses .357., type: Tweak}
-  id: 4314
-  time: '2023-07-24T23:02:15.0000000+00:00'
 - author: Dygon
   changes:
   - {message: Cigarettes can be injected again., type: Tweak}
@@ -2986,3 +2974,14 @@ Entries:
       per operative., type: Add}
   id: 4812
   time: '2023-09-12T21:50:03.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix eye not updating correctly when stopping riding (e.g. leaving vehicles).,
+    type: Fix}
+  id: 4813
+  time: '2023-09-13T04:25:35.0000000+00:00'
+- author: Doru991
+  changes:
+  - {message: Welders can be toggled off again., type: Fix}
+  id: 4814
+  time: '2023-09-13T04:35:05.0000000+00:00'
