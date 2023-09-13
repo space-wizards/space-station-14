@@ -20,7 +20,7 @@ namespace Content.Server.Actions;
 [RegisterComponent]
 public sealed partial class ActionOnInteractComponent : Component
 {
-    [DataField("actions", customTypeSerializer: typeof(PrototypeIdListSerializer<EntityPrototype>))]
+    [DataField("actions", customTypeSerializer: typeof(PrototypeIdListSerializer<EntityPrototype>), required:true)]
     public List<string>? Actions;
 
     [DataField("actionEntities")] public List<EntityUid>? ActionEntities;

@@ -111,8 +111,8 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
     {
         if (_actionsSystem != null)
         {
-            _actionsSystem.ActionAdded += OnActionAdded;
-            _actionsSystem.ActionRemoved += OnActionRemoved;
+            _actionsSystem.OnActionAdded += OnActionAdded;
+            _actionsSystem.OnActionRemoved += OnActionRemoved;
             _actionsSystem.ActionReplaced += OnActionReplaced;
             _actionsSystem.ActionsUpdated += OnActionsUpdated;
         }
@@ -319,8 +319,8 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
     {
         if (_actionsSystem != null)
         {
-            _actionsSystem.ActionAdded -= OnActionAdded;
-            _actionsSystem.ActionRemoved -= OnActionRemoved;
+            _actionsSystem.OnActionAdded -= OnActionAdded;
+            _actionsSystem.OnActionRemoved -= OnActionRemoved;
             _actionsSystem.ActionReplaced -= OnActionReplaced;
             _actionsSystem.ActionsUpdated -= OnActionsUpdated;
         }
@@ -522,8 +522,8 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
         return filter switch
         {
             Filters.Enabled => action.Enabled,
-            Filters.Item => action.Provider != null && action.Provider != _playerManager.LocalPlayer?.ControlledEntity,
-            Filters.Innate => action.Provider == null || action.Provider == _playerManager.LocalPlayer?.ControlledEntity,
+            Filters.Item => action.Container != null && action.Container != _playerManager.LocalPlayer?.ControlledEntity,
+            Filters.Innate => action.Container == null || action.Container == _playerManager.LocalPlayer?.ControlledEntity,
             Filters.Instant => action is InstantActionComponent,
             Filters.Targeted => action is BaseTargetActionComponent,
             _ => throw new ArgumentOutOfRangeException(nameof(filter), filter, null)
@@ -583,10 +583,10 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
             if (name.Contains(search, StringComparison.OrdinalIgnoreCase))
                 return true;
 
-            if (action.Comp.Provider == null || action.Comp.Provider == _playerManager.LocalPlayer?.ControlledEntity)
+            if (action.Comp.Container == _playerManager.LocalPlayer?.ControlledEntity)
                 return false;
 
-            var providerName = EntityManager.GetComponent<MetaDataComponent>(action.Comp.Provider.Value).EntityName;
+            var providerName = EntityManager.GetComponent<MetaDataComponent>(action.Comp.Container).EntityName;
             return providerName.Contains(search, StringComparison.OrdinalIgnoreCase);
         });
 
@@ -745,6 +745,8 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
         if (_actionsSystem != null && _actionsSystem.TryGetActionData(_menuDragHelper.Dragged?.ActionId, out var action))
         {
             var entIcon = action.EntityIcon;
+            if (entIcon == null && action.Container != action.AttachedEntity)
+                entIcon = action.Container;
 
             if (entIcon != null)
             {
@@ -902,6 +904,7 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
             return;
 
         var actions = _actionsSystem.GetClientActions().Where(action => action.Comp.AutoPopulate).ToList();
+        actions.Sort(ActionComparer);
 
         var offset = 0;
         var totalPages = _pages.Count;
@@ -965,11 +968,11 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
         action.Toggled = true;
 
         // override "held-item" overlay
-        var provider = action.Provider;
+        var provider = action.Container;
 
         if (action.TargetingIndicator && _overlays.TryGetOverlay<ShowHandItemOverlay>(out var handOverlay))
         {
-            if (action.ItemIconStyle == ItemActionIconStyle.BigItem && action.Provider != null)
+            if (action.ItemIconStyle == ItemActionIconStyle.BigItem && action.Container != null)
             {
                 handOverlay.EntityOverride = provider;
             }

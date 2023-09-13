@@ -11,7 +11,7 @@ public sealed partial class JetpackComponent : Component
     public float MoleUsage = 0.012f;
 
     [DataField("toggleAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string? ToggleAction = "ActionToggleJetpack";
+    public string ToggleAction = "ActionToggleJetpack";
 
     [DataField("toggleActionEntity")] public EntityUid? ToggleActionEntity;
 

@@ -20,6 +20,9 @@ public sealed partial class SubdermalImplantComponent : Component
     [DataField("implantAction")]
     public string? ImplantAction;
 
+    [DataField("action")]
+    public EntityUid? Action;
+
     /// <summary>
     /// The entity this implant is inside
     /// </summary>

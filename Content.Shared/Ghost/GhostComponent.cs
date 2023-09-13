@@ -42,9 +42,9 @@ public sealed partial class GhostComponent : Component
     public int BooMaxTargets = 3;
 
     [DataField("action", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string Action = "ActionGhostBoo";
+    public string BooAction = "ActionGhostBoo";
 
-    [DataField("actionEntity")] public EntityUid? ActionEntity;
+    [DataField("actionEntity")] public EntityUid? BooActionEntity;
 
     // TODO: instead of this funny stuff just give it access and update in system dirtying when needed
     [ViewVariables(VVAccess.ReadWrite)]

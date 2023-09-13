@@ -8,8 +8,8 @@ namespace Content.Shared.Clothing;
 [Access(typeof(SharedMagbootsSystem))]
 public sealed partial class MagbootsComponent : Component
 {
-    [DataField("toggleAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>), required: true)]
-    public string? ToggleAction;
+    [DataField("toggleAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    public string ToggleAction = "ActionToggleMagboots";
 
     [DataField("toggleActionEntity")]
     public EntityUid? ToggleActionEntity;

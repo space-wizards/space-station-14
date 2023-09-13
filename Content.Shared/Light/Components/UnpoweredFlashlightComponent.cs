@@ -18,7 +18,7 @@ public sealed partial class UnpoweredFlashlightComponent : Component
     [ViewVariables] public bool LightOn = false;
 
     [DataField("toggleAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string? ToggleAction = "ActionToggleLight";
+    public string ToggleAction = "ActionToggleLight";
 
     [DataField("toggleActionEntity")] public EntityUid? ToggleActionEntity;
 
