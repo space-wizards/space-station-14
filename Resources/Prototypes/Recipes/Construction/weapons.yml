@@ -176,6 +176,17 @@
 
 - type: construction
   hide: true
+  name: makeshift laser pistol
+  id: WeaponMakeshiftLaser
+  graph: WeaponMakeshiftLaser
+  startNode: start
+  targetNode: makeshiftlaserpistol
+  category: construction-category-weapons
+  icon: { sprite: Objects/Weapons/Guns/Battery/makeshift.rsi, state: icon }
+  objectType: Item
+
+- type: construction
+  hide: true
   name: retro laser blaster
   id: WeaponLaserGun
   graph: WeaponLaserGun
