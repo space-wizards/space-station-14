@@ -13,7 +13,7 @@
   - type: Charger
     slotId: charger_slot
   - type: PowerCellSlot
-    cellSlotId: charge_slot
+    cellSlotId: charger_slot
     # this is a charger...
     fitsInCharger: false
   - type: Anchorable
