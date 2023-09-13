@@ -158,8 +158,6 @@
     whitelist:
       components:
       - BorgChassis
-  - type: PowerCellSlot
-    cellSlotId: entity_storage
   - type: Construction
     containers:
     - machine_parts
