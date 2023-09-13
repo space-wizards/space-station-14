@@ -15,7 +15,7 @@ namespace Content.Client.UserInterface.Systems.Ghost.Controls.Roles
         public event Action<GhostRoleInfo>? OnRoleSelected;
         public event Action<GhostRoleInfo>? OnRoleFollow;
 
-        public GhostRolesEntry(string name, string description, bool hasAccess, FormattedText? reason, IEnumerable<GhostRoleInfo> roles, SpriteSystem spriteSystem)
+        public GhostRolesEntry(string name, string description, bool hasAccess, FormattedMessage? reason, IEnumerable<GhostRoleInfo> roles, SpriteSystem spriteSystem)
         {
             RobustXamlLoader.Load(this);
             _spriteSystem = spriteSystem;
