@@ -77,24 +77,6 @@
       shader: "unshaded"
   - type: Machine
     board: CellRechargerCircuitboard
-  - type: Destructible
-    thresholds:
-      - trigger:
-          !type:DamageTrigger
-          damage: 80
-        behaviors:
-          - !type:DoActsBehavior
-            acts: [ "Destruction" ]
-      - trigger:
-          !type:DamageTrigger
-          damage: 40
-        behaviors:
-          - !type:EmptyAllContainersBehaviour
-          - !type:DoActsBehavior
-            acts: [ "Destruction" ]
-          - !type:PlaySoundBehavior
-            sound:
-              path: /Audio/Effects/metalbreak.ogg
   - type: ItemSlots
     slots:
       charger_slot:
@@ -105,7 +87,7 @@
           - PowerCell
 
 - type: entity
-  parent: PowerCellRecharger
+  parent: BaseRecharger
   id: WeaponCapacitorRecharger
   name: recharger
   components:
