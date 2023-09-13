@@ -51,6 +51,12 @@
     - type: BatteryDischarger
       voltage: High
       node: input
+    - type: Renameable
+      suffix: SMES
+    - type: UserInterface
+      interfaces:
+      - key: enum.RenamingUiKey.Key
+        type: RenamingBoundUserInterface
     - type: PowerNetworkBattery
       maxSupply: 150000
       maxChargeRate: 5000
