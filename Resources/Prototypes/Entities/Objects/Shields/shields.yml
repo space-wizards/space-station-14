@@ -409,8 +409,14 @@
   components:
     - type: ItemToggle
       activatedDisarmMalus: 0.6
-      activateSound: false
-      deActivateSound: false
+      activateSound:
+        path: /Audio/Weapons/telescopicon.ogg
+        params:
+          volume: -5
+      deActivateSound:
+        path: /Audio/Weapons/telescopicoff.ogg
+        params:
+          volume: -5
       offSize: 10
     - type: Sprite
       sprite: Objects/Weapons/Melee/teleriot_shield.rsi
