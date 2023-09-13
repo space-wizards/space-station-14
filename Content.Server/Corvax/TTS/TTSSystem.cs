@@ -1,12 +1,9 @@
-﻿using System.IO;
-using System.Net;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Content.Server.Chat.Systems;
 using Content.Shared.Corvax.CCCVars;
 using Content.Shared.Corvax.TTS;
 using Content.Shared.GameTicking;
 using Content.Shared.SS220.AnnounceTTS;
-using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Network;
@@ -99,7 +96,7 @@ public sealed partial class TTSSystem : EntitySystem
         var soundData = await GenerateTTS(ev.Text, protoVoice.Speaker);
         if (soundData is null) return;
 
-        RaiseNetworkEvent(new PlayTTSEvent(ev.Uid, soundData, false), Filter.SinglePlayer(session));
+        RaiseNetworkEvent(new PlayTTSEvent(GetNetEntity(ev.Uid), soundData, false), Filter.SinglePlayer(session));
     }
 
     private async void OnEntitySpoke(EntityUid uid, TTSComponent component, EntitySpokeEvent args)
@@ -130,7 +127,7 @@ public sealed partial class TTSSystem : EntitySystem
     {
         var soundData = await GenerateTTS(message, speaker);
         if (soundData is null) return;
-        RaiseNetworkEvent(new PlayTTSEvent(uid, soundData, false), Filter.Pvs(uid));
+        RaiseNetworkEvent(new PlayTTSEvent(GetNetEntity(uid), soundData, false), Filter.Pvs(uid));
     }
 
     private async void HandleWhisper(EntityUid uid, string message, string speaker, bool isRadio)
@@ -157,7 +154,7 @@ public sealed partial class TTSSystem : EntitySystem
                 continue;
 
             var ttsEvent = new PlayTTSEvent(
-                uid,
+                GetNetEntity(uid),
                 soundData,
                 false,
                 WhisperVoiceVolumeModifier * (1f - distance / WhisperVoiceRange));
@@ -173,7 +170,7 @@ public sealed partial class TTSSystem : EntitySystem
 
         foreach (var uid in uids)
         {
-            RaiseNetworkEvent(new PlayTTSEvent(uid, soundData, true), Filter.Entities(uid));
+            RaiseNetworkEvent(new PlayTTSEvent(GetNetEntity(uid), soundData, true), Filter.Entities(uid));
         }
     }
 

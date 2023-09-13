@@ -24,6 +24,7 @@ public sealed class TTSSystem : EntitySystem
     [Dependency] private readonly IEyeManager _eye = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly SharedPhysicsSystem _broadPhase = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     private ISawmill _sawmill = default!;
 
@@ -58,10 +59,11 @@ public sealed class TTSSystem : EntitySystem
         var ourPos = _eye.CurrentEye.Position.Position;
         foreach (var stream in _currentStreams)
         {
+            var streamUid = GetEntity(stream.Uid);
             if (!stream.Source.IsPlaying ||
-                !_entity.TryGetComponent<MetaDataComponent>(stream.Uid, out var meta) ||
-                Deleted(stream.Uid, meta) ||
-                !_entity.TryGetComponent<TransformComponent>(stream.Uid, out var xform))
+                !_entity.TryGetComponent<MetaDataComponent>(streamUid, out var meta) ||
+                Deleted(streamUid, meta) ||
+                !_entity.TryGetComponent<TransformComponent>(streamUid, out var xform))
             {
                 stream.Source.Dispose();
                 streamToRemove.Add(stream);
@@ -87,7 +89,7 @@ public sealed class TTSSystem : EntitySystem
                 {
                     occlusion = _broadPhase.IntersectRayPenetration(mapPos.MapId,
                         new CollisionRay(mapPos.Position, sourceRelative.Normalized(), collisionMask),
-                        sourceRelative.Length(), stream.Uid);
+                        sourceRelative.Length(), streamUid);
                 }
                 stream.Source.SetOcclusion(occlusion);
             }
@@ -96,7 +98,7 @@ public sealed class TTSSystem : EntitySystem
         foreach (var audioStream in streamToRemove)
         {
             _currentStreams.Remove(audioStream);
-            ProcessEntityQueue(audioStream.Uid);
+            ProcessEntityQueue(GetEntity(audioStream.Uid));
         }
     }
 
@@ -144,20 +146,21 @@ public sealed class TTSSystem : EntitySystem
 
     private void AddEntityStreamToQueue(AudioStream stream)
     {
-        if (_entityQueues.TryGetValue(stream.Uid, out var queue))
+        var uid = GetEntity(stream.Uid);
+        if (_entityQueues.TryGetValue(uid, out var queue))
         {
             queue.Enqueue(stream);
         }
         else
         {
-            _entityQueues.Add(stream.Uid, new Queue<AudioStream>(new[] { stream }));
+            _entityQueues.Add(uid, new Queue<AudioStream>(new[] { stream }));
 
             if (!IsEntityCurrentlyPlayStream(stream.Uid))
-                ProcessEntityQueue(stream.Uid);
+                ProcessEntityQueue(uid);
         }
     }
 
-    private bool IsEntityCurrentlyPlayStream(EntityUid uid)
+    private bool IsEntityCurrentlyPlayStream(NetEntity uid)
     {
         return _currentStreams.Any(s => s.Uid == uid);
     }
@@ -184,8 +187,8 @@ public sealed class TTSSystem : EntitySystem
 
     private void PlayEntity(AudioStream stream)
     {
-        if (!_entity.TryGetComponent<TransformComponent>(stream.Uid, out var xform) ||
-            !stream.Source.SetPosition(xform.WorldPosition))
+        if (!_entity.TryGetComponent<TransformComponent>(GetEntity(stream.Uid), out var xform) ||
+            !stream.Source.SetPosition(_transform.GetWorldPosition(xform)))
             return;
 
         stream.Source.StartPlaying();
@@ -207,10 +210,10 @@ public sealed class TTSSystem : EntitySystem
     // ReSharper disable once InconsistentNaming
     private sealed class AudioStream
     {
-        public EntityUid Uid { get; }
+        public NetEntity Uid { get; }
         public IClydeAudioSource Source { get; }
 
-        public AudioStream(EntityUid uid, IClydeAudioSource source)
+        public AudioStream(NetEntity uid, IClydeAudioSource source)
         {
             Uid = uid;
             Source = source;

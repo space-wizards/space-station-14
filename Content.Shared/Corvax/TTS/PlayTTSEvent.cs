@@ -6,12 +6,12 @@ namespace Content.Shared.Corvax.TTS;
 // ReSharper disable once InconsistentNaming
 public sealed class PlayTTSEvent : EntityEventArgs
 {
-    public EntityUid Uid { get; }
+    public NetEntity Uid { get; }
     public byte[] Data { get; }
     public bool IsRadio { get; }
     public float VolumeModifier { get; set; }
 
-    public PlayTTSEvent(EntityUid uid, byte[] data, bool isRadio, float volumeModifier = 1f)
+    public PlayTTSEvent(NetEntity uid, byte[] data, bool isRadio, float volumeModifier = 1f)
     {
         Uid = uid;
         Data = data;
