@@ -1,9 +1,4 @@
 Entries:
-- author: Tunguso4ka
-  changes:
-  - {message: Added coffin to bury your fellow spessmen with honor., type: Add}
-  id: 4313
-  time: '2023-07-24T03:13:10.0000000+00:00'
 - author: Flareguy
   changes:
   - {message: 'The Syndicate has supplied traitors with a much newer, much scarier
@@ -2986,3 +2981,9 @@ Entries:
       per operative., type: Add}
   id: 4812
   time: '2023-09-12T21:50:03.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix eye not updating correctly when stopping riding (e.g. leaving vehicles).,
+    type: Fix}
+  id: 4813
+  time: '2023-09-13T04:25:35.0000000+00:00'
