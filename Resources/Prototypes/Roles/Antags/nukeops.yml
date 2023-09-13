@@ -10,6 +10,9 @@
   - !type:DepartmentTimeRequirement
     department: Security
     time: 18000 # 5h
+  - !type:RoleTimeRequirement
+    role: SalvageSpecialist
+    tme: 7200 # 2h
   - !type:DepartmentTimeRequirement
     department: Command
     time: 3600 # 1h
