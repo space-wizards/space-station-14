@@ -12,6 +12,10 @@
   - type: Appearance
   - type: Charger
     slotId: charger_slot
+  - type: PowerCellSlot
+    cellSlotId: charge_slot
+    # this is a charger...
+    fitsInCharger: false
   - type: Anchorable
     delay: 1
   - type: Destructible
@@ -172,6 +176,8 @@
     whitelist:
       components:
       - BorgChassis
+  - type: PowerCellSlot
+    cellSlotId: entity_storage
   - type: Construction
     containers:
     - machine_parts
