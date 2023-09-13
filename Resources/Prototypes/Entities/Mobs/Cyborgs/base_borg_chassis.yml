@@ -137,6 +137,12 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound: /Audio/Machines/warning_buzzer.ogg
+    - trigger:
+        !type:DamageTrigger
         damage: 100
       behaviors:
       - !type:PlaySoundBehavior
