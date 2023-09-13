@@ -1309,7 +1309,7 @@ namespace Content.Client.Preferences.UI
                 Antag = antag;
 
                 var requirements = IoCManager.Resolve<JobRequirementsManager>();
-                var description = Loc.GetString(antag.Description);
+                var description = antag.Description != null ? FormattedMessage.FromMarkup(Loc.GetString(antag.Description)) : null;
                 _checkBox = new CheckBox {Text = Loc.GetString(antag.Name)};
 
                 if (antag.Requirements != null && !requirements.CheckRoleTime(antag.Requirements, out var reason))

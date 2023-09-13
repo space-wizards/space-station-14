@@ -5,6 +5,7 @@ using Content.Shared.Eui;
 using Content.Shared.Ghost.Roles;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
+using Robust.Shared.Utility;
 
 namespace Content.Client.UserInterface.Systems.Ghost.Controls.Roles
 {
@@ -78,7 +79,7 @@ namespace Content.Client.UserInterface.Systems.Ghost.Controls.Roles
                 var name = group.Key.Name;
                 var description = group.Key.Description;
                 bool hasAccess = true;
-                string? reason;
+                FormattedMessage? reason;
 
                 if (!requirementsManager.CheckRoleTime(group.Key.Requirements, out reason))
                 {

@@ -100,7 +100,7 @@ public sealed class JobRequirementsManager
         if (player == null)
             return true;
 
-        return CheckRoleTime(jo.Requirements, out var reason);
+        return CheckRoleTime(job.Requirements, out reason);
     }
 
     public bool CheckRoleTime(HashSet<JobRequirement>? requirements, [NotNullWhen(false)] out FormattedMessage? reason)
@@ -116,10 +116,10 @@ public sealed class JobRequirementsManager
             if (JobRequirements.TryRequirementMet(requirement, _roles, out var jobReason, _entManager, _prototypes))
                 continue;
 
-            reasons.Add(jobReason);
+            reasons.Add(jobReason.ToMarkup());
         }
 
-        reason = reasons.Count == 0 ? null : FormattedMessage.FromMarkup(reasons.Join("\n"));
+        reason = reasons.Count == 0 ? null : FormattedMessage.FromMarkup(string.Join('\n', reasons));
         return reason == null;
     }
 }
