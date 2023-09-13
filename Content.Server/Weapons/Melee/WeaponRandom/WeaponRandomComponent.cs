@@ -4,7 +4,7 @@ using Robust.Shared.Audio;
 namespace Content.Server.Weapons.Melee.WeaponRandom;
 
 [RegisterComponent]
-internal sealed class WeaponRandomComponent : Component
+internal sealed partial class WeaponRandomComponent : Component
 {
 
     /// <summary>

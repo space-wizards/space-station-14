@@ -12,7 +12,7 @@ namespace Content.Shared.Humanoid.Prototypes;
 public sealed class HumanoidSpeciesBaseSpritesPrototype : IPrototype
 {
      [IdDataField]
-     public string ID { get; } = default!;
+     public string ID { get; private set; } = default!;
 
      /// <summary>
      ///     Sprites that this species will use on the given humanoid
@@ -33,7 +33,7 @@ public sealed class HumanoidSpeciesBaseSpritesPrototype : IPrototype
 public sealed class HumanoidSpeciesSpriteLayer : IPrototype
 {
     [IdDataField]
-    public string ID { get; } = default!;
+    public string ID { get; private set; } = default!;
     /// <summary>
     ///     The base sprite for this sprite layer. This is what
     ///     will replace the empty layer tagged by the enum
@@ -43,7 +43,7 @@ public sealed class HumanoidSpeciesSpriteLayer : IPrototype
     ///     layer will be invisible until otherwise set.
     /// </summary>
     [DataField("baseSprite")]
-    public SpriteSpecifier? BaseSprite { get; }
+    public SpriteSpecifier? BaseSprite { get; private set; }
 
     /// <summary>
     ///     The alpha of this layer. Ensures that
@@ -51,20 +51,20 @@ public sealed class HumanoidSpeciesSpriteLayer : IPrototype
     ///     of alpha.
     /// </summary>
     [DataField("layerAlpha")]
-    public float LayerAlpha { get; } = 1.0f;
+    public float LayerAlpha { get; private set; } = 1.0f;
 
     /// <summary>
     ///     If this sprite layer should allow markings or not.
     /// </summary>
     [DataField("allowsMarkings")]
-    public bool AllowsMarkings { get; } = true;
+    public bool AllowsMarkings { get; private set; } = true;
 
     /// <summary>
     ///     If this layer should always match the
     ///     skin tone in a character profile.
     /// </summary>
     [DataField("matchSkin")]
-    public bool MatchSkin { get; } = true;
+    public bool MatchSkin { get; private set; } = true;
 
     /// <summary>
     ///     If any markings that go on this layer should
@@ -72,5 +72,5 @@ public sealed class HumanoidSpeciesSpriteLayer : IPrototype
     ///     alpha.
     /// </summary>
     [DataField("markingsMatchSkin")]
-    public bool MarkingsMatchSkin { get; }
+    public bool MarkingsMatchSkin { get; private set; }
 }

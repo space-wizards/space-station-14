@@ -7,7 +7,7 @@ namespace Content.Shared.Weapons.Ranged.Components;
 /// Indicates that this gun requires wielding to be useable.
 /// </summary>
 [RegisterComponent, NetworkedComponent, Access(typeof(WieldableSystem))]
-public sealed class GunRequiresWieldComponent : Component
+public sealed partial class GunRequiresWieldComponent : Component
 {
 
 }

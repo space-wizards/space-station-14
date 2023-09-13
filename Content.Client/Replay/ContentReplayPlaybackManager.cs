@@ -5,13 +5,13 @@ using Content.Client.Replay.Spectator;
 using Content.Client.Replay.UI.Loading;
 using Content.Client.UserInterface.Systems.Chat;
 using Content.Shared.Chat;
+using Content.Shared.Effects;
 using Content.Shared.GameTicking;
 using Content.Shared.GameWindow;
 using Content.Shared.Hands;
 using Content.Shared.Instruments;
 using Content.Shared.Popups;
 using Content.Shared.Projectiles;
-using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Melee.Events;
 using Content.Shared.Weapons.Ranged.Events;
 using Content.Shared.Weapons.Ranged.Systems;
@@ -24,9 +24,7 @@ using Robust.Client.Replays.Playback;
 using Robust.Client.State;
 using Robust.Client.Timing;
 using Robust.Client.UserInterface;
-using Robust.Shared.ContentPack;
 using Robust.Shared.Serialization.Markdown.Mapping;
-using Robust.Shared.Utility;
 
 namespace Content.Client.Replay;
 
@@ -66,7 +64,7 @@ public sealed class ContentReplayPlaybackManager
     private void LoadOverride(IReplayFileReader fileReader)
     {
         var screen = _stateMan.RequestStateChange<LoadingScreen<bool>>();
-        screen.Job = new ContentLoadReplayJob(1/60f, fileReader, _loadMan, screen);
+        screen.Job = new ContentLoadReplayJob(1 / 60f, fileReader, _loadMan, screen);
         screen.OnJobFinished += (_, e) => OnFinishedLoading(e);
     }
 
@@ -120,6 +118,9 @@ public sealed class ContentReplayPlaybackManager
                 if (!_entMan.EntityExists(_player.LocalPlayer?.ControlledEntity))
                     _entMan.System<ReplaySpectatorSystem>().SetSpectatorPosition(default);
                 return true;
+            case ChatMessage chat:
+                _uiMan.GetUIController<ChatUIController>().ProcessChatMessage(chat, speechBubble: !skipEffects);
+                return true;
         }
 
         if (!skipEffects)
@@ -130,10 +131,6 @@ public sealed class ContentReplayPlaybackManager
 
         switch (message)
         {
-            case ChatMessage chat:
-                // Pass the chat message to the UI controller, skip the speech-bubble / pop-up.
-                _uiMan.GetUIController<ChatUIController>().ProcessChatMessage(chat, speechBubble: false);
-                return true;
             case RoundEndMessageEvent:
             case PopupEvent:
             case AudioMessage:
@@ -142,7 +139,7 @@ public sealed class ContentReplayPlaybackManager
             case SharedGunSystem.HitscanEvent:
             case ImpactEffectEvent:
             case MuzzleFlashEvent:
-            case DamageEffectEvent:
+            case ColorFlashEffectEvent:
             case InstrumentStartMidiEvent:
             case InstrumentMidiEventEvent:
             case InstrumentStopMidiEvent:
@@ -160,7 +157,7 @@ public sealed class ContentReplayPlaybackManager
 
     private void OnReplayPlaybackStopped()
     {
-        _conGrp.Implementation = (IClientConGroupImplementation)_adminMan;
+        _conGrp.Implementation = (IClientConGroupImplementation) _adminMan;
         ReturnToDefaultState();
     }
 }

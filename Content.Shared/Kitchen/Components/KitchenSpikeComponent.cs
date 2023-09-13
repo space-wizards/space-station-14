@@ -6,7 +6,7 @@ namespace Content.Shared.Kitchen.Components;
 
 [RegisterComponent, NetworkedComponent]
 [Access(typeof(SharedKitchenSpikeSystem))]
-public sealed class KitchenSpikeComponent : Component
+public sealed partial class KitchenSpikeComponent : Component
 {
     [DataField("delay")]
     public float SpikeDelay = 7.0f;

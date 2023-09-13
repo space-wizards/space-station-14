@@ -1,14 +1,13 @@
 - type: entity
   id: FloorWaterEntity
   name: water
+  description: A real thirst quencher.
   placement:
     mode: SnapgridCenter
     snap:
     - Wall
   components:
-  - type: StepTrigger
-    requiredTriggeredSpeed: 0
-    intersectRatio: 0.1
+  - type: FloorOccluder
   - type: Transform
     anchored: true
   - type: SyncSprite

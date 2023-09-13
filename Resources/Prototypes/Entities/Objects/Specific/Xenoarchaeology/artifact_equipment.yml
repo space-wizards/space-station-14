@@ -29,7 +29,7 @@
           shape:
             !type:PhysShapeCircle
             radius: 0.45
-          density: 75
+          density: 50
           mask:
           - MachineMask
           layer:
@@ -44,6 +44,8 @@
         - Artifact
     - type: Weldable
     - type: SuppressArtifactContainer
+    - type: RadiationBlockingContainer
+      resistance: 5
     - type: PlaceableSurface
       isPlaceable: false
     - type: Damageable

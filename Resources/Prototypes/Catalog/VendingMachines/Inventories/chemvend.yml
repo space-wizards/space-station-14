@@ -1,6 +1,7 @@
 - type: vendingMachineInventory
   id: ChemVendInventory
   startingInventory:
+    Jug: 4
     JugAluminium: 2
     JugCarbon: 2
     JugChlorine: 2

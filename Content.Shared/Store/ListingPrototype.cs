@@ -1,12 +1,11 @@
+using System.Linq;
+using Content.Shared.FixedPoint;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 using Robust.Shared.Utility;
-using Content.Shared.Actions.ActionTypes;
-using Content.Shared.FixedPoint;
-using System.Linq;
 
 namespace Content.Shared.Store;
 
@@ -17,7 +16,7 @@ namespace Content.Shared.Store;
 /// </summary>
 [Serializable, NetSerializable]
 [Virtual, DataDefinition]
-public class ListingData : IEquatable<ListingData>, ICloneable
+public partial class ListingData : IEquatable<ListingData>, ICloneable
 {
     /// <summary>
     /// The name of the listing. If empty, uses the entity's name (if present)
@@ -71,7 +70,7 @@ public class ListingData : IEquatable<ListingData>, ICloneable
     /// <summary>
     /// The action that is given when the listing is purchased.
     /// </summary>
-    [DataField("productAction", customTypeSerializer: typeof(PrototypeIdSerializer<InstantActionPrototype>))]
+    [DataField("productAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string? ProductAction;
 
     /// <summary>
@@ -148,9 +147,9 @@ public class ListingData : IEquatable<ListingData>, ICloneable
 [Prototype("listing")]
 [Serializable, NetSerializable]
 [DataDefinition]
-public sealed class ListingPrototype : ListingData, IPrototype
+public sealed partial class ListingPrototype : ListingData, IPrototype
 {
     [ViewVariables]
     [IdDataField]
-    public string ID { get; } = default!;
+    public string ID { get; private set; } = default!;
 }

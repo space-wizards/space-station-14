@@ -10,7 +10,7 @@ namespace Content.Shared.Buckle.Components;
 
 [RegisterComponent, NetworkedComponent]
 [Access(typeof(SharedBuckleSystem), typeof(SharedVehicleSystem))]
-public sealed class StrapComponent : Component
+public sealed partial class StrapComponent : Component
 {
     /// <summary>
     /// The entities that are currently buckled
@@ -125,10 +125,10 @@ public sealed class StrapComponentState : ComponentState
     public readonly StrapPosition Position;
     public readonly float MaxBuckleDistance;
     public readonly Vector2 BuckleOffsetClamped;
-    public readonly HashSet<EntityUid> BuckledEntities;
+    public readonly HashSet<NetEntity> BuckledEntities;
     public readonly int OccupiedSize;
 
-    public StrapComponentState(StrapPosition position, Vector2 offset, HashSet<EntityUid> buckled,
+    public StrapComponentState(StrapPosition position, Vector2 offset, HashSet<NetEntity> buckled,
         float maxBuckleDistance, int occupiedSize)
     {
         Position = position;

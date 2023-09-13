@@ -8979,37 +8979,25 @@ entities:
     - pos: 10.5,43.5
       parent: 1653
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 583
-      type: SignalReceiver
+    - links:
+      - 583
+      type: DeviceLinkSink
   - uid: 581
     components:
     - pos: 11.5,43.5
       parent: 1653
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 583
-      type: SignalReceiver
+    - links:
+      - 583
+      type: DeviceLinkSink
   - uid: 582
     components:
     - pos: 12.5,43.5
       parent: 1653
       type: Transform
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 583
-      type: SignalReceiver
+    - links:
+      - 583
+      type: DeviceLinkSink
 - proto: SignalButton
   entities:
   - uid: 583
@@ -9017,15 +9005,14 @@ entities:
     - pos: 9.5,43.5
       parent: 1653
       type: Transform
-    - outputs:
-        Pressed:
-        - port: Toggle
-          uid: 580
-        - port: Toggle
-          uid: 581
-        - port: Toggle
-          uid: 582
-      type: SignalTransmitter
+    - linkedPorts:
+        580:
+        - Pressed: Toggle
+        581:
+        - Pressed: Toggle
+        582:
+        - Pressed: Toggle
+      type: DeviceLinkSource
 - proto: SignalTrigger
   entities:
   - uid: 1597

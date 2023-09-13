@@ -1,7 +1,6 @@
 using Content.Server.Actions;
 using Content.Server.Popups;
 using Content.Server.Sound.Components;
-using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Audio;
 using Content.Shared.Bed.Sleep;
 using Content.Shared.Damage;
@@ -10,11 +9,10 @@ using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
-using Content.Shared.StatusEffect;
 using Content.Shared.Slippery;
+using Content.Shared.StatusEffect;
 using Content.Shared.Stunnable;
 using Content.Shared.Verbs;
-using Robust.Shared.Audio;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -31,6 +29,8 @@ namespace Content.Server.Bed.Sleep
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly StatusEffectsSystem _statusEffectsSystem = default!;
+
+        [ValidatePrototypeId<EntityPrototype>] public const string SleepActionId = "ActionSleep";
 
         public override void Initialize()
         {
@@ -52,7 +52,6 @@ namespace Content.Server.Bed.Sleep
         /// </summary>
         private void OnSleepStateChanged(EntityUid uid, MobStateComponent component, SleepStateChangedEvent args)
         {
-            _prototypeManager.TryIndex<InstantActionPrototype>("Wake", out var wakeAction);
             if (args.FellAsleep)
             {
                 // Expiring status effects would remove the components needed for sleeping
@@ -62,24 +61,17 @@ namespace Content.Server.Bed.Sleep
                 EnsureComp<StunnedComponent>(uid);
                 EnsureComp<KnockedDownComponent>(uid);
 
-                var emitSound = EnsureComp<SpamEmitSoundComponent>(uid);
-
-                // TODO WTF is this, these should a data fields and not hard-coded.
-                emitSound.Sound = new SoundCollectionSpecifier("Snores", AudioParams.Default.WithVariation(0.2f));
-                emitSound.PlayChance = 0.33f;
-                emitSound.RollInterval = 5f;
-                emitSound.PopUp = "sleep-onomatopoeia";
-
-                if (wakeAction != null)
+                if (TryComp<SleepEmitSoundComponent>(uid, out var sleepSound))
                 {
-                    var wakeInstance = new InstantAction(wakeAction);
-                    wakeInstance.Cooldown = (_gameTiming.CurTime, _gameTiming.CurTime + TimeSpan.FromSeconds(15));
-                    _actionsSystem.AddAction(uid, wakeInstance, null);
+                    var emitSound = EnsureComp<SpamEmitSoundComponent>(uid);
+                    emitSound.Sound = sleepSound.Snore;
+                    emitSound.PlayChance = sleepSound.Chance;
+                    emitSound.RollInterval = sleepSound.Interval;
+                    emitSound.PopUp = sleepSound.PopUp;
                 }
+
                 return;
             }
-            if (wakeAction != null)
-                _actionsSystem.RemoveAction(uid, wakeAction);
 
             RemComp<StunnedComponent>(uid);
             RemComp<KnockedDownComponent>(uid);
@@ -192,8 +184,7 @@ namespace Content.Server.Bed.Sleep
             RaiseLocalEvent(uid, ref tryingToSleepEvent);
             if (tryingToSleepEvent.Cancelled) return false;
 
-            if (_prototypeManager.TryIndex<InstantActionPrototype>("Sleep", out var sleepAction))
-                _actionsSystem.RemoveAction(uid, sleepAction);
+            _actionsSystem.RemoveAction(uid, SleepActionId);
 
             EnsureComp<SleepingComponent>(uid);
             return true;

@@ -7,7 +7,7 @@ namespace Content.Server.Xenoarchaeology.XenoArtifacts.Triggers.Components;
 /// Triggers when a certain threshold of damage of certain types is reached
 /// </summary>
 [RegisterComponent]
-public sealed class ArtifactDamageTriggerComponent : Component
+public sealed partial class ArtifactDamageTriggerComponent : Component
 {
     /// <summary>
     /// What damage types are accumulated for the trigger?

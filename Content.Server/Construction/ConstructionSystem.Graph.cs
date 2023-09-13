@@ -256,7 +256,8 @@ namespace Content.Server.Construction
                     $"{ToPrettyString(userUid.Value):player} changed {ToPrettyString(uid):entity}'s node from \"{oldNode}\" to \"{id}\"");
 
             // ChangeEntity will handle the pathfinding update.
-            if (node.Entity is {} newEntity && ChangeEntity(uid, userUid, newEntity, construction) != null)
+            if (node.Entity.GetId(uid, userUid, new(EntityManager)) is {} newEntity
+                && ChangeEntity(uid, userUid, newEntity, construction) != null)
                 return true;
 
             if(performActions)
@@ -323,13 +324,17 @@ namespace Content.Server.Construction
                 }
             }
 
-            EntityManager.InitializeAndStartEntity(newUid);
+            // If the new entity has the *same* construction graph, stay on the same node.
+            // If not, we effectively restart the construction graph, so the new entity can be completed.
+            if (construction.Graph == newConstruction.Graph)
+            {
+                ChangeNode(newUid, userUid, construction.Node, false, newConstruction);
 
-            // We set the graph and node accordingly.
-            ChangeGraph(newUid, userUid, construction.Graph, construction.Node, false, newConstruction);
-
-            if (construction.TargetNode is {} targetNode)
-                SetPathfindingTarget(newUid, targetNode, newConstruction);
+                // Retain the target node if an entity change happens in response to deconstruction;
+                // in that case, we must continue to move towards the start node.
+                if (construction.TargetNode is {} targetNode)
+                    SetPathfindingTarget(newUid, targetNode, newConstruction);
+            }
 
             // Transfer all pending interaction events too.
             while (construction.InteractionQueue.TryDequeue(out var ev))
@@ -358,8 +363,12 @@ namespace Content.Server.Construction
                     if (!_container.TryGetContainer(uid, container, out var ourContainer, containerManager))
                         continue;
 
-                    // NOTE: Only Container is supported by Construction!
-                    var otherContainer = _container.EnsureContainer<Container>(newUid, container, newContainerManager);
+                    if (!_container.TryGetContainer(newUid, container, out var otherContainer, newContainerManager))
+                    {
+                        // NOTE: Only Container is supported by Construction!
+                        // todo: one day, the ensured container should be the same type as ourContainer
+                        otherContainer = _container.EnsureContainer<Container>(newUid, container, newContainerManager);
+                    }
 
                     for (var i = ourContainer.ContainedEntities.Count - 1; i >= 0; i--)
                     {
@@ -373,6 +382,13 @@ namespace Content.Server.Construction
             var entChangeEv = new ConstructionChangeEntityEvent(newUid, uid);
             RaiseLocalEvent(uid, entChangeEv);
             RaiseLocalEvent(newUid, entChangeEv, broadcast: true);
+
+            foreach (var logic in GetCurrentNode(newUid, newConstruction)!.TransformLogic)
+            {
+                logic.Transform(uid, newUid, userUid, new(EntityManager));
+            }
+
+            EntityManager.InitializeAndStartEntity(newUid);
 
             QueueDel(uid);
 

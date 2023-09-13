@@ -1,0 +1,9 @@
+- files: ["none_button.png", "minor_button.png", "medium_button.png", "high_button.png"]
+  license: "CC-BY-SA-3.0"
+  copyright: "CitrusGender"
+  source: "https://github.com/tgstation/tgstation/pull/39808"
+
+- files: ["watchlist.png", "message.png"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Riggle"
+  source: "https://github.com/RigglePrime/"

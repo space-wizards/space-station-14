@@ -181,3 +181,48 @@
   sprites:
   - sprite: Mobs/Customization/reptilian_parts.rsi
     state: body_tiger
+
+- type: marking
+  id: LizardHeadTiger
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [Reptilian]
+  sprites:
+  - sprite: Mobs/Customization/reptilian_parts.rsi
+    state: head_tiger
+
+- type: marking
+  id: LizardLArmTiger
+  bodyPart: LArm
+  markingCategory: Arms
+  speciesRestriction: [Reptilian]
+  sprites:
+  - sprite: Mobs/Customization/reptilian_parts.rsi
+    state: l_arm_tiger
+
+- type: marking
+  id: LizardLLegTiger
+  bodyPart: LLeg
+  markingCategory: Legs
+  speciesRestriction: [Reptilian]
+  sprites:
+  - sprite: Mobs/Customization/reptilian_parts.rsi
+    state: l_leg_tiger
+
+- type: marking
+  id: LizardRArmTiger
+  bodyPart: RArm
+  markingCategory: Arms
+  speciesRestriction: [Reptilian]
+  sprites:
+  - sprite: Mobs/Customization/reptilian_parts.rsi
+    state: r_arm_tiger
+
+- type: marking
+  id: LizardRLegTiger
+  bodyPart: RLeg
+  markingCategory: Legs
+  speciesRestriction: [Reptilian]
+  sprites:
+  - sprite: Mobs/Customization/reptilian_parts.rsi
+    state: r_leg_tiger

@@ -35,6 +35,7 @@
 <GuideEntityEmbed Entity="MechRipley" Caption="Ripley APLU"/>
 <GuideEntityEmbed Entity="MechHonker" Caption="H.O.N.K."/>
 <GuideEntityEmbed Entity="MechHamtr" Caption="HAMTR"/>
+<GuideEntityEmbed Entity="MechVim" Caption="Vim"/>
 </Box>
   [color=#a4885c]Mechs[/color] are giant behemoths of metal designed to carry out a variety of functions respective to their model. They are piloted by players and require power cells to function.
 
@@ -48,9 +49,10 @@
 
   For example, both of the circuit boards above are necessary to create a ripley mech, and cannot be used to make any other mech.
 
-  To start making a mech, print their harness in the fabricator and insert the arms and legs, you can [color=#a4885c]examine[/color] it to see how to proceed with construction.
+  To start making a mech, print their harness in the fabricator and insert the limbs, you can [color=#a4885c]examine[/color] it to see how to proceed with construction once all limbs are in place.
   - Every mech requires some combination of wires, tool usage, and their own unique circuit boards to construct after the chassis has been assembled. Most mechs have two or more unique circuit boards. For example, the [color=#a4885c]Ripley[/color] mech requires a [color=#a4885c]ripley controls module[/color] board and a [color=#a4885c]ripley peripherals module[/color] board.
   - Mechs require large amounts of material to create - be sure to ask your fellow scientists and cargo personnel for any materials you're missing!
+  - The Vim exosuit requires a pair of borg legs and an EVA helmet, regular or syndicate, then a voice trigger and a power cell.
 
   ## Equipment
     A mech is nothing more than an expensive hunk of metal without their exclusive tools. Equipment can be created at the fabricator, the same as any other part.

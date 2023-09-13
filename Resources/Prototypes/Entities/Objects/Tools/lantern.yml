@@ -1,7 +1,7 @@
 ﻿- type: entity
   name: lantern
   parent: BaseItem
-  id: lantern
+  id: Lantern
   description: The holy light guides the way.
   components:
     - type: HandheldLight
@@ -60,10 +60,9 @@
         cell_slot: !type:ContainerSlot {}
 
 - type: entity
-  name: extra-bright lantern
-  parent: lantern
-  id: lanternextrabright
-  description: Blinding.
+  parent: Lantern
+  id: LanternFlash
+  suffix: Flash
   components:
     - type: Sprite
       sprite: Objects/Tools/lantern.rsi
@@ -78,10 +77,8 @@
         map: [ "enum.FlashVisuals.LightLayer" ]
         visible: false
     - type: PointLight
-      enabled: false
       radius: 5
       energy: 10
-      color: "#FFC458"
     - type: Flash
     - type: LimitedCharges
       maxCharges: 15

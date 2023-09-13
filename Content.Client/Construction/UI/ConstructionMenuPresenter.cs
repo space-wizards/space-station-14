@@ -8,6 +8,7 @@ using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.Utility;
 using Robust.Shared.Enums;
+using Robust.Shared.Graphics;
 using Robust.Shared.Prototypes;
 using static Robust.Client.UserInterface.Controls.BaseButton;
 
@@ -404,7 +405,7 @@ namespace Content.Client.Construction.UI
                 return;
             }
 
-            if (_selected == null || _selected.Mirror == String.Empty)
+            if (_selected == null || _selected.Mirror == null)
             {
                 return;
             }

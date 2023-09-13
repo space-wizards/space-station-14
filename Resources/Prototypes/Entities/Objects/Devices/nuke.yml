@@ -23,6 +23,14 @@
         - MachineMask
         layer:
         - HalfWallLayer
+  - type: PointLight
+    enabled: false
+    radius: 4
+    energy: 2.0
+    color: "#FF4020"
+    mask: /Textures/Effects/LightMasks/double_cone.png
+  - type: RotatingLight
+    speed: 120
   - type: NukeLabel
   - type: Nuke
     explosionType: Default
@@ -61,8 +69,10 @@
   id: NuclearBombUnanchored
   suffix: unanchored
   components:
-    - type: Transform
-      anchored: false
+  - type: Transform
+    anchored: false
+  - type: Physics
+    bodyType: Dynamic
 
 - type: entity
   parent: StorageTank

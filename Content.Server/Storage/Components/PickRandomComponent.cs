@@ -9,7 +9,7 @@ namespace Content.Server.Storage.Components;
 /// </summary>
 [RegisterComponent]
 [Access(typeof(PickRandomSystem))]
-public sealed class PickRandomComponent : Component
+public sealed partial class PickRandomComponent : Component
 {
     /// <summary>
     /// Whitelist for potential picked items.

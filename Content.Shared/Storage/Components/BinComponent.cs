@@ -13,7 +13,7 @@ namespace Content.Shared.Storage.Components;
 /// you can only take off of the top of the bin.
 /// </summary>
 [RegisterComponent, NetworkedComponent, Access(typeof(BinSystem))]
-public sealed class BinComponent : Component
+public sealed partial class BinComponent : Component
 {
     /// <summary>
     /// The containers that contain the items held in the bin
@@ -56,13 +56,13 @@ public sealed class BinComponent : Component
 [Serializable, NetSerializable]
 public sealed class BinComponentState : ComponentState
 {
-    public List<EntityUid> Items;
+    public List<NetEntity> Items;
 
     public EntityWhitelist? Whitelist;
 
     public int MaxItems;
 
-    public BinComponentState(List<EntityUid> items, EntityWhitelist? whitelist, int maxItems)
+    public BinComponentState(List<NetEntity> items, EntityWhitelist? whitelist, int maxItems)
     {
         Items = items;
         Whitelist = whitelist;

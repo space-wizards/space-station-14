@@ -41,6 +41,27 @@
         orGroup: GlovesOrWires
 
 - type: entity
+  id: ToolboxElectricalTurretFilled
+  name: electrical toolbox
+  suffix: Filled
+  parent: ToolboxElectricalTurret
+  components:
+  - type: StorageFill
+    contents:
+      - id: Screwdriver
+      - id: Crowbar
+      - id: Wirecutter
+      - id: CableApcStack10
+      - id: CableMVStack10
+      - id: trayScanner
+        prob: 0.9
+      - id: ClothingHandsGlovesColorYellow
+        prob: 0.05
+        orGroup: GlovesOrWires
+      - id: CableHVStack10
+        orGroup: GlovesOrWires
+
+- type: entity
   id: ToolboxMechanicalFilled
   name: mechanical toolbox
   suffix: Filled

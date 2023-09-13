@@ -18,7 +18,7 @@ public abstract partial class SharedGunSystem
         if (component.Count is null)
         {
             component.Count = component.Capacity;
-            Dirty(component);
+            Dirty(uid, component);
         }
 
         UpdateBasicEntityAppearance(uid, component);
@@ -37,12 +37,12 @@ public abstract partial class SharedGunSystem
             }
 
             var ent = Spawn(component.Proto, args.Coordinates);
-            args.Ammo.Add((ent, EnsureComp<AmmoComponent>(ent)));
+            args.Ammo.Add((ent, EnsureShootable(ent)));
         }
 
         _recharge.Reset(uid);
         UpdateBasicEntityAppearance(uid, component);
-        Dirty(component);
+        Dirty(uid, component);
     }
 
     private void OnBasicEntityAmmoCount(EntityUid uid, BasicEntityAmmoProviderComponent component, ref GetAmmoCountEvent args)
@@ -72,7 +72,7 @@ public abstract partial class SharedGunSystem
             return false;
 
         component.Count = count;
-        Dirty(component);
+        Dirty(uid, component);
         UpdateBasicEntityAppearance(uid, component);
         UpdateAmmoCount(uid);
 

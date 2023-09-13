@@ -26,6 +26,19 @@
     contents:
       - id: BoxSurvivalSecurity
       - id: Flash
+      - id: MagazinePistol
+      
+- type: entity
+  noSpawn: true
+  parent: ClothingBackpackDuffelSecurity
+  id: ClothingBackpackDuffelSecurityFilledDetective
+  components:
+  - type: StorageFill
+    contents:
+      - id: BoxSurvivalSecurity
+      - id: Flash
+      - id: ForensicPad
+      - id: ForensicScanner
 
 - type: entity
   noSpawn: true
@@ -103,7 +116,7 @@
 
 - type: entity
   noSpawn: true
-  parent: ClothingBackpackDuffel
+  parent: ClothingBackpackDuffelCargo
   id: ClothingBackpackDuffelQuartermasterFilled
   components:
   - type: StorageFill
@@ -121,6 +134,7 @@
     contents:
       - id: BoxSurvivalSecurity
       - id: Flash
+      - id: MagazinePistol
 
 - type: entity
   noSpawn: true
@@ -130,6 +144,16 @@
   - type: StorageFill
     contents:
       - id: BoxSurvivalEngineering
+
+- type: entity
+  noSpawn: true
+  parent: ClothingBackpackDuffelAtmospherics
+  id: ClothingBackpackDuffelAtmosphericsFilled
+  components:
+  - type: StorageFill
+    contents:
+      - id: BoxSurvivalEngineering
+
 
 - type: entity
   noSpawn: true
@@ -212,6 +236,15 @@
       - id: CigPackBlack
       - id: BoxForensicPad
       - id: HandLabeler
+
+- type: entity
+  noSpawn: true
+  parent: ClothingBackpackDuffelCargo
+  id: ClothingBackpackDuffelCargoFilled
+  components:
+    - type: StorageFill
+      contents:
+        - id: BoxSurvival
 
 - type: entity
   noSpawn: true

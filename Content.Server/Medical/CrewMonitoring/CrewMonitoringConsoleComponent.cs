@@ -4,7 +4,7 @@ namespace Content.Server.Medical.CrewMonitoring
 {
     [RegisterComponent]
     [Access(typeof(CrewMonitoringConsoleSystem))]
-    public sealed class CrewMonitoringConsoleComponent : Component
+    public sealed partial class CrewMonitoringConsoleComponent : Component
     {
         /// <summary>
         ///     List of all currently connected sensors to this console.

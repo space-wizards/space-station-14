@@ -8,7 +8,7 @@ namespace Content.Shared.Parallax.Biomes.Layers;
 /// For example if they wish to add their own layers at specific points across different templates.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class BiomeDummyLayer : IBiomeLayer
+public sealed partial class BiomeDummyLayer : IBiomeLayer
 {
     [DataField("id", required: true)] public string ID = string.Empty;
 

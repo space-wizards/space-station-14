@@ -28,6 +28,8 @@
         type: TransferAmountBoundUserInterface
       - key: enum.InstrumentUiKey.Key
         type: InstrumentBoundUserInterface
+      - key: enum.IntercomUiKey.Key
+        type: IntercomBoundUserInterface
     - type: Reactive
       groups:
         Acidic: [Touch]

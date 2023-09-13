@@ -6,7 +6,7 @@ namespace Content.Shared.Sound.Components
     /// Base sound emitter which defines most of the data fields.
     /// Accepts both single sounds and sound collections.
     /// </summary>
-    public abstract class BaseEmitSoundComponent : Component
+    public abstract partial class BaseEmitSoundComponent : Component
     {
         public static readonly AudioParams DefaultParams = AudioParams.Default.WithVolume(-2f);
 

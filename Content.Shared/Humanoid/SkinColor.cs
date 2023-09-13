@@ -118,7 +118,7 @@ public static class SkinColor
     public static Color TintedHues(Color color)
     {
         var newColor = Color.ToHsv(color);
-        newColor.Y = .1f;
+        newColor.Y *= 0.1f;
 
         return Color.FromHsv(newColor);
     }

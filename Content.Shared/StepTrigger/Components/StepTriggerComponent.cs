@@ -8,7 +8,7 @@ namespace Content.Shared.StepTrigger.Components;
 [RegisterComponent]
 [NetworkedComponent]
 [Access(typeof(StepTriggerSystem))]
-public sealed class StepTriggerComponent : Component
+public sealed partial class StepTriggerComponent : Component
 {
     /// <summary>
     ///     List of entities that are currently colliding with the entity.
@@ -42,15 +42,22 @@ public sealed class StepTriggerComponent : Component
     public float RequiredTriggerSpeed = 3.5f;
 
     /// <summary>
-    /// If any entities occupy the blacklist on the same tile then steptrigger won't work.
+    ///     If any entities occupy the blacklist on the same tile then steptrigger won't work.
     /// </summary>
     [DataField("blacklist")]
     public EntityWhitelist? Blacklist;
+
+    /// <summary>
+    ///     If this is true, steptrigger will still occur on entities that are in air / weightless. They do not
+    ///     by default.
+    /// </summary>
+    [DataField("ignoreWeightless")]
+    public bool IgnoreWeightless = false;
 }
 
 [RegisterComponent]
 [Access(typeof(StepTriggerSystem))]
-public sealed class StepTriggerActiveComponent : Component
+public sealed partial class StepTriggerActiveComponent : Component
 {
 
 }
@@ -60,11 +67,11 @@ public sealed class StepTriggerComponentState : ComponentState
 {
     public float IntersectRatio { get; }
     public float RequiredTriggerSpeed { get; }
-    public readonly HashSet<EntityUid> CurrentlySteppedOn;
-    public readonly HashSet<EntityUid> Colliding;
+    public readonly HashSet<NetEntity> CurrentlySteppedOn;
+    public readonly HashSet<NetEntity> Colliding;
     public readonly bool Active;
 
-    public StepTriggerComponentState(float intersectRatio, HashSet<EntityUid> currentlySteppedOn, HashSet<EntityUid> colliding, float requiredTriggerSpeed, bool active)
+    public StepTriggerComponentState(float intersectRatio, HashSet<NetEntity> currentlySteppedOn, HashSet<NetEntity> colliding, float requiredTriggerSpeed, bool active)
     {
         IntersectRatio = intersectRatio;
         CurrentlySteppedOn = currentlySteppedOn;

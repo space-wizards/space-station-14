@@ -3,7 +3,7 @@ using Content.Shared.Atmos;
 namespace Content.Server.Atmos.Piping.Binary.Components
 {
     [RegisterComponent]
-    public sealed class GasPassiveGateComponent : Component
+    public sealed partial class GasPassiveGateComponent : Component
     {
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("inlet")]

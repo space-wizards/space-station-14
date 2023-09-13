@@ -5,7 +5,7 @@ namespace Content.Shared.Humanoid.Markings;
 /// <summary>
 ///     Colors marking in color of first defined marking from specified category (in e.x. from Hair category)
 /// </summary>
-public sealed class CategoryColoring : LayerColoringType
+public sealed partial class CategoryColoring : LayerColoringType
 {
     [DataField("category", required: true)]
     public MarkingCategories Category;

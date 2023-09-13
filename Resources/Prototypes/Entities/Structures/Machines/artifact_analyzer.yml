@@ -46,6 +46,10 @@
     powerDrawMultiplier: 0.80
     scaling: Exponential
   - type: ArtifactAnalyzer
+  - type: ItemPlacer
+    whitelist:
+      components:
+      - Artifact
   - type: DeviceNetwork
     deviceNetId: Wired
     receiveFrequencyId: BasicDevice
@@ -109,6 +113,14 @@
     powerDrawMultiplier: 0.80
     scaling: Exponential
   - type: TraversalDistorter
+  - type: ItemPlacer
+    # don't limit the number of artifacts that can be biased
+    maxEntities: 0
+    whitelist:
+      components:
+      - Artifact
+  - type: PlaceableSurface
+    placeCentered: true
   - type: Machine
     board: TraversalDistorterMachineCircuitboard
   - type: Appearance

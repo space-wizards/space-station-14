@@ -8,7 +8,7 @@ namespace Content.Server.Power.Components
     ///     so that it can receive power from a <see cref="IApcNet"/>.
     /// </summary>
     [RegisterComponent]
-    public sealed class ApcPowerReceiverComponent : Component
+    public sealed partial class ApcPowerReceiverComponent : Component
     {
         [ViewVariables]
         public bool Powered => (MathHelper.CloseToPercent(NetworkLoad.ReceivingPower, Load) || !NeedsPower) && !PowerDisabled;
