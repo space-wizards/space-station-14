@@ -16,6 +16,7 @@ namespace Content.Shared.Roles
     public abstract partial class JobRequirement{}
 
     [UsedImplicitly]
+    [Serializable, NetSerializable]
     public sealed partial class DepartmentTimeRequirement : JobRequirement
     {
         /// <summary>
@@ -40,6 +41,7 @@ namespace Content.Shared.Roles
     }
 
     [UsedImplicitly]
+    [Serializable, NetSerializable]
     public sealed partial class RoleTimeRequirement : JobRequirement
     {
         /// <summary>
@@ -56,6 +58,7 @@ namespace Content.Shared.Roles
     }
 
     [UsedImplicitly]
+    [Serializable, NetSerializable]
     public sealed partial class OverallPlaytimeRequirement : JobRequirement
     {
         /// <inheritdoc cref="DepartmentTimeRequirement.Time"/>
