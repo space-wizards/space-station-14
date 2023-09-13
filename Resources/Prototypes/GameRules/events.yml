@@ -78,7 +78,7 @@
     duration: 1
     earliestStart: 30
     reoccurrenceDelay: 60
-    minimumPlayers: 15
+    minimumPlayers: 40
   - type: NinjaSpawnRule
 
 - type: entity
