@@ -11542,7 +11542,7 @@ entities:
       type: DecalGrid
     - type: RadiationGridResistance
     - type: LoadedMap
-    - id: ghetto
+    - id: Europa
       type: BecomesStation
 - proto: AccordionInstrument
   entities:
