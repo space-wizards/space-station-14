@@ -26,22 +26,22 @@ using Robust.Shared.Timing;
 
 namespace Content.Server.Ghost
 {
-    public sealed partial class GhostSystem : SharedGhostSystem
+    public sealed class GhostSystem : SharedGhostSystem
     {
+        [Dependency] private readonly SharedActionsSystem _actions = default!;
+        [Dependency] private readonly SharedEyeSystem _eye = default!;
+        [Dependency] private readonly FollowerSystem _followerSystem = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly JobSystem _jobs = default!;
+        [Dependency] private readonly EntityLookupSystem _lookup = default!;
+        [Dependency] private readonly MindSystem _minds = default!;
+        [Dependency] private readonly SharedMindSystem _mindSystem = default!;
+        [Dependency] private readonly MobStateSystem _mobState = default!;
+        [Dependency] private readonly SharedPhysicsSystem _physics = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly GameTicker _ticker = default!;
-        [Dependency] private readonly SharedMindSystem _mindSystem = default!;
-        [Dependency] private readonly SharedActionsSystem _actions = default!;
-        [Dependency] private readonly VisibilitySystem _visibilitySystem = default!;
-        [Dependency] private readonly EntityLookupSystem _lookup = default!;
-        [Dependency] private readonly FollowerSystem _followerSystem = default!;
-        [Dependency] private readonly MobStateSystem _mobState = default!;
-        [Dependency] private readonly SharedEyeSystem _eye = default!;
-        [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-        [Dependency] private readonly MindSystem _minds = default!;
-        [Dependency] private readonly JobSystem _jobs = default!;
         [Dependency] private readonly TransformSystem _transformSystem = default!;
+        [Dependency] private readonly VisibilitySystem _visibilitySystem = default!;
 
         public override void Initialize()
         {
@@ -177,6 +177,7 @@ namespace Content.Server.Ghost
         }
 
         #region Ghost Deletion
+
         private void OnMindRemovedMessage(EntityUid uid, GhostComponent component, MindRemovedMessage args)
         {
             DeleteEntity(uid);
@@ -199,6 +200,7 @@ namespace Content.Server.Ghost
 
             QueueDel(uid);
         }
+
         #endregion
 
         private void OnGhostReturnToBodyRequest(GhostReturnToBodyRequest msg, EntitySessionEventArgs args)
@@ -216,6 +218,7 @@ namespace Content.Server.Ghost
         }
 
         #region Warp
+
         private void OnGhostWarpsRequest(GhostWarpsRequestEvent msg, EntitySessionEventArgs args)
         {
             if (args.SenderSession.AttachedEntity is not {Valid: true} entity
@@ -246,11 +249,10 @@ namespace Content.Server.Ghost
                 return;
             }
 
-            if (TryComp(target, out WarpPointComponent? warp) && warp.Follow
-                || HasComp<MobStateComponent>(target))
+            if ((TryComp(target, out WarpPointComponent? warp) && warp.Follow) || HasComp<MobStateComponent>(target))
             {
-                 _followerSystem.StartFollowingEntity(attached, target);
-                 return;
+                _followerSystem.StartFollowingEntity(attached, target);
+                return;
             }
 
             var xform = Transform(attached);
@@ -267,9 +269,7 @@ namespace Content.Server.Ghost
             while (allQuery.MoveNext(out var uid, out var warp))
             {
                 if (warp.Location != null)
-                {
                     yield return new GhostWarp(GetNetEntity(uid), warp.Location, true);
-                }
             }
         }
 
@@ -288,9 +288,10 @@ namespace Content.Server.Ghost
                 var playerInfo = $"{Comp<MetaDataComponent>(attached).EntityName} ({jobName})";
 
                 if (_mobState.IsAlive(attached) || _mobState.IsCritical(attached))
-                        yield return new GhostWarp(GetNetEntity(attached), playerInfo, false);
+                    yield return new GhostWarp(GetNetEntity(attached), playerInfo, false);
             }
         }
+
         #endregion
 
         private void OnEntityStorageInsertAttempt(EntityUid uid, GhostComponent comp, ref InsertIntoEntityStorageAttemptEvent args)
@@ -335,6 +336,7 @@ namespace Content.Server.Ghost
         public string Command => "toggleghosts";
         public string Description => "Toggles ghost visibility";
         public string Help => $"{Command}";
+
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (shell.Player == null)
@@ -346,9 +348,7 @@ namespace Content.Server.Ghost
             if (uid == null
                 || !entityManager.HasComponent<GhostComponent>(uid)
                 || !entityManager.TryGetComponent<EyeComponent>(uid, out var eyeComponent))
-            {
                 return;
-            }
 
             entityManager.System<EyeSystem>().SetVisibilityMask(uid.Value, eyeComponent.VisibilityMask ^ (int) VisibilityFlags.Ghost, eyeComponent);
         }
