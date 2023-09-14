@@ -1,9 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: Fixed chat bubbles not appearing in replays., type: Fix}
-  id: 4328
-  time: '2023-07-26T07:11:15.0000000+00:00'
 - author: Nairodian
   changes:
   - {message: Changed captain's starting loadout not to have their gloves and carapace.,
@@ -2979,3 +2974,8 @@ Entries:
     type: Add}
   id: 4827
   time: '2023-09-14T07:17:45.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Fixed some missing localization., type: Fix}
+  id: 4828
+  time: '2023-09-14T10:08:03.0000000+00:00'
