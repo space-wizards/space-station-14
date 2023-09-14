@@ -11,7 +11,7 @@ public sealed partial class MagbootsComponent : Component
     [DataField("toggleAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string ToggleAction = "ActionToggleMagboots";
 
-    [DataField("toggleActionEntity")]
+    [DataField("toggleActionEntity"), AutoNetworkedField]
     public EntityUid? ToggleActionEntity;
 
     [DataField("on"), AutoNetworkedField]
