@@ -95,12 +95,12 @@ public sealed partial class CargoSystem
         var bui = _uiSystem.GetUi(uid, CargoPalletConsoleUiKey.Sale);
         if (Transform(uid).GridUid is not EntityUid gridUid)
         {
-            UserInterfaceSystem.SetUiState(bui,
+            _uiSystem.SetUiState(bui,
             new CargoPalletConsoleInterfaceState(0, 0, false));
             return;
         }
         GetPalletGoods(gridUid, out var toSell, out var amount);
-        UserInterfaceSystem.SetUiState(bui,
+        _uiSystem.SetUiState(bui,
             new CargoPalletConsoleInterfaceState((int) amount, toSell.Count, true));
     }
 
@@ -147,7 +147,7 @@ public sealed partial class CargoSystem
         var shuttleName = orderDatabase?.Shuttle != null ? MetaData(orderDatabase.Shuttle.Value).EntityName : string.Empty;
 
         if (_uiSystem.TryGetUi(uid, CargoConsoleUiKey.Shuttle, out var bui))
-            UserInterfaceSystem.SetUiState(bui, new CargoShuttleConsoleBoundUserInterfaceState(
+            _uiSystem.SetUiState(bui, new CargoShuttleConsoleBoundUserInterfaceState(
                 station != null ? MetaData(station.Value).EntityName : Loc.GetString("cargo-shuttle-console-station-unknown"),
                 string.IsNullOrEmpty(shuttleName) ? Loc.GetString("cargo-shuttle-console-shuttle-not-found") : shuttleName,
                 orders
@@ -324,7 +324,7 @@ public sealed partial class CargoSystem
         var bui = _uiSystem.GetUi(uid, CargoPalletConsoleUiKey.Sale);
         if (Transform(uid).GridUid is not EntityUid gridUid)
         {
-            UserInterfaceSystem.SetUiState(bui,
+            _uiSystem.SetUiState(bui,
             new CargoPalletConsoleInterfaceState(0, 0, false));
             return;
         }

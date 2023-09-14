@@ -187,7 +187,7 @@
     tags:
     - HidesHair
     - WhitelistChameleon
-    
+
 #Winter Coat Hoods
 - type: entity
   parent: ClothingHeadHatHoodWinterBase
@@ -198,8 +198,8 @@
   - type: Sprite
     sprite: Clothing/Head/Hoods/Coat/hooddefault.rsi
   - type: Clothing
-    sprite: Clothing/Head/Hoods/Coat/hooddefault.rsi  
-  
+    sprite: Clothing/Head/Hoods/Coat/hooddefault.rsi
+
 - type: entity
   parent: ClothingHeadHatHoodWinterBase
   id: ClothingHeadHatHoodWinterBartender
@@ -222,7 +222,7 @@
     sprite: Clothing/Head/Hoods/Coat/hoodcaptain.rsi
   - type: Clothing
     sprite: Clothing/Head/Hoods/Coat/hoodcaptain.rsi
-    
+
 - type: entity
   parent: ClothingHeadHatHoodWinterBase
   id: ClothingHeadHatHoodWinterCargo
@@ -233,7 +233,7 @@
     sprite: Clothing/Head/Hoods/Coat/hoodcargo.rsi
   - type: Clothing
     sprite: Clothing/Head/Hoods/Coat/hoodcargo.rsi
-    
+
 - type: entity
   parent: ClothingHeadHatHoodWinterBase
   id: ClothingHeadHatHoodWinterCE
@@ -243,8 +243,8 @@
   - type: Sprite
     sprite: Clothing/Head/Hoods/Coat/hoodce.rsi
   - type: Clothing
-    sprite: Clothing/Head/Hoods/Coat/hoodce.rsi    
-    
+    sprite: Clothing/Head/Hoods/Coat/hoodce.rsi
+
 - type: entity
   parent: ClothingHeadHatHoodWinterBase
   id: ClothingHeadHatHoodWinterCentcom
@@ -255,7 +255,7 @@
   - type: Sprite
     sprite: Clothing/Head/Hoods/Coat/hoodcentcom.rsi
   - type: Clothing
-    sprite: Clothing/Head/Hoods/Coat/hoodcentcom.rsi    
+    sprite: Clothing/Head/Hoods/Coat/hoodcentcom.rsi
 
 - type: entity
   parent: ClothingHeadHatHoodWinterBase
@@ -266,8 +266,8 @@
   - type: Sprite
     sprite: Clothing/Head/Hoods/Coat/hoodchemist.rsi
   - type: Clothing
-    sprite: Clothing/Head/Hoods/Coat/hoodchemist.rsi    
-    
+    sprite: Clothing/Head/Hoods/Coat/hoodchemist.rsi
+
 - type: entity
   parent: ClothingHeadHatHoodWinterBase
   id: ClothingHeadHatHoodWinterCMO
@@ -278,7 +278,7 @@
     sprite: Clothing/Head/Hoods/Coat/hoodcmo.rsi
   - type: Clothing
     sprite: Clothing/Head/Hoods/Coat/hoodcmo.rsi
-    
+
 - type: entity
   parent: ClothingHeadHatHoodWinterBase
   id: ClothingHeadHatHoodWinterEngineer
@@ -289,7 +289,7 @@
     sprite: Clothing/Head/Hoods/Coat/hoodengi.rsi
   - type: Clothing
     sprite: Clothing/Head/Hoods/Coat/hoodengi.rsi
-    
+
 - type: entity
   parent: ClothingHeadHatHoodWinterBase
   id: ClothingHeadHatHoodWinterHOP
@@ -300,7 +300,7 @@
     sprite: Clothing/Head/Hoods/Coat/hoodhop.rsi
   - type: Clothing
     sprite: Clothing/Head/Hoods/Coat/hoodhop.rsi
-    
+
 - type: entity
   parent: ClothingHeadHatHoodWinterBase
   id: ClothingHeadHatHoodWinterHOS
@@ -311,7 +311,7 @@
     sprite: Clothing/Head/Hoods/Coat/hoodhos.rsi
   - type: Clothing
     sprite: Clothing/Head/Hoods/Coat/hoodhos.rsi
-    
+
 - type: entity
   parent: ClothingHeadHatHoodWinterBase
   id: ClothingHeadHatHoodWinterHydro
@@ -322,7 +322,7 @@
     sprite: Clothing/Head/Hoods/Coat/hoodhydro.rsi
   - type: Clothing
     sprite: Clothing/Head/Hoods/Coat/hoodhydro.rsi
-    
+
 - type: entity
   parent: ClothingHeadHatHoodWinterBase
   id: ClothingHeadHatHoodWinterJani
@@ -344,7 +344,7 @@
     sprite: Clothing/Head/Hoods/Coat/hoodmed.rsi
   - type: Clothing
     sprite: Clothing/Head/Hoods/Coat/hoodmed.rsi
-    
+
 - type: entity
   parent: ClothingHeadHatHoodWinterBase
   id: ClothingHeadHatHoodWinterMime
@@ -355,7 +355,7 @@
     sprite: Clothing/Head/Hoods/Coat/hoodmime.rsi
   - type: Clothing
     sprite: Clothing/Head/Hoods/Coat/hoodmime.rsi
-    
+
 - type: entity
   parent: ClothingHeadHatHoodWinterBase
   id: ClothingHeadHatHoodWinterMiner
@@ -366,7 +366,7 @@
     sprite: Clothing/Head/Hoods/Coat/hoodminer.rsi
   - type: Clothing
     sprite: Clothing/Head/Hoods/Coat/hoodminer.rsi
-    
+
 - type: entity
   parent: ClothingHeadHatHoodWinterBase
   id: ClothingHeadHatHoodWinterPara
@@ -377,7 +377,7 @@
     sprite: Clothing/Head/Hoods/Coat/hoodpara.rsi
   - type: Clothing
     sprite: Clothing/Head/Hoods/Coat/hoodpara.rsi
-    
+
 - type: entity
   parent: ClothingHeadHatHoodWinterBase
   id: ClothingHeadHatHoodWinterQM
@@ -399,7 +399,7 @@
     sprite: Clothing/Head/Hoods/Coat/hoodrd.rsi
   - type: Clothing
     sprite: Clothing/Head/Hoods/Coat/hoodrd.rsi
-    
+
 - type: entity
   parent: ClothingHeadHatHoodWinterBase
   id: ClothingHeadHatHoodWinterRobo
@@ -410,7 +410,7 @@
     sprite: Clothing/Head/Hoods/Coat/hoodrobo.rsi
   - type: Clothing
     sprite: Clothing/Head/Hoods/Coat/hoodrobo.rsi
-   
+
 - type: entity
   parent: ClothingHeadHatHoodWinterBase
   id: ClothingHeadHatHoodWinterSci
@@ -432,7 +432,7 @@
     sprite: Clothing/Head/Hoods/Coat/hoodsec.rsi
   - type: Clothing
     sprite: Clothing/Head/Hoods/Coat/hoodsec.rsi
-        
+
 - type: entity
   parent: ClothingHeadHatHoodWinterBase
   id: ClothingHeadHatHoodWinterSyndie
@@ -454,3 +454,14 @@
     sprite: Clothing/Head/Hoods/Coat/hoodsec.rsi
   - type: Clothing
     sprite: Clothing/Head/Hoods/Coat/hoodsec.rsi
+
+- type: entity
+  parent: ClothingHeadHatHoodWinterBase
+  id: ClothingHeadHatHoodWinterWeb
+  noSpawn: true
+  name: web coat hood
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hoods/Coat/hoodweb.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hoods/Coat/hoodweb.rsi

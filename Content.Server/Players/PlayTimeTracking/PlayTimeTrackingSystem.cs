@@ -165,7 +165,7 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
 
         var playTimes = _tracking.GetTrackerTimes(player);
 
-        return JobRequirements.TryRequirementsMet(job, playTimes, out _, _prototypes);
+        return JobRequirements.TryRequirementsMet(job, playTimes, out _, EntityManager, _prototypes);
     }
 
     public HashSet<string> GetDisallowedJobs(IPlayerSession player)
@@ -182,7 +182,7 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
             {
                 foreach (var requirement in job.Requirements)
                 {
-                    if (JobRequirements.TryRequirementMet(requirement, playTimes, out _, _prototypes))
+                    if (JobRequirements.TryRequirementMet(requirement, playTimes, out _, EntityManager, _prototypes))
                         continue;
 
                     goto NoRole;
@@ -205,7 +205,7 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
         if (!_tracking.TryGetTrackerTimes(player, out var playTimes))
         {
             // Sorry mate but your playtimes haven't loaded.
-            Logger.ErrorS("playtime", $"Playtimes weren't ready yet for {player} on roundstart!");
+            Log.Error($"Playtimes weren't ready yet for {player} on roundstart!");
             playTimes ??= new Dictionary<string, TimeSpan>();
         }
 
@@ -220,7 +220,7 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
 
             foreach (var requirement in jobber.Requirements)
             {
-                if (JobRequirements.TryRequirementMet(requirement, playTimes, out _, _prototypes))
+                if (JobRequirements.TryRequirementMet(requirement, playTimes, out _, EntityManager, _prototypes))
                     continue;
 
                 jobs.RemoveSwap(i);

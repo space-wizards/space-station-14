@@ -26,13 +26,15 @@ public sealed class LinkedEntitySystem : EntitySystem
 
     private void OnGetState(EntityUid uid, LinkedEntityComponent component, ref ComponentGetState args)
     {
-        args.State = new LinkedEntityComponentState(component.LinkedEntities);
+        args.State = new LinkedEntityComponentState(GetNetEntitySet(component.LinkedEntities));
     }
 
     private void OnHandleState(EntityUid uid, LinkedEntityComponent component, ref ComponentHandleState args)
     {
         if (args.Current is LinkedEntityComponentState state)
-            component.LinkedEntities = state.LinkedEntities;
+        {
+            component.LinkedEntities = EnsureEntitySet<LinkedEntityComponent>(state.LinkedEntities, uid);
+        }
     }
 
     private void OnLinkShutdown(EntityUid uid, LinkedEntityComponent component, ComponentShutdown args)

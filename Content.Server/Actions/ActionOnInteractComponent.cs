@@ -1,5 +1,6 @@
-using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Interaction;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
 namespace Content.Server.Actions;
 
@@ -19,12 +20,8 @@ namespace Content.Server.Actions;
 [RegisterComponent]
 public sealed partial class ActionOnInteractComponent : Component
 {
-    [DataField("activateActions")]
-    public List<InstantAction>? ActivateActions;
+    [DataField("actions", customTypeSerializer: typeof(PrototypeIdListSerializer<EntityPrototype>))]
+    public List<string>? Actions;
 
-    [DataField("entityActions")]
-    public List<EntityTargetAction>? EntityActions;
-
-    [DataField("worldActions")]
-    public List<WorldTargetAction>? WorldActions;
+    [DataField("actionEntities")] public List<EntityUid>? ActionEntities;
 }
