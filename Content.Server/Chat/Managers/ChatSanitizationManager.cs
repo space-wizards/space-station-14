@@ -71,24 +71,6 @@ public sealed class ChatSanitizationManager : IChatSanitizationManager
         { "o7", "chatsan-salutes" },
         { ";_;7", "chatsan-tearfully-salutes"},
         { "idk", "chatsan-shrugs" },
-        { "omg", "oh my god" },
-        { "wtf", "what the fuck" },
-        { "gtfo", "get the fuck out" },
-        { "ty", "thank you" },
-        { "idc", "i don't care" },
-        { "jk", "just kidding" },
-        { "btw", "by the way" },
-        { "brb", "be right back" },
-        { "fr", "for real" },
-        { "plz", "please" },
-        { "pls", "please" },
-        { "imo", "in my opinion" },
-        { "nvm", "nevermind" },
-        { "omw", "on my way" },
-        { "np", "no problem" },
-        { "iirc", "if I remember correctly" },
-        { "ur", "your" },
-        { "u", "you" }
     };
 
     private bool _doSanitize;

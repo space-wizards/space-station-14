@@ -88,3 +88,88 @@ accent-words-slimes-2 = Blimpuf?
 accent-words-slimes-3 = Blump!
 accent-words-slimes-4 = Bluuump...
 accent-words-slimes-5 = Blabl blump!
+
+# Chat Sanitization
+accent-chatsanitize-replaced-1 = omg
+accent-chatsanitize-replacement-1 = oh my god
+
+accent-chatsanitize-replaced-2 = omfg
+accent-chatsanitize-replacement-2 = oh my fucking god
+
+accent-chatsanitize-replaced-3 = ong
+accent-chatsanitize-replacement-3 = on god
+
+accent-chatsanitize-replaced-4 = wtf
+accent-chatsanitize-replacement-4 = what the fuck
+
+accent-chatsanitize-replaced-5 = gtfo
+accent-chatsanitize-replacement-5 = get the fuck out
+
+accent-chatsanitize-replaced-6 = ty
+accent-chatsanitize-replacement-6 = thank you
+
+accent-chatsanitize-replaced-7 = idc
+accent-chatsanitize-replacement-7 = i don't care
+
+accent-chatsanitize-replaced-8 = jk
+accent-chatsanitize-replacement-8 = just kidding
+
+accent-chatsanitize-replaced-9 = btw
+accent-chatsanitize-replacement-9 = by the way
+
+accent-chatsanitize-replaced-10 = brb
+accent-chatsanitize-replacement-10 = be right back
+
+accent-chatsanitize-replaced-11 = fr
+accent-chatsanitize-replacement-11 = for real
+
+accent-chatsanitize-replaced-12 = plz
+accent-chatsanitize-replacement-12 = please
+
+accent-chatsanitize-replaced-13 = pls
+accent-chatsanitize-replacement-13 = please
+
+accent-chatsanitize-replaced-14 = imo
+accent-chatsanitize-replacement-14 = in my opinion
+
+accent-chatsanitize-replaced-15 = nvm
+accent-chatsanitize-replacement-15 = nevermind
+
+accent-chatsanitize-replaced-16 = omw
+accent-chatsanitize-replacement-16 = on my way
+
+accent-chatsanitize-replaced-17 = np
+accent-chatsanitize-replacement-17 = no problem
+
+accent-chatsanitize-replaced-18 = iirc
+accent-chatsanitize-replacement-18 = if I remember correctly
+
+accent-chatsanitize-replaced-19 = ur
+accent-chatsanitize-replacement-19 = your
+
+accent-chatsanitize-replaced-20 = u
+accent-chatsanitize-replacement-20 = you
+
+accent-chatsanitize-replaced-21 = ffs
+accent-chatsanitize-replacement-21 = for fuck's sake
+
+accent-chatsanitize-replaced-22 = ikr
+accent-chatsanitize-replacement-22 = i know, right
+
+accent-chatsanitize-replaced-23 = ik
+accent-chatsanitize-replacement-23 = i know
+
+accent-chatsanitize-replaced-24 = mk
+accent-chatsanitize-replacement-24 = mmm, okay
+
+accent-chatsanitize-replaced-25 = afk
+accent-chatsanitize-replacement-25 = ssd
+
+accent-chatsanitize-replaced-26 = stfu
+accent-chatsanitize-replacement-26 = shut the fuck up
+
+accent-chatsanitize-replaced-27 = tbh
+accent-chatsanitize-replacement-27 = to be honest
+
+accent-chatsanitize-replaced-28 = afaik
+accent-chatsanitize-replacement-28 = as far as i know

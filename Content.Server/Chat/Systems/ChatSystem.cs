@@ -8,6 +8,7 @@ using Content.Server.GameTicking;
 using Content.Server.Players;
 using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
+using Content.Server.Speech.EntitySystems;
 using Content.Shared.ActionBlocker;
 using Content.Shared.CCVar;
 using Content.Shared.Chat;
@@ -53,6 +54,7 @@ public sealed partial class ChatSystem : SharedChatSystem
     [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
+    [Dependency] private readonly ReplacementAccentSystem _wordreplacement = default!;
 
     public const int VoiceRange = 10; // how far voice goes in world units
     public const int WhisperClearRange = 2; // how far whisper goes while still being understandable, in world units
@@ -681,9 +683,11 @@ public sealed partial class ChatSystem : SharedChatSystem
     }
 
     // ReSharper disable once InconsistentNaming
-    private string SanitizeInGameICMessage(EntityUid source, string message, out string? emoteStr, bool capitalize = true, bool punctuate = false, bool capitalizeTheWordI = true)
+    private string SanitizeInGameICMessage(EntityUid source, string message, out string? emoteStr, bool capitalize = true, bool punctuate = false, bool capitalizeTheWordI = true, bool replaceNetSpeak = true)
     {
         var newMessage = message.Trim();
+        if (replaceNetSpeak)
+            newMessage = SanitizeMessageReplaceWord(newMessage);
         if (capitalize)
             newMessage = SanitizeMessageCapital(newMessage);
         if (capitalizeTheWordI)
@@ -729,6 +733,18 @@ public sealed partial class ChatSystem : SharedChatSystem
         if (char.IsLetter(message[^1]))
             message += ".";
         return message;
+    }
+
+    public string SanitizeMessageReplaceWord(string message)
+    {
+        if (string.IsNullOrEmpty(message))
+            return message;
+
+        var msg = message;
+
+        msg = _wordreplacement.ApplyReplacements(msg, "chatsanitize");
+
+        return msg;
     }
 
     /// <summary>
