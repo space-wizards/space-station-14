@@ -179,3 +179,50 @@
   - type: Construction
     graph: WeaponLaserGun
     node: wiresMissing
+
+- type: entity
+  parent: BaseItem
+  id: PistolViperFrame
+  name: viper frame
+  description: A viper pistol missing a slide and internal mechanisms.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Pistols/viper.rsi
+    layers:
+    - state: frame
+  - type: Item
+    size: 5
+  - type: Construction
+    graph: WeaponPistolViper
+    node: frame
+
+- type: entity
+  parent: BaseItem
+  id: PistolCobraFrame
+  name: cobra frame
+  description: A cobra pistol missing a slide and internal mechanisms.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Pistols/cobra.rsi
+    layers:
+    - state: frame
+  - type: Item
+    size: 5
+  - type: Construction
+    graph: WeaponPistolCobra
+    node: frame
+
+- type: entity
+  parent: BaseItem
+  id: PistolMk58Frame
+  name: mk 58 frame
+  description: An mk 58 pistol missing a slide and internal mechanisms.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Pistols/mk58.rsi
+    state: frame
+  - type: Item
+    size: 5
+  - type: Construction
+    graph: WeaponPistolMk58
+    node: frame
