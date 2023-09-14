@@ -1,0 +1,22 @@
+{
+    "version": 1,
+    "size": {
+      "x": 32,
+      "y": 32
+    },
+    "license": "CC-BY-SA-3.0",
+    "copyright": "https://github.com/goonstation/goonstation/commit/be4f220b65aa315165b5f3c2c24eeb5674caf03b#diff-a67180777ae47f2c84f3ebf93c61442bbe34aebcad5b7cbd76feb78f177bcee1",
+    "states": [
+      {
+        "name": "icon"
+      },
+      {
+        "name": "inhand-left",
+        "directions": 4
+      },
+      {
+        "name": "inhand-right",
+        "directions": 4
+      }
+    ]
+  }

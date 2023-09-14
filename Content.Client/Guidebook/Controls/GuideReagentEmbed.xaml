@@ -1,0 +1,58 @@
+﻿<BoxContainer xmlns="https://spacestation14.io"
+              xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+              Orientation="Vertical"
+              Margin="5 5 5 5">
+    <PanelContainer HorizontalExpand="True">
+        <PanelContainer.PanelOverride>
+            <gfx:StyleBoxFlat BorderThickness="1" BorderColor="#777777"/>
+        </PanelContainer.PanelOverride>
+        <BoxContainer Orientation="Vertical">
+            <PanelContainer Name="NameBackground" HorizontalExpand="True" VerticalExpand="False">
+                <RichTextLabel Name="ReagentName" HorizontalAlignment="Center"/>
+            </PanelContainer>
+            <BoxContainer Name="RecipesContainer" HorizontalExpand="True">
+                <Collapsible Orientation="Vertical" HorizontalExpand="True">
+                    <CollapsibleHeading Title="{Loc 'guidebook-reagent-recipes-header'}"/>
+                    <CollapsibleBody>
+                        <BoxContainer Name="RecipesDescriptionContainer"
+                                      Margin="10 0 10 0"
+                                      Orientation="Horizontal"
+                                      HorizontalAlignment="Stretch"
+                                      HorizontalExpand="True">
+                            <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalAlignment="Center">
+                                <RichTextLabel Name="ReactantsLabel"
+                                               HorizontalAlignment="Center"
+                                               VerticalAlignment="Center"/>
+                            </BoxContainer>
+                            <BoxContainer Orientation="Vertical"  VerticalAlignment="Center">
+                                <TextureRect TexturePath="/Textures/Interface/Misc/beakerlarge.png"/>
+                                <Label Text="{Loc 'guidebook-reagent-recipes-mix'}"
+                                       HorizontalAlignment="Center"/>
+                            </BoxContainer>
+                            <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalAlignment="Center">
+                                <RichTextLabel Name="ProductsLabel"
+                                               HorizontalAlignment="Center"
+                                               VerticalAlignment="Center"/>
+                            </BoxContainer>
+                        </BoxContainer>
+                    </CollapsibleBody>
+                </Collapsible>
+            </BoxContainer>
+            <BoxContainer Name="EffectsContainer" HorizontalExpand="True">
+                <Collapsible Orientation="Vertical">
+                    <CollapsibleHeading Title="{Loc 'guidebook-reagent-effects-header'}"/>
+                    <CollapsibleBody>
+                        <BoxContainer Name="EffectsDescriptionContainer"
+                                      Orientation="Vertical"
+                                      Margin="10 0 10 0"
+                                      HorizontalExpand="True"/>
+                    </CollapsibleBody>
+                </Collapsible>
+            </BoxContainer>
+            <BoxContainer Margin="10 5 10 10" HorizontalExpand="True">
+                <!-- The troublemaker !-->
+                <RichTextLabel Name="ReagentDescription" HorizontalAlignment="Left"/>
+            </BoxContainer>
+        </BoxContainer>
+    </PanelContainer>
+</BoxContainer>

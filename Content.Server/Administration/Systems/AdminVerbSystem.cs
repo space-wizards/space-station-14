@@ -1,4 +1,4 @@
-using Content.Server.Administration.Commands;
+using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Server.Administration.UI;
@@ -9,8 +9,6 @@ using Content.Server.Disposal.Tube.Components;
 using Content.Server.EUI;
 using Content.Server.Ghost.Roles;
 using Content.Server.Mind.Commands;
-using Content.Server.Mind.Components;
-using Content.Server.Players;
 using Content.Server.Prayer;
 using Content.Server.Xenoarchaeology.XenoArtifacts;
 using Content.Server.Xenoarchaeology.XenoArtifacts.Triggers.Components;
@@ -20,6 +18,8 @@ using Content.Shared.Database;
 using Content.Shared.GameTicking;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Inventory;
+using Content.Shared.Mind;
+using Content.Shared.Mind.Components;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using Robust.Server.Console;
@@ -27,8 +27,11 @@ using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
+using Robust.Shared.Players;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
+using Robust.Shared.Toolshed;
 using Robust.Shared.Utility;
 using static Content.Shared.Configurable.ConfigurationComponent;
 
@@ -52,36 +55,52 @@ namespace Content.Server.Administration.Systems
         [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
         [Dependency] private readonly PrayerSystem _prayerSystem = default!;
         [Dependency] private readonly EuiManager _eui = default!;
+        [Dependency] private readonly SharedMindSystem _mindSystem = default!;
+        [Dependency] private readonly ToolshedManager _toolshed = default!;
+        [Dependency] private readonly RejuvenateSystem _rejuvenate = default!;
 
-        private readonly Dictionary<IPlayerSession, EditSolutionsEui> _openSolutionUis = new();
+        private readonly Dictionary<ICommonSession, EditSolutionsEui> _openSolutionUis = new();
 
         public override void Initialize()
         {
-            SubscribeLocalEvent<GetVerbsEvent<Verb>>(AddAdminVerbs);
-            SubscribeLocalEvent<GetVerbsEvent<Verb>>(AddDebugVerbs);
-            SubscribeLocalEvent<GetVerbsEvent<Verb>>(AddSmiteVerbs);
-            SubscribeLocalEvent<GetVerbsEvent<Verb>>(AddTricksVerbs);
-            SubscribeLocalEvent<GetVerbsEvent<Verb>>(AddAntagVerbs);
+            SubscribeLocalEvent<GetVerbsEvent<Verb>>(GetVerbs);
             SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
             SubscribeLocalEvent<SolutionContainerManagerComponent, SolutionChangedEvent>(OnSolutionChanged);
         }
 
+        private void GetVerbs(GetVerbsEvent<Verb> ev)
+        {
+            AddAdminVerbs(ev);
+            AddDebugVerbs(ev);
+            AddSmiteVerbs(ev);
+            AddTricksVerbs(ev);
+            AddAntagVerbs(ev);
+        }
+
         private void AddAdminVerbs(GetVerbsEvent<Verb> args)
         {
-            if (!EntityManager.TryGetComponent<ActorComponent?>(args.User, out var actor))
+            if (!EntityManager.TryGetComponent(args.User, out ActorComponent? actor))
                 return;
 
             var player = actor.PlayerSession;
 
             if (_adminManager.IsAdmin(player))
             {
+                Verb mark = new();
+                mark.Text = Loc.GetString("toolshed-verb-mark");
+                mark.Message = Loc.GetString("toolshed-verb-mark-description");
+                mark.Category = VerbCategory.Admin;
+                mark.Act = () => _toolshed.InvokeCommand(player, "=> $marked", Enumerable.Repeat(args.Target, 1), out _);
+                mark.Impact = LogImpact.Low;
+                args.Verbs.Add(mark);
+
                 if (TryComp(args.Target, out ActorComponent? targetActor))
                 {
                     // AdminHelp
                     Verb verb = new();
                     verb.Text = Loc.GetString("ahelp-verb-get-data-text");
                     verb.Category = VerbCategory.Admin;
-                    verb.Icon = new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/gavel.svg.192dpi.png"));
+                    verb.Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/gavel.svg.192dpi.png"));
                     verb.Act = () =>
                         _console.RemoteExecuteCommand(player, $"openahelp \"{targetActor.PlayerSession.UserId}\"");
                     verb.Impact = LogImpact.Low;
@@ -91,7 +110,7 @@ namespace Content.Server.Administration.Systems
                     Verb prayerVerb = new();
                     prayerVerb.Text = Loc.GetString("prayer-verbs-subtle-message");
                     prayerVerb.Category = VerbCategory.Admin;
-                    prayerVerb.Icon = new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/pray.svg.png"));
+                    prayerVerb.Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/pray.svg.png"));
                     prayerVerb.Act = () =>
                     {
                         _quickDialog.OpenDialog(player, "Subtle Message", "Message", "Popup Message", (string message, string popupMessage) =>
@@ -111,7 +130,7 @@ namespace Content.Server.Administration.Systems
                             ? Loc.GetString("admin-verbs-unfreeze")
                             : Loc.GetString("admin-verbs-freeze"),
                         Category = VerbCategory.Admin,
-                        Icon = new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/VerbIcons/snow.svg.192dpi.png")),
+                        Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/snow.svg.192dpi.png")),
                         Act = () =>
                         {
                             if (frozen)
@@ -147,7 +166,7 @@ namespace Content.Server.Administration.Systems
                 {
                     Text = Loc.GetString("admin-verbs-teleport-to"),
                     Category = VerbCategory.Admin,
-                    Icon = new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/VerbIcons/open.svg.192dpi.png")),
+                    Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/open.svg.192dpi.png")),
                     Act = () => _console.ExecuteCommand(player, $"tpto {args.Target}"),
                     Impact = LogImpact.Low
                 });
@@ -157,8 +176,22 @@ namespace Content.Server.Administration.Systems
                 {
                     Text = Loc.GetString("admin-verbs-teleport-here"),
                     Category = VerbCategory.Admin,
-                    Icon = new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/VerbIcons/close.svg.192dpi.png")),
-                    Act = () => _console.ExecuteCommand(player, $"tpto {args.Target} {args.User}"),
+                    Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/close.svg.192dpi.png")),
+                    Act = () =>
+                    {
+                        if (HasComp<MapGridComponent>(args.Target))
+                        {
+                            if (player.AttachedEntity != null)
+                            {
+                                var mapPos = Transform(player.AttachedEntity.Value).MapPosition;
+                                _console.ExecuteCommand(player, $"tpgrid {args.Target} {mapPos.X} {mapPos.Y} {mapPos.MapId}");
+                            }
+                        }
+                        else
+                        {
+                            _console.ExecuteCommand(player, $"tpto {args.User} {args.Target}");
+                        }
+                    },
                     Impact = LogImpact.Low
                 });
 
@@ -171,8 +204,6 @@ namespace Content.Server.Administration.Systems
                         Category = VerbCategory.Admin,
                         Act = () =>
                         {
-                            if (!TryComp<ActorComponent>(args.Target, out var actor)) return;
-
                             _console.ExecuteCommand(player, $"respawn {actor.PlayerSession.Name}");
                         },
                         ConfirmationPopup = true,
@@ -184,19 +215,19 @@ namespace Content.Server.Administration.Systems
 
         private void AddDebugVerbs(GetVerbsEvent<Verb> args)
         {
-            if (!EntityManager.TryGetComponent<ActorComponent?>(args.User, out var actor))
+            if (!EntityManager.TryGetComponent(args.User, out ActorComponent? actor))
                 return;
 
             var player = actor.PlayerSession;
 
             // Delete verb
-            if (_groupController.CanCommand(player, "deleteentity"))
+            if (_toolshed.ActivePermissionController?.CheckInvokable(new CommandSpec(_toolshed.DefaultEnvironment.GetCommand("delete"), null), player, out _) ?? false)
             {
                 Verb verb = new()
                 {
                     Text = Loc.GetString("delete-verb-get-data-text"),
                     Category = VerbCategory.Debug,
-                    Icon = new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/VerbIcons/delete_transparent.svg.192dpi.png")),
+                    Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/delete_transparent.svg.192dpi.png")),
                     Act = () => EntityManager.DeleteEntity(args.Target),
                     Impact = LogImpact.Medium,
                     ConfirmationPopup = true
@@ -205,21 +236,21 @@ namespace Content.Server.Administration.Systems
             }
 
             // Rejuvenate verb
-            if (_groupController.CanCommand(player, "rejuvenate"))
+            if (_toolshed.ActivePermissionController?.CheckInvokable(new CommandSpec(_toolshed.DefaultEnvironment.GetCommand("rejuvenate"), null), player, out _) ?? false)
             {
                 Verb verb = new()
                 {
                     Text = Loc.GetString("rejuvenate-verb-get-data-text"),
                     Category = VerbCategory.Debug,
-                    Icon = new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/VerbIcons/rejuvenate.svg.192dpi.png")),
-                    Act = () => RejuvenateCommand.PerformRejuvenate(args.Target),
+                    Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/rejuvenate.svg.192dpi.png")),
+                    Act = () => _rejuvenate.PerformRejuvenate(args.Target),
                     Impact = LogImpact.Medium
                 };
                 args.Verbs.Add(verb);
             }
 
             // Control mob verb
-            if (_groupController.CanCommand(player, "controlmob") &&
+            if (_toolshed.ActivePermissionController?.CheckInvokable(new CommandSpec(_toolshed.DefaultEnvironment.GetCommand("mind"), "control"), player, out _) ?? false &&
                 args.User != args.Target)
             {
                 Verb verb = new()
@@ -230,7 +261,11 @@ namespace Content.Server.Administration.Systems
                     Act = () =>
                     {
                         MakeSentientCommand.MakeSentient(args.Target, EntityManager);
-                        player.ContentData()?.Mind?.TransferTo(args.Target, ghostCheckOverride: true);
+
+                        if (!_minds.TryGetMind(player, out var mindId, out var mind))
+                            return;
+
+                        _mindSystem.TransferTo(mindId, args.Target, ghostCheckOverride: true, mind: mind);
                     },
                     Impact = LogImpact.High,
                     ConfirmationPopup = true
@@ -264,13 +299,13 @@ namespace Content.Server.Administration.Systems
             // Make Sentient verb
             if (_groupController.CanCommand(player, "makesentient") &&
                 args.User != args.Target &&
-                !EntityManager.HasComponent<MindComponent>(args.Target))
+                !EntityManager.HasComponent<MindContainerComponent>(args.Target))
             {
                 Verb verb = new()
                 {
                     Text = Loc.GetString("make-sentient-verb-get-data-text"),
                     Category = VerbCategory.Debug,
-                    Icon = new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/VerbIcons/sentient.svg.192dpi.png")),
+                    Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/sentient.svg.192dpi.png")),
                     Act = () => MakeSentientCommand.MakeSentient(args.Target, EntityManager),
                     Impact = LogImpact.Medium
                 };
@@ -285,7 +320,7 @@ namespace Content.Server.Administration.Systems
                 {
                     Text = Loc.GetString("set-outfit-verb-get-data-text"),
                     Category = VerbCategory.Debug,
-                    Icon = new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/VerbIcons/outfit.svg.192dpi.png")),
+                    Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/outfit.svg.192dpi.png")),
                     Act = () => _euiManager.OpenEui(new SetOutfitEui(args.Target), player),
                     Impact = LogImpact.Medium
                 };
@@ -299,7 +334,7 @@ namespace Content.Server.Administration.Systems
                 {
                     Text = Loc.GetString("in-range-unoccluded-verb-get-data-text"),
                     Category = VerbCategory.Debug,
-                    Icon = new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/VerbIcons/information.svg.192dpi.png")),
+                    Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/information.svg.192dpi.png")),
                     Act = () =>
                     {
                         var message = args.User.InRangeUnOccluded(args.Target)
@@ -313,13 +348,13 @@ namespace Content.Server.Administration.Systems
 
             // Get Disposal tube direction verb
             if (_groupController.CanCommand(player, "tubeconnections") &&
-                EntityManager.TryGetComponent<DisposalTubeComponent?>(args.Target, out var tube))
+                EntityManager.TryGetComponent(args.Target, out DisposalTubeComponent? tube))
             {
                 Verb verb = new()
                 {
                     Text = Loc.GetString("tube-direction-verb-get-data-text"),
                     Category = VerbCategory.Debug,
-                    Icon = new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/VerbIcons/information.svg.192dpi.png")),
+                    Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/information.svg.192dpi.png")),
                     Act = () => _disposalTubes.PopupDirections(args.Target, tube, args.User)
                 };
                 args.Verbs.Add(verb);
@@ -327,7 +362,7 @@ namespace Content.Server.Administration.Systems
 
             // Make ghost role verb
             if (_groupController.CanCommand(player, "makeghostrole") &&
-                !(EntityManager.GetComponentOrNull<MindComponent>(args.Target)?.HasMind ?? false))
+                !(EntityManager.GetComponentOrNull<MindContainerComponent>(args.Target)?.HasMind ?? false))
             {
                 Verb verb = new();
                 verb.Text = Loc.GetString("make-ghost-role-verb-get-data-text");
@@ -340,12 +375,12 @@ namespace Content.Server.Administration.Systems
             }
 
             if (_groupController.CanAdminMenu(player) &&
-                EntityManager.TryGetComponent<ConfigurationComponent?>(args.Target, out var config))
+                EntityManager.TryGetComponent(args.Target, out ConfigurationComponent? config))
             {
                 Verb verb = new()
                 {
                     Text = Loc.GetString("configure-verb-get-data-text"),
-                    Icon = new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/VerbIcons/settings.svg.192dpi.png")),
+                    Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/settings.svg.192dpi.png")),
                     Category = VerbCategory.Debug,
                     Act = () => _uiSystem.TryOpen(args.Target, ConfigurationUiKey.Key, actor.PlayerSession)
                 };
@@ -360,7 +395,7 @@ namespace Content.Server.Administration.Systems
                 {
                     Text = Loc.GetString("edit-solutions-verb-get-data-text"),
                     Category = VerbCategory.Debug,
-                    Icon = new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/VerbIcons/spill.svg.192dpi.png")),
+                    Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/spill.svg.192dpi.png")),
                     Act = () => OpenEditSolutionsEui(player, args.Target),
                     Impact = LogImpact.Medium // maybe high depending on WHAT reagents they add...
                 };
@@ -391,7 +426,7 @@ namespace Content.Server.Administration.Systems
             eui.StateDirty();
         }
 
-        public void OnEditSolutionsEuiClosed(IPlayerSession session)
+        public void OnEditSolutionsEuiClosed(ICommonSession session)
         {
             _openSolutionUis.Remove(session, out var eui);
         }

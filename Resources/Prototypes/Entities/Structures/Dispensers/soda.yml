@@ -9,7 +9,6 @@
     sprite: Structures/smalldispensers.rsi
     drawdepth: SmallObjects
     state: soda
-    netsync: false
   - type: ReagentDispenser
     pack: SodaDispenserInventory
     emagPack: SodaDispenserEmagInventory
@@ -18,5 +17,8 @@
   - type: Machine
     board: SodaDispenserMachineCircuitboard
   - type: Wires
-    BoardName: "SodaDispenser"
+    BoardName: wires-board-name-soda
     LayoutId: SodaDispenser
+  - type: GuideHelp
+    guides:
+    - Bartender

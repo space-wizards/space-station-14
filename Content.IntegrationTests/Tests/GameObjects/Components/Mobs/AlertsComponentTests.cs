@@ -1,9 +1,7 @@
 using System.Linq;
-using System.Threading.Tasks;
 using Content.Client.UserInterface.Systems.Alerts.Controls;
 using Content.Client.UserInterface.Systems.Alerts.Widgets;
 using Content.Shared.Alert;
-using NUnit.Framework;
 using Robust.Client.UserInterface;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
@@ -18,10 +16,19 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
         [Test]
         public async Task AlertsTest()
         {
-            await using var pairTracker = await PoolManager.GetServerClient();
-            var server = pairTracker.Pair.Server;
-            var client = pairTracker.Pair.Client;
+            await using var pair = await PoolManager.GetServerClient(new PoolSettings
+            {
+                Connected = true,
+                DummyTicker = false
+            });
+            var server = pair.Server;
+            var client = pair.Client;
 
+            var clientPlayerMgr = client.ResolveDependency<Robust.Client.Player.IPlayerManager>();
+            var clientUIMgr = client.ResolveDependency<IUserInterfaceManager>();
+            var clientEntManager = client.ResolveDependency<IEntityManager>();
+
+            var entManager = server.ResolveDependency<IEntityManager>();
             var serverPlayerManager = server.ResolveDependency<IPlayerManager>();
             var alertsSystem = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<AlertsSystem>();
 
@@ -29,12 +36,14 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
             await server.WaitAssertion(() =>
             {
                 playerUid = serverPlayerManager.Sessions.Single().AttachedEntity.GetValueOrDefault();
-                Assert.That(playerUid != default);
+#pragma warning disable NUnit2045 // Interdependent assertions.
+                Assert.That(playerUid, Is.Not.EqualTo(default));
                 // Making sure it exists
-                _ = IoCManager.Resolve<IEntityManager>().GetComponent<AlertsComponent>(playerUid);
+                Assert.That(entManager.HasComponent<AlertsComponent>(playerUid));
+#pragma warning restore NUnit2045
 
                 var alerts = alertsSystem.GetActiveAlerts(playerUid);
-                Assert.IsNotNull(alerts);
+                Assert.That(alerts, Is.Not.Null);
                 var alertCount = alerts.Count;
 
                 alertsSystem.ShowAlert(playerUid, AlertType.Debug1);
@@ -43,27 +52,26 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
                 Assert.That(alerts, Has.Count.EqualTo(alertCount + 2));
             });
 
-            await PoolManager.RunTicksSync(pairTracker.Pair, 5);
+            await pair.RunTicksSync(5);
 
             AlertsUI clientAlertsUI = default;
             await client.WaitAssertion(() =>
             {
-                var clientPlayerMgr = IoCManager.Resolve<Robust.Client.Player.IPlayerManager>();
-                var clientUIMgr = IoCManager.Resolve<IUserInterfaceManager>();
-
                 var local = clientPlayerMgr.LocalPlayer;
-                Assert.NotNull(local);
+                Assert.That(local, Is.Not.Null);
                 var controlled = local.ControlledEntity;
-                Assert.NotNull(controlled);
+#pragma warning disable NUnit2045 // Interdependent assertions.
+                Assert.That(controlled, Is.Not.Null);
                 // Making sure it exists
-                _ = IoCManager.Resolve<IEntityManager>().GetComponent<AlertsComponent>(controlled.Value);
+                Assert.That(clientEntManager.HasComponent<AlertsComponent>(controlled.Value));
+#pragma warning restore Nunit2045
 
                 // find the alertsui
 
                 clientAlertsUI = FindAlertsUI(clientUIMgr.ActiveScreen);
-                Assert.NotNull(clientAlertsUI);
+                Assert.That(clientAlertsUI, Is.Not.Null);
 
-                AlertsUI FindAlertsUI(Control control)
+                static AlertsUI FindAlertsUI(Control control)
                 {
                     if (control is AlertsUI alertUI)
                         return alertUI;
@@ -81,7 +89,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
                 Assert.That(clientAlertsUI.AlertContainer.ChildCount, Is.GreaterThanOrEqualTo(3));
                 var alertControls = clientAlertsUI.AlertContainer.Children.Select(c => (AlertControl) c);
                 var alertIDs = alertControls.Select(ac => ac.Alert.AlertType).ToArray();
-                var expectedIDs = new [] {AlertType.HumanHealth, AlertType.Debug1, AlertType.Debug2};
+                var expectedIDs = new[] { AlertType.HumanHealth, AlertType.Debug1, AlertType.Debug2 };
                 Assert.That(alertIDs, Is.SupersetOf(expectedIDs));
             });
 
@@ -90,7 +98,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
                 alertsSystem.ClearAlert(playerUid, AlertType.Debug1);
             });
 
-            await PoolManager.RunTicksSync(pairTracker.Pair, 5);
+            await pair.RunTicksSync(5);
 
             await client.WaitAssertion(() =>
             {
@@ -98,11 +106,11 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
                 Assert.That(clientAlertsUI.AlertContainer.ChildCount, Is.GreaterThanOrEqualTo(2));
                 var alertControls = clientAlertsUI.AlertContainer.Children.Select(c => (AlertControl) c);
                 var alertIDs = alertControls.Select(ac => ac.Alert.AlertType).ToArray();
-                var expectedIDs = new [] {AlertType.HumanHealth, AlertType.Debug2};
+                var expectedIDs = new[] { AlertType.HumanHealth, AlertType.Debug2 };
                 Assert.That(alertIDs, Is.SupersetOf(expectedIDs));
             });
 
-            await pairTracker.CleanReturnAsync();
+            await pair.CleanReturnAsync();
         }
     }
 }

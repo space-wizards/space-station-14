@@ -3,8 +3,9 @@
   id: HitscanEffect
   noSpawn: true
   components:
+  - type: TimedDespawn
+    lifetime: 2.0
   - type: Sprite
-    netsync: false
     drawdepth: Effects
     layers:
     - shader: unshaded
@@ -50,6 +51,21 @@
   damage:
     types:
       Heat: 17
+  muzzleFlash:
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+    state: muzzle_laser
+  travelFlash:
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+    state: beam
+  impactFlash:
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+    state: impact_laser
+
+- type: hitscan
+  id: RedLightLaser
+  damage:
+    types:
+      Heat: 7
   muzzleFlash:
     sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
     state: muzzle_laser

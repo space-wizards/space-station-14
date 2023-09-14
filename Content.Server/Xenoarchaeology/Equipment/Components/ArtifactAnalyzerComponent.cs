@@ -8,10 +8,10 @@ namespace Content.Server.Xenoarchaeology.Equipment.Components;
 
 /// <summary>
 /// A machine that is combined and linked to the <see cref="AnalysisConsoleComponent"/>
-/// in order to analyze and destroy artifacts.
+/// in order to analyze artifacts and extract points.
 /// </summary>
 [RegisterComponent]
-public sealed class ArtifactAnalyzerComponent : Component
+public sealed partial class ArtifactAnalyzerComponent : Component
 {
     /// <summary>
     /// How long it takes to analyze an artifact
@@ -30,7 +30,7 @@ public sealed class ArtifactAnalyzerComponent : Component
     /// The machine part that modifies analysis duration.
     /// </summary>
     [DataField("machinePartAnalysisDuration", customTypeSerializer: typeof(PrototypeIdSerializer<MachinePartPrototype>))]
-    public string MachinePartAnalysisDuration = "ScanningModule";
+    public string MachinePartAnalysisDuration = "Manipulator";
 
     /// <summary>
     /// The modifier raised to the part rating to determine the duration multiplier.
@@ -45,17 +45,11 @@ public sealed class ArtifactAnalyzerComponent : Component
     [ViewVariables]
     public EntityUid? Console;
 
-    /// <summary>
-    /// All of the valid artifacts currently touching the analyzer.
-    /// </summary>
-    [ViewVariables]
-    public HashSet<EntityUid> Contacts = new();
-
     [ViewVariables(VVAccess.ReadWrite)]
     public bool ReadyToPrint = false;
 
     [DataField("scanFinishedSound")]
-    public readonly SoundSpecifier ScanFinishedSound = new SoundPathSpecifier("/Audio/Machines/scan_finish.ogg");
+    public SoundSpecifier ScanFinishedSound = new SoundPathSpecifier("/Audio/Machines/scan_finish.ogg");
 
     #region Analysis Data
     [ViewVariables]

@@ -1,3 +1,4 @@
+using Content.Shared.Gravity;
 using Content.Shared.Hands.Components;
 using Robust.Shared.Utility;
 
@@ -6,6 +7,7 @@ namespace Content.Shared.DoAfter;
 public abstract partial class SharedDoAfterSystem : EntitySystem
 {
     [Dependency] private readonly IDynamicTypeFactory _factory = default!;
+    [Dependency] private readonly SharedGravitySystem _gravity = default!;
 
     public override void Update(float frameTime)
     {
@@ -69,7 +71,7 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
         }
 
         if (dirty)
-            Dirty(comp);
+            Dirty(uid, comp);
 
         if (comp.DoAfters.Count == 0)
             RemCompDeferred(uid, active);
@@ -87,7 +89,7 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
             // I feel like this is somewhat cursed, but its the only way I can think of without having to just send
             // redundant data over the network and increasing DoAfter boilerplate.
             var evType = typeof(DoAfterAttemptEvent<>).MakeGenericType(args.Event.GetType());
-            doAfter.AttemptEvent = _factory.CreateInstance(evType, new object[] { doAfter, args.Event }, inject: false);
+            doAfter.AttemptEvent = _factory.CreateInstance(evType, new object[] { doAfter, args.Event });
         }
 
         if (args.EventTarget != null)
@@ -151,18 +153,23 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
         if (args.Used is { } @using && !xformQuery.TryGetComponent(@using, out usedXform))
             return true;
 
-        // TODO: Handle Inertia in space
         // TODO: Re-use existing xform query for these calculations.
-        if (args.BreakOnUserMove && !userXform.Coordinates
-                .InRange(EntityManager, _transform, doAfter.UserPosition, args.MovementThreshold))
+        // when there is no gravity you will be drifting 99% of the time making many doafters impossible
+        // so this just ignores your movement if you are weightless (unless the doafter sets BreakOnWeightlessMove then moving will still break it)
+        if (args.BreakOnUserMove
+            && !userXform.Coordinates.InRange(EntityManager, _transform, doAfter.UserPosition, args.MovementThreshold)
+            && (args.BreakOnWeightlessMove || !_gravity.IsWeightless(args.User, xform: userXform)))
             return true;
 
         if (args.BreakOnTargetMove)
         {
             DebugTools.Assert(targetXform != null, "Break on move is true, but no target specified?");
-            if (targetXform != null && !targetXform.Coordinates.InRange(EntityManager, _transform,
-                    doAfter.TargetPosition, args.MovementThreshold))
-                return true;
+            if (targetXform != null && targetXform.Coordinates.TryDistance(EntityManager, userXform.Coordinates, out var distance))
+            {
+                // once the target moves too far from you the do after breaks
+                if (Math.Abs(distance - doAfter.TargetDistance) > args.MovementThreshold)
+                    return true;
+            }
         }
 
         if (args.AttemptFrequency == AttemptFrequency.EveryTick && !TryAttemptEvent(doAfter))

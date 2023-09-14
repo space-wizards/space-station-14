@@ -1,4 +1,3 @@
-﻿using Content.Shared.Actions.ActionTypes;
 using Content.Shared.FixedPoint;
 using Content.Shared.Whitelist;
 using Robust.Shared.Containers;
@@ -15,7 +14,7 @@ namespace Content.Shared.Mech.Components;
 /// powered via an internal battery.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-public sealed class MechComponent : Component
+public sealed partial class MechComponent : Component
 {
     /// <summary>
     /// How much "health" the mech has left.
@@ -93,6 +92,9 @@ public sealed class MechComponent : Component
     [DataField("equipmentWhitelist")]
     public EntityWhitelist? EquipmentWhitelist;
 
+    [DataField("pilotWhitelist")]
+    public EntityWhitelist? PilotWhitelist;
+
     /// <summary>
     /// A container for storing the equipment entities.
     /// </summary>
@@ -138,20 +140,13 @@ public sealed class MechComponent : Component
     [DataField("startingEquipment", customTypeSerializer: typeof(PrototypeIdListSerializer<EntityPrototype>))]
     public List<string> StartingEquipment = new();
 
-    /// <summary>
-    /// The battery the mech initially has when it spawns
-    /// Good for admemes and nukie mechs.
-    /// </summary>
-    [DataField("startingBattery", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string? StartingBattery;
-
     #region Action Prototypes
-    [DataField("mechCycleAction", customTypeSerializer: typeof(PrototypeIdSerializer<InstantActionPrototype>))]
-    public string MechCycleAction = "MechCycleEquipment";
-    [DataField("mechUiAction", customTypeSerializer: typeof(PrototypeIdSerializer<InstantActionPrototype>))]
-    public string MechUiAction = "MechOpenUI";
-    [DataField("mechEjectAction", customTypeSerializer: typeof(PrototypeIdSerializer<InstantActionPrototype>))]
-    public string MechEjectAction = "MechEject";
+    [DataField("mechCycleAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    public string MechCycleAction = "ActionMechCycleEquipment";
+    [DataField("mechUiAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    public string MechUiAction = "ActionMechOpenUI";
+    [DataField("mechEjectAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    public string MechEjectAction = "ActionMechEject";
     #endregion
 
     #region Visualizer States
@@ -174,6 +169,6 @@ public sealed class MechComponentState : ComponentState
     public FixedPoint2 MaxIntegrity;
     public FixedPoint2 Energy;
     public FixedPoint2 MaxEnergy;
-    public EntityUid? CurrentSelectedEquipment;
+    public NetEntity? CurrentSelectedEquipment;
     public bool Broken;
 }

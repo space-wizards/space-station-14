@@ -1,7 +1,7 @@
 - type: cargoProduct
   id: SecurityArmor
   icon:
-    sprite: Clothing/OuterClothing/Vests/oldarmor.rsi
+    sprite: Clothing/OuterClothing/Armor/security.rsi
     state: icon
   product: CrateSecurityArmor
   cost: 700
@@ -24,7 +24,7 @@
     sprite: Objects/Weapons/Guns/Battery/disabler.rsi
     state: base
   product: CrateSecurityNonlethal
-  cost: 2100
+  cost: 4000
   category: Security
   group: market
 
@@ -34,7 +34,7 @@
     sprite: Clothing/OuterClothing/Armor/riot.rsi
     state: icon
   product: CrateSecurityRiot
-  cost: 2900
+  cost: 5500
   category: Security
   group: market
 
@@ -65,5 +65,15 @@
     state: icon
   product: CrateSecurityBiosuit
   cost: 800
+  category: Security
+  group: market
+
+- type: cargoProduct
+  id: SecurityBarrier
+  icon:
+    sprite: Objects/Specific/Security/barrier.rsi
+    state: idle
+  product: DeployableBarrier
+  cost: 1000
   category: Security
   group: market

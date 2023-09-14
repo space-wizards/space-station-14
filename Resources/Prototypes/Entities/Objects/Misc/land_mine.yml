@@ -12,13 +12,13 @@
     fixedRotation: true
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.2,-0.2,0.2,0.2"
-      id: "slips"
-      hard: false
-      layer:
-        - LowImpassable
+      slips:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.2,-0.2,0.2,0.2"
+        hard: false
+        layer:
+          - LowImpassable
   - type: Sprite
     drawdepth: Items
     sprite: Objects/Misc/uglymine.rsi

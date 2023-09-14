@@ -1,4 +1,5 @@
-﻿using Robust.Shared.Prototypes;
+﻿using System.Numerics;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Chat.TypingIndicator;
@@ -10,16 +11,16 @@ namespace Content.Shared.Chat.TypingIndicator;
 public sealed class TypingIndicatorPrototype : IPrototype
 {
     [IdDataField]
-    public string ID { get; } = default!;
+    public string ID { get; private set; } = default!;
 
     [DataField("spritePath")]
-    public ResourcePath SpritePath = new("/Textures/Effects/speech.rsi");
+    public ResPath SpritePath = new("/Textures/Effects/speech.rsi");
 
     [DataField("typingState", required: true)]
     public string TypingState = default!;
 
     [DataField("offset")]
-    public Vector2 Offset = new(0.5f, 0.5f);
+    public Vector2 Offset = new(0, 0);
 
     [DataField("shader")]
     public string Shader = "unshaded";

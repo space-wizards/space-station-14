@@ -4,13 +4,14 @@ using Content.Server.Body.Components;
 using Content.Server.GameTicking;
 using Content.Server.Humanoid;
 using Content.Server.Kitchen.Components;
-using Content.Server.Mind.Components;
+using Content.Server.Mind;
 using Content.Shared.Body.Components;
+using Content.Shared.Body.Organ;
 using Content.Shared.Body.Part;
-using Content.Shared.Body.Prototypes;
 using Content.Shared.Body.Systems;
-using Content.Shared.Coordinates;
 using Content.Shared.Humanoid;
+using Content.Shared.Kitchen.Components;
+using Content.Shared.Mind;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Movement.Events;
 using Content.Shared.Random.Helpers;
@@ -29,28 +30,88 @@ public sealed class BodySystem : SharedBodySystem
     [Dependency] private readonly HumanoidAppearanceSystem _humanoidSystem = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly SharedMindSystem _mindSystem = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
+        SubscribeLocalEvent<BodyPartComponent, ComponentStartup>(OnPartStartup);
+        SubscribeLocalEvent<BodyComponent, ComponentStartup>(OnBodyStartup);
         SubscribeLocalEvent<BodyComponent, MoveInputEvent>(OnRelayMoveInput);
         SubscribeLocalEvent<BodyComponent, ApplyMetabolicMultiplierEvent>(OnApplyMetabolicMultiplier);
         SubscribeLocalEvent<BodyComponent, BeingMicrowavedEvent>(OnBeingMicrowaved);
     }
 
-    private void OnRelayMoveInput(EntityUid uid, BodyComponent component, ref MoveInputEvent args)
+    private void OnPartStartup(EntityUid uid, BodyPartComponent component, ComponentStartup args)
     {
-        if (_mobState.IsDead(uid) &&
-            EntityManager.TryGetComponent<MindComponent>(uid, out var mind) &&
-            mind.HasMind)
+        // This inter-entity relationship makes be deeply uncomfortable because its probably going to re-encounter
+        // all of the networking & startup ordering issues that containers and joints have.
+        // TODO just use containers. Please.
+
+        foreach (var slot in component.Children.Values)
         {
-            if (!mind.Mind!.TimeOfDeath.HasValue)
+            DebugTools.Assert(slot.Parent == uid);
+            if (slot.Child == null)
+                continue;
+
+            if (TryComp(slot.Child, out BodyPartComponent? child))
             {
-                mind.Mind.TimeOfDeath = _gameTiming.RealTime;
+                child.ParentSlot = slot;
+                Dirty(slot.Child.Value, child);
+                continue;
             }
 
-            _ticker.OnGhostAttempt(mind.Mind!, true);
+            Log.Error($"Body part encountered missing limbs: {ToPrettyString(uid)}. Slot: {slot.Id}");
+            slot.Child = null;
+        }
+
+        foreach (var slot in component.Organs.Values)
+        {
+            DebugTools.Assert(slot.Parent == uid);
+            if (slot.Child == null)
+                continue;
+
+            if (TryComp(slot.Child, out OrganComponent? child))
+            {
+                child.ParentSlot = slot;
+                Dirty(slot.Child.Value, child);
+                continue;
+            }
+
+            Log.Error($"Body part encountered missing organ: {ToPrettyString(uid)}. Slot: {slot.Id}");
+            slot.Child = null;
+        }
+    }
+
+    private void OnBodyStartup(EntityUid uid, BodyComponent component, ComponentStartup args)
+    {
+        if (component.Root is not { } slot)
+            return;
+
+        DebugTools.Assert(slot.Parent == uid);
+        if (slot.Child == null)
+            return;
+
+        if (!TryComp(slot.Child, out BodyPartComponent? child))
+        {
+            Log.Error($"Body part encountered missing limbs: {ToPrettyString(uid)}. Slot: {slot.Id}");
+            slot.Child = null;
+            return;
+        }
+
+        child.ParentSlot = slot;
+        Dirty(slot.Child.Value, child);
+    }
+
+    private void OnRelayMoveInput(EntityUid uid, BodyComponent component, ref MoveInputEvent args)
+    {
+        if (_mobState.IsDead(uid) && _mindSystem.TryGetMind(uid, out var mindId, out var mind))
+        {
+            mind.TimeOfDeath ??= _gameTiming.RealTime;
+            _ticker.OnGhostAttempt(mindId, true, mind: mind);
         }
     }
 
@@ -69,7 +130,8 @@ public sealed class BodySystem : SharedBodySystem
             return;
 
         // Don't microwave animals, kids
-        Transform(uid).AttachToGridOrMap();
+        _transform.AttachToGridOrMap(uid);
+        _appearance.SetData(args.Microwave, MicrowaveVisualState.Bloody, true);
         GibBody(uid, false, component);
 
         args.Handled = true;
@@ -116,22 +178,6 @@ public sealed class BodySystem : SharedBodySystem
         var layers = HumanoidVisualLayersExtension.Sublayers(layer.Value);
         _humanoidSystem.SetLayersVisibility(oldBody.Value, layers, false, true, humanoid);
         return true;
-    }
-
-    protected override void InitBody(BodyComponent body, BodyPrototype prototype)
-    {
-        var root = prototype.Slots[prototype.Root];
-        Containers.EnsureContainer<Container>(body.Owner, BodyContainerId);
-        if (root.Part == null)
-            return;
-        var bodyId = Spawn(root.Part, body.Owner.ToCoordinates());
-        var partComponent = Comp<BodyPartComponent>(bodyId);
-        var slot = new BodyPartSlot(root.Part, body.Owner, partComponent.PartType);
-        body.Root = slot;
-        partComponent.Body = bodyId;
-
-        AttachPart(bodyId, slot, partComponent);
-        InitPart(partComponent, prototype, prototype.Root);
     }
 
     public override HashSet<EntityUid> GibBody(EntityUid? bodyId, bool gibOrgans = false, BodyComponent? body = null, bool deleteItems = false)

@@ -1,23 +1,27 @@
 using System.Linq;
-using Content.Server.Objectives.Interfaces;
+using Content.Server.GameTicking.Rules;
+using Content.Shared.Mind;
+using Content.Shared.Objectives.Interfaces;
+using Content.Shared.Roles.Jobs;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
-using Content.Server.GameTicking.Rules;
 
 namespace Content.Server.Objectives.Conditions
 {
     [DataDefinition]
-    public sealed class RandomTraitorAliveCondition : IObjectiveCondition
+    public sealed partial class RandomTraitorAliveCondition : IObjectiveCondition
     {
-        private Mind.Mind? _target;
+        private EntityUid? _targetMind;
 
-        public IObjectiveCondition GetAssigned(Mind.Mind mind)
+        public IObjectiveCondition GetAssigned(EntityUid mindId, MindComponent mind)
         {
             var entityMgr = IoCManager.Resolve<IEntityManager>();
-            var traitors = entityMgr.EntitySysManager.GetEntitySystem<TraitorRuleSystem>().GetOtherTraitorsAliveAndConnected(mind).ToList();
 
-            if (traitors.Count == 0) return new EscapeShuttleCondition{}; //You were made a traitor by admins, and are the first/only.
-            return new RandomTraitorAliveCondition { _target = IoCManager.Resolve<IRobustRandom>().Pick(traitors).Mind };
+            var traitors = Enumerable.ToList<(EntityUid Id, MindComponent Mind)>(entityMgr.System<TraitorRuleSystem>().GetOtherTraitorMindsAliveAndConnected(mind));
+
+            if (traitors.Count == 0)
+                return new EscapeShuttleCondition(); //You were made a traitor by admins, and are the first/only.
+            return new RandomTraitorAliveCondition { _targetMind = IoCManager.Resolve<IRobustRandom>().Pick(traitors).Id };
         }
 
         public string Title
@@ -25,13 +29,18 @@ namespace Content.Server.Objectives.Conditions
             get
             {
                 var targetName = string.Empty;
-                var jobName = _target?.CurrentJob?.Name ?? "Unknown";
+                var ents = IoCManager.Resolve<IEntityManager>();
+                var jobs = ents.System<SharedJobSystem>();
+                var jobName = jobs.MindTryGetJobName(_targetMind);
 
-                if (_target == null)
+                if (_targetMind == null)
                     return Loc.GetString("objective-condition-other-traitor-alive-title", ("targetName", targetName), ("job", jobName));
 
-                if (_target.OwnedEntity is {Valid: true} owned)
-                    targetName = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(owned).EntityName;
+                if (ents.TryGetComponent(_targetMind, out MindComponent? mind) &&
+                    mind.OwnedEntity is {Valid: true} owned)
+                {
+                    targetName = ents.GetComponent<MetaDataComponent>(owned).EntityName;
+                }
 
                 return Loc.GetString("objective-condition-other-traitor-alive-title", ("targetName", targetName), ("job", jobName));
             }
@@ -39,15 +48,26 @@ namespace Content.Server.Objectives.Conditions
 
         public string Description => Loc.GetString("objective-condition-other-traitor-alive-description");
 
-        public SpriteSpecifier Icon => new SpriteSpecifier.Rsi(new ResourcePath("Objects/Misc/bureaucracy.rsi"), "folder-white");
+        public SpriteSpecifier Icon => new SpriteSpecifier.Rsi(new ("Objects/Misc/bureaucracy.rsi"), "folder-white");
 
-        public float Progress => (!_target?.CharacterDeadIC ?? true) ? 1f : 0f;
+        public float Progress
+        {
+            get
+            {
+                var entityManager = IoCManager.Resolve<EntityManager>();
+                var mindSystem = entityManager.System<SharedMindSystem>();
+                return !entityManager.TryGetComponent(_targetMind, out MindComponent? mind) ||
+                       !mindSystem.IsCharacterDeadIc(mind)
+                    ? 1f
+                    : 0f;
+            }
+        }
 
         public float Difficulty => 1.75f;
 
         public bool Equals(IObjectiveCondition? other)
         {
-            return other is RandomTraitorAliveCondition kpc && Equals(_target, kpc._target);
+            return other is RandomTraitorAliveCondition kpc && Equals(_targetMind, kpc._targetMind);
         }
 
         public override bool Equals(object? obj)
@@ -59,7 +79,7 @@ namespace Content.Server.Objectives.Conditions
 
         public override int GetHashCode()
         {
-            return _target?.GetHashCode() ?? 0;
+            return _targetMind?.GetHashCode() ?? 0;
         }
     }
 }

@@ -33,10 +33,10 @@ public partial class PolymorphSystem
 
     private void OnPolymorphCollide(EntityUid uid, PolymorphOnCollideComponent component, ref StartCollideEvent args)
     {
-        if (args.OurFixture.ID != SharedProjectileSystem.ProjectileFixture)
+        if (args.OurFixtureId != SharedProjectileSystem.ProjectileFixture)
             return;
 
-        var other = args.OtherFixture.Body.Owner;
+        var other = args.OtherEntity;
         if (!component.Whitelist.IsValid(other)
             || component.Blacklist != null && component.Blacklist.IsValid(other))
             return;

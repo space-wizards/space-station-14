@@ -6,7 +6,6 @@
   components:
   - type: Sprite
     sprite: Objects/Devices/gps.rsi
-    netsync: false
     layers:
     - state: icon
     - state: active

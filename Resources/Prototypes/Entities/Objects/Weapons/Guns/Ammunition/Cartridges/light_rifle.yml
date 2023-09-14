@@ -11,7 +11,6 @@
   - type: CartridgeAmmo
     proto: BulletLightRifle
   - type: Sprite
-    netsync: false
     sprite: Objects/Weapons/Guns/Ammunition/Casings/ammo_casing.rsi
     layers:
     - state: base
@@ -30,14 +29,6 @@
     proto: BulletLightRifle
 
 - type: entity
-  id: CartridgeLightRifleHighVelocity
-  name: cartridge (.30 rifle high-velocity)
-  parent: BaseCartridgeLightRifle
-  components:
-  - type: CartridgeAmmo
-    proto: BulletLightRifleHighVelocity
-
-- type: entity
   id: CartridgeLightRiflePractice
   name: cartridge (.30 rifle practice)
   parent: BaseCartridgeLightRifle
@@ -52,3 +43,11 @@
   components:
   - type: CartridgeAmmo
     proto: BulletLightRifleRubber
+
+- type: entity
+  id: CartridgeLightRifleIncendiary
+  name: cartridge (.30 rifle incendiary)
+  parent: BaseCartridgeLightRifle
+  components:
+  - type: CartridgeAmmo
+    proto: BulletLightRifleIncendiary

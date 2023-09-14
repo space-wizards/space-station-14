@@ -14,24 +14,26 @@ using Content.Client.Parallax.Managers;
 using Content.Client.Players.PlayTimeTracking;
 using Content.Client.Preferences;
 using Content.Client.Radiation.Overlays;
+using Content.Client.Replay;
 using Content.Client.Screenshot;
 using Content.Client.Singularity;
 using Content.Client.Stylesheets;
 using Content.Client.Viewport;
 using Content.Client.Voting;
-using Content.Shared.Administration;
-using Content.Shared.AME;
+using Content.Shared.Ame;
 using Content.Shared.Gravity;
 using Content.Shared.Localizations;
 using Robust.Client;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
+using Robust.Client.Replays.Loading;
 using Robust.Client.State;
 using Robust.Client.UserInterface;
+using Robust.Shared;
 using Robust.Shared.Configuration;
 using Robust.Shared.ContentPack;
-using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Replays;
 
 namespace Content.Client.Entry
 {
@@ -52,19 +54,20 @@ namespace Content.Client.Entry
         [Dependency] private readonly ViewportManager _viewportManager = default!;
         [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
         [Dependency] private readonly IInputManager _inputManager = default!;
-        [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IOverlayManager _overlayManager = default!;
         [Dependency] private readonly IChatManager _chatManager = default!;
         [Dependency] private readonly IClientPreferencesManager _clientPreferencesManager = default!;
         [Dependency] private readonly EuiManager _euiManager = default!;
         [Dependency] private readonly IVoteManager _voteManager = default!;
-        [Dependency] private readonly IGamePrototypeLoadManager _gamePrototypeLoadManager = default!;
-        [Dependency] private readonly NetworkResourceManager _networkResources = default!;
         [Dependency] private readonly DocumentParsingManager _documentParsingManager = default!;
         [Dependency] private readonly GhostKickManager _ghostKick = default!;
         [Dependency] private readonly ExtendedDisconnectInformationManager _extendedDisconnectInformation = default!;
-        [Dependency] private readonly PlayTimeTrackingManager _playTimeTracking = default!;
+        [Dependency] private readonly JobRequirementsManager _jobRequirements = default!;
         [Dependency] private readonly ContentLocalizationManager _contentLoc = default!;
+        [Dependency] private readonly ContentReplayPlaybackManager _playbackMan = default!;
+        [Dependency] private readonly IResourceManager _resourceManager = default!;
+        [Dependency] private readonly IReplayLoadManager _replayLoad = default!;
+        [Dependency] private readonly ILogManager _logManager = default!;
 
         public override void Init()
         {
@@ -85,15 +88,14 @@ namespace Content.Client.Entry
 
             // Do not add to these, they are legacy.
             _componentFactory.RegisterClass<SharedGravityGeneratorComponent>();
-            _componentFactory.RegisterClass<SharedAMEControllerComponent>();
+            _componentFactory.RegisterClass<SharedAmeControllerComponent>();
             // Do not add to the above, they are legacy
 
+            _prototypeManager.RegisterIgnore("utilityQuery");
+            _prototypeManager.RegisterIgnore("utilityCurvePreset");
             _prototypeManager.RegisterIgnore("accent");
-            _prototypeManager.RegisterIgnore("material");
-            _prototypeManager.RegisterIgnore("reaction"); //Chemical reactions only needed by server. Reactions checks are server-side.
             _prototypeManager.RegisterIgnore("gasReaction");
             _prototypeManager.RegisterIgnore("seed"); // Seeds prototypes are server-only.
-            _prototypeManager.RegisterIgnore("barSign");
             _prototypeManager.RegisterIgnore("objective");
             _prototypeManager.RegisterIgnore("holiday");
             _prototypeManager.RegisterIgnore("aiFaction");
@@ -101,14 +103,14 @@ namespace Content.Client.Entry
             _prototypeManager.RegisterIgnore("htnPrimitive");
             _prototypeManager.RegisterIgnore("gameMap");
             _prototypeManager.RegisterIgnore("gameMapPool");
-            _prototypeManager.RegisterIgnore("faction");
+            _prototypeManager.RegisterIgnore("npcFaction");
             _prototypeManager.RegisterIgnore("lobbyBackground");
             _prototypeManager.RegisterIgnore("advertisementsPack");
-            _prototypeManager.RegisterIgnore("metabolizerType");
-            _prototypeManager.RegisterIgnore("metabolismGroup");
             _prototypeManager.RegisterIgnore("salvageMap");
-            _prototypeManager.RegisterIgnore("salvageFaction");
             _prototypeManager.RegisterIgnore("gamePreset");
+            _prototypeManager.RegisterIgnore("noiseChannel");
+            _prototypeManager.RegisterIgnore("spaceBiome");
+            _prototypeManager.RegisterIgnore("worldgenConfig");
             _prototypeManager.RegisterIgnore("gameRule");
             _prototypeManager.RegisterIgnore("worldSpell");
             _prototypeManager.RegisterIgnore("entitySpell");
@@ -117,18 +119,17 @@ namespace Content.Client.Entry
             _prototypeManager.RegisterIgnore("wireLayout");
             _prototypeManager.RegisterIgnore("alertLevels");
             _prototypeManager.RegisterIgnore("nukeopsRole");
-            _prototypeManager.RegisterIgnore("flavor");
 
             _componentFactory.GenerateNetIds();
             _adminManager.Initialize();
-            _stylesheetManager.Initialize();
             _screenshotHook.Initialize();
             _changelogManager.Initialize();
             _rulesManager.Initialize();
             _viewportManager.Initialize();
             _ghostKick.Initialize();
             _extendedDisconnectInformation.Initialize();
-            _playTimeTracking.Initialize();
+            _jobRequirements.Initialize();
+            _playbackMan.Initialize();
 
             //AUTOSCALING default Setup!
             _configManager.SetCVar("interface.resolutionAutoScaleUpperCutoffX", 1080);
@@ -141,6 +142,9 @@ namespace Content.Client.Entry
         public override void PostInit()
         {
             base.PostInit();
+
+            _stylesheetManager.Initialize();
+
             // Setup key contexts
             ContentContexts.SetupContexts(_inputManager.Contexts);
 
@@ -149,13 +153,10 @@ namespace Content.Client.Entry
             _overlayManager.AddOverlay(new SingularityOverlay());
             _overlayManager.AddOverlay(new FlashOverlay());
             _overlayManager.AddOverlay(new RadiationPulseOverlay());
-
             _chatManager.Initialize();
             _clientPreferencesManager.Initialize();
             _euiManager.Initialize();
             _voteManager.Initialize();
-            _gamePrototypeLoadManager.Initialize();
-            _networkResources.Initialize();
             _userInterfaceManager.SetDefaultTheme("SS14DefaultTheme");
             _documentParsingManager.Initialize();
 
@@ -178,7 +179,20 @@ namespace Content.Client.Entry
         {
             // Fire off into state dependent on launcher or not.
 
-            if (_gameController.LaunchState.FromLauncher)
+            // Check if we're loading a replay via content bundle!
+            if (_configManager.GetCVar(CVars.LaunchContentBundle)
+                && _resourceManager.ContentFileExists(
+                    ReplayConstants.ReplayZipFolder.ToRootedPath() / ReplayConstants.FileMeta))
+            {
+                _logManager.GetSawmill("entry").Info("Loading content bundle replay from VFS!");
+
+                var reader = new ReplayFileReaderResources(
+                    _resourceManager,
+                    ReplayConstants.ReplayZipFolder.ToRootedPath());
+
+                _replayLoad.LoadAndStartReplay(reader);
+            }
+            else if (_gameController.LaunchState.FromLauncher)
             {
                 _stateManager.RequestStateChange<LauncherConnecting>();
                 var state = (LauncherConnecting) _stateManager.CurrentState;

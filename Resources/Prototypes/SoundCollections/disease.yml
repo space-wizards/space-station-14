@@ -57,3 +57,8 @@
   - /Audio/Voice/Human/snore1.ogg
   - /Audio/Voice/Human/snore2.ogg
   - /Audio/Voice/Human/snore3.ogg
+
+- type: soundCollection
+  id: Honks
+  files:
+  - /Audio/Items/bikehorn.ogg

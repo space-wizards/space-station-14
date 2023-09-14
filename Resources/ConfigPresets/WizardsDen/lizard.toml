@@ -5,3 +5,6 @@
 [game]
 hostname = "[EN] Wizard's Den Lizard [US West]"
 soft_max_players = 80
+
+[hub]
+tags = "lang:en,region:am_n_w,rp:low"

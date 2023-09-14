@@ -1,16 +1,19 @@
-﻿using Content.Server.Objectives.Interfaces;
-using Content.Server.Traitor;
+﻿using Content.Server.Roles;
+using Content.Shared.Mind;
+using Content.Shared.Objectives.Interfaces;
+using Content.Shared.Roles;
 using JetBrains.Annotations;
 
 namespace Content.Server.Objectives.Requirements
 {
     [UsedImplicitly]
     [DataDefinition]
-    public sealed class TraitorRequirement : IObjectiveRequirement
+    public sealed partial class TraitorRequirement : IObjectiveRequirement
     {
-        public bool CanBeAssigned(Mind.Mind mind)
+        public bool CanBeAssigned(EntityUid mindId, MindComponent mind)
         {
-            return mind.HasRole<TraitorRole>();
+            var roleSystem = IoCManager.Resolve<IEntityManager>().System<SharedRoleSystem>();
+            return roleSystem.MindHasRole<TraitorRoleComponent>(mindId);
         }
     }
 }

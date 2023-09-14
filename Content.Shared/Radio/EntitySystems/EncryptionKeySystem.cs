@@ -20,7 +20,7 @@ namespace Content.Shared.Radio.EntitySystems;
 /// <summary>
 ///     This system manages encryption keys & key holders for use with radio channels.
 /// </summary>
-public sealed class EncryptionKeySystem : EntitySystem
+public sealed partial class EncryptionKeySystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _protoManager = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
@@ -62,7 +62,7 @@ public sealed class EncryptionKeySystem : EntitySystem
         // TODO add predicted pop-up overrides.
         if (_net.IsServer)
             _popup.PopupEntity(Loc.GetString("encryption-keys-all-extracted"), uid, args.User);
-        
+
         _audio.PlayPredicted(component.KeyExtractionSound, uid, args.User);
     }
 
@@ -115,29 +115,25 @@ public sealed class EncryptionKeySystem : EntitySystem
     {
         if (!component.KeysUnlocked)
         {
-            if (_net.IsClient && _timing.IsFirstTimePredicted)
-                _popup.PopupEntity(Loc.GetString("encryption-keys-are-locked"), uid, args.User);
+            _popup.PopupClient(Loc.GetString("encryption-keys-are-locked"), uid, args.User);
             return;
         }
 
         if (TryComp<WiresPanelComponent>(uid, out var panel) && !panel.Open)
         {
-            if (_net.IsClient && _timing.IsFirstTimePredicted)
-                _popup.PopupEntity(Loc.GetString("encryption-keys-panel-locked"), uid, args.User);
+            _popup.PopupClient(Loc.GetString("encryption-keys-panel-locked"), uid, args.User);
             return;
         }
 
         if (component.KeySlots <= component.KeyContainer.ContainedEntities.Count)
         {
-            if (_net.IsClient && _timing.IsFirstTimePredicted)
-                _popup.PopupEntity(Loc.GetString("encryption-key-slots-already-full"), uid, args.User);
+            _popup.PopupClient(Loc.GetString("encryption-key-slots-already-full"), uid, args.User);
             return;
         }
 
         if (component.KeyContainer.Insert(args.Used))
         {
-            if (_net.IsClient&& _timing.IsFirstTimePredicted)
-                _popup.PopupEntity(Loc.GetString("encryption-key-successfully-installed"), uid, args.User);
+            _popup.PopupClient(Loc.GetString("encryption-key-successfully-installed"), uid, args.User);
             _audio.PlayPredicted(component.KeyInsertionSound, args.Target, args.User);
             args.Handled = true;
             return;
@@ -149,22 +145,19 @@ public sealed class EncryptionKeySystem : EntitySystem
     {
         if (!component.KeysUnlocked)
         {
-            if (_net.IsClient && _timing.IsFirstTimePredicted)
-                _popup.PopupEntity(Loc.GetString("encryption-keys-are-locked"), uid, args.User);
+            _popup.PopupClient(Loc.GetString("encryption-keys-are-locked"), uid, args.User);
             return;
         }
 
         if (TryComp<WiresPanelComponent>(uid, out var panel) && !panel.Open)
         {
-            if (_net.IsClient && _timing.IsFirstTimePredicted)
-                _popup.PopupEntity(Loc.GetString("encryption-keys-panel-locked"), uid, args.User);
+            _popup.PopupClient(Loc.GetString("encryption-keys-panel-locked"), uid, args.User);
             return;
         }
 
         if (component.KeyContainer.ContainedEntities.Count == 0)
         {
-            if (_net.IsClient && _timing.IsFirstTimePredicted)
-                _popup.PopupEntity(Loc.GetString("encryption-keys-no-keys"), uid, args.User);
+            _popup.PopupClient(Loc.GetString("encryption-keys-no-keys"), uid, args.User);
             return;
         }
 
@@ -252,7 +245,7 @@ public sealed class EncryptionKeySystem : EntitySystem
     }
 
     [Serializable, NetSerializable]
-    public sealed class EncryptionRemovalFinishedEvent : SimpleDoAfterEvent
+    public sealed partial class EncryptionRemovalFinishedEvent : SimpleDoAfterEvent
     {
     }
 }

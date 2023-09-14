@@ -16,8 +16,14 @@
       - id: PlushieRouny
       - id: PlushieRatvar
       - id: PlushieSharkBlue
+        orGroup: PlushieShark
+      - id: PlushieSharkGrey
+        orGroup: PlushieShark
       - id: PlushieAtmosian
       - id: PlushieDiona
+      - id: PlushieXeno
+      - id: PlushieHampter
+      - id: PlushieMoth
 
 - type: entity
   id: CrateFunInstrumentsVariety
@@ -135,8 +141,13 @@
       - id: BackgammonBoard
       - id: ParchisBoard
       - id: CheckerBoard
-      - id: d6Dice
-        amount: 4
+      - id: ShipBattlemap
+      - id: SnowBattlemap
+      - id: SandBattlemap
+      - id: MoonBattlemap
+      - id: GrassBattlemap
+      - id: DiceBag
+        amount: 6
 
 - type: entity
   id: CrateFunATV
@@ -187,6 +198,17 @@
       - id: KnifePlastic
 
 - type: entity
+  id: CrateFunWaterGuns
+  parent: CratePlastic
+  components:
+  - type: StorageFill
+    contents:
+      - id: WeaponWaterBlaster
+        amount: 2
+      - id: WeaponWaterPistol
+        amount: 4
+
+- type: entity
   id: CrateFunSyndicateSegway
   parent: CrateLivestock
   components:
@@ -194,6 +216,21 @@
       contents:
         - id: VehicleSyndicateSegway
         - id: VehicleKeySyndicateSegway
+
+- type: entity
+  id: CrateFunBoxing
+  parent: CrateGenericSteel
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingHandsGlovesBoxingRed
+      - id: ClothingHandsGlovesBoxingBlue
+      - id: ClothingHandsGlovesBoxingYellow
+      - id: ClothingHandsGlovesBoxingGreen
+      - id: UniformShortsRed
+        amount: 3
+      - id: UniformShortsRedWithTop
+        amount: 3
 
 - type: entity
   id: CrateFunPirate
@@ -207,6 +244,49 @@
       - id: ClothingOuterCoatPirate
       - id: ClothingShoesBootsLaceup
         amount: 2
-      - id: HatBandRed
+      - id: ClothingHeadBandRed
       - id: FoamCutlass
         amount: 2
+
+- type: entity
+  id: CrateFunToyBox
+  parent: CrateToyBox
+  suffix: Filled
+  components:
+  - type: StorageFill
+    contents:
+      - id: CrazyGlue
+        amount: 2
+      - id: PlasticBanana
+      - id: WhoopieCushion
+      - id: ToyHammer
+      - id: MrChips
+        orGroup: GiftPool
+      - id: MrDips
+        orGroup: Giftpool
+      - id: RevolverCapGun
+      - id: VehicleUnicycleFolded
+      - id: ClothingShoesClownLarge
+      - id: ClothingHeadHatMagician
+      - id: BeachBall
+
+- type: entity
+  id: CrateFunBikeHornImplants
+  parent: CrateGenericSteel
+  components:
+  - type: StorageFill
+    contents:
+      - id: BikeHornImplanter
+        amount: 3
+
+- type: entity
+  id: CrateFunMysteryFigurines
+  parent: CratePlastic
+  components:
+  - type: StorageFill
+    contents:
+      - id: MysteryFigureBox
+        amount: 10
+      - id: MysteryFigureBox
+        amount: 15
+        prob: 0.05

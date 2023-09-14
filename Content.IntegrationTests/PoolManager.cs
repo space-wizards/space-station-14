@@ -1,33 +1,24 @@
-using System;
+#nullable enable
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using Content.Client.IoC;
 using Content.Client.Parallax.Managers;
+using Content.IntegrationTests.Pair;
 using Content.IntegrationTests.Tests;
 using Content.IntegrationTests.Tests.Destructible;
 using Content.IntegrationTests.Tests.DeviceNetwork;
 using Content.IntegrationTests.Tests.Interaction.Click;
-using Content.IntegrationTests.Tests.Networking;
-using Content.Server.GameTicking;
-using Content.Shared.CCVar;
-using Microsoft.Diagnostics.Tracing.Parsers.Kernel;
-using NUnit.Framework;
 using Robust.Client;
 using Robust.Server;
-using Robust.Shared;
 using Robust.Shared.Configuration;
 using Robust.Shared.ContentPack;
-using Robust.Shared.Exceptions;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
-using Robust.Shared.Map;
-using Robust.Shared.Map.Components;
-using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.UnitTesting;
@@ -39,54 +30,24 @@ namespace Content.IntegrationTests;
 /// <summary>
 /// Making clients, and servers is slow, this manages a pool of them so tests can reuse them.
 /// </summary>
-public static class PoolManager
+public static partial class PoolManager
 {
-    private static readonly (string cvar, string value)[] ServerTestCvars =
-    {
-        // @formatter:off
-        (CCVars.DatabaseSynchronous.Name,     "true"),
-        (CCVars.DatabaseSqliteDelay.Name,     "0"),
-        (CCVars.HolidaysEnabled.Name,         "false"),
-        (CCVars.GameMap.Name,                 "Empty"),
-        (CCVars.AdminLogsQueueSendDelay.Name, "0"),
-        (CVars.NetPVS.Name,                   "false"),
-        (CCVars.NPCMaxUpdates.Name,           "999999"),
-        (CVars.ThreadParallelCount.Name,      "1"),
-        (CCVars.GameRoleTimers.Name,          "false"),
-        (CCVars.CargoShuttles.Name,           "false"),
-        (CCVars.ArrivalsShuttles.Name,        "false"),
-        (CCVars.EmergencyShuttleEnabled.Name, "false"),
-        (CCVars.ProcgenPreload.Name,          "false"),
-        // @formatter:on
-    };
-
-    private static int PairId;
-    private static object PairLock = new();
+    public const string TestMap = "Empty";
+    private static int _pairId;
+    private static readonly object PairLock = new();
+    private static bool _initialized;
 
     // Pair, IsBorrowed
-    private static Dictionary<Pair, bool> Pairs = new();
-    private static bool Dead;
-    private static Exception PoolFailureReason;
+    private static readonly Dictionary<TestPair, bool> Pairs = new();
+    private static bool _dead;
+    private static Exception? _poolFailureReason;
 
-    private static async Task ConfigurePrototypes(RobustIntegrationTest.IntegrationInstance instance,
-        PoolSettings settings)
-    {
-        await instance.WaitPost(() =>
-        {
-            var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
-            var changes = new Dictionary<Type, HashSet<string>>();
-            prototypeManager.LoadString(settings.ExtraPrototypes.Trim(), true, changes);
-            prototypeManager.ReloadPrototypes(changes);
-        });
-    }
-
-    private static async Task<(RobustIntegrationTest.ServerIntegrationInstance, PoolTestLogHandler)> GenerateServer(
+    public static async Task<(RobustIntegrationTest.ServerIntegrationInstance, PoolTestLogHandler)> GenerateServer(
         PoolSettings poolSettings,
         TextWriter testOut)
     {
         var options = new RobustIntegrationTest.ServerIntegrationOptions
         {
-            ExtraPrototypes = poolSettings.ExtraPrototypes,
             ContentStart = true,
             Options = new ServerOptions()
             {
@@ -101,32 +62,27 @@ public static class PoolManager
             }
         };
 
-        options.BeforeStart += () =>
-        {
-            IoCManager.Resolve<IEntitySystemManager>()
-                .LoadExtraSystemType<SimplePredictReconcileTest.PredictionTestEntitySystem>();
-            IoCManager.Resolve<IComponentFactory>().RegisterClass<SimplePredictReconcileTest.PredictionTestComponent>();
-            IoCManager.Register<ResettingEntitySystemTests.TestRoundRestartCleanupEvent>();
-            IoCManager.Register<InteractionSystemTests.TestInteractionSystem>();
-            IoCManager.Register<DeviceNetworkTestSystem>();
-            IoCManager.Resolve<IEntitySystemManager>()
-                .LoadExtraSystemType<ResettingEntitySystemTests.TestRoundRestartCleanupEvent>();
-            IoCManager.Resolve<IEntitySystemManager>()
-                .LoadExtraSystemType<InteractionSystemTests.TestInteractionSystem>();
-            IoCManager.Resolve<IEntitySystemManager>().LoadExtraSystemType<DeviceNetworkTestSystem>();
-            IoCManager.Resolve<IEntitySystemManager>().LoadExtraSystemType<TestDestructibleListenerSystem>();
-            IoCManager.Resolve<ILogManager>().GetSawmill("loc").Level = LogLevel.Error;
-        };
-
         var logHandler = new PoolTestLogHandler("SERVER");
         logHandler.ActivateContext(testOut);
-
         options.OverrideLogHandler = () => logHandler;
 
-        SetupCVars(poolSettings, options);
+        options.BeforeStart += () =>
+        {
+            var entSysMan = IoCManager.Resolve<IEntitySystemManager>();
+            var compFactory = IoCManager.Resolve<IComponentFactory>();
+            entSysMan.LoadExtraSystemType<ResettingEntitySystemTests.TestRoundRestartCleanupEvent>();
+            entSysMan.LoadExtraSystemType<InteractionSystemTests.TestInteractionSystem>();
+            entSysMan.LoadExtraSystemType<DeviceNetworkTestSystem>();
+            entSysMan.LoadExtraSystemType<TestDestructibleListenerSystem>();
+            IoCManager.Resolve<ILogManager>().GetSawmill("loc").Level = LogLevel.Error;
+            IoCManager.Resolve<IConfigurationManager>()
+                .OnValueChanged(RTCVars.FailureLogLevel, value => logHandler.FailureLevel = value, true);
+        };
 
+        SetDefaultCVars(options);
         var server = new RobustIntegrationTest.ServerIntegrationInstance(options);
         await server.WaitIdleAsync();
+        await SetupCVars(server, poolSettings);
         return (server, logHandler);
     }
 
@@ -136,12 +92,12 @@ public static class PoolManager
     /// </summary>
     public static void Shutdown()
     {
-        List<Pair> localPairs;
+        List<TestPair> localPairs;
         lock (PairLock)
         {
-            if(Dead)
+            if (_dead)
                 return;
-            Dead = true;
+            _dead = true;
             localPairs = Pairs.Keys.ToList();
         }
 
@@ -149,6 +105,8 @@ public static class PoolManager
         {
             pair.Kill();
         }
+
+        _initialized = false;
     }
 
     public static string DeathReport()
@@ -156,12 +114,12 @@ public static class PoolManager
         lock (PairLock)
         {
             var builder = new StringBuilder();
-            var pairs = Pairs.Keys.OrderBy(pair => pair.PairId);
+            var pairs = Pairs.Keys.OrderBy(pair => pair.Id);
             foreach (var pair in pairs)
             {
                 var borrowed = Pairs[pair];
-                builder.AppendLine($"Pair {pair.PairId}, Tests Run: {pair.TestHistory.Count}, Borrowed: {borrowed}");
-                for (int i = 0; i < pair.TestHistory.Count; i++)
+                builder.AppendLine($"Pair {pair.Id}, Tests Run: {pair.TestHistory.Count}, Borrowed: {borrowed}");
+                for (var i = 0; i < pair.TestHistory.Count; i++)
                 {
                     builder.AppendLine($"#{i}: {pair.TestHistory[i]}");
                 }
@@ -171,7 +129,7 @@ public static class PoolManager
         }
     }
 
-    private static async Task<(RobustIntegrationTest.ClientIntegrationInstance, PoolTestLogHandler)> GenerateClient(
+    public static async Task<(RobustIntegrationTest.ClientIntegrationInstance, PoolTestLogHandler)> GenerateClient(
         PoolSettings poolSettings,
         TextWriter testOut)
     {
@@ -179,7 +137,6 @@ public static class PoolManager
         {
             FailureLogLevel = LogLevel.Warning,
             ContentStart = true,
-            ExtraPrototypes = poolSettings.ExtraPrototypes,
             ContentAssemblies = new[]
             {
                 typeof(Shared.Entry.EntryPoint).Assembly,
@@ -199,79 +156,53 @@ public static class PoolManager
             // LoadContentResources = !poolSettings.NoLoadContent
         };
 
+        var logHandler = new PoolTestLogHandler("CLIENT");
+        logHandler.ActivateContext(testOut);
+        options.OverrideLogHandler = () => logHandler;
+
         options.BeforeStart += () =>
         {
             IoCManager.Resolve<IModLoader>().SetModuleBaseCallbacks(new ClientModuleTestingCallbacks
             {
                 ClientBeforeIoC = () =>
                 {
-                    IoCManager.Resolve<IEntitySystemManager>()
-                        .LoadExtraSystemType<SimplePredictReconcileTest.PredictionTestEntitySystem>();
-                    IoCManager.Resolve<IComponentFactory>()
-                        .RegisterClass<SimplePredictReconcileTest.PredictionTestComponent>();
+                    // do not register extra systems or components here -- they will get cleared when the client is
+                    // disconnected. just use reflection.
                     IoCManager.Register<IParallaxManager, DummyParallaxManager>(true);
                     IoCManager.Resolve<ILogManager>().GetSawmill("loc").Level = LogLevel.Error;
+                    IoCManager.Resolve<IConfigurationManager>()
+                        .OnValueChanged(RTCVars.FailureLogLevel, value => logHandler.FailureLevel = value, true);
                 }
             });
         };
 
-        var logHandler = new PoolTestLogHandler("CLIENT");
-        logHandler.ActivateContext(testOut);
-        options.OverrideLogHandler = () => logHandler;
-
-        SetupCVars(poolSettings, options);
-
+        SetDefaultCVars(options);
         var client = new RobustIntegrationTest.ClientIntegrationInstance(options);
         await client.WaitIdleAsync();
+        await SetupCVars(client, poolSettings);
         return (client, logHandler);
     }
 
-    private static void SetupCVars(PoolSettings poolSettings, RobustIntegrationTest.IntegrationOptions options)
-    {
-        foreach (var serverTestCvar in ServerTestCvars)
-        {
-            options.CVarOverrides[serverTestCvar.cvar] = serverTestCvar.value;
-        }
-
-        if (poolSettings.DummyTicker)
-        {
-            options.CVarOverrides[CCVars.GameDummyTicker.Name] = "true";
-        }
-
-        options.CVarOverrides[CCVars.GameLobbyEnabled.Name] = poolSettings.InLobby.ToString();
-
-        if (poolSettings.DisableInterpolate)
-        {
-            options.CVarOverrides[CVars.NetInterp.Name] = "false";
-        }
-
-        if (poolSettings.Map != null)
-        {
-            options.CVarOverrides[CCVars.GameMap.Name] = poolSettings.Map;
-        }
-
-        options.CVarOverrides[CCVars.ConfigPresetDevelopment.Name] = "false";
-
-        // This breaks some tests.
-        // TODO: Figure out which tests this breaks.
-        options.CVarOverrides[CVars.NetBufferSize.Name] = "0";
-    }
-
     /// <summary>
-    /// Gets a <see cref="PairTracker"/>, which can be used to get access to a server, and client <see cref="Pair"/>
+    /// Gets a <see cref="Pair.TestPair"/>, which can be used to get access to a server, and client <see cref="Pair.TestPair"/>
     /// </summary>
     /// <param name="poolSettings">See <see cref="PoolSettings"/></param>
     /// <returns></returns>
-    public static async Task<PairTracker> GetServerClient(PoolSettings poolSettings = null) =>
-        await GetServerClientPair(poolSettings ?? new PoolSettings());
+    public static async Task<TestPair> GetServerClient(PoolSettings? poolSettings = null)
+    {
+        return await GetServerClientPair(poolSettings ?? new PoolSettings());
+    }
 
     private static string GetDefaultTestName(TestContext testContext)
     {
         return testContext.Test.FullName.Replace("Content.IntegrationTests.Tests.", "");
     }
 
-    private static async Task<PairTracker> GetServerClientPair(PoolSettings poolSettings)
+    private static async Task<TestPair> GetServerClientPair(PoolSettings poolSettings)
     {
+        if (!_initialized)
+            throw new InvalidOperationException($"Pool manager has not been initialized");
+
         // Trust issues with the AsyncLocal that backs this.
         var testContext = TestContext.CurrentContext;
         var testOut = TestContext.Out;
@@ -280,7 +211,7 @@ public static class PoolManager
         var currentTestName = poolSettings.TestName ?? GetDefaultTestName(testContext);
         var poolRetrieveTimeWatch = new Stopwatch();
         await testOut.WriteLineAsync($"{nameof(GetServerClientPair)}: Called by test {currentTestName}");
-        Pair pair = null;
+        TestPair? pair = null;
         try
         {
             poolRetrieveTimeWatch.Start();
@@ -297,19 +228,24 @@ public static class PoolManager
                 if (pair != null)
                 {
                     pair.ActivateContext(testOut);
-
                     await testOut.WriteLineAsync($"{nameof(GetServerClientPair)}: Suitable pair found");
                     var canSkip = pair.Settings.CanFastRecycle(poolSettings);
 
                     if (canSkip)
                     {
                         await testOut.WriteLineAsync($"{nameof(GetServerClientPair)}: Cleanup not needed, Skipping cleanup of pair");
+                        await SetupCVars(pair.Client, poolSettings);
+                        await SetupCVars(pair.Server, poolSettings);
+                        await pair.RunTicksSync(1);
                     }
                     else
                     {
                         await testOut.WriteLineAsync($"{nameof(GetServerClientPair)}: Cleaning existing pair");
-                        await CleanPooledPair(poolSettings, pair, testOut);
+                        await pair.CleanPooledPair(poolSettings, testOut);
                     }
+
+                    await pair.RunTicksSync(5);
+                    await pair.SyncTicks(targetDelta: 1);
                 }
                 else
                 {
@@ -317,300 +253,121 @@ public static class PoolManager
                     pair = await CreateServerClientPair(poolSettings, testOut);
                 }
             }
-
         }
         finally
         {
             if (pair != null && pair.TestHistory.Count > 1)
             {
-                await testOut.WriteLineAsync($"{nameof(GetServerClientPair)}: Pair {pair.PairId} Test History Start");
-                for (int i = 0; i < pair.TestHistory.Count; i++)
+                await testOut.WriteLineAsync($"{nameof(GetServerClientPair)}: Pair {pair.Id} Test History Start");
+                for (var i = 0; i < pair.TestHistory.Count; i++)
                 {
-                    await testOut.WriteLineAsync($"- Pair {pair.PairId} Test #{i}: {pair.TestHistory[i]}");
+                    await testOut.WriteLineAsync($"- Pair {pair.Id} Test #{i}: {pair.TestHistory[i]}");
                 }
-                await testOut.WriteLineAsync($"{nameof(GetServerClientPair)}: Pair {pair.PairId} Test History End");
+                await testOut.WriteLineAsync($"{nameof(GetServerClientPair)}: Pair {pair.Id} Test History End");
             }
         }
+
+        pair.ValidateSettings(poolSettings);
+
         var poolRetrieveTime = poolRetrieveTimeWatch.Elapsed;
         await testOut.WriteLineAsync(
-            $"{nameof(GetServerClientPair)}: Retrieving pair {pair.PairId} from pool took {poolRetrieveTime.TotalMilliseconds} ms");
+            $"{nameof(GetServerClientPair)}: Retrieving pair {pair.Id} from pool took {poolRetrieveTime.TotalMilliseconds} ms");
         await testOut.WriteLineAsync(
-            $"{nameof(GetServerClientPair)}: Returning pair {pair.PairId}");
+            $"{nameof(GetServerClientPair)}: Returning pair {pair.Id}");
         pair.Settings = poolSettings;
         pair.TestHistory.Add(currentTestName);
-        var usageWatch = new Stopwatch();
-        usageWatch.Start();
-
-        return new PairTracker(testOut)
-        {
-            Pair = pair,
-            UsageWatch = usageWatch
-        };
+        pair.Watch.Restart();
+        return pair;
     }
 
-    private static Pair GrabOptimalPair(PoolSettings poolSettings)
+    private static TestPair? GrabOptimalPair(PoolSettings poolSettings)
     {
         lock (PairLock)
         {
-            Pair fallback = null;
+            TestPair? fallback = null;
             foreach (var pair in Pairs.Keys)
             {
                 if (Pairs[pair])
                     continue;
+
                 if (!pair.Settings.CanFastRecycle(poolSettings))
                 {
                     fallback = pair;
                     continue;
                 }
+
+                pair.Use();
                 Pairs[pair] = true;
                 return pair;
             }
 
             if (fallback != null)
             {
+                fallback.Use();
                 Pairs[fallback!] = true;
             }
+
+            if (fallback == null && _pairId > 8)
+            {
+                var x = 2;
+            }
+
             return fallback;
         }
     }
 
     /// <summary>
-    /// Used by PairTracker after checking the server/client pair, Don't use this.
+    /// Used by TestPair after checking the server/client pair, Don't use this.
     /// </summary>
-    /// <param name="pair"></param>
-    public static void NoCheckReturn(Pair pair)
+    public static void NoCheckReturn(TestPair pair)
     {
         lock (PairLock)
         {
-            if (pair.Dead)
-            {
+            if (pair.State == TestPair.PairState.Dead)
                 Pairs.Remove(pair);
-            }
-            else
-            {
+            else if (pair.State == TestPair.PairState.Ready)
                 Pairs[pair] = false;
-            }
+            else
+                throw new InvalidOperationException($"Attempted to return a pair in an invalid state. Pair: {pair.Id}. State: {pair.State}.");
         }
-    }
-
-    private static async Task CleanPooledPair(PoolSettings poolSettings, Pair pair, TextWriter testOut)
-    {
-        var methodWatch = new Stopwatch();
-        methodWatch.Start();
-        await testOut.WriteLineAsync($"Recycling: {methodWatch.Elapsed.TotalMilliseconds} ms: Setting CVar ");
-        var configManager = pair.Server.ResolveDependency<IConfigurationManager>();
-        await pair.Server.WaitPost(() =>
-        {
-            configManager.SetCVar(CCVars.GameLobbyEnabled, poolSettings.InLobby);
-        });
-        var cNetMgr = pair.Client.ResolveDependency<IClientNetManager>();
-        if (!cNetMgr.IsConnected)
-        {
-            await testOut.WriteLineAsync($"Recycling: {methodWatch.Elapsed.TotalMilliseconds} ms: Connecting client, and restarting server");
-            pair.Client.SetConnectTarget(pair.Server);
-            await pair.Server.WaitPost(() =>
-            {
-                EntitySystem.Get<GameTicker>().RestartRound();
-            });
-            await pair.Client.WaitPost(() =>
-            {
-                cNetMgr.ClientConnect(null!, 0, null!);
-            });
-        }
-        await ReallyBeIdle(pair,11);
-
-        await testOut.WriteLineAsync($"Recycling: {methodWatch.Elapsed.TotalMilliseconds} ms: Disconnecting client, and restarting server");
-
-        await pair.Client.WaitPost(() =>
-        {
-            cNetMgr.ClientDisconnect("Test pooling cleanup disconnect");
-        });
-
-        await ReallyBeIdle(pair, 10);
-
-        if (!string.IsNullOrWhiteSpace(pair.Settings.ExtraPrototypes))
-        {
-            await testOut.WriteLineAsync($"Recycling: {methodWatch.Elapsed.TotalMilliseconds} ms: Removing prototypes");
-            if (!pair.Settings.NoServer)
-            {
-                var serverProtoManager = pair.Server.ResolveDependency<IPrototypeManager>();
-                await pair.Server.WaitPost(() =>
-                {
-                    serverProtoManager.RemoveString(pair.Settings.ExtraPrototypes.Trim());
-                });
-            }
-            if(!pair.Settings.NoClient)
-            {
-                var clientProtoManager = pair.Client.ResolveDependency<IPrototypeManager>();
-                await pair.Client.WaitPost(() =>
-                {
-                    clientProtoManager.RemoveString(pair.Settings.ExtraPrototypes.Trim());
-                });
-            }
-
-            await ReallyBeIdle(pair, 1);
-        }
-
-        if (poolSettings.ExtraPrototypes != null)
-        {
-            await testOut.WriteLineAsync($"Recycling: {methodWatch.Elapsed.TotalMilliseconds} ms: Adding prototypes");
-            if (!poolSettings.NoServer)
-            {
-                await ConfigurePrototypes(pair.Server, poolSettings);
-            }
-            if (!poolSettings.NoClient)
-            {
-                await ConfigurePrototypes(pair.Client, poolSettings);
-            }
-        }
-
-        await testOut.WriteLineAsync($"Recycling: {methodWatch.Elapsed.TotalMilliseconds} ms: Restarting server again");
-        await pair.Server.WaitPost(() =>
-        {
-            EntitySystem.Get<GameTicker>().RestartRound();
-        });
-
-
-        if (!poolSettings.NotConnected)
-        {
-            await testOut.WriteLineAsync($"Recycling: {methodWatch.Elapsed.TotalMilliseconds} ms: Connecting client");
-            await ReallyBeIdle(pair);
-            pair.Client.SetConnectTarget(pair.Server);
-            await pair.Client.WaitPost(() =>
-            {
-                var netMgr = IoCManager.Resolve<IClientNetManager>();
-                if (!netMgr.IsConnected)
-                {
-                    netMgr.ClientConnect(null!, 0, null!);
-                }
-            });
-        }
-        await ReallyBeIdle(pair);
-        await testOut.WriteLineAsync($"Recycling: {methodWatch.Elapsed.TotalMilliseconds} ms: Done recycling");
     }
 
     private static void DieIfPoolFailure()
     {
-        if (PoolFailureReason != null)
+        if (_poolFailureReason != null)
         {
-            // If the PoolFailureReason is not null, we can assume at least one test failed.
+            // If the _poolFailureReason is not null, we can assume at least one test failed.
             // So we say inconclusive so we don't add more failed tests to search through.
             Assert.Inconclusive(@"
 In a different test, the pool manager had an exception when trying to create a server/client pair.
 Instead of risking that the pool manager will fail at creating a server/client pairs for every single test,
-we are just going to end this here to save a lot of time. This is the exception that started this:\n {0}", PoolFailureReason);
+we are just going to end this here to save a lot of time. This is the exception that started this:\n {0}", _poolFailureReason);
         }
 
-        if (Dead)
+        if (_dead)
         {
             // If Pairs is null, we ran out of time, we can't assume a test failed.
             // So we are going to tell it all future tests are a failure.
             Assert.Fail("The pool was shut down");
         }
     }
-    private static async Task<Pair> CreateServerClientPair(PoolSettings poolSettings, TextWriter testOut)
+
+    private static async Task<TestPair> CreateServerClientPair(PoolSettings poolSettings, TextWriter testOut)
     {
-        Pair pair;
         try
         {
-            var (client, clientLog) = await GenerateClient(poolSettings, testOut);
-            var (server, serverLog) = await GenerateServer(poolSettings, testOut);
-            pair = new Pair
-            {
-                Server = server,
-                ServerLogHandler = serverLog,
-                Client = client,
-                ClientLogHandler = clientLog,
-                PairId = Interlocked.Increment(ref PairId)
-            };
+            var id = Interlocked.Increment(ref _pairId);
+            var pair = new TestPair(id);
+            await pair.Initialize(poolSettings, testOut, _testPrototypes);
+            pair.Use();
+            await pair.RunTicksSync(5);
+            await pair.SyncTicks(targetDelta: 1);
+            return pair;
         }
         catch (Exception ex)
         {
-            PoolFailureReason = ex;
+            _poolFailureReason = ex;
             throw;
-        }
-
-        if (!poolSettings.NotConnected)
-        {
-            pair.Client.SetConnectTarget(pair.Server);
-            await pair.Client.WaitPost(() =>
-            {
-                var netMgr = IoCManager.Resolve<IClientNetManager>();
-                if (!netMgr.IsConnected)
-                {
-                    netMgr.ClientConnect(null!, 0, null!);
-                }
-            });
-            await ReallyBeIdle(pair, 10);
-            await pair.Client.WaitRunTicks(1);
-        }
-        return pair;
-    }
-
-    /// <summary>
-    /// Creates a map, a grid, and a tile, and gives back references to them.
-    /// </summary>
-    /// <param name="pairTracker">A pairTracker</param>
-    /// <returns>A TestMapData</returns>
-    public static async Task<TestMapData> CreateTestMap(PairTracker pairTracker)
-    {
-        var server = pairTracker.Pair.Server;
-        var settings = pairTracker.Pair.Settings;
-        if (settings.NoServer) throw new Exception("Cannot setup test map without server");
-        var mapData = new TestMapData();
-        await server.WaitPost(() =>
-        {
-            var mapManager = IoCManager.Resolve<IMapManager>();
-            mapData.MapId = mapManager.CreateMap();
-            mapData.MapUid = mapManager.GetMapEntityId(mapData.MapId);
-            mapData.MapGrid = mapManager.CreateGrid(mapData.MapId);
-            mapData.GridUid = mapData.MapGrid.Owner;
-            mapData.GridCoords = new EntityCoordinates(mapData.GridUid, 0, 0);
-            var tileDefinitionManager = IoCManager.Resolve<ITileDefinitionManager>();
-            var plating = tileDefinitionManager["Plating"];
-            var platingTile = new Tile(plating.TileId);
-            mapData.MapGrid.SetTile(mapData.GridCoords, platingTile);
-            mapData.MapCoords = new MapCoordinates(0, 0, mapData.MapId);
-            mapData.Tile = mapData.MapGrid.GetAllTiles().First();
-        });
-        if (!settings.Disconnected)
-        {
-            await RunTicksSync(pairTracker.Pair, 10);
-        }
-
-        return mapData;
-    }
-
-    /// <summary>
-    /// Runs a server/client pair in sync
-    /// </summary>
-    /// <param name="pair">A server/client pair</param>
-    /// <param name="ticks">How many ticks to run them for</param>
-    public static async Task RunTicksSync(Pair pair, int ticks)
-    {
-        for (var i = 0; i < ticks; i++)
-        {
-            await pair.Server.WaitRunTicks(1);
-            await pair.Client.WaitRunTicks(1);
-        }
-    }
-
-    /// <summary>
-    /// Runs the server/client in sync, but also ensures they are both idle each tick.
-    /// </summary>
-    /// <param name="pair">The server/client pair</param>
-    /// <param name="runTicks">How many ticks to run</param>
-    public static async Task ReallyBeIdle(Pair pair, int runTicks = 25)
-    {
-        for (int i = 0; i < runTicks; i++)
-        {
-            await pair.Client.WaitRunTicks(1);
-            await pair.Server.WaitRunTicks(1);
-            for (int idleCycles = 0; idleCycles < 4; idleCycles++)
-            {
-                await pair.Client.WaitIdleAsync();
-                await pair.Server.WaitIdleAsync();
-            }
         }
     }
 
@@ -667,282 +424,36 @@ we are just going to end this here to save a lot of time. This is the exception 
 
         Assert.That(passed);
     }
-}
-
-/// <summary>
-/// Settings for the pooled server, and client pair.
-/// Some options are for changing the pair, and others are
-/// so the pool can properly clean up what you borrowed.
-/// </summary>
-public sealed class PoolSettings
-{
-    // TODO: We can make more of these pool-able, if we need enough of them for it to matter
 
     /// <summary>
-    /// If the returned pair must not be reused
+    ///     Helper method that retrieves all entity prototypes that have some component.
     /// </summary>
-    public bool MustNotBeReused => Destructive || NoLoadContent || DisableInterpolate || DummyTicker || NoToolsExtraPrototypes;
-
-    /// <summary>
-    /// If the given pair must be brand new
-    /// </summary>
-    public bool MustBeNew => Fresh || NoLoadContent || DisableInterpolate || DummyTicker || NoToolsExtraPrototypes;
-
-    /// <summary>
-    /// If the given pair must not be connected
-    /// </summary>
-    public bool NotConnected => NoClient || NoServer || Disconnected;
-
-    /// <summary>
-    /// Set to true if the test will ruin the server/client pair.
-    /// </summary>
-    public bool Destructive { get; init; }
-
-    /// <summary>
-    /// Set to true if the given server/client pair should be created fresh.
-    /// </summary>
-    public bool Fresh { get; init; }
-
-    /// <summary>
-    /// Set to true if the given server should be using a dummy ticker.
-    /// </summary>
-    public bool DummyTicker { get; init; }
-
-    /// <summary>
-    /// Set to true if the given server/client pair should be disconnected from each other.
-    /// </summary>
-    public bool Disconnected { get; init; }
-
-    /// <summary>
-    /// Set to true if the given server/client pair should be in the lobby.
-    /// </summary>
-    public bool InLobby { get; init; }
-
-    /// <summary>
-    /// Set this to true to skip loading the content files.
-    /// Note: This setting won't work with a client.
-    /// </summary>
-    public bool NoLoadContent { get; init; }
-
-    /// <summary>
-    /// Set this to raw yaml text to load prototypes onto the given server/client pair.
-    /// </summary>
-    public string ExtraPrototypes { get; init; }
-
-    /// <summary>
-    /// Set this to true to disable the NetInterp CVar on the given server/client pair
-    /// </summary>
-    public bool DisableInterpolate { get; init; }
-
-    /// <summary>
-    /// Set this to true to always clean up the server/client pair before giving it to another borrower
-    /// </summary>
-    public bool Dirty { get; init; }
-
-    /// <summary>
-    /// Set this to the path of a map to have the given server/client pair load the map.
-    /// </summary>
-    public string Map { get; init; } // TODO for map painter
-
-    /// <summary>
-    /// Set to true if the test won't use the client (so we can skip cleaning it up)
-    /// </summary>
-    public bool NoClient { get; init; }
-
-    /// <summary>
-    /// Set to true if the test won't use the server (so we can skip cleaning it up)
-    /// </summary>
-    public bool NoServer { get; init; }
-
-    /// <summary>
-    /// Overrides the test name detection, and uses this in the test history instead
-    /// </summary>
-    public string TestName { get; set; }
-
-    /// <summary>
-    /// Tries to guess if we can skip recycling the server/client pair.
-    /// </summary>
-    /// <param name="nextSettings">The next set of settings the old pair will be set to</param>
-    /// <returns>If we can skip cleaning it up</returns>
-    public bool CanFastRecycle(PoolSettings nextSettings)
+    public static List<EntityPrototype> GetPrototypesWithComponent<T>(RobustIntegrationTest.IntegrationInstance instance) where T : Component
     {
-        if (Dirty) return false;
-        if (Destructive || nextSettings.Destructive) return false;
-        if (NotConnected != nextSettings.NotConnected) return false;
-        if (InLobby != nextSettings.InLobby) return false;
-        if (DisableInterpolate != nextSettings.DisableInterpolate) return false;
-        if (nextSettings.DummyTicker) return false;
-        if (Map != nextSettings.Map) return false;
-        if (NoLoadContent != nextSettings.NoLoadContent) return false;
-        if (nextSettings.Fresh) return false;
-        if (ExtraPrototypes != nextSettings.ExtraPrototypes) return false;
-        return true;
-    }
+        var protoMan = instance.ResolveDependency<IPrototypeManager>();
+        var compFact = instance.ResolveDependency<IComponentFactory>();
 
-    // Prototype hot reload is not available outside TOOLS builds,
-    // so we can't pool test instances that use ExtraPrototypes without TOOLS.
-#if TOOLS
-    private bool NoToolsExtraPrototypes => false;
-#else
-    private bool NoToolsExtraPrototypes => !string.IsNullOrEmpty(ExtraPrototypes);
-#endif
-}
-
-/// <summary>
-/// Holds a reference to things commonly needed when testing on a map
-/// </summary>
-public sealed class TestMapData
-{
-    public EntityUid MapUid { get; set; }
-    public EntityUid GridUid { get; set; }
-    public MapId MapId { get; set; }
-    public MapGridComponent MapGrid { get; set; }
-    public EntityCoordinates GridCoords { get; set; }
-    public MapCoordinates MapCoords { get; set; }
-    public TileRef Tile { get; set; }
-}
-
-/// <summary>
-/// A server/client pair
-/// </summary>
-public sealed class Pair
-{
-    public bool Dead { get; private set; }
-    public int PairId { get; init; }
-    public List<string> TestHistory { get; set; } = new();
-    public PoolSettings Settings { get; set; }
-    public RobustIntegrationTest.ServerIntegrationInstance Server { get; init; }
-    public RobustIntegrationTest.ClientIntegrationInstance Client { get; init; }
-
-    public PoolTestLogHandler ServerLogHandler { get; init; }
-    public PoolTestLogHandler ClientLogHandler { get; init; }
-
-    public void Kill()
-    {
-        Dead = true;
-        Server.Dispose();
-        Client.Dispose();
-    }
-
-    public void ClearContext()
-    {
-        ServerLogHandler.ClearContext();
-        ClientLogHandler.ClearContext();
-    }
-
-    public void ActivateContext(TextWriter testOut)
-    {
-        ServerLogHandler.ActivateContext(testOut);
-        ClientLogHandler.ActivateContext(testOut);
-    }
-}
-
-/// <summary>
-/// Used by the pool to keep track of a borrowed server/client pair.
-/// </summary>
-public sealed class PairTracker : IAsyncDisposable
-{
-    private readonly TextWriter _testOut;
-    private int _disposed;
-    public Stopwatch UsageWatch { get; set; }
-    public Pair Pair { get; init; }
-
-    public PairTracker(TextWriter testOut)
-    {
-        _testOut = testOut;
-    }
-
-    private async Task OnDirtyDispose()
-    {
-        var usageTime = UsageWatch.Elapsed;
-        await _testOut.WriteLineAsync($"{nameof(DisposeAsync)}: Test gave back pair {Pair.PairId} in {usageTime.TotalMilliseconds} ms");
-        var dirtyWatch = new Stopwatch();
-        dirtyWatch.Start();
-        Pair.Kill();
-        PoolManager.NoCheckReturn(Pair);
-        var disposeTime = dirtyWatch.Elapsed;
-        await _testOut.WriteLineAsync($"{nameof(DisposeAsync)}: Disposed pair {Pair.PairId} in {disposeTime.TotalMilliseconds} ms");
-    }
-
-    private async Task OnCleanDispose()
-    {
-        var usageTime = UsageWatch.Elapsed;
-        await _testOut.WriteLineAsync($"{nameof(CleanReturnAsync)}: Test borrowed pair {Pair.PairId} for {usageTime.TotalMilliseconds} ms");
-        var cleanWatch = new Stopwatch();
-        cleanWatch.Start();
-        // Let any last minute failures the test cause happen.
-        await PoolManager.ReallyBeIdle(Pair);
-        if (!Pair.Settings.Destructive)
+        var id = compFact.GetComponentName(typeof(T));
+        var list = new List<EntityPrototype>();
+        foreach (var ent in protoMan.EnumeratePrototypes<EntityPrototype>())
         {
-            if (Pair.Client.IsAlive == false)
-            {
-                throw new Exception($"{nameof(CleanReturnAsync)}: Test killed the client in pair {Pair.PairId}:", Pair.Client.UnhandledException);
-            }
-
-            if (Pair.Server.IsAlive == false)
-            {
-                throw new Exception($"{nameof(CleanReturnAsync)}: Test killed the server in pair {Pair.PairId}:", Pair.Server.UnhandledException);
-            }
+            if (ent.Components.ContainsKey(id))
+                list.Add(ent);
         }
 
-        if (Pair.Settings.MustNotBeReused)
-        {
-            Pair.Kill();
-            PoolManager.NoCheckReturn(Pair);
-            await PoolManager.ReallyBeIdle(Pair);
-            var returnTime2 = cleanWatch.Elapsed;
-            await _testOut.WriteLineAsync($"{nameof(CleanReturnAsync)}: Clean disposed in {returnTime2.TotalMilliseconds} ms");
-            return;
-        }
-
-        var sRuntimeLog = Pair.Server.ResolveDependency<IRuntimeLog>();
-        if (sRuntimeLog.ExceptionCount > 0)
-            throw new Exception($"{nameof(CleanReturnAsync)}: Server logged exceptions");
-        var cRuntimeLog = Pair.Client.ResolveDependency<IRuntimeLog>();
-        if (cRuntimeLog.ExceptionCount > 0)
-            throw new Exception($"{nameof(CleanReturnAsync)}: Client logged exceptions");
-
-        Pair.ClearContext();
-        PoolManager.NoCheckReturn(Pair);
-        var returnTime = cleanWatch.Elapsed;
-        await _testOut.WriteLineAsync($"{nameof(CleanReturnAsync)}: PoolManager took {returnTime.TotalMilliseconds} ms to put pair {Pair.PairId} back into the pool");
+        return list;
     }
 
-    public async ValueTask CleanReturnAsync()
+    /// <summary>
+    /// Initialize the pool manager.
+    /// </summary>
+    /// <param name="assembly">Assembly to search for to discover extra test prototypes.</param>
+    public static void Startup(Assembly? assembly)
     {
-        var disposed = Interlocked.Exchange(ref _disposed, 1);
-        switch (disposed)
-        {
-            case 0:
-                await _testOut.WriteLineAsync($"{nameof(CleanReturnAsync)}: Return of pair {Pair.PairId} started");
-                break;
-            case 1:
-                throw new Exception($"{nameof(CleanReturnAsync)}: Already clean returned");
-            case 2:
-                throw new Exception($"{nameof(CleanReturnAsync)}: Already dirty disposed");
-            default:
-                throw new Exception($"{nameof(CleanReturnAsync)}: Unexpected disposed value");
-        }
+        if (_initialized)
+            throw new InvalidOperationException("Already initialized");
 
-        await OnCleanDispose();
-    }
-
-    public async ValueTask DisposeAsync()
-    {
-        var disposed = Interlocked.Exchange(ref _disposed, 2);
-        switch (disposed)
-        {
-            case 0:
-                await _testOut.WriteLineAsync($"{nameof(DisposeAsync)}: Dirty return of pair {Pair.PairId} started");
-                break;
-            case 1:
-                await _testOut.WriteLineAsync($"{nameof(DisposeAsync)}: Pair {Pair.PairId} was properly clean disposed");
-                return;
-            case 2:
-                throw new Exception($"{nameof(DisposeAsync)}: Already dirty disposed pair {Pair.PairId}");
-            default:
-                throw new Exception($"{nameof(DisposeAsync)}: Unexpected disposed value");
-        }
-        await OnDirtyDispose();
+        _initialized = true;
+        DiscoverTestPrototypes(assembly);
     }
 }

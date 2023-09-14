@@ -6,7 +6,7 @@ namespace Content.Server.DeviceNetwork.Components
 {
     [RegisterComponent]
     [Access(typeof(DeviceNetworkSystem), typeof(DeviceNet))]
-    public sealed class DeviceNetworkComponent : Component
+    public sealed partial class DeviceNetworkComponent : Component
     {
         public enum DeviceNetIdDefaults
         {
@@ -101,5 +101,13 @@ namespace Content.Server.DeviceNetwork.Components
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("sendBroadcastAttemptEvent")]
         public bool SendBroadcastAttemptEvent = false;
+
+        /// <summary>
+        ///     A list of entities that get sent the <see cref="DeviceShutDownEvent"/> when this entity gets deleted.<br/><br/>
+        ///     When a device subscribes to the deletion of another device the entity id of the device being subscribed
+        ///     to also gets saved on the subscribing device.
+        /// </summary>
+        [DataField("ShutdownSubscribers")]
+        public HashSet<EntityUid> ShutdownSubscribers = new();
     }
 }

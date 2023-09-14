@@ -1,3 +1,4 @@
+using System.Numerics;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Weapons.Melee.Events;
@@ -8,7 +9,7 @@ namespace Content.Shared.Weapons.Melee.Events;
 [Serializable, NetSerializable]
 public sealed class MeleeLungeEvent : EntityEventArgs
 {
-    public EntityUid Entity;
+    public NetEntity Entity;
 
     /// <summary>
     /// Width of the attack angle.
@@ -25,9 +26,9 @@ public sealed class MeleeLungeEvent : EntityEventArgs
     /// </summary>
     public string? Animation;
 
-    public MeleeLungeEvent(EntityUid uid, Angle angle, Vector2 localPos, string? animation)
+    public MeleeLungeEvent(NetEntity entity, Angle angle, Vector2 localPos, string? animation)
     {
-        Entity = uid;
+        Entity = entity;
         Angle = angle;
         LocalPos = localPos;
         Animation = animation;

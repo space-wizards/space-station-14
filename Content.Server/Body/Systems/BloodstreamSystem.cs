@@ -5,6 +5,7 @@ using Content.Server.Fluids.EntitySystems;
 using Content.Server.Forensics;
 using Content.Server.HealthExaminable;
 using Content.Server.Popups;
+using Content.Shared.Alert;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Damage;
@@ -21,6 +22,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Content.Shared.Speech.EntitySystems;
 
 namespace Content.Server.Body.Systems;
 
@@ -35,6 +37,8 @@ public sealed class BloodstreamSystem : EntitySystem
     [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
     [Dependency] private readonly SharedDrunkSystem _drunkSystem = default!;
     [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
+    [Dependency] private readonly SharedStutteringSystem _stutteringSystem = default!;
+    [Dependency] private readonly AlertsSystem _alertsSystem = default!;
 
     public override void Initialize()
     {
@@ -91,8 +95,10 @@ public sealed class BloodstreamSystem : EntitySystem
             bloodstream.AccumulatedFrametime -= bloodstream.UpdateInterval;
 
             // Adds blood to their blood level if it is below the maximum; Blood regeneration. Must be alive.
-            if (bloodstream.BloodSolution.Volume < bloodstream.BloodSolution.MaxVolume && _mobStateSystem.IsAlive(uid))
+            if (bloodstream.BloodSolution.Volume < bloodstream.BloodSolution.MaxVolume && !_mobStateSystem.IsDead(uid))
+            {
                 TryModifyBloodLevel(uid, bloodstream.BloodRefreshAmount, bloodstream);
+            }
 
             // Removes blood from the bloodstream based on bleed amount (bleed rate)
             // as well as stop their bleeding to a certain extent.
@@ -106,7 +112,7 @@ public sealed class BloodstreamSystem : EntitySystem
 
             // deal bloodloss damage if their blood level is below a threshold.
             var bloodPercentage = GetBloodLevelPercentage(uid, bloodstream);
-            if (bloodPercentage < bloodstream.BloodlossThreshold && _mobStateSystem.IsAlive(uid))
+            if (bloodPercentage < bloodstream.BloodlossThreshold && !_mobStateSystem.IsDead(uid))
             {
                 // bloodloss damage is based on the base value, and modified by how low your blood level is.
                 var amt = bloodstream.BloodlossDamage / (0.1f + bloodPercentage);
@@ -117,21 +123,21 @@ public sealed class BloodstreamSystem : EntitySystem
                 // The effect is applied in a way that it will never be cleared without being healthy.
                 // Multiplying by 2 is arbitrary but works for this case, it just prevents the time from running out
                 _drunkSystem.TryApplyDrunkenness(uid, bloodstream.UpdateInterval*2, false);
+                _stutteringSystem.DoStutter(uid, TimeSpan.FromSeconds(bloodstream.UpdateInterval*2), false);
 
-                // storing the drunk time so we can remove it independently from other effects additions
-                bloodstream.DrunkTime += bloodstream.UpdateInterval * 2;
-
+                // storing the drunk and stutter time so we can remove it independently from other effects additions
+                bloodstream.StatusTime += bloodstream.UpdateInterval * 2;
             }
-            else if (_mobStateSystem.IsAlive(uid))
+            else if (!_mobStateSystem.IsDead(uid))
             {
                 // If they're healthy, we'll try and heal some bloodloss instead.
                 _damageableSystem.TryChangeDamage(uid, bloodstream.BloodlossHealDamage * bloodPercentage, true, false);
 
-                // Remove the drunk effect when healthy. Should only remove the amount of drunk added by low blood level
-                _drunkSystem.TryRemoveDrunkenessTime(uid, bloodstream.DrunkTime);
-                // Reset the drunk time to zero
-                bloodstream.DrunkTime = 0;
-
+                // Remove the drunk effect when healthy. Should only remove the amount of drunk and stutter added by low blood level
+                _drunkSystem.TryRemoveDrunkenessTime(uid, bloodstream.StatusTime);
+                _stutteringSystem.DoRemoveStutterTime(uid, bloodstream.StatusTime);
+                // Reset the drunk and stutter time to zero
+                bloodstream.StatusTime = 0;
             }
         }
     }
@@ -247,6 +253,7 @@ public sealed class BloodstreamSystem : EntitySystem
     {
         TryModifyBleedAmount(uid, -component.BleedAmount, component);
         TryModifyBloodLevel(uid, component.BloodSolution.AvailableVolume, component);
+        _solutionContainerSystem.RemoveAllSolution(uid, component.ChemicalSolution);
     }
 
     /// <summary>
@@ -267,9 +274,9 @@ public sealed class BloodstreamSystem : EntitySystem
         for (var i = component.ChemicalSolution.Contents.Count - 1; i >= 0; i--)
         {
             var (reagentId, _) = component.ChemicalSolution.Contents[i];
-            if (reagentId != excludedReagentID)
+            if (reagentId.Prototype != excludedReagentID)
             {
-                _solutionContainerSystem.TryRemoveReagent(uid, component.ChemicalSolution, reagentId, quantity);
+                _solutionContainerSystem.RemoveReagent(uid, component.ChemicalSolution, reagentId, quantity);
             }
         }
 
@@ -340,6 +347,14 @@ public sealed class BloodstreamSystem : EntitySystem
         component.BleedAmount += amount;
         component.BleedAmount = Math.Clamp(component.BleedAmount, 0, component.MaxBleedAmount);
 
+        if (component.BleedAmount == 0)
+            _alertsSystem.ClearAlert(uid, AlertType.Bleed);
+        else
+        {
+            var severity = (short) Math.Clamp(Math.Round(component.BleedAmount, MidpointRounding.ToZero), 0, 10);
+            _alertsSystem.ShowAlert(uid, AlertType.Bleed, severity);
+        }
+
         return true;
     }
 
@@ -370,5 +385,23 @@ public sealed class BloodstreamSystem : EntitySystem
                 comp.DNAs.Add(dna.DNA);
             }
         }
+    }
+
+    /// <summary>
+    ///     Change what someone's blood is made of, on the fly.
+    /// </summary>
+    public void ChangeBloodReagent(EntityUid uid, string reagent, BloodstreamComponent? component = null)
+    {
+        if (!Resolve(uid, ref component, false))
+            return;
+
+        if(reagent == component.BloodReagent)
+            return;
+
+        var currentVolume = component.BloodSolution.Volume;
+
+        component.BloodReagent = reagent;
+        component.BloodSolution.RemoveAllSolution();
+        _solutionContainerSystem.TryAddReagent(uid, component.BloodSolution, component.BloodReagent, currentVolume, out _);
     }
 }

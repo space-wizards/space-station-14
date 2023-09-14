@@ -3,7 +3,7 @@ using Robust.Shared.Audio;
 namespace Content.Server.Explosion.Components
 {
     [RegisterComponent]
-    public sealed class OnUseTimerTriggerComponent : Component
+    public sealed partial class OnUseTimerTriggerComponent : Component
     {
         [DataField("delay")]
         public float Delay = 1f;
@@ -28,9 +28,6 @@ namespace Content.Server.Explosion.Components
 
         [DataField("beepInterval")]
         public float BeepInterval = 1;
-
-        [DataField("beepParams")]
-        public AudioParams BeepParams = AudioParams.Default.WithVolume(-2f);
 
         /// <summary>
         ///     Should timer be started when it was stuck to another entity.

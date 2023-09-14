@@ -1,31 +1,16 @@
 - type: entity
-  parent: Clothing
+  parent: ClothingBackpack
   id: ClothingBackpackDuffel
   name: duffel bag
   description: A large duffel bag for holding extra things.
   components:
   - type: Sprite
     sprite: Clothing/Back/Duffels/duffel.rsi
-    state: icon
-  - type: Item
-    size: 9999
-  - type: Clothing
-    quickEquip: false
-    slots:
-    - back
   - type: Storage
     capacity: 120
-  - type: ContainerContainer
-    containers:
-      storagebase: !type:Container
-        ents: []
   - type: ClothingSpeedModifier
     walkModifier: 1
     sprintModifier: 0.9
-  - type: UserInterface
-    interfaces:
-    - key: enum.StorageUiKey.Key
-      type: StorageBoundUserInterface
 
 - type: entity
   parent: ClothingBackpackDuffel
@@ -35,6 +20,15 @@
   components:
   - type: Sprite
     sprite: Clothing/Back/Duffels/engineering.rsi
+
+- type: entity
+  parent: ClothingBackpackDuffel
+  id: ClothingBackpackDuffelAtmospherics
+  name: atmospherics duffel bag
+  description: A large duffel bag made of fire resistant fibers. Smells like plasma.
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Duffels/atmospherics.rsi
 
 - type: entity
   parent: ClothingBackpackDuffel
@@ -77,13 +71,22 @@
 
 - type: entity
   parent: ClothingBackpackDuffel
+  id: ClothingBackpackDuffelBrigmedic
+  name: brigmedic duffel bag
+  description: A large duffel bag for holding extra medical related goods.
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Duffels/brigmedic.rsi
+
+- type: entity
+  parent: ClothingBackpackDuffel
   id: ClothingBackpackDuffelChemistry
   name: chemistry duffel bag
   description: A large duffel bag for holding extra beakers and test tubes.
   components:
   - type: Sprite
     sprite: Clothing/Back/Duffels/chemistry.rsi
-    
+
 - type: entity
   parent: ClothingBackpackDuffel
   id: ClothingBackpackDuffelVirology
@@ -92,7 +95,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Back/Duffels/virology.rsi
-    
+
 - type: entity
   parent: ClothingBackpackDuffel
   id: ClothingBackpackDuffelGenetics
@@ -132,6 +135,15 @@
   components:
     - type: Sprite
       sprite: Clothing/Back/Duffels/hydroponics.rsi
+
+- type: entity
+  parent: ClothingBackpackDuffel
+  id: ClothingBackpackDuffelCargo
+  name: cargo duffel bag
+  description: A large duffel bag for stealing cargo's precious loot.
+  components:
+    - type: Sprite
+      sprite: Clothing/Back/Duffels/cargo.rsi
 
 - type: entity
   parent: ClothingBackpackDuffel
@@ -175,7 +187,7 @@
     equippedPrefix: ammo
 
 - type: entity
-  parent: ClothingBackpackDuffelSyndicate
+  parent: ClothingBackpackDuffelSyndicateAmmo
   id: ClothingBackpackDuffelSyndicateAmmoBundle
   abstract: true
   components:
@@ -196,7 +208,7 @@
     equippedPrefix: med
 
 - type: entity
-  parent: ClothingBackpackDuffelSyndicate
+  parent: ClothingBackpackDuffelSyndicateMedical
   id: ClothingBackpackDuffelSyndicateMedicalBundle
   abstract: true
   components:
@@ -218,3 +230,5 @@
       shader: unshaded
   - type: Storage
     capacity: 9999
+  - type: ClothingSpeedModifier
+    sprintModifier: 1 # makes its stats identical to other variants of bag of holding

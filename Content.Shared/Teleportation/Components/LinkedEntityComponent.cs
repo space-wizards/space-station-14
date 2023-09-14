@@ -9,7 +9,7 @@ namespace Content.Shared.Teleportation.Components;
 ///     thrown into to teleport an entity.
 /// </summary>
 [RegisterComponent, Access(typeof(LinkedEntitySystem)), NetworkedComponent]
-public sealed class LinkedEntityComponent : Component
+public sealed partial class LinkedEntityComponent : Component
 {
     /// <summary>
     ///     The entities that this entity is linked to.
@@ -27,9 +27,9 @@ public sealed class LinkedEntityComponent : Component
 [Serializable, NetSerializable]
 public sealed class LinkedEntityComponentState : ComponentState
 {
-    public HashSet<EntityUid> LinkedEntities;
+    public HashSet<NetEntity> LinkedEntities;
 
-    public LinkedEntityComponentState(HashSet<EntityUid> linkedEntities)
+    public LinkedEntityComponentState(HashSet<NetEntity> linkedEntities)
     {
         LinkedEntities = linkedEntities;
     }

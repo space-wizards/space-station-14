@@ -5,12 +5,12 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.Dragon;
 
 [RegisterComponent]
-public sealed class DragonRiftComponent : SharedDragonRiftComponent
+public sealed partial class DragonRiftComponent : SharedDragonRiftComponent
 {
     /// <summary>
     /// Dragon that spawned this rift.
     /// </summary>
-    [DataField("dragon")] public EntityUid Dragon;
+    [DataField("dragon")] public EntityUid? Dragon;
 
     /// <summary>
     /// How long the rift has been active.

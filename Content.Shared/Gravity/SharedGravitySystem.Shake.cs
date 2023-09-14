@@ -24,18 +24,19 @@ public abstract partial class SharedGravitySystem
     {
         var curTime = Timing.CurTime;
         var gravityQuery = GetEntityQuery<GravityComponent>();
+        var query = EntityQueryEnumerator<GravityShakeComponent>();
 
-        foreach (var comp in EntityQuery<GravityShakeComponent>())
+        while (query.MoveNext(out var uid, out var comp))
         {
             if (comp.NextShake <= curTime)
             {
-                if (comp.ShakeTimes == 0 || !gravityQuery.TryGetComponent(comp.Owner, out var gravity))
+                if (comp.ShakeTimes == 0 || !gravityQuery.TryGetComponent(uid, out var gravity))
                 {
-                    RemCompDeferred<GravityShakeComponent>(comp.Owner);
+                    RemCompDeferred<GravityShakeComponent>(uid);
                     continue;
                 }
 
-                ShakeGrid(comp.Owner, gravity);
+                ShakeGrid(uid, gravity);
                 comp.ShakeTimes--;
                 comp.NextShake += TimeSpan.FromSeconds(ShakeCooldown);
                 Dirty(comp);

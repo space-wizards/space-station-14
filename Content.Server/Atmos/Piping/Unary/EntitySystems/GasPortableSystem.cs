@@ -2,6 +2,7 @@ using System.Diagnostics.CodeAnalysis;
 using Content.Server.Atmos.Piping.Binary.Components;
 using Content.Server.Atmos.Piping.Unary.Components;
 using Content.Server.NodeContainer;
+using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NodeContainer.Nodes;
 using Content.Shared.Atmos.Piping.Unary.Components;
 using Content.Shared.Construction.Components;
@@ -16,6 +17,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+        [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
 
         public override void Initialize()
         {
@@ -41,7 +43,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             if (!EntityManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer))
                 return;
 
-            if (!nodeContainer.TryGetNode(portable.PortName, out PipeNode? portableNode))
+            if (!_nodeContainer.TryGetNode(nodeContainer, portable.PortName, out PipeNode? portableNode))
                 return;
 
             portableNode.ConnectionsEnabled = args.Anchored;

@@ -1,30 +1,35 @@
-using Content.Server.Ninja.Systems;
-using Content.Server.Objectives.Interfaces;
+using Content.Server.Roles;
+using Content.Shared.Mind;
+using Content.Shared.Objectives.Interfaces;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Objectives.Conditions;
 
+/// <summary>
+/// Objective condition that requires the player to be a ninja and have called in a threat.
+/// </summary>
 [DataDefinition]
-public sealed class TerrorCondition : IObjectiveCondition
+public sealed partial class TerrorCondition : IObjectiveCondition
 {
-    private Mind.Mind? _mind;
+    private EntityUid? _mind;
 
-    public IObjectiveCondition GetAssigned(Mind.Mind mind)
+    public IObjectiveCondition GetAssigned(EntityUid uid, MindComponent mind)
     {
-        return new TerrorCondition {_mind = mind};
+        return new TerrorCondition {_mind = uid};
     }
 
     public string Title => Loc.GetString("objective-condition-terror-title");
 
     public string Description => Loc.GetString("objective-condition-terror-description");
 
-    public SpriteSpecifier Icon => new SpriteSpecifier.Rsi(new ResourcePath("Structures/Machines/computers.rsi"), "comm_icon");
+    public SpriteSpecifier Icon => new SpriteSpecifier.Rsi(new ResPath("Objects/Fun/Instruments/otherinstruments.rsi"), "red_phone");
 
     public float Progress
     {
         get
         {
-            if (!NinjaSystem.GetNinjaRole(_mind, out var role))
+            var entMan = IoCManager.Resolve<EntityManager>();
+            if (!entMan.TryGetComponent<NinjaRoleComponent>(_mind, out var role))
                 return 0f;
 
             return role.CalledInThreat ? 1f : 0f;

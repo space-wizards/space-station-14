@@ -4,6 +4,7 @@ using Content.Server.Atmos.Piping.Binary.Components;
 using Content.Server.Atmos.Piping.Components;
 using Content.Server.Construction;
 using Content.Server.NodeContainer;
+using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NodeContainer.Nodes;
 using Content.Shared.Atmos;
 using Content.Shared.Audio;
@@ -19,6 +20,7 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
         [Dependency] private readonly AppearanceSystem _appearance = default!;
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
         [Dependency] private readonly SharedAmbientSoundSystem _ambientSoundSystem = default!;
+        [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
 
         public override void Initialize()
         {
@@ -42,8 +44,8 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
                 return;
 
             if (!EntityManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer)
-                || !nodeContainer.TryGetNode(comp.InletName, out PipeNode? inlet)
-                || !nodeContainer.TryGetNode(comp.OutletName, out PipeNode? _))
+                || !_nodeContainer.TryGetNode(nodeContainer, comp.InletName, out PipeNode? inlet)
+                || !_nodeContainer.TryGetNode(nodeContainer, comp.OutletName, out PipeNode? _))
             {
                 return;
             }
@@ -69,8 +71,8 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
         private void OnUpdate(EntityUid uid, GasRecyclerComponent comp, AtmosDeviceUpdateEvent args)
         {
             if (!EntityManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer)
-                || !nodeContainer.TryGetNode(comp.InletName, out PipeNode? inlet)
-                || !nodeContainer.TryGetNode(comp.OutletName, out PipeNode? outlet))
+                || !_nodeContainer.TryGetNode(nodeContainer, comp.InletName, out PipeNode? inlet)
+                || !_nodeContainer.TryGetNode(nodeContainer, comp.OutletName, out PipeNode? outlet))
             {
                 _ambientSoundSystem.SetAmbience(comp.Owner, false);
                 return;

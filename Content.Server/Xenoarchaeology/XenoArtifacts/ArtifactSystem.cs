@@ -6,8 +6,10 @@ using Content.Server.Power.EntitySystems;
 using Content.Server.Xenoarchaeology.Equipment.Components;
 using Content.Server.Xenoarchaeology.XenoArtifacts.Events;
 using Content.Server.Xenoarchaeology.XenoArtifacts.Triggers.Components;
+using Content.Shared.CCVar;
 using Content.Shared.Xenoarchaeology.XenoArtifacts;
 using JetBrains.Annotations;
+using Robust.Shared.Configuration;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
@@ -17,6 +19,8 @@ public sealed partial class ArtifactSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly IConfigurationManager _configurationManager = default!;
 
     private ISawmill _sawmill = default!;
 
@@ -26,17 +30,11 @@ public sealed partial class ArtifactSystem : EntitySystem
 
         _sawmill = Logger.GetSawmill("artifact");
 
-        SubscribeLocalEvent<ArtifactComponent, MapInitEvent>(OnInit);
         SubscribeLocalEvent<ArtifactComponent, PriceCalculationEvent>(GetPrice);
         SubscribeLocalEvent<RoundEndTextAppendEvent>(OnRoundEnd);
 
         InitializeCommands();
         InitializeActions();
-    }
-
-    private void OnInit(EntityUid uid, ArtifactComponent component, MapInitEvent args)
-    {
-        RandomizeArtifact(uid, component);
     }
 
     /// <summary>
@@ -51,7 +49,7 @@ public sealed partial class ArtifactSystem : EntitySystem
     /// </remarks>
     private void GetPrice(EntityUid uid, ArtifactComponent component, ref PriceCalculationEvent args)
     {
-        args.Price =+ GetResearchPointValue(uid, component) * component.PriceMultiplier;
+        args.Price += (GetResearchPointValue(uid, component) + component.ConsumedPoints) * component.PriceMultiplier;
     }
 
     /// <summary>
@@ -74,9 +72,8 @@ public sealed partial class ArtifactSystem : EntitySystem
 
         var sumValue = component.NodeTree.Sum(n => GetNodePointValue(n, component, getMaxPrice));
         var fullyExploredBonus = component.NodeTree.All(x => x.Triggered) || getMaxPrice ? 1.25f : 1;
-        sumValue -= component.ConsumedPoints;
 
-        return (int) (sumValue * fullyExploredBonus);
+        return (int) (sumValue * fullyExploredBonus) - component.ConsumedPoints;
     }
 
     /// <summary>
@@ -174,6 +171,7 @@ public sealed partial class ArtifactSystem : EntitySystem
         if (component.CurrentNodeId == null)
             return;
 
+        _audio.PlayPvs(component.ActivationSound, uid);
         component.LastActivationTime = _gameTiming.CurTime;
 
         var ev = new ArtifactActivatedEvent
@@ -300,12 +298,16 @@ public sealed partial class ArtifactSystem : EntitySystem
     /// </summary>
     private void OnRoundEnd(RoundEndTextAppendEvent ev)
     {
-        var query = EntityQueryEnumerator<ArtifactComponent>();
-        while (query.MoveNext(out var ent, out var artifactComp))
+        var RoundEndTimer = _configurationManager.GetCVar(CCVars.ArtifactRoundEndTimer);
+        if (RoundEndTimer > 0)
         {
-            artifactComp.CooldownTime = TimeSpan.Zero;
-            var timerTrigger = EnsureComp<ArtifactTimerTriggerComponent>(ent);
-            timerTrigger.ActivationRate = TimeSpan.FromSeconds(0.5); //HAHAHAHAHAHAHAHAHAH -emo
+            var query = EntityQueryEnumerator<ArtifactComponent>();
+            while (query.MoveNext(out var ent, out var artifactComp))
+            {
+                artifactComp.CooldownTime = TimeSpan.Zero;
+                var timerTrigger = EnsureComp<ArtifactTimerTriggerComponent>(ent);
+                timerTrigger.ActivationRate = TimeSpan.FromSeconds(RoundEndTimer); //HAHAHAHAHAHAHAHAHAH -emo
+            }
         }
     }
 }

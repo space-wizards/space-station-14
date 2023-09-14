@@ -9,7 +9,6 @@
         path:
           "/Audio/Effects/glass_hit.ogg"
   - type: Sprite
-    netsync: false
     sprite: Objects/Power/light_bulb.rsi
     layers:
       - map: [ enum.LightBulbVisualLayers.Base ]
@@ -92,6 +91,17 @@
     lightSoftness: 1.1
 
 - type: entity
+  suffix: Broken
+  parent: BaseLightbulb
+  name: incandescent light bulb
+  id: LightBulbBroken
+  description: A light bulb.
+  components:
+  - type: LightBulb
+    startingState: Broken
+    bulb: Bulb
+
+- type: entity
   parent: BaseLightTube
   name: fluorescent light tube
   id: LightTube
@@ -103,6 +113,16 @@
     lightRadius: 10
     lightSoftness: 1
     PowerUse: 25
+
+- type: entity
+  suffix: Broken
+  parent: BaseLightTube
+  name: fluorescent light tube
+  id: LightTubeBroken
+  description: A light fixture.
+  components:
+  - type: LightBulb
+    startingState: Broken
 
 - type: entity
   parent: BaseLightTube

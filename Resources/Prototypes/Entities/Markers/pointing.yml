@@ -7,7 +7,6 @@
     tags:
     - HideContextMenu
   - type: Sprite
-    netsync: false
     sprite: Interface/Misc/pointing.rsi
     state: pointing
     drawDepth: Overlays

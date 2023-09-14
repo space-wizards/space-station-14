@@ -6,13 +6,13 @@ using Robust.Shared.Serialization;
 namespace Content.Server.UserInterface
 {
     [RegisterComponent]
-    public sealed class ActivatableUIComponent : Component,
+    public sealed partial class ActivatableUIComponent : Component,
             ISerializationHooks
     {
         [ViewVariables]
         public Enum? Key { get; set; }
 
-        [ViewVariables] public BoundUserInterface? UserInterface => (Key != null) ? Owner.GetUIOrNull(Key) : null;
+        [ViewVariables] public PlayerBoundUserInterface? UserInterface => (Key != null) ? Owner.GetUIOrNull(Key) : null;
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("inHandsOnly")]
@@ -25,7 +25,7 @@ namespace Content.Server.UserInterface
         [DataField("adminOnly")]
         public bool AdminOnly { get; set; } = false;
 
-        [DataField("key", readOnly: true, required: true)]
+        [DataField("key", required: true)]
         private string _keyRaw = default!;
 
         [DataField("verbText")]
@@ -41,6 +41,13 @@ namespace Content.Server.UserInterface
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("requireHands")]
         public bool RequireHands = true;
+
+        /// <summary>
+        ///     Whether you can activate this ui with activateinhand or not
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("rightClickOnly")]
+        public bool rightClickOnly = false;
 
         /// <summary>
         ///     Whether spectators (non-admin ghosts) should be allowed to view this UI.

@@ -1,11 +1,13 @@
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Monitor.Systems;
-using Content.Server.Doors.Components;
 using Content.Server.Popups;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
+using Content.Server.Remotes;
 using Content.Server.Shuttles.Components;
+using Content.Shared.Access.Components;
+using Content.Shared.Access.Systems;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Monitor;
 using Content.Shared.Doors;
@@ -26,6 +28,7 @@ namespace Content.Server.Doors.Systems
         [Dependency] private readonly AtmosAlarmableSystem _atmosAlarmable = default!;
         [Dependency] private readonly AtmosphereSystem _atmosSystem = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+        [Dependency] private readonly AccessReaderSystem _accessReaderSystem = default!;
 
         private static float _visualUpdateInterval = 0.5f;
         private float _accumulatedFrameTime;
@@ -134,7 +137,10 @@ namespace Content.Server.Doors.Systems
 
         private void OnBeforeDoorOpened(EntityUid uid, FirelockComponent component, BeforeDoorOpenedEvent args)
         {
-            if (!this.IsPowered(uid, EntityManager) || IsHoldingPressureOrFire(uid, component))
+            // Give the Door remote the ability to force a firelock open even if it is holding back dangerous gas
+            var overrideAccess = (args.User != null) && _accessReaderSystem.IsAllowed(args.User.Value, uid);
+
+            if (!this.IsPowered(uid, EntityManager) || (!overrideAccess && IsHoldingPressureOrFire(uid, component)))
                 args.Cancel();
         }
 
@@ -161,13 +167,13 @@ namespace Content.Server.Doors.Systems
         {
             var ev = new BeforeDoorAutoCloseEvent();
             RaiseLocalEvent(uid, ev);
+            UpdateVisuals(uid, component, args);
             if (ev.Cancelled)
             {
                 return;
             }
 
             _doorSystem.SetNextStateChange(uid, component.AutocloseDelay);
-            UpdateVisuals(uid, component, args);
         }
 
         private void OnBeforeDoorAutoclose(EntityUid uid, FirelockComponent component, BeforeDoorAutoCloseEvent args)

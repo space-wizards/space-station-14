@@ -18,6 +18,7 @@
   - type: ExaminableSolution
     solution: hypospray
   - type: Hypospray
+    onlyMobs: false
   - type: UseDelay
     delay: 0.5
   - type: StaticPrice
@@ -46,8 +47,23 @@
   - type: ExaminableSolution
     solution: hypospray
   - type: Hypospray
+    onlyMobs: false
   - type: UseDelay
     delay: 0.5
+
+- type: entity
+  name: experimental hypospray
+  suffix: Admeme
+  parent: SyndiHypo
+  description: The ultimate application of bluespace technology and rapid chemical administration.
+  id: AdminHypo
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        hypospray:
+          maxVol: 3000
+    - type: UseDelay
+      delay: 0.0
 
 - type: entity
   name: chemical medipen
@@ -57,7 +73,6 @@
   components:
   - type: Sprite
     sprite: Objects/Specific/Medical/medipen.rsi
-    netsync: false
     layers:
     - state: medipen
       map: ["enum.SolutionContainerLayers.Fill"]
@@ -115,6 +130,11 @@
   id: AntiPoisonMedipen
   description: A rapid dose of anti-poison. Contains ultravasculine and epinephrine.
   components:
+  - type: Sprite
+    sprite: Objects/Specific/Medical/medipen.rsi
+    layers:
+    - state: penacid
+      map: ["enum.SolutionContainerLayers.Fill"]
   - type: SolutionContainerManager
     solutions:
       pen:
@@ -128,6 +148,58 @@
     tags: []
 
 - type: entity
+  name: brute auto-injector
+  parent: ChemicalMedipen
+  id: BruteAutoInjector
+  description: A rapid dose of bicaridine and tranexamic acid, intended for combat applications
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Medical/medipen.rsi
+    layers:
+    - state: bicpen
+      map: ["enum.SolutionContainerLayers.Fill"]
+  - type: Hypospray
+    solutionName: pen
+    transferAmount: 20
+  - type: SolutionContainerManager
+    solutions:
+      pen:
+        maxVol: 20
+        reagents:
+        - ReagentId: Bicaridine
+          Quantity: 15
+        - ReagentId: TranexamicAcid
+          Quantity: 5
+  - type: Tag
+    tags: []
+
+- type: entity
+  name: burn auto-injector
+  parent: ChemicalMedipen
+  id: BurnAutoInjector
+  description: A rapid dose of dermaline and leporazine, intended for combat applications
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Medical/medipen.rsi
+    layers:
+    - state: dermpen
+      map: ["enum.SolutionContainerLayers.Fill"]
+  - type: Hypospray
+    solutionName: pen
+    transferAmount: 20
+  - type: SolutionContainerManager
+    solutions:
+      pen:
+        maxVol: 20
+        reagents:
+        - ReagentId: Dermaline
+          Quantity: 10
+        - ReagentId: Leporazine
+          Quantity: 10
+  - type: Tag
+    tags: []
+
+- type: entity
   name: space medipen
   parent: ChemicalMedipen
   id: SpaceMedipen
@@ -135,7 +207,6 @@
   components:
   - type: Sprite
     sprite: Objects/Specific/Medical/medipen.rsi
-    netsync: false
     layers:
     - state: hypovolemic
       map: [ "enum.SolutionContainerLayers.Fill" ]
@@ -163,21 +234,26 @@
   name: stimulant injector
   parent: ChemicalMedipen
   id: Stimpack
-  description: Contains enough stimulants for you to have the chemical's effect for 5 minutes. Use it when you're sure you're ready to throw down.
+  description: Contains enough stimulants for you to have the chemical's effect for 30 seconds. Use it when you're sure you're ready to throw down.
   components:
+  - type: Sprite
+    sprite: Objects/Specific/Medical/medipen.rsi
+    layers:
+    - state: stimpen
+      map: ["enum.SolutionContainerLayers.Fill"]
   - type: Item
     sprite: Objects/Specific/Medical/medipen.rsi
     size: 10
   - type: SolutionContainerManager
     solutions:
       pen:
-        maxVol: 60
+        maxVol: 30
         reagents:
         - ReagentId: Stimulants
-          Quantity: 60
+          Quantity: 30
   - type: Hypospray
     solutionName: pen
-    transferAmount: 60
+    transferAmount: 30
   - type: StaticPrice
     price: 500
   - type: Tag
@@ -187,8 +263,13 @@
   name: stimulant microinjector
   parent: ChemicalMedipen
   id: StimpackMini
-  description: A microinjector of stimulants that give you about one minute of the chemical's effects.
+  description: A microinjector of stimulants that give you about fifteen seconds of the chemical's effects.
   components:
+  - type: Sprite
+    sprite: Objects/Specific/Medical/medipen.rsi
+    layers:
+    - state: stimpen
+      map: ["enum.SolutionContainerLayers.Fill"]
   - type: Item
     sprite: Objects/Specific/Medical/medipen.rsi
     size: 5
@@ -205,26 +286,33 @@
     tags: []
 
 - type: entity
-  name: experimental stimulant injector
+  name: combat medipen
   parent: ChemicalMedipen
-  id: StimpackExperimental
-  description: There's a red label on the side of it. It says "PRODUCT HAS EXTREME SIDE EFFECTS, PRODUCTION HALTED. DO NOT DISTRIBUTE."
+  id: CombatMedipen
+  description: A single-use medipen containing chemicals that regenerate most types of damage.
   components:
+  - type: Sprite
+    sprite: Objects/Specific/Medical/medipen.rsi
+    layers:
+    - state: morphen
+      map: ["enum.SolutionContainerLayers.Fill"]
   - type: Item
     sprite: Objects/Specific/Medical/medipen.rsi
-    size: 10
+    size: 5
   - type: SolutionContainerManager
     solutions:
       pen:
-        maxVol: 60
+        maxVol: 30
         reagents:
-        - ReagentId: ExperimentalStimulants
-          Quantity: 60
+        - ReagentId: Omnizine
+          Quantity: 25
+        - ReagentId: TranexamicAcid
+          Quantity: 5
   - type: Hypospray
     solutionName: pen
-    transferAmount: 60
+    transferAmount: 30
   - type: StaticPrice
-    price: 1000
+    price: 500
   - type: Tag
     tags: []
 
@@ -244,6 +332,7 @@
   - type: ExaminableSolution
     solution: hypospray
   - type: Hypospray
+    onlyMobs: false
   - type: UseDelay
     delay: 0.5
   - type: StaticPrice # A new shitcurity meta
@@ -258,7 +347,6 @@
   - type: Sprite
     sprite: Objects/Storage/penbox.rsi
     state: hypopen
-    netsync: false
   - type: SpawnItemsOnUse
     items:
     - id: Hypopen

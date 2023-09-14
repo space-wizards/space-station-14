@@ -5,5 +5,3 @@ siren.ogg taken from https://github.com/ParadiseSS13/Paradise/blob/master/sound/
 redalert.ogg was taken from: https://github.com/Skyrat-SS13/Skyrat13/commit/2d4f2d1b489590b559e4073f41b126cef56f4c50
 
 bluealert.ogg was taken from: https://github.com/Skyrat-SS13/Skyrat13/commit/2d4f2d1b489590b559e4073f41b126cef56f4c50
-
-nukeops.ogg was taken from: https://github.com/tgstation/tgstation/commit/827967c9650c23af64280ad1491405fed8f644c5

@@ -1,78 +1,41 @@
 using Content.Shared.Pinpointer;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
-using Robust.Shared.GameStates;
 
-namespace Content.Client.Pinpointer
+namespace Content.Client.Pinpointer;
+
+public sealed class PinpointerSystem : SharedPinpointerSystem
 {
-    public sealed class PinpointerSystem : SharedPinpointerSystem
+    [Dependency] private readonly IEyeManager _eyeManager = default!;
+
+    public override void Update(float frameTime)
     {
-        [Dependency] private readonly IEyeManager _eyeManager = default!;
-        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+        base.Update(frameTime);
 
-        public override void Initialize()
+        // we want to show pinpointers arrow direction relative
+        // to players eye rotation (like it was in SS13)
+
+        // because eye can change it rotation anytime
+        // we need to update this arrow in a update loop
+        var query = EntityQueryEnumerator<PinpointerComponent, SpriteComponent>();
+        while (query.MoveNext(out var _, out var pinpointer, out var sprite))
         {
-            base.Initialize();
-            SubscribeLocalEvent<PinpointerComponent, ComponentHandleState>(HandleCompState);
-        }
-
-        public override void FrameUpdate(float frameTime)
-        {
-            base.FrameUpdate(frameTime);
-
-            // we want to show pinpointers arrow direction relative
-            // to players eye rotation (like it was in SS13)
-
-            // because eye can change it rotation anytime
-            // we need to update this arrow in a update loop
-            foreach (var pinpointer in EntityQuery<PinpointerComponent>())
-            {
-                UpdateAppearance(pinpointer.Owner, pinpointer);
-                UpdateEyeDir(pinpointer.Owner, pinpointer);
-            }
-        }
-
-        private void HandleCompState(EntityUid uid, PinpointerComponent pinpointer, ref ComponentHandleState args)
-        {
-            if (args.Current is not PinpointerComponentState state)
-                return;
-
-            pinpointer.IsActive = state.IsActive;
-            pinpointer.ArrowAngle = state.ArrowAngle;
-            pinpointer.DistanceToTarget = state.DistanceToTarget;
-        }
-
-        private void UpdateAppearance(EntityUid uid, PinpointerComponent? pinpointer = null,
-            AppearanceComponent? appearance = null)
-        {
-            if (!Resolve(uid, ref pinpointer, ref appearance))
-                return;
-
-            _appearance.SetData(uid, PinpointerVisuals.IsActive, pinpointer.IsActive, appearance);
-            _appearance.SetData(uid, PinpointerVisuals.TargetDistance, pinpointer.DistanceToTarget, appearance);
-        }
-
-        private void UpdateArrowAngle(EntityUid uid, Angle angle, PinpointerComponent? pinpointer = null,
-            AppearanceComponent? appearance = null)
-        {
-            if (!Resolve(uid, ref pinpointer, ref appearance))
-                return;
-
-            _appearance.SetData(uid, PinpointerVisuals.ArrowAngle, angle, appearance);
-        }
-
-        /// <summary>
-        ///     Transform pinpointer arrow from world space to eye space
-        ///     And send it to the appearance component
-        /// </summary>
-        private void UpdateEyeDir(EntityUid uid, PinpointerComponent? pinpointer = null)
-        {
-            if (!Resolve(uid, ref pinpointer) || !pinpointer.HasTarget)
-                return;
-
+            if (!pinpointer.HasTarget)
+                continue;
             var eye = _eyeManager.CurrentEye;
             var angle = pinpointer.ArrowAngle + eye.Rotation;
-            UpdateArrowAngle(uid, angle, pinpointer);
+
+            switch (pinpointer.DistanceToTarget)
+            {
+                case Distance.Close:
+                case Distance.Medium:
+                case Distance.Far:
+                    sprite.LayerSetRotation(PinpointerLayers.Screen, angle);
+                    break;
+                default:
+                    sprite.LayerSetRotation(PinpointerLayers.Screen, Angle.Zero);
+                    break;
+            }
         }
     }
 }

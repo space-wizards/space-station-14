@@ -8,7 +8,7 @@ namespace Content.Server.Nutrition.Components
 {
     [RegisterComponent]
     [Access(typeof(DrinkSystem))]
-    public sealed class DrinkComponent : Component
+    public sealed partial class DrinkComponent : Component
     {
         [DataField("solution")]
         public string SolutionName { get; set; } = DefaultSolutionName;
@@ -21,6 +21,7 @@ namespace Content.Server.Nutrition.Components
         internal bool DefaultToOpened;
 
         [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("transferAmount")]
         public FixedPoint2 TransferAmount { get; [UsedImplicitly] private set; } = FixedPoint2.New(5);
 
         [ViewVariables(VVAccess.ReadWrite)]
@@ -40,6 +41,9 @@ namespace Content.Server.Nutrition.Components
         /// </summary>
         [DataField("delay")]
         public float Delay = 1;
+
+        [DataField("examinable")]
+        public bool Examinable = true;
 
         /// <summary>
         ///     This is how many seconds it takes to force feed someone this drink.

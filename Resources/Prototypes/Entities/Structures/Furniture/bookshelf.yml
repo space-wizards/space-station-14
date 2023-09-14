@@ -2,30 +2,19 @@
   id: Bookshelf
   parent: BaseStructure
   name: "bookshelf"
-  description: Mostly filled with erotica.
+  description: Mostly filled with books.
   components:
   - type: Sprite
     sprite: Structures/Furniture/bookshelf.rsi
     snapCardinals: true
-    netsync: false
     layers:
       - state: base
       - state: book-0
-        map: [ "enum.DamageStateVisualLayers.Base" ]
-  - type: RandomSprite
-    available:
-      - enum.DamageStateVisualLayers.Base:
-          book-0: ""
-      - enum.DamageStateVisualLayers.Base:
-          book-1: ""
-      - enum.DamageStateVisualLayers.Base:
-          book-2: ""
-      - enum.DamageStateVisualLayers.Base:
-          book-3: ""
-      - enum.DamageStateVisualLayers.Base:
-          book-4: ""
-      - enum.DamageStateVisualLayers.Base:
-          book-5: ""
+      - map: ["enum.StorageFillLayers.Fill"]
+  - type: Appearance
+  - type: StorageFillVisualizer
+    maxFillLevels: 20
+    fillBaseName: book
   - type: Damageable
     damageModifierSet: Wood
     damageContainer: Inorganic
@@ -41,12 +30,13 @@
       - !type:SpawnEntitiesBehavior
         spawn:
           MaterialWoodPlank:
-            min: 1
-            max: 1
+            min: 2
+            max: 3
       - !type:DoActsBehavior
         acts: ["Destruction"]
   - type: Tag
     tags:
+    - Structure
     - Wooden
   - type: Transform
     anchored: true
@@ -55,3 +45,24 @@
     bodyType: Static
   - type: Anchorable
   - type: Pullable
+  - type: Occluder
+  - type: Storage
+    capacity: 200
+    whitelist:
+      tags:
+        - Document
+        - Folder
+        - Write
+        - Book
+        - Spellbook
+  - type: UserInterface
+    interfaces:
+    - key: enum.StorageUiKey.Key
+      type: StorageBoundUserInterface
+  - type: InteractionOutline
+  - type: ContainerContainer
+    containers:
+      storagebase: !type:Container
+  - type: Construction
+    graph: Bookshelf
+    node: bookshelf

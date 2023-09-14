@@ -6,6 +6,7 @@ using Content.Shared.Radiation.Events;
 using Content.Shared.Radiation.Systems;
 using Robust.Shared.Console;
 using Robust.Shared.Enums;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Players;
 
 namespace Content.Server.Radiation.Systems;
@@ -55,17 +56,14 @@ public partial class RadiationSystem
         if (_debugSessions.Count == 0)
             return;
 
-        var query = GetEntityQuery<RadiationGridResistanceComponent>();
-        var dict = new Dictionary<EntityUid, Dictionary<Vector2i, float>>();
+        var dict = new Dictionary<NetEntity, Dictionary<Vector2i, float>>();
 
-        foreach (var grid in _mapManager.GetAllGrids())
+        var gridQuery = AllEntityQuery<MapGridComponent, RadiationGridResistanceComponent>();
+
+        while (gridQuery.MoveNext(out var gridUid, out _, out var resistance))
         {
-            var gridUid = grid.Owner;
-            if (!query.TryGetComponent(gridUid, out var resistance))
-                continue;
-
             var resMap = resistance.ResistancePerTile;
-            dict.Add(gridUid, resMap);
+            dict.Add(GetNetEntity(gridUid), resMap);
         }
 
         var ev = new OnRadiationOverlayResistanceUpdateEvent(dict);

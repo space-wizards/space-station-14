@@ -13,7 +13,7 @@ namespace Content.Shared.SubFloor
     [NetworkedComponent]
     [RegisterComponent]
     [Access(typeof(SharedSubFloorHideSystem))]
-    public sealed class SubFloorHideComponent : Component
+    public sealed partial class SubFloorHideComponent : Component
     {
         /// <summary>
         ///     Whether the entity's current position has a "Floor-type" tile above its current position.

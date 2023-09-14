@@ -6,7 +6,6 @@
   abstract: true
   components:
   - type: Sprite
-    netsync: false
   - type: Clothing
     sprite: Objects/Weapons/Guns/Launchers/china_lake.rsi
     quickEquip: false
@@ -34,6 +33,7 @@
         map: ["enum.GunVisualLayers.Base"]
   - type: Clothing
     sprite: Objects/Weapons/Guns/Launchers/china_lake.rsi
+  - type: AmmoCounter
   - type: Gun
     fireRate: 1
     selectedMode: SemiAuto
@@ -45,7 +45,6 @@
     whitelist:
       tags:
         - Grenade
-    autoCycle: false
     capacity: 3
     proto: GrenadeFrag
     soundInsert:
@@ -151,7 +150,200 @@
       soundInsert:
         path: /Audio/Weapons/Guns/Gunshots/grenade_launcher.ogg
 
+- type: entity
+  name: tether gun
+  parent:
+  - BaseItem
+  - PowerCellSlotMediumItem
+  id: WeaponTetherGun
+  description: Manipulates gravity around objects to fling them at high velocities.
+  components:
+    - type: TetherGun
+      frequency: 5
+      dampingRatio: 4
+    - type: PowerCellDraw
+    - type: Sprite
+      sprite: Objects/Weapons/Guns/Launchers/tether_gun.rsi
+      layers:
+        - state: base
+        - state: base-unshaded
+          map: [ "unshaded" ]
+          shader: unshaded
+          visible: false
+    - type: ToggleableLightVisuals
+      spriteLayer: unshaded
+      inhandVisuals:
+        left:
+          - state: inhand-left-unshaded
+            shader: unshaded
+        right:
+          - state: inhand-right-unshaded
+            shader: unshaded
+    - type: Appearance
+    - type: GenericVisualizer
+      visuals:
+        enum.TetherVisualsStatus.Key:
+          unshaded:
+            True: { visible: true }
+            False: { visible: false }
+
+- type: entity
+  name: force gun
+  parent:
+    - BaseItem
+    - PowerCellSlotMediumItem
+  id: WeaponForceGun
+  description: Manipulates gravity around objects to fling them at high velocities.
+  components:
+    - type: ForceGun
+      frequency: 15
+      dampingRatio: 4
+      massLimit: 50
+      lineColor: "#18a2d5"
+      soundLaunch:
+        path: /Audio/Weapons/soup.ogg
+        params:
+          volume: 2
+    - type: PowerCellDraw
+    - type: Sprite
+      sprite: Objects/Weapons/Guns/Launchers/force_gun.rsi
+      layers:
+        - state: base
+        - state: base-unshaded
+          map: [ "unshaded" ]
+          shader: unshaded
+          visible: false
+        - type: ToggleableLightVisuals
+          spriteLayer: unshaded
+          inhandVisuals:
+            left:
+              - state: inhand-left-unshaded
+                shader: unshaded
+            right:
+              - state: inhand-right-unshaded
+                shader: unshaded
+        - type: Appearance
+        - type: GenericVisualizer
+          visuals:
+            enum.TetherVisualsStatus.Key:
+              unshaded:
+                True: { visible: true }
+                False: { visible: false }
+
+- type: entity
+  name: grappling gun
+  parent: BaseItem
+  id: WeaponGrapplingGun
+  components:
+    - type: AmmoCounter
+    - type: GrapplingGun
+    - type: Gun
+      soundGunshot: /Audio/Weapons/Guns/Gunshots/harpoon.ogg
+      fireRate: 0.5
+    - type: RechargeCycleAmmo
+    - type: BasicEntityAmmoProvider
+      proto: GrapplingHook
+      capacity: 1
+    - type: Sprite
+      sprite: Objects/Weapons/Guns/Launchers/grappling_gun.rsi
+      layers:
+        - state: base
+        - state: base-unshaded
+          map: [ "unshaded" ]
+          shader: unshaded
+          visible: true
+    - type: UseDelay
+      delay: 1.5
+    - type: Appearance
+    - type: GenericVisualizer
+      visuals:
+        enum.TetherVisualsStatus.Key:
+          unshaded:
+            True: { state: base-unshaded }
+            False: { state: base-unshaded-off }
+
 # Admeme
+- type: entity
+  name: tether gun
+  parent: BaseItem
+  id: WeaponTetherGunAdmin
+  suffix: admin
+  description: Manipulates gravity around objects to fling them at high velocities.
+  components:
+    - type: TetherGun
+      canTetherAlive: true
+      canUnanchor: true
+      maxForce: 10000
+      massLimit: 10000
+      dampingRatio: 4
+      frequency: 20
+    - type: Sprite
+      sprite: Objects/Weapons/Guns/Launchers/tether_gun.rsi
+      layers:
+        - state: base
+        - state: base-unshaded
+          map: [ "unshaded" ]
+          shader: unshaded
+          visible: false
+    - type: ToggleableLightVisuals
+      spriteLayer: unshaded
+      inhandVisuals:
+        left:
+          - state: inhand-left-unshaded
+            shader: unshaded
+        right:
+          - state: inhand-right-unshaded
+            shader: unshaded
+    - type: Appearance
+    - type: GenericVisualizer
+      visuals:
+        enum.TetherVisualsStatus.Key:
+          unshaded:
+            True: { visible: true }
+            False: { visible: false }
+
+- type: entity
+  name: force gun
+  parent: BaseItem
+  id: WeaponForceGunAdmin
+  suffix: Admin
+  description: Manipulates gravity around objects to fling them at high velocities.
+  components:
+    - type: ForceGun
+      canTetherAlive: true
+      canUnanchor: true
+      maxForce: 10000
+      massLimit: 10000
+      frequency: 15
+      dampingRatio: 4
+      throwForce: 50
+      throwDistance: 100
+      lineColor: "#18a2d5"
+    - type: Sprite
+      sprite: Objects/Weapons/Guns/Launchers/force_gun.rsi
+      layers:
+        - state: base
+        - state: base-unshaded
+          map: [ "unshaded" ]
+          shader: unshaded
+          visible: false
+    - type: ToggleableLightVisuals
+      spriteLayer: unshaded
+      inhandVisuals:
+        left:
+          - state: inhand-left-unshaded
+            shader: unshaded
+        right:
+          - state: inhand-right-unshaded
+            shader: unshaded
+    - type: Appearance
+    - type: GenericVisualizer
+      visuals:
+        enum.TetherVisualsStatus.Key:
+          unshaded:
+            True: { visible: true }
+            False: { visible: false }
+
 - type: entity
   name: meteor launcher
   parent: WeaponLauncherMultipleRocket

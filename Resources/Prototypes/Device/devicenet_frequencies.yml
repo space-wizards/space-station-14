@@ -86,3 +86,8 @@
   id: Fax
   name: device-frequency-prototype-name-fax
   frequency: 2640
+
+- type: deviceFrequency
+  id: BasicDevice
+  name: device-frequency-prototype-name-basic-device
+  frequency: 1280

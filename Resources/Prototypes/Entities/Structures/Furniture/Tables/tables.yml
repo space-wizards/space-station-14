@@ -12,14 +12,15 @@
     state: full
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.40,-0.30,0.40,0.45"
-      density: 80
-      mask:
-      - TableMask
-      layer:
-      - TableLayer
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.40,-0.30,0.40,0.45"
+        density: 80
+        mask:
+        - TableMask
+        layer:
+        - TableLayer
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Metallic
@@ -61,20 +62,20 @@
   - type: SpriteFade
   - type: Sprite
     sprite: Structures/Furniture/Tables/frame.rsi
-    netsync: false
   - type: Icon
     sprite: Structures/Furniture/Tables/frame.rsi
     state: full
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.45,-0.45,0.45,0.45"
-      density: 55
-      mask:
-      - TableMask
-      layer:
-      - TableLayer
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.45,-0.45,0.45,0.45"
+        density: 55
+        mask:
+        - TableMask
+        layer:
+        - TableLayer
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Wood
@@ -476,6 +477,35 @@
           path: /Audio/Effects/picaxe2.ogg
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+
+- type: entity
+  id: TableWeb
+  parent: TableBase
+  name: web table
+  description: Really smooth and surprisingly durable.
+  components:
+  - type: Damageable
+    damageModifierSet: Web
+  - type: Sprite
+    sprite: Structures/Furniture/Tables/web.rsi
+  - type: Icon
+    sprite: Structures/Furniture/Tables/web.rsi
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: MeleeSound
+    soundGroups:
+      Brute:
+        path:
+          "/Audio/Weapons/slash.ogg"
+  - type: Construction
+    graph: WebStructures
+    node: table
 
 - type: entity
   id: TableDebug

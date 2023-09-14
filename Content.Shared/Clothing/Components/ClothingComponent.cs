@@ -12,11 +12,11 @@ namespace Content.Shared.Clothing.Components;
 [NetworkedComponent]
 [RegisterComponent]
 [Access(typeof(ClothingSystem), typeof(InventorySystem))]
-public sealed class ClothingComponent : Component
+public sealed partial class ClothingComponent : Component
 {
     [DataField("clothingVisuals")]
     [Access(typeof(ClothingSystem), typeof(InventorySystem), Other = AccessPermissions.ReadExecute)] // TODO remove execute permissions.
-    public Dictionary<string, List<SharedSpriteComponent.PrototypeLayerData>> ClothingVisuals = new();
+    public Dictionary<string, List<PrototypeLayerData>> ClothingVisuals = new();
 
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("quickEquip")]
@@ -54,8 +54,16 @@ public sealed class ClothingComponent : Component
     public string? RsiPath;
 
     [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("maleMask")]
+    public ClothingMask MaleMask = ClothingMask.UniformFull;
+
+    [ViewVariables(VVAccess.ReadWrite)]
     [DataField("femaleMask")]
-    public FemaleClothingMask FemaleMask = FemaleClothingMask.UniformFull;
+    public ClothingMask FemaleMask = ClothingMask.UniformFull;
+
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("unisexMask")]
+    public ClothingMask UnisexMask = ClothingMask.UniformFull;
 
     public string? InSlot;
 }
@@ -71,7 +79,7 @@ public sealed class ClothingComponentState : ComponentState
     }
 }
 
-public enum FemaleClothingMask : byte
+public enum ClothingMask : byte
 {
     NoMask = 0,
     UniformFull,

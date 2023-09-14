@@ -7,7 +7,6 @@
   - type: Sprite
     sprite: Structures/Machines/material_reclaimer.rsi
     snapCardinals: true
-    netsync: false
     layers:
     - state: icon
       map: ["enum.LatheVisualLayers.IsRunning"]
@@ -58,8 +57,9 @@
         acts: ["Destruction"]
   - type: Machine
     board: MaterialReclaimerMachineCircuitboard
+  - type: WiresPanel
   - type: Wires
-    BoardName: "reclaimer"
+    BoardName: wires-board-name-reclaimer
     LayoutId: Reclaimer
   - type: MaterialReclaimer
     whitelist:
@@ -72,7 +72,7 @@
     blacklist:
       components:
       - Material
-      - PDA
+      - Pda
       - IdCard
       tags:
       - HighRiskItem

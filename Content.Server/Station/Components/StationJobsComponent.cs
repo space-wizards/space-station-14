@@ -10,7 +10,7 @@ namespace Content.Server.Station.Components;
 /// Stores information about a station's job selection.
 /// </summary>
 [RegisterComponent, Access(typeof(StationJobsSystem)), PublicAPI]
-public sealed class StationJobsComponent : Component
+public sealed partial class StationJobsComponent : Component
 {
     /// <summary>
     /// Total *round-start* jobs at station start.
@@ -31,6 +31,16 @@ public sealed class StationJobsComponent : Component
     /// Station is running on extended access.
     /// </summary>
     [DataField("extendedAccess")] public bool ExtendedAccess;
+
+    /// <summary>
+    /// If there are less than or equal this amount of players in the game at round start,
+    /// people get extended access levels from job prototypes.
+    /// </summary>
+    /// <remarks>
+    /// Set to -1 to disable extended access.
+    /// </remarks>
+    [DataField("extendedAccessThreshold")]
+    public int ExtendedAccessThreshold { get; set; } = 15;
 
     /// <summary>
     /// The percentage of jobs remaining.
@@ -62,5 +72,10 @@ public sealed class StationJobsComponent : Component
     /// <summary>
     /// Overflow jobs that round-start can spawn infinitely many of.
     /// </summary>
-    [DataField("overflowJobs", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<JobPrototype>))] public HashSet<string> OverflowJobs = new();
+    [DataField("overflowJobs", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<JobPrototype>))]
+    public HashSet<string> OverflowJobs = new();
+
+    [DataField("availableJobs", required: true,
+        customTypeSerializer: typeof(PrototypeIdDictionarySerializer<List<int?>, JobPrototype>))]
+    public Dictionary<string, List<int?>> SetupAvailableJobs = default!;
 }

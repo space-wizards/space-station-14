@@ -10,7 +10,7 @@ public class GuideEntry
     /// <summary>
     ///     The file containing the contents of this guide.
     /// </summary>
-    [DataField("text", required: true)] public ResourcePath Text = default!;
+    [DataField("text", required: true)] public ResPath Text = default!;
 
     /// <summary>
     ///     The unique id for this guide.
@@ -28,6 +28,11 @@ public class GuideEntry
     /// </summary>
     [DataField("children", customTypeSerializer:typeof(PrototypeIdListSerializer<GuideEntryPrototype>))]
     public List<string> Children = new();
+
+    /// <summary>
+    ///     Enable filtering of items.
+    /// </summary>
+    [DataField("filterEnabled")] public bool FilterEnabled = default!;
 
     /// <summary>
     ///     Priority for sorting top-level guides when shown in a tree / table of contents.

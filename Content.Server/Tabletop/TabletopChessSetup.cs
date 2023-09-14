@@ -6,16 +6,14 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.Tabletop
 {
     [UsedImplicitly]
-    public sealed class TabletopChessSetup : TabletopSetup
+    public sealed partial class TabletopChessSetup : TabletopSetup
     {
-        [DataField("boardPrototype", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
-        public string ChessBoardPrototype { get; } = "ChessBoardTabletop";
 
         // TODO: Un-hardcode the rest of entity prototype IDs, probably.
 
         public override void SetupTabletop(TabletopSession session, IEntityManager entityManager)
         {
-            var chessboard = entityManager.SpawnEntity(ChessBoardPrototype, session.Position.Offset(-1, 0));
+            var chessboard = entityManager.SpawnEntity(BoardPrototype, session.Position.Offset(-1, 0));
 
             session.Entities.Add(chessboard);
 

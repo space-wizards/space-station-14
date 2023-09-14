@@ -4,18 +4,17 @@ using Content.Server.Atmos.EntitySystems;
 using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
 using Content.Server.Clothing.Components;
-using Content.Server.Disease.Components;
 using Content.Server.IdentityManagement;
 using Content.Server.Nutrition.EntitySystems;
 using Content.Server.Popups;
 using Content.Server.VoiceMask;
 using Content.Shared.Actions;
+using Content.Shared.Clothing;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.IdentityManagement.Components;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
-using Robust.Shared.Player;
 
 namespace Content.Server.Clothing
 {
@@ -40,20 +39,20 @@ namespace Content.Server.Clothing
 
         private void OnGetActions(EntityUid uid, MaskComponent component, GetItemActionsEvent args)
         {
-            if (component.ToggleAction != null && !args.InHands)
-                args.Actions.Add(component.ToggleAction);
+            if (!args.InHands)
+                args.AddAction(ref component.ToggleActionEntity, component.ToggleAction);
         }
 
         private void OnToggleMask(EntityUid uid, MaskComponent mask, ToggleMaskEvent args)
         {
-            if (mask.ToggleAction == null)
+            if (mask.ToggleActionEntity == null)
                 return;
 
             if (!_inventorySystem.TryGetSlotEntity(args.Performer, "mask", out var existing) || !mask.Owner.Equals(existing))
                 return;
 
             mask.IsToggled ^= true;
-            _actionSystem.SetToggled(mask.ToggleAction, mask.IsToggled);
+            _actionSystem.SetToggled(mask.ToggleActionEntity, mask.IsToggled);
 
             // Pulling mask down can change identity, so we want to update that
             _identity.QueueIdentityUpdate(args.Performer);
@@ -69,19 +68,19 @@ namespace Content.Server.Clothing
         // set to untoggled when unequipped, so it isn't left in a 'pulled down' state
         private void OnGotUnequipped(EntityUid uid, MaskComponent mask, GotUnequippedEvent args)
         {
-            if (mask.ToggleAction == null)
+            if (mask.ToggleActionEntity == null)
                 return;
 
             mask.IsToggled = false;
-            _actionSystem.SetToggled(mask.ToggleAction, mask.IsToggled);
+            _actionSystem.SetToggled(mask.ToggleActionEntity, mask.IsToggled);
 
             ToggleMaskComponents(uid, mask, args.Equipee, true);
         }
 
         private void ToggleMaskComponents(EntityUid uid, MaskComponent mask, EntityUid wearer, bool isEquip = false)
         {
-            //toggle visuals
-            if (TryComp<ClothingComponent>(mask.Owner, out var clothing))
+            // toggle visuals
+            if (TryComp<ClothingComponent>(uid, out var clothing))
             {
                 //TODO: sprites for 'pulled down' state. defaults to invisible due to no sprite with this prefix
                 _clothing.SetEquippedPrefix(uid, mask.IsToggled ? "toggled" : null, clothing);
@@ -92,10 +91,6 @@ namespace Content.Server.Clothing
             // toggle ingestion blocking
             if (TryComp<IngestionBlockerComponent>(uid, out var blocker))
                 blocker.Enabled = !mask.IsToggled;
-
-            // toggle disease protection
-            if (TryComp<DiseaseProtectionComponent>(uid, out var diseaseProtection))
-                diseaseProtection.IsActive = !mask.IsToggled;
 
             // toggle identity
             if (TryComp<IdentityBlockerComponent>(uid, out var identity))

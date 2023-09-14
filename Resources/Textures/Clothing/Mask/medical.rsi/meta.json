@@ -35,6 +35,16 @@
       "directions": 4
     },
     {
+      "name": "equipped-MASK-hamster",
+      "directions": 4,
+      "delays": [[1.0], [1.0], [1.0], [1.0]]
+    },
+    {
+      "name": "equipped-MASK-kangaroo",
+      "directions": 4,
+      "delays": [[1.0], [1.0], [1.0], [1.0]]
+    },
+    {
       "name": "equipped-MASK-possum",
       "directions": 4
     },

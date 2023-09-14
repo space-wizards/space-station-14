@@ -1,0 +1,9 @@
+<DefaultWindow xmlns="https://spacestation14.io"
+               xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+               Title="{Loc 'replay-menu-select-title'}"
+               SetSize="300 200">
+    <BoxContainer Name="VBox" Orientation="Vertical" StyleIdentifier="mainMenuVBox">
+        <Label Name="NoneLabel" Access="Public" Text="{Loc 'replay-menu-none'}" Margin="4" Visible="False"/>
+        <ItemList Name="ReplayList" SelectMode="Single" VerticalExpand="True"  Margin ="4" Visible="False"/>
+    </BoxContainer>
+</DefaultWindow>

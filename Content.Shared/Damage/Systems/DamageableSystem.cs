@@ -2,6 +2,8 @@ using System.Linq;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.FixedPoint;
 using Content.Shared.Inventory;
+using Content.Shared.Mobs.Components;
+using Content.Shared.Mobs.Systems;
 using Content.Shared.Radiation.Events;
 using Content.Shared.Rejuvenate;
 using Robust.Shared.GameStates;
@@ -16,6 +18,7 @@ namespace Content.Shared.Damage
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
         [Dependency] private readonly INetManager _netMan = default!;
+        [Dependency] private readonly MobThresholdSystem _mobThreshold = default!;
 
         public override void Initialize()
         {
@@ -24,34 +27,6 @@ namespace Content.Shared.Damage
             SubscribeLocalEvent<DamageableComponent, ComponentGetState>(DamageableGetState);
             SubscribeLocalEvent<DamageableComponent, OnIrradiatedEvent>(OnIrradiated);
             SubscribeLocalEvent<DamageableComponent, RejuvenateEvent>(OnRejuvenate);
-        }
-
-        /// <summary>
-        /// Retrieves the damage examine values.
-        /// </summary>
-        public FormattedMessage GetDamageExamine(DamageSpecifier damageSpecifier, string? type = null)
-        {
-            var msg = new FormattedMessage();
-
-            if (string.IsNullOrEmpty(type))
-            {
-                msg.AddMarkup(Loc.GetString("damage-examine"));
-            }
-            else
-            {
-                msg.AddMarkup(Loc.GetString("damage-examine-type", ("type", type)));
-            }
-
-            foreach (var damage in damageSpecifier.DamageDict)
-            {
-                if (damage.Value != FixedPoint2.Zero)
-                {
-                    msg.PushNewline();
-                    msg.AddMarkup(Loc.GetString("damage-value", ("type", damage.Key), ("amount", damage.Value)));
-                }
-            }
-
-            return msg;
         }
 
         /// <summary>
@@ -121,7 +96,7 @@ namespace Content.Shared.Damage
 
             if (EntityManager.TryGetComponent<AppearanceComponent>(uid, out var appearance) && damageDelta != null)
             {
-                var data = new DamageVisualizerGroupData(damageDelta.GetDamagePerGroup(_prototypeManager).Keys.ToList());
+                var data = new DamageVisualizerGroupData(component.DamagePerGroup.Keys.ToList());
                 _appearance.SetData(uid, DamageVisualizerKeys.DamageUpdateGroups, data, appearance);
             }
             RaiseLocalEvent(uid, new DamageChangedEvent(component, damageDelta, interruptsDoAfters, origin));
@@ -148,18 +123,12 @@ namespace Content.Shared.Damage
                 return null;
             }
 
-            if (damage == null)
-            {
-                Logger.Error("Null DamageSpecifier. Probably because a required yaml field was not given.");
-                return null;
-            }
-
             if (damage.Empty)
             {
                 return damage;
             }
 
-            var before = new BeforeDamageChangedEvent(damage);
+            var before = new BeforeDamageChangedEvent(damage, origin);
             RaiseLocalEvent(uid.Value, ref before);
 
             if (before.Cancelled)
@@ -174,7 +143,7 @@ namespace Content.Shared.Damage
                     damage = DamageSpecifier.ApplyModifierSet(damage, modifierSet);
                 }
 
-                var ev = new DamageModifyEvent(damage);
+                var ev = new DamageModifyEvent(damage, origin);
                 RaiseLocalEvent(uid.Value, ev);
                 damage = ev.Damage;
 
@@ -264,7 +233,10 @@ namespace Content.Shared.Damage
 
         private void OnRejuvenate(EntityUid uid, DamageableComponent component, RejuvenateEvent args)
         {
+            TryComp<MobThresholdsComponent>(uid, out var thresholds);
+            _mobThreshold.SetAllowRevives(uid, true, thresholds); // do this so that the state changes when we set the damage
             SetAllDamage(uid, component, 0);
+            _mobThreshold.SetAllowRevives(uid, false, thresholds);
         }
 
         private void DamageableHandleState(EntityUid uid, DamageableComponent component, ref ComponentHandleState args)
@@ -293,7 +265,7 @@ namespace Content.Shared.Damage
     ///     Raised before damage is done, so stuff can cancel it if necessary.
     /// </summary>
     [ByRefEvent]
-    public record struct BeforeDamageChangedEvent(DamageSpecifier Delta, bool Cancelled=false);
+    public record struct BeforeDamageChangedEvent(DamageSpecifier Delta, EntityUid? Origin = null, bool Cancelled = false);
 
     /// <summary>
     ///     Raised on an entity when damage is about to be dealt,
@@ -307,11 +279,15 @@ namespace Content.Shared.Damage
         // Whenever locational damage is a thing, this should just check only that bit of armour.
         public SlotFlags TargetSlots { get; } = ~SlotFlags.POCKET;
 
+        public readonly DamageSpecifier OriginalDamage;
         public DamageSpecifier Damage;
+        public EntityUid? Origin;
 
-        public DamageModifyEvent(DamageSpecifier damage)
+        public DamageModifyEvent(DamageSpecifier damage, EntityUid? origin = null)
         {
+            OriginalDamage = damage;
             Damage = damage;
+            Origin = origin;
         }
     }
 

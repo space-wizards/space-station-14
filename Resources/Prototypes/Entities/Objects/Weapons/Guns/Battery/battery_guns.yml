@@ -4,7 +4,6 @@
   abstract: true
   components:
   - type: Sprite
-    netsync: false
   - type: Item
     size: 50
   - type: Clothing
@@ -46,7 +45,7 @@
     - Belt
 
 - type: entity
-  name: retro laser gun
+  name: retro laser blaster
   parent: BaseWeaponBatterySmall
   id: WeaponLaserGun
   description: A weapon using light amplified by the stimulated emission of radiation.
@@ -60,7 +59,7 @@
       map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
   - type: HitscanBatteryAmmoProvider
-    proto: RedLaser
+    proto: RedMediumLaser
     fireCost: 62.5
   - type: MagazineVisuals
     magState: mag
@@ -69,7 +68,7 @@
   - type: Appearance
 
 - type: entity
-  name: makeshift laser gun
+  name: makeshift laser pistol
   parent: BaseWeaponBatterySmall
   id: WeaponMakeshiftLaser
   description: Better pray it won't burn your hands off.
@@ -92,7 +91,7 @@
     startingCharge: 500
 
 - type: entity
-  name: laser gun
+  name: laser rifle
   parent: BaseWeaponBattery
   id: WeaponLaserCarbine
   description: Favoured by Nanotrasen Security for being cheap and easy to use.
@@ -116,10 +115,10 @@
     fireCost: 62.5
 
 - type: entity
-  name: practice laser gun
+  name: practice laser rifle
   parent: WeaponLaserCarbine
   id: WeaponLaserCarbinePractice
-  description: A modified version of the basic laser gun, this one fires less concentrated energy bolts designed for target practice.
+  description: This modified laser rifle fires harmless beams in the 40-watt range, for target practice.
   components:
   - type: HitscanBatteryAmmoProvider
     proto: RedLaserPractice
@@ -298,6 +297,9 @@
       steps: 5
       zeroVisible: true
     - type: Appearance
+    - type: GuideHelp
+      guides:
+      - Security
 
 - type: entity
   name: practice disabler
@@ -327,7 +329,6 @@
   parent: BaseWeaponBatterySmall
   id: WeaponTaser
   description: A low-capacity, energy-based stun gun used by security teams to subdue targets at range.
-  suffix: Admin
   components:
   - type: Tag
     tags:
@@ -351,7 +352,7 @@
       path: /Audio/Weapons/Guns/Gunshots/taser.ogg
   - type: ProjectileBatteryAmmoProvider
     proto: BulletTaser
-    fireCost: 100
+    fireCost: 200
   - type: MagazineVisuals
     magState: mag
     steps: 5
@@ -359,13 +360,11 @@
   - type: Appearance
 
 - type: entity
-  name: antique laser gun
+  name: antique laser pistol
   parent: BaseWeaponBatterySmall
   id: WeaponAntiqueLaser
-  description: This is an antique laser gun. All craftsmanship is of the highest quality. It is decorated with assistant leather and chrome. The object menaces with spikes of energy.
+  description: This is an antique laser pistol. All craftsmanship is of the highest quality. It is decorated with assistant leather and chrome. The object menaces with spikes of energy.
   components:
-  - type: Item
-    size: 30
   - type: Sprite
     sprite: Objects/Weapons/Guns/Battery/antiquelasergun.rsi
     layers:
@@ -397,11 +396,13 @@
     price: 750
 
 - type: entity
-  name: advanced laser gun
+  name: advanced laser pistol
   parent: BaseWeaponBatterySmall
   id: WeaponAdvancedLaser
-  description: An experimental laser gun with a self charging nuclear powered battery.
+  description: An experimental high-energy laser pistol with a self-charging nuclear battery.
   components:
+  - type: Item
+    size: 30  # Intentionally larger than other pistols
   - type: Sprite
     sprite: Objects/Weapons/Guns/Battery/advancedlasergun.rsi
     layers:
@@ -420,7 +421,7 @@
     fireCost: 100
   - type: BatterySelfRecharger
     autoRecharge: true
-    autoRechargeRate: 40
+    autoRechargeRate: 30
   - type: MagazineVisuals
     magState: mag
     steps: 5
@@ -428,3 +429,90 @@
   - type: Appearance
   - type: StaticPrice
     price: 63
+
+- type: entity
+  name: C.H.I.M.P. handcannon
+  parent: BaseWeaponBatterySmall
+  id: WeaponPistolCHIMP
+  description: Just because it's a little C.H.I.M.P. doesn't mean it can't punch like an A.P.E.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Revolvers/chimp.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-unshaded-1
+      visible: false
+      map: ["enum.GunVisualLayers.MagUnshaded"]
+      shader: unshaded
+  - type: Appearance
+  - type: MagazineVisuals
+    magState: mag
+    steps: 3
+    zeroVisible: false
+  - type: Clothing
+    sprite: Objects/Weapons/Guns/Revolvers/chimp.rsi
+  - type: Gun
+    fireRate: 1.5
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/taser2.ogg
+  - type: ProjectileBatteryAmmoProvider
+    proto: AnomalousParticleDeltaStrong
+    fireCost: 100 
+  - type: BatteryWeaponFireModes
+    fireModes:
+    - proto: AnomalousParticleDeltaStrong
+      fireCost: 100
+    - proto: AnomalousParticleEpsilonStrong
+      fireCost: 100
+    - proto: AnomalousParticleZetaStrong
+      fireCost: 100
+  - type: Construction
+    graph: UpgradeWeaponPistolCHIMP
+    node: start
+      
+- type: entity
+  name: experimental C.H.I.M.P. handcannon
+  parent: WeaponPistolCHIMP
+  id: WeaponPistolCHIMPUpgraded
+  description: This C.H.I.M.P. seems to have a greater punch than is usual...
+  components: 
+  - type: BatteryWeaponFireModes
+    fireModes:
+    - proto: AnomalousParticleDeltaStrong
+      fireCost: 100
+    - proto: AnomalousParticleEpsilonStrong
+      fireCost: 100
+    - proto: AnomalousParticleOmegaStrong
+      fireCost: 100     
+    - proto: AnomalousParticleZetaStrong
+      fireCost: 100
+
+- type: entity
+  name: Eye of a behonker
+  parent: BaseWeaponBatterySmall
+  id: WeaponBehonkerLaser
+  description: The eye of a behonker, it fires a laser when squeezed.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Battery/behonker_eye.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+  - type: Gun
+    fireRate: 1
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/laser_clown.ogg
+  - type: HitscanBatteryAmmoProvider
+    proto: RedMediumLaser
+    fireCost: 100
+  - type: BatterySelfRecharger
+    autoRecharge: true
+    autoRechargeRate: 40
+  - type: MagazineVisuals
+    magState: mag
+    steps: 5
+    zeroVisible: true
+  - type: Appearance
+  - type: StaticPrice
+    price: 750

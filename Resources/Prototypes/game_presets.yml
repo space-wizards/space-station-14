@@ -53,35 +53,17 @@
     - BasicStationEventScheduler
 
 - type: gamePreset
-  id: Suspicion
-  alias:
-    - suspicion
-    - sus
-  name: suspicion-title
-  description: suspicion-description
-  rules:
-    - Suspicion
-
-- type: gamePreset
   id: Deathmatch
   alias:
     - deathmatch
     - dm
   name: death-match-title
   description: death-match-description
+  maxPlayers: 15
+  showInVote: true
+  supportedMaps: DeathMatchMapPool
   rules:
-    - DeathMatch
-
-- type: gamePreset
-  id: TraitorDeathMatch
-  alias:
-    - traitordm
-    - traitordeathmatch
-  name: traitor-death-match-title
-  description: traitor-death-match-description
-  rules:
-    - TraitorDeathMatch
-    - MaxTimeRestart
+    - DeathMatch31
 
 - type: gamePreset
   id: Nukeops
@@ -97,17 +79,17 @@
 - type: gamePreset
   id: Zombie
   alias:
-    - zombie
-    - zombies
-    - Zombies
-    - zz14
-    - zomber
+  - zombie
+  - zombies
+  - Zombies
+  - zz14
+  - zomber
   name: zombie-title
   description: zombie-description
   showInVote: false
   rules:
-    - Zombie
-    - BasicStationEventScheduler
+  - Zombie
+  - BasicStationEventScheduler
 
 - type: gamePreset
   id: Pirates

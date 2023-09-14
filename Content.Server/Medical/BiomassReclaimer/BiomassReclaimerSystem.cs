@@ -1,31 +1,32 @@
-using Content.Shared.Interaction;
-using Content.Shared.Audio;
-using Content.Shared.Jittering;
-using Content.Shared.Chemistry.Components;
-using Content.Shared.Throwing;
-using Content.Shared.Construction.Components;
-using Content.Shared.Nutrition.Components;
-using Content.Shared.Administration.Logs;
-using Content.Shared.CCVar;
-using Content.Shared.Database;
-using Content.Server.Power.Components;
-using Content.Server.Fluids.EntitySystems;
+using System.Numerics;
 using Content.Server.Body.Components;
 using Content.Server.Climbing;
 using Content.Server.Construction;
+using Content.Server.Fluids.EntitySystems;
 using Content.Server.Materials;
-using Content.Server.Mind.Components;
+using Content.Server.Power.Components;
+using Content.Shared.Administration.Logs;
+using Content.Shared.Audio;
+using Content.Shared.CCVar;
+using Content.Shared.Chemistry.Components;
+using Content.Shared.Construction.Components;
+using Content.Shared.Database;
 using Content.Shared.DoAfter;
 using Content.Shared.Humanoid;
+using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
+using Content.Shared.Jittering;
+using Content.Shared.Medical;
+using Content.Shared.Mind;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
+using Content.Shared.Nutrition.Components;
 using Content.Shared.Popups;
-using Robust.Shared.Random;
-using Robust.Shared.Configuration;
+using Content.Shared.Throwing;
 using Robust.Server.Player;
+using Robust.Shared.Configuration;
 using Robust.Shared.Physics.Components;
-using Content.Shared.Medical;
+using Robust.Shared.Random;
 
 namespace Content.Server.Medical.BiomassReclaimer
 {
@@ -44,6 +45,7 @@ namespace Content.Server.Medical.BiomassReclaimer
         [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly MaterialStorageSystem _material = default!;
+        [Dependency] private readonly SharedMindSystem _minds = default!;
 
         public override void Update(float frameTime)
         {
@@ -65,7 +67,7 @@ namespace Content.Server.Medical.BiomassReclaimer
                     if (_robustRandom.Prob(0.03f) && reclaimer.SpawnedEntities.Count > 0)
                     {
                         var thrown = Spawn(_robustRandom.Pick(reclaimer.SpawnedEntities).PrototypeId, Transform(reclaimer.Owner).Coordinates);
-                        Vector2 direction = (_robustRandom.Next(-30, 30), _robustRandom.Next(-30, 30));
+                        var direction = new Vector2(_robustRandom.Next(-30, 30), _robustRandom.Next(-30, 30));
                         _throwing.TryThrow(thrown, direction, _robustRandom.Next(1, 10));
                     }
                     reclaimer.RandomMessTimer += (float) reclaimer.RandomMessInterval.TotalSeconds;
@@ -150,7 +152,7 @@ namespace Content.Server.Medical.BiomassReclaimer
             if (!HasComp<MobStateComponent>(args.Used) || !CanGib(uid, args.Used, component))
                 return;
 
-            _doAfterSystem.TryStartDoAfter(new DoAfterArgs(args.User, 7f, new ReclaimerDoAfterEvent(), uid, target: args.Target, used: args.Used)
+            _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, args.User, 7f, new ReclaimerDoAfterEvent(), uid, target: args.Target, used: args.Used)
             {
                 BreakOnTargetMove = true,
                 BreakOnUserMove = true,
@@ -162,7 +164,7 @@ namespace Content.Server.Medical.BiomassReclaimer
         {
             if (!CanGib(uid, args.Climber, component))
             {
-                Vector2 direction = (_robustRandom.Next(-2, 2), _robustRandom.Next(-2, 2));
+                var direction = new Vector2(_robustRandom.Next(-2, 2), _robustRandom.Next(-2, 2));
                 _throwing.TryThrow(args.Climber, direction, 0.5f);
                 return;
             }
@@ -243,9 +245,9 @@ namespace Content.Server.Medical.BiomassReclaimer
             // Reject souled bodies in easy mode.
             if (_configManager.GetCVar(CCVars.BiomassEasyMode) &&
                 HasComp<HumanoidAppearanceComponent>(dragged) &&
-                TryComp<MindComponent>(dragged, out var mindComp))
+                _minds.TryGetMind(dragged, out _, out var mind))
             {
-                if (mindComp.Mind?.UserId != null && _playerManager.TryGetSessionById(mindComp.Mind.UserId.Value, out _))
+                if (mind.UserId != null && _playerManager.TryGetSessionById(mind.UserId.Value, out _))
                     return false;
             }
 

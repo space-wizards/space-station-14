@@ -8,7 +8,7 @@ namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators;
 /// <summary>
 /// Chooses a nearby coordinate and puts it into the resulting key.
 /// </summary>
-public sealed class PickAccessibleOperator : HTNOperator
+public sealed partial class PickAccessibleOperator : HTNOperator
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
     private PathfindingSystem _pathfinding = default!;
@@ -16,8 +16,8 @@ public sealed class PickAccessibleOperator : HTNOperator
     [DataField("rangeKey", required: true)]
     public string RangeKey = string.Empty;
 
-    [DataField("targetKey", required: true)]
-    public string TargetKey = string.Empty;
+    [DataField("targetCoordinates")]
+    public string TargetCoordinates = "TargetCoordinates";
 
     /// <summary>
     /// Where the pathfinding result will be stored (if applicable). This gets removed after execution.
@@ -58,7 +58,7 @@ public sealed class PickAccessibleOperator : HTNOperator
 
         return (true, new Dictionary<string, object>()
         {
-            { TargetKey, target },
+            { TargetCoordinates, target },
             { PathfindKey, path}
         });
     }

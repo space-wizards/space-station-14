@@ -1,5 +1,15 @@
 - type: entity
   parent: BaseElectronics
   id: StationMapCircuitboard
-  name: station map circuit board
-  description: A printed circuit board for a station map.
+  name: station map electronics
+  description: An electronics board used in station maps.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/module.rsi
+    state: airalarm_electronics
+  - type: Tag
+    tags:
+      - DroneUsable
+      - StationMapElectronics
+  - type: StaticPrice
+    price: 15 

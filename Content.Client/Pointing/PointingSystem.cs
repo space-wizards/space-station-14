@@ -31,7 +31,7 @@ public sealed class PointingSystem : SharedPointingSystem
 
     private void AddPointingVerb(GetVerbsEvent<Verb> args)
     {
-        if (args.Target.IsClientSide())
+        if (IsClientSide(args.Target))
             return;
 
         // Really this could probably be a properly predicted event, but that requires reworking pointing. For now
@@ -55,9 +55,9 @@ public sealed class PointingSystem : SharedPointingSystem
         Verb verb = new()
         {
             Text = Loc.GetString("pointing-verb-get-data-text"),
-            Icon = new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/VerbIcons/point.svg.192dpi.png")),
+            Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/point.svg.192dpi.png")),
             ClientExclusive = true,
-            Act = () => RaiseNetworkEvent(new PointingAttemptEvent(args.Target))
+            Act = () => RaiseNetworkEvent(new PointingAttemptEvent(GetNetEntity(args.Target)))
         };
 
         args.Verbs.Add(verb);

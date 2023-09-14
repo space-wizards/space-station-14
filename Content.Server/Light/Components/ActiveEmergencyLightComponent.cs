@@ -1,7 +1,7 @@
 namespace Content.Server.Light.Components;
 
 [RegisterComponent]
-public sealed class ActiveEmergencyLightComponent : Component
+public sealed partial class ActiveEmergencyLightComponent : Component
 {
 
 }

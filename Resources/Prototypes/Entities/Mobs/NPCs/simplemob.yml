@@ -1,8 +1,8 @@
 - type: entity
   save: false
-  abstract: true
-  id: SimpleSpaceMobBase # Mob without barotrauma, freezing and asphyxiation (for space carps!?)
+  id: BaseSimpleMob
   suffix: AI
+  abstract: true
   components:
   - type: LagCompensation
   - type: Tag
@@ -15,13 +15,8 @@
       Acidic: [Touch, Ingestion]
   - type: InputMover
   - type: MobMover
-  - type: HTN
-    rootTask: IdleCompound
   - type: Input
     context: "human"
-  - type: Faction
-    factions:
-    - SimpleNeutral
   - type: MovementSpeedModifier
     baseWalkSpeed : 4
     baseSprintSpeed : 4
@@ -42,42 +37,26 @@
   - type: Sprite
     noRot: true
     drawdepth: Mobs
-    netsync: false
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
     bodyType: KinematicController # Same for all inheritors
   - type: Fixtures
     fixtures:
-    - shape:
-        # Circles, cuz rotation of rectangles looks very bad
-        !type:PhysShapeCircle
-        radius: 0.35
-      density: 50
-      mask:
-      - MobMask
-      layer:
-      - MobLayer
-  - type: SolutionContainerManager
-  - type: Bloodstream
-    bloodlossDamage:
-      types:
-        Bloodloss:
-          1
-    bloodlossHealDamage:
-      types:
-        Bloodloss:
-          -1
+      fix1:
+        shape:
+          # Circles, cuz rotation of rectangles looks very bad
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 50
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
   - type: Damageable
     damageContainer: Biological
   - type: RadiationReceiver
   - type: AtmosExposed
-  - type: Flammable
-    fireSpread: true
-    canResistFire: true
-    damage:
-      types:
-        Heat: 1 #per second, scales with number of fire 'stacks'
   - type: Temperature
     heatDamageThreshold: 360
     coldDamageThreshold: 0
@@ -90,6 +69,13 @@
       types:
         Heat : 0.1 #per second, scales with temperature & other constants
   - type: MobState
+  - type: Deathgasp
+  - type: MobStateActions
+    actions:
+      Critical:
+      - ActionCritSuccumb
+      - ActionCritFakeDeath
+      - ActionCritLastWords
   - type: MobThresholds
     thresholds:
       0: Alive
@@ -105,8 +91,8 @@
       behaviors:
       - !type:GibBehavior { }
   - type: HeatResistance
-  - type: CombatMode
   - type: Internals
+  - type: StatusIcon
   - type: StatusEffects
     allowed:
     - SlowedDown
@@ -115,11 +101,45 @@
     - ForcedSleep
     - TemporaryBlindness
     - Pacified
-  - type: Body
-    prototype: Animal
   - type: InjectableSolution
     solution: chemicals
   - type: Examiner
+  - type: Appearance
+  - type: RotationVisuals
+    defaultRotation: 0
+    horizontalRotation: 0
+  - type: Actions
+  - type: DoAfter
+  - type: Polymorphable
+  - type: Pullable
+  - type: Buckle
+  - type: StandingState
+  - type: Alerts
+
+- type: entity
+  save: false
+  abstract: true
+  parent: BaseSimpleMob
+  id: SimpleSpaceMobBase # Mob without barotrauma, freezing and asphyxiation (for space carps!?)
+  suffix: AI
+  components:
+  - type: NpcFactionMember
+    factions:
+    - SimpleNeutral
+  - type: HTN
+    rootTask:
+      task: IdleCompound
+  - type: SolutionContainerManager
+  - type: Bloodstream
+    bloodlossDamage:
+      types:
+        Bloodloss:
+          1
+    bloodlossHealDamage:
+      types:
+        Bloodloss:
+          -1
+  - type: CombatMode
   - type: MeleeWeapon
     hidden: true
     angle: 0
@@ -127,20 +147,19 @@
     damage:
       groups:
         Brute: 5
-  - type: Appearance
-  - type: RotationVisuals
+  - type: Body
+    prototype: Animal
+  - type: Flammable
+    fireSpread: true
+    canResistFire: true
+    damage:
+      types:
+        Heat: 1 #per second, scales with number of fire 'stacks'
   - type: FireVisuals
     sprite: Mobs/Effects/onfire.rsi
     normalState: Generic_mob_burning
-  - type: Actions
-  - type: DoAfter
   - type: Climbing
   - type: Flashable
-  - type: Polymorphable
-  - type: Pullable
-  - type: Buckle
-  - type: StandingState
-  - type: Alerts
   - type: NameIdentifier
     group: GenericNumber
   - type: SlowOnDamage
@@ -190,6 +209,7 @@
       - ForcedSleep
       - TemporaryBlindness
       - Pacified
+      - StaminaModifier
   - type: ThermalRegulator
     metabolismHeat: 800
     radiatedHeat: 100
@@ -220,7 +240,6 @@
     bloodMaxVolume: 150
   - type: MobPrice
     price: 150
-  - type: Appearance
   - type: FloatingVisuals
   - type: Puller
     needsHands: false

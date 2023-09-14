@@ -1,13 +1,18 @@
 ﻿using Content.Server.Body.Components;
 using Content.Shared.Atmos;
 using Content.Shared.Chemistry.Reagent;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Chemistry.ReagentEffects;
 
-public sealed class ModifyLungGas : ReagentEffect
+public sealed partial class ModifyLungGas : ReagentEffect
 {
     [DataField("ratios", required: true)]
     private Dictionary<Gas, float> _ratios = default!;
+
+    // JUSTIFICATION: This is internal magic that players never directly interact with.
+    protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
+        => null;
 
     public override void Effect(ReagentEffectArgs args)
     {

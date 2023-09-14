@@ -8,15 +8,15 @@
   },
   "states": [
     {
-      "name": "cap",
+      "name": "unwired",
       "directions": 4
     },
     {
-      "name": "capc",
+      "name": "completed",
       "directions": 4
     },
     {
-      "name": "capw",
+      "name": "wired",
       "directions": 4
     }
   ]

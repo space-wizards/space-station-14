@@ -8,21 +8,20 @@
   - type: Appearance
   - type: Sprite
     sprite: Objects/Devices/pda.rsi
-    netsync: false
     layers:
-    - map: [ "enum.PDAVisualLayers.Base" ]
+    - map: [ "enum.PdaVisualLayers.Base" ]
     - state: "light_overlay"
-      map: [ "enum.PDAVisualLayers.Flashlight" ]
+      map: [ "enum.PdaVisualLayers.Flashlight" ]
       shader: "unshaded"
       visible: false
     - state: "id_overlay"
-      map: [ "enum.PDAVisualLayers.IDLight" ]
+      map: [ "enum.PdaVisualLayers.IdLight" ]
       shader: "unshaded"
       visible: false
   - type: Icon
     sprite: Objects/Devices/pda.rsi
     state: pda
-  - type: PDA
+  - type: Pda
     state: pda
     penSlot:
       startingItem: Pen
@@ -52,12 +51,6 @@
     - idcard
     - Belt
   - type: UnpoweredFlashlight
-    toggleAction:
-      name: action-name-toggle-light
-      description: action-description-toggle-light
-      icon: { sprite: Objects/Tools/flashlight.rsi, state: flashlight }
-      iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
-      event: !type:ToggleActionEvent
   - type: PointLight
     enabled: false
     radius: 1.5
@@ -71,9 +64,11 @@
   - type: WirelessNetworkConnection
     range: 500
   - type: CartridgeLoader
-    uiKey: enum.PDAUiKey.Key
+    uiKey: enum.PdaUiKey.Key
     preinstalled:
+      - CrewManifestCartridge
       - NotekeeperCartridge
+      - NewsReadCartridge
     cartridgeSlot:
       priority: -1
       name: Cartridge
@@ -83,13 +78,13 @@
         components:
           - Cartridge
   - type: ActivatableUI
-    key: enum.PDAUiKey.Key
+    key: enum.PdaUiKey.Key
     singleUser: true
     closeOnHandDeselect: false
   - type: UserInterface
     interfaces:
-    - key: enum.PDAUiKey.Key
-      type: PDABoundUserInterface
+    - key: enum.PdaUiKey.Key
+      type: PdaBoundUserInterface
     - key: enum.StoreUiKey.Key
       type: StoreBoundUserInterface
     - key: enum.RingerUiKey.Key
@@ -112,10 +107,10 @@
   name: passenger PDA
   description: Why isn't it gray?
   components:
-  - type: PDA
+  - type: Pda
     id: PassengerIDCard
     state: pda
-  - type: PDABorderColor
+  - type: PdaBorderColor
     borderColor: "#717059"
 
 - type: entity
@@ -124,9 +119,12 @@
   name: technical assistant PDA
   description: Why isn't it yellow?
   components:
-  - type: PDA
+  - type: Pda
     id: TechnicalAssistantIDCard
     state: pda-interntech
+  - type: PdaBorderColor
+    borderColor: "#717059"
+    accentVColor: "#949137"
   - type: Icon
     state: pda-interntech
 
@@ -136,15 +134,21 @@
   name: medical intern PDA
   description: Why isn't it white? Has a built-in health analyzer.
   components:
-  - type: PDA
+  - type: Pda
     id: MedicalInternIDCard
     state: pda-internmed
+  - type: PdaBorderColor
+    borderColor: "#717059"
+    accentVColor: "#447987"
   - type: Icon
     state: pda-internmed
   - type: HealthAnalyzer
-    scanDelay: 1.4
+    scanDelay: 1
     scanningEndSound:
       path: "/Audio/Items/Medical/healthscanner.ogg"
+  - type: GuideHelp
+    guides:
+    - Medical Doctor
 
 - type: entity
   parent: BasePDA
@@ -152,9 +156,12 @@
   name: security cadet PDA
   description: Why isn't it red?
   components:
-  - type: PDA
+  - type: Pda
     id: SecurityCadetIDCard
     state: pda-interncadet
+  - type: PdaBorderColor
+    borderColor: "#717059"
+    accentVColor: "#A32D26"
   - type: Icon
     state: pda-interncadet
 
@@ -164,9 +171,12 @@
   name: research assistant PDA
   description: Why isn't it purple?
   components:
-  - type: PDA
+  - type: Pda
     id: ResearchAssistantIDCard
     state: pda-internsci
+  - type: PdaBorderColor
+    borderColor: "#717059"
+    accentVColor: "#8900c9"
   - type: Icon
     state: pda-internsci
 
@@ -176,9 +186,12 @@
   name: service worker PDA
   description: Why isn't it gray?
   components:
-  - type: PDA
+  - type: Pda
     id: ServiceWorkerIDCard
     state: pda-internservice
+  - type: PdaBorderColor
+    borderColor: "#717059"
+    accentVColor: "#00cc35"
   - type: Icon
     state: pda-internservice
 
@@ -188,10 +201,10 @@
   name: chef PDA
   description: Covered in grease and flour.
   components:
-  - type: PDA
+  - type: Pda
     id: ChefIDCard
     state: pda-cook
-  - type: PDABorderColor
+  - type: PdaBorderColor
     borderColor: "#d7d7d0"
   - type: Icon
     state: pda-cook
@@ -202,9 +215,12 @@
   name: botanist PDA
   description: Has an earthy scent.
   components:
-  - type: PDA
+  - type: Pda
     id: BotanistIDCard
     state: pda-hydro
+  - type: PdaBorderColor
+    borderColor: "#44843c"
+    accentVColor: "#00cc35"
   - type: Icon
     state: pda-hydro
 
@@ -214,7 +230,7 @@
   name: clown PDA
   description: Looks can be deceiving.
   components:
-  - type: PDA
+  - type: Pda
     id: ClownIDCard
     state: pda-clown
     penSlot:
@@ -225,7 +241,7 @@
       whitelist:
         tags:
         - Write
-  - type: PDABorderColor
+  - type: PdaBorderColor
     borderColor: "#C18199"
   - type: Icon
     state: pda-clown
@@ -239,19 +255,20 @@
     bodyType: Dynamic
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.4,-0.3,0.4,0.3"
-      id: "slips"
-      hard: false
-      layer:
-      - SlipLayer
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.4,-0.3,0.4,0.3"
-      density: 5
-      mask:
-      - ItemMask
+      slips:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.4,-0.3,0.4,0.3"
+        hard: false
+        layer:
+          - SlipLayer
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.4,-0.3,0.4,0.3"
+        density: 5
+        mask:
+        - ItemMask
 
 - type: entity
   parent: BasePDA
@@ -259,7 +276,7 @@
   name: mime PDA
   description: Suprisingly not on mute.
   components:
-  - type: PDA
+  - type: Pda
     id: MimeIDCard
     state: pda-mime
     idSlot:
@@ -267,32 +284,38 @@
       whitelist:
         components:
         - IdCard
+  - type: PdaBorderColor
+    borderColor: "#d7d7d0"
+    accentHColor: "#333333"
   - type: Icon
     state: pda-mime
 
 - type: entity
-  name: Chaplain PDA
+  name: chaplain PDA
   parent: BasePDA
   id: ChaplainPDA
   description: God's chosen PDA.
   components:
-  - type: PDA
+  - type: Pda
     id: ChaplainIDCard
     state: pda-chaplain
-  - type: PDABorderColor
+  - type: PdaBorderColor
     borderColor: "#333333"
   - type: Icon
     state: pda-chaplain
 
 - type: entity
-  name: Quartermaster PDA
+  name: quartermaster PDA
   parent: BasePDA
   id: QuartermasterPDA
   description: PDA for the guy that orders the guns.
   components:
-  - type: PDA
+  - type: Pda
     id: QuartermasterIDCard
     state: pda-qm
+  - type: PdaBorderColor
+    borderColor: "#e39751"
+    accentVColor: "#a23e3e"
   - type: Icon
     state: pda-qm
 
@@ -302,9 +325,11 @@
   name: cargo PDA
   description: PDA for the guys that order the pizzas.
   components:
-  - type: PDA
+  - type: Pda
     id: CargoIDCard
     state: pda-cargo
+  - type: PdaBorderColor
+    borderColor: "#e39751"
   - type: Icon
     state: pda-cargo
 
@@ -314,9 +339,12 @@
   name: salvage PDA
   description: Smells like ash.
   components:
-  - type: PDA
+  - type: Pda
     id: SalvageIDCard
     state: pda-miner
+  - type: PdaBorderColor
+    borderColor: "#af9366"
+    accentVColor: "#8900c9"
   - type: Icon
     state: pda-miner
 
@@ -326,9 +354,11 @@
   name: bartender PDA
   description: Smells like beer.
   components:
-  - type: PDA
+  - type: Pda
     id: BartenderIDCard
     state: pda-bartender
+  - type: PdaBorderColor
+    borderColor: "#333333"
   - type: Icon
     state: pda-bartender
 
@@ -338,9 +368,11 @@
   name: librarian PDA
   description: Smells like books.
   components:
-  - type: PDA
+  - type: Pda
     id: LibrarianIDCard
     state: pda-library
+  - type: PdaBorderColor
+    borderColor: "#858585"
   - type: Icon
     state: pda-library
 
@@ -350,9 +382,11 @@
   name: lawyer PDA
   description: For lawyers to poach dubious clients.
   components:
-  - type: PDA
+  - type: Pda
     id: LawyerIDCard
     state: pda-lawyer
+  - type: PdaBorderColor
+    borderColor: "#6f6192"
   - type: Icon
     state: pda-lawyer
 
@@ -362,10 +396,10 @@
   name: janitor PDA
   description: Smells like bleach.
   components:
-  - type: PDA
+  - type: Pda
     id: JanitorIDCard
     state: pda-janitor
-  - type: PDABorderColor
+  - type: PdaBorderColor
     borderColor: "#5D2D56"
   - type: Icon
     state: pda-janitor
@@ -376,7 +410,7 @@
   name: captain PDA
   description: Surprisingly no different from your PDA.
   components:
-  - type: PDA
+  - type: Pda
     id: CaptainIDCard
     state: pda-captain
     penSlot:
@@ -385,7 +419,7 @@
       whitelist:
         tags:
         - Write
-  - type: PDABorderColor
+  - type: PdaBorderColor
     borderColor: "#7C5D00"
   - type: Icon
     state: pda-captain
@@ -396,7 +430,7 @@
   name: head of personnel PDA
   description: Looks like it's been chewed on.
   components:
-  - type: PDA
+  - type: Pda
     id: HoPIDCard
     state: pda-hop
     penSlot:
@@ -405,6 +439,9 @@
       whitelist:
         tags:
         - Write
+  - type: PdaBorderColor
+    borderColor: "#789876"
+    accentHColor: "#447987"
   - type: Icon
     state: pda-hop
 
@@ -414,10 +451,10 @@
   name: chief engineer PDA
   description: Looks like it's barely been used.
   components:
-  - type: PDA
+  - type: Pda
     id: CEIDCard
     state: pda-ce
-  - type: PDABorderColor
+  - type: PdaBorderColor
     borderColor: "#949137"
     accentHColor: "#447987"
   - type: Icon
@@ -429,9 +466,12 @@
   name: engineer PDA
   description: Rugged and well-worn.
   components:
-  - type: PDA
+  - type: Pda
     id: EngineeringIDCard
     state: pda-engineer
+  - type: PdaBorderColor
+    borderColor: "#949137"
+    accentVColor: "#A32D26"
   - type: Icon
     state: pda-engineer
 
@@ -441,10 +481,10 @@
   name: chief medical officer PDA
   description: Extraordinarily shiny and sterile. Has a built-in health analyzer.
   components:
-  - type: PDA
+  - type: Pda
     id: CMOIDCard
     state: pda-cmo
-  - type: PDABorderColor
+  - type: PdaBorderColor
     borderColor: "#d7d7d0"
     accentHColor: "#447987"
     accentVColor: "#447987"
@@ -461,16 +501,38 @@
   name: medical PDA
   description: Shiny and sterile. Has a built-in health analyzer.
   components:
-  - type: PDA
+  - type: Pda
     id: MedicalIDCard
     state: pda-medical
-  - type: PDABorderColor
+  - type: PdaBorderColor
     borderColor: "#d7d7d0"
     accentVColor: "#447987"
   - type: Icon
     state: pda-medical
   - type: HealthAnalyzer
-    scanDelay: 1.2
+    scanDelay: 1
+    scanningEndSound:
+      path: "/Audio/Items/Medical/healthscanner.ogg"
+  - type: GuideHelp
+    guides:
+    - Medical Doctor
+
+- type: entity
+  parent: BasePDA
+  id: ParamedicPDA
+  name: paramedic PDA
+  description: Shiny and sterile. Has a built-in rapid health analyzer.
+  components:
+  - type: Pda
+    id: ParamedicIDCard
+    state: pda-paramedic
+  - type: PdaBorderColor
+    borderColor: "#d7d7d0"
+    accentVColor: "#2a4b5b"
+  - type: Icon
+    state: pda-paramedic
+  - type: HealthAnalyzer
+    scanDelay: 1
     scanningEndSound:
       path: "/Audio/Items/Medical/healthscanner.ogg"
 
@@ -480,14 +542,18 @@
   name: chemistry PDA
   description: It has a few discolored blotches here and there.
   components:
-  - type: PDA
+  - type: Pda
     id: ChemistIDCard
     state: pda-chemistry
-  - type: PDABorderColor
+  - type: PdaBorderColor
     borderColor: "#d7d7d0"
     accentVColor: "#B34200"
   - type: Icon
     state: pda-chemistry
+  - type: HealthAnalyzer
+    scanDelay: 1
+    scanningEndSound:
+      path: "/Audio/Items/Medical/healthscanner.ogg"
 
 - type: entity
   parent: BasePDA
@@ -495,9 +561,13 @@
   name: research director PDA
   description: It appears surprisingly ordinary.
   components:
-  - type: PDA
+  - type: Pda
     id: RDIDCard
     state: pda-rd
+  - type: PdaBorderColor
+    borderColor: "#d7d7d0"
+    accentHColor: "#447987"
+    accentVColor: "#8900c9"
   - type: Icon
     state: pda-rd
 
@@ -507,9 +577,12 @@
   name: science PDA
   description: It's covered with an unknown gooey substance.
   components:
-  - type: PDA
+  - type: Pda
     id: ResearchIDCard
     state: pda-science
+  - type: PdaBorderColor
+    borderColor: "#d7d7d0"
+    accentVColor: "#8900c9"
   - type: Icon
     state: pda-science
 
@@ -519,10 +592,10 @@
   name: head of security PDA
   description: Whosoever bears this PDA is the law.
   components:
-  - type: PDA
+  - type: Pda
     id: HoSIDCard
     state: pda-hos
-  - type: PDABorderColor
+  - type: PdaBorderColor
     borderColor: "#A32D26"
     accentHColor: "#447987"
   - type: Icon
@@ -534,9 +607,12 @@
   name: warden PDA
   description: The OS appears to have been jailbroken.
   components:
-  - type: PDA
+  - type: Pda
     id: WardenIDCard
     state: pda-warden
+  - type: PdaBorderColor
+    borderColor: "#A32D26"
+    accentVColor: "#949137"
   - type: Icon
     state: pda-warden
 
@@ -546,9 +622,11 @@
   name: security PDA
   description: Red to hide the stains of passenger blood.
   components:
-  - type: PDA
+  - type: Pda
     id: SecurityIDCard
     state: pda-security
+  - type: PdaBorderColor
+    borderColor: "#A32D26"
   - type: Icon
     state: pda-security
 
@@ -558,18 +636,34 @@
   name: CentCom PDA
   description: Light green sign of walking bureaucracy.
   components:
-  - type: PDA
-    id: CentcomIDCardSyndie
+  - type: Pda
+    id: CentcomIDCard
     state: pda-centcom
     penSlot:
       startingItem: PenCentcom
       whitelist:
         tags:
         - Write
-  - type: PDABorderColor
-    borderColor: "#32CD32"
+  - type: PdaBorderColor
+    borderColor: "#00842e"
   - type: Icon
     state: pda-centcom
+
+- type: entity
+  parent: CentcomPDA
+  id: CentcomPDAFake
+  suffix: Fake
+  components:
+  - type: Pda
+    id: CentcomIDCardSyndie
+
+- type: entity
+  parent: CentcomPDA
+  id: DeathsquadPDA
+  suffix: Deathsquad
+  components:
+  - type: Pda
+    id: CentcomIDCardDeathsquad
 
 - type: entity
   parent: BasePDA
@@ -577,8 +671,12 @@
   name: musician PDA
   description: It fills you with inspiration.
   components:
-  - type: PDA
+  - type: Pda
     id: MusicianIDCard
+    state: pda-musician
+  - type: PdaBorderColor
+    borderColor: "#333333"
+  - type: Icon
     state: pda-musician
   - type: Instrument
     allowPercussion: false
@@ -592,9 +690,12 @@
   name: atmos PDA
   description: Still smells like plasma.
   components:
-  - type: PDA
+  - type: Pda
     id: AtmosIDCard
     state: pda-atmos
+  - type: PdaBorderColor
+    borderColor: "#949137"
+    accentVColor: "#447987"
   - type: Icon
     state: pda-atmos
 
@@ -604,9 +705,11 @@
   name: clear PDA
   description: 99 and 44/100ths percent pure plastic.
   components:
-  - type: PDA
+  - type: Pda
     id: PassengerIDCard
     state: pda-clear
+  - type: PdaBorderColor
+    borderColor: "#288e4d"
   - type: Icon
     state: pda-clear
 
@@ -616,11 +719,25 @@
   name: syndicate PDA
   description: Ok, time to be a productive member of- oh cool I'm a bad guy time to kill people!
   components:
-  - type: PDA
+  - type: Pda
     id: SyndicateIDCard
     state: pda-syndi
+  - type: PdaBorderColor
+    borderColor: "#891417"
   - type: Icon
     state: pda-syndi
+  - type: CartridgeLoader
+    uiKey: enum.PdaUiKey.Key
+    preinstalled:
+      - NotekeeperCartridge
+    cartridgeSlot:
+      priority: -1
+      name: Cartridge
+      ejectSound: /Audio/Machines/id_swipe.ogg
+      insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+      whitelist:
+        components:
+          - Cartridge
 
 - type: entity
   parent: BasePDA
@@ -628,12 +745,13 @@
   name: ERT PDA
   description: Red for firepower.
   components:
-  - type: PDA
+  - type: Pda
     id: ERTLeaderIDCard
     state: pda-ert
-  - type: PDABorderColor
+  - type: PdaBorderColor
     borderColor: "#A32D26"
     accentHColor: "#447987"
+    accentVColor: "#447987"
   - type: Icon
     state: pda-ert
 
@@ -643,12 +761,13 @@
   name: CBURN PDA
   description: Smells like rotten flesh.
   components:
-  - type: PDA
+  - type: Pda
     id: CBURNIDcard
     state: pda-ert
-  - type: PDABorderColor
+  - type: PdaBorderColor
     borderColor: "#A32D26"
     accentHColor: "#447987"
+    accentVColor: "#447987"
 
 - type: entity
   parent: BasePDA
@@ -656,10 +775,10 @@
   name: psychologist PDA
   description: Looks immaculately cleaned.
   components:
-  - type: PDA
+  - type: Pda
     id: PsychologistIDCard
     state: pda-medical
-  - type: PDABorderColor
+  - type: PdaBorderColor
     borderColor: "#d7d7d0"
     accentVColor: "#447987"
   - type: Icon
@@ -671,9 +790,11 @@
   name: reporter PDA
   description: Smells like freshly printed press.
   components:
-  - type: PDA
+  - type: Pda
     id: ReporterIDCard
     state: pda-reporter
+  - type: PdaBorderColor
+    borderColor: "#3f3f74"
   - type: Icon
     state: pda-reporter
 
@@ -683,9 +804,11 @@
   name: zookeeper PDA
   description: Made with genuine synthetic leather. Crikey!
   components:
-  - type: PDA
+  - type: Pda
     id: ZookeeperIDCard
     state: pda-zookeeper
+  - type: PdaBorderColor
+    borderColor: "#ffe685"
   - type: Icon
     state: pda-zookeeper
 
@@ -695,12 +818,12 @@
   name: boxer PDA
   description: Float like a butterfly, ringtone like a bee.
   components:
-  - type: PDA
+  - type: Pda
     id: BoxerIDCard
     state: pda-boxer
-  - type: PDABorderColor
+  - type: PdaBorderColor
     borderColor: "#333333"
-    borderVColor: "#390504"
+    accentVColor: "#390504"
   - type: Icon
     state: pda-boxer
 
@@ -710,29 +833,29 @@
   name: detective PDA
   description: Smells like rain... pouring down the rooftops...
   components:
-  - type: PDA
+  - type: Pda
     id: DetectiveIDCard
     state: pda-detective
-  - type: PDABorderColor
+  - type: PdaBorderColor
     borderColor: "#774705"
   - type: Icon
     state: pda-detective
 
 - type: entity
   parent: BasePDA
-  id: BrigmedPDA
-  name: brigmed PDA
+  id: BrigmedicPDA
+  name: brigmedic PDA
   description: I wonder whose pulse is on the screen? I hope he doesnt stop... PDA has a built-in health analyzer.
   components:
-  - type: PDA
-    id: BrigmedIDCard
-    state: pda-brigmed
-  - type: PDABorderColor
+  - type: Pda
+    id: BrigmedicIDCard
+    state: pda-brigmedic
+  - type: PdaBorderColor
     borderColor: "#A32D26"
-    accentHColor: "#447987"
-    accentVColor: "#447987"
+    accentHColor: "#d7d7d0"
+    accentVColor: "#d7d7d0"
   - type: Icon
-    state: pda-brigmed
+    state: pda-brigmedic
   - type: HealthAnalyzer
     scanDelay: 1
     scanningEndSound:
@@ -745,10 +868,10 @@
   suffix: Unremoveable
   description: Cursed cluwne PDA.
   components:
-  - type: PDA
+  - type: Pda
     id: CluwneIDCard
     state: pda-cluwne
-  - type: PDABorderColor
+  - type: PdaBorderColor
     borderColor: "#1c8f4d"
   - type: Icon
     state: pda-cluwne
@@ -761,3 +884,68 @@
         - Write
   - type: Unremoveable
 
+- type: entity
+  parent: BasePDA
+  id: SeniorEngineerPDA
+  name: senior engineer PDA
+  description: Seems to have been taken apart and put back together several times.
+  components:
+  - type: Pda
+    id: SeniorEngineerIDCard
+    state: pda-seniorengineer
+  - type: PdaBorderColor
+    borderColor: "#949137"
+    accentVColor: "#CD6900"
+  - type: Icon
+    state: pda-seniorengineer
+
+- type: entity
+  parent: BasePDA
+  id: SeniorResearcherPDA
+  name: senior researcher PDA
+  description: Looks like it's been through years of chemical burns and explosions.
+  components:
+  - type: Pda
+    id: SeniorResearcherIDCard
+    state: pda-seniorresearcher
+  - type: PdaBorderColor
+    borderColor: "#d7d7d0"
+    accentHColor: "#8900c9"
+    accentVColor: "#8900c9"
+  - type: Icon
+    state: pda-seniorresearcher
+
+- type: entity
+  parent: BasePDA
+  id: SeniorPhysicianPDA
+  name: senior physician PDA
+  description: Smells faintly like iron and chemicals. Has a built-in health analyzer.
+  components:
+  - type: Pda
+    id: SeniorPhysicianIDCard
+    state: pda-seniorphysician
+  - type: PdaBorderColor
+    borderColor: "#d7d7d0"
+    accentHColor: "#447987"
+    accentVColor: "#B34200"
+  - type: Icon
+    state: pda-seniorphysician
+  - type: HealthAnalyzer
+    scanDelay: 1
+    scanningEndSound:
+      path: "/Audio/Items/Medical/healthscanner.ogg"
+
+- type: entity
+  parent: BasePDA
+  id: SeniorOfficerPDA
+  name: senior officer PDA
+  description: Beaten, battered and broken, but just barely useable.
+  components:
+  - type: Pda
+    id: SeniorOfficerIDCard
+    state: pda-seniorofficer
+  - type: PdaBorderColor
+    borderColor: "#A32D26"
+    accentVColor: "#DFDFDF"
+  - type: Icon
+    state: pda-seniorofficer

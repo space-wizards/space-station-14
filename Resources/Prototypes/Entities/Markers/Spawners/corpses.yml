@@ -1,0 +1,103 @@
+- type: entity
+  name: Human Corpse Spawner
+  id: SalvageHumanCorpseSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    sprite: Markers/jobs.rsi
+    layers:
+      - state: green
+  - type: ConditionalSpawner
+    prototypes:
+      - SalvageHumanCorpse
+
+- type: entity
+  name: Random Service Corpse Spawner
+  id: RandomServiceCorpseSpawner
+  parent: SalvageHumanCorpseSpawner
+  components:
+  - type: Sprite
+    layers:
+      - state: botanist
+      - state: green
+  - type: ConditionalSpawner
+    prototypes:
+      - MobRandomServiceCorpse
+
+- type: entity
+  name: Random Engineer Corpse Spawner
+  id: RandomEngineerCorpseSpawner
+  parent: SalvageHumanCorpseSpawner
+  components:
+  - type: Sprite
+    layers:
+      - state: engineer
+      - state: green
+  - type: ConditionalSpawner
+    prototypes:
+      - MobRandomEngineerCorpse
+
+- type: entity
+  name: Random Cargo Corpse Spawner
+  id: RandomCargoCorpseSpawner
+  parent: SalvageHumanCorpseSpawner
+  components:
+  - type: Sprite
+    layers:
+      - state: cargo_tech
+      - state: green
+  - type: ConditionalSpawner
+    prototypes:
+      - MobRandomCargoCorpse
+
+- type: entity
+  name: Random Medic Corpse Spawner
+  id: RandomMedicCorpseSpawner
+  parent: SalvageHumanCorpseSpawner
+  components:
+  - type: Sprite
+    layers:
+      - state: doctor
+      - state: green
+  - type: ConditionalSpawner
+    prototypes:
+      - MobRandomMedicCorpse
+
+- type: entity
+  name: Random Science Corpse Spawner
+  id: RandomScienceCorpseSpawner
+  parent: SalvageHumanCorpseSpawner
+  components:
+  - type: Sprite
+    layers:
+      - state: scientist
+      - state: green
+  - type: ConditionalSpawner
+    prototypes:
+      - MobRandomScienceCorpse
+
+- type: entity
+  name: Random Security Corpse Spawner
+  id: RandomSecurityCorpseSpawner
+  parent: SalvageHumanCorpseSpawner
+  components:
+  - type: Sprite
+    layers:
+      - state: security_officer
+      - state: green
+  - type: ConditionalSpawner
+    prototypes:
+      - MobRandomSecurityCorpse
+
+- type: entity
+  name: Random Command Corpse Spawner
+  id: RandomCommandCorpseSpawner
+  parent: SalvageHumanCorpseSpawner
+  components:
+  - type: Sprite
+    layers:
+      - state: captain
+      - state: green
+  - type: ConditionalSpawner
+    prototypes:
+      - MobRandomCommandCorpse

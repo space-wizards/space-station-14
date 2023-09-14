@@ -8,20 +8,28 @@
     - type: Sprite
       sprite: Objects/Weapons/Melee/shields.rsi
       state: riot-icon
-      netsync: false
     - type: Item
       sprite: Objects/Weapons/Melee/shields.rsi
       size: 100
       heldPrefix: riot
     - type: Blocking
-      passiveBlockModifier: PassiveRiotShieldBlock
-      activeBlockModifier: ActiveRiotShieldBlock
-      blockingToggleAction:
-        name: action-name-blocking
-        description: action-description-blocking
-        icon: { sprite: Objects/Weapons/Melee/shields.rsi, state: teleriot-icon }
-        iconOn: Objects/Weapons/Melee/shields.rsi/teleriot-on.png
-        event: !type:ToggleActionEvent
+      passiveBlockModifier:
+        coefficients:
+          Blunt: 0.9
+          Slash: 0.9
+          Piercing: 0.9
+          Heat: 0.9
+      activeBlockModifier:
+        coefficients:
+          Blunt: 0.8
+          Slash: 0.8
+          Piercing: 0.8
+          Heat: 0.8
+        flatReductions:
+          Blunt: 1
+          Slash: 1
+          Piercing: 1
+          Heat: 1
     - type: Damageable
       damageContainer: Shield
     - type: Destructible
@@ -73,8 +81,14 @@
     - type: Item
       heldPrefix: riot_laser
     - type: Blocking
-      passiveBlockModifier: PassiveRiotLaserShieldBlock
-      activeBlockModifier: ActiveRiotLaserShieldBlock
+      passiveBlockModifier:
+        coefficients:
+          Heat: 0.8
+      activeBlockModifier:
+        coefficients:
+          Heat: 0.7
+        flatReductions:
+          Heat: 2
 
 - type: entity
   name: riot bullet shield
@@ -87,8 +101,17 @@
     - type: Item
       heldPrefix: riot_bullet
     - type: Blocking
-      passiveBlockModifier: PassiveRiotBulletShieldBlock
-      activeBlockModifier: ActiveRiotBulletShieldBlock
+      passiveBlockModifier:
+        coefficients:
+          Blunt: 0.8
+          Piercing: 0.8
+      activeBlockModifier:
+        coefficients:
+          Blunt: 0.7
+          Piercing: 0.7
+        flatReductions:
+          Blunt: 1.5
+          Piercing: 1.5
 
 #Craftable shields
 
@@ -103,8 +126,22 @@
     - type: Item
       heldPrefix: buckler
     - type: Blocking
-      passiveBlockModifier: PassiveBucklerBlock
-      activeBlockModifier: ActiveBucklerBlock
+      passiveBlockModifier:
+        coefficients:
+          Blunt: 0.95
+          Slash: 0.95
+          Piercing: 0.95
+          Heat: 2
+      activeBlockModifier:
+        coefficients:
+          Blunt: 0.85
+          Slash: 0.85
+          Piercing: 0.85
+          Heat: 2
+        flatReductions:
+          Blunt: 1
+          Slash: 1
+          Piercing: 1
     - type: Construction
       graph: WoodenBuckler
       node: woodenBuckler
@@ -143,8 +180,23 @@
     - type: Item
       heldPrefix: metal
     - type: Blocking
-      passiveBlockModifier: PassiveMakeshiftBlock
-      activeBlockModifier: ActiveMakeshiftBlock
+      passiveBlockModifier:
+        coefficients:
+          Blunt: 0.95
+          Slash: 0.95
+          Piercing: 0.95
+          Heat: 0.9
+      activeBlockModifier:
+        coefficients:
+          Blunt: 0.85
+          Slash: 0.85
+          Piercing: 0.85
+          Heat: 0.8
+        flatReductions:
+          Blunt: 0.5
+          Slash: 0.5
+          Piercing: 0.5
+          Heat: 1
     - type: Construction
       graph: MakeshiftShield
       node: makeshiftShield
@@ -183,8 +235,22 @@
     - type: Item
       heldPrefix: ratvarian
     - type: Blocking
-      passiveBlockModifier: PassiveClockworkShieldBlock
-      activeBlockModifier: ActiveClockworkShieldBlock
+      passiveBlockModifier:
+        coefficients:
+          Blunt: 0.8
+          Slash: 0.8
+          Piercing: 0.8
+          Heat: 1.5
+      activeBlockModifier:
+        coefficients:
+          Blunt: 0.7
+          Slash: 0.7
+          Piercing: 0.7
+          Heat: 1.5
+        flatReductions:
+          Blunt: 1
+          Slash: 1
+          Piercing: 1
       #Have it break into brass when clock cult is in
 
 - type: entity
@@ -197,9 +263,21 @@
       state: mirror-icon
     - type: Item
       heldPrefix: mirror
-    - type: Blocking
-      passiveBlockModifier: PassiveMirrorShieldBlock
-      activeBlockModifier: ActiveMirrorShieldBlock
+    - type: Blocking #Mirror shield should reflect heat/laser eventually, but be relatively weak to everything else.
+      passiveBlockModifier:
+        coefficients:
+          Blunt: 1.2
+          Slash: 1.2
+          Piercing: 1.2
+          Heat: .7
+      activeBlockModifier:
+        coefficients:
+          Blunt: 1.2
+          Slash: 1.2
+          Piercing: 1.2
+          Heat: .6
+        flatReductions:
+          Heat: 1
       blockSound: !type:SoundPathSpecifier
         path: /Audio/Effects/glass_step.ogg
     - type: Destructible
@@ -217,3 +295,176 @@
                 SheetGlass:
                   min: 5
                   max: 5
+
+- type: entity
+  name: energy shield
+  parent: BaseItem
+  id: EnergyShield
+  description: Exotic energy shield, when folded, can even fit in your pocket.
+  components:
+    - type: ItemToggle
+      activatedDisarmMalus: 0.6
+      activateSound:
+        path: /Audio/Weapons/ebladeon.ogg
+      deActivateSound:
+        path: /Audio/Weapons/ebladeoff.ogg
+      offSize: 5
+    - type: Sprite
+      sprite: Objects/Weapons/Melee/e_shield.rsi
+      layers:
+        - state: eshield-icon
+        - state: eshield-on
+          color: "#FFFFFF"
+          visible: false
+          shader: unshaded
+          map: [ "shield" ]
+    - type: Item
+      size: 5
+      sprite: Objects/Weapons/Melee/e_shield.rsi
+      heldPrefix: eshield
+    - type: UseDelay
+      delay: 0.5
+    - type: ToggleableLightVisuals
+      spriteLayer: shield
+      inhandVisuals:
+        left:
+          - state: inhand-left-shield
+            shader: unshaded
+        right:
+          - state: inhand-right-shield
+            shader: unshaded
+    - type: PointLight
+      netsync: false
+      enabled: false
+      radius: 1.5
+      energy: 2
+      color: blue
+    - type: Reflect
+      enabled: false
+      reflectProb: 0.95
+      reflects:
+        - Energy
+    - type: Blocking
+      passiveBlockModifier:
+        coefficients:
+          Blunt: 1.0
+          Slash: 0.9
+          Piercing: 0.85
+          Heat: 0.6
+      activeBlockModifier:
+        coefficients:
+          Blunt: 1.2
+          Slash: 0.85
+          Piercing: 0.5
+          Heat: 0.4
+        flatReductions:
+          Heat: 1
+          Piercing: 1
+    - type: Appearance
+    - type: Damageable
+      damageContainer: Shield
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 180
+          behaviors:
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+        - trigger:
+            !type:DamageTrigger
+            damage: 150
+          behaviors:
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+            - !type:PlaySoundBehavior
+              sound: /Audio/Effects/metalbreak.ogg
+            - !type:SpawnEntitiesBehavior
+              spawn:
+                BrokenEnergyShield:
+                  min: 1
+                  max: 1
+    - type: StaticPrice
+      price: 350
+
+- type: entity
+  name: broken energy shield
+  parent: BaseItem
+  id: BrokenEnergyShield
+  description: Something inside is burned out, it is no longer functional.
+  components:
+    - type: Sprite
+      sprite: Objects/Weapons/Melee/e_shield.rsi
+      state: eshield-icon
+    - type: Item
+      sprite: Objects/Weapons/Melee/e_shield.rsi
+      size: 5
+      heldPrefix: eshield
+
+- type: entity
+  name: telescopic shield
+  parent: BaseShield
+  id: TelescopicShield
+  description: An advanced riot shield made of lightweight materials that collapses for easy storage.
+  components:
+    - type: ItemToggle
+      activatedDisarmMalus: 0.6
+      activateSound:
+        path: /Audio/Weapons/telescopicon.ogg
+        params:
+          volume: -5
+      deActivateSound:
+        path: /Audio/Weapons/telescopicoff.ogg
+        params:
+          volume: -5
+      offSize: 10
+    - type: Sprite
+      sprite: Objects/Weapons/Melee/teleriot_shield.rsi
+      layers:
+        - state: teleriot-icon
+        - state: teleriot-on
+          visible: false
+          shader: unshaded
+          map: [ "shield" ]
+    - type: Item
+      size: 10
+      sprite: Objects/Weapons/Melee/teleriot_shield.rsi
+      heldPrefix: teleriot
+    - type: UseDelay
+      delay: 0.5
+    - type: ToggleableLightVisuals
+      spriteLayer: shield
+      inhandVisuals:
+        left:
+          - state: inhand-left-shield
+            shader: unshaded
+        right:
+          - state: inhand-right-shield
+            shader: unshaded
+    - type: Appearance
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 100
+          behaviors:
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+        - trigger:
+            !type:DamageTrigger
+            damage: 70
+          behaviors:
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+            - !type:PlaySoundBehavior
+              sound: /Audio/Effects/metalbreak.ogg
+            - !type:SpawnEntitiesBehavior
+              spawn:
+                SheetSteel:
+                  min: 1
+                  max: 1
+                SheetGlass:
+                  min: 2
+                  max: 2
+    - type: StaticPrice
+      price: 250

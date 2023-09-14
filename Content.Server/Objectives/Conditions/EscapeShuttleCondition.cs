@@ -1,21 +1,23 @@
-using Content.Server.Objectives.Interfaces;
-using Content.Server.Station.Components;
+using Content.Server.Shuttles.Systems;
 using Content.Shared.Cuffs.Components;
+using Content.Shared.Mind;
+using Content.Shared.Objectives.Interfaces;
 using JetBrains.Annotations;
-using Robust.Shared.Map.Components;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Objectives.Conditions
 {
     [UsedImplicitly]
     [DataDefinition]
-    public sealed class EscapeShuttleCondition : IObjectiveCondition
+    public sealed partial class EscapeShuttleCondition : IObjectiveCondition
     {
-        private Mind.Mind? _mind;
+        // TODO refactor all of this to be ecs
+        private MindComponent? _mind;
 
-        public IObjectiveCondition GetAssigned(Mind.Mind mind)
+        public IObjectiveCondition GetAssigned(EntityUid mindId, MindComponent mind)
         {
-            return new EscapeShuttleCondition {
+            return new EscapeShuttleCondition
+            {
                 _mind = mind,
             };
         }
@@ -24,52 +26,34 @@ namespace Content.Server.Objectives.Conditions
 
         public string Description => Loc.GetString("objective-condition-escape-shuttle-description");
 
-        public SpriteSpecifier Icon => new SpriteSpecifier.Rsi(new ResourcePath("Structures/Furniture/chairs.rsi"), "shuttle");
-
-        private bool IsAgentOnShuttle(TransformComponent agentXform, EntityUid? shuttle)
-        {
-            if (shuttle == null)
-                return false;
-
-            var entMan = IoCManager.Resolve<IEntityManager>();
-
-            if (!entMan.TryGetComponent<MapGridComponent>(shuttle, out var shuttleGrid) ||
-                !entMan.TryGetComponent<TransformComponent>(shuttle, out var shuttleXform))
-            {
-                return false;
-            }
-
-            return shuttleXform.WorldMatrix.TransformBox(shuttleGrid.LocalAABB).Contains(agentXform.WorldPosition);
-        }
+        public SpriteSpecifier Icon => new SpriteSpecifier.Rsi(new ("Structures/Furniture/chairs.rsi"), "shuttle");
 
         public float Progress
         {
             get {
                 var entMan = IoCManager.Resolve<IEntityManager>();
+                var mindSystem = entMan.System<SharedMindSystem>();
 
                 if (_mind?.OwnedEntity == null
                     || !entMan.TryGetComponent<TransformComponent>(_mind.OwnedEntity, out var xform))
                     return 0f;
 
-                var shuttleContainsAgent = false;
-                var agentIsAlive = !_mind.CharacterDeadIC;
-                var agentIsEscaping = true;
+                if (mindSystem.IsCharacterDeadIc(_mind))
+                    return 0f;
 
                 if (entMan.TryGetComponent<CuffableComponent>(_mind.OwnedEntity, out var cuffed)
                     && cuffed.CuffedHandCount > 0)
-                    // You're not escaping if you're restrained!
-                    agentIsEscaping = false;
-
-                // Any emergency shuttle counts for this objective.
-                foreach (var stationData in entMan.EntityQuery<StationDataComponent>())
                 {
-                    if (IsAgentOnShuttle(xform, stationData.EmergencyShuttle)) {
-                        shuttleContainsAgent = true;
-                        break;
-                    }
+                    // You're not escaping if you're restrained!
+                    return 0f;
                 }
 
-                return (shuttleContainsAgent && agentIsAlive && agentIsEscaping) ? 1f : 0f;
+                // Any emergency shuttle counts for this objective, but not pods.
+                var emergencyShuttle = entMan.System<EmergencyShuttleSystem>();
+                if (!emergencyShuttle.IsTargetEscaping(_mind.OwnedEntity.Value))
+                    return 0f;
+
+                return 1f;
             }
         }
 

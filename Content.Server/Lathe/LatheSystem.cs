@@ -9,6 +9,7 @@ using Content.Server.Power.EntitySystems;
 using Content.Server.Stack;
 using Content.Server.UserInterface;
 using Content.Shared.Database;
+using Content.Shared.Emag.Components;
 using Content.Shared.Lathe;
 using Content.Shared.Materials;
 using Content.Shared.Research.Components;
@@ -31,6 +32,7 @@ namespace Content.Server.Lathe
         [Dependency] private readonly UserInterfaceSystem _uiSys = default!;
         [Dependency] private readonly MaterialStorageSystem _materialStorage = default!;
         [Dependency] private readonly StackSystem _stack = default!;
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         public override void Initialize()
         {
@@ -41,25 +43,63 @@ namespace Content.Server.Lathe
             SubscribeLocalEvent<LatheComponent, RefreshPartsEvent>(OnPartsRefresh);
             SubscribeLocalEvent<LatheComponent, UpgradeExamineEvent>(OnUpgradeExamine);
             SubscribeLocalEvent<LatheComponent, TechnologyDatabaseModifiedEvent>(OnDatabaseModified);
+            SubscribeLocalEvent<LatheComponent, ResearchRegistrationChangedEvent>(OnResearchRegistrationChanged);
 
             SubscribeLocalEvent<LatheComponent, LatheQueueRecipeMessage>(OnLatheQueueRecipeMessage);
             SubscribeLocalEvent<LatheComponent, LatheSyncRequestMessage>(OnLatheSyncRequestMessage);
 
-            SubscribeLocalEvent<LatheComponent, BeforeActivatableUIOpenEvent>((u,c,_) => UpdateUserInterfaceState(u,c));
+            SubscribeLocalEvent<LatheComponent, BeforeActivatableUIOpenEvent>((u, c, _) => UpdateUserInterfaceState(u, c));
             SubscribeLocalEvent<LatheComponent, MaterialAmountChangedEvent>(OnMaterialAmountChanged);
-
             SubscribeLocalEvent<TechnologyDatabaseComponent, LatheGetRecipesEvent>(OnGetRecipes);
+            SubscribeLocalEvent<EmagLatheRecipesComponent, LatheGetRecipesEvent>(GetEmagLatheRecipes);
+
+            SubscribeLocalEvent<LatheComponent, LatheEjectMaterialMessage>(OnLatheEjectMessage);
+        }
+
+        private void OnLatheEjectMessage(EntityUid uid, LatheComponent lathe, LatheEjectMaterialMessage message)
+        {
+            if (!lathe.CanEjectStoredMaterials)
+                return;
+
+            if (!_prototypeManager.TryIndex<MaterialPrototype>(message.Material, out var material))
+                return;
+
+            var volume = 0;
+
+            if (material.StackEntity != null)
+            {
+                var entProto = _prototypeManager.Index<EntityPrototype>(material.StackEntity);
+                if (!entProto.TryGetComponent<PhysicalCompositionComponent>(out var composition))
+                    return;
+
+                var volumePerSheet = composition.MaterialComposition.FirstOrDefault(kvp => kvp.Key == message.Material).Value;
+                var sheetsToExtract = Math.Min(message.SheetsToExtract, _stack.GetMaxCount(material.StackEntity));
+
+                volume = sheetsToExtract * volumePerSheet;
+            }
+
+            if (volume > 0 && _materialStorage.TryChangeMaterialAmount(uid, message.Material, -volume))
+            {
+                var mats = _materialStorage.SpawnMultipleFromMaterial(volume, material, Transform(uid).Coordinates, out _);
+                foreach (var mat in mats)
+                {
+                    if (TerminatingOrDeleted(mat))
+                        continue;
+                    _stack.TryMergeToContacts(mat);
+                }
+            }
         }
 
         public override void Update(float frameTime)
         {
-            foreach (var (comp, lathe) in EntityQuery<LatheProducingComponent, LatheComponent>())
+            var query = EntityQueryEnumerator<LatheProducingComponent, LatheComponent>();
+            while (query.MoveNext(out var uid, out var comp, out var lathe))
             {
                 if (lathe.CurrentRecipe == null)
                     continue;
 
-                if ( _timing.CurTime - comp.StartTime >= comp.ProductionLength)
-                    FinishProducing(comp.Owner, lathe);
+                if (_timing.CurTime - comp.StartTime >= comp.ProductionLength)
+                    FinishProducing(uid, lathe);
             }
         }
 
@@ -68,7 +108,7 @@ namespace Content.Server.Lathe
             if (args.Storage != uid)
                 return;
             var materialWhitelist = new List<string>();
-            var recipes =  GetAllBaseRecipes(component);
+            var recipes = GetAllBaseRecipes(component);
             foreach (var id in recipes)
             {
                 if (!_proto.TryIndex<LatheRecipePrototype>(id, out var proto))
@@ -100,17 +140,15 @@ namespace Content.Server.Lathe
         {
             var ev = new LatheGetRecipesEvent(uid)
             {
-                Recipes = component.StaticRecipes
+                Recipes = new List<string>(component.StaticRecipes)
             };
             RaiseLocalEvent(uid, ev);
             return ev.Recipes;
         }
 
-        public List<string> GetAllBaseRecipes(LatheComponent component)
+        public static List<string> GetAllBaseRecipes(LatheComponent component)
         {
-            return component.DynamicRecipes == null
-                ? component.StaticRecipes
-                : component.StaticRecipes.Union(component.DynamicRecipes).ToList();
+            return component.StaticRecipes.Union(component.DynamicRecipes).ToList();
         }
 
         public bool TryAddToQueue(EntityUid uid, LatheRecipePrototype recipe, LatheComponent? component = null)
@@ -191,10 +229,33 @@ namespace Content.Server.Lathe
 
         private void OnGetRecipes(EntityUid uid, TechnologyDatabaseComponent component, LatheGetRecipesEvent args)
         {
-            if (uid != args.Lathe || !TryComp<LatheComponent>(uid, out var latheComponent) || latheComponent.DynamicRecipes == null)
+            if (uid != args.Lathe || !TryComp<LatheComponent>(uid, out var latheComponent))
                 return;
 
-            args.Recipes = args.Recipes.Union(component.RecipeIds.Where(r => latheComponent.DynamicRecipes.Contains(r))).ToList();
+            foreach (var recipe in latheComponent.DynamicRecipes)
+            {
+                if (!component.UnlockedRecipes.Contains(recipe) || args.Recipes.Contains(recipe))
+                    continue;
+                args.Recipes.Add(recipe);
+            }
+        }
+
+        private void GetEmagLatheRecipes(EntityUid uid, EmagLatheRecipesComponent component, LatheGetRecipesEvent args)
+        {
+            if (uid != args.Lathe || !TryComp<TechnologyDatabaseComponent>(uid, out var technologyDatabase))
+                return;
+            if (!HasComp<EmaggedComponent>(uid))
+                return;
+            foreach (var recipe in component.EmagDynamicRecipes)
+            {
+                if (!technologyDatabase.UnlockedRecipes.Contains(recipe) || args.Recipes.Contains(recipe))
+                    continue;
+                args.Recipes.Add(recipe);
+            }
+            foreach (var recipe in component.EmagStaticRecipes)
+            {
+                args.Recipes.Add(recipe);
+            }
         }
 
         private void OnMaterialAmountChanged(EntityUid uid, LatheComponent component, ref MaterialAmountChangedEvent args)
@@ -258,11 +319,15 @@ namespace Content.Server.Lathe
             UpdateUserInterfaceState(uid, component);
         }
 
+        private void OnResearchRegistrationChanged(EntityUid uid, LatheComponent component, ref ResearchRegistrationChangedEvent args)
+        {
+            UpdateUserInterfaceState(uid, component);
+        }
+
         protected override bool HasRecipe(EntityUid uid, LatheRecipePrototype recipe, LatheComponent component)
         {
             return GetAvailableRecipes(uid, component).Contains(recipe.ID);
         }
-
         #region UI Messages
 
         private void OnLatheQueueRecipeMessage(EntityUid uid, LatheComponent component, LatheQueueRecipeMessage args)
@@ -274,6 +339,8 @@ namespace Content.Server.Lathe
                 {
                     if (TryAddToQueue(uid, recipe, component))
                         count++;
+                    else
+                        break;
                 }
                 if (count > 0 && args.Session.AttachedEntity != null)
                 {

@@ -1,7 +1,84 @@
 # Numbers for armor here largely taken from /tg/.
+# NOTE: Half of the kind of armor you're probably thinking of is in vests.yml. These should probably be merged some day.
 
+#Basic armor vest
 - type: entity
   parent: ClothingOuterBase
+  id: ClothingOuterArmorBasic
+  name: armor vest
+  description: A standard Type I armored vest that provides decent protection against most types of damage.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Armor/security.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Armor/security.rsi
+  - type: Armor #Based on /tg/ but slightly compensated to fit the fact that armor stacks in SS14.
+    modifiers:
+      coefficients:
+        Blunt: 0.70
+        Slash: 0.70
+        Piercing: 0.70 #Can save you, but bullets will still hurt. Will take about 10 shots from a Viper before critting, as opposed to 7 while unarmored and 16~ with a bulletproof vest.
+        Heat: 0.80
+  - type: ExplosionResistance
+    damageCoefficient: 0.90
+
+#Alternate / slim basic armor vest
+- type: entity
+  parent: ClothingOuterArmorBasic
+  id: ClothingOuterArmorBasicSlim
+  name: armor vest
+  suffix: slim
+  description: A slim Type I armored vest that provides decent protection against most types of damage.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Armor/security_slim.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Armor/security_slim.rsi
+
+- type: entity
+  parent: ClothingOuterBaseLarge
+  id: ClothingOuterArmorRiot
+  name: riot suit
+  description: A suit of semi-flexible polycarbonate body armor with heavy padding to protect against melee attacks. Perfect for fighting delinquents around the station.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Armor/riot.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Armor/riot.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.4
+        Slash: 0.4
+        Piercing: 0.7
+        Heat: 0.9
+        Caustic: 0.9
+  - type: ExplosionResistance
+    damageCoefficient: 0.9
+  - type: GroupExamine
+
+- type: entity
+  parent: ClothingOuterArmorBasic
+  id: ClothingOuterArmorBulletproof
+  name: bulletproof vest
+  description: A Type III heavy bulletproof vest that excels in protecting the wearer against traditional projectile weaponry and explosives to a minor extent.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Armor/bulletproof.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Armor/bulletproof.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.4
+        Heat: 0.9
+  - type: ExplosionResistance
+    damageCoefficient: 0.80
+
+- type: entity
+  parent: ClothingOuterArmorBasic
   id: ClothingOuterArmorReflective
   name: reflective vest
   description: An armored vest with advanced shielding to protect against energy weapons.
@@ -17,24 +94,10 @@
         Slash: 0.9
         Piercing: 0.9
         Heat: 0.4 # this technically means it protects against fires pretty well? -heat is just for lasers and stuff, not atmos temperature
-
-- type: entity
-  parent: ClothingOuterBase
-  id: ClothingOuterArmorBulletproof
-  name: bulletproof vest
-  description: An armored vest with heavy plates to protect against ballistic projectiles.
-  components:
-  - type: Sprite
-    sprite: Clothing/OuterClothing/Armor/bulletproof.rsi
-  - type: Clothing
-    sprite: Clothing/OuterClothing/Armor/bulletproof.rsi
-  - type: Armor
-    modifiers:
-      coefficients:
-        Blunt: 0.9
-        Slash: 0.9
-        Piercing: 0.4
-        Heat: 0.9
+  - type: Reflect
+    reflectProb: 1
+    reflects:
+      - Energy
 
 - type: entity
   parent: ClothingOuterBaseLarge
@@ -122,28 +185,6 @@
 
 - type: entity
   parent: ClothingOuterBaseLarge
-  id: ClothingOuterArmorRiot
-  name: riot suit
-  description: An armored vest with heavy padding to protect against melee attacks, perfect for fighting delinquents around the station.
-  components:
-  - type: Sprite
-    sprite: Clothing/OuterClothing/Armor/riot.rsi
-  - type: Clothing
-    sprite: Clothing/OuterClothing/Armor/riot.rsi
-  - type: Armor
-    modifiers:
-      coefficients:
-        Blunt: 0.4
-        Slash: 0.4
-        Piercing: 0.9
-        Heat: 0.9
-        Caustic: 0.9
-  - type: ExplosionResistance
-    damageCoefficient: 0.9
-  - type: GroupExamine
-
-- type: entity
-  parent: ClothingOuterBaseLarge
   id: ClothingOuterArmorScaf
   name: scaf suit
   description: A green and brown tactical suit for combat situations.
@@ -166,6 +207,7 @@
   - type: Tag
     tags:
     - Hardsuit
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingOuterBaseLarge
@@ -209,7 +251,7 @@
         Radiation: 0.8
   - type: ClothingSpeedModifier
     walkModifier: 0.7
-    sprintModifier: 0.65 
+    sprintModifier: 0.65
   - type: ExplosionResistance
     damageCoefficient: 0.5
   - type: GroupExamine

@@ -1,4 +1,5 @@
-using Content.Server.Objectives.Interfaces;
+using Content.Shared.Mind;
+using Content.Shared.Objectives.Interfaces;
 using JetBrains.Annotations;
 using Robust.Shared.Utility;
 
@@ -6,22 +7,30 @@ namespace Content.Server.Objectives.Conditions
 {
     [UsedImplicitly]
     [DataDefinition]
-    public sealed class DieCondition : IObjectiveCondition
+    public sealed partial class DieCondition : IObjectiveCondition
     {
-        private Mind.Mind? _mind;
+        private MindComponent? _mind;
 
-        public IObjectiveCondition GetAssigned(Mind.Mind mind)
+        public IObjectiveCondition GetAssigned(EntityUid mindId, MindComponent mind)
         {
-            return new DieCondition {_mind = mind};
+            return new DieCondition { _mind = mind };
         }
 
         public string Title => Loc.GetString("objective-condition-die-title");
 
         public string Description => Loc.GetString("objective-condition-die-description");
 
-        public SpriteSpecifier Icon => new SpriteSpecifier.Rsi(new ResourcePath("Mobs/Ghosts/ghost_human.rsi"), "icon");
+        public SpriteSpecifier Icon => new SpriteSpecifier.Rsi(new ("Mobs/Ghosts/ghost_human.rsi"), "icon");
 
-        public float Progress => (_mind?.CharacterDeadIC ?? true) ? 1f : 0f;
+        public float Progress
+        {
+            get
+            {
+                var entityManager = IoCManager.Resolve<EntityManager>();
+                var mindSystem = entityManager.System<SharedMindSystem>();
+                return _mind == null || mindSystem.IsCharacterDeadIc(_mind) ? 1f : 0f;
+            }
+        }
 
         public float Difficulty => 0.5f;
 

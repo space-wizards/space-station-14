@@ -5,17 +5,17 @@
   description: A piece of unrefined ore.
   components:
   - type: Sprite
-    netsync: false
     sprite: Objects/Materials/ore.rsi
   - type: Item
     sprite: Objects/Materials/ore.rsi
-  - type: ItemStatus
+    size: 60
   - type: Tag
     tags:
     - Ore
   - type: Fixtures
     fixtures:
-      - shape:
+      fix1:
+        shape:
           !type:PhysShapeCircle
           radius: 0.2
         density: 20
@@ -46,7 +46,8 @@
   - type: Sprite
     state: gold
   - type: Material
-    materials:
+  - type: PhysicalComposition
+    materialComposition:
       Gold: 500
 
 - type: entity
@@ -56,6 +57,8 @@
   components:
   - type: Stack
     count: 1
+  - type: Item
+    size: 2
 
 - type: entity
   parent: OreBase
@@ -68,7 +71,8 @@
   - type: Sprite
     state: iron
   - type: Material
-    materials:
+  - type: PhysicalComposition
+    materialComposition:
       Steel: 500
 
 - type: entity
@@ -78,6 +82,8 @@
   components:
     - type: Stack
       count: 1
+    - type: Item
+      size: 2
 
 - type: entity
   parent: OreBase
@@ -90,7 +96,8 @@
   - type: Sprite
     state: plasma
   - type: Material
-    materials:
+  - type: PhysicalComposition
+    materialComposition:
       Plasma: 500
 
 - type: entity
@@ -100,6 +107,8 @@
   components:
     - type: Stack
       count: 1
+    - type: Item
+      size: 2
 
 - type: entity
   parent: OreBase
@@ -112,7 +121,8 @@
   - type: Sprite
     state: silver
   - type: Material
-    materials:
+  - type: PhysicalComposition
+    materialComposition:
       Silver: 500
 
 - type: entity
@@ -122,6 +132,8 @@
   components:
   - type: Stack
     count: 1
+  - type: Item
+    size: 2
 
 - type: entity
   parent: OreBase
@@ -134,7 +146,8 @@
   - type: Sprite
     state: spacequartz
   - type: Material
-    materials:
+  - type: PhysicalComposition
+    materialComposition:
       Glass: 500
 
 - type: entity
@@ -144,6 +157,8 @@
   components:
   - type: Stack
     count: 1
+  - type: Item
+    size: 2
 
 - type: entity
   parent: OreBase
@@ -156,7 +171,8 @@
   - type: Sprite
     state: uranium
   - type: Material
-    materials:
+  - type: PhysicalComposition
+    materialComposition:
       Uranium: 500
 
 - type: entity
@@ -166,3 +182,31 @@
   components:
   - type: Stack
     count: 1
+  - type: Item
+    size: 2
+
+
+- type: entity
+  parent: OreBase
+  id: BananiumOre
+  name: bananium ore
+  suffix: Full
+  components:
+  - type: Stack
+    stackType: BananiumOre
+  - type: Sprite
+    state: bananium
+  - type: Material
+  - type: PhysicalComposition
+    materialComposition:
+      Bananium: 500
+
+- type: entity
+  parent: BananiumOre
+  id: BananiumOre1
+  suffix: Single
+  components:
+  - type: Stack
+    count: 1
+  - type: Item
+    size: 2

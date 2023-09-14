@@ -1,5 +1,5 @@
-﻿using Content.Shared.DeviceNetwork;
-using JetBrains.Annotations;
+﻿using Content.Client.NetworkConfigurator.Systems;
+using Content.Shared.DeviceNetwork;
 using Robust.Client.GameObjects;
 using Robust.Client.UserInterface.Controls;
 
@@ -7,18 +7,20 @@ namespace Content.Client.NetworkConfigurator;
 
 public sealed class NetworkConfiguratorBoundUserInterface : BoundUserInterface
 {
-    [Dependency] private readonly IEntityManager _entityManager = default!;
-    private NetworkConfiguratorListMenu? _listMenu;
+    private readonly NetworkConfiguratorSystem _netConfig;
+
+    [ViewVariables]
     private NetworkConfiguratorConfigurationMenu? _configurationMenu;
 
-    private NetworkConfiguratorSystem _netConfig;
-    private DeviceListSystem _deviceList;
+    [ViewVariables]
+    private NetworkConfiguratorLinkMenu? _linkMenu;
 
-    public NetworkConfiguratorBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
+    [ViewVariables]
+    private NetworkConfiguratorListMenu? _listMenu;
+
+    public NetworkConfiguratorBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
     {
-        IoCManager.InjectDependencies(this);
-        _netConfig = _entityManager.System<NetworkConfiguratorSystem>();
-        _deviceList = _entityManager.System<DeviceListSystem>();
+        _netConfig = EntMan.System<NetworkConfiguratorSystem>();
     }
 
     public void OnRemoveButtonPressed(string address)
@@ -36,7 +38,7 @@ public sealed class NetworkConfiguratorBoundUserInterface : BoundUserInterface
                 _listMenu = new NetworkConfiguratorListMenu(this);
                 _listMenu.OnClose += Close;
                 _listMenu.ClearButton.OnPressed += _ => OnClearButtonPressed();
-                _listMenu.OpenCentered();
+                _listMenu.OpenCenteredRight();
                 break;
             case NetworkConfiguratorUiKey.Configure:
                 _configurationMenu = new NetworkConfiguratorConfigurationMenu();
@@ -47,15 +49,20 @@ public sealed class NetworkConfiguratorBoundUserInterface : BoundUserInterface
                 _configurationMenu.Clear.OnPressed += _ => OnConfigButtonPressed(NetworkConfiguratorButtonKey.Clear);
                 _configurationMenu.Copy.OnPressed += _ => OnConfigButtonPressed(NetworkConfiguratorButtonKey.Copy);
                 _configurationMenu.Show.OnPressed += OnShowPressed;
-                _configurationMenu.Show.Pressed = _netConfig.ConfiguredListIsTracked(Owner.Owner);
+                _configurationMenu.Show.Pressed = _netConfig.ConfiguredListIsTracked(Owner);
                 _configurationMenu.OpenCentered();
+                break;
+            case NetworkConfiguratorUiKey.Link:
+                _linkMenu = new NetworkConfiguratorLinkMenu(this);
+                _linkMenu.OnClose += Close;
+                _linkMenu.OpenCentered();
                 break;
         }
     }
 
     private void OnShowPressed(BaseButton.ButtonEventArgs args)
     {
-        _netConfig.ToggleVisualization(Owner.Owner, args.Button.Pressed);
+        _netConfig.ToggleVisualization(Owner, args.Button.Pressed);
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)
@@ -69,6 +76,9 @@ public sealed class NetworkConfiguratorBoundUserInterface : BoundUserInterface
                 break;
             case DeviceListUserInterfaceState listState:
                 _configurationMenu?.UpdateState(listState);
+                break;
+            case DeviceLinkUserInterfaceState linkState:
+                _linkMenu?.UpdateState(linkState);
                 break;
         }
     }

@@ -4,6 +4,7 @@ using Content.Shared.ActionBlocker;
 using Content.Shared.Damage;
 using Content.Shared.Hands.Components;
 using Content.Shared.Mobs;
+using Content.Shared.Tag;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
@@ -16,6 +17,7 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
     [Dependency] protected readonly IGameTiming GameTiming = default!;
     [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private readonly TagSystem _tag = default!;
 
     /// <summary>
     ///     We'll use an excess time so stuff like finishing effects can show.
@@ -98,7 +100,7 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
 
     private void OnDoAfterGetState(EntityUid uid, DoAfterComponent comp, ref ComponentGetState args)
     {
-        args.State = new DoAfterComponentState(comp);
+        args.State = new DoAfterComponentState(EntityManager, comp);
     }
 
     private void OnDoAfterHandleState(EntityUid uid, DoAfterComponent comp, ref ComponentHandleState args)
@@ -113,7 +115,18 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
         comp.DoAfters.Clear();
         foreach (var (id, doAfter) in state.DoAfters)
         {
-            comp.DoAfters.Add(id, new(doAfter));
+            var newDoAfter = new DoAfter(EntityManager, doAfter);
+            comp.DoAfters.Add(id, newDoAfter);
+
+            // Networking yay (if you have an easier way dear god please).
+            newDoAfter.UserPosition = EnsureCoordinates<DoAfterComponent>(newDoAfter.NetUserPosition, uid);
+            newDoAfter.InitialItem = EnsureEntity<DoAfterComponent>(newDoAfter.NetInitialItem, uid);
+
+            var doAfterArgs = newDoAfter.Args;
+            doAfterArgs.Target = EnsureEntity<DoAfterComponent>(doAfterArgs.NetTarget, uid);
+            doAfterArgs.Used = EnsureEntity<DoAfterComponent>(doAfterArgs.NetUsed, uid);
+            doAfterArgs.User = EnsureEntity<DoAfterComponent>(doAfterArgs.NetUser, uid);
+            doAfterArgs.EventTarget = EnsureEntity<DoAfterComponent>(doAfterArgs.NetEventTarget, uid);
         }
 
         comp.NextId = state.NextId;
@@ -178,7 +191,7 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
 
         if (!Resolve(args.User, ref comp))
         {
-            Logger.Error($"Attempting to start a doAfter with invalid user: {ToPrettyString(args.User)}.");
+            Log.Error($"Attempting to start a doAfter with invalid user: {ToPrettyString(args.User)}.");
             id = null;
             return false;
         }
@@ -193,12 +206,25 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
         id = new DoAfterId(args.User, comp.NextId++);
         var doAfter = new DoAfter(id.Value.Index, args, GameTiming.CurTime);
 
-        if (args.BreakOnUserMove)
+        // Networking yay
+        doAfter.NetUserPosition = GetNetCoordinates(doAfter.UserPosition);
+        doAfter.NetInitialItem = GetNetEntity(doAfter.InitialItem);
+
+        // Networking yay
+        args.NetTarget = GetNetEntity(args.Target);
+        args.NetUsed = GetNetEntity(args.Used);
+        args.NetUser = GetNetEntity(args.User);
+        args.NetEventTarget = GetNetEntity(args.EventTarget);
+
+        if (args.BreakOnUserMove || args.BreakOnTargetMove)
             doAfter.UserPosition = Transform(args.User).Coordinates;
 
         if (args.Target != null && args.BreakOnTargetMove)
+        {
             // Target should never be null if the bool is set.
-            doAfter.TargetPosition = Transform(args.Target.Value).Coordinates;
+            var targetPosition = Transform(args.Target.Value).Coordinates;
+            doAfter.UserPosition.TryDistance(EntityManager, targetPosition, out doAfter.TargetDistance);
+        }
 
         // For this we need to stay on the same hand slot and need the same item in that hand slot
         // (or if there is no item there we need to keep it free).
@@ -211,14 +237,15 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
             doAfter.InitialItem = handsComponent.ActiveHandEntity;
         }
 
-        // Inital checks
+        // Initial checks
         if (ShouldCancel(doAfter, GetEntityQuery<TransformComponent>(), GetEntityQuery<HandsComponent>()))
             return false;
 
         if (args.AttemptFrequency == AttemptFrequency.StartAndEnd && !TryAttemptEvent(doAfter))
             return false;
 
-        if (args.Delay <= TimeSpan.Zero)
+        if (args.Delay <= TimeSpan.Zero ||
+            _tag.HasTag(args.User, "InstantDoAfters"))
         {
             RaiseDoAfterEvents(doAfter, comp);
             // We don't store instant do-afters. This is just a lazy way of hiding them from client-side visuals.
@@ -311,12 +338,12 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
 
         if (!comp.DoAfters.TryGetValue(id, out var doAfter))
         {
-            Logger.Error($"Attempted to cancel do after with an invalid id ({id}) on entity {ToPrettyString(entity)}");
+            Log.Error($"Attempted to cancel do after with an invalid id ({id}) on entity {ToPrettyString(entity)}");
             return;
         }
 
         InternalCancel(doAfter, comp);
-        Dirty(comp);
+        Dirty(entity, comp);
     }
 
     private void InternalCancel(DoAfter doAfter, DoAfterComponent component)
@@ -356,7 +383,7 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
         if (doAfter.Cancelled)
             return DoAfterStatus.Cancelled;
 
-        if (GameTiming.CurTime - doAfter.StartTime < doAfter.Args.Delay)
+        if (!doAfter.Completed)
             return DoAfterStatus.Running;
 
         // Theres the chance here that the DoAfter hasn't actually finished yet if the system's update hasn't run yet.

@@ -1,7 +1,7 @@
 <controls:FancyWindow xmlns="https://spacestation14.io"
                 xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
                 xmlns:networkConfigurator="clr-namespace:Content.Client.NetworkConfigurator"
-                Title="Network Configurator" MinSize="350 100">
+                Title="{Loc 'network-configurator-title-device-configuration'}" MinSize="350 100">
     <BoxContainer Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True">
         <networkConfigurator:NetworkConfiguratorDeviceList Name="DeviceList" MinHeight="500" />
         <BoxContainer Orientation="Horizontal" HorizontalExpand="True" Margin="8 8 8 1">
@@ -15,6 +15,6 @@
             <Button Name="Copy" Text="Copy" Access="Public" ToolTip="{Loc 'network-configurator-tooltip-copy'}" HorizontalExpand="True" StyleClasses="OpenRight"/>
             <Button Name="Show" Text="Show" Access="Public" ToggleMode="True" ToolTip="{Loc 'network-configurator-tooltip-show'}" HorizontalExpand="True" StyleClasses="ButtonSquare"/>
         </BoxContainer>
-        <Label Name="Count" HorizontalAlignment="Right" />
+        <Label Name="Count" StyleClasses="LabelSubText" HorizontalAlignment="Right" Margin="0 0 12 8"/>
     </BoxContainer>
 </controls:FancyWindow>

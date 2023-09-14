@@ -2,6 +2,7 @@
   id: Intercom
   name: intercom
   description: An intercom. For when the station just needs to know something.
+  abstract: true
   components:
   - type: WallMount
   - type: ApcPowerReceiver
@@ -12,10 +13,22 @@
     powerRequired: true
     unobstructedRequired: true
     listenRange: 2
+    toggleOnInteract: false
+  - type: RadioSpeaker
+    toggleOnInteract: false
+  - type: Intercom
+  - type: Speech
+    speechVerb: Robotic
   - type: ExtensionCableReceiver
   - type: Clickable
   - type: InteractionOutline
   - type: Appearance
+  - type: ContainerFill
+    containers:
+      board: [ IntercomElectronics ]
+  - type: ContainerContainer
+    containers:
+      board: !type:Container
   - type: Sprite
     noRot: false
     sprite: Structures/Wallmounts/intercom.rsi
@@ -23,16 +36,29 @@
     - state: base
     - state: unshaded
       map: ["enum.PowerDeviceVisualLayers.Powered"]
+      shader: unshaded
     - state: broadcasting
       map: ["enum.RadioDeviceVisualLayers.Broadcasting"]
+      shader: unshaded
+      visible: false
+    - state: speaker
+      map: ["enum.RadioDeviceVisualLayers.Speaker"]
       shader: unshaded
       visible: false
   - type: Transform
     noRot: false
     anchored: true
+  - type: WiresPanel
   - type: Wires
-    BoardName: "Intercom"
+    BoardName: wires-board-name-intercom
     LayoutId: Intercom
+  - type: ActivatableUIRequiresPower
+  - type: ActivatableUI
+    key: enum.IntercomUiKey.Key
+  - type: UserInterface
+    interfaces:
+      - key: enum.IntercomUiKey.Key
+        type: IntercomBoundUserInterface
   - type: Construction
     graph: Intercom
     node: intercom
@@ -66,6 +92,10 @@
         enum.RadioDeviceVisualLayers.Broadcasting:
           True: { visible: true }
           False: { visible: false }
+      enum.RadioDeviceVisuals.Speaker:
+        enum.RadioDeviceVisualLayers.Speaker:
+          True: { visible: true }
+          False: { visible: false }
   placement:
     mode: SnapgridCenter
     snap:
@@ -93,14 +123,20 @@
     - Wallmount
 
 - type: entity
+  id: IntercomCommon
+  parent: Intercom
+  suffix: Common
+  components:
+  - type: Intercom
+    supportedChannels:
+    - Common
+
+- type: entity
   id: IntercomCommand
   parent: Intercom
   suffix: Command
   components:
-  - type: RadioMicrophone
-    powerRequired: true
-    unobstructedRequired: true
-    listenRange: 2
+  - type: Intercom
     supportedChannels:
     - Common
     - Command
@@ -110,10 +146,7 @@
   parent: Intercom
   suffix: Engineering
   components:
-  - type: RadioMicrophone
-    powerRequired: true
-    unobstructedRequired: true
-    listenRange: 2
+  - type: Intercom
     supportedChannels:
     - Common
     - Engineering
@@ -123,10 +156,7 @@
   parent: Intercom
   suffix: Medical
   components:
-  - type: RadioMicrophone
-    powerRequired: true
-    unobstructedRequired: true
-    listenRange: 2
+  - type: Intercom
     supportedChannels:
     - Common
     - Medical
@@ -136,10 +166,7 @@
   parent: Intercom
   suffix: Science
   components:
-  - type: RadioMicrophone
-    powerRequired: true
-    unobstructedRequired: true
-    listenRange: 2
+  - type: Intercom
     supportedChannels:
     - Common
     - Science
@@ -149,10 +176,7 @@
   parent: Intercom
   suffix: Security
   components:
-  - type: RadioMicrophone
-    powerRequired: true
-    unobstructedRequired: true
-    listenRange: 2
+  - type: Intercom
     supportedChannels:
     - Common
     - Security
@@ -162,10 +186,7 @@
   parent: Intercom
   suffix: Service
   components:
-  - type: RadioMicrophone
-    powerRequired: true
-    unobstructedRequired: true
-    listenRange: 2
+  - type: Intercom
     supportedChannels:
     - Common
     - Service
@@ -175,10 +196,7 @@
   parent: Intercom
   suffix: Supply
   components:
-  - type: RadioMicrophone
-    powerRequired: true
-    unobstructedRequired: true
-    listenRange: 2
+  - type: Intercom
     supportedChannels:
     - Common
     - Supply
@@ -188,10 +206,7 @@
   parent: Intercom
   suffix: All
   components:
-  - type: RadioMicrophone
-    powerRequired: true
-    unobstructedRequired: true
-    listenRange: 2
+  - type: Intercom
     supportedChannels:
     - Common
     - Command

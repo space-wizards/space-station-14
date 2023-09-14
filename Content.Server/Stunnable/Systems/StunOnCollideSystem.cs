@@ -25,12 +25,6 @@ namespace Content.Server.Stunnable
 
             if (EntityManager.TryGetComponent<StatusEffectsComponent>(target, out var status))
             {
-                StandingStateComponent? standingState = null;
-                AppearanceComponent? appearance = null;
-
-                // Let the actual methods log errors for these.
-                Resolve(target, ref standingState, ref appearance, false);
-
                 _stunSystem.TryStun(target, TimeSpan.FromSeconds(component.StunAmount), true, status);
 
                 _stunSystem.TryKnockdown(target, TimeSpan.FromSeconds(component.KnockdownAmount), true,
@@ -42,9 +36,10 @@ namespace Content.Server.Stunnable
         }
         private void HandleCollide(EntityUid uid, StunOnCollideComponent component, ref StartCollideEvent args)
         {
-            if (args.OurFixture.ID != component.FixtureID) return;
+            if (args.OurFixtureId != component.FixtureID)
+                return;
 
-            TryDoCollideStun(uid, component, args.OtherFixture.Body.Owner);
+            TryDoCollideStun(uid, component, args.OtherEntity);
         }
 
         private void HandleThrow(EntityUid uid, StunOnCollideComponent component, ThrowDoHitEvent args)

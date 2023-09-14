@@ -4,14 +4,12 @@
   abstract: true
   components:
   - type: Sprite
-    netsync: false
     sprite: Objects/Storage/boxes.rsi
   - type: Item
     sprite: Objects/Storage/boxes.rsi
     size: 30
   - type: Storage
     capacity: 30
-    size: 10
   - type: ContainerContainer
     containers:
       storagebase: !type:Container

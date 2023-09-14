@@ -5,10 +5,12 @@ namespace Content.Client.StationRecords;
 
 public sealed class GeneralStationRecordConsoleBoundUserInterface : BoundUserInterface
 {
+    [ViewVariables]
     private GeneralStationRecordConsoleWindow? _window = default!;
 
-    public GeneralStationRecordConsoleBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
-    {}
+    public GeneralStationRecordConsoleBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
+    {
+    }
 
     protected override void Open()
     {
@@ -24,7 +26,7 @@ public sealed class GeneralStationRecordConsoleBoundUserInterface : BoundUserInt
 
     private void OnKeySelected(StationRecordKey? key)
     {
-        SendMessage(new SelectGeneralStationRecord(key));
+        SendMessage(new SelectGeneralStationRecord(EntMan.System<SharedStationRecordsSystem>().Convert(key)));
     }
 
     private void OnFiltersChanged(

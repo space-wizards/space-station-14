@@ -3,11 +3,10 @@ using Content.Shared.DeviceNetwork;
 using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using Robust.Shared.Utility;
 using System.Buffers;
 using System.Diagnostics.CodeAnalysis;
+using System.Numerics;
 using Content.Shared.Examine;
-using static Content.Server.DeviceNetwork.Components.DeviceNetworkComponent;
 
 namespace Content.Server.DeviceNetwork.Systems
 {
@@ -23,21 +22,39 @@ namespace Content.Server.DeviceNetwork.Systems
         [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
 
         private readonly Dictionary<int, DeviceNet> _networks = new(4);
-        private readonly Queue<DeviceNetworkPacketEvent> _packets = new();
+        private readonly Queue<DeviceNetworkPacketEvent> _queueA = new();
+        private readonly Queue<DeviceNetworkPacketEvent> _queueB = new();
+
+        /// <summary>
+        /// The queue being processed in the current tick
+        /// </summary>
+        private Queue<DeviceNetworkPacketEvent> _activeQueue = null!;
+
+        /// <summary>
+        /// The queue that will be processed in the next tick
+        /// </summary>
+        private Queue<DeviceNetworkPacketEvent> _nextQueue = null!;
+
 
         public override void Initialize()
         {
             SubscribeLocalEvent<DeviceNetworkComponent, MapInitEvent>(OnMapInit);
             SubscribeLocalEvent<DeviceNetworkComponent, ComponentShutdown>(OnNetworkShutdown);
             SubscribeLocalEvent<DeviceNetworkComponent, ExaminedEvent>(OnExamine);
+
+            _activeQueue = _queueA;
+            _nextQueue = _queueB;
         }
 
         public override void Update(float frameTime)
         {
-            while (_packets.TryDequeue(out var packet))
+
+            while (_activeQueue.TryDequeue(out var packet))
             {
                 SendPacket(packet);
             }
+
+            SwapQueues();
         }
 
         /// <summary>
@@ -49,7 +66,7 @@ namespace Content.Server.DeviceNetwork.Systems
         /// <param name="frequency">The frequency to send on</param>
         /// <param name="data">The data to be sent</param>
         /// <returns>Returns true when the packet was successfully enqueued.</returns>
-        public bool QueuePacket(EntityUid uid, string? address, NetworkPayload data, uint? frequency = null, DeviceNetworkComponent? device = null)
+        public bool QueuePacket(EntityUid uid, string? address, NetworkPayload data, uint? frequency = null, int? network = null, DeviceNetworkComponent? device = null)
         {
             if (!Resolve(uid, ref device, false))
                 return false;
@@ -62,8 +79,23 @@ namespace Content.Server.DeviceNetwork.Systems
             if (frequency == null)
                 return false;
 
-            _packets.Enqueue(new DeviceNetworkPacketEvent(device.DeviceNetId, address, frequency.Value, device.Address, uid, data));
+            network ??= device.DeviceNetId;
+
+            _nextQueue.Enqueue(new DeviceNetworkPacketEvent(network.Value, address, frequency.Value, device.Address, uid, data));
             return true;
+        }
+
+        /// <summary>
+        /// Swaps the active queue.
+        /// Queues are swapped so that packets being sent in the current tick get processed in the next tick.
+        /// </summary>
+        /// <remarks>
+        /// This prevents infinite loops while sending packets
+        /// </remarks>
+        private void SwapQueues()
+        {
+            _nextQueue = _activeQueue;
+            _activeQueue = _activeQueue == _queueA ? _queueB : _queueA;
         }
 
         private void OnExamine(EntityUid uid, DeviceNetworkComponent device, ExaminedEvent args)
@@ -111,6 +143,17 @@ namespace Content.Server.DeviceNetwork.Systems
         /// </summary>
         private void OnNetworkShutdown(EntityUid uid, DeviceNetworkComponent component, ComponentShutdown args)
         {
+            var eventArgs = new DeviceShutDownEvent(uid);
+
+            foreach (var shutdownSubscriberId in component.ShutdownSubscribers)
+            {
+                RaiseLocalEvent(shutdownSubscriberId, ref eventArgs);
+
+                DeviceNetworkComponent? device = null!;
+                if (Resolve(shutdownSubscriberId, ref device))
+                    device.ShutdownSubscribers.Remove(uid);
+            }
+
             GetNetwork(component.DeviceNetId).Remove(component);
         }
 
@@ -222,6 +265,36 @@ namespace Content.Server.DeviceNetwork.Systems
             device.CustomAddress = false;
             device.Address = "";
             deviceNet.Add(device);
+        }
+
+        public void SubscribeToDeviceShutdown(
+            EntityUid subscriberId, EntityUid targetId,
+            DeviceNetworkComponent? subscribingDevice = null,
+            DeviceNetworkComponent? targetDevice = null)
+        {
+            if (subscriberId == targetId)
+                return;
+
+            if (!Resolve(subscriberId, ref subscribingDevice) || !Resolve(targetId, ref targetDevice))
+                return;
+
+            targetDevice.ShutdownSubscribers.Add(subscriberId);
+            subscribingDevice.ShutdownSubscribers.Add(targetId);
+        }
+
+        public void UnsubscribeFromDeviceShutdown(
+            EntityUid subscriberId, EntityUid targetId,
+            DeviceNetworkComponent? subscribingDevice = null,
+            DeviceNetworkComponent? targetDevice = null)
+        {
+            if (subscriberId == targetId)
+                return;
+
+            if (!Resolve(subscriberId, ref subscribingDevice) || !Resolve(targetId, ref targetDevice))
+                return;
+
+            targetDevice.ShutdownSubscribers.Remove(subscriberId);
+            subscribingDevice.ShutdownSubscribers.Remove(targetId);
         }
 
         /// <summary>
@@ -408,4 +481,11 @@ namespace Content.Server.DeviceNetwork.Systems
             Data = data;
         }
     }
+
+    /// <summary>
+    /// Gets raised on entities that subscribed to shutdown event of the shut down entity
+    /// </summary>
+    /// <param name="ShutDownEntityUid">The entity that was shut down</param>
+    [ByRefEvent]
+    public readonly record struct DeviceShutDownEvent(EntityUid ShutDownEntityUid);
 }

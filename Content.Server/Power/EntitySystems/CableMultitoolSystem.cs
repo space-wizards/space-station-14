@@ -52,7 +52,7 @@ namespace Content.Server.Power.EntitySystems
                     Message = Loc.GetString("cable-multitool-system-verb-tooltip"),
                     Text = Loc.GetString("cable-multitool-system-verb-name"),
                     Category = VerbCategory.Examine,
-                    Icon = new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/VerbIcons/zap.svg.192dpi.png")),
+                    Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/zap.svg.192dpi.png")),
                     Act = () =>
                     {
                         var markup = FormattedMessage.FromMarkup(GenerateCableMarkup(uid));

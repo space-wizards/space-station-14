@@ -1,29 +1,35 @@
+using Content.Server.Construction;
 using Content.Server.Power.Components;
 using Content.Server.PowerCell;
-using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Examine;
+using Content.Shared.Power;
 using Content.Shared.PowerCell.Components;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
-using Content.Shared.Power;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
+using Content.Shared.Storage.Components;
+using Robust.Server.Containers;
 
 namespace Content.Server.Power.EntitySystems;
 
 [UsedImplicitly]
 internal sealed class ChargerSystem : EntitySystem
 {
-    [Dependency] private readonly ItemSlotsSystem _itemSlotsSystem = default!;
-    [Dependency] private readonly PowerCellSystem _cellSystem = default!;
-    [Dependency] private readonly SharedAppearanceSystem _sharedAppearanceSystem = default!;
+    [Dependency] private readonly ContainerSystem _container = default!;
+    [Dependency] private readonly PowerCellSystem _powerCell = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
     public override void Initialize()
     {
         SubscribeLocalEvent<ChargerComponent, ComponentStartup>(OnStartup);
+        SubscribeLocalEvent<ChargerComponent, RefreshPartsEvent>(OnRefreshParts);
+        SubscribeLocalEvent<ChargerComponent, UpgradeExamineEvent>(OnUpgradeExamine);
         SubscribeLocalEvent<ChargerComponent, PowerChangedEvent>(OnPowerChanged);
         SubscribeLocalEvent<ChargerComponent, EntInsertedIntoContainerMessage>(OnInserted);
         SubscribeLocalEvent<ChargerComponent, EntRemovedFromContainerMessage>(OnRemoved);
         SubscribeLocalEvent<ChargerComponent, ContainerIsInsertingAttemptEvent>(OnInsertAttempt);
+        SubscribeLocalEvent<ChargerComponent, InsertIntoEntityStorageAttemptEvent>(OnEntityStorageInsertAttempt);
         SubscribeLocalEvent<ChargerComponent, ExaminedEvent>(OnChargerExamine);
     }
 
@@ -34,21 +40,36 @@ internal sealed class ChargerSystem : EntitySystem
 
     private void OnChargerExamine(EntityUid uid, ChargerComponent component, ExaminedEvent args)
     {
-        args.PushMarkup(Loc.GetString("charger-examine", ("color", "yellow"), ("chargeRate", component.ChargeRate)));
+        args.PushMarkup(Loc.GetString("charger-examine", ("color", "yellow"), ("chargeRate", (int) component.ChargeRate)));
     }
 
     public override void Update(float frameTime)
     {
-        foreach (var (_, charger, slotComp) in EntityManager.EntityQuery<ActiveChargerComponent, ChargerComponent, ItemSlotsComponent>())
+        var query = EntityQueryEnumerator<ActiveChargerComponent, ChargerComponent, ContainerManagerComponent>();
+        while (query.MoveNext(out var uid, out _, out var charger, out var containerComp))
         {
-            if (!_itemSlotsSystem.TryGetSlot(charger.Owner, charger.SlotId, out ItemSlot? slot, slotComp))
+            if (!_container.TryGetContainer(uid, charger.SlotId, out var container, containerComp))
                 continue;
 
-            if (charger.Status == CellChargerStatus.Empty || charger.Status == CellChargerStatus.Charged || !slot.HasItem)
+            if (charger.Status == CellChargerStatus.Empty || charger.Status == CellChargerStatus.Charged || container.ContainedEntities.Count == 0)
                 continue;
 
-            TransferPower(charger.Owner, slot.Item!.Value, charger, frameTime);
+            foreach (var contained in container.ContainedEntities)
+            {
+                TransferPower(uid, contained, charger, frameTime);
+            }
         }
+    }
+
+    private void OnRefreshParts(EntityUid uid, ChargerComponent component, RefreshPartsEvent args)
+    {
+        var modifierRating = args.PartRatings[component.MachinePartChargeRateModifier];
+        component.ChargeRate = component.BaseChargeRate * MathF.Pow(component.PartRatingChargeRateModifier, modifierRating - 1);
+    }
+
+    private void OnUpgradeExamine(EntityUid uid, ChargerComponent component, UpgradeExamineEvent args)
+    {
+        args.AddPercentageUpgrade("charger-component-charge-rate", component.ChargeRate / component.BaseChargeRate);
     }
 
     private void OnPowerChanged(EntityUid uid, ChargerComponent component, ref PowerChangedEvent args)
@@ -86,14 +107,23 @@ internal sealed class ChargerSystem : EntitySystem
         if (args.Container.ID != component.SlotId)
             return;
 
-        if (!TryComp(args.EntityUid, out PowerCellSlotComponent? cellSlot))
+        if (!TryComp<PowerCellSlotComponent>(args.EntityUid, out var cellSlot))
             return;
 
-        if (!_itemSlotsSystem.TryGetSlot(args.EntityUid, cellSlot.CellSlotId, out ItemSlot? itemSlot))
-            return;
-
-        if (!cellSlot.FitsInCharger || !itemSlot.HasItem)
+        if (!cellSlot.FitsInCharger)
             args.Cancel();
+    }
+
+    private void OnEntityStorageInsertAttempt(EntityUid uid, ChargerComponent component, ref InsertIntoEntityStorageAttemptEvent args)
+    {
+        if (!component.Initialized || args.Cancelled)
+            return;
+
+        if (!TryComp<PowerCellSlotComponent>(uid, out var cellSlot))
+            return;
+
+        if (!cellSlot.FitsInCharger)
+            args.Cancelled = true;
     }
 
     private void UpdateStatus(EntityUid uid, ChargerComponent component)
@@ -102,7 +132,7 @@ internal sealed class ChargerSystem : EntitySystem
         if (component.Status == status || !TryComp(uid, out ApcPowerReceiverComponent? receiver))
             return;
 
-        if (!_itemSlotsSystem.TryGetSlot(uid, component.SlotId, out ItemSlot? slot))
+        if (!_container.TryGetContainer(uid, component.SlotId, out var container))
             return;
 
         TryComp(uid, out AppearanceComponent? appearance);
@@ -122,25 +152,25 @@ internal sealed class ChargerSystem : EntitySystem
         {
             case CellChargerStatus.Off:
                 receiver.Load = 0;
-                _sharedAppearanceSystem.SetData(uid, CellVisual.Light, CellChargerStatus.Off, appearance);
+                _appearance.SetData(uid, CellVisual.Light, CellChargerStatus.Off, appearance);
                 break;
             case CellChargerStatus.Empty:
                 receiver.Load = 0;
-                _sharedAppearanceSystem.SetData(uid, CellVisual.Light, CellChargerStatus.Empty, appearance);
+                _appearance.SetData(uid, CellVisual.Light, CellChargerStatus.Empty, appearance);
                 break;
             case CellChargerStatus.Charging:
                 receiver.Load = component.ChargeRate;
-                _sharedAppearanceSystem.SetData(uid, CellVisual.Light, CellChargerStatus.Charging, appearance);
+                _appearance.SetData(uid, CellVisual.Light, CellChargerStatus.Charging, appearance);
                 break;
             case CellChargerStatus.Charged:
                 receiver.Load = 0;
-                _sharedAppearanceSystem.SetData(uid, CellVisual.Light, CellChargerStatus.Charged, appearance);
+                _appearance.SetData(uid, CellVisual.Light, CellChargerStatus.Charged, appearance);
                 break;
             default:
                 throw new ArgumentOutOfRangeException();
         }
 
-        _sharedAppearanceSystem.SetData(uid, CellVisual.Occupied, slot.HasItem, appearance);
+        _appearance.SetData(uid, CellVisual.Occupied, container.ContainedEntities.Count != 0, appearance);
     }
 
     private CellChargerStatus GetStatus(EntityUid uid, ChargerComponent component)
@@ -157,16 +187,16 @@ internal sealed class ChargerSystem : EntitySystem
         if (!apcPowerReceiverComponent.Powered)
             return CellChargerStatus.Off;
 
-        if (!_itemSlotsSystem.TryGetSlot(uid, component.SlotId, out ItemSlot? slot))
+        if (!_container.TryGetContainer(uid, component.SlotId, out var container))
             return CellChargerStatus.Off;
 
-        if (!slot.HasItem)
+        if (container.ContainedEntities.Count == 0)
             return CellChargerStatus.Empty;
 
-        if (!SearchForBattery(slot.Item!.Value, out BatteryComponent? heldBattery))
+        if (!SearchForBattery(container.ContainedEntities.First(), out var heldBattery))
             return CellChargerStatus.Off;
 
-        if (heldBattery != null && Math.Abs(heldBattery.MaxCharge - heldBattery.CurrentCharge) < 0.01)
+        if (Math.Abs(heldBattery.MaxCharge - heldBattery.CurrentCharge) < 0.01)
             return CellChargerStatus.Charged;
 
         return CellChargerStatus.Charging;
@@ -180,7 +210,10 @@ internal sealed class ChargerSystem : EntitySystem
         if (!receiverComponent.Powered)
             return;
 
-        if (!SearchForBattery(targetEntity, out BatteryComponent? heldBattery))
+        if (component.Whitelist?.IsValid(targetEntity, EntityManager) == false)
+            return;
+
+        if (!SearchForBattery(targetEntity, out var heldBattery))
             return;
 
         heldBattery.CurrentCharge += component.ChargeRate * frameTime;
@@ -199,7 +232,7 @@ internal sealed class ChargerSystem : EntitySystem
         if (!TryComp(uid, out component))
         {
             // or by checking for a power cell slot on the inserted entity
-            return _cellSystem.TryGetBatteryFromSlot(uid, out component);
+            return _powerCell.TryGetBatteryFromSlot(uid, out component);
         }
         return true;
     }

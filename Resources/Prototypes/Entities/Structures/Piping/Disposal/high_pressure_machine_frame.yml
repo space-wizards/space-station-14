@@ -12,14 +12,15 @@
       bodyType: Static
     - type: Fixtures
       fixtures:
-      - shape:
-          !type:PhysShapeAabb
-          bounds: "-0.25,-0.4,0.25,0.4"
-        density: 190
-        mask:
-        - MachineMask
-        layer:
-        - MachineLayer
+        fix1:
+          shape:
+            !type:PhysShapeAabb
+            bounds: "-0.25,-0.4,0.25,0.4"
+          density: 190
+          mask:
+          - MachineMask
+          layer:
+          - MachineLayer
     - type: Clickable
     - type: InteractionOutline
     - type: Anchorable
@@ -42,4 +43,17 @@
               acts: [ "Destruction" ]
     - type: Sprite
       sprite: Structures/Piping/high_pressure_machine_frame.rsi
-      state: frame
+      layers:
+      - state: frame
+        map: [ "enum.ConstructionVisuals.Layer" ]
+    - type: Appearance
+    - type: GenericVisualizer
+      visuals:
+        enum.ConstructionVisuals.Key:
+          enum.ConstructionVisuals.Layer:
+            frame_cable: { state: frame_cables }
+            frame_electronics: { state: frame_electronics }
+            frame_unit: { state: frame_unit }
+            frame_mailing: { state: frame_unit } # not a typo, there is no frame_mailing state.
+            frame_inlet: { state: frame_inlet }
+            frame_outlet: { state: frame_outlet }

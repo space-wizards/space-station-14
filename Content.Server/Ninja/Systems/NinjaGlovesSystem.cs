@@ -1,92 +1,105 @@
 using Content.Server.Communications;
 using Content.Server.DoAfter;
-using Content.Server.Ninja.Systems;
+using Content.Server.Mind;
+using Content.Server.Ninja.Events;
 using Content.Server.Power.Components;
+using Content.Server.Roles;
+using Content.Shared.Communications;
 using Content.Shared.DoAfter;
+using Content.Shared.Interaction.Components;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Ninja.Components;
 using Content.Shared.Ninja.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Research.Components;
+using Content.Shared.Toggleable;
 
 namespace Content.Server.Ninja.Systems;
 
+/// <summary>
+/// Handles the toggle gloves action.
+/// </summary>
 public sealed class NinjaGlovesSystem : SharedNinjaGlovesSystem
 {
-    [Dependency] private readonly new NinjaSystem _ninja = default!;
+    [Dependency] private readonly EmagProviderSystem _emagProvider = default!;
+    [Dependency] private readonly CommsHackerSystem _commsHacker = default!;
+    [Dependency] private readonly MindSystem _mind = default!;
+    [Dependency] private readonly SharedStunProviderSystem _stunProvider = default!;
+    [Dependency] private readonly SpaceNinjaSystem _ninja = default!;
 
-    protected override void OnDrain(EntityUid uid, NinjaDrainComponent comp, InteractionAttemptEvent args)
+    public override void Initialize()
     {
-        if (!GloveCheck(uid, args, out var gloves, out var user, out var target)
-            || !HasComp<PowerNetworkBatteryComponent>(target))
-            return;
+        base.Initialize();
 
-        // nicer for spam-clicking to not open apc ui, and when draining starts, so cancel the ui action
-        args.Cancel();
-
-        var doAfterArgs = new DoAfterArgs(user, comp.DrainTime, new DrainDoAfterEvent(), target: target, used: uid, eventTarget: uid)
-        {
-            BreakOnUserMove = true,
-            MovementThreshold = 0.5f,
-            CancelDuplicate = false
-        };
-
-        _doAfter.TryStartDoAfter(doAfterArgs);
+        SubscribeLocalEvent<NinjaGlovesComponent, ToggleActionEvent>(OnToggleAction);
     }
 
-    protected override void OnDownloadDoAfter(EntityUid uid, NinjaDownloadComponent comp, DownloadDoAfterEvent args)
+    /// <summary>
+    /// Toggle gloves, if the user is a ninja wearing a ninja suit.
+    /// </summary>
+    private void OnToggleAction(EntityUid uid, NinjaGlovesComponent comp, ToggleActionEvent args)
     {
-        if (args.Cancelled || args.Handled)
+        if (args.Handled)
             return;
 
-        var user = args.User;
-        var target = args.Target;
+        args.Handled = true;
 
-        if (!TryComp<NinjaComponent>(user, out var ninja)
-            || !TryComp<TechnologyDatabaseComponent>(target, out var database))
-            return;
-
-        var gained = _ninja.Download(uid, database.TechnologyIds);
-        var str = gained == 0
-            ? Loc.GetString("ninja-download-fail")
-            : Loc.GetString("ninja-download-success", ("count", gained), ("server", target));
-
-        Popups.PopupEntity(str, user, user, PopupType.Medium);
-    }
-
-    protected override void OnTerror(EntityUid uid, NinjaTerrorComponent comp, InteractionAttemptEvent args)
-    {
-        if (!GloveCheck(uid, args, out var gloves, out var user, out var target)
-            || !_ninja.GetNinjaRole(user, out var role)
-            || !HasComp<CommunicationsConsoleComponent>(target))
-            return;
-
-
-        // can only do it once
-        if (role.CalledInThreat)
+        var user = args.Performer;
+        // need to wear suit to enable gloves
+        if (!TryComp<SpaceNinjaComponent>(user, out var ninja)
+            || ninja.Suit == null
+            || !HasComp<NinjaSuitComponent>(ninja.Suit.Value))
         {
-            Popups.PopupEntity(Loc.GetString("ninja-terror-already-called"), user, user);
+            Popup.PopupEntity(Loc.GetString("ninja-gloves-not-wearing-suit"), user, user);
             return;
         }
 
-        var doAfterArgs = new DoAfterArgs(user, comp.TerrorTime, new TerrorDoAfterEvent(), target: target, used: uid, eventTarget: uid)
-        {
-            BreakOnDamage = true,
-            BreakOnUserMove = true,
-            MovementThreshold = 0.5f,
-            CancelDuplicate = false
-        };
+        // show its state to the user
+        var enabling = comp.User == null;
+        Appearance.SetData(uid, ToggleVisuals.Toggled, enabling);
+        var message = Loc.GetString(enabling ? "ninja-gloves-on" : "ninja-gloves-off");
+        Popup.PopupEntity(message, user, user);
 
-        _doAfter.TryStartDoAfter(doAfterArgs);
-        // FIXME: doesnt work, don't show the console popup
-        args.Cancel();
+        if (enabling)
+        {
+            EnableGloves(uid, comp, user, ninja);
+        }
+        else
+        {
+            DisableGloves(uid, comp);
+        }
     }
 
-    protected override void OnTerrorDoAfter(EntityUid uid, NinjaTerrorComponent comp, TerrorDoAfterEvent args)
+    private void EnableGloves(EntityUid uid, NinjaGlovesComponent comp, EntityUid user, SpaceNinjaComponent ninja)
     {
-        if (args.Cancelled || args.Handled)
+        // can't use abilities if suit is not equipped, this is checked elsewhere but just making sure to satisfy nullability
+        if (ninja.Suit == null)
             return;
 
-        _ninja.CallInThreat(args.User);
+        comp.User = user;
+        Dirty(uid, comp);
+        _ninja.AssignGloves(user, uid, ninja);
+
+        var drainer = EnsureComp<BatteryDrainerComponent>(user);
+        var stun = EnsureComp<StunProviderComponent>(user);
+        _stunProvider.SetNoPowerPopup(user, "ninja-no-power", stun);
+        if (_ninja.GetNinjaBattery(user, out var battery, out var _))
+        {
+            var ev = new NinjaBatteryChangedEvent(battery.Value, ninja.Suit.Value);
+            RaiseLocalEvent(user, ref ev);
+        }
+
+        var emag = EnsureComp<EmagProviderComponent>(user);
+        _emagProvider.SetWhitelist(user, comp.DoorjackWhitelist, emag);
+
+        EnsureComp<ResearchStealerComponent>(user);
+        // prevent calling in multiple threats by toggling gloves after
+        if (_mind.TryGetRole<NinjaRoleComponent>(user, out var role) && !role.CalledInThreat)
+        {
+            var hacker = EnsureComp<CommsHackerComponent>(user);
+            var rule = _ninja.NinjaRule(user);
+            if (rule != null)
+                _commsHacker.SetThreats(user, rule.Threats, hacker);
+        }
     }
 }

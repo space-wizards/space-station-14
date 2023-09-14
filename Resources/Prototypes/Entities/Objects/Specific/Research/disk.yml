@@ -8,6 +8,9 @@
     sprite: Objects/Specific/Research/researchdisk.rsi
     state: icon
   - type: ResearchDisk
+  - type: GuideHelp
+    guides:
+    - Science
 
 - type: entity
   parent: ResearchDisk
@@ -54,3 +57,13 @@
     - enum.DamageStateVisualLayers.Base:
         datadisk_base: Sixteen
   - type: TechnologyDisk
+  - type: StaticPrice
+    price: 100
+
+- type: entity
+  parent: TechnologyDisk
+  id: TechnologyDiskRare
+  suffix: rare.
+  components:
+  - type: TechnologyDisk
+    tierWeightPrototype: RareTechDiskTierWeights

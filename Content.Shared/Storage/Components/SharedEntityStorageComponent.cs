@@ -1,4 +1,5 @@
-﻿using Content.Shared.Physics;
+﻿using System.Numerics;
+using Content.Shared.Physics;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
@@ -8,7 +9,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Storage.Components;
 
 [NetworkedComponent]
-public abstract class SharedEntityStorageComponent : Component
+public abstract partial class SharedEntityStorageComponent : Component
 {
     public readonly float MaxSize = 1.0f; // maximum width or height of an entity allowed inside the storage.
 
@@ -56,7 +57,7 @@ public abstract class SharedEntityStorageComponent : Component
 
     //The collision groups checked, so that items are depositied or grabbed from inside walls.
     [DataField("enteringOffsetCollisionFlags")]
-    public readonly CollisionGroup EnteringOffsetCollisionFlags = CollisionGroup.Impassable | CollisionGroup.MidImpassable;
+    public CollisionGroup EnteringOffsetCollisionFlags = CollisionGroup.Impassable | CollisionGroup.MidImpassable;
 
     /// <summary>
     /// How close you have to be to the "entering" spot to be able to enter
@@ -118,12 +119,6 @@ public abstract class SharedEntityStorageComponent : Component
     /// </summary>
     [ViewVariables]
     public Container Contents = default!;
-
-    /// <summary>
-    /// Whether or not the storage has been welded shut
-    /// </summary>
-    [DataField("isWeldedShut"), ViewVariables(VVAccess.ReadWrite)]
-    public bool IsWeldedShut;
 }
 
 [Serializable, NetSerializable]
@@ -139,16 +134,13 @@ public sealed class EntityStorageComponentState : ComponentState
 
     public float EnteringRange;
 
-    public bool IsWeldedShut;
-
-    public EntityStorageComponentState(bool open, int capacity, bool isCollidableWhenOpen, bool openOnMove, float enteringRange, bool isWeldedShut)
+    public EntityStorageComponentState(bool open, int capacity, bool isCollidableWhenOpen, bool openOnMove, float enteringRange)
     {
         Open = open;
         Capacity = capacity;
         IsCollidableWhenOpen = isCollidableWhenOpen;
         OpenOnMove = openOnMove;
         EnteringRange = enteringRange;
-        IsWeldedShut = isWeldedShut;
     }
 }
 
@@ -159,7 +151,7 @@ public record struct InsertIntoEntityStorageAttemptEvent(bool Cancelled = false)
 public record struct StoreMobInItemContainerAttemptEvent(bool Handled, bool Cancelled = false);
 
 [ByRefEvent]
-public record struct StorageOpenAttemptEvent(bool Silent, bool Cancelled = false);
+public record struct StorageOpenAttemptEvent(EntityUid User, bool Silent, bool Cancelled = false);
 
 [ByRefEvent]
 public readonly record struct StorageBeforeOpenEvent;

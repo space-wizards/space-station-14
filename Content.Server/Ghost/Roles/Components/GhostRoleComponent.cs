@@ -4,9 +4,9 @@ namespace Content.Server.Ghost.Roles.Components
 {
     [RegisterComponent]
     [Access(typeof(GhostRoleSystem))]
-    public sealed class GhostRoleComponent : Component
+    public sealed partial class GhostRoleComponent : Component
     {
-        [DataField("name")] public string _roleName = "Unknown";
+        [DataField("name")] private string _roleName = "Unknown";
 
         [DataField("description")] private string _roleDescription = "Unknown";
 
@@ -55,7 +55,7 @@ namespace Content.Server.Ghost.Roles.Components
         [Access(typeof(GhostRoleSystem), Other = AccessPermissions.ReadWriteExecute)] // FIXME Friends
         public string RoleRules
         {
-            get => _roleRules;
+            get => Loc.GetString(_roleRules);
             set
             {
                 _roleRules = value;

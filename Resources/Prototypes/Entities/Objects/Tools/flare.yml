@@ -1,5 +1,5 @@
 ﻿- type: entity
-  name: emergency flare # todo: we need some sort of IgnitionSourceComponent we can add to this, so when it's lit it will cause fires when touching fuel
+  name: emergency flare
   parent: BaseItem
   id: Flare
   description: A flare that produces a very bright light for a short while. Point the flame away from yourself.
@@ -24,12 +24,15 @@
   - type: Sprite
     sprite: Objects/Misc/flare.rsi
     layers:
-      - state: flare_base
-      - state: flare_burn
+      - map: [ enum.ExpendableLightVisualLayers.Base ]
+        state: flare_base
+      - map: [ enum.ExpendableLightVisualLayers.Glow ]
+        state: flare_burn
         color: "#FFFFFF"
         visible: false
         shader: unshaded
-      - state: flare_unlit
+      - map: [ enum.ExpendableLightVisualLayers.Overlay ]
+        state: flare_unlit
         color: "#FF0000"
   - type: Icon
     sprite: Objects/Misc/flare.rsi
@@ -38,8 +41,6 @@
     sprite: Objects/Misc/flare.rsi
     heldPrefix: unlit
   - type: Appearance
-    visuals:
-      - type: ExpendableLightVisualizer
   - type: PointLight
     enabled: false
     color: "#FF8080"
@@ -50,15 +51,6 @@
     temperature: 1000
   - type: LightBehaviour
     behaviours:
-      - !type:RandomizeBehaviour # immediately make it bright and flickery
-        id: turn_on
-        interpolate: Nearest
-        minDuration: 0.001
-        maxDuration: 0.001
-        startValue: 6.0
-        endValue: 15.0
-        property: Energy
-        isLooped: true
       - !type:FadeBehaviour # have the radius start small and get larger as it starts to burn
         id: turn_on
         interpolate: Linear

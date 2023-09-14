@@ -15,7 +15,7 @@ namespace Content.Server.Station.Systems;
 public sealed partial class StationJobsSystem
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly RoleBanManager _roleBanManager = default!;
+    [Dependency] private readonly IBanManager _banManager = default!;
     [Dependency] private readonly PlayTimeTrackingSystem _playTime = default!;
 
     private Dictionary<int, HashSet<string>> _jobsByWeight = default!;
@@ -292,7 +292,7 @@ public sealed partial class StationJobsSystem
                 assignedJobs.Add(player, (null, EntityUid.Invalid));
                 continue;
             }
-            
+
             _random.Shuffle(givenStations);
 
             foreach (var station in givenStations)
@@ -318,9 +318,8 @@ public sealed partial class StationJobsSystem
         foreach (var (station, count) in jobsCount)
         {
             var jobs = Comp<StationJobsComponent>(station);
-            var data = Comp<StationDataComponent>(station);
 
-            var thresh = data.StationConfig?.ExtendedAccessThreshold ?? -1;
+            var thresh = jobs.ExtendedAccessThreshold;
 
             jobs.ExtendedAccess = count <= thresh;
 
@@ -343,7 +342,7 @@ public sealed partial class StationJobsSystem
 
         foreach (var (player, profile) in profiles)
         {
-            var roleBans = _roleBanManager.GetJobBans(player);
+            var roleBans = _banManager.GetJobBans(player);
             var profileJobs = profile.JobPriorities.Keys.ToList();
             _playTime.RemoveDisallowedJobs(player, ref profileJobs);
 

@@ -1,5 +1,6 @@
 using System.Globalization;
 using System.Linq;
+using System.Numerics;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager;
@@ -15,7 +16,7 @@ using static Content.Shared.Decals.DecalGridComponent;
 namespace Content.Shared.Decals
 {
     [TypeSerializer]
-    public sealed class DecalGridChunkCollectionTypeSerializer : ITypeSerializer<DecalGridChunkCollection, MappingDataNode>
+    public sealed partial class DecalGridChunkCollectionTypeSerializer : ITypeSerializer<DecalGridChunkCollection, MappingDataNode>
     {
         public ValidationNode Validate(ISerializationManager serializationManager, MappingDataNode node,
             IDependencyCollection dependencies, ISerializationContext? context = null)
@@ -133,7 +134,6 @@ namespace Content.Shared.Decals
                 }
             }
 
-            var lookupIndex = 0;
             var lookupNodes = lookup.Keys.ToList();
             lookupNodes.Sort();
 
@@ -163,22 +163,22 @@ namespace Content.Shared.Decals
         }
 
         [DataDefinition]
-        private readonly struct DecalData : IEquatable<DecalData>, IComparable<DecalData>
+        private readonly partial struct DecalData : IEquatable<DecalData>, IComparable<DecalData>
         {
             [DataField("id")]
-            public readonly string Id = string.Empty;
+            public string Id { get; init; } = string.Empty;
 
             [DataField("color")]
-            public readonly Color? Color;
+            public Color? Color { get; init; }
 
             [DataField("angle")]
-            public readonly Angle Angle = Angle.Zero;
+            public Angle Angle { get; init; } = Angle.Zero;
 
             [DataField("zIndex")]
-            public readonly int ZIndex;
+            public int ZIndex { get; init; }
 
             [DataField("cleanable")]
-            public readonly bool Cleanable;
+            public bool Cleanable { get; init; }
 
             public DecalData(string id, Color? color, Angle angle, int zIndex, bool cleanable)
             {
@@ -222,6 +222,16 @@ namespace Content.Shared.Decals
                 var idComparison = string.Compare(Id, other.Id, StringComparison.Ordinal);
                 if (idComparison != 0)
                     return idComparison;
+
+                var colorComparison = string.Compare(Color?.ToHex(), other.Color?.ToHex(), StringComparison.Ordinal);
+
+                if (colorComparison != 0)
+                    return colorComparison;
+
+                var angleComparison = Angle.Theta.CompareTo(other.Angle.Theta);
+
+                if (angleComparison != 0)
+                    return angleComparison;
 
                 var zIndexComparison = ZIndex.CompareTo(other.ZIndex);
                 if (zIndexComparison != 0)

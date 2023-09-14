@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from cev-eris at commit https://github.com/discordia-space/CEV-Eris/commit/f777c8ddf7a529b002df17909566d5d93b8ad201",
+  "copyright": "Taken from cev-eris at commit https://github.com/discordia-space/CEV-Eris/commit/f777c8ddf7a529b002df17909566d5d93b8ad201 and edited by Kit0vras (github)",
   "size": {
     "x": 32,
     "y": 32
@@ -34,6 +34,48 @@
     },
     {
       "name": "book-5"
+    },
+    {
+      "name": "book-6"
+    },
+    {
+      "name": "book-7"
+    },
+    {
+      "name": "book-8"
+    },
+    {
+      "name": "book-9"
+    },
+    {
+      "name": "book-10"
+    },
+    {
+      "name": "book-11"
+    },
+    {
+      "name": "book-12"
+    },
+    {
+      "name": "book-13"
+    },
+    {
+      "name": "book-14"
+    },
+    {
+      "name": "book-15"
+    },
+    {
+      "name": "book-16"
+    },
+    {
+      "name": "book-17"
+    },
+    {
+      "name": "book-18"
+    },
+    {
+      "name": "book-19"
     }
   ]
 }

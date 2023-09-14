@@ -25,6 +25,22 @@
     - !type:KillRandomPersonCondition {}
   canBeDuplicate: true
 
+# technically its still possible for KillRandomObjective to roll a head but this is guaranteed, so higher difficulty
+# this also will not count missing evac as killing as heads are higher profile, so you really need to do the dirty work
+- type: objective
+  id: KillRandomHeadObjective
+  issuer: syndicate
+  difficultyOverride: 3.0
+  requirements:
+  - !type:TraitorRequirement {}
+  - !type:IncompatibleConditionsRequirement
+    conditions:
+    - RandomTraitorAliveCondition
+  conditions:
+  - !type:KillRandomHeadCondition {}
+  # killing 1 head is enough
+  canBeDuplicate: false
+
 - type: objective
   id: RandomTraitorAliveObjective
   issuer: syndicate
@@ -99,6 +115,22 @@
     owner: job-name-rd
 
 - type: objective
+  id: SecretDocumentsStealObjective
+  issuer: syndicate
+  difficultyOverride: 2.75
+  requirements:
+  - !type:TraitorRequirement {}
+  - !type:IncompatibleConditionsRequirement
+    conditions:
+    - DieCondition
+  - !type:NotRoleRequirement
+    roleId: HeadOfSecurity
+  conditions:
+  - !type:StealCondition
+    prototype: BookSecretDocuments
+    owner: job-name-hos
+
+- type: objective
   id: NukeDiskStealObjective
   issuer: syndicate
   requirements:
@@ -123,22 +155,6 @@
       prototype: NukeDisk
       owner: objective-condition-steal-station
 
-
-- type: objective
-  id: IDComputerBoardStealObjective
-  issuer: syndicate
-  requirements:
-    - !type:TraitorRequirement {}
-    - !type:IncompatibleConditionsRequirement
-      conditions:
-        - DieCondition
-    - !type:NotRoleRequirement
-      roleId: HeadOfPersonnel
-  conditions:
-    - !type:StealCondition
-      prototype: IDComputerCircuitboard
-      owner: job-name-hop
-
 - type: objective
   id: MagbootsStealObjective
   issuer: syndicate
@@ -154,21 +170,6 @@
     - !type:StealCondition
       prototype: ClothingShoesBootsMagAdv
       owner: job-name-ce
-
-- type: objective
-  id: SupplyConsoleBoardStealObjective
-  issuer: syndicate
-  requirements:
-    - !type:TraitorRequirement {}
-    - !type:IncompatibleConditionsRequirement
-      conditions:
-        - DieCondition
-    - !type:NotRoleRequirement
-      roleId: Quartermaster
-  conditions:
-    - !type:StealCondition
-      prototype: CargoRequestComputerCircuitboard
-      owner: job-name-qm
 
 - type: objective
   id: CorgiMeatStealObjective

@@ -34,11 +34,6 @@ namespace Content.Shared.Administration
     public static class PermissionsEuiMsg
     {
         [Serializable, NetSerializable]
-        public sealed class Close : EuiMessageBase
-        {
-        }
-
-        [Serializable, NetSerializable]
         public sealed class AddAdmin : EuiMessageBase
         {
             public string UserNameOrId = string.Empty;

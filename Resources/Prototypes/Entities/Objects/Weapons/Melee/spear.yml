@@ -1,16 +1,33 @@
-﻿- type: entity
+- type: entity
   name: spear
   parent: BaseItem
   id: Spear
   description: Definition of a Classic. Keeping murder affordable since 200,000 BCE.
   components:
+  - type: EmbeddableProjectile
+    offset: 0.15,0.15
+  - type: ThrowingAngle
+    angle: 225
   - type: Tag
     tags:
     - Spear
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PolygonShape
+          vertices:
+            - -0.40,-0.30
+            - -0.30,-0.40
+            - 0.40,0.30
+            - 0.30,0.40
+        density: 20
+        mask:
+        - ItemMask
+        restitution: 0.3
+        friction: 0.2
   - type: Sharp
   - type: Sprite
     sprite: Objects/Weapons/Melee/spear.rsi
-    netsync: false
     state: spear
   - type: MeleeWeapon
     damage:
@@ -18,12 +35,14 @@
         Piercing: 12
     angle: 0
     animation: WeaponArcThrust
+    soundHit:
+      path: /Audio/Weapons/bladeslice.ogg
   - type: DamageOtherOnHit
     damage:
       types:
         Piercing: 15
   - type: Item
-    size: 25
+    size: 95
   - type: Clothing
     quickEquip: false
     slots:
@@ -77,3 +96,62 @@
     damage:
       types:
         Blunt: 5
+
+- type: entity
+  name: reinforced spear
+  parent: Spear
+  id: SpearReinforced
+  description: A spear with a reinforced glass shard as a tip.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/reinforced_spear.rsi
+  - type: MeleeWeapon
+    damage:
+      types:
+        Piercing: 15
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Piercing: 18
+  - type: Construction
+    graph: SpearReinforced
+
+- type: entity
+  name: plasma spear
+  parent: Spear
+  id: SpearPlasma
+  description: A spear with a plasma shard as a tip.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/plasma_spear.rsi
+  - type: MeleeWeapon
+    damage:
+      types:
+        Piercing: 18
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Piercing: 21
+  - type: Construction
+    graph: SpearPlasma
+
+- type: entity
+  name: uranium spear
+  parent: Spear
+  id: SpearUranium
+  description: A spear with a uranium shard as a tip.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/uranium_spear.rsi
+  - type: MeleeWeapon
+    damage:
+      types:
+        Piercing: 10
+        Radiation: 8
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Piercing: 12
+        Radiation: 9
+  - type: Construction
+    graph: SpearUranium

@@ -1,0 +1,156 @@
+- type: entity
+  name: behonker
+  parent: [ SimpleSpaceMobBase, FlyingMobBase ]
+  id: BaseMobBehonker
+  abstract: true
+  description: A floating demon aspect of the honkmother.
+  components:
+    - type: GhostRole
+      allowMovement: true
+      makeSentient: true
+      name: ghost-role-information-behonker-name
+      description: ghost-role-information-behonker-description
+    - type: GhostTakeoverAvailable
+    - type: HTN
+      rootTask:
+        task: SimpleHostileCompound
+    - type: NpcFactionMember
+      factions:
+        - SimpleHostile
+    - type: Speech
+      speechVerb: Cluwne
+    - type: CombatMode
+    - type: MobMover
+    - type: InputMover
+    - type: MovementSpeedModifier
+      baseWalkSpeed: 3
+      baseSprintSpeed: 5
+      weightlessModifier: 1.5
+    - type: Sprite
+      sprite: Mobs/Demons/behonker.rsi
+      layers:
+        - map: [ "enum.DamageStateVisualLayers.Base" ]
+          state: alive
+    - type: DamageStateVisuals
+      states:
+        Alive:
+          Base: alive
+        Dead:
+          Base: dead
+    - type: Physics
+      bodyType: KinematicController
+    - type: Fixtures
+      fixtures:
+        fix1:
+          shape:
+            !type:PhysShapeCircle
+            radius: 0.40
+          density: 100
+          mask:
+            - FlyingMobMask
+          layer:
+            - FlyingMobLayer
+    - type: MobState
+    - type: InnateTool
+      tools:
+        - id: WeaponBehonkerLaser
+        - id: BikeHorn
+    - type: UserInterface
+      interfaces:
+      - key: enum.StrippingUiKey.Key
+        type: StrippableBoundUserInterface
+    - type: MobThresholds
+      thresholds:
+        0: Alive
+        500: Dead
+    - type: Metabolizer
+      solutionOnBody: false
+      updateFrequency: 0.25
+      metabolizerTypes: [ Dragon ]
+      groups:
+        - id: Medicine
+        - id: Poison
+    - type: Butcherable
+      spawned:
+        - id: MaterialBananium1
+          amount: 2
+    - type: MeleeWeapon
+      hidden: true
+      soundHit:
+        path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
+      damage:
+        types:
+          Piercing: 10
+          Slash: 10
+    - type: Anomaly
+      pulseSound:
+        collection: BananiumHorn
+        params:
+          volume: 5
+      anomalyContactDamage:
+        types:
+          Radiation: 10
+    - type: Input
+      context: "human"
+    - type: Hands
+      showInHands: false
+    - type: Body
+      prototype: Behonker
+
+- type: entity
+  name: behonker
+  parent: BaseMobBehonker
+  id: MobBehonkerElectrical
+  suffix: "Pyro"
+  components:
+    - type: PyroclasticAnomaly
+    - type: TempAffectingAnomaly
+      tempChangePerSecond: 25
+      hotspotExposeTemperature: 1000
+    - type: GasProducerAnomaly
+      releasedGas: 3
+      releaseOnMaxSeverity: true
+      spawnRadius: 0
+
+- type: entity
+  name: behonker
+  parent: BaseMobBehonker
+  id: MobBehonkerPyro
+  suffix: "Electrical"
+  components:
+  - type: ElectricityAnomaly
+  - type: Electrified
+
+- type: entity
+  name: behonker
+  parent: BaseMobBehonker
+  id: MobBehonkerGrav
+  suffix: "Grav"
+  components:
+  - type: GravityAnomaly
+
+- type: entity
+  name: behonker
+  parent: BaseMobBehonker
+  id: MobBehonkerIce
+  suffix: "Ice"
+  components:
+  - type: Anomaly
+    anomalyContactDamage:
+      types:
+        Cold: 10
+  - type: ExplosionAnomaly
+    supercriticalExplosion: Cryo
+    explosionTotalIntensity: 1000
+    explosionDropoff: 1
+    explosionMaxTileIntensity: 10
+  - type: ProjectileAnomaly
+    projectilePrototype: ProjectileIcicle
+    targetNonSentientChance: 0.1
+  - type: TempAffectingAnomaly
+    tempChangePerSecond: -25
+    hotspotExposeTemperature: -1000
+  - type: GasProducerAnomaly
+    releasedGas: 8 # Frezon. Please replace if there is a better way to specify this
+    releaseOnMaxSeverity: true
+    spawnRadius: 0

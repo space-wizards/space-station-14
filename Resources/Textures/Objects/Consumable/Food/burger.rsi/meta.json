@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation and modified by Swept at https://github.com/tgstation/tgstation/commit/40d75cc340c63582fb66ce15bf75a36115f6bdaa, ian.png created by EmoGarbage",
+  "copyright": "Taken from tgstation and modified by Swept and potato1234x at https://github.com/tgstation/tgstation/commit/40d75cc340c63582fb66ce15bf75a36115f6bdaa, ian.png created by EmoGarbage",
   "size": {
     "x": 32,
     "y": 32
@@ -30,6 +30,9 @@
     },
     {
       "name": "c"
+    },
+    {
+      "name": "cat"
     },
     {
       "name": "cheese"
@@ -85,26 +88,29 @@
       "name": "ghost",
       "delays": [
         [
-          0.01,
+          0.11,
           0.08,
           0.06,
           0.05,
           0.04,
           0.04,
-          0.06,
-          0.01,
-          0.01,
-          0.01,
+          0.07,
+          0.1,
+          0.13,
+          0.11,
           0.09,
-          0.06,
+          0.07,
           0.05,
           0.06,
-          0.06,
+          0.07,
           0.08,
-          0.01,
-          0.02
+          0.1,
+          0.12
         ]
       ]
+    },
+    {
+      "name": "human"
     },
     {
       "name": "ian"

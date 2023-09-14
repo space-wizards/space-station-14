@@ -1,10 +1,10 @@
 - type: objective
-  id: DownloadObjective
+  id: StealResearchObjective
   issuer: spiderclan
   requirements:
   - !type:NinjaRequirement {}
   conditions:
-  - !type:DownloadCondition {}
+  - !type:StealResearchCondition {}
 
 - type: objective
   id: DoorjackObjective
@@ -19,6 +19,7 @@
   issuer: spiderclan
   requirements:
   - !type:NinjaRequirement {}
+  - !type:SpiderChargeTargetRequirement {}
   conditions:
   - !type:SpiderChargeCondition {}
 

@@ -1,6 +1,4 @@
 using Content.Shared.Actions;
-using Content.Shared.Actions.ActionTypes;
-using Content.Shared.CombatMode;
 using Content.Shared.Examine;
 using Content.Shared.Verbs;
 using Content.Shared.Weapons.Ranged.Components;
@@ -16,7 +14,7 @@ public abstract partial class SharedGunSystem
             return;
 
         args.PushMarkup(Loc.GetString("gun-selected-mode-examine", ("color", ModeExamineColor), ("mode", GetLocSelector(component.SelectedMode))));
-        args.PushMarkup(Loc.GetString("gun-fire-rate-examine", ("color", FireRateExamineColor), ("fireRate", component.FireRate)));
+        args.PushMarkup(Loc.GetString("gun-fire-rate-examine", ("color", FireRateExamineColor), ("fireRate", $"{component.FireRate:0.0}")));
     }
 
     private string GetLocSelector(SelectiveFire mode)
@@ -35,7 +33,7 @@ public abstract partial class SharedGunSystem
         {
             Act = () => SelectFire(uid, component, nextMode, args.User),
             Text = Loc.GetString("gun-selector-verb", ("mode", GetLocSelector(nextMode))),
-            Icon = new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/VerbIcons/fold.svg.192dpi.png")),
+            Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/fold.svg.192dpi.png")),
         };
 
         args.Verbs.Add(verb);
@@ -78,7 +76,7 @@ public abstract partial class SharedGunSystem
 
         Audio.PlayPredicted(component.SoundModeToggle, uid, user);
         Popup(Loc.GetString("gun-selected-mode", ("mode", GetLocSelector(fire))), uid, user);
-        Dirty(component);
+        Dirty(uid, component);
     }
 
     /// <summary>
@@ -96,7 +94,7 @@ public abstract partial class SharedGunSystem
     }
 
     // TODO: Actions need doing for guns anyway.
-    private sealed class CycleModeEvent : InstantActionEvent
+    private sealed partial class CycleModeEvent : InstantActionEvent
     {
         public SelectiveFire Mode;
     }

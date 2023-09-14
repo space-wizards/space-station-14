@@ -23,4 +23,6 @@ disposal-unit-thrown-missed = Missed!
 
 # state
 disposal-unit-state-Ready = Ready
+# Yes I want it to always say Pressurizing
+disposal-unit-state-Flushed = Pressurizing
 disposal-unit-state-Pressurizing = Pressurizing

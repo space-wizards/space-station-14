@@ -6,7 +6,7 @@ namespace Content.Shared.Lightning.Components;
 /// <summary>
 /// Handles how lightning acts and is spawned. Use the ShootLightning method to fire lightning from one user to a target.
 /// </summary>
-public abstract class SharedLightningComponent : Component
+public abstract partial class SharedLightningComponent : Component
 {
     /// <summary>
     /// Can this lightning arc?
@@ -34,7 +34,7 @@ public abstract class SharedLightningComponent : Component
     /// The target that the lightning will Arc to.
     /// </summary>
     [DataField("arcTarget")]
-    public EntityUid ArcTarget;
+    public EntityUid? ArcTarget;
 
     /// <summary>
     /// How far should this lightning go?

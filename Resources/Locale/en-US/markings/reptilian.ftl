@@ -43,6 +43,21 @@ marking-LizardSnoutSharp = Lizard Snout (Sharp)
 marking-LizardChestTiger-chest_tiger = Lizard Chest (Tiger)
 marking-LizardChestTiger = Lizard Chest (Tiger)
 
+marking-LizardHeadTiger-head_tiger = Lizard Head (Tiger)
+marking-LizardHeadTiger = Lizard Head (Tiger)
+
+marking-LizardLArmTiger-l_arm_tiger = Lizard Left Arm (Tiger)
+marking-LizardLArmTiger = Lizard Left Arm (Tiger)
+
+marking-LizardLLegTiger-l_leg_tiger = Lizard Left Leg (Tiger)
+marking-LizardLLegTiger = Lizard Left Leg (Tiger)
+
+marking-LizardRArmTiger-r_arm_tiger = Lizard Right Arm (Tiger)
+marking-LizardRArmTiger = Lizard Right Arm (Tiger)
+
+marking-LizardRLegTiger-r_leg_tiger = Lizard Right Leg (Tiger)
+marking-LizardRLegTiger = Lizard Right Leg (Tiger)
+
 marking-LizardFrillsDivinity-frills_divinity = Lizard Frills (Divinity)
 marking-LizardFrillsDivinity = Lizard Frills (Divinity)
 

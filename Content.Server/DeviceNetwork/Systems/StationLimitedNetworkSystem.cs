@@ -31,6 +31,18 @@ namespace Content.Server.DeviceNetwork.Systems
         }
 
         /// <summary>
+        /// Tries to set the station id to the current station if the device is currently on a station
+        /// </summary>
+        public bool TrySetStationId(EntityUid uid, StationLimitedNetworkComponent? component = null)
+        {
+            if (!Resolve(uid, ref component) || !Transform(uid).GridUid.HasValue)
+                return false;
+
+            component.StationId = _stationSystem.GetOwningStation(uid);
+            return component.StationId.HasValue;
+        }
+
+        /// <summary>
         /// Set the station id to the one the entity is on when the station limited component is added
         /// </summary>
         private void OnMapInit(EntityUid uid, StationLimitedNetworkComponent networkComponent, MapInitEvent args)
@@ -43,6 +55,9 @@ namespace Content.Server.DeviceNetwork.Systems
         /// </summary>
         private void OnBeforePacketSent(EntityUid uid, StationLimitedNetworkComponent component, BeforePacketSentEvent args)
         {
+            if (!component.StationId.HasValue)
+                TrySetStationId(uid, component);
+
             if (!CheckStationId(args.Sender, component.AllowNonStationPackets, component.StationId))
             {
                 args.Cancel();
@@ -61,6 +76,9 @@ namespace Content.Server.DeviceNetwork.Systems
 
             if (!Resolve(senderUid, ref sender, false))
                 return allowNonStationPackets;
+
+            if (!sender.StationId.HasValue)
+                TrySetStationId(senderUid, sender);
 
             return sender.StationId == receiverStationId;
         }

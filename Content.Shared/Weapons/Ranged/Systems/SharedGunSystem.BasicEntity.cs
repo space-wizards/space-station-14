@@ -8,17 +8,17 @@ public abstract partial class SharedGunSystem
 {
     protected virtual void InitializeBasicEntity()
     {
-        SubscribeLocalEvent<BasicEntityAmmoProviderComponent, ComponentInit>(OnBasicEntityInit);
+        SubscribeLocalEvent<BasicEntityAmmoProviderComponent, MapInitEvent>(OnBasicEntityMapInit);
         SubscribeLocalEvent<BasicEntityAmmoProviderComponent, TakeAmmoEvent>(OnBasicEntityTakeAmmo);
         SubscribeLocalEvent<BasicEntityAmmoProviderComponent, GetAmmoCountEvent>(OnBasicEntityAmmoCount);
     }
 
-    private void OnBasicEntityInit(EntityUid uid, BasicEntityAmmoProviderComponent component, ComponentInit args)
+    private void OnBasicEntityMapInit(EntityUid uid, BasicEntityAmmoProviderComponent component, MapInitEvent args)
     {
         if (component.Count is null)
         {
             component.Count = component.Capacity;
-            Dirty(component);
+            Dirty(uid, component);
         }
 
         UpdateBasicEntityAppearance(uid, component);
@@ -26,7 +26,7 @@ public abstract partial class SharedGunSystem
 
     private void OnBasicEntityTakeAmmo(EntityUid uid, BasicEntityAmmoProviderComponent component, TakeAmmoEvent args)
     {
-        for (int i = 0; i < args.Shots; i++)
+        for (var i = 0; i < args.Shots; i++)
         {
             if (component.Count <= 0)
                 return;
@@ -37,11 +37,12 @@ public abstract partial class SharedGunSystem
             }
 
             var ent = Spawn(component.Proto, args.Coordinates);
-            args.Ammo.Add((ent, EnsureComp<AmmoComponent>(ent)));
+            args.Ammo.Add((ent, EnsureShootable(ent)));
         }
 
+        _recharge.Reset(uid);
         UpdateBasicEntityAppearance(uid, component);
-        Dirty(component);
+        Dirty(uid, component);
     }
 
     private void OnBasicEntityAmmoCount(EntityUid uid, BasicEntityAmmoProviderComponent component, ref GetAmmoCountEvent args)
@@ -71,8 +72,9 @@ public abstract partial class SharedGunSystem
             return false;
 
         component.Count = count;
-        Dirty(component);
+        Dirty(uid, component);
         UpdateBasicEntityAppearance(uid, component);
+        UpdateAmmoCount(uid);
 
         return true;
     }

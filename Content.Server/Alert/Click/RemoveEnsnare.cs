@@ -6,7 +6,7 @@ using JetBrains.Annotations;
 namespace Content.Server.Alert.Click;
 [UsedImplicitly]
 [DataDefinition]
-public sealed class RemoveEnsnare : IAlertClick
+public sealed partial class RemoveEnsnare : IAlertClick
 {
     public void AlertClicked(EntityUid player)
     {
@@ -19,6 +19,9 @@ public sealed class RemoveEnsnare : IAlertClick
                     return;
 
                 entManager.EntitySysManager.GetEntitySystem<EnsnareableSystem>().TryFree(player, player, ensnare, ensnaringComponent);
+
+                // Only one snare at a time.
+                break;
             }
         }
     }

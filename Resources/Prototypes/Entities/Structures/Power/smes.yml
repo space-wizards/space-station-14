@@ -14,18 +14,25 @@
       sound:
         path: /Audio/Ambience/Objects/periodic_beep.ogg
     - type: Sprite
-      netsync: false
       sprite: Structures/Power/smes.rsi
       snapCardinals: true
       layers:
         - state: smes
+        - map: ["enum.SmesVisualLayers.Charge"]
+          state: "smes-og1" # -og0 does not exist
+          shader: unshaded
+          visible: false
+        - map: ["enum.SmesVisualLayers.Input"]
+          state: "smes-oc0"
+          shader: unshaded
+        - map: ["enum.SmesVisualLayers.Output"]
+          state: "smes-op1"
+          shader: unshaded
     - type: Smes
     - type: UpgradeBattery
       maxChargeMultiplier: 2
       baseMaxCharge: 8000000
     - type: Appearance
-      visuals:
-        - type: SmesVisualizer
     - type: Battery
       startingCharge: 0
     - type: ExaminableBattery
@@ -54,15 +61,32 @@
       energy: 1.6
       color: "#c9c042"
       castShadows: false
+    - type: WiresPanel
     - type: Wires
-      BoardName: "SMES"
+      BoardName: wires-board-name-smes
       LayoutId: SMES
     - type: Machine
       board: SMESMachineCircuitboard
     - type: StationInfiniteBatteryTarget
+    - type: Electrified
+      onHandInteract: false
+      onInteractUsing: false
+      onBump: false
+      requirePower: true
+      highVoltageNode: input
+      mediumVoltageNode: output
     - type: Damageable
       damageContainer: Inorganic
       damageModifierSet: StrongMetallic
+    - type: BatterySensor
+    - type: DeviceNetwork
+      deviceNetId: AtmosDevices
+      receiveFrequencyId: AtmosMonitor
+      transmitFrequencyId: AtmosMonitor
+      prefix: device-address-prefix-smes
+      sendBroadcastAttemptEvent: true
+      examinableAddress: true
+    - type: WiredNetworkConnection
     - type: UserInterface
       interfaces:
         - key: enum.SmesUiKey.Key

@@ -6,16 +6,16 @@
   components:
   - type: Smokable
   - type: Sprite
-    netsync: false
   - type: Appearance
-    visuals:
-      - type: BurnStateVisualizer
+  - type: BurnStateVisuals
   - type: Tag
     tags:
     - Trash
   - type: SpaceGarbage
   - type: StaticPrice
     price: 5
+  - type: InjectableSolution
+    solution: smokable
 
 # Base for all cigars and cigarettes.
 - type: entity
@@ -62,3 +62,21 @@
     solutions:
       smokable:
         maxVol: 20
+
+- type: entity
+  parent: BaseItem
+  id: BaseVape
+  abstract: true
+  components:
+  - type: Vape
+    damage:
+      groups:
+        Burn: 2
+  - type: SolutionContainerManager
+    solutions:
+      smokable:
+        maxVol: 10
+  - type: RefillableSolution
+    solution: smokable
+  - type: ExaminableSolution
+    solution: smokable

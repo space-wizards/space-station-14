@@ -1,5 +1,5 @@
 reagent-name-thermite = thermite
-reagent-desc-thermite = A mixture that becomes extremely hot when ignited, and which can burn straight through walls when applied and ignited. It'll slowly inflict burn damage to anybody dumb enough to ingest it, but can't be ignited inside inside said dumb person.
+reagent-desc-thermite = A mixture that becomes extremely hot when ignited.
 
 reagent-name-napalm = napalm
 reagent-desc-napalm = It's just a little flammable.

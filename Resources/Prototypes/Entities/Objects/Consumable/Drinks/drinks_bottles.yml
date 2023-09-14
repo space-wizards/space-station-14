@@ -351,7 +351,7 @@
 
 - type: entity
   parent: DrinkBottleBaseFull
-  id: DrinkBeer # Needs to be renamed DrinkBeerBottleFull
+  id: DrinkBeerBottleFull
   name: beer  # beer it is. coffee. beer? coff-ee? be-er? c-o... b-e
   description: An alcoholic beverage made from malted grains, hops, yeast, and water.
   components:
@@ -380,6 +380,21 @@
           Quantity: 50
   - type: Sprite
     sprite: Objects/Consumable/Drinks/alebottle.rsi
+
+- type: entity
+  parent: DrinkBottleBaseFull
+  id: DrinkChampagneBottleFull
+  name: champagne bottle
+  description: Only people devoid of imagination can't find an excuse for champagne.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: Champagne
+          Quantity: 100
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/champagnebottle.rsi
 
 - type: entity
   parent: DrinkBottleBaseFull

@@ -53,3 +53,10 @@
   toolName: tool-quality-sawing-tool-name
   spawn: Saw
   icon: { sprite: Objects/Specific/Medical/Surgery/saw.rsi, state: saw }
+
+- type: tool
+  id: Honking
+  name: tool-quality-honking-name
+  toolName: tool-quality-honking-tool-name
+  spawn: BikeHorn
+  icon: { sprite: Objects/Fun/bikehorn.rsi, state: icon }

@@ -1,0 +1,31 @@
+<Document>
+  # Cargo
+  The supply department, more commonly known simply as Cargo, is in charge of keeping the station stocked up on necessary resources, such as fuel and raw materials. Though, they are not restricted to simple goods, and can order a wide variety of different items from off-station. The point is, it's Cargo's job to get the rest of the station what they need.
+
+  ## Ordering
+  <Box>
+    <GuideEntityEmbed Entity="ComputerCargoOrders"/>
+  </Box>
+  Every transaction you make will begin at a [color=#a4885c]cargo request computer[/color], from which you can make orders for specific products. Making any order requires [color=#118C4F]spesos[/color], the currency of the station. To make an order, click the "request" button next to whatever you need, type an appropriate reason for why you're ordering it, and hit "approve" when it appears below the request list.
+
+  ## Piloting
+  Orders are shipped to the station via the [color=#a4885c]cargo shuttle[/color], the remotely piloted spacecraft that cargo uses to buy and sell goods. In order to move the shuttle, you must first find the [color=#a4885c]cargo shuttle computer[/color].
+  <Box>
+    <GuideEntityEmbed Entity="ComputerCargoShuttle"/>
+  </Box>
+  After clicking the computer, you should see a radar view of the shuttle. Here are the steps for piloting the shuttle back and forth:
+
+  - First, disconnect any airlocks that are connected to the dock.
+  - Then, you actually get to pilot the shuttle. The controls are fairly simple, with W and S being forward and backward, A and D being turn left and right; and Spacebar being the brake.
+  - Find the button that designates the trading post. Hit this button, and the shuttle will start traveling to it.
+  - After a short delay, the option to FTL back to the station will reappear. After this, just pilot the shuttle back to the cargo dock and retrieve the items you ordered.
+
+  ## Selling
+  So, you want to order something, but don't have the money for it? You just need to sell something! Almost everything on the station has economic value, which an [color=#a4885c]appraisal tool[/color] can read out to you.
+  <Box>
+    <GuideEntityEmbed Entity="AppraisalTool"/>
+    <GuideEntityEmbed Entity="CargoPallet"/>
+  </Box>
+  After finding something worth selling, place it on one of the shuttle's cargo pallets. The next time the shuttle is sent to a trading post, the item will be sold and the money will be directly transferred back to the station's bank account. You can also make even more money by completing [textlink="bounties" link="CargoBounties"] or selling valuable items from [textlink="salvage" link="Salvage"].
+
+</Document>

@@ -6,7 +6,6 @@
   components:
   - type: Sprite
     sprite: Objects/Tiles/tile.rsi
-    netsync: false
   - type: Item
     sprite: Objects/Tiles/tile.rsi
   - type: DamageOtherOnHit
@@ -59,6 +58,30 @@
   - type: Construction
     graph: TileSteel
     node: steeltile
+
+- type: entity
+  name: steel dark checker tile
+  parent: FloorTileItemSteel
+  id: FloorTileItemSteelCheckerDark
+  components:
+  - type: Sprite
+    state: checker-dark
+  - type: FloorTile
+    outputs:
+      - Plating
+      - FloorSteelCheckerDark
+
+- type: entity
+  name: steel light checker tile
+  parent: FloorTileItemSteel
+  id: FloorTileItemSteelCheckerLight
+  components:
+  - type: Sprite
+    state: checker-light
+  - type: FloorTile
+    outputs:
+      - Plating
+      - FloorSteelCheckerLight
 
 - type: entity
   name: steel tile
@@ -394,6 +417,55 @@
       - FloorLaundry
   - type: Stack
     stackType: FloorTileLaundry
+
+# Concrete
+- type: entity
+  parent: FloorTileItemBase
+  id: FloorTileItemConcrete
+  name: concrete tile
+  components:
+  - type: Sprite
+    state: concrete
+  - type: Item
+    heldPrefix: generic
+  - type: FloorTile
+    outputs:
+    - Plating
+    - FloorConcrete
+  - type: Stack
+    stackType: FloorTileConcrete
+
+- type: entity
+  parent: FloorTileItemBase
+  id: FloorTileItemGrayConcrete
+  name: gray concrete tile
+  components:
+  - type: Sprite
+    state: grayconcrete
+  - type: Item
+    heldPrefix: generic
+  - type: FloorTile
+    outputs:
+    - Plating
+    - FloorGrayConcrete
+  - type: Stack
+    stackType: FloorTileGrayConcrete
+
+- type: entity
+  parent: FloorTileItemBase
+  id: FloorTileItemOldConcrete
+  name: old concrete tile
+  components:
+  - type: Sprite
+    state: oldconcrete
+  - type: Item
+    heldPrefix: generic
+  - type: FloorTile
+    outputs:
+    - Plating
+    - FloorOldConcrete
+  - type: Stack
+    stackType: FloorTileOldConcrete
 
 # Carpets
 - type: entity
@@ -737,6 +809,25 @@
     stackType: FloorTileWoodPattern
 
 - type: entity
+  id: FloorTileItemFlesh
+  parent: FloorTileItemBase
+  name: flesh floor
+  components:
+  - type: Sprite
+    state: meat
+  - type: Item
+    heldPrefix: meat
+  - type: FloorTile
+    outputs:
+    - Plating
+    - FloorFlesh
+  - type: Stack
+    stackType: FloorTileFlesh
+  - type: Construction
+    graph: TileFlesh
+    node: fleshTile
+
+- type: entity
   name: steel maint floor
   parent: FloorTileItemBase
   id: FloorTileItemSteelMaint
@@ -768,3 +859,19 @@
   - type: Stack
     stackType: FloorTileGratingMaint
 
+- type: entity
+  name: web tile
+  parent: FloorTileItemBase
+  id: FloorTileItemWeb
+  components:
+  - type: Sprite
+    sprite: Objects/Tiles/web.rsi
+    state: icon
+  - type: FloorTile
+    outputs:
+      - FloorWebTile
+  - type: Stack
+    stackType: FloorTileWeb
+  - type: Construction
+    graph: WebObjects
+    node: tile

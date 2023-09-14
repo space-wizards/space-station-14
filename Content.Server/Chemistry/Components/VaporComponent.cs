@@ -3,7 +3,7 @@
 namespace Content.Server.Chemistry.Components
 {
     [RegisterComponent]
-    public sealed class VaporComponent : Component
+    public sealed partial class VaporComponent : Component
     {
         public const string SolutionName = "vapor";
 
@@ -11,6 +11,7 @@ namespace Content.Server.Chemistry.Components
         public FixedPoint2 TransferAmount = FixedPoint2.New(0.5);
 
         public float ReactTimer;
+        [DataField("active")]
         public bool Active;
     }
 }

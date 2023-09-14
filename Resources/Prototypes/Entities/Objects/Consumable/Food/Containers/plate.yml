@@ -15,7 +15,6 @@
   - type: Sprite
     sprite: Objects/Consumable/Food/plates.rsi
     state: plate
-    netsync: false
   - type: DamageOnLand
     damage:
       types:
@@ -47,7 +46,7 @@
     - Trash
   - type: PhysicalComposition
     materialComposition:
-      Glass: 100
+      Glass: 60
   - type: SpaceGarbage
 
 - type: entity
@@ -59,7 +58,6 @@
   - type: Sprite
     sprite: Objects/Consumable/Food/plates.rsi
     state: plate-trash
-    netsync: false
   - type: Tag
     tags:
     - Trash
@@ -93,6 +91,9 @@
             max: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: PhysicalComposition
+    materialComposition:
+      Glass: 30
 
 - type: entity
   parent: FoodPlateTrash
@@ -101,7 +102,6 @@
   - type: Sprite
     sprite: Objects/Consumable/Food/plates.rsi
     state: plate-small-trash
-    netsync: false
 
 # Plastic Plate
 
@@ -114,7 +114,6 @@
   - type: Sprite
     sprite: Objects/Consumable/Food/plates.rsi
     state: plate-plastic
-    netsync: false
   - type: Tag
     tags:
     - Trash
@@ -128,7 +127,6 @@
   - type: Sprite
     sprite: Objects/Consumable/Food/plates.rsi
     state: plate-small-plastic
-    netsync: false
   - type: Tag
     tags:
     - Trash
@@ -144,7 +142,6 @@
   - type: Sprite
     sprite: Objects/Consumable/Food/plates.rsi
     state: tin
-    netsync: false
   - type: Tag
     tags:
     - Trash

@@ -1,10 +1,8 @@
-using Content.Server.Humanoid;
 using Content.Server.Speech.EntitySystems;
-using Content.Shared.Actions;
-using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Chat.Prototypes;
 using Content.Shared.Humanoid;
 using Robust.Shared.Audio;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
 
@@ -15,7 +13,7 @@ namespace Content.Server.Speech.Components;
 /// </summary>
 [RegisterComponent]
 [Access(typeof(VocalSystem))]
-public sealed class VocalComponent : Component
+public sealed partial class VocalComponent : Component
 {
     /// <summary>
     ///     Emote sounds prototype id for each sex (not gender).
@@ -33,11 +31,11 @@ public sealed class VocalComponent : Component
     [DataField("wilhelmProbability")]
     public float WilhelmProbability = 0.0002f;
 
-    [DataField("screamActionId", customTypeSerializer: typeof(PrototypeIdSerializer<InstantActionPrototype>))]
-    public string ScreamActionId = "Scream";
+    [DataField("screamAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    public string ScreamAction = "ActionScream";
 
-    [DataField("screamAction")]
-    public InstantAction? ScreamAction;
+    [DataField("screamActionEntity")]
+    public EntityUid? ScreamActionEntity;
 
     /// <summary>
     ///     Currently loaded emote sounds prototype, based on entity sex.
@@ -45,9 +43,4 @@ public sealed class VocalComponent : Component
     /// </summary>
     [ViewVariables]
     public EmoteSoundsPrototype? EmoteSounds = null;
-}
-
-public sealed class ScreamActionEvent : InstantActionEvent
-{
-
 }

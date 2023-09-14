@@ -1,17 +1,19 @@
+using System.Numerics;
 using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
-using Content.Server.Coordinates.Helpers;
+using Content.Server.Chat.Systems;
 using Content.Server.Doors.Systems;
-using Content.Server.Magic.Events;
+using Content.Server.Magic.Components;
 using Content.Server.Weapons.Ranged.Systems;
 using Content.Shared.Actions;
-using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Body.Components;
+using Content.Shared.Coordinates.Helpers;
 using Content.Shared.DoAfter;
 using Content.Shared.Doors.Components;
 using Content.Shared.Doors.Systems;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Magic;
+using Content.Shared.Magic.Events;
 using Content.Shared.Maps;
 using Content.Shared.Physics;
 using Content.Shared.Spawners.Components;
@@ -19,8 +21,6 @@ using Content.Shared.Storage;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
-using Robust.Shared.Player;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager;
 
@@ -34,9 +34,8 @@ public sealed class MagicSystem : EntitySystem
     [Dependency] private readonly ISerializationManager _seriMan = default!;
     [Dependency] private readonly IComponentFactory _compFact = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly AirlockSystem _airlock = default!;
+    [Dependency] private readonly DoorBoltSystem _boltsSystem = default!;
     [Dependency] private readonly BodySystem _bodySystem = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly SharedDoorSystem _doorSystem = default!;
@@ -46,6 +45,7 @@ public sealed class MagicSystem : EntitySystem
     [Dependency] private readonly PhysicsSystem _physics = default!;
     [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly ChatSystem _chat = default!;
 
     public override void Initialize()
     {
@@ -69,30 +69,16 @@ public sealed class MagicSystem : EntitySystem
         if (args.Handled || args.Cancelled)
             return;
 
-        _actionsSystem.AddActions(args.Args.User, component.Spells, uid);
+        _actionsSystem.AddActions(args.Args.User, component.Spells, component.LearnPermanently ? null : uid);
         args.Handled = true;
     }
 
     private void OnInit(EntityUid uid, SpellbookComponent component, ComponentInit args)
     {
         //Negative charges means the spell can be used without it running out.
-        foreach (var (id, charges) in component.WorldSpells)
+        foreach (var (id, charges) in component.SpellActions)
         {
-            var spell = new WorldTargetAction(_prototypeManager.Index<WorldTargetActionPrototype>(id));
-            _actionsSystem.SetCharges(spell, charges < 0 ? null : charges);
-            component.Spells.Add(spell);
-        }
-
-        foreach (var (id, charges) in component.InstantSpells)
-        {
-            var spell = new InstantAction(_prototypeManager.Index<InstantActionPrototype>(id));
-            _actionsSystem.SetCharges(spell, charges < 0 ? null : charges);
-            component.Spells.Add(spell);
-        }
-
-        foreach (var (id, charges) in component.EntitySpells)
-        {
-            var spell = new EntityTargetAction(_prototypeManager.Index<EntityTargetActionPrototype>(id));
+            var spell = Spawn(id);
             _actionsSystem.SetCharges(spell, charges < 0 ? null : charges);
             component.Spells.Add(spell);
         }
@@ -110,7 +96,7 @@ public sealed class MagicSystem : EntitySystem
 
     private void AttemptLearn(EntityUid uid, SpellbookComponent component, UseInHandEvent args)
     {
-        var doAfterEventArgs = new DoAfterArgs(args.User, component.LearnTime, new SpellbookDoAfterEvent(), uid, target: uid)
+        var doAfterEventArgs = new DoAfterArgs(EntityManager, args.User, component.LearnTime, new SpellbookDoAfterEvent(), uid, target: uid)
         {
             BreakOnTargetMove = true,
             BreakOnUserMove = true,
@@ -144,6 +130,7 @@ public sealed class MagicSystem : EntitySystem
             }
         }
 
+        Speak(args);
         args.Handled = true;
     }
 
@@ -152,6 +139,9 @@ public sealed class MagicSystem : EntitySystem
         if (ev.Handled)
             return;
 
+        ev.Handled = true;
+        Speak(ev);
+
         var xform = Transform(ev.Performer);
         var userVelocity = _physics.GetMapLinearVelocity(ev.Performer);
 
@@ -159,17 +149,24 @@ public sealed class MagicSystem : EntitySystem
         {
             // If applicable, this ensures the projectile is parented to grid on spawn, instead of the map.
             var mapPos = pos.ToMap(EntityManager);
-            EntityCoordinates spawnCoords = _mapManager.TryFindGridAt(mapPos, out var grid)
-                ? pos.WithEntityId(grid.Owner, EntityManager)
+            var spawnCoords = _mapManager.TryFindGridAt(mapPos, out var gridUid, out _)
+                ? pos.WithEntityId(gridUid, EntityManager)
                 : new(_mapManager.GetMapEntityId(mapPos.MapId), mapPos.Position);
 
             var ent = Spawn(ev.Prototype, spawnCoords);
-            _gunSystem.ShootProjectile(ent, ev.Target.Position - mapPos.Position, userVelocity, ev.Performer);
+            var direction = ev.Target.ToMapPos(EntityManager, _transformSystem) -
+                            spawnCoords.ToMapPos(EntityManager, _transformSystem);
+            _gunSystem.ShootProjectile(ent, direction, userVelocity, ev.Performer);
         }
     }
 
     private void OnChangeComponentsSpell(ChangeComponentsSpellEvent ev)
     {
+        if (ev.Handled)
+            return;
+        ev.Handled = true;
+        Speak(ev);
+
         foreach (var toRemove in ev.ToRemove)
         {
             if (_compFact.TryGetRegistration(toRemove, out var registration))
@@ -198,7 +195,7 @@ public sealed class MagicSystem : EntitySystem
             case TargetInFront:
             {
                 // This is shit but you get the idea.
-                var directionPos = casterXform.Coordinates.Offset(casterXform.LocalRotation.ToWorldVec().Normalized);
+                var directionPos = casterXform.Coordinates.Offset(casterXform.LocalRotation.ToWorldVec().Normalized());
 
                 if (!_mapManager.TryGetGrid(casterXform.GridUid, out var mapGrid))
                     return new List<EntityCoordinates>();
@@ -263,6 +260,7 @@ public sealed class MagicSystem : EntitySystem
         _transformSystem.SetCoordinates(args.Performer, args.Target);
         transform.AttachToGridOrMap();
         _audio.PlayPvs(args.BlinkSound, args.Performer, AudioParams.Default.WithVolume(args.BlinkVolume));
+        Speak(args);
         args.Handled = true;
     }
 
@@ -275,6 +273,9 @@ public sealed class MagicSystem : EntitySystem
         if (args.Handled)
             return;
 
+        args.Handled = true;
+        Speak(args);
+
         //Get the position of the player
         var transform = Transform(args.Performer);
         var coords = transform.Coordinates;
@@ -284,20 +285,21 @@ public sealed class MagicSystem : EntitySystem
         //Look for doors and don't open them if they're already open.
         foreach (var entity in _lookup.GetEntitiesInRange(coords, args.Range))
         {
-            if (TryComp<AirlockComponent>(entity, out var airlock))
-                _airlock.SetBoltsDown(entity, airlock, false);
+            if (TryComp<DoorBoltComponent>(entity, out var bolts))
+                _boltsSystem.SetBoltsDown(entity, bolts, false);
 
             if (TryComp<DoorComponent>(entity, out var doorComp) && doorComp.State is not DoorState.Open)
                 _doorSystem.StartOpening(doorComp.Owner);
         }
-
-        args.Handled = true;
     }
 
     private void OnSmiteSpell(SmiteSpellEvent ev)
     {
         if (ev.Handled)
             return;
+
+        ev.Handled = true;
+        Speak(ev);
 
         var direction = Transform(ev.Target).MapPosition.Position - Transform(ev.Performer).MapPosition.Position;
         var impulseVector = direction * 10000;
@@ -337,7 +339,7 @@ public sealed class MagicSystem : EntitySystem
         var targetMapCoords = args.Target;
 
         SpawnSpellHelper(args.Contents, targetMapCoords, args.Lifetime, args.Offset);
-
+        Speak(args);
         args.Handled = true;
     }
 
@@ -373,4 +375,13 @@ public sealed class MagicSystem : EntitySystem
     }
 
     #endregion
+
+    private void Speak(BaseActionEvent args)
+    {
+        if (args is not ISpeakSpell speak || string.IsNullOrWhiteSpace(speak.Speech))
+            return;
+
+        _chat.TrySendInGameICMessage(args.Performer, Loc.GetString(speak.Speech),
+            InGameICChatType.Speak, false);
+    }
 }

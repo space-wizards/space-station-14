@@ -7,14 +7,17 @@
   - type: Item
     size: 1
   - type: Sprite
-    netsync: false
     sprite: Objects/Specific/Medical/mouth_swab.rsi
     state: icon
   - type: Tag
     tags:
     - Recyclable
-  - type: DiseaseSwab
+    - Trash
   - type: BotanySwab
+  - type: GuideHelp
+    guides:
+  # - Virology (when it's back)
+    - Botany
 
 - type: entity
   parent: BaseItem
@@ -26,6 +29,4 @@
     size: 3
   - type: Sprite
     sprite: Objects/Specific/Medical/medipen.rsi
-    netsync: false
     state: salpen
-  - type: DiseaseVaccine

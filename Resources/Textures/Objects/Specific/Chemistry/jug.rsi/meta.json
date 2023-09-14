@@ -1,0 +1,40 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Created by HoofedEar",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "jug"
+    },
+    {
+      "name": "inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "jug1"
+    },
+    {
+      "name": "jug2"
+    },
+    {
+      "name": "jug3"
+    },
+    {
+      "name": "jug4"
+    },
+    {
+      "name": "jug5"
+    },
+    {
+      "name": "jug6"
+    }
+  ]
+}

@@ -45,14 +45,14 @@ public sealed class RandomSpriteSystem : SharedRandomSpriteSystem
             if (_reflection.TryParseEnumReference(layer.Key, out var @enum))
             {
                 if (!sprite.LayerMapTryGet(@enum, out index, logError: true))
-                    return;
+                    continue;
             }
             else if (!sprite.LayerMapTryGet(layer.Key, out index))
             {
-                if (layer.Key is not string strKey || !int.TryParse(strKey, out index))
+                if (layer.Key is not { } strKey || !int.TryParse(strKey, out index))
                 {
                     Logger.Error($"Invalid key `{layer.Key}` for entity with random sprite {ToPrettyString(uid)}");
-                    return;
+                    continue;
                 }
             }
 

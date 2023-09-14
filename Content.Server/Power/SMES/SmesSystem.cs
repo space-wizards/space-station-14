@@ -3,14 +3,12 @@ using Content.Server.Power.EntitySystems;
 using Content.Shared.Power;
 using Content.Shared.Rounding;
 using Content.Shared.SMES;
-using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Power.SMES;
 
-[UsedImplicitly]
-internal sealed class SmesSystem : EntitySystem
+public sealed class SmesSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
@@ -31,7 +29,7 @@ internal sealed class SmesSystem : EntitySystem
         UpdateSmesState(uid, component);
     }
 
-    private void OnBatteryChargeChanged(EntityUid uid, SmesComponent component, ChargeChangedEvent args)
+    private void OnBatteryChargeChanged(EntityUid uid, SmesComponent component, ref ChargeChangedEvent args)
     {
         UpdateSmesState(uid, component);
     }
@@ -41,7 +39,7 @@ internal sealed class SmesSystem : EntitySystem
         bool updateUi = false;
 
         var newLevel = CalcChargeLevel(uid);
-        if (newLevel != smes.LastChargeLevel && smes.LastChargeLevelTime + SmesComponent.VisualsChangeDelay < _gameTiming.CurTime)
+        if (newLevel != smes.LastChargeLevel && smes.LastChargeLevelTime + smes.VisualsChangeDelay < _gameTiming.CurTime)
         {
             smes.LastChargeLevel = newLevel;
             smes.LastChargeLevelTime = _gameTiming.CurTime;
@@ -51,7 +49,7 @@ internal sealed class SmesSystem : EntitySystem
         }
 
         var newChargeState = CalcChargeState(uid);
-        if (newChargeState != smes.LastChargeState && smes.LastChargeStateTime + SmesComponent.VisualsChangeDelay < _gameTiming.CurTime)
+        if (newChargeState != smes.LastChargeState && smes.LastChargeStateTime + smes.VisualsChangeDelay < _gameTiming.CurTime)
         {
             smes.LastChargeState = newChargeState;
             smes.LastChargeStateTime = _gameTiming.CurTime;
@@ -60,8 +58,7 @@ internal sealed class SmesSystem : EntitySystem
         }
 
         var extPowerState = CalcExtPowerState(uid);
-        if (extPowerState != smes.LastExternalState
-            || smes.LastUiUpdate + SmesComponent.VisualsChangeDelay < _gameTiming.CurTime)
+        if (extPowerState != smes.LastExternalState || smes.LastUiUpdate + smes.VisualsChangeDelay < _gameTiming.CurTime)
         {
             smes.LastExternalState = extPowerState;
 
@@ -92,15 +89,16 @@ internal sealed class SmesSystem : EntitySystem
 
     private int CalcChargeLevel(EntityUid uid, BatteryComponent? battery = null)
     {
-        if (!Resolve<BatteryComponent>(uid, ref battery))
+        if (!Resolve(uid, ref battery, false))
             return 0;
 
         return ContentHelpers.RoundToLevels(battery.CurrentCharge, battery.MaxCharge, 6);
     }
 
+    // TODO: put this in PNB
     private ChargeState CalcChargeState(EntityUid uid, PowerNetworkBatteryComponent? netBattery = null)
     {
-        if (!Resolve<PowerNetworkBatteryComponent>(uid, ref netBattery))
+        if (!Resolve(uid, ref netBattery, false))
             return ChargeState.Still;
 
         return (netBattery.CurrentSupply - netBattery.CurrentReceiving) switch
@@ -111,6 +109,7 @@ internal sealed class SmesSystem : EntitySystem
         };
     }
 
+    // TODO: put this in battery system
     private ExternalPowerState CalcExtPowerState(EntityUid uid, BatteryComponent? battery = null)
     {
         // TODO: Refactor this too.

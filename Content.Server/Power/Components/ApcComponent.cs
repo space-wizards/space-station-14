@@ -2,31 +2,36 @@ using Content.Server.Power.NodeGroups;
 using Content.Shared.APC;
 using Content.Shared.Power;
 using Robust.Shared.Audio;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Server.Power.Components;
 
 [RegisterComponent]
-public sealed class ApcComponent : BaseApcNetComponent
+public sealed partial class ApcComponent : BaseApcNetComponent
 {
     [DataField("onReceiveMessageSound")]
     public SoundSpecifier OnReceiveMessageSound = new SoundPathSpecifier("/Audio/Machines/machine_switch.ogg");
 
-    [ViewVariables]
+    [DataField("lastChargeState")]
     public ApcChargeState LastChargeState;
+    [DataField("lastChargeStateTime", customTypeSerializer: typeof(TimeOffsetSerializer))]
     public TimeSpan LastChargeStateTime;
 
-    /// <summary>
-    ///     Is the panel open for this entity's APC?
-    /// </summary>
-    [DataField("open")]
-    public bool IsApcOpen { get; set; }
-
-    [ViewVariables]
+    [DataField("lastExternalState")]
     public ExternalPowerState LastExternalState;
+
+    /// <summary>
+    /// Time the ui was last updated automatically.
+    /// Done after every <see cref="VisualsChangeDelay"/> to show the latest load.
+    /// If charge state changes it will be instantly updated.
+    /// </summary>
+    [DataField("lastUiUpdate", customTypeSerializer: typeof(TimeOffsetSerializer))]
     public TimeSpan LastUiUpdate;
 
-    [ViewVariables]
+    [DataField("enabled")]
     public bool MainBreakerEnabled = true;
+    // TODO: remove this since it probably breaks when 2 people use it
+    [DataField("hasAccess")]
     public bool HasAccess = false;
 
     public const float HighPowerThreshold = 0.9f;
@@ -42,11 +47,4 @@ public sealed class ApcComponent : BaseApcNetComponent
     {
         apcNet.RemoveApc(this);
     }
-
-    [DataField("screwdriverOpenSound")]
-    public SoundSpecifier ScrewdriverOpenSound = new SoundPathSpecifier("/Audio/Machines/screwdriveropen.ogg");
-
-    [DataField("screwdriverCloseSound")]
-    public SoundSpecifier ScrewdriverCloseSound = new SoundPathSpecifier("/Audio/Machines/screwdriverclose.ogg");
-
 }

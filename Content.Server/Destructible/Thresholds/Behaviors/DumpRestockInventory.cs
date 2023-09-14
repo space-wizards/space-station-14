@@ -1,6 +1,5 @@
 using Robust.Shared.Random;
 using Content.Shared.Stacks;
-using Content.Server.VendingMachines.Restock;
 using Content.Shared.Prototypes;
 using Content.Shared.VendingMachines;
 
@@ -12,7 +11,7 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
     /// </summary>
     [Serializable]
     [DataDefinition]
-    public sealed class DumpRestockInventory: IThresholdBehavior
+    public sealed partial class DumpRestockInventory: IThresholdBehavior
     {
         /// <summary>
         ///     The percent of each inventory entry that will be salvaged

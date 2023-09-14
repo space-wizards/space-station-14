@@ -28,6 +28,18 @@
               amount: 2
               doAfter: 3
 
+        - to: uraniumWindow
+          steps:
+            - material: UraniumGlass
+              amount: 2
+              doAfter: 2
+
+        - to: reinforcedUraniumWindow
+          steps:
+            - material: ReinforcedUraniumGlass
+              amount: 2
+              doAfter: 3
+
         - to: window
           steps:
             - material: Glass
@@ -117,6 +129,48 @@
           completed:
             - !type:SpawnPrototype
               prototype: SheetRPGlass1
+              amount: 2
+            - !type:DeleteEntity {}
+          steps:
+            - tool: Welding
+              doAfter: 5
+            - tool: Screwing
+              doAfter: 2
+            - tool: Prying
+              doAfter: 3
+            - tool: Welding
+              doAfter: 5
+            - tool: Screwing
+              doAfter: 2
+            - tool: Anchoring
+              doAfter: 3
+
+    - node: uraniumWindow
+      entity: UraniumWindow
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetUGlass1
+              amount: 2
+            - !type:DeleteEntity {}
+          steps:
+            - tool: Screwing
+              doAfter: 2
+            - tool: Prying
+              doAfter: 3
+            - tool: Screwing
+              doAfter: 2
+            - tool: Anchoring
+              doAfter: 3
+
+    - node: reinforcedUraniumWindow
+      entity: ReinforcedUraniumWindow
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetRUGlass1
               amount: 2
             - !type:DeleteEntity {}
           steps:

@@ -6,6 +6,9 @@ using Content.Shared.Inventory.Events;
 using Content.Shared.Radiation.Components;
 using Content.Shared.Radiation.Systems;
 using Robust.Shared.GameStates;
+using Robust.Shared.Player;
+using Robust.Server.GameObjects;
+using Robust.Server.Player;
 
 namespace Content.Server.Radiation.Systems;
 
@@ -13,6 +16,8 @@ public sealed class GeigerSystem : SharedGeigerSystem
 {
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly RadiationSystem _radiation = default!;
+    [Dependency] private readonly AudioSystem _audio = default!;
+    [Dependency] private readonly IPlayerManager _player = default!;
 
     private static readonly float ApproxEqual = 0.01f;
 
@@ -88,7 +93,7 @@ public sealed class GeigerSystem : SharedGeigerSystem
             CurrentRadiation = component.CurrentRadiation,
             DangerLevel = component.DangerLevel,
             IsEnabled = component.IsEnabled,
-            User = component.User
+            User = GetNetEntity(component.User)
         };
     }
 
@@ -107,6 +112,7 @@ public sealed class GeigerSystem : SharedGeigerSystem
         if (curLevel != newLevel)
         {
             UpdateAppearance(uid, component);
+            UpdateSound(uid, component);
         }
 
         Dirty(component);
@@ -119,6 +125,7 @@ public sealed class GeigerSystem : SharedGeigerSystem
 
         component.User = user;
         Dirty(component);
+        UpdateSound(component.Owner, component);
     }
 
     private void SetEnabled(EntityUid uid, GeigerComponent component, bool isEnabled)
@@ -136,6 +143,7 @@ public sealed class GeigerSystem : SharedGeigerSystem
         _radiation.SetCanReceive(uid, isEnabled);
 
         UpdateAppearance(uid, component);
+        UpdateSound(uid, component);
         Dirty(component);
     }
 
@@ -147,6 +155,28 @@ public sealed class GeigerSystem : SharedGeigerSystem
 
         _appearance.SetData(uid, GeigerVisuals.IsEnabled, component.IsEnabled, appearance);
         _appearance.SetData(uid, GeigerVisuals.DangerLevel, component.DangerLevel, appearance);
+    }
+
+    private void UpdateSound(EntityUid uid, GeigerComponent? component = null)
+    {
+        if (!Resolve(uid, ref component, false))
+            return;
+
+        component.Stream?.Stop();
+
+        if (!component.Sounds.TryGetValue(component.DangerLevel, out var sounds))
+            return;
+
+        if (component.User == null)
+            return;
+
+        if (!_player.TryGetSessionByEntity(component.User.Value, out var session))
+            return;
+
+        var sound = _audio.GetSound(sounds);
+        var param = sounds.Params.WithLoop(true).WithVolume(-4f);
+
+        component.Stream = _audio.PlayGlobal(sound, session, param);
     }
 
     public static GeigerDangerLevel RadsToLevel(float rads)
@@ -161,5 +191,3 @@ public sealed class GeigerSystem : SharedGeigerSystem
         };
     }
 }
-
-

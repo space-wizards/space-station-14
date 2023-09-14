@@ -7,7 +7,7 @@ namespace Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Components;
 ///     It could be an angry mob or some random item.
 /// </summary>
 [RegisterComponent]
-public sealed class SpawnArtifactComponent : Component
+public sealed partial class SpawnArtifactComponent : Component
 {
     [DataField("spawns")]
     public List<EntitySpawnEntry>? Spawns;

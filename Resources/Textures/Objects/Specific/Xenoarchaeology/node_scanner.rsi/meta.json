@@ -8,7 +8,13 @@
   },
   "states": [
     {
-      "name": "icon"
+      "name": "icon",
+      "delays": [
+        [
+          0.2,
+          0.2
+        ]
+      ]
     },
     {
       "name": "inhand-left",

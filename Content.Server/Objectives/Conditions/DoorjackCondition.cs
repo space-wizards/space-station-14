@@ -1,21 +1,25 @@
-using Content.Server.Ninja.Systems;
-using Content.Server.Objectives.Interfaces;
+using Content.Server.Roles;
+using Content.Shared.Mind;
+using Content.Shared.Objectives.Interfaces;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Objectives.Conditions;
 
+/// <summary>
+/// Objective condition that requires the player to be a ninja and have doorjacked at least a random number of airlocks.
+/// </summary>
 [DataDefinition]
-public sealed class DoorjackCondition : IObjectiveCondition
+public sealed partial class DoorjackCondition : IObjectiveCondition
 {
-    private Mind.Mind? _mind;
+    private EntityUid? _mind;
     private int _target;
 
-    public IObjectiveCondition GetAssigned(Mind.Mind mind)
+    public IObjectiveCondition GetAssigned(EntityUid uid, MindComponent mind)
     {
         // TODO: clamp to number of doors on station incase its somehow a shittle or something
         return new DoorjackCondition {
-            _mind = mind,
+            _mind = uid,
             _target = IoCManager.Resolve<IRobustRandom>().Next(15, 40)
         };
     }
@@ -24,7 +28,7 @@ public sealed class DoorjackCondition : IObjectiveCondition
 
     public string Description => Loc.GetString("objective-condition-doorjack-description", ("count", _target));
 
-    public SpriteSpecifier Icon => new SpriteSpecifier.Rsi(new ResourcePath("Objects/Tools/emag.rsi"), "icon");
+    public SpriteSpecifier Icon => new SpriteSpecifier.Rsi(new ResPath("Objects/Tools/emag.rsi"), "icon");
 
     public float Progress
     {
@@ -34,8 +38,12 @@ public sealed class DoorjackCondition : IObjectiveCondition
             if (_target == 0)
                 return 1f;
 
-            if (!NinjaSystem.GetNinjaRole(_mind, out var role))
+            var entMan = IoCManager.Resolve<IEntityManager>();
+            if (!entMan.TryGetComponent<NinjaRoleComponent>(_mind, out var role))
                 return 0f;
+
+            if (role.DoorsJacked >= _target)
+                return 1f;
 
             return (float) role.DoorsJacked / (float) _target;
         }

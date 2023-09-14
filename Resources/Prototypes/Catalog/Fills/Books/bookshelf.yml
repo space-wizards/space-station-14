@@ -1,0 +1,71 @@
+- type: entity
+  id: BookshelfFilled
+  parent: Bookshelf
+  suffix: random filled
+  components:
+  - type: StorageFill
+    contents:
+      - id: BookRandom
+        prob: 0.4
+        amount: 1
+        maxAmount: 4
+      - id: BookNarsieLegend
+        prob: 0.1
+      - id: BookTruth
+        prob: 0.1
+      - id: BookWorld
+        prob: 0.1
+      - id: BookIanAntarctica
+        prob: 0.1
+      - id: BookSlothClownSSS
+        prob: 0.1
+      - id: BookSlothClownPranks
+        prob: 0.1
+      - id: BookSlothClownMMD
+        prob: 0.1
+      - id: BookStruck
+        prob: 0.1
+      - id: BookSun
+        prob: 0.1
+      - id: BookPossum
+        prob: 0.1
+      - id: BookCafe
+        prob: 0.1
+      - id: BookFeather
+        prob: 0.1
+      - id: BookIanLostWolfPup
+        prob: 0.1
+      - id: BookIanRanch
+        prob: 0.1
+      - id: BookIanOcean
+        prob: 0.1
+      - id: BookIanMountain
+        prob: 0.1
+      - id: BookIanCity
+        prob: 0.1
+      - id: BookIanArctic
+        prob: 0.1
+      - id: BookIanDesert
+        prob: 0.1
+      - id: BookNames
+        prob: 0.1
+      - id: BookEarth
+        prob: 0.1
+      - id: BookAurora
+        prob: 0.1
+      - id: BookTemple
+        prob: 0.1
+      - id: BookWatched
+        prob: 0.1
+      - id: BookMedicalOfficer
+        prob: 0.1
+      - id: BookMorgue
+        prob: 0.1
+      - id: BookRufus
+        prob: 0.1
+      - id: BookMap
+        prob: 0.1
+      - id: BookJourney
+        prob: 0.1
+      - id: BookInspiration
+        prob: 0.1

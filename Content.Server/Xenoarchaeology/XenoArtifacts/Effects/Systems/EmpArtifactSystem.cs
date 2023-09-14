@@ -16,6 +16,6 @@ public sealed class EmpArtifactSystem : EntitySystem
 
     private void OnActivate(EntityUid uid, EmpArtifactComponent component, ArtifactActivatedEvent args)
     {
-        _emp.EmpPulse(Transform(uid).MapPosition, component.Range, component.EnergyConsumption);
+        _emp.EmpPulse(Transform(uid).MapPosition, component.Range, component.EnergyConsumption, component.DisableDuration);
     }
 }

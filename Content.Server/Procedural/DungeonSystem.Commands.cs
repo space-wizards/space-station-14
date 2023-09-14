@@ -43,7 +43,7 @@ public sealed partial class DungeonSystem
             return;
         }
 
-        var position = new Vector2(posX, posY);
+        var position = new Vector2i(posX, posY);
         var dungeonUid = _mapManager.GetMapEntityId(mapId);
 
         if (!TryComp<MapGridComponent>(dungeonUid, out var dungeonGrid))

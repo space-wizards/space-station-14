@@ -6,11 +6,10 @@
   description: It's a storage unit for tools.
   components:
   - type: Appearance
-    visuals:
-    - type: StorageVisualizer
-      state: eng
-      state_open: eng_open
-      state_closed: eng_tool_door
+  - type: EntityStorageVisuals
+    stateBaseClosed: eng
+    stateDoorOpen: eng_open
+    stateDoorClosed: eng_tool_door
 
 # Radiation suit closet
 - type: entity
@@ -20,11 +19,10 @@
   description: "More comfortable than radiation poisioning."
   components:
   - type: Appearance
-    visuals:
-    - type: StorageVisualizer
-      state: eng
-      state_open: eng_open
-      state_closed: eng_rad_door
+  - type: EntityStorageVisuals
+    stateBaseClosed: eng
+    stateDoorOpen: eng_open
+    stateDoorClosed: eng_rad_door
 
 # Emergency closet
 - type: entity
@@ -34,11 +32,10 @@
   description: It's a storage unit for emergency breath masks and O2 tanks.
   components:
   - type: Appearance
-    visuals:
-    - type: StorageVisualizer
-      state: emergency
-      state_open: emergency_open
-      state_closed: emergency_door
+  - type: EntityStorageVisuals
+    stateBaseClosed: emergency
+    stateDoorOpen: emergency_open
+    stateDoorClosed: emergency_door
 
 # Fire safety closet
 - type: entity
@@ -48,11 +45,10 @@
   description: It's a storage unit for fire-fighting supplies.
   components:
   - type: Appearance
-    visuals:
-    - type: StorageVisualizer
-      state: fire
-      state_open: fire_open
-      state_closed: fire_door
+  - type: EntityStorageVisuals
+    stateBaseClosed: fire
+    stateDoorOpen: fire_open
+    stateDoorClosed: fire_door
 
 # EOD closet
 - type: entity
@@ -62,11 +58,10 @@
   description: It's a storage unit for explosion-protective suits.
   components:
   - type: Appearance
-    visuals:
-    - type: StorageVisualizer
-      state: bomb
-      state_open: bomb_open
-      state_closed: bomb_door
+  - type: EntityStorageVisuals
+    stateBaseClosed: bomb
+    stateDoorOpen: bomb_open
+    stateDoorClosed: bomb_door
 
 # Biohazard
 
@@ -78,11 +73,10 @@
   description: It's a storage unit for level 3 biohazard gear.
   components:
   - type: Appearance
-    visuals:
-    - type: StorageVisualizer
-      state: bio
-      state_open: bio_open
-      state_closed: bio_door
+  - type: EntityStorageVisuals
+    stateBaseClosed: bio
+    stateDoorOpen: bio_open
+    stateDoorClosed: bio_door
 
 # Virology variant
 - type: entity
@@ -90,11 +84,10 @@
   parent: ClosetL3
   components:
   - type: Appearance
-    visuals:
-    - type: StorageVisualizer
-      state: bio_viro
-      state_open: bio_viro_open
-      state_closed: bio_viro_door
+  - type: EntityStorageVisuals
+    stateBaseClosed: bio_viro
+    stateDoorOpen: bio_viro_open
+    stateDoorClosed: bio_viro_door
 
 # Security variant
 - type: entity
@@ -102,11 +95,10 @@
   parent: ClosetL3
   components:
   - type: Appearance
-    visuals:
-    - type: StorageVisualizer
-      state: bio_sec
-      state_open: bio_sec_open
-      state_closed: bio_sec_door
+  - type: EntityStorageVisuals
+    stateBaseClosed: bio_sec
+    stateDoorOpen: bio_sec_open
+    stateDoorClosed: bio_sec_door
 
 # Janitor variant
 - type: entity
@@ -114,11 +106,10 @@
   parent: ClosetL3
   components:
   - type: Appearance
-    visuals:
-    - type: StorageVisualizer
-      state: bio_jan
-      state_open: bio_jan_open
-      state_closed: bio_jan_door
+  - type: EntityStorageVisuals
+    stateBaseClosed: bio_jan
+    stateDoorOpen: bio_jan_open
+    stateDoorClosed: bio_jan_door
 
 # Maintenance closet
 - type: entity
@@ -127,11 +118,10 @@
   parent: ClosetBase
   description: It's a storage unit.
   components:
-    - type: Appearance
-      visuals:
-        - type: StorageVisualizer
-          state_open: generic_open
-          state_closed: generic_door
+  - type: Appearance
+  - type: EntityStorageVisuals
+    stateDoorOpen: generic_open
+    stateDoorClosed: generic_door
 
 # Bluespace closet
 - type: entity

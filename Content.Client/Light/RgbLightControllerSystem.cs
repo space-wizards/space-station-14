@@ -4,7 +4,7 @@ using Content.Shared.Clothing;
 using Content.Shared.Hands;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Light;
-using Content.Shared.Light.Component;
+using Content.Shared.Light.Components;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map.Components;
@@ -17,6 +17,7 @@ namespace Content.Client.Light
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly ItemSystem _itemSystem = default!;
+        [Dependency] private readonly SharedPointLightSystem _lights = default!;
 
         public override void Initialize()
         {
@@ -99,6 +100,7 @@ namespace Content.Client.Light
                     rgb.HolderLayers.Add(key);
             }
         }
+
         private void OnHandleState(EntityUid uid, RgbLightControllerComponent rgb, ref ComponentHandleState args)
         {
             if (args.Current is not RgbLightControllerState state)
@@ -155,7 +157,7 @@ namespace Content.Client.Light
             if (!Resolve(uid, ref rgb, ref sprite, ref light, false))
                 return;
 
-            light.Color = rgb.OriginalLightColor;
+            _lights.SetColor(uid, rgb.OriginalLightColor, light);
 
             if (rgb.Layers == null || rgb.OriginalLayerColors == null)
                 return;
@@ -172,13 +174,14 @@ namespace Content.Client.Light
             {
                 var color = GetCurrentRgbColor(_gameTiming.RealTime, rgb.CreationTick.Value * _gameTiming.TickPeriod, rgb);
 
-                light.Color = color;
+                _lights.SetColor(light.Owner, color, light);
 
                 if (rgb.Layers != null)
                 {
-                    foreach (var layer in rgb.Layers)
+                    foreach (var index in rgb.Layers)
                     {
-                        sprite.LayerSetColor(layer, color);
+                        if (sprite.TryGetLayer(index, out var layer))
+                            layer.Color = color;
                     }
                 }
 
@@ -188,11 +191,12 @@ namespace Content.Client.Light
 
                 foreach (var layer in rgb.HolderLayers)
                 {
-                    holderSprite.LayerSetColor(layer, color);
+                    if (holderSprite.LayerMapTryGet(layer, out var index))
+                        holderSprite.LayerSetColor(index, color);
                 }
             }
 
-            foreach (var (rgb, map) in EntityQuery<RgbLightControllerComponent, MapLightComponent>())
+            foreach (var (map, rgb) in EntityQuery<MapLightComponent, RgbLightControllerComponent>())
             {
                 var color = GetCurrentRgbColor(_gameTiming.RealTime, rgb.CreationTick.Value * _gameTiming.TickPeriod, rgb);
                 map.AmbientLightColor = color;
@@ -202,7 +206,7 @@ namespace Content.Client.Light
         public static Color GetCurrentRgbColor(TimeSpan curTime, TimeSpan offset, RgbLightControllerComponent rgb)
         {
             return Color.FromHsv(new Vector4(
-                (float) (((curTime.TotalSeconds - offset.TotalSeconds) * rgb.CycleRate + Math.Abs(rgb.Owner.GetHashCode() * 0.1)) % 1),
+                (float) (((curTime.TotalSeconds - offset.TotalSeconds) * rgb.CycleRate + Math.Abs(rgb.Owner.Id * 0.1)) % 1),
                 1.0f,
                 1.0f,
                 1.0f

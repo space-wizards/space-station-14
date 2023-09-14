@@ -6,7 +6,7 @@ using Robust.Shared.Audio;
 namespace Content.Server.Crayon
 {
     [RegisterComponent]
-    public sealed class CrayonComponent : SharedCrayonComponent
+    public sealed partial class CrayonComponent : SharedCrayonComponent
     {
         [DataField("useSound")] public SoundSpecifier? UseSound;
 
@@ -25,6 +25,6 @@ namespace Content.Server.Crayon
         [DataField("deleteEmpty")]
         public bool DeleteEmpty = true;
 
-        [ViewVariables] public BoundUserInterface? UserInterface => Owner.GetUIOrNull(CrayonUiKey.Key);
+        [ViewVariables] public PlayerBoundUserInterface? UserInterface => Owner.GetUIOrNull(CrayonUiKey.Key);
     }
 }

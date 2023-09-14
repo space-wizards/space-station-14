@@ -31,8 +31,7 @@ public sealed partial class TriggerSystem
             component.Delay,
             component.BeepInterval,
             component.InitialBeepDelay,
-            component.BeepSound,
-            component.BeepParams);
+            component.BeepSound);
     }
 
     private void OnExamined(EntityUid uid, OnUseTimerTriggerComponent component, ExaminedEvent args)
@@ -150,8 +149,7 @@ public sealed partial class TriggerSystem
             component.Delay,
             component.BeepInterval,
             component.InitialBeepDelay,
-            component.BeepSound,
-            component.BeepParams);
+            component.BeepSound);
 
         args.Handled = true;
     }

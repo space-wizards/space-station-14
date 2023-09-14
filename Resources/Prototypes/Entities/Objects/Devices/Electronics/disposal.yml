@@ -11,3 +11,5 @@
       tags:
         - DroneUsable
         - MailingUnitElectronics
+    - type: StaticPrice
+      price: 55

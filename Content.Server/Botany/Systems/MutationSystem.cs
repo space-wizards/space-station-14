@@ -1,10 +1,21 @@
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Content.Shared.Chemistry.Reagent;
+using System.Linq;
+using Content.Shared.Atmos;
 
 namespace Content.Server.Botany;
 
-public class MutationSystem : EntitySystem
+public sealed class MutationSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _robustRandom = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    private List<ReagentPrototype> _allChemicals = default!;
+
+    public override void Initialize()
+    {
+        _allChemicals = _prototypeManager.EnumeratePrototypes<ReagentPrototype>().ToList();
+    }
 
     /// <summary>
     /// Main idea: Simulate genetic mutation using random binary flips.  Each
@@ -18,8 +29,14 @@ public class MutationSystem : EntitySystem
     /// </summary>
     public void MutateSeed(SeedData seed, float severity)
     {
+        if (!seed.Unique)
+        {
+            Log.Error($"Attempted to mutate a shared seed");
+            return;
+        }
+
         // Add up everything in the bits column and put the number here.
-        const int totalbits = 245;
+        const int totalbits = 270;
 
         // Tolerances (55)
         MutateFloat(ref seed.NutrientConsumption   , 0.05f , 1.2f , 5 , totalbits , severity);
@@ -56,13 +73,20 @@ public class MutationSystem : EntitySystem
         seed.BioluminescentColor = RandomColor(seed.BioluminescentColor, 10, totalbits, severity);
         // ConstantUpgade (10)
         MutateHarvestType(ref seed.HarvestRepeat   , 10 , totalbits , severity);
+
+        // Gas (5)
+        MutateGasses(ref seed.ExudeGasses, 0.01f, 0.5f, 4, totalbits, severity);
+        MutateGasses(ref seed.ConsumeGasses, 0.01f, 0.5f, 1, totalbits, severity);
+
+        // Chems (20)
+        MutateChemicals(ref seed.Chemicals, 5, 20, totalbits, severity);
     }
 
     public SeedData Cross(SeedData a, SeedData b)
     {
         SeedData result = b.Clone();
 
-        result.Chemicals = random(0.5f) ? a.Chemicals : result.Chemicals;
+        CrossChemicals(ref result.Chemicals, a.Chemicals);
 
         CrossFloat(ref result.NutrientConsumption, a.NutrientConsumption);
         CrossFloat(ref result.WaterConsumption, a.WaterConsumption);
@@ -91,11 +115,14 @@ public class MutationSystem : EntitySystem
         CrossBool(ref result.Bioluminescent, a.Bioluminescent);
         CrossBool(ref result.TurnIntoKudzu, a.TurnIntoKudzu);
         CrossBool(ref result.CanScream, a.CanScream);
-        result.BioluminescentColor = random(0.5f) ? a.BioluminescentColor : result.BioluminescentColor;
+        CrossGasses(ref result.ExudeGasses, a.ExudeGasses);
+        CrossGasses(ref result.ConsumeGasses, a.ConsumeGasses);
+
+        result.BioluminescentColor = Random(0.5f) ? a.BioluminescentColor : result.BioluminescentColor;
 
         // Hybrids have a high chance of being seedless. Balances very
         // effective hybrid crossings.
-        if (a.Name == result.Name && random(0.7f))
+        if (a.Name == result.Name && Random(0.7f))
         {
             result.Seedless = true;
         }
@@ -113,7 +140,8 @@ public class MutationSystem : EntitySystem
     {
         // Probability that a bit flip happens for this value.
         float p = mult*bits/totalbits;
-        if (!random(p))
+        p = Math.Clamp(p, 0, 1);
+        if (!Random(p))
         {
             return;
         }
@@ -126,7 +154,7 @@ public class MutationSystem : EntitySystem
         // Probability that the bit flip increases n.
         float p_increase = 1-(float)n/bits;
         int np;
-        if (random(p_increase))
+        if (Random(p_increase))
         {
             np = n + 1;
         }
@@ -144,7 +172,8 @@ public class MutationSystem : EntitySystem
     {
         // Probability that a bit flip happens for this value.
         float p = mult*bits/totalbits;
-        if (!random(p))
+        p = Math.Clamp(p, 0, 1);
+        if (!Random(p))
         {
             return;
         }
@@ -152,7 +181,7 @@ public class MutationSystem : EntitySystem
         // Probability that the bit flip increases n.
         float p_increase = 1-(float)n/bits;
         int np;
-        if (random(p_increase))
+        if (Random(p_increase))
         {
             np = n + 1;
         }
@@ -168,8 +197,9 @@ public class MutationSystem : EntitySystem
     private void MutateBool(ref bool val, bool polarity, int bits, int totalbits, float mult)
     {
         // Probability that a bit flip happens for this value.
-        float p = mult*bits/totalbits;
-        if (!random(p))
+        float p = mult * bits / totalbits;
+        p = Math.Clamp(p, 0, 1);
+        if (!Random(p))
         {
             return;
         }
@@ -180,7 +210,8 @@ public class MutationSystem : EntitySystem
     private void MutateHarvestType(ref HarvestType val, int bits, int totalbits, float mult)
     {
         float p = mult * bits/totalbits;
-        if (!random(p))
+        p = Math.Clamp(p, 0, 1);
+        if (!Random(p))
             return;
 
         if (val == HarvestType.NoRepeat)
@@ -190,10 +221,63 @@ public class MutationSystem : EntitySystem
             val = HarvestType.SelfHarvest;
     }
 
+    private void MutateGasses(ref Dictionary<Gas, float> gasses, float min, float max, int bits, int totalbits, float mult)
+    {
+        float p = mult * bits / totalbits;
+        p = Math.Clamp(p, 0, 1);
+        if (!Random(p))
+            return;
+
+        // Add a random amount of a random gas to this gas dictionary
+        float amount = _robustRandom.NextFloat(min, max);
+        Gas gas = _robustRandom.Pick(Enum.GetValues(typeof(Gas)).Cast<Gas>().ToList());
+        if (gasses.ContainsKey(gas))
+        {
+            gasses[gas] += amount;
+        }
+        else
+        {
+            gasses.Add(gas, amount);
+        }
+    }
+
+    private void MutateChemicals(ref Dictionary<string, SeedChemQuantity> chemicals, int max, int bits, int totalbits, float mult)
+    {
+        float p = mult * bits / totalbits;
+        p = Math.Clamp(p, 0, 1);
+        if (!Random(p))
+            return;
+
+        // Add a random amount of a random chemical to this set of chemicals
+        ReagentPrototype selected_chemical = _robustRandom.Pick(_allChemicals);
+        if (selected_chemical != null)
+        {
+            string chemical_id = selected_chemical.ID;
+            int amount = _robustRandom.Next(1, max);
+            SeedChemQuantity seed_chem_quantity = new SeedChemQuantity();
+            if (chemicals.ContainsKey(chemical_id))
+            {
+                seed_chem_quantity.Min = chemicals[chemical_id].Min;
+                seed_chem_quantity.Max = chemicals[chemical_id].Max + amount;
+                int potency = (int) Math.Ceiling(100.0f / (float) seed_chem_quantity.Max);
+                seed_chem_quantity.PotencyDivisor = potency;
+                chemicals[chemical_id] = seed_chem_quantity;
+            }
+            else
+            {
+                seed_chem_quantity.Min = 1;
+                seed_chem_quantity.Max = 1 + amount;
+                int potency = (int) Math.Ceiling(100.0f / (float) seed_chem_quantity.Max);
+                seed_chem_quantity.PotencyDivisor = potency;
+                chemicals.Add(chemical_id, seed_chem_quantity);
+            }
+        }
+    }
+
     private Color RandomColor(Color color, int bits, int totalbits, float mult)
     {
         float p = mult*bits/totalbits;
-        if (random(p))
+        if (Random(p))
         {
             var colors = new List<Color>{
                 Color.White,
@@ -204,28 +288,94 @@ public class MutationSystem : EntitySystem
                 Color.Purple,
                 Color.Pink
             };
-            var rng = IoCManager.Resolve<IRobustRandom>();
-            return rng.Pick(colors);
+            return _robustRandom.Pick(colors);
         }
         return color;
     }
 
+    private void CrossChemicals(ref Dictionary<string, SeedChemQuantity> val, Dictionary<string, SeedChemQuantity> other)
+    {
+        // Go through chemicals from the pollen in swab
+        foreach (var other_chem in other)
+        {
+            // if both have same chemical, randomly pick potency ratio from the two.
+            if (val.ContainsKey(other_chem.Key))
+            {
+                val[other_chem.Key] = Random(0.5f) ? other_chem.Value : val[other_chem.Key];
+            }
+            // if target plant doesn't have this chemical, has 50% chance to add it. 
+            else
+            {
+                if (Random(0.5f))
+                {
+                    val.Add(other_chem.Key, other_chem.Value);
+                }
+            }
+        }
+
+        // if the target plant has chemical that the pollen in swab does not, 50% chance to remove it.
+        foreach (var this_chem in val)
+        {
+            if (!other.ContainsKey(this_chem.Key))
+            {
+                if (Random(0.5f))
+                {
+                    if (val.Count > 1)
+                    {
+                        val.Remove(this_chem.Key);
+                    }
+                }
+            }
+        }
+    }
+
+    private void CrossGasses(ref Dictionary<Gas, float> val, Dictionary<Gas, float> other)
+    {
+        // Go through gasses from the pollen in swab
+        foreach (var other_gas in other)
+        {
+            // if both have same gas, randomly pick ammount from the two.
+            if (val.ContainsKey(other_gas.Key))
+            {
+                val[other_gas.Key] = Random(0.5f) ? other_gas.Value : val[other_gas.Key];
+            }
+            // if target plant doesn't have this gas, has 50% chance to add it.
+            else
+            {
+                if (Random(0.5f))
+                {
+                    val.Add(other_gas.Key, other_gas.Value);
+                }
+            }
+        }
+        // if the target plant has gas that the pollen in swab does not, 50% chance to remove it.
+        foreach (var this_gas in val)
+        {
+            if (!other.ContainsKey(this_gas.Key))
+            {
+                if (Random(0.5f))
+                {
+                    val.Remove(this_gas.Key);
+                }
+            }
+        }
+    }
     private void CrossFloat(ref float val, float other)
     {
-        val = random(0.5f) ? val : other;
+        val = Random(0.5f) ? val : other;
     }
 
     private void CrossInt(ref int val, int other)
     {
-        val = random(0.5f) ? val : other;
+        val = Random(0.5f) ? val : other;
     }
 
     private void CrossBool(ref bool val, bool other)
     {
-        val = random(0.5f) ? val : other;
+        val = Random(0.5f) ? val : other;
     }
 
-    private bool random(float p)
+    private bool Random(float p)
     {
         return _robustRandom.Prob(p);
     }

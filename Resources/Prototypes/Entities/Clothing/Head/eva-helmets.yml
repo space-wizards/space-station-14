@@ -1,0 +1,83 @@
+#EVA Helmet
+- type: entity
+  parent: ClothingHeadEVAHelmetBase
+  id: ClothingHeadHelmetEVA
+  name: EVA helmet
+  description: An old-but-gold helmet designed for extravehicular activites. Infamous for making security officers paranoid.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Helmets/eva.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Helmets/eva.rsi
+  - type: Tag
+    tags:
+    - HelmetEVA
+    - WhitelistChameleon
+
+#Large EVA Helmet
+- type: entity
+  parent: ClothingHeadEVAHelmetBase
+  id: ClothingHeadHelmetEVALarge
+  name: EVA helmet
+  description: An old-but-gold helmet designed for extravehicular activites.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Helmets/eva_large.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Helmets/eva_large.rsi
+
+#Syndicate EVA Helmet
+- type: entity
+  parent: ClothingHeadEVAHelmetBase
+  id: ClothingHeadHelmetSyndicate
+  name: syndicate EVA helmet
+  description: A simple, stylish EVA helmet. Designed for maximum humble space-badassery.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Helmets/eva_syndicate.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Helmets/eva_syndicate.rsi
+
+#Cosmonaut Helmet
+- type: entity
+  parent: ClothingHeadEVAHelmetBase
+  id: ClothingHeadHelmetCosmonaut
+  name: cosmonaut helmet
+  description: Ancient design, but advanced manufacturing. #Description here originally started with " A deceptively well armored space helmet." Potentially had armor values in SS13 that weren't brought over?
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Helmets/cosmonaut.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Helmets/cosmonaut.rsi
+
+#Paramedic Void Helmet
+- type: entity
+  parent: ClothingHeadEVAHelmetBase
+  id: ClothingHeadHelmetVoidParamed
+  name: Paramedic Void Helmet
+  description: A void helmet made for paramedics.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Helmets/paramedhelm.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Helmets/paramedhelm.rsi
+  - type: TemperatureProtection
+    coefficient: 0.1
+  - type: Armor
+    modifiers:
+      coefficients:
+        Slash: 0.95
+        Heat: 0.90
+        Radiation: 0.75
+
+#Ancient Void Helmet
+- type: entity
+  parent: ClothingHeadEVAHelmetBase
+  id: ClothingHeadHelmetAncient
+  name: NTSRA void helmet
+  description: An ancient space helmet, designed by the NTSRA branch of CentCom.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Helmets/ancientvoidsuit.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Helmets/ancientvoidsuit.rsi

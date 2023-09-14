@@ -3,14 +3,14 @@ using Content.Shared.Gravity;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 
-namespace Content.Client. Anomaly.Ui;
+namespace Content.Client.Anomaly.Ui;
 
 [UsedImplicitly]
 public sealed class AnomalyGeneratorBoundUserInterface : BoundUserInterface
 {
     private AnomalyGeneratorWindow? _window;
 
-    public AnomalyGeneratorBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base (owner, uiKey)
+    public AnomalyGeneratorBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
     {
     }
 
@@ -18,7 +18,7 @@ public sealed class AnomalyGeneratorBoundUserInterface : BoundUserInterface
     {
         base.Open();
 
-        _window = new (Owner.Owner);
+        _window = new(Owner);
 
         _window.OpenCentered();
         _window.OnClose += Close;

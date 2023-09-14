@@ -12,7 +12,6 @@
   - type: Food
   - type: Sprite
     sprite: Objects/Consumable/Food/meals.rsi
-    netsync: false
   - type: SolutionContainerManager
     solutions:
       food:
@@ -78,7 +77,9 @@
       - salty
   - type: Sprite
     state: fries-carrot
-    netsync: false
+  - type: Tag
+    tags:
+    - CarrotFries
   - type: SolutionContainerManager
     solutions:
       food:
@@ -221,6 +222,9 @@
       - fishy
       - batter
       - spicy
+  - type: Tag
+    tags:
+    - CubanCarp
   - type: Sprite
     state: cubancarp
   - type: SolutionContainerManager
@@ -513,7 +517,6 @@
             Quantity: 6
 # What do Europeans eat instead of enchiladas? 25.4 millimeter-iladas.
 
-
 - type: entity
   name: melon fruit bowl
   parent: FoodMealBase
@@ -541,3 +544,18 @@
           Quantity: 5
         - ReagentId: Kelotane
           Quantity: 5
+
+- type: entity
+  name: taco
+  parent: FoodMealBase
+  id: FoodMealTaco
+  description: Take a bite!
+  components:
+  - type: FlavorProfile
+    flavors:
+      - cheesy
+      - tomato
+      - meaty
+      - onion
+  - type: Sprite
+    state: taco

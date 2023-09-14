@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Numerics;
 using Content.Client.Message;
 using Content.Shared.GameTicking;
 using Robust.Client.GameObjects;
@@ -12,13 +13,14 @@ namespace Content.Client.RoundEnd
     public sealed class RoundEndSummaryWindow : DefaultWindow
     {
         private readonly IEntityManager _entityManager;
+        public int RoundId;
 
         public RoundEndSummaryWindow(string gm, string roundEnd, TimeSpan roundTimeSpan, int roundId,
             RoundEndMessageEvent.RoundEndPlayerInfo[] info, IEntityManager entityManager)
         {
             _entityManager = entityManager;
 
-            MinSize = SetSize = (520, 580);
+            MinSize = SetSize = new Vector2(520, 580);
 
             Title = Loc.GetString("round-end-summary-window-title");
 
@@ -28,9 +30,10 @@ namespace Content.Client.RoundEnd
             // "clown slipped the crew x times.", "x shots were fired this round.", etc.
             // Also good for serious info.
 
+            RoundId = roundId;
             var roundEndTabs = new TabContainer();
             roundEndTabs.AddChild(MakeRoundEndSummaryTab(gm, roundEnd, roundTimeSpan, roundId));
-            roundEndTabs.AddChild(MakePlayerManifestoTab(info));
+            roundEndTabs.AddChild(MakePlayerManifestTab(info));
 
             Contents.AddChild(roundEndTabs);
 
@@ -87,12 +90,12 @@ namespace Content.Client.RoundEnd
             return roundEndSummaryTab;
         }
 
-        private BoxContainer MakePlayerManifestoTab(RoundEndMessageEvent.RoundEndPlayerInfo[] playersInfo)
+        private BoxContainer MakePlayerManifestTab(RoundEndMessageEvent.RoundEndPlayerInfo[] playersInfo)
         {
             var playerManifestTab = new BoxContainer
             {
                 Orientation = LayoutOrientation.Vertical,
-                Name = Loc.GetString("round-end-summary-window-player-manifesto-tab-title")
+                Name = Loc.GetString("round-end-summary-window-player-manifest-tab-title")
             };
 
             var playerInfoContainerScrollbox = new ScrollContainer
@@ -122,15 +125,19 @@ namespace Content.Client.RoundEnd
                     VerticalExpand = true,
                 };
 
-                if (_entityManager.TryGetComponent(playerInfo.PlayerEntityUid, out SpriteComponent? sprite))
+                var playerUid = _entityManager.GetEntity(playerInfo.PlayerNetEntity);
+
+                if (_entityManager.HasComponent<SpriteComponent>(playerUid))
                 {
-                    hBox.AddChild(new SpriteView
+                    var spriteView = new SpriteView
                     {
-                        Sprite = sprite,
                         OverrideDirection = Direction.South,
                         VerticalAlignment = VAlignment.Center,
+                        SetSize = new Vector2(32, 32),
                         VerticalExpand = true,
-                    });
+                    };
+                    spriteView.SetEntity(playerUid);
+                    hBox.AddChild(spriteView);
                 }
 
                 if (playerInfo.PlayerICName != null)

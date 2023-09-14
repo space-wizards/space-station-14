@@ -29,7 +29,7 @@
       - DrinkVodkaBottleFull
       - DrinkWhiskeyBottleFull
       - DrinkWineBottleFull
-      - DrinkBeer
+      - DrinkBeerBottleFull
       - DrinkAleBottleFull
     chance: 0.8
     offset: 0.0

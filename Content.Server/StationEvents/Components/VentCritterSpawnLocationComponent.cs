@@ -1,7 +1,9 @@
-﻿namespace Content.Server.StationEvents.Components;
+﻿using Content.Server.StationEvents.Events;
 
-[RegisterComponent]
-public sealed class VentCritterSpawnLocationComponent : Component
+namespace Content.Server.StationEvents.Components;
+
+[RegisterComponent, Access(typeof(VentClogRule))]
+public sealed partial class VentCritterSpawnLocationComponent : Component
 {
 
 }

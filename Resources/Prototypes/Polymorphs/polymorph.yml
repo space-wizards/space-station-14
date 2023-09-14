@@ -83,3 +83,22 @@
   transferName: true
   revertOnCrit: false
   revertOnDeath: false
+
+- type: polymorph
+  id: BreadMorph
+  entity: FoodBreadPlain
+  forced: true
+  inventory: None
+  transferName: false
+  transferDamage: true
+  revertOnCrit: false
+  revertOnDeath: true
+  revertOnEat: true
+
+- type: polymorph
+  id: TreeMorph
+  entity: FloraTree01
+  forced: true
+  transferName: true
+  revertOnDeath: true
+

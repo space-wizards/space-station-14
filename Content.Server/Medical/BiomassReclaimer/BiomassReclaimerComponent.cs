@@ -7,7 +7,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.Medical.BiomassReclaimer
 {
     [RegisterComponent]
-    public sealed class BiomassReclaimerComponent : Component
+    public sealed partial class BiomassReclaimerComponent : Component
     {
         /// <summary>
         /// This gets set for each mob it processes.
@@ -63,7 +63,7 @@ namespace Content.Server.Medical.BiomassReclaimer
         /// Machine part whose rating modifies the yield per mass.
         /// </summary>
         [DataField("machinePartYieldAmount", customTypeSerializer: typeof(PrototypeIdSerializer<MachinePartPrototype>))]
-        public string MachinePartYieldAmount = "Manipulator";
+        public string MachinePartYieldAmount = "MatterBin";
 
         /// <summary>
         /// How much the machine part quality affects the yield.
@@ -89,7 +89,7 @@ namespace Content.Server.Medical.BiomassReclaimer
         /// The machine part that increses the processing speed.
         /// </summary>
         [DataField("machinePartProcessSpeed", customTypeSerializer: typeof(PrototypeIdSerializer<MachinePartPrototype>))]
-        public string MachinePartProcessingSpeed = "Laser";
+        public string MachinePartProcessingSpeed = "Manipulator";
 
         /// <summary>
         /// How much the machine part quality affects the yield.

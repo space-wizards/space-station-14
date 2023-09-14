@@ -4,7 +4,7 @@ namespace Content.Server.Containers
     /// Empties a list of containers when the machine is deconstructed via MachineDeconstructedEvent.
     /// </summary>
     [RegisterComponent]
-    public sealed class EmptyOnMachineDeconstructComponent : Component
+    public sealed partial class EmptyOnMachineDeconstructComponent : Component
     {
         [DataField("containers")]
         public HashSet<string> Containers { get; set; } = new();

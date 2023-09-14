@@ -9,7 +9,7 @@ namespace Content.Benchmarks
     [Virtual]
     public class DynamicTreeBenchmark
     {
-        private static readonly Box2[] _aabbs1 =
+        private static readonly Box2[] Aabbs1 =
         {
             ((Box2) default).Enlarged(1), //2x2 square
             ((Box2) default).Enlarged(2), //4x4 square
@@ -39,11 +39,11 @@ namespace Content.Benchmarks
         public void Setup()
         {
             _b2Tree = new B2DynamicTree<int>();
-            _tree = new DynamicTree<int>((in int value) => _aabbs1[value], capacity: 16);
+            _tree = new DynamicTree<int>((in int value) => Aabbs1[value], capacity: 16);
 
-            for (var i = 0; i < _aabbs1.Length; i++)
+            for (var i = 0; i < Aabbs1.Length; i++)
             {
-                var aabb = _aabbs1[i];
+                var aabb = Aabbs1[i];
                 _b2Tree.CreateProxy(aabb, i);
                 _tree.Add(i);
             }

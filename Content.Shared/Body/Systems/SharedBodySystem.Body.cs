@@ -8,11 +8,14 @@ using Content.Shared.Coordinates;
 using Content.Shared.DragDrop;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
+using Robust.Shared.Network;
 
 namespace Content.Shared.Body.Systems;
 
 public partial class SharedBodySystem
 {
+    [Dependency] private readonly INetManager _netManager = default!;
+
     public void InitializeBody()
     {
         SubscribeLocalEvent<BodyComponent, ComponentInit>(OnBodyInit);
@@ -34,7 +37,10 @@ public partial class SharedBodySystem
             return;
 
         var prototype = Prototypes.Index<BodyPrototype>(body.Prototype);
-        InitBody(body, prototype);
+
+        if (!_netManager.IsClient || IsClientSide(bodyId))
+            InitBody(body, prototype);
+
         Dirty(body); // Client doesn't actually spawn the body, need to sync it
     }
 
@@ -48,7 +54,7 @@ public partial class SharedBodySystem
         if (args.Current is not BodyComponentState state)
             return;
 
-        body.Root = state.Root;
+        body.Root = state.Root; // TODO use containers. This is broken and does not work.
         body.GibSound = state.GibSound;
     }
 
@@ -66,13 +72,38 @@ public partial class SharedBodySystem
             body.Root != null)
             return false;
 
-        slot = new BodyPartSlot(slotId, bodyId.Value, null);
+        slot = new BodyPartSlot
+        {
+            Id = slotId,
+            Parent = bodyId.Value,
+            NetParent = GetNetEntity(bodyId.Value),
+        };
         body.Root = slot;
 
         return true;
     }
 
-    protected abstract void InitBody(BodyComponent body, BodyPrototype prototype);
+    protected void InitBody(BodyComponent body, BodyPrototype prototype)
+    {
+        var root = prototype.Slots[prototype.Root];
+        Containers.EnsureContainer<Container>(body.Owner, BodyContainerId);
+        if (root.Part == null)
+            return;
+        var bodyId = Spawn(root.Part, body.Owner.ToCoordinates());
+        var partComponent = Comp<BodyPartComponent>(bodyId);
+        var slot = new BodyPartSlot
+        {
+            Id = root.Part,
+            Type = partComponent.PartType,
+            Parent = body.Owner,
+            NetParent = GetNetEntity(body.Owner),
+        };
+        body.Root = slot;
+        partComponent.Body = bodyId;
+
+        AttachPart(bodyId, slot, partComponent);
+        InitPart(partComponent, prototype, prototype.Root);
+    }
 
     protected void InitPart(BodyPartComponent parent, BodyPrototype prototype, string slotId, HashSet<string>? initialized = null)
     {

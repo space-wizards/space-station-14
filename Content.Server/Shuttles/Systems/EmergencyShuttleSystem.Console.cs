@@ -1,16 +1,15 @@
 using System.Threading;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Events;
-using Content.Server.Station.Components;
 using Content.Server.UserInterface;
+using Content.Shared.Access;
 using Content.Shared.CCVar;
 using Content.Shared.Database;
-using Content.Shared.GameTicking;
 using Content.Shared.Popups;
 using Content.Shared.Shuttles.BUIStates;
 using Content.Shared.Shuttles.Events;
 using Content.Shared.Shuttles.Systems;
-using Robust.Shared.Audio;
+using Robust.Server.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Timer = Robust.Shared.Timing.Timer;
@@ -62,6 +61,7 @@ public sealed partial class EmergencyShuttleSystem
 
     private CancellationTokenSource? _roundEndCancelToken;
 
+    [ValidatePrototypeId<AccessLevelPrototype>]
     private const string EmergencyRepealAllAccess = "EmergencyShuttleRepealAll";
     private static readonly Color DangerColor = Color.Red;
 
@@ -70,7 +70,10 @@ public sealed partial class EmergencyShuttleSystem
     /// </summary>
     private bool _launchedShuttles;
 
-    private bool _leftShuttles;
+    /// <summary>
+    /// Have the emergency shuttles left for CentCom?
+    /// </summary>
+    public bool ShuttlesLeft;
 
     /// <summary>
     /// Have we announced the launch?
@@ -154,39 +157,39 @@ public sealed partial class EmergencyShuttleSystem
         {
             _launchedShuttles = true;
 
-            if (CentComMap != null)
+            var dataQuery = AllEntityQuery<StationEmergencyShuttleComponent>();
+
+            while (dataQuery.MoveNext(out var stationUid, out var comp))
             {
-                var dataQuery = AllEntityQuery<StationDataComponent>();
-
-                while (dataQuery.MoveNext(out var comp))
+                if (!TryComp<ShuttleComponent>(comp.EmergencyShuttle, out var shuttle) ||
+                    !TryComp<StationCentcommComponent>(stationUid, out var centcomm))
                 {
-                    if (!TryComp<ShuttleComponent>(comp.EmergencyShuttle, out var shuttle))
-                        continue;
-
-                    if (Deleted(CentCom))
-                    {
-                        // TODO: Need to get non-overlapping positions.
-                        _shuttle.FTLTravel(comp.EmergencyShuttle.Value, shuttle,
-                            new EntityCoordinates(
-                                _mapManager.GetMapEntityId(CentComMap.Value),
-                                _random.NextVector2(1000f)), _consoleAccumulator, TransitTime);
-                    }
-                    else
-                    {
-                        _shuttle.FTLTravel(comp.EmergencyShuttle.Value, shuttle,
-                            CentCom.Value, _consoleAccumulator, TransitTime, true);
-                    }
+                    continue;
                 }
 
-                var podQuery = AllEntityQuery<EscapePodComponent>();
-                var podLaunchOffset = 0.5f;
-
-                // Stagger launches coz funny
-                while (podQuery.MoveNext(out _, out var pod))
+                if (Deleted(centcomm.Entity))
                 {
-                    pod.LaunchTime = _timing.CurTime + TimeSpan.FromSeconds(podLaunchOffset);
-                    podLaunchOffset += _random.NextFloat(0.5f, 2.5f);
+                    // TODO: Need to get non-overlapping positions.
+                    _shuttle.FTLTravel(comp.EmergencyShuttle.Value, shuttle,
+                        new EntityCoordinates(
+                            _mapManager.GetMapEntityId(centcomm.MapId),
+                            _random.NextVector2(1000f)), _consoleAccumulator, TransitTime);
                 }
+                else
+                {
+                    _shuttle.FTLTravel(comp.EmergencyShuttle.Value, shuttle,
+                        centcomm.Entity, _consoleAccumulator, TransitTime, true);
+                }
+            }
+
+            var podQuery = AllEntityQuery<EscapePodComponent>();
+            var podLaunchOffset = 0.5f;
+
+            // Stagger launches coz funny
+            while (podQuery.MoveNext(out _, out var pod))
+            {
+                pod.LaunchTime = _timing.CurTime + TimeSpan.FromSeconds(podLaunchOffset);
+                podLaunchOffset += _random.NextFloat(0.5f, 2.5f);
             }
         }
 
@@ -194,32 +197,41 @@ public sealed partial class EmergencyShuttleSystem
 
         while (podLaunchQuery.MoveNext(out var uid, out var pod, out var shuttle))
         {
-            if (CentCom == null || pod.LaunchTime == null || pod.LaunchTime < _timing.CurTime)
+            var stationUid = _station.GetOwningStation(uid);
+
+            if (!TryComp<StationCentcommComponent>(stationUid, out var centcomm) ||
+                Deleted(centcomm.Entity) || pod.LaunchTime == null || pod.LaunchTime < _timing.CurTime)
+            {
                 continue;
+            }
 
             // Don't dock them. If you do end up doing this then stagger launch.
-            _shuttle.FTLTravel(uid, shuttle,
-                CentCom.Value, hyperspaceTime: TransitTime);
-
+            _shuttle.FTLTravel(uid, shuttle, centcomm.Entity, hyperspaceTime: TransitTime);
             RemCompDeferred<EscapePodComponent>(uid);
         }
 
         // Departed
-        if (!_leftShuttles && _consoleAccumulator <= 0f)
+        if (!ShuttlesLeft && _consoleAccumulator <= 0f)
         {
-            _leftShuttles = true;
+            ShuttlesLeft = true;
             _chatSystem.DispatchGlobalAnnouncement(Loc.GetString("emergency-shuttle-left", ("transitTime", $"{TransitTime:0}")));
 
-            _roundEndCancelToken = new CancellationTokenSource();
-            Timer.Spawn((int) (TransitTime * 1000) + _bufferTime.Milliseconds, () => _roundEnd.EndRound(), _roundEndCancelToken.Token);
+            Timer.Spawn((int) (TransitTime * 1000) + _bufferTime.Milliseconds, () => _roundEnd.EndRound(), _roundEndCancelToken?.Token ?? default);
         }
 
         // All the others.
         if (_consoleAccumulator < minTime)
         {
+            var query = AllEntityQuery<StationCentcommComponent>();
+
             // Guarantees that emergency shuttle arrives first before anyone else can FTL.
-            if (CentCom != null)
-                _shuttle.AddFTLDestination(CentCom.Value, true);
+            while (query.MoveNext(out var comp))
+            {
+                if (Deleted(comp.Entity))
+                    continue;
+
+                _shuttle.AddFTLDestination(comp.Entity, true);
+            }
         }
     }
 
@@ -255,7 +267,8 @@ public sealed partial class EmergencyShuttleSystem
         }
 
         // TODO: This is fucking bad
-        if (!component.AuthorizedEntities.Remove(MetaData(idCard.Owner).EntityName)) return;
+        if (!component.AuthorizedEntities.Remove(MetaData(idCard.Owner).EntityName))
+            return;
 
         _logger.Add(LogType.EmergencyShuttle, LogImpact.High, $"Emergency shuttle early launch REPEAL by {args.Session:user}");
         var remaining = component.AuthorizationsRequired - component.AuthorizedEntities.Count;
@@ -267,7 +280,8 @@ public sealed partial class EmergencyShuttleSystem
     private void OnEmergencyAuthorize(EntityUid uid, EmergencyShuttleConsoleComponent component, EmergencyShuttleAuthorizeMessage args)
     {
         var player = args.Session.AttachedEntity;
-        if (player == null) return;
+        if (player == null)
+            return;
 
         if (!_idSystem.TryFindIdCard(player.Value, out var idCard) || !_reader.IsAllowed(idCard.Owner, uid))
         {
@@ -276,7 +290,8 @@ public sealed partial class EmergencyShuttleSystem
         }
 
         // TODO: This is fucking bad
-        if (!component.AuthorizedEntities.Add(MetaData(idCard.Owner).EntityName)) return;
+        if (!component.AuthorizedEntities.Add(MetaData(idCard.Owner).EntityName))
+            return;
 
         _logger.Add(LogType.EmergencyShuttle, LogImpact.High, $"Emergency shuttle early launch AUTH by {args.Session:user}");
         var remaining = component.AuthorizationsRequired - component.AuthorizedEntities.Count;
@@ -287,7 +302,7 @@ public sealed partial class EmergencyShuttleSystem
                 playSound: false, colorOverride: DangerColor);
 
         if (!CheckForLaunch(component))
-            SoundSystem.Play("/Audio/Misc/notice1.ogg", Filter.Broadcast());
+            _audio.PlayGlobal("/Audio/Misc/notice1.ogg", Filter.Broadcast(), recordReplay: true);
 
         UpdateAllEmergencyConsoles();
     }
@@ -296,7 +311,7 @@ public sealed partial class EmergencyShuttleSystem
     {
         _announced = false;
         _roundEndCancelToken = null;
-        _leftShuttles = false;
+        ShuttlesLeft = false;
         _launchedShuttles = false;
         _consoleAccumulator = float.MinValue;
         EarlyLaunchAuthorized = false;
@@ -308,9 +323,10 @@ public sealed partial class EmergencyShuttleSystem
 
     private void UpdateAllEmergencyConsoles()
     {
-        foreach (var comp in EntityQuery<EmergencyShuttleConsoleComponent>(true))
+        var query = AllEntityQuery<EmergencyShuttleConsoleComponent>();
+        while (query.MoveNext(out var uid, out var comp))
         {
-            UpdateConsoleState(comp.Owner, comp);
+            UpdateConsoleState(uid, comp);
         }
     }
 
@@ -323,12 +339,16 @@ public sealed partial class EmergencyShuttleSystem
             auths.Add(auth);
         }
 
-        _uiSystem.GetUiOrNull(uid, EmergencyConsoleUiKey.Key)?.SetState(new EmergencyConsoleBoundUserInterfaceState()
-        {
-            EarlyLaunchTime = EarlyLaunchAuthorized ? _timing.CurTime + TimeSpan.FromSeconds(_consoleAccumulator) : null,
-            Authorizations = auths,
-            AuthorizationsRequired = component.AuthorizationsRequired,
-        });
+        if (_uiSystem.TryGetUi(uid, EmergencyConsoleUiKey.Key, out var bui))
+            _uiSystem.SetUiState(
+                bui,
+                new EmergencyConsoleBoundUserInterfaceState()
+                {
+                    EarlyLaunchTime = EarlyLaunchAuthorized ? _timing.CurTime + TimeSpan.FromSeconds(_consoleAccumulator) : null,
+                    Authorizations = auths,
+                    AuthorizationsRequired = component.AuthorizationsRequired,
+                }
+            );
     }
 
     private bool CheckForLaunch(EmergencyShuttleConsoleComponent component)
@@ -366,12 +386,14 @@ public sealed partial class EmergencyShuttleSystem
             playSound: false,
             colorOverride: DangerColor);
 
-        SoundSystem.Play("/Audio/Misc/notice1.ogg", Filter.Broadcast());
+        _audio.PlayGlobal("/Audio/Misc/notice1.ogg", Filter.Broadcast(), recordReplay: true);
     }
 
     public bool DelayEmergencyRoundEnd()
     {
-        if (_roundEndCancelToken == null) return false;
+        if (_roundEndCancelToken == null)
+            return false;
+
         _roundEndCancelToken?.Cancel();
         _roundEndCancelToken = null;
         return true;

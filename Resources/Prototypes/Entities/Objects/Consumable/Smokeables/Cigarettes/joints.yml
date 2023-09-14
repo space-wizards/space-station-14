@@ -6,7 +6,6 @@
   components:
   - type: Sprite
     sprite: Objects/Consumable/Smokeables/Cannabis/joint.rsi
-    netsync: false
     state: unlit-icon
   - type: Tag
     tags:
@@ -25,10 +24,10 @@
   - type: SolutionContainerManager
     solutions:
       smokable:
-        maxVol: 20
+        maxVol: 30
         reagents:
           - ReagentId: THC
-            Quantity: 10
+            Quantity: 20
 
 - type: entity
   id: Blunt
@@ -38,7 +37,6 @@
   components:
   - type: Sprite
     sprite: Objects/Consumable/Smokeables/Cannabis/blunt.rsi
-    netsync: false
     state: unlit-icon
   - type: Tag
     tags:
@@ -57,7 +55,7 @@
   - type: SolutionContainerManager
     solutions:
       smokable:
-        maxVol: 20
+        maxVol: 30
         reagents:
           - ReagentId: THC
-            Quantity: 10
+            Quantity: 20

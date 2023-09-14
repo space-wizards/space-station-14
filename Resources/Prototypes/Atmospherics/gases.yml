@@ -6,7 +6,7 @@
   molarMass: 32
   color: 2887E8
   reagent: Oxygen
-  pricePerMole: 0.1
+  pricePerMole: 0
 
 - type: gas
   id: 1
@@ -16,7 +16,7 @@
   molarMass: 28
   color: DA1010
   reagent: Nitrogen
-  pricePerMole: 0.1
+  pricePerMole: 0
 
 - type: gas
   id: 2
@@ -26,7 +26,7 @@
   molarMass: 44
   color: 4e4e4e
   reagent: CarbonDioxide
-  pricePerMole: 0.1
+  pricePerMole: 0
 
 - type: gas
   id: 3
@@ -38,7 +38,7 @@
   gasOverlayState: plasma
   color: FF3300
   reagent: Plasma
-  pricePerMole: 0.1
+  pricePerMole: 0
 
 - type: gas
   id: 4
@@ -62,7 +62,7 @@
   gasOverlayState: water_vapor
   color: bffffd
   reagent: Water
-  pricePerMole: 0.1
+  pricePerMole: 0
 
 - type: gas
   id: 6

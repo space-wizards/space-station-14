@@ -13,6 +13,7 @@
   color: "#9FED58"
   roles:
   - Bartender
+  - Borg
   - Botanist
   - Boxer
   - Chaplain
@@ -22,16 +23,12 @@
   - Janitor
   - Lawyer
   - Librarian
-  - MedicalIntern
   - Mime
   - Musician
   - Passenger
   - Reporter
   - Zookeeper
-  - SecurityCadet
   - ServiceWorker
-  - TechnicalAssistant
-  - ResearchAssistant
 
 - type: department
   id: Command
@@ -54,6 +51,7 @@
   roles:
   - AtmosphericTechnician
   - ChiefEngineer
+  - SeniorEngineer
   - StationEngineer
   - TechnicalAssistant
 
@@ -67,24 +65,37 @@
   - MedicalDoctor
   - MedicalIntern
   - Psychologist
+  - Paramedic
+  - SeniorPhysician
 
 - type: department
   id: Security
-  description: department-Command-description
+  description: department-Security-description
   color: "#DE3A3A"
   roles:
   - HeadOfSecurity
   - SecurityCadet
   - SecurityOfficer
+  - SeniorOfficer
   - Detective
   - Warden
-  - Brigmedic
 
 - type: department
   id: Science
-  description: department-Command-description
+  description: department-Science-description
   color: "#D381C9"
   roles:
   - ResearchDirector
+  - SeniorResearcher
   - Scientist
   - ResearchAssistant
+
+- type: department
+  id: Specific
+  description: department-Specific-description
+  color: "#9FED58"
+  roles:
+  - Boxer
+  - Reporter
+  - Zookeeper
+  - Psychologist

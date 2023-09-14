@@ -1,6 +1,7 @@
 using System.Linq;
 using Content.Server.Administration;
 using Content.Server.EUI;
+using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
 using Content.Server.StationRecords;
 using Content.Server.StationRecords.Systems;
@@ -12,6 +13,7 @@ using Content.Shared.StationRecords;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Console;
+using Robust.Shared.Players;
 
 namespace Content.Server.CrewManifest;
 
@@ -29,7 +31,7 @@ public sealed class CrewManifestSystem : EntitySystem
     /// </summary>
     private readonly Dictionary<EntityUid, CrewManifestEntries> _cachedEntries = new();
 
-    private readonly Dictionary<EntityUid, Dictionary<IPlayerSession, CrewManifestEui>> _openEuis = new();
+    private readonly Dictionary<EntityUid, Dictionary<ICommonSession, CrewManifestEui>> _openEuis = new();
 
     public override void Initialize()
     {
@@ -63,7 +65,7 @@ public sealed class CrewManifestSystem : EntitySystem
             return;
         }
 
-        OpenEui(message.Id, sessionCast);
+        OpenEui(GetEntity(message.Id), sessionCast);
     }
 
     // Not a big fan of this one. Rebuilds the crew manifest every time
@@ -167,7 +169,7 @@ public sealed class CrewManifestSystem : EntitySystem
     /// <param name="station">Station that we're displaying the crew manifest for.</param>
     /// <param name="session">The player's session.</param>
     /// <param name="owner">The owner of this EUI, if there was one.</param>
-    public void CloseEui(EntityUid station, IPlayerSession session, EntityUid? owner = null)
+    public void CloseEui(EntityUid station, ICommonSession session, EntityUid? owner = null)
     {
         if (!HasComp<StationRecordsComponent>(station))
         {
@@ -211,15 +213,7 @@ public sealed class CrewManifestSystem : EntitySystem
         }
 
         entries.Entries = entries.Entries.OrderBy(e => e.JobTitle).ThenBy(e => e.Name).ToList();
-
-        if (_cachedEntries.ContainsKey(station))
-        {
-            _cachedEntries[station] = entries;
-        }
-        else
-        {
-            _cachedEntries.Add(station, entries);
-        }
+        _cachedEntries[station] = entries;
     }
 }
 
@@ -245,7 +239,7 @@ public sealed class CrewManifestCommand : IConsoleCommand
             return;
         }
 
-        if (!EntityUid.TryParse(args[0], out var uid))
+        if (!NetEntity.TryParse(args[0], out var uidNet) || !_entityManager.TryGetEntity(uidNet, out var uid))
         {
             shell.WriteLine($"{args[0]} is not a valid entity UID.");
             return;
@@ -259,7 +253,7 @@ public sealed class CrewManifestCommand : IConsoleCommand
 
         var crewManifestSystem = _entityManager.System<CrewManifestSystem>();
 
-        crewManifestSystem.OpenEui(uid, session);
+        crewManifestSystem.OpenEui(uid.Value, session);
     }
 
     public CompletionResult GetCompletion(IConsoleShell shell, string[] args)
@@ -270,13 +264,12 @@ public sealed class CrewManifestCommand : IConsoleCommand
         }
 
         var stations = _entityManager
-            .System<StationSystem>()
-            .Stations
-            .Select(station =>
+            .EntityQuery<StationDataComponent>()
+            .Select(stationData =>
             {
-                var meta = _entityManager.GetComponent<MetaDataComponent>(station);
+                var meta = _entityManager.GetComponent<MetaDataComponent>(stationData.Owner);
 
-                return new CompletionOption(station.ToString(), meta.EntityName);
+                return new CompletionOption(stationData.Owner.ToString(), meta.EntityName);
             });
 
         return CompletionResult.FromHintOptions(stations, null);

@@ -1,11 +1,17 @@
 using Content.Server.Administration.Logs;
 using Content.Server.Atmos.EntitySystems;
+using Content.Server.Atmos.Monitor.Systems;
 using Content.Server.Atmos.Piping.Binary.Components;
 using Content.Server.Atmos.Piping.Components;
+using Content.Server.DeviceNetwork;
+using Content.Server.DeviceNetwork.Components;
+using Content.Server.DeviceNetwork.Systems;
 using Content.Server.NodeContainer;
+using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NodeContainer.Nodes;
 using Content.Shared.Atmos.Piping;
 using Content.Shared.Atmos.Piping.Binary.Components;
+using Content.Shared.Atmos.Piping.Unary.Components;
 using Content.Shared.Audio;
 using Content.Shared.Database;
 using Content.Shared.Examine;
@@ -13,20 +19,21 @@ using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
-using Robust.Shared.Timing;
 
 namespace Content.Server.Atmos.Piping.Binary.EntitySystems
 {
     [UsedImplicitly]
     public sealed class GasVolumePumpSystem : EntitySystem
     {
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly TransformSystem _transformSystem = default!;
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
         [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
         [Dependency] private readonly SharedAmbientSoundSystem _ambientSoundSystem = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+        [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
+        [Dependency] private readonly DeviceNetworkSystem _deviceNetwork = default!;
+
 
         public override void Initialize()
         {
@@ -36,10 +43,12 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
             SubscribeLocalEvent<GasVolumePumpComponent, AtmosDeviceUpdateEvent>(OnVolumePumpUpdated);
             SubscribeLocalEvent<GasVolumePumpComponent, AtmosDeviceDisabledEvent>(OnVolumePumpLeaveAtmosphere);
             SubscribeLocalEvent<GasVolumePumpComponent, ExaminedEvent>(OnExamined);
-            SubscribeLocalEvent<GasVolumePumpComponent, InteractHandEvent>(OnPumpInteractHand);
+            SubscribeLocalEvent<GasVolumePumpComponent, ActivateInWorldEvent>(OnPumpActivate);
             // Bound UI subscriptions
             SubscribeLocalEvent<GasVolumePumpComponent, GasVolumePumpChangeTransferRateMessage>(OnTransferRateChangeMessage);
             SubscribeLocalEvent<GasVolumePumpComponent, GasVolumePumpToggleStatusMessage>(OnToggleStatusMessage);
+
+            SubscribeLocalEvent<GasVolumePumpComponent, DeviceNetworkPacketEvent>(OnPacketRecv);
         }
 
         private void OnInit(EntityUid uid, GasVolumePumpComponent pump, ComponentInit args)
@@ -64,8 +73,8 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
             if (!pump.Enabled
                 || !TryComp(uid, out NodeContainerComponent? nodeContainer)
                 || !TryComp(uid, out AtmosDeviceComponent? device)
-                || !nodeContainer.TryGetNode(pump.InletName, out PipeNode? inlet)
-                || !nodeContainer.TryGetNode(pump.OutletName, out PipeNode? outlet))
+                || !_nodeContainer.TryGetNode(nodeContainer, pump.InletName, out PipeNode? inlet)
+                || !_nodeContainer.TryGetNode(nodeContainer, pump.OutletName, out PipeNode? outlet))
             {
                 _ambientSoundSystem.SetAmbience(uid, false);
                 return;
@@ -83,7 +92,7 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
                 return;
 
             // We multiply the transfer rate in L/s by the seconds passed since the last process to get the liters.
-            var removed = inlet.Air.RemoveVolume((float)(pump.TransferRate * (_gameTiming.CurTime - device.LastProcess).TotalSeconds));
+            var removed = inlet.Air.RemoveVolume((float)(pump.TransferRate * args.dt));
 
             // Some of the gas from the mixture leaks when overclocked.
             if (pump.Overclocked)
@@ -99,6 +108,8 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
                 }
             }
 
+            pump.LastMolesTransferred = removed.TotalMoles;
+
             _atmosphereSystem.Merge(outlet.Air, removed);
             _ambientSoundSystem.SetAmbience(uid, removed.TotalMoles > 0f);
         }
@@ -112,7 +123,7 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
             _userInterfaceSystem.TryCloseAll(uid, GasVolumePumpUiKey.Key);
         }
 
-        private void OnPumpInteractHand(EntityUid uid, GasVolumePumpComponent pump, InteractHandEvent args)
+        private void OnPumpActivate(EntityUid uid, GasVolumePumpComponent pump, ActivateInWorldEvent args)
         {
             if (!EntityManager.TryGetComponent(args.User, out ActorComponent? actor))
                 return;
@@ -162,6 +173,25 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
                 return;
 
             _appearance.SetData(uid, PumpVisuals.Enabled, pump.Enabled, appearance);
+        }
+
+        private void OnPacketRecv(EntityUid uid, GasVolumePumpComponent component, DeviceNetworkPacketEvent args)
+        {
+            if (!TryComp(uid, out DeviceNetworkComponent? netConn)
+                || !args.Data.TryGetValue(DeviceNetworkConstants.Command, out var cmd))
+                return;
+
+            var payload = new NetworkPayload();
+
+            switch (cmd)
+            {
+                case AtmosDeviceNetworkSystem.SyncData:
+                    payload.Add(DeviceNetworkConstants.Command, AtmosDeviceNetworkSystem.SyncData);
+                    payload.Add(AtmosDeviceNetworkSystem.SyncData, new GasVolumePumpData(component.LastMolesTransferred));
+
+                    _deviceNetwork.QueuePacket(uid, args.SenderAddress, payload, device: netConn);
+                    return;
+            }
         }
     }
 }

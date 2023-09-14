@@ -10,12 +10,15 @@ namespace Content.Shared.Access.Systems
     public abstract class SharedIdCardConsoleSystem : EntitySystem
     {
         [Dependency] private readonly ItemSlotsSystem _itemSlotsSystem = default!;
+        [Dependency] private readonly ILogManager _log = default!;
 
         public const string Sawmill = "idconsole";
+        protected ISawmill _sawmill = default!;
 
         public override void Initialize()
         {
             base.Initialize();
+            _sawmill = _log.GetSawmill(Sawmill);
 
             SubscribeLocalEvent<IdCardConsoleComponent, ComponentInit>(OnComponentInit);
             SubscribeLocalEvent<IdCardConsoleComponent, ComponentRemove>(OnComponentRemove);

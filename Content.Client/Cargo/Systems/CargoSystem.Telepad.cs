@@ -1,4 +1,6 @@
 using Content.Shared.Cargo;
+using Content.Shared.Cargo.Components;
+using JetBrains.Annotations;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
@@ -52,47 +54,48 @@ public sealed partial class CargoSystem
 
     private void OnCargoAppChange(EntityUid uid, CargoTelepadComponent component, ref AppearanceChangeEvent args)
     {
-        OnChangeData(args.Component, args.Sprite);
+        OnChangeData(uid, args.Sprite);
     }
 
     private void OnCargoAnimComplete(EntityUid uid, CargoTelepadComponent component, AnimationCompletedEvent args)
     {
-        if (!TryComp<AppearanceComponent>(uid, out var appearance)) return;
-
-        OnChangeData(appearance);
+        OnChangeData(uid);
     }
 
-    private void OnChangeData(AppearanceComponent component, SpriteComponent? sprite = null)
+    private void OnChangeData(EntityUid uid, SpriteComponent? sprite = null)
     {
-        if (!Resolve(component.Owner, ref sprite))
+        if (!Resolve(uid, ref sprite))
             return;
 
-        _appearance.TryGetData<CargoTelepadState?>(component.Owner, CargoTelepadVisuals.State, out var state);
+        _appearance.TryGetData<CargoTelepadState?>(uid, CargoTelepadVisuals.State, out var state);
         AnimationPlayerComponent? player = null;
 
         switch (state)
         {
             case CargoTelepadState.Teleporting:
-                if (_player.HasRunningAnimation(component.Owner, TelepadBeamKey)) return;
-                _player.Stop(component.Owner, player, TelepadIdleKey);
-                _player.Play(component.Owner, player, CargoTelepadBeamAnimation, TelepadBeamKey);
+                if (_player.HasRunningAnimation(uid, TelepadBeamKey))
+                    return;
+                _player.Stop(uid, player, TelepadIdleKey);
+                _player.Play(uid, player, CargoTelepadBeamAnimation, TelepadBeamKey);
                 break;
             case CargoTelepadState.Unpowered:
                 sprite.LayerSetVisible(CargoTelepadLayers.Beam, false);
-                _player.Stop(component.Owner, player, TelepadBeamKey);
-                _player.Stop(component.Owner, player, TelepadIdleKey);
+                _player.Stop(uid, player, TelepadBeamKey);
+                _player.Stop(uid, player, TelepadIdleKey);
                 break;
             default:
                 sprite.LayerSetVisible(CargoTelepadLayers.Beam, true);
 
-                if (_player.HasRunningAnimation(component.Owner, player, TelepadIdleKey) ||
-                    _player.HasRunningAnimation(component.Owner, player, TelepadBeamKey)) return;
+                if (_player.HasRunningAnimation(uid, player, TelepadIdleKey) ||
+                    _player.HasRunningAnimation(uid, player, TelepadBeamKey))
+                    return;
 
-                _player.Play(component.Owner, player, CargoTelepadIdleAnimation, TelepadIdleKey);
+                _player.Play(uid, player, CargoTelepadIdleAnimation, TelepadIdleKey);
                 break;
         }
     }
 
+    [UsedImplicitly]
     private enum CargoTelepadLayers : byte
     {
         Base = 0,

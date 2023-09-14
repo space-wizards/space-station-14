@@ -1,4 +1,5 @@
-﻿using Content.Client.Resources;
+﻿using System.Numerics;
+using Content.Client.Resources;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -55,8 +56,8 @@ public sealed class ChannelFilterButton : ContainerButton
         {
             var globalPos = GlobalPosition;
             var (minX, minY) = ChatFilterPopup.MinSize;
-            var box = UIBox2.FromDimensions(globalPos - (FilterDropdownOffset, 0),
-                (Math.Max(minX, ChatFilterPopup.MinWidth), minY));
+            var box = UIBox2.FromDimensions(globalPos - new Vector2(FilterDropdownOffset, 0),
+                new Vector2(Math.Max(minX, ChatFilterPopup.MinWidth), minY));
             ChatFilterPopup.Open(box);
         }
         else

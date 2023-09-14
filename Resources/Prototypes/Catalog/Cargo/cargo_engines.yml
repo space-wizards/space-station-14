@@ -74,7 +74,7 @@
   id: EngineParticleAccelerator
   icon:
     sprite: Structures/Power/Generation/PA/control_box.rsi
-    state: boxc
+    state: completed
   product: CrateEngineeringParticleAccelerator
   cost: 2000
   category: Engineering

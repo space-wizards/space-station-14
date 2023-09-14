@@ -1,57 +1,75 @@
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.Pinpointer
+namespace Content.Shared.Pinpointer;
+
+/// <summary>
+/// Displays a sprite on the item that points towards the target component.
+/// </summary>
+[RegisterComponent, NetworkedComponent]
+[AutoGenerateComponentState]
+[Access(typeof(SharedPinpointerSystem))]
+public sealed partial class PinpointerComponent : Component
 {
+    // TODO: Type serializer oh god
+    [DataField("component"), ViewVariables(VVAccess.ReadWrite)]
+    public string? Component;
+
+    [DataField("mediumDistance"), ViewVariables(VVAccess.ReadWrite)]
+    public float MediumDistance = 16f;
+
+    [DataField("closeDistance"), ViewVariables(VVAccess.ReadWrite)]
+    public float CloseDistance = 8f;
+
+    [DataField("reachedDistance"), ViewVariables(VVAccess.ReadWrite)]
+    public float ReachedDistance = 1f;
+
     /// <summary>
-    /// Displays a sprite on the item that points towards the target component.
+    ///     Pinpointer arrow precision in radians.
     /// </summary>
-    [RegisterComponent]
-    [NetworkedComponent]
-    [Access(typeof(SharedPinpointerSystem))]
-    public sealed class PinpointerComponent : Component
-    {
-        // TODO: Type serializer oh god
-        [DataField("component")]
-        public string? Component;
+    [DataField("precision"), ViewVariables(VVAccess.ReadWrite)]
+    public double Precision = 0.09;
 
-        [DataField("mediumDistance")]
-        public float MediumDistance = 16f;
+    /// <summary>
+    ///     Name to display of the target being tracked.
+    /// </summary>
+    [DataField("targetName"), ViewVariables(VVAccess.ReadWrite)]
+    public string? TargetName;
 
-        [DataField("closeDistance")]
-        public float CloseDistance = 8f;
+    /// <summary>
+    ///     Whether or not the target name should be updated when the target is updated.
+    /// </summary>
+    [DataField("updateTargetName"), ViewVariables(VVAccess.ReadWrite)]
+    public bool UpdateTargetName;
 
-        [DataField("reachedDistance")]
-        public float ReachedDistance = 1f;
+    /// <summary>
+    ///     Whether or not the target can be reassigned.
+    /// </summary>
+    [DataField("canRetarget"), ViewVariables(VVAccess.ReadWrite)]
+    public bool CanRetarget;
 
-        /// <summary>
-        ///     Pinpointer arrow precision in radians.
-        /// </summary>
-        [DataField("precision")]
-        public double Precision = 0.09;
+    [ViewVariables]
+    public EntityUid? Target = null;
 
-        public EntityUid? Target = null;
-        public bool IsActive = false;
-        public Angle ArrowAngle;
-        public Distance DistanceToTarget = Distance.Unknown;
-        public bool HasTarget => DistanceToTarget != Distance.Unknown;
-    }
+    [ViewVariables, AutoNetworkedField]
+    public bool IsActive = false;
 
-    [Serializable, NetSerializable]
-    public sealed class PinpointerComponentState : ComponentState
-    {
-        public bool IsActive;
-        public Angle ArrowAngle;
-        public Distance DistanceToTarget;
-    }
+    [ViewVariables, AutoNetworkedField]
+    public Angle ArrowAngle;
 
-    [Serializable, NetSerializable]
-    public enum Distance : byte
-    {
-        Unknown,
-        Reached,
-        Close,
-        Medium,
-        Far
-    }
+    [ViewVariables, AutoNetworkedField]
+    public Distance DistanceToTarget = Distance.Unknown;
+
+    [ViewVariables]
+    public bool HasTarget => DistanceToTarget != Distance.Unknown;
+}
+
+[Serializable, NetSerializable]
+public enum Distance : byte
+{
+    Unknown,
+    Reached,
+    Close,
+    Medium,
+    Far
 }

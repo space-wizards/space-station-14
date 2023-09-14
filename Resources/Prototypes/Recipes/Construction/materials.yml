@@ -52,3 +52,25 @@
   description: A high-quality thread used to make durable clothes.
   icon: { sprite: Objects/Materials/materials.rsi, state: durathread }
   objectType: Item
+
+- type: construction
+  name: uranium glass
+  description: A sheet of uranium glass.
+  id: SheetUGlass
+  graph: Glass
+  startNode: start
+  targetNode: SheetUGlass
+  category: construction-category-materials
+  icon: { sprite: Objects/Materials/Sheets/glass.rsi, state: uglass }
+  objectType: Item
+
+- type: construction
+  name: reinforced uranium glass
+  description: A reinforced sheet of uranium glass.
+  id: SheetRUGlass
+  graph: Glass
+  startNode: start
+  targetNode: SheetRUGlass
+  category: construction-category-materials
+  icon: { sprite: Objects/Materials/Sheets/glass.rsi, state: ruglass }
+  objectType: Item

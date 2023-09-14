@@ -132,7 +132,7 @@ namespace Content.Server.Strip
             Verb verb = new()
             {
                 Text = Loc.GetString("strip-verb-get-data-text"),
-                Icon = new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/VerbIcons/outfit.svg.192dpi.png")),
+                Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/outfit.svg.192dpi.png")),
                 Act = () => StartOpeningStripper(args.User, component, true),
             };
             args.Verbs.Add(verb);
@@ -149,7 +149,7 @@ namespace Content.Server.Strip
             ExamineVerb verb = new()
             {
                 Text = Loc.GetString("strip-verb-get-data-text"),
-                Icon = new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/VerbIcons/outfit.svg.192dpi.png")),
+                Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/outfit.svg.192dpi.png")),
                 Act = () => StartOpeningStripper(args.User, component, true),
                 Category = VerbCategory.Examine,
             };
@@ -217,7 +217,7 @@ namespace Content.Server.Strip
             var ev = new BeforeGettingStrippedEvent(userEv.Time, userEv.Stealth);
             RaiseLocalEvent(target, ev);
 
-            var doAfterArgs = new DoAfterArgs(user, ev.Time, new AwaitedDoAfterEvent(), null, target: target, used: held)
+            var doAfterArgs = new DoAfterArgs(EntityManager, user, ev.Time, new AwaitedDoAfterEvent(), null, target: target, used: held)
             {
                 ExtraCheck = Check,
                 AttemptFrequency = AttemptFrequency.EveryTick,
@@ -234,6 +234,8 @@ namespace Content.Server.Strip
                     ("user", Identity.Entity(user, EntityManager)), ("item", userHands.ActiveHandEntity));
                 _popup.PopupEntity(message, target, target, PopupType.Large);
             }
+
+            _adminLogger.Add(LogType.Stripping, LogImpact.Low, $"{ToPrettyString(user):user} is trying to place the item {ToPrettyString(held):item} in {ToPrettyString(target):target}'s {slot} slot");
 
             var result = await _doAfter.WaitDoAfter(doAfterArgs);
             if (result != DoAfterStatus.Finished) return;
@@ -287,7 +289,7 @@ namespace Content.Server.Strip
             var ev = new BeforeGettingStrippedEvent(userEv.Time, userEv.Stealth);
             RaiseLocalEvent(target, ev);
 
-            var doAfterArgs = new DoAfterArgs(user, ev.Time, new AwaitedDoAfterEvent(), null, target: target, used: held)
+            var doAfterArgs = new DoAfterArgs(EntityManager, user, ev.Time, new AwaitedDoAfterEvent(), null, target: target, used: held)
             {
                 ExtraCheck = Check,
                 AttemptFrequency = AttemptFrequency.EveryTick,
@@ -297,6 +299,8 @@ namespace Content.Server.Strip
                 NeedHand = true,
                 DuplicateCondition = DuplicateConditions.SameTool
             };
+
+            _adminLogger.Add(LogType.Stripping, LogImpact.Low, $"{ToPrettyString(user):user} is trying to place the item {ToPrettyString(held):item} in {ToPrettyString(target):target}'s hands");
 
             var result = await _doAfter.WaitDoAfter(doAfterArgs);
             if (result != DoAfterStatus.Finished) return;
@@ -327,7 +331,7 @@ namespace Content.Server.Strip
 
                 if (!_inventorySystem.CanUnequip(user, target, slot, out var reason))
                 {
-                    _popup.PopupCursor(reason, user);
+                    _popup.PopupCursor(Loc.GetString(reason), user);
                     return false;
                 }
 
@@ -345,7 +349,7 @@ namespace Content.Server.Strip
             var ev = new BeforeGettingStrippedEvent(userEv.Time, userEv.Stealth);
             RaiseLocalEvent(target, ev);
 
-            var doAfterArgs = new DoAfterArgs(user, ev.Time, new AwaitedDoAfterEvent(), null, target: target, used: item)
+            var doAfterArgs = new DoAfterArgs(EntityManager, user, ev.Time, new AwaitedDoAfterEvent(), null, target: target, used: item)
             {
                 ExtraCheck = Check,
                 AttemptFrequency = AttemptFrequency.EveryTick,
@@ -370,6 +374,8 @@ namespace Content.Server.Strip
                         target, PopupType.Large);
                 }
             }
+
+            _adminLogger.Add(LogType.Stripping, LogImpact.Low, $"{ToPrettyString(user):user} is trying to strip the item {ToPrettyString(item):item} from {ToPrettyString(target):target}");
 
             var result = await _doAfter.WaitDoAfter(doAfterArgs);
             if (result != DoAfterStatus.Finished) return;
@@ -418,7 +424,7 @@ namespace Content.Server.Strip
             var ev = new BeforeGettingStrippedEvent(userEv.Time, userEv.Stealth);
             RaiseLocalEvent(target, ev);
 
-            var doAfterArgs = new DoAfterArgs(user, ev.Time, new AwaitedDoAfterEvent(), null, target: target, used: item)
+            var doAfterArgs = new DoAfterArgs(EntityManager, user, ev.Time, new AwaitedDoAfterEvent(), null, target: target, used: item)
             {
                 ExtraCheck = Check,
                 AttemptFrequency = AttemptFrequency.EveryTick,
@@ -438,6 +444,9 @@ namespace Content.Server.Strip
                     component.Owner,
                     component.Owner);
             }
+
+            _adminLogger.Add(LogType.Stripping, LogImpact.Low,
+                $"{ToPrettyString(user):user} is trying to strip the item {ToPrettyString(item):item} from {ToPrettyString(target):target}");
 
             var result = await _doAfter.WaitDoAfter(doAfterArgs);
             if (result != DoAfterStatus.Finished) return;

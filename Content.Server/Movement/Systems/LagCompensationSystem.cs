@@ -1,6 +1,7 @@
 using Content.Server.Movement.Components;
 using Robust.Server.Player;
 using Robust.Shared.Map;
+using Robust.Shared.Players;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Movement.Systems;
@@ -35,7 +36,9 @@ public sealed class LagCompensationSystem : EntitySystem
 
         // Cull any old ones from active updates
         // Probably fine to include ignored.
-        foreach (var (_, comp) in EntityQuery<ActiveLagCompensationComponent, LagCompensationComponent>(true))
+        var query = AllEntityQuery<LagCompensationComponent>();
+
+        while (query.MoveNext(out var comp))
         {
             while (comp.Positions.TryPeek(out var pos))
             {
@@ -47,11 +50,6 @@ public sealed class LagCompensationSystem : EntitySystem
 
                 break;
             }
-
-            if (comp.Positions.Count == 0)
-            {
-                RemComp<ActiveLagCompensationComponent>(comp.Owner);
-            }
         }
     }
 
@@ -60,17 +58,16 @@ public sealed class LagCompensationSystem : EntitySystem
         if (!args.NewPosition.EntityId.IsValid())
             return; // probably being sent to nullspace for deletion.
 
-        EnsureComp<ActiveLagCompensationComponent>(uid);
         component.Positions.Enqueue((_timing.CurTime, args.NewPosition, args.NewRotation));
     }
 
-    public (EntityCoordinates Coordinates, Angle Angle) GetCoordinatesAngle(EntityUid uid, IPlayerSession pSession,
+    public (EntityCoordinates Coordinates, Angle Angle) GetCoordinatesAngle(EntityUid uid, ICommonSession? pSession,
         TransformComponent? xform = null)
     {
         if (!Resolve(uid, ref xform))
             return (EntityCoordinates.Invalid, Angle.Zero);
 
-        if (!TryComp<LagCompensationComponent>(uid, out var lag) || lag.Positions.Count == 0)
+        if (pSession == null || !TryComp<LagCompensationComponent>(uid, out var lag) || lag.Positions.Count == 0)
             return (xform.Coordinates, xform.LocalRotation);
 
         var angle = Angle.Zero;
@@ -102,15 +99,15 @@ public sealed class LagCompensationSystem : EntitySystem
         return (coordinates, angle);
     }
 
-    public Angle GetAngle(EntityUid uid, IPlayerSession pSession, TransformComponent? xform = null)
+    public Angle GetAngle(EntityUid uid, ICommonSession? session, TransformComponent? xform = null)
     {
-        var (_, angle) = GetCoordinatesAngle(uid, pSession, xform);
+        var (_, angle) = GetCoordinatesAngle(uid, session, xform);
         return angle;
     }
 
-    public EntityCoordinates GetCoordinates(EntityUid uid, IPlayerSession pSession, TransformComponent? xform = null)
+    public EntityCoordinates GetCoordinates(EntityUid uid, ICommonSession? session, TransformComponent? xform = null)
     {
-        var (coordinates, _) = GetCoordinatesAngle(uid, pSession, xform);
+        var (coordinates, _) = GetCoordinatesAngle(uid, session, xform);
         return coordinates;
     }
 }

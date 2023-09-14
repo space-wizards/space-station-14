@@ -1,0 +1,37 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from /tg/station at commit 28b476ab6d17014e6f9e18a748d7c96be28de9a1",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "bonfire_0"
+    },
+    {
+      "name": "bonfire_1"
+    },
+    {
+      "name": "burning",
+      "delays": [
+        [
+      0.3,
+      0.3,
+      0.3
+    ]
+      ]
+    },
+    {
+      "name": "legionnaire_bonfire",
+      "delays": [
+        [
+      0.3,
+      0.3,
+      0.3
+    ]
+      ]
+    }
+  ]
+}

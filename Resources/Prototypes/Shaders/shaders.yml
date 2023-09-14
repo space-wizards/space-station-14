@@ -66,13 +66,19 @@
   kind: source
   path: "/Textures/Shaders/blurryy.swsl"
 
-- type: shader
-  id: Dim
-  kind: source
-  path: "/Textures/Shaders/dim.swsl"
-
 # cloaking distortion effect
 - type: shader
   id: Stealth
   kind: source
   path: "/Textures/Shaders/stealth.swsl"
+
+- type: shader
+  id: PaperStamp
+  kind: source
+  path: "/Textures/Shaders/paperstamp.swsl"
+  
+# Simple horizontal cut
+- type: shader
+  id: HorizontalCut
+  kind: source
+  path: "/Textures/Shaders/hcut.swsl"

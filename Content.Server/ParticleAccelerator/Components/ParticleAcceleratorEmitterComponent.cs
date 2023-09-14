@@ -1,36 +1,27 @@
 ﻿using Content.Shared.Singularity.Components;
 
-namespace Content.Server.ParticleAccelerator.Components
+namespace Content.Server.ParticleAccelerator.Components;
+
+[RegisterComponent]
+public sealed partial class ParticleAcceleratorEmitterComponent : Component
 {
-    [RegisterComponent]
-    public sealed class ParticleAcceleratorEmitterComponent : Component
+    [DataField("emittedPrototype")]
+    [ViewVariables(VVAccess.ReadWrite)]
+    public string EmittedPrototype = "ParticlesProjectile";
+
+    [DataField("emitterType")]
+    [ViewVariables(VVAccess.ReadWrite)]
+    public ParticleAcceleratorEmitterType Type = ParticleAcceleratorEmitterType.Fore;
+
+    public override string ToString()
     {
-        [DataField("emitterType")]
-        public ParticleAcceleratorEmitterType Type = ParticleAcceleratorEmitterType.Center;
-
-        public void Fire(ParticleAcceleratorPowerState strength)
-        {
-            var entities = IoCManager.Resolve<IEntityManager>();
-            var projectile = entities.SpawnEntity("ParticlesProjectile", entities.GetComponent<TransformComponent>(Owner).Coordinates);
-
-            if (!entities.TryGetComponent<ParticleProjectileComponent?>(projectile, out var particleProjectileComponent))
-            {
-                Logger.Error("ParticleAcceleratorEmitter tried firing particles, but they was spawned without a ParticleProjectileComponent");
-                return;
-            }
-            particleProjectileComponent.Fire(strength, entities.GetComponent<TransformComponent>(Owner).WorldRotation, Owner);
-        }
-
-        public override string ToString()
-        {
-            return base.ToString() + $" EmitterType:{Type}";
-        }
+        return base.ToString() + $" EmitterType:{Type}";
     }
+}
 
-    public enum ParticleAcceleratorEmitterType
-    {
-        Left,
-        Center,
-        Right
-    }
+public enum ParticleAcceleratorEmitterType
+{
+    Port,
+    Fore,
+    Starboard
 }

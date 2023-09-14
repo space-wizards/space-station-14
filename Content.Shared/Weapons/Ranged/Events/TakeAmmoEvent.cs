@@ -12,6 +12,11 @@ public sealed class TakeAmmoEvent : EntityEventArgs
     public List<(EntityUid? Entity, IShootable Shootable)> Ammo;
 
     /// <summary>
+    /// If no ammo returned what is the reason for it?
+    /// </summary>
+    public string? Reason;
+
+    /// <summary>
     /// Coordinates to spawn the ammo at.
     /// </summary>
     public EntityCoordinates Coordinates;

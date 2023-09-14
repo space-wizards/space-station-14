@@ -8,7 +8,7 @@
       department: Civilian
       time: 1800
   startingGear: BartenderGear
-  icon: "Bartender"
+  icon: "JobIconBartender"
   supervisors: job-supervisors-hop
   access:
   - Service
@@ -23,7 +23,7 @@
   equipment:
     head: ClothingHeadHatTophat
     jumpsuit: ClothingUniformJumpsuitBartender
-    outerClothing: ClothingOuterVestKevlar
+    outerClothing: ClothingOuterVest
     back: ClothingBackpackFilled
     shoes: ClothingShoesColorBlack
     id: BartenderPDA

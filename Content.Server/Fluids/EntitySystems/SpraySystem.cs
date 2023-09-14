@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Server.Chemistry.Components;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Cooldown;
@@ -50,7 +51,9 @@ public sealed class SpraySystem : EntitySystem
         var curTime = _gameTiming.CurTime;
         if (TryComp<ItemCooldownComponent>(uid, out var cooldown)
             && curTime < cooldown.CooldownEnd)
+        {
             return;
+        }
 
         if (solution.Volume <= 0)
         {
@@ -63,14 +66,20 @@ public sealed class SpraySystem : EntitySystem
         var userXform = xformQuery.GetComponent(args.User);
 
         var userMapPos = userXform.MapPosition;
-        var clickMapPos = args.ClickLocation.ToMap(EntityManager);
+        var clickMapPos = args.ClickLocation.ToMap(EntityManager, _transform);
 
         var diffPos = clickMapPos.Position - userMapPos.Position;
-        if (diffPos == Vector2.Zero || diffPos == Vector2.NaN)
+        if (diffPos == Vector2.Zero || diffPos == Vector2Helpers.NaN)
             return;
 
-        var diffLength = diffPos.Length;
-        var diffNorm = diffPos.Normalized;
+        var diffNorm = diffPos.Normalized();
+        var diffLength = diffPos.Length();
+
+        if (diffLength > component.SprayDistance)
+        {
+            diffLength = component.SprayDistance;
+        }
+
         var diffAngle = diffNorm.ToAngle();
 
         // Vectors to determine the spawn offset of the vapor clouds.
@@ -79,6 +88,8 @@ public sealed class SpraySystem : EntitySystem
 
         var amount = Math.Max(Math.Min((solution.Volume / component.TransferAmount).Int(), component.VaporAmount), 1);
         var spread = component.VaporSpread / amount;
+        // TODO: Just use usedelay homie.
+        var cooldownTime = 0f;
 
         for (var i = 0; i < amount; i++)
         {
@@ -87,9 +98,9 @@ public sealed class SpraySystem : EntitySystem
 
             // Calculate the destination for the vapor cloud. Limit to the maximum spray distance.
             var target = userMapPos
-                .Offset((diffNorm + rotation.ToVec()).Normalized * diffLength + quarter);
+                .Offset((diffNorm + rotation.ToVec()).Normalized() * diffLength + quarter);
 
-            var distance = target.Position.Length;
+            var distance = (target.Position - userMapPos.Position).Length();
             if (distance > component.SprayDistance)
                 target = userMapPos.Offset(diffNorm * component.SprayDistance);
 
@@ -117,13 +128,16 @@ public sealed class SpraySystem : EntitySystem
 
             // impulse direction is defined in world-coordinates, not local coordinates
             var impulseDirection = rotation.ToVec();
-            _vapor.Start(vaporComponent, vaporXform, impulseDirection, component.SprayVelocity, target, component.SprayAliveTime, args.User);
+            var time = diffLength / component.SprayVelocity;
+            cooldownTime = MathF.Max(time, cooldownTime);
+
+            _vapor.Start(vaporComponent, vaporXform, impulseDirection * diffLength, component.SprayVelocity, target, time, args.User);
         }
 
         _audio.PlayPvs(component.SpraySound, uid, component.SpraySound.Params.WithVariation(0.125f));
 
         RaiseLocalEvent(uid,
-            new RefreshItemCooldownEvent(curTime, curTime + TimeSpan.FromSeconds(component.CooldownTime)), true);
+            new RefreshItemCooldownEvent(curTime, curTime + TimeSpan.FromSeconds(cooldownTime)), true);
     }
 }
 

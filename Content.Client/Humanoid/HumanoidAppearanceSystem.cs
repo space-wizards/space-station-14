@@ -126,7 +126,7 @@ public sealed class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
     ///     This should not be used if the entity is owned by the server. The server will otherwise
     ///     override this with the appearance data it sends over.
     /// </remarks>
-    public void LoadProfile(EntityUid uid, HumanoidCharacterProfile profile, HumanoidAppearanceComponent? humanoid = null)
+    public override void LoadProfile(EntityUid uid, HumanoidCharacterProfile profile, HumanoidAppearanceComponent? humanoid = null)
     {
         if (!Resolve(uid, ref humanoid))
         {
@@ -164,7 +164,7 @@ public sealed class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
             ? profile.Appearance.SkinColor.WithAlpha(hairAlpha) : profile.Appearance.HairColor;
         var hair = new Marking(profile.Appearance.HairStyleId,
             new[] { hairColor });
-    
+
         var facialHairColor = _markingManager.MustMatchSkin(profile.Species, HumanoidVisualLayers.FacialHair, out var facialHairAlpha, _prototypeManager)
             ? profile.Appearance.SkinColor.WithAlpha(facialHairAlpha) : profile.Appearance.FacialHairColor;
         var facialHair = new Marking(profile.Appearance.FacialHairStyleId,
@@ -178,7 +178,7 @@ public sealed class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
         {
             markings.AddBack(MarkingCategories.FacialHair, facialHair);
         }
-        
+
         // Finally adding marking with forced colors
         foreach (var (marking, prototype) in markingFColored)
         {
@@ -190,14 +190,14 @@ public sealed class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
             );
             markings.AddBack(prototype.MarkingCategory, new Marking(marking.MarkingId, markingColors));
         }
-        
+
         markings.EnsureSpecies(profile.Species, profile.Appearance.SkinColor, _markingManager, _prototypeManager);
         markings.EnsureDefault(
-            profile.Appearance.SkinColor, 
+            profile.Appearance.SkinColor,
             profile.Appearance.EyeColor,
             _markingManager);
 
-        DebugTools.Assert(uid.IsClientSide());
+        DebugTools.Assert(IsClientSide(uid));
 
         var state = new HumanoidAppearanceState(markings,
             new(),
@@ -303,7 +303,9 @@ public sealed class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
 
         for (var j = 0; j < markingPrototype.Sprites.Count; j++)
         {
-            if (markingPrototype.Sprites[j] is not SpriteSpecifier.Rsi rsi)
+            var markingSprite = markingPrototype.Sprites[j];
+
+            if (markingSprite is not SpriteSpecifier.Rsi rsi)
             {
                 continue;
             }
@@ -312,19 +314,22 @@ public sealed class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
 
             if (!sprite.LayerMapTryGet(layerId, out _))
             {
-                var layer = sprite.AddLayer(markingPrototype.Sprites[j], targetLayer + j + 1);
+                var layer = sprite.AddLayer(markingSprite, targetLayer + j + 1);
                 sprite.LayerMapSet(layerId, layer);
                 sprite.LayerSetSprite(layerId, rsi);
             }
 
             sprite.LayerSetVisible(layerId, visible);
-            
+
             if (!visible || setting == null) // this is kinda implied
             {
                 continue;
             }
 
-            if (colors != null) 
+            // Okay so if the marking prototype is modified but we load old marking data this may no longer be valid
+            // and we need to check the index is correct.
+            // So if that happens just default to white?
+            if (colors != null && j < colors.Count)
             {
                 sprite.LayerSetColor(layerId, colors[j]);
             }
@@ -335,15 +340,12 @@ public sealed class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
         }
     }
 
-    public override void SetSkinColor(EntityUid uid, Color skinColor, bool sync = true, HumanoidAppearanceComponent? humanoid = null)
+    public override void SetSkinColor(EntityUid uid, Color skinColor, bool sync = true, bool verify = true, HumanoidAppearanceComponent? humanoid = null)
     {
         if (!Resolve(uid, ref humanoid) || humanoid.SkinColor == skinColor)
             return;
 
-        humanoid.SkinColor = skinColor;
-
-        if (sync)
-            Dirty(humanoid);
+        base.SetSkinColor(uid, skinColor, false, verify, humanoid);
 
         if (!TryComp(uid, out SpriteComponent? sprite))
             return;

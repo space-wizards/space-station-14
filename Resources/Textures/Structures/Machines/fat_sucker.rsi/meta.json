@@ -1,0 +1,50 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0", 
+  "copyright": "taken from /tg/station at commit https://github.com/tgstation/tgstation/commit/48370e5a35a19eab427d3e403b653e65fa391ca2",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "display"
+    },
+    {
+      "name": "fat"
+    },
+    {
+      "name": "fat_door_off"
+    },
+    {
+      "name": "fat_door_on"
+    },
+    {
+      "name": "fat_green"
+    },
+    {
+      "name": "fat_yellow"
+    },
+    {
+      "name": "fat_red"
+    },
+    {
+      "name": "fat_stack"
+    },
+    {
+      "name": "fat_smoke",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.4
+        ]
+      ]
+    },
+    {
+      "name": "fat_panel"
+    }
+  ]
+}

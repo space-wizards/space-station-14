@@ -1,16 +1,18 @@
 ﻿using System.Linq;
 using Content.Shared.Actions;
-using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Implants.Components;
+using Content.Shared.Interaction;
+using Content.Shared.Interaction.Events;
+using Content.Shared.Mobs;
 using Content.Shared.Tag;
 using Robust.Shared.Containers;
-using Robust.Shared.Prototypes;
+using Robust.Shared.Network;
 
 namespace Content.Shared.Implants;
 
 public abstract class SharedSubdermalImplantSystem : EntitySystem
 {
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly INetManager _net = default!;
     [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly TagSystem _tag = default!;
@@ -22,16 +24,20 @@ public abstract class SharedSubdermalImplantSystem : EntitySystem
         SubscribeLocalEvent<SubdermalImplantComponent, EntGotInsertedIntoContainerMessage>(OnInsert);
         SubscribeLocalEvent<SubdermalImplantComponent, ContainerGettingRemovedAttemptEvent>(OnRemoveAttempt);
         SubscribeLocalEvent<SubdermalImplantComponent, EntGotRemovedFromContainerMessage>(OnRemove);
+
+        SubscribeLocalEvent<ImplantedComponent, MobStateChangedEvent>(RelayToImplantEvent);
+        SubscribeLocalEvent<ImplantedComponent, AfterInteractUsingEvent>(RelayToImplantEvent);
+        SubscribeLocalEvent<ImplantedComponent, SuicideEvent>(RelayToImplantEvent);
     }
 
     private void OnInsert(EntityUid uid, SubdermalImplantComponent component, EntGotInsertedIntoContainerMessage args)
     {
-        if (component.ImplantedEntity == null)
+        if (component.ImplantedEntity == null || _net.IsClient)
             return;
 
-        if (component.ImplantAction != null)
+        if (!string.IsNullOrWhiteSpace(component.ImplantAction))
         {
-            var action = new InstantAction(_prototypeManager.Index<InstantActionPrototype>(component.ImplantAction));
+            var action = Spawn(component.ImplantAction);
             _actionsSystem.AddAction(component.ImplantedEntity.Value, action, uid);
         }
 
@@ -76,6 +82,28 @@ public abstract class SharedSubdermalImplantSystem : EntitySystem
                 continue;
 
             _container.RemoveEntity(storageImplant.Owner, entity, force: true, destination: entCoords);
+        }
+    }
+
+    /// <summary>
+    /// Add a list of implants to a person.
+    /// Logs any implant ids that don't have <see cref="SubdermalImplantComponent"/>.
+    /// </summary>
+    public void AddImplants(EntityUid uid, IEnumerable<String> implants)
+    {
+        var coords = Transform(uid).Coordinates;
+        foreach (var id in implants)
+        {
+            var ent = Spawn(id, coords);
+            if (TryComp<SubdermalImplantComponent>(ent, out var implant))
+            {
+                ForceImplant(uid, ent, implant);
+            }
+            else
+            {
+                Log.Warning($"Found invalid starting implant '{id}' on {uid} {ToPrettyString(uid):implanted}");
+                Del(ent);
+            }
         }
     }
 
@@ -125,5 +153,31 @@ public abstract class SharedSubdermalImplantSystem : EntitySystem
         var implantContainer = implanted.ImplantContainer;
 
         _container.CleanContainer(implantContainer);
+    }
+
+    //Relays from the implanted to the implant
+    private void RelayToImplantEvent<T>(EntityUid uid, ImplantedComponent component, T args) where T : notnull
+    {
+        if (!_container.TryGetContainer(uid, ImplanterComponent.ImplantSlotId, out var implantContainer))
+            return;
+
+        var relayEv = new ImplantRelayEvent<T>(args);
+        foreach (var implant in implantContainer.ContainedEntities)
+        {
+            if (args is HandledEntityEventArgs { Handled : true })
+                return;
+
+            RaiseLocalEvent(implant, relayEv);
+        }
+    }
+}
+
+public sealed class ImplantRelayEvent<T> where T : notnull
+{
+    public readonly T Event;
+
+    public ImplantRelayEvent(T ev)
+    {
+        Event = ev;
     }
 }

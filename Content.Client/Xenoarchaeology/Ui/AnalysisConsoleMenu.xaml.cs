@@ -15,7 +15,7 @@ public sealed partial class AnalysisConsoleMenu : FancyWindow
     public event Action? OnServerSelectionButtonPressed;
     public event Action? OnScanButtonPressed;
     public event Action? OnPrintButtonPressed;
-    public event Action? OnDestroyButtonPressed;
+    public event Action? OnExtractButtonPressed;
 
     public AnalysisConsoleMenu()
     {
@@ -25,7 +25,7 @@ public sealed partial class AnalysisConsoleMenu : FancyWindow
         ServerSelectionButton.OnPressed += _ => OnServerSelectionButtonPressed?.Invoke();
         ScanButton.OnPressed += _ => OnScanButtonPressed?.Invoke();
         PrintButton.OnPressed += _ => OnPrintButtonPressed?.Invoke();
-        DestroyButton.OnPressed += _ => OnDestroyButtonPressed?.Invoke();
+        ExtractButton.OnPressed += _ => OnExtractButtonPressed?.Invoke();
     }
 
     public void SetButtonsDisabled(AnalysisConsoleScanUpdateState state)
@@ -35,15 +35,15 @@ public sealed partial class AnalysisConsoleMenu : FancyWindow
 
         var disabled = !state.ServerConnected || !state.CanScan || state.PointAmount <= 0;
 
-        DestroyButton.Disabled = disabled;
+        ExtractButton.Disabled = disabled;
 
         if (disabled)
         {
-            DestroyButton.RemoveStyleClass(StyleBase.ButtonCaution);
+            ExtractButton.RemoveStyleClass("ButtonColorGreen");
         }
         else
         {
-            DestroyButton.AddStyleClass(StyleBase.ButtonCaution);
+            ExtractButton.AddStyleClass("ButtonColorGreen");
         }
     }
 
@@ -56,10 +56,7 @@ public sealed partial class AnalysisConsoleMenu : FancyWindow
         }
         ArtifactDisplay.Visible = true;
 
-        if (!_ent.TryGetComponent<SpriteComponent>(uid, out var sprite))
-            return;
-
-        ArtifactDisplay.Sprite = sprite;
+        ArtifactDisplay.SetEntity(uid);
     }
 
     public void UpdateInformationDisplay(AnalysisConsoleScanUpdateState state)
@@ -74,7 +71,7 @@ public sealed partial class AnalysisConsoleMenu : FancyWindow
             return;
         }
 
-        UpdateArtifactIcon(state.Artifact);
+        UpdateArtifactIcon(_ent.GetEntity(state.Artifact));
 
         if (state.ScanReport == null)
         {

@@ -35,6 +35,14 @@ public sealed class VaporVisualizerSystem : VisualizerSystem<VaporVisualsCompone
                 }
             }
         };
+
+        if (AppearanceSystem.TryGetData<bool>(uid, VaporVisuals.State, out var state) &&
+            state &&
+            TryComp<AnimationPlayerComponent>(uid, out var animPlayer) &&
+            !AnimationSystem.HasRunningAnimation(uid, animPlayer, VaporVisualsComponent.AnimationKey))
+        {
+            AnimationSystem.Play(uid, animPlayer, comp.VaporFlick, VaporVisualsComponent.AnimationKey);
+        }
     }
 
     /// <summary>
@@ -45,13 +53,6 @@ public sealed class VaporVisualizerSystem : VisualizerSystem<VaporVisualsCompone
         if (AppearanceSystem.TryGetData<Color>(uid, VaporVisuals.Color, out var color, args.Component) && args.Sprite != null)
         {
             args.Sprite.Color = color;
-        }
-
-        if ((AppearanceSystem.TryGetData<bool>(uid, VaporVisuals.State, out var state, args.Component) && state) &&
-            TryComp<AnimationPlayerComponent>(uid, out var animPlayer) &&
-           !AnimationSystem.HasRunningAnimation(uid, animPlayer, VaporVisualsComponent.AnimationKey))
-        {
-            AnimationSystem.Play(uid, animPlayer, comp.VaporFlick, VaporVisualsComponent.AnimationKey);
         }
     }
 }

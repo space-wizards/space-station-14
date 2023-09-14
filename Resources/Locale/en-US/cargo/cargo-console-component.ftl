@@ -4,7 +4,7 @@ cargo-console-menu-account-name-label = Account name:{" "}
 cargo-console-menu-account-name-none-text = None
 cargo-console-menu-shuttle-name-label = Shuttle name:{" "}
 cargo-console-menu-shuttle-name-none-text = None
-cargo-console-menu-points-label = Spacebucks:{" "}
+cargo-console-menu-points-label = Spesos:{" "}
 cargo-console-menu-points-amount = ${$amount}
 cargo-console-menu-shuttle-status-label = Shuttle status:{" "}
 cargo-console-menu-shuttle-status-away-text = Away
@@ -43,3 +43,5 @@ cargo-shuttle-console-station-unknown = Unknown
 cargo-shuttle-console-shuttle-not-found = Not found
 cargo-shuttle-console-organics = Detected organic lifeforms on the shuttle
 cargo-no-shuttle = No cargo shuttle found!
+
+cargo-telepad-delay-upgrade = Teleport delay

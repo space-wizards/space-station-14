@@ -1,35 +1,15 @@
-
 ## Traitor
 
-# Shown at the end of a round of Traitor
-traitor-round-end-result = {$traitorCount ->
-    [one] There was one traitor.
-    *[other] There were {$traitorCount} traitors.
-}
-
 traitor-round-end-codewords = The codewords were: [color=White]{$codewords}[/color]
+traitor-round-end-agent-name = traitor
+
+objective-issuer-syndicate = [color=#87cefa]The Syndicate[/color]
 
 # Shown at the end of a round of Traitor
-traitor-user-was-a-traitor = [color=gray]{$user}[/color] was a traitor.
-traitor-user-was-a-traitor-named = [color=White]{$name}[/color] ([color=gray]{$user}[/color]) was a traitor.
-traitor-was-a-traitor-named = [color=White]{$name}[/color] was a traitor.
-
-traitor-user-was-a-traitor-with-objectives = [color=gray]{$user}[/color] was a traitor who had the following objectives:
-traitor-user-was-a-traitor-with-objectives-named = [color=White]{$name}[/color] ([color=gray]{$user}[/color]) was a traitor who had the following objectives:
-traitor-was-a-traitor-with-objectives-named = [color=White]{$name}[/color] was a traitor who had the following objectives:
-
-preset-traitor-objective-issuer-syndicate = [color=#87cefa]The Syndicate[/color]
-preset-traitor-objective-issuer-spiderclan = [color=#33cc00]Spider Clan[/color]
-
-# Shown at the end of a round of Traitor
-traitor-objective-condition-success = {$condition} | [color={$markupColor}]Success![/color]
-
-# Shown at the end of a round of Traitor
-traitor-objective-condition-fail = {$condition} | [color={$markupColor}]Failure![/color] ({$progress}%)
 
 traitor-title = Traitor
 traitor-description = There are traitors among us...
-traitor-not-enough-ready-players = Not enough players readied up for the game! There were {$readyPlayersCount} players readied up out of {$minimumPlayers} needed.
+traitor-not-enough-ready-players = Not enough players readied up for the game! There were {$readyPlayersCount} players readied up out of {$minimumPlayers} needed. Can't start Traitor.
 traitor-no-one-ready = No players readied up! Can't start Traitor.
 
 ## TraitorDeathMatch
@@ -52,3 +32,12 @@ traitor-role-codewords =
     {$codewords}.
     Codewords can be used in regular conversation to identify yourself discretely to other syndicate agents.
     Listen for them, and keep them secret.
+traitor-role-uplink-code =
+    Set your ringtone to the notes {$code} to lock or unlock your uplink.
+    Remember to lock it after, or the stations crew will easily open it too!
+
+# don't need all the flavour text for character menu
+traitor-role-codewords-short =
+    The codewords are:
+    {$codewords}.
+traitor-role-uplink-code-short = Your uplink code is {$code}.

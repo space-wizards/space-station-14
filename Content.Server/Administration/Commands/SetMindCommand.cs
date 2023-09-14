@@ -1,6 +1,7 @@
-using Content.Server.Mind.Components;
 using Content.Server.Players;
 using Content.Shared.Administration;
+using Content.Shared.Mind;
+using Content.Shared.Mind.Components;
 using Robust.Server.Player;
 using Robust.Shared.Console;
 
@@ -9,15 +10,16 @@ namespace Content.Server.Administration.Commands
     [AdminCommand(AdminFlags.Admin)]
     sealed class SetMindCommand : IConsoleCommand
     {
+
         public string Command => "setmind";
 
-        public string Description => Loc.GetString("set-mind-command-description", ("requiredComponent", nameof(MindComponent)));
+        public string Description => Loc.GetString("set-mind-command-description", ("requiredComponent", nameof(MindContainerComponent)));
 
         public string Help => Loc.GetString("set-mind-command-help-text", ("command", Command));
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            if (args.Length != 2)
+            if (args.Length < 2)
             {
                 shell.WriteLine(Loc.GetString("shell-wrong-arguments-number"));
                 return;
@@ -27,6 +29,12 @@ namespace Content.Server.Administration.Commands
             {
                 shell.WriteLine(Loc.GetString("shell-entity-uid-must-be-number"));
                 return;
+            }
+
+            bool ghostOverride = true;
+            if (args.Length > 2)
+            {
+                ghostOverride = bool.Parse(args[2]);
             }
 
             var entityManager = IoCManager.Resolve<IEntityManager>();
@@ -39,7 +47,7 @@ namespace Content.Server.Administration.Commands
                 return;
             }
 
-            if (!entityManager.HasComponent<MindComponent>(eUid))
+            if (!entityManager.HasComponent<MindContainerComponent>(eUid))
             {
                 shell.WriteLine(Loc.GetString("set-mind-command-target-has-no-mind-message"));
                 return;
@@ -59,16 +67,12 @@ namespace Content.Server.Administration.Commands
                 return;
             }
 
-            var mind = playerCData.Mind;
-            if (mind == null)
-            {
-                mind = new Mind.Mind(session.UserId)
-                {
-                    CharacterName = entityManager.GetComponent<MetaDataComponent>(eUid).EntityName
-                };
-                mind.ChangeOwningPlayer(session.UserId);
-            }
-            mind.TransferTo(eUid);
+            var mindSystem = entityManager.System<SharedMindSystem>();
+            var metadata = entityManager.GetComponent<MetaDataComponent>(eUid);
+
+            var mind = playerCData.Mind ?? mindSystem.CreateMind(session.UserId, metadata.EntityName);
+
+            mindSystem.TransferTo(mind, eUid, ghostOverride);
         }
     }
 }

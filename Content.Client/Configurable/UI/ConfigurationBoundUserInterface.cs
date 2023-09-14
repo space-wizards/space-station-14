@@ -1,20 +1,20 @@
-﻿using System.Collections.Generic;
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 using Robust.Client.GameObjects;
-using Robust.Shared.GameObjects;
 using static Content.Shared.Configurable.ConfigurationComponent;
 
 namespace Content.Client.Configurable.UI
 {
     public sealed class ConfigurationBoundUserInterface : BoundUserInterface
     {
+        [ViewVariables]
+        private ConfigurationMenu? _menu;
+
+        [ViewVariables]
         public Regex? Validation { get; internal set; }
 
-        public ConfigurationBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
+        public ConfigurationBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
         {
         }
-
-        private ConfigurationMenu? _menu;
 
         protected override void Open()
         {

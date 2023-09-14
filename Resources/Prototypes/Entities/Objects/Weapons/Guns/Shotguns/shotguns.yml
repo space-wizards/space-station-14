@@ -6,7 +6,6 @@
   abstract: true
   components:
   - type: Sprite
-    netsync: false
     layers:
       - state: icon
         map: [ "enum.GunVisualLayers.Base" ]
@@ -30,7 +29,6 @@
     soundEmpty:
       path: /Audio/Weapons/Guns/Empty/empty.ogg
   - type: BallisticAmmoProvider
-    autoCycle: false
     whitelist:
       tags:
       - ShellShotgun
@@ -54,7 +52,6 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Shotguns/bulldog.rsi
-    netsync: false
     layers:
     - state: base
       map: ["enum.GunVisualLayers.Base"]
@@ -68,6 +65,7 @@
     slots:
     - Back
     - suitStorage
+  - type: AmmoCounter
   - type: Gun
     fireRate: 2
     selectedMode: FullAuto
@@ -119,6 +117,16 @@
     deconstructionTarget: null
 
 - type: entity
+  name: double-barreled shotgun
+  parent: WeaponShotgunDoubleBarreled
+  id: WeaponShotgunDoubleBarreledRubber
+  description: An immortal classic. Uses .50 shotgun shells.
+  suffix: Non-Lethal
+  components:
+  - type: BallisticAmmoProvider
+    proto: ShellShotgunBeanbag
+
+- type: entity
   name: Enforcer
   parent: BaseWeaponShotgun
   id: WeaponShotgunEnforcer
@@ -129,7 +137,21 @@
   - type: Clothing
     sprite: Objects/Weapons/Guns/Shotguns/enforcer.rsi
   - type: BallisticAmmoProvider
-
+  
+- type: entity
+  name: Enforcer
+  parent: BaseWeaponShotgun
+  id: WeaponShotgunEnforcerRubber
+  description: A next-generation Frozen Star shotgun. Uses .50 shotgun shells.
+  suffix: Non-Lethal
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Shotguns/enforcer.rsi
+  - type: Clothing
+    sprite: Objects/Weapons/Guns/Shotguns/enforcer.rsi
+  - type: BallisticAmmoProvider
+    proto: ShellShotgunBeanbag
+  
 - type: entity
   name: Kammerer
   parent: BaseWeaponShotgun
@@ -159,6 +181,20 @@
     fireRate: 4
   - type: BallisticAmmoProvider
     capacity: 2
+  - type: Construction
+    graph: ShotgunSawn
+    node: shotgunsawn
+    deconstructionTarget: null
+
+- type: entity
+  name: sawn-off shogun
+  parent: WeaponShotgunSawn
+  id: WeaponShotgunSawnEmpty
+  description: Groovy! Uses .50 shotgun shells.
+  suffix: Empty
+  components:
+  - type: BallisticAmmoProvider
+    proto: null
   - type: Construction
     graph: ShotgunSawn
     node: shotgunsawn
@@ -198,3 +234,35 @@
     fireRate: 2
   - type: BallisticAmmoProvider
     capacity: 1
+
+- type: entity
+  name: improvised shotgun
+  parent: BaseWeaponShotgun
+  id: WeaponShotgunImprovised
+  description: A shitty, hand-made shotgun that uses .50 shotgun shells. It can only hold one round in the chamber.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Shotguns/improvised_shotgun.rsi
+  - type: Clothing
+    sprite: Objects/Weapons/Guns/Shotguns/improvised_shotgun.rsi
+  - type: Item
+    size: 75
+  - type: Gun
+    fireRate: 4 #No reason to stifle the firerate since you have to manually reload every time anyways.
+  - type: BallisticAmmoProvider
+    capacity: 1
+    proto: null
+  - type: Construction
+    graph: ImprovisedShotgunGraph
+    node: shotgun
+  - type: StaticPrice
+    price: 400
+
+- type: entity
+  name: improvised shotgun
+  parent: WeaponShotgunImprovised
+  suffix: Loaded
+  id: WeaponShotgunImprovisedLoaded
+  components:
+  - type: BallisticAmmoProvider
+    proto: ShellShotgunImprovised

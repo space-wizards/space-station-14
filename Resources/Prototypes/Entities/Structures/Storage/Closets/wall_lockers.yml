@@ -5,11 +5,10 @@
   description: It's a storage unit.
   components:
   - type: Appearance
-    visuals:
-    - type: StorageVisualizer
-      state: generic
-      state_open: generic_open
-      state_closed: generic_door
+  - type: EntityStorageVisuals
+    stateBaseClosed: generic
+    stateDoorOpen: generic_open
+    stateDoorClosed: generic_door
 
 - type: entity
   id: ClosetWallEmergency
@@ -18,11 +17,10 @@
   description: It's a storage unit for emergency breath masks and O2 tanks.
   components:
   - type: Appearance
-    visuals:
-    - type: StorageVisualizer
-      state: emergency
-      state_open: emergency_open
-      state_closed: emergency_door
+  - type: EntityStorageVisuals
+    stateBaseClosed: emergency
+    stateDoorOpen: emergency_open
+    stateDoorClosed: emergency_door
 
 - type: entity
   id: ClosetWallFire
@@ -31,11 +29,10 @@
   description: It's a storage unit for fire-fighting supplies.
   components:
   - type: Appearance
-    visuals:
-    - type: StorageVisualizer
-      state: fire
-      state_open: fire_open
-      state_closed: fire_door
+  - type: EntityStorageVisuals
+    stateBaseClosed: fire
+    stateDoorOpen: fire_open
+    stateDoorClosed: fire_door
 
 - type: entity
   id: ClosetWallBlue
@@ -44,11 +41,10 @@
   description: "A wardrobe packed with stylish blue clothing."
   components:
   - type: Appearance
-    visuals:
-    - type: StorageVisualizer
-      state: generic
-      state_open: generic_open
-      state_closed: blue_door
+  - type: EntityStorageVisuals
+    stateBaseClosed: generic
+    stateDoorOpen: generic_open
+    stateDoorClosed: blue_door
 
 - type: entity
   id: ClosetWallPink
@@ -57,11 +53,10 @@
   description: "A wardrobe packed with fabulous pink clothing."
   components:
   - type: Appearance
-    visuals:
-    - type: StorageVisualizer
-      state: generic
-      state_open: generic_open
-      state_closed: pink_door
+  - type: EntityStorageVisuals
+    stateBaseClosed: generic
+    stateDoorOpen: generic_open
+    stateDoorClosed: pink_door
 
 - type: entity
   id: ClosetWallBlack
@@ -70,11 +65,10 @@
   description: "A wardrobe packed with stylish black clothing."
   components:
   - type: Appearance
-    visuals:
-    - type: StorageVisualizer
-      state: generic
-      state_open: generic_open
-      state_closed: black_door
+  - type: EntityStorageVisuals
+    stateBaseClosed: generic
+    stateDoorOpen: generic_open
+    stateDoorClosed: black_door
 
 - type: entity
   id: ClosetWallGreen
@@ -83,11 +77,10 @@
   description: "A wardrobe packed with stylish green clothing."
   components:
   - type: Appearance
-    visuals:
-    - type: StorageVisualizer
-      state: generic
-      state_open: generic_open
-      state_closed: green_door
+  - type: EntityStorageVisuals
+    stateBaseClosed: generic
+    stateDoorOpen: generic_open
+    stateDoorClosed: green_door
 
 - type: entity
   id: ClosetWallOrange
@@ -95,11 +88,10 @@
   name: prison wall closet
   components:
   - type: Appearance
-    visuals:
-    - type: StorageVisualizer
-      state: generic
-      state_open: generic_open
-      state_closed: orange_door
+  - type: EntityStorageVisuals
+    stateBaseClosed: generic
+    stateDoorOpen: generic_open
+    stateDoorClosed: orange_door
 
 - type: entity
   id: ClosetWallYellow
@@ -108,11 +100,10 @@
   description: "A wardrobe packed with stylish yellow clothing."
   components:
   - type: Appearance
-    visuals:
-    - type: StorageVisualizer
-      state: generic
-      state_open: generic_open
-      state_closed: yellow_door
+  - type: EntityStorageVisuals
+    stateBaseClosed: generic
+    stateDoorOpen: generic_open
+    stateDoorClosed: yellow_door
 
 - type: entity
   id: ClosetWallWhite
@@ -121,11 +112,10 @@
   description: "A wardrobe packed with stylish white clothing."
   components:
   - type: Appearance
-    visuals:
-    - type: StorageVisualizer
-      state: generic
-      state_open: generic_open
-      state_closed: white_door
+  - type: EntityStorageVisuals
+    stateBaseClosed: generic
+    stateDoorOpen: generic_open
+    stateDoorClosed: white_door
 
 - type: entity
   id: ClosetWallGrey
@@ -134,11 +124,10 @@
   description: "A wardrobe packed with a tide of grey clothing."
   components:
   - type: Appearance
-    visuals:
-    - type: StorageVisualizer
-      state: generic
-      state_open: generic_open
-      state_closed: gray_door
+  - type: EntityStorageVisuals
+    stateBaseClosed: generic
+    stateDoorOpen: generic_open
+    stateDoorClosed: gray_door
 
 - type: entity
   id: ClosetWallMixed
@@ -147,11 +136,10 @@
   description: "A wardrobe packed with a mix of colorful clothing."
   components:
   - type: Appearance
-    visuals:
-    - type: StorageVisualizer
-      state: generic
-      state_open: generic_open
-      state_closed: mixed_door
+  - type: EntityStorageVisuals
+    stateBaseClosed: generic
+    stateDoorOpen: generic_open
+    stateDoorClosed: mixed_door
 
 - type: entity
   id: ClosetWallAtmospherics
@@ -159,11 +147,10 @@
   name: atmospherics wall closet
   components:
   - type: Appearance
-    visuals:
-    - type: StorageVisualizer
-      state: generic
-      state_open: generic_open
-      state_closed: atmos_door
+  - type: EntityStorageVisuals
+    stateBaseClosed: generic
+    stateDoorOpen: generic_open
+    stateDoorClosed: atmos_door
 
 - type: entity
   id: LockerWallMedical
@@ -171,10 +158,9 @@
   name: medical wall locker
   components:
   - type: Appearance
-    visuals:
-    - type: StorageVisualizer
-      state: med
-      state_open: med_open
-      state_closed: med_door
+  - type: EntityStorageVisuals
+    stateBaseClosed: med
+    stateDoorOpen: med_open
+    stateDoorClosed: med_door
   - type: AccessReader
     access: [["Medical"]]

@@ -7,8 +7,8 @@ namespace Content.Shared.Dataset
     {
         [ViewVariables]
         [IdDataField]
-        public string ID { get; } = default!;
+        public string ID { get; private set; } = default!;
 
-        [DataField("values")] public IReadOnlyList<string> Values { get; } = new List<string>();
+        [DataField("values")] public IReadOnlyList<string> Values { get; private set; } = new List<string>();
     }
 }

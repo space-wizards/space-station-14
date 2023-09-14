@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/c6e3401f2e7e1e55c57060cdf956a98ef1fefc24 , bear pelt remade by Alekshhh, wood sprite modified by MisterMecky, wood_2 and wood_3 made by MisterMecky based on wood sprite, cardboard sprites made by MisterMecky for SS14",
+  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/c6e3401f2e7e1e55c57060cdf956a98ef1fefc24 , bear pelt remade by Alekshhh, wood sprite modified by MisterMecky, wood_2 and wood_3 made by MisterMecky based on wood sprite, cardboard sprites made by MisterMecky, bananium, bananium_1 and peel made by brainfood1183 (github) for ss14",
   "size": {
     "x": 32,
     "y": 32
@@ -15,6 +15,9 @@
     },
     {
       "name": "bananium"
+    },
+    {
+      "name": "bananium_1"
     },
     {
       "name": "bearpelt"
@@ -115,6 +118,9 @@
     },
     {
       "name": "phoron_gem"
+    },
+    {
+      "name": "peel"
     },
     {
       "name": "phoron_gem_spent"

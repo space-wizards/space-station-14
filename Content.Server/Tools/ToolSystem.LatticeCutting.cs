@@ -26,15 +26,16 @@ public sealed partial class ToolSystem
         if (args.Cancelled)
             return;
 
-        var gridUid = args.Coordinates.GetGridUid(EntityManager);
+        var coords = GetCoordinates(args.Coordinates);
+        var gridUid = coords.GetGridUid(EntityManager);
         if (gridUid == null)
             return;
         var grid = _mapManager.GetGrid(gridUid.Value);
-        var tile = grid.GetTileRef(args.Coordinates);
+        var tile = grid.GetTileRef(coords);
 
         if (_tileDefinitionManager[tile.Tile.TypeId] is not ContentTileDefinition tileDef
             || !tileDef.CanWirecutter
-            || tileDef.BaseTurfs.Count == 0
+            || string.IsNullOrEmpty(tileDef.BaseTurf)
             || tile.IsBlockedTurf(true))
             return;
 
@@ -54,7 +55,7 @@ public sealed partial class ToolSystem
 
     private bool TryCut(EntityUid toolEntity, EntityUid user, LatticeCuttingComponent component, EntityCoordinates clickLocation)
     {
-        if (!_mapManager.TryFindGridAt(clickLocation.ToMap(EntityManager, _transformSystem), out var mapGrid))
+        if (!_mapManager.TryFindGridAt(clickLocation.ToMap(EntityManager, _transformSystem), out _, out var mapGrid))
             return false;
 
         var tile = mapGrid.GetTileRef(clickLocation);
@@ -66,12 +67,14 @@ public sealed partial class ToolSystem
 
         if (_tileDefinitionManager[tile.Tile.TypeId] is not ContentTileDefinition tileDef
             || !tileDef.CanWirecutter
-            || tileDef.BaseTurfs.Count == 0
-            || _tileDefinitionManager[tileDef.BaseTurfs[^1]] is not ContentTileDefinition newDef
+            || string.IsNullOrEmpty(tileDef.BaseTurf)
+            || _tileDefinitionManager[tileDef.BaseTurf] is not ContentTileDefinition newDef
             || tile.IsBlockedTurf(true))
+        {
             return false;
+        }
 
-        var ev = new LatticeCuttingCompleteEvent(coordinates);
+        var ev = new LatticeCuttingCompleteEvent(GetNetCoordinates(coordinates));
         return UseTool(toolEntity, user, toolEntity, component.Delay, component.QualityNeeded, ev);
     }
 }

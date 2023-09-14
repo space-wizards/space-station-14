@@ -13,7 +13,6 @@
   description: A tiny volumetric display for documents, makes one wonder if Cybersun's legal budget is way too high.
   components:
   - type: Sprite
-    netsync: false
     sprite: Objects/Misc/guardian_info.rsi
     state: guardian_info
   - type: ActivatableUI

@@ -21,7 +21,6 @@
   - type: Sprite
     sprite: Objects/Devices/Holoprojectors/custodial.rsi
     state: icon
-    netsync: false
   - type: Tag
     tags:
       - HolosignProjector
@@ -38,7 +37,6 @@
   - type: Sprite
     sprite: Objects/Devices/Holoprojectors/atmos.rsi
     state: icon
-    netsync: false
   - type: Tag
     tags:
       - HolofanProjector
@@ -58,7 +56,6 @@
     - type: Sprite
       sprite: Objects/Devices/Holoprojectors/security.rsi
       state: icon
-      netsync: false
     - type: Tag
       tags:
         - HolofanProjector
