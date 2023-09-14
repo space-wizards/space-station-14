@@ -4,6 +4,7 @@ using Content.Shared.CombatMode;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Destructible;
 using Content.Shared.DoAfter;
+using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Implants.Components;
@@ -37,7 +38,7 @@ public abstract class SharedStorageSystem : EntitySystem
     [Dependency] private   readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] protected readonly SharedAudioSystem Audio = default!;
     [Dependency] private   readonly SharedCombatModeSystem _combatMode = default!;
-    [Dependency] private   readonly SharedTransformSystem _transform = default!;
+    [Dependency] protected   readonly SharedTransformSystem _transform = default!;
     [Dependency] private   readonly SharedStackSystem _stack = default!;
     [Dependency] protected readonly UseDelaySystem UseDelay = default!;
 
@@ -435,7 +436,7 @@ public abstract class SharedStorageSystem : EntitySystem
 
         foreach (var entity in entities.ToArray())
         {
-            Insert(target, entity, user, targetComp, playSound: false);
+            Insert(target, entity, out _, user: user, targetComp, playSound: false);
         }
 
         Audio.PlayPredicted(sourceComp.StorageInsertSound, target, user);
@@ -495,8 +496,10 @@ public abstract class SharedStorageSystem : EntitySystem
     ///     Inserts into the storage container
     /// </summary>
     /// <returns>true if the entity was inserted, false otherwise</returns>
-    public bool Insert(EntityUid uid, EntityUid insertEnt, EntityUid? user = null, StorageComponent? storageComp = null, bool playSound = true)
+    public bool Insert(EntityUid uid, EntityUid insertEnt, out EntityUid? stackedEntity, EntityUid? user = null, StorageComponent? storageComp = null, bool playSound = true)
     {
+        stackedEntity = null;
+
         if (!Resolve(uid, ref storageComp) || !CanInsert(uid, insertEnt, out _, storageComp))
             return false;
 
@@ -522,6 +525,7 @@ public abstract class SharedStorageSystem : EntitySystem
                 if (!_stack.TryAdd(insertEnt, ent, insertStack, containedStack))
                     continue;
 
+                stackedEntity = ent;
                 var remaining = insertStack.Count;
                 toInsertCount -= toInsertCount - remaining;
 
@@ -596,11 +600,17 @@ public abstract class SharedStorageSystem : EntitySystem
         if (!Resolve(uid, ref storageComp) || !_sharedInteractionSystem.InRangeUnobstructed(player, uid))
             return false;
 
-        if (!Insert(uid, toInsert, player, storageComp))
+        if (!Insert(uid, toInsert, out _, user: player, storageComp))
         {
             _popupSystem.PopupClient(Loc.GetString("comp-storage-cant-insert"), uid, player);
             return false;
         }
         return true;
     }
+
+    /// <summary>
+    /// Plays a clientside pickup animation for the specified uid.
+    /// </summary>
+    public abstract void PlayPickupAnimation(EntityUid uid, EntityCoordinates initialCoordinates,
+        EntityCoordinates finalCoordinates, Angle initialRotation, EntityUid? user = null);
 }

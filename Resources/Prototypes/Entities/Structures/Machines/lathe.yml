@@ -558,6 +558,7 @@
       - VoiceTrigger
       - TimerTrigger
       - Truncheon
+      - TelescopicShield
       - FlashPayload
       - ExplosivePayload
       - WeaponLaserCarbine

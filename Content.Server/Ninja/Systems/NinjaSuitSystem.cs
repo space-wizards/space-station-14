@@ -1,4 +1,5 @@
 using Content.Server.Emp;
+using Content.Server.Ninja.Events;
 using Content.Server.Popups;
 using Content.Server.Power.Components;
 using Content.Server.PowerCell;
@@ -8,6 +9,7 @@ using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Ninja.Components;
 using Content.Shared.Ninja.Systems;
 using Content.Shared.Popups;
+using Content.Shared.PowerCell.Components;
 using Robust.Shared.Containers;
 
 namespace Content.Server.Ninja.Systems;
@@ -47,6 +49,11 @@ public sealed class NinjaSuitSystem : SharedNinjaSuitSystem
     // TODO: or put MaxCharge in shared along with powercellslot
     private void OnSuitInsertAttempt(EntityUid uid, NinjaSuitComponent comp, ContainerIsInsertingAttemptEvent args)
     {
+        // this is for handling battery upgrading, not stopping actions from being added
+        // if another container like ActionsContainer is specified, don't handle it
+        if (TryComp<PowerCellSlotComponent>(uid, out var slot) && args.Container.ID != slot.CellSlotId)
+            return;
+
         // no power cell for some reason??? allow it
         if (!_powerCell.TryGetBatteryFromSlot(uid, out var battery))
             return;
@@ -57,7 +64,13 @@ public sealed class NinjaSuitSystem : SharedNinjaSuitSystem
             args.Cancel();
         }
 
-        // TODO: raise event on ninja telling it to update battery
+        // tell ninja abilities that use battery to update it so they don't use charge from the old one
+        var user = Transform(uid).ParentUid;
+        if (!HasComp<SpaceNinjaComponent>(user))
+            return;
+
+        var ev = new NinjaBatteryChangedEvent(args.EntityUid, uid);
+        RaiseLocalEvent(user, ref ev);
     }
 
     private void OnEmpAttempt(EntityUid uid, NinjaSuitComponent comp, EmpAttemptEvent args)
