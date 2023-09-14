@@ -1,71 +1,4 @@
 Entries:
-- author: Phill101
-  changes:
-  - {message: Added bleeding status icon, type: Add}
-  id: 4319
-  time: '2023-07-25T21:28:35.0000000+00:00'
-- author: Jackal298
-  changes:
-  - {message: fixed spirete modular receiver and rifle stock, type: Fix}
-  id: 4320
-  time: '2023-07-25T21:29:56.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Non-human zombies now are the proper color and zombies can now identify
-      one another and are unable to harm one another., type: Add}
-  - {message: 'Removed zombie revival, decreased passive zombie healing, and adjusted
-      zombie weaknesses.', type: Add}
-  - {message: Fixed zombie NPCs continuing to attack other zombies., type: Fix}
-  - {message: Zombies can now pry open doors., type: Tweak}
-  - {message: Made initial infection selection more obvious., type: Tweak}
-  - {message: Fixed an issue where midround zombie outbreaks wouldn't create any zombies.,
-    type: Fix}
-  - {message: Initial infected selection is now delayed at the start of zombie rounds.,
-    type: Tweak}
-  - {message: The emergency shuttle is now automatically called when enough crew become
-      zombies., type: Add}
-  - {message: Reenabled zombie mode in secret., type: Add}
-  id: 4321
-  time: '2023-07-25T21:31:35.0000000+00:00'
-- author: deltanedas
-  changes:
-  - {message: Animals can now drink satiating liquids like water or beer when thirsty.,
-    type: Tweak}
-  - {message: Animals no longer eat with a full belly., type: Tweak}
-  id: 4322
-  time: '2023-07-25T21:32:11.0000000+00:00'
-- author: Emisse
-  changes:
-  - {message: Hardsuit + Firesuit Rebalancingening., type: Tweak}
-  id: 4323
-  time: '2023-07-26T00:34:59.0000000+00:00'
-- author: kseandi
-  changes:
-  - {message: Nanotraisen found the cause of the Geiger counters malfunction!, type: Fix}
-  id: 4324
-  time: '2023-07-26T00:35:19.0000000+00:00'
-- author: Nairodian
-  changes:
-  - {message: 'Added four new senior roles meant for teaching new players their related
-      department; Senior Engineer, Senior Researcher, Senior Physician and Senior
-      Officer.', type: Add}
-  id: 4325
-  time: '2023-07-26T03:06:31.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Players in critical condition can no longer use LOOC chat., type: Tweak}
-  id: 4326
-  time: '2023-07-26T06:02:49.0000000+00:00'
-- author: OctoRocket
-  changes:
-  - {message: Added an accentless trait., type: Add}
-  id: 4327
-  time: '2023-07-26T06:54:45.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Fixed chat bubbles not appearing in replays., type: Fix}
-  id: 4328
-  time: '2023-07-26T07:11:15.0000000+00:00'
 - author: Nairodian
   changes:
   - {message: Changed captain's starting loadout not to have their gloves and carapace.,
@@ -2984,3 +2917,65 @@ Entries:
   - {message: Training bombs are now available for purchase at cargo., type: Add}
   id: 4818
   time: '2023-09-13T16:54:48.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: 'Ninjas can spawn from 30 mins in, instead of 45.', type: Tweak}
+  id: 4819
+  time: '2023-09-13T22:02:33.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix storage windows not closing upon gamestate change., type: Fix}
+  id: 4820
+  time: '2023-09-13T22:03:45.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Fixed microbomb implanters not spawning in nukie duffelbags., type: Fix}
+  id: 4821
+  time: '2023-09-14T00:21:33.0000000+00:00'
+- author: Flareguy
+  changes:
+  - {message: The syndicate bomb now has a unique beeping sound., type: Add}
+  - {message: The training bomb now has the same amount of wires as the real deal.,
+    type: Tweak}
+  - {message: The syndicate bomb's minimum timer setting is now 120 seconds (30 seconds
+      longer then before.), type: Tweak}
+  - {message: Fixed the syndicate bomb's name & description in the uplink showing
+      up incorrectly., type: Fix}
+  id: 4822
+  time: '2023-09-14T00:26:58.0000000+00:00'
+- author: Nimfar11
+  changes:
+  - {message: "Added a telescopi\u0441 shield to the Advanced Riot Control Technology.",
+    type: Add}
+  id: 4823
+  time: '2023-09-14T01:03:13.0000000+00:00'
+- author: notafet
+  changes:
+  - {message: Cryogenic gas cylinders are now available for purchase from cargo.,
+    type: Add}
+  id: 4824
+  time: '2023-09-14T03:37:13.0000000+00:00'
+- author: Whisper
+  changes:
+  - {message: 'Guardians (holo, holoclown) have AI control before a ghost takes over
+      the role, and after a player ghosts from it.', type: Add}
+  - {message: Guardians can be summoned without a player in the role., type: Tweak}
+  id: 4825
+  time: '2023-09-14T03:51:10.0000000+00:00'
+- author: Doru991
+  changes:
+  - {message: 'When mutated, some plants have been observed to occasionally transform
+      into entirely different species.', type: Add}
+  id: 4826
+  time: '2023-09-14T04:56:24.0000000+00:00'
+- author: Psychpsyo
+  changes:
+  - {message: Janitors can now take the shark plushie for a walk in their bucket.,
+    type: Add}
+  id: 4827
+  time: '2023-09-14T07:17:45.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Fixed some missing localization., type: Fix}
+  id: 4828
+  time: '2023-09-14T10:08:03.0000000+00:00'

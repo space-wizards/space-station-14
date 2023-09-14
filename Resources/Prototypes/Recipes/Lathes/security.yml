@@ -107,6 +107,14 @@
     Glass: 400
 
 - type: latheRecipe
+  id: TelescopicShield
+  result: TelescopicShield
+  completetime: 4
+  materials:
+    Steel: 300
+    Glass: 800
+
+- type: latheRecipe
   id: Flash
   result: Flash
   completetime: 2
