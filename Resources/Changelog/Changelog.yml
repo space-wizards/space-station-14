@@ -1,11 +1,4 @@
 Entries:
-- author: deltanedas
-  changes:
-  - {message: Animals can now drink satiating liquids like water or beer when thirsty.,
-    type: Tweak}
-  - {message: Animals no longer eat with a full belly., type: Tweak}
-  id: 4322
-  time: '2023-07-25T21:32:11.0000000+00:00'
 - author: Emisse
   changes:
   - {message: Hardsuit + Firesuit Rebalancingening., type: Tweak}
@@ -2971,3 +2964,14 @@ Entries:
   - {message: Fixed microbomb implanters not spawning in nukie duffelbags., type: Fix}
   id: 4821
   time: '2023-09-14T00:21:33.0000000+00:00'
+- author: Flareguy
+  changes:
+  - {message: The syndicate bomb now has a unique beeping sound., type: Add}
+  - {message: The training bomb now has the same amount of wires as the real deal.,
+    type: Tweak}
+  - {message: The syndicate bomb's minimum timer setting is now 120 seconds (30 seconds
+      longer then before.), type: Tweak}
+  - {message: Fixed the syndicate bomb's name & description in the uplink showing
+      up incorrectly., type: Fix}
+  id: 4822
+  time: '2023-09-14T00:26:58.0000000+00:00'
