@@ -491,34 +491,3 @@
     accent-archaic-replaced-231: accent-archaic-replacement-231
     accent-archaic-replaced-232: accent-archaic-replacement-232
 
-- type: accent
-  id: chatsanitize
-  wordReplacements:
-    accent-chatsanitize-replaced-1: accent-chatsanitize-replacement-1
-    accent-chatsanitize-replaced-2: accent-chatsanitize-replacement-2
-    accent-chatsanitize-replaced-3: accent-chatsanitize-replacement-3
-    accent-chatsanitize-replaced-4: accent-chatsanitize-replacement-4
-    accent-chatsanitize-replaced-5: accent-chatsanitize-replacement-5
-    accent-chatsanitize-replaced-6: accent-chatsanitize-replacement-6
-    accent-chatsanitize-replaced-7: accent-chatsanitize-replacement-7
-    accent-chatsanitize-replaced-8: accent-chatsanitize-replacement-8
-    accent-chatsanitize-replaced-9: accent-chatsanitize-replacement-9
-    accent-chatsanitize-replaced-10: accent-chatsanitize-replacement-10
-    accent-chatsanitize-replaced-11: accent-chatsanitize-replacement-11
-    accent-chatsanitize-replaced-12: accent-chatsanitize-replacement-12
-    accent-chatsanitize-replaced-13: accent-chatsanitize-replacement-13
-    accent-chatsanitize-replaced-14: accent-chatsanitize-replacement-14
-    accent-chatsanitize-replaced-15: accent-chatsanitize-replacement-15
-    accent-chatsanitize-replaced-16: accent-chatsanitize-replacement-16
-    accent-chatsanitize-replaced-17: accent-chatsanitize-replacement-17
-    accent-chatsanitize-replaced-18: accent-chatsanitize-replacement-18
-    accent-chatsanitize-replaced-19: accent-chatsanitize-replacement-19
-    accent-chatsanitize-replaced-20: accent-chatsanitize-replacement-20
-    accent-chatsanitize-replaced-21: accent-chatsanitize-replacement-21
-    accent-chatsanitize-replaced-22: accent-chatsanitize-replacement-22
-    accent-chatsanitize-replaced-23: accent-chatsanitize-replacement-23
-    accent-chatsanitize-replaced-24: accent-chatsanitize-replacement-24
-    accent-chatsanitize-replaced-25: accent-chatsanitize-replacement-25
-    accent-chatsanitize-replaced-26: accent-chatsanitize-replacement-26
-    accent-chatsanitize-replaced-27: accent-chatsanitize-replacement-27
-    accent-chatsanitize-replaced-28: accent-chatsanitize-replacement-28
