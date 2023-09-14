@@ -1,9 +1,4 @@
 Entries:
-- author: Hebiman
-  changes:
-  - {message: Added filter for reagents, type: Add}
-  id: 4330
-  time: '2023-07-26T08:05:09.0000000+00:00'
 - author: Emisse
   changes:
   - {message: Pun-Pun is now always a ghost role, type: Tweak}
@@ -2979,3 +2974,8 @@ Entries:
       techfab., type: Tweak}
   id: 4829
   time: '2023-09-14T23:34:43.0000000+00:00'
+- author: Lank
+  changes:
+  - {message: Training bombs are now unable to space tiles., type: Tweak}
+  id: 4830
+  time: '2023-09-14T23:51:47.0000000+00:00'
