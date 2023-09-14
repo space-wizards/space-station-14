@@ -6,6 +6,7 @@ using Content.Shared.DoAfter;
 using Content.Shared.Doors.Components;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
+using Content.Shared.Mech.Components;
 using Content.Shared.Physics;
 using Content.Shared.Stunnable;
 using Content.Shared.Tag;
@@ -500,6 +501,15 @@ public abstract partial class SharedDoorSystem : EntitySystem
 
         if (!Resolve(uid, ref access, false))
             return true;
+
+        // Mechs dont forward the pilots access, which is why we need to check if the user is a mech.
+        MechComponent? mech = null;
+        if (Resolve(user.Value, ref mech, false))
+        {
+            // Check if theres a pilot in there, this is because people might try to push a mech into a door or something.
+            if (mech.PilotSlot.ContainedEntity.HasValue)
+                user = mech.PilotSlot.ContainedEntity.Value;
+        }
 
         var isExternal = access.AccessLists.Any(list => list.Contains("External"));
 
