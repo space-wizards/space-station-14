@@ -175,9 +175,6 @@ namespace Content.Client.Actions
         protected override void ActionAdded(EntityUid performer, EntityUid actionId, ActionsComponent comp,
             BaseActionComponent action)
         {
-            if (GameTiming.ApplyingState)
-                return;
-
             if (_playerManager.LocalPlayer?.ControlledEntity != performer)
                 return;
 
@@ -186,9 +183,6 @@ namespace Content.Client.Actions
 
         protected override void ActionRemoved(EntityUid performer, EntityUid actionId, ActionsComponent comp, BaseActionComponent action)
         {
-            if (GameTiming.ApplyingState)
-                return;
-
             if (_playerManager.LocalPlayer?.ControlledEntity != performer)
                 return;
 

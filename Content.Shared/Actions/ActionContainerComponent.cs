@@ -11,5 +11,7 @@ namespace Content.Shared.Actions;
 public sealed partial class ActionsContainerComponent : Component
 {
     public const string ContainerId = "actions";
+
+    [ViewVariables]
     public Container Container = default!;
 }

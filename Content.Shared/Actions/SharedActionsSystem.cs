@@ -463,14 +463,7 @@ public abstract class SharedActionsSystem : EntitySystem
             return false;
         }
 
-        DebugTools.Assert(comp == null || comp.Owner == performer);
-        comp ??= EnsureComp<ActionsComponent>(performer);
-        action.AttachedEntity = performer;
-        comp.Actions.Add(actionId);
-        Dirty(actionId, action);
-        Dirty(performer, comp);
-        ActionAdded(performer, actionId, comp, action);
-        return true;
+        return AddActionDirect(performer, actionId, comp, action);
     }
 
     /// <summary>
@@ -544,7 +537,7 @@ public abstract class SharedActionsSystem : EntitySystem
     /// <summary>
     ///     Remove any actions that were enabled by some other entity. Useful when unequiping items that grant actions.
     /// </summary>
-    public void RemoveProvidedActions(EntityUid performer, EntityUid provider, ActionsComponent? comp = null)
+    public void RemoveProvidedActions(EntityUid performer, EntityUid container, ActionsComponent? comp = null)
     {
         if (!Resolve(performer, ref comp, false))
             return;
@@ -554,7 +547,7 @@ public abstract class SharedActionsSystem : EntitySystem
             if (!TryGetActionData(actionId, out var action))
                 return;
 
-            if (action.Container == provider)
+            if (action.Container == container)
                 RemoveAction(performer, actionId, comp);
         }
     }
@@ -617,6 +610,9 @@ public abstract class SharedActionsSystem : EntitySystem
     #region EquipHandlers
     private void OnDidEquip(EntityUid uid, ActionsComponent component, DidEquipEvent args)
     {
+        if (GameTiming.ApplyingState)
+            return;
+
         var ev = new GetItemActionsEvent(_actionContainer, args.Equipee, args.Equipment, args.SlotFlags);
         RaiseLocalEvent(args.Equipment, ev);
 
@@ -628,6 +624,9 @@ public abstract class SharedActionsSystem : EntitySystem
 
     private void OnHandEquipped(EntityUid uid, ActionsComponent component, DidEquipHandEvent args)
     {
+        if (GameTiming.ApplyingState)
+            return;
+
         var ev = new GetItemActionsEvent(_actionContainer, args.User, args.Equipped);
         RaiseLocalEvent(args.Equipped, ev);
 
@@ -639,11 +638,17 @@ public abstract class SharedActionsSystem : EntitySystem
 
     private void OnDidUnequip(EntityUid uid, ActionsComponent component, DidUnequipEvent args)
     {
+        if (GameTiming.ApplyingState)
+            return;
+
         RemoveProvidedActions(uid, args.Equipment, component);
     }
 
     private void OnHandUnequipped(EntityUid uid, ActionsComponent component, DidUnequipHandEvent args)
     {
+        if (GameTiming.ApplyingState)
+            return;
+
         RemoveProvidedActions(uid, args.Unequipped, component);
     }
     #endregion
