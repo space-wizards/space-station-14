@@ -5,6 +5,7 @@
   id: BaseMobOrganic
   noSpawn: true
   components:
+  - type: FloorOcclusion
   - type: LagCompensation
   - type: RangedDamageSound
     soundGroups:
@@ -202,9 +203,9 @@
   - type: MobStateActions
     actions:
       Critical:
-      - CritSuccumb
-      - CritFakeDeath
-      - CritLastWords
+      - ActionCritSuccumb
+      - ActionCritFakeDeath
+      - ActionCritLastWords
   - type: MobThresholds
     thresholds:
       0: Alive
@@ -270,8 +271,7 @@
     attackRate: 1
     damage:
       types:
-        # Actually does 5 damage due to +25% damage bonus on all single target melee attacks
-        Blunt: 4
+        Blunt: 5
   - type: Pullable
   - type: DoAfter
   - type: CreamPied
@@ -312,6 +312,7 @@
     deathPenalty: 0.01 # However they really ought to be living and intact, otherwise they're worth 100x less.
   - type: ContentEye
   - type: SleepEmitSound
+  - type: SSDIndicator
 
 - type: entity
   save: false

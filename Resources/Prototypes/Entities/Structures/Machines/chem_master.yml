@@ -61,7 +61,7 @@
   # Machine / Construction stuff
   - type: WiresPanel
   - type: Wires
-    BoardName: "chem_master"
+    BoardName: wires-board-name-chemmaster
     LayoutId: chem_master
   - type: Machine
     board: ChemMasterMachineCircuitboard
@@ -86,6 +86,9 @@
   - type: SolutionContainerManager
     solutions:
       buffer: {}
+  - type: DumpableSolution
+    solution: buffer
+    unlimited: true
   - type: GuideHelp
     guides:
     - Chemicals

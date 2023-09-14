@@ -102,15 +102,15 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
             return false;
         }
 
-        var target = ev.Target!.Value;
+        var target = GetEntity(ev.Target!.Value);
 
-        if (!TryComp<HandsComponent>(ev.Target.Value, out var targetHandsComponent))
+        if (!TryComp<HandsComponent>(target, out var targetHandsComponent))
         {
-            if (!TryComp<StatusEffectsComponent>(ev.Target!.Value, out var status) || !status.AllowedEffects.Contains("KnockedDown"))
+            if (!TryComp<StatusEffectsComponent>(target, out var status) || !status.AllowedEffects.Contains("KnockedDown"))
                 return false;
         }
 
-        if (!InRange(user, ev.Target.Value, component.Range, session))
+        if (!InRange(user, target, component.Range, session))
         {
             return false;
         }
@@ -122,7 +122,7 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
             inTargetHand = targetHandsComponent.ActiveHand.HeldEntity!.Value;
         }
 
-        Interaction.DoContactInteraction(user, ev.Target);
+        Interaction.DoContactInteraction(user, target);
 
         var attemptEvent = new DisarmAttemptEvent(target, user, inTargetHand);
 
@@ -228,7 +228,7 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
             filter = Filter.Pvs(user, entityManager: EntityManager);
         }
 
-        RaiseNetworkEvent(new MeleeLungeEvent(user, angle, localPos, animation), filter);
+        RaiseNetworkEvent(new MeleeLungeEvent(GetNetEntity(user), angle, localPos, animation), filter);
     }
 
     private void OnSpeechHit(EntityUid owner, MeleeSpeechComponent comp, MeleeHitEvent args)

@@ -51,7 +51,7 @@
   - type: WiresVisuals
   - type: WiresPanel
   - type: Wires
-    BoardName: "Cryo pod"
+    BoardName: wires-board-name-cryopod
     LayoutId: CryoPod
   - type: Damageable
     damageContainer: Inorganic

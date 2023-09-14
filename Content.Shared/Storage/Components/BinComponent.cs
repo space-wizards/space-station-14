@@ -56,13 +56,13 @@ public sealed partial class BinComponent : Component
 [Serializable, NetSerializable]
 public sealed class BinComponentState : ComponentState
 {
-    public List<EntityUid> Items;
+    public List<NetEntity> Items;
 
     public EntityWhitelist? Whitelist;
 
     public int MaxItems;
 
-    public BinComponentState(List<EntityUid> items, EntityWhitelist? whitelist, int maxItems)
+    public BinComponentState(List<NetEntity> items, EntityWhitelist? whitelist, int maxItems)
     {
         Items = items;
         Whitelist = whitelist;

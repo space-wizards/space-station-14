@@ -135,7 +135,7 @@ namespace Content.Server.Atmos.EntitySystems
 
             // Normal hard collisions, though this isn't generally possible since most flammable things are mobs
             // which don't collide with one another, shouldn't work here.
-            if (args.OtherFixture.ID != FlammableFixtureID && args.OurFixture.ID != FlammableFixtureID)
+            if (args.OtherFixtureId != FlammableFixtureID && args.OurFixtureId != FlammableFixtureID)
                 return;
 
             if (!EntityManager.TryGetComponent(otherUid, out FlammableComponent? otherFlammable))

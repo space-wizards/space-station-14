@@ -4,7 +4,6 @@ using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Ghost;
 using Content.Server.Light.Components;
 using Content.Server.Power.Components;
-using Content.Server.Power.EntitySystems;
 using Content.Server.Temperature.Components;
 using Content.Shared.Audio;
 using Content.Shared.Damage;
@@ -12,7 +11,7 @@ using Content.Shared.Database;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Light;
-using Content.Shared.Light.Component;
+using Content.Shared.Light.Components;
 using Content.Shared.Popups;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -42,8 +41,8 @@ namespace Content.Server.Light.EntitySystems
         [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
         [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
+        [Dependency] private readonly PointLightSystem _pointLight = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-        [Dependency] private readonly PowerReceiverSystem _power = default!;
 
         private static readonly TimeSpan ThunkDelay = TimeSpan.FromSeconds(2);
         public const string LightBulbContainer = "light_bulb";
@@ -76,9 +75,10 @@ namespace Content.Server.Light.EntitySystems
 
         private void OnMapInit(EntityUid uid, PoweredLightComponent light, MapInitEvent args)
         {
+            // TODO: Use ContainerFill dog
             if (light.HasLampOnSpawn != null)
             {
-                var entity = EntityManager.SpawnEntity(light.HasLampOnSpawn, EntityManager.GetComponent<TransformComponent>(light.Owner).Coordinates);
+                var entity = EntityManager.SpawnEntity(light.HasLampOnSpawn, EntityManager.GetComponent<TransformComponent>(uid).Coordinates);
                 light.LightBulbContainer.Insert(entity);
             }
             // need this to update visualizers
@@ -140,7 +140,7 @@ namespace Content.Server.Light.EntitySystems
             }
 
             // removing a working bulb, so require a delay
-            _doAfterSystem.TryStartDoAfter(new DoAfterArgs(userUid, light.EjectBulbDelay, new PoweredLightDoAfterEvent(), uid, target: uid)
+            _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, userUid, light.EjectBulbDelay, new PoweredLightDoAfterEvent(), uid, target: uid)
             {
                 BreakOnUserMove = true,
                 BreakOnDamage = true,
@@ -243,20 +243,12 @@ namespace Content.Server.Light.EntitySystems
         }
         #endregion
 
-        /// <summary>
-        /// Supply factor (0-1) as input x, returns linear light scale (0-1).
-        /// </summary>
-        private float LightCurve(float x)
-        {
-            return (float)(1/0.8*(x-0.2));
-        }
-
         private void UpdateLight(EntityUid uid,
             PoweredLightComponent? light = null,
             ApcPowerReceiverComponent? powerReceiver = null,
             AppearanceComponent? appearance = null)
         {
-            if (!Resolve(uid, ref light, ref powerReceiver))
+            if (!Resolve(uid, ref light, ref powerReceiver, false))
                 return;
 
             // Optional component.
@@ -275,10 +267,9 @@ namespace Content.Server.Light.EntitySystems
             switch (lightBulb.State)
             {
                 case LightBulbState.Normal:
-                    float factor = LightCurve(_power.SupplyFactor(uid, powerReceiver));
-                    if (factor > 0 && light.On)
+                    if (powerReceiver.Powered && light.On)
                     {
-                        SetLight(uid, true, lightBulb.Color, light, lightBulb.LightRadius*factor, lightBulb.LightEnergy*factor, lightBulb.LightSoftness);
+                        SetLight(uid, true, lightBulb.Color, light, lightBulb.LightRadius, lightBulb.LightEnergy, lightBulb.LightSoftness);
                         _appearance.SetData(uid, PoweredLightVisuals.BulbState, PoweredLightState.On, appearance);
                         var time = _gameTiming.CurTime;
                         if (time > light.LastThunk + ThunkDelay)
@@ -397,16 +388,16 @@ namespace Content.Server.Light.EntitySystems
 
             if (EntityManager.TryGetComponent(uid, out PointLightComponent? pointLight))
             {
-                pointLight.Enabled = value;
+                _pointLight.SetEnabled(uid, value, pointLight);
 
                 if (color != null)
-                    pointLight.Color = color.Value;
+                    _pointLight.SetColor(uid, color.Value, pointLight);
                 if (radius != null)
-                    pointLight.Radius = (float) radius;
+                    _pointLight.SetRadius(uid, (float) radius, pointLight);
                 if (energy != null)
-                    pointLight.Energy = (float) energy;
+                    _pointLight.SetEnergy(uid, (float) energy, pointLight);
                 if (softness != null)
-                    pointLight.Softness = (float) softness;
+                    _pointLight.SetSoftness(uid, (float) softness, pointLight);
             }
         }
 

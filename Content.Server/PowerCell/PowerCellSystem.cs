@@ -1,6 +1,7 @@
 using Content.Server.Administration.Logs;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Explosion.EntitySystems;
+using Content.Server.Emp;
 using Content.Server.Power.Components;
 using Content.Shared.Database;
 using Content.Shared.Examine;
@@ -23,12 +24,9 @@ namespace Content.Server.PowerCell;
 /// </summary>
 public sealed partial class PowerCellSystem : SharedPowerCellSystem
 {
-    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly ActivatableUISystem _activatable = default!;
     [Dependency] private readonly BatterySystem _battery = default!;
-    [Dependency] private readonly SolutionContainerSystem _solutionsSystem = default!;
-    [Dependency] private readonly ExplosionSystem _explosionSystem = default!;
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
     [Dependency] private readonly ItemSlotsSystem _itemSlotsSystem = default!;
     [Dependency] private readonly SharedAppearanceSystem _sharedAppearanceSystem = default!;
@@ -41,6 +39,7 @@ public sealed partial class PowerCellSystem : SharedPowerCellSystem
 
         SubscribeLocalEvent<PowerCellComponent, ChargeChangedEvent>(OnChargeChanged);
         SubscribeLocalEvent<PowerCellComponent, ExaminedEvent>(OnCellExamined);
+        SubscribeLocalEvent<PowerCellComponent, EmpAttemptEvent>(OnCellEmpAttempt);
 
         SubscribeLocalEvent<PowerCellDrawComponent, EntityUnpausedEvent>(OnUnpaused);
         SubscribeLocalEvent<PowerCellDrawComponent, ChargeChangedEvent>(OnDrawChargeChanged);
@@ -234,6 +233,14 @@ public sealed partial class PowerCellSystem : SharedPowerCellSystem
     {
         TryComp<BatteryComponent>(uid, out var battery);
         OnBatteryExamined(uid, battery, args);
+    }
+
+    private void OnCellEmpAttempt(EntityUid uid, PowerCellComponent component, EmpAttemptEvent args)
+    {
+        var parent = Transform(uid).ParentUid;
+        // relay the attempt event to the slot so it can cancel it
+        if (HasComp<PowerCellSlotComponent>(parent))
+            RaiseLocalEvent(parent, args);
     }
 
     private void OnCellSlotExamined(EntityUid uid, PowerCellSlotComponent component, ExaminedEvent args)

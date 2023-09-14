@@ -80,6 +80,12 @@ public sealed partial class ZombieComponent : Component
     [DataField("beforeZombifiedSkinColor")]
     public Color BeforeZombifiedSkinColor;
 
+    /// <summary>
+    /// The eye color of the humanoid to restore in case of cloning
+    /// </summary>
+    [DataField("beforeZombifiedEyeColor")]
+    public Color BeforeZombifiedEyeColor;
+
     [DataField("emoteId", customTypeSerializer: typeof(PrototypeIdSerializer<EmoteSoundsPrototype>))]
     public string? EmoteSoundsId = "Zombie";
 

@@ -7,6 +7,19 @@
     - player
     - splat
     - emplace
+    - bin
+    - extremes
+    - reduce
+    - sortby
+    - sort
+    - sortdownby
+    - sortdown
+    - sortmapby
+    - sortmapdownby
+    - iota
+    - rep
+    - to
+    - iterate
 
 - Flags: DEBUG
   Commands:
@@ -23,7 +36,14 @@
     - types
     - ecscomp
     - actor
+    - spawn
+    - mappos
+    - pos
+    - tp
+    - allcomps
+    - replace
     - entitysystemupdateorder
+    - mind
 
 - Flags: HOST
   Commands:
@@ -69,3 +89,95 @@
     - '>='
     - '=='
     - '!='
+    - f
+    - i
+    - s
+    - b
+    - '+/'
+    - '-/'
+    - '*/'
+    - '//'
+    - join
+    - append
+    - '?'
+    - 'or?'
+    - '??'
+    - rng
+    - 'sum'
+    - take
+    - curtick
+    - curtime
+    - realtime
+    - servertime
+    - more
+    - '%'
+    - '%/'
+    - '&~'
+    - '|~'
+    - '^~'
+    - '~'
+    - 'abs'
+    - 'average'
+    - 'bibytecount'
+    - 'shortestbitlength'
+    - 'countleadzeros'
+    - 'counttrailingzeros'
+    - 'fpi'
+    - 'fe'
+    - 'ftau'
+    - 'fepsilon'
+    - dpi
+    - de
+    - dtau
+    - depsilon
+    - hpi
+    - he
+    - htau
+    - hepsilon
+    - floor
+    - ceil
+    - round
+    - trunc
+    - round2frac
+    - exponentbytecount
+    - significandbytecount
+    - significandbitcount
+    - exponentshortestbitcount
+    - stepnext
+    - stepprev
+    - checkedto
+    - saturateto
+    - truncto
+    - iscanonical
+    - iscomplex
+    - iseven
+    - isodd
+    - isfinite
+    - isimaginary
+    - isinfinite
+    - isinteger
+    - isnan
+    - isnegative
+    - ispositive
+    - isreal
+    - issubnormal
+    - iszero
+    - pow
+    - sqrt
+    - cbrt
+    - root
+    - hypot
+    - sin
+    - sinpi
+    - asin
+    - asinpi
+    - cos
+    - cospi
+    - acos
+    - acospi
+    - tan
+    - tanpi
+    - atan
+    - atanpi
+    - pick
+    - tee

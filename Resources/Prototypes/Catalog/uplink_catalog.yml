@@ -239,6 +239,16 @@
   categories:
   - UplinkExplosives
 
+- type: listing
+  id: UplinkSyndicateBomb
+  name: uplink-exploding-syndicate-bomb-name
+  description: uplink-exploding-syndicate-bomb-desc
+  productEntity: SyndicateBomb
+  cost:
+    Telecrystal: 11
+  categories:
+    - UplinkExplosives
+
 # Ammo
 
 - type: listing
@@ -507,26 +517,6 @@
     Telecrystal: 5
   categories:
     - UplinkImplants
-
-- type: listing
-  id: UplinkMicroBombImplanter
-  name: uplink-micro-bomb-implanter-name
-  description: uplink-micro-bomb-implanter-desc
-  icon: { sprite: /Textures/Actions/Implants/implants.rsi, state: explosive }
-  productEntity: MicroBombImplanter
-  cost:
-    Telecrystal: 2
-  categories:
-    - UplinkImplants
-  conditions:
-    - !type:StoreWhitelistCondition
-      whitelist:
-        tags:
-          - NukeOpsUplink
-    - !type:BuyerWhitelistCondition
-      blacklist:
-        components:
-          - SurplusBundle
 
 - type: listing
   id: UplinkDnaScramblerImplant
@@ -821,7 +811,7 @@
   description: uplink-carp-dehydrated-desc
   productEntity: DehydratedSpaceCarp
   cost:
-    Telecrystal: 3
+    Telecrystal: 2
   categories:
   - UplinkTools
   conditions:
@@ -965,10 +955,9 @@
   categories:
   - UplinkJob
   conditions:
-    - !type:BuyerJobCondition
+    - !type:BuyerDepartmentCondition
       whitelist:
-        - Scientist
-        - SeniorResearcher
+      - Science
 
 - type: listing
   id: uplinkProximityMine
@@ -999,11 +988,12 @@
   categories:
   - UplinkJob
   conditions:
-  - !type:BuyerJobCondition
+  - !type:BuyerJobCondition # We can't use BuyerDepartmentCondition here since Zookeeper and Chef can also get this
     whitelist:
     - Zookeeper
     - Scientist
     - SeniorResearcher
+    - ResearchDirector
     - Chef
 
 # Armor
@@ -1190,7 +1180,7 @@
   description: uplink-combat-medipen-desc
   productEntity: CombatMedipen
   cost:
-    Telecrystal: 8
+    Telecrystal: 4
   categories:
   - UplinkMisc
 
@@ -1307,6 +1297,16 @@
   name: uplink-costume-clown-name
   description: uplink-costume-clown-desc
   productEntity: ClothingBackpackDuffelSyndicateCostumeClown
+  cost:
+    Telecrystal: 4
+  categories:
+  - UplinkPointless
+
+- type: listing
+  id: UplinkCarpSuitBundle
+  name: uplink-carp-suit-bundle-name
+  description: uplink-carp-suit-bundle-desc
+  productEntity: ClothingBackpackDuffelSyndicateCarpSuit
   cost:
     Telecrystal: 4
   categories:
