@@ -1,8 +1,10 @@
+using Content.Server.Humanoid;
 using Content.Server.Speech.EntitySystems;
+using Content.Shared.Actions;
+using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Chat.Prototypes;
 using Content.Shared.Humanoid;
 using Robust.Shared.Audio;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
 
@@ -31,11 +33,11 @@ public sealed partial class VocalComponent : Component
     [DataField("wilhelmProbability")]
     public float WilhelmProbability = 0.0002f;
 
-    [DataField("screamAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string ScreamAction = "ActionScream";
+    [DataField("screamActionId", customTypeSerializer: typeof(PrototypeIdSerializer<InstantActionPrototype>))]
+    public string ScreamActionId = "Scream";
 
-    [DataField("screamActionEntity")]
-    public EntityUid? ScreamActionEntity;
+    [DataField("screamAction")]
+    public InstantAction? ScreamAction;
 
     /// <summary>
     ///     Currently loaded emote sounds prototype, based on entity sex.
@@ -43,4 +45,9 @@ public sealed partial class VocalComponent : Component
     /// </summary>
     [ViewVariables]
     public EmoteSoundsPrototype? EmoteSounds = null;
+}
+
+public sealed partial class ScreamActionEvent : InstantActionEvent
+{
+
 }

@@ -1,4 +1,5 @@
 using Content.Shared.Mobs;
+using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
 using Robust.Shared.Enums;

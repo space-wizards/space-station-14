@@ -12,11 +12,11 @@ namespace Content.Shared.Tabletop.Events
         /// <summary>
         /// The UID of the entity being dragged.
         /// </summary>
-        public NetEntity DraggedEntityUid;
+        public EntityUid DraggedEntityUid;
 
         public bool IsDragging;
 
-        public TabletopDraggingPlayerChangedEvent(NetEntity draggedEntityUid, bool isDragging)
+        public TabletopDraggingPlayerChangedEvent(EntityUid draggedEntityUid, bool isDragging)
         {
             DraggedEntityUid = draggedEntityUid;
             IsDragging = isDragging;

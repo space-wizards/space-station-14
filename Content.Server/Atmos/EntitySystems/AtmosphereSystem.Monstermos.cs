@@ -467,20 +467,19 @@ namespace Content.Server.Atmos.EntitySystems
                     otherTile.Air.Temperature = Atmospherics.TCMB;
                     continue;
                 }
-                var sum = otherTile.Air.TotalMoles;
-                if (SpacingEscapeRatio < 1f)
+
+                // Pressure as a multiple of normal air pressure (takes temperature into account)
+                float pressureMultiple = (otherTile.Air.Pressure / 110.0f);
+                var sum = otherTile.Air.TotalMoles * Atmospherics.SpacingEscapeRatio * pressureMultiple;
+                if (sum < Atmospherics.SpacingMinGas)
                 {
-                    sum *= SpacingEscapeRatio;
-                    if (sum < SpacingMinGas)
-                    {
-                        // Boost the last bit of air draining from the tile.
-                        sum = Math.Min(SpacingMinGas, otherTile.Air.TotalMoles);
-                    }
-                    if (sum + otherTile.MonstermosInfo.CurrentTransferAmount > SpacingMaxWind)
-                    {
-                        // Limit the flow of air out of tiles which have air flowing into them from elsewhere.
-                        sum = Math.Max(SpacingMinGas, SpacingMaxWind - otherTile.MonstermosInfo.CurrentTransferAmount);
-                    }
+                    // Boost the last bit of air draining from the tile.
+                    sum = Math.Min(Atmospherics.SpacingMinGas, otherTile.Air.TotalMoles);
+                }
+                if (sum + otherTile.MonstermosInfo.CurrentTransferAmount > Atmospherics.SpacingMaxWind * pressureMultiple)
+                {
+                    // Limit the flow of air out of tiles which have air flowing into them from elsewhere.
+                    sum = Math.Max(Atmospherics.SpacingMinGas, Atmospherics.SpacingMaxWind * pressureMultiple - otherTile.MonstermosInfo.CurrentTransferAmount);
                 }
                 totalMolesRemoved += sum;
                 otherTile.MonstermosInfo.CurrentTransferAmount += sum;
@@ -494,7 +493,7 @@ namespace Content.Server.Atmos.EntitySystems
                     otherTile2.PressureDirection = otherTile.MonstermosInfo.CurrentTransferDirection;
                 }
 
-                if (otherTile.Air != null && otherTile.Air.Pressure - sum > SpacingMinGas * 0.1f)
+                if (otherTile.Air != null && otherTile.Air.Pressure - sum > Atmospherics.SpacingMinGas * 0.1f)
                 {
                     // Transfer the air into the other tile (space wind :)
                     ReleaseGasTo(otherTile.Air!, otherTile2.Air!, sum);
@@ -653,7 +652,7 @@ namespace Content.Server.Atmos.EntitySystems
             if (!MonstermosRipTiles)
                 return;
 
-            var chance = MathHelper.Clamp(0.01f + (sum / SpacingMaxWind) * 0.3f, 0.003f, 0.3f);
+            var chance = MathHelper.Clamp(0.01f + (sum / Atmospherics.SpacingMaxWind) * 0.3f, 0.003f, 0.3f);
 
             if (sum > 20 && _robustRandom.Prob(chance))
                 PryTile(mapGrid, tile.GridIndices);

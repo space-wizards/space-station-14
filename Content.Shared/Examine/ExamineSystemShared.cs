@@ -48,7 +48,7 @@ namespace Content.Shared.Examine
 
         public bool IsInDetailsRange(EntityUid examiner, EntityUid entity)
         {
-            if (IsClientSide(entity))
+            if (entity.IsClientSide())
                 return true;
 
             // check if the mob is in critical or dead
@@ -72,7 +72,7 @@ namespace Content.Shared.Examine
         public bool CanExamine(EntityUid examiner, EntityUid examined)
         {
             // special check for client-side entities stored in null-space for some UI guff.
-            if (IsClientSide(examined))
+            if (examined.IsClientSide())
                 return true;
 
             return !Deleted(examined) && CanExamine(examiner, EntityManager.GetComponent<TransformComponent>(examined).MapPosition,
@@ -138,7 +138,7 @@ namespace Content.Shared.Examine
         /// </summary>
         public bool IsOccluded(EntityUid uid)
         {
-            return TryComp<EyeComponent>(uid, out var eye) && eye.DrawFov;
+            return TryComp<SharedEyeComponent>(uid, out var eye) && eye.DrawFov;
         }
 
         public static bool InRangeUnOccluded(MapCoordinates origin, MapCoordinates other, float range, Ignored? predicate, bool ignoreInsideBlocker = true, IEntityManager? entMan = null)

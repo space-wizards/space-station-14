@@ -28,13 +28,19 @@ public abstract class SharedCameraRecoilSystem : EntitySystem
     /// </summary>
     protected const float KickMagnitudeMax = 1f;
 
-    [Dependency] private readonly SharedEyeSystem _eye = default!;
+    private ISawmill _log = default!;
+
+    public override void Initialize()
+    {
+        base.Initialize();
+        _log = Logger.GetSawmill($"ecs.systems.{nameof(SharedCameraRecoilSystem)}");
+    }
 
     /// <summary>
     ///     Applies explosion/recoil/etc kickback to the view of the entity.
     /// </summary>
     /// <remarks>
-    ///     If the entity is missing <see cref="CameraRecoilComponent" /> and/or <see cref="EyeComponent" />,
+    ///     If the entity is missing <see cref="CameraRecoilComponent" /> and/or <see cref="SharedEyeComponent" />,
     ///     this call will have no effect. It is safe to call this function on any entity.
     /// </remarks>
     public abstract void KickCamera(EntityUid euid, Vector2 kickback, CameraRecoilComponent? component = null);
@@ -43,15 +49,15 @@ public abstract class SharedCameraRecoilSystem : EntitySystem
     {
         base.FrameUpdate(frameTime);
 
-        var query = AllEntityQuery<EyeComponent, CameraRecoilComponent>();
-
-        while (query.MoveNext(out var uid, out var eye, out var recoil))
+        foreach (var entity in EntityManager.EntityQuery<SharedEyeComponent, CameraRecoilComponent>(true))
         {
+            var recoil = entity.Item2;
+            var eye = entity.Item1;
             var magnitude = recoil.CurrentKick.Length();
             if (magnitude <= 0.005f)
             {
                 recoil.CurrentKick = Vector2.Zero;
-                _eye.SetOffset(uid, recoil.BaseOffset + recoil.CurrentKick, eye);
+                eye.Offset = recoil.BaseOffset + recoil.CurrentKick;
             }
             else // Continually restore camera to 0.
             {
@@ -66,7 +72,7 @@ public abstract class SharedCameraRecoilSystem : EntitySystem
 
                 recoil.CurrentKick = new Vector2(x, y);
 
-                _eye.SetOffset(uid, recoil.BaseOffset + recoil.CurrentKick, eye);
+                eye.Offset = recoil.BaseOffset + recoil.CurrentKick;
             }
         }
     }
@@ -76,12 +82,12 @@ public abstract class SharedCameraRecoilSystem : EntitySystem
 [NetSerializable]
 public sealed class CameraKickEvent : EntityEventArgs
 {
-    public readonly NetEntity NetEntity;
+    public readonly EntityUid Euid;
     public readonly Vector2 Recoil;
 
-    public CameraKickEvent(NetEntity netEntity, Vector2 recoil)
+    public CameraKickEvent(EntityUid euid, Vector2 recoil)
     {
         Recoil = recoil;
-        NetEntity = netEntity;
+        Euid = euid;
     }
 }

@@ -31,7 +31,7 @@ namespace Content.Server.Disposal
                 return;
             }
 
-            if (!NetEntity.TryParse(args[0], out var idNet) || !_entities.TryGetEntity(idNet, out var id))
+            if (!EntityUid.TryParse(args[0], out var id))
             {
                 shell.WriteLine(Loc.GetString("shell-invalid-entity-uid",("uid", args[0])));
                 return;
@@ -51,7 +51,7 @@ namespace Content.Server.Disposal
                 return;
             }
 
-            _entities.System<DisposalTubeSystem>().PopupDirections(id.Value, tube, player.AttachedEntity.Value);
+            _entities.System<DisposalTubeSystem>().PopupDirections(id, tube, player.AttachedEntity.Value);
         }
     }
 }

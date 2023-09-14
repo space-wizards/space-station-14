@@ -30,10 +30,10 @@ public sealed class CrewManifestSystem : EntitySystem
     /// <summary>
     ///     Requests a crew manifest from the server.
     /// </summary>
-    /// <param name="netEntity">EntityUid of the entity we're requesting the crew manifest from.</param>
-    public void RequestCrewManifest(NetEntity netEntity)
+    /// <param name="uid">EntityUid of the entity we're requesting the crew manifest from.</param>
+    public void RequestCrewManifest(EntityUid uid)
     {
-        RaiseNetworkEvent(new RequestCrewManifestMessage(netEntity));
+        RaiseNetworkEvent(new RequestCrewManifestMessage(uid));
     }
 
     private void OnPrototypesReload(PrototypesReloadedEventArgs _)

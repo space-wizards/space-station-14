@@ -1,32 +1,57 @@
-﻿using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+﻿using Content.Shared.Actions.ActionTypes;
+using Robust.Shared.Reflection;
+using Robust.Shared.Serialization;
 
 namespace Content.Server.UserInterface;
 
 [RegisterComponent]
-public sealed partial class IntrinsicUIComponent : Component
+public sealed partial class IntrinsicUIComponent : Component, ISerializationHooks
 {
     /// <summary>
     /// List of UIs and their actions that this entity has.
     /// </summary>
-    [DataField("uis", required: true)] public List<IntrinsicUIEntry> UIs = new();
+    [DataField("uis", required: true)]
+    public List<IntrinsicUIEntry> UIs = new();
+
+    void ISerializationHooks.AfterDeserialization()
+    {
+        for (var i = 0; i < UIs.Count; i++)
+        {
+            var ui = UIs[i];
+            ui.AfterDeserialization();
+            UIs[i] = ui;
+        }
+    }
 }
 
 [DataDefinition]
-public partial class IntrinsicUIEntry
+public partial struct IntrinsicUIEntry
 {
+    [ViewVariables] public Enum? Key { get; private set; } = null;
+
     /// <summary>
     /// The BUI key that this intrinsic UI should open.
     /// </summary>
     [DataField("key", required: true)]
-    public Enum? Key { get; private set; }
-
-    [DataField("toggleAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>), required: true)]
-    public string? ToggleAction;
+    private string _keyRaw = default!;
 
     /// <summary>
     /// The action used for this BUI.
     /// </summary>
-    [DataField("toggleActionEntity")]
-    public EntityUid? ToggleActionEntity = new();
+    [DataField("toggleAction", required: true)]
+    public InstantAction ToggleAction = new();
+
+    public void AfterDeserialization()
+    {
+        var reflectionManager = IoCManager.Resolve<IReflectionManager>();
+        if (reflectionManager.TryParseEnumReference(_keyRaw, out var key))
+            Key = key;
+
+        if (ToggleAction.Event is ToggleIntrinsicUIEvent ev)
+        {
+            ev.Key = Key;
+        }
+    }
+
+    public IntrinsicUIEntry() {}
 }

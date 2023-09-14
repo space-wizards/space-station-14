@@ -46,7 +46,6 @@ public sealed partial class DockingSystem
        Angle targetGridRotation,
        FixturesComponent shuttleFixtures,
        MapGridComponent grid,
-       bool isMap,
        out Matrix3 matty,
        out Box2 shuttleDockedAABB,
        out Angle gridRotation)
@@ -76,7 +75,7 @@ public sealed partial class DockingSystem
        var gridXformMatrix = Matrix3.CreateTransform(gridDockXform.LocalPosition, gridDockAngle);
        Matrix3.Multiply(in stationDockMatrix, in gridXformMatrix, out matty);
 
-       if (!ValidSpawn(grid, matty, offsetAngle, shuttleFixtures, isMap))
+       if (!ValidSpawn(grid, matty, offsetAngle, shuttleFixtures))
            return false;
 
        shuttleDockedAABB = matty.TransformBox(shuttleAABB);
@@ -137,8 +136,6 @@ public sealed partial class DockingSystem
         var shuttleFixturesComp = Comp<FixturesComponent>(shuttleUid);
         var shuttleAABB = Comp<MapGridComponent>(shuttleUid).LocalAABB;
 
-        var isMap = HasComp<MapComponent>(targetGrid);
-
         var validDockConfigs = new List<DockingConfig>();
         if (shuttleDocks.Count > 0)
         {
@@ -158,7 +155,6 @@ public sealed partial class DockingSystem
                            targetGridAngle,
                            shuttleFixturesComp,
                            targetGridGrid,
-                           isMap,
                            out var matty,
                            out var dockedAABB,
                            out var targetAngle))
@@ -209,7 +205,6 @@ public sealed partial class DockingSystem
                                    shuttleAABB,
                                    targetGridAngle,
                                    shuttleFixturesComp, targetGridGrid,
-                                   isMap,
                                    out _,
                                    out var otherdockedAABB,
                                    out var otherTargetAngle))
@@ -260,9 +255,9 @@ public sealed partial class DockingSystem
     }
 
    /// <summary>
-   /// Checks whether the shuttle can warp to the specified position.
+   /// Checks whether the emergency shuttle can warp to the specified position.
    /// </summary>
-   private bool ValidSpawn(MapGridComponent grid, Matrix3 matty, Angle angle, FixturesComponent shuttleFixturesComp, bool isMap)
+   private bool ValidSpawn(MapGridComponent grid, Matrix3 matty, Angle angle, FixturesComponent shuttleFixturesComp)
    {
        var transform = new Transform(matty.Transform(Vector2.Zero), angle);
 
@@ -273,32 +268,8 @@ public sealed partial class DockingSystem
            var aabb = polyShape.ComputeAABB(transform, 0);
            aabb = aabb.Enlarged(-0.01f);
 
-           // If it's a map check no hard collidable anchored entities overlap
-           if (isMap)
-           {
-               foreach (var tile in grid.GetLocalTilesIntersecting(aabb))
-               {
-                   var anchoredEnumerator = grid.GetAnchoredEntitiesEnumerator(tile.GridIndices);
-
-                   while (anchoredEnumerator.MoveNext(out var anc))
-                   {
-                       if (!_physicsQuery.TryGetComponent(anc, out var physics) ||
-                           !physics.CanCollide ||
-                           !physics.Hard)
-                       {
-                           continue;
-                       }
-
-                       return false;
-                   }
-               }
-           }
-           // If it's not a map check it doesn't overlap the grid.
-           else
-           {
-               if (grid.GetLocalTilesIntersecting(aabb).Any())
-                   return false;
-           }
+           if (grid.GetLocalTilesIntersecting(aabb).Any())
+               return false;
        }
 
        return true;

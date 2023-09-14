@@ -53,16 +53,17 @@
   - ExplosivePayload
 
 - type: technology
-  id: WeaponizedLaserManipulation
-  name: research-technology-weaponized-laser-manipulation
+  id: AdvancedLaserManipulation
+  name: research-technology-advanced-laser-manipulation
   icon:
-    sprite: Objects/Weapons/Guns/Battery/laser_gun.rsi
+    sprite: Objects/Weapons/Guns/Battery/advancedlasergun.rsi
     state: icon
   discipline: Arsenal
   tier: 1
-  cost: 7500
+  cost: 10000
   recipeUnlocks:
   - WeaponLaserCarbine
+  - WeaponAdvancedLaser
 
 - type: technology
   id: NonlethalAmmunition
@@ -121,7 +122,6 @@
   cost: 8000
   recipeUnlocks:
   - Truncheon
-  - TelescopicShield
 
 # Tier 3
 
@@ -136,15 +136,3 @@
   cost: 15000
   recipeUnlocks:
   - WeaponTaser
-
-- type: technology
-  id: PortableMicrofusionWeaponry
-  name: research-technology-portable-microfusion-weaponry
-  icon:
-    sprite: Objects/Weapons/Guns/Battery/advancedlasergun.rsi
-    state: icon
-  discipline: Arsenal
-  tier: 3
-  cost: 15000
-  recipeUnlocks:
-  - WeaponAdvancedLaser

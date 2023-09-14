@@ -16,11 +16,10 @@ namespace Content.Client.Gateway.UI;
 public sealed partial class GatewayWindow : FancyWindow,
     IComputerWindow<EmergencyConsoleBoundUserInterfaceState>
 {
-    private readonly IEntityManager _entManager;
     private readonly IGameTiming _timing;
 
     public event Action<EntityUid>? OpenPortal;
-    private List<(NetEntity, string, TimeSpan, bool)> _destinations = default!;
+    private List<(EntityUid, string, TimeSpan, bool)> _destinations = default!;
     private EntityUid? _current;
     private TimeSpan _nextClose;
     private TimeSpan _lastOpen;
@@ -30,15 +29,13 @@ public sealed partial class GatewayWindow : FancyWindow,
     public GatewayWindow()
     {
         RobustXamlLoader.Load(this);
-        var dependencies = IoCManager.Instance!;
-        _entManager = dependencies.Resolve<IEntityManager>();
-        _timing = dependencies.Resolve<IGameTiming>();
+        _timing = IoCManager.Resolve<IGameTiming>();
     }
 
     public void UpdateState(GatewayBoundUserInterfaceState state)
     {
         _destinations = state.Destinations;
-        _current = _entManager.GetEntity(state.Current);
+        _current = state.Current;
         _nextClose = state.NextClose;
         _lastOpen = state.LastOpen;
 
@@ -67,7 +64,7 @@ public sealed partial class GatewayWindow : FancyWindow,
         var now = _timing.CurTime;
         foreach (var dest in _destinations)
         {
-            var uid = _entManager.GetEntity(dest.Item1);
+            var uid = dest.Item1;
             var name = dest.Item2;
             var nextReady = dest.Item3;
             var busy = dest.Item4;
@@ -104,7 +101,7 @@ public sealed partial class GatewayWindow : FancyWindow,
                 OpenPortal?.Invoke(uid);
             };
 
-            if (uid == _entManager.GetEntity(state.Current))
+            if (uid == state.Current)
             {
                 openButton.AddStyleClass(StyleBase.ButtonCaution);
             }

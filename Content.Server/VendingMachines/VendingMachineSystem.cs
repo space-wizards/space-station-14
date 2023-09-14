@@ -8,6 +8,7 @@ using Content.Server.UserInterface;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.Actions;
+using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Damage;
 using Content.Shared.Destructible;
 using Content.Shared.DoAfter;
@@ -43,7 +44,6 @@ namespace Content.Server.VendingMachines
             base.Initialize();
 
             _sawmill = Logger.GetSawmill("vending");
-            SubscribeLocalEvent<VendingMachineComponent, MapInitEvent>(OnComponentMapInit);
             SubscribeLocalEvent<VendingMachineComponent, PowerChangedEvent>(OnPowerChanged);
             SubscribeLocalEvent<VendingMachineComponent, BreakageEventArgs>(OnBreak);
             SubscribeLocalEvent<VendingMachineComponent, GotEmaggedEvent>(OnEmagged);
@@ -60,12 +60,6 @@ namespace Content.Server.VendingMachines
             SubscribeLocalEvent<VendingMachineComponent, RestockDoAfterEvent>(OnDoAfter);
 
             SubscribeLocalEvent<VendingMachineRestockComponent, PriceCalculationEvent>(OnPriceCalculation);
-        }
-
-        private void OnComponentMapInit(EntityUid uid, VendingMachineComponent component, MapInitEvent args)
-        {
-            _action.AddAction(uid, ref component.ActionEntity, component.Action, uid);
-            Dirty(uid, component);
         }
 
         private void OnVendingPrice(EntityUid uid, VendingMachineComponent component, ref PriceCalculationEvent args)
@@ -93,6 +87,12 @@ namespace Content.Server.VendingMachines
             if (HasComp<ApcPowerReceiverComponent>(uid))
             {
                 TryUpdateVisualState(uid, component);
+            }
+
+            if (component.Action != null)
+            {
+                var action = new InstantAction(PrototypeManager.Index<InstantActionPrototype>(component.Action));
+                _action.AddAction(uid, action, uid);
             }
         }
 

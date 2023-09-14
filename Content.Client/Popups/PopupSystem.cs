@@ -61,9 +61,9 @@ namespace Content.Client.Popups
             if (recordReplay && _replayRecording.IsRecording)
             {
                 if (entity != null)
-                    _replayRecording.RecordClientMessage(new PopupEntityEvent(message, type, GetNetEntity(entity.Value)));
+                    _replayRecording.RecordClientMessage(new PopupEntityEvent(message, type, entity.Value));
                 else
-                    _replayRecording.RecordClientMessage(new PopupCoordinatesEvent(message, type, GetNetCoordinates(coordinates)));
+                    _replayRecording.RecordClientMessage(new PopupCoordinatesEvent(message, type, coordinates));
             }
 
             var label = new WorldPopupLabel(coordinates)
@@ -170,15 +170,13 @@ namespace Content.Client.Popups
 
         private void OnPopupCoordinatesEvent(PopupCoordinatesEvent ev)
         {
-            PopupMessage(ev.Message, ev.Type, GetCoordinates(ev.Coordinates), null, false);
+            PopupMessage(ev.Message, ev.Type, ev.Coordinates, null, false);
         }
 
         private void OnPopupEntityEvent(PopupEntityEvent ev)
         {
-            var entity = GetEntity(ev.Uid);
-
-            if (TryComp(entity, out TransformComponent? transform))
-                PopupMessage(ev.Message, ev.Type, transform.Coordinates, entity, false);
+            if (TryComp(ev.Uid, out TransformComponent? transform))
+                PopupMessage(ev.Message, ev.Type, transform.Coordinates, ev.Uid, false);
         }
 
         private void OnRoundRestart(RoundRestartCleanupEvent ev)

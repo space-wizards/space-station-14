@@ -1,11 +1,14 @@
 using Content.Server.Actions;
 using Content.Server.DoAfter;
 using Content.Server.Popups;
-using Content.Server.Stack;
+using Content.Shared.Actions;
+using Content.Shared.Actions.ActionTypes;
 using Content.Shared.DoAfter;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
+using Robust.Shared.Prototypes;
 using Content.Shared.Sericulture;
+using Content.Server.Stack;
 
 namespace Content.Server.Sericulture;
 
@@ -13,6 +16,7 @@ public sealed partial class SericultureSystem : EntitySystem
 {
     [Dependency] private readonly ActionsSystem _actionsSystem = default!;
     [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
+    [Dependency] private readonly IPrototypeManager _protoManager = default!;
     [Dependency] private readonly HungerSystem _hungerSystem = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly StackSystem _stackSystem = default!;
@@ -21,20 +25,26 @@ public sealed partial class SericultureSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<SericultureComponent, MapInitEvent>(OnCompMapInit);
+        SubscribeLocalEvent<SericultureComponent, ComponentInit>(OnCompInit);
         SubscribeLocalEvent<SericultureComponent, ComponentShutdown>(OnCompRemove);
         SubscribeLocalEvent<SericultureComponent, SericultureActionEvent>(OnSericultureStart);
         SubscribeLocalEvent<SericultureComponent, SericultureDoAfterEvent>(OnSericultureDoAfter);
     }
 
-    private void OnCompMapInit(EntityUid uid, SericultureComponent comp, MapInitEvent args)
+    private void OnCompInit(EntityUid uid, SericultureComponent comp, ComponentInit args)
     {
-        _actionsSystem.AddAction(uid, ref comp.ActionEntity, comp.Action, uid);
+        if (!_protoManager.TryIndex<InstantActionPrototype>(comp.ActionProto, out var actionProto))
+            return;
+
+        _actionsSystem.AddAction(uid, new InstantAction(actionProto), uid);
     }
 
     private void OnCompRemove(EntityUid uid, SericultureComponent comp, ComponentShutdown args)
     {
-        _actionsSystem.RemoveAction(uid, comp.ActionEntity);
+        if (!_protoManager.TryIndex<InstantActionPrototype>(comp.ActionProto, out var actionProto))
+            return;
+
+        _actionsSystem.RemoveAction(uid, new InstantAction(actionProto));
     }
 
     private void OnSericultureStart(EntityUid uid, SericultureComponent comp, SericultureActionEvent args)
@@ -45,7 +55,7 @@ public sealed partial class SericultureSystem : EntitySystem
             return;
         }
 
-        var doAfter = new DoAfterArgs(EntityManager, uid, comp.ProductionLength, new SericultureDoAfterEvent(), uid)
+        var doAfter = new DoAfterArgs(uid, comp.ProductionLength, new SericultureDoAfterEvent(), uid)
         {
             BreakOnUserMove = true,
             BlockDuplicate = true,
@@ -86,4 +96,6 @@ public sealed partial class SericultureSystem : EntitySystem
 
         return false;
     }
+
+    public sealed partial class SericultureActionEvent : InstantActionEvent { }
 }

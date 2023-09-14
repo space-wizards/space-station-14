@@ -1,6 +1,4 @@
-using System.Linq;
 using Content.IntegrationTests.Tests.Interaction;
-using Content.Shared.DoAfter;
 using Content.Shared.Wires;
 
 namespace Content.IntegrationTests.Tests.Construction.Interaction;

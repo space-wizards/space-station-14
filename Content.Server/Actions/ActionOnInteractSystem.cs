@@ -1,4 +1,5 @@
 using Content.Shared.Actions;
+using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Interaction;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
@@ -24,41 +25,51 @@ public sealed class ActionOnInteractSystem : EntitySystem
 
     private void OnActivate(EntityUid uid, ActionOnInteractComponent component, ActivateInWorldEvent args)
     {
-        if (args.Handled || component.ActionEntities == null)
+        if (args.Handled || component.ActivateActions == null)
             return;
 
-        var options = GetValidActions<InstantActionComponent>(component.ActionEntities);
+        var options = new List<InstantAction>();
+        foreach (var action in component.ActivateActions)
+        {
+            if (ValidAction(action))
+                options.Add(action);
+        }
+
         if (options.Count == 0)
             return;
 
-        var (actId, act) = _random.Pick(options);
+        var act = _random.Pick(options);
         if (act.Event != null)
             act.Event.Performer = args.User;
 
         act.Provider = uid;
-        _actions.PerformAction(args.User, null, actId, act, act.Event, _timing.CurTime, false);
+        _actions.PerformAction(args.User, null, act, act.Event, _timing.CurTime, false);
         args.Handled = true;
     }
 
     private void OnAfterInteract(EntityUid uid, ActionOnInteractComponent component, AfterInteractEvent args)
     {
-        if (args.Handled || component.ActionEntities == null)
+        if (args.Handled)
             return;
 
         // First, try entity target actions
-        if (args.Target != null)
+        if (args.Target != null && component.EntityActions != null)
         {
-            var entOptions = GetValidActions<EntityTargetActionComponent>(component.ActionEntities, args.CanReach);
-            for (var i = entOptions.Count - 1; i >= 0; i--)
+            var entOptions = new List<EntityTargetAction>();
+            foreach (var action in component.EntityActions)
             {
-                var action = entOptions[i].Comp;
+                if (!ValidAction(action, args.CanReach))
+                    continue;
+
                 if (!_actions.ValidateEntityTarget(args.User, args.Target.Value, action))
-                    entOptions.RemoveAt(i);
+                    continue;
+
+                entOptions.Add(action);
             }
 
             if (entOptions.Count > 0)
             {
-                var (entActId, entAct) = _random.Pick(entOptions);
+                var entAct = _random.Pick(entOptions);
                 if (entAct.Event != null)
                 {
                     entAct.Event.Performer = args.User;
@@ -66,25 +77,32 @@ public sealed class ActionOnInteractSystem : EntitySystem
                 }
 
                 entAct.Provider = uid;
-                _actions.PerformAction(args.User, null, entActId, entAct, entAct.Event, _timing.CurTime, false);
+                _actions.PerformAction(args.User, null, entAct, entAct.Event, _timing.CurTime, false);
                 args.Handled = true;
                 return;
             }
         }
 
         // else: try world target actions
-        var options = GetValidActions<WorldTargetActionComponent>(component.ActionEntities, args.CanReach);
-        for (var i = options.Count - 1; i >= 0; i--)
+        if (component.WorldActions == null)
+            return;
+
+        var options = new List<WorldTargetAction>();
+        foreach (var action in component.WorldActions)
         {
-            var action = options[i].Comp;
+            if (!ValidAction(action, args.CanReach))
+                continue;
+
             if (!_actions.ValidateWorldTarget(args.User, args.ClickLocation, action))
-                options.RemoveAt(i);
+                continue;
+
+            options.Add(action);
         }
 
         if (options.Count == 0)
             return;
 
-        var (actId, act) = _random.Pick(options);
+        var act = _random.Pick(options);
         if (act.Event != null)
         {
             act.Event.Performer = args.User;
@@ -92,44 +110,22 @@ public sealed class ActionOnInteractSystem : EntitySystem
         }
 
         act.Provider = uid;
-        _actions.PerformAction(args.User, null, actId, act, act.Event, _timing.CurTime, false);
+        _actions.PerformAction(args.User, null, act, act.Event, _timing.CurTime, false);
         args.Handled = true;
     }
 
-    private bool ValidAction(BaseActionComponent action, bool canReach = true)
+    private bool ValidAction(ActionType act, bool canReach = true)
     {
-        if (!action.Enabled)
+        if (!act.Enabled)
             return false;
 
-        if (action.Charges.HasValue && action.Charges <= 0)
+        if (act.Charges.HasValue && act.Charges <= 0)
             return false;
 
         var curTime = _timing.CurTime;
-        if (action.Cooldown.HasValue && action.Cooldown.Value.End > curTime)
+        if (act.Cooldown.HasValue && act.Cooldown.Value.End > curTime)
             return false;
 
-        return canReach || action is BaseTargetActionComponent { CheckCanAccess: false };
-    }
-
-    private List<(EntityUid Id, T Comp)> GetValidActions<T>(List<EntityUid>? actions, bool canReach = true) where T : BaseActionComponent
-    {
-        var valid = new List<(EntityUid Id, T Comp)>();
-
-        if (actions == null)
-            return valid;
-
-        foreach (var id in actions)
-        {
-            if (!_actions.TryGetActionData(id, out var baseAction) ||
-                baseAction as T is not { } action ||
-                !ValidAction(action, canReach))
-            {
-                continue;
-            }
-
-            valid.Add((id, action));
-        }
-
-        return valid;
+        return canReach || act is TargetedAction { CheckCanAccess: false };
     }
 }

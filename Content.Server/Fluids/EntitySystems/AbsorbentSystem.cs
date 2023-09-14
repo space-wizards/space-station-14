@@ -55,8 +55,7 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
         var oldProgress = component.Progress.ShallowClone();
         component.Progress.Clear();
 
-        var water = solution.GetTotalPrototypeQuantity(PuddleSystem.EvaporationReagent);
-        if (water > FixedPoint2.Zero)
+        if (solution.TryGetReagent(PuddleSystem.EvaporationReagent, out var water))
         {
             component.Progress[_prototype.Index<ReagentPrototype>(PuddleSystem.EvaporationReagent).SubstanceColor] = water.Float();
         }
@@ -231,7 +230,7 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
         }
 
         // Check if we have any evaporative reagents on our absorber to transfer
-        var available = absorberSoln.GetTotalPrototypeQuantity(PuddleSystem.EvaporationReagent);
+        absorberSoln.TryGetReagent(PuddleSystem.EvaporationReagent, out var available);
 
         // No material
         if (available == FixedPoint2.Zero)

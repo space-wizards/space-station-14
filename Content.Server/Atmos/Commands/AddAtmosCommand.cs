@@ -24,27 +24,29 @@ namespace Content.Server.Atmos.Commands
                 return;
             }
 
-            if (!NetEntity.TryParse(args[0], out var eNet) || !_entities.TryGetEntity(eNet, out var euid))
+            var entMan = IoCManager.Resolve<IEntityManager>();
+
+            if (!EntityUid.TryParse(args[0], out var euid))
             {
                 shell.WriteError($"Failed to parse euid '{args[0]}'.");
                 return;
             }
 
-            if (!_entities.HasComponent<MapGridComponent>(euid))
+            if (!entMan.HasComponent<MapGridComponent>(euid))
             {
                 shell.WriteError($"Euid '{euid}' does not exist or is not a grid.");
                 return;
             }
 
-            var atmos = _entities.EntitySysManager.GetEntitySystem<AtmosphereSystem>();
+            var atmos = entMan.EntitySysManager.GetEntitySystem<AtmosphereSystem>();
 
-            if (atmos.HasAtmosphere(euid.Value))
+            if (atmos.HasAtmosphere(euid))
             {
                 shell.WriteLine("Grid already has an atmosphere.");
                 return;
             }
 
-            _entities.AddComponent<GridAtmosphereComponent>(euid.Value);
+            _entities.AddComponent<GridAtmosphereComponent>(euid);
 
             shell.WriteLine($"Added atmosphere to grid {euid}.");
         }

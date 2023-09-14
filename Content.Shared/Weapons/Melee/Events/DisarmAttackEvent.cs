@@ -6,9 +6,9 @@ namespace Content.Shared.Weapons.Melee.Events;
 [Serializable, NetSerializable]
 public sealed class DisarmAttackEvent : AttackEvent
 {
-    public NetEntity? Target;
+    public EntityUid? Target;
 
-    public DisarmAttackEvent(NetEntity? target, NetCoordinates coordinates) : base(coordinates)
+    public DisarmAttackEvent(EntityUid? target, EntityCoordinates coordinates) : base(coordinates)
     {
         Target = target;
     }

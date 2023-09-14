@@ -32,13 +32,12 @@ public sealed partial class BandMenu : DefaultWindow
         Timer.Spawn(0, Close);
     }
 
-    public void Populate((NetEntity, string)[] nearby, IEntityManager entManager)
+    public void Populate((EntityUid, string)[] nearby)
     {
         BandList.Clear();
 
-        foreach (var (nent, name) in nearby)
+        foreach (var (uid, name) in nearby)
         {
-            var uid = entManager.GetEntity(nent);
             var item = BandList.AddItem(name, null, true, uid);
             item.Selected = _owner.Instrument?.Master == uid;
         }

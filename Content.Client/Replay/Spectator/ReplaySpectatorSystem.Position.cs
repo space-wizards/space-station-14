@@ -167,7 +167,7 @@ public sealed partial class ReplaySpectatorSystem
 
     private void OnDetached(EntityUid uid, ReplaySpectatorComponent component, PlayerDetachedEvent args)
     {
-        if (IsClientSide(uid))
+        if (uid.IsClientSide())
             QueueDel(uid);
         else
             RemCompDeferred(uid, component);

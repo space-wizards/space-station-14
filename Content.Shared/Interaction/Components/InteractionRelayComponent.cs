@@ -27,9 +27,9 @@ public sealed partial class InteractionRelayComponent : Component
 [Serializable, NetSerializable]
 public sealed class InteractionRelayComponentState : ComponentState
 {
-    public NetEntity? RelayEntity;
+    public EntityUid? RelayEntity;
 
-    public InteractionRelayComponentState(NetEntity? relayEntity)
+    public InteractionRelayComponentState(EntityUid? relayEntity)
     {
         RelayEntity = relayEntity;
     }

@@ -27,15 +27,15 @@ namespace Content.Server.Verbs
         {
             var player = (IPlayerSession) eventArgs.SenderSession;
 
-            if (!EntityManager.EntityExists(GetEntity(args.EntityUid)))
+            if (!EntityManager.EntityExists(args.EntityUid))
             {
-                Log.Warning($"{nameof(HandleVerbRequest)} called on a non-existent entity with id {args.EntityUid} by player {player}.");
+                Logger.Warning($"{nameof(HandleVerbRequest)} called on a non-existent entity with id {args.EntityUid} by player {player}.");
                 return;
             }
 
             if (player.AttachedEntity is not {} attached)
             {
-                Log.Warning($"{nameof(HandleVerbRequest)} called by player {player} with no attached entity.");
+                Logger.Warning($"{nameof(HandleVerbRequest)} called by player {player} with no attached entity.");
                 return;
             }
 
@@ -54,11 +54,11 @@ namespace Content.Server.Verbs
                 if (type != null)
                     verbTypes.Add(type);
                 else
-                    Log.Error($"Unknown verb type received: {key}");
+                    Logger.Error($"Unknown verb type received: {key}");
             }
 
             var response =
-                new VerbsResponseEvent(args.EntityUid, GetLocalVerbs(GetEntity(args.EntityUid), attached, verbTypes, force));
+                new VerbsResponseEvent(args.EntityUid, GetLocalVerbs(args.EntityUid, attached, verbTypes, force));
             RaiseNetworkEvent(response, player.ConnectedClient);
         }
 

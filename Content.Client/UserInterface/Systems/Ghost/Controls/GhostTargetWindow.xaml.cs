@@ -11,9 +11,9 @@ namespace Content.Client.UserInterface.Systems.Ghost.Controls
     [GenerateTypedNameReferences]
     public sealed partial class GhostTargetWindow : DefaultWindow
     {
-        private List<(string, NetEntity)> _warps = new();
+        private List<(string, EntityUid)> _warps = new();
 
-        public event Action<NetEntity>? WarpClicked;
+        public event Action<EntityUid>? WarpClicked;
 
         public GhostTargetWindow()
         {

@@ -15,7 +15,7 @@ public sealed class TryStartStructureConstructionMessage : EntityEventArgs
     /// <summary>
     ///     Position to start building.
     /// </summary>
-    public readonly NetCoordinates Location;
+    public readonly EntityCoordinates Location;
 
     /// <summary>
     ///     The construction prototype to start building.
@@ -27,13 +27,9 @@ public sealed class TryStartStructureConstructionMessage : EntityEventArgs
     /// <summary>
     ///     Identifier to be sent back in the acknowledgement so that the client can clean up its ghost.
     /// </summary>
-    /// <remarks>
-    /// So essentially the client is sending its own entity to the server so it knows to delete it when it gets server
-    /// response back.
-    /// </remarks>
     public readonly int Ack;
 
-    public TryStartStructureConstructionMessage(NetCoordinates loc, string prototypeName, Angle angle, int ack)
+    public TryStartStructureConstructionMessage(EntityCoordinates loc, string prototypeName, Angle angle, int ack)
     {
         Location = loc;
         PrototypeName = prototypeName;
@@ -71,9 +67,9 @@ public sealed class AckStructureConstructionMessage : EntityEventArgs
     /// <summary>
     ///     The entity that is now being constructed, if any.
     /// </summary>
-    public readonly NetEntity? Uid;
+    public readonly EntityUid? Uid;
 
-    public AckStructureConstructionMessage(int ghostId, NetEntity? uid = null)
+    public AckStructureConstructionMessage(int ghostId, EntityUid? uid = null)
     {
         GhostId = ghostId;
         Uid = uid;
@@ -114,15 +110,15 @@ public sealed class ResponseConstructionGuide : EntityEventArgs
 public sealed partial class ConstructionInteractDoAfterEvent : DoAfterEvent
 {
     [DataField("clickLocation")]
-    public NetCoordinates ClickLocation;
+    public EntityCoordinates ClickLocation;
 
     private ConstructionInteractDoAfterEvent()
     {
     }
 
-    public ConstructionInteractDoAfterEvent(IEntityManager entManager, InteractUsingEvent ev)
+    public ConstructionInteractDoAfterEvent(InteractUsingEvent ev)
     {
-        ClickLocation = entManager.GetNetCoordinates(ev.ClickLocation);
+        ClickLocation = ev.ClickLocation;
     }
 
     public override DoAfterEvent Clone() => this;

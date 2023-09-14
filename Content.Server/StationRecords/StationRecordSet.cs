@@ -1,7 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.StationRecords;
-using Robust.Shared.Utility;
 
 namespace Content.Server.StationRecords;
 
@@ -10,20 +9,15 @@ namespace Content.Server.StationRecords;
 ///     Keyed by StationRecordKey, which should be obtained from
 ///     an entity that stores a reference to it.
 /// </summary>
-[DataDefinition]
-public sealed partial class StationRecordSet
+public sealed class StationRecordSet
 {
-    [DataField("currentRecordId")]
     private uint _currentRecordId;
 
-    // TODO add custom type serializer so that keys don't have to be written twice.
-    [DataField("keys")]
-    public HashSet<StationRecordKey> Keys = new();
+    private HashSet<StationRecordKey> _keys = new();
 
-    [DataField("recentlyAccessed")]
     private HashSet<StationRecordKey> _recentlyAccessed = new();
 
-    [DataField("tables")] // TODO ensure all of this data is serializable.
+    [ViewVariables]
     private Dictionary<Type, Dictionary<StationRecordKey, object>> _tables = new();
 
     /// <summary>
@@ -52,17 +46,16 @@ public sealed partial class StationRecordSet
     }
 
     /// <summary>
-    ///     Add an entry into a record.
+    ///     Add a new record into this set of entries.
     /// </summary>
-    /// <param name="entry">Entry to add.</param>
-    /// <typeparam name="T">Type of the entry that's being added.</typeparam>
-    public StationRecordKey AddRecordEntry<T>(EntityUid station, T entry)
+    /// <param name="station">Station that we're adding the record for.</param>
+    /// <returns>A key that represents the record in this set.</returns>
+    public StationRecordKey AddRecord(EntityUid station)
     {
-        if (entry == null)
-            return StationRecordKey.Invalid;
-
         var key = new StationRecordKey(_currentRecordId++, station);
-        AddRecordEntry(key, entry);
+
+        _keys.Add(key);
+
         return key;
     }
 
@@ -74,11 +67,18 @@ public sealed partial class StationRecordSet
     /// <typeparam name="T">Type of the entry that's being added.</typeparam>
     public void AddRecordEntry<T>(StationRecordKey key, T entry)
     {
-        if (entry == null)
+        if (!_keys.Contains(key) || entry == null)
+        {
             return;
+        }
 
-        if (Keys.Add(key))
-            _tables.GetOrNew(typeof(T))[key] = entry;
+        if (!_tables.TryGetValue(typeof(T), out var table))
+        {
+            table = new();
+            _tables.Add(typeof(T), table);
+        }
+
+        table.Add(key, entry);
     }
 
     /// <summary>
@@ -92,7 +92,7 @@ public sealed partial class StationRecordSet
     {
         entry = default;
 
-        if (!Keys.Contains(key)
+        if (!_keys.Contains(key)
             || !_tables.TryGetValue(typeof(T), out var table)
             || !table.TryGetValue(key, out var entryObject))
         {
@@ -113,7 +113,7 @@ public sealed partial class StationRecordSet
     /// <returns>True if the entry exists, false otherwise.</returns>
     public bool HasRecordEntry<T>(StationRecordKey key)
     {
-        return Keys.Contains(key)
+        return _keys.Contains(key)
                && _tables.TryGetValue(typeof(T), out var table)
                && table.ContainsKey(key);
     }
@@ -142,7 +142,7 @@ public sealed partial class StationRecordSet
     /// <returns>True if successful, false otherwise.</returns>
     public bool RemoveAllRecords(StationRecordKey key)
     {
-        if (!Keys.Remove(key))
+        if (!_keys.Remove(key))
         {
             return false;
         }

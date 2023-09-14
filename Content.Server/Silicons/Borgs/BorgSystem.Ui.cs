@@ -84,15 +84,13 @@ public sealed partial class BorgSystem
         if (args.Session.AttachedEntity is not { } attachedEntity)
             return;
 
-        var module = GetEntity(args.Module);
-
-        if (!component.ModuleContainer.Contains(module))
+        if (!component.ModuleContainer.Contains(args.Module))
             return;
 
         _adminLog.Add(LogType.Action, LogImpact.Medium,
-            $"{ToPrettyString(attachedEntity):player} removed module {ToPrettyString(module)} from borg {ToPrettyString(uid)}");
-        component.ModuleContainer.Remove(module);
-        _hands.TryPickupAnyHand(attachedEntity, module);
+            $"{ToPrettyString(attachedEntity):player} removed module {ToPrettyString(args.Module)} from borg {ToPrettyString(uid)}");
+        component.ModuleContainer.Remove(args.Module);
+        _hands.TryPickupAnyHand(attachedEntity, args.Module);
 
         UpdateUI(uid, component);
     }

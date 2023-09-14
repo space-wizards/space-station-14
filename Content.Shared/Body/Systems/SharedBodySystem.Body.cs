@@ -38,7 +38,7 @@ public partial class SharedBodySystem
 
         var prototype = Prototypes.Index<BodyPrototype>(body.Prototype);
 
-        if (!_netManager.IsClient || IsClientSide(bodyId))
+        if (!_netManager.IsClient || bodyId.IsClientSide())
             InitBody(body, prototype);
 
         Dirty(body); // Client doesn't actually spawn the body, need to sync it
@@ -72,12 +72,7 @@ public partial class SharedBodySystem
             body.Root != null)
             return false;
 
-        slot = new BodyPartSlot
-        {
-            Id = slotId,
-            Parent = bodyId.Value,
-            NetParent = GetNetEntity(bodyId.Value),
-        };
+        slot = new BodyPartSlot(slotId, bodyId.Value, null);
         body.Root = slot;
 
         return true;
@@ -91,13 +86,7 @@ public partial class SharedBodySystem
             return;
         var bodyId = Spawn(root.Part, body.Owner.ToCoordinates());
         var partComponent = Comp<BodyPartComponent>(bodyId);
-        var slot = new BodyPartSlot
-        {
-            Id = root.Part,
-            Type = partComponent.PartType,
-            Parent = body.Owner,
-            NetParent = GetNetEntity(body.Owner),
-        };
+        var slot = new BodyPartSlot(root.Part, body.Owner, partComponent.PartType);
         body.Root = slot;
         partComponent.Body = bodyId;
 

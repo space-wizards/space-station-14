@@ -2,10 +2,12 @@ using Content.Client.Movement.Systems;
 using Content.Shared.Actions;
 using Content.Shared.Ghost;
 using Content.Shared.Popups;
+using JetBrains.Annotations;
 using Robust.Client.Console;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
+using Robust.Shared.GameStates;
 
 namespace Content.Client.Ghost
 {
@@ -79,9 +81,9 @@ namespace Content.Client.Ghost
                 sprite.Visible = GhostVisibility;
             }
 
-            _actions.AddAction(uid, ref component.ToggleLightingActionEntity, component.ToggleGhostsAction);
-            _actions.AddAction(uid, ref component.ToggleFoVActionEntity, component.ToggleFoVAction);
-            _actions.AddAction(uid, ref component.ToggleGhostsActionEntity, component.ToggleGhostsAction);
+            _actions.AddAction(uid, component.ToggleLightingAction, null);
+            _actions.AddAction(uid, component.ToggleFoVAction, null);
+            _actions.AddAction(uid, component.ToggleGhostsAction, null);
         }
 
         private void OnToggleLighting(EntityUid uid, GhostComponent component, ToggleLightingActionEvent args)
@@ -116,9 +118,9 @@ namespace Content.Client.Ghost
 
         private void OnGhostRemove(EntityUid uid, GhostComponent component, ComponentRemove args)
         {
-            _actions.RemoveAction(uid, component.ToggleLightingActionEntity);
-            _actions.RemoveAction(uid, component.ToggleFoVActionEntity);
-            _actions.RemoveAction(uid, component.ToggleGhostsActionEntity);
+            _actions.RemoveAction(uid, component.ToggleLightingAction);
+            _actions.RemoveAction(uid, component.ToggleFoVAction);
+            _actions.RemoveAction(uid, component.ToggleGhostsAction);
 
             if (uid != _playerManager.LocalPlayer?.ControlledEntity)
                 return;

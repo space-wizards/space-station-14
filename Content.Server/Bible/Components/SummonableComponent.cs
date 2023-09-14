@@ -1,5 +1,7 @@
+using Content.Shared.Actions.ActionTypes;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Bible.Components
 {
@@ -16,7 +18,7 @@ namespace Content.Server.Bible.Components
         public string? SpecialItemPrototype = null;
         public bool AlreadySummoned = false;
 
-        [DataField("requiresBibleUser")]
+        [DataField("requriesBibleUser")]
         public bool RequiresBibleUser = true;
 
         /// <summary>
@@ -25,11 +27,14 @@ namespace Content.Server.Bible.Components
         [ViewVariables]
         public EntityUid? Summon = null;
 
-        [DataField("summonAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-        public string SummonAction = "ActionBibleSummon";
-
-        [DataField("summonActionEntity")]
-        public EntityUid? SummonActionEntity;
+        [DataField("summonAction")]
+        public InstantAction SummonAction = new()
+        {
+            Icon = new SpriteSpecifier.Texture(new ("Clothing/Head/Hats/witch.rsi/icon.png")),
+            DisplayName = "bible-summon-verb",
+            Description = "bible-summon-verb-desc",
+            Event = new SummonActionEvent(),
+        };
 
         /// Used for respawning
         [DataField("accumulator")]

@@ -246,9 +246,6 @@ namespace Content.Shared.Containers.ItemSlots
         /// </remarks>
         public bool CanInsert(EntityUid uid, EntityUid usedUid, EntityUid? user, ItemSlot slot, bool swap = false, EntityUid? popup = null)
         {
-            if (slot.ContainerSlot == null)
-                return false;
-
             if (slot.Locked)
                 return false;
 
@@ -268,7 +265,7 @@ namespace Content.Shared.Containers.ItemSlots
             if (ev.Cancelled)
                 return false;
 
-            return _containers.CanInsert(usedUid, slot.ContainerSlot, assumeEmpty: true);
+            return slot.ContainerSlot?.CanInsertIfEmpty(usedUid, EntityManager) ?? false;
         }
 
         /// <summary>
@@ -328,16 +325,16 @@ namespace Content.Shared.Containers.ItemSlots
 
         public bool CanEject(EntityUid uid, EntityUid? user, ItemSlot slot)
         {
-            if (slot.Locked || slot.ContainerSlot?.ContainedEntity is not {} item)
+            if (slot.Locked || slot.Item == null)
                 return false;
 
-            var ev = new ItemSlotEjectAttemptEvent(uid, item, user, slot);
+            var ev = new ItemSlotEjectAttemptEvent(uid, slot.Item.Value, user, slot);
             RaiseLocalEvent(uid, ref ev);
-            RaiseLocalEvent(item, ref ev);
+            RaiseLocalEvent(slot.Item.Value, ref ev);
             if (ev.Cancelled)
                 return false;
 
-            return _containers.CanRemove(item, slot.ContainerSlot);
+            return slot.ContainerSlot?.CanRemove(slot.Item.Value, EntityManager) ?? false;
         }
 
         /// <summary>
@@ -438,13 +435,11 @@ namespace Content.Shared.Containers.ItemSlots
 
                     var verbSubject = slot.Name != string.Empty
                         ? Loc.GetString(slot.Name)
-                        : Name(args.Using.Value);
+                        : Name(args.Using.Value) ?? string.Empty;
 
-                    AlternativeVerb verb = new()
-                    {
-                        IconEntity = GetNetEntity(args.Using),
-                        Act = () => Insert(uid, slot, args.Using.Value, args.User, excludeUserAudio: true)
-                    };
+                    AlternativeVerb verb = new();
+                    verb.IconEntity = args.Using;
+                    verb.Act = () => Insert(uid, slot, args.Using.Value, args.User, excludeUserAudio: true);
 
                     if (slot.InsertVerbText != null)
                     {
@@ -479,7 +474,7 @@ namespace Content.Shared.Containers.ItemSlots
             // Add the eject-item verbs
             foreach (var slot in itemSlots.Slots.Values)
             {
-                if (slot.EjectOnInteract || slot.DisableEject)
+                if (slot.EjectOnInteract)
                     // For this item slot, ejecting/inserting is a primary interaction. Instead of an eject category
                     // alt-click verb, there will be a "Take item" primary interaction verb.
                     continue;
@@ -496,7 +491,7 @@ namespace Content.Shared.Containers.ItemSlots
 
                 AlternativeVerb verb = new()
                 {
-                    IconEntity = GetNetEntity(slot.Item),
+                    IconEntity = slot.Item,
                     Act = () => TryEjectToHands(uid, slot, args.User, excludeUserAudio: true)
                 };
 
@@ -533,11 +528,9 @@ namespace Content.Shared.Containers.ItemSlots
                     ? Loc.GetString(slot.Name)
                     : Name(slot.Item!.Value);
 
-                InteractionVerb takeVerb = new()
-                {
-                    IconEntity = GetNetEntity(slot.Item),
-                    Act = () => TryEjectToHands(uid, slot, args.User, excludeUserAudio: true)
-                };
+                InteractionVerb takeVerb = new();
+                takeVerb.IconEntity = slot.Item;
+                takeVerb.Act = () => TryEjectToHands(uid, slot, args.User, excludeUserAudio: true);
 
                 if (slot.EjectVerbText == null)
                     takeVerb.Text = Loc.GetString("take-item-verb-text", ("subject", verbSubject));
@@ -563,7 +556,7 @@ namespace Content.Shared.Containers.ItemSlots
 
                 InteractionVerb insertVerb = new()
                 {
-                    IconEntity = GetNetEntity(args.Using),
+                    IconEntity = args.Using,
                     Act = () => Insert(uid, slot, args.Using.Value, args.User, excludeUserAudio: true)
                 };
 

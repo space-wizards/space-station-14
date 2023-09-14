@@ -1,6 +1,8 @@
 ﻿using System.Linq;
 using Content.Shared.Actions;
+using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Damage;
+using Content.Shared.Damage.Prototypes;
 using Content.Shared.Examine;
 using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
@@ -78,7 +80,11 @@ public sealed partial class BlockingSystem : EntitySystem
 
     private void OnGetActions(EntityUid uid, BlockingComponent component, GetItemActionsEvent args)
     {
-        args.AddAction(ref component.BlockingToggleActionEntity, component.BlockingToggleAction);
+        if (component.BlockingToggleAction == null && _proto.TryIndex(component.BlockingToggleActionId, out InstantActionPrototype? act))
+            component.BlockingToggleAction = new(act);
+
+        if (component.BlockingToggleAction != null)
+            args.Actions.Add(component.BlockingToggleAction);
     }
 
     private void OnToggleAction(EntityUid uid, BlockingComponent component, ToggleActionEvent args)
@@ -185,7 +191,7 @@ public sealed partial class BlockingSystem : EntitySystem
                 CantBlockError(user);
                 return false;
             }
-            _actionsSystem.SetToggled(component.BlockingToggleActionEntity, true);
+            _actionsSystem.SetToggled(component.BlockingToggleAction, true);
             _popupSystem.PopupEntity(msgUser, user, user);
             _popupSystem.PopupEntity(msgOther, user, Filter.PvsExcept(user), true);
         }
@@ -246,7 +252,7 @@ public sealed partial class BlockingSystem : EntitySystem
             if (xform.Anchored)
                 _transformSystem.Unanchor(user, xform);
 
-            _actionsSystem.SetToggled(component.BlockingToggleActionEntity, false);
+            _actionsSystem.SetToggled(component.BlockingToggleAction, false);
             _fixtureSystem.DestroyFixture(user, BlockingComponent.BlockFixtureID, body: physicsComponent);
             _physics.SetBodyType(user, blockingUserComponent.OriginalBodyType, body: physicsComponent);
             _popupSystem.PopupEntity(msgUser, user, user);

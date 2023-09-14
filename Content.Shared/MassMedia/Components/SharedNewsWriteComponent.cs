@@ -25,12 +25,11 @@ public sealed class NewsWriteBoundUserInterfaceState : BoundUserInterfaceState
 [Serializable, NetSerializable]
 public sealed class NewsWriteShareMessage : BoundUserInterfaceMessage
 {
-    public readonly string Name;
-    public readonly string Content;
-    public NewsWriteShareMessage(string name, string content)
+    public NewsArticle Article;
+
+    public NewsWriteShareMessage(NewsArticle article)
     {
-        Name = name;
-        Content = content;
+        Article = article;
     }
 }
 

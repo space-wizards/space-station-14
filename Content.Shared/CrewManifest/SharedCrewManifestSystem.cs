@@ -11,9 +11,9 @@ namespace Content.Shared.CrewManifest;
 [Serializable, NetSerializable]
 public sealed class RequestCrewManifestMessage : EntityEventArgs
 {
-    public NetEntity Id { get; }
+    public EntityUid Id { get; }
 
-    public RequestCrewManifestMessage(NetEntity id)
+    public RequestCrewManifestMessage(EntityUid id)
     {
         Id = id;
     }

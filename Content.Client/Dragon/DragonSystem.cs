@@ -6,8 +6,6 @@ namespace Content.Client.Dragon;
 
 public sealed class DragonSystem : EntitySystem
 {
-    [Dependency] private readonly SharedPointLightSystem _lights = default!;
-
     public override void Initialize()
     {
         base.Initialize();
@@ -34,25 +32,19 @@ public sealed class DragonSystem : EntitySystem
                 sprite?.LayerSetColor(0, Color.FromHex("#569fff"));
 
                 if (light != null)
-                {
-                    _lights.SetColor(uid, Color.FromHex("#366db5"), light);
-                }
+                    light.Color = Color.FromHex("#366db5");
                 break;
             case DragonRiftState.AlmostFinished:
                 sprite?.LayerSetColor(0, Color.FromHex("#cf4cff"));
 
                 if (light != null)
-                {
-                    _lights.SetColor(uid, Color.FromHex("#9e2fc1"), light);
-                }
+                    light.Color = Color.FromHex("#9e2fc1");
                 break;
             case DragonRiftState.Finished:
                 sprite?.LayerSetColor(0, Color.FromHex("#edbc36"));
 
                 if (light != null)
-                {
-                    _lights.SetColor(uid, Color.FromHex("#cbaf20"), light);
-                }
+                    light.Color = Color.FromHex("#cbaf20");
                 break;
         }
     }

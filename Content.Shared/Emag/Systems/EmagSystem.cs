@@ -7,6 +7,8 @@ using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Tag;
+using Robust.Shared.Network;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.Emag.Systems;
 
@@ -20,8 +22,10 @@ public sealed class EmagSystem : EntitySystem
 {
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly SharedChargesSystem _charges = default!;
+    [Dependency] private readonly INetManager _net = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly TagSystem _tag = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
 
     public override void Initialize()
     {
@@ -52,7 +56,8 @@ public sealed class EmagSystem : EntitySystem
         TryComp<LimitedChargesComponent>(uid, out var charges);
         if (_charges.IsEmpty(uid, charges))
         {
-            _popup.PopupClient(Loc.GetString("emag-no-charges"), user, user);
+            if (_net.IsClient && _timing.IsFirstTimePredicted)
+                _popup.PopupEntity(Loc.GetString("emag-no-charges"), user, user);
             return false;
         }
 
@@ -60,8 +65,12 @@ public sealed class EmagSystem : EntitySystem
         if (!handled)
             return false;
 
-        _popup.PopupClient(Loc.GetString("emag-success", ("target", Identity.Entity(target, EntityManager))), user,
-            user, PopupType.Medium);
+        // only do popup on client
+        if (_net.IsClient && _timing.IsFirstTimePredicted)
+        {
+            _popup.PopupEntity(Loc.GetString("emag-success", ("target", Identity.Entity(target, EntityManager))), user,
+                user, PopupType.Medium);
+        }
 
         _adminLogger.Add(LogType.Emag, LogImpact.High, $"{ToPrettyString(user):player} emagged {ToPrettyString(target):target}");
 

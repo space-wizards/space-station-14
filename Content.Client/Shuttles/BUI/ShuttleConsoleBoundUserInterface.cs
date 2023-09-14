@@ -28,7 +28,7 @@ public sealed class ShuttleConsoleBoundUserInterface : BoundUserInterface
         _window.OnClose += OnClose;
     }
 
-    private void OnDestinationPressed(NetEntity obj)
+    private void OnDestinationPressed(EntityUid obj)
     {
         SendMessage(new ShuttleConsoleFTLRequestMessage()
         {
@@ -51,17 +51,17 @@ public sealed class ShuttleConsoleBoundUserInterface : BoundUserInterface
         }
     }
 
-    private void OnStopAutodockPressed(NetEntity obj)
+    private void OnStopAutodockPressed(EntityUid obj)
     {
         SendMessage(new StopAutodockRequestMessage() { DockEntity = obj });
     }
 
-    private void OnAutodockPressed(NetEntity obj)
+    private void OnAutodockPressed(EntityUid obj)
     {
         SendMessage(new AutodockRequestMessage() { DockEntity = obj });
     }
 
-    private void OnUndockPressed(NetEntity obj)
+    private void OnUndockPressed(EntityUid obj)
     {
         SendMessage(new UndockRequestMessage() { DockEntity = obj });
     }
@@ -71,7 +71,7 @@ public sealed class ShuttleConsoleBoundUserInterface : BoundUserInterface
         base.UpdateState(state);
         if (state is not ShuttleConsoleBoundInterfaceState cState) return;
 
-        _window?.SetMatrix(EntMan.GetCoordinates(cState.Coordinates), cState.Angle);
+        _window?.SetMatrix(cState.Coordinates, cState.Angle);
         _window?.UpdateState(cState);
     }
 }

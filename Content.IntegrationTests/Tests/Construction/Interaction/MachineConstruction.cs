@@ -15,8 +15,7 @@ public sealed class MachineConstruction : InteractionTest
     {
         await StartConstruction(MachineFrame);
         await Interact(Steel, 5);
-        ClientAssertPrototype(Unfinished, ClientTarget);
-        Target = CTestSystem.Ghosts[ClientTarget!.Value.GetHashCode()];
+        AssertPrototype(Unfinished);
         await Interact(Wrench, Cable);
         AssertPrototype(MachineFrame);
         await Interact(ProtolatheBoard, Bin1, Bin1, Manipulator1, Manipulator1, Beaker, Beaker, Screw);
@@ -62,10 +61,9 @@ public sealed class MachineConstruction : InteractionTest
     {
         // Partially deconstruct a protolathe.
         await SpawnTarget(Protolathe);
-        var serverTarget = SEntMan.GetEntity(Target!.Value);
 
         // Initially has all quality-1 parts.
-        foreach (var part in SConstruction.GetAllParts(serverTarget))
+        foreach (var part in SConstruction.GetAllParts(Target!.Value))
         {
             Assert.That(part.Rating, Is.EqualTo(1));
         }
@@ -80,7 +78,7 @@ public sealed class MachineConstruction : InteractionTest
         AssertPrototype(Protolathe);
 
         // Query now returns higher quality parts.
-        foreach (var part in SConstruction.GetAllParts(SEntMan.GetEntity(Target!.Value)))
+        foreach (var part in SConstruction.GetAllParts(Target!.Value))
         {
             Assert.That(part.Rating, Is.EqualTo(4));
         }

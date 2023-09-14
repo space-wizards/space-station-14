@@ -27,7 +27,6 @@ public sealed class StationSystem : EntitySystem
     private void StationsUpdated(StationsUpdatedEvent ev)
     {
         _stations.Clear();
-        // TODO this needs to be dona in component states and with the Ensure() methods
-        _stations.UnionWith(GetEntitySet(ev.Stations));
+        _stations.UnionWith(ev.Stations);
     }
 }

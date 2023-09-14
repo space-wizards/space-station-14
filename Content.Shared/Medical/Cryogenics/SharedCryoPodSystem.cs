@@ -23,7 +23,6 @@ public abstract partial class SharedCryoPodSystem: EntitySystem
     [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
-    [Dependency] private readonly SharedPointLightSystem _light = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
 
     public override void Initialize()
@@ -52,17 +51,14 @@ public abstract partial class SharedCryoPodSystem: EntitySystem
     {
         if (!Resolve(uid, ref cryoPod))
             return;
-
         var cryoPodEnabled = HasComp<ActiveCryoPodComponent>(uid);
-
-        if (_light.TryGetLight(uid, out var light))
+        if (TryComp<SharedPointLightComponent>(uid, out var light))
         {
-            _light.SetEnabled(uid, cryoPodEnabled && cryoPod.BodyContainer.ContainedEntity != null, light);
+            light.Enabled = cryoPodEnabled && cryoPod.BodyContainer.ContainedEntity != null;
         }
 
         if (!Resolve(uid, ref appearance))
             return;
-
         _appearanceSystem.SetData(uid, CryoPodComponent.CryoPodVisuals.ContainsEntity, cryoPod.BodyContainer.ContainedEntity == null, appearance);
         _appearanceSystem.SetData(uid, CryoPodComponent.CryoPodVisuals.IsOn, cryoPodEnabled, appearance);
     }

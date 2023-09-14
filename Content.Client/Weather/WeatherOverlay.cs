@@ -7,8 +7,6 @@ using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Client.Utility;
 using Robust.Shared.Enums;
-using Robust.Shared.Graphics;
-using Robust.Shared.Graphics.RSI;
 using Robust.Shared.Map;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Prototypes;
@@ -133,7 +131,7 @@ public sealed class WeatherOverlay : Overlay
             case SpriteSpecifier.Rsi rsi:
                 var rsiActual = _cache.GetResource<RSIResource>(rsi.RsiPath).RSI;
                 rsiActual.TryGetState(rsi.RsiState, out var state);
-                var frames = state!.GetFrames(RsiDirection.South);
+                var frames = state!.GetFrames(RSI.State.Direction.South);
                 var delays = state.GetDelays();
                 var totalDelay = delays.Sum();
                 var time = curTime.TotalSeconds % totalDelay;

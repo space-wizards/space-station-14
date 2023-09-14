@@ -15,6 +15,7 @@ public sealed class LavaSystem : EntitySystem
         SubscribeLocalEvent<LavaComponent, StepTriggerAttemptEvent>(OnLavaStepTriggerAttempt);
     }
 
+
     private void OnLavaStepTriggerAttempt(EntityUid uid, LavaComponent component, ref StepTriggerAttemptEvent args)
     {
         if (!HasComp<FlammableComponent>(args.Tripper))

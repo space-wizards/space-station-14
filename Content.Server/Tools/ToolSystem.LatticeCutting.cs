@@ -26,12 +26,11 @@ public sealed partial class ToolSystem
         if (args.Cancelled)
             return;
 
-        var coords = GetCoordinates(args.Coordinates);
-        var gridUid = coords.GetGridUid(EntityManager);
+        var gridUid = args.Coordinates.GetGridUid(EntityManager);
         if (gridUid == null)
             return;
         var grid = _mapManager.GetGrid(gridUid.Value);
-        var tile = grid.GetTileRef(coords);
+        var tile = grid.GetTileRef(args.Coordinates);
 
         if (_tileDefinitionManager[tile.Tile.TypeId] is not ContentTileDefinition tileDef
             || !tileDef.CanWirecutter
@@ -70,11 +69,9 @@ public sealed partial class ToolSystem
             || string.IsNullOrEmpty(tileDef.BaseTurf)
             || _tileDefinitionManager[tileDef.BaseTurf] is not ContentTileDefinition newDef
             || tile.IsBlockedTurf(true))
-        {
             return false;
-        }
 
-        var ev = new LatticeCuttingCompleteEvent(GetNetCoordinates(coordinates));
+        var ev = new LatticeCuttingCompleteEvent(coordinates);
         return UseTool(toolEntity, user, toolEntity, component.Delay, component.QualityNeeded, ev);
     }
 }

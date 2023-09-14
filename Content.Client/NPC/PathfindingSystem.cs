@@ -60,8 +60,8 @@ namespace Content.Client.NPC
         private PathfindingDebugMode _modes = PathfindingDebugMode.None;
 
         // It's debug data IDC if it doesn't support snapshots I just want something fast.
-        public Dictionary<NetEntity, Dictionary<Vector2i, List<PathfindingBreadcrumb>>> Breadcrumbs = new();
-        public Dictionary<NetEntity, Dictionary<Vector2i, Dictionary<Vector2i, List<DebugPathPoly>>>> Polys = new();
+        public Dictionary<EntityUid, Dictionary<Vector2i, List<PathfindingBreadcrumb>>> Breadcrumbs = new();
+        public Dictionary<EntityUid, Dictionary<Vector2i, Dictionary<Vector2i, List<DebugPathPoly>>>> Polys = new();
         public readonly List<(TimeSpan Time, PathRouteMessage Message)> Routes = new();
 
         public override void Initialize()
@@ -184,9 +184,7 @@ namespace Content.Client.NPC
 
                 foreach (var grid in _mapManager.FindGridsIntersecting(mouseWorldPos.MapId, aabb))
                 {
-                    var netGrid = _entManager.GetNetEntity(grid.Owner);
-
-                    if (found || !_system.Breadcrumbs.TryGetValue(netGrid, out var crumbs) || !xformQuery.TryGetComponent(grid.Owner, out var gridXform))
+                    if (found || !_system.Breadcrumbs.TryGetValue(grid.Owner, out var crumbs) || !xformQuery.TryGetComponent(grid.Owner, out var gridXform))
                         continue;
 
                     var (_, _, worldMatrix, invWorldMatrix) = gridXform.GetWorldPositionRotationMatrixWithInv();
@@ -259,7 +257,7 @@ namespace Content.Client.NPC
                 if (!_mapManager.TryFindGridAt(mouseWorldPos, out var gridUid, out var grid) || !xformQuery.TryGetComponent(gridUid, out var gridXform))
                     return;
 
-                if (!_system.Polys.TryGetValue(_entManager.GetNetEntity(gridUid), out var data))
+                if (!_system.Polys.TryGetValue(gridUid, out var data))
                     return;
 
                 var tileRef = grid.GetTileRef(mouseWorldPos);
@@ -335,9 +333,7 @@ namespace Content.Client.NPC
             {
                 foreach (var grid in _mapManager.FindGridsIntersecting(mouseWorldPos.MapId, aabb))
                 {
-                    var netGrid = _entManager.GetNetEntity(grid.Owner);
-
-                    if (!_system.Breadcrumbs.TryGetValue(netGrid, out var crumbs) ||
+                    if (!_system.Breadcrumbs.TryGetValue(grid.Owner, out var crumbs) ||
                         !xformQuery.TryGetComponent(grid.Owner, out var gridXform))
                     {
                         continue;
@@ -394,9 +390,7 @@ namespace Content.Client.NPC
             {
                 foreach (var grid in _mapManager.FindGridsIntersecting(args.MapId, aabb))
                 {
-                    var netGrid = _entManager.GetNetEntity(grid.Owner);
-
-                    if (!_system.Polys.TryGetValue(netGrid, out var data) ||
+                    if (!_system.Polys.TryGetValue(grid.Owner, out var data) ||
                         !xformQuery.TryGetComponent(grid.Owner, out var gridXform))
                         continue;
 
@@ -430,9 +424,7 @@ namespace Content.Client.NPC
             {
                 foreach (var grid in _mapManager.FindGridsIntersecting(args.MapId, aabb))
                 {
-                    var netGrid = _entManager.GetNetEntity(grid.Owner);
-
-                    if (!_system.Polys.TryGetValue(netGrid, out var data) ||
+                    if (!_system.Polys.TryGetValue(grid.Owner, out var data) ||
                         !xformQuery.TryGetComponent(grid.Owner, out var gridXform))
                         continue;
 
@@ -458,10 +450,10 @@ namespace Content.Client.NPC
                                     Color color;
                                     Vector2 neighborPos;
 
-                                    if (neighborPoly.NetEntity != poly.GraphUid)
+                                    if (neighborPoly.EntityId != poly.GraphUid)
                                     {
                                         color = Color.Green;
-                                        var neighborMap = _entManager.GetCoordinates(neighborPoly).ToMap(_entManager);
+                                        var neighborMap = neighborPoly.ToMap(_entManager);
 
                                         if (neighborMap.MapId != args.MapId)
                                             continue;
@@ -486,9 +478,7 @@ namespace Content.Client.NPC
             {
                 foreach (var grid in _mapManager.FindGridsIntersecting(args.MapId, args.WorldBounds))
                 {
-                    var netGrid = _entManager.GetNetEntity(grid.Owner);
-
-                    if (!_system.Breadcrumbs.TryGetValue(netGrid, out var crumbs) ||
+                    if (!_system.Breadcrumbs.TryGetValue(grid.Owner, out var crumbs) ||
                         !xformQuery.TryGetComponent(grid.Owner, out var gridXform))
                         continue;
 
@@ -516,7 +506,7 @@ namespace Content.Client.NPC
                 {
                     foreach (var node in route.Message.Path)
                     {
-                        if (!_entManager.TryGetComponent<TransformComponent>(_entManager.GetEntity(node.GraphUid), out var graphXform))
+                        if (!_entManager.TryGetComponent<TransformComponent>(node.GraphUid, out var graphXform))
                             continue;
 
                         worldHandle.SetTransform(graphXform.WorldMatrix);
@@ -535,14 +525,12 @@ namespace Content.Client.NPC
 
                     foreach (var (node, cost) in route.Message.Costs)
                     {
-                        var graph = _entManager.GetEntity(node.GraphUid);
-
-                        if (matrix != graph)
+                        if (matrix != node.GraphUid)
                         {
-                            if (!_entManager.TryGetComponent<TransformComponent>(graph, out var graphXform))
+                            if (!_entManager.TryGetComponent<TransformComponent>(node.GraphUid, out var graphXform))
                                 continue;
 
-                            matrix = graph;
+                            matrix = node.GraphUid;
                             worldHandle.SetTransform(graphXform.WorldMatrix);
                         }
 

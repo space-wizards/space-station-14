@@ -26,6 +26,9 @@
             "name": "manifest"
         },
         {
+            "name": "devour"
+        },
+        {
             "name": "carp_summon"
         },
         {

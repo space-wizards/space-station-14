@@ -124,7 +124,7 @@ public sealed class RadarControl : MapGridControl
         foreach (var state in ls.Docks)
         {
             var coordinates = state.Coordinates;
-            var grid = _docks.GetOrNew(_entManager.GetEntity(coordinates.NetEntity));
+            var grid = _docks.GetOrNew(coordinates.EntityId);
             grid.Add(state);
         }
     }
@@ -324,7 +324,7 @@ public sealed class RadarControl : MapGridControl
         {
             foreach (var state in docks)
             {
-                var ent = _entManager.GetEntity(state.Entity);
+                var ent = state.Entity;
                 var position = state.Coordinates.Position;
                 var uiPosition = matrix.Transform(position);
 

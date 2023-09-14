@@ -50,34 +50,24 @@ public sealed class GridDraggingSystem : SharedGridDraggingSystem
 
     private void OnRequestVelocity(GridDragVelocityRequest ev, EntitySessionEventArgs args)
     {
-        var grid = GetEntity(ev.Grid);
-
         if (args.SenderSession is not IPlayerSession playerSession ||
             !_admin.CanCommand(playerSession, CommandName) ||
-            !Exists(grid) ||
-            Deleted(grid))
-        {
-            return;
-        }
+            !Exists(ev.Grid) ||
+            Deleted(ev.Grid)) return;
 
-        var gridBody = Comp<PhysicsComponent>(grid);
-        _physics.SetLinearVelocity(grid, ev.LinearVelocity, body: gridBody);
-        _physics.SetAngularVelocity(grid, 0f, body: gridBody);
+        var gridBody = Comp<PhysicsComponent>(ev.Grid);
+        _physics.SetLinearVelocity(ev.Grid, ev.LinearVelocity, body: gridBody);
+        _physics.SetAngularVelocity(ev.Grid, 0f, body: gridBody);
     }
 
     private void OnRequestDrag(GridDragRequestPosition msg, EntitySessionEventArgs args)
     {
-        var grid = GetEntity(msg.Grid);
-
         if (args.SenderSession is not IPlayerSession playerSession ||
             !_admin.CanCommand(playerSession, CommandName) ||
-            !Exists(grid) ||
-            Deleted(grid))
-        {
-            return;
-        }
+            !Exists(msg.Grid) ||
+            Deleted(msg.Grid)) return;
 
-        var gridXform = Transform(grid);
+        var gridXform = Transform(msg.Grid);
 
         gridXform.WorldPosition = msg.WorldPosition;
     }

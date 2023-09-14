@@ -2,6 +2,7 @@
     <Button
         Name="Button"
         HorizontalExpand="True"
+        TooltipDelay="0.5"
         Margin="0"
         StyleClasses="ButtonSquare">
         <BoxContainer Orientation="Horizontal">

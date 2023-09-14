@@ -14,7 +14,7 @@ namespace Content.Shared.Tabletop.Events
         /// <summary>
         /// The UID of the entity being moved.
         /// </summary>
-        public NetEntity MovedEntityUid { get; }
+        public EntityUid MovedEntityUid { get; }
 
         /// <summary>
         /// The new coordinates of the entity being moved.
@@ -24,9 +24,9 @@ namespace Content.Shared.Tabletop.Events
         /// <summary>
         /// The UID of the table the entity is being moved on.
         /// </summary>
-        public NetEntity TableUid { get; }
+        public EntityUid TableUid { get; }
 
-        public TabletopMoveEvent(NetEntity movedEntityUid, MapCoordinates coordinates, NetEntity tableUid)
+        public TabletopMoveEvent(EntityUid movedEntityUid, MapCoordinates coordinates, EntityUid tableUid)
         {
             MovedEntityUid = movedEntityUid;
             Coordinates = coordinates;

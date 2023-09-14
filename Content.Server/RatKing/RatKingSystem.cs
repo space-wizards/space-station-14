@@ -1,11 +1,13 @@
 using Content.Server.Actions;
 using Content.Server.Atmos.EntitySystems;
+using Content.Server.Nutrition.Components;
 using Content.Server.Popups;
+using Content.Shared.Actions;
 using Content.Shared.Atmos;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
-using Content.Shared.RatKing;
 using Robust.Server.GameObjects;
+using Robust.Shared.Player;
 
 namespace Content.Server.RatKing
 {
@@ -21,16 +23,16 @@ namespace Content.Server.RatKing
         {
             base.Initialize();
 
-            SubscribeLocalEvent<RatKingComponent, MapInitEvent>(OnMapInit);
+            SubscribeLocalEvent<RatKingComponent, ComponentStartup>(OnStartup);
 
             SubscribeLocalEvent<RatKingComponent, RatKingRaiseArmyActionEvent>(OnRaiseArmy);
             SubscribeLocalEvent<RatKingComponent, RatKingDomainActionEvent>(OnDomain);
         }
 
-        private void OnMapInit(EntityUid uid, RatKingComponent component, MapInitEvent args)
+        private void OnStartup(EntityUid uid, RatKingComponent component, ComponentStartup args)
         {
-            _action.AddAction(uid, ref component.ActionRaiseArmyEntity, component.ActionRaiseArmy);
-            _action.AddAction(uid, ref component.ActionDomainEntity, component.ActionDomain);
+            _action.AddAction(uid, component.ActionRaiseArmy, null);
+            _action.AddAction(uid, component.ActionDomain, null);
         }
 
         /// <summary>
@@ -84,4 +86,14 @@ namespace Content.Server.RatKing
             tileMix?.AdjustMoles(Gas.Miasma, component.MolesMiasmaPerDomain);
         }
     }
-}
+
+    public sealed partial class RatKingRaiseArmyActionEvent : InstantActionEvent
+    {
+
+    }
+
+    public sealed partial class RatKingDomainActionEvent : InstantActionEvent
+    {
+
+    }
+};

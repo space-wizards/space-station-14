@@ -8,11 +8,11 @@ namespace Content.Shared.MedicalScanner;
 [Serializable, NetSerializable]
 public sealed class HealthAnalyzerScannedUserMessage : BoundUserInterfaceMessage
 {
-    public readonly NetEntity? TargetEntity;
+    public readonly EntityUid? TargetEntity;
     public float Temperature;
     public float BloodLevel;
 
-    public HealthAnalyzerScannedUserMessage(NetEntity? targetEntity, float temperature, float bloodLevel)
+    public HealthAnalyzerScannedUserMessage(EntityUid? targetEntity, float temperature, float bloodLevel)
     {
         TargetEntity = targetEntity;
         Temperature = temperature;

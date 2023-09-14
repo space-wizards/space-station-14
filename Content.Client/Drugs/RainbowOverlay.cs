@@ -1,5 +1,6 @@
 using Content.Shared.Drugs;
 using Content.Shared.StatusEffect;
+using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
 using Robust.Shared.Enums;

@@ -36,7 +36,7 @@ namespace Content.Shared.NodeContainer
         [Serializable, NetSerializable]
         public sealed class NodeDatum
         {
-            public NetEntity Entity;
+            public EntityUid Entity;
             public int NetId;
             public int[] Reachable = Array.Empty<int>();
             public string Name = "";

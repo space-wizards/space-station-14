@@ -3,7 +3,6 @@ using Content.Server.Administration.Logs;
 using Content.Server.Chemistry.Components;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Dispenser;
-using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Database;
 using Content.Shared.Emag.Components;
@@ -64,30 +63,28 @@ namespace Content.Server.Chemistry.EntitySystems
 
             if (_solutionContainerSystem.TryGetFitsInDispenser(container.Value, out var solution))
             {
-                return new ContainerInfo(Name(container.Value), solution.Volume, solution.MaxVolume)
-                {
-                    Reagents = solution.Contents
-                };
+                var reagents = solution.Contents.Select(reagent => (reagent.ReagentId, reagent.Quantity)).ToList();
+                return new ContainerInfo(Name(container.Value), true, solution.Volume, solution.MaxVolume, reagents);
             }
 
             return null;
         }
 
-        private List<ReagentId> GetInventory(ReagentDispenserComponent reagentDispenser)
+        private List<string> GetInventory(ReagentDispenserComponent reagentDispenser)
         {
-            var inventory = new List<ReagentId>();
+            var inventory = new List<string>();
 
             if (reagentDispenser.PackPrototypeId is not null
                 && _prototypeManager.TryIndex(reagentDispenser.PackPrototypeId, out ReagentDispenserInventoryPrototype? packPrototype))
             {
-                inventory.AddRange(packPrototype.Inventory.Select(x => new ReagentId(x, null)));
+                inventory.AddRange(packPrototype.Inventory);
             }
 
             if (HasComp<EmaggedComponent>(reagentDispenser.Owner)
                 && reagentDispenser.EmagPackPrototypeId is not null
                 && _prototypeManager.TryIndex(reagentDispenser.EmagPackPrototypeId, out ReagentDispenserInventoryPrototype? emagPackPrototype))
             {
-                inventory.AddRange(emagPackPrototype.Inventory.Select(x => new ReagentId(x, null)));
+                inventory.AddRange(emagPackPrototype.Inventory);
             }
 
             return inventory;

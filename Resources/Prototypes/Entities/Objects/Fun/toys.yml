@@ -281,9 +281,6 @@
     state: blue
   - type: Item
     heldPrefix: blue
-  - type: Tag
-    tags:
-      - PlushieSharkBlue
 
 - type: entity
   parent: PlushieSharkBlue
@@ -296,9 +293,6 @@
     state: pink
   - type: Item
     heldPrefix: pink
-  - type: Tag
-    tags:
-      - PlushieSharkPink
 
 - type: entity
   parent: PlushieSharkBlue
@@ -311,9 +305,6 @@
     state: grey
   - type: Item
     heldPrefix: grey
-  - type: Tag
-    tags:
-      - PlushieSharkGrey
 
 - type: entity
   parent: BasePlushie
@@ -1043,24 +1034,3 @@
         reagents:
         - ReagentId: SpaceGlue
           Quantity: 100
-
-- type: entity
-  parent: BasePlushie
-  id: PlushieMoth
-  name: moth plushie
-  description: Cute and fluffy moth plushie. Enjoy, bz!
-  components:
-  - type: Sprite
-    state: plushie_moth
-  - type: EmitSoundOnUse
-    sound:
-      path: /Audio/Voice/Moth/moth_chitter.ogg
-  - type: EmitSoundOnLand
-    sound:
-      path: /Audio/Voice/Moth/moth_chitter.ogg
-  - type: EmitSoundOnActivate
-    sound:
-      path: /Audio/Voice/Moth/moth_chitter.ogg
-  - type: MeleeWeapon
-    soundHit:
-      path: /Audio/Voice/Moth/moth_chitter.ogg

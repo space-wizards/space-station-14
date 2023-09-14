@@ -10,7 +10,7 @@ namespace Content.Shared.Verbs
     [Serializable, NetSerializable]
     public sealed class RequestServerVerbsEvent : EntityEventArgs
     {
-        public readonly NetEntity EntityUid;
+        public readonly EntityUid EntityUid;
 
         public readonly List<string> VerbTypes = new();
 
@@ -18,11 +18,11 @@ namespace Content.Shared.Verbs
         ///     If the target item is inside of some storage (e.g., backpack), this is the entity that owns that item
         ///     slot. Needed for validating that the user can access the target item.
         /// </summary>
-        public readonly NetEntity? SlotOwner;
+        public readonly EntityUid? SlotOwner;
 
         public readonly bool AdminRequest;
 
-        public RequestServerVerbsEvent(NetEntity entityUid, IEnumerable<Type> verbTypes, NetEntity? slotOwner = null, bool adminRequest = false)
+        public RequestServerVerbsEvent(EntityUid entityUid, IEnumerable<Type> verbTypes, EntityUid? slotOwner = null, bool adminRequest = false)
         {
             EntityUid = entityUid;
             SlotOwner = slotOwner;
@@ -40,9 +40,9 @@ namespace Content.Shared.Verbs
     public sealed class VerbsResponseEvent : EntityEventArgs
     {
         public readonly List<Verb>? Verbs;
-        public readonly NetEntity Entity;
+        public readonly EntityUid Entity;
 
-        public VerbsResponseEvent(NetEntity entity, SortedSet<Verb>? verbs)
+        public VerbsResponseEvent(EntityUid entity, SortedSet<Verb>? verbs)
         {
             Entity = entity;
 
@@ -57,10 +57,10 @@ namespace Content.Shared.Verbs
     [Serializable, NetSerializable]
     public sealed class ExecuteVerbEvent : EntityEventArgs
     {
-        public readonly NetEntity Target;
+        public readonly EntityUid Target;
         public readonly Verb RequestedVerb;
 
-        public ExecuteVerbEvent(NetEntity target, Verb requestedVerb)
+        public ExecuteVerbEvent(EntityUid target, Verb requestedVerb)
         {
             Target = target;
             RequestedVerb = requestedVerb;

@@ -7,9 +7,9 @@ namespace Content.Shared.Follower.Components;
 ///     Attached to entities that are currently being followed by a ghost.
 /// </summary>
 [RegisterComponent, Access(typeof(FollowerSystem))]
-[NetworkedComponent]
+[NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class FollowedComponent : Component
 {
-    [DataField("following")]
+    [AutoNetworkedField(true), DataField("following")]
     public HashSet<EntityUid> Following = new();
 }

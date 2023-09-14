@@ -12,7 +12,7 @@ public class RadarConsoleBoundInterfaceState : BoundUserInterfaceState
     /// <summary>
     /// The relevant coordinates to base the radar around.
     /// </summary>
-    public NetCoordinates? Coordinates;
+    public EntityCoordinates? Coordinates;
 
     /// <summary>
     /// The relevant rotation to rotate the angle around.
@@ -23,7 +23,7 @@ public class RadarConsoleBoundInterfaceState : BoundUserInterfaceState
 
     public RadarConsoleBoundInterfaceState(
         float maxRange,
-        NetCoordinates? coordinates,
+        EntityCoordinates? coordinates,
         Angle? angle,
         List<DockingInterfaceState> docks)
     {
@@ -40,9 +40,9 @@ public class RadarConsoleBoundInterfaceState : BoundUserInterfaceState
 [Serializable, NetSerializable]
 public sealed class DockingInterfaceState
 {
-    public NetCoordinates Coordinates;
+    public EntityCoordinates Coordinates;
     public Angle Angle;
-    public NetEntity Entity;
+    public EntityUid Entity;
     public bool Connected;
     public Color Color;
     public Color HighlightedColor;

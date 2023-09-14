@@ -113,8 +113,6 @@ namespace Content.Server.Kitchen.EntitySystems
 
         private void SubtractContents(MicrowaveComponent component, FoodRecipePrototype recipe)
         {
-            // TODO Turn recipe.IngredientsReagents into a ReagentQuantity[]
-
             var totalReagentsToRemove = new Dictionary<string, FixedPoint2>(recipe.IngredientsReagents);
 
             // this is spaghetti ngl
@@ -132,7 +130,10 @@ namespace Content.Server.Kitchen.EntitySystems
                         if (!totalReagentsToRemove.ContainsKey(reagent))
                             continue;
 
-                        var quant = solution.GetTotalPrototypeQuantity(reagent);
+                        if (!solution.ContainsReagent(reagent))
+                            continue;
+
+                        var quant = solution.GetReagentQuantity(reagent);
 
                         if (quant >= totalReagentsToRemove[reagent])
                         {
@@ -144,7 +145,7 @@ namespace Content.Server.Kitchen.EntitySystems
                             totalReagentsToRemove[reagent] -= quant;
                         }
 
-                        _solutionContainer.RemoveReagent(item, solution, reagent, quant);
+                        _solutionContainer.TryRemoveReagent(item, solution, reagent, quant);
                     }
                 }
             }
@@ -288,8 +289,8 @@ namespace Content.Server.Kitchen.EntitySystems
             if (ui == null)
                 return;
 
-            _userInterface.SetUiState(ui, new MicrowaveUpdateUserInterfaceState(
-                GetNetEntityArray(component.Storage.ContainedEntities.ToArray()),
+            UserInterfaceSystem.SetUiState(ui, new MicrowaveUpdateUserInterfaceState(
+                component.Storage.ContainedEntities.ToArray(),
                 HasComp<ActiveMicrowaveComponent>(uid),
                 component.CurrentCookTimeButtonIndex,
                 component.CurrentCookTimerTime
@@ -323,8 +324,6 @@ namespace Content.Server.Kitchen.EntitySystems
 
             var solidsDict = new Dictionary<string, int>();
             var reagentDict = new Dictionary<string, FixedPoint2>();
-            // TODO use lists of Reagent quantities instead of reagent prototype ids.
-
             foreach (var item in component.Storage.ContainedEntities)
             {
                 // special behavior when being microwaved ;)
@@ -371,12 +370,12 @@ namespace Content.Server.Kitchen.EntitySystems
 
                 foreach (var (_, solution) in solMan.Solutions)
                 {
-                    foreach (var (reagent, quantity) in solution.Contents)
+                    foreach (var reagent in solution.Contents)
                     {
-                        if (reagentDict.ContainsKey(reagent.Prototype))
-                            reagentDict[reagent.Prototype] += quantity;
+                        if (reagentDict.ContainsKey(reagent.ReagentId))
+                            reagentDict[reagent.ReagentId] += reagent.Quantity;
                         else
-                            reagentDict.Add(reagent.Prototype, quantity);
+                            reagentDict.Add(reagent.ReagentId, reagent.Quantity);
                     }
                 }
             }
@@ -418,7 +417,6 @@ namespace Content.Server.Kitchen.EntitySystems
 
             foreach (var reagent in recipe.IngredientsReagents)
             {
-                // TODO Turn recipe.IngredientsReagents into a ReagentQuantity[]
                 if (!reagents.ContainsKey(reagent.Key))
                     return (recipe, 0);
 
@@ -482,7 +480,7 @@ namespace Content.Server.Kitchen.EntitySystems
             if (!HasContents(component) || HasComp<ActiveMicrowaveComponent>(uid))
                 return;
 
-            component.Storage.Remove(EntityManager.GetEntity(args.EntityID));
+            component.Storage.Remove(args.EntityID);
             UpdateUserInterfaceState(uid, component);
         }
 

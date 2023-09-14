@@ -6,11 +6,11 @@ namespace Content.Shared.Ghost.Roles
     [Serializable, NetSerializable]
     public sealed class MakeGhostRoleEuiState : EuiStateBase
     {
-        public MakeGhostRoleEuiState(NetEntity entity)
+        public MakeGhostRoleEuiState(EntityUid entityUid)
         {
-            Entity = entity;
+            EntityUid = entityUid;
         }
 
-        public NetEntity Entity { get; }
+        public EntityUid EntityUid { get; }
     }
 }

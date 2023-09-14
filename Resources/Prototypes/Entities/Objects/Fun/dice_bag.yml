@@ -19,6 +19,7 @@
   - type: Item
   - type: Storage
     capacity: 18
+    size: 5
     whitelist:
       tags:
         - Dice

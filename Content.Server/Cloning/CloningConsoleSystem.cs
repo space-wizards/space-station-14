@@ -145,7 +145,7 @@ namespace Content.Server.Cloning
             }
 
             var newState = GetUserInterfaceState(consoleComponent);
-            _uiSystem.SetUiState(ui, newState);
+            UserInterfaceSystem.SetUiState(ui, newState);
         }
 
         public void TryClone(EntityUid uid, EntityUid cloningPodUid, EntityUid scannerUid, CloningPodComponent? cloningPod = null, MedicalScannerComponent? scannerComp = null, CloningConsoleComponent? consoleComponent = null)

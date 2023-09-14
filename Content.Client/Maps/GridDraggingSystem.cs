@@ -47,11 +47,11 @@ public sealed class GridDraggingSystem : SharedGridDraggingSystem
         _dragging = grid;
         _localPosition = localPosition;
 
-        if (HasComp<PhysicsComponent>(grid))
+        if (TryComp<PhysicsComponent>(grid, out var body))
         {
             RaiseNetworkEvent(new GridDragVelocityRequest()
             {
-                Grid = GetNetEntity(grid),
+                Grid = grid,
                 LinearVelocity = Vector2.Zero
             });
         }
@@ -69,7 +69,7 @@ public sealed class GridDraggingSystem : SharedGridDraggingSystem
             var distance = _lastMousePosition.Value.Position - xform.WorldPosition;
             RaiseNetworkEvent(new GridDragVelocityRequest()
             {
-                Grid = GetNetEntity(_dragging.Value),
+                Grid = _dragging.Value,
                 LinearVelocity = distance.LengthSquared() > 0f ? (distance / (float) tickTime.TotalSeconds) * 0.25f : Vector2.Zero,
             });
         }
@@ -125,7 +125,7 @@ public sealed class GridDraggingSystem : SharedGridDraggingSystem
 
         RaiseNetworkEvent(new GridDragRequestPosition()
         {
-            Grid = GetNetEntity(_dragging.Value),
+            Grid = _dragging.Value,
             WorldPosition = requestedGridOrigin,
         });
     }

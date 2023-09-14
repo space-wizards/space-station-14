@@ -12,8 +12,6 @@ namespace Content.Server.Mind.Commands
     [AdminCommand(AdminFlags.Admin)]
     public sealed class MakeSentientCommand : IConsoleCommand
     {
-        [Dependency] private readonly IEntityManager _entManager = default!;
-
         public string Command => "makesentient";
         public string Description => "Makes an entity sentient (able to be controlled by a player)";
         public string Help => "makesentient <entity id>";
@@ -26,19 +24,21 @@ namespace Content.Server.Mind.Commands
                 return;
             }
 
-            if (!NetEntity.TryParse(args[0], out var entNet) || !_entManager.TryGetEntity(entNet, out var entId))
+            if (!EntityUid.TryParse(args[0], out var entId))
             {
                 shell.WriteLine("Invalid argument.");
                 return;
             }
 
-            if (!_entManager.EntityExists(entId))
+            var entityManager = IoCManager.Resolve<IEntityManager>();
+
+            if (!entityManager.EntityExists(entId))
             {
                 shell.WriteLine("Invalid entity specified!");
                 return;
             }
 
-            MakeSentient(entId.Value, _entManager, true, true);
+            MakeSentient(entId, entityManager, true, true);
         }
 
         public static void MakeSentient(EntityUid uid, IEntityManager entityManager, bool allowMovement = true, bool allowSpeech = true)

@@ -67,14 +67,20 @@ namespace Content.Client.MassMedia.Ui
 
             var stringContent = Rope.Collapse(_menu.ContentInput.TextRope);
 
-            if (stringContent == null || stringContent.Length == 0)
-                return;
+            if (stringContent == null || stringContent.Length == 0) return;
+            if (_gameTicker == null) return;
 
+            NewsArticle article = new NewsArticle();
             var stringName = _menu.NameInput.Text;
             var name = (stringName.Length <= 25 ? stringName.Trim() : $"{stringName.Trim().Substring(0, 25)}...");
+            article.Name = name;
+            article.Content = stringContent;
+            article.ShareTime = _gameTiming.CurTime.Subtract(_gameTicker.RoundStartTimeSpan);
+
             _menu.ContentInput.TextRope = new Rope.Leaf(string.Empty);
             _menu.NameInput.Text = string.Empty;
-            SendMessage(new NewsWriteShareMessage(name, stringContent));
+
+            SendMessage(new NewsWriteShareMessage(article));
         }
 
         private void OnDeleteButtonPressed(int articleNum)

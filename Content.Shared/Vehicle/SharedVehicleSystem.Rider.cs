@@ -18,7 +18,7 @@ public abstract partial class SharedVehicleSystem
     {
         args.State = new RiderComponentState()
         {
-            Entity = GetNetEntity(component.Vehicle),
+            Entity = component.Vehicle,
         };
     }
 

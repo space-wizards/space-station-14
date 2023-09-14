@@ -4,7 +4,6 @@ using Content.Server.Ghost.Roles.Events;
 using Content.Server.Popups;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Actions;
-using Content.Shared.Bible;
 using Content.Shared.Damage;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
@@ -180,9 +179,8 @@ namespace Content.Server.Bible
             if (component.AlreadySummoned)
                 return;
 
-            args.AddAction(ref component.SummonActionEntity, component.SummonAction);
+            args.Actions.Add(component.SummonAction);
         }
-
         private void OnSummon(EntityUid uid, SummonableComponent component, SummonActionEvent args)
         {
             AttemptSummon(component, args.Performer, Transform(args.Performer));
@@ -240,7 +238,12 @@ namespace Content.Server.Bible
                 Transform(familiar).AttachParent(component.Owner);
             }
             component.AlreadySummoned = true;
-            _actionsSystem.RemoveAction(user, component.SummonActionEntity);
+            _actionsSystem.RemoveAction(user, component.SummonAction);
         }
+    }
+
+    public sealed partial class SummonActionEvent : InstantActionEvent
+    {
+
     }
 }

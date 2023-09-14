@@ -1,3 +1,4 @@
+using Content.Shared.Actions.ActionTypes;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
@@ -6,13 +7,11 @@ namespace Content.Server.RatKing
     [RegisterComponent]
     public sealed partial class RatKingComponent : Component
     {
-        [DataField("actionRaiseArmy", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-        public string ActionRaiseArmy = "ActionRatKingRaiseArmy";
-
         /// <summary>
         ///     The action for the Raise Army ability
         /// </summary>
-        [DataField("actionRaiseArmyEntity")] public EntityUid? ActionRaiseArmyEntity;
+        [DataField("actionRaiseArmy", required: true)]
+        public InstantAction ActionRaiseArmy = new();
 
         /// <summary>
         ///     The amount of hunger one use of Raise Army consumes
@@ -26,14 +25,11 @@ namespace Content.Server.RatKing
         [ViewVariables(VVAccess.ReadWrite), DataField("armyMobSpawnId", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
         public string ArmyMobSpawnId = "MobRatServant";
 
-        [DataField("actionDomain", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-        public string ActionDomain = "ActionRatKingDomain";
-
         /// <summary>
         ///     The action for the Domain ability
         /// </summary>
-        [DataField("actionDomainEntity")]
-        public EntityUid? ActionDomainEntity;
+        [DataField("actionDomain", required: true)]
+        public InstantAction ActionDomain = new();
 
         /// <summary>
         ///     The amount of hunger one use of Domain consumes
@@ -47,4 +43,4 @@ namespace Content.Server.RatKing
         [DataField("molesMiasmaPerDomain")]
         public float MolesMiasmaPerDomain = 100f;
     }
-}
+};

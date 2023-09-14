@@ -16,12 +16,12 @@ public sealed class ToggleNukeCommand : LocalizedCommands
 
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        EntityUid? bombUid = null;
+        EntityUid bombUid;
         NukeComponent? bomb = null;
 
         if (args.Length >= 2)
         {
-            if (!_entManager.TryParseNetEntity(args[1], out bombUid))
+            if (!EntityUid.TryParse(args[1], out bombUid))
             {
                 shell.WriteError(Loc.GetString("shell-entity-uid-must-be-number"));
                 return;
@@ -31,13 +31,12 @@ public sealed class ToggleNukeCommand : LocalizedCommands
         {
             var query = _entManager.EntityQueryEnumerator<NukeComponent>();
 
-            while (query.MoveNext(out var bomba, out bomb))
+            while (query.MoveNext(out bombUid, out bomb))
             {
-                bombUid = bomba;
                 break;
             }
 
-            if (bombUid == null)
+            if (bomb == null)
             {
                 shell.WriteError(Loc.GetString("cmd-nukearm-not-found"));
                 return;
@@ -54,10 +53,10 @@ public sealed class ToggleNukeCommand : LocalizedCommands
                 return;
             }
 
-            nukeSys.SetRemainingTime(bombUid.Value, timer, bomb);
+            nukeSys.SetRemainingTime(bombUid, timer, bomb);
         }
 
-        nukeSys.ToggleBomb(bombUid.Value, bomb);
+        nukeSys.ToggleBomb(bombUid, bomb);
     }
 
     public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)

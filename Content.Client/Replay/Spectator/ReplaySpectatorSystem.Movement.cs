@@ -55,7 +55,7 @@ public sealed partial class ReplaySpectatorSystem
             return;
         }
 
-        if (!IsClientSide(player) || !HasComp<ReplaySpectatorComponent>(player))
+        if (!player.IsClientSide() || !HasComp<ReplaySpectatorComponent>(player))
         {
             // Player is trying to move -> behave like the ghost-on-move component.
             SpawnSpectatorGhost(new EntityCoordinates(player, default), true);
@@ -113,9 +113,12 @@ public sealed partial class ReplaySpectatorSystem
             _dir = dir;
         }
 
-        public override bool HandleCmdMessage(IEntityManager entManager, ICommonSession? session, IFullInputCmdMessage message)
+        public override bool HandleCmdMessage(ICommonSession? session, InputCmdMessage message)
         {
-            if (message.State == BoundKeyState.Down)
+            if (message is not FullInputCmdMessage full)
+                return false;
+
+            if (full.State == BoundKeyState.Down)
                 _sys.Direction |= _dir;
             else
                 _sys.Direction &= ~_dir;

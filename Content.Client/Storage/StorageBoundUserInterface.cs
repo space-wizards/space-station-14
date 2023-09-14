@@ -4,13 +4,12 @@ using Content.Client.UserInterface.Controls;
 using Content.Client.Verbs.UI;
 using Content.Shared.Input;
 using Content.Shared.Interaction;
-using Content.Shared.Storage;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Input;
-using static Content.Shared.Storage.StorageComponent;
+using static Content.Shared.Storage.SharedStorageComponent;
 
 namespace Content.Client.Storage
 {
@@ -20,11 +19,8 @@ namespace Content.Client.Storage
         [ViewVariables]
         private StorageWindow? _window;
 
-        [Dependency] private readonly IEntityManager _entManager = default!;
-
         public StorageBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
         {
-            IoCManager.InjectDependencies(this);
         }
 
         protected override void Open()
@@ -33,32 +29,22 @@ namespace Content.Client.Storage
 
             if (_window == null)
             {
-                // TODO: This is a bit of a mess but storagecomponent got moved to shared and cleaned up a bit.
-                var controller = IoCManager.Resolve<IUserInterfaceManager>().GetUIController<StorageUIController>();
-                _window = controller.EnsureStorageWindow(Owner);
-                _window.Title = EntMan.GetComponent<MetaDataComponent>(Owner).EntityName;
+                _window = new StorageWindow(EntMan)
+                {
+                    Title = EntMan.GetComponent<MetaDataComponent>(Owner).EntityName
+                };
 
                 _window.EntityList.GenerateItem += _window.GenerateButton;
                 _window.EntityList.ItemPressed += InteractWithItem;
                 _window.StorageContainerButton.OnPressed += TouchedContainerButton;
 
                 _window.OnClose += Close;
-
-                if (EntMan.TryGetComponent<StorageComponent>(Owner, out var storageComp))
-                {
-                    BuildEntityList(Owner, storageComp);
-                }
-
+                _window.OpenCenteredLeft();
             }
             else
             {
                 _window.Open();
             }
-        }
-
-        public void BuildEntityList(EntityUid uid, StorageComponent component)
-        {
-            _window?.BuildEntityList(uid, component);
         }
 
         public void InteractWithItem(BaseButton.ButtonEventArgs args, ListData cData)
@@ -68,7 +54,7 @@ namespace Content.Client.Storage
 
             if (args.Event.Function == EngineKeyFunctions.UIClick)
             {
-                SendPredictedMessage(new StorageInteractWithItemEvent(_entManager.GetNetEntity(entity)));
+                SendMessage(new StorageInteractWithItemEvent(entity));
             }
             else if (EntMan.EntityExists(entity))
             {
@@ -90,11 +76,11 @@ namespace Content.Client.Storage
             else if (args.Function == ContentKeyFunctions.ActivateItemInWorld)
             {
                 EntMan.EntityNetManager?.SendSystemNetworkMessage(
-                    new InteractInventorySlotEvent(EntMan.GetNetEntity(entity), altInteract: false));
+                    new InteractInventorySlotEvent(entity, altInteract: false));
             }
             else if (args.Function == ContentKeyFunctions.AltActivateItemInWorld)
             {
-                EntMan.RaisePredictiveEvent(new InteractInventorySlotEvent(EntMan.GetNetEntity(entity), altInteract: true));
+                EntMan.RaisePredictiveEvent(new InteractInventorySlotEvent(entity, altInteract: true));
             }
             else
             {
@@ -106,7 +92,17 @@ namespace Content.Client.Storage
 
         public void TouchedContainerButton(BaseButton.ButtonEventArgs args)
         {
-            SendPredictedMessage(new StorageInsertItemMessage());
+            SendMessage(new StorageInsertItemMessage());
+        }
+
+        protected override void UpdateState(BoundUserInterfaceState state)
+        {
+            base.UpdateState(state);
+
+            if (_window == null || state is not StorageBoundUserInterfaceState cast)
+                return;
+
+            _window?.BuildEntityList(cast);
         }
 
         protected override void Dispose(bool disposing)
@@ -117,13 +113,14 @@ namespace Content.Client.Storage
 
             if (_window != null)
             {
-                _window.Orphan();
                 _window.EntityList.GenerateItem -= _window.GenerateButton;
                 _window.EntityList.ItemPressed -= InteractWithItem;
                 _window.StorageContainerButton.OnPressed -= TouchedContainerButton;
                 _window.OnClose -= Close;
-                _window = null;
             }
+
+            _window?.Dispose();
+            _window = null;
         }
     }
 }

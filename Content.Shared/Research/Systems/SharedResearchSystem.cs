@@ -169,18 +169,6 @@ public abstract class SharedResearchSystem : EntitySystem
         if (prototype.Tier < discipline.LockoutTier)
             return;
         component.MainDiscipline = prototype.Discipline;
-        Dirty(uid, component);
-    }
-
-    /// <summary>
-    /// Clear all unlocked technologies from the database.
-    /// </summary>
-    public void ClearTechs(EntityUid uid, TechnologyDatabaseComponent? comp = null)
-    {
-        if (!Resolve(uid, ref comp) || comp.UnlockedTechnologies.Count == 0)
-            return;
-
-        comp.UnlockedTechnologies.Clear();
-        Dirty(uid, comp);
+        Dirty(component);
     }
 }

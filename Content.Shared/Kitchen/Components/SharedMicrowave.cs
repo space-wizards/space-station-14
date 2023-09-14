@@ -1,5 +1,4 @@
 using Content.Shared.Chemistry.Components;
-using Content.Shared.Chemistry.Reagent;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Kitchen.Components
@@ -18,8 +17,8 @@ namespace Content.Shared.Kitchen.Components
     [Serializable, NetSerializable]
     public sealed class MicrowaveEjectSolidIndexedMessage : BoundUserInterfaceMessage
     {
-        public NetEntity EntityID;
-        public MicrowaveEjectSolidIndexedMessage(NetEntity entityId)
+        public EntityUid EntityID;
+        public MicrowaveEjectSolidIndexedMessage(EntityUid entityId)
         {
             EntityID = entityId;
         }
@@ -28,8 +27,8 @@ namespace Content.Shared.Kitchen.Components
     [Serializable, NetSerializable]
     public sealed class MicrowaveVaporizeReagentIndexedMessage : BoundUserInterfaceMessage
     {
-        public ReagentQuantity ReagentQuantity;
-        public MicrowaveVaporizeReagentIndexedMessage(ReagentQuantity reagentQuantity)
+        public Solution.ReagentQuantity ReagentQuantity;
+        public MicrowaveVaporizeReagentIndexedMessage(Solution.ReagentQuantity reagentQuantity)
         {
             ReagentQuantity = reagentQuantity;
         }
@@ -50,12 +49,12 @@ namespace Content.Shared.Kitchen.Components
     [NetSerializable, Serializable]
     public sealed class MicrowaveUpdateUserInterfaceState : BoundUserInterfaceState
     {
-        public NetEntity[] ContainedSolids;
+        public EntityUid[] ContainedSolids;
         public bool IsMicrowaveBusy;
         public int ActiveButtonIndex;
         public uint CurrentCookTime;
 
-        public MicrowaveUpdateUserInterfaceState(NetEntity[] containedSolids,
+        public MicrowaveUpdateUserInterfaceState(EntityUid[] containedSolids,
             bool isMicrowaveBusy, int activeButtonIndex, uint currentCookTime)
         {
             ContainedSolids = containedSolids;

@@ -74,7 +74,7 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
         {
             if (weapon.Attacking)
             {
-                RaisePredictiveEvent(new StopAttackEvent(GetNetEntity(weaponUid)));
+                RaisePredictiveEvent(new StopAttackEvent(weaponUid));
             }
         }
 
@@ -126,7 +126,7 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
                     target = screen.GetClickedEntity(mousePos);
                 }
 
-                EntityManager.RaisePredictiveEvent(new DisarmAttackEvent(GetNetEntity(target), GetNetCoordinates(coordinates)));
+                EntityManager.RaisePredictiveEvent(new DisarmAttackEvent(target, coordinates));
                 return;
             }
 
@@ -152,7 +152,7 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
                 target = screen.GetClickedEntity(mousePos);
             }
 
-            RaisePredictiveEvent(new LightAttackEvent(GetNetEntity(target), GetNetEntity(weaponUid), GetNetCoordinates(coordinates)));
+            RaisePredictiveEvent(new LightAttackEvent(target, weaponUid, coordinates));
         }
     }
 
@@ -182,17 +182,15 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
             return false;
         }
 
-        var target = GetEntity(ev.Target);
-
         // They need to either have hands...
-        if (!HasComp<HandsComponent>(target!.Value))
+        if (!HasComp<HandsComponent>(ev.Target!.Value))
         {
             // or just be able to be shoved over.
-            if (TryComp<StatusEffectsComponent>(target, out var status) && status.AllowedEffects.Contains("KnockedDown"))
+            if (TryComp<StatusEffectsComponent>(ev.Target!.Value, out var status) && status.AllowedEffects.Contains("KnockedDown"))
                 return true;
 
-            if (Timing.IsFirstTimePredicted && HasComp<MobStateComponent>(target.Value))
-                PopupSystem.PopupEntity(Loc.GetString("disarm-action-disarmable", ("targetName", target.Value)), target.Value);
+            if (Timing.IsFirstTimePredicted && HasComp<MobStateComponent>(ev.Target.Value))
+                PopupSystem.PopupEntity(Loc.GetString("disarm-action-disarmable", ("targetName", ev.Target.Value)), ev.Target.Value);
 
             return false;
         }
@@ -224,16 +222,14 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
 
         // This should really be improved. GetEntitiesInArc uses pos instead of bounding boxes.
         // Server will validate it with InRangeUnobstructed.
-        var entities = GetNetEntityList(ArcRayCast(userPos, direction.ToWorldAngle(), component.Angle, distance, userXform.MapID, user).ToList());
-        RaisePredictiveEvent(new HeavyAttackEvent(GetNetEntity(meleeUid), entities.GetRange(0, Math.Min(MaxTargets, entities.Count)), GetNetCoordinates(coordinates)));
+        var entities = ArcRayCast(userPos, direction.ToWorldAngle(), component.Angle, distance, userXform.MapID, user).ToList();
+        RaisePredictiveEvent(new HeavyAttackEvent(meleeUid, entities.GetRange(0, Math.Min(MaxTargets, entities.Count)), coordinates));
     }
 
     private void OnMeleeLunge(MeleeLungeEvent ev)
     {
-        var ent = GetEntity(ev.Entity);
-
         // Entity might not have been sent by PVS.
-        if (Exists(ent))
-            DoLunge(ent, ev.Angle, ev.LocalPos, ev.Animation);
+        if (Exists(ev.Entity))
+            DoLunge(ev.Entity, ev.Angle, ev.LocalPos, ev.Animation);
     }
 }

@@ -8,5 +8,5 @@ namespace Content.Shared.Shuttles.Events;
 [Serializable, NetSerializable]
 public sealed class UndockRequestMessage : BoundUserInterfaceMessage
 {
-    public NetEntity DockEntity;
+    public EntityUid DockEntity;
 }

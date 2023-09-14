@@ -495,16 +495,16 @@ namespace Content.Server.NPC.Pathfinding
         private DebugPathPoly GetDebugPoly(PathPoly poly)
         {
             // Create fake neighbors for it
-            var neighbors = new List<NetCoordinates>(poly.Neighbors.Count);
+            var neighbors = new List<EntityCoordinates>(poly.Neighbors.Count);
 
             foreach (var neighbor in poly.Neighbors)
             {
-                neighbors.Add(GetNetCoordinates(neighbor.Coordinates));
+                neighbors.Add(neighbor.Coordinates);
             }
 
             return new DebugPathPoly()
             {
-                GraphUid = GetNetEntity(poly.GraphUid),
+                GraphUid = poly.GraphUid,
                 ChunkOrigin = poly.ChunkOrigin,
                 TileIndex = poly.TileIndex,
                 Box = poly.Box,
@@ -579,14 +579,12 @@ namespace Content.Server.NPC.Pathfinding
 
             foreach (var comp in EntityQuery<GridPathfindingComponent>(true))
             {
-                var netGrid = GetNetEntity(comp.Owner);
-
-                msg.Breadcrumbs.Add(netGrid, new Dictionary<Vector2i, List<PathfindingBreadcrumb>>(comp.Chunks.Count));
+                msg.Breadcrumbs.Add(comp.Owner, new Dictionary<Vector2i, List<PathfindingBreadcrumb>>(comp.Chunks.Count));
 
                 foreach (var chunk in comp.Chunks)
                 {
                     var data = GetCrumbs(chunk.Value);
-                    msg.Breadcrumbs[netGrid].Add(chunk.Key, data);
+                    msg.Breadcrumbs[comp.Owner].Add(chunk.Key, data);
                 }
             }
 
@@ -628,14 +626,12 @@ namespace Content.Server.NPC.Pathfinding
 
             foreach (var comp in EntityQuery<GridPathfindingComponent>(true))
             {
-                var netGrid = GetNetEntity(comp.Owner);
-
-                msg.Polys.Add(netGrid, new Dictionary<Vector2i, Dictionary<Vector2i, List<DebugPathPoly>>>(comp.Chunks.Count));
+                msg.Polys.Add(comp.Owner, new Dictionary<Vector2i, Dictionary<Vector2i, List<DebugPathPoly>>>(comp.Chunks.Count));
 
                 foreach (var chunk in comp.Chunks)
                 {
                     var data = GetPolys(chunk.Value);
-                    msg.Polys[netGrid].Add(chunk.Key, data);
+                    msg.Polys[comp.Owner].Add(chunk.Key, data);
                 }
             }
 
@@ -650,7 +646,7 @@ namespace Content.Server.NPC.Pathfinding
             var msg = new PathBreadcrumbsRefreshMessage()
             {
                 Origin = chunk.Origin,
-                GridUid = GetNetEntity(gridUid),
+                GridUid = gridUid,
                 Data = GetCrumbs(chunk),
             };
 
@@ -684,7 +680,7 @@ namespace Content.Server.NPC.Pathfinding
             var msg = new PathPolysRefreshMessage()
             {
                 Origin = chunk.Origin,
-                GridUid = GetNetEntity(gridUid),
+                GridUid = gridUid,
                 Polys = data,
             };
 

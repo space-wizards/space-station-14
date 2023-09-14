@@ -1,22 +1,21 @@
+using Content.Shared.Actions;
+using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Devour;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
-namespace Content.Shared.Devour.Components;
+namespace Content.Server.Devour.Components;
 
 [RegisterComponent, NetworkedComponent]
 [Access(typeof(SharedDevourSystem))]
 public sealed partial class DevourerComponent : Component
 {
-    [DataField("devourAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string? DevourAction = "ActionDevour";
-
-    [DataField("devourActionEntity")]
-    public EntityUid? DevourActionEntity;
+    [DataField("devourAction")]
+    public EntityTargetAction? DevourAction;
 
     [ViewVariables(VVAccess.ReadWrite), DataField("soundDevour")]
     public SoundSpecifier? SoundDevour = new SoundPathSpecifier("/Audio/Effects/demon_consume.ogg")

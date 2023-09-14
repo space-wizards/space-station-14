@@ -11,6 +11,7 @@ using Content.Server.RoundEnd;
 using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
 using Content.Server.Zombies;
+using Content.Shared.Actions.ActionTypes;
 using Content.Shared.CCVar;
 using Content.Shared.Humanoid;
 using Content.Shared.Mind;
@@ -194,7 +195,9 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
     private void OnZombifySelf(EntityUid uid, ZombifyOnDeathComponent component, ZombifySelfActionEvent args)
     {
         _zombie.ZombifyEntity(uid);
-        _action.RemoveAction(uid, ZombieRuleComponent.ZombifySelfActionPrototype);
+
+        var action = new InstantAction(_prototypeManager.Index<InstantActionPrototype>(ZombieRuleComponent.ZombifySelfActionPrototype));
+        _action.RemoveAction(uid, action);
     }
 
     private float GetInfectedFraction(bool includeOffStation = true, bool includeDead = false)
@@ -315,14 +318,14 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
 
             totalInfected++;
 
-            _roles.MindAddRole(mindId, new InitialInfectedRoleComponent { PrototypeId = component.PatientZeroPrototypeId });
+            _roles.MindAddRole(mindId, new ZombieRoleComponent { PrototypeId = component.PatientZeroPrototypeId });
 
             var pending = EnsureComp<PendingZombieComponent>(ownedEntity);
             pending.GracePeriod = _random.Next(component.MinInitialInfectedGrace, component.MaxInitialInfectedGrace);
             EnsureComp<ZombifyOnDeathComponent>(ownedEntity);
             EnsureComp<IncurableZombieComponent>(ownedEntity);
             var inCharacterName = MetaData(ownedEntity).EntityName;
-            var action = Spawn(ZombieRuleComponent.ZombifySelfActionPrototype);
+            var action = new InstantAction(_prototypeManager.Index<InstantActionPrototype>(ZombieRuleComponent.ZombifySelfActionPrototype));
             _action.AddAction(mind.OwnedEntity.Value, action, null);
 
             var message = Loc.GetString("zombie-patientzero-role-greeting");

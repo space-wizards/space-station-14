@@ -61,9 +61,9 @@ public sealed class AccessReaderComponentState : ComponentState
 
     public List<HashSet<string>> AccessLists;
 
-    public List<(NetEntity, uint)> AccessKeys;
+    public HashSet<StationRecordKey> AccessKeys;
 
-    public AccessReaderComponentState(bool enabled, HashSet<string> denyTags, List<HashSet<string>> accessLists, List<(NetEntity, uint)> accessKeys)
+    public AccessReaderComponentState(bool enabled, HashSet<string> denyTags, List<HashSet<string>> accessLists, HashSet<StationRecordKey> accessKeys)
     {
         Enabled = enabled;
         DenyTags = denyTags;

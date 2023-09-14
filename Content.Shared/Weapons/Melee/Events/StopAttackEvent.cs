@@ -5,9 +5,9 @@ namespace Content.Shared.Weapons.Melee.Events;
 [Serializable, NetSerializable]
 public sealed class StopAttackEvent : EntityEventArgs
 {
-    public readonly NetEntity Weapon;
+    public readonly EntityUid Weapon;
 
-    public StopAttackEvent(NetEntity weapon)
+    public StopAttackEvent(EntityUid weapon)
     {
         Weapon = weapon;
     }

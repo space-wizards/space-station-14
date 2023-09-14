@@ -6,16 +6,15 @@ namespace Content.Shared.Throwing
     [RegisterComponent, NetworkedComponent]
     public sealed partial class ThrownItemComponent : Component
     {
-        [ViewVariables(VVAccess.ReadWrite), DataField("thrower")]
         public EntityUid? Thrower { get; set; }
     }
 
     [Serializable, NetSerializable]
     public sealed class ThrownItemComponentState : ComponentState
     {
-        public NetEntity? Thrower { get; }
+        public EntityUid? Thrower { get; }
 
-        public ThrownItemComponentState(NetEntity? thrower)
+        public ThrownItemComponentState(EntityUid? thrower)
         {
             Thrower = thrower;
         }

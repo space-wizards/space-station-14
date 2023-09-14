@@ -112,7 +112,7 @@ public sealed class DragDropSystem : SharedDragDropSystem
         base.Initialize();
         _sawmill = Logger.GetSawmill("drag_drop");
         UpdatesOutsidePrediction = true;
-        UpdatesAfter.Add(typeof(SharedEyeSystem));
+        UpdatesAfter.Add(typeof(EyeUpdateSystem));
 
         _cfgMan.OnValueChanged(CCVars.DragDropDeadZone, SetDeadZone, true);
 
@@ -193,29 +193,27 @@ public sealed class DragDropSystem : SharedDragDropSystem
         // the mouse, canceling the drag, but just being cautious)
         EndDrag();
 
-        var entity = args.EntityUid;
-
         // possibly initiating a drag
         // check if the clicked entity is draggable
-        if (!Exists(entity))
+        if (!Exists(args.EntityUid))
         {
             return false;
         }
 
         // check if the entity is reachable
-        if (!_interactionSystem.InRangeUnobstructed(dragger, entity))
+        if (!_interactionSystem.InRangeUnobstructed(dragger, args.EntityUid))
         {
             return false;
         }
 
         var ev = new CanDragEvent();
 
-        RaiseLocalEvent(entity, ref ev);
+        RaiseLocalEvent(args.EntityUid, ref ev);
 
         if (ev.Handled != true)
             return false;
 
-        _draggedEntity = entity;
+        _draggedEntity = args.EntityUid;
         _state = DragState.MouseDown;
         _mouseDownScreenPos = _inputManager.MouseScreenPosition;
         _mouseDownTime = 0;
@@ -311,32 +309,14 @@ public sealed class DragDropSystem : SharedDragDropSystem
                     // adjust the timing info based on the current tick so it appears as if it happened now
                     var replayMsg = savedValue.OriginalMessage;
 
-                    switch (replayMsg)
-                    {
-                        case ClientFullInputCmdMessage clientInput:
-                            replayMsg = new ClientFullInputCmdMessage(args.OriginalMessage.Tick,
-                                args.OriginalMessage.SubTick,
-                                replayMsg.InputFunctionId)
-                            {
-                                State = replayMsg.State,
-                                Coordinates = clientInput.Coordinates,
-                                ScreenCoordinates = clientInput.ScreenCoordinates,
-                                Uid = clientInput.Uid,
-                            };
-                            break;
-                        case FullInputCmdMessage fullInput:
-                            replayMsg = new FullInputCmdMessage(args.OriginalMessage.Tick,
-                                args.OriginalMessage.SubTick,
-                                replayMsg.InputFunctionId, replayMsg.State, fullInput.Coordinates, fullInput.ScreenCoordinates,
-                                fullInput.Uid);
-                            break;
-                        default:
-                            throw new ArgumentOutOfRangeException();
-                    }
+                    var adjustedInputMsg = new FullInputCmdMessage(args.OriginalMessage.Tick,
+                        args.OriginalMessage.SubTick,
+                        replayMsg.InputFunctionId, replayMsg.State, replayMsg.Coordinates, replayMsg.ScreenCoordinates,
+                        replayMsg.Uid);
 
                     if (savedValue.Session != null)
                     {
-                        _inputSystem.HandleInputCommand(savedValue.Session, EngineKeyFunctions.Use, replayMsg,
+                        _inputSystem.HandleInputCommand(savedValue.Session, EngineKeyFunctions.Use, adjustedInputMsg,
                             true);
                     }
 
@@ -360,11 +340,10 @@ public sealed class DragDropSystem : SharedDragDropSystem
         }
 
         IEnumerable<EntityUid> entities;
-        var coords = args.Coordinates;
 
         if (_stateManager.CurrentState is GameplayState screen)
         {
-            entities = screen.GetClickableEntities(coords);
+            entities = screen.GetClickableEntities(args.Coordinates);
         }
         else
         {
@@ -392,7 +371,7 @@ public sealed class DragDropSystem : SharedDragDropSystem
             }
 
             // tell the server about the drop attempt
-            RaiseNetworkEvent(new DragDropRequestEvent(GetNetEntity(_draggedEntity.Value), GetNetEntity(entity)));
+            RaiseNetworkEvent(new DragDropRequestEvent(_draggedEntity.Value, entity));
             EndDrag();
             return true;
         }

@@ -27,7 +27,7 @@ public sealed class MechBoundUserInterface : BoundUserInterface
 
         _menu.OnRemoveButtonPressed += uid =>
         {
-            SendMessage(new MechEquipmentRemoveMessage(EntMan.GetNetEntity(uid)));
+            SendMessage(new MechEquipmentRemoveMessage(uid));
         };
     }
 
@@ -54,7 +54,7 @@ public sealed class MechBoundUserInterface : BoundUserInterface
                 continue;
             foreach (var (attached, estate) in state.EquipmentStates)
             {
-                if (ent == EntMan.GetEntity(attached))
+                if (ent == attached)
                     ui.UpdateState(estate);
             }
         }

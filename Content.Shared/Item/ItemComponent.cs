@@ -56,10 +56,10 @@ public sealed class ItemComponentState : ComponentState
 [Serializable, NetSerializable]
 public sealed class VisualsChangedEvent : EntityEventArgs
 {
-    public readonly NetEntity Item;
+    public readonly EntityUid Item;
     public readonly string ContainerId;
 
-    public VisualsChangedEvent(NetEntity item, string containerId)
+    public VisualsChangedEvent(EntityUid item, string containerId)
     {
         Item = item;
         ContainerId = containerId;

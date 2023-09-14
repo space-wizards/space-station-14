@@ -23,11 +23,9 @@ namespace Content.Server.Chemistry.EntitySystems;
 public sealed class SolutionChangedEvent : EntityEventArgs
 {
     public readonly Solution Solution;
-    public readonly string SolutionId;
 
-    public SolutionChangedEvent(Solution solution, string solutionId)
+    public SolutionChangedEvent(Solution solution)
     {
-        SolutionId = solutionId;
         Solution = solution;
     }
 }
@@ -105,7 +103,7 @@ public sealed partial class SolutionContainerSystem : EntitySystem
     {
         var msg = new FormattedMessage();
 
-        if (solution.Volume == 0)
+        if (solution.Contents.Count == 0) //TODO: better way to see if empty?
         {
             msg.AddMarkup(Loc.GetString("scannable-solution-empty-container"));
             return msg;
@@ -113,13 +111,17 @@ public sealed partial class SolutionContainerSystem : EntitySystem
 
         msg.AddMarkup(Loc.GetString("scannable-solution-main-text"));
 
-        foreach (var (proto, quantity) in solution.GetReagentPrototypes(_prototypeManager))
+        foreach (var reagent in solution)
         {
+            if (!_prototypeManager.TryIndex<ReagentPrototype>(reagent.ReagentId, out var proto))
+            {
+                continue;
+            }
             msg.PushNewline();
             msg.AddMarkup(Loc.GetString("scannable-solution-chemical"
                 , ("type", proto.LocalizedName)
                 , ("color", proto.SubstanceColor.ToHexNoAlpha())
-                , ("amount", quantity)));
+                , ("amount", reagent.Quantity)));
         }
 
         return msg;
@@ -130,41 +132,46 @@ public sealed partial class SolutionContainerSystem : EntitySystem
     {
         SolutionContainerManagerComponent? solutionsManager = null;
         if (!Resolve(args.Examined, ref solutionsManager)
-            || !solutionsManager.Solutions.TryGetValue(examinableComponent.Solution, out var solution))
+            || !solutionsManager.Solutions.TryGetValue(examinableComponent.Solution, out var solutionHolder))
         {
             return;
         }
 
-        var primaryReagent = solution.GetPrimaryReagentId();
+        var primaryReagent = solutionHolder.GetPrimaryReagentId();
 
-        if (string.IsNullOrEmpty(primaryReagent?.Prototype))
+        if (string.IsNullOrEmpty(primaryReagent))
         {
             args.PushText(Loc.GetString("shared-solution-container-component-on-examine-empty-container"));
             return;
         }
 
-        if (!_prototypeManager.TryIndex(primaryReagent.Value.Prototype, out ReagentPrototype? primary))
+        if (!_prototypeManager.TryIndex(primaryReagent, out ReagentPrototype? primary))
         {
             Logger.Error(
                 $"{nameof(Solution)} could not find the prototype associated with {primaryReagent}.");
             return;
         }
 
-        var colorHex = solution.GetColor(_prototypeManager)
+        var colorHex = solutionHolder.GetColor(_prototypeManager)
             .ToHexNoAlpha(); //TODO: If the chem has a dark color, the examine text becomes black on a black background, which is unreadable.
         var messageString = "shared-solution-container-component-on-examine-main-text";
 
         args.PushMarkup(Loc.GetString(messageString,
             ("color", colorHex),
-            ("wordedAmount", Loc.GetString(solution.Contents.Count == 1
+            ("wordedAmount", Loc.GetString(solutionHolder.Contents.Count == 1
                 ? "shared-solution-container-component-on-examine-worded-amount-one-reagent"
                 : "shared-solution-container-component-on-examine-worded-amount-multiple-reagents")),
             ("desc", primary.LocalizedPhysicalDescription)));
 
         // Add descriptions of immediately recognizable reagents, like water or beer
         var recognized = new List<ReagentPrototype>();
-        foreach (var proto in solution.GetReagentPrototypes(_prototypeManager).Keys)
+        foreach (var (id, _) in solutionHolder)
         {
+            if (!_prototypeManager.TryIndex<ReagentPrototype>(id, out var proto))
+            {
+                continue;
+            }
+
             if (!proto.Recognizable)
             {
                 continue;
@@ -271,7 +278,7 @@ public sealed partial class SolutionContainerSystem : EntitySystem
         }
 
         UpdateAppearance(uid, solutionHolder);
-        RaiseLocalEvent(uid, new SolutionChangedEvent(solutionHolder, solutionHolder.Name));
+        RaiseLocalEvent(uid, new SolutionChangedEvent(solutionHolder));
     }
 
     public void RemoveAllSolution(EntityUid uid, Solution solutionHolder)
@@ -317,109 +324,44 @@ public sealed partial class SolutionContainerSystem : EntitySystem
     /// </summary>
     /// <param name="targetUid"></param>
     /// <param name="targetSolution">Container to which we are adding reagent</param>
-    /// <param name="reagentQuantity">The reagent to add.</param>
+    /// <param name="reagentId">The Id of the reagent to add.</param>
+    /// <param name="quantity">The amount of reagent to add.</param>
     /// <param name="acceptedQuantity">The amount of reagent successfully added.</param>
     /// <returns>If all the reagent could be added.</returns>
-    public bool TryAddReagent(EntityUid targetUid, Solution targetSolution, ReagentQuantity reagentQuantity,
+    public bool TryAddReagent(EntityUid targetUid, Solution targetSolution, string reagentId, FixedPoint2 quantity,
         out FixedPoint2 acceptedQuantity, float? temperature = null)
     {
-        acceptedQuantity = targetSolution.AvailableVolume > reagentQuantity.Quantity
-            ? reagentQuantity.Quantity
-            : targetSolution.AvailableVolume;
+        acceptedQuantity = targetSolution.AvailableVolume > quantity ? quantity : targetSolution.AvailableVolume;
 
         if (acceptedQuantity <= 0)
-            return reagentQuantity.Quantity == 0;
+            return quantity == 0;
 
         if (temperature == null)
-        {
-            targetSolution.AddReagent(reagentQuantity.Reagent, acceptedQuantity);
-        }
+            targetSolution.AddReagent(reagentId, acceptedQuantity);
         else
-        {
-            var proto = _prototypeManager.Index<ReagentPrototype>(reagentQuantity.Reagent.Prototype);
-            targetSolution.AddReagent(proto, acceptedQuantity, temperature.Value, _prototypeManager);
-        }
+            targetSolution.AddReagent(_prototypeManager.Index<ReagentPrototype>(reagentId), acceptedQuantity, temperature.Value, _prototypeManager);
 
         UpdateChemicals(targetUid, targetSolution, true);
-        return acceptedQuantity == reagentQuantity.Quantity;
+        return acceptedQuantity == quantity;
     }
 
-    /// <summary>
-    ///     Adds reagent of an Id to the container.
-    /// </summary>
-    /// <param name="targetUid"></param>
-    /// <param name="targetSolution">Container to which we are adding reagent</param>
-    /// <param name="prototype">The Id of the reagent to add.</param>
-    /// <param name="quantity">The amount of reagent to add.</param>
-    /// <param name="acceptedQuantity">The amount of reagent successfully added.</param>
-    /// <returns>If all the reagent could be added.</returns>
-    public bool TryAddReagent(EntityUid targetUid, Solution targetSolution, string prototype, FixedPoint2 quantity,
-        out FixedPoint2 acceptedQuantity, float? temperature = null, ReagentData? data = null)
-    {
-        var reagent = new ReagentQuantity(prototype, quantity, data);
-        return TryAddReagent(targetUid, targetSolution, reagent, out acceptedQuantity, temperature);
-    }
 
     /// <summary>
-    ///     Adds reagent of an Id to the container.
-    /// </summary>
-    /// <param name="targetUid"></param>
-    /// <param name="targetSolution">Container to which we are adding reagent</param>
-    /// <param name="reagentId">The reagent to add.</param>
-    /// <param name="quantity">The amount of reagent to add.</param>
-    /// <param name="acceptedQuantity">The amount of reagent successfully added.</param>
-    /// <returns>If all the reagent could be added.</returns>
-    public bool TryAddReagent(EntityUid targetUid, Solution targetSolution, ReagentId reagentId, FixedPoint2 quantity,
-        out FixedPoint2 acceptedQuantity, float? temperature = null)
-    {
-        var quant = new ReagentQuantity(reagentId, quantity);
-        return TryAddReagent(targetUid, targetSolution, quant, out acceptedQuantity, temperature);
-    }
-
-    /// <summary>
-    ///     Removes reagent from a container.
+    ///     Removes reagent of an Id to the container.
     /// </summary>
     /// <param name="targetUid"></param>
     /// <param name="container">Solution container from which we are removing reagent</param>
-    /// <param name="reagentQuantity">The reagent to remove.</param>
+    /// <param name="reagentId">The Id of the reagent to remove.</param>
+    /// <param name="quantity">The amount of reagent to remove.</param>
     /// <returns>If the reagent to remove was found in the container.</returns>
-    public bool RemoveReagent(EntityUid targetUid, Solution? container, ReagentQuantity reagentQuantity)
+    public bool TryRemoveReagent(EntityUid targetUid, Solution? container, string reagentId, FixedPoint2 quantity)
     {
-        if (container == null)
+        if (container == null || !container.ContainsReagent(reagentId))
             return false;
 
-        var quant = container.RemoveReagent(reagentQuantity);
-        if (quant <= FixedPoint2.Zero)
-            return false;
-
+        container.RemoveReagent(reagentId, quantity);
         UpdateChemicals(targetUid, container);
         return true;
-    }
-
-    /// <summary>
-    ///     Removes reagent from a container.
-    /// </summary>
-    /// <param name="targetUid"></param>
-    /// <param name="container">Solution container from which we are removing reagent</param>
-    /// <param name="prototype">The Id of the reagent to remove.</param>
-    /// <param name="quantity">The amount of reagent to remove.</param>
-    /// <returns>If the reagent to remove was found in the container.</returns>
-    public bool RemoveReagent(EntityUid targetUid, Solution? container, string prototype, FixedPoint2 quantity, ReagentData? data = null)
-    {
-        return RemoveReagent(targetUid, container, new ReagentQuantity(prototype, quantity, data));
-    }
-
-    /// <summary>
-    ///     Removes reagent from a container.
-    /// </summary>
-    /// <param name="targetUid"></param>
-    /// <param name="container">Solution container from which we are removing reagent</param>
-    /// <param name="reagentId">The reagent to remove.</param>
-    /// <param name="quantity">The amount of reagent to remove.</param>
-    /// <returns>If the reagent to remove was found in the container.</returns>
-    public bool RemoveReagent(EntityUid targetUid, Solution? container, ReagentId reagentId, FixedPoint2 quantity)
-    {
-        return RemoveReagent(targetUid, container, new ReagentQuantity(reagentId, quantity));
     }
 
     /// <summary>
@@ -450,34 +392,18 @@ public sealed partial class SolutionContainerSystem : EntitySystem
     /// <param name="quantity">quantity of solution to move from source to target. If this is a negative number, the source & target roles are reversed.</param>
     public bool TryTransferSolution(EntityUid sourceUid, EntityUid targetUid, Solution source, Solution target, FixedPoint2 quantity)
     {
-        if (!TryTransferSolution(targetUid, target, source, quantity))
-            return false;
-
-        UpdateChemicals(sourceUid, source, false);
-        return true;
-    }
-
-    /// <summary>
-    ///     Moves some quantity of a solution from one solution to another.
-    /// </summary>
-    /// <param name="sourceUid">entity holding the source solution</param>
-    /// <param name="targetUid">entity holding the target solution</param>
-    /// <param name="source">source solution</param>
-    /// <param name="target">target solution</param>
-    /// <param name="quantity">quantity of solution to move from source to target. If this is a negative number, the source & target roles are reversed.</param>
-    public bool TryTransferSolution(EntityUid targetUid, Solution target, Solution source, FixedPoint2 quantity)
-    {
         if (quantity < 0)
-            throw new InvalidOperationException("Quantity must be positive");
+            return TryTransferSolution(targetUid, sourceUid, target, source, -quantity);
 
         quantity = FixedPoint2.Min(quantity, target.AvailableVolume, source.Volume);
         if (quantity == 0)
             return false;
 
-        // TODO This should be made into a function that directly transfers reagents.
-        // Currently this is quite inefficient.
+        // TODO This should be made into a function that directly transfers reagents. currently this is quite
+        // inefficient.
         target.AddSolution(source.SplitSolution(quantity), _prototypeManager);
 
+        UpdateChemicals(sourceUid, source, false);
         UpdateChemicals(targetUid, target, true);
         return true;
     }
@@ -614,7 +540,7 @@ public sealed partial class SolutionContainerSystem : EntitySystem
     }
 
     public Solution EnsureSolution(EntityUid uid, string name,
-        IEnumerable<ReagentQuantity> reagents,
+        IEnumerable<Solution.ReagentQuantity> reagents,
         bool setMaxVol = true,
         SolutionContainerManagerComponent? solutionsMgr = null)
     {
@@ -648,16 +574,19 @@ public sealed partial class SolutionContainerSystem : EntitySystem
         // RemoveReagent does a RemoveSwap, meaning we don't have to copy the list if we iterate it backwards.
         for (var i = solution.Contents.Count-1; i >= 0; i--)
         {
-            var (reagent, _) = solution.Contents[i];
-            var removedQuantity = solution.RemoveReagent(reagent, quantity);
-            removedSolution.AddReagent(reagent, removedQuantity);
+            var (reagentId, _) = solution.Contents[i];
+
+            var removedQuantity = solution.RemoveReagent(reagentId, quantity);
+
+            if(removedQuantity > 0)
+                removedSolution.AddReagent(reagentId, removedQuantity);
         }
 
         UpdateChemicals(uid, solution);
         return removedSolution;
     }
 
-    public FixedPoint2 GetTotalPrototypeQuantity(EntityUid owner, string reagentId)
+    public FixedPoint2 GetReagentQuantity(EntityUid owner, string reagentId)
     {
         var reagentQuantity = FixedPoint2.New(0);
         if (EntityManager.EntityExists(owner)
@@ -665,7 +594,7 @@ public sealed partial class SolutionContainerSystem : EntitySystem
         {
             foreach (var solution in managerComponent.Solutions.Values)
             {
-                reagentQuantity += solution.GetTotalPrototypeQuantity(reagentId);
+                reagentQuantity += solution.GetReagentQuantity(reagentId);
             }
         }
 
@@ -711,21 +640,21 @@ public sealed partial class SolutionContainerSystem : EntitySystem
         if (component.Solutions.Count == 0)
             return null;
 
-        var reagentCounts = new Dictionary<ReagentId, FixedPoint2>();
+        var reagentCounts = new Dictionary<string, FixedPoint2>();
 
         foreach (var solution in component.Solutions.Values)
         {
-            foreach (var (reagent, quantity) in solution.Contents)
+            foreach (var reagent in solution.Contents)
             {
-                reagentCounts.TryGetValue(reagent, out var existing);
-                existing += quantity;
-                reagentCounts[reagent] = existing;
+                reagentCounts.TryGetValue(reagent.ReagentId, out var existing);
+                existing += reagent.Quantity;
+                reagentCounts[reagent.ReagentId] = existing;
             }
         }
 
         var max = reagentCounts.Max();
 
-        return _prototypeManager.Index<ReagentPrototype>(max.Key.Prototype);
+        return _prototypeManager.Index<ReagentPrototype>(max.Key);
     }
 
     public SoundSpecifier? GetSound(SolutionContainerManagerComponent component)

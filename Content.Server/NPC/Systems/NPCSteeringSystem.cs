@@ -270,7 +270,7 @@ public sealed partial class NPCSteeringSystem : SharedNPCSteeringSystem
                 var (uid, steering, mover, _) = npcs[i];
 
                 data.Add(new NPCSteeringDebugData(
-                    GetNetEntity(uid),
+                    uid,
                     mover.CurTickSprintMovement,
                     steering.Interest,
                     steering.Danger,

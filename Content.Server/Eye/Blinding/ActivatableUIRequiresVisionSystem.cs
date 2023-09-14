@@ -44,7 +44,7 @@ public sealed class ActivatableUIRequiresVisionSystem : EntitySystem
         if (uiList == null)
             return;
 
-        Queue<PlayerBoundUserInterface> closeList = new(); // foreach collection modified moment
+        Queue<BoundUserInterface> closeList = new(); // foreach collection modified moment
 
         foreach (var ui in uiList)
         {

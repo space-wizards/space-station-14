@@ -1,6 +1,7 @@
 using Content.Server.Actions;
 using Content.Server.Popups;
 using Content.Server.Sound.Components;
+using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Audio;
 using Content.Shared.Bed.Sleep;
 using Content.Shared.Damage;
@@ -9,14 +10,16 @@ using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
-using Content.Shared.Slippery;
 using Content.Shared.StatusEffect;
+using Content.Shared.Slippery;
 using Content.Shared.Stunnable;
 using Content.Shared.Verbs;
+using Robust.Shared.Audio;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
+using Content.Shared.Interaction.Components;
 
 namespace Content.Server.Bed.Sleep
 {
@@ -29,8 +32,6 @@ namespace Content.Server.Bed.Sleep
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly StatusEffectsSystem _statusEffectsSystem = default!;
-
-        [ValidatePrototypeId<EntityPrototype>] public const string SleepActionId = "ActionSleep";
 
         public override void Initialize()
         {
@@ -52,6 +53,7 @@ namespace Content.Server.Bed.Sleep
         /// </summary>
         private void OnSleepStateChanged(EntityUid uid, MobStateComponent component, SleepStateChangedEvent args)
         {
+            _prototypeManager.TryIndex<InstantActionPrototype>("Wake", out var wakeAction);
             if (args.FellAsleep)
             {
                 // Expiring status effects would remove the components needed for sleeping
@@ -70,8 +72,16 @@ namespace Content.Server.Bed.Sleep
                     emitSound.PopUp = sleepSound.PopUp;
                 }
 
+                if (wakeAction != null)
+                {
+                    var wakeInstance = new InstantAction(wakeAction);
+                    wakeInstance.Cooldown = (_gameTiming.CurTime, _gameTiming.CurTime + TimeSpan.FromSeconds(15));
+                    _actionsSystem.AddAction(uid, wakeInstance, null);
+                }
                 return;
             }
+            if (wakeAction != null)
+                _actionsSystem.RemoveAction(uid, wakeAction);
 
             RemComp<StunnedComponent>(uid);
             RemComp<KnockedDownComponent>(uid);
@@ -184,7 +194,8 @@ namespace Content.Server.Bed.Sleep
             RaiseLocalEvent(uid, ref tryingToSleepEvent);
             if (tryingToSleepEvent.Cancelled) return false;
 
-            _actionsSystem.RemoveAction(uid, SleepActionId);
+            if (_prototypeManager.TryIndex<InstantActionPrototype>("Sleep", out var sleepAction))
+                _actionsSystem.RemoveAction(uid, sleepAction);
 
             EnsureComp<SleepingComponent>(uid);
             return true;

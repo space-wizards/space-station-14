@@ -67,7 +67,7 @@ public sealed partial class AtmosphereSystem
 
        foreach (var arg in args)
        {
-           if (!NetEntity.TryParse(arg, out var netEntity) || !TryGetEntity(netEntity, out var euid))
+           if(!EntityUid.TryParse(arg, out var euid))
            {
                shell.WriteError($"Failed to parse euid '{arg}'.");
                return;
@@ -85,7 +85,7 @@ public sealed partial class AtmosphereSystem
                continue;
            }
 
-           var transform = Transform(euid.Value);
+           var transform = Transform(euid);
 
            foreach (var (indices, tileMain) in gridAtmosphere.Tiles)
            {

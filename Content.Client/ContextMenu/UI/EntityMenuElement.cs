@@ -49,8 +49,7 @@ namespace Content.Client.ContextMenu.UI
 
         private string? SearchPlayerName(EntityUid entity)
         {
-            var netEntity = _entityManager.GetNetEntity(entity);
-            return _adminSystem.PlayerList.FirstOrDefault(player => player.NetEntity == netEntity)?.Username;
+            return _adminSystem.PlayerList.FirstOrDefault(player => player.EntityUid == entity)?.Username;
         }
 
         /// <summary>
@@ -78,12 +77,12 @@ namespace Content.Client.ContextMenu.UI
             var representation = _entityManager.ToPrettyString(entity);
 
             var name = representation.Name;
-            var id = representation.Uid.ToString();
+            var id = representation.Uid;
             var prototype = representation.Prototype;
             var playerName = representation.Session?.Name ?? SearchPlayerName(entity);
             var deleted = representation.Deleted;
 
-            return $"{name} ({id} / {_entityManager.GetNetEntity(entity).ToString()}{(prototype != null ? $", {prototype}" : "")}{(playerName != null ? $", {playerName}" : "")}){(deleted ? "D" : "")}";
+            return $"{name} ({id}{(prototype != null ? $", {prototype}" : "")}{(playerName != null ? $", {playerName}" : "")}){(deleted ? "D" : "")}";
         }
 
         private string GetEntityDescription(EntityUid entity)

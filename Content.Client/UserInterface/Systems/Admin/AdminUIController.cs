@@ -154,16 +154,16 @@ public sealed class AdminUIController : UIController, IOnStateEntered<GameplaySt
     private void PlayerTabEntryPressed(ButtonEventArgs args)
     {
         if (args.Button is not PlayerTabEntry button
-            || button.PlayerEntity == null)
+            || button.PlayerUid == null)
             return;
 
-        var entity = button.PlayerEntity.Value;
+        var uid = button.PlayerUid.Value;
         var function = args.Event.Function;
 
         if (function == EngineKeyFunctions.UIClick)
-            _conHost.ExecuteCommand($"vv {entity}");
+            _conHost.ExecuteCommand($"vv {uid}");
         else if (function == EngineKeyFunctions.UseSecondary)
-            _verb.OpenVerbMenu(EntityManager.GetEntity(entity), true);
+            _verb.OpenVerbMenu(uid, true);
         else
             return;
 

@@ -125,10 +125,10 @@ public sealed class StrapComponentState : ComponentState
     public readonly StrapPosition Position;
     public readonly float MaxBuckleDistance;
     public readonly Vector2 BuckleOffsetClamped;
-    public readonly HashSet<NetEntity> BuckledEntities;
+    public readonly HashSet<EntityUid> BuckledEntities;
     public readonly int OccupiedSize;
 
-    public StrapComponentState(StrapPosition position, Vector2 offset, HashSet<NetEntity> buckled,
+    public StrapComponentState(StrapPosition position, Vector2 offset, HashSet<EntityUid> buckled,
         float maxBuckleDistance, int occupiedSize)
     {
         Position = position;

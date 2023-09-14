@@ -1,37 +1,21 @@
+using Robust.Shared.Serialization;
+
 namespace Content.Shared.StationRecords;
 
 // Station record keys. These should be stored somewhere,
 // preferably within an ID card.
-public readonly struct StationRecordKey : IEquatable<StationRecordKey>
+[Serializable, NetSerializable]
+public readonly struct StationRecordKey
 {
-    [DataField("id")]
-    public readonly uint Id;
+    [ViewVariables]
+    public uint ID { get; }
 
-    [DataField("station")]
-    public readonly EntityUid OriginStation;
-
-    public static StationRecordKey Invalid = default;
+    [ViewVariables]
+    public EntityUid OriginStation { get; }
 
     public StationRecordKey(uint id, EntityUid originStation)
     {
-        Id = id;
+        ID = id;
         OriginStation = originStation;
     }
-
-    public bool Equals(StationRecordKey other)
-    {
-        return Id == other.Id && OriginStation.Id == other.OriginStation.Id;
-    }
-
-    public override bool Equals(object? obj)
-    {
-        return obj is StationRecordKey other && Equals(other);
-    }
-
-    public override int GetHashCode()
-    {
-        return HashCode.Combine(Id, OriginStation);
-    }
-
-    public bool IsValid() => OriginStation.IsValid();
 }

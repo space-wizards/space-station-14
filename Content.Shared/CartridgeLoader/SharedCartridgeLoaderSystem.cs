@@ -2,18 +2,13 @@
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
-using Robust.Shared.Network;
 
 namespace Content.Shared.CartridgeLoader;
 
 public abstract class SharedCartridgeLoaderSystem : EntitySystem
 {
-    public const string InstalledContainerId = "program-container";
-
     [Dependency] private readonly ItemSlotsSystem _itemSlotsSystem = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
-    [Dependency] private readonly SharedContainerSystem _container = default!;
-    [Dependency] private readonly INetManager _netMan = default!;
 
     public override void Initialize()
     {
@@ -41,8 +36,11 @@ public abstract class SharedCartridgeLoaderSystem : EntitySystem
     private void OnComponentRemove(EntityUid uid, CartridgeLoaderComponent loader, ComponentRemove args)
     {
         _itemSlotsSystem.RemoveItemSlot(uid, loader.CartridgeSlot);
-        if (_container.TryGetContainer(uid, InstalledContainerId, out var cont))
-            cont.Shutdown(EntityManager, _netMan);
+
+        foreach (var program in loader.InstalledPrograms)
+        {
+               EntityManager.QueueDeleteEntity(program);
+        }
     }
 
     protected virtual void OnItemInserted(EntityUid uid, CartridgeLoaderComponent loader, EntInsertedIntoContainerMessage args)

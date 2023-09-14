@@ -1,18 +1,19 @@
 ﻿using System.Linq;
 using Content.Shared.Actions;
+using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Implants.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Mobs;
 using Content.Shared.Tag;
 using Robust.Shared.Containers;
-using Robust.Shared.Network;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Implants;
 
 public abstract class SharedSubdermalImplantSystem : EntitySystem
 {
-    [Dependency] private readonly INetManager _net = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly TagSystem _tag = default!;
@@ -32,12 +33,12 @@ public abstract class SharedSubdermalImplantSystem : EntitySystem
 
     private void OnInsert(EntityUid uid, SubdermalImplantComponent component, EntGotInsertedIntoContainerMessage args)
     {
-        if (component.ImplantedEntity == null || _net.IsClient)
+        if (component.ImplantedEntity == null)
             return;
 
-        if (!string.IsNullOrWhiteSpace(component.ImplantAction))
+        if (component.ImplantAction != null)
         {
-            var action = Spawn(component.ImplantAction);
+            var action = new InstantAction(_prototypeManager.Index<InstantActionPrototype>(component.ImplantAction));
             _actionsSystem.AddAction(component.ImplantedEntity.Value, action, uid);
         }
 
@@ -82,28 +83,6 @@ public abstract class SharedSubdermalImplantSystem : EntitySystem
                 continue;
 
             _container.RemoveEntity(storageImplant.Owner, entity, force: true, destination: entCoords);
-        }
-    }
-
-    /// <summary>
-    /// Add a list of implants to a person.
-    /// Logs any implant ids that don't have <see cref="SubdermalImplantComponent"/>.
-    /// </summary>
-    public void AddImplants(EntityUid uid, IEnumerable<String> implants)
-    {
-        var coords = Transform(uid).Coordinates;
-        foreach (var id in implants)
-        {
-            var ent = Spawn(id, coords);
-            if (TryComp<SubdermalImplantComponent>(ent, out var implant))
-            {
-                ForceImplant(uid, ent, implant);
-            }
-            else
-            {
-                Log.Warning($"Found invalid starting implant '{id}' on {uid} {ToPrettyString(uid):implanted}");
-                Del(ent);
-            }
         }
     }
 

@@ -18,7 +18,7 @@
       - id: BoxBeanbag
         amount: 2
       - id: RagItem
-        amount: 2
+        amound: 2
 
 #- type: entity
 #  id: LockerFormalFilled

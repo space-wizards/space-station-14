@@ -73,9 +73,9 @@
   - type: MobStateActions
     actions:
       Critical:
-      - ActionCritSuccumb
-      - ActionCritFakeDeath
-      - ActionCritLastWords
+      - CritSuccumb
+      - CritFakeDeath
+      - CritLastWords
   - type: MobThresholds
     thresholds:
       0: Alive

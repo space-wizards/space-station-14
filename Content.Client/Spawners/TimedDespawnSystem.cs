@@ -6,6 +6,6 @@ public sealed class TimedDespawnSystem : SharedTimedDespawnSystem
 {
     protected override bool CanDelete(EntityUid uid)
     {
-        return IsClientSide(uid);
+        return uid.IsClientSide();
     }
 }

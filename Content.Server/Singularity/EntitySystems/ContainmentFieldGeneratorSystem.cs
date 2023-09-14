@@ -18,11 +18,10 @@ namespace Content.Server.Singularity.EntitySystems;
 public sealed class ContainmentFieldGeneratorSystem : EntitySystem
 {
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly AppearanceSystem _visualizer = default!;
-    [Dependency] private readonly PhysicsSystem _physics = default!;
-    [Dependency] private readonly PopupSystem _popupSystem = default!;
-    [Dependency] private readonly SharedPointLightSystem _light = default!;
     [Dependency] private readonly TagSystem _tags = default!;
+    [Dependency] private readonly PopupSystem _popupSystem = default!;
+    [Dependency] private readonly PhysicsSystem _physics = default!;
+    [Dependency] private readonly AppearanceSystem _visualizer = default!;
 
     public override void Initialize()
     {
@@ -326,9 +325,9 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
     /// </summary>
     public void UpdateConnectionLights(ContainmentFieldGeneratorComponent component)
     {
-        if (_light.TryGetLight(component.Owner, out var pointLightComponent))
+        if (EntityManager.TryGetComponent<PointLightComponent>(component.Owner, out var pointLightComponent))
         {
-            _light.SetEnabled(component.Owner, component.Connections.Count > 0, pointLightComponent);
+            pointLightComponent.Enabled = component.Connections.Count > 0;
         }
     }
 

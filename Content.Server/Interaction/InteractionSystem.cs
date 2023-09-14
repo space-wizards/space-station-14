@@ -2,6 +2,7 @@
 
 using Content.Server.Administration.Logs;
 using Content.Server.Pulling;
+using Content.Server.Storage.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.DragDrop;
 using Content.Shared.Input;
@@ -45,54 +46,51 @@ namespace Content.Server.Interaction
             if (!_container.TryGetContainingContainer(target, out var container))
                 return false;
 
-            if (!TryComp(container.Owner, out StorageComponent? storage))
+            if (!TryComp(container.Owner, out ServerStorageComponent? storage))
                 return false;
 
-            if (storage.Container?.ID != container.ID)
+            if (storage.Storage?.ID != container.ID)
                 return false;
 
             if (!TryComp(user, out ActorComponent? actor))
                 return false;
 
             // we don't check if the user can access the storage entity itself. This should be handed by the UI system.
-            return _uiSystem.SessionHasOpenUi(container.Owner, StorageComponent.StorageUiKey.Key, actor.PlayerSession);
+            return _uiSystem.SessionHasOpenUi(container.Owner, SharedStorageComponent.StorageUiKey.Key, actor.PlayerSession);
         }
 
         #region Drag drop
 
         private void HandleDragDropRequestEvent(DragDropRequestEvent msg, EntitySessionEventArgs args)
         {
-            var dragged = GetEntity(msg.Dragged);
-            var target = GetEntity(msg.Target);
-
-            if (Deleted(dragged) || Deleted(target))
+            if (Deleted(msg.Dragged) || Deleted(msg.Target))
                 return;
 
             var user = args.SenderSession.AttachedEntity;
 
-            if (user == null || !_actionBlockerSystem.CanInteract(user.Value, target))
+            if (user == null || !_actionBlockerSystem.CanInteract(user.Value, msg.Target))
                 return;
 
             // must be in range of both the target and the object they are drag / dropping
             // Client also does this check but ya know we gotta validate it.
-            if (!InRangeUnobstructed(user.Value, dragged, popup: true)
-                || !InRangeUnobstructed(user.Value, target, popup: true))
+            if (!InRangeUnobstructed(user.Value, msg.Dragged, popup: true)
+                || !InRangeUnobstructed(user.Value, msg.Target, popup: true))
             {
                 return;
             }
 
-            var dragArgs = new DragDropDraggedEvent(user.Value, target);
+            var dragArgs = new DragDropDraggedEvent(user.Value, msg.Target);
 
             // trigger dragdrops on the dropped entity
-            RaiseLocalEvent(dragged, ref dragArgs);
+            RaiseLocalEvent(msg.Dragged, ref dragArgs);
 
             if (dragArgs.Handled)
                 return;
 
-            var dropArgs = new DragDropTargetEvent(user.Value, dragged);
+            var dropArgs = new DragDropTargetEvent(user.Value, msg.Dragged);
 
             // trigger dragdrops on the target entity (what you are dropping onto)
-            RaiseLocalEvent(GetEntity(msg.Target), ref dropArgs);
+            RaiseLocalEvent(msg.Target, ref dropArgs);
         }
 
         #endregion

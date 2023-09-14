@@ -7,8 +7,5 @@ ent-ArmoryShotgun = { ent-CrateArmoryShotgun }
 ent-TrackingImplants = { ent-CrateTrackingImplants }
     .desc = { ent-CrateTrackingImplants.desc }
 
-ent-TrainingBombs = { ent-CrateTrainingBombs }
-    .desc = { ent-CrateTrainingBombs.desc }
-
 ent-ArmoryLaser = { ent-CrateArmoryLaser }
     .desc = { ent-CrateArmoryLaser.desc }

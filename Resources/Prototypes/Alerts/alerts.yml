@@ -6,7 +6,6 @@
   order:
     - category: Health
     - category: Stamina
-    - alertType: SuitPower
     - category: Internals
     - alertType: Fire
     - alertType: Handcuffed

@@ -26,7 +26,7 @@ public sealed class GeneralStationRecordConsoleBoundUserInterface : BoundUserInt
 
     private void OnKeySelected(StationRecordKey? key)
     {
-        SendMessage(new SelectGeneralStationRecord(EntMan.System<SharedStationRecordsSystem>().Convert(key)));
+        SendMessage(new SelectGeneralStationRecord(key));
     }
 
     private void OnFiltersChanged(

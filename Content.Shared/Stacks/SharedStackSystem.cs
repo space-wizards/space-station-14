@@ -1,11 +1,9 @@
 using System.Numerics;
 using Content.Shared.Examine;
-using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
-using Content.Shared.Storage.EntitySystems;
 using JetBrains.Annotations;
 using Robust.Shared.GameStates;
 using Robust.Shared.Physics.Systems;
@@ -24,10 +22,9 @@ namespace Content.Shared.Stacks
         [Dependency] protected readonly SharedAppearanceSystem Appearance = default!;
         [Dependency] protected readonly SharedHandsSystem Hands = default!;
         [Dependency] protected readonly SharedTransformSystem Xform = default!;
-        [Dependency] private   readonly EntityLookupSystem _entityLookup = default!;
-        [Dependency] private   readonly SharedPhysicsSystem _physics = default!;
+        [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
+        [Dependency] private readonly SharedPhysicsSystem _physics = default!;
         [Dependency] protected readonly SharedPopupSystem Popup = default!;
-        [Dependency] private readonly SharedStorageSystem _storage = default!;
 
         public override void Initialize()
         {
@@ -59,8 +56,6 @@ namespace Content.Shared.Stacks
             if (!TryComp(args.Used, out StackComponent? recipientStack))
                 return;
 
-            var localRotation = Transform(args.Used).LocalRotation;
-
             if (!TryMergeStacks(uid, args.Used, out var transfered, stack, recipientStack))
                 return;
 
@@ -72,11 +67,10 @@ namespace Content.Shared.Stacks
                 return;
 
             var popupPos = args.ClickLocation;
-            var userCoords = Transform(args.User).Coordinates;
 
             if (!popupPos.IsValid(EntityManager))
             {
-                popupPos = userCoords;
+                popupPos = Transform(args.User).Coordinates;
             }
 
             switch (transfered)
@@ -96,18 +90,16 @@ namespace Content.Shared.Stacks
                     Popup.PopupCoordinates(Loc.GetString("comp-stack-already-full"), popupPos, Filter.Local(), false);
                     break;
             }
-
-            _storage.PlayPickupAnimation(args.Used, popupPos, userCoords, localRotation, args.User);
         }
 
         private bool TryMergeStacks(
             EntityUid donor,
             EntityUid recipient,
-            out int transferred,
+            out int transfered,
             StackComponent? donorStack = null,
             StackComponent? recipientStack = null)
         {
-            transferred = 0;
+            transfered = 0;
             if (donor == recipient)
                 return false;
 
@@ -117,10 +109,10 @@ namespace Content.Shared.Stacks
             if (string.IsNullOrEmpty(recipientStack.StackTypeId) || !recipientStack.StackTypeId.Equals(donorStack.StackTypeId))
                 return false;
 
-            transferred = Math.Min(donorStack.Count, GetAvailableSpace(recipientStack));
-            SetCount(donor, donorStack.Count - transferred, donorStack);
-            SetCount(recipient, recipientStack.Count + transferred, recipientStack);
-            return transferred > 0;
+            transfered = Math.Min(donorStack.Count, GetAvailableSpace(recipientStack));
+            SetCount(donor, donorStack.Count - transfered, donorStack);
+            SetCount(recipient, recipientStack.Count + transfered, recipientStack);
+            return true;
         }
 
         /// <summary>

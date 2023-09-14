@@ -77,7 +77,7 @@ namespace Content.IntegrationTests.Tests.Networking
 
             await client.WaitPost(() =>
             {
-                clientComponent = cEntityManager.GetComponent<PredictionTestComponent>(cEntityManager.GetEntity(sEntityManager.GetNetEntity(serverEnt)));
+                clientComponent = cEntityManager.GetComponent<PredictionTestComponent>(serverEnt);
             });
 
             var baseTick = sGameTiming.CurTick.Value;
@@ -110,7 +110,7 @@ namespace Content.IntegrationTests.Tests.Networking
                 Assert.That(clientComponent.Foo, Is.False);
                 await client.WaitPost(() =>
                 {
-                    cEntityManager.RaisePredictiveEvent(new SetFooMessage(sEntityManager.GetNetEntity(serverEnt), true));
+                    cEntityManager.RaisePredictiveEvent(new SetFooMessage(serverEnt, true));
                 });
                 Assert.That(clientComponent.Foo, Is.True);
 
@@ -190,7 +190,7 @@ namespace Content.IntegrationTests.Tests.Networking
                 // Send event to server to change flag again, this time to disable it..
                 await client.WaitPost(() =>
                 {
-                    cEntityManager.RaisePredictiveEvent(new SetFooMessage(sEntityManager.GetNetEntity(serverEnt), false));
+                    cEntityManager.RaisePredictiveEvent(new SetFooMessage(serverEnt, false));
 
                     Assert.That(clientComponent.Foo, Is.False);
                 });
@@ -270,7 +270,7 @@ namespace Content.IntegrationTests.Tests.Networking
                 // Send first event to disable the flag (reminder: it never got accepted by the server).
                 await client.WaitPost(() =>
                 {
-                    cEntityManager.RaisePredictiveEvent(new SetFooMessage(sEntityManager.GetNetEntity(serverEnt), false));
+                    cEntityManager.RaisePredictiveEvent(new SetFooMessage(serverEnt, false));
 
                     Assert.That(clientComponent.Foo, Is.False);
                 });
@@ -298,7 +298,7 @@ namespace Content.IntegrationTests.Tests.Networking
                 // Send another event, to re-enable it.
                 await client.WaitPost(() =>
                 {
-                    cEntityManager.RaisePredictiveEvent(new SetFooMessage(sEntityManager.GetNetEntity(serverEnt), true));
+                    cEntityManager.RaisePredictiveEvent(new SetFooMessage(serverEnt, true));
 
                     Assert.That(clientComponent.Foo, Is.True);
                 });
@@ -406,14 +406,12 @@ namespace Content.IntegrationTests.Tests.Networking
 
             private void HandleMessage(SetFooMessage message, EntitySessionEventArgs args)
             {
-                var uid = GetEntity(message.Uid);
-
-                var component = EntityManager.GetComponent<PredictionTestComponent>(uid);
+                var component = EntityManager.GetComponent<PredictionTestComponent>(message.Uid);
                 var old = component.Foo;
                 if (Allow)
                 {
                     component.Foo = message.NewFoo;
-                    Dirty(uid, component);
+                    Dirty(message.Uid, component);
                 }
 
                 EventTriggerList.Add((_gameTiming.CurTick, _gameTiming.IsFirstTimePredicted, old, component.Foo, message.NewFoo));
@@ -422,13 +420,13 @@ namespace Content.IntegrationTests.Tests.Networking
 
         public sealed class SetFooMessage : EntityEventArgs
         {
-            public SetFooMessage(NetEntity uid, bool newFoo)
+            public SetFooMessage(EntityUid uid, bool newFoo)
             {
                 Uid = uid;
                 NewFoo = newFoo;
             }
 
-            public NetEntity Uid { get; }
+            public EntityUid Uid { get; }
             public bool NewFoo { get; }
         }
     }

@@ -44,11 +44,8 @@ public sealed partial class DoAfter
     /// <summary>
     ///     Position of the user relative to their parent when the do after was started.
     /// </summary>
-    [NonSerialized]
     [DataField("userPosition")]
     public EntityCoordinates UserPosition;
-
-    public NetCoordinates NetUserPosition;
 
     /// <summary>
     ///     Distance from the user to the target when the do after was started.
@@ -65,11 +62,8 @@ public sealed partial class DoAfter
     /// <summary>
     ///     If <see cref="NeedHand"/> is true, this is the entity that was in the active hand when the doafter started.
     /// </summary>
-    [NonSerialized]
     [DataField("activeItem")]
     public EntityUid? InitialItem;
-
-    public NetEntity? NetInitialItem;
 
     // cached attempt event for the sake of avoiding unnecessary reflection every time this needs to be raised.
     [NonSerialized] public object? AttemptEvent;
@@ -92,7 +86,7 @@ public sealed partial class DoAfter
         StartTime = startTime;
     }
 
-    public DoAfter(IEntityManager entManager, DoAfter other)
+    public DoAfter(DoAfter other)
     {
         Index = other.Index;
         Args = new(other.Args);
@@ -103,9 +97,6 @@ public sealed partial class DoAfter
         TargetDistance = other.TargetDistance;
         InitialHand = other.InitialHand;
         InitialItem = other.InitialItem;
-
-        NetUserPosition = other.NetUserPosition;
-        NetInitialItem = other.NetInitialItem;
     }
 }
 

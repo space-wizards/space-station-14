@@ -43,7 +43,7 @@ public sealed partial class GunSystem
             EnsureShootable(ent.Value);
         }
 
-        if (ent != null && IsClientSide(ent.Value))
+        if (ent != null && ent.Value.IsClientSide())
             Del(ent.Value);
 
         var cycledEvent = new GunCycledEvent();

@@ -1,21 +1,19 @@
 using Content.Server.Body.Components;
 using Content.Server.Medical.Components;
-using Content.Server.Medical.Stethoscope.Components;
 using Content.Server.Popups;
 using Content.Shared.Actions;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Damage;
-using Content.Shared.DoAfter;
 using Content.Shared.FixedPoint;
 using Content.Shared.Inventory.Events;
-using Content.Shared.Medical;
-using Content.Shared.Medical.Stethoscope;
+using Content.Shared.Verbs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
-using Content.Shared.Verbs;
+using Content.Shared.DoAfter;
+using Content.Shared.Medical;
 using Robust.Shared.Utility;
 
-namespace Content.Server.Medical.Stethoscope
+namespace Content.Server.Medical
 {
     public sealed class StethoscopeSystem : EntitySystem
     {
@@ -99,13 +97,13 @@ namespace Content.Server.Medical.Stethoscope
 
         private void OnGetActions(EntityUid uid, StethoscopeComponent component, GetItemActionsEvent args)
         {
-            args.AddAction(ref component.ActionEntity, component.Action);
+            args.Actions.Add(component.Action);
         }
 
         // construct the doafter and start it
         private void StartListening(EntityUid scope, EntityUid user, EntityUid target, StethoscopeComponent comp)
         {
-            _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, user, comp.Delay, new StethoscopeDoAfterEvent(), scope, target: target, used: scope)
+            _doAfterSystem.TryStartDoAfter(new DoAfterArgs(user, comp.Delay, new StethoscopeDoAfterEvent(), scope, target: target, used: scope)
             {
                 BreakOnTargetMove = true,
                 BreakOnUserMove = true,
@@ -158,4 +156,6 @@ namespace Content.Server.Medical.Stethoscope
             return msg;
         }
     }
+
+    public sealed partial class StethoscopeActionEvent : EntityTargetActionEvent {}
 }

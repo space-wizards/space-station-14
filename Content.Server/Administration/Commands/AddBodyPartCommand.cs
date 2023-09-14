@@ -7,8 +7,6 @@ namespace Content.Server.Administration.Commands
     [AdminCommand(AdminFlags.Admin)]
     public sealed class AddBodyPartCommand : IConsoleCommand
     {
-        [Dependency] private readonly IEntityManager _entManager = default!;
-
         public string Command => "addbodypart";
         public string Description => "Adds a given entity to a containing body.";
         public string Help => "Usage: addbodypart <entity uid> <body uid> <part slot>";
@@ -21,21 +19,20 @@ namespace Content.Server.Administration.Commands
                 return;
             }
 
-            if (!NetEntity.TryParse(args[0], out var childNetId))
+            if (!EntityUid.TryParse(args[0], out var childId))
             {
                 shell.WriteError(Loc.GetString("shell-entity-uid-must-be-number"));
                 return;
             }
 
-            if (!NetEntity.TryParse(args[1], out var parentNetId))
+            if (!EntityUid.TryParse(args[1], out var parentId))
             {
                 shell.WriteError(Loc.GetString("shell-entity-uid-must-be-number"));
                 return;
             }
 
-            var childId = _entManager.GetEntity(childNetId);
-            var parentId = _entManager.GetEntity(parentNetId);
-            var bodySystem = _entManager.System<BodySystem>();
+            var entityManager = IoCManager.Resolve<IEntityManager>();
+            var bodySystem = entityManager.System<BodySystem>();
 
             if (bodySystem.TryCreatePartSlotAndAttach(parentId, args[2], childId))
             {

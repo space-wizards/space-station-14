@@ -14,8 +14,7 @@ public sealed class WallConstruction : InteractionTest
         await StartConstruction(Wall);
         await Interact(Steel, 2);
         Assert.That(Hands.ActiveHandEntity, Is.Null);
-        ClientAssertPrototype(Girder, ClientTarget);
-        Target = CTestSystem.Ghosts[ClientTarget!.Value.GetHashCode()];
+        AssertPrototype(Girder);
         await Interact(Steel, 2);
         Assert.That(Hands.ActiveHandEntity, Is.Null);
         AssertPrototype(WallSolid);

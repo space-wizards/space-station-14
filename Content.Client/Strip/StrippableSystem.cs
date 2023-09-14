@@ -5,6 +5,7 @@ using Content.Shared.Hands;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Strip;
 using Content.Shared.Strip.Components;
+using Robust.Client.GameObjects;
 
 namespace Content.Client.Strip;
 
@@ -32,7 +33,7 @@ public sealed class StrippableSystem : SharedStrippableSystem
 
     public void UpdateUi(EntityUid uid, StrippableComponent? component = null, EntityEventArgs? args = null)
     {
-        if (!TryComp(uid, out UserInterfaceComponent? uiComp))
+        if (!TryComp(uid, out ClientUserInterfaceComponent? uiComp))
             return;
 
         foreach (var ui in uiComp.OpenInterfaces.Values)

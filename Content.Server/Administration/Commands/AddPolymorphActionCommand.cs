@@ -8,8 +8,6 @@ namespace Content.Server.Administration.Commands;
 [AdminCommand(AdminFlags.Fun)]
 public sealed class AddPolymorphActionCommand : IConsoleCommand
 {
-    [Dependency] private readonly IEntityManager _entityManager = default!;
-
     public string Command => "addpolymorphaction";
 
     public string Description => Loc.GetString("add-polymorph-action-command-description");
@@ -24,15 +22,16 @@ public sealed class AddPolymorphActionCommand : IConsoleCommand
             return;
         }
 
-        if (!NetEntity.TryParse(args[0], out var entityUidNet) || !_entityManager.TryGetEntity(entityUidNet, out var entityUid))
+        if (!EntityUid.TryParse(args[0], out var entityUid))
         {
             shell.WriteError(Loc.GetString("shell-entity-uid-must-be-number"));
             return;
         }
 
-        var polySystem = _entityManager.EntitySysManager.GetEntitySystem<PolymorphSystem>();
+        var entityManager = IoCManager.Resolve<IEntityManager>();
+        var polySystem = entityManager.EntitySysManager.GetEntitySystem<PolymorphSystem>();
 
-        _entityManager.EnsureComponent<PolymorphableComponent>(entityUid.Value);
-        polySystem.CreatePolymorphAction(args[1], entityUid.Value);
+        entityManager.EnsureComponent<PolymorphableComponent>(entityUid);
+        polySystem.CreatePolymorphAction(args[1], entityUid);
     }
 }

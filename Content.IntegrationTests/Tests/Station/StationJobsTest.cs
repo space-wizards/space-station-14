@@ -21,19 +21,7 @@ public sealed class StationJobsTest
     [TestPrototypes]
     private const string Prototypes = @"
 - type: playTimeTracker
-  id: PlayTimeDummyAssistant
-
-- type: playTimeTracker
-  id: PlayTimeDummyMime
-
-- type: playTimeTracker
-  id: PlayTimeDummyClown
-
-- type: playTimeTracker
-  id: PlayTimeDummyCaptain
-
-- type: playTimeTracker
-  id: PlayTimeDummyChaplain
+  id: PlayTimeDummy
 
 - type: gameMap
   id: FooStation
@@ -56,26 +44,26 @@ public sealed class StationJobsTest
 
 - type: job
   id: TAssistant
-  playTimeTracker: PlayTimeDummyAssistant
+  playTimeTracker: PlayTimeDummy
 
 - type: job
   id: TMime
   weight: 20
-  playTimeTracker: PlayTimeDummyMime
+  playTimeTracker: PlayTimeDummy
 
 - type: job
   id: TClown
   weight: -10
-  playTimeTracker: PlayTimeDummyClown
+  playTimeTracker: PlayTimeDummy
 
 - type: job
   id: TCaptain
   weight: 10
-  playTimeTracker: PlayTimeDummyCaptain
+  playTimeTracker: PlayTimeDummy
 
 - type: job
   id: TChaplain
-  playTimeTracker: PlayTimeDummyChaplain
+  playTimeTracker: PlayTimeDummy
 ";
 
     private const int StationCount = 100;

@@ -8,5 +8,5 @@ namespace Content.Shared.Weapons.Ranged.Events;
 [Serializable, NetSerializable]
 public sealed class RequestStopShootEvent : EntityEventArgs
 {
-    public NetEntity Gun;
+    public EntityUid Gun;
 }

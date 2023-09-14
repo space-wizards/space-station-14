@@ -105,7 +105,7 @@ public sealed class GhostUIController : UIController, IOnSystemChanged<GhostSyst
         UpdateGui();
     }
 
-    private void OnWarpClicked(NetEntity player)
+    private void OnWarpClicked(EntityUid player)
     {
         var msg = new GhostWarpToTargetRequestEvent(player);
         _net.SendSystemNetworkMessage(msg);

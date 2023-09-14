@@ -14,10 +14,9 @@ namespace Content.Server.Light.EntitySystems
     public sealed class MatchstickSystem : EntitySystem
     {
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
-        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-        [Dependency] private readonly SharedItemSystem _item = default!;
-        [Dependency] private readonly SharedPointLightSystem _lights = default!;
         [Dependency] private readonly TransformSystem _transformSystem = default!;
+        [Dependency] private readonly SharedItemSystem _item = default!;
+        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
         private HashSet<MatchstickComponent> _litMatches = new();
 
@@ -93,25 +92,25 @@ namespace Content.Server.Light.EntitySystems
         {
             component.CurrentState = value;
 
-            if (_lights.TryGetLight(uid, out var pointLightComponent))
+            if (TryComp<PointLightComponent>(component.Owner, out var pointLightComponent))
             {
-                _lights.SetEnabled(uid, component.CurrentState == SmokableState.Lit, pointLightComponent);
+                pointLightComponent.Enabled = component.CurrentState == SmokableState.Lit;
             }
 
-            if (EntityManager.TryGetComponent(uid, out ItemComponent? item))
+            if (EntityManager.TryGetComponent(component.Owner, out ItemComponent? item))
             {
                 switch (component.CurrentState)
                 {
                     case SmokableState.Lit:
-                        _item.SetHeldPrefix(uid, "lit", item);
+                        _item.SetHeldPrefix(component.Owner, "lit", item);
                         break;
                     default:
-                        _item.SetHeldPrefix(uid, "unlit", item);
+                        _item.SetHeldPrefix(component.Owner, "unlit", item);
                         break;
                 }
             }
 
-            if (EntityManager.TryGetComponent(uid, out AppearanceComponent? appearance))
+            if (EntityManager.TryGetComponent(component.Owner, out AppearanceComponent? appearance))
             {
                 _appearance.SetData(uid, SmokingVisuals.Smoking, component.CurrentState, appearance);
             }

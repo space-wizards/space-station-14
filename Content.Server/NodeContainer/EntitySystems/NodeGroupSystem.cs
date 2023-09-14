@@ -409,7 +409,7 @@ namespace Content.Server.NodeContainer.EntitySystems
             RaiseNetworkEvent(msg, player.ConnectedClient);
         }
 
-        private NodeVis.GroupData VisMakeGroupState(BaseNodeGroup group)
+        private static NodeVis.GroupData VisMakeGroupState(BaseNodeGroup group)
         {
             return new()
             {
@@ -421,7 +421,7 @@ namespace Content.Server.NodeContainer.EntitySystems
                     Name = n.Name,
                     NetId = n.NetId,
                     Reachable = n.ReachableNodes.Select(r => r.NetId).ToArray(),
-                    Entity = GetNetEntity(n.Owner),
+                    Entity = n.Owner,
                     Type = n.GetType().Name
                 }).ToArray(),
                 DebugData = group.GetDebugData()

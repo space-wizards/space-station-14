@@ -16,17 +16,17 @@ namespace Content.Shared.NPC;
 [Serializable, NetSerializable]
 public sealed class DebugPathPoly
 {
-    public NetEntity GraphUid;
+    public EntityUid GraphUid;
     public Vector2i ChunkOrigin;
     public byte TileIndex;
 
     public Box2 Box;
     public PathfindingData Data;
-    public List<NetCoordinates> Neighbors = default!;
+    public List<EntityCoordinates> Neighbors = default!;
 }
 
 [Serializable, NetSerializable]
 public sealed class DebugPathPolyNeighbor
 {
-    public NetCoordinates Coordinates;
+    public EntityCoordinates Coordinates;
 }

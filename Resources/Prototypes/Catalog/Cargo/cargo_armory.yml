@@ -29,16 +29,6 @@
   group: market
 
 - type: cargoProduct
-  id: TrainingBombs
-  icon:
-    sprite: Structures/Machines/bomb.rsi
-    state: training-bomb
-  product: CrateTrainingBombs
-  cost: 3000
-  category: Armory
-  group: market
-
-- type: cargoProduct
   id: ArmoryLaser
   icon:
     sprite: Objects/Weapons/Guns/Battery/laser_retro.rsi

@@ -1,8 +1,10 @@
-using Content.Server.Body.Systems;
-using Content.Shared.Chemistry.Components;
 using Content.Shared.Devour;
-using Content.Shared.Devour.Components;
+using Content.Server.Body.Systems;
 using Content.Shared.Humanoid;
+using Content.Shared.Chemistry.Components;
+using Content.Server.Devour.Components;
+using Content.Shared.DoAfter;
+using Robust.Shared.Serialization;
 
 namespace Content.Server.Devour;
 

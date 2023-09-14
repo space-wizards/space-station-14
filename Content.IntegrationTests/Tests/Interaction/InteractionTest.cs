@@ -53,23 +53,21 @@ public abstract partial class InteractionTest
     /// Target coordinates. Note that this does not necessarily correspond to the position of the <see cref="Target"/>
     /// entity.
     /// </summary>
-    protected NetCoordinates TargetCoords;
+    protected EntityCoordinates TargetCoords;
 
     /// <summary>
     /// Initial player coordinates. Note that this does not necessarily correspond to the position of the
     /// <see cref="Player"/> entity.
     /// </summary>
-    protected NetCoordinates PlayerCoords;
+    protected EntityCoordinates PlayerCoords;
 
     /// <summary>
     /// The player entity that performs all these interactions. Defaults to an admin-observer with 1 hand.
     /// </summary>
-    protected NetEntity Player;
+    protected EntityUid Player;
 
     protected ICommonSession ClientSession = default!;
     protected IPlayerSession ServerSession = default!;
-
-    public EntityUid? ClientTarget;
 
     /// <summary>
     /// The current target entity. This is the default entity for various helper functions.
@@ -79,7 +77,7 @@ public abstract partial class InteractionTest
     /// interactions often swap out entities, and there are helper methods that attempt to automatically upddate
     /// the target entity. See <see cref="CheckTargetChange"/>
     /// </remarks>
-    protected NetEntity? Target;
+    protected EntityUid? Target;
 
     /// <summary>
     /// When attempting to start construction, this is the client-side ID of the construction ghost.
@@ -176,8 +174,8 @@ public abstract partial class InteractionTest
 
         // Setup map.
         await Pair.CreateTestMap();
-        PlayerCoords = SEntMan.GetNetCoordinates(MapData.GridCoords.Offset(new Vector2(0.5f, 0.5f)).WithEntityId(MapData.MapUid, Transform, SEntMan));
-        TargetCoords = SEntMan.GetNetCoordinates(MapData.GridCoords.Offset(new Vector2(1.5f, 0.5f)).WithEntityId(MapData.MapUid, Transform, SEntMan));
+        PlayerCoords = MapData.GridCoords.Offset(new Vector2(0.5f, 0.5f)).WithEntityId(MapData.MapUid, Transform, SEntMan);
+        TargetCoords = MapData.GridCoords.Offset(new Vector2(1.5f, 0.5f)).WithEntityId(MapData.MapUid, Transform, SEntMan);
         await SetTile(Plating, grid: MapData.MapGrid);
 
         // Get player data
@@ -197,16 +195,15 @@ public abstract partial class InteractionTest
             SEntMan.System<SharedMindSystem>().WipeMind(ServerSession.ContentData()?.Mind);
 
             old = cPlayerMan.LocalPlayer.ControlledEntity;
-            Player = SEntMan.GetNetEntity(SEntMan.SpawnEntity(PlayerPrototype, SEntMan.GetCoordinates(PlayerCoords)));
-            var serverPlayerEnt = SEntMan.GetEntity(Player);
-            Actor.Attach(serverPlayerEnt, ServerSession);
-            Hands = SEntMan.GetComponent<HandsComponent>(serverPlayerEnt);
-            DoAfters = SEntMan.GetComponent<DoAfterComponent>(serverPlayerEnt);
+            Player = SEntMan.SpawnEntity(PlayerPrototype, PlayerCoords);
+            Actor.Attach(Player, ServerSession);
+            Hands = SEntMan.GetComponent<HandsComponent>(Player);
+            DoAfters = SEntMan.GetComponent<DoAfterComponent>(Player);
         });
 
         // Check player got attached.
         await RunTicks(5);
-        Assert.That(CEntMan.GetNetEntity(cPlayerMan.LocalPlayer.ControlledEntity), Is.EqualTo(Player));
+        Assert.That(cPlayerMan.LocalPlayer.ControlledEntity, Is.EqualTo(Player));
 
         // Delete old player entity.
         await Server.WaitPost(() =>
@@ -219,7 +216,7 @@ public abstract partial class InteractionTest
         await Server.WaitPost(() =>
         {
             var bodySystem = SEntMan.System<BodySystem>();
-            var hands = bodySystem.GetBodyChildrenOfType(SEntMan.GetEntity(Player), BodyPartType.Hand).ToArray();
+            var hands = bodySystem.GetBodyChildrenOfType(Player, BodyPartType.Hand).ToArray();
 
             for (var i = 1; i < hands.Length; i++)
             {
@@ -232,8 +229,8 @@ public abstract partial class InteractionTest
         await Pair.ReallyBeIdle(5);
         Assert.Multiple(() =>
         {
-            Assert.That(CEntMan.GetNetEntity(cPlayerMan.LocalPlayer.ControlledEntity), Is.EqualTo(Player));
-            Assert.That(sPlayerMan.GetSessionByUserId(ClientSession.UserId).AttachedEntity, Is.EqualTo(SEntMan.GetEntity(Player)));
+            Assert.That(cPlayerMan.LocalPlayer.ControlledEntity, Is.EqualTo(Player));
+            Assert.That(sPlayerMan.GetSessionByUserId(ClientSession.UserId).AttachedEntity, Is.EqualTo(Player));
         });
     }
 

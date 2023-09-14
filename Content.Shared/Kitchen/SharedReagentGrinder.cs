@@ -1,5 +1,4 @@
 using Content.Shared.Chemistry.Components;
-using Content.Shared.Chemistry.Reagent;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Kitchen
@@ -32,8 +31,8 @@ namespace Content.Shared.Kitchen
     [Serializable, NetSerializable]
     public sealed class ReagentGrinderEjectChamberContentMessage : BoundUserInterfaceMessage
     {
-        public NetEntity EntityId;
-        public ReagentGrinderEjectChamberContentMessage(NetEntity entityId)
+        public EntityUid EntityId;
+        public ReagentGrinderEjectChamberContentMessage(EntityUid entityId)
         {
             EntityId = entityId;
         }
@@ -84,9 +83,9 @@ namespace Content.Shared.Kitchen
         public bool Powered;
         public bool CanJuice;
         public bool CanGrind;
-        public NetEntity[] ChamberContents;
-        public ReagentQuantity[]? ReagentQuantities;
-        public ReagentGrinderInterfaceState(bool isBusy, bool hasBeaker, bool powered, bool canJuice, bool canGrind, NetEntity[] chamberContents, ReagentQuantity[]? heldBeakerContents)
+        public EntityUid[] ChamberContents;
+        public Solution.ReagentQuantity[]? ReagentQuantities;
+        public ReagentGrinderInterfaceState(bool isBusy, bool hasBeaker, bool powered, bool canJuice, bool canGrind, EntityUid[] chamberContents, Solution.ReagentQuantity[]? heldBeakerContents)
         {
             IsBusy = isBusy;
             HasBeakerIn = hasBeaker;

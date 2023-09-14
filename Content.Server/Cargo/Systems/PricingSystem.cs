@@ -51,7 +51,7 @@ public sealed class PricingSystem : EntitySystem
 
         foreach (var gid in args)
         {
-            if (!EntityManager.TryParseNetEntity(gid, out var gridId) || !gridId.Value.IsValid())
+            if (!EntityUid.TryParse(gid, out var gridId) || !gridId.IsValid())
             {
                 shell.WriteError($"Invalid grid ID \"{gid}\".");
                 continue;
@@ -90,7 +90,7 @@ public sealed class PricingSystem : EntitySystem
 
         if (!TryComp<BodyComponent>(uid, out var body) || !TryComp<MobStateComponent>(uid, out var state))
         {
-            Log.Error($"Tried to get the mob price of {ToPrettyString(uid)}, which has no {nameof(BodyComponent)} and no {nameof(MobStateComponent)}.");
+            Logger.ErrorS("pricing", $"Tried to get the mob price of {ToPrettyString(uid)}, which has no {nameof(BodyComponent)} and no {nameof(MobStateComponent)}.");
             return;
         }
 
@@ -110,13 +110,11 @@ public sealed class PricingSystem : EntitySystem
 
         foreach (var solution in component.Solutions.Values)
         {
-            foreach (var (reagent, quantity) in solution.Contents)
+            foreach (var reagent in solution.Contents)
             {
-                if (!_prototypeManager.TryIndex<ReagentPrototype>(reagent.Prototype, out var reagentProto))
+                if (!_prototypeManager.TryIndex<ReagentPrototype>(reagent.ReagentId, out var reagentProto))
                     continue;
-
-                // TODO check ReagentData for price information?
-                price += (float) quantity * reagentProto.PricePerUnit;
+                price += (float) reagent.Quantity * reagentProto.PricePerUnit;
             }
         }
 

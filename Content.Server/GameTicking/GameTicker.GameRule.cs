@@ -247,10 +247,10 @@ public sealed partial class GameTicker
 
         foreach (var rule in args)
         {
-            if (!NetEntity.TryParse(rule, out var ruleEntNet) || !TryGetEntity(ruleEntNet, out var ruleEnt))
+            if (!EntityUid.TryParse(rule, out var ruleEnt))
                 continue;
 
-            EndGameRule(ruleEnt.Value);
+            EndGameRule(ruleEnt);
         }
     }
 

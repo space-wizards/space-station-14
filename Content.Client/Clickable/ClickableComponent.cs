@@ -2,9 +2,7 @@ using System.Numerics;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Utility;
-using Robust.Shared.Graphics;
 using static Robust.Client.GameObjects.SpriteComponent;
-using Direction = Robust.Shared.Maths.Direction;
 
 namespace Content.Client.Clickable
 {
@@ -75,7 +73,7 @@ namespace Content.Client.Clickable
                 if (layer.ActualRsi is not { } rsi || !rsi.TryGetState(layer.State, out var rsiState))
                     continue;
 
-                var dir = Layer.GetDirection(rsiState.RsiDirections, relativeRotation);
+                var dir = Layer.GetDirection(rsiState.Directions, relativeRotation);
 
                 // convert to layer-local coordinates
                 layer.GetLayerDrawMatrix(dir, out var matrix);
@@ -88,7 +86,7 @@ namespace Content.Client.Clickable
                 // Next, to get the right click map we need the "direction" of this layer that is actually being used to draw the sprite on the screen.
                 // This **can** differ from the dir defined before, but can also just be the same.
                 if (sprite.EnableDirectionOverride)
-                    dir = sprite.DirectionOverride.Convert(rsiState.RsiDirections);
+                    dir = sprite.DirectionOverride.Convert(rsiState.Directions);
                 dir = dir.OffsetRsiDir(layer.DirOffset);
 
                 if (_clickMapManager.IsOccluding(layer.ActualRsi!, layer.State, dir, layer.AnimationFrame, layerImagePos))

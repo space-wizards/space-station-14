@@ -11,6 +11,10 @@ namespace Content.Client.UserInterface.Systems.Alerts.Controls
 {
     public sealed class AlertControl : BaseButton
     {
+        // shorter than default tooltip delay so user can more easily
+        // see what alerts they have
+        private const float CustomTooltipDelay = 0.5f;
+
         public AlertPrototype Alert { get; }
 
         /// <summary>
@@ -44,6 +48,7 @@ namespace Content.Client.UserInterface.Systems.Alerts.Controls
         public AlertControl(AlertPrototype alert, short? severity)
         {
             _gameTiming = IoCManager.Resolve<IGameTiming>();
+            TooltipDelay = CustomTooltipDelay;
             TooltipSupplier = SupplyTooltip;
             Alert = alert;
             _severity = severity;

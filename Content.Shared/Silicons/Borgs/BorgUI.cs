@@ -48,9 +48,9 @@ public sealed class BorgSetNameBuiMessage : BoundUserInterfaceMessage
 [Serializable, NetSerializable]
 public sealed class BorgRemoveModuleBuiMessage : BoundUserInterfaceMessage
 {
-    public NetEntity Module;
+    public EntityUid Module;
 
-    public BorgRemoveModuleBuiMessage(NetEntity module)
+    public BorgRemoveModuleBuiMessage(EntityUid module)
     {
         Module = module;
     }

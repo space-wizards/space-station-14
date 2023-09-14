@@ -1,7 +1,12 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Content.Shared.Construction;
 using Content.Shared.Construction.Prototypes;
+using Robust.Client.Graphics;
 using Robust.Client.Placement;
 using Robust.Client.Utility;
+using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Map;
 
 namespace Content.Client.Construction
@@ -34,9 +39,9 @@ namespace Content.Client.Construction
         /// <inheritdoc />
         public override bool HijackDeletion(EntityUid entity)
         {
-            if (IoCManager.Resolve<IEntityManager>().HasComponent<ConstructionGhostComponent>(entity))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out ConstructionGhostComponent? ghost))
             {
-                _constructionSystem.ClearGhost(entity.GetHashCode());
+                _constructionSystem.ClearGhost(ghost.GhostId);
             }
             return true;
         }

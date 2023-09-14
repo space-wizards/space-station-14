@@ -1,7 +1,7 @@
 ﻿- type: entity
   name: watcher
   id: MobWatcherBase
-  parent: [ SimpleSpaceMobBase, FlyingMobBase ]
+  parent: SimpleSpaceMobBase
   abstract: true
   description: It's like its staring right through you.
   components:
@@ -46,6 +46,8 @@
   - type: MovementSpeedModifier
     baseWalkSpeed: 5
     baseSprintSpeed: 7
+  - type: MovementAlwaysTouching
+  - type: NoSlip
   - type: ProjectileBatteryAmmoProvider
     proto: WatcherBolt
     fireCost: 50

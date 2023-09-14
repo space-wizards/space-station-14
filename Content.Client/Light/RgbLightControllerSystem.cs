@@ -17,7 +17,6 @@ namespace Content.Client.Light
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly ItemSystem _itemSystem = default!;
-        [Dependency] private readonly SharedPointLightSystem _lights = default!;
 
         public override void Initialize()
         {
@@ -157,7 +156,7 @@ namespace Content.Client.Light
             if (!Resolve(uid, ref rgb, ref sprite, ref light, false))
                 return;
 
-            _lights.SetColor(uid, rgb.OriginalLightColor, light);
+            light.Color = rgb.OriginalLightColor;
 
             if (rgb.Layers == null || rgb.OriginalLayerColors == null)
                 return;
@@ -174,7 +173,7 @@ namespace Content.Client.Light
             {
                 var color = GetCurrentRgbColor(_gameTiming.RealTime, rgb.CreationTick.Value * _gameTiming.TickPeriod, rgb);
 
-                _lights.SetColor(light.Owner, color, light);
+                light.Color = color;
 
                 if (rgb.Layers != null)
                 {
@@ -206,7 +205,7 @@ namespace Content.Client.Light
         public static Color GetCurrentRgbColor(TimeSpan curTime, TimeSpan offset, RgbLightControllerComponent rgb)
         {
             return Color.FromHsv(new Vector4(
-                (float) (((curTime.TotalSeconds - offset.TotalSeconds) * rgb.CycleRate + Math.Abs(rgb.Owner.Id * 0.1)) % 1),
+                (float) (((curTime.TotalSeconds - offset.TotalSeconds) * rgb.CycleRate + Math.Abs(rgb.Owner.GetHashCode() * 0.1)) % 1),
                 1.0f,
                 1.0f,
                 1.0f

@@ -9,6 +9,7 @@ using Content.Shared.Cargo.Prototypes;
 using Content.Shared.Database;
 using JetBrains.Annotations;
 using Robust.Server.Containers;
+using Robust.Server.GameObjects;
 using Robust.Shared.Collections;
 using Robust.Shared.Containers;
 using Robust.Shared.Random;
@@ -313,7 +314,7 @@ public sealed partial class CargoSystem
 
     public void UpdateBountyConsoles()
     {
-        var query = EntityQueryEnumerator<CargoBountyConsoleComponent, UserInterfaceComponent>();
+        var query = EntityQueryEnumerator<CargoBountyConsoleComponent, ServerUserInterfaceComponent>();
         while (query.MoveNext(out var uid, out _, out var ui))
         {
             if (_station.GetOwningStation(uid) is not { } station ||

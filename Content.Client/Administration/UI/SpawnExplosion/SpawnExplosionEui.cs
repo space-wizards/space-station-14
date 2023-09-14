@@ -10,7 +10,6 @@ namespace Content.Client.Administration.UI.SpawnExplosion;
 [UsedImplicitly]
 public sealed class SpawnExplosionEui : BaseEui
 {
-    [Dependency] private readonly EntityManager _entManager = default!;
     [Dependency] private readonly IOverlayManager _overlayManager = default!;
 
     private readonly SpawnExplosionWindow _window;
@@ -70,14 +69,7 @@ public sealed class SpawnExplosionEui : BaseEui
             _overlayManager.AddOverlay(_debugOverlay);
         }
 
-        var tiles = new Dictionary<EntityUid, Dictionary<int, List<Vector2i>>>();
-        _debugOverlay.Tiles.Clear();
-
-        foreach (var (nent, det) in data.Explosion.Tiles)
-        {
-            tiles[_entManager.GetEntity(nent)] = det;
-        }
-
+        _debugOverlay.Tiles = data.Explosion.Tiles;
         _debugOverlay.SpaceTiles = data.Explosion.SpaceTiles;
         _debugOverlay.Intensity = data.Explosion.Intensity;
         _debugOverlay.Slope = data.Slope;

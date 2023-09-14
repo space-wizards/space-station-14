@@ -1,4 +1,5 @@
 ﻿using Content.Shared.Implants;
+using Content.Shared.Implants.Components;
 using Content.Shared.Roles;
 using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
@@ -12,6 +13,7 @@ namespace Content.Server.Jobs;
 [UsedImplicitly]
 public sealed partial class AddImplantSpecial : JobSpecial
 {
+
     [DataField("implants", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<EntityPrototype>))]
     public HashSet<String> Implants { get; private set; } = new();
 
@@ -19,6 +21,19 @@ public sealed partial class AddImplantSpecial : JobSpecial
     {
         var entMan = IoCManager.Resolve<IEntityManager>();
         var implantSystem = entMan.System<SharedSubdermalImplantSystem>();
-        implantSystem.AddImplants(mob, Implants);
+        var xformQuery = entMan.GetEntityQuery<TransformComponent>();
+
+        if (!xformQuery.TryGetComponent(mob, out var xform))
+            return;
+
+        foreach (var implantId in Implants)
+        {
+            var implant = entMan.SpawnEntity(implantId, xform.Coordinates);
+
+            if (!entMan.TryGetComponent<SubdermalImplantComponent>(implant, out var implantComp))
+                return;
+
+            implantSystem.ForceImplant(mob, implant, implantComp);
+        }
     }
 }

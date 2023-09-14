@@ -8,14 +8,12 @@ using Content.Shared.Physics.Pull;
 using Content.Shared.Tag;
 using Content.Shared.Verbs;
 using Robust.Shared.Containers;
-using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Events;
 using Robust.Shared.Network;
 using Robust.Shared.Utility;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Systems;
-using Robust.Shared.Serialization;
 
 namespace Content.Shared.Follower;
 
@@ -38,25 +36,6 @@ public sealed class FollowerSystem : EntitySystem
         SubscribeLocalEvent<FollowerComponent, GotEquippedHandEvent>(OnGotEquippedHand);
         SubscribeLocalEvent<FollowedComponent, EntityTerminatingEvent>(OnFollowedTerminating);
         SubscribeLocalEvent<BeforeSaveEvent>(OnBeforeSave);
-
-        SubscribeLocalEvent<FollowedComponent, ComponentGetState>(OnFollowedGetState);
-        SubscribeLocalEvent<FollowedComponent, ComponentHandleState>(OnFollowedHandleState);
-    }
-
-    private void OnFollowedGetState(EntityUid uid, FollowedComponent component, ref ComponentGetState args)
-    {
-        args.State = new FollowedComponentState()
-        {
-            Following = GetNetEntitySet(component.Following),
-        };
-    }
-
-    private void OnFollowedHandleState(EntityUid uid, FollowedComponent component, ref ComponentHandleState args)
-    {
-        if (args.Current is not FollowedComponentState state)
-            return;
-
-        component.Following = EnsureEntitySet<FollowedComponent>(state.Following, uid);
     }
 
     private void OnBeforeSave(BeforeSaveEvent ev)
@@ -79,7 +58,7 @@ public sealed class FollowerSystem : EntitySystem
 
     private void OnGetAlternativeVerbs(GetVerbsEvent<AlternativeVerb> ev)
     {
-        if (ev.User == ev.Target || IsClientSide(ev.Target))
+        if (ev.User == ev.Target || ev.Target.IsClientSide())
             return;
 
         if (HasComp<GhostComponent>(ev.User))
@@ -241,12 +220,6 @@ public sealed class FollowerSystem : EntitySystem
         {
             StopFollowingEntity(player, uid, followed);
         }
-    }
-
-    [Serializable, NetSerializable]
-    private sealed class FollowedComponentState : ComponentState
-    {
-        public HashSet<NetEntity> Following = new();
     }
 }
 

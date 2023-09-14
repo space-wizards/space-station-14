@@ -6,8 +6,6 @@ using Content.Shared.Movement.Events;
 using Content.Shared.Popups;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
-using Robust.Shared.Physics.Components;
-using Robust.Shared.Physics.Systems;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Movement.Systems;
@@ -19,7 +17,6 @@ public abstract class SharedJetpackSystem : EntitySystem
     [Dependency] protected readonly SharedContainerSystem Container = default!;
     [Dependency] private   readonly SharedMoverController _mover = default!;
     [Dependency] private   readonly SharedPopupSystem _popup = default!;
-    [Dependency] private   readonly SharedPhysicsSystem _physics = default!;
 
     public override void Initialize()
     {
@@ -65,14 +62,14 @@ public abstract class SharedJetpackSystem : EntitySystem
         if (args.Current is not JetpackUserComponentState state)
             return;
 
-        component.Jetpack = EnsureEntity<JetpackUserComponent>(state.Jetpack, uid);
+        component.Jetpack = state.Jetpack;
     }
 
     private void OnJetpackUserGetState(EntityUid uid, JetpackUserComponent component, ref ComponentGetState args)
     {
         args.State = new JetpackUserComponentState()
         {
-            Jetpack = GetNetEntity(component.Jetpack),
+            Jetpack = component.Jetpack,
         };
     }
 
@@ -101,10 +98,6 @@ public abstract class SharedJetpackSystem : EntitySystem
     {
         var userComp = EnsureComp<JetpackUserComponent>(user);
         _mover.SetRelay(user, jetpackUid);
-
-        if (TryComp<PhysicsComponent>(user, out var physics))
-            _physics.SetBodyStatus(physics, BodyStatus.InAir);
-
         userComp.Jetpack = jetpackUid;
     }
 
@@ -112,9 +105,6 @@ public abstract class SharedJetpackSystem : EntitySystem
     {
         if (!RemComp<JetpackUserComponent>(uid))
             return;
-
-        if (TryComp<PhysicsComponent>(uid, out var physics))
-            _physics.SetBodyStatus(physics, BodyStatus.OnGround);
 
         RemComp<RelayInputMoverComponent>(uid);
     }
@@ -142,7 +132,7 @@ public abstract class SharedJetpackSystem : EntitySystem
 
     private void OnJetpackGetAction(EntityUid uid, JetpackComponent component, GetItemActionsEvent args)
     {
-        args.AddAction(ref component.ToggleActionEntity, component.ToggleAction);
+        args.Actions.Add(component.ToggleAction);
     }
 
     private bool IsEnabled(EntityUid uid)
@@ -192,7 +182,7 @@ public abstract class SharedJetpackSystem : EntitySystem
         }
 
         Appearance.SetData(uid, JetpackVisuals.Enabled, enabled);
-        Dirty(uid, component);
+        Dirty(component);
     }
 
     public bool IsUserFlying(EntityUid uid)
@@ -208,7 +198,7 @@ public abstract class SharedJetpackSystem : EntitySystem
     [Serializable, NetSerializable]
     protected sealed class JetpackUserComponentState : ComponentState
     {
-        public NetEntity Jetpack;
+        public EntityUid Jetpack;
     }
 }
 

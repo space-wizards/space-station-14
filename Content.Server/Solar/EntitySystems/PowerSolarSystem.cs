@@ -172,8 +172,10 @@ namespace Content.Server.Solar.EntitySystems
             SolarPanelComponent? solar = null,
             PowerSupplierComponent? supplier = null)
         {
-            if (!Resolve(uid, ref solar, ref supplier, false))
+            if (!Resolve(uid, ref solar, ref supplier))
+            {
                 return;
+            }
 
             supplier.MaxSupply = (int) (solar.MaxSupply * solar.Coverage);
         }

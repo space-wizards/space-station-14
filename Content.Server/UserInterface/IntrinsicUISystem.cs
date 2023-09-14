@@ -1,6 +1,6 @@
 ﻿using Content.Server.Actions;
 using Content.Shared.Actions;
-using Content.Shared.UserInterface;
+using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 
 namespace Content.Server.UserInterface;
@@ -28,7 +28,7 @@ public sealed class IntrinsicUISystem : EntitySystem
 
         foreach (var entry in component.UIs)
         {
-            _actionsSystem.AddAction(uid, ref entry.ToggleActionEntity, entry.ToggleAction, null, actions);
+            _actionsSystem.AddAction(uid, entry.ToggleAction, null, actions);
         }
     }
 
@@ -59,13 +59,20 @@ public sealed class IntrinsicUISystem : EntitySystem
         return true;
     }
 
-    private PlayerBoundUserInterface? GetUIOrNull(EntityUid uid, Enum? key, IntrinsicUIComponent? component = null)
+    private BoundUserInterface? GetUIOrNull(EntityUid uid, Enum? key, IntrinsicUIComponent? component = null)
     {
         if (!Resolve(uid, ref component))
             return null;
 
         return key is null ? null : uid.GetUIOrNull(key);
     }
+}
+
+[UsedImplicitly]
+public sealed partial class ToggleIntrinsicUIEvent : InstantActionEvent
+{
+    [ViewVariables]
+    public Enum? Key { get; set; }
 }
 
 // Competing with ActivatableUI for horrible event names.

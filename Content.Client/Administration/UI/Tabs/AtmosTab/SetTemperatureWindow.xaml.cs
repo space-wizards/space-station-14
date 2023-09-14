@@ -17,7 +17,7 @@ namespace Content.Client.Administration.UI.Tabs.AtmosTab
     [UsedImplicitly]
     public sealed partial class SetTemperatureWindow : DefaultWindow
     {
-        private List<NetEntity>? _data;
+        private List<EntityUid>? _data;
 
         protected override void EnteredTree()
         {
@@ -25,7 +25,7 @@ namespace Content.Client.Administration.UI.Tabs.AtmosTab
             var playerManager = IoCManager.Resolve<IPlayerManager>();
 
             var gridQuery = entManager.AllEntityQueryEnumerator<MapGridComponent>();
-            _data ??= new List<NetEntity>();
+            _data ??= new List<EntityUid>();
             _data.Clear();
 
             while (gridQuery.MoveNext(out var uid, out _))
@@ -33,7 +33,7 @@ namespace Content.Client.Administration.UI.Tabs.AtmosTab
                 var player = playerManager.LocalPlayer?.ControlledEntity;
                 var playerGrid = entManager.GetComponentOrNull<TransformComponent>(player)?.GridUid;
                 GridOptions.AddItem($"{uid} {(playerGrid == uid ? " (Current)" : "")}");
-                _data.Add(entManager.GetNetEntity(uid));
+                _data.Add(uid);
             }
 
             GridOptions.OnItemSelected += eventArgs => GridOptions.SelectId(eventArgs.Id);

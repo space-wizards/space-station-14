@@ -19,7 +19,7 @@ public sealed class RadiationRay
     /// <summary>
     ///     Uid of entity with <see cref="RadiationSourceComponent"/>.
     /// </summary>
-    public NetEntity SourceUid;
+    public EntityUid SourceUid;
     /// <summary>
     ///     World coordinates of radiation source.
     /// </summary>
@@ -27,7 +27,7 @@ public sealed class RadiationRay
     /// <summary>
     ///     Uid of entity with radiation receiver component.
     /// </summary>
-    public NetEntity DestinationUid;
+    public EntityUid DestinationUid;
     /// <summary>
     ///     World coordinates of radiation receiver.
     /// </summary>
@@ -50,10 +50,10 @@ public sealed class RadiationRay
     ///     Last tile may have negative value if ray has lost all intensity.
     ///     Grid traversal order isn't guaranteed.
     /// </remarks>
-    public Dictionary<NetEntity, List<(Vector2i, float)>> Blockers = new();
+    public Dictionary<EntityUid, List<(Vector2i, float)>> Blockers = new();
 
-    public RadiationRay(MapId mapId, NetEntity sourceUid, Vector2 source,
-        NetEntity destinationUid, Vector2 destination, float rads)
+    public RadiationRay(MapId mapId, EntityUid sourceUid, Vector2 source,
+        EntityUid destinationUid, Vector2 destination, float rads)
     {
         MapId = mapId;
         SourceUid = sourceUid;

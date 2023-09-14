@@ -86,13 +86,13 @@ public abstract partial class SharedHandsSystem : EntitySystem
         var newActiveIndex = component.SortedHands.IndexOf(component.ActiveHand.Name) + 1;
         var nextHand = component.SortedHands[newActiveIndex % component.Hands.Count];
 
-        TrySetActiveHand(session.AttachedEntity.Value, nextHand, component);
+        TrySetActiveHand(component.Owner, nextHand, component);
     }
 
-    private bool DropPressed(ICommonSession? session, EntityCoordinates coords, EntityUid netEntity)
+    private bool DropPressed(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
     {
         if (TryComp(session?.AttachedEntity, out HandsComponent? hands) && hands.ActiveHand != null)
-            TryDrop(session.AttachedEntity.Value, hands.ActiveHand, coords, handsComp: hands);
+            TryDrop(session.AttachedEntity!.Value, hands.ActiveHand, coords, handsComp: hands);
 
         // always send to server.
         return false;

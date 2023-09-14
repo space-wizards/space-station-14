@@ -38,9 +38,8 @@ namespace Content.Client.Administration.UI.Tabs.AtmosTab
             if (_data == null)
                 return;
             var dataList = _data.ToList();
-            var entManager = IoCManager.Resolve<IEntityManager>();
             var selectedGrid = dataList[GridOptions.SelectedId].Owner;
-            IoCManager.Resolve<IClientConsoleHost>().ExecuteCommand($"addatmos {entManager.GetNetEntity(selectedGrid)}");
+            IoCManager.Resolve<IClientConsoleHost>().ExecuteCommand($"addatmos {selectedGrid}");
         }
     }
 }

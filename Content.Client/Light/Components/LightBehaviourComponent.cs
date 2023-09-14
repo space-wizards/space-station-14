@@ -53,7 +53,7 @@ namespace Content.Client.Light.Components
 
             if (Enabled && _entMan.TryGetComponent(_parent, out PointLightComponent? light))
             {
-                _entMan.System<PointLightSystem>().SetEnabled(_parent, true, light);
+                light.Enabled = true;
             }
 
             OnInitialize();
@@ -63,7 +63,7 @@ namespace Content.Client.Light.Components
         {
             if (_entMan.TryGetComponent(_parent, out PointLightComponent? light))
             {
-                _entMan.System<PointLightSystem>().SetEnabled(_parent, true, light);
+                light.Enabled = true;
             }
 
             if (MinDuration > 0)

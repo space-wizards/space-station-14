@@ -11,7 +11,6 @@ namespace Content.Server.GameTicking.Commands
     [AnyCommand]
     sealed class JoinGameCommand : IConsoleCommand
     {
-        [Dependency] private readonly IEntityManager _entManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         public string Command => "joingame";
@@ -37,8 +36,9 @@ namespace Content.Server.GameTicking.Commands
                 return;
             }
 
-            var ticker = _entManager.System<GameTicker>();
-            var stationJobs = _entManager.System<StationJobsSystem>();
+            var ticker = EntitySystem.Get<GameTicker>();
+            var stationSystem = EntitySystem.Get<StationSystem>();
+            var stationJobs = EntitySystem.Get<StationJobsSystem>();
 
             if (ticker.PlayerGameStatuses.TryGetValue(player.UserId, out var status) && status == PlayerGameStatus.JoinedGame)
             {
@@ -61,7 +61,7 @@ namespace Content.Server.GameTicking.Commands
                     shell.WriteError(Loc.GetString("shell-argument-must-be-number"));
                 }
 
-                var station = _entManager.GetEntity(new NetEntity(sid));
+                var station = new EntityUid(sid);
                 var jobPrototype = _prototypeManager.Index<JobPrototype>(id);
                 if(stationJobs.TryGetJobSlot(station, jobPrototype, out var slots) == false || slots == 0)
                 {

@@ -32,12 +32,12 @@ public sealed class GeneralStationRecordConsoleState : BoundUserInterfaceState
     /// <summary>
     ///     Current selected key.
     /// </summary>
-    public (NetEntity, uint)? SelectedKey { get; }
+    public StationRecordKey? SelectedKey { get; }
     public GeneralStationRecord? Record { get; }
-    public Dictionary<(NetEntity, uint), string>? RecordListing { get; }
+    public Dictionary<StationRecordKey, string>? RecordListing { get; }
     public GeneralStationRecordsFilter? Filter { get; }
-    public GeneralStationRecordConsoleState((NetEntity, uint)? key, GeneralStationRecord? record,
-        Dictionary<(NetEntity, uint), string>? recordListing, GeneralStationRecordsFilter? newFilter)
+    public GeneralStationRecordConsoleState(StationRecordKey? key, GeneralStationRecord? record,
+        Dictionary<StationRecordKey, string>? recordListing, GeneralStationRecordsFilter? newFilter)
     {
         SelectedKey = key;
         Record = record;
@@ -52,9 +52,9 @@ public sealed class GeneralStationRecordConsoleState : BoundUserInterfaceState
 [Serializable, NetSerializable]
 public sealed class SelectGeneralStationRecord : BoundUserInterfaceMessage
 {
-    public (NetEntity, uint)? SelectedKey { get; }
+    public StationRecordKey? SelectedKey { get; }
 
-    public SelectGeneralStationRecord((NetEntity, uint)? selectedKey)
+    public SelectGeneralStationRecord(StationRecordKey? selectedKey)
     {
         SelectedKey = selectedKey;
     }

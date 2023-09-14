@@ -14,11 +14,13 @@ namespace Content.Shared.Chemistry.Dispenser
     [Serializable, NetSerializable, Prototype("reagentDispenserInventory")]
     public sealed class ReagentDispenserInventoryPrototype : IPrototype
     {
-        // TODO use ReagentId
         [DataField("inventory", customTypeSerializer: typeof(PrototypeIdListSerializer<ReagentPrototype>))]
-        public List<string> Inventory = new();
+        private List<string> _inventory = new();
 
-        [ViewVariables, IdDataField]
-        public string ID { get; } = default!;
+        [ViewVariables]
+        [IdDataField]
+        public string ID { get; private set; } = default!;
+
+        public List<string> Inventory => _inventory;
     }
 }

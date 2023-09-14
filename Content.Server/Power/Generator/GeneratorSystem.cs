@@ -81,7 +81,7 @@ public sealed class GeneratorSystem : SharedGeneratorSystem
 
         foreach (var reagentQuantity in solution)
         {
-            if (reagentQuantity.Reagent.Prototype != component.Reagent)
+            if (reagentQuantity.ReagentId != component.Reagent)
             {
                 args.Clogged = true;
                 return;
@@ -94,7 +94,7 @@ public sealed class GeneratorSystem : SharedGeneratorSystem
         if (!_solutionContainer.TryGetSolution(uid, component.Solution, out var solution))
             return;
 
-        var availableReagent = solution.GetTotalPrototypeQuantity(component.Reagent).Value;
+        var availableReagent = solution.GetReagentQuantity(component.Reagent).Value;
         var toRemove = RemoveFractionalFuel(
             ref component.FractionalReagent,
             args.FuelUsed,
@@ -112,8 +112,8 @@ public sealed class GeneratorSystem : SharedGeneratorSystem
         if (!_solutionContainer.TryGetSolution(uid, component.Solution, out var solution))
             return;
 
-        var availableReagent = solution.GetTotalPrototypeQuantity(component.Reagent).Float();
-        var reagent = component.FractionalReagent * FixedPoint2.Epsilon.Float() + availableReagent;
+        var reagent = component.FractionalReagent * FixedPoint2.Epsilon.Float()
+                      + solution.GetReagentQuantity(component.Reagent).Float();
         args.Fuel = reagent * component.Multiplier;
     }
 

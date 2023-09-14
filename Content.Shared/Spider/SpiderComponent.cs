@@ -1,4 +1,5 @@
 using Content.Shared.Actions;
+using Content.Shared.Actions.ActionTypes;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
@@ -14,8 +15,8 @@ public sealed partial class SpiderComponent : Component
     public string WebPrototype = "SpiderWeb";
 
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("webAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string WebAction = "ActionSpiderWeb";
+    [DataField("webActionName", customTypeSerializer: typeof(PrototypeIdSerializer<InstantActionPrototype>))]
+    public string WebActionName = "SpiderWebAction";
 }
 
 public sealed partial class SpiderWebActionEvent : InstantActionEvent { }

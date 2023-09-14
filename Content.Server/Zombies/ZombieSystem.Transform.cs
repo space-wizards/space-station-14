@@ -106,8 +106,8 @@ namespace Content.Server.Zombies
 
             //This is needed for stupid entities that fuck up combat mode component
             //in an attempt to make an entity not attack. This is the easiest way to do it.
-            var combat = EnsureComp<CombatModeComponent>(target);
-            _combat.SetCanDisarm(target, false, combat);
+            RemComp<CombatModeComponent>(target);
+            var combat = AddComp<CombatModeComponent>(target);
             _combat.SetInCombatMode(target, true, combat);
 
             //This is the actual damage of the zombie. We assign the visual appearance

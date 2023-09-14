@@ -10,9 +10,9 @@ namespace Content.Shared.Weapons.Melee.Events
         /// <summary>
         /// Coordinates being attacked.
         /// </summary>
-        public readonly NetCoordinates Coordinates;
+        public readonly EntityCoordinates Coordinates;
 
-        protected AttackEvent(NetCoordinates coordinates)
+        protected AttackEvent(EntityCoordinates coordinates)
         {
             Coordinates = coordinates;
         }

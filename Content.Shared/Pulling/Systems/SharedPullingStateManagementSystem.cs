@@ -33,7 +33,7 @@ namespace Content.Shared.Pulling
 
         private void OnGetState(EntityUid uid, SharedPullableComponent component, ref ComponentGetState args)
         {
-            args.State = new PullableComponentState(GetNetEntity(component.Puller));
+            args.State = new PullableComponentState(component.Puller);
         }
 
         private void OnHandleState(EntityUid uid, SharedPullableComponent component, ref ComponentHandleState args)
@@ -41,23 +41,21 @@ namespace Content.Shared.Pulling
             if (args.Current is not PullableComponentState state)
                 return;
 
-            var puller = EnsureEntity<SharedPullableComponent>(state.Puller, uid);
-
-            if (!puller.HasValue)
+            if (!state.Puller.HasValue)
             {
                 ForceDisconnectPullable(component);
                 return;
             }
 
-            if (component.Puller == puller)
+            if (component.Puller == state.Puller)
             {
                 // don't disconnect and reconnect a puller for no reason
                 return;
             }
 
-            if (!TryComp<SharedPullerComponent>(puller, out var comp))
+            if (!TryComp<SharedPullerComponent?>(state.Puller.Value, out var comp))
             {
-                Log.Error($"Pullable state for entity {ToPrettyString(uid)} had invalid puller entity {ToPrettyString(puller.Value)}");
+                Log.Error($"Pullable state for entity {ToPrettyString(uid)} had invalid puller entity {ToPrettyString(state.Puller.Value)}");
                 // ensure it disconnects from any different puller, still
                 ForceDisconnectPullable(component);
                 return;

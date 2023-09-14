@@ -1,8 +1,9 @@
-- action: !type:InstantActionComponent
+- action: !type:InstantAction
+    checkCanInteract: False
     icon:
       entity: ReinforcedWindow
+    name: ReinforcedWindow
     keywords: []
-    checkCanInteract: False
     clientExclusive: True
     autoPopulate: False
     temporary: True
@@ -11,12 +12,12 @@
       entityType: ReinforcedWindow
   assignments:
   - 0: 3
-  name: ReinforcedWindow
-- action: !type:InstantActionComponent
+- action: !type:InstantAction
+    checkCanInteract: False
     icon:
       entity: WallSolid
+    name: WallSolid
     keywords: []
-    checkCanInteract: False
     clientExclusive: True
     autoPopulate: False
     temporary: True
@@ -25,12 +26,12 @@
       entityType: WallSolid
   assignments:
   - 0: 0
-  name: WallSolid
-- action: !type:InstantActionComponent
+- action: !type:InstantAction
+    checkCanInteract: False
     icon:
       entity: WallReinforced
+    name: WallReinforced
     keywords: []
-    checkCanInteract: False
     clientExclusive: True
     autoPopulate: False
     temporary: True
@@ -39,12 +40,12 @@
       entityType: WallReinforced
   assignments:
   - 0: 1
-  name: WallReinforced
-- action: !type:InstantActionComponent
+- action: !type:InstantAction
+    checkCanInteract: False
     icon:
       entity: Window
+    name: Window
     keywords: []
-    checkCanInteract: False
     clientExclusive: True
     autoPopulate: False
     temporary: True
@@ -53,12 +54,12 @@
       entityType: Window
   assignments:
   - 0: 2
-  name: Window
-- action: !type:InstantActionComponent
+- action: !type:InstantAction
+    checkCanInteract: False
     icon:
       entity: Firelock
+    name: Firelock
     keywords: []
-    checkCanInteract: False
     clientExclusive: True
     autoPopulate: False
     temporary: True
@@ -67,12 +68,12 @@
       entityType: Firelock
   assignments:
   - 0: 5
-  name: Firelock
-- action: !type:InstantActionComponent
+- action: !type:InstantAction
+    checkCanInteract: False
     icon:
       entity: Grille
+    name: Grille
     keywords: []
-    checkCanInteract: False
     clientExclusive: True
     autoPopulate: False
     temporary: True
@@ -81,11 +82,11 @@
       entityType: Grille
   assignments:
   - 0: 4
-  name: Grille
-- action: !type:InstantActionComponent
-    icon: Interface/VerbIcons/delete.svg.192dpi.png
-    keywords: []
+- action: !type:InstantAction
     checkCanInteract: False
+    icon: Interface/VerbIcons/delete.svg.192dpi.png
+    name: action-name-mapping-erase
+    keywords: []
     clientExclusive: True
     autoPopulate: False
     temporary: True
@@ -98,12 +99,12 @@
   - 4: 9
   - 5: 9
   - 6: 9
-  name: action-name-mapping-erase
-- action: !type:InstantActionComponent
+- action: !type:InstantAction
+    checkCanInteract: False
     icon:
       entity: GasPipeStraight
+    name: GasPipeStraight
     keywords: []
-    checkCanInteract: False
     clientExclusive: True
     autoPopulate: False
     temporary: True
@@ -112,12 +113,12 @@
       entityType: GasPipeStraight
   assignments:
   - 1: 0
-  name: GasPipeStraight
-- action: !type:InstantActionComponent
+- action: !type:InstantAction
+    checkCanInteract: False
     icon:
       entity: GasPipeBend
+    name: GasPipeBend
     keywords: []
-    checkCanInteract: False
     clientExclusive: True
     autoPopulate: False
     temporary: True
@@ -126,12 +127,12 @@
       entityType: GasPipeBend
   assignments:
   - 1: 1
-  name: GasPipeBend
-- action: !type:InstantActionComponent
+- action: !type:InstantAction
+    checkCanInteract: False
     icon:
       entity: GasPipeTJunction
+    name: GasPipeTJunction
     keywords: []
-    checkCanInteract: False
     clientExclusive: True
     autoPopulate: False
     temporary: True
@@ -140,12 +141,12 @@
       entityType: GasPipeTJunction
   assignments:
   - 1: 2
-  name: GasPipeTJunction
-- action: !type:InstantActionComponent
+- action: !type:InstantAction
+    checkCanInteract: False
     icon:
       entity: GasPipeFourway
+    name: GasPipeFourway
     keywords: []
-    checkCanInteract: False
     clientExclusive: True
     autoPopulate: False
     temporary: True
@@ -154,12 +155,12 @@
       entityType: GasPipeFourway
   assignments:
   - 1: 3
-  name: GasPipeFourway
-- action: !type:InstantActionComponent
+- action: !type:InstantAction
+    checkCanInteract: False
     icon:
       entity: GasVentScrubber
+    name: GasVentScrubber
     keywords: []
-    checkCanInteract: False
     clientExclusive: True
     autoPopulate: False
     temporary: True
@@ -168,12 +169,12 @@
       entityType: GasVentScrubber
   assignments:
   - 1: 4
-  name: GasVentScrubber
-- action: !type:InstantActionComponent
+- action: !type:InstantAction
+    checkCanInteract: False
     icon:
       entity: GasVentPump
+    name: GasVentPump
     keywords: []
-    checkCanInteract: False
     clientExclusive: True
     autoPopulate: False
     temporary: True
@@ -182,12 +183,12 @@
       entityType: GasVentPump
   assignments:
   - 1: 5
-  name: GasVentPump
-- action: !type:InstantActionComponent
+- action: !type:InstantAction
+    checkCanInteract: False
     icon:
       entity: AirAlarm
+    name: AirAlarm
     keywords: []
-    checkCanInteract: False
     clientExclusive: True
     autoPopulate: False
     temporary: True
@@ -196,12 +197,12 @@
       entityType: AirAlarm
   assignments:
   - 1: 6
-  name: AirAlarm
-- action: !type:InstantActionComponent
+- action: !type:InstantAction
+    checkCanInteract: False
     icon:
       entity: FireAlarm
+    name: FireAlarm
     keywords: []
-    checkCanInteract: False
     clientExclusive: True
     autoPopulate: False
     temporary: True
@@ -210,12 +211,12 @@
       entityType: FireAlarm
   assignments:
   - 1: 7
-  name: FireAlarm
-- action: !type:InstantActionComponent
+- action: !type:InstantAction
+    checkCanInteract: False
     icon:
       entity: APCBasic
+    name: APCBasic
     keywords: []
-    checkCanInteract: False
     clientExclusive: True
     autoPopulate: False
     temporary: True
@@ -224,12 +225,12 @@
       entityType: APCBasic
   assignments:
   - 2: 3
-  name: APCBasic
-- action: !type:InstantActionComponent
+- action: !type:InstantAction
+    checkCanInteract: False
     icon:
       entity: CableApcExtension
+    name: CableApcExtension
     keywords: []
-    checkCanInteract: False
     clientExclusive: True
     autoPopulate: False
     temporary: True
@@ -238,12 +239,12 @@
       entityType: CableApcExtension
   assignments:
   - 2: 0
-  name: CableApcExtension
-- action: !type:InstantActionComponent
+- action: !type:InstantAction
+    checkCanInteract: False
     icon:
       entity: CableMV
+    name: CableMV
     keywords: []
-    checkCanInteract: False
     clientExclusive: True
     autoPopulate: False
     temporary: True
@@ -252,12 +253,12 @@
       entityType: CableMV
   assignments:
   - 2: 1
-  name: CableMV
-- action: !type:InstantActionComponent
+- action: !type:InstantAction
+    checkCanInteract: False
     icon:
       entity: CableHV
+    name: CableHV
     keywords: []
-    checkCanInteract: False
     clientExclusive: True
     autoPopulate: False
     temporary: True
@@ -266,12 +267,12 @@
       entityType: CableHV
   assignments:
   - 2: 2
-  name: CableHV
-- action: !type:InstantActionComponent
+- action: !type:InstantAction
+    checkCanInteract: False
     icon:
       entity: SubstationBasic
+    name: SubstationBasic
     keywords: []
-    checkCanInteract: False
     clientExclusive: True
     autoPopulate: False
     temporary: True
@@ -280,12 +281,12 @@
       entityType: SubstationBasic
   assignments:
   - 2: 4
-  name: SubstationBasic
-- action: !type:InstantActionComponent
+- action: !type:InstantAction
+    checkCanInteract: False
     icon:
       entity: Poweredlight
+    name: Poweredlight
     keywords: []
-    checkCanInteract: False
     clientExclusive: True
     autoPopulate: False
     temporary: True
@@ -294,12 +295,12 @@
       entityType: Poweredlight
   assignments:
   - 2: 6
-  name: Poweredlight
-- action: !type:InstantActionComponent
+- action: !type:InstantAction
+    checkCanInteract: False
     icon:
       entity: EmergencyLight
+    name: EmergencyLight
     keywords: []
-    checkCanInteract: False
     clientExclusive: True
     autoPopulate: False
     temporary: True
@@ -308,12 +309,12 @@
       entityType: EmergencyLight
   assignments:
   - 2: 7
-  name: EmergencyLight
-- action: !type:InstantActionComponent
+- action: !type:InstantAction
+    checkCanInteract: False
     icon:
       entity: SMESBasic
+    name: SMESBasic
     keywords: []
-    checkCanInteract: False
     clientExclusive: True
     autoPopulate: False
     temporary: True
@@ -322,12 +323,12 @@
       entityType: SMESBasic
   assignments:
   - 2: 5
-  name: SMESBasic
-- action: !type:InstantActionComponent
+- action: !type:InstantAction
+    checkCanInteract: False
     icon:
       entity: TableWood
+    name: TableWood
     keywords: []
-    checkCanInteract: False
     clientExclusive: True
     autoPopulate: False
     temporary: True
@@ -336,12 +337,12 @@
       entityType: TableWood
   assignments:
   - 3: 0
-  name: TableWood
-- action: !type:InstantActionComponent
+- action: !type:InstantAction
+    checkCanInteract: False
     icon:
       entity: Table
+    name: Table
     keywords: []
-    checkCanInteract: False
     clientExclusive: True
     autoPopulate: False
     temporary: True
@@ -350,12 +351,12 @@
       entityType: Table
   assignments:
   - 3: 1
-  name: Table
-- action: !type:InstantActionComponent
+- action: !type:InstantAction
+    checkCanInteract: False
     icon:
       entity: ChairWood
+    name: ChairWood
     keywords: []
-    checkCanInteract: False
     clientExclusive: True
     autoPopulate: False
     temporary: True
@@ -364,12 +365,12 @@
       entityType: ChairWood
   assignments:
   - 3: 2
-  name: ChairWood
-- action: !type:InstantActionComponent
+- action: !type:InstantAction
+    checkCanInteract: False
     icon:
       entity: Chair
+    name: Chair
     keywords: []
-    checkCanInteract: False
     clientExclusive: True
     autoPopulate: False
     temporary: True
@@ -378,12 +379,12 @@
       entityType: Chair
   assignments:
   - 3: 3
-  name: Chair
-- action: !type:InstantActionComponent
+- action: !type:InstantAction
+    checkCanInteract: False
     icon:
       entity: ChairOfficeLight
+    name: ChairOfficeLight
     keywords: []
-    checkCanInteract: False
     clientExclusive: True
     autoPopulate: False
     temporary: True
@@ -392,12 +393,12 @@
       entityType: ChairOfficeLight
   assignments:
   - 3: 4
-  name: ChairOfficeLight
-- action: !type:InstantActionComponent
+- action: !type:InstantAction
+    checkCanInteract: False
     icon:
       entity: StoolBar
+    name: StoolBar
     keywords: []
-    checkCanInteract: False
     clientExclusive: True
     autoPopulate: False
     temporary: True
@@ -406,12 +407,12 @@
       entityType: StoolBar
   assignments:
   - 3: 6
-  name: StoolBar
-- action: !type:InstantActionComponent
+- action: !type:InstantAction
+    checkCanInteract: False
     icon:
       entity: Stool
+    name: Stool
     keywords: []
-    checkCanInteract: False
     clientExclusive: True
     autoPopulate: False
     temporary: True
@@ -420,12 +421,12 @@
       entityType: Stool
   assignments:
   - 3: 7
-  name: Stool
-- action: !type:InstantActionComponent
+- action: !type:InstantAction
+    checkCanInteract: False
     icon:
       entity: Rack
+    name: Rack
     keywords: []
-    checkCanInteract: False
     clientExclusive: True
     autoPopulate: False
     temporary: True
@@ -434,12 +435,12 @@
       entityType: Rack
   assignments:
   - 3: 8
-  name: Rack
-- action: !type:InstantActionComponent
+- action: !type:InstantAction
+    checkCanInteract: False
     icon:
       entity: ChairOfficeDark
+    name: ChairOfficeDark
     keywords: []
-    checkCanInteract: False
     clientExclusive: True
     autoPopulate: False
     temporary: True
@@ -448,12 +449,12 @@
       entityType: ChairOfficeDark
   assignments:
   - 3: 5
-  name: ChairOfficeDark
-- action: !type:InstantActionComponent
+- action: !type:InstantAction
+    checkCanInteract: False
     icon:
       entity: LampGold
+    name: LampGold
     keywords: []
-    checkCanInteract: False
     clientExclusive: True
     autoPopulate: False
     temporary: True
@@ -462,12 +463,12 @@
       entityType: LampGold
   assignments:
   - 3: 9
-  name: LampGold
-- action: !type:InstantActionComponent
+- action: !type:InstantAction
+    checkCanInteract: False
     icon:
       entity: DisposalPipe
+    name: DisposalPipe
     keywords: []
-    checkCanInteract: False
     clientExclusive: True
     autoPopulate: False
     temporary: True
@@ -476,12 +477,12 @@
       entityType: DisposalPipe
   assignments:
   - 4: 0
-  name: DisposalPipe
-- action: !type:InstantActionComponent
+- action: !type:InstantAction
+    checkCanInteract: False
     icon:
       entity: DisposalBend
+    name: DisposalBend
     keywords: []
-    checkCanInteract: False
     clientExclusive: True
     autoPopulate: False
     temporary: True
@@ -490,12 +491,12 @@
       entityType: DisposalBend
   assignments:
   - 4: 1
-  name: DisposalBend
-- action: !type:InstantActionComponent
+- action: !type:InstantAction
+    checkCanInteract: False
     icon:
       entity: DisposalJunction
+    name: DisposalJunction
     keywords: []
-    checkCanInteract: False
     clientExclusive: True
     autoPopulate: False
     temporary: True
@@ -504,12 +505,12 @@
       entityType: DisposalJunction
   assignments:
   - 4: 2
-  name: DisposalJunction
-- action: !type:InstantActionComponent
+- action: !type:InstantAction
+    checkCanInteract: False
     icon:
       entity: DisposalJunctionFlipped
+    name: DisposalJunctionFlipped
     keywords: []
-    checkCanInteract: False
     clientExclusive: True
     autoPopulate: False
     temporary: True
@@ -518,12 +519,12 @@
       entityType: DisposalJunctionFlipped
   assignments:
   - 4: 3
-  name: DisposalJunctionFlipped
-- action: !type:InstantActionComponent
+- action: !type:InstantAction
+    checkCanInteract: False
     icon:
       entity: DisposalRouter
+    name: DisposalRouter
     keywords: []
-    checkCanInteract: False
     clientExclusive: True
     autoPopulate: False
     temporary: True
@@ -532,12 +533,12 @@
       entityType: DisposalRouter
   assignments:
   - 4: 4
-  name: DisposalRouter
-- action: !type:InstantActionComponent
+- action: !type:InstantAction
+    checkCanInteract: False
     icon:
       entity: DisposalRouterFlipped
+    name: DisposalRouterFlipped
     keywords: []
-    checkCanInteract: False
     clientExclusive: True
     autoPopulate: False
     temporary: True
@@ -546,12 +547,12 @@
       entityType: DisposalRouterFlipped
   assignments:
   - 4: 5
-  name: DisposalRouterFlipped
-- action: !type:InstantActionComponent
+- action: !type:InstantAction
+    checkCanInteract: False
     icon:
       entity: DisposalUnit
+    name: DisposalUnit
     keywords: []
-    checkCanInteract: False
     clientExclusive: True
     autoPopulate: False
     temporary: True
@@ -560,12 +561,12 @@
       entityType: DisposalUnit
   assignments:
   - 4: 6
-  name: DisposalUnit
-- action: !type:InstantActionComponent
+- action: !type:InstantAction
+    checkCanInteract: False
     icon:
       entity: DisposalTrunk
+    name: DisposalTrunk
     keywords: []
-    checkCanInteract: False
     clientExclusive: True
     autoPopulate: False
     temporary: True
@@ -574,12 +575,12 @@
       entityType: DisposalTrunk
   assignments:
   - 4: 7
-  name: DisposalTrunk
-- action: !type:InstantActionComponent
+- action: !type:InstantAction
+    checkCanInteract: False
     icon:
       entity: SignDisposalSpace
+    name: SignDisposalSpace
     keywords: []
-    checkCanInteract: False
     clientExclusive: True
     autoPopulate: False
     temporary: True
@@ -588,12 +589,12 @@
       entityType: SignDisposalSpace
   assignments:
   - 4: 8
-  name: SignDisposalSpace
-- action: !type:InstantActionComponent
+- action: !type:InstantAction
+    checkCanInteract: False
     icon:
       entity: Windoor
+    name: Windoor
     keywords: []
-    checkCanInteract: False
     clientExclusive: True
     autoPopulate: False
     temporary: True
@@ -602,12 +603,12 @@
       entityType: Windoor
   assignments:
   - 5: 0
-  name: Windoor
-- action: !type:InstantActionComponent
+- action: !type:InstantAction
+    checkCanInteract: False
     icon:
       entity: WindowDirectional
+    name: WindowDirectional
     keywords: []
-    checkCanInteract: False
     clientExclusive: True
     autoPopulate: False
     temporary: True
@@ -616,12 +617,12 @@
       entityType: WindowDirectional
   assignments:
   - 5: 1
-  name: WindowDirectional
-- action: !type:InstantActionComponent
+- action: !type:InstantAction
+    checkCanInteract: False
     icon:
       entity: WindowReinforcedDirectional
+    name: WindowReinforcedDirectional
     keywords: []
-    checkCanInteract: False
     clientExclusive: True
     autoPopulate: False
     temporary: True
@@ -630,12 +631,12 @@
       entityType: WindowReinforcedDirectional
   assignments:
   - 5: 2
-  name: WindowReinforcedDirectional
-- action: !type:InstantActionComponent
+- action: !type:InstantAction
+    checkCanInteract: False
     icon:
       entity: PlasmaWindowDirectional
+    name: PlasmaWindowDirectional
     keywords: []
-    checkCanInteract: False
     clientExclusive: True
     autoPopulate: False
     temporary: True
@@ -644,12 +645,12 @@
       entityType: PlasmaWindowDirectional
   assignments:
   - 5: 3
-  name: PlasmaWindowDirectional
-- action: !type:InstantActionComponent
+- action: !type:InstantAction
+    checkCanInteract: False
     icon:
       entity: Railing
+    name: Railing
     keywords: []
-    checkCanInteract: False
     clientExclusive: True
     autoPopulate: False
     temporary: True
@@ -658,12 +659,12 @@
       entityType: Railing
   assignments:
   - 5: 6
-  name: Railing
-- action: !type:InstantActionComponent
+- action: !type:InstantAction
+    checkCanInteract: False
     icon:
       entity: RailingCorner
+    name: RailingCorner
     keywords: []
-    checkCanInteract: False
     clientExclusive: True
     autoPopulate: False
     temporary: True
@@ -672,12 +673,12 @@
       entityType: RailingCorner
   assignments:
   - 5: 7
-  name: RailingCorner
-- action: !type:InstantActionComponent
+- action: !type:InstantAction
+    checkCanInteract: False
     icon:
       entity: RailingCornerSmall
+    name: RailingCornerSmall
     keywords: []
-    checkCanInteract: False
     clientExclusive: True
     autoPopulate: False
     temporary: True
@@ -686,12 +687,12 @@
       entityType: RailingCornerSmall
   assignments:
   - 5: 8
-  name: RailingCornerSmall
-- action: !type:InstantActionComponent
+- action: !type:InstantAction
+    checkCanInteract: False
     icon:
       entity: AirlockMaintLocked
+    name: AirlockMaintLocked
     keywords: []
-    checkCanInteract: False
     clientExclusive: True
     autoPopulate: False
     temporary: True
@@ -700,12 +701,12 @@
       entityType: AirlockMaintLocked
   assignments:
   - 6: 0
-  name: AirlockMaintLocked
-- action: !type:InstantActionComponent
+- action: !type:InstantAction
+    checkCanInteract: False
     icon:
       entity: AirlockGlass
+    name: AirlockGlass
     keywords: []
-    checkCanInteract: False
     clientExclusive: True
     autoPopulate: False
     temporary: True
@@ -714,12 +715,12 @@
       entityType: AirlockGlass
   assignments:
   - 6: 1
-  name: AirlockGlass
-- action: !type:InstantActionComponent
+- action: !type:InstantAction
+    checkCanInteract: False
     icon:
       entity: AirlockServiceLocked
+    name: AirlockServiceLocked
     keywords: []
-    checkCanInteract: False
     clientExclusive: True
     autoPopulate: False
     temporary: True
@@ -728,12 +729,12 @@
       entityType: AirlockServiceLocked
   assignments:
   - 6: 2
-  name: AirlockServiceLocked
-- action: !type:InstantActionComponent
+- action: !type:InstantAction
+    checkCanInteract: False
     icon:
       entity: AirlockSecurityLocked
+    name: AirlockSecurityLocked
     keywords: []
-    checkCanInteract: False
     clientExclusive: True
     autoPopulate: False
     temporary: True
@@ -742,12 +743,12 @@
       entityType: AirlockSecurityLocked
   assignments:
   - 6: 3
-  name: AirlockSecurityLocked
-- action: !type:InstantActionComponent
+- action: !type:InstantAction
+    checkCanInteract: False
     icon:
       entity: AirlockCommand
+    name: AirlockCommand
     keywords: []
-    checkCanInteract: False
     clientExclusive: True
     autoPopulate: False
     temporary: True
@@ -756,12 +757,12 @@
       entityType: AirlockCommand
   assignments:
   - 6: 4
-  name: AirlockCommand
-- action: !type:InstantActionComponent
+- action: !type:InstantAction
+    checkCanInteract: False
     icon:
       entity: AirlockScience
+    name: AirlockScience
     keywords: []
-    checkCanInteract: False
     clientExclusive: True
     autoPopulate: False
     temporary: True
@@ -770,12 +771,12 @@
       entityType: AirlockScience
   assignments:
   - 6: 5
-  name: AirlockScience
-- action: !type:InstantActionComponent
+- action: !type:InstantAction
+    checkCanInteract: False
     icon:
       entity: AirlockMedical
+    name: AirlockMedical
     keywords: []
-    checkCanInteract: False
     clientExclusive: True
     autoPopulate: False
     temporary: True
@@ -784,12 +785,12 @@
       entityType: AirlockMedical
   assignments:
   - 6: 6
-  name: AirlockMedical
-- action: !type:InstantActionComponent
+- action: !type:InstantAction
+    checkCanInteract: False
     icon:
       entity: AirlockEngineering
+    name: AirlockEngineering
     keywords: []
-    checkCanInteract: False
     clientExclusive: True
     autoPopulate: False
     temporary: True
@@ -798,12 +799,12 @@
       entityType: AirlockEngineering
   assignments:
   - 6: 7
-  name: AirlockEngineering
-- action: !type:InstantActionComponent
+- action: !type:InstantAction
+    checkCanInteract: False
     icon:
       entity: AirlockCargo
+    name: AirlockCargo
     keywords: []
-    checkCanInteract: False
     clientExclusive: True
     autoPopulate: False
     temporary: True
@@ -812,9 +813,7 @@
       entityType: AirlockCargo
   assignments:
   - 6: 8
-  name: AirlockCargo
-- action: !type:WorldTargetActionComponent
-    keywords: []
+- action: !type:WorldTargetAction
     repeat: True
     checkCanAccess: False
     range: -1
@@ -822,6 +821,8 @@
       sprite: Decals/markings.rsi
       state: bot_left
     iconColor: '#EFB34196'
+    name: BotLeft
+    keywords: []
     checkCanInteract: False
     clientExclusive: True
     autoPopulate: False
@@ -832,9 +833,7 @@
       decalId: BotLeft
   assignments:
   - 7: 0
-  name: BotLeft
-- action: !type:WorldTargetActionComponent
-    keywords: []
+- action: !type:WorldTargetAction
     repeat: True
     checkCanAccess: False
     range: -1
@@ -842,6 +841,8 @@
       sprite: Decals/markings.rsi
       state: delivery
     iconColor: '#EFB34196'
+    name: Delivery
+    keywords: []
     checkCanInteract: False
     clientExclusive: True
     autoPopulate: False
@@ -852,9 +853,7 @@
       decalId: Delivery
   assignments:
   - 7: 1
-  name: Delivery
-- action: !type:WorldTargetActionComponent
-    keywords: []
+- action: !type:WorldTargetAction
     repeat: True
     checkCanAccess: False
     range: -1
@@ -862,6 +861,8 @@
       sprite: Decals/markings.rsi
       state: warn_full
     iconColor: '#EFB34196'
+    name: WarnFull
+    keywords: []
     checkCanInteract: False
     clientExclusive: True
     autoPopulate: False
@@ -872,9 +873,7 @@
       decalId: WarnFull
   assignments:
   - 7: 2
-  name: WarnFull
-- action: !type:WorldTargetActionComponent
-    keywords: []
+- action: !type:WorldTargetAction
     repeat: True
     checkCanAccess: False
     range: -1
@@ -882,6 +881,8 @@
       sprite: Decals/Overlays/greyscale.rsi
       state: halftile_overlay
     iconColor: '#EFB34196'
+    name: HalfTileOverlayGreyscale
+    keywords: []
     checkCanInteract: False
     clientExclusive: True
     autoPopulate: False
@@ -892,9 +893,7 @@
       decalId: HalfTileOverlayGreyscale
   assignments:
   - 7: 3
-  name: HalfTileOverlayGreyscale
-- action: !type:WorldTargetActionComponent
-    keywords: []
+- action: !type:WorldTargetAction
     repeat: True
     checkCanAccess: False
     range: -1
@@ -902,6 +901,8 @@
       sprite: Decals/Overlays/greyscale.rsi
       state: halftile_overlay
     iconColor: '#334E6DC8'
+    name: HalfTileOverlayGreyscale (#334E6DC8, 0)
+    keywords: []
     checkCanInteract: False
     clientExclusive: True
     autoPopulate: False
@@ -912,9 +913,7 @@
       decalId: HalfTileOverlayGreyscale
   assignments:
   - 7: 4
-  name: HalfTileOverlayGreyscale (#334E6DC8, 0)
-- action: !type:WorldTargetActionComponent
-    keywords: []
+- action: !type:WorldTargetAction
     repeat: True
     checkCanAccess: False
     range: -1
@@ -922,6 +921,8 @@
       sprite: Decals/Overlays/greyscale.rsi
       state: halftile_overlay
     iconColor: '#52B4E996'
+    name: HalfTileOverlayGreyscale (#52B4E996, 0)
+    keywords: []
     checkCanInteract: False
     clientExclusive: True
     autoPopulate: False
@@ -932,9 +933,7 @@
       decalId: HalfTileOverlayGreyscale
   assignments:
   - 7: 5
-  name: HalfTileOverlayGreyscale (#52B4E996, 0)
-- action: !type:WorldTargetActionComponent
-    keywords: []
+- action: !type:WorldTargetAction
     repeat: True
     checkCanAccess: False
     range: -1
@@ -942,6 +941,8 @@
       sprite: Decals/Overlays/greyscale.rsi
       state: halftile_overlay
     iconColor: '#9FED5896'
+    name: HalfTileOverlayGreyscale (#9FED5896, 0)
+    keywords: []
     checkCanInteract: False
     clientExclusive: True
     autoPopulate: False
@@ -952,9 +953,7 @@
       decalId: HalfTileOverlayGreyscale
   assignments:
   - 7: 6
-  name: HalfTileOverlayGreyscale (#9FED5896, 0)
-- action: !type:WorldTargetActionComponent
-    keywords: []
+- action: !type:WorldTargetAction
     repeat: True
     checkCanAccess: False
     range: -1
@@ -962,6 +961,8 @@
       sprite: Decals/Overlays/greyscale.rsi
       state: halftile_overlay
     iconColor: '#DE3A3A96'
+    name: HalfTileOverlayGreyscale (#DE3A3A96, 0)
+    keywords: []
     checkCanInteract: False
     clientExclusive: True
     autoPopulate: False
@@ -972,9 +973,7 @@
       decalId: HalfTileOverlayGreyscale
   assignments:
   - 7: 7
-  name: HalfTileOverlayGreyscale (#DE3A3A96, 0)
-- action: !type:WorldTargetActionComponent
-    keywords: []
+- action: !type:WorldTargetAction
     repeat: True
     checkCanAccess: False
     range: -1
@@ -982,6 +981,8 @@
       sprite: Decals/Overlays/greyscale.rsi
       state: halftile_overlay
     iconColor: '#D381C996'
+    name: HalfTileOverlayGreyscale (#D381C996, 0)
+    keywords: []
     checkCanInteract: False
     clientExclusive: True
     autoPopulate: False
@@ -992,9 +993,7 @@
       decalId: HalfTileOverlayGreyscale
   assignments:
   - 7: 8
-  name: HalfTileOverlayGreyscale (#D381C996, 0)
-- action: !type:WorldTargetActionComponent
-    keywords: []
+- action: !type:WorldTargetAction
     repeat: True
     checkCanAccess: False
     range: -1
@@ -1002,6 +1001,8 @@
       sprite: Decals/Overlays/greyscale.rsi
       state: halftile_overlay
     iconColor: '#A4610696'
+    name: HalfTileOverlayGreyscale (#A4610696, 0)
+    keywords: []
     checkCanInteract: False
     clientExclusive: True
     autoPopulate: False
@@ -1012,11 +1013,11 @@
       decalId: HalfTileOverlayGreyscale
   assignments:
   - 7: 9
-  name: HalfTileOverlayGreyscale (#A4610696, 0)
-- action: !type:InstantActionComponent
-    icon: /Textures/Tiles/steel.png
-    keywords: []
+- action: !type:InstantAction
     checkCanInteract: False
+    icon: /Textures/Tiles/steel.png
+    name: steel floor
+    keywords: []
     clientExclusive: True
     autoPopulate: False
     temporary: True
@@ -1025,11 +1026,11 @@
       tileId: FloorSteel
   assignments:
   - 0: 6
-  name: steel floor
-- action: !type:InstantActionComponent
-    icon: /Textures/Tiles/plating.png
-    keywords: []
+- action: !type:InstantAction
     checkCanInteract: False
+    icon: /Textures/Tiles/plating.png
+    name: plating
+    keywords: []
     clientExclusive: True
     autoPopulate: False
     temporary: True
@@ -1040,11 +1041,11 @@
   - 0: 7
   - 1: 8
   - 2: 8
-  name: plating
-- action: !type:InstantActionComponent
-    icon: /Textures/Tiles/cropped_parallax.png
-    keywords: []
+- action: !type:InstantAction
     checkCanInteract: False
+    icon: /Textures/Tiles/cropped_parallax.png
+    name: space
+    keywords: []
     clientExclusive: True
     autoPopulate: False
     temporary: True
@@ -1053,5 +1054,4 @@
       tileId: Space
   assignments:
   - 0: 8
-  name: space
 ...

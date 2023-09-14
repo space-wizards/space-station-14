@@ -1,4 +1,3 @@
-using System.Diagnostics.CodeAnalysis;
 using Content.Server.Access.Systems;
 using Content.Server.Administration;
 using Content.Server.Administration.Systems;
@@ -18,9 +17,6 @@ namespace Content.Server.Mind.Commands;
 [AdminCommand(AdminFlags.VarEdit)]
 public sealed class RenameCommand : IConsoleCommand
 {
-    [Dependency] private readonly IEntityManager _entManager = default!;
-    [Dependency] private readonly IPlayerManager _playerManager = default!;
-
     public string Command => "rename";
     public string Description => "Renames an entity and its cloner entries, ID cards, and PDAs.";
     public string Help => "rename <Username|EntityUid> <New character name>";
@@ -40,53 +36,53 @@ public sealed class RenameCommand : IConsoleCommand
             return;
         }
 
-        if (!TryParseUid(args[0], shell, _entManager, out var entityUid))
+        var entMan = IoCManager.Resolve<IEntityManager>();
+
+        if (!TryParseUid(args[0], shell, entMan, out var entityUid))
             return;
 
         // Metadata
-        var metadata = _entManager.GetComponent<MetaDataComponent>(entityUid.Value);
+        var metadata = entMan.GetComponent<MetaDataComponent>(entityUid);
         var oldName = metadata.EntityName;
-        _entManager.System<MetaDataSystem>().SetEntityName(entityUid.Value, name, metadata);
+        entMan.System<MetaDataSystem>().SetEntityName(entityUid, name, metadata);
 
-        var minds = _entManager.System<SharedMindSystem>();
+        var minds = entMan.System<SharedMindSystem>();
 
-        if (minds.TryGetMind(entityUid.Value, out var mindId, out var mind))
+        if (minds.TryGetMind(entityUid, out var mindId, out var mind))
         {
             // Mind
             mind.CharacterName = name;
         }
 
         // Id Cards
-        if (_entManager.TrySystem<IdCardSystem>(out var idCardSystem))
+        if (entMan.TrySystem<IdCardSystem>(out var idCardSystem))
         {
-            if (idCardSystem.TryFindIdCard(entityUid.Value, out var idCard))
+            if (idCardSystem.TryFindIdCard(entityUid, out var idCard))
             {
                 idCardSystem.TryChangeFullName(idCard.Owner, name, idCard);
 
                 // Records
                 // This is done here because ID cards are linked to station records
-                if (_entManager.TrySystem<StationRecordsSystem>(out var recordsSystem)
-                    && _entManager.TryGetComponent(idCard.Owner, out StationRecordKeyStorageComponent? keyStorage)
+                if (entMan.TrySystem<StationRecordsSystem>(out var recordsSystem)
+                    && entMan.TryGetComponent(idCard.Owner, out StationRecordKeyStorageComponent? keyStorage)
                     && keyStorage.Key != null)
                 {
-                    var origin = keyStorage.Key.Value.OriginStation;
-
-                    if (recordsSystem.TryGetRecord<GeneralStationRecord>(origin,
+                    if (recordsSystem.TryGetRecord<GeneralStationRecord>(keyStorage.Key.Value.OriginStation,
                             keyStorage.Key.Value,
                             out var generalRecord))
                     {
                         generalRecord.Name = name;
                     }
 
-                    recordsSystem.Synchronize(origin);
+                    recordsSystem.Synchronize(keyStorage.Key.Value.OriginStation);
                 }
             }
         }
 
         // PDAs
-        if (_entManager.TrySystem<PdaSystem>(out var pdaSystem))
+        if (entMan.TrySystem<PdaSystem>(out var pdaSystem))
         {
-            var query = _entManager.EntityQueryEnumerator<PdaComponent>();
+            var query = entMan.EntityQueryEnumerator<PdaComponent>();
             while (query.MoveNext(out var uid, out var pda))
             {
                 if (pda.OwnerName == oldName)
@@ -97,20 +93,21 @@ public sealed class RenameCommand : IConsoleCommand
         }
 
         // Admin Overlay
-        if (_entManager.TrySystem<AdminSystem>(out var adminSystem)
-            && _entManager.TryGetComponent<ActorComponent>(entityUid, out var actorComp))
+        if (entMan.TrySystem<AdminSystem>(out var adminSystem)
+            && entMan.TryGetComponent<ActorComponent>(entityUid, out var actorComp))
         {
             adminSystem.UpdatePlayerList(actorComp.PlayerSession);
         }
     }
 
-    private bool TryParseUid(string str, IConsoleShell shell,
-        IEntityManager entMan, [NotNullWhen(true)] out EntityUid? entityUid)
+    private static bool TryParseUid(string str, IConsoleShell shell,
+        IEntityManager entMan, out EntityUid entityUid)
     {
-        if (NetEntity.TryParse(str, out var entityUidNet) && _entManager.TryGetEntity(entityUidNet, out entityUid) && entMan.EntityExists(entityUid))
+        if (EntityUid.TryParse(str, out entityUid) && entMan.EntityExists(entityUid))
             return true;
 
-        if (_playerManager.TryGetSessionByUsername(str, out var session) && session.AttachedEntity.HasValue)
+        var playerMan = IoCManager.Resolve<IPlayerManager>();
+        if (playerMan.TryGetSessionByUsername(str, out var session) && session.AttachedEntity.HasValue)
         {
             entityUid = session.AttachedEntity.Value;
             return true;
@@ -120,8 +117,6 @@ public sealed class RenameCommand : IConsoleCommand
             shell.WriteError("Can't find username/uid: " + str);
         else
             shell.WriteError(str + " does not have an entity.");
-
-        entityUid = EntityUid.Invalid;
         return false;
     }
 }

@@ -10,8 +10,6 @@ namespace Content.Server.Damage.Commands
     [AdminCommand(AdminFlags.Admin)]
     public sealed class GodModeCommand : IConsoleCommand
     {
-        [Dependency] private readonly IEntityManager _entManager = default!;
-
         public string Command => "godmode";
         public string Description => "Makes your entity or another invulnerable to almost anything. May have irreversible changes.";
         public string Help => $"Usage: {Command} / {Command} <entityUid>";
@@ -20,6 +18,8 @@ namespace Content.Server.Damage.Commands
         {
             var player = shell.Player as IPlayerSession;
             EntityUid entity;
+
+            var entityManager = IoCManager.Resolve<IEntityManager>();
 
             switch (args.Length)
             {
@@ -39,29 +39,29 @@ namespace Content.Server.Damage.Commands
                     entity = player.AttachedEntity.Value;
                     break;
                 case 1:
-                    if (!NetEntity.TryParse(args[0], out var idNet) || !_entManager.TryGetEntity(idNet, out var id))
+                    if (!EntityUid.TryParse(args[0], out var id))
                     {
                         shell.WriteLine($"{args[0]} isn't a valid entity id.");
                         return;
                     }
 
-                    if (!_entManager.EntityExists(id))
+                    if (!entityManager.EntityExists(id))
                     {
                         shell.WriteLine($"No entity found with id {id}.");
                         return;
                     }
 
-                    entity = id.Value;
+                    entity = id;
                     break;
                 default:
                     shell.WriteLine(Help);
                     return;
             }
 
-            var godmodeSystem = _entManager.System<SharedGodmodeSystem>();
+            var godmodeSystem = EntitySystem.Get<SharedGodmodeSystem>();
             var enabled = godmodeSystem.ToggleGodmode(entity);
 
-            var name = _entManager.GetComponent<MetaDataComponent>(entity).EntityName;
+            var name = entityManager.GetComponent<MetaDataComponent>(entity).EntityName;
 
             shell.WriteLine(enabled
                 ? $"Enabled godmode for entity {name} with id {entity}"

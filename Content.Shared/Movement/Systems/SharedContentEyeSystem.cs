@@ -21,8 +21,6 @@ public abstract class SharedContentEyeSystem : EntitySystem
     public static readonly Vector2 DefaultZoom = Vector2.One;
     public static readonly Vector2 MinZoom = DefaultZoom * (float)Math.Pow(ZoomMod, -3);
 
-    [Dependency] private readonly SharedEyeSystem _eye = default!;
-
     public override void Initialize()
     {
         base.Initialize();
@@ -84,7 +82,7 @@ public abstract class SharedContentEyeSystem : EntitySystem
     private void OnContentZoomRequest(RequestTargetZoomEvent msg, EntitySessionEventArgs args)
     {
         var ignoreLimit = msg.IgnoreLimit && _admin.HasAdminFlag(args.SenderSession, AdminFlags.Debug);
-
+        
         if (TryComp<ContentEyeComponent>(args.SenderSession.AttachedEntity, out var content))
             SetZoom(args.SenderSession.AttachedEntity.Value, msg.TargetZoom, ignoreLimit, eye: content);
     }
@@ -97,15 +95,16 @@ public abstract class SharedContentEyeSystem : EntitySystem
         if (!HasComp<GhostComponent>(player) && !_admin.IsAdmin(player))
             return;
 
-        if (TryComp<EyeComponent>(player, out var eyeComp))
+        if (TryComp<SharedEyeComponent>(player, out var eyeComp))
         {
-            _eye.SetDrawFov(player, msg.Fov, eyeComp);
+            eyeComp.DrawFov = msg.Fov;
+            Dirty(player, eyeComp);
         }
     }
 
     private void OnContentEyeStartup(EntityUid uid, ContentEyeComponent component, ComponentStartup args)
     {
-        if (!TryComp<EyeComponent>(uid, out var eyeComp))
+        if (!TryComp<SharedEyeComponent>(uid, out var eyeComp))
             return;
 
         component.TargetZoom = eyeComp.Zoom;

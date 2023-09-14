@@ -229,7 +229,7 @@ namespace Content.Server.Atmos.EntitySystems
             _userInterface.TrySendUiMessage(uid, GasAnalyzerUiKey.Key,
                 new GasAnalyzerUserMessage(gasMixList.ToArray(),
                     component.Target != null ? Name(component.Target.Value) : string.Empty,
-                    GetNetEntity(component.Target) ?? NetEntity.Invalid,
+                    component.Target ?? EntityUid.Invalid,
                     deviceFlipped));
             return true;
         }

@@ -12,10 +12,6 @@ namespace Content.Server.Decals.Commands
     [AdminCommand(AdminFlags.Mapping)]
     public sealed class AddDecalCommand : IConsoleCommand
     {
-        [Dependency] private readonly IEntityManager _entManager = default!;
-        [Dependency] private readonly IMapManager _mapManager = default!;
-        [Dependency] private readonly IPrototypeManager _protoManager = default!;
-
         public string Command => "adddecal";
         public string Description => "Creates a decal on the map";
         public string Help => $"{Command} <id> <x position> <y position> <gridId> [angle=<angle> zIndex=<zIndex> color=<color>]";
@@ -27,7 +23,7 @@ namespace Content.Server.Decals.Commands
                 return;
             }
 
-            if (!_protoManager.HasIndex<DecalPrototype>(args[0]))
+            if (!IoCManager.Resolve<IPrototypeManager>().HasIndex<DecalPrototype>(args[0]))
             {
                 shell.WriteError($"Cannot find decalprototype '{args[0]}'.");
             }
@@ -44,9 +40,8 @@ namespace Content.Server.Decals.Commands
                 return;
             }
 
-            if (!NetEntity.TryParse(args[3], out var gridIdNet) ||
-                !_entManager.TryGetEntity(gridIdNet, out var gridIdRaw) ||
-                !_mapManager.TryGetGrid(gridIdRaw, out var grid))
+            var mapManager = IoCManager.Resolve<IMapManager>();
+            if (!EntityUid.TryParse(args[3], out var gridIdRaw) || !mapManager.TryGetGrid(gridIdRaw, out var grid))
             {
                 shell.WriteError($"Failed parsing gridId '{args[3]}'.");
                 return;
@@ -106,7 +101,7 @@ namespace Content.Server.Decals.Commands
                 }
             }
 
-            if (_entManager.System<DecalSystem>().TryAddDecal(args[0], coordinates, out var uid, color, rotation, zIndex))
+            if(EntitySystem.Get<DecalSystem>().TryAddDecal(args[0], coordinates, out var uid, color, rotation, zIndex))
             {
                 shell.WriteLine($"Successfully created decal {uid}.");
             }

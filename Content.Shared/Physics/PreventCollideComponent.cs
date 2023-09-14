@@ -15,10 +15,10 @@ public sealed partial class PreventCollideComponent : Component
 [Serializable, NetSerializable]
 public sealed class PreventCollideComponentState : ComponentState
 {
-    public NetEntity Uid;
+    public EntityUid Uid;
 
-    public PreventCollideComponentState(NetEntity netEntity)
+    public PreventCollideComponentState(PreventCollideComponent component)
     {
-        Uid = netEntity;
+        Uid = component.Uid;
     }
 }

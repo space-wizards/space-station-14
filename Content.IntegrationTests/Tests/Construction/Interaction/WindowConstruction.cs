@@ -12,7 +12,7 @@ public sealed class WindowConstruction : InteractionTest
     {
         await StartConstruction(Window);
         await Interact(Glass, 5);
-        ClientAssertPrototype(Window, ClientTarget);
+        AssertPrototype(Window);
     }
 
     [Test]
@@ -29,7 +29,7 @@ public sealed class WindowConstruction : InteractionTest
     {
         await StartConstruction(RWindow);
         await Interact(RGlass, 5);
-        ClientAssertPrototype(RWindow, ClientTarget);
+        AssertPrototype(RWindow);
     }
 
     [Test]

@@ -1,9 +1,9 @@
 using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Pointing.Components;
+using Content.Server.Visible;
 using Content.Shared.Bed.Sleep;
 using Content.Shared.Database;
-using Content.Shared.Eye;
 using Content.Shared.Ghost;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Input;
@@ -65,8 +65,6 @@ namespace Content.Server.Pointing.EntitySystems
         private void SendMessage(EntityUid source, IEnumerable<ICommonSession> viewers, EntityUid pointed, string selfMessage,
             string viewerMessage, string? viewerPointedAtMessage = null)
         {
-            var netSource = GetNetEntity(source);
-
             foreach (var viewer in viewers)
             {
                 if (viewer.AttachedEntity is not {Valid: true} viewerEntity)
@@ -80,10 +78,10 @@ namespace Content.Server.Pointing.EntitySystems
                         ? viewerPointedAtMessage
                         : viewerMessage;
 
-                RaiseNetworkEvent(new PopupEntityEvent(message, PopupType.Small, netSource), viewerEntity);
+                RaiseNetworkEvent(new PopupEntityEvent(message, PopupType.Small, source), viewerEntity);
             }
 
-            _replay.RecordServerMessage(new PopupEntityEvent(viewerMessage, PopupType.Small, netSource));
+            _replay.RecordServerMessage(new PopupEntityEvent(viewerMessage, PopupType.Small, source));
         }
 
         public bool InRange(EntityUid pointer, EntityCoordinates coordinates)
@@ -102,13 +100,13 @@ namespace Content.Server.Pointing.EntitySystems
         {
             if (session?.AttachedEntity is not { } player)
             {
-                Log.Warning($"Player {session} attempted to point without any attached entity");
+                Logger.Warning($"Player {session} attempted to point without any attached entity");
                 return false;
             }
 
             if (!coords.IsValid(EntityManager))
             {
-                Log.Warning($"Player {ToPrettyString(player)} attempted to point at invalid coordinates: {coords}");
+                Logger.Warning($"Player {ToPrettyString(player)} attempted to point at invalid coordinates: {coords}");
                 return false;
             }
 
@@ -249,12 +247,10 @@ namespace Content.Server.Pointing.EntitySystems
 
         private void OnPointAttempt(PointingAttemptEvent ev, EntitySessionEventArgs args)
         {
-            var target = GetEntity(ev.Target);
-
-            if (TryComp(target, out TransformComponent? xform))
-                TryPoint(args.SenderSession, xform.Coordinates, target);
+            if (TryComp(ev.Target, out TransformComponent? xform))
+                TryPoint(args.SenderSession, xform.Coordinates, ev.Target);
             else
-                Log.Warning($"User {args.SenderSession} attempted to point at a non-existent entity uid: {ev.Target}");
+                Logger.Warning($"User {args.SenderSession} attempted to point at a non-existent entity uid: {ev.Target}");
         }
 
         public override void Shutdown()

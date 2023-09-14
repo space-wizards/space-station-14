@@ -414,15 +414,3 @@
     layers:
       - state: box
       - state: syringe
-
-- type: entity
-  name: lead-lined box
-  parent: BoxCardboard
-  suffix: Debug
-  id: BoxLeadLined
-  description: This box stymies the transmission of harmful radiation.
-  components:
-  - type: Sprite
-    state: box
-  - type: RadiationBlockingContainer
-    resistance: 2

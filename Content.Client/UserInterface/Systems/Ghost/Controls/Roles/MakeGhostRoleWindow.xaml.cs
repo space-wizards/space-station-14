@@ -9,7 +9,7 @@ namespace Content.Client.UserInterface.Systems.Ghost.Controls.Roles
     [GenerateTypedNameReferences]
     public sealed partial class MakeGhostRoleWindow : DefaultWindow
     {
-        public delegate void MakeRole(NetEntity uid, string name, string description, string rules, bool makeSentient);
+        public delegate void MakeRole(EntityUid uid, string name, string description, string rules, bool makeSentient);
 
         public MakeGhostRoleWindow()
         {
@@ -27,25 +27,26 @@ namespace Content.Client.UserInterface.Systems.Ghost.Controls.Roles
             MakeButton.OnPressed += OnPressed;
         }
 
-        private NetEntity? Entity { get; set; }
+        private EntityUid? EntityUid { get; set; }
 
         public event MakeRole? OnMake;
 
-        public void SetEntity(IEntityManager entManager, NetEntity entity)
+        public void SetEntity(EntityUid uid)
         {
-            Entity = entity;
-            RoleName.Text = entManager.GetComponent<MetaDataComponent>(entManager.GetEntity(entity)).EntityName;
-            RoleEntity.Text = $"{entity}";
+            EntityUid = uid;
+            var entManager = IoCManager.Resolve<IEntityManager>();
+            RoleName.Text = entManager.GetComponent<MetaDataComponent>(uid).EntityName;
+            RoleEntity.Text = $"{uid}";
         }
 
         private void OnPressed(ButtonEventArgs args)
         {
-            if (Entity == null)
+            if (EntityUid == null)
             {
                 return;
             }
 
-            OnMake?.Invoke(Entity.Value, RoleName.Text, RoleDescription.Text, RoleRules.Text, MakeSentientCheckbox.Pressed);
+            OnMake?.Invoke(EntityUid.Value, RoleName.Text, RoleDescription.Text, RoleRules.Text, MakeSentientCheckbox.Pressed);
         }
     }
 }

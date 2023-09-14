@@ -1,6 +1,4 @@
 
-using Content.Shared.Actions;
-
 namespace Content.Shared.Clothing;
 
 /// <summary>
@@ -57,5 +55,3 @@ public sealed class EquipmentVisualsUpdatedEvent : EntityEventArgs
         RevealedLayers = revealedLayers;
     }
 }
-
-public sealed partial class ToggleMaskEvent : InstantActionEvent { }

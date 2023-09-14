@@ -220,16 +220,14 @@ public sealed class MaterialReclaimerSystem : SharedMaterialReclaimerSystem
         if (!Resolve(reclaimer, ref reclaimerComponent, ref xform))
             return;
 
-        efficiency *= reclaimerComponent.Efficiency;
-
-        var totalChemicals = new Solution();
+        var overflow = new Solution();
+        var totalChemicals = new Dictionary<string, FixedPoint2>();
 
         if (Resolve(item, ref composition, false))
         {
             foreach (var (key, value) in composition.ChemicalComposition)
             {
-                // TODO use ReagentQuantity
-                totalChemicals.AddReagent(key, value * efficiency, false);
+                totalChemicals[key] = totalChemicals.GetValueOrDefault(key) + value;
             }
         }
 
@@ -240,15 +238,27 @@ public sealed class MaterialReclaimerSystem : SharedMaterialReclaimerSystem
             {
                 foreach (var quantity in solution.Contents)
                 {
-                    totalChemicals.AddReagent(quantity.Reagent.Prototype, quantity.Quantity * efficiency, false);
+                    totalChemicals[quantity.ReagentId] =
+                        totalChemicals.GetValueOrDefault(quantity.ReagentId) + quantity.Quantity;
                 }
             }
         }
 
-        _solutionContainer.TryTransferSolution(reclaimer, reclaimerComponent.OutputSolution, totalChemicals, totalChemicals.Volume);
-        if (totalChemicals.Volume > 0)
+        foreach (var (reagent, amount) in totalChemicals)
         {
-            _puddle.TrySpillAt(reclaimer, totalChemicals, out _, transformComponent: xform);
+            var outputAmount = amount * efficiency * reclaimerComponent.Efficiency;
+            _solutionContainer.TryAddReagent(reclaimer, reclaimerComponent.OutputSolution, reagent, outputAmount,
+                out var accepted);
+            var overflowAmount = outputAmount - accepted;
+            if (overflowAmount > 0)
+            {
+                overflow.AddReagent(reagent, overflowAmount);
+            }
+        }
+
+        if (overflow.Volume > 0)
+        {
+            _puddle.TrySpillAt(reclaimer, overflow, out _, transformComponent: xform);
         }
     }
 }

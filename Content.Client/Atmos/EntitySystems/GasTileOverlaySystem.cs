@@ -65,10 +65,8 @@ namespace Content.Client.Atmos.EntitySystems
 
         private void HandleGasOverlayUpdate(GasOverlayUpdateEvent ev)
         {
-            foreach (var (nent, removedIndicies) in ev.RemovedChunks)
+            foreach (var (grid, removedIndicies) in ev.RemovedChunks)
             {
-                var grid = GetEntity(nent);
-
                 if (!TryComp(grid, out GasTileOverlayComponent? comp))
                     continue;
 
@@ -78,10 +76,8 @@ namespace Content.Client.Atmos.EntitySystems
                 }
             }
 
-            foreach (var (nent, gridData) in ev.UpdatedChunks)
+            foreach (var (grid, gridData) in ev.UpdatedChunks)
             {
-                var grid = GetEntity(nent);
-
                 if (!TryComp(grid, out GasTileOverlayComponent? comp))
                     continue;
 

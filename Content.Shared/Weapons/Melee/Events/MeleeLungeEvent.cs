@@ -9,7 +9,7 @@ namespace Content.Shared.Weapons.Melee.Events;
 [Serializable, NetSerializable]
 public sealed class MeleeLungeEvent : EntityEventArgs
 {
-    public NetEntity Entity;
+    public EntityUid Entity;
 
     /// <summary>
     /// Width of the attack angle.
@@ -26,9 +26,9 @@ public sealed class MeleeLungeEvent : EntityEventArgs
     /// </summary>
     public string? Animation;
 
-    public MeleeLungeEvent(NetEntity entity, Angle angle, Vector2 localPos, string? animation)
+    public MeleeLungeEvent(EntityUid uid, Angle angle, Vector2 localPos, string? animation)
     {
-        Entity = entity;
+        Entity = uid;
         Angle = angle;
         LocalPos = localPos;
         Animation = animation;

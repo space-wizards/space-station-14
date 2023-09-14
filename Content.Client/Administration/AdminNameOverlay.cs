@@ -35,21 +35,20 @@ namespace Content.Client.Administration
 
             foreach (var playerInfo in _system.PlayerList)
             {
-                var entity = _entityManager.GetEntity(playerInfo.NetEntity);
-
                 // Otherwise the entity can not exist yet
-                if (entity == null || !_entityManager.EntityExists(entity))
+                if (!_entityManager.EntityExists(playerInfo.EntityUid))
                 {
                     continue;
                 }
+                var entity = playerInfo.EntityUid.Value;
 
                 // if not on the same map, continue
-                if (_entityManager.GetComponent<TransformComponent>(entity.Value).MapID != _eyeManager.CurrentMap)
+                if (_entityManager.GetComponent<TransformComponent>(entity).MapID != _eyeManager.CurrentMap)
                 {
                     continue;
                 }
 
-                var aabb = _entityLookup.GetWorldAABB(entity.Value);
+                var aabb = _entityLookup.GetWorldAABB(entity);
 
                 // if not on screen, continue
                 if (!aabb.Intersects(in viewport))

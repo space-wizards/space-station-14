@@ -340,14 +340,14 @@ public enum DoorVisualLayers : byte
 public sealed class DoorComponentState : ComponentState
 {
     public readonly DoorState DoorState;
-    public readonly HashSet<NetEntity> CurrentlyCrushing;
+    public readonly HashSet<EntityUid> CurrentlyCrushing;
     public readonly TimeSpan? NextStateChange;
     public readonly bool Partial;
 
-    public DoorComponentState(DoorComponent door, HashSet<NetEntity> currentlyCrushing)
+    public DoorComponentState(DoorComponent door)
     {
         DoorState = door.State;
-        CurrentlyCrushing = currentlyCrushing;
+        CurrentlyCrushing = door.CurrentlyCrushing;
         NextStateChange = door.NextStateChange;
         Partial = door.Partial;
     }

@@ -1,6 +1,5 @@
+using Content.Shared.Actions.ActionTypes;
 using Robust.Shared.GameStates;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.PAI
 {
@@ -24,12 +23,8 @@ namespace Content.Shared.PAI
         [DataField("lastUSer"), ViewVariables(VVAccess.ReadWrite)]
         public EntityUid? LastUser;
 
-        [DataField("midiActionId", serverOnly: true,
-            customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-        public string? MidiActionId = "ActionPAIPlayMidi";
-
-        [DataField("midiAction", serverOnly: true)] // server only, as it uses a server-BUI event !type
-        public EntityUid? MidiAction;
+        [DataField("midiAction", required: true, serverOnly: true)] // server only, as it uses a server-BUI event !type
+        public InstantAction? MidiAction;
     }
 }
 

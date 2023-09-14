@@ -12,7 +12,6 @@ using Content.Shared.VendingMachines;
 using Content.Shared.Wires;
 using Content.Server.Wires;
 using Content.Shared.Prototypes;
-using Content.Shared.Storage.Components;
 
 namespace Content.IntegrationTests.Tests
 {

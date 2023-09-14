@@ -17,9 +17,7 @@ public sealed class ComputerConstruction : InteractionTest
 
         // Initial interaction (ghost turns into real entity)
         await Interact(Steel, 5);
-        ClientAssertPrototype(ComputerFrame, ClientTarget);
-        Target = CTestSystem.Ghosts[ClientTarget!.Value.GetHashCode()];
-        ClientTarget = null;
+        AssertPrototype(ComputerFrame);
 
         // Perform construction steps
         await Interact(
@@ -31,7 +29,7 @@ public sealed class ComputerConstruction : InteractionTest
             Screw);
 
         // Construction finished, target entity was replaced with a new one:
-        AssertPrototype(ComputerId, Target);
+        AssertPrototype(ComputerId);
     }
 
     [Test]

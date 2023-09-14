@@ -1,15 +1,16 @@
-using System.Linq;
 using Content.Server.Actions;
 using Content.Server.Administration.Logs;
 using Content.Server.PDA.Ringer;
 using Content.Server.Stack;
 using Content.Server.Store.Components;
 using Content.Server.UserInterface;
-using Content.Shared.Database;
+using Content.Shared.Actions.ActionTypes;
 using Content.Shared.FixedPoint;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Store;
+using Content.Shared.Database;
 using Robust.Server.GameObjects;
+using System.Linq;
 
 namespace Content.Server.Store.Systems;
 
@@ -67,7 +68,7 @@ public sealed partial class StoreSystem
     /// <param name="store">The store entity itself</param>
     /// <param name="component">The store component being refreshed.</param>
     /// <param name="ui"></param>
-    public void UpdateUserInterface(EntityUid? user, EntityUid store, StoreComponent? component = null, PlayerBoundUserInterface? ui = null)
+    public void UpdateUserInterface(EntityUid? user, EntityUid store, StoreComponent? component = null, BoundUserInterface? ui = null)
     {
         if (!Resolve(store, ref component))
             return;
@@ -97,12 +98,12 @@ public sealed partial class StoreSystem
         // only tell operatives to lock their uplink if it can be locked
         var showFooter = HasComp<RingerUplinkComponent>(store);
         var state = new StoreUpdateState(component.LastAvailableListings, allCurrency, showFooter);
-        _ui.SetUiState(ui, state);
+        UserInterfaceSystem.SetUiState(ui, state);
     }
 
     private void OnRequestUpdate(EntityUid uid, StoreComponent component, StoreRequestUpdateInterfaceMessage args)
     {
-        UpdateUserInterface(args.Session.AttachedEntity, GetEntity(args.Entity), component);
+        UpdateUserInterface(args.Session.AttachedEntity, args.Entity, component);
     }
 
     private void BeforeActivatableUiOpen(EntityUid uid, StoreComponent component, BeforeActivatableUIOpenEvent args)
@@ -161,9 +162,10 @@ public sealed partial class StoreSystem
         }
 
         //give action
-        if (!string.IsNullOrWhiteSpace(listing.ProductAction))
+        if (listing.ProductAction != null)
         {
-            _actions.AddAction(buyer, Spawn(listing.ProductAction), null);
+            var action = new InstantAction(_proto.Index<InstantActionPrototype>(listing.ProductAction));
+            _actions.AddAction(buyer, action, null);
         }
 
         //broadcast event

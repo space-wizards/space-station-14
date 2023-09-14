@@ -104,7 +104,7 @@ namespace Content.Client.Administration.UI.Tabs.AdminbusTab
         private void OnTeleportButtonPressed(BaseButton.ButtonEventArgs obj)
         {
             IoCManager.Resolve<IClientConsoleHost>().ExecuteCommand(
-                $"tp {XCoordinate.Value} {YCoordinate.Value} {new MapId(MapOptions.SelectedId)}");
+                $"tp {XCoordinate.Value} {YCoordinate.Value} {MapOptions.SelectedId}");
         }
 
         private void OnSubmitButtonPressed(BaseButton.ButtonEventArgs obj)
@@ -112,7 +112,7 @@ namespace Content.Client.Administration.UI.Tabs.AdminbusTab
             if (MapPath.Text.Length == 0) return;
 
             IoCManager.Resolve<IClientConsoleHost>().ExecuteCommand(
-                $"loadbp {new MapId(MapOptions.SelectedId)} \"{MapPath.Text}\" {XCoordinate.Value} {YCoordinate.Value} {RotationSpin.Value}");
+                $"loadbp {MapOptions.SelectedId} \"{MapPath.Text}\" {XCoordinate.Value} {YCoordinate.Value} {RotationSpin.Value}");
         }
     }
 }
