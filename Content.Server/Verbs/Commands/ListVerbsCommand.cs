@@ -8,6 +8,8 @@ namespace Content.Server.Verbs.Commands
     [AdminCommand(AdminFlags.Admin)]
     public sealed class ListVerbsCommand : IConsoleCommand
     {
+        [Dependency] private readonly IEntityManager _entManager = default!;
+
         public string Command => "listverbs";
         public string Description => Loc.GetString("list-verbs-command-description");
         public string Help => Loc.GetString("list-verbs-command-help");
@@ -20,11 +22,11 @@ namespace Content.Server.Verbs.Commands
                 return;
             }
 
-            var entityManager = IoCManager.Resolve<IEntityManager>();
-            var verbSystem = EntitySystem.Get<SharedVerbSystem>();
+            var verbSystem = _entManager.System<SharedVerbSystem>();
 
             // get the 'player' entity (defaulting to command user, otherwise uses a uid)
             EntityUid? playerEntity = null;
+
             if (!int.TryParse(args[0], out var intPlayerUid))
             {
                 if (args[0] == "self" && shell.Player?.AttachedEntity != null)
@@ -36,10 +38,6 @@ namespace Content.Server.Verbs.Commands
                     shell.WriteError(Loc.GetString("list-verbs-command-invalid-player-uid"));
                     return;
                 }
-            }
-            else
-            {
-                entityManager.EntityExists(new EntityUid(intPlayerUid));
             }
 
             // gets the target entity
@@ -55,14 +53,15 @@ namespace Content.Server.Verbs.Commands
                 return;
             }
 
-            var target = new EntityUid(intUid);
-            if (!entityManager.EntityExists(target))
+            var targetNet = new NetEntity(intUid);
+
+            if (!_entManager.TryGetEntity(targetNet, out var target))
             {
                 shell.WriteError(Loc.GetString("list-verbs-command-invalid-target-entity"));
                 return;
             }
 
-            var verbs = verbSystem.GetLocalVerbs(target, playerEntity.Value, Verb.VerbTypes);
+            var verbs = verbSystem.GetLocalVerbs(target.Value, playerEntity.Value, Verb.VerbTypes);
 
             foreach (var verb in verbs)
             {

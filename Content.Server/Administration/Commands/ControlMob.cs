@@ -34,16 +34,16 @@ namespace Content.Server.Administration.Commands
                 return;
             }
 
-            var target = new NetEntity(targetId);
+            var targetNet = new NetEntity(targetId);
 
-            if (!target.IsValid() || !_entities.EntityExists(target))
+            if (!_entities.TryGetEntity(targetNet, out var target))
             {
                 shell.WriteLine(Loc.GetString("shell-invalid-entity-id"));
                 return;
             }
 
             var mindSystem = _entities.System<SharedMindSystem>();
-            if (!mindSystem.TryGetMind(target, out var mindId, out var mind))
+            if (!mindSystem.TryGetMind(target.Value, out var mindId, out var mind))
             {
                 shell.WriteLine(Loc.GetString("shell-entity-is-not-mob"));
                 return;

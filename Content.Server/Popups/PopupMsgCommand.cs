@@ -8,6 +8,8 @@ namespace Content.Server.Popups
     [AdminCommand(AdminFlags.Debug)]
     public sealed class PopupMsgCommand : IConsoleCommand
     {
+        [Dependency] private readonly IEntityManager _entManager = default!;
+
         public string Command => "srvpopupmsg";
         public string Description => "";
         public string Help => "";
@@ -18,7 +20,9 @@ namespace Content.Server.Popups
             var viewer = NetEntity.Parse(args[1]);
             var msg = args[2];
 
-            source.PopupMessage(viewer, msg);
+            var popupSystem = _entManager.System<PopupSystem>();
+
+            popupSystem.PopupEntity(msg, _entManager.GetEntity(source), _entManager.GetEntity(viewer));
         }
     }
 }

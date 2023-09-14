@@ -12,15 +12,18 @@ namespace Content.Server.Sandbox.Commands
     [AnyCommand]
     public sealed class ColorNetworkCommand : IConsoleCommand
     {
+        [Dependency] private readonly IAdminManager _adminManager = default!;
+        [Dependency] private readonly IEntityManager _entManager = default!;
+
         public string Command => "colornetwork";
         public string Description => Loc.GetString("color-network-command-description");
         public string Help => Loc.GetString("color-network-command-help-text", ("command",Command));
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            var sandboxManager = EntitySystem.Get<SandboxSystem>();
-            var adminManager = IoCManager.Resolve<IAdminManager>();
-            if (shell.IsClient && (!sandboxManager.IsSandboxEnabled && !adminManager.HasAdminFlag((IPlayerSession)shell.Player!, AdminFlags.Mapping)))
+            var sandboxManager = _entManager.System<SandboxSystem>();
+
+            if (shell.IsClient && (!sandboxManager.IsSandboxEnabled && !_adminManager.HasAdminFlag((IPlayerSession)shell.Player!, AdminFlags.Mapping)))
             {
                 shell.WriteError("You are not currently able to use mapping commands.");
             }
@@ -31,25 +34,21 @@ namespace Content.Server.Sandbox.Commands
                 return;
             }
 
-
-
-            var entityManager = IoCManager.Resolve<IEntityManager>();
-
             if (!int.TryParse(args[0], out var targetId))
             {
                 shell.WriteLine(Loc.GetString("shell-argument-must-be-number"));
                 return;
             }
 
-            var eUid = new EntityUid(targetId);
+            var nent = new NetEntity(targetId);
 
-            if (!eUid.IsValid() || !entityManager.EntityExists(eUid))
+            if (!_entManager.TryGetEntity(nent, out var eUid))
             {
                 shell.WriteLine(Loc.GetString("shell-invalid-entity-id"));
                 return;
             }
 
-            if (!entityManager.TryGetComponent(eUid, out NodeContainerComponent? nodeContainerComponent))
+            if (!_entManager.TryGetComponent(eUid, out NodeContainerComponent? nodeContainerComponent))
             {
                 shell.WriteLine(Loc.GetString("shell-entity-is-not-node-container"));
                 return;
@@ -75,13 +74,15 @@ namespace Content.Server.Sandbox.Commands
         {
             var group = nodeContainerComponent.Nodes[nodeGroupId.ToString().ToLower()].NodeGroup;
 
-            if (group == null) return;
+            if (group == null)
+                return;
 
             foreach (var x in group.Nodes)
             {
-                if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(x.Owner, out AtmosPipeColorComponent? atmosPipeColorComponent)) continue;
+                if (!_entManager.TryGetComponent(x.Owner, out AtmosPipeColorComponent? atmosPipeColorComponent))
+                    continue;
 
-                EntitySystem.Get<AtmosPipeColorSystem>().SetColor(x.Owner, atmosPipeColorComponent, color);
+                _entManager.System<AtmosPipeColorSystem>().SetColor(x.Owner, atmosPipeColorComponent, color);
             }
         }
     }
