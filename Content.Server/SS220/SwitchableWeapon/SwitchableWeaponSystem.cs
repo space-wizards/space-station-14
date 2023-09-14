@@ -55,14 +55,14 @@ public sealed class SwitchableWeaponSystem : EntitySystem
 
     private void UpdateState(EntityUid uid, SwitchableWeaponComponent comp)
     {
-        if (TryComp<ItemComponent>(comp.Owner, out var item))
+        if (TryComp<ItemComponent>(uid, out var item))
         {
-            _item.SetSize(item.Owner,comp.IsOpen ? comp.SizeOpened : comp.SizeClosed,item);
-            _item.SetHeldPrefix(comp.Owner, comp.IsOpen ? "on" : "off", item);
+            _item.SetSize(uid, comp.IsOpen ? comp.SizeOpened : comp.SizeClosed, item);
+            _item.SetHeldPrefix(uid, comp.IsOpen ? "on" : "off", item);
         }
 
-        if (TryComp<AppearanceComponent>(comp.Owner, out var appearance))
-            _appearance.SetData(comp.Owner, ToggleVisuals.Toggled, comp.IsOpen, appearance);
+        if (TryComp<AppearanceComponent>(uid, out var appearance))
+            _appearance.SetData(uid, ToggleVisuals.Toggled, comp.IsOpen, appearance);
     }
 
     private void Toggle(EntityUid uid, SwitchableWeaponComponent comp, UseInHandEvent args)
