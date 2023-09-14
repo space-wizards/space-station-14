@@ -1,0 +1,42 @@
+- type: constructionGraph
+  id: WeaponPistolMk58
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: frame
+      steps:
+      - material: Steel
+        amount: 5
+        doAfter: 4
+
+  - node: frame
+    entity: PistolMk58Frame
+    edges:
+    - to: mk58
+      steps:
+      - tag: BallisticsTechPart
+        store: hammer
+        name: a modular hammer
+        doAfter: 2
+
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 5
+      - !type:DeleteEntity {}
+      steps:
+      - tool: Screwing
+        doAfter: 2
+
+  - node: mk58
+    entity: WeaponPistolMk58Empty
+    edges:
+    - to: frame
+      completed:
+      - !type:EmptyContainer
+        container: hammer
+      steps:
+      - tool: Prying
+        doAfter: 1

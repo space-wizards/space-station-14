@@ -1,0 +1,41 @@
+- type: constructionGraph
+  id: WeaponPistolViper
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: frame
+      steps:
+      - material: Steel
+        amount: 5
+        doAfter: 4
+
+  - node: frame
+    entity: PistolViperFrame
+    edges:
+    - to: viper
+      steps:
+      - tag: BallisticsTechPart
+        store: hammer
+        name: a modular hammer
+        doAfter: 2
+
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 5
+      - !type:DeleteEntity {}
+      steps:
+      - tool: Screwing
+        doAfter: 2
+
+  - node: viper
+    entity: WeaponPistolViperEmpty
+    edges:
+    - to: frame
+      completed:
+      - !type:EmptyAllContainers
+      steps:
+      - tool: Prying
+        doAfter: 1

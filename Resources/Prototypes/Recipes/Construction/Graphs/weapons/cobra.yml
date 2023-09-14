@@ -1,0 +1,42 @@
+- type: constructionGraph
+  id: WeaponPistolCobra
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: frame
+      steps:
+      - material: Steel
+        amount: 5
+        doAfter: 4
+
+  - node: frame
+    entity: PistolCobraFrame
+    edges:
+    - to: cobra
+      steps:
+      - tag: BallisticsTechPart
+        store: hammer
+        name: a modular hammer
+        doAfter: 2
+
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 5
+      - !type:DeleteEntity {}
+      steps:
+      - tool: Screwing
+        doAfter: 2
+
+  - node: cobra
+    entity: WeaponPistolCobraEmpty
+    edges:
+    - to: frame
+      completed:
+      - !type:EmptyContainer
+        container: hammer
+      steps:
+      - tool: Prying
+        doAfter: 1
