@@ -21,6 +21,7 @@
 - type: startingGear
   id: DetectiveGear
   equipment:
+    neck: SecurityWhistle
     jumpsuit: ClothingUniformJumpsuitDetective
     back: ClothingBackpackSecurityFilledDetective
     shoes: ClothingShoesBootsCombatFilled
