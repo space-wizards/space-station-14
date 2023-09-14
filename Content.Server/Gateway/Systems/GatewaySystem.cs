@@ -66,7 +66,7 @@ public sealed class GatewaySystem : EntitySystem
 
     private void UpdateUserInterface(EntityUid uid, GatewayComponent comp)
     {
-        var destinations = new List<(NetEntity, String, TimeSpan, bool)>();
+        var destinations = new List<(NetEntity, string, TimeSpan, bool)>();
         foreach (var destUid in comp.Destinations)
         {
             var dest = Comp<GatewayDestinationComponent>(destUid);
