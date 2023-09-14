@@ -72,9 +72,10 @@ namespace Content.Client.MassMedia.Ui
 
             var stringName = _menu.NameInput.Text;
             var name = (stringName.Length <= 25 ? stringName.Trim() : $"{stringName.Trim().Substring(0, 25)}...");
+            var content = (stringContent.Length <= 2048 ? stringContent.Trim() : $"{stringContent.Trim().Substring(0, 2048)}...");
             _menu.ContentInput.TextRope = new Rope.Leaf(string.Empty);
             _menu.NameInput.Text = string.Empty;
-            SendMessage(new NewsWriteShareMessage(name, stringContent));
+            SendMessage(new NewsWriteShareMessage(name, content));
         }
 
         private void OnDeleteButtonPressed(int articleNum)

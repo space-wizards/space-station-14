@@ -36,6 +36,9 @@ public sealed class NewsSystem : EntitySystem
     [Dependency] private readonly AccessReaderSystem _accessReader = default!;
     [Dependency] private readonly StationRecordsSystem _stationRecords = default!;
 
+    private const int MaxNameLength = 25;
+    private const int MaxContentLength = 2048;
+
     // TODO remove this. Dont store data on systems
     private readonly List<NewsArticle> _articles = new List<NewsArticle>();
 
@@ -145,8 +148,8 @@ public sealed class NewsSystem : EntitySystem
         NewsArticle article = new NewsArticle
         {
             Author = authorName,
-            Name = (msg.Name.Length <= 25 ? msg.Name.Trim() : $"{msg.Name.Trim().Substring(0, 25)}..."),
-            Content = msg.Content,
+            Name = (msg.Name.Length <= MaxNameLength ? msg.Name.Trim() : $"{msg.Name.Trim().Substring(0, MaxNameLength)}..."),
+            Content = (msg.Content.Length <= MaxContentLength ? msg.Name.Trim() : $"{msg.Content.Trim().Substring(0, MaxContentLength)}..."),
             ShareTime = _ticker.RoundDuration()
 
         };
