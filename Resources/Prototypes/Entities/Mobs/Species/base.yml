@@ -314,6 +314,7 @@
   - type: TTS # Corvax-TTS
   - type: ContentEye
   - type: SleepEmitSound
+  - type: SSDIndicator
 
 - type: entity
   save: false

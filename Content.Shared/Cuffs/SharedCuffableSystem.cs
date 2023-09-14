@@ -479,7 +479,7 @@ namespace Content.Shared.Cuffs
             if (HasComp<DisarmProneComponent>(target))
                 cuffTime = 0.0f; // cuff them instantly.
 
-            var doAfterEventArgs = new DoAfterArgs(user, cuffTime, new AddCuffDoAfterEvent(), handcuff, target, handcuff)
+            var doAfterEventArgs = new DoAfterArgs(EntityManager, user, cuffTime, new AddCuffDoAfterEvent(), handcuff, target, handcuff)
             {
                 BreakOnTargetMove = true,
                 BreakOnUserMove = true,
@@ -566,7 +566,7 @@ namespace Content.Shared.Cuffs
             }
 
             var uncuffTime = isOwner ? cuff.BreakoutTime : cuff.UncuffTime;
-            var doAfterEventArgs = new DoAfterArgs(user, uncuffTime, new UnCuffDoAfterEvent(), target, target, cuffsToRemove)
+            var doAfterEventArgs = new DoAfterArgs(EntityManager, user, uncuffTime, new UnCuffDoAfterEvent(), target, target, cuffsToRemove)
             {
                 BreakOnUserMove = true,
                 BreakOnTargetMove = true,

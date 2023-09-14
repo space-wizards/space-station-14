@@ -133,17 +133,17 @@ public sealed class StrapComponentState : ComponentState
     public readonly StrapPosition Position;
     public readonly float MaxBuckleDistance;
     public readonly Vector2 BuckleOffsetClamped;
-    public readonly HashSet<EntityUid> BuckledEntities;
-    public readonly bool HasSeatbelt;
+    public readonly HashSet<NetEntity> BuckledEntities;
+    public readonly bool HasSeatbelt; //SS220-Gravpull-straps-bugfix
     public readonly int OccupiedSize;
 
-    public StrapComponentState(StrapPosition position, Vector2 offset, HashSet<EntityUid> buckled,
-        bool hasSeatbelt ,float maxBuckleDistance, int occupiedSize)
+    public StrapComponentState(StrapPosition position, Vector2 offset, HashSet<NetEntity> buckled,
+        bool hasSeatbelt, float maxBuckleDistance, int occupiedSize)
     {
         Position = position;
         BuckleOffsetClamped = offset;
         BuckledEntities = buckled;
-        HasSeatbelt = hasSeatbelt;
+        HasSeatbelt = hasSeatbelt;  //SS220-Gravpull-straps-bugfix
         MaxBuckleDistance = maxBuckleDistance;
         OccupiedSize = occupiedSize;
     }

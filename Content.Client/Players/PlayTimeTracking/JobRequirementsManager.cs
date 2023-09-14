@@ -10,6 +10,7 @@ using Robust.Client.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 
 namespace Content.Client.Players.PlayTimeTracking;
 
@@ -18,6 +19,7 @@ public sealed class JobRequirementsManager
     [Dependency] private readonly IBaseClient _client = default!;
     [Dependency] private readonly IClientNetManager _net = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
+    [Dependency] private readonly IEntityManager _entManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypes = default!;
     [Dependency] private readonly IClientAdminManager _adminManager = default!;
@@ -79,17 +81,19 @@ public sealed class JobRequirementsManager
         Updated?.Invoke();
     }
 
+    //SS220-Client-admin-check-for-jobs
     private bool IsBypassedChecks()
     {
         return _adminManager.IsActive();
     }
-    public bool IsAllowed(JobPrototype job, [NotNullWhen(false)] out string? reason)
+
+    public bool IsAllowed(JobPrototype job, [NotNullWhen(false)] out FormattedMessage? reason)
     {
         reason = null;
 
         if (_roleBans.Contains($"Job:{job.ID}"))
         {
-            reason = Loc.GetString("role-ban");
+            reason = FormattedMessage.FromUnformatted(Loc.GetString("role-ban"));
             return false;
         }
 
@@ -106,21 +110,19 @@ public sealed class JobRequirementsManager
 
         var reasonBuilder = new StringBuilder();
 
-        var first = true;
         foreach (var requirement in job.Requirements)
         {
-            if (JobRequirements.TryRequirementMet(requirement, _roles, out reason, _prototypes))
+            if (JobRequirements.TryRequirementMet(requirement, _roles, out var jobReason, _entManager, _prototypes))
                 continue;
+
+            //SS220-Client-admin-check-for-jobs
             if (IsBypassedChecks())
                 continue;
-            if (!first)
-                reasonBuilder.Append('\n');
-            first = false;
 
-            reasonBuilder.AppendLine(reason);
+            reasonBuilder.AppendLine(jobReason.ToMarkup());
         }
 
-        reason = reasonBuilder.Length == 0 ? null : reasonBuilder.ToString();
+        reason = reasonBuilder.Length == 0 ? null : FormattedMessage.FromMarkup(reasonBuilder.ToString().Trim());
         return reason == null;
     }
 }

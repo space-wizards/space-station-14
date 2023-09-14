@@ -32,7 +32,7 @@ namespace Content.Server.Tabletop.Components
         /// </summary>
         [DataField("windowSize")]
         [ViewVariables(VVAccess.ReadWrite)]
-        public Vector2i WindowSize { get; set; } = (500, 436);
+        public Vector2i WindowSize { get; set; } = (500, 436); //SS220-Tabletop-window-start-size
 
         /// <summary>
         /// The zoom of the viewport camera.

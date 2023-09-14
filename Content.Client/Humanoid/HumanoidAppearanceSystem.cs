@@ -198,7 +198,7 @@ public sealed class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
             profile.Appearance.EyeColor,
             _markingManager);
 
-        DebugTools.Assert(uid.IsClientSide());
+        DebugTools.Assert(IsClientSide(uid));
 
         var state = new HumanoidAppearanceState(markings,
             new(),

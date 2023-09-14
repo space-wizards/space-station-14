@@ -5,7 +5,6 @@ using Content.Client.Viewport;
 using Content.Shared.CCVar;
 using Content.Shared.Interaction;
 using Content.Shared.SS220.Interaction;
-using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.Player;
@@ -43,7 +42,7 @@ public sealed class InteractionOutlineSystem : EntitySystem
         base.Initialize();
 
         _configManager.OnValueChanged(CCVars.OutlineEnabled, SetCvarEnabled);
-        UpdatesAfter.Add(typeof(EyeUpdateSystem));
+        UpdatesAfter.Add(typeof(SharedEyeSystem));
     }
 
     public override void Shutdown()

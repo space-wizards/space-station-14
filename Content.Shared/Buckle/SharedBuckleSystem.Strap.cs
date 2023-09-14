@@ -52,19 +52,19 @@ public abstract partial class SharedBuckleSystem
 
     private void OnStrapGetState(EntityUid uid, StrapComponent component, ref ComponentGetState args)
     {
-        args.State = new StrapComponentState(component.Position, component.BuckleOffset, component.BuckledEntities, component.HasSeatbelt, component.MaxBuckleDistance, component.OccupiedSize);
+        args.State = new StrapComponentState(component.Position, component.BuckleOffset, GetNetEntitySet(component.BuckledEntities), component.HasSeatbelt, component.MaxBuckleDistance, component.OccupiedSize);
     }
 
     private void OnStrapHandleState(EntityUid uid, StrapComponent component, ref ComponentHandleState args)
     {
         if (args.Current is not StrapComponentState state)
             return;
-        
+
         component.Position = state.Position;
         component.BuckleOffsetUnclamped = state.BuckleOffsetClamped;
         component.BuckledEntities.Clear();
-        component.BuckledEntities.UnionWith(state.BuckledEntities);
-        component.HasSeatbelt = state.HasSeatbelt;
+        component.BuckledEntities.UnionWith(EnsureEntitySet<StrapComponent>(state.BuckledEntities, uid));
+        component.HasSeatbelt = state.HasSeatbelt; //SS220-Gravpull-seatbelt-fix
         component.MaxBuckleDistance = state.MaxBuckleDistance;
         component.OccupiedSize = state.OccupiedSize;
     }
@@ -109,7 +109,7 @@ public abstract partial class SharedBuckleSystem
     private void OnStrapContainerGettingInsertedAttempt(EntityUid uid, StrapComponent component, ContainerGettingInsertedAttemptEvent args)
     {
         // If someone is attempting to put this item inside of a backpack, ensure that it has no entities strapped to it.
-        if (HasComp<SharedStorageComponent>(args.Container.Owner) && component.BuckledEntities.Count != 0)
+        if (HasComp<StorageComponent>(args.Container.Owner) && component.BuckledEntities.Count != 0)
             args.Cancel();
     }
 

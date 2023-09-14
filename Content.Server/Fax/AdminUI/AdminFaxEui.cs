@@ -35,7 +35,7 @@ public sealed class AdminFaxEui : BaseEui
         var entries = new List<AdminFaxEntry>();
         while (faxes.MoveNext(out var uid, out var fax, out var device))
         {
-            entries.Add(new AdminFaxEntry(uid, fax.FaxName, device.Address));
+            entries.Add(new AdminFaxEntry(_entityManager.GetNetEntity(uid), fax.FaxName, device.Address));
         }
         return new AdminFaxEuiState(entries);
     }
@@ -52,7 +52,7 @@ public sealed class AdminFaxEui : BaseEui
                     !_entityManager.HasComponent<GhostComponent>(Player.AttachedEntity.Value))
                     return;
 
-                _followerSystem.StartFollowingEntity(Player.AttachedEntity.Value, followData.TargetFax);
+                _followerSystem.StartFollowingEntity(Player.AttachedEntity.Value, _entityManager.GetEntity(followData.TargetFax));
                 break;
             }
             case AdminFaxEuiMsg.Send sendData:
@@ -73,7 +73,7 @@ public sealed class AdminFaxEui : BaseEui
                 };
 
                 var printout = new FaxPrintout(dataToCopy, metaData);
-                _faxSystem.Receive(sendData.Target, printout);
+                _faxSystem.Receive(_entityManager.GetEntity(sendData.Target), printout);
                 break;
             }
         }
