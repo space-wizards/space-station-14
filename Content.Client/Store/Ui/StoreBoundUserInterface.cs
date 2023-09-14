@@ -2,6 +2,9 @@ using Content.Shared.Store;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using System.Linq;
+using System.Threading;
+using Serilog;
+using Timer = Robust.Shared.Timing.Timer;
 
 namespace Content.Client.Store.Ui;
 
@@ -40,6 +43,10 @@ public sealed class StoreBoundUserInterface : BoundUserInterface
         {
             SendMessage(new StoreRequestWithdrawMessage(type, amount));
         };
+        Timer.SpawnRepeating(1000, () =>
+        {
+            SendMessage(new StoreRequestUpdateInterfaceMessage());
+        }, CancellationToken.None);
     }
     protected override void UpdateState(BoundUserInterfaceState state)
     {
@@ -53,6 +60,7 @@ public sealed class StoreBoundUserInterface : BoundUserInterface
             case StoreUpdateState msg:
                 _menu.UpdateBalance(msg.Balance);
                 _menu.PopulateStoreCategoryButtons(msg.Listings);
+
                 _menu.UpdateListing(msg.Listings.ToList());
                 _menu.SetFooterVisibility(msg.ShowFooter);
                 break;
