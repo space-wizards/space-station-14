@@ -46,6 +46,7 @@ namespace Content.IntegrationTests.Tests
         {
             "Dev",
             "TestTeg",
+            "Gateways",
             "Fland",
             "Meta",
             "Packed",
