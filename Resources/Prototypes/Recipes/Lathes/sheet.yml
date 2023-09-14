@@ -139,3 +139,10 @@
   completetime: 6.4
   materials:
     Meaterial: 200
+
+- type: latheRecipe
+  id: SheetPaper
+  result: SheetPaper1
+  completetime: 1
+  materials:
+    Wood: 50

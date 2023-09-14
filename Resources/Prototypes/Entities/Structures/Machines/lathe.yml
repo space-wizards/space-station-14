@@ -861,9 +861,11 @@
     whitelist:
       tags:
       - Raw
+      - Wooden
   - type: Lathe
     idleState: base_machine
     runningState: base_machine_processing
     canEjectStoredMaterials: false
     staticRecipes:
     - MaterialSheetMeat
+    - SheetPaper
