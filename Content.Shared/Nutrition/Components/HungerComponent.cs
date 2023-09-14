@@ -99,7 +99,6 @@ public sealed partial class HungerComponent : Component
     /// Damage dealt when your current threshold is at HungerThreshold.Dead
     /// </summary>
     [DataField("starvationDamage")]
-    [AutoNetworkedField]
     public DamageSpecifier? StarvationDamage;
 
     /// <summary>
