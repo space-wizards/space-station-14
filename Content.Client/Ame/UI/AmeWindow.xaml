@@ -1,4 +1,4 @@
-﻿<DefaultWindow xmlns="https://spacestation14.io"
+<DefaultWindow xmlns="https://spacestation14.io"
             Title="{Loc 'ame-window-title'}"
             MinSize="250 250">
     <BoxContainer Orientation="Vertical">
@@ -41,6 +41,14 @@
             <Label Text="{Loc 'ame-window-core-count-label'}" />
             <Label Text=" " />
             <Label Name="CoreCount" Text="0" />
+        </BoxContainer>
+        <BoxContainer Orientation="Horizontal">
+            <Label Text="{Loc 'ame-window-power-produced-label'}" />
+            <Label Text=" " />
+            <Label Name="CurrentPowerSupply" Text="0" />
+            <Label Text=" / " />
+            <Label Name="MaxPowerSupply" Text="0" />
+            <Label Text=" kW" />
         </BoxContainer>
     </BoxContainer>
 </DefaultWindow>

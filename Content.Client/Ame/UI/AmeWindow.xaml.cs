@@ -64,6 +64,8 @@ namespace Content.Client.Ame.UI
 
             CoreCount.Text = $"{castState.CoreCount}";
             InjectionAmount.Text = $"{castState.InjectionAmount}";
+            CurrentPowerSupply.Text = $"{castState.CurrentPowerSupply}";
+            MaxPowerSupply.Text = $"{castState.MaxPowerSupply}";
         }
     }
 }

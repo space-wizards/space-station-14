@@ -112,12 +112,21 @@ public sealed class AmeControllerSystem : EntitySystem
     {
         var powered = !TryComp<ApcPowerReceiverComponent>(uid, out var powerSource) || powerSource.Powered;
         var coreCount = TryGetAMENodeGroup(uid, out var group) ? group.CoreCount : 0;
+        float currentPowerSupply = 0;
+        float maxPowerSupply = 0;
+
+        // set current power statistics in kW
+        if (TryComp<PowerSupplierComponent>(uid, out var powerOutlet))
+        {
+            currentPowerSupply = powerOutlet.CurrentSupply / 1000;
+            maxPowerSupply = powerOutlet.MaxSupply / 1000;
+        }
 
         var hasJar = Exists(controller.JarSlot.ContainedEntity);
         if (!hasJar || !TryComp<AmeFuelContainerComponent>(controller.JarSlot.ContainedEntity, out var jar))
-            return new AmeControllerBoundUserInterfaceState(powered, IsMasterController(uid), false, hasJar, 0, controller.InjectionAmount, coreCount);
+            return new AmeControllerBoundUserInterfaceState(powered, IsMasterController(uid), false, hasJar, 0, controller.InjectionAmount, coreCount, currentPowerSupply, maxPowerSupply);
 
-        return new AmeControllerBoundUserInterfaceState(powered, IsMasterController(uid), controller.Injecting, hasJar, jar.FuelAmount, controller.InjectionAmount, coreCount);
+        return new AmeControllerBoundUserInterfaceState(powered, IsMasterController(uid), controller.Injecting, hasJar, jar.FuelAmount, controller.InjectionAmount, coreCount, currentPowerSupply, maxPowerSupply);
     }
 
     private bool IsMasterController(EntityUid uid)
