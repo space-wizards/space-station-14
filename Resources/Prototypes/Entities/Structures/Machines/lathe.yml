@@ -266,6 +266,7 @@
       - ClothingEyesGlassesChemical
       - RayCaster
       - ProtoKineticCharger
+      - SchematicProtoKineticAccelerator
   - type: EmagLatheRecipes
     emagDynamicRecipes:
       - ExplosivePayload
@@ -566,6 +567,9 @@
       - WeaponLaserCannon
       - WeaponXrayCannon
       - WeaponTaser
+      - SchematicLaserCarbine
+      - SchematicAdvancedLaser
+      - SchematicLaserCannon
   - type: MaterialStorage
     whitelist:
       tags:

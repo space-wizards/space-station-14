@@ -15,3 +15,10 @@
     Steel: 1000
     Glass: 500
     # If they get spammed make it cost silver.
+
+- type: latheRecipe
+  id: SchematicProtoKineticAccelerator
+  result: SchematicProtoKineticAccelerator
+  completetime: 3
+  materials:
+    Paper: 500

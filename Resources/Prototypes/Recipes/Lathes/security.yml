@@ -388,3 +388,24 @@
   completetime: 5
   materials:
     Plastic: 950
+
+- type: latheRecipe
+  id: SchematicLaserCarbine
+  result: SchematicLaserCarbine
+  completetime: 3
+  materials:
+    Paper: 500
+
+- type: latheRecipe
+  id: SchematicAdvancedLaser
+  result: SchematicAdvancedLaser
+  completetime: 3
+  materials:
+    Paper: 500
+
+- type: latheRecipe
+  id: SchematicLaserCannon
+  result: SchematicLaserCannon
+  completetime: 3
+  materials:
+    Paper: 500
