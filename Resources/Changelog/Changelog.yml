@@ -1,9 +1,4 @@
 Entries:
-- author: Emisse
-  changes:
-  - {message: Hardsuit + Firesuit Rebalancingening., type: Tweak}
-  id: 4323
-  time: '2023-07-26T00:34:59.0000000+00:00'
 - author: kseandi
   changes:
   - {message: Nanotraisen found the cause of the Geiger counters malfunction!, type: Fix}
@@ -2975,3 +2970,9 @@ Entries:
       up incorrectly., type: Fix}
   id: 4822
   time: '2023-09-14T00:26:58.0000000+00:00'
+- author: Nimfar11
+  changes:
+  - {message: "Added a telescopi\u0441 shield to the Advanced Riot Control Technology.",
+    type: Add}
+  id: 4823
+  time: '2023-09-14T01:03:13.0000000+00:00'
