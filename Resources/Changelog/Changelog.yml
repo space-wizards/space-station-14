@@ -1,9 +1,4 @@
 Entries:
-- author: kseandi
-  changes:
-  - {message: Nanotraisen found the cause of the Geiger counters malfunction!, type: Fix}
-  id: 4324
-  time: '2023-07-26T00:35:19.0000000+00:00'
 - author: Nairodian
   changes:
   - {message: 'Added four new senior roles meant for teaching new players their related
@@ -2976,3 +2971,9 @@ Entries:
     type: Add}
   id: 4823
   time: '2023-09-14T01:03:13.0000000+00:00'
+- author: notafet
+  changes:
+  - {message: Cryogenic gas cylinders are now available for purchase from cargo.,
+    type: Add}
+  id: 4824
+  time: '2023-09-14T03:37:13.0000000+00:00'
