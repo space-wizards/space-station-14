@@ -195,3 +195,36 @@
   category: construction-category-weapons
   icon: { sprite: Objects/Weapons/Guns/Battery/laser_retro.rsi, state: icon }
   objectType: Item
+
+- type: construction
+  hide: true
+  name: cobra
+  id: WeaponPistolCobra
+  graph: WeaponPistolCobra
+  startNode: start
+  targetNode: cobra
+  category: construction-category-weapons
+  icon: { sprite: Objects/Weapons/Guns/Pistols/cobra.rsi, state: icon }
+  objectType: Item
+
+- type: construction
+  hide: true
+  name: viper
+  id: WeaponPistolViper
+  graph: WeaponPistolViper
+  startNode: start
+  targetNode: viper
+  category: construction-category-weapons
+  icon: { sprite: Objects/Weapons/Guns/Pistols/viper.rsi, state: icon }
+  objectType: Item
+
+- type: construction
+  hide: true
+  name: mk58
+  id: WeaponPistolMk58
+  graph: WeaponPistolMk58
+  startNode: start
+  targetNode: mk58
+  category: construction-category-weapons
+  icon: { sprite: Objects/Weapons/Guns/Pistols/mk58.rsi, state: icon }
+  objectType: Item
