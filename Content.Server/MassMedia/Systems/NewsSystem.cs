@@ -17,7 +17,9 @@ using Content.Server.GameTicking;
 using Robust.Shared.Timing;
 using Content.Server.Popups;
 using Content.Server.StationRecords.Systems;
+using Content.Shared.CCVar;
 using Content.Shared.Database;
+using Robust.Shared.Configuration;
 using Robust.Shared.Containers;
 using Robust.Shared.Utility;
 
@@ -26,6 +28,7 @@ namespace Content.Server.MassMedia.Systems;
 public sealed class NewsSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
     [Dependency] private readonly RingerSystem _ringer = default!;
     [Dependency] private readonly CartridgeLoaderSystem _cartridgeLoaderSystem = default!;
@@ -142,11 +145,14 @@ public sealed class NewsSystem : EntitySystem
             }
         }
 
+        var maxNameLength = _cfg.GetCVar(CCVars.NewsNameLimit);
+        var maxContentLength = _cfg.GetCVar(CCVars.NewsContentLimit);
+
         NewsArticle article = new NewsArticle
         {
             Author = authorName,
-            Name = (msg.Name.Length <= 25 ? msg.Name.Trim() : $"{msg.Name.Trim().Substring(0, 25)}..."),
-            Content = msg.Content,
+            Name = (msg.Name.Length <= maxNameLength ? msg.Name.Trim() : $"{msg.Name.Trim().Substring(0, maxNameLength)}..."),
+            Content = (msg.Content.Length <= maxContentLength ? msg.Name.Trim() : $"{msg.Content.Trim().Substring(0, maxContentLength)}..."),
             ShareTime = _ticker.RoundDuration()
 
         };
