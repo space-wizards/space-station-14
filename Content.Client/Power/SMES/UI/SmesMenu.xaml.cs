@@ -31,7 +31,7 @@ public sealed partial class SmesMenu : FancyWindow
     public void UpdateState(SmesBoundInterfaceState state)
     {
         if (PowerLabel != null)
-            PowerLabel.Text = Loc.GetString("smes-power", ("amount", state.Power));
+            PowerLabel.Text = Loc.GetString("smes-power", ("power", state.Power));
 
         if (ExternalPowerStateLabel != null)
             PowerUIHelpers.FillExternalPowerLabel(ExternalPowerStateLabel, state.ExternalPower);
