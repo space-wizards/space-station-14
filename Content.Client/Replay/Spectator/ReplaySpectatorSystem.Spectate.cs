@@ -51,7 +51,7 @@ public sealed partial class ReplaySpectatorSystem
         if (old == null)
             return;
 
-        if (old.Value.IsClientSide())
+        if (IsClientSide(old.Value))
             Del(old.Value);
         else
             RemComp<ReplaySpectatorComponent>(old.Value);
@@ -77,7 +77,7 @@ public sealed partial class ReplaySpectatorSystem
 
         if (old != null)
         {
-            if (old.Value.IsClientSide())
+            if (IsClientSide(old.Value))
                 QueueDel(old.Value);
             else
                 RemComp<ReplaySpectatorComponent>(old.Value);
@@ -100,11 +100,13 @@ public sealed partial class ReplaySpectatorSystem
             return;
         }
 
-        if (!EntityUid.TryParse(args[0], out var uid))
+        if (!NetEntity.TryParse(args[0], out var netEntity))
         {
             shell.WriteError(Loc.GetString("cmd-parse-failure-uid", ("arg", args[0])));
             return;
         }
+
+        var uid = GetEntity(netEntity);
 
         if (!Exists(uid))
         {
@@ -120,7 +122,7 @@ public sealed partial class ReplaySpectatorSystem
         if (args.Length != 1)
             return CompletionResult.Empty;
 
-        return CompletionResult.FromHintOptions(CompletionHelper.EntityUids(args[0],
+        return CompletionResult.FromHintOptions(CompletionHelper.NetEntities(args[0],
             EntityManager), Loc.GetString("cmd-replay-spectate-hint"));
     }
 }

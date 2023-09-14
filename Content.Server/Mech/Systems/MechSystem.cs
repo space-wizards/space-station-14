@@ -24,17 +24,17 @@ using Robust.Shared.Map;
 namespace Content.Server.Mech.Systems;
 
 /// <inheritdoc/>
-public sealed class MechSystem : SharedMechSystem
+public sealed partial class MechSystem : SharedMechSystem
 {
+    [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
     [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
+    [Dependency] private readonly BatterySystem _battery = default!;
     [Dependency] private readonly ContainerSystem _container = default!;
     [Dependency] private readonly DamageableSystem _damageable = default!;
-    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly IMapManager _map = default!;
-    [Dependency] private readonly UserInterfaceSystem _ui = default!;
-    [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
+    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly BatterySystem _batterySystem = default!;
+    [Dependency] private readonly UserInterfaceSystem _ui = default!;
 
     private ISawmill _sawmill = default!;
 
@@ -44,6 +44,8 @@ public sealed class MechSystem : SharedMechSystem
         base.Initialize();
 
         _sawmill = Logger.GetSawmill("mech");
+
+        InitializeFiltering();
 
         SubscribeLocalEvent<MechComponent, InteractUsingEvent>(OnInteractUsing);
         SubscribeLocalEvent<MechComponent, EntInsertedIntoContainerMessage>(OnInsertBattery);
@@ -91,7 +93,7 @@ public sealed class MechSystem : SharedMechSystem
 
         if (TryComp<ToolComponent>(args.Used, out var tool) && tool.Qualities.Contains("Prying") && component.BatterySlot.ContainedEntity != null)
         {
-            var doAfterEventArgs = new DoAfterArgs(args.User, component.BatteryRemovalDelay, new RemoveBatteryEvent(), uid, target: uid, used: args.Target)
+            var doAfterEventArgs = new DoAfterArgs(EntityManager, args.User, component.BatteryRemovalDelay, new RemoveBatteryEvent(), uid, target: uid, used: args.Target)
             {
                 BreakOnTargetMove = true,
                 BreakOnUserMove = true,
@@ -127,11 +129,14 @@ public sealed class MechSystem : SharedMechSystem
     private void OnMapInit(EntityUid uid, MechComponent component, MapInitEvent args)
     {
         var xform = Transform(uid);
-        foreach (var ent in component.StartingEquipment.Select(equipment => Spawn(equipment, xform.Coordinates)))
+        // TODO: this should use containerfill?
+        foreach (var equipment in component.StartingEquipment)
         {
+            var ent = Spawn(equipment, xform.Coordinates);
             InsertEquipment(uid, ent, component);
         }
 
+        // TODO: this should just be damage and battery
         component.Integrity = component.MaxIntegrity;
         component.Energy = component.MaxEnergy;
 
@@ -141,13 +146,15 @@ public sealed class MechSystem : SharedMechSystem
 
     private void OnRemoveEquipmentMessage(EntityUid uid, MechComponent component, MechEquipmentRemoveMessage args)
     {
-        if (!Exists(args.Equipment) || Deleted(args.Equipment))
+        var equip = GetEntity(args.Equipment);
+
+        if (!Exists(equip) || Deleted(equip))
             return;
 
-        if (!component.EquipmentContainer.ContainedEntities.Contains(args.Equipment))
+        if (!component.EquipmentContainer.ContainedEntities.Contains(equip))
             return;
 
-        RemoveEquipment(uid, args.Equipment, component);
+        RemoveEquipment(uid, equip, component);
     }
 
     private void OnOpenUi(EntityUid uid, MechComponent component, MechOpenUiEvent args)
@@ -174,7 +181,7 @@ public sealed class MechSystem : SharedMechSystem
                 Text = Loc.GetString("mech-verb-enter"),
                 Act = () =>
                 {
-                    var doAfterEventArgs = new DoAfterArgs(args.User, component.EntryDelay, new MechEntryEvent(), uid, target: uid)
+                    var doAfterEventArgs = new DoAfterArgs(EntityManager, args.User, component.EntryDelay, new MechEntryEvent(), uid, target: uid)
                     {
                         BreakOnUserMove = true,
                     };
@@ -204,7 +211,7 @@ public sealed class MechSystem : SharedMechSystem
                         return;
                     }
 
-                    var doAfterEventArgs = new DoAfterArgs(args.User, component.ExitDelay, new MechExitEvent(), uid, target: uid)
+                    var doAfterEventArgs = new DoAfterArgs(EntityManager, args.User, component.ExitDelay, new MechExitEvent(), uid, target: uid)
                     {
                         BreakOnUserMove = true,
                         BreakOnTargetMove = true,
@@ -277,9 +284,11 @@ public sealed class MechSystem : SharedMechSystem
     {
         var ev = new MechEquipmentUiMessageRelayEvent(args);
         var allEquipment = new List<EntityUid>(component.EquipmentContainer.ContainedEntities);
+        var argEquip = GetEntity(args.Equipment);
+
         foreach (var equipment in allEquipment)
         {
-            if (args.Equipment == equipment)
+            if (argEquip == equipment)
                 RaiseLocalEvent(equipment, ev);
         }
     }
@@ -302,57 +311,7 @@ public sealed class MechSystem : SharedMechSystem
             EquipmentStates = ev.States
         };
         var ui = _ui.GetUi(uid, MechUiKey.Key);
-        UserInterfaceSystem.SetUiState(ui, state);
-    }
-
-    public override bool TryInsert(EntityUid uid, EntityUid? toInsert, MechComponent? component = null)
-    {
-        if (!Resolve(uid, ref component))
-            return false;
-
-        if (!base.TryInsert(uid, toInsert, component))
-            return false;
-
-        if (component.Airtight && TryComp(uid, out MechAirComponent? mechAir))
-        {
-            var coordinates = Transform(uid).MapPosition;
-            if (_map.TryFindGridAt(coordinates, out _, out var grid))
-            {
-                var tile = grid.GetTileRef(coordinates);
-
-                if (_atmosphere.GetTileMixture(tile.GridUid, null, tile.GridIndices, true) is { } environment)
-                {
-                    _atmosphere.Merge(mechAir.Air, environment.RemoveVolume(MechAirComponent.GasMixVolume));
-                }
-            }
-        }
-        return true;
-    }
-
-    public override bool TryEject(EntityUid uid, MechComponent? component = null)
-    {
-        if (!Resolve(uid, ref component))
-            return false;
-
-        if (!base.TryEject(uid, component))
-            return false;
-
-        if (component.Airtight && TryComp(uid, out MechAirComponent? mechAir))
-        {
-            var coordinates = Transform(uid).MapPosition;
-            if (_map.TryFindGridAt(coordinates, out _, out var grid))
-            {
-                var tile = grid.GetTileRef(coordinates);
-
-                if (_atmosphere.GetTileMixture(tile.GridUid, null, tile.GridIndices, true) is { } environment)
-                {
-                    _atmosphere.Merge(environment, mechAir.Air);
-                    mechAir.Air.Clear();
-                }
-            }
-        }
-
-        return true;
+        _ui.SetUiState(ui, state);
     }
 
     public override void BreakMech(EntityUid uid, MechComponent? component = null)
@@ -378,7 +337,7 @@ public sealed class MechSystem : SharedMechSystem
         if (!TryComp<BatteryComponent>(battery, out var batteryComp))
             return false;
 
-        _batterySystem.SetCharge(battery!.Value, batteryComp.CurrentCharge + delta.Float(), batteryComp);
+        _battery.SetCharge(battery!.Value, batteryComp.CurrentCharge + delta.Float(), batteryComp);
         if (batteryComp.CurrentCharge != component.Energy) //if there's a discrepency, we have to resync them
         {
             _sawmill.Debug($"Battery charge was not equal to mech charge. Battery {batteryComp.CurrentCharge}. Mech {component.Energy}");

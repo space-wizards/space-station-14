@@ -17,7 +17,7 @@ public sealed class SharedPreventCollideSystem : EntitySystem
 
     private void OnGetState(EntityUid uid, PreventCollideComponent component, ref ComponentGetState args)
     {
-        args.State = new PreventCollideComponentState(component);
+        args.State = new PreventCollideComponentState(GetNetEntity(component.Uid));
     }
 
     private void OnHandleState(EntityUid uid, PreventCollideComponent component, ref ComponentHandleState args)
@@ -25,7 +25,7 @@ public sealed class SharedPreventCollideSystem : EntitySystem
         if (args.Current is not PreventCollideComponentState state)
             return;
 
-        component.Uid = state.Uid;
+        component.Uid = EnsureEntity<PreventCollideComponent>(state.Uid, uid);
     }
 
     private void OnPreventCollide(EntityUid uid, PreventCollideComponent component, ref PreventCollideEvent args)

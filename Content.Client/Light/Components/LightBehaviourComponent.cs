@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using Content.Shared.Light.Component;
+using Content.Shared.Light.Components;
 using JetBrains.Annotations;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
@@ -53,7 +53,7 @@ namespace Content.Client.Light.Components
 
             if (Enabled && _entMan.TryGetComponent(_parent, out PointLightComponent? light))
             {
-                light.Enabled = true;
+                _entMan.System<PointLightSystem>().SetEnabled(_parent, true, light);
             }
 
             OnInitialize();
@@ -63,7 +63,7 @@ namespace Content.Client.Light.Components
         {
             if (_entMan.TryGetComponent(_parent, out PointLightComponent? light))
             {
-                light.Enabled = true;
+                _entMan.System<PointLightSystem>().SetEnabled(_parent, true, light);
             }
 
             if (MinDuration > 0)

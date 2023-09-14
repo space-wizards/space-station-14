@@ -4,7 +4,7 @@ using Robust.Shared.Audio.Midi;
 
 namespace Content.Client.Instruments;
 
-[RegisterComponent, ComponentReference(typeof(SharedInstrumentComponent))]
+[RegisterComponent]
 public sealed partial class InstrumentComponent : SharedInstrumentComponent
 {
     public event Action? OnMidiPlaybackEnded;

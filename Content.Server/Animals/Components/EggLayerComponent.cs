@@ -1,8 +1,6 @@
-using Content.Shared.Actions;
-using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Storage;
 using Robust.Shared.Audio;
-using Robust.Shared.Serialization;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Animals.Components;
@@ -14,8 +12,8 @@ namespace Content.Server.Animals.Components;
 [RegisterComponent]
 public sealed partial class EggLayerComponent : Component
 {
-    [DataField("eggLayAction", customTypeSerializer: typeof(PrototypeIdSerializer<InstantActionPrototype>))]
-    public string EggLayAction = "AnimalLayEgg";
+    [DataField("eggLayAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    public string EggLayAction = "ActionAnimalLayEgg";
 
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("hungerUsage")]
@@ -51,5 +49,3 @@ public sealed partial class EggLayerComponent : Component
     [DataField("accumulatedFrametime")]
     public float AccumulatedFrametime;
 }
-
-public sealed partial class EggLayInstantActionEvent : InstantActionEvent {}

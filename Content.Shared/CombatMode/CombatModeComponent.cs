@@ -1,8 +1,7 @@
-using Content.Shared.Actions;
-using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Targeting;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.CombatMode
@@ -12,7 +11,7 @@ namespace Content.Shared.CombatMode
     ///     This is used to differentiate between regular item interactions or
     ///     using *everything* as a weapon.
     /// </summary>
-    [RegisterComponent, NetworkedComponent]
+    [RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true)]
     [Access(typeof(SharedCombatModeSystem))]
     public sealed partial class CombatModeComponent : Component
     {
@@ -33,40 +32,16 @@ namespace Content.Shared.CombatMode
 
         #endregion
 
-        private bool _isInCombatMode;
-        private TargetingZone _activeZone;
+        [DataField("combatToggleAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+        public string CombatToggleAction = "ActionCombatModeToggle";
 
-        [DataField("combatToggleActionId", customTypeSerializer: typeof(PrototypeIdSerializer<InstantActionPrototype>))]
-        public string CombatToggleActionId = "CombatModeToggle";
+        [DataField("combatToggleActionEntity")]
+        public EntityUid? CombatToggleActionEntity;
 
-        [DataField("combatToggleAction")]
-        public InstantAction? CombatToggleAction;
+        [ViewVariables(VVAccess.ReadWrite), DataField("isInCombatMode"), AutoNetworkedField]
+        public bool IsInCombatMode;
 
-        [ViewVariables(VVAccess.ReadWrite)]
-        public bool IsInCombatMode
-        {
-            get => _isInCombatMode;
-            set
-            {
-                if (_isInCombatMode == value) return;
-                _isInCombatMode = value;
-                if (CombatToggleAction != null)
-                    EntitySystem.Get<SharedActionsSystem>().SetToggled(CombatToggleAction, _isInCombatMode);
-
-                Dirty();
-            }
-        }
-
-        [ViewVariables(VVAccess.ReadWrite)]
-        public TargetingZone ActiveZone
-        {
-            get => _activeZone;
-            set
-            {
-                if (_activeZone == value) return;
-                _activeZone = value;
-                Dirty();
-            }
-        }
+        [ViewVariables(VVAccess.ReadWrite), DataField("activeZone"), AutoNetworkedField]
+        public TargetingZone ActiveZone;
     }
 }

@@ -8,6 +8,8 @@ namespace Content.Server.Administration.Commands
     [AdminCommand(AdminFlags.Fun)]
     public sealed class SetSolutionThermalEnergy : IConsoleCommand
     {
+        [Dependency] private readonly IEntityManager _entManager = default!;
+
         public string Command => "setsolutionthermalenergy";
         public string Description => "Set the thermal energy of some solution.";
         public string Help => $"Usage: {Command} <target> <solution> <new thermal energy>";
@@ -20,13 +22,13 @@ namespace Content.Server.Administration.Commands
                 return;
             }
 
-            if (!EntityUid.TryParse(args[0], out var uid))
+            if (!NetEntity.TryParse(args[0], out var uidNet) || !_entManager.TryGetEntity(uidNet, out var uid))
             {
                 shell.WriteLine($"Invalid entity id.");
                 return;
             }
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(uid, out SolutionContainerManagerComponent? man))
+            if (!_entManager.TryGetComponent(uid, out SolutionContainerManagerComponent? man))
             {
                 shell.WriteLine($"Entity does not have any solutions.");
                 return;
@@ -53,13 +55,14 @@ namespace Content.Server.Administration.Commands
                     shell.WriteLine($"Cannot set the thermal energy of a solution with 0 heat capacity to a non-zero number.");
                     return;
                 }
-            } else if(quantity <= 0.0f)
+            }
+            else if(quantity <= 0.0f)
             {
                 shell.WriteLine($"Cannot set the thermal energy of a solution with heat capacity to a non-positive number.");
                 return;
             }
 
-            EntitySystem.Get<SolutionContainerSystem>().SetThermalEnergy(uid, solution, quantity);
+            _entManager.System<SolutionContainerSystem>().SetThermalEnergy(uid.Value, solution, quantity);
         }
     }
 }
