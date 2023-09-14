@@ -18,7 +18,7 @@ public sealed class SmesBoundUserInterface : BoundUserInterface
     {
         base.Open();
 
-        _menu = new SmesMenu(this, Owner);
+        _menu = new SmesMenu(Owner);
         _menu.OnClose += Close;
         _menu.OpenCentered();
     }

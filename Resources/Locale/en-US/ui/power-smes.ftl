@@ -1,2 +1,2 @@
 smes-menu-title = SMES
-smes-power = {POWERWATTS($power)]
+smes-power = {POWERWATTS($power)}
