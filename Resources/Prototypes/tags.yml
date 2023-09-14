@@ -541,6 +541,9 @@
   id: Head
 
 - type: Tag
+  id: HeavyLaserTechPart
+
+- type: Tag
   id: HelmetEVA
 
 - type: Tag

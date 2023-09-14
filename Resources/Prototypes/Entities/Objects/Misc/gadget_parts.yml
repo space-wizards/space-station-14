@@ -11,7 +11,7 @@
     size: 5
   - type: Tag
     tags:
-      - ProtoKineticTechPart
+    - ProtoKineticTechPart
 
 - type: entity
   parent: BaseItem
@@ -26,7 +26,22 @@
     size: 5
   - type: Tag
     tags:
-      - LaserTechPart
+    - LaserTechPart
+
+- type: entity
+  parent: BaseItem
+  id: HeavyRayCaster
+  name: heavy ray caster
+  description: #todo
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/heavy_ray_caster.rsi
+    state: icon
+  - type: Item
+    size: 5
+  - type: Tag
+    tags:
+    - HeavyLaserTechPart
 
 - type: entity
   parent: BaseItem
