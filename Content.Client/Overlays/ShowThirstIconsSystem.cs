@@ -17,25 +17,19 @@ public sealed class ShowThirstIconsSystem : EquipmentHudSystem<ShowThirstIconsCo
         SubscribeLocalEvent<ThirstComponent, GetStatusIconsEvent>(OnGetStatusIconsEvent);
     }
 
-    private void OnGetStatusIconsEvent(EntityUid uid, ThirstComponent thirstComponent, ref GetStatusIconsEvent @event)
+    private void OnGetStatusIconsEvent(EntityUid uid, ThirstComponent thirstComponent, ref GetStatusIconsEvent args)
     {
-        if (!IsActive)
+        if (!IsActive || args.InContainer)
             return;
 
         var healthIcons = DecideThirstIcon(uid, thirstComponent);
 
-        @event.StatusIcons.AddRange(healthIcons);
+        args.StatusIcons.AddRange(healthIcons);
     }
 
     private IReadOnlyList<StatusIconPrototype> DecideThirstIcon(EntityUid uid, ThirstComponent thirstComponent)
     {
         var result = new List<StatusIconPrototype>();
-
-        if (EntityManager.TryGetComponent<MetaDataComponent>(uid, out var metaDataComponent) &&
-            (metaDataComponent.Flags & MetaDataFlags.InContainer) == MetaDataFlags.InContainer)
-        {
-            return result;
-        }
 
         switch (thirstComponent.CurrentThirstThreshold)
         {

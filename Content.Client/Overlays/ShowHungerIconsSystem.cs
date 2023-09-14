@@ -17,25 +17,19 @@ public sealed class ShowHungerIconsSystem : EquipmentHudSystem<ShowHungerIconsCo
         SubscribeLocalEvent<HungerComponent, GetStatusIconsEvent>(OnGetStatusIconsEvent);
     }
 
-    private void OnGetStatusIconsEvent(EntityUid uid, HungerComponent hungerComponent, ref GetStatusIconsEvent @event)
+    private void OnGetStatusIconsEvent(EntityUid uid, HungerComponent hungerComponent, ref GetStatusIconsEvent args)
     {
-        if (!IsActive)
+        if (!IsActive || args.InContainer)
             return;
 
         var healthIcons = DecideHungerIcon(uid, hungerComponent);
 
-        @event.StatusIcons.AddRange(healthIcons);
+        args.StatusIcons.AddRange(healthIcons);
     }
 
     private IReadOnlyList<StatusIconPrototype> DecideHungerIcon(EntityUid uid, HungerComponent hungerComponent)
     {
         var result = new List<StatusIconPrototype>();
-
-        if (EntityManager.TryGetComponent<MetaDataComponent>(uid, out var metaDataComponent) &&
-            (metaDataComponent.Flags & MetaDataFlags.InContainer) == MetaDataFlags.InContainer)
-        {
-            return result;
-        }
 
         switch (hungerComponent.CurrentThreshold)
         {
