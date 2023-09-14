@@ -64,6 +64,27 @@ namespace Content.Server.Power.EntitySystems
             _powerState.Loads.Free(component.NetworkLoad.Id);
         }
 
+        /// <summary>
+        /// Calculate the external power state of a battery.
+        /// </summary>
+        public ExternalPowerState CalcExtPowerState(EntityUid uid, BatteryComponent? battery = null, PowerNetworkBatteryComponent? netBat = null)
+        {
+            if (!Resolve(uid, ref battery, ref netBat))
+                return ExternalPowerState.None;
+
+            // receiving no power is ok if the battery is full, nothing to charge.
+            // if the battery is not full and not receiving power then there is no external power at all.
+            if (netBat.CurrentReceiving == 0 && !MathHelper.CloseTo(battery.CurrentCharge / battery.MaxCharge, 1))
+                return ExternalPowerState.None;
+
+            // not charging enough to keep up with demand, losing power
+            var delta = netBat.CurrentReceiving - netBat.CurrentSupply;
+            if (!MathHelper.CloseToPercent(delta, 0, 0.1f) && delta < 0)
+                return ExternalPowerState.Low;
+
+            return ExternalPowerState.Good;
+        }
+
         private static void ApcPowerReceiverPaused(
             EntityUid uid,
             ApcPowerReceiverComponent component,

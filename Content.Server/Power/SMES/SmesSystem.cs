@@ -11,8 +11,9 @@ namespace Content.Server.Power.SMES;
 public sealed class SmesSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _gameTiming = default!;
+    [Dependency] private readonly PowerNetSystem _powerNet;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
+    [Dependency] private readonly UserInterfaceSystem _ui = default!;
 
     public override void Initialize()
     {
@@ -57,7 +58,7 @@ public sealed class SmesSystem : EntitySystem
             _appearance.SetData(uid, SmesVisuals.LastChargeState, newChargeState);
         }
 
-        var extPowerState = CalcExtPowerState(uid);
+        var extPowerState = _powerNet.CalcExtPowerState(uid);
         if (extPowerState != smes.LastExternalState || smes.LastUiUpdate + smes.VisualsChangeDelay < _gameTiming.CurTime)
         {
             smes.LastExternalState = extPowerState;
@@ -81,10 +82,8 @@ public sealed class SmesSystem : EntitySystem
         int power = (int) MathF.Ceiling(netBattery?.CurrentSupply ?? 0f);
         float charge = battery.CurrentCharge / battery.MaxCharge;
 
-        if (_userInterfaceSystem.GetUiOrNull(uid, SmesUiKey.Key, ui) is { } bui)
-        {
-            bui.SetState(new SmesBoundInterfaceState(power, smes.LastExternalState, charge));
-        }
+        var state = new SmesBoundInterfaceState(power, smes.LastExternalState, charge);
+        _ui.TrySetUiState(uid, SmesUiKey.Key);
     }
 
     private int CalcChargeLevel(EntityUid uid, BatteryComponent? battery = null)
@@ -95,10 +94,9 @@ public sealed class SmesSystem : EntitySystem
         return ContentHelpers.RoundToLevels(battery.CurrentCharge, battery.MaxCharge, 6);
     }
 
-    // TODO: put this in PNB
     private ChargeState CalcChargeState(EntityUid uid, PowerNetworkBatteryComponent? netBattery = null)
     {
-        if (!Resolve(uid, ref netBattery, false))
+        if (!Resolve(uid, ref netBattery))
             return ChargeState.Still;
 
         return (netBattery.CurrentSupply - netBattery.CurrentReceiving) switch
@@ -107,27 +105,5 @@ public sealed class SmesSystem : EntitySystem
             < 0 => ChargeState.Charging,
             _ => ChargeState.Still
         };
-    }
-
-    // TODO: put this in battery system
-    private ExternalPowerState CalcExtPowerState(EntityUid uid, BatteryComponent? battery = null)
-    {
-        // TODO: Refactor this too.
-        if (!Resolve(uid, ref battery))
-            return ExternalPowerState.None;
-
-        var netBat = Comp<PowerNetworkBatteryComponent>(uid);
-        if (netBat.CurrentReceiving == 0 && !MathHelper.CloseTo(battery.CurrentCharge / battery.MaxCharge, 1))
-        {
-            return ExternalPowerState.None;
-        }
-
-        var delta = netBat.CurrentReceiving - netBat.CurrentSupply;
-        if (!MathHelper.CloseToPercent(delta, 0, 0.1f) && delta < 0)
-        {
-            return ExternalPowerState.Low;
-        }
-
-        return ExternalPowerState.Good;
     }
 }

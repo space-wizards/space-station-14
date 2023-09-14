@@ -1,6 +1,7 @@
 using Content.Server.Emp;
 using Content.Server.Popups;
 using Content.Server.Power.Components;
+using Content.Server.Power.EntitySystems;
 using Content.Server.Power.Pow3r;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
@@ -19,6 +20,7 @@ public sealed class ApcSystem : EntitySystem
     [Dependency] private readonly AccessReaderSystem _accessReader = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
+    [Dependency] private readonly PowerNetSystem _powerNet = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
@@ -135,7 +137,7 @@ public sealed class ApcSystem : EntitySystem
             }
         }
 
-        var extPowerState = CalcExtPowerState(uid, battery.NetworkBattery);
+        var extPowerState = _powerNet.CalcExtPowerState(uid, battery.NetworkBattery);
         if (extPowerState != apc.LastExternalState)
         {
             apc.LastExternalState = extPowerState;
@@ -172,23 +174,6 @@ public sealed class ApcSystem : EntitySystem
 
         var delta = battery.CurrentSupply - battery.CurrentReceiving;
         return delta < 0 ? ApcChargeState.Charging : ApcChargeState.Lack;
-    }
-
-    public ExternalPowerState CalcExtPowerState(EntityUid uid, BatteryComponent? battery = null, PowerNetworkBatteryComponent? netBat = null)
-    {
-        if (!Resolve(uid, ref battery, ref netBat))
-            return ExternalPowerState.None;
-
-        if (netBat.CurrentReceiving == 0 && !MathHelper.CloseTo(battery.CurrentCharge / battery.MaxCharge, 1))
-            return ExternalPowerState.None;
-
-        var delta = netBat.CurrentReceiving - netBat.CurrentSupply;
-        if (!MathHelper.CloseToPercent(delta, 0, 0.1f) && delta < 0)
-        {
-            return ExternalPowerState.Low;
-        }
-
-        return ExternalPowerState.Good;
     }
 
     private void OnEmpPulse(EntityUid uid, ApcComponent component, ref EmpPulseEvent args)
