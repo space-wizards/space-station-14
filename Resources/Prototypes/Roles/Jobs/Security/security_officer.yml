@@ -21,6 +21,7 @@
 - type: startingGear
   id: SecurityOfficerGear
   equipment:
+    neck: SecurityWhistle
     jumpsuit: ClothingUniformJumpsuitSec
     back: ClothingBackpackSecurityFilled
     shoes: ClothingShoesBootsCombatFilled
