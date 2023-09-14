@@ -114,8 +114,8 @@ namespace Content.Client.Actions
             if (priorityA != priorityB)
                 return priorityA - priorityB;
 
-            priorityA = a.Item2?.Container.Id ?? 0;
-            priorityB = b.Item2?.Container.Id ?? 0;
+            priorityA = a.Item2?.Container?.Id ?? 0;
+            priorityB = b.Item2?.Container?.Id ?? 0;
             return priorityA - priorityB;
         }
 
@@ -242,23 +242,9 @@ namespace Content.Client.Actions
                     continue;
 
                 var action = _serialization.Read<BaseActionComponent>(actionNode, notNullableOverride: true);
-
-                // TODO ACTIONS move this to shared, or just remove it outright.
-                // Moving to shared means we no longer have the weird issues were actions get assigned before the player gets attached to the mapping ghost.
-
                 var actionId = Spawn(null);
                 AddComp(actionId, action);
-
-                // This is very cursed. We need to store the actions somewhere.
-                // But we also don't want them to stick around forever
-                // Attaching them to the player makes sense
-                // But the player is a networked entity, with a networked container component
-                // so we cannot store them in there.
-                // so what ill do instead is create a little action gremlin, and hide them on the player entity
-                // no one will ever know
-                var gremlin = SpawnAttachedTo(null, new EntityCoordinates(user, default));
-                _actionContainer.AddAction(gremlin, actionId, action);
-                GrantAction(user, actionId);
+                AddActionDirect(user, actionId);
 
                 if (map.TryGet<ValueDataNode>("name", out var nameNode))
                     _metaData.SetEntityName(actionId, nameNode.Value);

@@ -561,6 +561,9 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
         if (_window is not { Disposed: false } || _actionsSystem == null)
             return;
 
+        if (_playerManager.LocalPlayer?.ControlledEntity is not { } player)
+            return;
+
         var search = _window.SearchBar.Text;
         var filters = _window.FilterButton.SelectedKeys;
         var actions = _actionsSystem.GetClientActions();
@@ -583,10 +586,10 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
             if (name.Contains(search, StringComparison.OrdinalIgnoreCase))
                 return true;
 
-            if (action.Comp.Container == _playerManager.LocalPlayer?.ControlledEntity)
+            if (action.Comp.Container == null || action.Comp.Container == player)
                 return false;
 
-            var providerName = EntityManager.GetComponent<MetaDataComponent>(action.Comp.Container).EntityName;
+            var providerName = EntityManager.GetComponent<MetaDataComponent>(action.Comp.Container.Value).EntityName;
             return providerName.Contains(search, StringComparison.OrdinalIgnoreCase);
         });
 
@@ -744,13 +747,9 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
     {
         if (_actionsSystem != null && _actionsSystem.TryGetActionData(_menuDragHelper.Dragged?.ActionId, out var action))
         {
-            var entIcon = action.EntityIcon;
-            if (entIcon == null && action.Container != action.AttachedEntity)
-                entIcon = action.Container;
-
-            if (entIcon != null)
+            if (action.EntityIcon is {} entIcon)
             {
-                _dragShadow.Texture = EntityManager.GetComponent<SpriteComponent>(entIcon.Value).Icon?
+                _dragShadow.Texture = EntityManager.GetComponent<SpriteComponent>(entIcon).Icon?
                     .GetFrame(RsiDirection.South, 0);
             }
             else if (action.Icon != null)

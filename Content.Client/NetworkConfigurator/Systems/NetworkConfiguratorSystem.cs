@@ -70,9 +70,7 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
             if (overlay.Colors.Count > 0)
                 return;
 
-            if (overlay.ActionContainer != null)
-                Del(overlay.ActionContainer.Value);
-
+            _actions.RemoveAction(overlay.Action);
             _overlay.RemoveOverlay<NetworkConfiguratorLinkOverlay>();
             return;
         }
@@ -81,9 +79,9 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
         {
             var overlay = new NetworkConfiguratorLinkOverlay();
             _overlay.AddOverlay(overlay);
-            overlay.ActionContainer = Spawn(null);
             var player = _playerManager.LocalPlayer.ControlledEntity.Value;
-            _actions.AddAction(player, ref overlay.Action, Action, overlay.ActionContainer.Value);
+            overlay.Action = Spawn(Action);
+            _actions.AddActionDirect(player, overlay.Action.Value);
         }
 
         EnsureComp<NetworkConfiguratorActiveLinkOverlayComponent>(component.ActiveDeviceList.Value);
@@ -101,8 +99,7 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
             RemCompDeferred<NetworkConfiguratorActiveLinkOverlayComponent>(tracker.Owner);
         }
 
-        if (overlay.ActionContainer != null)
-            Del(overlay.ActionContainer.Value);
+        _actions.RemoveAction(overlay.Action);
         _overlay.RemoveOverlay(overlay);
     }
 

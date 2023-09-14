@@ -103,9 +103,9 @@ public sealed class ActionContainerSystem : EntitySystem
         if (!_actions.ResolveActionData(actionId, ref action))
             return false;
 
-        if (action.Container.IsValid())
+        if (action.Container != null)
         {
-            Log.Error($"Attempted to insert an action {ToPrettyString(actionId)} that was already in a container {ToPrettyString(action.Container)}");
+            Log.Error($"Attempted to insert an action {ToPrettyString(actionId)} that was already in a container {ToPrettyString(action.Container.Value)}");
             return false;
         }
 
@@ -143,7 +143,7 @@ public sealed class ActionContainerSystem : EntitySystem
             return;
 
         DebugTools.Assert(data.AttachedEntity == null || data.Container != EntityUid.Invalid);
-        DebugTools.Assert(data.Container == EntityUid.Invalid || data.Container == uid);
+        DebugTools.Assert(data.Container == null || data.Container == uid);
 
         data.Container = uid;
         Dirty(uid, component);

@@ -15,7 +15,6 @@ public sealed class NetworkConfiguratorLinkOverlay : Overlay
     private readonly DeviceListSystem _deviceListSystem;
 
     public Dictionary<EntityUid, Color> Colors = new();
-    public EntityUid? ActionContainer;
     public EntityUid? Action;
 
     public override OverlaySpace Space => OverlaySpace.WorldSpace;

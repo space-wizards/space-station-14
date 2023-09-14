@@ -70,11 +70,12 @@ public abstract partial class BaseActionComponent : Component
     [DataField("charges")] public int? Charges;
 
     /// <summary>
-    ///     The entity that contains this action. If the action is innate, this may be the user themselves.
+    /// The entity that contains this action. If the action is innate, this may be the user themselves.
+    /// This should almost always be non-null.
     /// </summary>
     [Access(typeof(ActionContainerSystem), typeof(SharedActionsSystem))]
     [DataField("container")]
-    public EntityUid Container;
+    public EntityUid? Container;
 
     /// <summary>
     ///     Entity to use for the action icon. If no entity is provided and the <see cref="Container"/> differs from
@@ -125,17 +126,9 @@ public abstract partial class BaseActionComponent : Component
     [DataField("autoPopulate")] public bool AutoPopulate = true;
 
     /// <summary>
-    ///     Temporary actions are removed from the action component when removed from the action-bar/GUI. Currently,
-    ///     should only be used for client-exclusive actions (server is not notified).
+    ///     Temporary actions are deleted when they get removed a <see cref="ActionsComponent"/>.
     /// </summary>
-    /// <remarks>
-    ///     Currently there is no way for a player to just voluntarily remove actions. They can hide them from the
-    ///     toolbar, but not actually remove them. This is undesirable for things like dynamically added mapping
-    ///     entity-selection actions, as the # of actions would just keep increasing.
-    /// </remarks>
     [DataField("temporary")] public bool Temporary;
-    // TODO re-add support for this
-    // UI refactor seems to have just broken it.
 
     /// <summary>
     ///     Determines the appearance of the entity-icon for actions that are enabled via some entity.
@@ -160,7 +153,7 @@ public abstract class BaseActionComponentState : ComponentState
     public (TimeSpan Start, TimeSpan End)? Cooldown;
     public TimeSpan? UseDelay;
     public int? Charges;
-    public NetEntity Container;
+    public NetEntity? Container;
     public NetEntity? EntityIcon;
     public bool CheckCanInteract;
     public bool ClientExclusive;

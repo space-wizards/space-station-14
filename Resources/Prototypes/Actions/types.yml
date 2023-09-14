@@ -209,6 +209,7 @@
   noSpawn: true
   components:
   - type: InstantAction
+    temporary: true
     icon: { sprite: Objects/Tools/multitool.rsi, state: icon }
     event: !type:ClearAllOverlaysEvent
 
