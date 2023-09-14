@@ -38,7 +38,7 @@
       event: !type:ToggleActionEvent
   - type: PointLight
     enabled: false
-    radius: 5
+    radius: 9
     softness: 20
     autoRot: true
 
@@ -82,7 +82,7 @@
       event: !type:ToggleActionEvent
   - type: PointLight
     enabled: false
-    radius: 3
+    radius: 10
     softness: 20
     autoRot: true
   - type: Construction
@@ -149,7 +149,7 @@
         Heat: 0.6
   - type: PointLight
     enabled: false
-    radius: 7
+    radius: 9
     softness: 20
     autoRot: true
   - type: ToggleableClothing
@@ -527,7 +527,7 @@
   - type: PointLight
     color: "#e6aa5c"
     enabled: false
-    radius: 6
+    radius: 14
     softness: 20
     autoRot: true
   - type: ToggleableClothing
@@ -564,7 +564,7 @@
   - type: PointLight
     color: "#a0f1e8"
     enabled: false
-    radius: 3.5
+    radius: 5
     softness: 20
     autoRot: true
   - type: ToggleableClothing
@@ -722,7 +722,7 @@
   - type: PointLight
     color: "#b289db"
     enabled: false
-    radius: 6
+    radius: 8
     softness: 20
     autoRot: true
 
@@ -746,7 +746,7 @@
   - type: PointLight
     color: "#a0f1e8"
     enabled: false
-    radius: 5
+    radius: 7
     softness: 20
     autoRot: true
   - type: Armor
@@ -801,7 +801,7 @@
   - type: PointLight
     color: "#a0f1e8"
     enabled: false
-    radius: 6
+    radius: 7
     softness: 20
     autoRot: true
   - type: ToggleableClothing
@@ -841,7 +841,7 @@
   - type: PointLight
     color: "#a0f1e8"
     enabled: false
-    radius: 8
+    radius: 9
     softness: 20
     autoRot: true
   - type: ToggleableClothing
