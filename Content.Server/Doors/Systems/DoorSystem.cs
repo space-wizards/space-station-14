@@ -17,7 +17,7 @@ using Content.Shared.Tools;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
 using Content.Shared.DoAfter;
-using Content.Server.Doors.Prying.Systems;
+using Content.Shared.Doors.Prying.Systems;
 using Content.Shared.Doors.Prying.Components;
 using Content.Shared.Tools.Systems;
 

@@ -6,10 +6,9 @@ using Content.Shared.Database;
 using Content.Shared.Doors.Components;
 using Content.Shared.Doors.Systems;
 using Content.Shared.Tools.Components;
-using Robust.Shared.GameObjects;
 
 namespace Content.Shared.Doors.Prying.Systems;
-public abstract class SharedDoorPryingSystem : EntitySystem
+public class DoorPryingSystem : EntitySystem
 {
     [Dependency] private readonly ISharedAdminLogManager _adminLog = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
@@ -101,7 +100,7 @@ public abstract class SharedDoorPryingSystem : EntitySystem
         _doAfterSystem.TryStartDoAfter(doAfterArgs, out id);
     }
 
-    protected virtual void OnDoAfter(EntityUid uid, DoorComponent door, DoorPryDoAfterEvent args)
+    protected void OnDoAfter(EntityUid uid, DoorComponent door, DoorPryDoAfterEvent args)
     {
         if (args.Cancelled)
             return;
@@ -110,15 +109,18 @@ public abstract class SharedDoorPryingSystem : EntitySystem
 
         DoorPryingComponent? comp = null;
 
+        if (args.Used != null && Resolve(args.Used.Value, ref comp))
+            _audioSystem.PlayPredicted(comp.UseSound, args.Used.Value, args.User, comp.UseSound.Params.WithVariation(0.175f).AddVolume(-5f));
+
         if (door.State == DoorState.Closed)
         {
             _adminLog.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(args.User)} pried {ToPrettyString(args.Target.Value)} open");
-            _doorSystem.StartOpening(args.Target.Value, door);
+            _doorSystem.StartOpening(args.Target.Value, door, args.Target, true);
         }
         else if (door.State == DoorState.Open)
         {
             _adminLog.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(args.User)} pried {ToPrettyString(args.Target.Value)} closed");
-            _doorSystem.StartClosing(args.Target.Value, door);
+            _doorSystem.StartClosing(args.Target.Value, door, args.Target, true);
         }
     }
 }
