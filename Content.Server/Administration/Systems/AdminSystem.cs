@@ -36,7 +36,7 @@ namespace Content.Server.Administration.Systems
 
         private readonly HashSet<NetUserId> _roundActivePlayers = new();
 
-        private List<GameRuleInfo> _gameRulesList = new();
+        private List<GameRuleInfo> _gameRulesList = new(); // SS220-View-active-gamerules
 
         public override void Initialize()
         {
@@ -186,12 +186,13 @@ namespace Content.Server.Administration.Systems
             RaiseNetworkEvent(ev, playerSession.ConnectedClient);
         }
 
+        // SS220-View-active-gamerules
         private void SendGameRulesList()
         {
             var ev = new GameRulesListEvent();
 
             _gameRulesList = _gameTicker.GetAddedGameRules()
-                .Select(gr => new GameRuleInfo(gr, MetaData(gr).EntityPrototype?.ID ?? string.Empty)).ToList();
+                .Select(gr => new GameRuleInfo(GetNetEntity(gr), MetaData(gr).EntityPrototype?.ID ?? string.Empty)).ToList();
 
             ev.ActiveGameRules = _gameRulesList;
 

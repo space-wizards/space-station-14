@@ -287,12 +287,12 @@ namespace Content.Server.VendingMachines
                 vendComponent.Inventory.TryGetValue(itemId, out var entry))
             {
                 entry.Amount++;
-                entry.EntityUids.Add(entityUid);
+                entry.EntityUids.Add(GetNetEntity(entityUid));
                 return true;
             }
 
             vendComponent.Inventory.Add(itemId,
-                new VendingMachineInventoryEntry(InventoryType.Regular, itemId, 1, entityUid)
+                new VendingMachineInventoryEntry(InventoryType.Regular, itemId, 1, GetNetEntity(entityUid))
             );
 
             return true;
@@ -444,7 +444,7 @@ namespace Content.Server.VendingMachines
         {
             if (item.EntityUids.Count > 0)
             {
-                vendComponent.NextEntityToEject = item.EntityUids[0];
+                vendComponent.NextEntityToEject = GetEntity(item.EntityUids[0]);
                 item.EntityUids.RemoveAt(0);
             }
             else

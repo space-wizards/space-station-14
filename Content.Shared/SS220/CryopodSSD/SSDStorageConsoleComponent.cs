@@ -40,8 +40,8 @@ public sealed partial class SSDStorageConsoleComponent : Component
 [Serializable, NetSerializable]
 public sealed class CryopodSSDStorageInteractWithItemEvent : BoundUserInterfaceMessage
 {
-    public readonly EntityUid InteractedItemUid;
-    public CryopodSSDStorageInteractWithItemEvent(EntityUid interactedItemUid)
+    public readonly NetEntity InteractedItemUid;
+    public CryopodSSDStorageInteractWithItemEvent(NetEntity interactedItemUid)
     {
         InteractedItemUid = interactedItemUid;
     }

@@ -4,6 +4,6 @@ namespace Content.Shared.Administration
 {
     [Serializable, NetSerializable]
     public record GameRuleInfo(
-        EntityUid? EntityUid,
+        NetEntity? Entity,
         string Name);
 }

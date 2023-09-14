@@ -94,9 +94,11 @@ public sealed class SSDStorageConsoleSystem : EntitySystem
         if (args.Session.AttachedEntity is not EntityUid player)
             return;
 
-        if (!Exists(args.InteractedItemUid))
+        var entInteractedItemUid = GetEntity(args.InteractedItemUid);
+
+        if (!Exists(entInteractedItemUid))
         {
-            _sawmill.Error($"Player {args.Session} interacted with non-existent item {args.InteractedItemUid} stored in {ToPrettyString(uid)}");
+            _sawmill.Error($"Player {args.Session} interacted with non-existent item {entInteractedItemUid} stored in {ToPrettyString(uid)}");
             return;
         }
 
@@ -105,7 +107,7 @@ public sealed class SSDStorageConsoleSystem : EntitySystem
             return;
         }
 
-        if (!_actionBlockerSystem.CanInteract(player, args.InteractedItemUid) || storageComp.Container == null || !storageComp.Container.Contains(args.InteractedItemUid))
+        if (!_actionBlockerSystem.CanInteract(player, entInteractedItemUid) || storageComp.Container == null || !storageComp.Container.Contains(entInteractedItemUid))
             return;
 
         if (!TryComp(player, out HandsComponent? hands) || hands.Count == 0)
@@ -119,9 +121,9 @@ public sealed class SSDStorageConsoleSystem : EntitySystem
 
         if (hands.ActiveHandEntity == null)
         {
-            if (_handsSystem.TryPickupAnyHand(player, args.InteractedItemUid, handsComp: hands)
+            if (_handsSystem.TryPickupAnyHand(player, entInteractedItemUid, handsComp: hands)
                 && storageComp.StorageRemoveSound != null)
-                _sawmill.Info($"{ToPrettyString(player)} takes {ToPrettyString(args.InteractedItemUid)} from {ToPrettyString(uid)}");
+                _sawmill.Info($"{ToPrettyString(player)} takes {ToPrettyString(entInteractedItemUid)} from {ToPrettyString(uid)}");
         }
     }
 
@@ -147,8 +149,9 @@ public sealed class SSDStorageConsoleSystem : EntitySystem
                 continue;
             }
 
+            var cryopodSSDEntity = args.CryopodSSD;
             var consoleCoord = Transform(uid).Coordinates;
-            var cryopodCoord = Transform(args.CryopodSSD).Coordinates;
+            var cryopodCoord = Transform(cryopodSSDEntity).Coordinates;
 
             if (consoleCoord.InRange(_entityManager, _transformSystem, cryopodCoord, ssdStorageConsoleComp.RadiusToConnect))
             {

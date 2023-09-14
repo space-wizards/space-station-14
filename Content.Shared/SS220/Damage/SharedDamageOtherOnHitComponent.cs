@@ -17,15 +17,15 @@ public sealed class GetDamageOtherOnHitEvent : HandledEntityEventArgs
     /// <summary>
     /// Entity that hit something.
     /// </summary>
-    public readonly EntityUid HitEntity;
+    public readonly NetEntity HitEntity;
 
-    public readonly EntityUid Target;
+    public readonly NetEntity Target;
 
     public DamageSpecifier Damage;
 
     public bool IgnoreResistances;
 
-    public GetDamageOtherOnHitEvent(EntityUid hitEntity, EntityUid target, DamageSpecifier damage, bool ignoreResistances)
+    public GetDamageOtherOnHitEvent(NetEntity hitEntity, NetEntity target, DamageSpecifier damage, bool ignoreResistances)
     {
         HitEntity = hitEntity;
         Target = target;

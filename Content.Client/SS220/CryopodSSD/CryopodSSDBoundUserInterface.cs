@@ -57,14 +57,16 @@ public sealed class CryopodSSDBoundUserInterface : BoundUserInterface
 
     public void InteractWithItem(BaseButton.ButtonEventArgs args, ListData cData)
     {
+        var entMan = IoCManager.Resolve<IEntityManager>();
+
         if (cData is not EntityListData {Uid: var entity})
             return;
 
         if (args.Event.Function == EngineKeyFunctions.UIClick)
         {
-            SendMessage(new CryopodSSDStorageInteractWithItemEvent(entity));
+            SendMessage(new CryopodSSDStorageInteractWithItemEvent(entMan.GetNetEntity(entity)));
         }
-        else if (IoCManager.Resolve<IEntityManager>().EntityExists(entity))
+        else if (entMan.EntityExists(entity))
         {
             OnButtonPressed(args.Event, entity);
         }

@@ -16,6 +16,7 @@ namespace Content.Client.Administration.UI.CustomControls
     public sealed partial class GameRulesListControl : BoxContainer
     {
         private readonly AdminSystem _adminSystem;
+        private readonly IEntityManager _entityManager;
 
         private List<GameRuleInfo> _gameRulesList = new();
 
@@ -28,6 +29,7 @@ namespace Content.Client.Administration.UI.CustomControls
         public GameRulesListControl()
         {
             _adminSystem = EntitySystem.Get<AdminSystem>();
+            _entityManager = IoCManager.Resolve<IEntityManager>();
             IoCManager.InjectDependencies(this);
             RobustXamlLoader.Load(this);
             // Fill the Option data
@@ -51,9 +53,11 @@ namespace Content.Client.Administration.UI.CustomControls
                 if (OverrideText != null && args.Button.Children.FirstOrDefault()?.Children?.FirstOrDefault() is Label label)
                     label.Text = GetText(selectedGameRule);
             }
-            else if (args.Event.Function == EngineKeyFunctions.UseSecondary && selectedGameRule.EntityUid != null)
+            else if (args.Event.Function == EngineKeyFunctions.UseSecondary && selectedGameRule.Entity != null)
             {
-                IoCManager.Resolve<IUserInterfaceManager>().GetUIController<VerbMenuUIController>().OpenVerbMenu(selectedGameRule.EntityUid.Value);
+                var entity = _entityManager.GetEntity(selectedGameRule.Entity.Value);
+                if (_entityManager.EntityExists(entity))
+                    IoCManager.Resolve<IUserInterfaceManager>().GetUIController<VerbMenuUIController>().OpenVerbMenu(entity);
             }
         }
 
@@ -69,7 +73,7 @@ namespace Content.Client.Administration.UI.CustomControls
 
         private string GetText(GameRuleInfo info)
         {
-            var text = $"{info.EntityUid} - {info.Name}";
+            var text = $"{_entityManager.GetEntity(info.Entity)} - {info.Name}";
             if (OverrideText != null)
                 text = OverrideText.Invoke(info, text);
             return text;
