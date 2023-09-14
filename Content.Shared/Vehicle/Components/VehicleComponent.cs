@@ -1,8 +1,8 @@
 using System.Numerics;
-using Content.Shared.Actions.ActionTypes;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
-using Robust.Shared.Utility;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Vehicle.Components;
 
@@ -49,19 +49,15 @@ public sealed partial class VehicleComponent : Component
 
     /// Use ambient sound component for the idle sound.
 
+    [DataField("hornAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    public string? HornAction = "ActionVehicleHorn";
+
     /// <summary>
     /// The action for the horn (if any)
     /// </summary>
-    [DataField("hornAction")]
+    [DataField("hornActionEntity")]
     [ViewVariables(VVAccess.ReadWrite)]
-    public InstantAction HornAction = new()
-    {
-        UseDelay = TimeSpan.FromSeconds(3.4),
-        Icon = new SpriteSpecifier.Texture(new("Objects/Fun/bikehorn.rsi/icon.png")),
-        DisplayName = "action-name-honk",
-        Description = "action-desc-honk",
-        Event = new HonkActionEvent(),
-    };
+    public EntityUid? HornActionEntity;
 
     /// <summary>
     /// Whether the vehicle has a key currently inside it or not.

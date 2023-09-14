@@ -7,6 +7,8 @@ using Robust.Shared.Players;
 namespace Content.Shared.Mind
 {
     /// <summary>
+    ///     This is added as a component to mind entities, not to player entities.
+    ///     <see cref="MindContainerComponent"/> for the one that is added to players.
     ///     A mind represents the IC "mind" of a player.
     ///     Roles are attached as components to its owning entity.
     /// </summary>
