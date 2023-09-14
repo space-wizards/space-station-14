@@ -1,0 +1,33 @@
+[33mcommit c9662b79d4130608de4bc7d3bb266fc365673265[m
+Author: Silver <silvertorch5@gmail.com>
+Date:   Sun May 21 22:29:08 2017 -0600
+
+    Create README.md
+
+[33mcommit 8adabfab67bd59bb7f7c9b20127b0c46cc18255d[m
+Author: Matt Smith <psykzz@users.noreply.github.com>
+Date:   Wed May 31 03:09:47 2017 +0100
+
+    Import engine as submodule (#1)
+
+[33mcommit 20affd2acea05d4182991c2c136c5e33530beb6e[m
+Author: clusterfack <clusterfack@users.noreply.github.com>
+Date:   Tue May 30 22:20:55 2017 -0500
+
+    Revert "Import engine as submodule (#1)" (#2)
+    
+    This reverts commit 8adabfab67bd59bb7f7c9b20127b0c46cc18255d.
+
+[33mcommit 8d7293bdd26559ad6b454e9a9fc1364052cf1855[m
+Author: clusterfack <afleck1@alumni.nd.edu>
+Date:   Tue May 30 22:50:10 2017 -0500
+
+    Import engine as submodule
+    
+    Trying an https link to allow submodule downloading without SSH authentication
+
+[33mcommit a4882cb83afe0731de2f0c6e87681b0ab278462c[m
+Author: Acruid <shatter66@gmail.com>
+Date:   Wed Aug 2 12:27:55 2017 -0700
+
+    Create LICENSE.TXT
