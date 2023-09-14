@@ -60,7 +60,7 @@
 - type: entity
   noSpawn: true
   parent: [BaseNinjaObjective, BaseSurviveObjective]
-  id: SurviveObjective
+  id: NinjaSurviveObjective
   components:
   - type: Objective
     title: objective-condition-survive-title
