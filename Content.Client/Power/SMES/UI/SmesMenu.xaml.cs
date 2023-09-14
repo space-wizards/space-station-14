@@ -19,25 +19,22 @@ namespace Content.Client.Power.SMES.UI;
 public sealed partial class SmesMenu : FancyWindow
 {
     [Dependency] private readonly IEntityManager _entityManager = default!;
-    public SmesMenu(SmesBoundUserInterface owner, ClientUserInterfaceComponent component)
+
+    public SmesMenu(EntityUid owner)
     {
         IoCManager.InjectDependencies(this);
         RobustXamlLoader.Load(this);
 
-        EntityView.Sprite = _entityManager.GetComponent<SpriteComponent>(component.Owner);
+        EntityView.Sprite = _entityManager.GetComponent<SpriteComponent>(owner);
     }
 
     public void UpdateState(SmesBoundInterfaceState state)
     {
         if (PowerLabel != null)
-        {
-            PowerLabel.Text = state.Power + "W";
-        }
+            PowerLabel.Text = Loc.GetString("smes-power", ("amount", state.Power));
 
         if (ExternalPowerStateLabel != null)
-        {
             PowerUIHelpers.FillExternalPowerLabel(ExternalPowerStateLabel, state.ExternalPower);
-        }
 
         if (ChargeBar != null)
         {
