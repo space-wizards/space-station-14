@@ -6,6 +6,7 @@ using Content.Shared.Database;
 using Content.Shared.Doors.Components;
 using Content.Shared.Doors.Systems;
 using Content.Shared.Tools.Components;
+using Robust.Shared.GameObjects;
 
 namespace Content.Shared.Doors.Prying.Systems;
 public abstract class SharedDoorPryingSystem : EntitySystem
@@ -83,7 +84,7 @@ public abstract class SharedDoorPryingSystem : EntitySystem
 
 
         RaiseLocalEvent(target, modEv, false);
-        var doAfterArgs = new DoAfterArgs(user, TimeSpan.FromSeconds(door.PryTime * modEv.PryTimeModifier / toolModifier), new DoorPryDoAfterEvent(), target, target, tool)
+        var doAfterArgs = new DoAfterArgs(EntityManager, user, TimeSpan.FromSeconds(door.PryTime * modEv.PryTimeModifier / toolModifier), new DoorPryDoAfterEvent(), target, target, tool)
         {
             BreakOnDamage = true,
             BreakOnUserMove = true,
