@@ -7,7 +7,6 @@ using Robust.Client.Player;
 using Robust.Shared.ContentPack;
 using Robust.Shared.GameStates;
 using Robust.Shared.Input.Binding;
-using Robust.Shared.Map;
 using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Serialization.Markdown;
 using Robust.Shared.Serialization.Markdown.Mapping;
@@ -27,7 +26,6 @@ namespace Content.Client.Actions
         [Dependency] private readonly IResourceManager _resources = default!;
         [Dependency] private readonly ISerializationManager _serialization = default!;
         [Dependency] private readonly MetaDataSystem _metaData = default!;
-        [Dependency] private readonly ActionContainerSystem _actionContainer = default!;
 
         public event Action<EntityUid>? OnActionAdded;
         public event Action<EntityUid>? OnActionRemoved;
@@ -47,16 +45,71 @@ namespace Content.Client.Actions
             SubscribeLocalEvent<ActionsComponent, PlayerAttachedEvent>(OnPlayerAttached);
             SubscribeLocalEvent<ActionsComponent, PlayerDetachedEvent>(OnPlayerDetached);
             SubscribeLocalEvent<ActionsComponent, ComponentHandleState>(HandleComponentState);
+
+            SubscribeLocalEvent<InstantActionComponent, ComponentHandleState>(OnInstantHandleState);
+            SubscribeLocalEvent<EntityTargetActionComponent, ComponentHandleState>(OnEntityTargetHandleState);
+            SubscribeLocalEvent<WorldTargetActionComponent, ComponentHandleState>(OnWorldTargetHandleState);
         }
 
-        public override void Dirty(EntityUid? actionId)
+        private void OnInstantHandleState(EntityUid uid, InstantActionComponent component, ref ComponentHandleState args)
         {
-            base.Dirty(actionId);
-
-            if (!TryGetActionData(actionId, out var action))
+            if (args.Current is not InstantActionComponentState state)
                 return;
 
-            if (_playerManager.LocalPlayer?.ControlledEntity != action?.AttachedEntity)
+            BaseHandleState<InstantActionComponent>(uid, component, state);
+        }
+
+        private void OnEntityTargetHandleState(EntityUid uid, EntityTargetActionComponent component, ref ComponentHandleState args)
+        {
+            if (args.Current is not EntityTargetActionComponentState state)
+                return;
+
+            component.Whitelist = state.Whitelist;
+            component.CanTargetSelf = state.CanTargetSelf;
+            BaseHandleState<EntityTargetActionComponent>(uid, component, state);
+        }
+
+        private void OnWorldTargetHandleState(EntityUid uid, WorldTargetActionComponent component, ref ComponentHandleState args)
+        {
+            if (args.Current is not WorldTargetActionComponentState state)
+                return;
+
+            BaseHandleState<WorldTargetActionComponent>(uid, component, state);
+        }
+
+        private void BaseHandleState<T>(EntityUid uid, BaseActionComponent component, BaseActionComponentState state) where T : BaseActionComponent
+        {
+            component.Icon = state.Icon;
+            component.IconOn = state.IconOn;
+            component.IconColor = state.IconColor;
+            component.Keywords = new HashSet<string>(state.Keywords);
+            component.Enabled = state.Enabled;
+            component.Toggled = state.Toggled;
+            component.Cooldown = state.Cooldown;
+            component.UseDelay = state.UseDelay;
+            component.Charges = state.Charges;
+            component.Container = EnsureEntity<T>(state.Container, uid);
+            component.EntityIcon = EnsureEntity<T>(state.EntityIcon, uid);
+            component.CheckCanInteract = state.CheckCanInteract;
+            component.ClientExclusive = state.ClientExclusive;
+            component.Priority = state.Priority;
+            component.AttachedEntity = EnsureEntity<T>(state.AttachedEntity, uid);
+            component.AutoPopulate = state.AutoPopulate;
+            component.Temporary = state.Temporary;
+            component.ItemIconStyle = state.ItemIconStyle;
+            component.Sound = state.Sound;
+
+            if (_playerManager.LocalPlayer?.ControlledEntity == component.AttachedEntity)
+                ActionsUpdated?.Invoke();
+        }
+
+        protected override void UpdateAction(EntityUid? actionId, BaseActionComponent? action = null)
+        {
+            if (!ResolveActionData(actionId, ref action))
+                return;
+
+            base.UpdateAction(actionId, action);
+            if (_playerManager.LocalPlayer?.ControlledEntity != action.AttachedEntity)
                 return;
 
             ActionsUpdated?.Invoke();

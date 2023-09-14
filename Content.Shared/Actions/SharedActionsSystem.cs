@@ -42,10 +42,6 @@ public abstract class SharedActionsSystem : EntitySystem
         SubscribeLocalEvent<EntityTargetActionComponent, ComponentGetState>(OnEntityTargetGetState);
         SubscribeLocalEvent<WorldTargetActionComponent, ComponentGetState>(OnWorldTargetGetState);
 
-        SubscribeLocalEvent<InstantActionComponent, ComponentHandleState>(OnInstantHandleState);
-        SubscribeLocalEvent<EntityTargetActionComponent, ComponentHandleState>(OnEntityTargetHandleState);
-        SubscribeLocalEvent<WorldTargetActionComponent, ComponentHandleState>(OnWorldTargetHandleState);
-
         SubscribeLocalEvent<InstantActionComponent, GetActionDataEvent>(OnGetActionData);
         SubscribeLocalEvent<EntityTargetActionComponent, GetActionDataEvent>(OnGetActionData);
         SubscribeLocalEvent<WorldTargetActionComponent, GetActionDataEvent>(OnGetActionData);
@@ -66,55 +62,6 @@ public abstract class SharedActionsSystem : EntitySystem
     private void OnWorldTargetGetState(EntityUid uid, WorldTargetActionComponent component, ref ComponentGetState args)
     {
         args.State = new WorldTargetActionComponentState(component, EntityManager);
-    }
-
-    private void BaseHandleState<T>(EntityUid uid, BaseActionComponent component, BaseActionComponentState state) where T : BaseActionComponent
-    {
-        component.Icon = state.Icon;
-        component.IconOn = state.IconOn;
-        component.IconColor = state.IconColor;
-        component.Keywords = new HashSet<string>(state.Keywords);
-        component.Enabled = state.Enabled;
-        component.Toggled = state.Toggled;
-        component.Cooldown = state.Cooldown;
-        component.UseDelay = state.UseDelay;
-        component.Charges = state.Charges;
-        component.Container = EnsureEntity<T>(state.Container, uid);
-        component.EntityIcon = EnsureEntity<T>(state.EntityIcon, uid);
-        component.CheckCanInteract = state.CheckCanInteract;
-        component.ClientExclusive = state.ClientExclusive;
-        component.Priority = state.Priority;
-        component.AttachedEntity = EnsureEntity<T>(state.AttachedEntity, uid);
-        component.AutoPopulate = state.AutoPopulate;
-        component.Temporary = state.Temporary;
-        component.ItemIconStyle = state.ItemIconStyle;
-        component.Sound = state.Sound;
-    }
-
-    private void OnInstantHandleState(EntityUid uid, InstantActionComponent component, ref ComponentHandleState args)
-    {
-        if (args.Current is not InstantActionComponentState state)
-            return;
-
-        BaseHandleState<InstantActionComponent>(uid, component, state);
-    }
-
-    private void OnEntityTargetHandleState(EntityUid uid, EntityTargetActionComponent component, ref ComponentHandleState args)
-    {
-        if (args.Current is not EntityTargetActionComponentState state)
-            return;
-
-        BaseHandleState<EntityTargetActionComponent>(uid, component, state);
-        component.Whitelist = state.Whitelist;
-        component.CanTargetSelf = state.CanTargetSelf;
-    }
-
-    private void OnWorldTargetHandleState(EntityUid uid, WorldTargetActionComponent component, ref ComponentHandleState args)
-    {
-        if (args.Current is not WorldTargetActionComponentState state)
-            return;
-
-        BaseHandleState<WorldTargetActionComponent>(uid, component, state);
     }
 
     private void OnGetActionData<T>(EntityUid uid, T component, ref GetActionDataEvent args) where T : BaseActionComponent
@@ -169,25 +116,9 @@ public abstract class SharedActionsSystem : EntitySystem
     }
 
     #region ComponentStateManagement
-    public virtual void Dirty(EntityUid? actionId)
+    protected virtual void UpdateAction(EntityUid? actionId, BaseActionComponent? action = null)
     {
-        if (!TryGetActionData(actionId, out var action))
-            return;
-
-        Dirty(actionId.Value, action);
-
-        if (action.AttachedEntity == null)
-            return;
-
-        var ent = action.AttachedEntity;
-
-        if (!TryComp(ent, out ActionsComponent? comp))
-        {
-            action.AttachedEntity = null;
-            return;
-        }
-
-        Dirty(action.AttachedEntity.Value, comp);
+        // See client-side code.
     }
 
     public void SetToggled(EntityUid? actionId, bool toggled)
@@ -199,6 +130,7 @@ public abstract class SharedActionsSystem : EntitySystem
         }
 
         action.Toggled = toggled;
+        UpdateAction(actionId, action);
         Dirty(actionId.Value, action);
     }
 
@@ -211,6 +143,7 @@ public abstract class SharedActionsSystem : EntitySystem
         }
 
         action.Enabled = enabled;
+        UpdateAction(actionId, action);
         Dirty(actionId.Value, action);
     }
 
@@ -223,6 +156,7 @@ public abstract class SharedActionsSystem : EntitySystem
         }
 
         action.Charges = charges;
+        UpdateAction(actionId, action);
         Dirty(actionId.Value, action);
     }
 
@@ -551,12 +485,9 @@ public abstract class SharedActionsSystem : EntitySystem
         if (!ResolveActionData(actionId, ref action))
             return false;
 
-        if (!TryComp(action.Container, out ActionsContainerComponent? containerComp)
-            || !containerComp.Container.Contains(actionId))
-        {
-            Log.Error($"Attempted to add an action with an invalid container: {ToPrettyString(actionId)}");
-            return false;
-        }
+        DebugTools.Assert(action.Container == null ||
+                          (TryComp(action.Container, out ActionsContainerComponent? containerComp)
+                           && containerComp.Container.Contains(actionId)));
 
         DebugTools.Assert(comp == null || comp.Owner == performer);
         comp ??= EnsureComp<ActionsComponent>(performer);
@@ -659,7 +590,7 @@ public abstract class SharedActionsSystem : EntitySystem
         if (action.AttachedEntity == null)
         {
             // action was already removed?
-            DebugTools.Assert(!comp.Actions.Contains(actionId.Value));
+            DebugTools.Assert(!comp.Actions.Contains(actionId.Value) || GameTiming.ApplyingState);
             return;
         }
 
