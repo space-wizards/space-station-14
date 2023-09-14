@@ -138,7 +138,7 @@ public sealed class CryopodSSDSystem : SharedCryopodSSDSystem
                     _audioSystem.PlayPvs(ambientSoundComponent.Sound, portal);
                 }
 
-                var doAfterArgs = new DoAfterArgs(target, cryopodSSDComp.EntryDelay, new TeleportToCryoFinished(portal), cryopodSSDUid)
+                var doAfterArgs = new DoAfterArgs(EntityManager, target, cryopodSSDComp.EntryDelay, new TeleportToCryoFinished(portal), cryopodSSDUid)
                 {
                     BreakOnDamage = false,
                     BreakOnTargetMove = false,
@@ -188,7 +188,7 @@ public sealed class CryopodSSDSystem : SharedCryopodSSDSystem
             return;
         }
 
-        var doAfterArgs = new DoAfterArgs(args.User, cryopodSsdComponent.EntryDelay, new CryopodSSDDragFinished(), uid,
+        var doAfterArgs = new DoAfterArgs(EntityManager, args.User, cryopodSsdComponent.EntryDelay, new CryopodSSDDragFinished(), uid,
             target: args.Dragged, used: uid)
         {
             BreakOnDamage = true,
