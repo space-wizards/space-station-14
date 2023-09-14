@@ -13,38 +13,37 @@ using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using FancyWindow = Content.Client.UserInterface.Controls.FancyWindow;
 
-namespace Content.Client.Power.SMES.UI
-{
-    [GenerateTypedNameReferences]
-    public sealed partial class SmesMenu : FancyWindow
-    {
-        [Dependency] private readonly IEntityManager _entityManager = default!;
-        public SmesMenu(SmesBoundUserInterface owner, ClientUserInterfaceComponent component)
-        {
-            IoCManager.InjectDependencies(this);
-            RobustXamlLoader.Load(this);
+namespace Content.Client.Power.SMES.UI;
 
-            EntityView.Sprite = _entityManager.GetComponent<SpriteComponent>(component.Owner);
+[GenerateTypedNameReferences]
+public sealed partial class SmesMenu : FancyWindow
+{
+    [Dependency] private readonly IEntityManager _entityManager = default!;
+    public SmesMenu(SmesBoundUserInterface owner, ClientUserInterfaceComponent component)
+    {
+        IoCManager.InjectDependencies(this);
+        RobustXamlLoader.Load(this);
+
+        EntityView.Sprite = _entityManager.GetComponent<SpriteComponent>(component.Owner);
+    }
+
+    public void UpdateState(SmesBoundInterfaceState state)
+    {
+        if (PowerLabel != null)
+        {
+            PowerLabel.Text = state.Power + "W";
         }
 
-        public void UpdateState(SmesBoundInterfaceState state)
+        if (ExternalPowerStateLabel != null)
         {
-            if (PowerLabel != null)
-            {
-                PowerLabel.Text = state.Power + "W";
-            }
+            PowerUIHelpers.FillExternalPowerLabel(ExternalPowerStateLabel, state.ExternalPower);
+        }
 
-            if (ExternalPowerStateLabel != null)
-            {
-                PowerUIHelpers.FillExternalPowerLabel(ExternalPowerStateLabel, state.ExternalPower);
-            }
-
-            if (ChargeBar != null)
-            {
-                PowerUIHelpers.FillBatteryChargeProgressBar(ChargeBar, state.Charge);
-                var chargePercentage = (state.Charge / ChargeBar.MaxValue);
-                ChargePercentage.Text = Loc.GetString("apc-menu-charge-label", ("percent", chargePercentage.ToString("P0")));
-            }
+        if (ChargeBar != null)
+        {
+            PowerUIHelpers.FillBatteryChargeProgressBar(ChargeBar, state.Charge);
+            var chargePercentage = (state.Charge / ChargeBar.MaxValue);
+            ChargePercentage.Text = Loc.GetString("apc-menu-charge-label", ("percent", chargePercentage.ToString("P0")));
         }
     }
 }
