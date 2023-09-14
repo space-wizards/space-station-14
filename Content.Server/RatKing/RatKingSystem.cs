@@ -1,20 +1,27 @@
-using Content.Server.Actions;
+using System.Numerics;
 using Content.Server.Atmos.EntitySystems;
+using Content.Server.Chat.Systems;
+using Content.Server.NPC;
+using Content.Server.NPC.HTN;
+using Content.Server.NPC.Systems;
 using Content.Server.Popups;
 using Content.Shared.Atmos;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.RatKing;
 using Robust.Server.GameObjects;
+using Robust.Shared.Map;
 
 namespace Content.Server.RatKing
 {
     /// <inheritdoc/>
     public sealed class RatKingSystem : SharedRatKingSystem
     {
-        [Dependency] private readonly ActionsSystem _action = default!;
         [Dependency] private readonly AtmosphereSystem _atmos = default!;
+        [Dependency] private readonly ChatSystem _chat = default!;
+        [Dependency] private readonly HTNSystem _htn = default!;
         [Dependency] private readonly HungerSystem _hunger = default!;
+        [Dependency] private readonly NPCSystem _npc = default!;
         [Dependency] private readonly PopupSystem _popup = default!;
         [Dependency] private readonly TransformSystem _xform = default!;
 
@@ -22,16 +29,8 @@ namespace Content.Server.RatKing
         {
             base.Initialize();
 
-            SubscribeLocalEvent<RatKingComponent, MapInitEvent>(OnMapInit);
-
             SubscribeLocalEvent<RatKingComponent, RatKingRaiseArmyActionEvent>(OnRaiseArmy);
             SubscribeLocalEvent<RatKingComponent, RatKingDomainActionEvent>(OnDomain);
-        }
-
-        private void OnMapInit(EntityUid uid, RatKingComponent component, MapInitEvent args)
-        {
-            _action.AddAction(uid, ref component.ActionRaiseArmyEntity, component.ActionRaiseArmy);
-            _action.AddAction(uid, ref component.ActionDomainEntity, component.ActionDomain);
         }
 
         /// <summary>
@@ -53,7 +52,14 @@ namespace Content.Server.RatKing
             }
             args.Handled = true;
             _hunger.ModifyHunger(uid, -component.HungerPerArmyUse, hunger);
-            Spawn(component.ArmyMobSpawnId, Transform(uid).Coordinates); //spawn the little mouse boi
+            var servant = Spawn(component.ArmyMobSpawnId, Transform(uid).Coordinates);
+            var comp = EnsureComp<RatKingServantComponent>(servant);
+            comp.King = uid;
+            Dirty(servant, comp);
+
+            component.Servants.Add(servant);
+            _npc.SetBlackboard(servant, NPCBlackboard.FollowTarget, new EntityCoordinates(uid, Vector2.Zero));
+            UpdateServantNpc(servant, component.CurrentOrder);
         }
 
         /// <summary>
@@ -83,6 +89,47 @@ namespace Content.Server.RatKing
             var indices = _xform.GetGridOrMapTilePosition(uid, transform);
             var tileMix = _atmos.GetTileMixture(transform.GridUid, transform.MapUid, indices, true);
             tileMix?.AdjustMoles(Gas.Miasma, component.MolesMiasmaPerDomain);
+        }
+
+        public override void UpdateServantNpc(EntityUid uid, RatKingOrderType orderType)
+        {
+            base.UpdateServantNpc(uid, orderType);
+
+            if (!TryComp<HTNComponent>(uid, out var htn))
+                return;
+
+            if (htn.Plan != null)
+                _htn.ShutdownPlan(htn);
+            /*
+            //todo YELL COMMANDS HAHA
+            switch (orderType)
+            {
+                case RatKingOrderType.Stay:
+                    htn.RootTask = new HTNCompoundTask
+                    {
+                        Task = "IdleCompound"
+                    };
+                    break;
+                case RatKingOrderType.Follow:
+                    htn.RootTask = new HTNCompoundTask
+                    {
+                        Task = "FollowCompound"
+                    };
+                    break;
+                case RatKingOrderType.CheeseEm:
+
+                    break;
+                case RatKingOrderType.Loose:
+                    htn.RootTask = new HTNCompoundTask
+                    {
+                        Task = "SimpleHostileCompound"
+                    };
+                    break;
+            }
+            */
+            _chat.TrySendInGameICMessage();
+            _npc.SetBlackboard(uid, NPCBlackboard.CurrentOrders, orderType);
+            _htn.Replan(htn);
         }
     }
 }

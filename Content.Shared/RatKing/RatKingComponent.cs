@@ -1,10 +1,12 @@
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.RatKing;
 
 [RegisterComponent, NetworkedComponent, Access(typeof(SharedRatKingSystem))]
+[AutoGenerateComponentState]
 public sealed partial class RatKingComponent : Component
 {
     [DataField("actionRaiseArmy", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
@@ -40,12 +42,66 @@ public sealed partial class RatKingComponent : Component
     /// <summary>
     ///     The amount of hunger one use of Domain consumes
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("hungerPerDomainUse", required: true)]
+    [DataField("hungerPerDomainUse", required: true), ViewVariables(VVAccess.ReadWrite)]
     public float HungerPerDomainUse = 50f;
 
     /// <summary>
     ///     How many moles of Miasma are released after one us of Domain
     /// </summary>
-    [DataField("molesMiasmaPerDomain")]
+    [DataField("molesMiasmaPerDomain"), ViewVariables(VVAccess.ReadWrite)]
     public float MolesMiasmaPerDomain = 100f;
+
+    /// <summary>
+    /// The current order that the Rat King assigned.
+    /// </summary>
+    [DataField("currentOrders"), ViewVariables(VVAccess.ReadWrite)]
+    [AutoNetworkedField]
+    public RatKingOrderType CurrentOrder = RatKingOrderType.Loose;
+
+    /// <summary>
+    /// The servants that the rat king is currently controlling
+    /// </summary>
+    [DataField("servants")]
+    public HashSet<EntityUid> Servants = new();
+
+    [DataField("actionOrderStay", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    public string ActionOrderStay = "ActionRatKingOrderStay";
+
+    [DataField("actionOrderStayEntity")]
+    public EntityUid? ActionOrderStayEntity;
+
+    [DataField("actionOrderFollow", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    public string ActionOrderFollow = "ActionRatKingOrderFollow";
+
+    [DataField("actionOrderFollowEntity")]
+    public EntityUid? ActionOrderFollowEntity;
+
+    [DataField("actionOrderCheeseEm", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    public string ActionOrderCheeseEm = "ActionRatKingOrderCheeseEm";
+
+    [DataField("actionOrderCheeseEmEntity")]
+    public EntityUid? ActionOrderCheeseEmEntity;
+
+    [DataField("actionOrderLoose", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    public string ActionOrderLoose = "ActionRatKingOrderLoose";
+
+    [DataField("actionOrderLooseEntity")]
+    public EntityUid? ActionOrderLooseEntity;
+
+    public Dictionary<RatKingOrderType, string> OrderCallouts = new()
+    {
+        { RatKingOrderType.Stay, "RatKingCommandStay" },
+        { RatKingOrderType.Follow, "RatKingCommandFollow" },
+        { RatKingOrderType.CheeseEm, "RatKingCommandCheeseEm" },
+        { RatKingOrderType.Loose, "RatKingCommandLoose" }
+    };
+}
+
+[Serializable, NetSerializable]
+public enum RatKingOrderType : byte
+{
+    Stay,
+    Follow,
+    CheeseEm,
+    Loose
 }

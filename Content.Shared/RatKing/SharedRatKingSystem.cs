@@ -1,4 +1,5 @@
-﻿using Content.Shared.DoAfter;
+﻿using Content.Shared.Actions;
+using Content.Shared.DoAfter;
 using Content.Shared.Random;
 using Content.Shared.Random.Helpers;
 using Content.Shared.Verbs;
@@ -14,14 +15,83 @@ public abstract class SharedRatKingSystem : EntitySystem
     [Dependency] private readonly INetManager _net = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly SharedActionsSystem _action = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
     {
+        SubscribeLocalEvent<RatKingComponent, ComponentStartup>(OnStartup);
+        SubscribeLocalEvent<RatKingComponent, ComponentShutdown>(OnShutdown);
+        SubscribeLocalEvent<RatKingComponent, RatKingOrderActionEvent>(OnOrderAction);
+
+        SubscribeLocalEvent<RatKingServantComponent, ComponentShutdown>(OnServantShutdown);
+
         SubscribeLocalEvent<RatKingRummageableComponent, GetVerbsEvent<AlternativeVerb>>(OnGetVerb);
         SubscribeLocalEvent<RatKingRummageableComponent, RatKingRummageDoAfterEvent>(OnDoAfterComplete);
+    }
+
+    private void OnStartup(EntityUid uid, RatKingComponent component, ComponentStartup args)
+    {
+        if (!TryComp(uid, out ActionsComponent? comp))
+            return;
+
+        _action.AddAction(uid, ref component.ActionRaiseArmyEntity, component.ActionRaiseArmy, holderComp: comp);
+        _action.AddAction(uid, ref component.ActionDomainEntity, component.ActionDomain, holderComp: comp);
+        _action.AddAction(uid, ref component.ActionOrderStayEntity, component.ActionOrderStay, holderComp: comp);
+        _action.AddAction(uid, ref component.ActionOrderFollowEntity, component.ActionOrderFollow, holderComp: comp);
+        _action.AddAction(uid, ref component.ActionOrderCheeseEmEntity, component.ActionOrderCheeseEm, holderComp: comp);
+        _action.AddAction(uid, ref component.ActionOrderLooseEntity, component.ActionOrderLoose, holderComp: comp);
+
+        UpdateActionToggles(uid, component);
+    }
+
+    private void OnShutdown(EntityUid uid, RatKingComponent component, ComponentShutdown args)
+    {
+        foreach (var servant in component.Servants)
+        {
+            if (TryComp(servant, out RatKingServantComponent? servantComp))
+                servantComp.King = null;
+        }
+
+        if (!TryComp(uid, out ActionsComponent? comp))
+            return;
+
+        _action.RemoveAction(uid, component.ActionRaiseArmyEntity, comp);
+        _action.RemoveAction(uid, component.ActionDomainEntity, comp);
+        _action.RemoveAction(uid, component.ActionOrderStayEntity, comp);
+        _action.RemoveAction(uid, component.ActionOrderFollowEntity, comp);
+        _action.RemoveAction(uid, component.ActionOrderCheeseEmEntity, comp);
+        _action.RemoveAction(uid, component.ActionOrderLooseEntity, comp);
+    }
+
+    private void OnOrderAction(EntityUid uid, RatKingComponent component, RatKingOrderActionEvent args)
+    {
+        if (component.CurrentOrder == args.Type)
+            return;
+        args.Handled = true;
+        component.CurrentOrder = args.Type;
+        Dirty(uid, component);
+        UpdateActionToggles(uid, component);
+        UpdateAllServants(uid, component);
+    }
+
+    private void OnServantShutdown(EntityUid uid, RatKingServantComponent component, ComponentShutdown args)
+    {
+        if (TryComp(component.King, out RatKingComponent? ratKingComponent))
+            ratKingComponent.Servants.Remove(uid);
+    }
+
+    private void UpdateActionToggles(EntityUid uid, RatKingComponent? component = null)
+    {
+        if (!Resolve(uid, ref component))
+            return;
+
+        _action.SetToggled(component.ActionOrderStayEntity, component.CurrentOrder == RatKingOrderType.Stay);
+        _action.SetToggled(component.ActionOrderFollowEntity, component.CurrentOrder == RatKingOrderType.Follow);
+        _action.SetToggled(component.ActionOrderCheeseEmEntity, component.CurrentOrder == RatKingOrderType.CheeseEm);
+        _action.SetToggled(component.ActionOrderLooseEntity, component.CurrentOrder == RatKingOrderType.Loose);
     }
 
     private void OnGetVerb(EntityUid uid, RatKingRummageableComponent component, GetVerbsEvent<AlternativeVerb> args)
@@ -58,6 +128,19 @@ public abstract class SharedRatKingSystem : EntitySystem
         var spawn = _prototypeManager.Index<WeightedRandomEntityPrototype>(component.RummageLoot).Pick(_random);
         if (_net.IsServer)
             Spawn(spawn, Transform(uid).Coordinates);
+    }
+
+    public void UpdateAllServants(EntityUid uid, RatKingComponent component)
+    {
+        foreach (var servant in component.Servants)
+        {
+            UpdateServantNpc(servant, component.CurrentOrder);
+        }
+    }
+
+    public virtual void UpdateServantNpc(EntityUid uid, RatKingOrderType orderType)
+    {
+
     }
 }
 
