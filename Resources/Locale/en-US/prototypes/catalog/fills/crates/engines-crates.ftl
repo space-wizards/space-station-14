@@ -2,7 +2,7 @@ ent-CrateEngineeringAMEShielding = Packaged antimatter reactor crate
     .desc = 9 parts for the main body of an antimatter reactor, or for expanding an existing one.
 
 ent-CrateEngineeringAMEJar = Antimatter containment jar crate
-    .desc = 3 antimatter jars, for fuelling an antimatter reactor.
+    .desc = 1 antimatter jar, for fuelling an antimatter reactor.
 
 ent-CrateEngineeringAMEControl = Antimatter control unit crate
     .desc = The control unit of an antimatter reactor.

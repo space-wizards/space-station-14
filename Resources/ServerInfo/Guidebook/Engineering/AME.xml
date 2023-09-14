@@ -1,7 +1,9 @@
 <Document>
 # Antimatter Engine (AME)
 
-The AME is one of the simplest engines available. You put together the multi-tile structure, stick some fuel into it, and you're all set. This doesn't mean it isn't potentially dangerous with overheating though.
+The AME is a dead-simple engine that requires minimal operational knowledge. With enough cores, it can easily power the entire station with very little hassle - however, due to its fuel being expensive, it's usually not a good idea to use outside of jumpstarting other things or emergencies. You can think of it as a [color=#a4885c]big back-up generator[/color] of sorts.
+
+Despite its simplicity, it is not without danger: if the AME is sabotaged, it will violently explode. This is usually more than enough to destroy the room it's located it.
 
 ## Construction
 <Box>Required parts:</Box>
@@ -18,4 +20,11 @@ Once this is done, you can use a multitool to convert each AME part into shieldi
 ## Fuel Economy
 The closer you are to the perfect ratio of [color=#a4885c]1:2[/color] (1 AME core to 2 fuel rate) the more efficient you'll be. You're cutting fuel efficiency to [color=#a4885c]50% and less[/color] if you're using more cores, but less fuel injection rate.
 For an example [color=#76db91]3 core and 6 fuel rate[/color] will generate [color=#76db91]240kW[/color], while [color=#f0684d]8 core 8 fuel rate[/color] will generate [color=#f0684d]160kW[/color]. Generating 80kW less while spending 2 more fuel each injection.
+
+##Danger
+The Antimatter is fairly easy to destroy. While beyond the [color=#a4885c]1:2[/color] core-to-fuel ratio, the AME will start overloading, with its cores taking on a sort of cross shape.
+
+Once it gets close to exploding, the AME fuel controller's display will turn [color=#FF0000]deep red,[/color] eventually displaying [color=#FF0000]"FUCK"[/color] once it is even closer. It is probably not a good idea to go towards an AME controller that says [color=#FF0000]"FUCK,"[/color] unless you want to risk getting caught in a large explosion.
+
+The amount of fuel being injected directly corresponds to the speed at which the AME will explode. This means that AMEs with more cores are safer, as it takes more clicks (and thus more time) to raise the core count to dangerous levels.
 </Document>

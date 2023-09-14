@@ -16,7 +16,7 @@
   - type: StorageFill
     contents:
       - id: AmeJar
-        amount: 3
+        amount: 1
 
 - type: entity
   id: CrateEngineeringAMEControl
