@@ -14,6 +14,7 @@
   # These are roundstart but not replenishable for salvage
   - WeaponCrusher
   - WeaponCrusherDagger
+  - ProtoKineticCharger
 
 - type: technology
   id: DraconicMunitions
@@ -63,6 +64,7 @@
   cost: 7500
   recipeUnlocks:
   - WeaponLaserCarbine
+  - RayCaster
 
 - type: technology
   id: NonlethalAmmunition

@@ -92,3 +92,21 @@
   materials:
     Steel: 750
     Plastic: 100
+
+- type: latheRecipe
+  id: ProtoKineticCharger
+  result: ProtoKineticCharger
+  completetime: 3
+  materials:
+    Steel: 300
+    Glass: 200
+    Silver: 200
+
+- type: latheRecipe
+  id: RayCaster
+  result: RayCaster
+  completetime: 3
+  materials:
+    Steel: 300
+    Glass: 300
+    Gold: 500
