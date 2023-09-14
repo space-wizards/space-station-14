@@ -720,6 +720,12 @@
   id: Mop
 
 - type: Tag
+  id: MopAdv
+
+- type: Tag
+  id: MopBasic
+
+- type: Tag
   id: Mouse
 
 - type: Tag
