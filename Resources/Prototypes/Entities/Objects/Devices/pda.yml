@@ -51,12 +51,6 @@
     - idcard
     - Belt
   - type: UnpoweredFlashlight
-    toggleAction:
-      name: action-name-toggle-light
-      description: action-description-toggle-light
-      icon: { sprite: Objects/Tools/flashlight.rsi, state: flashlight }
-      iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
-      event: !type:ToggleActionEvent
   - type: PointLight
     enabled: false
     radius: 1.5
@@ -72,6 +66,7 @@
   - type: CartridgeLoader
     uiKey: enum.PdaUiKey.Key
     preinstalled:
+      - CrewManifestCartridge
       - NotekeeperCartridge
       - NewsReadCartridge
     cartridgeSlot:
@@ -148,7 +143,7 @@
   - type: Icon
     state: pda-internmed
   - type: HealthAnalyzer
-    scanDelay: 1.4
+    scanDelay: 1
     scanningEndSound:
       path: "/Audio/Items/Medical/healthscanner.ogg"
   - type: GuideHelp
@@ -515,7 +510,7 @@
   - type: Icon
     state: pda-medical
   - type: HealthAnalyzer
-    scanDelay: 1.2
+    scanDelay: 1
     scanningEndSound:
       path: "/Audio/Items/Medical/healthscanner.ogg"
   - type: GuideHelp
@@ -537,7 +532,7 @@
   - type: Icon
     state: pda-paramedic
   - type: HealthAnalyzer
-    scanDelay: 0.5
+    scanDelay: 1
     scanningEndSound:
       path: "/Audio/Items/Medical/healthscanner.ogg"
 

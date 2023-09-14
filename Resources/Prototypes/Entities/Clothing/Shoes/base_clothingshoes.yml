@@ -8,6 +8,19 @@
     - FEET
   - type: Sprite
     state: icon
+  - type: Food
+    requiresSpecialDigestion: true
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: Fiber
+          Quantity: 10
+  - type: Tag
+    tags:
+    - ClothMade
+    - WhitelistChameleon
 
 - type: entity
   abstract: true

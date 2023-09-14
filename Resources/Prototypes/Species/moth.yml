@@ -1,0 +1,159 @@
+- type: species
+  id: Moth
+  name: species-name-moth
+  roundStart: true
+  prototype: MobMoth
+  sprites: MobMothSprites
+  defaultSkinTone: "#ffda93"
+  markingLimits: MobMothMarkingLimits
+  dollPrototype: MobMothDummy
+  skinColoration: Hues
+  maleFirstNames: names_moth_first_male
+  femaleFirstNames: names_moth_first_female
+  lastNames: names_moth_last
+
+- type: speciesBaseSprites
+  id: MobMothSprites
+  sprites:
+    Head: MobMothHead
+    Snout: MobHumanoidAnyMarking
+    Chest: MobMothTorso
+    HeadTop: MobHumanoidAnyMarking
+    HeadSide: MobHumanoidAnyMarking
+    Tail: MobHumanoidAnyMarking
+    Eyes: MobMothEyes
+    LArm: MobMothLArm
+    RArm: MobMothRArm
+    LHand: MobMothLHand
+    RHand: MobMothRHand
+    LLeg: MobMothLLeg
+    RLeg: MobMothRLeg
+    LFoot: MobMothLFoot
+    RFoot: MobMothRFoot
+
+- type: humanoidBaseSprite
+  id: MobMothEyes
+  baseSprite:
+    sprite: Mobs/Species/Moth/parts.rsi
+    state: eyes
+
+- type: markingPoints
+  id: MobMothMarkingLimits
+  onlyWhitelisted: true
+  points:
+    Hair:
+      points: 0
+      required: false
+    FacialHair:
+      points: 0
+      required: false
+    Tail:
+      points: 1
+      required: true
+      defaultMarkings: [ MothWingsDefault ]
+    Snout:
+      points: 1
+      required: false
+    HeadTop:
+      points: 1
+      required: true
+      defaultMarkings: [ MothAntennasDefault ]
+    HeadSide:
+      points: 1
+      required: false
+    Head:
+      points: 1
+      required: false
+    Chest:
+      points: 1
+      required: false
+    Legs:
+      points: 2
+      required: false
+    Arms:
+      points: 2
+      required: false
+
+- type: humanoidBaseSprite
+  id: MobMothHead
+  baseSprite:
+    sprite: Mobs/Species/Moth/parts.rsi
+    state: head_m
+
+- type: humanoidBaseSprite
+  id: MobMothHeadMale
+  baseSprite:
+    sprite: Mobs/Species/Moth/parts.rsi
+    state: head_m
+
+- type: humanoidBaseSprite
+  id: MobMothHeadFemale
+  baseSprite:
+    sprite: Mobs/Species/Moth/parts.rsi
+    state: head_f
+
+- type: humanoidBaseSprite
+  id: MobMothTorso
+  baseSprite:
+    sprite: Mobs/Species/Moth/parts.rsi
+    state: torso_m
+
+- type: humanoidBaseSprite
+  id: MobMothTorsoMale
+  baseSprite:
+    sprite: Mobs/Species/Moth/parts.rsi
+    state: torso_m
+
+- type: humanoidBaseSprite
+  id: MobMothTorsoFemale
+  baseSprite:
+    sprite: Mobs/Species/Moth/parts.rsi
+    state: torso_f
+
+- type: humanoidBaseSprite
+  id: MobMothLLeg
+  baseSprite:
+    sprite: Mobs/Species/Moth/parts.rsi
+    state: l_leg
+
+- type: humanoidBaseSprite
+  id: MobMothLHand
+  baseSprite:
+    sprite: Mobs/Species/Moth/parts.rsi
+    state: l_hand
+
+- type: humanoidBaseSprite
+  id: MobMothLArm
+  baseSprite:
+    sprite: Mobs/Species/Moth/parts.rsi
+    state: l_arm
+
+- type: humanoidBaseSprite
+  id: MobMothLFoot
+  baseSprite:
+    sprite: Mobs/Species/Moth/parts.rsi
+    state: l_foot
+
+- type: humanoidBaseSprite
+  id: MobMothRLeg
+  baseSprite:
+    sprite: Mobs/Species/Moth/parts.rsi
+    state: r_leg
+
+- type: humanoidBaseSprite
+  id: MobMothRHand
+  baseSprite:
+    sprite: Mobs/Species/Moth/parts.rsi
+    state: r_hand
+
+- type: humanoidBaseSprite
+  id: MobMothRArm
+  baseSprite:
+    sprite: Mobs/Species/Moth/parts.rsi
+    state: r_arm
+
+- type: humanoidBaseSprite
+  id: MobMothRFoot
+  baseSprite:
+    sprite: Mobs/Species/Moth/parts.rsi
+    state: r_foot

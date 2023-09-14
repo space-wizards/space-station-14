@@ -12,6 +12,8 @@ namespace Content.Shared.Body.Systems;
 
 public partial class SharedBodySystem
 {
+    [Dependency] private readonly SharedContainerSystem _container = default!;
+
     private void InitializeOrgans()
     {
         SubscribeLocalEvent<OrganComponent, ComponentGetState>(OnOrganGetState);
@@ -23,7 +25,12 @@ public partial class SharedBodySystem
         if (!Resolve(parent, ref part, false))
             return null;
 
-        var slot = new OrganSlot(slotId, parent);
+        var slot = new OrganSlot()
+        {
+            Id = slotId,
+            Parent = parent,
+            NetParent = GetNetEntity(parent),
+        };
         part.Organs.Add(slotId, slot);
 
         return slot;
@@ -35,12 +42,12 @@ public partial class SharedBodySystem
                slot.Child == null &&
                Resolve(organId.Value, ref organ, false) &&
                Containers.TryGetContainer(slot.Parent, BodyContainerId, out var container) &&
-               container.CanInsert(organId.Value);
+               _container.CanInsert(organId.Value, container);
     }
 
     private void OnOrganGetState(EntityUid uid, OrganComponent organ, ref ComponentGetState args)
     {
-        args.State = new OrganComponentState(organ.Body, organ.ParentSlot);
+        args.State = new OrganComponentState(GetNetEntity(organ.Body), organ.ParentSlot);
     }
 
     private void OnOrganHandleState(EntityUid uid, OrganComponent organ, ref ComponentHandleState args)
@@ -48,7 +55,7 @@ public partial class SharedBodySystem
         if (args.Current is not OrganComponentState state)
             return;
 
-        organ.Body = state.Body;
+        organ.Body = EnsureEntity<OrganComponent>(state.Body, uid);
         organ.ParentSlot = state.Parent;
     }
 
@@ -70,8 +77,8 @@ public partial class SharedBodySystem
         organ.ParentSlot = slot;
         organ.Body = CompOrNull<BodyPartComponent>(slot.Parent)?.Body;
 
-        Dirty(slot.Parent);
-        Dirty(organId.Value);
+        DirtyAllComponents(slot.Parent);
+        Dirty(organId.Value, organ);
 
         if (organ.Body == null)
         {
@@ -84,6 +91,20 @@ public partial class SharedBodySystem
 
         return true;
     }
+
+    public void DirtyAllComponents(EntityUid uid)
+    {
+        // TODO just use containers. Please
+        if (TryComp(uid, out BodyPartComponent? part))
+            Dirty(uid, part);
+
+        if (TryComp(uid, out OrganComponent? organ))
+            Dirty(uid, organ);
+
+        if (TryComp(uid, out BodyComponent? body))
+            Dirty(uid, body);
+    }
+
 
     public bool AddOrganToFirstValidSlot(
         EntityUid? childId,

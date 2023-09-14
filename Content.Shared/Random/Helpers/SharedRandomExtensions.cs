@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Shared.Dataset;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Random;
@@ -12,7 +12,7 @@ namespace Content.Shared.Random.Helpers
             return random.Pick(prototype.Values);
         }
 
-        public static string Pick(this WeightedRandomPrototype prototype, System.Random random)
+        public static string Pick(this IWeightedRandomPrototype prototype, System.Random random)
         {
             var picks = prototype.Weights;
             var sum = picks.Values.Sum();
@@ -34,7 +34,7 @@ namespace Content.Shared.Random.Helpers
             throw new InvalidOperationException($"Invalid weighted pick for {prototype.ID}!");
         }
 
-        public static string Pick(this WeightedRandomPrototype prototype, IRobustRandom? random = null)
+        public static string Pick(this IWeightedRandomPrototype prototype, IRobustRandom? random = null)
         {
             IoCManager.Resolve(ref random);
             var picks = prototype.Weights;

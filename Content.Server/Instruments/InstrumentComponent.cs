@@ -5,8 +5,8 @@ using Robust.Server.Player;
 
 namespace Content.Server.Instruments;
 
-[RegisterComponent, ComponentReference(typeof(SharedInstrumentComponent))]
-public sealed class InstrumentComponent : SharedInstrumentComponent
+[RegisterComponent]
+public sealed partial class InstrumentComponent : SharedInstrumentComponent
 {
     [Dependency] private readonly IEntityManager _entMan = default!;
 
@@ -21,10 +21,10 @@ public sealed class InstrumentComponent : SharedInstrumentComponent
         _entMan.GetComponentOrNull<ActivatableUIComponent>(Owner)?.CurrentSingleUser
         ?? _entMan.GetComponentOrNull<ActorComponent>(Owner)?.PlayerSession;
 
-    [ViewVariables] public BoundUserInterface? UserInterface => Owner.GetUIOrNull(InstrumentUiKey.Key);
+    [ViewVariables] public PlayerBoundUserInterface? UserInterface => Owner.GetUIOrNull(InstrumentUiKey.Key);
 }
 
 [RegisterComponent]
-public sealed class ActiveInstrumentComponent : Component
+public sealed partial class ActiveInstrumentComponent : Component
 {
 }

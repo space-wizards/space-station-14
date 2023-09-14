@@ -11,9 +11,6 @@ namespace Content.Client.Radiation.Systems;
 
 public sealed class GeigerSystem : SharedGeigerSystem
 {
-    [Dependency] private readonly AudioSystem _audio = default!;
-    [Dependency] private readonly IPlayerManager _playerManager = default!;
-
     public override void Initialize()
     {
         base.Initialize();
@@ -29,7 +26,7 @@ public sealed class GeigerSystem : SharedGeigerSystem
         component.CurrentRadiation = state.CurrentRadiation;
         component.DangerLevel = state.DangerLevel;
         component.IsEnabled = state.IsEnabled;
-        component.User = state.User;
+        component.User = EnsureEntity<GeigerComponent>(state.User, uid);
         component.UiUpdateNeeded = true;
     }
 

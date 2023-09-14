@@ -28,6 +28,8 @@
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/smg.ogg
   - type: ChamberMagazineAmmoProvider
+    soundRack:
+      path: /Audio/Weapons/Guns/Cock/smg_cock.ogg
   - type: ItemSlots
     slots:
       gun_magazine:
@@ -95,7 +97,7 @@
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/c-20r.ogg
   - type: ChamberMagazineAmmoProvider
-    # autoEject: true # Do not set this until the PVS prediction issue is resolved
+    autoEject: true
   - type: MagazineVisuals
     magState: mag
     steps: 6
@@ -216,6 +218,8 @@
         shader: unshaded
   - type: Clothing
     sprite: Objects/Weapons/Guns/SMGs/wt550.rsi
+  - type: ChamberMagazineAmmoProvider
+    boltClosed: null
   - type: Gun
     fireRate: 5
     selectedMode: FullAuto

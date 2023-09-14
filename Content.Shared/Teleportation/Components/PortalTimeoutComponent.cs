@@ -8,7 +8,7 @@ namespace Content.Shared.Teleportation.Components;
 ///     at the end destination.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-public sealed class PortalTimeoutComponent : Component
+public sealed partial class PortalTimeoutComponent : Component
 {
     /// <summary>
     ///     The portal that was entered. Null if coming from a hand teleporter, etc.
@@ -20,9 +20,9 @@ public sealed class PortalTimeoutComponent : Component
 [Serializable, NetSerializable]
 public sealed class PortalTimeoutComponentState : ComponentState
 {
-    public EntityUid? EnteredPortal;
+    public NetEntity? EnteredPortal;
 
-    public PortalTimeoutComponentState(EntityUid? enteredPortal)
+    public PortalTimeoutComponentState(NetEntity? enteredPortal)
     {
         EnteredPortal = enteredPortal;
     }

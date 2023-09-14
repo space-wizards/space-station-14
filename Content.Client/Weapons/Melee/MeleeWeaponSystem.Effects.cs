@@ -30,21 +30,22 @@ public sealed partial class MeleeWeaponSystem
         if (localPos == Vector2.Zero || animation == null)
             return;
 
-        if (!TryComp<TransformComponent>(user, out var userXform) || userXform.MapID == MapId.Nullspace)
+        if (!_xformQuery.TryGetComponent(user, out var userXform) || userXform.MapID == MapId.Nullspace)
             return;
 
         var animationUid = Spawn(animation, userXform.Coordinates);
 
         if (!TryComp<SpriteComponent>(animationUid, out var sprite)
             || !TryComp<WeaponArcVisualsComponent>(animationUid, out var arcComponent))
+        {
             return;
+        }
 
         sprite.NoRotation = true;
         sprite.Rotation = localPos.ToWorldAngle();
         var distance = Math.Clamp(localPos.Length() / 2f, 0.2f, 1f);
 
-        var xformQuery = GetEntityQuery<TransformComponent>();
-        var xform = xformQuery.GetComponent(animationUid);
+        var xform = _xformQuery.GetComponent(animationUid);
 
         switch (arcComponent.Animation)
         {
@@ -61,10 +62,10 @@ public sealed partial class MeleeWeaponSystem
                     _animation.Play(animationUid, GetFadeAnimation(sprite, 0.05f, 0.15f), FadeAnimationKey);
                 break;
             case WeaponArcAnimation.None:
-                var (mapPos, mapRot) = TransformSystem.GetWorldPositionRotation(userXform, xformQuery);
+                var (mapPos, mapRot) = TransformSystem.GetWorldPositionRotation(userXform);
                 TransformSystem.AttachToGridOrMap(animationUid, xform);
                 var worldPos = mapPos + (mapRot - userXform.LocalRotation).RotateVec(localPos);
-                var newLocalPos = TransformSystem.GetInvWorldMatrix(xform.ParentUid, xformQuery).Transform(worldPos);
+                var newLocalPos = TransformSystem.GetInvWorldMatrix(xform.ParentUid).Transform(worldPos);
                 TransformSystem.SetLocalPositionNoLerp(xform, newLocalPos);
                 if (arcComponent.Fadeout)
                     _animation.Play(animationUid, GetFadeAnimation(sprite, 0f, 0.15f), FadeAnimationKey);

@@ -128,6 +128,9 @@
     tags:
     - HamsterWearable
     - WhitelistChameleon
+  - type: GuideHelp
+    guides:
+    - Security
 
 - type: entity
   parent: ClothingEyesBase
@@ -171,3 +174,15 @@
     - type: Clothing
       sprite: Clothing/Eyes/Glasses/science.rsi
     - type: SolutionScanner
+
+- type: entity
+  parent: ClothingEyesBase
+  id: ClothingEyesVisorNinja
+  name: ninja visor
+  description: An advanced visor protecting a ninja's eyes from flashing lights.
+  components:
+  - type: Sprite
+    sprite: Clothing/Eyes/Glasses/ninjavisor.rsi
+  - type: Clothing
+    sprite: Clothing/Eyes/Glasses/ninjavisor.rsi
+  - type: FlashImmunity

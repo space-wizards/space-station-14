@@ -9,9 +9,11 @@ public sealed class PoolManagerTestEventHandler
     // This value is completely arbitrary.
     private static TimeSpan MaximumTotalTestingTimeLimit => TimeSpan.FromMinutes(20);
     private static TimeSpan HardStopTimeLimit => MaximumTotalTestingTimeLimit.Add(TimeSpan.FromMinutes(1));
+
     [OneTimeSetUp]
     public void Setup()
     {
+        PoolManager.Startup(typeof(PoolManagerTestEventHandler).Assembly);
         // If the tests seem to be stuck, we try to end it semi-nicely
         _ = Task.Delay(MaximumTotalTestingTimeLimit).ContinueWith(_ =>
         {

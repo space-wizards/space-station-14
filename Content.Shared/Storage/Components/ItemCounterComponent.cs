@@ -17,14 +17,14 @@ namespace Content.Shared.Storage.Components
     /// </code>
     [RegisterComponent]
     [Access(typeof(SharedItemCounterSystem))]
-    public sealed class ItemCounterComponent : Component
+    public sealed partial class ItemCounterComponent : Component
     {
         [DataField("count", required: true)]
         public EntityWhitelist Count { get; set; } = default!;
 
         [DataField("amount")]
         public int? MaxAmount { get; set; }
-    
+
         /// <summary>
         /// Default IconLayer stack.
         /// </summary>

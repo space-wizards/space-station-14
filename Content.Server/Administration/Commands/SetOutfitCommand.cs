@@ -20,7 +20,6 @@ namespace Content.Server.Administration.Commands
     public sealed class SetOutfitCommand : IConsoleCommand
     {
         [Dependency] private readonly IEntityManager _entities = default!;
-        [Dependency] private readonly IPrototypeManager _prototypes = default!;
 
         public string Command => "setoutfit";
 
@@ -76,7 +75,7 @@ namespace Content.Server.Administration.Commands
 
         public static bool SetOutfit(EntityUid target, string gear, IEntityManager entityManager, Action<EntityUid, EntityUid>? onEquipped = null)
         {
-            if (!entityManager.TryGetComponent<InventoryComponent?>(target, out var inventoryComponent))
+            if (!entityManager.TryGetComponent(target, out InventoryComponent? inventoryComponent))
                 return false;
 
             var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
@@ -85,7 +84,7 @@ namespace Content.Server.Administration.Commands
 
             HumanoidCharacterProfile? profile = null;
             // Check if we are setting the outfit of a player to respect the preferences
-            if (entityManager.TryGetComponent<ActorComponent?>(target, out var actorComponent))
+            if (entityManager.TryGetComponent(target, out ActorComponent? actorComponent))
             {
                 var userId = actorComponent.PlayerSession.UserId;
                 var preferencesManager = IoCManager.Resolve<IServerPreferencesManager>();
@@ -106,7 +105,7 @@ namespace Content.Server.Administration.Commands
                     }
                     var equipmentEntity = entityManager.SpawnEntity(gearStr, entityManager.GetComponent<TransformComponent>(target).Coordinates);
                     if (slot.Name == "id" &&
-                        entityManager.TryGetComponent<PdaComponent?>(equipmentEntity, out var pdaComponent) &&
+                        entityManager.TryGetComponent(equipmentEntity, out PdaComponent? pdaComponent) &&
                         entityManager.TryGetComponent<IdCardComponent>(pdaComponent.ContainedId, out var id))
                     {
                         id.FullName = entityManager.GetComponent<MetaDataComponent>(target).EntityName;

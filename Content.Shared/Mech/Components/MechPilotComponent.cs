@@ -10,7 +10,7 @@ namespace Content.Shared.Mech.Components;
 /// Get in the robot, Shinji
 /// </remarks>
 [RegisterComponent, NetworkedComponent]
-public sealed class MechPilotComponent : Component
+public sealed partial class MechPilotComponent : Component
 {
     /// <summary>
     /// The mech being piloted
@@ -22,5 +22,5 @@ public sealed class MechPilotComponent : Component
 [Serializable, NetSerializable]
 public sealed class MechPilotComponentState : ComponentState
 {
-    public EntityUid Mech;
+    public NetEntity Mech;
 }

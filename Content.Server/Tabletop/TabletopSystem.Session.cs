@@ -1,7 +1,6 @@
 using System.Numerics;
 using Content.Server.Tabletop.Components;
 using Content.Shared.Tabletop.Events;
-using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Utility;
 
@@ -78,7 +77,7 @@ namespace Content.Server.Tabletop
             if (session.Players.ContainsKey(player))
                 return;
 
-            if(EntityManager.TryGetComponent<TabletopGamerComponent?>(attachedEntity, out var gamer))
+            if(EntityManager.TryGetComponent(attachedEntity, out TabletopGamerComponent? gamer))
                 CloseSessionFor(player, gamer.Tabletop, false);
 
             // Set the entity as an absolute GAMER.
@@ -90,7 +89,7 @@ namespace Content.Server.Tabletop
             session.Players[player] = new TabletopSessionPlayerData { Camera = camera };
 
             // Tell the gamer to open a viewport for the tabletop game
-            RaiseNetworkEvent(new TabletopPlayEvent(uid, camera, Loc.GetString(tabletop.BoardName), tabletop.Size), player.ConnectedClient);
+            RaiseNetworkEvent(new TabletopPlayEvent(GetNetEntity(uid), GetNetEntity(camera), Loc.GetString(tabletop.BoardName), tabletop.Size), player.ConnectedClient);
         }
 
         /// <summary>
@@ -141,8 +140,8 @@ namespace Content.Server.Tabletop
 
             // Add an eye component and disable FOV
             var eyeComponent = camera.EnsureComponent<EyeComponent>();
-            eyeComponent.DrawFov = false;
-            eyeComponent.Zoom = tabletop.CameraZoom;
+            _eye.SetDrawFov(camera, false, eyeComponent);
+            _eye.SetZoom(camera, tabletop.CameraZoom, eyeComponent);
 
             // Add the user to the view subscribers. If there is no player session, just skip this step
             _viewSubscriberSystem.AddViewSubscriber(camera, player);

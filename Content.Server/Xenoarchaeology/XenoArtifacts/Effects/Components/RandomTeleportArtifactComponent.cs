@@ -5,7 +5,7 @@
 /// to a random position within a certain radius
 /// </summary>
 [RegisterComponent]
-public sealed class RandomTeleportArtifactComponent : Component
+public sealed partial class RandomTeleportArtifactComponent : Component
 {
     /// <summary>
     /// The max distance that the artifact will teleport.

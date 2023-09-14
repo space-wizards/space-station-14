@@ -8,6 +8,9 @@
   - type: SolutionContainerManager
   - type: Sprite
     state: produce
+  # let cows eat raw produce like wheat and oats
+  - type: Food
+    requiredStomachs: 2
   - type: Produce
   - type: PotencyVisuals
   - type: Appearance
@@ -229,28 +232,6 @@
   - type: Slippery
     paralyzeTime: 4
     launchForwardsMultiplier: 2
-
-- type: entity
-  name: banana peel
-  suffix: Explosive
-  parent: TrashBananaPeel
-  id: TrashBananaPeelExplosive
-  components:
-    - type: Sprite
-      sprite: Objects/Specific/Hydroponics/banana.rsi
-      layers:
-      - state: peel
-      - state: primed
-        shader: unshaded
-    - type: TriggerOnSlip
-    - type: ExplodeOnTrigger
-    - type: Explosive
-      explosionType: Default
-      maxIntensity: 2
-      totalIntensity: 10
-      canCreateVacuum: false
-    - type: DeleteOnTrigger
-    - type: AnimationPlayer
 
 - type: entity
   name: carrot
@@ -479,8 +460,10 @@
         maxVol: 14
         reagents:
         - ReagentId: Nutriment
-          Quantity: 10
+          Quantity: 7
         - ReagentId: Vitamin
+          Quantity: 3
+        - ReagentId: Water
           Quantity: 4
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/tomato.rsi
@@ -517,11 +500,8 @@
       - !type:PlaySoundBehavior
         sound:
           collection: desecration
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          PuddleTomato:
-            min: 1
-            max: 1
+      - !type:SpillBehavior
+        solution: food
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
 
@@ -575,6 +555,36 @@
       reagents:
       - ReagentId: JuiceApple
         Quantity: 10
+
+- type: entity
+  name: cocoa pod
+  parent: FoodProduceBase
+  id: FoodCocoaPod
+  description: You can never have too much chocolate!
+  components:
+  - type: FlavorProfile
+    flavors:
+      - chocolate
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 14
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 2
+        - ReagentId: Vitamin
+          Quantity: 1
+        - ReagentId: CocoaPowder
+          Quantity: 1
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/cocoa.rsi
+  - type: Produce
+    seedId: cocoa
+  - type: SpawnItemsOnUse
+    items:
+      - id: FoodCocoaBeans
+    sound:
+      path: /Audio/Effects/packetrip.ogg
 
 - type: entity
   name: ear of corn
@@ -829,7 +839,7 @@
         reagents:
         - ReagentId: Aloe
           Quantity: 10
-        - ReagentId: Kelotane
+        - ReagentId: Dermaline
           Quantity: 10
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/aloe.rsi
@@ -981,6 +991,7 @@
     seedId: flyAmanita
   - type: Extractable
     grindableSolutionName: food
+  - type: BadFood
 
 - type: entity
   name: gatfruit
@@ -1102,11 +1113,8 @@
       - !type:PlaySoundBehavior
         sound:
           collection: desecration
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          PuddleWatermelon:
-            min: 1
-            max: 1
+      - !type:SpillBehavior
+        solution: food
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: SliceableFood

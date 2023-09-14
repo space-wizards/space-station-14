@@ -12,6 +12,7 @@ public sealed class SlurredSystem : SharedSlurredSystem
     [Dependency] private readonly StatusEffectsSystem _statusEffectsSystem = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
 
+    [ValidatePrototypeId<StatusEffectPrototype>]
     private const string SlurKey = "SlurredSpeech";
 
     public override void Initialize()

@@ -152,10 +152,11 @@
   - type: Tag
     tags:
     - HidesHair
+    - WhitelistChameleon
 
 #Space Ninja Helmet
 - type: entity
-  parent: ClothingHeadBase
+  parent: ClothingHeadEVAHelmetBase
   id: ClothingHeadHelmetSpaceNinja
   name: space ninja helmet
   description: What may appear to be a simple black garment is in fact a highly sophisticated nano-weave helmet. Standard issue ninja gear.
@@ -164,10 +165,11 @@
     sprite: Clothing/Head/Helmets/spaceninja.rsi
   - type: Clothing
     sprite: Clothing/Head/Helmets/spaceninja.rsi
-  - type: IngestionBlocker
   - type: Tag
     tags:
     - HidesHair
+    - WhitelistChameleon
+  - type: IngestionBlocker
   - type: IdentityBlocker
 
 #Templar Helmet
@@ -215,7 +217,7 @@
   parent: ClothingHeadLightBase
   id: ClothingHeadHelmetFire
   name: fire helmet
-  description: An atmos techs best friend. Provides some heat resistance and looks cool.
+  description: An atmos tech's best friend. Provides some heat resistance and looks cool.
   components:
   - type: Sprite
     sprite: Clothing/Head/Helmets/firehelmet.rsi

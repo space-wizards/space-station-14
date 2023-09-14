@@ -18,14 +18,13 @@
     - Back
   - type: AmmoCounter
   - type: Gun
-    fireRate: 0.3 # ~5 second cooldown between shots
+    fireRate: 0.75
     selectedMode: SemiAuto
     availableModes:
     - SemiAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/sniper.ogg
   - type: BallisticAmmoProvider
-    autoCycle: false
     capacity: 10
     proto: CartridgeLightRifle
     whitelist:

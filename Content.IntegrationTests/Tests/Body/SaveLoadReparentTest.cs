@@ -11,6 +11,7 @@ namespace Content.IntegrationTests.Tests.Body;
 [TestFixture]
 public sealed class SaveLoadReparentTest
 {
+    [TestPrototypes]
     private const string Prototypes = @"
 - type: entity
   name: HumanBodyDummy
@@ -23,12 +24,8 @@ public sealed class SaveLoadReparentTest
     [Test]
     public async Task Test()
     {
-        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings
-        {
-            NoClient = true,
-            ExtraPrototypes = Prototypes
-        });
-        var server = pairTracker.Pair.Server;
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
 
         var entities = server.ResolveDependency<IEntityManager>();
         var maps = server.ResolveDependency<IMapManager>();
@@ -162,6 +159,6 @@ public sealed class SaveLoadReparentTest
             }
         });
 
-        await pairTracker.CleanReturnAsync();
+        await pair.CleanReturnAsync();
     }
 }

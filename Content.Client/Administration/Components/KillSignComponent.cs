@@ -4,5 +4,5 @@ using Robust.Shared.GameStates;
 namespace Content.Client.Administration.Components;
 
 [NetworkedComponent, RegisterComponent]
-public sealed class KillSignComponent : SharedKillSignComponent
+public sealed partial class KillSignComponent : SharedKillSignComponent
 { }

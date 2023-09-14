@@ -12,7 +12,8 @@ namespace Content.IntegrationTests.Tests.Utility
     {
         private const string BlockerDummyId = "BlockerDummy";
 
-        private static readonly string Prototypes = $@"
+        [TestPrototypes]
+        private const string Prototypes = $@"
 - type: entity
   id: {BlockerDummyId}
   name: {BlockerDummyId}
@@ -31,14 +32,10 @@ namespace Content.IntegrationTests.Tests.Utility
         [Test]
         public async Task Test()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings
-            {
-                NoClient = true,
-                ExtraPrototypes = Prototypes
-            });
-            var server = pairTracker.Pair.Server;
+            await using var pair = await PoolManager.GetServerClient();
+            var server = pair.Server;
 
-            var testMap = await PoolManager.CreateTestMap(pairTracker);
+            var testMap = await pair.CreateTestMap();
             var mapCoordinates = testMap.MapCoords;
             var entityCoordinates = testMap.GridCoords;
 
@@ -98,7 +95,7 @@ namespace Content.IntegrationTests.Tests.Utility
                     Assert.That(entity, Is.Not.Null);
                 });
             });
-            await pairTracker.CleanReturnAsync();
+            await pair.CleanReturnAsync();
         }
     }
 }

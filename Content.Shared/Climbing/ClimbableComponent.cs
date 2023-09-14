@@ -7,7 +7,7 @@ using Robust.Shared.GameStates;
 namespace Content.Shared.Climbing
 {
     [RegisterComponent, NetworkedComponent]
-    public sealed class ClimbableComponent : Component
+    public sealed partial class ClimbableComponent : Component
     {
         /// <summary>
         ///     The range from which this entity can be climbed.
@@ -19,5 +19,17 @@ namespace Content.Shared.Climbing
         /// </summary>
         [DataField("delay")]
         public float ClimbDelay = 0.8f;
+
+        /// <summary>
+        ///     Sound to be played when a climb is started.
+        /// </summary>
+        [DataField("startClimbSound")]
+        public SoundSpecifier? StartClimbSound = null;
+
+        /// <summary>
+        ///     Sound to be played when a climb finishes.
+        /// </summary>
+        [DataField("finishClimbSound")]
+        public SoundSpecifier? FinishClimbSound = null;
     }
 }

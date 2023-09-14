@@ -66,10 +66,7 @@
       interactSuccessSound:
         path: /Audio/Effects/double_beep.ogg
     - type: CombatMode
-      combatToggleAction:
-        enabled: false
-        autoPopulate: false
-        name: action-name-combat
+      combatToggleAction: ActionCombatModeToggleOff
     - type: Damageable
       damageContainer: Inorganic
     - type: Destructible
@@ -106,8 +103,11 @@
       proto: CartridgeCaselessRifle
       capacity: 500
     - type: HTN
-      rootTask: TurretCompound
+      rootTask:
+        task: TurretCompound
       blackboard:
+        RotateSpeed: !type:Single
+          3.141
         SoundTargetInLOS: !type:SoundPathSpecifier
           path: /Audio/Effects/double_beep.ogg
 
@@ -153,7 +153,6 @@
     - type: BallisticAmmoProvider
       proto: CartridgePistol
       capacity: 50
-      cycleable: false
     - type: Construction
       deconstructionTarget: null
       graph: WeaponTurretSyndicateDisposable
@@ -211,7 +210,8 @@
       selectedMode: FullAuto
       soundGunshot: /Audio/Weapons/Xeno/alien_spitacid.ogg
     - type: HTN
-      rootTask: TurretCompound
+      rootTask:
+        task: TurretCompound
       blackboard:
         SoundTargetInLOS: !type:SoundPathSpecifier
           path: /Audio/Animals/snake_hiss.ogg

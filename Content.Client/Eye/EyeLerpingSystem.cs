@@ -1,11 +1,10 @@
-using Content.Shared.Follower.Components;
+using System.Numerics;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
+using JetBrains.Annotations;
 using Robust.Client.GameObjects;
-using Robust.Client.Graphics;
 using Robust.Client.Physics;
 using Robust.Client.Player;
-using Robust.Shared.Collections;
 using Robust.Shared.Timing;
 
 namespace Content.Client.Eye;
@@ -14,10 +13,12 @@ public sealed class EyeLerpingSystem : EntitySystem
 {
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
+    [Dependency] private readonly SharedEyeSystem _eye = default!;
     [Dependency] private readonly SharedMoverController _mover = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     // Convenience variable for for VV.
-    [ViewVariables]
+    [ViewVariables, UsedImplicitly]
     private IEnumerable<LerpingEyeComponent> ActiveEyes => EntityQuery<LerpingEyeComponent>();
 
     public override void Initialize()
@@ -26,14 +27,14 @@ public sealed class EyeLerpingSystem : EntitySystem
 
         SubscribeLocalEvent<EyeComponent, ComponentStartup>(OnEyeStartup);
         SubscribeLocalEvent<EyeComponent, ComponentShutdown>(OnEyeShutdown);
-        SubscribeLocalEvent<EyeComponent, PlayerAttachedEvent>(OnAttached);
+        SubscribeLocalEvent<EyeAttachedEvent>(OnAttached);
 
         SubscribeLocalEvent<LerpingEyeComponent, EntParentChangedMessage>(HandleMapChange);
         SubscribeLocalEvent<LerpingEyeComponent, PlayerDetachedEvent>(OnDetached);
 
         UpdatesAfter.Add(typeof(TransformSystem));
         UpdatesAfter.Add(typeof(PhysicsSystem));
-        UpdatesBefore.Add(typeof(EyeUpdateSystem));
+        UpdatesBefore.Add(typeof(SharedEyeSystem));
         UpdatesOutsidePrediction = true;
     }
 
@@ -59,8 +60,14 @@ public sealed class EyeLerpingSystem : EntitySystem
         lerpInfo.LastRotation = lerpInfo.TargetRotation;
         lerpInfo.ManuallyAdded |= !automatic;
 
+        lerpInfo.TargetZoom = component.Zoom;
+        lerpInfo.LastZoom = lerpInfo.TargetZoom;
+
         if (component.Eye != null)
-            component.Eye.Rotation = lerpInfo.TargetRotation;
+        {
+            _eye.SetRotation(uid, lerpInfo.TargetRotation, component);
+            _eye.SetZoom(uid, lerpInfo.TargetZoom, component);
+        }
     }
 
     public void RemoveEye(EntityUid uid)
@@ -82,9 +89,9 @@ public sealed class EyeLerpingSystem : EntitySystem
             component.LastRotation = GetRotation(uid, args.Transform);
     }
 
-    private void OnAttached(EntityUid uid, EyeComponent component, PlayerAttachedEvent args)
+    private void OnAttached(ref EyeAttachedEvent ev)
     {
-        AddEye(uid, component, true);
+        AddEye(ev.Entity, ev.Component, true);
     }
 
     private void OnDetached(EntityUid uid, LerpingEyeComponent component, PlayerDetachedEvent args)
@@ -107,7 +114,27 @@ public sealed class EyeLerpingSystem : EntitySystem
         {
             lerpInfo.LastRotation = lerpInfo.TargetRotation;
             lerpInfo.TargetRotation = GetRotation(uid, xform);
+
+            lerpInfo.LastZoom = lerpInfo.TargetZoom;
+            lerpInfo.TargetZoom = UpdateZoom(uid, frameTime);
         }
+    }
+
+    private Vector2 UpdateZoom(EntityUid uid, float frameTime, EyeComponent? eye = null, ContentEyeComponent? content = null)
+    {
+        if (!Resolve(uid, ref content, ref eye, false))
+            return Vector2.One;
+
+        var diff = content.TargetZoom - eye.Zoom;
+
+        if (diff.LengthSquared() < 0.00001f)
+        {
+            return content.TargetZoom;
+        }
+
+        var change = diff * 8f * frameTime;
+
+        return eye.Zoom + change;
     }
 
     /// <summary>
@@ -138,7 +165,7 @@ public sealed class EyeLerpingSystem : EntitySystem
         // if not tied to a mover then lock it to map / grid
         var relative = xform.GridUid ?? xform.MapUid;
         if (relative != null)
-            return -Transform(relative.Value).WorldRotation;
+            return -_transform.GetWorldRotation(relative.Value);
 
         return Angle.Zero;
     }
@@ -151,6 +178,19 @@ public sealed class EyeLerpingSystem : EntitySystem
 
         while (query.MoveNext(out var entity, out var lerpInfo, out var eye, out var xform))
         {
+            // Handle zoom
+            var zoomDiff = Vector2.Lerp(lerpInfo.LastZoom, lerpInfo.TargetZoom, tickFraction);
+
+            if ((zoomDiff - lerpInfo.TargetZoom).Length() < lerpMinimum)
+            {
+                _eye.SetZoom(entity, lerpInfo.TargetZoom, eye);
+            }
+            else
+            {
+                _eye.SetZoom(entity, zoomDiff, eye);
+            }
+
+            // Handle Rotation
             TryComp<InputMoverComponent>(entity, out var mover);
 
             // This needs to be recomputed every frame, as if this is simply the grid rotation, then we need to account for grid angle lerping.
@@ -158,7 +198,7 @@ public sealed class EyeLerpingSystem : EntitySystem
 
             if (!NeedsLerp(mover))
             {
-                eye.Rotation = lerpInfo.TargetRotation;
+                _eye.SetRotation(entity, lerpInfo.TargetRotation, eye);
                 continue;
             }
 
@@ -166,11 +206,11 @@ public sealed class EyeLerpingSystem : EntitySystem
 
             if (Math.Abs(shortest.Theta) < lerpMinimum)
             {
-                eye.Rotation = lerpInfo.TargetRotation;
+                _eye.SetRotation(entity, lerpInfo.TargetRotation, eye);
                 continue;
             }
 
-            eye.Rotation = shortest * tickFraction + lerpInfo.LastRotation;
+            _eye.SetRotation(entity, shortest * tickFraction + lerpInfo.LastRotation, eye);
         }
     }
 }

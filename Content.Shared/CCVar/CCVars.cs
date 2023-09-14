@@ -1,6 +1,5 @@
 using Robust.Shared;
 using Robust.Shared.Configuration;
-using Robust.Shared.Utility;
 
 namespace Content.Shared.CCVar
 {
@@ -312,6 +311,13 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<float> ArtifactRoundEndTimer = CVarDef.Create("game.artifact_round_end_timer", 0.5f, CVar.NOTIFY | CVar.REPLICATED);
 
+        /// <summary>
+        /// The time in seconds that the server should wait before restarting the round.
+        /// Defaults to 2 minutes.
+        /// </summary>
+        public static readonly CVarDef<float> RoundRestartTime =
+            CVarDef.Create("game.round_restart_time", 120f, CVar.SERVERONLY);
+
         /*
          * Discord
          */
@@ -320,7 +326,7 @@ namespace Content.Shared.CCVar
         /// URL of the Discord webhook which will relay all ahelp messages.
         /// </summary>
         public static readonly CVarDef<string> DiscordAHelpWebhook =
-            CVarDef.Create("discord.ahelp_webhook", string.Empty, CVar.SERVERONLY);
+            CVarDef.Create("discord.ahelp_webhook", string.Empty, CVar.SERVERONLY | CVar.CONFIDENTIAL);
 
         /// <summary>
         /// The server icon to use in the Discord ahelp embed footer.
@@ -341,11 +347,17 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<string> DiscordVoteWebhook =
             CVarDef.Create("discord.vote_webhook", string.Empty, CVar.SERVERONLY);
 
-        /// <summary>
-        /// The avatar to use for the vote webhook. Should be an URL. If left empty, disables the webhook. 
+        /// URL of the Discord webhook which will relay round restart messages.
         /// </summary>
-        public static readonly CVarDef<string> DiscordVoteAvatar =
-            CVarDef.Create("discord.vote_avatar", string.Empty, CVar.SERVERONLY);
+        public static readonly CVarDef<string> DiscordRoundUpdateWebhook =
+            CVarDef.Create("discord.round_update_webhook", string.Empty, CVar.SERVERONLY | CVar.CONFIDENTIAL);
+
+        /// <summary>
+        /// Role id for the Discord webhook to ping when the round ends.
+        /// </summary>
+        public static readonly CVarDef<string> DiscordRoundEndRoleWebhook =
+            CVarDef.Create("discord.round_end_role", string.Empty, CVar.SERVERONLY);
+
 
         /*
          * Suspicion
@@ -711,6 +723,11 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<int> AdminAlertExplosionMinIntensity =
             CVarDef.Create("admin.alert.explosion_min_intensity", 60, CVar.SERVERONLY);
 
+        /// <summary>
+        ///     Minimum particle accelerator strength to create an admin alert message.
+        /// </summary>
+        public static readonly CVarDef<int> AdminAlertParticleAcceleratorMinPowerState =
+            CVarDef.Create("admin.alert.particle_accelerator_min_power_state", 3, CVar.SERVERONLY);
 
         /// <summary>
         ///     Should the ban details in admin channel include PII? (IP, HWID, etc)
@@ -866,11 +883,17 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<float> AdminLogsQueueSendDelay =
             CVarDef.Create("adminlogs.queue_send_delay_seconds", 5f, CVar.SERVERONLY);
 
+        // When to skip the waiting time to save in-round admin logs, if no admin logs are currently being saved
         public static readonly CVarDef<int> AdminLogsQueueMax =
             CVarDef.Create("adminlogs.queue_max", 5000, CVar.SERVERONLY);
 
+        // When to skip the waiting time to save pre-round admin logs, if no admin logs are currently being saved
         public static readonly CVarDef<int> AdminLogsPreRoundQueueMax =
             CVarDef.Create("adminlogs.pre_round_queue_max", 5000, CVar.SERVERONLY);
+
+        // When to start dropping logs
+        public static readonly CVarDef<int> AdminLogsDropThreshold =
+            CVarDef.Create("adminlogs.drop_threshold", 20000, CVar.SERVERONLY);
 
         // How many logs to send to the client at once
         public static readonly CVarDef<int> AdminLogsClientBatchSize =
@@ -948,6 +971,12 @@ namespace Content.Shared.CCVar
         /// <remarks> Disabled by default, superconduction is awful. </remarks>
         public static readonly CVarDef<bool> Superconduction =
             CVarDef.Create("atmos.superconduction", false, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     Heat loss per tile due to radiation at 20 degC, in W.
+        /// </summary>
+        public static readonly CVarDef<float> SuperconductionTileLoss =
+            CVarDef.Create("atmos.superconduction_tile_loss", 30f, CVar.SERVERONLY);
 
         /// <summary>
         ///     Whether excited groups will be processed and created.
@@ -1437,6 +1466,12 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<string> ICRandomSpeciesWeights =
             CVarDef.Create("ic.random_species_weights", "SpeciesWeights", CVar.SERVER);
+
+        /// <summary>
+        /// Control displaying SSD indicators near players
+        /// </summary>
+        public static readonly CVarDef<bool> ICShowSSDIndicator =
+            CVarDef.Create("ic.show_ssd_indicator", true, CVar.CLIENTONLY);
 
         /*
          * Salvage

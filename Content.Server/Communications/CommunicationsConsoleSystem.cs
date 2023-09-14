@@ -1,9 +1,7 @@
 using System.Globalization;
-using System.Linq;
 using Content.Server.Access.Systems;
 using Content.Server.Administration.Logs;
 using Content.Server.AlertLevel;
-using Content.Server.Chat;
 using Content.Server.Chat.Systems;
 using Content.Server.Interaction;
 using Content.Server.Popups;
@@ -16,11 +14,9 @@ using Content.Shared.CCVar;
 using Content.Shared.Communications;
 using Content.Shared.Database;
 using Content.Shared.Emag.Components;
-using Content.Shared.Examine;
 using Content.Shared.Popups;
 using Robust.Server.GameObjects;
 using Robust.Shared.Configuration;
-using Robust.Shared.Player;
 
 namespace Content.Server.Communications
 {
@@ -35,9 +31,9 @@ namespace Content.Server.Communications
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly RoundEndSystem _roundEndSystem = default!;
         [Dependency] private readonly StationSystem _stationSystem = default!;
+        [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
         [Dependency] private readonly IConfigurationManager _cfg = default!;
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-        [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
 
         private const int MaxMessageLength = 256;
         private const int MaxMessageNewlines = 2;
@@ -156,7 +152,7 @@ namespace Content.Server.Communications
             }
 
             if (comp.UserInterface is not null)
-                UserInterfaceSystem.SetUiState(comp.UserInterface, new CommunicationsConsoleInterfaceState(
+                _uiSystem.SetUiState(comp.UserInterface, new CommunicationsConsoleInterfaceState(
                     CanAnnounce(comp),
                     CanCallOrRecall(comp),
                     levels,
@@ -179,7 +175,7 @@ namespace Content.Server.Communications
 
             if (TryComp<AccessReaderComponent>(console, out var accessReaderComponent) && !HasComp<EmaggedComponent>(console))
             {
-                return _accessReaderSystem.IsAllowed(user, accessReaderComponent);
+                return _accessReaderSystem.IsAllowed(user, console, accessReaderComponent);
             }
             return true;
         }
@@ -263,6 +259,9 @@ namespace Content.Server.Communications
             comp.AnnouncementCooldownRemaining = comp.DelayBetweenAnnouncements;
             UpdateCommsConsoleInterface(uid, comp);
 
+            var ev = new CommunicationConsoleAnnouncementEvent(uid, comp, msg, message.Session.AttachedEntity);
+            RaiseLocalEvent(ref ev);
+
             // allow admemes with vv
             Loc.TryGetString(comp.AnnouncementDisplayName, out var title);
             title ??= comp.AnnouncementDisplayName;
@@ -292,6 +291,15 @@ namespace Content.Server.Communications
                 _popupSystem.PopupEntity(Loc.GetString("comms-console-permission-denied"), uid, message.Session);
                 return;
             }
+
+            var ev = new CommunicationConsoleCallShuttleAttemptEvent(uid, comp, mob);
+            RaiseLocalEvent(ref ev);
+            if (ev.Cancelled)
+            {
+                _popupSystem.PopupEntity(ev.Reason ?? Loc.GetString("comms-console-shuttle-unavailable"), uid, message.Session);
+                return;
+            }
+
             _roundEndSystem.RequestRoundEnd(uid);
             _adminLogger.Add(LogType.Action, LogImpact.Extreme, $"{ToPrettyString(mob):player} has called the shuttle.");
         }
@@ -309,5 +317,30 @@ namespace Content.Server.Communications
             _roundEndSystem.CancelRoundEndCountdown(uid);
             _adminLogger.Add(LogType.Action, LogImpact.Extreme, $"{ToPrettyString(mob):player} has recalled the shuttle.");
         }
+    }
+
+    /// <summary>
+    /// Raised on announcement
+    /// </summary>
+    [ByRefEvent]
+    public record struct CommunicationConsoleAnnouncementEvent(EntityUid Uid, CommunicationsConsoleComponent Component, string Text, EntityUid? Sender)
+    {
+        public EntityUid Uid = Uid;
+        public CommunicationsConsoleComponent Component = Component;
+        public EntityUid? Sender = Sender;
+        public string Text = Text;
+    }
+
+    /// <summary>
+    /// Raised on shuttle call attempt. Can be cancelled
+    /// </summary>
+    [ByRefEvent]
+    public record struct CommunicationConsoleCallShuttleAttemptEvent(EntityUid Uid, CommunicationsConsoleComponent Component, EntityUid? Sender)
+    {
+        public bool Cancelled = false;
+        public EntityUid Uid = Uid;
+        public CommunicationsConsoleComponent Component = Component;
+        public EntityUid? Sender = Sender;
+        public string? Reason;
     }
 }

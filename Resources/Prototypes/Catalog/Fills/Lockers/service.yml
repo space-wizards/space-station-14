@@ -18,7 +18,7 @@
       - id: BoxBeanbag
         amount: 2
       - id: RagItem
-        amound: 2
+        amount: 2
 
 #- type: entity
 #  id: LockerFormalFilled
@@ -93,24 +93,17 @@
   - type: StorageFill
     contents:
       - id: ClothingHandsGlovesLeather
-        amount: 2
       - id: ClothingOuterApronBotanist
-        amount: 2
       - id: ClothingHeadBandBotany
-        amount: 2
       - id: HydroponicsToolClippers
+      - id: HydroponicsToolSpade
+      - id: HydroponicsToolMiniHoe
+      - id: RobustHarvestChemistryBottle
+        prob: 0.3
       - id: ClothingBeltPlant
       - id: PlantBag ##Some maps don't have nutrivend
       - id: BoxMouthSwab
       - id: HandLabeler
-      - id: TowercapSeeds
-      - id: BananaSeeds
-        prob: 0.6
-      - id: EggySeeds
-        prob: 0.5
-      - id: AppleSeeds
-        prob: 0.8
-      - id: TomatoSeeds
       - id: ClothingUniformOveralls
       - id: ClothingHeadHatTrucker
         prob: 0.1

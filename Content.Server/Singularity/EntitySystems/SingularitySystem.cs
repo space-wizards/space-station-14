@@ -130,9 +130,9 @@ public sealed class SingularitySystem : SharedSingularitySystem
 
         singularity.Energy = value;
         SetLevel(uid, value switch {
-                >= 1500 => 6,
-                >= 1000 => 5,
-                >= 600 => 4,
+                >= 2400 => 6,
+                >= 1600 => 5,
+                >= 900 => 4,
                 >= 300 => 3,
                 >= 200 => 2,
                 > 0 => 1,
@@ -312,8 +312,8 @@ public sealed class SingularitySystem : SharedSingularitySystem
         {
             6 => 20,
             5 => 15,
-            4 => 10,
-            3 => 6,
+            4 => 12,
+            3 => 8,
             2 => 2,
             1 => 1,
             _ => 0

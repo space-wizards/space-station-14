@@ -663,6 +663,22 @@
   conditions:
     - !type:TileNotBlocked {}
 
+- type: construction
+  id: HeatExchanger
+  name: radiator
+  description: Transfers heat between the pipe and its surroundings.
+  graph: GasBinary
+  startNode: start
+  targetNode: radiator
+  category: construction-category-utilities
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  icon:
+    sprite: Structures/Piping/Atmospherics/heatexchanger.rsi
+    state: heStraight
+  conditions:
+    - !type:TileNotBlocked {}
+
 # ATMOS TRINARY
 - type: construction
   id: GasFilter

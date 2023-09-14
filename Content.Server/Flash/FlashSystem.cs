@@ -5,6 +5,7 @@ using Content.Server.Popups;
 using Content.Server.Stunnable;
 using Content.Shared.Charges.Components;
 using Content.Shared.Charges.Systems;
+using Content.Shared.Damage;
 using Content.Shared.Eye.Blinding.Components;
 using Content.Shared.Flash;
 using Content.Shared.IdentityManagement;
@@ -43,7 +44,6 @@ namespace Content.Server.Flash
             SubscribeLocalEvent<FlashComponent, MeleeHitEvent>(OnFlashMeleeHit);
             // ran before toggling light for extra-bright lantern
             SubscribeLocalEvent<FlashComponent, UseInHandEvent>(OnFlashUseInHand, before: new []{ typeof(HandheldLightSystem) });
-
             SubscribeLocalEvent<InventoryComponent, FlashAttemptEvent>(OnInventoryFlashAttempt);
 
             SubscribeLocalEvent<FlashImmunityComponent, FlashAttemptEvent>(OnFlashImmunityFlashAttempt);

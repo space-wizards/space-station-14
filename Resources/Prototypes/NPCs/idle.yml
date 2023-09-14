@@ -2,76 +2,65 @@
 - type: htnCompound
   id: IdleCompound
   branches:
-    - tasks:
-        - id: WaitIdleTimePrimitive
     # Pick a new spot and wait there.
-    - tasks:
-        - id: PickAccessiblePrimitive
-        - id: MoveToAccessiblePrimitive
-        - id: RandomIdleTimePrimitive
-        - id: WaitIdleTimePrimitive
-      preconditions:
+    - preconditions:
         - !type:BuckledPrecondition
           isBuckled: false
         - !type:PulledPrecondition
           isPulled: false
+      tasks:
+        - !type:HTNPrimitiveTask
+          operator: !type:PickAccessibleOperator
+            rangeKey: IdleRange
+
+        - !type:HTNPrimitiveTask
+          operator: !type:MoveToOperator
+            pathfindInPlanning: false
+
+        - !type:HTNPrimitiveTask
+          operator: !type:RandomOperator
+            targetKey: IdleTime
+            minKey: MinimumIdleTime
+            maxKey: MaximumIdleTime
+
+        - !type:HTNPrimitiveTask
+          operator: !type:WaitOperator
+            key: IdleTime
+          preconditions:
+            - !type:KeyExistsPrecondition
+              key: IdleTime
 
 # Spin to a random rotation and idle.
 - type: htnCompound
   id: IdleSpinCompound
   branches:
     - tasks:
-        - id: WaitIdleTimePrimitive
+        - !type:HTNPrimitiveTask
+          operator: !type:WaitOperator
+            key: IdleTime
+          preconditions:
+            - !type:KeyExistsPrecondition
+              key: IdleTime
+
     # Pick a new angle and spin there
     - tasks:
-        - id: PickRandomRotationPrimitive
-        - id: RotateToTargetPrimitive
-        - id: RandomIdleTimePrimitive
-        - id: WaitIdleTimePrimitive
+        - !type:HTNPrimitiveTask
+          operator: !type:PickRandomRotationOperator
+            targetKey: RotateTarget
 
+        - !type:HTNPrimitiveTask
+          operator: !type:RotateToTargetOperator
+            targetKey: RotateTarget
 
-# Primitives
-- type: htnPrimitive
-  id: InteractWithPrimitive
-  preconditions:
-    - !type:TargetInRangePrecondition
-      targetKey: Target
-      rangeKey: InteractRange
-  operator: !type:InteractWithOperator
-    targetKey: Target
+        - !type:HTNPrimitiveTask
+          operator: !type:RandomOperator
+            targetKey: IdleTime
+            minKey: MinimumIdleTime
+            maxKey: MaximumIdleTime
 
-- type: htnPrimitive
-  id: MoveToAccessiblePrimitive
-  operator: !type:MoveToOperator
-    pathfindInPlanning: false
-
-- type: htnPrimitive
-  id: PickAccessiblePrimitive
-  operator: !type:PickAccessibleOperator
-    rangeKey: IdleRange
-    targetKey: MovementTarget
-
-- type: htnPrimitive
-  id: PickRandomRotationPrimitive
-  operator: !type:PickRandomRotationOperator
-    targetKey: RotateTarget
-
-- type: htnPrimitive
-  id: RotateToTargetPrimitive
-  operator: !type:RotateToTargetOperator
-    targetKey: RotateTarget
-
-- type: htnPrimitive
-  id: RandomIdleTimePrimitive
-  operator: !type:RandomOperator
-    targetKey: IdleTime
-    minKey: MinimumIdleTime
-    maxKey: MaximumIdleTime
-
-- type: htnPrimitive
-  id: WaitIdleTimePrimitive
-  operator: !type:WaitOperator
-    key: IdleTime
-  preconditions:
-    - !type:KeyExistsPrecondition
-      key: IdleTime
+        - !type:HTNPrimitiveTask
+          operator: !type:WaitOperator
+            key: IdleTime
+          preconditions:
+            - !type:KeyExistsPrecondition
+              key: IdleTime

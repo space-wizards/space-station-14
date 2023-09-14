@@ -8,6 +8,7 @@ anomaly-vessel-component-upgrade-output = point output
 anomaly-particles-delta = Delta particles
 anomaly-particles-epsilon = Epsilon particles
 anomaly-particles-zeta = Zeta particles
+anomaly-particles-omega = Omega particles
 
 anomaly-scanner-component-scan-complete = Scan complete!
 

@@ -73,11 +73,8 @@
       - !type:PlaySoundBehavior
         sound:
           collection: desecration
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          PuddleFlour:
-            min: 1
-            max: 1
+      - !type:SpillBehavior
+        solution: food
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: TrashOnEmpty
@@ -117,11 +114,8 @@
       - !type:PlaySoundBehavior
         sound:
           collection: desecration
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          PuddleFlour:
-            min: 1
-            max: 1
+      - !type:SpillBehavior
+        solution: food
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
 
@@ -470,6 +464,27 @@
   components:
   - type: Sprite
     state: butter
+    
+- type: entity
+  name: stick of cannabis butter
+  parent: FoodBakingBase
+  id: FoodCannabisButter
+  description: Add this to your favorite baked goods for an irie time.
+  components:
+  - type: Sprite
+    state: butter
+    color: "#82C36E"
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 100
+        reagents:
+        - ReagentId: Butter
+          Quantity: 10
+        - ReagentId: THC
+          Quantity: 82
+  - type: Extractable
+    grindableSolutionName: food
 
 - type: entity
   name: cheese wheel
@@ -620,3 +635,32 @@
   - type: Tag
     tags:
     - Trash
+
+- type: entity
+  name: cocoa beans
+  parent: FoodProduceBase
+  id: FoodCocoaBeans
+  description: You can never have too much chocolate!
+  components:
+  - type: FlavorProfile
+    flavors:
+      - chocolate
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/cocoa.rsi
+    state: produce-beans
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 14
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 2
+        - ReagentId: Vitamin
+          Quantity: 1
+        - ReagentId: CocoaPowder
+          Quantity: 2
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: CocoaPowder
+        Quantity: 2
