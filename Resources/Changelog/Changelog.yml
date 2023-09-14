@@ -1,9 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Players in critical condition can no longer use LOOC chat., type: Tweak}
-  id: 4326
-  time: '2023-07-26T06:02:49.0000000+00:00'
 - author: OctoRocket
   changes:
   - {message: Added an accentless trait., type: Add}
@@ -2977,3 +2972,9 @@ Entries:
   - {message: Guardians can be summoned without a player in the role., type: Tweak}
   id: 4825
   time: '2023-09-14T03:51:10.0000000+00:00'
+- author: Doru991
+  changes:
+  - {message: 'When mutated, some plants have been observed to occasionally transform
+      into entirely different species.', type: Add}
+  id: 4826
+  time: '2023-09-14T04:56:24.0000000+00:00'
