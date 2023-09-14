@@ -11,12 +11,13 @@ using Robust.Shared.Console;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
 using Content.Server.GameTicking;
 using System.Net.Http;
 using Robust.Shared;
 using Robust.Shared.Configuration;
 using Content.Shared.CCVar;
+using Content.Server.Discord;
+using Robust.Shared.Log;
 
 namespace Content.Server.Voting
 {
@@ -73,6 +74,10 @@ namespace Content.Server.Voting
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly IEntitySystemManager _entitySystem = default!;
         [Dependency] private readonly IConfigurationManager _cfg = default!;
+        [Dependency] private readonly DiscordWebhook _discord = default!;
+
+        private ISawmill _sawmill = default!;
+
         private const int MaxArgCount = 10;
 
         public string Command => "customvote";
@@ -82,10 +87,13 @@ namespace Content.Server.Voting
         // Webhook stuff 
         private string _webhookUrl = string.Empty;
         private readonly HttpClient _httpClient = new();
-        private string webhookId = string.Empty;
+        private ulong _webhookId;
+        private WebhookIdentifier? _webhookIdentifier;
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
+            _sawmill = Logger.GetSawmill("vote");
+
             if (args.Length < 3 || args.Length > MaxArgCount)
             {
                 shell.WriteError(Loc.GetString("shell-need-between-arguments",("lower", 3), ("upper", 10)));
@@ -109,38 +117,38 @@ namespace Content.Server.Voting
 
             // Set up the webhook payload
             string _serverName = _cfg.GetCVar(CVars.GameHostName);
-            string _avatarUrl = _cfg.GetCVar(CCVars.DiscordVoteAvatar);
             _webhookUrl = _cfg.GetCVar(CCVars.DiscordVoteWebhook);
+
+
             var _gameTicker = _entitySystem.GetEntitySystem<GameTicker>();
 
             var payload = new WebhookPayload()
             {
-                AvatarUrl = _avatarUrl,
                 Username = Loc.GetString("custom-vote-webhook-name"),
-                Embeds = new List<Embed>
+                Embeds = new List<WebhookEmbed>
                 {
                     new()
                     {
                         Title = $"{shell.Player}",
                         Color = 13438992, 
                         Description = options.Title,
-                        Footer = new EmbedFooter
+                        Footer = new WebhookEmbedFooter
                         {
                             Text = $"{_serverName} {_gameTicker.RoundId} {_gameTicker.RunLevel}",
                         },
 
-                        Fields = new List<Field> {},
+                        Fields = new List<WebhookEmbedField> {},
                     },
                 },
             };
 
             foreach (var voteOption in options.Options)
             {
-                var NewVote = new Field() { Name = voteOption.text,  Value = "0"};
+                var NewVote = new WebhookEmbedField() { Name = voteOption.text,  Value = "0"};
                 payload.Embeds[0].Fields.Add(NewVote);
             }
 
-            WebhookMessage(payload, webhookId);
+            WebhookMessage(payload);
 
             options.SetInitiatorOrServer((IPlayerSession?) shell.Player);
 
@@ -173,10 +181,10 @@ namespace Content.Server.Voting
                     var newEmbed = payload.Embeds[0];
                     newEmbed.Color = 2353993;
                     payload.Embeds[0] = newEmbed;
-                    payload.Embeds[0].Fields[i] = new Field() { Name = oldName, Value = newValue, Inline =  true};
+                    payload.Embeds[0].Fields[i] = new WebhookEmbedField() { Name = oldName, Value = newValue, Inline =  true};
                 }
             
-                WebhookMessage(payload, webhookId);
+                WebhookMessage(payload, _webhookId);
             };
         }
 
@@ -193,86 +201,36 @@ namespace Content.Server.Voting
         }
 
         // Sends the payload's message. 
-        private async void WebhookMessage(WebhookPayload payload, string id)
+        private async void WebhookMessage(WebhookPayload payload)
         {
-            if(String.IsNullOrEmpty(_webhookUrl))
+            if (System.String.IsNullOrEmpty(_webhookUrl))
                 return;
 
-            if(id == string.Empty)
-            {
-                var request = await _httpClient.PostAsync($"{_webhookUrl}?wait=true",
-                    new StringContent(JsonSerializer.Serialize(payload), Encoding.UTF8, "application/json"));
+            _discord.GetWebhook(_webhookUrl, data => _webhookIdentifier = data.ToIdentifier());
 
-                var content = await request.Content.ReadAsStringAsync();
-                webhookId = (string) JsonNode.Parse(content)?["id"]!;
-            } else {
-                await _httpClient.PatchAsync($"{_webhookUrl}/messages/{id}",
-                    new StringContent(JsonSerializer.Serialize(payload), Encoding.UTF8, "application/json"));
-            }
+            if (_webhookIdentifier == null)
+                return;
+
+            _sawmill.Debug(JsonSerializer.Serialize(payload));
+
+            var request = await _discord.CreateMessage(_webhookIdentifier.Value, payload);
+            var content = await request.Content.ReadAsStringAsync();
+            _webhookId = (ulong) JsonNode.Parse(content)?["id"]!;
         }
 
-        public struct WebhookPayload
+        // Edits a pre-existing payload message, given an ID
+        private async void WebhookMessage(WebhookPayload payload, ulong id)
         {
-            [JsonPropertyName("username")]
-            public string Username { get; set; } = "";
+            if (System.String.IsNullOrEmpty(_webhookUrl))
+                return;
 
-            [JsonPropertyName("avatar_url")]
-            public string AvatarUrl { get; set; } = "";
+            _discord.GetWebhook(_webhookUrl, data => _webhookIdentifier = data.ToIdentifier());
 
-            [JsonPropertyName("embeds")]
-            public List<Embed>? Embeds { get; set; } = null;
+            if (_webhookIdentifier == null)
+                return;
 
-            public WebhookPayload() { }
+            var request = await _discord.EditMessage(_webhookIdentifier.Value, id, payload);
         }
-
-        public struct Embed
-        {
-            [JsonPropertyName("title")]
-            public string Title { get; set; } = "";
-
-            [JsonPropertyName("description")]
-            public string Description { get; set; } = "";
-
-            [JsonPropertyName("color")]
-            public int Color { get; set; } = 0;
-
-            [JsonPropertyName("footer")]
-            public EmbedFooter? Footer { get; set; } = null;
-
-            [JsonPropertyName("fields")]
-            public List<Field> Fields { get; set; } = default!;
-
-            public Embed()
-            {
-            }
-        }
-
-        public struct EmbedFooter
-        {
-            [JsonPropertyName("text")]
-            public string Text { get; set; } = "";
-
-            public EmbedFooter()
-            {
-            }
-        }
-
-        public struct Field
-        {
-            [JsonPropertyName("name")]
-            public string Name { get; set; } = "";
-
-            [JsonPropertyName("value")]
-            public string Value { get; set; } = "";
-
-            [JsonPropertyName("inline")]
-            public bool Inline { get; set; } = true;
-
-            public Field()
-            {
-            }
-        }
-
     }
 
 
