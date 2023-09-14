@@ -81,24 +81,6 @@ public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
     }
 
     /// <summary>
-    /// Turns the player into a space ninja
-    /// </summary>
-    public void MakeNinja(EntityUid mindId, MindComponent mind)
-    {
-        if (mind.OwnedEntity == null)
-            return;
-
-        // prevent double ninja'ing
-        var uid = mind.OwnedEntity.Value;
-        if (HasComp<SpaceNinjaComponent>(uid))
-            return;
-
-        AddComp<SpaceNinjaComponent>(uid);
-        SetOutfitCommand.SetOutfit(uid, "SpaceNinjaGear", EntityManager);
-        _genericAntag.MakeAntag(uid, mindId, null, mind);
-    }
-
-    /// <summary>
     /// Download the given set of nodes, returning how many new nodes were downloaded.
     /// </summary>
     private int Download(EntityUid uid, List<string> ids)
