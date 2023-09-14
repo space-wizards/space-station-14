@@ -11,7 +11,7 @@ namespace Content.Server.Power.SMES;
 public sealed class SmesSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _gameTiming = default!;
-    [Dependency] private readonly PowerNetSystem _powerNet;
+    [Dependency] private readonly PowerNetSystem _powerNet = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
 
@@ -75,7 +75,6 @@ public sealed class SmesSystem : EntitySystem
 
     private void UpdateUIState(EntityUid uid, SmesComponent smes)
     {
-        var ui = Comp<ServerUserInterfaceComponent>(uid);
         var battery = Comp<BatteryComponent>(uid);
         var netBattery = Comp<PowerNetworkBatteryComponent>(uid);
 
@@ -83,7 +82,7 @@ public sealed class SmesSystem : EntitySystem
         float charge = battery.CurrentCharge / battery.MaxCharge;
 
         var state = new SmesBoundInterfaceState(power, smes.LastExternalState, charge);
-        _ui.TrySetUiState(uid, SmesUiKey.Key);
+        _ui.TrySetUiState(uid, SmesUiKey.Key, state);
     }
 
     private int CalcChargeLevel(EntityUid uid, BatteryComponent? battery = null)

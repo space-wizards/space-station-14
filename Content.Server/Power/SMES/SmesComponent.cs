@@ -23,6 +23,12 @@ public sealed partial class SmesComponent : Component
     [DataField("lastChargeLevelTime", customTypeSerializer: typeof(TimeOffsetSerializer))]
     public TimeSpan LastChargeLevelTime;
 
+    /// <summary>
+    /// How long it takes either charge state or charge level being the same to force a ui update.
+    /// </summary>
+    [DataField("visualsChangeDelay")]
+    public TimeSpan VisualsChangeDelay = TimeSpan.FromSeconds(1);
+
     [DataField("lastExternalState")]
     public ExternalPowerState LastExternalState;
     [DataField("lastUiUpdate", customTypeSerializer: typeof(TimeOffsetSerializer))]
@@ -46,6 +52,4 @@ public sealed partial class SmesComponent : Component
     /// </summary>
     [DataField("chargeState")]
     public ChargeState ChargeState = ChargeState.Still;
-
-    public static TimeSpan VisualsChangeDelay = TimeSpan.FromSeconds(1);
 }

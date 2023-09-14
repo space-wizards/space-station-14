@@ -137,7 +137,7 @@ public sealed class ApcSystem : EntitySystem
             }
         }
 
-        var extPowerState = _powerNet.CalcExtPowerState(uid, battery.NetworkBattery);
+        var extPowerState = _powerNet.CalcExtPowerState(uid, null, battery);
         if (extPowerState != apc.LastExternalState)
         {
             apc.LastExternalState = extPowerState;
