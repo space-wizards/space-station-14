@@ -17,7 +17,9 @@ using Content.Server.GameTicking;
 using Robust.Shared.Timing;
 using Content.Server.Popups;
 using Content.Server.StationRecords.Systems;
+using Content.Shared.CCVar;
 using Content.Shared.Database;
+using Robust.Shared.Configuration;
 using Robust.Shared.Containers;
 using Robust.Shared.Utility;
 
@@ -26,6 +28,7 @@ namespace Content.Server.MassMedia.Systems;
 public sealed class NewsSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
     [Dependency] private readonly RingerSystem _ringer = default!;
     [Dependency] private readonly CartridgeLoaderSystem _cartridgeLoaderSystem = default!;
@@ -35,9 +38,6 @@ public sealed class NewsSystem : EntitySystem
     [Dependency] private readonly GameTicker _ticker = default!;
     [Dependency] private readonly AccessReaderSystem _accessReader = default!;
     [Dependency] private readonly StationRecordsSystem _stationRecords = default!;
-
-    private const int MaxNameLength = 25;
-    private const int MaxContentLength = 2048;
 
     // TODO remove this. Dont store data on systems
     private readonly List<NewsArticle> _articles = new List<NewsArticle>();
@@ -145,11 +145,14 @@ public sealed class NewsSystem : EntitySystem
             }
         }
 
+        var maxNameLength = _cfg.GetCVar(CCVars.NewsNameLimit);
+        var maxContentLength = _cfg.GetCVar(CCVars.NewsContentLimit);
+
         NewsArticle article = new NewsArticle
         {
             Author = authorName,
-            Name = (msg.Name.Length <= MaxNameLength ? msg.Name.Trim() : $"{msg.Name.Trim().Substring(0, MaxNameLength)}..."),
-            Content = (msg.Content.Length <= MaxContentLength ? msg.Name.Trim() : $"{msg.Content.Trim().Substring(0, MaxContentLength)}..."),
+            Name = (msg.Name.Length <= maxNameLength ? msg.Name.Trim() : $"{msg.Name.Trim().Substring(0, maxNameLength)}..."),
+            Content = (msg.Content.Length <= maxContentLength ? msg.Name.Trim() : $"{msg.Content.Trim().Substring(0, maxContentLength)}..."),
             ShareTime = _ticker.RoundDuration()
 
         };

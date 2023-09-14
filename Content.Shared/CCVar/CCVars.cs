@@ -1757,5 +1757,21 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<string> ReplayAutoRecordTempDir =
             CVarDef.Create("replay.auto_record_temp_dir", "", CVar.SERVERONLY);
+
+        /*
+         * News
+         */
+
+        /// <summary>
+        /// Maximum number of characters that can be specified in the news name
+        /// </summary>
+        public static readonly CVarDef<int> NewsNameLimit =
+            CVarDef.Create("news.name_limit", 25, CVar.SERVER | CVar.REPLICATED);
+
+        /// <summary>
+        /// Maximum number of characters that can be specified in the news content
+        /// </summary>
+        public static readonly CVarDef<int> NewsContentLimit =
+            CVarDef.Create("news.content_limit", 2048, CVar.SERVER | CVar.REPLICATED);
     }
 }
