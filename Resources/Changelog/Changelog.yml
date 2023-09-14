@@ -1,11 +1,4 @@
 Entries:
-- author: Nairodian
-  changes:
-  - {message: 'Added four new senior roles meant for teaching new players their related
-      department; Senior Engineer, Senior Researcher, Senior Physician and Senior
-      Officer.', type: Add}
-  id: 4325
-  time: '2023-07-26T03:06:31.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Players in critical condition can no longer use LOOC chat., type: Tweak}
@@ -2977,3 +2970,10 @@ Entries:
     type: Add}
   id: 4824
   time: '2023-09-14T03:37:13.0000000+00:00'
+- author: Whisper
+  changes:
+  - {message: 'Guardians (holo, holoclown) have AI control before a ghost takes over
+      the role, and after a player ghosts from it.', type: Add}
+  - {message: Guardians can be summoned without a player in the role., type: Tweak}
+  id: 4825
+  time: '2023-09-14T03:51:10.0000000+00:00'
