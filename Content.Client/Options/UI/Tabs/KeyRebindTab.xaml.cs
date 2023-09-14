@@ -192,6 +192,7 @@ namespace Content.Client.Options.UI.Tabs
             AddButton(EngineKeyFunctions.ShowDebugConsole);
             AddButton(EngineKeyFunctions.ShowDebugMonitors);
             AddButton(EngineKeyFunctions.HideUI);
+            AddButton(ContentKeyFunctions.InspectEntity);
 
             foreach (var control in _keyControls.Values)
             {
