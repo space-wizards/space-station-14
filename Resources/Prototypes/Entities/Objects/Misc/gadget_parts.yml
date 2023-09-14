@@ -27,3 +27,20 @@
   - type: Tag
     tags:
       - LaserTechPart
+
+- type: entity
+  parent: BaseItem
+  id: ModularReceiver
+  name: modular receiver
+  description: #todo
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/modular_receiver.rsi
+    state: icon
+  - type: Item
+    size: 5
+  - type: Tag
+    tags:
+    - BallisticsTechPart
+    - ModularReceiver
+    - Metal
