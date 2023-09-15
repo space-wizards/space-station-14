@@ -137,9 +137,9 @@
   name: terminator spawn point
   components:
   - type: GhostRole
-    name: ghost-role-information-terminator-name
-    description: ghost-role-information-terminator-description
-    rules: ghost-role-component-default-rules
+    name: ghost-role-information-exterminator-name
+    description: ghost-role-information-exterminator-description
+    rules: ghost-role-information-exterminator-rules
   - type: GhostRoleMobSpawner
     prototype: MobHumanTerminator
   - type: Sprite
