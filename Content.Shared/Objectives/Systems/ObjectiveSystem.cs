@@ -118,7 +118,7 @@ public sealed class ObjectiveSystem : EntitySystem
             Log.Error($"An objective {uid} of {_mind.MindOwnerLoggingString(mind)} has incomplete info: {info.Title} {info.Description} {info.Progress}");
             info.Title ??= "!!!BROKEN OBJECTIVE!!!";
             info.Description ??= "!!! BROKEN OBJECTIVE DESCRIPTION!!!";
-            info.Icon ??= new SpriteSpecifier.Rsi(new ("error.rsi"), "error.rsi");
+            info.Icon ??= new SpriteSpecifier.Rsi(new ("error.rsi"), "error");
             info.Progress ??= 0f;
         }
 

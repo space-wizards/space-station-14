@@ -43,7 +43,8 @@ namespace Content.Server.Objectives.Commands
             for (var i = 0; i < objectives.Count; i++)
             {
                 var info = objective.GetInfo(objectives[i], mindId, mind);
-                shell.WriteLine($"- [{i}] '{info.Title}' ({info.Progress}%)");
+                var progress = (int) (info.Progress! * 100f);
+                shell.WriteLine($"- [{i}] '{info.Title}' ({progress}%)");
             }
         }
 
