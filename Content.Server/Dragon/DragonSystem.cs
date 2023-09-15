@@ -19,6 +19,7 @@ public sealed partial class DragonSystem : EntitySystem
     [Dependency] private readonly ITileDefinitionManager _tileDef = default!;
     [Dependency] private readonly MovementSpeedModifierSystem _movement = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
+    [Dependency] private readonly RoleSystem _role = default!;
     [Dependency] private readonly SharedActionsSystem _actions = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
 
@@ -179,13 +180,13 @@ public sealed partial class DragonSystem : EntitySystem
         DeleteRifts(uid, false, component);
     }
 
-    private void OnCreated(EntityUid uid, DragonComponent, ref GenericAntagCreatedEvent args)
+    private void OnCreated(EntityUid uid, DragonComponent comp, ref GenericAntagCreatedEvent args)
     {
         var mindId = args.MindId;
         var mind = args.Mind;
 
         _role.MindAddRole(mindId, new DragonRoleComponent(), mind);
-        _role.MindAddRole(mindId, new RoleBriefing()
+        _role.MindAddRole(mindId, new RoleBriefingComponent()
         {
             Briefing = Loc.GetString("dragon-role-briefing")
         }, mind);
