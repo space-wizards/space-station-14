@@ -133,6 +133,8 @@
     spawnsLeft: 2
     spawnsProto: MobCarpDragon
     spawnRiftAction: ActionSpawnRift
+  - type: GenericAntag
+    rule: Dragon
   - type: GuideHelp
     guides:
     - MinorAntagonists
