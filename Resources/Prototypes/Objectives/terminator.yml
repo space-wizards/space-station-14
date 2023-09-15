@@ -16,7 +16,7 @@
   id: TerminateObjective
   components:
   - type: Objective
-    description: objective-condition-terminate-description
+    description: objective-terminate-description
     difficulty: 1
     unique: false
   - type: TargetObjective
@@ -32,7 +32,7 @@
   components:
   - type: Objective
     title: objective-condition-shut-down-title
-    description: objective-condition-shut-down-description
+    description: objective-shut-down-description
     icon:
       sprite: Mobs/Species/Terminator/parts.rsi
       state: skull_icon
