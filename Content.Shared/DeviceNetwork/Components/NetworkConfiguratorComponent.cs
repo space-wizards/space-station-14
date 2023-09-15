@@ -62,10 +62,10 @@ public sealed partial class NetworkConfiguratorComponent : Component
 [Serializable, NetSerializable]
 public sealed class NetworkConfiguratorComponentState : ComponentState
 {
-    public readonly EntityUid? ActiveDeviceList;
+    public readonly NetEntity? ActiveDeviceList;
     public readonly bool LinkModeActive;
 
-    public NetworkConfiguratorComponentState(EntityUid? activeDeviceList, bool linkModeActive)
+    public NetworkConfiguratorComponentState(NetEntity? activeDeviceList, bool linkModeActive)
     {
         ActiveDeviceList = activeDeviceList;
         LinkModeActive = linkModeActive;

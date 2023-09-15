@@ -41,7 +41,6 @@ public sealed class ChatUIController : UIController
     [Dependency] private readonly IClientAdminManager _admin = default!;
     [Dependency] private readonly IChatManager _manager = default!;
     [Dependency] private readonly IConfigurationManager _config = default!;
-    [Dependency] private readonly IEntityManager _entities = default!;
     [Dependency] private readonly IEyeManager _eye = default!;
     [Dependency] private readonly IInputManager _input = default!;
     [Dependency] private readonly IClientNetManager _net = default!;
@@ -390,7 +389,9 @@ public sealed class ChatUIController : UIController
 
     private void AddSpeechBubble(ChatMessage msg, SpeechBubble.SpeechType speechType)
     {
-        if (!_entities.EntityExists(msg.SenderEntity))
+        var ent = EntityManager.GetEntity(msg.SenderEntity);
+
+        if (!EntityManager.EntityExists(ent))
         {
             _sawmill.Debug("Got local chat message with invalid sender entity: {0}", msg.SenderEntity);
             return;
@@ -401,14 +402,14 @@ public sealed class ChatUIController : UIController
 
         foreach (var message in messages)
         {
-            EnqueueSpeechBubble(msg.SenderEntity, message, speechType);
+            EnqueueSpeechBubble(ent, message, speechType);
         }
     }
 
     private void CreateSpeechBubble(EntityUid entity, SpeechBubbleData speechData)
     {
         var bubble =
-            SpeechBubble.CreateSpeechBubble(speechData.Type, speechData.Message, entity, _eye, _manager, _entities);
+            SpeechBubble.CreateSpeechBubble(speechData.Type, speechData.Message, entity, _eye, _manager, EntityManager);
 
         bubble.OnDied += SpeechBubbleDied;
 
@@ -445,7 +446,7 @@ public sealed class ChatUIController : UIController
     private void EnqueueSpeechBubble(EntityUid entity, string contents, SpeechBubble.SpeechType speechType)
     {
         // Don't enqueue speech bubbles for other maps. TODO: Support multiple viewports/maps?
-        if (_entities.GetComponent<TransformComponent>(entity).MapID != _eye.CurrentMap)
+        if (EntityManager.GetComponent<TransformComponent>(entity).MapID != _eye.CurrentMap)
             return;
 
         if (!_queuedSpeechBubbles.TryGetValue(entity, out var queueData))
@@ -562,7 +563,7 @@ public sealed class ChatUIController : UIController
 
         foreach (var (entity, queueData) in _queuedSpeechBubbles.ShallowClone())
         {
-            if (!_entities.EntityExists(entity))
+            if (!EntityManager.EntityExists(entity))
             {
                 _queuedSpeechBubbles.Remove(entity);
                 continue;
@@ -593,14 +594,14 @@ public sealed class ChatUIController : UIController
         var predicate = static (EntityUid uid, (EntityUid compOwner, EntityUid? attachedEntity) data)
             => uid == data.compOwner || uid == data.attachedEntity;
         var playerPos = player != null
-            ? _entities.GetComponent<TransformComponent>(player.Value).MapPosition
+            ? EntityManager.GetComponent<TransformComponent>(player.Value).MapPosition
             : MapCoordinates.Nullspace;
 
         var occluded = player != null && _examine.IsOccluded(player.Value);
 
         foreach (var (ent, bubs) in _activeSpeechBubbles)
         {
-            if (_entities.Deleted(ent))
+            if (EntityManager.Deleted(ent))
             {
                 SetBubbles(bubs, false);
                 continue;
@@ -612,7 +613,7 @@ public sealed class ChatUIController : UIController
                 continue;
             }
 
-            var otherPos = _entities.GetComponent<TransformComponent>(ent).MapPosition;
+            var otherPos = EntityManager.GetComponent<TransformComponent>(ent).MapPosition;
 
             if (occluded && !ExamineSystemShared.InRangeUnOccluded(
                     playerPos,

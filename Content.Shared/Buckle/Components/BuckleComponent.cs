@@ -85,20 +85,20 @@ public sealed partial class BuckleComponent : Component
 [Serializable, NetSerializable]
 public sealed class BuckleComponentState : ComponentState
 {
-    public BuckleComponentState(bool buckled, bool fastenedSeatbelt, EntityUid? buckledTo, EntityUid? lastEntityBuckledTo,
+    public BuckleComponentState(bool buckled, bool fastenedSeatbelt, NetEntity? buckledTo, NetEntity? lastEntityBuckledTo,
         bool dontCollide)
     {
         Buckled = buckled;
-        FastenedSeatbelt = fastenedSeatbelt;
+        FastenedSeatbelt = fastenedSeatbelt; //SS220-Gravpull-seatbelt-fix
         BuckledTo = buckledTo;
         LastEntityBuckledTo = lastEntityBuckledTo;
         DontCollide = dontCollide;
     }
 
     public readonly bool Buckled;
-    public readonly bool FastenedSeatbelt;
-    public readonly EntityUid? BuckledTo;
-    public  readonly EntityUid? LastEntityBuckledTo;
+    public readonly bool FastenedSeatbelt; //SS220-Gravpull-seatbelt-fix
+    public readonly NetEntity? BuckledTo;
+    public readonly NetEntity? LastEntityBuckledTo;
     public readonly bool DontCollide;
 }
 

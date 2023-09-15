@@ -1,7 +1,7 @@
 ﻿- type: entity
   id: ActionConfigureMeleeSpeech
-  name: melee-speech-config
-  description: melee-speech-config-desc
+  name: Set Battlecry
+  description: Set a custom battlecry for when you attack!
   noSpawn: true
   components:
   - type: InstantAction

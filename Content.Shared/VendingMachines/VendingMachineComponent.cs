@@ -204,7 +204,7 @@ namespace Content.Shared.VendingMachines
         [ViewVariables(VVAccess.ReadWrite)]
         public uint Amount;
         [ViewVariables(VVAccess.ReadWrite)]
-        public List<EntityUid> EntityUids = new();
+        public List<NetEntity> EntityUids = new();
         public VendingMachineInventoryEntry(InventoryType type, string id, uint amount)
         {
             Type = type;
@@ -212,10 +212,10 @@ namespace Content.Shared.VendingMachines
             Amount = amount;
         }
 
-        public VendingMachineInventoryEntry(InventoryType type, string id, uint amount, EntityUid firstUid)
+        public VendingMachineInventoryEntry(InventoryType type, string id, uint amount, NetEntity firstUid)
             : this(type, id, amount)
         {
-            EntityUids = new List<EntityUid> { firstUid };
+            EntityUids = new List<NetEntity> { firstUid };
         }
     }
 

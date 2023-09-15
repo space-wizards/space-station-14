@@ -173,6 +173,7 @@ namespace Content.Client.Entry
             _queueManager.Initialize(); // Corvax-Queue
             _ttsManager.Initialize(); // Corvax-TTS
             _discordAuthManager.Initialize(); // Corvax-DiscordAuth
+            _userInterfaceManager.SetActiveTheme(_configManager.GetCVar(CVars.InterfaceTheme));
             _documentParsingManager.Initialize();
 
             _baseClient.RunLevelChanged += (_, args) =>

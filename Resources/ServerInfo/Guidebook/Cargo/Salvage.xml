@@ -40,7 +40,9 @@
 <GuideEntityEmbed Entity="OreBag"/>
 <GuideEntityEmbed Entity="ClothingBeltUtilityFilled"/>
 </Box>
-Шахтёрское снаряжение и полный пояс инструментов помогут вам утилизировать обломки с максимальной эффективностью. Шахтёрское снаряжение предназначено для быстрой добычи руды и её доставки к переработчику руды, чтобы тот не простаивал, а пояс с инструментами - для разборки или демонтажа с последующим подбором ценных устройств и вещей.
+The pickaxe and mining drill are both useful for mining rocks or breaking structures quickly.
+The ore bag magnetises nearby ore and automatically picks it up if equipped to a belt slot.
+The utility belt can be useful for holding miscellaneous items when not occupied by your ore bag.
 
 ## Как утилизаторы делают деньги
 <Box>

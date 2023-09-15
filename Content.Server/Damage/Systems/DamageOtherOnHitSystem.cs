@@ -35,7 +35,7 @@ namespace Content.Server.Damage.Systems
         private void OnDoHit(EntityUid uid, DamageOtherOnHitComponent component, ThrowDoHitEvent args)
         {
             // SS220-Stunbaton-rework begin
-            var hitEv = new GetDamageOtherOnHitEvent(uid, args.Target, component.Damage, component.IgnoreResistances);
+            var hitEv = new GetDamageOtherOnHitEvent(GetNetEntity(uid), GetNetEntity(args.Target), component.Damage, component.IgnoreResistances);
             RaiseLocalEvent(uid, hitEv);
 
             if (hitEv.Handled)

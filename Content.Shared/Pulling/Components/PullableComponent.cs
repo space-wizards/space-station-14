@@ -54,9 +54,9 @@ namespace Content.Shared.Pulling.Components
     [Serializable, NetSerializable]
     public sealed class PullableComponentState : ComponentState
     {
-        public readonly EntityUid? Puller;
+        public readonly NetEntity? Puller;
 
-        public PullableComponentState(EntityUid? puller)
+        public PullableComponentState(NetEntity? puller)
         {
             Puller = puller;
         }

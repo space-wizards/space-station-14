@@ -4,11 +4,11 @@ using Content.Client.Examine;
 using Content.Client.Storage.UI;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Input;
-using Robust.Client.GameObjects;
 using Content.Shared.SS220.CryopodSSD;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Input;
+using Content.Shared.Storage;
 
 namespace Content.Client.SS220.CryopodSSD;
 
@@ -18,27 +18,30 @@ public sealed class CryopodSSDBoundUserInterface : BoundUserInterface
     private StorageWindow? _storageWindow = default!;
 
     public CryopodSSDBoundUserInterface(EntityUid owner, Enum uikey) : base(owner, uikey)
-    {}
-    
+    {
+    }
+
     protected override void Open()
     {
         base.Open();
 
         var entMan = IoCManager.Resolve<IEntityManager>();
-        
+
         _window = new CryopodSSDWindow();
         _window.OnClose += Close;
-        
+
         _window.OpenCentered();
 
         if (_storageWindow == null)
         {
             _storageWindow = new StorageWindow(entMan)
-                {Title = entMan.GetComponent<MetaDataComponent>(Owner).EntityName};
+            {
+                Title = entMan.GetComponent<MetaDataComponent>(Owner).EntityName
+            };
 
             _storageWindow.EntityList.GenerateItem += _storageWindow.GenerateButton;
             _storageWindow.EntityList.ItemPressed += InteractWithItem;
-            
+
             _storageWindow.OnClose += Close;
             _storageWindow.OpenCenteredLeft();
         }
@@ -46,23 +49,29 @@ public sealed class CryopodSSDBoundUserInterface : BoundUserInterface
         {
             _storageWindow.Open();
         }
+
+        var entityMan = IoCManager.Resolve<IEntityManager>();
+        if (entityMan.TryGetComponent<StorageComponent>(Owner, out var storageComp))
+            _storageWindow?.BuildEntityList(Owner, storageComp);
     }
-    
+
     public void InteractWithItem(BaseButton.ButtonEventArgs args, ListData cData)
     {
+        var entMan = IoCManager.Resolve<IEntityManager>();
+
         if (cData is not EntityListData {Uid: var entity})
             return;
-        
+
         if (args.Event.Function == EngineKeyFunctions.UIClick)
         {
-            SendMessage(new CryopodSSDStorageInteractWithItemEvent(entity));
+            SendMessage(new CryopodSSDStorageInteractWithItemEvent(entMan.GetNetEntity(entity)));
         }
-        else if (IoCManager.Resolve<IEntityManager>().EntityExists(entity))
+        else if (entMan.EntityExists(entity))
         {
             OnButtonPressed(args.Event, entity);
         }
     }
-    
+
     private void OnButtonPressed(GUIBoundKeyEventArgs args, EntityUid entity)
     {
         var entitySys = IoCManager.Resolve<IEntitySystemManager>();
@@ -94,7 +103,9 @@ public sealed class CryopodSSDBoundUserInterface : BoundUserInterface
             _storageWindow.Visible = castedState.HasAccess;
         }
 
-        _storageWindow?.BuildEntityList(castedState.StorageState);
+        var entityMan = IoCManager.Resolve<IEntityManager>();
+        if (entityMan.TryGetComponent<StorageComponent>(Owner, out var storageComp))
+            _storageWindow?.BuildEntityList(Owner, storageComp);
         _window?.UpdateState(castedState);
     }
 

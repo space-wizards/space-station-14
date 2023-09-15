@@ -38,7 +38,7 @@ public sealed class CommsHackerSystem : SharedCommsHackerSystem
         if (!_gloves.AbilityCheck(uid, args, out var target))
             return;
 
-        var doAfterArgs = new DoAfterArgs(uid, comp.Delay, new TerrorDoAfterEvent(), target: target, used: uid, eventTarget: uid)
+        var doAfterArgs = new DoAfterArgs(EntityManager, uid, comp.Delay, new TerrorDoAfterEvent(), target: target, used: uid, eventTarget: uid)
         {
             BreakOnDamage = true,
             BreakOnUserMove = true,

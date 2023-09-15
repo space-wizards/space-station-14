@@ -12,7 +12,6 @@ namespace Content.Server.SS220.Clocks;
 /// </summary>
 public sealed class PhysicalClockSystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly IEntitySystemManager _entitySystem = default!;
 
     // <inheritdoc/>

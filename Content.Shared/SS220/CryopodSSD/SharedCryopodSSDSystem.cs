@@ -167,9 +167,9 @@ public sealed partial class CryopodSSDDragFinished : SimpleDoAfterEvent
 [Serializable, NetSerializable]
 public sealed partial class TeleportToCryoFinished : SimpleDoAfterEvent
 {
-    public EntityUid PortalId { get; private set; }
+    public NetEntity PortalId { get; private set; }
 
-    public TeleportToCryoFinished(EntityUid portalId)
+    public TeleportToCryoFinished(NetEntity portalId)
     {
         PortalId = portalId;
     }

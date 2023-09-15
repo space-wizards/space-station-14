@@ -25,9 +25,9 @@ internal sealed class BuckleSystem : SharedBuckleSystem
             return;
 
         component.Buckled = state.Buckled;
-        component.FastenedSeatbelt = state.FastenedSeatbelt;
-        component.BuckledTo = state.BuckledTo;
-        component.LastEntityBuckledTo = state.LastEntityBuckledTo;
+        component.FastenedSeatbelt = state.FastenedSeatbelt; //SS220-Gravpull-straps-bugfix
+        component.BuckledTo = EnsureEntity<BuckleComponent>(state.BuckledTo, uid);
+        component.LastEntityBuckledTo = EnsureEntity<BuckleComponent>(state.LastEntityBuckledTo, uid);
         component.DontCollide = state.DontCollide;
 
         ActionBlockerSystem.UpdateCanMove(uid);

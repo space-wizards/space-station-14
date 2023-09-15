@@ -283,6 +283,7 @@
   components:
   - type: Sprite
     sprite: Structures/Machines/circuit_imprinter.rsi
+    snapCardinals: true
     layers:
     - state: icon
       map: ["enum.LatheVisualLayers.IsRunning"]
@@ -559,6 +560,8 @@
       - VoiceTrigger
       - TimerTrigger
       - Truncheon
+      - TelescopicShield
+      - HoloprojectorSecurity
       - FlashPayload
       - ExplosivePayload
       - WeaponLaserCarbine

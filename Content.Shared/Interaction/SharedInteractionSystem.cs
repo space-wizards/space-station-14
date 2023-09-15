@@ -203,8 +203,10 @@ namespace Content.Shared.Interaction
         /// </summary>
         private void HandleInteractInventorySlotEvent(InteractInventorySlotEvent msg, EntitySessionEventArgs args)
         {
+            var item = GetEntity(msg.ItemUid);
+
             // client sanitization
-            if (!TryComp(msg.ItemUid, out TransformComponent? itemXform) || !ValidateClientInput(args.SenderSession, itemXform.Coordinates, msg.ItemUid, out var user))
+            if (!TryComp(item, out TransformComponent? itemXform) || !ValidateClientInput(args.SenderSession, itemXform.Coordinates, item, out var user))
             {
                 Logger.InfoS("system.interaction", $"Inventory interaction validation failed.  Session={args.SenderSession}");
                 return;
@@ -217,10 +219,10 @@ namespace Content.Shared.Interaction
 
             if (msg.AltInteract)
                 // Use 'UserInteraction' function - behaves as if the user alt-clicked the item in the world.
-                UserInteraction(user.Value, itemXform.Coordinates, msg.ItemUid, msg.AltInteract);
+                UserInteraction(user.Value, itemXform.Coordinates, item, msg.AltInteract);
             else
                 // User used 'E'. We want to activate it, not simulate clicking on the item
-                InteractionActivate(user.Value, msg.ItemUid);
+                InteractionActivate(user.Value, item);
         }
 
         public bool HandleAltUseInteraction(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
@@ -1114,7 +1116,7 @@ namespace Content.Shared.Interaction
                 return false;
             }
 
-            if (uid.IsClientSide())
+            if (IsClientSide(uid))
             {
                 Logger.WarningS("system.interaction",
                     $"Client sent interaction with client-side entity. Session={session}, Uid={uid}");
@@ -1169,14 +1171,14 @@ namespace Content.Shared.Interaction
         /// <summary>
         ///     Entity that was interacted with.
         /// </summary>
-        public EntityUid ItemUid { get; }
+        public NetEntity ItemUid { get; }
 
         /// <summary>
         ///     Whether the interaction used the alt-modifier to trigger alternative interactions.
         /// </summary>
         public bool AltInteract { get; }
 
-        public InteractInventorySlotEvent(EntityUid itemUid, bool altInteract = false)
+        public InteractInventorySlotEvent(NetEntity itemUid, bool altInteract = false)
         {
             ItemUid = itemUid;
             AltInteract = altInteract;

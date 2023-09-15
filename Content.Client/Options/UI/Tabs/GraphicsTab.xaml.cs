@@ -46,6 +46,8 @@ namespace Content.Client.Options.UI.Tabs
             2f
         };
 
+        private Dictionary<string, int> hudThemeIdToIndex = new();
+
         [Dependency] private readonly IConfigurationManager _cfg = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
@@ -96,6 +98,7 @@ namespace Content.Client.Options.UI.Tabs
             foreach (var gear in _prototypeManager.EnumeratePrototypes<HudThemePrototype>())
             {
                 HudThemeOption.AddItem(Loc.GetString(gear.Name));
+                hudThemeIdToIndex.Add(gear.ID, HudThemeOption.GetItemId(HudThemeOption.ItemCount - 1));
             }
             HudThemeOption.OnItemSelected += OnHudThemeChanged;
 
@@ -149,7 +152,7 @@ namespace Content.Client.Options.UI.Tabs
             FullscreenCheckBox.Pressed = ConfigIsFullscreen;
             LightingPresetOption.SelectId(GetConfigLightingQuality());
             UIScaleOption.SelectId(GetConfigUIScalePreset(ConfigUIScale));
-            HudThemeOption.SelectId(_cfg.GetCVar(CCVars.HudTheme));
+            HudThemeOption.SelectId(hudThemeIdToIndex.GetValueOrDefault(_cfg.GetCVar(CVars.InterfaceTheme), 0));
             ViewportScaleSlider.Value = _cfg.GetCVar(CCVars.ViewportFixedScaleFactor);
             ViewportStretchCheckBox.Pressed = _cfg.GetCVar(CCVars.ViewportStretch);
             IntegerScalingCheckBox.Pressed = _cfg.GetCVar(CCVars.ViewportSnapToleranceMargin) != 0;
@@ -185,9 +188,13 @@ namespace Content.Client.Options.UI.Tabs
         {
             _cfg.SetCVar(CVars.DisplayVSync, VSyncCheckBox.Pressed);
             SetConfigLightingQuality(LightingPresetOption.SelectedId);
-            if (HudThemeOption.SelectedId != _cfg.GetCVar(CCVars.HudTheme)) // Don't unnecessarily redraw the HUD
+
+            foreach (var theme in _prototypeManager.EnumeratePrototypes<HudThemePrototype>())
             {
-                _cfg.SetCVar(CCVars.HudTheme, HudThemeOption.SelectedId);
+                if (hudThemeIdToIndex[theme.ID] != HudThemeOption.SelectedId)
+                    continue;
+                _cfg.SetCVar(CVars.InterfaceTheme, theme.ID);
+                break;
             }
 
             _cfg.SetCVar(CVars.DisplayWindowMode,
@@ -229,7 +236,7 @@ namespace Content.Client.Options.UI.Tabs
             var isVSyncSame = VSyncCheckBox.Pressed == _cfg.GetCVar(CVars.DisplayVSync);
             var isFullscreenSame = FullscreenCheckBox.Pressed == ConfigIsFullscreen;
             var isLightingQualitySame = LightingPresetOption.SelectedId == GetConfigLightingQuality();
-            var isHudThemeSame = HudThemeOption.SelectedId == _cfg.GetCVar(CCVars.HudTheme);
+            var isHudThemeSame = HudThemeOption.SelectedId == hudThemeIdToIndex.GetValueOrDefault(_cfg.GetCVar(CVars.InterfaceTheme), 0);
             var isUIScaleSame = MathHelper.CloseToPercent(UIScaleOptions[UIScaleOption.SelectedId], ConfigUIScale);
             var isVPStretchSame = ViewportStretchCheckBox.Pressed == _cfg.GetCVar(CCVars.ViewportStretch);
             var isVPScaleSame = (int) ViewportScaleSlider.Value == _cfg.GetCVar(CCVars.ViewportFixedScaleFactor);

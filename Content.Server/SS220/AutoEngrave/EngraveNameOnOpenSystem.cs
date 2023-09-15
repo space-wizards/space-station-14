@@ -1,7 +1,7 @@
 // © SS220, An EULA/CLA with a hosting restriction, full text: https://raw.githubusercontent.com/SerbiaStrong-220/space-station-14/master/CLA.txt
-using Content.Server.Storage.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.Interaction;
+using Content.Shared.Storage;
 
 namespace Content.Server.SS220.AutoEngrave;
 
@@ -17,7 +17,7 @@ public sealed class EngraveNameOnOpenSystem : EntitySystem
 
     private void OnActivate(EntityUid uid, EngraveNameOnOpenComponent component, ActivateInWorldEvent args)
     {
-        if (!TryComp<ServerStorageComponent>(uid, out var storageComp))
+        if (!TryComp<StorageComponent>(uid, out var storageComp))
             return;
 
         var character = args.User;
@@ -28,15 +28,15 @@ public sealed class EngraveNameOnOpenSystem : EntitySystem
         TryEngrave(character, storageComp, component);
     }
 
-    private void TryEngrave(EntityUid user, ServerStorageComponent storageComp, EngraveNameOnOpenComponent engraveComp)
+    private void TryEngrave(EntityUid user, StorageComponent storageComp, EngraveNameOnOpenComponent engraveComp)
     {
         if (engraveComp.Activated)
             return;
 
-        if (storageComp.StoredEntities is null)
+        if (storageComp.Container is null)
             return;
 
-        foreach (var item in storageComp.StoredEntities)
+        foreach (var item in storageComp.Container.ContainedEntities)
         {
             var id = MetaData(item).EntityPrototype?.ID;
             if (id is null)

@@ -213,7 +213,7 @@ namespace Content.Server.Paper
                 return;
 
             if (_uiSystem.TryGetUi(uid, PaperUiKey.Key, out var bui))
-                UserInterfaceSystem.SetUiState(bui, new PaperBoundUserInterfaceState(paperComp.Content, paperComp.StampedBy, paperComp.Mode), session);
+                _uiSystem.SetUiState(bui, new PaperBoundUserInterfaceState(paperComp.Content, paperComp.StampedBy, paperComp.Mode), session);
         }
     }
 

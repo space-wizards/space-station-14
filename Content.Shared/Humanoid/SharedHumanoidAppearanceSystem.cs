@@ -48,7 +48,7 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
 
     private void OnInit(EntityUid uid, HumanoidAppearanceComponent humanoid, ComponentInit args)
     {
-        if (string.IsNullOrEmpty(humanoid.Species) || _netManager.IsClient && !uid.IsClientSide())
+        if (string.IsNullOrEmpty(humanoid.Species) || _netManager.IsClient && !IsClientSide(uid))
         {
             return;
         }
