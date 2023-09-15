@@ -35,12 +35,12 @@
   - type: MobState
     allowedStates:
     - Alive
-    - Critical
+    - Dead
   - type: MobThresholds
     thresholds:
       0: Alive
       # used for health display its not possible to actually fall into crit
-      200: Critical
+      200: Dead
   # fire!!!!
   - type: Flammable
     damage:
@@ -92,8 +92,11 @@
   - type: RandomHumanoidAppearance
 
 - type: entity
-  # no mob composition fuck everything
-  parent: BaseSimpleMob
+  parent:
+  - BaseMob
+  - MobCombat
+  - MobDamageable
+  - MobSiliconBase
   id: MobTerminatorEndoskeleton
   # you are now valid
   name: nt-800 "exterminator" endoskeleton
@@ -106,37 +109,25 @@
     baseSprintSpeed: 3.0
   - type: Sprite
     sprite: Mobs/Species/Terminator/parts.rsi
-  - type: MobState
-    allowedStates:
-    - Alive
-    - Critical
   - type: MobThresholds
     thresholds:
       0: Alive
       # gibbed at 200 so cant go crit
-      200: Critical
+      200: Dead
   # incase some weird stuff happens and the crew adopts a terminator
   - type: Repairable
     doAfterDelay: 15
     allowSelfRepair: false
-  - type: Eye
   - type: Body
     prototype: TerminatorEndoskeleton
   # lets it sit in the terminator flesh's brain slot
   - type: Organ
   - type: Brain
-  - type: StatusEffects
-    allowed:
-    - Stun
-    - KnockedDown
-    - SlowedDown
   - type: TypingIndicator
     proto: robot # beep boop borp
   - type: Speech
-    speechVerb: Robotic
     speechSounds: Pai
   - type: Damageable
-    damageContainer: Inorganic
     damageModifierSet: Cybernetic
   - type: Destructible
     thresholds:
@@ -162,7 +153,6 @@
     damage:
       types:
         Heat: 0
-  - type: CombatMode
   # now his only weapon, but it is stronger
   - type: MeleeWeapon
     damage:
