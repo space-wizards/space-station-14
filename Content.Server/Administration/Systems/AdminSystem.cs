@@ -183,7 +183,7 @@ namespace Content.Server.Administration.Systems
 
             var connected = session != null && session.Status is SessionStatus.Connected or SessionStatus.InGame;
 
-            return new PlayerInfo(name, entityName, identityName, startingRole, antag, session?.AttachedEntity, data.UserId,
+            return new PlayerInfo(name, entityName, identityName, startingRole, antag, GetNetEntity(session?.AttachedEntity), data.UserId,
                 connected, _roundActivePlayers.Contains(data.UserId));
         }
     }

@@ -13,9 +13,9 @@ public sealed class ColorFlashEffectEvent : EntityEventArgs
     /// </summary>
     public Color Color;
 
-    public List<EntityUid> Entities;
+    public List<NetEntity> Entities;
 
-    public ColorFlashEffectEvent(Color color, List<EntityUid> entities)
+    public ColorFlashEffectEvent(Color color, List<NetEntity> entities)
     {
         Color = color;
         Entities = entities;

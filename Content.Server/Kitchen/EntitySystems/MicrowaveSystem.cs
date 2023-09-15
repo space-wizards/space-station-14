@@ -288,8 +288,8 @@ namespace Content.Server.Kitchen.EntitySystems
             if (ui == null)
                 return;
 
-            UserInterfaceSystem.SetUiState(ui, new MicrowaveUpdateUserInterfaceState(
-                component.Storage.ContainedEntities.ToArray(),
+            _userInterface.SetUiState(ui, new MicrowaveUpdateUserInterfaceState(
+                GetNetEntityArray(component.Storage.ContainedEntities.ToArray()),
                 HasComp<ActiveMicrowaveComponent>(uid),
                 component.CurrentCookTimeButtonIndex,
                 component.CurrentCookTimerTime
@@ -482,7 +482,7 @@ namespace Content.Server.Kitchen.EntitySystems
             if (!HasContents(component) || HasComp<ActiveMicrowaveComponent>(uid))
                 return;
 
-            component.Storage.Remove(args.EntityID);
+            component.Storage.Remove(EntityManager.GetEntity(args.EntityID));
             UpdateUserInterfaceState(uid, component);
         }
 

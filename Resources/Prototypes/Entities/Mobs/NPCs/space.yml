@@ -183,9 +183,6 @@
     interfaces:
     - key: enum.StrippingUiKey.Key
       type: StrippableBoundUserInterface
-    radius: 1.2
-    energy: 2
-    color: "#4faffb"
   - type: GhostRole
     prob: 0.25
     name: ghost-role-information-space-kangaroo-name

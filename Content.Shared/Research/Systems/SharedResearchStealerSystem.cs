@@ -43,7 +43,7 @@ public abstract class SharedResearchStealerSystem : EntitySystem
             return;
         }
 
-        var doAfterArgs = new DoAfterArgs(uid, comp.Delay, new ResearchStealDoAfterEvent(), target: target, used: uid, eventTarget: uid)
+        var doAfterArgs = new DoAfterArgs(EntityManager, uid, comp.Delay, new ResearchStealDoAfterEvent(), target: target, used: uid, eventTarget: uid)
         {
             BreakOnDamage = true,
             BreakOnUserMove = true,

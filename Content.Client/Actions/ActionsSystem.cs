@@ -67,12 +67,12 @@ namespace Content.Client.Actions
                 return;
 
             component.Actions.Clear();
-            component.Actions.UnionWith(state.Actions);
+            component.Actions.UnionWith(EnsureEntitySet<ActionsComponent>(state.Actions, uid));
 
             _actionHoldersQueue.Enqueue(uid);
         }
 
-        protected override void AddActionInternal(EntityUid holderId, EntityUid actionId, IContainer container, ActionsComponent holder)
+        protected override void AddActionInternal(EntityUid holderId, EntityUid actionId, BaseContainer container, ActionsComponent holder)
         {
             // Sometimes the client receives actions from the server, before predicting that newly added components will add
             // their own shared actions. Just in case those systems ever decided to directly access action properties (e.g.,
@@ -87,7 +87,7 @@ namespace Content.Client.Actions
             }
         }
 
-        public override void AddAction(EntityUid holderId, EntityUid actionId, EntityUid? provider, ActionsComponent? holder = null, BaseActionComponent? action = null, bool dirty = true, IContainer? actionContainer = null)
+        public override void AddAction(EntityUid holderId, EntityUid actionId, EntityUid? provider, ActionsComponent? holder = null, BaseActionComponent? action = null, bool dirty = true, BaseContainer? actionContainer = null)
         {
             if (!Resolve(holderId, ref holder, false))
                 return;
@@ -195,32 +195,10 @@ namespace Content.Client.Actions
             }
             else
             {
-                var request = new RequestPerformActionEvent(actionId);
+                var request = new RequestPerformActionEvent(GetNetEntity(actionId));
                 EntityManager.RaisePredictiveEvent(request);
             }
         }
-
-        /*public void SaveActionAssignments(string path)
-        {
-
-            // Currently only tested with temporary innate actions (i.e., mapping actions). No guarantee it works with
-            // other actions. If its meant to be used for full game state saving/loading, the entity that provides
-            // actions needs to keep the same uid.
-
-            var sequence = new SequenceDataNode();
-
-            foreach (var (action, assigns) in Assignments.Assignments)
-            {
-                var slot = new MappingDataNode();
-                slot.Add("action", _serializationManager.WriteValue(action));
-                slot.Add("assignments", _serializationManager.WriteValue(assigns));
-                sequence.Add(slot);
-            }
-
-            using var writer = _resourceManager.UserData.OpenWriteText(new ResourcePath(path).ToRootedPath());
-            var stream = new YamlStream { new(sequence.ToSequenceNode()) };
-            stream.Save(new YamlMappingFix(new Emitter(writer)), false);
-        }*/
 
         /// <summary>
         ///     Load actions and their toolbar assignments from a file.
