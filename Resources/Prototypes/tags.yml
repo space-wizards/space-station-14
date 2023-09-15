@@ -474,6 +474,9 @@
   id: ForceNoFixRotations # fixrotations command WON'T target this
 
 - type: Tag
+  id: ForcePhysicsTechPart
+
+- type: Tag
   id: Galaxythistle
 
 - type: Tag
@@ -964,6 +967,9 @@
 
 - type: Tag
   id: TabletopPiece
+
+- type: Tag
+  id: TetherPhysicsTechPart
 
 - type: Tag
   id: TimerBrigElectronics
