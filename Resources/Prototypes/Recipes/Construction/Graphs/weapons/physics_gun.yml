@@ -1,0 +1,54 @@
+- type: constructionGraph
+  id: WeaponPhysicsGun
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: wiresMissing
+      steps:
+      - material: Steel
+        amount: 5
+        doAfter: 2
+
+  - node: wiresMissing
+    entity: PhysicsGunFrame
+    actions:
+    - !type:AppearanceChange
+    edges:
+    - to: caseMissing
+      steps:
+      - material: Cable
+        amount: 4
+        doAfter: 1
+
+  - node: caseMissing
+    actions:
+    - !type:AppearanceChange
+    edges:
+    - to: boxMissing
+      steps:
+      - material: Plasteel
+        amount: 4
+        doAfter: 1
+
+  - node: boxMissing
+    actions:
+    - !type:AppearanceChange
+    edges:
+    - to: panelUnscrewed
+      steps:
+      - tag: TetherPhysicsTechPart
+        store: box
+        name: a physics box
+
+  - node: panelUnscrewed
+    actions:
+    - !type:AppearanceChange
+    edges:
+    - to: physicsgun
+      steps:
+      - tool: Screwing
+        doAfter: 1
+
+  - node: physicsgun
+    entity: WeaponTetherGun

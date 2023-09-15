@@ -186,6 +186,10 @@
           unshaded:
             True: { visible: true }
             False: { visible: false }
+    - type: Construction
+      graph: WeaponPhysicsGun
+      node: physicsgun
+      
 
 - type: entity
   name: force gun

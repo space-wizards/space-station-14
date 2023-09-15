@@ -228,3 +228,14 @@
   category: construction-category-weapons
   icon: { sprite: Objects/Weapons/Guns/Pistols/mk58.rsi, state: icon }
   objectType: Item
+
+- type: construction
+  hide: true
+  name: physics gun
+  id: WeaponPhysicsGun
+  graph: WeaponPhysicsGun
+  startNode: start
+  targetNode: physicsgun
+  category: construction-category-weapons
+  icon: { sprite: Objects/Weapons/Guns/Launchers/tether_gun.rsi, state: base }
+  objectType: Item
