@@ -1,12 +1,107 @@
-# Anything human specific (e.g. UI, input) goes under MobHuman
 - type: entity
   save: false
-  name: Urist McHands
-  id: BaseMobOrganic
-  noSpawn: true
+  parent:
+  - BaseMob
+  - MobDamageable
+  - MobCombat
+  id: BaseMobSpecies
+  abstract: true
   components:
+  - type: Sprite
+    layers:
+    - map: [ "enum.HumanoidVisualLayers.Chest" ]
+    - map: [ "enum.HumanoidVisualLayers.Head" ]
+    - map: [ "enum.HumanoidVisualLayers.Snout" ]
+    - map: [ "enum.HumanoidVisualLayers.Eyes" ]
+    - map: [ "enum.HumanoidVisualLayers.RArm" ]
+    - map: [ "enum.HumanoidVisualLayers.LArm" ]
+    - map: [ "enum.HumanoidVisualLayers.RLeg" ]
+    - map: [ "enum.HumanoidVisualLayers.LLeg" ]
+    - shader: StencilClear
+      sprite: Mobs/Species/Human/parts.rsi #PJB on stencil clear being on the left leg: "...this is 'fine'" -https://github.com/space-wizards/space-station-14/pull/12217#issuecomment-1291677115
+      # its fine, but its still very stupid that it has to be done like this instead of allowing sprites to just directly insert a stencil clear.
+      # sprite refactor when
+      state: l_leg
+    - shader: StencilMask
+      map: ["enum.HumanoidVisualLayers.StencilMask"]
+      sprite: Mobs/Customization/masking_helpers.rsi
+      state: unisex_full
+      visible: false
+    - map: ["jumpsuit"]
+    - map: ["enum.HumanoidVisualLayers.LFoot"]
+    - map: ["enum.HumanoidVisualLayers.RFoot"]
+    - map: ["enum.HumanoidVisualLayers.LHand"]
+    - map: ["enum.HumanoidVisualLayers.RHand"]
+    - map: [ "id" ]
+    - map: [ "gloves" ]
+    - map: [ "shoes" ]
+    - map: [ "ears" ]
+    - map: [ "outerClothing" ]
+    - map: [ "eyes" ]
+    - map: [ "belt" ]
+    - map: [ "neck" ]
+    - map: [ "back" ]
+    - map: [ "enum.HumanoidVisualLayers.FacialHair" ]
+    - map: [ "enum.HumanoidVisualLayers.Hair" ]
+    - map: [ "enum.HumanoidVisualLayers.HeadSide" ]
+    - map: [ "enum.HumanoidVisualLayers.HeadTop" ]
+    - map: [ "enum.HumanoidVisualLayers.Tail" ]
+    - map: [ "mask" ]
+    - map: [ "head" ]
+    - map: [ "pocket1" ]
+    - map: [ "pocket2" ]
+    - map: ["enum.HumanoidVisualLayers.Handcuffs"]
+      color: "#ffffff"
+      sprite: Objects/Misc/handcuffs.rsi
+      state: body-overlay-2
+      visible: false
+    - map: [ "clownedon" ] # Dynamically generated
+      sprite: "Effects/creampie.rsi"
+      state: "creampie_human"
+      visible: false
+  - type: DamageVisuals
+    thresholds: [ 20, 40, 100 ]
+    targetLayers:
+    - "enum.HumanoidVisualLayers.Chest"
+    - "enum.HumanoidVisualLayers.Head"
+    - "enum.HumanoidVisualLayers.LArm"
+    - "enum.HumanoidVisualLayers.LLeg"
+    - "enum.HumanoidVisualLayers.RArm"
+    - "enum.HumanoidVisualLayers.RLeg"
+    damageOverlayGroups:
+      Brute:
+        sprite: Mobs/Effects/brute_damage.rsi
+        color: "#FF0000"
+      Burn:
+        sprite: Mobs/Effects/burn_damage.rsi
+  - type: GenericVisualizer
+    visuals:
+      enum.CreamPiedVisuals.Creamed:
+        clownedon: # Not 'creampied' bc I can already see Skyrat complaining about conflicts.
+          True: {visible: true}
+          False: {visible: false}
+  - type: RotationVisuals
+    defaultRotation: 90
+    horizontalRotation: 90
+  - type: HumanoidAppearance
+    species: Human
+  - type: SlowOnDamage
+    speedModifierThresholds:
+      60: 0.7
+      80: 0.5
+  - type: Fixtures
+    fixtures: # TODO: This needs a second fixture just for mob collisions.
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 185
+        restitution: 0.0
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
   - type: FloorOcclusion
-  - type: LagCompensation
   - type: RangedDamageSound
     soundGroups:
       Brute:
@@ -16,11 +111,6 @@
       Heat:
         collection:
           MeatLaserImpact
-  - type: Tag
-    tags:
-    - CanPilot
-    - FootstepSound
-    - DoorBumpOpener
   - type: Reactive
     groups:
       Flammable: [ Touch ]
@@ -31,230 +121,36 @@
       methods: [Touch]
       effects:
       - !type:WashCreamPieReaction
-  - type: Flashable
-  - type: Polymorphable
-  - type: Identity
-  - type: Hands
-  - type: MovementSpeedModifier
-  - type: MovedByPressure
-  - type: Barotrauma
-    damage:
-      types:
-        Blunt: 0.35 #per second, scales with pressure and other constants.
-  - type: DamageOnHighSpeedImpact
-    damage:
-      types:
-        Blunt: 5
-    soundHit:
-      path: /Audio/Effects/hit_kick.ogg
-  # Organs
-  - type: InjectableSolution
-    solution: chemicals
-  - type: IdExaminable
-  - type: HealthExaminable
-    examinableTypes:
-      - Blunt
-      - Slash
-      - Piercing
-      - Heat
-      - Shock
-  - type: Bloodstream
-    bloodlossDamage:
-      types:
-        Bloodloss:
-          1
-    bloodlossHealDamage:
-      types:
-        Bloodloss:
-          -1
-  - type: Stamina
-  - type: StatusIcon
   - type: StatusEffects
     allowed:
-      - Stun
-      - KnockedDown
-      - SlowedDown
-      - Stutter
-      - SeeingRainbows
-      - Electrocution
-      - Drunk
-      - SlurredSpeech
-      - RatvarianLanguage
-      - PressureImmunity
-      - Muted
-      - ForcedSleep
-      - TemporaryBlindness
-      - Pacified
-      - StaminaModifier
-  - type: Blindable
-  # Other
-  - type: Inventory
-  - type: InventorySlots
-  - type: Clickable
-  - type: InteractionOutline
-  - type: Sprite
-    noRot: true
-    drawdepth: Mobs
-    layers:
-      - map: [ "enum.HumanoidVisualLayers.Chest" ]
-      - map: [ "enum.HumanoidVisualLayers.Head" ]
-      - map: [ "enum.HumanoidVisualLayers.Snout" ]
-      - map: [ "enum.HumanoidVisualLayers.Eyes" ]
-      - map: [ "enum.HumanoidVisualLayers.RArm" ]
-      - map: [ "enum.HumanoidVisualLayers.LArm" ]
-      - map: [ "enum.HumanoidVisualLayers.RLeg" ]
-      - map: [ "enum.HumanoidVisualLayers.LLeg" ]
-      - shader: StencilClear
-        sprite: Mobs/Species/Human/parts.rsi #PJB on stencil clear being on the left leg: "...this is 'fine'" -https://github.com/space-wizards/space-station-14/pull/12217#issuecomment-1291677115
-        # its fine, but its still very stupid that it has to be done like this instead of allowing sprites to just directly insert a stencil clear.
-        # sprite refactor when
-        state: l_leg
-      - shader: StencilMask
-        map: ["enum.HumanoidVisualLayers.StencilMask"]
-        sprite: Mobs/Customization/masking_helpers.rsi
-        state: unisex_full
-        visible: false
-      - map: ["jumpsuit"]
-      - map: ["enum.HumanoidVisualLayers.LFoot"]
-      - map: ["enum.HumanoidVisualLayers.RFoot"]
-      - map: ["enum.HumanoidVisualLayers.LHand"]
-      - map: ["enum.HumanoidVisualLayers.RHand"]
-      - map: [ "id" ]
-      - map: [ "gloves" ]
-      - map: [ "shoes" ]
-      - map: [ "ears" ]
-      - map: [ "outerClothing" ]
-      - map: [ "eyes" ]
-      - map: [ "belt" ]
-      - map: [ "neck" ]
-      - map: [ "back" ]
-      - map: [ "enum.HumanoidVisualLayers.FacialHair" ]
-      - map: [ "enum.HumanoidVisualLayers.Hair" ]
-      - map: [ "enum.HumanoidVisualLayers.HeadSide" ]
-      - map: [ "enum.HumanoidVisualLayers.HeadTop" ]
-      - map: [ "enum.HumanoidVisualLayers.Tail" ]
-      - map: [ "mask" ]
-      - map: [ "head" ]
-      - map: [ "pocket1" ]
-      - map: [ "pocket2" ]
-      - map: ["enum.HumanoidVisualLayers.Handcuffs"]
-        color: "#ffffff"
-        sprite: Objects/Misc/handcuffs.rsi
-        state: body-overlay-2
-        visible: false
-      - map: [ "clownedon" ] # Dynamically generated
-        sprite: "Effects/creampie.rsi"
-        state: "creampie_human"
-        visible: false
-  - type: Physics
-    bodyType: KinematicController
+    - Stun
+    - KnockedDown
+    - SlowedDown
+    - Stutter
+    - SeeingRainbows
+    - Electrocution
+    - Drunk
+    - SlurredSpeech
+    - RatvarianLanguage
+    - PressureImmunity
+    - Muted
+    - ForcedSleep
+    - TemporaryBlindness
+    - Pacified
+    - StaminaModifier
   - type: Reflect
     enabled: false
     reflectProb: 0
-  - type: Fixtures
-    fixtures: # TODO: This needs a second fixture just for mob collisions.
-      fix1:
-        shape:
-          !type:PhysShapeCircle
-          radius: 0.35
-        density: 185
-        restitution: 0.0
-        mask:
-          - MobMask
-        layer:
-          - MobLayer
-  - type: AtmosExposed
-  - type: Flammable
-    fireSpread: true
-    canResistFire: true
-    damage:
-      types:
-        Heat: 1 #per second, scales with number of fire 'stacks'
-  - type: Temperature
-    heatDamageThreshold: 360
-    coldDamageThreshold: 260
-    currentTemperature: 310.15
-    specificHeat: 42
-    coldDamage:
-      types:
-        Cold: 0.1 #per second, scales with temperature & other constants
-    heatDamage:
-      types:
-        Heat: 0.1 #per second, scales with temperature & other constants
-  - type: HumanoidAppearance
-    species: Human
   - type: Body
     prototype: Human
     requiredLegs: 2
-  - type: Damageable
-    damageContainer: Biological
-  - type: RadiationReceiver
-  - type: ThermalRegulator
-    metabolismHeat: 800
-    radiatedHeat: 100
-    implicitHeatRegulation: 500
-    sweatHeatRegulation: 2000
-    shiveringHeatRegulation: 2000
-    normalBodyTemperature: 310.15
-    thermalRegulationTemperatureThreshold: 25
+  - type: Identity
+  - type: IdExaminable
+  - type: Hands
   - type: Internals
-  - type: MobState
-  - type: Deathgasp
-  - type: MobStateActions
-    actions:
-      Critical:
-      - ActionCritSuccumb
-      - ActionCritFakeDeath
-      - ActionCritLastWords
-  - type: MobThresholds
-    thresholds:
-      0: Alive
-      100: Critical
-      200: Dead
-  - type: Destructible
-    thresholds:
-      - trigger:
-          !type:DamageTypeTrigger
-          damageType: Blunt
-          damage: 400
-        behaviors:
-          - !type:GibBehavior { }
-  - type: SlowOnDamage
-    speedModifierThresholds:
-      60: 0.7
-      80: 0.5
-  - type: HeatResistance
-  - type: DamageVisuals
-    thresholds: [ 20, 40, 100 ]
-    targetLayers:
-      - "enum.HumanoidVisualLayers.Chest"
-      - "enum.HumanoidVisualLayers.Head"
-      - "enum.HumanoidVisualLayers.LArm"
-      - "enum.HumanoidVisualLayers.LLeg"
-      - "enum.HumanoidVisualLayers.RArm"
-      - "enum.HumanoidVisualLayers.RLeg"
-    damageOverlayGroups:
-      Brute:
-        sprite: Mobs/Effects/brute_damage.rsi
-        color: "#FF0000"
-      Burn:
-        sprite: Mobs/Effects/burn_damage.rsi
-  - type: Appearance
-  - type: GenericVisualizer
-    visuals:
-      enum.CreamPiedVisuals.Creamed:
-        clownedon: # Not 'creampied' bc I can already see Skyrat complaining about conflicts.
-          True: {visible: true}
-          False: {visible: false}
-  - type: RotationVisuals
+  - type: Inventory
+  - type: InventorySlots
   - type: FloatingVisuals
-  - type: FireVisuals
-    sprite: Mobs/Effects/onfire.rsi
-    normalState: Generic_mob_burning
-    alternateState: Standing
-    fireStackAlternateState: 3
-  - type: CombatMode
-    canDisarm: true
   - type: Climbing
   - type: Cuffable
   - type: Ensnareable
@@ -262,6 +158,8 @@
     state: icon
   - type: AnimationPlayer
   - type: Buckle
+  - type: CombatMode
+    canDisarm: true
   - type: MeleeWeapon
     hidden: true
     soundHit:
@@ -272,8 +170,22 @@
     damage:
       types:
         Blunt: 5
-  - type: Pullable
-  - type: DoAfter
+  - type: SleepEmitSound
+  - type: SSDIndicator
+  - type: StandingState
+  - type: Fingerprint
+  - type: Dna
+  - type: MindContainer
+    showExamineInfo: true
+  - type: InteractionPopup
+    successChance: 1
+    interactSuccessString: hugging-success-generic
+    interactSuccessSound: /Audio/Effects/thudswoosh.ogg
+    messagePerceivedByOthers: hugging-success-generic-others
+  - type: CanHostGuardian
+  - type: NpcFactionMember
+    factions:
+    - NanoTrasen
   - type: CreamPied
   - type: Stripping
   - type: Strippable
@@ -286,11 +198,6 @@
       - key: enum.StrippingUiKey.Key
         type: StrippableBoundUserInterface
   - type: Puller
-  - type: Butcherable
-    butcheringType: Spike # TODO human.
-    spawned:
-      - id: FoodMeat
-        amount: 5
   - type: Speech
     speechSounds: Alto
   - type: Vocal
@@ -304,107 +211,147 @@
   - type: Grammar
     attributes:
       proper: true
-  - type: StandingState
-  - type: Fingerprint
-  - type: Dna
   - type: MobPrice
     price: 1500 # Kidnapping a living person and selling them for cred is a good move.
     deathPenalty: 0.01 # However they really ought to be living and intact, otherwise they're worth 100x less.
-  - type: ContentEye
-  - type: SleepEmitSound
-  - type: SSDIndicator
 
 - type: entity
   save: false
-  name: Urist McHands
-  id: BaseMobOrganicDummy
+  parent:
+  - MobBloodstream
+  - MobRespirator
+  - MobAtmosStandard
+  - MobFlammable
+  - BaseMobSpecies
+  id: BaseMobSpeciesOrganic
   abstract: true
-  description: A dummy human meant to be used in character setup.
   components:
-    - type: Hands
-    - type: Inventory
-    - type: InventorySlots
-    - type: ContainerContainer
-    - type: Icon
+  - type: Flashable
+  - type: Barotrauma
+    damage:
+      types:
+        Blunt: 0.35 #per second, scales with pressure and other constants.
+  # Organs
+  - type: StatusEffects
+    allowed:
+    - Stun
+    - KnockedDown
+    - SlowedDown
+    - Stutter
+    - SeeingRainbows
+    - Electrocution
+    - Drunk
+    - SlurredSpeech
+    - RatvarianLanguage
+    - PressureImmunity
+    - Muted
+    - ForcedSleep
+    - TemporaryBlindness
+    - Pacified
+    - StaminaModifier
+  - type: Blindable
+  # Other
+  - type: Temperature
+    heatDamageThreshold: 360
+    coldDamageThreshold: 260
+    currentTemperature: 310.15
+    specificHeat: 42
+    coldDamage:
+      types:
+        Cold: 0.1 #per second, scales with temperature & other constants
+    heatDamage:
+      types:
+        Heat: 0.1 #per second, scales with temperature & other constants
+  - type: ThermalRegulator
+    metabolismHeat: 800
+    radiatedHeat: 100
+    implicitHeatRegulation: 500
+    sweatHeatRegulation: 2000
+    shiveringHeatRegulation: 2000
+    normalBodyTemperature: 310.15
+    thermalRegulationTemperatureThreshold: 25
+  - type: Perishable
+  - type: Butcherable
+    butcheringType: Spike # TODO human.
+    spawned:
+      - id: FoodMeat
+        amount: 5
+  - type: Respirator
+    damage:
+      types:
+        Asphyxiation: 1.0
+    damageRecovery:
+      types:
+        Asphyxiation: -1.0
+
+- type: entity
+  save: false
+  id: BaseSpeciesDummy
+  abstract: true
+  components:
+  - type: Hands
+  - type: Inventory
+  - type: InventorySlots
+  - type: ContainerContainer
+  - type: Icon
+    sprite: Mobs/Species/Human/parts.rsi
+    state: full
+  - type: Sprite
+    drawdepth: Mobs
+    noRot: true
+    # TODO BODY Turn these into individual body parts?
+    layers:
+    - map: [ "enum.HumanoidVisualLayers.Chest" ]
+    - map: [ "enum.HumanoidVisualLayers.Head" ]
+    - map: [ "enum.HumanoidVisualLayers.Snout" ]
+    - map: [ "enum.HumanoidVisualLayers.Eyes" ]
+    - map: [ "enum.HumanoidVisualLayers.RArm" ]
+    - map: [ "enum.HumanoidVisualLayers.LArm" ]
+    - map: [ "enum.HumanoidVisualLayers.RLeg" ]
+    - map: [ "enum.HumanoidVisualLayers.LLeg" ]
+    - shader: StencilClear
       sprite: Mobs/Species/Human/parts.rsi
-      state: full
-    - type: Sprite
-      drawdepth: Mobs
-      noRot: true
-      # TODO BODY Turn these into individual body parts?
-      layers:
-        - map: [ "enum.HumanoidVisualLayers.Chest" ]
-        - map: [ "enum.HumanoidVisualLayers.Head" ]
-        - map: [ "enum.HumanoidVisualLayers.Snout" ]
-        - map: [ "enum.HumanoidVisualLayers.Eyes" ]
-        - map: [ "enum.HumanoidVisualLayers.RArm" ]
-        - map: [ "enum.HumanoidVisualLayers.LArm" ]
-        - map: [ "enum.HumanoidVisualLayers.RLeg" ]
-        - map: [ "enum.HumanoidVisualLayers.LLeg" ]
-        - shader: StencilClear
-          sprite: Mobs/Species/Human/parts.rsi
-          state: l_leg
-        - shader: StencilMask
-          map: ["enum.HumanoidVisualLayers.StencilMask"]
-          sprite: Mobs/Customization/masking_helpers.rsi
-          state: unisex_full
-          visible: false
-        - map: ["jumpsuit"]
-        - map: ["enum.HumanoidVisualLayers.LFoot"]
-        - map: ["enum.HumanoidVisualLayers.RFoot"]
-        - map: ["enum.HumanoidVisualLayers.LHand"]
-        - map: ["enum.HumanoidVisualLayers.RHand"]
-        - map: ["enum.HumanoidVisualLayers.Handcuffs"]
-          color: "#ffffff"
-          sprite: Objects/Misc/handcuffs.rsi
-          state: body-overlay-2
-          visible: false
-        - map: [ "id" ]
-        - map: [ "gloves" ]
-        - map: [ "shoes" ]
-        - map: [ "ears" ]
-        - map: [ "outerClothing" ]
-        - map: [ "eyes" ]
-        - map: [ "belt" ]
-        - map: [ "neck" ]
-        - map: [ "back" ]
-        - map: [ "enum.HumanoidVisualLayers.FacialHair" ]
-        - map: [ "enum.HumanoidVisualLayers.Hair" ]
-        - map: [ "enum.HumanoidVisualLayers.HeadSide" ]
-        - map: [ "enum.HumanoidVisualLayers.HeadTop" ]
-        - map: [ "enum.HumanoidVisualLayers.Tail" ]
-        - map: [ "mask" ]
-        - map: [ "head" ]
-        - map: [ "pocket1" ]
-        - map: [ "pocket2" ]
-    - type: Physics
-    - type: Fixtures
-      fixtures:
-        fix1:
-          shape:
-            !type:PhysShapeAabb
-            bounds: "-0.35,-0.35,0.35,0.35"
-          density: 185
-          restitution: 0.0
-          mask:
-          - MobMask
-          layer:
-          - MobLayer
-    - type: HumanoidAppearance
-      species: Human
-    - type: Body
-      prototype: Human
-      requiredLegs: 2
-    - type: Appearance
-    - type: Damageable
-      damageContainer: Biological
-    - type: MobState
-    - type: MobThresholds
-      thresholds:
-        0: Alive
-        100: Critical
-        200: Dead
-    - type: UserInterface
-      interfaces:
-        - key: enum.HumanoidMarkingModifierKey.Key # sure, this can go here too
-          type: HumanoidMarkingModifierBoundUserInterface
+      state: l_leg
+    - shader: StencilMask
+      map: ["enum.HumanoidVisualLayers.StencilMask"]
+      sprite: Mobs/Customization/masking_helpers.rsi
+      state: unisex_full
+      visible: false
+    - map: ["jumpsuit"]
+    - map: ["enum.HumanoidVisualLayers.LFoot"]
+    - map: ["enum.HumanoidVisualLayers.RFoot"]
+    - map: ["enum.HumanoidVisualLayers.LHand"]
+    - map: ["enum.HumanoidVisualLayers.RHand"]
+    - map: ["enum.HumanoidVisualLayers.Handcuffs"]
+      color: "#ffffff"
+      sprite: Objects/Misc/handcuffs.rsi
+      state: body-overlay-2
+      visible: false
+    - map: [ "id" ]
+    - map: [ "gloves" ]
+    - map: [ "shoes" ]
+    - map: [ "ears" ]
+    - map: [ "outerClothing" ]
+    - map: [ "eyes" ]
+    - map: [ "belt" ]
+    - map: [ "neck" ]
+    - map: [ "back" ]
+    - map: [ "enum.HumanoidVisualLayers.FacialHair" ]
+    - map: [ "enum.HumanoidVisualLayers.Hair" ]
+    - map: [ "enum.HumanoidVisualLayers.HeadSide" ]
+    - map: [ "enum.HumanoidVisualLayers.HeadTop" ]
+    - map: [ "enum.HumanoidVisualLayers.Tail" ]
+    - map: [ "mask" ]
+    - map: [ "head" ]
+    - map: [ "pocket1" ]
+    - map: [ "pocket2" ]
+  - type: Appearance
+  - type: HumanoidAppearance
+    species: Human
+  - type: Body
+    prototype: Human
+    requiredLegs: 2
+  - type: UserInterface
+    interfaces:
+      - key: enum.HumanoidMarkingModifierKey.Key # sure, this can go here too
+        type: HumanoidMarkingModifierBoundUserInterface
