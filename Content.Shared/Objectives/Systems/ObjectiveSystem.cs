@@ -76,7 +76,7 @@ public sealed class ObjectiveSystem : EntitySystem
             return null;
         }
 
-        Log.Debug($"Created objective {proto} ({uid}");
+        Log.Debug($"Created objective {proto} ({uid})");
 
         if (!CanBeAssigned(uid, mindId, mind, comp))
         {
