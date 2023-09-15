@@ -48,20 +48,3 @@
             - ChiefEngineer
           availableJobs:
             ChiefEngineer: [ -1, -1 ]
-
-- type: gameMap
-  id: Gateways
-  mapName: Gateways
-  mapPath: /Maps/Test/gateways.yml
-  minPlayers: 0
-  stations:
-    Gateways:
-      stationProto: StandardNanotrasenStation
-      components:
-      - type: StationNameSetup
-        mapNameTemplate: "Gateways"
-      - type: StationJobs
-        overflowJobs:
-        - Passenger
-        availableJobs:
-          Passenger: [ -1, -1 ]
