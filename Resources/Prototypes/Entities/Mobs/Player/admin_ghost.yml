@@ -1,6 +1,5 @@
 - type: entity
   parent: MobObserver
-  save: false
   id: AdminObserver
   name: admin observer
   noSpawn: true
@@ -18,10 +17,7 @@
     canInteract: true
   - type: Hands
   - type: Puller
-  - type: DoAfter
   - type: CombatMode
-  - type: Actions
-  - type: InputMover
   - type: Physics
     ignorePaused: true
     bodyType: Kinematic

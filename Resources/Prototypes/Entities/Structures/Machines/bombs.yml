@@ -90,6 +90,7 @@
       totalIntensity: 5.0
       intensitySlope: 5
       maxIntensity: 4
+      canCreateVacuum: false
     - type: Defusable
       disposable: false
 
