@@ -251,12 +251,6 @@
       Female: Mouse
       Unsexed: Mouse
     wilhelmProbability: 0.001
-  - type: GhostRole
-    makeSentient: true
-    name: ghost-role-information-rat-servant-name
-    description: ghost-role-information-rat-servant-description
-    rules: ghost-role-information-rat-servant-rules
-  - type: GhostTakeoverAvailable
   - type: Tag
     tags:
       - CannotSuicide

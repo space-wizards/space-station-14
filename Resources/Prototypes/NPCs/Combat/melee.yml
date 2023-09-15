@@ -25,7 +25,6 @@
         - !type:HTNCompoundTask
           task: MeleeAttackTargetCompound
 
-# Default melee combat stuff except we do not pick a target.
 - type: htnCompound
   id: RatServantCombatCompound
   branches:
