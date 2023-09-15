@@ -1,22 +1,15 @@
 using Content.Server.Body.Components;
-using Content.Server.GameTicking.Rules;
+using Content.Server.GenericAntag;
 using Content.Server.Ghost.Roles.Events;
-using Content.Server.Objectives.Components;
-using Content.Server.Objectives.Systems;
 using Content.Server.Roles;
 using Content.Server.Terminator.Components;
-using Content.Shared.Mind;
-using Content.Shared.Mind.Components;
 using Content.Shared.Roles;
 
 namespace Content.Server.Terminator.Systems;
 
 public sealed class TerminatorSystem : EntitySystem
 {
-    [Dependency] private readonly SharedMindSystem _mind = default!;
     [Dependency] private readonly SharedRoleSystem _role = default!;
-    [Dependency] private readonly TargetObjectiveSystem _target = default!;
-    [Dependency] private readonly TerminatorRuleSystem _terminatorRule = default!;
 
     public override void Initialize()
     {
@@ -24,7 +17,13 @@ public sealed class TerminatorSystem : EntitySystem
 
         SubscribeLocalEvent<TerminatorComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<TerminatorComponent, GhostRoleSpawnerUsedEvent>(OnSpawned);
-        SubscribeLocalEvent<TerminatorComponent, MindAddedMessage>(OnMindAdded);
+        SubscribeLocalEvent<TerminatorComponent, GenericAntagCreated>(OnCreated);
+    }
+
+    private void OnMapInit(EntityUid uid, TerminatorComponent comp, MapInitEvent args)
+    {
+        // cyborg doesn't need to breathe
+        RemComp<RespiratorComponent>(uid);
     }
 
     private void OnSpawned(EntityUid uid, TerminatorComponent comp, GhostRoleSpawnerUsedEvent args)
@@ -35,66 +34,32 @@ public sealed class TerminatorSystem : EntitySystem
         comp.Target = target.Target;
     }
 
-    private void OnMapInit(EntityUid uid, TerminatorComponent comp, MapInitEvent args)
+    private void OnCreated(EntityUid uid, TerminatorComponent comp, ref GenericAntagCreatedEvent args)
     {
-        // cyborg doesn't need to breathe
-        RemComp<RespiratorComponent>(uid);
-    }
+        var mindId = args.MindId;
+        var mind = args.Mind;
 
-    private void OnMindAdded(EntityUid uid, TerminatorComponent comp, MindAddedMessage args)
-    {
-        if (!TryComp<MindContainerComponent>(uid, out var mindContainer) || mindContainer.Mind == null)
-            return;
-
-        // give the player the role, if they don't have it already (debug > control mob)
-        var mindId = mindContainer.Mind.Value;
-        if (_role.MindHasRole<RoleBriefingComponent>(mindId) || _role.MindHasRole<TerminatorRoleComponent>(mindId))
-            return;
-
-        var mind = Comp<MindComponent>(mindId);
         _role.MindAddRole(mindId, new RoleBriefingComponent
         {
             Briefing = Loc.GetString("terminator-role-briefing")
         }, mind);
         _role.MindAddRole(mindId, new TerminatorRoleComponent(), mind);
-
-        // add the terminate objective
-        foreach (var id in comp.Objectives)
-        {
-            _mind.TryAddObjective(mindId, mind, id);
-        }
-
-        // set its target
-        // if there are multiple kill objectives they will all get set to the same target
-        var target = comp.Target;
-        foreach (var objective in mind.AllObjectives)
-        {
-            if (!HasComp<KillPersonConditionComponent>(objective))
-                continue;
-
-            // if its random this will see what it picked
-            // if there is already a target set this will set it
-            if (target != null)
-                _target.SetTarget(objective, target.Value);
-            _target.GetTarget(objective, out target);
-        }
-
-        if (target == null)
-        {
-            Log.Error($"Terminator {ToPrettyString(uid):player} had no terminate objective.");
-        }
-
-        _terminatorRule.StartRule(mindId);
     }
 
     /// <summary>
-    /// Set the target of a terminator ghost role spawner.
+    /// Create a spawner at a position and return it.
     /// </summary>
-    public void SetTarget(EntityUid uid, EntityUid target, TerminatorTargetComponent? comp = null)
+    /// <param name="coords">Coordinates to create the spawner at</param>
+    /// <param name="target">Optional target mind to force the terminator to target</param>
+    public EntityUid CreateSpawner(EntityCoordinates coords, EntityUid? target)
     {
-        if (!Resolve(uid, ref comp))
-            return;
+        var uid = Spawn("SpawnPointGhostTerminator", coords);
+        if (target != null)
+        {
+            var comp = EnsureComp<TerminatorTargetComponent>(uid);
+            comp.Target = target;
+        }
 
-        comp.Target = target;
+        return uid;
     }
 }

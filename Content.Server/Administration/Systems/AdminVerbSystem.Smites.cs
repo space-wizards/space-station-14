@@ -7,7 +7,6 @@ using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
 using Content.Server.Electrocution;
 using Content.Server.Explosion.EntitySystems;
-using Content.Server.GameTicking.Rules;
 using Content.Server.GhostKick;
 using Content.Server.Medical;
 using Content.Server.Nutrition.EntitySystems;
@@ -19,6 +18,7 @@ using Content.Server.Storage.Components;
 using Content.Server.Storage.EntitySystems;
 using Content.Server.Tabletop;
 using Content.Server.Tabletop.Components;
+using Content.Server.Terminator.Systems;
 using Content.Shared.Administration;
 using Content.Shared.Administration.Components;
 using Content.Shared.Body.Components;
@@ -75,7 +75,7 @@ public sealed partial class AdminVerbSystem
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly TabletopSystem _tabletopSystem = default!;
-    [Dependency] private readonly TerminatorRuleSystem _terminatorRule = default!;
+    [Dependency] private readonly TerminatorSystem _terminator = default!;
     [Dependency] private readonly VomitSystem _vomitSystem = default!;
     [Dependency] private readonly WeldableSystem _weldableSystem = default!;
     [Dependency] private readonly SharedContentEyeSystem _eyeSystem = default!;
@@ -809,7 +809,7 @@ public sealed partial class AdminVerbSystem
 
                 var coords = Transform(args.Target).Coordinates;
                 var mindId = mindContainer.Mind.Value;
-                _terminatorRule.CreateSpawner(coords, mindId);
+                _terminator.CreateSpawner(coords, mindId);
 
                 _popupSystem.PopupEntity(Loc.GetString("admin-smite-terminate-prompt"), args.Target,
                     args.Target, PopupType.LargeCaution);

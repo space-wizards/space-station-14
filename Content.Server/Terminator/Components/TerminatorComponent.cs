@@ -16,10 +16,4 @@ public sealed partial class TerminatorComponent : Component
     /// </summary>
     [DataField("target")]
     public EntityUid? Target;
-
-    /// <summary>
-    /// List of objectives to give the terminator on spawn.
-    /// </summary>
-    [DataField("objectives", required: true, customTypeSerializer: typeof(PrototypeIdListSerializer<EntityPrototype>))]
-    public List<string> Objectives;
 }
