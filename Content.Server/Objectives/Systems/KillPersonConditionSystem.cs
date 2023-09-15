@@ -49,6 +49,10 @@ public sealed class KillPersonConditionSystem : EntitySystem
             return;
         }
 
+        // target already assigned
+        if (target.Target != null)
+            return
+
         // no other humans to kill
         var allHumans = _mind.GetAliveHumansExcept(args.MindId);
         if (allHumans.Count == 0)
@@ -68,6 +72,10 @@ public sealed class KillPersonConditionSystem : EntitySystem
             args.Cancelled = true;
             return;
         }
+
+        // target already assigned
+        if (target.Target != null)
+            return
 
         // no other humans to kill
         var allHumans = _mind.GetAliveHumansExcept(args.MindId);
