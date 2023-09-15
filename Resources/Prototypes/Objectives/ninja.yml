@@ -35,7 +35,6 @@
   description: Your gloves can be used to hack a research server and steal its precious data. If science has been slacking you'll have to get to work.
   components:
   - type: Objective
-    description: objective-condition-steal-research-description
     icon:
       sprite: Structures/Machines/server.rsi
       state: server
