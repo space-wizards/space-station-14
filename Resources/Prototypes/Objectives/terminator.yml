@@ -22,7 +22,7 @@
   - type: TargetObjective
     title: objective-condition-terminate-title
   - type: PickRandomPerson
-  - type: TerminatorTarget
+  - type: TerminatorTargetOverride
   - type: KillPersonCondition
     requireDead: true
 
