@@ -1,6 +1,5 @@
 - type: entity
   parent: MobObserver
-  save: false
   id: AdminObserver
   name: admin observer
   noSpawn: true
@@ -19,10 +18,7 @@
   - type: GhostRoleCast
   - type: Hands
   - type: Puller
-  - type: DoAfter
   - type: CombatMode
-  - type: Actions
-  - type: InputMover
   - type: Physics
     ignorePaused: true
     bodyType: Kinematic

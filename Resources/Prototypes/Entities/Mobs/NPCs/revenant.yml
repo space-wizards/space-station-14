@@ -34,7 +34,6 @@
         density: 80
         mask:
         - GhostImpassable
-  - type: HeatResistance
   - type: MovementIgnoreGravity
   - type: Damageable
     damageContainer: Biological
