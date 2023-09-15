@@ -12,14 +12,12 @@ using System.Linq;
 
 namespace Content.Server.Objectives;
 
-public sealed class ObjectivesSystem : EntitySystem
+public sealed class ObjectivesSystem : SharedObjectivesSystem
 {
     [Dependency] private readonly GameTicker _gameTicker = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly MindSystem _mind = default!;
-    // yeah the naming here isnt ideal
-    [Dependency] private readonly ObjectiveSystem _objective = default!;
 
     public override void Initialize()
     {
@@ -94,7 +92,7 @@ public sealed class ObjectivesSystem : EntitySystem
 
                     foreach (var objective in objectiveGroup)
                     {
-                        var objectiveInfo = _objective.GetInfo(objective, mindId, mind);
+                        var objectiveInfo = GetInfo(objective, mindId, mind);
                         var objectiveTitle = objectiveInfo.Title!;
                         var progress = objectiveInfo.Progress!;
                         if (progress > 0.99f)
@@ -144,7 +142,7 @@ public sealed class ObjectivesSystem : EntitySystem
             }
 
             var proto = group.Pick(_random);
-            var objective = _objective.TryCreateObjective(mindId, mind, proto);
+            var objective = TryCreateObjective(mindId, mind, proto);
             if (objective != null)
                 return objective;
 

@@ -12,8 +12,8 @@ public sealed class CharacterInfoSystem : EntitySystem
 {
     [Dependency] private readonly JobSystem _jobs = default!;
     [Dependency] private readonly MindSystem _minds = default!;
-    [Dependency] private readonly ObjectiveSystem _objective = default!;
     [Dependency] private readonly RoleSystem _roles = default!;
+    [Dependency] private readonly SharedObjectivesSystem _objectives = default!;
 
     public override void Initialize()
     {
@@ -43,7 +43,7 @@ public sealed class CharacterInfoSystem : EntitySystem
                 if (!objectives.ContainsKey(issuer))
                     objectives[issuer] = new List<ObjectiveInfo>();
 
-                var info = _objective.GetInfo(objective, mindId, mind);
+                var info = _objectives.GetInfo(objective, mindId, mind);
                 objectives[issuer].Add(info);
             }
 

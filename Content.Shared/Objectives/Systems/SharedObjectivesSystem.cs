@@ -9,7 +9,7 @@ namespace Content.Shared.Objectives.Systems;
 /// Provides API for creating and interacting with objectives.
 /// Adds default info from <see cref="ObjectiveComponent"/> to <see cref="ObjectiveGetInfoEvent"/>.
 /// </summary>
-public sealed class ObjectiveSystem : EntitySystem
+public abstract class SharedObjectivesSystem : EntitySystem
 {
     [Dependency] private readonly SharedMindSystem _mind = default!;
 

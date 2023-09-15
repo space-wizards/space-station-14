@@ -23,7 +23,7 @@ public abstract class SharedMindSystem : EntitySystem
 {
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
-    [Dependency] private readonly ObjectiveSystem _objective = default!;
+    [Dependency] private readonly SharedObjectivesSystem _objectives = default!;
     [Dependency] private readonly SharedPlayerSystem _player = default!;
 
     // This is dictionary is required to track the minds of disconnected players that may have had their entity deleted.
@@ -258,7 +258,7 @@ public abstract class SharedMindSystem : EntitySystem
     /// <returns>Returns true if adding the objective succeeded.</returns>
     public bool TryAddObjective(EntityUid mindId, MindComponent mind, string proto)
     {
-        var objective = _objective.TryCreateObjective(mindId, mind, proto);
+        var objective = _objectives.TryCreateObjective(mindId, mind, proto);
         if (objective == null)
             return false;
 
@@ -271,7 +271,7 @@ public abstract class SharedMindSystem : EntitySystem
     /// </summary>
     public void AddObjective(EntityUid mindId, MindComponent mind, EntityUid objective)
     {
-        var title = _objective.GetTitle(objective, mindId, mind);
+        var title = _objectives.GetTitle(objective, mindId, mind);
         _adminLogger.Add(LogType.Mind, LogImpact.Low, $"Objective ({objective}) '{title}' added to mind of {MindOwnerLoggingString(mind)}");
         mind.Objectives.Add(objective);
     }
@@ -287,7 +287,7 @@ public abstract class SharedMindSystem : EntitySystem
 
         var objective = mind.Objectives[index];
 
-        var title = _objective.GetTitle(objective, mindId, mind);
+        var title = _objectives.GetTitle(objective, mindId, mind);
         _adminLogger.Add(LogType.Mind, LogImpact.Low, $"'{title}' removed from the mind of {MindOwnerLoggingString(mind)}");
         mind.Objectives.Remove(objective);
         Del(objective);

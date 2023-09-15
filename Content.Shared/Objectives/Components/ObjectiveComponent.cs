@@ -10,7 +10,7 @@ namespace Content.Shared.Objectives.Components;
 /// Mostly it provides optional static data for the objective info event.
 /// Progress cannot be provided this way, another system has to do that.
 /// </summary>
-[RegisterComponent, Access(typeof(ObjectiveSystem))]
+[RegisterComponent, Access(typeof(SharedObjectivesSystem))]
 public sealed partial class ObjectiveComponent : Component
 {
     /// <summary>
@@ -73,7 +73,7 @@ public record struct ObjectiveAssignedEvent(EntityUid MindId, MindComponent Mind
 /// <summary>
 /// Event raised on an objective to get info about it.
 /// In handlers set fields of <see cref="Info"/>.
-/// To use this yourself call <see cref="ObjectiveSystem.GetObjectiveInfo"/> with the mind.
+/// To use this yourself call <see cref="SharedObjectivesSystem.GetObjectiveInfo"/> with the mind.
 /// </summary>
 [ByRefEvent]
 public class ObjectiveGetInfoEvent

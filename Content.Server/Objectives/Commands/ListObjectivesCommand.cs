@@ -39,10 +39,10 @@ namespace Content.Server.Objectives.Commands
                 shell.WriteLine("None.");
             }
 
-            var objective = _entities.System<ObjectiveSystem>();
+            var objectivesSystem = _entities.System<SharedObjectivesSystem>();
             for (var i = 0; i < objectives.Count; i++)
             {
-                var info = objective.GetInfo(objectives[i], mindId, mind);
+                var info = objectivesSystem.GetInfo(objectives[i], mindId, mind);
                 var progress = (int) (info.Progress! * 100f);
                 shell.WriteLine($"- [{i}] '{info.Title}' ({progress}%)");
             }
