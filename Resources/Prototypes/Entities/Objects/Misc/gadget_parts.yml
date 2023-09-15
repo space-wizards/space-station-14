@@ -59,3 +59,35 @@
     - BallisticsTechPart
     - ModularReceiver
     - Metal
+
+- type: entity
+  parent: BaseItem
+  id: TetherPhysicsBox
+  name: tether physics box
+  description: #todo
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/physics_box.rsi
+    layers:
+    - state: box_back
+    - state: physics_tether
+    - state: box_front
+  - type: Tag
+    tags:
+    - TetherPhysicsTechPart
+
+- type: entity
+  parent: BaseItem
+  id: ForcePhysicsBox
+  name: force physics box
+  description: #todo
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/physics_box.rsi
+    layers:
+    - state: box_back
+    - state: physics_force
+    - state: box_front
+  - type: Tag
+    tags:
+    - ForcePhysicsTechPart

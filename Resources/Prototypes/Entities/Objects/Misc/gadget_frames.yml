@@ -226,3 +226,27 @@
   - type: Construction
     graph: WeaponPistolMk58
     node: frame
+
+- type: entity
+  parent: BaseItem
+  id: PhysicsGunFrame
+  name: physics gun frame
+  description: The incomplete frame of a handheld physics-manipulating device.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Launchers/force_gun.rsi
+    layers:
+    - state: frame_0
+      map: [ "enum.ConstructionVisuals.Layer" ]
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.ConstructionVisuals.Key:
+        enumConstructionVisuals.Layer:
+          wiresMissing: { state: frame_0 }
+          caseMissing: { state: frame_1 }
+          boxMissing: { state: frame_2 }
+          panelUnscrewed: { state: frame_tether }
+  - type: Construction
+    graph: WeaponPhysicsGun
+    node: wiresMissing
