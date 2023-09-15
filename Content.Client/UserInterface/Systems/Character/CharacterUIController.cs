@@ -127,13 +127,9 @@ public sealed class CharacterUIController : UIController, IOnStateEntered<Gamepl
 
             foreach (var condition in conditions)
             {
-                // this should never happen outside of a malicious server
-                if (condition.Title == null || condition.Description == null || condition.Icon == null || condition.Progress == null)
-                    continue;
-
                 var conditionControl = new ObjectiveConditionsControl();
                 conditionControl.ProgressTexture.Texture = _sprite.Frame0(condition.Icon);
-                conditionControl.ProgressTexture.Progress = condition.Progress.Value;
+                conditionControl.ProgressTexture.Progress = condition.Progress;
                 var titleMessage = new FormattedMessage();
                 var descriptionMessage = new FormattedMessage();
                 titleMessage.AddText(condition.Title);
