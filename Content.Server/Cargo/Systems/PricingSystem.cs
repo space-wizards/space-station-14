@@ -95,7 +95,7 @@ public sealed class PricingSystem : EntitySystem
         }
 
         var partList = _bodySystem.GetBodyAllSlots(uid, body).ToList();
-        var totalPartsPresent = partList.Sum(x => x.Child != null ? 1 : 0);
+        var totalPartsPresent = partList.Sum(x => x.Entity != null ? 1 : 0);
         var totalParts = partList.Count;
 
         var partRatio = totalPartsPresent / (double) totalParts;

@@ -31,10 +31,10 @@ namespace Content.Server.Body.Systems
         {
             // This one needs to be special, okay?
             if (!EntityManager.TryGetComponent(uid, out OrganComponent? organ) ||
-                organ.ParentSlot is not {Parent: var parent})
+                organ.Parent == null)
                 return;
 
-            HandleMind(parent, args.Old);
+            HandleMind(organ.Parent.Value, args.Old);
         }
 
         private void HandleMind(EntityUid newEntity, EntityUid oldEntity)
