@@ -95,14 +95,16 @@ public abstract class SharedObjectivesSystem : EntitySystem
     /// <param name="uid"/>ID of the condition entity</param>
     /// <param name="mindId"/>ID of the player's mind entity</param>
     /// <param name="mind"/>Mind component of the player's mind</param>
-    public ObjectiveInfo? GetInfo(EntityUid uid, EntityUid mindId, ObjectiveComponent? comp = null, MetaDataComponent? meta = null, MindComponent? mind = null)
+    public ObjectiveInfo? GetInfo(EntityUid uid, EntityUid mindId, MindComponent? mind = null)
     {
-        if (!Resolve(uid, ref comp, ref meta) || !Resolve(mindId, ref mind))
+        if (!Resolve(mindId, ref mind))
             return null;
 
         var ev = new ObjectiveGetProgressEvent(mindId, mind);
         RaiseLocalEvent(uid, ref ev);
 
+        var comp = Comp<ObjectiveComponent>(uid);
+        var meta = MetaData(uid);
         var title = meta.EntityName;
         var description = meta.EntityDescription;
         if (comp.Icon == null || ev.Progress == null)
