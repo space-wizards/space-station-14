@@ -120,18 +120,18 @@
     startDelay: 20
   - type: GasLeakRule
 
-- type: entity
-  id: KudzuGrowth
-  parent: BaseGameRule
-  noSpawn: true
-  components:
-  - type: StationEvent
-    earliestStart: 15
-    minimumPlayers: 15
-    weight: 5
-    startDelay: 50
-    duration: 240
-  - type: KudzuGrowthRule
+#- type: entity
+#  id: KudzuGrowth
+#  parent: BaseGameRule
+#  noSpawn: true
+#  components:
+#  - type: StationEvent
+#    earliestStart: 15
+#    minimumPlayers: 15
+#    weight: 5
+#    startDelay: 50
+#    duration: 240
+#  - type: KudzuGrowthRule
 
 - type: entity
   id: MeteorSwarm
