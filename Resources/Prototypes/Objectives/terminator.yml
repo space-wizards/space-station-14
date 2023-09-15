@@ -20,7 +20,7 @@
     difficulty: 1
     unique: false
   - type: TargetObjective
-    title: objective-condition-terminate-title
+    title: objective-terminate-title
   - type: PickRandomPerson
   - type: TerminatorTargetOverride
   - type: KillPersonCondition
@@ -32,7 +32,7 @@
   id: ShutDownObjective
   components:
   - type: Objective
-    title: objective-condition-shut-down-title
+    title: objective-shut-down-title
     description: objective-shut-down-description
     icon:
       sprite: Mobs/Species/Terminator/parts.rsi
