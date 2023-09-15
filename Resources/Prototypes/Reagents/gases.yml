@@ -235,8 +235,8 @@
         ignoreResistances: true
         damage:
           Groups:
-            Brute: -3
-            Burn: -3
+            Brute: -5
+            Burn: -5
 
 - type: reagent
   id: NitrousOxide

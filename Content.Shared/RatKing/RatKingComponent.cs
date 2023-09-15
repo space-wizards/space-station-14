@@ -88,6 +88,9 @@ public sealed partial class RatKingComponent : Component
     [DataField("actionOrderLooseEntity")]
     public EntityUid? ActionOrderLooseEntity;
 
+    /// <summary>
+    /// A dictionary with an order type to the corresponding callout dataset.
+    /// </summary>
     [DataField("orderCallouts")]
     public Dictionary<RatKingOrderType, string> OrderCallouts = new()
     {

@@ -44,7 +44,7 @@ public abstract class SharedRatKingSystem : EntitySystem
         _action.AddAction(uid, ref component.ActionOrderCheeseEmEntity, component.ActionOrderCheeseEm, holderComp: comp);
         _action.AddAction(uid, ref component.ActionOrderLooseEntity, component.ActionOrderLoose, holderComp: comp);
 
-        UpdateActionToggles(uid, component);
+        UpdateActions(uid, component);
     }
 
     private void OnShutdown(EntityUid uid, RatKingComponent component, ComponentShutdown args)
@@ -76,7 +76,7 @@ public abstract class SharedRatKingSystem : EntitySystem
         Dirty(uid, component);
 
         DoCommandCallout(uid, component);
-        UpdateActionToggles(uid, component);
+        UpdateActions(uid, component);
         UpdateAllServants(uid, component);
     }
 
@@ -86,7 +86,7 @@ public abstract class SharedRatKingSystem : EntitySystem
             ratKingComponent.Servants.Remove(uid);
     }
 
-    private void UpdateActionToggles(EntityUid uid, RatKingComponent? component = null)
+    private void UpdateActions(EntityUid uid, RatKingComponent? component = null)
     {
         if (!Resolve(uid, ref component))
             return;
@@ -95,6 +95,10 @@ public abstract class SharedRatKingSystem : EntitySystem
         _action.SetToggled(component.ActionOrderFollowEntity, component.CurrentOrder == RatKingOrderType.Follow);
         _action.SetToggled(component.ActionOrderCheeseEmEntity, component.CurrentOrder == RatKingOrderType.CheeseEm);
         _action.SetToggled(component.ActionOrderLooseEntity, component.CurrentOrder == RatKingOrderType.Loose);
+        _action.StartUseDelay(component.ActionOrderStayEntity);
+        _action.StartUseDelay(component.ActionOrderFollowEntity);
+        _action.StartUseDelay(component.ActionOrderCheeseEmEntity);
+        _action.StartUseDelay(component.ActionOrderLooseEntity);
     }
 
     private void OnGetVerb(EntityUid uid, RatKingRummageableComponent component, GetVerbsEvent<AlternativeVerb> args)
