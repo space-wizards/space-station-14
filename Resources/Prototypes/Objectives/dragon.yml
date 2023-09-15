@@ -17,6 +17,11 @@
   parent: BaseDragonObjective
   id: CarpRiftsObjective
   components:
+  - type: Objective
+    icon:
+      sprite: Structures/Specific/carp_rift.rsi
+      state: icon
+      color: "#569fff"
   - type: NumberObjective
     # dragon can only spawn 3 rifts so keep objective the same
     min: 3
