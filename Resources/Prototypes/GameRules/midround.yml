@@ -14,6 +14,18 @@
     - SurviveObjective
     threats:
     - announcement: terror-dragon
-      rule: Dragon
+      rule: DragonSpawn
     - announcement: terror-revenant
       rule: RevenantSpawn
+
+# stores configuration for dragon
+- type: entity
+  noSpawn: true
+  parent: BaseGameRule
+  id: Dragon
+  components:
+  - type: GenericAntagRule
+    agentName: dragon-round-end-agent-name = dragon
+    objectives:
+    - CarpRiftsObjective
+    - DragonSurviveObjective
