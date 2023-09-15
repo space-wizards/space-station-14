@@ -260,7 +260,7 @@
         name: power-cell-slot-component-slot-name-default
         startingItem: PowerCellMedium
   - type: RandomMetadata
-    nameSegments: [names_autoborg]
+    nameSegments: [names_borg]
 
 - type: entity
   id: PlayerBorgBattery
