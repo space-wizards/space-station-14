@@ -18,7 +18,7 @@ public sealed class TerminatorSystem : EntitySystem
 
         SubscribeLocalEvent<TerminatorComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<TerminatorComponent, GhostRoleSpawnerUsedEvent>(OnSpawned);
-        SubscribeLocalEvent<TerminatorComponent, GenericAntagCreated>(OnCreated);
+        SubscribeLocalEvent<TerminatorComponent, GenericAntagCreatedEvent>(OnCreated);
     }
 
     private void OnMapInit(EntityUid uid, TerminatorComponent comp, MapInitEvent args)
