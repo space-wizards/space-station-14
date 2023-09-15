@@ -51,7 +51,7 @@ public sealed class KillPersonConditionSystem : EntitySystem
 
         // target already assigned
         if (target.Target != null)
-            return
+            return;
 
         // no other humans to kill
         var allHumans = _mind.GetAliveHumansExcept(args.MindId);
@@ -75,7 +75,7 @@ public sealed class KillPersonConditionSystem : EntitySystem
 
         // target already assigned
         if (target.Target != null)
-            return
+            return;
 
         // no other humans to kill
         var allHumans = _mind.GetAliveHumansExcept(args.MindId);
