@@ -95,7 +95,7 @@ public sealed class SmesSystem : EntitySystem
 
     private ChargeState CalcChargeState(EntityUid uid, PowerNetworkBatteryComponent? netBattery = null)
     {
-        if (!Resolve(uid, ref netBattery))
+        if (!Resolve(uid, ref netBattery, false))
             return ChargeState.Still;
 
         return (netBattery.CurrentSupply - netBattery.CurrentReceiving) switch
