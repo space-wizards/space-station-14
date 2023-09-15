@@ -43,8 +43,16 @@ namespace Content.Server.Objectives.Commands
             for (var i = 0; i < objectives.Count; i++)
             {
                 var info = objectivesSystem.GetInfo(objectives[i], mindId, mind);
-                var progress = (int) (info.Progress! * 100f);
-                shell.WriteLine($"- [{i}] '{info.Title}' ({progress}%)");
+                if (info == null)
+                {
+                    shell.WriteLine($"- [{i}] {objectives[i]} - INVALID");
+                }
+                else
+                {
+
+                    var progress = (int) (info.Value.Progress * 100f);
+                    shell.WriteLine($"- [{i}] {objectives[i]} ({info.Value.Title}) ({progress}%)");
+                }
             }
         }
 
