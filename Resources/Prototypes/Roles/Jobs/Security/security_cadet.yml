@@ -22,7 +22,6 @@
 - type: startingGear
   id: SecurityCadetGear
   equipment:
-    neck: SecurityWhistle
     jumpsuit: ClothingUniformJumpsuitColorRed
     back: ClothingBackpackSecurityFilled
     shoes: ClothingShoesBootsCombatFilled
