@@ -213,7 +213,7 @@ namespace Content.Server.Voting
 
             var request = await _discord.CreateMessage(_webhookIdentifier.Value, payload);
             var content = await request.Content.ReadAsStringAsync();
-            _webhookId = (ulong) JsonNode.Parse(content)?["id"]!;
+            _webhookId = ulong.Parse(JsonNode.Parse(content)?["id"]!.GetValue<string>()!);
         }
 
         // Edits a pre-existing payload message, given an ID
