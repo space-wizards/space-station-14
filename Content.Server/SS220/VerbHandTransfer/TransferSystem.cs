@@ -3,7 +3,6 @@
 using Content.Shared.Hands.Components;
 using Content.Shared.Strip.Components;
 using Content.Shared.Verbs;
-using Robust.Shared.Player;
 using Robust.Shared.Players;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -12,7 +11,6 @@ namespace Content.Server.SS220.VerbHandTransfer
 {
     public sealed class VerbHandTransfer : EntitySystem
     {
-        [Dependency] private readonly IEntityManager _entitymanager = default!;
         [Dependency] private readonly ISharedPlayerManager _playerManager = default!;
 
         public override void Initialize()
@@ -39,7 +37,7 @@ namespace Content.Server.SS220.VerbHandTransfer
         private void TransferItemInHands(EntityUid target, EntityUid user, string freeHand)
         {
             if (_playerManager.TryGetSessionByEntity(user, out var session) && session is ICommonSession playerSession)
-                RaiseLocalEvent<StrippingSlotButtonPressed>(target, new StrippingSlotButtonPressed(freeHand, true) { Session = playerSession });
+                RaiseLocalEvent(target, new StrippingSlotButtonPressed(freeHand, true) { Session = playerSession });
         }
 
         private bool FindFreeHand(HandsComponent component, [NotNullWhen(true)] out string? freeHand)

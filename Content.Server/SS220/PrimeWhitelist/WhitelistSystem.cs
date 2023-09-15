@@ -14,6 +14,7 @@ namespace Content.Server.SS220.PrimeWhitelist;
 internal sealed class PrimelistDb
 {
     private readonly DbContextOptions<PrimelistDbContext> _options;
+    private readonly ISawmill _sawmill = Logger.GetSawmill("prime");
 
     public PrimelistDb(DbContextOptions<PrimelistDbContext> options)
     {
@@ -37,12 +38,12 @@ internal sealed class PrimelistDb
         }
         catch (Exception e)
         {
-            Logger.DebugS("prime", $"Exception occured: ${e}");
+            _sawmill.Debug($"Exception occured: ${e}");
             return null;
         }
     }
 
-    public class PrimelistDbContext : DbContext
+    public sealed class PrimelistDbContext : DbContext
     {
         public PrimelistDbContext(DbContextOptions<PrimelistDbContext> options) : base(options)
         {

@@ -68,7 +68,7 @@ public sealed class FormManager : EntitySystem
         }
         catch (Exception e)
         {
-            Logger.ErrorS("form-manager", e, "Failed to access form by descriptor");
+            _sawmill.Error($"Failed to access form by descriptor. Exception: {e}");
         }
 
         return null;
@@ -100,7 +100,7 @@ public sealed class FormManager : EntitySystem
         }
         catch (Exception e)
         {
-            Logger.ErrorS("form-manager", e, "Failed to parse form index");
+            _sawmill.Error($"Failed to parse form index. Exception: {e}");
             return;
         }
 
@@ -192,7 +192,7 @@ public sealed class FormManager : EntitySystem
         }
         catch (Exception e)
         {
-            Logger.ErrorS("form-manager", e, "Failed to read file at " + path);
+            _sawmill.Error($"Failed to read file at " + path + $" Exception: {e}");
             output = null;
         }
     }

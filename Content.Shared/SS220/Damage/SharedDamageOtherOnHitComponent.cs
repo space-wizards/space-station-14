@@ -4,10 +4,6 @@ using Content.Shared.Damage;
 
 namespace Content.Shared.SS220.Damage;
 
-public abstract partial class SharedDamageOtherOnHitComponent
-{
-}
-
 /// <summary>
 /// Raised directly on an entity that hit something.
 /// Here you can modify the damage, before it applies.

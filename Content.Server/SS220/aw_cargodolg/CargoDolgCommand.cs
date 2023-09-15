@@ -28,7 +28,7 @@ namespace Content.Server.Cargo.Commands
 
                 if (int.TryParse(args[1], out var toAdd))
                 {
-                    switch(args[0])
+                    switch (args[0])
                     {
                         case "set":
                             bSet = true;
@@ -69,12 +69,13 @@ namespace Content.Server.Cargo.Commands
         private void ProccessMoney(IConsoleShell shell, int money, bool bSet)
         {
             var cargoSystem = _entitySystemManager.GetEntitySystem<CargoSystem>();
-            var components = _entityManager.EntityQuery<StationBankAccountComponent>();
+            var bankQuery = _entityManager.EntityQueryEnumerator<StationBankAccountComponent>();
 
-            var bankComponent = components.First();
-            var owner = bankComponent.Owner;
+            bankQuery.MoveNext(out var owner, out var bankComponent);
+            if (!_entityManager.EntityExists(owner) || bankComponent is null)
+                return;
 
-            int currentMoney = bankComponent.Balance;
+            var currentMoney = bankComponent.Balance;
 
             cargoSystem.UpdateBankAccount(owner, bankComponent, -currentMoney);
             cargoSystem.UpdateBankAccount(owner, bankComponent, bSet ? money : currentMoney + money);
