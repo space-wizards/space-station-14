@@ -1,9 +1,4 @@
 Entries:
-- author: Emisse
-  changes:
-  - {message: Pun-Pun is now always a ghost role, type: Tweak}
-  id: 4331
-  time: '2023-07-26T10:02:02.0000000+00:00'
 - author: Hebiman
   changes:
   - {message: Removed Alt Click interaction with implanter syringe, type: Fix}
@@ -2979,3 +2974,8 @@ Entries:
   - {message: Training bombs are now unable to space tiles., type: Tweak}
   id: 4830
   time: '2023-09-14T23:51:47.0000000+00:00'
+- author: kseandi
+  changes:
+  - {message: HUD theme selection is now works!, type: Fix}
+  id: 4831
+  time: '2023-09-15T02:05:56.0000000+00:00'
