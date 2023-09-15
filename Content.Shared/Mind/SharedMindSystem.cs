@@ -271,8 +271,8 @@ public abstract class SharedMindSystem : EntitySystem
     /// </summary>
     public void AddObjective(EntityUid mindId, MindComponent mind, EntityUid objective)
     {
-        var title = _objectives.GetTitle(objective, mindId, mind);
-        _adminLogger.Add(LogType.Mind, LogImpact.Low, $"Objective ({objective}) '{title}' added to mind of {MindOwnerLoggingString(mind)}");
+        var title = Name(objective);
+        _adminLogger.Add(LogType.Mind, LogImpact.Low, $"Objective {objective} ({title}) added to mind of {MindOwnerLoggingString(mind)}");
         mind.Objectives.Add(objective);
     }
 
@@ -287,8 +287,8 @@ public abstract class SharedMindSystem : EntitySystem
 
         var objective = mind.Objectives[index];
 
-        var title = _objectives.GetTitle(objective, mindId, mind);
-        _adminLogger.Add(LogType.Mind, LogImpact.Low, $"'{title}' removed from the mind of {MindOwnerLoggingString(mind)}");
+        var title = Name(objective);
+        _adminLogger.Add(LogType.Mind, LogImpact.Low, $"Objective {objective} ({title}) removed from the mind of {MindOwnerLoggingString(mind)}");
         mind.Objectives.Remove(objective);
         Del(objective);
         return true;
