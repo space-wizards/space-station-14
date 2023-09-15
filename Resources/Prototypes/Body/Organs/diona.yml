@@ -21,6 +21,9 @@
         reagents:
         - ReagentId: Nutriment
           Quantity: 5
+  - type: FlavorProfile
+    flavors:
+      - people
 
 - type: entity
   id: OrganDionaBrain
