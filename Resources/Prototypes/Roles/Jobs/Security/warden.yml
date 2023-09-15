@@ -23,7 +23,6 @@
 - type: startingGear
   id: WardenGear
   equipment:
-    neck: SecurityWhistle
     head: ClothingHeadHatWarden
     jumpsuit: ClothingUniformJumpsuitWarden
     back: ClothingBackpackSecurityFilled
