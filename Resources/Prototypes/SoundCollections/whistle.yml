@@ -1,0 +1,10 @@
+- type: soundCollection
+  id: BaseWhistle
+  files:
+    - /Audio/Items/Whistle/whistle_1.ogg
+    - /Audio/Items/Whistle/whistle_2.ogg
+    - /Audio/Items/Whistle/whistle_3.ogg
+    - /Audio/Items/Whistle/whistle_4.ogg
+    - /Audio/Items/Whistle/whistle_5.ogg
+    - /Audio/Items/Whistle/whistle_6.ogg
+    - /Audio/Items/Whistle/whistle_7.ogg
