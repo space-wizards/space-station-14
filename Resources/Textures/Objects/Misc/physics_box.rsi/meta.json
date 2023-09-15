@@ -1,0 +1,25 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Box sprite by RiceMar1244, tether and force effects by RiceMar1244.",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "box_back"
+        },
+        {
+            "name": "box_front"
+        },
+        {
+            "name": "physics_tether",
+            "delays": [ [ 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1 ] ]
+        },
+        {
+            "name": "physics_force",
+            "delays": [ [ 0.1, 0.1, 0.1, 0.1, 0.1, 0.1 ] ]
+        }
+    ]
+}
