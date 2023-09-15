@@ -60,6 +60,8 @@ public sealed class AmeControllerSystem : EntitySystem
 
         controller.LastUpdate = curTime;
         controller.NextUpdate = curTime + controller.UpdatePeriod;
+        // update the UI regardless of other factors to update the power readings
+        UpdateUi(uid, controller);
 
         if (!controller.Injecting)
             return;
