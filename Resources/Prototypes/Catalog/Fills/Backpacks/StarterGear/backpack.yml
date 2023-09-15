@@ -237,7 +237,8 @@
     - type: StorageFill
       contents:
         - id: BoxSurvival
-        - id: WeaponPulseCarbine
+        - id: PinpointerNuclear
+        - id: WeaponPulseRifle
         - id: WeaponPulsePistol
         - id: WeaponDisabler
         - id: MedicatedSuture
