@@ -84,7 +84,6 @@ namespace Content.Server.Voting
 
         // Webhook stuff
         private string _webhookUrl = string.Empty;
-        private readonly HttpClient _httpClient = new();
         private ulong _webhookId;
         private WebhookIdentifier? _webhookIdentifier;
 
