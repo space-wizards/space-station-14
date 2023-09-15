@@ -1,5 +1,6 @@
 using Content.Shared.Ninja.Systems;
 using Content.Shared.Whitelist;
+using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
@@ -20,6 +21,12 @@ public sealed partial class StunProviderComponent : Component
     public EntityUid? BatteryUid;
 
     /// <summary>
+    /// Sound played when stunning someone.
+    /// </summary>
+    [DataField("sound"), ViewVariables(VVAccess.ReadWrite)]
+    public SoundSpecifier Sound = new SoundCollectionSpecifier("sparks");
+
+    /// <summary>
     /// Joules required in the battery to stun someone. Defaults to 10 uses on a small battery.
     /// </summary>
     [DataField("stunCharge"), ViewVariables(VVAccess.ReadWrite)]
@@ -35,13 +42,13 @@ public sealed partial class StunProviderComponent : Component
     /// Time that someone is stunned for, stacks if done multiple times.
     /// </summary>
     [DataField("stunTime"), ViewVariables(VVAccess.ReadWrite)]
-    public TimeSpan StunTime = TimeSpan.FromSeconds(3);
+    public TimeSpan StunTime = TimeSpan.FromSeconds(5);
 
     /// <summary>
     /// How long stunning is disabled after stunning something.
     /// </summary>
     [DataField("cooldown"), ViewVariables(VVAccess.ReadWrite)]
-    public TimeSpan Cooldown = TimeSpan.FromSeconds(1);
+    public TimeSpan Cooldown = TimeSpan.FromSeconds(2);
 
     /// <summary>
     /// Locale string to popup when there is no power
