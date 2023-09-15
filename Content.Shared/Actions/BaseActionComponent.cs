@@ -149,19 +149,19 @@ public abstract class BaseActionComponentState : ComponentState
     public (TimeSpan Start, TimeSpan End)? Cooldown;
     public TimeSpan? UseDelay;
     public int? Charges;
-    public EntityUid? Provider;
-    public EntityUid? EntityIcon;
+    public NetEntity? Provider;
+    public NetEntity? EntityIcon;
     public bool CheckCanInteract;
     public bool ClientExclusive;
     public int Priority;
-    public EntityUid? AttachedEntity;
+    public NetEntity? AttachedEntity;
     public bool AutoPopulate;
     public bool AutoRemove;
     public bool Temporary;
     public ItemActionIconStyle ItemIconStyle;
     public SoundSpecifier? Sound;
 
-    protected BaseActionComponentState(BaseActionComponent component)
+    protected BaseActionComponentState(BaseActionComponent component, IEntityManager entManager)
     {
         Icon = component.Icon;
         IconOn = component.IconOn;
@@ -172,12 +172,18 @@ public abstract class BaseActionComponentState : ComponentState
         Cooldown = component.Cooldown;
         UseDelay = component.UseDelay;
         Charges = component.Charges;
-        Provider = component.Provider;
-        EntityIcon = component.EntityIcon;
+
+        // TODO ACTION REFACTOR fix bugs
+        if (entManager.TryGetNetEntity(component.Provider, out var provider))
+            Provider = provider;
+        if (entManager.TryGetNetEntity(component.EntityIcon, out var icon))
+            EntityIcon = icon;
+        if (entManager.TryGetNetEntity(component.AttachedEntity, out var attached))
+            AttachedEntity = attached;
+
         CheckCanInteract = component.CheckCanInteract;
         ClientExclusive = component.ClientExclusive;
         Priority = component.Priority;
-        AttachedEntity = component.AttachedEntity;
         AutoPopulate = component.AutoPopulate;
         AutoRemove = component.AutoRemove;
         Temporary = component.Temporary;

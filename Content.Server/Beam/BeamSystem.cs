@@ -96,7 +96,7 @@ public sealed class BeamSystem : SharedBeamSystem
 
         var distanceLength = distanceCorrection.Length();
 
-        var beamVisualizerEvent = new BeamVisualizerEvent(ent, distanceLength, userAngle, bodyState, shader);
+        var beamVisualizerEvent = new BeamVisualizerEvent(GetNetEntity(ent), distanceLength, userAngle, bodyState, shader);
         RaiseNetworkEvent(beamVisualizerEvent);
 
         if (controller != null)
@@ -119,7 +119,7 @@ public sealed class BeamSystem : SharedBeamSystem
             beamSpawnPos = beamSpawnPos.Offset(calculatedDistance.Normalized());
             var newEnt = Spawn(prototype, beamSpawnPos);
 
-            var ev = new BeamVisualizerEvent(newEnt, distanceLength, userAngle, bodyState, shader);
+            var ev = new BeamVisualizerEvent(GetNetEntity(newEnt), distanceLength, userAngle, bodyState, shader);
             RaiseNetworkEvent(ev);
         }
 

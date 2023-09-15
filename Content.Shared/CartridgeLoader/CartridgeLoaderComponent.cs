@@ -14,7 +14,7 @@ public sealed partial class CartridgeLoaderComponent : Component
     /// <summary>
     /// List of programs that come preinstalled with this cartridge loader
     /// </summary>
-    [DataField("preinstalled")]
+    [DataField("preinstalled")] // TODO remove this and use container fill.
     public List<string> PreinstalledPrograms = new();
 
     /// <summary>
@@ -28,12 +28,6 @@ public sealed partial class CartridgeLoaderComponent : Component
     /// </summary>
     [ViewVariables]
     public readonly List<EntityUid> BackgroundPrograms = new();
-
-    /// <summary>
-    /// The list of program entities that are spawned into the cartridge loaders program container
-    /// </summary>
-    [DataField("installedCartridges")]
-    public List<EntityUid> InstalledPrograms = new();
 
     /// <summary>
     /// The maximum amount of programs that can be installed on the cartridge loader entity

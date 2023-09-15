@@ -25,7 +25,12 @@ public partial class SharedBodySystem
         if (!Resolve(parent, ref part, false))
             return null;
 
-        var slot = new OrganSlot(slotId, parent);
+        var slot = new OrganSlot()
+        {
+            Id = slotId,
+            Parent = parent,
+            NetParent = GetNetEntity(parent),
+        };
         part.Organs.Add(slotId, slot);
 
         return slot;
@@ -42,7 +47,7 @@ public partial class SharedBodySystem
 
     private void OnOrganGetState(EntityUid uid, OrganComponent organ, ref ComponentGetState args)
     {
-        args.State = new OrganComponentState(organ.Body, organ.ParentSlot);
+        args.State = new OrganComponentState(GetNetEntity(organ.Body), organ.ParentSlot);
     }
 
     private void OnOrganHandleState(EntityUid uid, OrganComponent organ, ref ComponentHandleState args)
@@ -50,7 +55,7 @@ public partial class SharedBodySystem
         if (args.Current is not OrganComponentState state)
             return;
 
-        organ.Body = state.Body;
+        organ.Body = EnsureEntity<OrganComponent>(state.Body, uid);
         organ.ParentSlot = state.Parent;
     }
 

@@ -76,8 +76,9 @@
   - type: StationEvent
     weight: 10
     duration: 1
-    earliestStart: 45
-    minimumPlayers: 15
+    earliestStart: 30
+    reoccurrenceDelay: 60
+    minimumPlayers: 40
   - type: NinjaSpawnRule
 
 - type: entity

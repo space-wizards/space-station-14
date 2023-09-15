@@ -1,7 +1,7 @@
 ﻿- type: entity
   id: ActionForceWall
-  name: action-name-spell-forcewall
-  description: action-description-spell-forcewall
+  name: Forcewall
+  description: Creates a magical barrier.
   noSpawn: true
   components:
   - type: InstantAction

@@ -38,7 +38,7 @@ public sealed class BinSystem : EntitySystem
 
     private void OnGetState(EntityUid uid, BinComponent component, ref ComponentGetState args)
     {
-        args.State = new BinComponentState(component.Items, component.Whitelist, component.MaxItems);
+        args.State = new BinComponentState(GetNetEntityList(component.Items), component.Whitelist, component.MaxItems);
     }
 
     private void OnHandleState(EntityUid uid, BinComponent component, ref ComponentHandleState args)
@@ -46,7 +46,7 @@ public sealed class BinSystem : EntitySystem
         if (args.Current is not BinComponentState state)
             return;
 
-        component.Items = new List<EntityUid>(state.Items);
+        component.Items = EnsureEntityList<BinComponent>(state.Items, uid);
         component.Whitelist = state.Whitelist;
         component.MaxItems = state.MaxItems;
     }
