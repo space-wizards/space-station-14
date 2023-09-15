@@ -9,6 +9,7 @@ using Content.Shared.DragDrop;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Network;
+using MapInitEvent = Robust.Shared.GameObjects.MapInitEvent;
 
 namespace Content.Shared.Body.Systems;
 
@@ -16,96 +17,65 @@ public partial class SharedBodySystem
 {
     [Dependency] private readonly INetManager _netManager = default!;
 
+    private const string BodyPartSlotPrefix = "BodySlot_";
+
     public void InitializeBody()
     {
-        SubscribeLocalEvent<BodyComponent, ComponentInit>(OnBodyInit);
-
-        SubscribeLocalEvent<BodyComponent, ComponentGetState>(OnBodyGetState);
-        SubscribeLocalEvent<BodyComponent, ComponentHandleState>(OnBodyHandleState);
+        SubscribeLocalEvent<BodyComponent, MapInitEvent>(OnBodyMapInit);
         SubscribeLocalEvent<BodyComponent, CanDragEvent>(OnBodyCanDrag);
     }
+
+
 
     private void OnBodyCanDrag(EntityUid uid, BodyComponent component, ref CanDragEvent args)
     {
         args.Handled = true;
     }
 
-    private void OnBodyInit(EntityUid bodyId, BodyComponent body, ComponentInit args)
+    private void OnBodyMapInit(EntityUid bodyId, BodyComponent body, MapInitEvent args)
     {
-        // ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
-        if (body.Prototype == null || body.Root != null)
+        if (body.Prototype == null || body.RootPart.ContainedEntity == null)
             return;
-
         var prototype = Prototypes.Index<BodyPrototype>(body.Prototype);
-
-        if (!_netManager.IsClient || IsClientSide(bodyId))
-            InitBody(body, prototype);
-
-        Dirty(body); // Client doesn't actually spawn the body, need to sync it
+            InitBody(bodyId, body, prototype);
     }
 
-    private void OnBodyGetState(EntityUid uid, BodyComponent body, ref ComponentGetState args)
-    {
-        args.State = new BodyComponentState(body.Root, body.GibSound);
-    }
-
-    private void OnBodyHandleState(EntityUid uid, BodyComponent body, ref ComponentHandleState args)
-    {
-        if (args.Current is not BodyComponentState state)
-            return;
-
-        body.Root = state.Root; // TODO use containers. This is broken and does not work.
-        body.GibSound = state.GibSound;
-    }
-
-    public bool TryCreateBodyRootSlot(
-        EntityUid? bodyId,
-        string slotId,
-        [NotNullWhen(true)] out BodyPartSlot? slot,
-        BodyComponent? body = null)
-    {
-        slot = null;
-
-        // ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
-        if (bodyId == null ||
-            !Resolve(bodyId.Value, ref body, false) ||
-            body.Root != null)
-            return false;
-
-        slot = new BodyPartSlot
-        {
-            Id = slotId,
-            Parent = bodyId.Value,
-            NetParent = GetNetEntity(bodyId.Value),
-        };
-        body.Root = slot;
-
-        return true;
-    }
-
-    protected void InitBody(BodyComponent body, BodyPrototype prototype)
+    protected void InitBody(EntityUid bodyEntity, BodyComponent body, BodyPrototype prototype)
     {
         var root = prototype.Slots[prototype.Root];
-        Containers.EnsureContainer<Container>(body.Owner, BodyContainerId);
+        body.RootPart = Containers.EnsureContainer<ContainerSlot>(bodyEntity, BodySlotContainerId);
         if (root.Part == null)
             return;
-        var bodyId = Spawn(root.Part, body.Owner.ToCoordinates());
-        var partComponent = Comp<BodyPartComponent>(bodyId);
-        var slot = new BodyPartSlot
-        {
-            Id = root.Part,
-            Type = partComponent.PartType,
-            Parent = body.Owner,
-            NetParent = GetNetEntity(body.Owner),
-        };
-        body.Root = slot;
-        partComponent.Body = bodyId;
-
-        AttachPart(bodyId, slot, partComponent);
-        InitPart(partComponent, prototype, prototype.Root);
+        var rootPartEntity =  Spawn(root.Part, bodyEntity.ToCoordinates());
+        var partComponent = Comp<BodyPartComponent>(rootPartEntity);
+        partComponent.Body = bodyEntity;
+        InitPartsLegacy(rootPartEntity, partComponent, prototype, prototype.Root);
     }
 
-    protected void InitPart(BodyPartComponent parent, BodyPrototype prototype, string slotId, HashSet<string>? initialized = null)
+    protected void InitPart(EntityUid bodyPartId, BodyPartComponent bodyPart, EntityUid? parentBodyPartId,
+        BodyPartComponent? parentBodypart, EntityUid? owningBodyId, params (string, BodyPartType, EntityUid?)[] slots)
+    {
+        bodyPart.Parent = parentBodyPartId;
+        bodyPart.Body = owningBodyId;
+        foreach (var (slotId, slotPartType, slotBodyPartEntity) in slots)
+        {
+            var slotContainer = _container.EnsureContainer<ContainerSlot>(bodyPartId, "BodySlot_" + slotId);
+            bodyPart.Children.Add(slotId, new BodyPartSlot(slotPartType, slotContainer));
+            if (slotBodyPartEntity == null)
+                continue;
+            slotContainer.Insert(slotBodyPartEntity.Value, EntityManager);
+        }
+    }
+
+
+    protected void InitializeParts(EntityUid owningBodyId, EntityUid rootBodyPartId, BodyPartComponent rootBodyPart, string rootSlotId,
+        BodyPrototype prototype)
+    {
+        //TODO make root connections
+    }
+
+    protected void InitPartsLegacy(EntityUid rootBodyId, EntityUid parentPartId, BodyPartComponent parentPart, BodyPrototype prototype,
+        string slotId, HashSet<string>? initialized = null)
     {
         initialized ??= new HashSet<string>();
 
@@ -118,11 +88,8 @@ public partial class SharedBodySystem
         connections = new HashSet<string>(connections);
         connections.ExceptWith(initialized);
 
-        var coordinates = parent.Owner.ToCoordinates();
+        var coordinates = rootBodyId.ToCoordinates();
         var subConnections = new List<(BodyPartComponent child, string slotId)>();
-
-        Containers.EnsureContainer<Container>(parent.Owner, BodyContainerId);
-
         foreach (var connection in connections)
         {
             var childSlot = prototype.Slots[connection];
@@ -131,13 +98,13 @@ public partial class SharedBodySystem
 
             var childPart = Spawn(childSlot.Part, coordinates);
             var childPartComponent = Comp<BodyPartComponent>(childPart);
-            var slot = CreatePartSlot(connection, parent.Owner, childPartComponent.PartType, parent);
+            var slot = CreatePartSlot(parentPartId, connection, childPartComponent.PartType, parentPart);
             if (slot == null)
             {
                 Logger.Error($"Could not create slot for connection {connection} in body {prototype.ID}");
                 continue;
             }
-
+            AttachPart(parentPartId, slot, )
             AttachPart(childPart, slot, childPartComponent);
             subConnections.Add((childPartComponent, connection));
         }
@@ -159,19 +126,21 @@ public partial class SharedBodySystem
 
         foreach (var connection in subConnections)
         {
-            InitPart(connection.child, prototype, connection.slotId, initialized);
+            InitPartsLegacy(connection.child, prototype, connection.slotId, initialized);
         }
     }
-    public IEnumerable<(EntityUid Id, BodyPartComponent Component)> GetBodyChildren(EntityUid? id, BodyComponent? body = null)
+    public IEnumerable<(EntityUid Id, BodyPartComponent Component)> GetBodyChildren(EntityUid? id, BodyComponent? body = null,
+        BodyPartComponent? rootPart = null)
     {
         if (id == null ||
-            !Resolve(id.Value, ref body, false) ||
-            !TryComp(body.Root?.Child, out BodyPartComponent? part))
+            !Resolve(id.Value, ref body, false) || body.RootPart.ContainedEntity == null ||
+            !Resolve(body.RootPart.ContainedEntity.Value, ref rootPart)
+            )
             yield break;
 
-        yield return (body.Root.Child.Value, part);
+        yield return (body.RootPart.ContainedEntity.Value, rootPart);
 
-        foreach (var child in GetPartChildren(body.Root.Child))
+        foreach (var child in GetPartChildren(body.RootPart.ContainedEntity, rootPart))
         {
             yield return child;
         }
@@ -193,10 +162,10 @@ public partial class SharedBodySystem
 
     public IEnumerable<BodyPartSlot> GetBodyAllSlots(EntityUid? bodyId, BodyComponent? body = null)
     {
-        if (bodyId == null || !Resolve(bodyId.Value, ref body, false))
+        if (bodyId == null || !Resolve(bodyId.Value, ref body, false) || body.RootPart.ContainedEntity == null)
             yield break;
 
-        foreach (var slot in GetPartAllSlots(body.Root?.Child))
+        foreach (var slot in GetPartAllSlots(body.RootPart.ContainedEntity))
         {
             yield return slot;
         }
@@ -214,16 +183,16 @@ public partial class SharedBodySystem
         if (!Resolve(partId, ref part, false))
             yield break;
 
-        foreach (var slot in part.Children.Values)
+        foreach (var (slotId,slot) in part.Children)
         {
-            if (!TryComp<BodyPartComponent>(slot.Child, out var childPart))
+            if (!TryComp<BodyPartComponent>(slot.Entity, out var childPart))
                 continue;
 
             yield return slot;
 
-            foreach (var child in GetAllBodyPartSlots(slot.Child.Value, childPart))
+            foreach (var childData in GetAllBodyPartSlots(slot.Entity.Value, childPart))
             {
-                yield return child;
+                yield return childData;
             }
         }
     }
@@ -253,5 +222,10 @@ public partial class SharedBodySystem
         }
 
         return gibs;
+    }
+
+    public static string GetSlotContainerName(string slotName)
+    {
+        return BodyPartSlotPrefix + slotName;
     }
 }

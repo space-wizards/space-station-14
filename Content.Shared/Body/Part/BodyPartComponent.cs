@@ -1,32 +1,23 @@
 ﻿using Content.Shared.Body.Components;
 using Content.Shared.Body.Organ;
 using Content.Shared.Body.Systems;
+using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Body.Part;
 
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 [Access(typeof(SharedBodySystem))]
 public sealed partial class BodyPartComponent : Component
 {
-    [DataField("body")]
+    [DataField("body"), AutoNetworkedField]
     public EntityUid? Body;
 
-    // This inter-entity relationship makes be deeply uncomfortable because its probably going to re-encounter all of the
-    // networking issues that containers and joints have.
-    // TODO just use containers. Please.
-    // Do not use set or get data from this in client-side code.
-    public BodyPartSlot? ParentSlot;
+    [AutoNetworkedField] public EntityUid? Parent;
 
-    // Do not use set or get data from this in client-side code.
-    [DataField("children")]
-    public Dictionary<string, BodyPartSlot> Children = new();
+    [AutoNetworkedField] public string? SlotId;
 
-    // See all the above ccomments.
-    [DataField("organs")]
-    public Dictionary<string, OrganSlot> Organs = new();
-
-    [DataField("partType")]
+    [DataField("partType"), AutoNetworkedField]
     public BodyPartType PartType = BodyPartType.Other;
 
     // TODO BODY Replace with a simulation of organs
@@ -34,9 +25,24 @@ public sealed partial class BodyPartComponent : Component
     ///     Whether or not the owning <see cref="Body"/> will die if all
     ///     <see cref="BodyComponent"/>s of this type are removed from it.
     /// </summary>
-    [DataField("vital")]
+    [DataField("vital"), AutoNetworkedField]
     public bool IsVital;
 
-    [DataField("symmetry")]
+    [DataField("symmetry"), AutoNetworkedField]
     public BodyPartSymmetry Symmetry = BodyPartSymmetry.None;
+
+    [ViewVariables] public Dictionary<string, BodyPartSlot> Children = new();
+
+    [ViewVariables] public Dictionary<string, OrganSlot> Organs = new();
+
 }
+
+public record struct BodyPartSlot(string Id, BodyPartType Type, ContainerSlot Container)
+{
+    public EntityUid? Entity => Container.ContainedEntity;
+};
+
+public record struct OrganSlot(string Id, ContainerSlot Container)
+{
+    public EntityUid? Organ => Container.ContainedEntity;
+};

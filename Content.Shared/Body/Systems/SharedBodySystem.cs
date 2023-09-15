@@ -8,7 +8,7 @@ namespace Content.Shared.Body.Systems;
 
 public abstract partial class SharedBodySystem : EntitySystem
 {
-    protected const string BodyContainerId = "BodyContainer";
+    protected const string BodySlotContainerId = "BodyPartRootSlot";
 
     [Dependency] protected readonly IPrototypeManager Prototypes = default!;
 
@@ -16,7 +16,7 @@ public abstract partial class SharedBodySystem : EntitySystem
     [Dependency] protected readonly DamageableSystem Damageable = default!;
     [Dependency] protected readonly StandingStateSystem Standing = default!;
     [Dependency] protected readonly MovementSpeedModifierSystem Movement = default!;
-
+    [Dependency] protected readonly SharedTransformSystem SharedTransform = default!;
     public override void Initialize()
     {
         base.Initialize();

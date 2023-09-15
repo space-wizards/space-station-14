@@ -54,12 +54,12 @@ public sealed class SaveLoadReparentTest
                 Assert.Multiple(() =>
                 {
                     Assert.That(component.Body, Is.EqualTo(human));
-                    Assert.That(component.ParentSlot, Is.Not.Null);
-                    Assert.That(component.ParentSlot.Parent, Is.Not.EqualTo(default(EntityUid)));
-                    Assert.That(component.ParentSlot.Child, Is.EqualTo(id));
+                    Assert.That(component.ParentSlotOld, Is.Not.Null);
+                    Assert.That(component.ParentSlotOld.Parent, Is.Not.EqualTo(default(EntityUid)));
+                    Assert.That(component.ParentSlotOld.Child, Is.EqualTo(id));
                 });
 
-                foreach (var (slotId, slot) in component.Children)
+                foreach (var (slotId, slot) in component.ChildrenOld)
                 {
                     Assert.Multiple(() =>
                     {
@@ -129,12 +129,12 @@ public sealed class SaveLoadReparentTest
                     Assert.Multiple(() =>
                     {
                         Assert.That(component.Body, Is.EqualTo(human));
-                        Assert.That(component.ParentSlot, Is.Not.Null);
-                        Assert.That(component.ParentSlot.Parent, Is.Not.EqualTo(default(EntityUid)));
-                        Assert.That(component.ParentSlot.Child, Is.EqualTo(id));
+                        Assert.That(component.ParentSlotOld, Is.Not.Null);
+                        Assert.That(component.ParentSlotOld.Parent, Is.Not.EqualTo(default(EntityUid)));
+                        Assert.That(component.ParentSlotOld.Child, Is.EqualTo(id));
                     });
 
-                    foreach (var (slotId, slot) in component.Children)
+                    foreach (var (slotId, slot) in component.ChildrenOld)
                     {
                         Assert.Multiple(() =>
                         {

@@ -41,7 +41,7 @@ public partial class SharedBodySystem
         return organId != null &&
                slot.Child == null &&
                Resolve(organId.Value, ref organ, false) &&
-               Containers.TryGetContainer(slot.Parent, BodyContainerId, out var container) &&
+               Containers.TryGetContainer(slot.Parent, BodySlotContainerId, out var container) &&
                _container.CanInsert(organId.Value, container);
     }
 
@@ -69,7 +69,7 @@ public partial class SharedBodySystem
         DropOrgan(slot.Child);
         DropOrgan(organId, organ);
 
-        var container = Containers.EnsureContainer<Container>(slot.Parent, BodyContainerId);
+        var container = Containers.EnsureContainer<Container>(slot.Parent, BodySlotContainerId);
         if (!container.Insert(organId.Value))
             return false;
 
@@ -143,7 +143,7 @@ public partial class SharedBodySystem
         organ.ParentSlot = null;
         organ.Body = null;
 
-        if (Containers.TryGetContainer(slot.Parent, BodyContainerId, out var container))
+        if (Containers.TryGetContainer(slot.Parent, BodySlotContainerId, out var container))
             container.Remove(organId.Value);
 
         if (TryComp(organId, out TransformComponent? transform))

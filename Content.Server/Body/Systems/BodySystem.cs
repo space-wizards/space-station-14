@@ -51,7 +51,7 @@ public sealed class BodySystem : SharedBodySystem
         // all of the networking & startup ordering issues that containers and joints have.
         // TODO just use containers. Please.
 
-        foreach (var slot in component.Children.Values)
+        foreach (var slot in component.ChildrenOld.Values)
         {
             DebugTools.Assert(slot.Parent == uid);
             if (slot.Child == null)
@@ -59,7 +59,7 @@ public sealed class BodySystem : SharedBodySystem
 
             if (TryComp(slot.Child, out BodyPartComponent? child))
             {
-                child.ParentSlot = slot;
+                child.ParentSlotOld = slot;
                 Dirty(slot.Child.Value, child);
                 continue;
             }
@@ -102,7 +102,7 @@ public sealed class BodySystem : SharedBodySystem
             return;
         }
 
-        child.ParentSlot = slot;
+        child.ParentSlotOld = slot;
         Dirty(slot.Child.Value, child);
     }
 
