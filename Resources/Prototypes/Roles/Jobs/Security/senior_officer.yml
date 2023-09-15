@@ -30,7 +30,6 @@
 - type: startingGear
   id: SeniorOfficerGear
   equipment:
-    neck: SecurityWhistle
     jumpsuit: ClothingUniformJumpsuitSeniorOfficer
     back: ClothingBackpackSecurityFilled
     shoes: ClothingShoesBootsCombatFilled
