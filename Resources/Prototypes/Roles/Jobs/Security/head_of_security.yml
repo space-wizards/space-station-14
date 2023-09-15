@@ -35,7 +35,6 @@
 - type: startingGear
   id: HoSGear
   equipment:
-    neck: SecurityWhistle #TODO make unique sprite
     jumpsuit: ClothingUniformJumpsuitHoS
     back: ClothingBackpackHOSFilled
     shoes: ClothingShoesBootsCombatFilled
