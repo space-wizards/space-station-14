@@ -336,7 +336,11 @@
         cart_garbage:
           whitelist:
             tags:
-              - TrashBag
+              - TrashBagGrey
+        cart_garbage_blue:
+          whitelist:
+            tags:
+              - TrashBagBlue
         cart_replacer:
           whitelist:
             components:

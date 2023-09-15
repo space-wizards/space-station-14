@@ -978,6 +978,12 @@
   id: TrashBag
 
 - type: Tag
+  id: TrashBagBlue
+
+- type: Tag
+  id: TrashBagGrey
+
+- type: Tag
   id: Unstackable # To prevent things like atmos devices (filters etc) being stacked on one tile. See NoUnstackableInTile
 
 - type: Tag
