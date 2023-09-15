@@ -15,7 +15,7 @@ namespace Content.Server.Objectives.Systems;
 public sealed class HelpProgressConditionSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly ObjectiveSystem _objective = default!;
+    [Dependency] private readonly SharedObjectivesSystem _objectives = default!;
     [Dependency] private readonly TargetObjectiveSystem _target = default!;
     [Dependency] private readonly TraitorRuleSystem _traitorRule = default!;
 
@@ -23,17 +23,17 @@ public sealed class HelpProgressConditionSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<HelpProgressConditionComponent, ObjectiveGetInfoEvent>(OnGetInfo);
+        SubscribeLocalEvent<HelpProgressConditionComponent, ObjectiveGetProgressEvent>(OnGetProgress);
 
         SubscribeLocalEvent<RandomTraitorProgressComponent, ObjectiveAssignedEvent>(OnTraitorAssigned);
     }
 
-    private void OnGetInfo(EntityUid uid, HelpProgressConditionComponent comp, ref ObjectiveGetInfoEvent args)
+    private void OnGetProgress(EntityUid uid, HelpProgressConditionComponent comp, ref ObjectiveGetProgressEvent args)
     {
         if (!_target.GetTarget(uid, out var target))
             return;
 
-        args.Info.Progress = GetProgress(target.Value);
+        args.Progress = GetProgress(target.Value);
     }
 
     private void OnTraitorAssigned(EntityUid uid, RandomTraitorProgressComponent comp, ref ObjectiveAssignedEvent args)
@@ -90,11 +90,13 @@ public sealed class HelpProgressConditionSystem : EntitySystem
         {
             foreach (var objective in mind.AllObjectives)
             {
-                max++; // things can only be up to 100% complete yeah
-
                 // this has the potential to loop forever, anything setting target has to check that there is no HelpProgressCondition.
-                var info = _objective.GetInfo(objective, target, mind);
-                total += info.Progress ?? 0f;
+                var info = _objectives.GetInfo(objective, target, mind);
+                if (info == null)
+                    continue;
+
+                max++; // things can only be up to 100% complete yeah
+                total += info.Value.Progress;
             }
         }
 

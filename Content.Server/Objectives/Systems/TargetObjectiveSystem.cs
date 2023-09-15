@@ -2,6 +2,7 @@ using Content.Server.Objectives.Components;
 using Content.Shared.Mind;
 using Content.Shared.Objectives.Components;
 using Content.Shared.Roles.Jobs;
+using Robust.Shared.GameObjects;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Content.Server.Objectives.Systems;
@@ -11,21 +12,22 @@ namespace Content.Server.Objectives.Systems;
 /// </summary>
 public sealed class TargetObjectiveSystem : EntitySystem
 {
+    [Dependency] private readonly MetaDataSystem _metaData = default!;
     [Dependency] private readonly SharedJobSystem _job = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
-        SubscribeLocalEvent<TargetObjectiveComponent, ObjectiveGetInfoEvent>(OnGetInfo);
+        SubscribeLocalEvent<TargetObjectiveComponent, ObjectiveAfterAssignEvent>(OnAfterAssign);
     }
 
-    private void OnGetInfo(EntityUid uid, TargetObjectiveComponent comp, ref ObjectiveGetInfoEvent args)
+    private void OnAfterAssign(EntityUid uid, TargetObjectiveComponent comp, ref ObjectiveAfterAssignEvent args)
     {
         if (!GetTarget(uid, out var target, comp))
             return;
 
-        args.Info.Title = GetTitle(target.Value, comp.Title);
+        _metaData.SetEntityName(uid, GetTitle(target.Value, comp.Title), args.Meta);
     }
 
     /// <summary>

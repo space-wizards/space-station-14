@@ -25,19 +25,19 @@ public sealed class KillPersonConditionSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<KillPersonConditionComponent, ObjectiveGetInfoEvent>(OnGetInfo);
+        SubscribeLocalEvent<KillPersonConditionComponent, ObjectiveGetProgressEvent>(OnGetProgress);
 
         SubscribeLocalEvent<PickRandomPersonComponent, ObjectiveAssignedEvent>(OnPersonAssigned);
 
         SubscribeLocalEvent<PickRandomHeadComponent, ObjectiveAssignedEvent>(OnHeadAssigned);
     }
 
-    private void OnGetInfo(EntityUid uid, KillPersonConditionComponent comp, ref ObjectiveGetInfoEvent args)
+    private void OnGetProgress(EntityUid uid, KillPersonConditionComponent comp, ref ObjectiveGetProgressEvent args)
     {
         if (!_target.GetTarget(uid, out var target))
             return;
 
-        args.Info.Progress = GetProgress(target.Value, comp.RequireDead);
+        args.Progress = GetProgress(target.Value, comp.RequireDead);
     }
 
     private void OnPersonAssigned(EntityUid uid, PickRandomPersonComponent comp, ref ObjectiveAssignedEvent args)

@@ -15,11 +15,11 @@ public sealed class SurviveConditionSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<SurviveConditionComponent, ObjectiveGetInfoEvent>(OnGetInfo);
+        SubscribeLocalEvent<SurviveConditionComponent, ObjectiveGetProgressEvent>(OnGetProgress);
     }
 
-    private void OnGetInfo(EntityUid uid, SurviveConditionComponent comp, ref ObjectiveGetInfoEvent args)
+    private void OnGetProgress(EntityUid uid, SurviveConditionComponent comp, ref ObjectiveGetProgressEvent args)
     {
-        args.Info.Progress = _mind.IsCharacterDeadIc(args.Mind) ? 0f : 1f;
+        args.Progress = _mind.IsCharacterDeadIc(args.Mind) ? 0f : 1f;
     }
 }

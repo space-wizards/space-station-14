@@ -2,6 +2,7 @@ using Content.Server.Roles;
 using Content.Server.Objectives.Components;
 using Content.Server.Warps;
 using Content.Shared.Objectives.Components;
+using Robust.Shared.GameObjects;
 
 namespace Content.Server.Objectives.Systems;
 
@@ -11,24 +12,26 @@ namespace Content.Server.Objectives.Systems;
 /// </summary>
 public sealed class NinjaConditionsSystem : EntitySystem
 {
+    [Dependency] private readonly MetaDataSystem _metaData = default!;
     [Dependency] private readonly NumberObjectiveSystem _number = default!;
 
     public override void Initialize()
     {
-        SubscribeLocalEvent<DoorjackConditionComponent, ObjectiveGetInfoEvent>(OnDoorjackGetInfo);
+        SubscribeLocalEvent<DoorjackConditionComponent, ObjectiveGetProgressEvent>(OnDoorjackGetProgress);
 
-        SubscribeLocalEvent<SpiderChargeConditionComponent, ObjectiveGetInfoEvent>(OnSpiderChargeGetInfo);
+        SubscribeLocalEvent<SpiderChargeConditionComponent, ObjectiveAfterAssignEvent>(OnSpiderChargeAfterAssign);
+        SubscribeLocalEvent<SpiderChargeConditionComponent, ObjectiveGetProgressEvent>(OnSpiderChargeGetProgress);
 
-        SubscribeLocalEvent<StealResearchConditionComponent, ObjectiveGetInfoEvent>(OnStealResearchGetInfo);
+        SubscribeLocalEvent<StealResearchConditionComponent, ObjectiveGetProgressEvent>(OnStealResearchGetProgress);
 
-        SubscribeLocalEvent<TerrorConditionComponent, ObjectiveGetInfoEvent>(OnTerrorGetInfo);
+        SubscribeLocalEvent<TerrorConditionComponent, ObjectiveGetProgressEvent>(OnTerrorGetProgress);
     }
 
     // doorjack
 
-    private void OnDoorjackGetInfo(EntityUid uid, DoorjackConditionComponent comp, ref ObjectiveGetInfoEvent args)
+    private void OnDoorjackGetProgress(EntityUid uid, DoorjackConditionComponent comp, ref ObjectiveGetProgressEvent args)
     {
-        args.Info.Progress = DoorjackProgress(args.MindId, _number.GetTarget(uid));
+        args.Progress = DoorjackProgress(args.MindId, _number.GetTarget(uid));
     }
 
     private float DoorjackProgress(EntityUid mindId, int target)
@@ -48,10 +51,14 @@ public sealed class NinjaConditionsSystem : EntitySystem
 
     // spider charge
 
-    private void OnSpiderChargeGetInfo(EntityUid uid, SpiderChargeConditionComponent comp, ref ObjectiveGetInfoEvent args)
+    private void OnSpiderChargeAfterAssign(EntityUid uid, SpiderChargeConditionComponent comp, ref ObjectiveAfterAssignEvent args)
     {
-        args.Info.Title = SpiderChargeTitle(args.MindId);
-        args.Info.Progress = TryComp<NinjaRoleComponent>(args.MindId, out var role) && role.SpiderChargeDetonated ? 1f : 0f;
+        _metaData.SetEntityName(uid, SpiderChargeTitle(args.MindId), args.Meta);
+    }
+
+    private void OnSpiderChargeGetProgress(EntityUid uid, SpiderChargeConditionComponent comp, ref ObjectiveGetProgressEvent args)
+    {
+        args.Progress = TryComp<NinjaRoleComponent>(args.MindId, out var role) && role.SpiderChargeDetonated ? 1f : 0f;
     }
 
     private string SpiderChargeTitle(EntityUid mindId)
@@ -70,9 +77,9 @@ public sealed class NinjaConditionsSystem : EntitySystem
 
     // steal research
 
-    private void OnStealResearchGetInfo(EntityUid uid, StealResearchConditionComponent comp, ref ObjectiveGetInfoEvent args)
+    private void OnStealResearchGetProgress(EntityUid uid, StealResearchConditionComponent comp, ref ObjectiveGetProgressEvent args)
     {
-        args.Info.Progress = StealResearchProgress(args.MindId, _number.GetTarget(uid));
+        args.Progress = StealResearchProgress(args.MindId, _number.GetTarget(uid));
     }
 
     private float StealResearchProgress(EntityUid mindId, int target)
@@ -92,8 +99,8 @@ public sealed class NinjaConditionsSystem : EntitySystem
 
     // terror
 
-    private void OnTerrorGetInfo(EntityUid uid, TerrorConditionComponent comp, ref ObjectiveGetInfoEvent args)
+    private void OnTerrorGetProgress(EntityUid uid, TerrorConditionComponent comp, ref ObjectiveGetProgressEvent args)
     {
-        args.Info.Progress = TryComp<NinjaRoleComponent>(args.MindId, out var role) && role.CalledInThreat ? 1f : 0f;
+        args.Progress = TryComp<NinjaRoleComponent>(args.MindId, out var role) && role.CalledInThreat ? 1f : 0f;
     }
 }

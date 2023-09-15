@@ -1,6 +1,7 @@
 using Content.Server.Objectives.Components;
 using Content.Shared.Mind;
 using Content.Shared.Objectives.Components;
+using Content.Shared.Objectives.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
@@ -10,6 +11,8 @@ namespace Content.Server.Objectives.Systems;
 public sealed class StealConditionSystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _proto = default!;
+    [Dependency] private readonly MetaDataSystem _metaData = default!;
+    [Dependency] private readonly SharedObjectivesSystem _objectives = default!;
 
     private EntityQuery<ContainerManagerComponent> containerQuery;
     private EntityQuery<MetaDataComponent> metaQuery;
@@ -22,7 +25,8 @@ public sealed class StealConditionSystem : EntitySystem
         metaQuery = GetEntityQuery<MetaDataComponent>();
 
         SubscribeLocalEvent<StealConditionComponent, ObjectiveAssignedEvent>(OnAssigned);
-        SubscribeLocalEvent<StealConditionComponent, ObjectiveGetInfoEvent>(OnGetInfo);
+        SubscribeLocalEvent<StealConditionComponent, ObjectiveAfterAssignEvent>(OnAfterAssign);
+        SubscribeLocalEvent<StealConditionComponent, ObjectiveGetProgressEvent>(OnGetProgress);
     }
 
     private void OnAssigned(EntityUid uid, StealConditionComponent comp, ref ObjectiveAssignedEvent args)
@@ -31,17 +35,22 @@ public sealed class StealConditionSystem : EntitySystem
         args.Cancelled |= !_proto.HasIndex<EntityPrototype>(comp.Prototype);
     }
 
-    private void OnGetInfo(EntityUid uid, StealConditionComponent comp, ref ObjectiveGetInfoEvent args)
+    private void OnAfterAssign(EntityUid uid, StealConditionComponent comp, ref ObjectiveAfterAssignEvent args)
     {
         var proto = _proto.Index<EntityPrototype>(comp.Prototype);
-        // nothing uses locale for it but might as well support it here incase
-        var name = Loc.GetString(proto.Name);
-        args.Info.Title = comp.OwnerText == null
-            ? Loc.GetString("objective-condition-steal-title-no-owner", ("itemName", name))
-            : Loc.GetString("objective-condition-steal-title", ("owner", Loc.GetString(comp.OwnerText)), ("itemName", name));
-        args.Info.Description = Loc.GetString("objective-condition-steal-description", ("itemName", name));
-        args.Info.Icon = new SpriteSpecifier.EntityPrototype(comp.Prototype);
-        args.Info.Progress = GetProgress(args.Mind, comp.Prototype);
+        var title = comp.OwnerText == null
+            ? Loc.GetString("objective-condition-steal-title-no-owner", ("itemName", proto.Name))
+            : Loc.GetString("objective-condition-steal-title", ("owner", Loc.GetString(comp.OwnerText)), ("itemName", proto.Name));
+        var description = Loc.GetString("objective-condition-steal-description", ("itemName", proto.Name));
+
+        _metaData.SetEntityName(uid, title, args.Meta);
+        _metaData.SetEntityDescription(uid, description, args.Meta);
+        _objectives.SetIcon(uid, new SpriteSpecifier.EntityPrototype(comp.Prototype), args.Objective);
+    }
+
+    private void OnGetProgress(EntityUid uid, StealConditionComponent comp, ref ObjectiveGetProgressEvent args)
+    {
+        args.Progress = GetProgress(args.Mind, comp.Prototype);
     }
 
     private float GetProgress(MindComponent mind, string prototype)
