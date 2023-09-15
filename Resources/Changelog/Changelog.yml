@@ -1,9 +1,4 @@
 Entries:
-- author: Hebiman
-  changes:
-  - {message: Removed Alt Click interaction with implanter syringe, type: Fix}
-  id: 4332
-  time: '2023-07-26T18:41:29.0000000+00:00'
 - author: Misha_Unity
   changes:
   - {message: Added a news tab in PDA, type: Add}
@@ -2979,3 +2974,8 @@ Entries:
   - {message: HUD theme selection is now works!, type: Fix}
   id: 4831
   time: '2023-09-15T02:05:56.0000000+00:00'
+- author: Morb0
+  changes:
+  - {message: NPS no longer have an SSD indicator, type: Fix}
+  id: 4832
+  time: '2023-09-15T02:15:26.0000000+00:00'
