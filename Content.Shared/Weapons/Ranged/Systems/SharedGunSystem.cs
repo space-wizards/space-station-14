@@ -226,9 +226,14 @@ public abstract partial class SharedGunSystem : EntitySystem
         // check if anything wants to prevent shooting
         var prevention = new ShotAttemptedEvent
         {
-            User = user
+            User = user,
+            Used = gunUid
         };
         RaiseLocalEvent(gunUid, ref prevention);
+        if (prevention.Cancelled)
+            return;
+
+        RaiseLocalEvent(user, ref prevention);
         if (prevention.Cancelled)
             return;
 
