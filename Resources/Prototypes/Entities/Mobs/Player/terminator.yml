@@ -5,9 +5,8 @@
   name: exterminator
   components:
   - type: Terminator
-    objectives:
-    - TerminateObjective
-    - ShutDownObjective
+  - type: GenericAntag
+    rule: Exterminator
   # reduced barotrauma damage
   - type: Barotrauma
     damage:

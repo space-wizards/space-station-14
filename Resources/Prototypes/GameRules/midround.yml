@@ -19,8 +19,12 @@
       rule: RevenantSpawn
 
 - type: entity
-  id: Terminator
-  parent: BaseGameRule
   noSpawn: true
+  parent: BaseGameRule
+  id: Exterminator
   components:
-  - type: TerminatorRule
+  - type: GenericAntagRule
+    agentName: terminator-round-end-agent-name
+    objectives:
+    - TerminateObjective
+    - ShutDownObjective
