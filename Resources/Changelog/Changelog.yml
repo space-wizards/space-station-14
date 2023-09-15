@@ -1,10 +1,4 @@
 Entries:
-- author: chromiumboy
-  changes:
-  - {message: reinforced uranium windows now prevent a large amount of radiation from
-      passing through them, type: Add}
-  id: 4334
-  time: '2023-07-26T21:28:45.0000000+00:00'
 - author: Lank
   changes:
   - {message: Senior roles now require less playtime in specific roles., type: Tweak}
@@ -2977,3 +2971,8 @@ Entries:
   - {message: It is now easier to tell how damaged cyborgs are., type: Tweak}
   id: 4833
   time: '2023-09-15T03:14:47.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Swapping between guns now has a small delay before you can fire., type: Tweak}
+  id: 4834
+  time: '2023-09-15T04:15:43.0000000+00:00'
