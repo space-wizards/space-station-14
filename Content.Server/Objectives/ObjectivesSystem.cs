@@ -80,9 +80,11 @@ public sealed class ObjectivesSystem : SharedObjectivesSystem
             // next add all the players with its own prepended text
             foreach (var (prepend, minds) in summary)
             {
-                // add space between the start text and player list
                 if (prepend != string.Empty)
-                    result += prepend + "\n";
+                    result += prepend;
+
+                // add space between the start text and player list
+                result += "\n";
 
                 AddSummary(ref result, agent, minds);
             }
