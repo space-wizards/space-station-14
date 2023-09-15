@@ -43,10 +43,11 @@ public sealed class StoreBoundUserInterface : BoundUserInterface
         {
             SendMessage(new StoreRequestWithdrawMessage(type, amount));
         };
-        Timer.SpawnRepeating(1000, () =>
+
+        _menu.OnRefreshButtonPressed += (_) =>
         {
             SendMessage(new StoreRequestUpdateInterfaceMessage());
-        }, CancellationToken.None);
+        };
     }
     protected override void UpdateState(BoundUserInterfaceState state)
     {
@@ -79,7 +80,6 @@ public sealed class StoreBoundUserInterface : BoundUserInterface
         base.Dispose(disposing);
         if (!disposing)
             return;
-
         _menu?.Close();
         _menu?.Dispose();
     }

@@ -13,7 +13,6 @@ using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
-using Timer = Robust.Shared.Timing.Timer;
 
 namespace Content.Client.Store.Ui;
 
@@ -25,13 +24,13 @@ public sealed partial class StoreMenu : DefaultWindow
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly IEntitySystemManager _entitySystem = default!;
     private readonly ClientGameTicker _gameTicker;
-    private readonly CancellationTokenSource _timerCancelTokenSource = new();
 
     private StoreWithdrawWindow? _withdrawWindow;
 
     public event Action<BaseButton.ButtonEventArgs, ListingData>? OnListingButtonPressed;
     public event Action<BaseButton.ButtonEventArgs, string>? OnCategoryButtonPressed;
     public event Action<BaseButton.ButtonEventArgs, string, int>? OnWithdrawAttempt;
+    public event Action<BaseButton.ButtonEventArgs>? OnRefreshButtonPressed;
 
     public Dictionary<string, FixedPoint2> Balance = new();
     public string CurrentCategory = string.Empty;
@@ -44,6 +43,7 @@ public sealed partial class StoreMenu : DefaultWindow
         _gameTicker = _entitySystem.GetEntitySystem<ClientGameTicker>();
 
         WithdrawButton.OnButtonDown += OnWithdrawButtonDown;
+        RefreshButton.OnButtonDown += OnRefreshButtonDown;
         if (Window != null)
             Window.Title = name;
     }
@@ -91,6 +91,12 @@ public sealed partial class StoreMenu : DefaultWindow
     public void SetFooterVisibility(bool visible)
     {
         TraitorFooter.Visible = visible;
+    }
+
+
+    private void OnRefreshButtonDown(BaseButton.ButtonEventArgs args)
+    {
+        OnRefreshButtonPressed?.Invoke(args);
     }
 
     private void OnWithdrawButtonDown(BaseButton.ButtonEventArgs args)
@@ -146,7 +152,6 @@ public sealed partial class StoreMenu : DefaultWindow
                 texture = spriteSys.Frame0(action.Icon);
             }
         }
-
         var listingInStock = ListingInStock(listing);
         if (listingInStock != GetListingPriceString(listing))
         {
