@@ -27,7 +27,7 @@ public sealed class MutationSystem : EntitySystem
     ///
     /// You MUST clone() seed before mutating it!
     /// </summary>
-    public void MutateSeed(SeedData seed, float severity)
+    public void MutateSeed(ref SeedData seed, float severity)
     {
         if (!seed.Unique)
         {
@@ -68,7 +68,7 @@ public sealed class MutationSystem : EntitySystem
         MutateBool(ref seed.Sentient       , true  , 10 , totalbits , severity);
         MutateBool(ref seed.Ligneous       , true  , 10 , totalbits , severity);
         MutateBool(ref seed.Bioluminescent , true  , 10 , totalbits , severity);
-        MutateBool(ref seed.TurnIntoKudzu  , true  , 10 , totalbits , severity);
+        MutateBool(ref seed.TurnIntoKudzu  , true  , 5  , totalbits , severity);
         MutateBool(ref seed.CanScream      , true  , 10 , totalbits , severity);
         seed.BioluminescentColor = RandomColor(seed.BioluminescentColor, 10, totalbits, severity);
         // ConstantUpgade (10)
@@ -80,6 +80,9 @@ public sealed class MutationSystem : EntitySystem
 
         // Chems (20)
         MutateChemicals(ref seed.Chemicals, 5, 20, totalbits, severity);
+
+        // Species (5)
+        MutateSpecies(ref seed, 5, totalbits, severity);
     }
 
     public SeedData Cross(SeedData a, SeedData b)
@@ -272,6 +275,31 @@ public sealed class MutationSystem : EntitySystem
                 chemicals.Add(chemical_id, seed_chem_quantity);
             }
         }
+    }
+
+    private void MutateSpecies(ref SeedData seed, int bits, int totalbits, float mult)
+    {
+        float p = mult * bits / totalbits;
+        p = Math.Clamp(p, 0, 1);
+        if (!Random(p))
+            return;
+
+        if (seed.MutationPrototypes.Count == 0)
+            return;
+
+        var targetProto = _robustRandom.Pick(seed.MutationPrototypes);
+        _prototypeManager.TryIndex(targetProto, out SeedPrototype? protoSeed);
+
+        if (protoSeed == null)
+        {
+            Log.Error($"Seed prototype could not be found: {targetProto}!");
+            return;
+        }
+
+        var oldSeed = seed.Clone();
+        seed = protoSeed.Clone();
+        seed.Potency = oldSeed.Potency;
+        seed.Yield = oldSeed.Yield;
     }
 
     private Color RandomColor(Color color, int bits, int totalbits, float mult)
