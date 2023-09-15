@@ -3,7 +3,7 @@
 - type: entity
   save: false
   name: Urist McVulp
-  parent: BaseMobOrganic
+  parent: BaseMobSpeciesOrganic
   id: BaseMobVulpkanin
   abstract: true
   components:
@@ -39,13 +39,13 @@
   save: false
   name: Urist McVulp
   id: MobVulpkaninDummy
-  parent: BaseMobOrganicDummy
+  parent: BaseSpeciesDummy
   noSpawn: true
   description: A dummy vulpkanin meant to be used in character setup.
   components:
     - type: HumanoidAppearance
       species: Vulpkanin
-  
+
 
 
 #я запутался, боже
