@@ -4,19 +4,17 @@ using Content.Shared.Administration.Logs;
 using Content.Shared.Audio;
 using Content.Shared.Database;
 using Content.Shared.Hands;
-using Content.Shared.Hands.Components;
-using Content.Shared.Weapons.Ranged.Events;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
-using Content.Shared.Item;
-using Robust.Shared.Physics.Components;
 using Content.Shared.Popups;
 using Content.Shared.Projectiles;
 using Content.Shared.Weapons.Ranged.Components;
+using Content.Shared.Weapons.Ranged.Events;
 using Robust.Shared.Network;
+using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.Weapons.Reflect;
 
@@ -26,9 +24,9 @@ namespace Content.Shared.Weapons.Reflect;
 public abstract class SharedReflectSystem : EntitySystem
 {
     [Dependency] private readonly INetManager _netManager = default!;
-    [Dependency] private readonly IPrototypeManager _protoManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
@@ -185,6 +183,9 @@ public abstract class SharedReflectSystem : EntitySystem
 
     private void OnReflectEquipped(EntityUid uid, ReflectComponent component, GotEquippedEvent args)
     {
+        if (_gameTiming.ApplyingState)
+            return;
+
         EnsureComp<ReflectUserComponent>(args.Equipee);
     }
 
@@ -195,6 +196,9 @@ public abstract class SharedReflectSystem : EntitySystem
 
     private void OnReflectHandEquipped(EntityUid uid, ReflectComponent component, GotEquippedHandEvent args)
     {
+        if (_gameTiming.ApplyingState)
+            return;
+
         EnsureComp<ReflectUserComponent>(args.User);
     }
 

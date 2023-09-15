@@ -91,6 +91,21 @@ public sealed partial class SolutionContainerSystem
         return true;
     }
 
+    public bool TryGetDumpableSolution(EntityUid uid,
+        [NotNullWhen(true)] out Solution? solution,
+        DumpableSolutionComponent? dumpable = null,
+        SolutionContainerManagerComponent? manager = null)
+    {
+        if (!Resolve(uid, ref dumpable, ref manager, false)
+            || !manager.Solutions.TryGetValue(dumpable.Solution, out solution))
+        {
+            solution = null;
+            return false;
+        }
+
+        return true;
+    }
+
     public bool TryGetDrawableSolution(EntityUid uid,
         [NotNullWhen(true)] out Solution? solution,
         DrawableSolutionComponent? drawable = null,

@@ -46,7 +46,7 @@ public sealed class AccessOverriderSystem : SharedAccessOverriderSystem
         if (!_interactionSystem.InRangeUnobstructed(args.User, (EntityUid) args.Target))
             return;
 
-        var doAfterEventArgs = new DoAfterArgs(args.User, component.DoAfterTime, new AccessOverriderDoAfterEvent(), uid, target: args.Target, used: uid)
+        var doAfterEventArgs = new DoAfterArgs(EntityManager, args.User, component.DoAfterTime, new AccessOverriderDoAfterEvent(), uid, target: args.Target, used: uid)
         {
             BreakOnTargetMove = true,
             BreakOnUserMove = true,

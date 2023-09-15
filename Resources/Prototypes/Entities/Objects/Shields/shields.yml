@@ -30,12 +30,6 @@
           Slash: 1
           Piercing: 1
           Heat: 1
-      blockingToggleAction:
-        name: action-name-blocking
-        description: action-description-blocking
-        icon: { sprite: Objects/Weapons/Melee/shields.rsi, state: teleriot-icon }
-        iconOn: Objects/Weapons/Melee/shields.rsi/teleriot-on.png
-        event: !type:ToggleActionEvent
     - type: Damageable
       damageContainer: Shield
     - type: Destructible
@@ -406,3 +400,71 @@
       sprite: Objects/Weapons/Melee/e_shield.rsi
       size: 5
       heldPrefix: eshield
+
+- type: entity
+  name: telescopic shield
+  parent: BaseShield
+  id: TelescopicShield
+  description: An advanced riot shield made of lightweight materials that collapses for easy storage.
+  components:
+    - type: ItemToggle
+      activatedDisarmMalus: 0.6
+      activateSound:
+        path: /Audio/Weapons/telescopicon.ogg
+        params:
+          volume: -5
+      deActivateSound:
+        path: /Audio/Weapons/telescopicoff.ogg
+        params:
+          volume: -5
+      offSize: 10
+    - type: Sprite
+      sprite: Objects/Weapons/Melee/teleriot_shield.rsi
+      layers:
+        - state: teleriot-icon
+        - state: teleriot-on
+          visible: false
+          shader: unshaded
+          map: [ "shield" ]
+    - type: Item
+      size: 10
+      sprite: Objects/Weapons/Melee/teleriot_shield.rsi
+      heldPrefix: teleriot
+    - type: UseDelay
+      delay: 0.5
+    - type: ToggleableLightVisuals
+      spriteLayer: shield
+      inhandVisuals:
+        left:
+          - state: inhand-left-shield
+            shader: unshaded
+        right:
+          - state: inhand-right-shield
+            shader: unshaded
+    - type: Appearance
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 100
+          behaviors:
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+        - trigger:
+            !type:DamageTrigger
+            damage: 70
+          behaviors:
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+            - !type:PlaySoundBehavior
+              sound: /Audio/Effects/metalbreak.ogg
+            - !type:SpawnEntitiesBehavior
+              spawn:
+                SheetSteel:
+                  min: 1
+                  max: 1
+                SheetGlass:
+                  min: 2
+                  max: 2
+    - type: StaticPrice
+      price: 250

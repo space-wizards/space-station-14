@@ -44,3 +44,14 @@
     sprite: Clothing/Neck/Misc/lawyerbadge.rsi
   - type: TypingIndicatorClothing
     proto: lawyer
+
+- type: entity
+  id: ActionStethoscope
+  name: Listen with stethoscope
+  noSpawn: true
+  components:
+  - type: EntityTargetAction
+    icon: Clothing/Neck/Misc/stethoscope.rsi/icon.png
+    event: !type:StethoscopeActionEvent
+    checkCanInteract: false
+    priority: -1
