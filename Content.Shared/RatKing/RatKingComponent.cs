@@ -88,6 +88,7 @@ public sealed partial class RatKingComponent : Component
     [DataField("actionOrderLooseEntity")]
     public EntityUid? ActionOrderLooseEntity;
 
+    [DataField("orderCallouts")]
     public Dictionary<RatKingOrderType, string> OrderCallouts = new()
     {
         { RatKingOrderType.Stay, "RatKingCommandStay" },

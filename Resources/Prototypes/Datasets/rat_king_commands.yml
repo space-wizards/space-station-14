@@ -1,16 +1,15 @@
 ﻿- type: dataset
   id: RatKingCommandStay
   values:
-    - "Heel!"
-    - "Follow!"
-    - "At ease!"
+    - "Sit!"
+    - "Stay!"
+    - "Stop!"
 
 - type: dataset
   id: RatKingCommandFollow
   values:
-    - "Sit!"
-    - "Stay!"
-    - "Stop!"
+    - "Heel!"
+    - "Follow!"
 
 - type: dataset
   id: RatKingCommandCheeseEm

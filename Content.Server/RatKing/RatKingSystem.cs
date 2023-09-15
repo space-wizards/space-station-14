@@ -6,11 +6,14 @@ using Content.Server.NPC.HTN;
 using Content.Server.NPC.Systems;
 using Content.Server.Popups;
 using Content.Shared.Atmos;
+using Content.Shared.Dataset;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
+using Content.Shared.Pointing;
 using Content.Shared.RatKing;
 using Robust.Server.GameObjects;
 using Robust.Shared.Map;
+using Robust.Shared.Random;
 
 namespace Content.Server.RatKing
 {
@@ -31,6 +34,7 @@ namespace Content.Server.RatKing
 
             SubscribeLocalEvent<RatKingComponent, RatKingRaiseArmyActionEvent>(OnRaiseArmy);
             SubscribeLocalEvent<RatKingComponent, RatKingDomainActionEvent>(OnDomain);
+            SubscribeLocalEvent<RatKingComponent, AfterPointedAtEvent>(OnPointedAt);
         }
 
         /// <summary>
@@ -91,6 +95,17 @@ namespace Content.Server.RatKing
             tileMix?.AdjustMoles(Gas.Miasma, component.MolesMiasmaPerDomain);
         }
 
+        private void OnPointedAt(EntityUid uid, RatKingComponent component, ref AfterPointedAtEvent args)
+        {
+            if (component.CurrentOrder != RatKingOrderType.CheeseEm)
+                return;
+
+            foreach (var servant in component.Servants)
+            {
+                _npc.SetBlackboard(servant, NPCBlackboard.CurrentOrderedTarget, args.Pointed);
+            }
+        }
+
         public override void UpdateServantNpc(EntityUid uid, RatKingOrderType orderType)
         {
             base.UpdateServantNpc(uid, orderType);
@@ -100,36 +115,21 @@ namespace Content.Server.RatKing
 
             if (htn.Plan != null)
                 _htn.ShutdownPlan(htn);
-            /*
-            //todo YELL COMMANDS HAHA
-            switch (orderType)
-            {
-                case RatKingOrderType.Stay:
-                    htn.RootTask = new HTNCompoundTask
-                    {
-                        Task = "IdleCompound"
-                    };
-                    break;
-                case RatKingOrderType.Follow:
-                    htn.RootTask = new HTNCompoundTask
-                    {
-                        Task = "FollowCompound"
-                    };
-                    break;
-                case RatKingOrderType.CheeseEm:
 
-                    break;
-                case RatKingOrderType.Loose:
-                    htn.RootTask = new HTNCompoundTask
-                    {
-                        Task = "SimpleHostileCompound"
-                    };
-                    break;
-            }
-            */
-            _chat.TrySendInGameICMessage();
             _npc.SetBlackboard(uid, NPCBlackboard.CurrentOrders, orderType);
             _htn.Replan(htn);
+        }
+
+        public override void DoCommandCallout(EntityUid uid, RatKingComponent component)
+        {
+            base.DoCommandCallout(uid, component);
+
+            if (!component.OrderCallouts.TryGetValue(component.CurrentOrder, out var datasetId) ||
+                !PrototypeManager.TryIndex<DatasetPrototype>(datasetId, out var datasetPrototype))
+                return;
+
+            var msg = Random.Pick(datasetPrototype.Values);
+            _chat.TrySendInGameICMessage(uid, msg, InGameICChatType.Speak, true);
         }
     }
 }

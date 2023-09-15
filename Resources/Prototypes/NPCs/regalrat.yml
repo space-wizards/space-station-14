@@ -9,15 +9,19 @@
         task: IdleCompound
   - preconditions:
       - !type:HasOrdersPrecondition
-        orders:
-          enum.RatKingOrderType.Follow
+        orders: enum.RatKingOrderType.Follow
     tasks:
       - !type:HTNCompoundTask
         task: FollowCompound
   - preconditions:
       - !type:HasOrdersPrecondition
-        orders:
-          enum.RatKingOrderType.Loose
+        orders: enum.RatKingOrderType.CheeseEm
+    tasks:
+      - !type:HTNCompoundTask
+        task: RatServantTargetAttackCompound
+  - preconditions:
+      - !type:HasOrdersPrecondition
+        orders: enum.RatKingOrderType.Loose
     tasks:
       - !type:HTNCompoundTask
         task: SimpleHostileCompound

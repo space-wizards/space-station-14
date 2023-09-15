@@ -13,8 +13,8 @@ namespace Content.Shared.RatKing;
 public abstract class SharedRatKingSystem : EntitySystem
 {
     [Dependency] private readonly INetManager _net = default!;
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] protected readonly IPrototypeManager PrototypeManager = default!;
+    [Dependency] protected readonly IRobustRandom Random = default!;
     [Dependency] private readonly SharedActionsSystem _action = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
@@ -71,8 +71,11 @@ public abstract class SharedRatKingSystem : EntitySystem
         if (component.CurrentOrder == args.Type)
             return;
         args.Handled = true;
+
         component.CurrentOrder = args.Type;
         Dirty(uid, component);
+
+        DoCommandCallout(uid, component);
         UpdateActionToggles(uid, component);
         UpdateAllServants(uid, component);
     }
@@ -125,7 +128,7 @@ public abstract class SharedRatKingSystem : EntitySystem
         Dirty(uid, component);
         _audio.PlayPvs(component.Sound, uid);
 
-        var spawn = _prototypeManager.Index<WeightedRandomEntityPrototype>(component.RummageLoot).Pick(_random);
+        var spawn = PrototypeManager.Index<WeightedRandomEntityPrototype>(component.RummageLoot).Pick(Random);
         if (_net.IsServer)
             Spawn(spawn, Transform(uid).Coordinates);
     }
@@ -139,6 +142,11 @@ public abstract class SharedRatKingSystem : EntitySystem
     }
 
     public virtual void UpdateServantNpc(EntityUid uid, RatKingOrderType orderType)
+    {
+
+    }
+
+    public virtual void DoCommandCallout(EntityUid uid, RatKingComponent component)
     {
 
     }

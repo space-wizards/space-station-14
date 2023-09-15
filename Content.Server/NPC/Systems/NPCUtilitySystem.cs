@@ -191,6 +191,16 @@ public sealed class NPCUtilitySystem : EntitySystem
 
                 return 1f;
             }
+            case OrderedTargetCon:
+            {
+                if (!blackboard.TryGetValue<EntityUid>(NPCBlackboard.CurrentOrderedTarget, out var orderedTarget, EntityManager))
+                    return 0f;
+
+                if (targetUid != orderedTarget)
+                    return 0f;
+
+                return 1f;
+            }
             case TargetAccessibleCon:
             {
                 if (_container.TryGetContainingContainer(targetUid, out var container))
