@@ -37,19 +37,20 @@ public sealed class ObjectivesSystem : SharedObjectivesSystem
             if (!_gameTicker.IsGameRuleAdded(uid, gameRule))
                 continue;
 
-            var info = new ObjectivesTextGetInfoEvent(new List<EntityUid>(), string.Empty);
-            RaiseLocalEvent(uid, ref info);
-            if (info.Minds.Count == 0)
+            // TODO: rework to combine the same agents from different rules if no prepend
+            var summary = new ObjectivesTextGetInfoEvent(new List<EntityUid>(), string.Empty);
+            RaiseLocalEvent(uid, ref summary);
+            if (summary.Minds.Count == 0)
                 continue;
 
-            var agent = info.AgentName;
-            var result = Loc.GetString("objectives-round-end-result", ("count", info.Minds.Count), ("agent", agent));
+            var agent = summary.AgentName;
+            var result = Loc.GetString("objectives-round-end-result", ("count", summary.Minds.Count), ("agent", agent));
             var prepend = new ObjectivesTextPrependEvent(result);
             RaiseLocalEvent(uid, ref prepend);
             // space between the start text and player list
             result = prepend.Text + "\n";
 
-            foreach (var mindId in info.Minds)
+            foreach (var mindId in summary.Minds)
             {
                 if (!TryComp(mindId, out MindComponent? mind))
                     continue;
@@ -92,9 +93,12 @@ public sealed class ObjectivesSystem : SharedObjectivesSystem
 
                     foreach (var objective in objectiveGroup)
                     {
-                        var objectiveInfo = GetInfo(objective, mindId, mind);
-                        var objectiveTitle = objectiveInfo.Title!;
-                        var progress = objectiveInfo.Progress!;
+                        var info = GetInfo(objective, mindId, mind);
+                        if (info == null)
+                            continue;
+
+                        var objectiveTitle = info.Value.Title;
+                        var progress = info.Value.Progress;
                         if (progress > 0.99f)
                         {
                             result += "\n- " + Loc.GetString(
