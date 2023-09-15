@@ -7,8 +7,6 @@ namespace Content.Shared.Objectives.Components;
 
 /// <summary>
 /// Required component for an objective entity prototype.
-/// Mostly it provides optional static data for the objective info event.
-/// Progress cannot be provided this way, another system has to do that.
 /// </summary>
 [RegisterComponent, Access(typeof(SharedObjectivesSystem))]
 public sealed partial class ObjectiveComponent : Component
@@ -33,22 +31,8 @@ public sealed partial class ObjectiveComponent : Component
     public bool Unique = true;
 
     /// <summary>
-    /// Optional locale id to handle <see cref="ObjectiveGetInfoEvent"/>'s title.
-    /// If another component provides it do not use this.
-    /// </summary>
-    [DataField("title"), ViewVariables(VVAccess.ReadWrite)]
-    public string? Title;
-
-    /// <summary>
-    /// Optional locale id to handle <see cref="ObjectiveGetInfoEvent"/>'s description.
-    /// If another component provides it do not use this.
-    /// </summary>
-    [DataField("description"), ViewVariables(VVAccess.ReadWrite)]
-    public string? Description;
-
-    /// <summary>
-    /// Optional icon to handle <see cref="ObjectiveGetInfoEvent"/>'s icon.
-    /// If another component provides it (should only be done if it depends on per-objective data) do not use this.
+    /// Icon of this objective to display in the character menu.
+    /// Can be specified by an <see cref="ObjectiveGetInfoEvent"/> handler but is usually done in the prototype.
     /// </summary>
     [DataField("icon"), ViewVariables(VVAccess.ReadWrite)]
     public SpriteSpecifier? Icon;
@@ -71,21 +55,15 @@ public record struct RequirementCheckEvent(EntityUid MindId, MindComponent Mind,
 public record struct ObjectiveAssignedEvent(EntityUid MindId, MindComponent Mind, bool Cancelled = false);
 
 /// <summary>
-/// Event raised on an objective to get info about it.
-/// In handlers set fields of <see cref="Info"/>.
-/// To use this yourself call <see cref="SharedObjectivesSystem.GetObjectiveInfo"/> with the mind.
+/// Event raised on an objective after everything has handled <see cref="ObjectiveAssignedEvent"/>.
+/// Use this to set the objective's title description or icon.
 /// </summary>
 [ByRefEvent]
-public class ObjectiveGetInfoEvent
-{
-    public EntityUid MindId;
-    public MindComponent Mind;
-    public ObjectiveInfo Info;
+public record struct ObjectiveAfterAssignEvent(EntityUid MindId, MindComponent Mind, ObjectiveComponent Objective, MetaDataComponent Meta);
 
-    public ObjectiveGetInfoEvent(EntityUid mindId, MindComponent mind, ObjectiveInfo info)
-    {
-        MindId = mindId;
-        Mind = mind;
-        Info = info;
-    }
-}
+/// <summary>
+/// Event raised on an objective to update the Progress field.
+/// To use this yourself call <see cref="SharedObjectivesSystem.GetInfo"/> with the mind.
+/// </summary>
+[ByRefEvent]
+public record struct ObjectiveGetProgressEvent(EntityUid MindId, MindComponent Mind, float? Progress = null);

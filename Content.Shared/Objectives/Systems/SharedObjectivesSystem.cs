@@ -7,7 +7,6 @@ namespace Content.Shared.Objectives.Systems;
 
 /// <summary>
 /// Provides API for creating and interacting with objectives.
-/// Adds default info from <see cref="ObjectiveComponent"/> to <see cref="ObjectiveGetInfoEvent"/>.
 /// </summary>
 public abstract class SharedObjectivesSystem : EntitySystem
 {
@@ -20,18 +19,6 @@ public abstract class SharedObjectivesSystem : EntitySystem
         base.Initialize();
 
         _metaQuery = GetEntityQuery<MetaDataComponent>();
-
-        SubscribeLocalEvent<ObjectiveComponent, ObjectiveGetInfoEvent>(OnGetInfo);
-    }
-
-    private void OnGetInfo(EntityUid uid, ObjectiveComponent comp, ref ObjectiveGetInfoEvent args)
-    {
-        if (comp.Title != null)
-            args.Info.Title = Loc.GetString(comp.Title);
-        if (comp.Description != null)
-            args.Info.Description = Loc.GetString(comp.Description);
-        if (comp.Icon != null)
-            args.Info.Icon = comp.Icon;
     }
 
     /// <summary>
@@ -94,42 +81,48 @@ public abstract class SharedObjectivesSystem : EntitySystem
             return null;
         }
 
+        // let the title description and icon be set by systems
+        var afterEv = new ObjectiveAfterAssignEvent(mindId, mind, comp, MetaData(uid));
+        RaiseLocalEvent(uid, ref afterEv);
+
         return uid;
     }
 
     /// <summary>
     /// Get the title, description, icon and progress of an objective using <see cref="ObjectiveGetInfoEvent"/>.
-    /// Any null fields are logged and replaced with fallbacks so they will never be null.
+    /// If any of them are null it is logged and null is returned.
     /// </summary>
     /// <param name="uid"/>ID of the condition entity</param>
     /// <param name="mindId"/>ID of the player's mind entity</param>
     /// <param name="mind"/>Mind component of the player's mind</param>
-    public ObjectiveInfo GetInfo(EntityUid uid, EntityUid mindId, MindComponent? mind = null)
+    public ObjectiveInfo? GetInfo(EntityUid uid, EntityUid mindId, ObjectiveComponent? comp = null, MetaDataComponent? meta = null, MindComponent? mind = null)
     {
-        if (!Resolve(mindId, ref mind))
-            return new ObjectiveInfo(null, null, null, null);
+        if (!Resolve(uid, ref comp, ref meta) || !Resolve(mindId, ref mind))
+            return null;
 
-        var ev = new ObjectiveGetInfoEvent(mindId, mind, new ObjectiveInfo(null, null, null, null));
+        var ev = new ObjectiveGetProgressEvent(mindId, mind);
         RaiseLocalEvent(uid, ref ev);
 
-        var info = ev.Info;
-        if (info.Title == null || info.Description == null || info.Icon == null || info.Progress == null)
+        var title = meta.EntityName;
+        var description = meta.EntityDescription;
+        if (comp.Icon == null || ev.Progress == null)
         {
-            Log.Error($"An objective {uid} of {_mind.MindOwnerLoggingString(mind)} has incomplete info: {info.Title} {info.Description} {info.Progress}");
-            info.Title ??= "!!!BROKEN OBJECTIVE!!!";
-            info.Description ??= "!!! BROKEN OBJECTIVE DESCRIPTION!!!";
-            info.Icon ??= new SpriteSpecifier.Rsi(new ("error.rsi"), "error");
-            info.Progress ??= 0f;
+            Log.Error($"An objective {ToPrettyString(uid):objective} of {_mind.MindOwnerLoggingString(mind)} is missing icon or progress ({ev.Progress})");
+            return null;
         }
 
-        return info;
+        return new ObjectiveInfo(title, description, comp.Icon, ev.Progress.Value);
     }
 
     /// <summary>
-    /// Helper for mind to get a objective's title easily
+    /// Sets the objective's icon to the one specified.
+    /// Intended for <see cref="ObjectiveAfterAssignEvent"/> handlers to set an icon.
     /// </summary>
-    public string GetTitle(EntityUid uid, EntityUid mindId, MindComponent? mind = null)
+    public void SetIcon(EntityUid uid, SpriteSpecifier icon, ObjectiveComponent? comp = null)
     {
-        return GetInfo(uid, mindId, mind).Title!;
+        if (!Resolve(uid, ref comp))
+            return;
+
+        comp.Icon = icon;
     }
 }
