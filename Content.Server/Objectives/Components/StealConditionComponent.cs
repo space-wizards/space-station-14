@@ -16,7 +16,7 @@ public sealed partial class StealConditionComponent : Component
     /// <remarks>
     /// Works by prototype id not tags or anything so it has to be the exact item.
     /// </remarks>
-    [DataField("prototype", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>)), ViewVariables(VVAccess.ReadWrite)]
+    [DataField(required: true, customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>)), ViewVariables(VVAccess.ReadWrite)]
     public string Prototype = string.Empty;
 
     /// <summary>

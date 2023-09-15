@@ -12,30 +12,30 @@ public sealed partial class NumberObjectiveComponent : Component
     /// <summary>
     /// Number to use in the objective condition.
     /// </summary>
-    [DataField("target"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public int Target;
 
     /// <summary>
     /// Minimum number for target to roll.
     /// </summary>
-    [DataField("min", required: true)]
+    [DataField(required: true)]
     public int Min;
 
     /// <summary>
     /// Maximum number for target to roll.
     /// </summary>
-    [DataField("max", required: true)]
+    [DataField(required: true)]
     public int Max;
 
     /// <summary>
     /// Optional title locale id, passed "count" with <see cref="Target"/>.
     /// </summary>
-    [DataField("title"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public string? Title;
 
     /// <summary>
     /// Optional description locale id, passed "count" with <see cref="Target"/>.
     /// </summary>
-    [DataField("description"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public string? Description;
 }

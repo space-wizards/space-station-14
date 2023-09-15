@@ -12,6 +12,6 @@ public sealed partial class NotJobRequirementComponent : Component
     /// <summary>
     /// ID of the job to ban from having this objective.
     /// </summary>
-    [DataField("job", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<JobPrototype>))]
+    [DataField(required: true, customTypeSerializer: typeof(PrototypeIdSerializer<JobPrototype>))]
     public string Job = string.Empty;
 }

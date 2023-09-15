@@ -11,6 +11,6 @@ public sealed partial class MultipleTraitorsRequirementComponent : Component
     /// <summary>
     /// Number of traitors, excluding yourself, that have to exist.
     /// </summary>
-    [DataField("traitors"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public int Traitors = 2;
 }

@@ -10,6 +10,6 @@ namespace Content.Server.Objectives.Components;
 [RegisterComponent, Access(typeof(RoleRequirementSystem))]
 public sealed partial class RoleRequirementComponent : Component
 {
-    [DataField("roles", required: true), ViewVariables(VVAccess.ReadWrite)]
+    [DataField(required: true), ViewVariables(VVAccess.ReadWrite)]
     public EntityWhitelist Roles = new();
 }
