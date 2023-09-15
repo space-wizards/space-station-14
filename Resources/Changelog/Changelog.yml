@@ -1,11 +1,4 @@
 Entries:
-- author: Misha_Unity
-  changes:
-  - {message: Added a news tab in PDA, type: Add}
-  - {message: Added a mass-media console to reporter, type: Add}
-  - {message: 'Added a popup, when PDA ringing', type: Add}
-  id: 4333
-  time: '2023-07-26T18:49:38.0000000+00:00'
 - author: chromiumboy
   changes:
   - {message: reinforced uranium windows now prevent a large amount of radiation from
@@ -2979,3 +2972,8 @@ Entries:
   - {message: NPS no longer have an SSD indicator, type: Fix}
   id: 4832
   time: '2023-09-15T02:15:26.0000000+00:00'
+- author: Doru991
+  changes:
+  - {message: It is now easier to tell how damaged cyborgs are., type: Tweak}
+  id: 4833
+  time: '2023-09-15T03:14:47.0000000+00:00'
