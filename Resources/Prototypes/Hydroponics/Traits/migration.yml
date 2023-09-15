@@ -1,0 +1,49 @@
+- type: plantTrait
+  id: glow
+  name: trait-glow-name
+  components:
+  - type: PointLight
+    radius: 2
+    color: "#FFFFFF"
+
+- type: plantTrait
+  id: slip
+  name: trait-slip-name
+  components:
+  - type: Slippery
+    launchForwardsMultiplier: 1.5
+  - type: StepTrigger
+    intersectRatio: 0.2
+  - type: CollisionWake
+    enabled: false
+  - type: Physics
+    bodyType: Dynamic
+  - type: Fixtures
+    fixtures:
+      slips:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.2,-0.2,0.2,0.2"
+        hard: false
+        layer:
+        - SlipLayer
+
+- type: plantTrait
+  id: sentient
+  name: trait-sentient-name
+  components:
+  - type: GhostRole
+  - type: GhostTakeoverAvailable
+
+- type: plantTrait
+  id: gastank
+  name: trait-gastank-name
+  components:
+  - type: GasTank
+    outputPressure: 21.3
+    air:
+      volume: 0.66
+      temperature: 293.15
+      moles:
+        - 0.270782035 # oxygen
+    tankLowPressure: 30.0

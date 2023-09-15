@@ -11,10 +11,20 @@ public sealed class MutationSystem : EntitySystem
     [Dependency] private readonly IRobustRandom _robustRandom = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     private List<ReagentPrototype> _allChemicals = default!;
+    private List<PlantTraitPrototype> _allPlantTraits = default!;
+
+    // Add up everything in the mutation bits column and put the number here.
+    private int _totalBits = 270;
 
     public override void Initialize()
     {
         _allChemicals = _prototypeManager.EnumeratePrototypes<ReagentPrototype>().ToList();
+        _allPlantTraits = _prototypeManager.EnumeratePrototypes<PlantTraitPrototype>().ToList();
+        foreach (var plantTrait in _allPlantTraits)
+        {
+            _totalBits += plantTrait.MutationLikelyhood;
+        }
+
     }
 
     /// <summary>
@@ -27,7 +37,7 @@ public sealed class MutationSystem : EntitySystem
     ///
     /// You MUST clone() seed before mutating it!
     /// </summary>
-    public void MutateSeed(SeedData seed, float severity)
+    public void MutateSeed(SeedData seed, float severity, EntityUid plant)
     {
         if (!seed.Unique)
         {
@@ -35,52 +45,74 @@ public sealed class MutationSystem : EntitySystem
             return;
         }
 
-        // Add up everything in the bits column and put the number here.
-        const int totalbits = 270;
 
+        //Can't use ref for this? meh
+        //Impostor syndrome strikes again. Lets do it all in place. WTF is going on :(
+
+        foreach (PlantTraitPrototype plantTrait in _allPlantTraits)
+        {
+            float p = severity * plantTrait.MutationLikelyhood / _totalBits;
+            p = Math.Clamp(p, 0, 1);
+            if (!Random(p))
+            {
+                if (seed.PlantTraits.ContainsKey(plantTrait.ID))
+                {
+                    seed.PlantTraits.Remove(plantTrait.ID);
+                }
+            }
+            else
+            {
+                if (!seed.PlantTraits.ContainsKey(plantTrait.ID))
+                {
+                    seed.PlantTraits.Add(plantTrait.ID, (PlantTraitData) plantTrait);
+                    Log.Debug($"added mutation trait {plantTrait.ID}");
+                }
+            }
+        }
         // Tolerances (55)
-        MutateFloat(ref seed.NutrientConsumption   , 0.05f , 1.2f , 5 , totalbits , severity);
-        MutateFloat(ref seed.WaterConsumption      , 3f    , 9f   , 5 , totalbits , severity);
-        MutateFloat(ref seed.IdealHeat             , 263f  , 323f , 5 , totalbits , severity);
-        MutateFloat(ref seed.HeatTolerance         , 2f    , 25f  , 5 , totalbits , severity);
-        MutateFloat(ref seed.IdealLight            , 0f    , 14f  , 5 , totalbits , severity);
-        MutateFloat(ref seed.LightTolerance        , 1f    , 5f   , 5 , totalbits , severity);
-        MutateFloat(ref seed.ToxinsTolerance       , 1f    , 10f  , 5 , totalbits , severity);
-        MutateFloat(ref seed.LowPressureTolerance  , 60f   , 100f , 5 , totalbits , severity);
-        MutateFloat(ref seed.HighPressureTolerance , 100f  , 140f , 5 , totalbits , severity);
-        MutateFloat(ref seed.PestTolerance         , 0f    , 15f  , 5 , totalbits , severity);
-        MutateFloat(ref seed.WeedTolerance         , 0f    , 15f  , 5 , totalbits , severity);
+        MutateFloat(ref seed.NutrientConsumption   , 0.05f , 1.2f , 5 , _totalBits , severity);
+        MutateFloat(ref seed.WaterConsumption      , 3f    , 9f   , 5 , _totalBits , severity);
+        MutateFloat(ref seed.IdealHeat             , 263f  , 323f , 5 , _totalBits , severity);
+        MutateFloat(ref seed.HeatTolerance         , 2f    , 25f  , 5 , _totalBits , severity);
+        MutateFloat(ref seed.IdealLight            , 0f    , 14f  , 5 , _totalBits , severity);
+        MutateFloat(ref seed.LightTolerance        , 1f    , 5f   , 5 , _totalBits , severity);
+        MutateFloat(ref seed.ToxinsTolerance       , 1f    , 10f  , 5 , _totalBits , severity);
+        MutateFloat(ref seed.LowPressureTolerance  , 60f   , 100f , 5 , _totalBits , severity);
+        MutateFloat(ref seed.HighPressureTolerance , 100f  , 140f , 5 , _totalBits , severity);
+        MutateFloat(ref seed.PestTolerance         , 0f    , 15f  , 5 , _totalBits , severity);
+        MutateFloat(ref seed.WeedTolerance         , 0f    , 15f  , 5 , _totalBits, severity);
 
         // Stats (30*2 = 60)
-        MutateFloat(ref seed.Endurance             , 50f   , 150f , 5 , totalbits , 2*severity);
-        MutateInt(ref seed.Yield                   , 3     , 10   , 5 , totalbits , 2*severity);
-        MutateFloat(ref seed.Lifespan              , 10f   , 80f  , 5 , totalbits , 2*severity);
-        MutateFloat(ref seed.Maturation            , 3f    , 8f   , 5 , totalbits , 2*severity);
-        MutateFloat(ref seed.Production            , 1f    , 10f  , 5 , totalbits , 2*severity);
-        MutateFloat(ref seed.Potency               , 30f   , 100f , 5 , totalbits , 2*severity);
+        MutateFloat(ref seed.Endurance             , 50f   , 150f , 5 , _totalBits , 2*severity);
+        MutateInt(ref seed.Yield                   , 3     , 10   , 5 , _totalBits , 2*severity);
+        MutateFloat(ref seed.Lifespan              , 10f   , 80f  , 5 , _totalBits , 2*severity);
+        MutateFloat(ref seed.Maturation            , 3f    , 8f   , 5 , _totalBits , 2*severity);
+        MutateFloat(ref seed.Production            , 1f    , 10f  , 5 , _totalBits , 2*severity);
+        MutateFloat(ref seed.Potency               , 30f   , 100f , 5 , _totalBits, 2*severity);
 
         // Kill the plant (30)
-        MutateBool(ref seed.Viable         , false , 30 , totalbits , severity);
+        MutateBool(ref seed.Viable         , false , 30 , _totalBits, severity);
 
-        // Fun (90)
-        MutateBool(ref seed.Seedless       , true  , 10 , totalbits , severity);
-        MutateBool(ref seed.Slip           , true  , 10 , totalbits , severity);
-        MutateBool(ref seed.Sentient       , true  , 10 , totalbits , severity);
-        MutateBool(ref seed.Ligneous       , true  , 10 , totalbits , severity);
-        MutateBool(ref seed.Bioluminescent , true  , 10 , totalbits , severity);
-        MutateBool(ref seed.TurnIntoKudzu  , true  , 10 , totalbits , severity);
-        MutateBool(ref seed.CanScream      , true  , 10 , totalbits , severity);
-        seed.BioluminescentColor = RandomColor(seed.BioluminescentColor, 10, totalbits, severity);
+        // Fun (50) //old 90
+        MutateBool(ref seed.Seedless       , true  , 10 , _totalBits, severity);
+        // MutateBool(ref seed.Slip           , true  , 10 , _totalBits , severity);
+        // MutateBool(ref seed.Sentient       , true  , 10 , _totalBits , severity);
+        MutateBool(ref seed.Ligneous       , true  , 10 , _totalBits, severity);
+        // MutateBool(ref seed.Bioluminescent , true  , 10 , _totalBits , severity);
+        MutateBool(ref seed.TurnIntoKudzu  , true  , 10 , _totalBits, severity);
+        MutateBool(ref seed.CanScream      , true  , 10 , _totalBits, severity);
+        // seed.BioluminescentColor = RandomColor(seed.BioluminescentColor, 10, _totalBits, severity);
         // ConstantUpgade (10)
-        MutateHarvestType(ref seed.HarvestRepeat   , 10 , totalbits , severity);
+        MutateHarvestType(ref seed.HarvestRepeat   , 10 , _totalBits, severity);
 
         // Gas (5)
-        MutateGasses(ref seed.ExudeGasses, 0.01f, 0.5f, 4, totalbits, severity);
-        MutateGasses(ref seed.ConsumeGasses, 0.01f, 0.5f, 1, totalbits, severity);
+        MutateGasses(ref seed.ExudeGasses, 0.01f, 0.5f, 4, _totalBits, severity);
+        MutateGasses(ref seed.ConsumeGasses, 0.01f, 0.5f, 1, _totalBits, severity);
 
         // Chems (20)
-        MutateChemicals(ref seed.Chemicals, 5, 20, totalbits, severity);
+        MutateChemicals(ref seed.Chemicals, 5, 20, _totalBits, severity);
     }
+
 
     public SeedData Cross(SeedData a, SeedData b)
     {
@@ -109,16 +141,16 @@ public sealed class MutationSystem : EntitySystem
 
         CrossBool(ref result.Seedless, a.Seedless);
         CrossBool(ref result.Viable, a.Viable);
-        CrossBool(ref result.Slip, a.Slip);
-        CrossBool(ref result.Sentient, a.Sentient);
+//        CrossBool(ref result.Slip, a.Slip);
+//        CrossBool(ref result.Sentient, a.Sentient);
         CrossBool(ref result.Ligneous, a.Ligneous);
-        CrossBool(ref result.Bioluminescent, a.Bioluminescent);
+//        CrossBool(ref result.Bioluminescent, a.Bioluminescent);
         CrossBool(ref result.TurnIntoKudzu, a.TurnIntoKudzu);
         CrossBool(ref result.CanScream, a.CanScream);
         CrossGasses(ref result.ExudeGasses, a.ExudeGasses);
         CrossGasses(ref result.ConsumeGasses, a.ConsumeGasses);
 
-        result.BioluminescentColor = Random(0.5f) ? a.BioluminescentColor : result.BioluminescentColor;
+//        result.BioluminescentColor = Random(0.5f) ? a.BioluminescentColor : result.BioluminescentColor;
 
         // Hybrids have a high chance of being seedless. Balances very
         // effective hybrid crossings.

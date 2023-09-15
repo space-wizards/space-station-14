@@ -21,6 +21,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
+using Robust.Shared.Serialization.Manager;
 
 namespace Content.Server.Botany.Systems;
 
@@ -28,6 +29,7 @@ public sealed partial class BotanySystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IRobustRandom _robustRandom = default!;
+    [Dependency] private readonly ISerializationManager _serializationManager = default!;
     [Dependency] private readonly AppearanceSystem _appearance = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
@@ -180,28 +182,17 @@ public sealed partial class BotanySystem : EntitySystem
                     metaData.EntityDescription + " " + Loc.GetString("botany-mysterious-description-addon"), metaData);
             }
 
-            if (proto.Bioluminescent)
+            foreach (var trait in proto.PlantTraits)
             {
-                var light = _light.EnsureLight(entity);
-                _light.SetRadius(entity, proto.BioluminescentRadius, light);
-                _light.SetColor(entity, proto.BioluminescentColor, light);
-                // TODO: Ayo why you copy-pasting code between here and plantholder?
-                _light.SetCastShadows(entity, false, light); // this is expensive, and botanists make lots of plants
-            }
+                foreach (var entry in trait.Value.Components.Values)
+                {
+                    if (HasComp(entity, entry.Component.GetType()))
+                        continue;
 
-            if (proto.Slip)
-            {
-                var slippery = EnsureComp<SlipperyComponent>(entity);
-                Dirty(entity, slippery);
-                EnsureComp<StepTriggerComponent>(entity);
-                // Need a fixture with a slip layer in order to actually do the slipping
-                var fixtures = EnsureComp<FixturesComponent>(entity);
-                var body = EnsureComp<PhysicsComponent>(entity);
-                var shape = fixtures.Fixtures["fix1"].Shape;
-                _fixtureSystem.TryCreateFixture(entity, shape, "slips", 1, false, (int) CollisionGroup.SlipLayer, manager: fixtures, body: body);
-                // Need to disable collision wake so that mobs can collide with and slip on it
-                var collisionWake = EnsureComp<CollisionWakeComponent>(entity);
-                _colWakeSystem.SetEnabled(entity, false, collisionWake);
+                    var comp = (Component) _serializationManager.CreateCopy(entry.Component, notNullableOverride: true);
+                    EntityManager.AddComponent(entity, comp);
+                    Dirty(entity, comp);
+                }
             }
         }
 

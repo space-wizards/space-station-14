@@ -173,17 +173,6 @@ public partial class SeedData
     /// </summary>
     [DataField("viable")] public bool Viable = true;
 
-    /// <summary>
-    ///     If true, fruit slips players.
-    /// </summary>
-    [DataField("slip")] public bool Slip = false;
-
-    /// <summary>
-    ///     If true, fruits are sentient.
-    /// </summary>
-    [DataField("sentient")] public bool Sentient = false;
-
-    /// <summary>
     ///     If true, a sharp tool is required to harvest this plant.
     /// </summary>
     [DataField("ligneous")] public bool Ligneous;
@@ -216,16 +205,13 @@ public partial class SeedData
 
     [DataField("screaming")] public bool CanScream;
 
-    [DataField("bioluminescent")] public bool Bioluminescent;
-    [DataField("bioluminescentColor")] public Color BioluminescentColor { get; set; } = Color.White;
-
-    public float BioluminescentRadius = 2f;
 
     [DataField("kudzuPrototype", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))] public string KudzuPrototype = "WeakKudzu";
 
     [DataField("turnIntoKudzu")] public bool TurnIntoKudzu;
     [DataField("splatPrototype")] public string? SplatPrototype { get; set; }
 
+    [DataField("plantTraits")] public Dictionary<string, PlantTraitData> PlantTraits { get; set; } = new();
     #endregion
 
     public SeedData Clone()
@@ -244,6 +230,7 @@ public partial class SeedData
             Chemicals = new Dictionary<string, SeedChemQuantity>(Chemicals),
             ConsumeGasses = new Dictionary<Gas, float>(ConsumeGasses),
             ExudeGasses = new Dictionary<Gas, float>(ExudeGasses),
+            PlantTraits = new Dictionary<string, PlantTraitData>(PlantTraits),
 
             NutrientConsumption = NutrientConsumption,
             WaterConsumption = WaterConsumption,
@@ -268,16 +255,16 @@ public partial class SeedData
 
             Seedless = Seedless,
             Viable = Viable,
-            Slip = Slip,
-            Sentient = Sentient,
+//            Slip = Slip,
+//            Sentient = Sentient,
             Ligneous = Ligneous,
 
             PlantRsi = PlantRsi,
             PlantIconState = PlantIconState,
-            Bioluminescent = Bioluminescent,
+//            Bioluminescent = Bioluminescent,
             CanScream = CanScream,
             TurnIntoKudzu = TurnIntoKudzu,
-            BioluminescentColor = BioluminescentColor,
+//            BioluminescentColor = BioluminescentColor,
             SplatPrototype = SplatPrototype,
 
             // Newly cloned seed is unique. No need to unnecessarily clone if repeatedly modified.

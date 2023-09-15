@@ -24,6 +24,8 @@ using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
+using Robust.Shared.Serialization.Manager;
+using System.Linq;
 
 namespace Content.Server.Botany.Systems;
 
@@ -41,6 +43,7 @@ public sealed class PlantHolderSystem : EntitySystem
     [Dependency] private readonly SolutionContainerSystem _solutionSystem = default!;
     [Dependency] private readonly TagSystem _tagSystem = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly ISerializationManager _serializationManager = default!;
 
 
     public const float HydroponicsSpeedMultiplier = 1f;
@@ -620,13 +623,6 @@ public sealed class PlantHolderSystem : EntitySystem
 
         CheckLevelSanity(uid, component);
 
-        if (component.Seed.Sentient)
-        {
-            var ghostRole = EnsureComp<GhostRoleComponent>(uid);
-            EnsureComp<GhostTakeoverAvailableComponent>(uid);
-            ghostRole.RoleName = MetaData(uid).EntityName;
-            ghostRole.RoleDescription = Loc.GetString("station-event-random-sentience-role-description", ("name", ghostRole.RoleName));
-        }
 
         if (component.UpdateSpriteAfterUpdate)
             UpdateSprite(uid, component);
@@ -841,11 +837,14 @@ public sealed class PlantHolderSystem : EntitySystem
         if (!Resolve(uid, ref component))
             return;
 
-        if (component.Seed != null)
-        {
-            EnsureUniqueSeed(uid, component);
-            _mutation.MutateSeed(component.Seed, severity);
-        }
+        if (component.Seed == null)
+            return;
+
+        EnsureUniqueSeed(uid, component);
+
+        _mutation.MutateSeed(component.Seed, severity, uid);
+
+        //Resolve any components
     }
 
     public void UpdateSprite(EntityUid uid, PlantHolderComponent? component = null)
@@ -855,18 +854,18 @@ public sealed class PlantHolderSystem : EntitySystem
 
         component.UpdateSpriteAfterUpdate = false;
 
-        if (component.Seed != null && component.Seed.Bioluminescent)
-        {
-            var light = EnsureComp<PointLightComponent>(uid);
-            _pointLight.SetRadius(uid, component.Seed.BioluminescentRadius, light);
-            _pointLight.SetColor(uid, component.Seed.BioluminescentColor, light);
-            _pointLight.SetCastShadows(uid, false, light);
-            Dirty(uid, light);
-        }
-        else
-        {
-            RemComp<PointLightComponent>(uid);
-        }
+//        if (component.Seed != null && component.Seed.Bioluminescent)
+//        {
+//            var light = EnsureComp<PointLightComponent>(uid);
+//            _pointLight.SetRadius(uid, component.Seed.BioluminescentRadius, light);
+//            _pointLight.SetColor(uid, component.Seed.BioluminescentColor, light);
+//            _pointLight.SetCastShadows(uid, false, light);
+//            Dirty(uid, light);
+//        }
+//        else
+//        {
+//            RemComp<PointLightComponent>(uid);
+//        }
 
         if (!TryComp<AppearanceComponent>(uid, out var app))
             return;

@@ -96,6 +96,7 @@ namespace Content.Client.Entry
             _prototypeManager.RegisterIgnore("accent");
             _prototypeManager.RegisterIgnore("gasReaction");
             _prototypeManager.RegisterIgnore("seed"); // Seeds prototypes are server-only.
+            _prototypeManager.RegisterIgnore("plantTrait");
             _prototypeManager.RegisterIgnore("objective");
             _prototypeManager.RegisterIgnore("holiday");
             _prototypeManager.RegisterIgnore("aiFaction");
