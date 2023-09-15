@@ -1,7 +1,7 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "Sprited by discord Kheprep#7153, modified by metalgearsloth",
+    "copyright": "Sprited by discord Kheprep#7153, modified by metalgearsloth. Construction frame sprites by RiceMar1244.",
     "size": {
         "x": 32,
         "y": 32
@@ -28,6 +28,21 @@
         {
             "name": "inhand-right-unshaded",
             "directions": 4
+        },
+        {
+            "name": "frame_0"
+        },
+        {
+            "name": "frame_1"
+        },
+        {
+            "name": "frame_2"
+        },
+        {
+            "name": "frame_force"
+        },
+        {
+            "name": "frame_tether"
         }
     ]
 }
