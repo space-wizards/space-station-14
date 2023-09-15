@@ -11,6 +11,7 @@ public abstract partial class SharedBodySystem : EntitySystem
     protected const string BodySlotContainerId = "BodyPartSlot";
     protected const string BodyRootContainerId = "BodyRootSlot";
     protected const string OrganSlotContainerId = "OrganSlot";
+    protected const string BodyRootSlotId = "Root";
 
     [Dependency] protected readonly IPrototypeManager Prototypes = default!;
 

@@ -15,7 +15,7 @@ public sealed partial class BodyPartComponent : Component
 
     [AutoNetworkedField] public EntityUid? Parent;
 
-    [AutoNetworkedField] public string? SlotId;
+    [AutoNetworkedField] public string? SlotId = null;
 
     [DataField("partType"), AutoNetworkedField]
     public BodyPartType PartType = BodyPartType.Other;
