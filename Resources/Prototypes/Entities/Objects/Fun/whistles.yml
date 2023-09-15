@@ -13,6 +13,8 @@
   - type: UseDelay
     delay: 1
   - type: Whistle
+    sound: 
+      collection: BaseWhistle
     exclamateOnePerson: true
     loudWhistleDistance: 4
 
