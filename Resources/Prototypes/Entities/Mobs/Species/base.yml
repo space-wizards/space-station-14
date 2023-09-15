@@ -2,8 +2,8 @@
   save: false
   parent:
   - BaseMob
-  - BaseMobDamageable
-  - BaseMobCombat
+  - MobDamageable
+  - MobCombat
   id: BaseMobSpecies
   abstract: true
   components:
@@ -218,10 +218,10 @@
 - type: entity
   save: false
   parent:
-  - BaseMobBloodstream
-  - BaseMobRespirator
-  - BaseMobAtmosStandard
-  - BaseMobFlammable
+  - MobBloodstream
+  - MobRespirator
+  - MobAtmosStandard
+  - MobFlammable
   - BaseMobSpecies
   id: BaseMobSpeciesOrganic
   abstract: true

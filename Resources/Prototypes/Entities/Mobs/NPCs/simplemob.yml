@@ -2,8 +2,8 @@
   save: false
   parent:
   - BaseMob
-  - BaseMobDamageable
-  - BaseMobAtmosExposed
+  - MobDamageable
+  - MobAtmosExposed
   id: BaseSimpleMob
   suffix: AI
   abstract: true
@@ -35,9 +35,9 @@
   abstract: true
   parent:
   - BaseSimpleMob
-  - BaseMobCombat
-  - BaseMobBloodstream
-  - BaseMobFlammable
+  - MobCombat
+  - MobBloodstream
+  - MobFlammable
   id: SimpleSpaceMobBase # Mob without barotrauma, freezing and asphyxiation (for space carps!?)
   suffix: AI
   components:
@@ -66,8 +66,8 @@
 
 - type: entity
   parent:
-  - BaseMobRespirator
-  - BaseMobAtmosStandard
+  - MobRespirator
+  - MobAtmosStandard
   - SimpleSpaceMobBase
   id: SimpleMobBase # for air breathers
   suffix: AI
