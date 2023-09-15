@@ -15,7 +15,7 @@ public sealed partial class BodyComponent : Component
     [DataField("prototype", customTypeSerializer: typeof(PrototypeIdSerializer<BodyPrototype>)), AutoNetworkedField]
     public string? Prototype;
 
-    [ViewVariables] public ContainerSlot RootPart;
+    [ViewVariables] public ContainerSlot RootContainer;
 
     [DataField("gibSound"), AutoNetworkedField]
     public SoundSpecifier GibSound = new SoundCollectionSpecifier("gib");

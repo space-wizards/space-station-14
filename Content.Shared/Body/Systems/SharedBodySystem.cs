@@ -8,7 +8,9 @@ namespace Content.Shared.Body.Systems;
 
 public abstract partial class SharedBodySystem : EntitySystem
 {
-    protected const string BodySlotContainerId = "BodyPartRootSlot";
+    protected const string BodySlotContainerId = "BodyPartSlot";
+    protected const string BodyRootContainerId = "BodyRootSlot";
+    protected const string OrganSlotContainerId = "OrganSlot";
 
     [Dependency] protected readonly IPrototypeManager Prototypes = default!;
 
@@ -24,5 +26,20 @@ public abstract partial class SharedBodySystem : EntitySystem
         InitializeBody();
         InitializeParts();
         InitializeOrgans();
+    }
+
+    public static string GetBodySlotContainerName(string slotName)
+    {
+        return BodyPartSlotPrefix + slotName;
+    }
+
+    public static string GetOrganContainerName(string slotName)
+    {
+        return OrganSlotContainerId + slotName;
+    }
+
+    public static string GetBodyRootContainerName(string slotName)
+    {
+        return BodyRootContainerId + slotName;
     }
 }
