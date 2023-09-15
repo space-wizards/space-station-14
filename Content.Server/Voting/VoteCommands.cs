@@ -1,23 +1,21 @@
 using System.Linq;
+using System.Net.Http;
+using System.Text.Json;
+using System.Text.Json.Nodes;
 using Content.Server.Administration;
 using Content.Server.Administration.Logs;
 using Content.Server.Chat.Managers;
+using Content.Server.Discord;
+using Content.Server.GameTicking;
 using Content.Server.Voting.Managers;
 using Content.Shared.Administration;
+using Content.Shared.CCVar;
 using Content.Shared.Database;
 using Content.Shared.Voting;
 using Robust.Server.Player;
-using Robust.Shared.Console;
-using System.Text;
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using Content.Server.GameTicking;
-using System.Net.Http;
 using Robust.Shared;
 using Robust.Shared.Configuration;
-using Content.Shared.CCVar;
-using Content.Server.Discord;
-using Robust.Shared.Log;
+using Robust.Shared.Console;
 
 namespace Content.Server.Voting
 {
@@ -84,7 +82,7 @@ namespace Content.Server.Voting
         public string Description => Loc.GetString("cmd-customvote-desc");
         public string Help => Loc.GetString("cmd-customvote-help");
 
-        // Webhook stuff 
+        // Webhook stuff
         private string _webhookUrl = string.Empty;
         private readonly HttpClient _httpClient = new();
         private ulong _webhookId;
@@ -130,7 +128,7 @@ namespace Content.Server.Voting
                     new()
                     {
                         Title = $"{shell.Player}",
-                        Color = 13438992, 
+                        Color = 13438992,
                         Description = options.Title,
                         Footer = new WebhookEmbedFooter
                         {
@@ -183,7 +181,7 @@ namespace Content.Server.Voting
                     payload.Embeds[0] = newEmbed;
                     payload.Embeds[0].Fields[i] = new WebhookEmbedField() { Name = oldName, Value = newValue, Inline =  true};
                 }
-            
+
                 WebhookMessage(payload, _webhookId);
             };
         }
@@ -200,16 +198,16 @@ namespace Content.Server.Voting
             return CompletionResult.FromHint(Loc.GetString("cmd-customvote-arg-option-n", ("n", n)));
         }
 
-        // Sends the payload's message. 
+        // Sends the payload's message.
         private async void WebhookMessage(WebhookPayload payload)
         {
-            if (System.String.IsNullOrEmpty(_webhookUrl))
+            if (string.IsNullOrEmpty(_webhookUrl))
                 return;
 
-            _discord.GetWebhook(_webhookUrl, data => _webhookIdentifier = data.ToIdentifier());
-
-            if (_webhookIdentifier == null)
+            if (await _discord.GetWebhook(_webhookUrl) is not { } identifier)
                 return;
+
+            _webhookIdentifier = identifier.ToIdentifier();
 
             _sawmill.Debug(JsonSerializer.Serialize(payload));
 
@@ -221,13 +219,13 @@ namespace Content.Server.Voting
         // Edits a pre-existing payload message, given an ID
         private async void WebhookMessage(WebhookPayload payload, ulong id)
         {
-            if (System.String.IsNullOrEmpty(_webhookUrl))
+            if (string.IsNullOrEmpty(_webhookUrl))
                 return;
 
-            _discord.GetWebhook(_webhookUrl, data => _webhookIdentifier = data.ToIdentifier());
-
-            if (_webhookIdentifier == null)
+            if (await _discord.GetWebhook(_webhookUrl) is not { } identifier)
                 return;
+
+            _webhookIdentifier = identifier.ToIdentifier();
 
             var request = await _discord.EditMessage(_webhookIdentifier.Value, id, payload);
         }
