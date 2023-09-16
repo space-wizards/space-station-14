@@ -164,6 +164,10 @@
     accentVColor: "#A32D26"
   - type: Icon
     state: pda-interncadet
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 6
 
 - type: entity
   parent: BasePDA
@@ -600,6 +604,11 @@
     accentHColor: "#447987"
   - type: Icon
     state: pda-hos
+  - type: MeleeWeapon
+    damage:
+      types:
+        # strip him naked and he can still eat the syndies for breakfast
+        Blunt: 8
 
 - type: entity
   parent: BasePDA
@@ -615,6 +624,10 @@
     accentVColor: "#949137"
   - type: Icon
     state: pda-warden
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 6
 
 - type: entity
   parent: BasePDA
@@ -629,6 +642,10 @@
     borderColor: "#A32D26"
   - type: Icon
     state: pda-security
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 6
 
 - type: entity
   parent: BasePDA
@@ -949,3 +966,7 @@
     accentVColor: "#DFDFDF"
   - type: Icon
     state: pda-seniorofficer
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 6
