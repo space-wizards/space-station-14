@@ -62,7 +62,7 @@ public abstract class SharedMagbootsSystem : EntitySystem
 
     protected void OnChanged(EntityUid uid, MagbootsComponent component)
     {
-        _sharedActions.SetToggled(component.ToggleAction, component.On);
+        _sharedActions.SetToggled(component.ToggleActionEntity, component.On);
         _clothingSpeedModifier.SetClothingSpeedModifierEnabled(uid, component.On);
     }
 
@@ -86,7 +86,7 @@ public abstract class SharedMagbootsSystem : EntitySystem
 
     private void OnGetActions(EntityUid uid, MagbootsComponent component, GetItemActionsEvent args)
     {
-        args.Actions.Add(component.ToggleAction);
+        args.AddAction(ref component.ToggleActionEntity, component.ToggleAction);
     }
 }
 

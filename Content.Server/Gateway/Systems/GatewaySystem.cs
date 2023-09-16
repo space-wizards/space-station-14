@@ -1,4 +1,5 @@
 using Content.Server.Gateway.Components;
+using Content.Shared.Access.Systems;
 using Content.Shared.Gateway;
 using Content.Shared.Teleportation.Components;
 using Content.Shared.Teleportation.Systems;
@@ -13,6 +14,7 @@ namespace Content.Server.Gateway.Systems;
 
 public sealed class GatewaySystem : EntitySystem
 {
+    [Dependency] private readonly AccessReaderSystem _accessReader = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly LinkedEntitySystem _linkedEntity = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
@@ -66,18 +68,18 @@ public sealed class GatewaySystem : EntitySystem
 
     private void UpdateUserInterface(EntityUid uid, GatewayComponent comp)
     {
-        var destinations = new List<(EntityUid, String, TimeSpan, bool)>();
+        var destinations = new List<(NetEntity, string, TimeSpan, bool)>();
         foreach (var destUid in comp.Destinations)
         {
             var dest = Comp<GatewayDestinationComponent>(destUid);
             if (!dest.Enabled)
                 continue;
 
-            destinations.Add((destUid, dest.Name, dest.NextReady, HasComp<PortalComponent>(destUid)));
+            destinations.Add((GetNetEntity(destUid), dest.Name, dest.NextReady, HasComp<PortalComponent>(destUid)));
         }
 
         GetDestination(uid, out var current);
-        var state = new GatewayBoundUserInterfaceState(destinations, current, comp.NextClose, comp.LastOpen);
+        var state = new GatewayBoundUserInterfaceState(destinations, GetNetEntity(current), comp.NextClose, comp.LastOpen);
         _ui.TrySetUiState(uid, GatewayUiKey.Key, state);
     }
 
@@ -88,16 +90,26 @@ public sealed class GatewaySystem : EntitySystem
 
     private void OnOpenPortal(EntityUid uid, GatewayComponent comp, GatewayOpenPortalMessage args)
     {
+        if (args.Session.AttachedEntity == null)
+            return;
+
+        // if the gateway has an access reader check it before allowing opening
+        var user = args.Session.AttachedEntity.Value;
+        if (!_accessReader.IsAllowed(user, uid))
+            return;
+
         // can't link if portal is already open on either side, the destination is invalid or on cooldown
+        var desto = GetEntity(args.Destination);
+
         if (HasComp<PortalComponent>(uid) ||
-            HasComp<PortalComponent>(args.Destination) ||
-            !TryComp<GatewayDestinationComponent>(args.Destination, out var dest) ||
+            HasComp<PortalComponent>(desto) ||
+            !TryComp<GatewayDestinationComponent>(desto, out var dest) ||
             !dest.Enabled ||
             _timing.CurTime < dest.NextReady)
             return;
 
         // TODO: admin log???
-        OpenPortal(uid, comp, args.Destination, dest);
+        OpenPortal(uid, comp, desto, dest);
     }
 
     private void OpenPortal(EntityUid uid, GatewayComponent comp, EntityUid dest, GatewayDestinationComponent destComp)

@@ -6,3 +6,96 @@
   - type: WarpPoint
   - type: Sprite
     state: pink
+
+- type: entity
+  id: WarpPointBeacon
+  parent: WarpPoint
+  name: warp point (beacon)
+  components:
+  - type: NavMapBeacon
+
+- type: entity
+  parent: WarpPoint
+  id: WarpPointBombing
+  name: warp point
+  suffix: ninja bombing target
+  components:
+  - type: BombingTarget
+  - type: Sprite
+    layers:
+    - state: pink
+    - sprite: Objects/Weapons/Bombs/spidercharge.rsi
+      state: icon
+
+# Departments
+- type: entity
+  id: WarpPointBeaconBar
+  parent: WarpPointBeacon
+  name: warp point (bar)
+  components:
+  - type: NavMapBeacon
+    text: bar
+    color: "#791500"
+
+- type: entity
+  id: WarpPointBeaconCargo
+  parent: WarpPointBeacon
+  name: warp point (cargo)
+  components:
+  - type: NavMapBeacon
+    text: cargo
+    color: "#A46106"
+
+- type: entity
+  id: WarpPointBeaconCommand
+  parent: WarpPointBeacon
+  name: warp point (command)
+  components:
+  - type: NavMapBeacon
+    text: command
+    color: "#334E6D"
+
+- type: entity
+  id: WarpPointBeaconEngineering
+  parent: WarpPointBeacon
+  name: warp point (engineering)
+  components:
+  - type: NavMapBeacon
+    text: engineering
+    color: "#EFB341"
+
+- type: entity
+  id: WarpPointBeaconMedical
+  parent: WarpPointBeacon
+  name: warp point (medical)
+  components:
+  - type: NavMapBeacon
+    text: medical
+    color: "#52B4E9"
+
+- type: entity
+  id: WarpPointBeaconNeutral
+  parent: WarpPointBeacon
+  name: warp point (neutral)
+  components:
+  - type: NavMapBeacon
+    text: neutral
+    color: "#D4D4D4"
+
+- type: entity
+  id: WarpPointBeaconScience
+  parent: WarpPointBeacon
+  name: warp point (science)
+  components:
+  - type: NavMapBeacon
+    text: science
+    color: "#D381C9"
+
+- type: entity
+  id: WarpPointBeaconService
+  parent: WarpPointBeacon
+  name: warp point (service)
+  components:
+  - type: NavMapBeacon
+    text: service
+    color: "#9FED58"

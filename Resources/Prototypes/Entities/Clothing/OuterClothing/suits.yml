@@ -93,7 +93,7 @@
 
 - type: entity
   parent: ClothingOuterBase
-  id: ClothingOuterSuitSpaceninja
+  id: ClothingOuterSuitSpaceNinja
   name: space ninja suit
   description: This black technologically advanced, cybernetically-enhanced suit provides good protection and many abilities like invisibility or teleportation.
   components:
@@ -102,14 +102,8 @@
   - type: Clothing
     sprite: Clothing/OuterClothing/Suits/spaceninja.rsi
   - type: StealthClothing
-    visibility: 0.3
-    toggleAction:
-      # have to plan (un)cloaking ahead of time
-      useDelay: 5
-      name: action-name-toggle-phase-cloak
-      description: action-desc-toggle-phase-cloak
-      priority: -9
-      event: !type:ToggleStealthEvent
+    visibility: 1.1
+    toggleAction: ActionTogglePhaseCloak
   - type: PressureProtection
     highPressureMultiplier: 0.6
     lowPressureMultiplier: 1000
@@ -122,6 +116,20 @@
         Slash: 0.6
         Piercing: 0.6
         Heat: 0.6
+  - type: NinjaSuit
+  - type: PowerCellSlot
+    cellSlotId: cell_slot
+    # throwing in a recharger would bypass glove charging mechanic
+    fitsInCharger: false
+  - type: ContainerContainer
+    containers:
+      cell_slot: !type:ContainerSlot
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellSmall
+        disableEject: true
 
 - type: entity
   parent: ClothingOuterBase
@@ -176,6 +184,9 @@
   - type: ContainerContainer
     containers:
       toggleable-clothing: !type:ContainerSlot {}
+  - type: Construction
+    graph: ClothingOuterSuitIan
+    node: suit
 
 - type: entity
   parent: ClothingOuterBase

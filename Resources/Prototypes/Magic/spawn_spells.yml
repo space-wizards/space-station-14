@@ -1,16 +1,19 @@
-﻿- type: worldTargetAction
-  id: SpawnMagicarpSpell
-  name: action-name-spell-summon-magicarp
-  description: action-description-spell-summon-magicarp
-  useDelay: 10
-  range: 4
-  itemIconStyle: BigAction
-  icon:
-    sprite: Objects/Magic/magicactions.rsi
-    state: spell_default
-  serverEvent: !type:WorldSpawnSpellEvent
-    prototypes:
+﻿- type: entity
+  id: ActionSpawnMagicarpSpell
+  name: Summon Magicarp
+  description: This spell summons three Magi-Carp to your aid! May or may not turn on user.
+  noSpawn: true
+  components:
+  - type: WorldTargetAction
+    useDelay: 10
+    range: 4
+    itemIconStyle: BigAction
+    icon:
+      sprite: Objects/Magic/magicactions.rsi
+      state: spell_default
+    event: !type:WorldSpawnSpellEvent
+      prototypes:
       - id: MobCarpMagic
         amount: 3
-    offsetVector2: 0, 1
-    speech: action-speech-spell-summon-magicarp
+      offset: 0, 1
+      speech: action-speech-spell-summon-magicarp
