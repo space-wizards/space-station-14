@@ -16,8 +16,8 @@
     - to: viper
       steps:
       - tag: BallisticsTechPart
-        store: hammer
-        name: a modular hammer
+        store: receiver
+        name: a modular receiver
         doAfter: 2
 
     - to: start

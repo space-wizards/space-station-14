@@ -16,8 +16,8 @@
     - to: mk58
       steps:
       - tag: BallisticsTechPart
-        store: hammer
-        name: a modular hammer
+        store: receiver
+        name: a modular receiver
         doAfter: 2
 
     - to: start
@@ -35,8 +35,7 @@
     edges:
     - to: frame
       completed:
-      - !type:EmptyContainer
-        container: hammer
+      - !type:EmptyAllContainers
       steps:
       - tool: Prying
         doAfter: 1
