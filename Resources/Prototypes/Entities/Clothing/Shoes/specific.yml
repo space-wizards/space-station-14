@@ -194,7 +194,6 @@
   description: "Get your skates on!"
   components:
   - type: Sprite
-    state: "icon"
     sprite: Clothing/Shoes/Specific/skates.rsi
   - type: Clothing
     sprite: Clothing/Shoes/Specific/skates.rsi
