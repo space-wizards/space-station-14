@@ -952,7 +952,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
                 if (_cfg.GetCVar(CCVars.AdminDeadminOnJoin) && _adminManager.IsAdmin(session))
                     _adminManager.DeAdmin(session);
 
-                _mindSystem.TransferTo(newMind, mob);
+                _mind.TransferTo(newMind, mob);
             }
             else if (addSpawnPoints)
             {
