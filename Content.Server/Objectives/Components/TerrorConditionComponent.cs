@@ -1,11 +1,12 @@
 using Content.Server.Objectives.Systems;
+using Content.Shared.Ninja.Systems;
 
 namespace Content.Server.Objectives.Components;
 
 /// <summary>
 /// Requires that the player is a ninja and has called in a threat.
 /// </summary>
-[RegisterComponent, Access(typeof(NinjaConditionsSystem))]
+[RegisterComponent, Access(typeof(NinjaConditionsSystem), typeof(SharedSpaceNinjaSystem))]
 public sealed partial class TerrorConditionComponent : Component
 {
     /// <summary>
