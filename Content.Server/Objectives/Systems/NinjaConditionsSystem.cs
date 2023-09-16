@@ -72,22 +72,16 @@ public sealed class NinjaConditionsSystem : EntitySystem
 
     private void OnStealResearchGetProgress(EntityUid uid, StealResearchConditionComponent comp, ref ObjectiveGetProgressEvent args)
     {
-        args.Progress = StealResearchProgress(args.MindId, _number.GetTarget(uid));
+        args.Progress = StealResearchProgress(comp, _number.GetTarget(uid));
     }
 
-    private float StealResearchProgress(EntityUid mindId, int target)
+    private float StealResearchProgress(StealResearchConditionComponent comp, int target)
     {
         // prevent divide-by-zero
         if (target == 0)
             return 1f;
 
-        if (!TryComp<NinjaRoleComponent>(mindId, out var role))
-            return 0f;
-
-        if (role.DownloadedNodes.Count >= target)
-            return 1f;
-
-        return (float) role.DownloadedNodes.Count / (float) target;
+        return MathF.Min(comp.DownloadedNodes.Count / (float) target, 1f);
     }
 
     private void OnTerrorGetProgress(EntityUid uid, TerrorConditionComponent comp, ref ObjectiveGetProgressEvent args)

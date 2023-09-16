@@ -9,4 +9,6 @@ namespace Content.Server.Objectives.Components;
 [RegisterComponent, Access(typeof(NinjaConditionsSystem))]
 public sealed partial class StealResearchConditionComponent : Component
 {
+    [DataField("downloadedNodes")]
+    public HashSet<string> DownloadedNodes = new();
 }

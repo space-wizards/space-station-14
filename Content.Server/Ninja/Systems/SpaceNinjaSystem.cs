@@ -93,12 +93,12 @@ public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
     /// </summary>
     private int Download(EntityUid uid, List<string> ids)
     {
-        if (!_mind.TryGetRole<NinjaRoleComponent>(uid, out var role))
+        if (!_mind.TryGetObjectiveComp<StealResearchConditionComponent>(uid, out var obj))
             return 0;
 
-        var oldCount = role.DownloadedNodes.Count;
-        role.DownloadedNodes.UnionWith(ids);
-        var newCount = role.DownloadedNodes.Count;
+        var oldCount = obj.DownloadedNodes.Count;
+        obj.DownloadedNodes.UnionWith(ids);
+        var newCount = obj.DownloadedNodes.Count;
         return newCount - oldCount;
     }
 
