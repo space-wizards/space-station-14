@@ -20,6 +20,15 @@
       - material: Cable
         amount: 4
         doAfter: 1
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 5
+      - !type:DeleteEntity {}
+      steps:
+      - tool: Welding
+        doAfter: 2
 
   - node: caseMissing
     actions:
@@ -29,6 +38,14 @@
       steps:
       - material: Plasteel
         amount: 4
+        doAfter: 1
+    - to: wiresMissing
+      completed:
+      - !type:SpawnPrototype
+        prototype: CableApcStack1
+        amount: 4
+      steps:
+      - tool: Cutting
         doAfter: 1
 
   - node: boxMissing
@@ -45,8 +62,17 @@
       - tag: ForcePhysicsTechPart
         store: box
         name: a force physics box
+    - to: caseMissing
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetPlasteel
+        amount: 4
+      steps:
+      - tool: Screwing
+        doAfter: 1
 
   - node: panelUnscrewedTether
+    entity: PhysicsGunFrame
     actions:
     - !type:AppearanceChange
     edges:
@@ -54,8 +80,16 @@
       steps:
       - tool: Screwing
         doAfter: 1
+    - to: boxMissing
+      completed:
+      - !type:EmptyContainer
+        container: box
+      steps:
+      - tool: Prying
+        doAfter: 0.5
 
   - node: panelUnscrewedForce
+    entity: PhysicsGunFrame
     actions:
     - !type:AppearanceChange
     edges:
@@ -63,9 +97,26 @@
       steps:
       - tool: Screwing
         doAfter: 1
+    - to: boxMissing
+      completed:
+      - !type:EmptyContainer
+        container: box
+      steps:
+      - tool: Prying
+        doAfter: 0.5
 
   - node: tethergun
     entity: WeaponTetherGun
+    edges:
+    - to: panelUnscrewedTether
+      steps:
+      - tool: Screwing
+        doAfter: 1
 
   - node: forcegun
     entity: WeaponForceGun
+    edges:
+    - to: panelUnscrewedForce
+      steps:
+      - tool: Screwing
+        doAfter: 1
