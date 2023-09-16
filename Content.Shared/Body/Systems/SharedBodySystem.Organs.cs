@@ -16,14 +16,14 @@ public partial class SharedBodySystem
     {
     }
 
-    private OrganSlot? CreateOrganSlot(string slotId, EntityUid parent, BodyPartComponent? part = null)
+    private OrganSlot? CreateOrganSlot(string slotName, EntityUid parent, BodyPartComponent? part = null)
     {
         if (!Resolve(parent, ref part, false))
             return null;
 
-        var container = Containers.EnsureContainer<ContainerSlot>(parent,GetOrganContainerName(slotId));
-        var slot = new OrganSlot(slotId, container);
-        part.Organs.Add(slotId, slot);
+        var container = Containers.EnsureContainer<ContainerSlot>(parent,GetOrganContainerName(slotName));
+        var slot = new OrganSlot(slotName, container);
+        part.Organs.Add(slotName, slot);
         return slot;
     }
 
@@ -37,33 +37,36 @@ public partial class SharedBodySystem
         if (partId == null ||
             !Resolve(partId.Value, ref part, false))
             return false;
-        var container = Containers.EnsureContainer<ContainerSlot>(partId.Value, GetBodySlotContainerName(slotId));
+        var container = Containers.EnsureContainer<ContainerSlot>(partId.Value, GetOrganContainerName(slotId));
         slot = new OrganSlot(slotId, container);
         return part.Organs.TryAdd(slotId,slot.Value);
     }
 
-    public bool CanInsertOrgan(EntityUid? partId, string slotId, BodyPartComponent? part = null)
+    public bool CanInsertOrgan(EntityUid? partId, string slotName, BodyPartComponent? part = null)
     {
-        return partId != null && Resolve(partId.Value, ref part) && part.Organs.TryGetValue(slotId, out var slot)
-               && slot.Organ == null;
+        return partId != null && Resolve(partId.Value, ref part) && part.Organs.ContainsKey(slotName);
     }
 
     public bool CanInsertOrgan(EntityUid? partId, OrganSlot slot, BodyPartComponent? part = null)
     {
-        return CanInsertOrgan(partId, slot.Id, part);
+        return CanInsertOrgan(partId, slot.Name, part);
     }
-    public bool InsertOrgan(EntityUid? partId, EntityUid? organId, BodyPartComponent? part = null, OrganComponent? organ = null)
+    public bool InsertOrgan(EntityUid? partId, EntityUid? organId, string slotName, BodyPartComponent? part = null, OrganComponent? organ = null)
     {
-        if (organId == null || partId == null || !Resolve(organId.Value, ref organ, false) || organ.SlotId == null ||
-            !Resolve(partId.Value, ref part, false) || !CanInsertOrgan(partId, organ.SlotId, part))
+        if (organId == null || partId == null || !Resolve(organId.Value, ref organ, false) || organ.AttachedToSlot != null
+            || !Resolve(partId.Value, ref part, false) || !CanInsertOrgan(partId, slotName, part))
             return false;
 
         if (organ.Parent != null)
         {
             DropOrgan(organId, organ);
         }
+        if (!part.Organs[slotName].Container.Insert(organId.Value))
+            return false;
         organ.Parent = partId;
         organ.Body = part.Body;
+        organ.AttachedToSlot = GetOrganContainerName(slotName);
+        Dirty(partId.Value, part);
         Dirty(organId.Value, organ);
 
         RaiseLocalEvent(organId.Value, new AddedToPartEvent(partId.Value));
@@ -76,9 +79,9 @@ public partial class SharedBodySystem
         bool reparent = false, EntityCoordinates? destination = null)
     {
         if (organId == null ||
-            !Resolve(organId.Value, ref organ, false) || organ.SlotId == null ||
+            !Resolve(organId.Value, ref organ, false) || organ.AttachedToSlot == null ||
             organ.Parent is not { } parentPartId || !Resolve(parentPartId, ref parentPart) ||
-            !parentPart.Organs.TryGetValue(organ.SlotId, out var organSlot))
+            !parentPart.Organs.TryGetValue(organ.AttachedToSlot, out var organSlot))
             return false;
         var oldParent = organ.Parent;
 
@@ -121,7 +124,7 @@ public partial class SharedBodySystem
             if (slot.Organ == null)
                 continue;
 
-            InsertOrgan(partId, organId, part, organ);
+            InsertOrgan(partId, organId, slot.Name, part, organ);
             return true;
         }
 

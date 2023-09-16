@@ -76,9 +76,9 @@ public sealed class BodySystem : SharedBodySystem
     }
 
     protected override bool InternalAttachPart(EntityUid? bodyId, EntityUid? parentId, EntityUid partId ,BodyPartComponent part,
-        string slotId, ContainerSlot container)
+        string slotName, ContainerSlot container)
     {
-        if (!base.InternalAttachPart(bodyId, parentId, partId, part, slotId, container))
+        if (!base.InternalAttachPart(bodyId, parentId, partId, part, slotName, container))
             return false;
 
         if (part.Body is { } body &&
@@ -95,11 +95,11 @@ public sealed class BodySystem : SharedBodySystem
         return true;
     }
 
-    protected override bool InternalDetachPart(EntityUid? body, EntityUid partId, BodyPartComponent part, string slotId,
+    protected override bool InternalDetachPart(EntityUid? body, EntityUid partId, BodyPartComponent part, string slotName,
         ContainerSlot container, bool reparent,
         EntityCoordinates? coords)
     {
-        if (!base.InternalDetachPart(body, partId, part, slotId, container, reparent, coords))
+        if (!base.InternalDetachPart(body, partId, part, slotName, container, reparent, coords))
             return false;
 
         if (body != null

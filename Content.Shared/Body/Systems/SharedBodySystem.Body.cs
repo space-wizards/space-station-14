@@ -52,8 +52,7 @@ public partial class SharedBodySystem
         var rootPartEntity =  Spawn(protoRoot.Part, bodyEntity.ToCoordinates());
         var rootPart = Comp<BodyPartComponent>(rootPartEntity);
         AttachPartToRoot(bodyEntity, rootPartEntity, prototype.Root, body, rootPart);
-        var preExisting = new HashSet<string>(){prototype.Root};
-        InitParts(bodyEntity, rootPartEntity, rootPart, prototype, preExisting);
+        InitParts(bodyEntity, rootPartEntity, rootPart, prototype);
         Dirty(rootPartEntity, rootPart);
         Dirty(bodyEntity, body);
     }
@@ -63,11 +62,11 @@ public partial class SharedBodySystem
     {
         initialized ??= new HashSet<string>();
 
-        if (parentPart.SlotId == null || initialized.Contains(parentPart.SlotId))
+        if (parentPart.AttachedToSlot == null || initialized.Contains(parentPart.AttachedToSlot))
             return;
-        initialized.Add(parentPart.SlotId);
+        initialized.Add(parentPart.AttachedToSlot);
 
-        var (_, connections, organs) = prototype.Slots[parentPart.SlotId];
+        var (_, connections, organs) = prototype.Slots[parentPart.AttachedToSlot];
         connections = new HashSet<string>(connections);
         connections.ExceptWith(initialized);
 
@@ -92,19 +91,19 @@ public partial class SharedBodySystem
             subConnections.Add((childPart,childPartComponent, connection));
         }
 
-        foreach (var (organSlotId, organId) in organs)
+        foreach (var (organSlotName, organId) in organs)
         {
             var organ = Spawn(organId, coordinates);
             var organComponent = Comp<OrganComponent>(organ);
 
-            var slot = CreateOrganSlot(organSlotId, parentPartId, parentPart);
+            var slot = CreateOrganSlot(organSlotName, parentPartId, parentPart);
             if (slot == null)
             {
-                Logger.Error($"Could not create slot for connection {organSlotId} in body {prototype.ID}");
+                Logger.Error($"Could not create slot for connection {organSlotName} in body {prototype.ID}");
                 continue;
             }
 
-            InsertOrgan(rootBodyId,organ, parentPart, organComponent);
+            InsertOrgan(parentPartId,organ, organSlotName ,parentPart, organComponent);
         }
 
         foreach (var connection in subConnections)

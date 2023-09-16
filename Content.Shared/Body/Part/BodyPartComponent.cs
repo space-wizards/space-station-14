@@ -14,9 +14,9 @@ public sealed partial class BodyPartComponent : Component
     [DataField("body"), AutoNetworkedField]
     public EntityUid? Body;
 
-    [AutoNetworkedField] public EntityUid? Parent;
+    [AutoNetworkedField, ViewVariables] public EntityUid? Parent;
 
-    [AutoNetworkedField] public string? SlotId = null;
+    [AutoNetworkedField, ViewVariables] public string? AttachedToSlot = null;
 
     [DataField("partType"), AutoNetworkedField]
     public BodyPartType PartType = BodyPartType.Other;
@@ -32,19 +32,51 @@ public sealed partial class BodyPartComponent : Component
     [DataField("symmetry"), AutoNetworkedField]
     public BodyPartSymmetry Symmetry = BodyPartSymmetry.None;
 
-    [AutoNetworkedField(CloneData = true)] public Dictionary<string, BodyPartSlot> Children = new();
+    [AutoNetworkedField(CloneData = true), ViewVariables]
+    public Dictionary<string, BodyPartSlot> Children = new();
 
-    [AutoNetworkedField(CloneData = true)] public Dictionary<string, OrganSlot> Organs = new();
 
+    [AutoNetworkedField(CloneData = true), ViewVariables]
+    public Dictionary<string, OrganSlot> Organs = new();
+
+    [ViewVariables]
+    public List<ContainerSlot> BodyPartSlots
+    {
+        get
+        {
+            List<ContainerSlot> temp = new();
+            foreach (var (_,slotData) in Children)
+            {
+                temp.Add(slotData.Container);
+            }
+            return temp;
+        }
+    }
+
+    [ViewVariables]
+    public List<ContainerSlot> OrganSlots
+    {
+        get
+        {
+            List<ContainerSlot> temp = new();
+            foreach (var (_,slotData) in Organs)
+            {
+                temp.Add(slotData.Container);
+            }
+            return temp;
+        }
+    }
 }
 [NetSerializable, Serializable]
-public readonly record struct BodyPartSlot(string Id, BodyPartType Type, [field: NonSerialized] ContainerSlot Container)
+public readonly record struct BodyPartSlot([field: ViewVariables] string Id,[field: ViewVariables] BodyPartType Type, [field: NonSerialized] ContainerSlot Container)
 {
+    [ViewVariables]
     public EntityUid? Entity => Container.ContainedEntity;
 };
 
 [NetSerializable, Serializable]
-public readonly record struct OrganSlot(string Id, [field: NonSerialized] ContainerSlot Container)
+public readonly record struct OrganSlot([field: ViewVariables] string Name, [field: NonSerialized] ContainerSlot Container)
 {
+    [ViewVariables]
     public EntityUid? Organ => Container.ContainedEntity;
 };

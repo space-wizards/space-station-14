@@ -11,8 +11,8 @@ public sealed partial class OrganComponent : Component
     [DataField("body"), AutoNetworkedField]
     public EntityUid? Body;
 
-    public string? SlotId;
+    [ViewVariables] public string? AttachedToSlot;
 
-    [AutoNetworkedField] public EntityUid? Parent;
+    [AutoNetworkedField, ViewVariables] public EntityUid? Parent;
 
 }
