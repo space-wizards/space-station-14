@@ -19,6 +19,7 @@ using Content.Shared.Spawners.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Fluids.EntitySystems;
@@ -35,6 +36,7 @@ public sealed class SmokeSystem : EntitySystem
     [Dependency] private readonly AppearanceSystem _appearance = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly SolutionContainerSystem _solutionSystem = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -112,24 +114,26 @@ public sealed class SmokeSystem : EntitySystem
         }
 
         // Give our spread to neighbor tiles.
-        if (args.NeighborFreeTiles.Count == 0 && args.Neighbors.Count > 0 && component.SpreadAmount > 0)
+        if (args.NeighborFreeTiles.Count > 0 || args.Neighbors.Count == 0 || component.SpreadAmount < 1)
+            return;
+
+        var smokeQuery = GetEntityQuery<SmokeComponent>();
+
+        _random.Shuffle(args.Neighbors);
+        foreach (var neighbor in args.Neighbors)
         {
-            var smokeQuery = GetEntityQuery<SmokeComponent>();
+            if (!smokeQuery.TryGetComponent(neighbor, out var smoke))
+                continue;
 
-            foreach (var neighbor in args.Neighbors)
+            smoke.SpreadAmount++;
+            args.Updates--;
+            component.SpreadAmount--;
+            EnsureComp<ActiveEdgeSpreaderComponent>(neighbor);
+
+            if (component.SpreadAmount == 0)
             {
-                if (!smokeQuery.TryGetComponent(neighbor, out var smoke))
-                    continue;
-
-                smoke.SpreadAmount++;
-                component.SpreadAmount--;
-                EnsureComp<ActiveEdgeSpreaderComponent>(neighbor);
-
-                if (component.SpreadAmount == 0)
-                {
-                    RemCompDeferred<ActiveEdgeSpreaderComponent>(uid);
-                    break;
-                }
+                RemCompDeferred<ActiveEdgeSpreaderComponent>(uid);
+                break;
             }
         }
     }
