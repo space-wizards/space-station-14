@@ -262,8 +262,8 @@ public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
         Popup.PopupEntity(Loc.GetString("ninja-doorjack-success", ("target", Identity.Entity(args.Target, EntityManager))), uid, uid, PopupType.Medium);
 
         // handle greentext
-        if (_mind.TryGetObjectiveComp<DoorjackConditionComponent>(uid, out var condition))
-            condition.DoorsJacked++;
+        if (_mind.TryGetObjectiveComp<DoorjackConditionComponent>(uid, out var obj))
+            obj.DoorsJacked++;
     }
 
     /// <summary>
