@@ -531,22 +531,9 @@ public sealed class WiresSystem : SharedWiresSystem
             component.WireSeed = _random.Next(1, int.MaxValue);
 
         if (TryComp<WiresPanelSecurityComponent>(uid, out var wiresPanelSecurity) &&
+            !string.IsNullOrEmpty(wiresPanelSecurity.SecurityLevel) &&
             TryComp<ConstructionComponent>(uid, out var construction))
-        {
-            if (string.IsNullOrEmpty(wiresPanelSecurity.BaseGraph))
-                wiresPanelSecurity.BaseGraph = construction.Graph;
-
-            if (string.IsNullOrEmpty(wiresPanelSecurity.BaseGraph))
-                wiresPanelSecurity.BaseNode = construction.Node;
-
-            if (string.IsNullOrEmpty(wiresPanelSecurity.BaseGraph))
-                wiresPanelSecurity.SecurityGraph = construction.Graph;
-
-            if (string.IsNullOrEmpty(wiresPanelSecurity.BaseGraph))
-                wiresPanelSecurity.SecurityNode = construction.Node;
-
-            _constructionSystem.ChangeGraph(uid, null, wiresPanelSecurity.SecurityGraph, wiresPanelSecurity.SecurityNode, true, construction);
-        }
+            _constructionSystem.ChangeNode(uid, null, wiresPanelSecurity.SecurityLevel, true, construction);
 
         UpdateUserInterface(uid);
     }

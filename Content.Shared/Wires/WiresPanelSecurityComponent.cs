@@ -2,6 +2,11 @@ using Robust.Shared.GameStates;
 
 namespace Content.Shared.Wires;
 
+/// <summary>
+///     Allows hacking protections to a be added to an entity.
+///     These safeguards are determined via a construction graph,
+///     so the entity requires <cref="ConstructionComponent"/> for this to function 
+/// </summary>
 [NetworkedComponent, RegisterComponent]
 [Access(typeof(SharedWiresSystem))]
 [AutoGenerateComponentState]
@@ -32,32 +37,11 @@ public sealed partial class WiresPanelSecurityComponent : Component
     public bool WeldingAllowed = true;
 
     /// <summary>
-    ///     Name of the construction graph which contains the entities' security upgrades
+    ///     Name of the construction graph node that the entity will start on
     /// </summary>
-    [DataField("graph")]
+    [DataField("securityLevel")]
     [AutoNetworkedField]
-    public string SecurityGraph = string.Empty;
-
-    /// <summary>
-    ///     Name of the node that the entity will start on
-    /// </summary>
-    [DataField("node")]
-    [AutoNetworkedField]
-    public string SecurityNode = string.Empty;
-
-    /// <summary>
-    ///     Name of the base construction graph
-    /// </summary>
-    [DataField("baseGraph")]
-    [AutoNetworkedField]
-    public string BaseGraph = string.Empty;
-
-    /// <summary>
-    ///     Name of the base node for the base construction graph
-    /// </summary>
-    [DataField("baseNode")]
-    [AutoNetworkedField]
-    public string BaseNode = string.Empty;
+    public string SecurityLevel = string.Empty;
 }
 
 /// <summary>

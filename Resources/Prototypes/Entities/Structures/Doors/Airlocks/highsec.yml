@@ -68,8 +68,7 @@
     usesApcPower: true
   - type: WiresPanel
   - type: WiresPanelSecurity
-    graph: AirlockSecurity
-    node: maxSecurity
+    securityLevel: maxSecurity
   - type: Wires
     BoardName: wires-board-name-highsec
     LayoutId: HighSec
@@ -98,3 +97,6 @@
   - type: Construction
     graph: Airlock
     node: highSecDoor
+  - type: Tag
+    tags:
+      - HighSecDoor

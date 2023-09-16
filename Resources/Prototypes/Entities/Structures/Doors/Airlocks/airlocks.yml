@@ -70,8 +70,7 @@
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/command.rsi
   - type: WiresPanelSecurity
-    graph: AirlockSecurity
-    node: medSecurity
+    securityLevel: medSecurity
 
 - type: entity
   parent: Airlock
@@ -137,7 +136,10 @@
     group: Glass
   - type: RadiationBlocker
     resistance: 2
-
+  - type: Tag
+    tags:
+      - GlassAirlock
+    
 - type: entity
   parent: AirlockGlass
   id: AirlockEngineeringGlass
@@ -218,8 +220,7 @@
   - type: PaintableAirlock
     group: Glass
   - type: WiresPanelSecurity
-    graph: AirlockSecurity
-    node: medSecurity
+    securityLevel: medSecurity
 
 - type: entity
   parent: AirlockGlass
