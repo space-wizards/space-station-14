@@ -124,3 +124,41 @@
       map: ["planLayer"]
   - type: StartItemConstructionOnActivate
     prototype: WeaponMakeshiftLaser
+
+- type: entity
+  parent: [ BaseSchematic, SchematicFoldable ]
+  id: SchematicTetherGun
+  name: tether gun schematic
+  description: A schematic for building a tether gun using a tether physics box. The first step is to build a frame for the device using steel.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/schematics.rsi
+    layers:
+    - state: sheet-folded_nanotrasen
+      map: ["foldedLayer"]
+      visible: false
+    - state: sheet-unfolded_nanotrasen
+      map: ["unfoldedLayer"]
+    - state: plan_tethergun
+      map: ["planLayer"]
+  - type: StartItemConstructionOnActivate
+    prototype: WeaponTetherGun
+
+- type: entity
+  parent: [ BaseSchematic, SchematicFoldable ]
+  id: SchematicForceGun
+  name: force gun schematic
+  description: A schematic for building a force gun using a force physics box. The first step is to build a frame for the device using steel.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/schematics.rsi
+    layers:
+    - state: sheet-folded_nanotrasen
+      map: ["foldedLayer"]
+      visible: false
+    - state: sheet-unfolded_nanotrasen
+      map: ["unfoldedLayer"]
+    - state: plan_forcegun
+      map: ["planLayer"]
+  - type: StartItemConstructionOnActivate
+    prototype: WeaponForceGun
