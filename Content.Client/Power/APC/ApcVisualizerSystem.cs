@@ -78,11 +78,11 @@ enum ApcVisualLayers : byte
     /// <summary>
     /// The sprite layer used for the interface lock indicator light overlay.
     /// </summary>
-    InterfaceLock = 0,
+    InterfaceLock = 3,
     /// <summary>
     /// The sprite layer used for the panel lock indicator light overlay.
     /// </summary>
-    PanelLock = 1,
+    PanelLock = 4,
     /// <summary>
     /// The first of the lock indicator light layers.
     /// </summary>
@@ -91,15 +91,15 @@ enum ApcVisualLayers : byte
     /// <summary>
     /// The sprite layer used for the equipment channel indicator light overlay.
     /// </summary>
-    Equipment = 2,
+    Equipment = 5,
     /// <summary>
     /// The sprite layer used for the lighting channel indicator light overlay.
     /// </summary>
-    Lighting = 3,
+    Lighting = 6,
     /// <summary>
     /// The sprite layer used for the environment channel indicator light overlay.
     /// </summary>
-    Environment = 4,
+    Environment = 7,
     /// <summary>
     /// The first of the channel status indicator light layers.
     /// </summary>
@@ -108,5 +108,5 @@ enum ApcVisualLayers : byte
     /// <summary>
     /// The sprite layer used for the APC screen overlay.
     /// </summary>
-    ChargeState = 5,
+    ChargeState = 2,
 }
