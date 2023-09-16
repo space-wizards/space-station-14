@@ -85,7 +85,7 @@ namespace Content.Server.Tools
                 return false;
 
             // Optional components.
-            Resolve(uid, ref item,ref appearance, false);
+            Resolve(uid, ref item, ref appearance, false);
 
             _light.ResolveLight(uid, ref light);
 
@@ -150,7 +150,9 @@ namespace Content.Server.Tools
                 return false;
 
             // Optional components.
-            Resolve(uid, ref item, ref light, ref appearance, false);
+            Resolve(uid, ref item, ref appearance, false);
+
+            _light.ResolveLight(uid, ref light);
 
             welder.Lit = false;
 

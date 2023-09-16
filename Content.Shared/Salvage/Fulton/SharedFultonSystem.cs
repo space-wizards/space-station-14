@@ -60,6 +60,9 @@ public abstract partial class SharedFultonSystem : EntitySystem
 
     private void OnFultonedGetVerbs(EntityUid uid, FultonedComponent component, GetVerbsEvent<InteractionVerb> args)
     {
+        if (!args.CanAccess || !args.CanInteract)
+            return;
+
         args.Verbs.Add(new InteractionVerb()
         {
             Text = Loc.GetString("fulton-remove"),

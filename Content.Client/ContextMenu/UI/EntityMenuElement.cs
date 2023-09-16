@@ -1,6 +1,7 @@
 using System.Linq;
 using Content.Client.Administration.Managers;
 using Content.Client.Administration.Systems;
+using Content.Client.UserInterface;
 using Content.Shared.Administration;
 using Content.Shared.IdentityManagement;
 using Robust.Client.GameObjects;
@@ -8,7 +9,7 @@ using Robust.Client.Player;
 
 namespace Content.Client.ContextMenu.UI
 {
-    public sealed partial class EntityMenuElement : ContextMenuElement
+    public sealed partial class EntityMenuElement : ContextMenuElement, IEntityControl
     {
         [Dependency] private readonly IClientAdminManager _adminManager = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
@@ -117,5 +118,7 @@ namespace Content.Client.ContextMenu.UI
                 Text = GetEntityDescription(entity.Value);
             }
         }
+
+        EntityUid? IEntityControl.UiEntity => Entity;
     }
 }
