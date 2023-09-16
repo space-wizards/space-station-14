@@ -70,9 +70,18 @@
     steps: 5
     zeroVisible: true
   - type: Appearance
+  - type: ContainerContainer
+    containers:
+      caster: !type:Container
+  - type: ContainerFill
+    containers:
+      caster:
+      - RayCaster
   - type: Construction
     graph: WeaponLaserGun
     node: retrolaserblaster
+    containers:
+    - caster
 
 - type: entity
   name: retro laser blaster
@@ -108,9 +117,18 @@
   - type: Battery
     maxCharge: 500
     startingCharge: 0
+  - type: ContainerContainer
+    containers:
+      caster: !type:Container
+  - type: ContainerFill
+    containers:
+      caster:
+      - RayCaster
   - type: Construction
     graph: WeaponMakeshiftLaser
     node: makeshiftlaserpistol
+    containers:
+    - caster
 
 - type: entity
   name: makeshift laser pistol
@@ -150,9 +168,18 @@
   - type: Battery
     maxCharge: 1000
     startingCharge: 0
+  - type: ContainerContainer
+    containers:
+      caster: !type:Container
+  - type: ContainerFill
+    containers:
+      caster:
+      - RayCaster
   - type: Construction
     graph: WeaponLaserCarbine
     node: laserrifle
+    containers:
+    - caster
 
 - type: entity
   name: laser rifle
@@ -333,9 +360,18 @@
   - type: Battery
     maxCharge: 1000
     startingCharge: 0
+  - type: ContainerContainer
+    containers:
+      caster: !type:Container
+  - type: ContainerFill
+    containers:
+      caster:
+      - HeavyRayCaster
   - type: Construction
     graph: WeaponLaserCannon
     node: lasercannon
+    containers:
+    - caster
 
 - type: entity
   name: laser cannon
@@ -566,9 +602,18 @@
     - HighRiskItem
   - type: StaticPrice
     price: 750
+  - type: ContainerContainer
+    containers:
+      caster: !type:Container
+  - type: ContainerFill
+    containers:
+      caster:
+      - RayCaster
   - type: Construction
     graph: WeaponAntiqueLaser
     node: antiquelaserpistol
+    containers:
+    - caster
 
 - type: entity
   name: antique laser pistol
@@ -618,9 +663,18 @@
   - type: Appearance
   - type: StaticPrice
     price: 63
+  - type: ContainerContainer
+    containers:
+      caster: !type:Container
+  - type: ContainerFill
+    containers:
+      caster:
+      - RayCaster
   - type: Construction
     graph: WeaponAdvancedLaser
     node: advancedlaserpistol
+    containers:
+    - caster
 
 - type: entity
   name: advanced laser pistol

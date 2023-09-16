@@ -52,6 +52,11 @@
     containers:
       gun_magazine: !type:ContainerSlot
       gun_chamber: !type:ContainerSlot
+      receiver: !type:Container
+  - type: ContainerFill
+    containers:
+      receiver:
+      - ModularReceiver
   - type: MagazineVisuals
     magState: mag
     steps: 1
@@ -97,6 +102,8 @@
   - type: Construction
     graph: WeaponPistolViper
     node: viper
+    containers:
+    - receiver
 
 - type: entity
   name: viper
@@ -169,6 +176,8 @@
   - type: Construction
     graph: WeaponPistolCobra
     node: cobra
+    containers:
+    - receiver
 
 - type: entity
   name: cobra
@@ -237,6 +246,8 @@
   - type: Construction
     graph: WeaponPistolMk58
     node: mk58
+    containers:
+    - receiver
 
 - type: entity
   name: mk 58

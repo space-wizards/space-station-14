@@ -11,6 +11,15 @@
     - state: animation-icon
       visible: false
       map: [ "empty-icon" ]
+  - type: ContainerContainer
+    containers:
+      charger: !type:Container
+  - type: ContainerFill
+    containers:
+      charger:
+      - ProtoKineticCharger
   - type: Construction
     graph: WeaponProtoKineticAccelerator
     node: pka
+    containers:
+    - charger

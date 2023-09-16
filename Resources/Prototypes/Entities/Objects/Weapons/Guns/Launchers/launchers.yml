@@ -186,9 +186,18 @@
           unshaded:
             True: { visible: true }
             False: { visible: false }
+    - type: ContainerContainer
+      containers:
+        box: !type:Container
+    - type: ContainerFill
+      containers:
+        box:
+        - TetherPhysicsBox
     - type: Construction
       graph: WeaponPhysicsGun
       node: tethergun
+      containers:
+      - box
       
 
 - type: entity
@@ -233,9 +242,18 @@
               unshaded:
                 True: { visible: true }
                 False: { visible: false }
+    - type: ContainerContainer
+      containers:
+        box: !type:Container
+    - type: ContainerFill
+      containers:
+        box:
+        - ForcePhysicsBox
     - type: Construction
       graph: WeaponPhysicsGun
       node: forcegun
+      containers:
+      - box
 
 - type: entity
   name: grappling gun
