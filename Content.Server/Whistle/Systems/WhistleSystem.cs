@@ -7,7 +7,7 @@ using Robust.Server.GameObjects;
 
 namespace Content.Server.Whistle;
 
-public class WhistleSystem : EntitySystem
+public sealed class WhistleSystem : EntitySystem
 {
     [Dependency] private readonly TransformSystem _transform = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
