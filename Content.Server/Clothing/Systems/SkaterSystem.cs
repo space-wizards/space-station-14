@@ -7,8 +7,8 @@ namespace Content.Server.Clothing;
 
 public sealed class SkaterSystem : EntitySystem
 {
-    [Dependency] private readonly SharedStunSystem _stunSystem = default!;
-    [Dependency] private readonly IRobustRandom _robustRandom = default!;
+    [Dependency] private readonly SharedStunSystem _stun = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
 
     public override void Initialize()
@@ -20,10 +20,10 @@ public sealed class SkaterSystem : EntitySystem
 
     public void OnMove(EntityUid uid, SkaterComponent component, ref MoveInputEvent args)
     {
-        if (_robustRandom.Prob(component.KnockChance))
+        if (_random.Prob(component.KnockChance))
         {
             _audio.PlayPvs(component.KnockSound, uid);
-            _stunSystem.TryParalyze(args.Entity, TimeSpan.FromSeconds(component.ParalyzeTime), true);
+            _stun.TryParalyze(args.Entity, TimeSpan.FromSeconds(component.ParalyzeTime), true);
         }
     }
 }

@@ -18,8 +18,7 @@ public sealed class SkatesSystem : EntitySystem
     {
         if (args.Slot == "shoes")
         {
-            if (HasComp<SkaterComponent>(args.Equipee))
-                RemComp<SkaterComponent>(args.Equipee);
+            RemComp<SkaterComponent>(args.Equipee);
         }
     }
 
@@ -27,8 +26,7 @@ public sealed class SkatesSystem : EntitySystem
     {
         if (args.Slot == "shoes")
         {
-            if (!HasComp<SkaterComponent>(args.Equipee))
-                AddComp<SkaterComponent>(args.Equipee);
+            EnsureComp<SkaterComponent>(args.Equipee);
         }
     }
 }
