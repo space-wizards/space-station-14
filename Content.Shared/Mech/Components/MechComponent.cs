@@ -158,14 +158,9 @@ public sealed partial class MechComponent : Component
     public string? BrokenState;
     #endregion
 
-    [DataField("mechCycleActionEntity")]
-    public EntityUid? MechCycleActionEntity;
-
-    [DataField("mechUiActionEntity")]
-    public EntityUid? MechUiActionEntity;
-
-    [DataField("mechEjectActionEntity")]
-    public EntityUid? MechEjectActionEntity;
+    [DataField] public EntityUid? MechCycleActionEntity;
+    [DataField] public EntityUid? MechUiActionEntity;
+    [DataField] public EntityUid? MechEjectActionEntity;
 }
 
 /// <summary>

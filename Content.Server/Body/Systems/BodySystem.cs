@@ -202,10 +202,11 @@ public sealed class BodySystem : SharedBodySystem
 
         if (TryComp(bodyId, out ContainerManagerComponent? container))
         {
-            // TODO OH GOD fix this
-            // please no, dont just grab all containers
-            // containers can contain abstract entities like actions
             // AAAAAAAAAAAAAAAAAAAAAA
+            // TODO somebody fix this
+            // this just dumps all containers. it **really** shouldn't do that
+            // containers can contain abstract entities like actions. It should just handle body+hands+inventory
+            // or rally just body, inventorty & hand containers should depend on body parts.
             foreach (var cont in container.GetAllContainers().ToArray())
             {
                 foreach (var ent in cont.ContainedEntities.ToArray())

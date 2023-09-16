@@ -25,6 +25,5 @@ public sealed partial class MobStateActionsComponent : Component
     [DataField("actions")]
     public Dictionary<MobState, List<string>> Actions = new();
 
-    [DataField("grantedActions")]
-    public List<EntityUid> GrantedActions = new();
+    [DataField] public List<EntityUid> GrantedActions = new();
 }

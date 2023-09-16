@@ -26,7 +26,6 @@ namespace Content.Server.Polymorph.Components
         [DataField("time")]
         public float Time;
 
-        [DataField("action")]
-        public EntityUid? Action;
+        [DataField] public EntityUid? Action;
     }
 }

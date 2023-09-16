@@ -1,5 +1,6 @@
 using Content.Shared.Actions;
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Implants.Components;
 
@@ -16,9 +17,9 @@ public sealed partial class SubdermalImplantComponent : Component
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("implantAction")]
-    public string? ImplantAction;
+    public EntProtoId? ImplantAction;
 
-    [DataField("action"), AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public EntityUid? Action;
 
     /// <summary>

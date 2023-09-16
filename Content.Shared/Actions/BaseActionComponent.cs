@@ -49,7 +49,7 @@ public abstract partial class BaseActionComponent : Component
     ///     The toggle can set directly via <see cref="SharedActionsSystem.SetToggled"/>, but it will also be
     ///     automatically toggled for targeted-actions while selecting a target.
     /// </remarks>
-    [DataField("toggled")]
+    [DataField]
     public bool Toggled;
 
     /// <summary>
@@ -74,7 +74,7 @@ public abstract partial class BaseActionComponent : Component
     /// This should almost always be non-null.
     /// </summary>
     [Access(typeof(ActionContainerSystem), typeof(SharedActionsSystem))]
-    [DataField("container")]
+    [DataField]
     public EntityUid? Container;
 
     /// <summary>
@@ -96,7 +96,7 @@ public abstract partial class BaseActionComponent : Component
         set => EntIcon = value;
     }
 
-    [DataField("entityIcon")]
+    [DataField]
     public EntityUid? EntIcon;
 
     /// <summary>
