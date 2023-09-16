@@ -1,12 +1,8 @@
 using Content.Server.Administration.Commands;
 using Content.Server.Communications;
 using Content.Server.Chat.Managers;
-using Content.Server.StationEvents.Components;
 using Content.Server.GameTicking;
-using Content.Server.GameTicking.Rules;
 using Content.Server.GameTicking.Rules.Components;
-using Content.Server.Ghost.Roles.Events;
-using Content.Server.Objectives;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.PowerCell;
@@ -22,16 +18,11 @@ using Content.Shared.Mind.Components;
 using Content.Shared.Ninja.Components;
 using Content.Shared.Ninja.Systems;
 using Content.Shared.Popups;
-using Content.Shared.Roles;
-using Content.Shared.PowerCell.Components;
 using Content.Shared.Rounding;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Physics.Components;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using Content.Server.Objectives.Components;
 
 namespace Content.Server.Ninja.Systems;
@@ -292,9 +283,9 @@ public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
 
     private void OnThreatCalledIn(EntityUid uid, SpaceNinjaComponent comp, ref ThreatCalledInEvent args)
     {
-        if (_mind.TryGetRole<NinjaRoleComponent>(uid, out var role))
+        if (_mind.TryGetObjectiveComp<TerrorConditionComponent>(uid, out var obj))
         {
-            role.CalledInThreat = true;
+            obj.CalledInThreat = true;
         }
     }
 }

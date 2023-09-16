@@ -8,4 +8,9 @@ namespace Content.Server.Objectives.Components;
 [RegisterComponent, Access(typeof(NinjaConditionsSystem))]
 public sealed partial class TerrorConditionComponent : Component
 {
+    /// <summary>
+    /// Whether the comms console has been hacked
+    /// </summary>
+    [DataField("calledInThreat")]
+    public bool CalledInThreat;
 }

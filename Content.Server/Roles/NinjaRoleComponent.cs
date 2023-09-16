@@ -25,10 +25,4 @@ public sealed partial class NinjaRoleComponent : AntagonistRoleComponent
     /// </summary>
     [DataField("spiderChargeDetonated")]
     public bool SpiderChargeDetonated;
-
-    /// <summary>
-    /// Whether the comms console has been hacked, used for objective
-    /// </summary>
-    [DataField("calledInThreat")]
-    public bool CalledInThreat;
 }

@@ -2,7 +2,6 @@ using Content.Server.Roles;
 using Content.Server.Objectives.Components;
 using Content.Server.Warps;
 using Content.Shared.Objectives.Components;
-using Robust.Shared.GameObjects;
 
 namespace Content.Server.Objectives.Systems;
 
@@ -91,10 +90,8 @@ public sealed class NinjaConditionsSystem : EntitySystem
         return (float) role.DownloadedNodes.Count / (float) target;
     }
 
-    // terror
-
     private void OnTerrorGetProgress(EntityUid uid, TerrorConditionComponent comp, ref ObjectiveGetProgressEvent args)
     {
-        args.Progress = TryComp<NinjaRoleComponent>(args.MindId, out var role) && role.CalledInThreat ? 1f : 0f;
+        args.Progress = comp.CalledInThreat ? 1f : 0f;
     }
 }
