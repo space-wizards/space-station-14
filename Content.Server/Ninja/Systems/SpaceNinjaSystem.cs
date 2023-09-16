@@ -48,7 +48,6 @@ public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedMindSystem _mind = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly StealthClothingSystem _stealthClothing = default!;
 
     public override void Initialize()
