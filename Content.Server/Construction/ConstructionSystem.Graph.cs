@@ -285,7 +285,7 @@ namespace Content.Server.Construction
         /// <param name="containerManager">The container manager component of the target entity. Will be resolved if null,
         ///                                but it is an optional component and not required for the method to work.</param>
         /// <returns>The new entity, or null if the method did not succeed.</returns>
-        private EntityUid? ChangeEntity(EntityUid uid, EntityUid? userUid, string newEntity,
+        public EntityUid? ChangeEntity(EntityUid uid, EntityUid? userUid, string newEntity,
             ConstructionComponent? construction = null,
             MetaDataComponent? metaData = null,
             TransformComponent? transform = null,

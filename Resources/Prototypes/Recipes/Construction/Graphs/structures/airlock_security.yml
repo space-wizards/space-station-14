@@ -1,35 +1,23 @@
 - type: constructionGraph
-  id: HighSecDoor
+  id: AirlockSecurity
   start: start
   graph:
-  - node: start
+  - node: unsecuredAirlock
     actions:
     - !type:SetWiresPanelSecurity
-      level: Level0
-    edges:
-    - to: medSecurityBreached
-      conditions:
-      - !type:WirePanel {}
-      steps:
-      - material: Steel
-        amount: 2
-        doAfter: 2
-    
-    - to: highSecurityBreached
-      conditions:
-      - !type:WirePanel {}
-      steps:
-      - material: Plasteel
-        amount: 2
-        doAfter: 2
+      wiresAccessible: true     
+      weldingAllowed: true
+    - !type:RemoveWiresPanelSecurity
 
 ## Medium security level door: a layer of steel plating protects the internal wiring
-  - node: medSecurityBreached
+  - node: medSecurityUnfinished
     actions:
-      - !type:SetWiresPanelSecurity
-        level: Level1    
+    - !type:SetWiresPanelSecurity
+      examine: wires-panel-component-on-examine-security-level1
+      wiresAccessible: false     
+      weldingAllowed: false
     edges:
-    - to: start 
+    - to: unsecuredAirlock 
       completed:
       - !type:GivePrototype
         prototype: SheetSteel1
@@ -49,10 +37,12 @@
       
   - node: medSecurity
     actions:
-      - !type:SetWiresPanelSecurity
-        level: Level2
+    - !type:SetWiresPanelSecurity
+      examine: wires-panel-component-on-examine-security-level2
+      wiresAccessible: false     
+      weldingAllowed: false
     edges:
-    - to: medSecurityBreached 
+    - to: medSecurityUnfinished 
       conditions:
       - !type:WirePanel {}
       steps:
@@ -60,12 +50,14 @@
         doAfter: 10
 
 ## High security level door: a layer of plasteel plating protects the internal wiring
-  - node: highSecurityBreached
+  - node: highSecurityUnfinished
     actions:
-      - !type:SetWiresPanelSecurity
-        level: Level3   
+    - !type:SetWiresPanelSecurity
+      examine: wires-panel-component-on-examine-security-level3
+      wiresAccessible: false     
+      weldingAllowed: false
     edges:
-    - to: start 
+    - to: unsecuredAirlock 
       completed:
       - !type:GivePrototype
         prototype: SheetPlasteel1
@@ -85,10 +77,12 @@
       
   - node: highSecurity
     actions:
-      - !type:SetWiresPanelSecurity
-        level: Level4
+    - !type:SetWiresPanelSecurity
+      examine: wires-panel-component-on-examine-security-level4
+      wiresAccessible: false     
+      weldingAllowed: false
     edges:
-    - to: highSecurityBreached
+    - to: highSecurityUnfinished
       conditions:
       - !type:WirePanel {}
       steps:
@@ -106,8 +100,10 @@
 ## Max security level door: an electric grill is added        
   - node: maxSecurity
     actions:
-      - !type:SetWiresPanelSecurity
-        level: Level5
+    - !type:SetWiresPanelSecurity
+      examine: wires-panel-component-on-examine-security-level5
+      wiresAccessible: false     
+      weldingAllowed: true
     edges:
     - to: highSecurity 
       completed:
@@ -121,7 +117,7 @@
       - tool: Cutting
         doAfter: 0.5 
 
-    - to: superMaxSecurityBreached
+    - to: superMaxSecurityUnfinished
       conditions:
       - !type:WirePanel {}
       steps:     
@@ -130,10 +126,12 @@
         doAfter: 2
 
 ## Super max security level door: an additional layer of plasteel is added     
-  - node: superMaxSecurityBreached
+  - node: superMaxSecurityUnfinished
     actions:
-      - !type:SetWiresPanelSecurity
-        level: Level6
+    - !type:SetWiresPanelSecurity
+      examine: wires-panel-component-on-examine-security-level6
+      wiresAccessible: false     
+      weldingAllowed: false
     edges:
     - to: maxSecurity 
       completed:
@@ -155,10 +153,12 @@
       
   - node: superMaxSecurity
     actions:
-      - !type:SetWiresPanelSecurity
-        level: Level7
+    - !type:SetWiresPanelSecurity
+      examine: wires-panel-component-on-examine-security-level7
+      wiresAccessible: false     
+      weldingAllowed: false
     edges:
-    - to: superMaxSecurityBreached 
+    - to: superMaxSecurityUnfinished 
       conditions:
       - !type:WirePanel {}
       steps:
