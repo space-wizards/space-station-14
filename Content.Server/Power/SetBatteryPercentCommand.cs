@@ -8,6 +8,8 @@ namespace Content.Server.Power
     [AdminCommand(AdminFlags.Debug)]
     public sealed class SetBatteryPercentCommand : IConsoleCommand
     {
+        [Dependency] private readonly IEntityManager _entManager = default!;
+
         public string Command => "setbatterypercent";
         public string Description => "Drains or recharges a battery by entity uid and percentage, i.e.: forall with Battery do setbatterypercent $ID 0";
         public string Help => $"{Command} <id> <percent>";
@@ -20,7 +22,7 @@ namespace Content.Server.Power
                 return;
             }
 
-            if (!EntityUid.TryParse(args[0], out var id))
+            if (!NetEntity.TryParse(args[0], out var netEnt) || !_entManager.TryGetEntity(netEnt, out var id))
             {
                 shell.WriteLine($"{args[0]} is not a valid entity id.");
                 return;
@@ -32,9 +34,7 @@ namespace Content.Server.Power
                 return;
             }
 
-            var entityManager = IoCManager.Resolve<IEntityManager>();
-
-            if (!entityManager.TryGetComponent<BatteryComponent>(id, out var battery))
+            if (!_entManager.TryGetComponent<BatteryComponent>(id, out var battery))
             {
                 shell.WriteLine($"No battery found with id {id}.");
                 return;

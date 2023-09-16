@@ -13,7 +13,7 @@ public abstract partial class SharedInteractionSystem
 
     private void OnGetState(EntityUid uid, InteractionRelayComponent component, ref ComponentGetState args)
     {
-        args.State = new InteractionRelayComponentState(component.RelayEntity);
+        args.State = new InteractionRelayComponentState(GetNetEntity(component.RelayEntity));
     }
 
     private void OnHandleState(EntityUid uid, InteractionRelayComponent component, ref ComponentHandleState args)
@@ -21,7 +21,7 @@ public abstract partial class SharedInteractionSystem
         if (args.Current is not InteractionRelayComponentState state)
             return;
 
-        component.RelayEntity = state.RelayEntity;
+        component.RelayEntity = EnsureEntity<InteractionRelayComponent>(state.RelayEntity, uid);
     }
 
     public void SetRelay(EntityUid uid, EntityUid? relayEntity, InteractionRelayComponent? component = null)

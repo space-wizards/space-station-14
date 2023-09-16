@@ -9,6 +9,8 @@ namespace Content.Server.Administration.Commands
     [AdminCommand(AdminFlags.Fun)]
     public sealed class SetSolutionCapacity : IConsoleCommand
     {
+        [Dependency] private readonly IEntityManager _entManager = default!;
+
         public string Command => "setsolutioncapacity";
         public string Description => "Set the capacity (maximum volume) of some solution.";
         public string Help => $"Usage: {Command} <target> <solution> <new capacity>";
@@ -21,13 +23,13 @@ namespace Content.Server.Administration.Commands
                 return;
             }
 
-            if (!EntityUid.TryParse(args[0], out var uid))
+            if (!NetEntity.TryParse(args[0], out var uidNet))
             {
                 shell.WriteLine($"Invalid entity id.");
                 return;
             }
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(uid, out SolutionContainerManagerComponent? man))
+            if (!_entManager.TryGetEntity(uidNet, out var uid) || !_entManager.TryGetComponent(uid, out SolutionContainerManagerComponent? man))
             {
                 shell.WriteLine($"Entity does not have any solutions.");
                 return;
@@ -54,7 +56,7 @@ namespace Content.Server.Administration.Commands
             }
 
             var quantity = FixedPoint2.New(quantityFloat);
-            EntitySystem.Get<SolutionContainerSystem>().SetCapacity(uid, solution, quantity);
+            _entManager.System<SolutionContainerSystem>().SetCapacity(uid.Value, solution, quantity);
         }
     }
 }

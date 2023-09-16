@@ -29,6 +29,9 @@ public sealed class NavMapSystem : SharedNavMapSystem
                 TileData = data,
             });
         }
+
+        component.Beacons.Clear();
+        component.Beacons.AddRange(state.Beacons);
     }
 }
 

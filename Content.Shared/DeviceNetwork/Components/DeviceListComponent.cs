@@ -40,11 +40,11 @@ public sealed partial class DeviceListComponent : Component
 [Serializable, NetSerializable]
 public sealed class DeviceListComponentState : ComponentState
 {
-    public readonly HashSet<EntityUid> Devices;
+    public readonly HashSet<NetEntity> Devices;
     public readonly bool IsAllowList;
     public readonly bool HandleIncomingPackets;
 
-    public DeviceListComponentState(HashSet<EntityUid> devices, bool isAllowList, bool handleIncomingPackets)
+    public DeviceListComponentState(HashSet<NetEntity> devices, bool isAllowList, bool handleIncomingPackets)
     {
         Devices = devices;
         IsAllowList = isAllowList;

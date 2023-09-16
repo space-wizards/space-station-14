@@ -20,7 +20,7 @@ public sealed partial class GatewayComponent : Component
     /// Every other gateway destination on the server.
     /// </summary>
     /// <remarks>
-    /// Added on
+    /// Added on startup and when a new destination portal is created.
     /// </remarks>
     [ViewVariables]
     public HashSet<EntityUid> Destinations = new();

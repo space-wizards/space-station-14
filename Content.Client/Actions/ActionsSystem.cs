@@ -63,13 +63,16 @@ namespace Content.Client.Actions
 
         private void HandleComponentState(EntityUid uid, ActionsComponent component, ref ComponentHandleState args)
         {
-            if (args.Current is not ActionsComponentState)
+            if (args.Current is not ActionsComponentState state)
                 return;
+
+            component.Actions.Clear();
+            component.Actions.UnionWith(EnsureEntitySet<ActionsComponent>(state.Actions, uid));
 
             _actionHoldersQueue.Enqueue(uid);
         }
 
-        protected override void AddActionInternal(EntityUid actionId, IContainer container)
+        protected override void AddActionInternal(EntityUid holderId, EntityUid actionId, BaseContainer container, ActionsComponent holder)
         {
             // Sometimes the client receives actions from the server, before predicting that newly added components will add
             // their own shared actions. Just in case those systems ever decided to directly access action properties (e.g.,
@@ -80,11 +83,11 @@ namespace Content.Client.Actions
             }
             else
             {
-                container.Insert(actionId);
+                base.AddActionInternal(holderId, actionId, container, holder);
             }
         }
 
-        public override void AddAction(EntityUid holderId, EntityUid actionId, EntityUid? provider, ActionsComponent? holder = null, BaseActionComponent? action = null, bool dirty = true, IContainer? actionContainer = null)
+        public override void AddAction(EntityUid holderId, EntityUid actionId, EntityUid? provider, ActionsComponent? holder = null, BaseActionComponent? action = null, bool dirty = true, BaseContainer? actionContainer = null)
         {
             if (!Resolve(holderId, ref holder, false))
                 return;
@@ -103,7 +106,7 @@ namespace Content.Client.Actions
                 ActionAdded?.Invoke(actionId);
         }
 
-        public override void RemoveAction(EntityUid holderId, EntityUid? actionId, ActionsComponent? comp = null, BaseActionComponent? action = null, bool dirty = true, ContainerManagerComponent? actionContainer = null)
+        public override void RemoveAction(EntityUid holderId, EntityUid? actionId, ActionsComponent? comp = null, BaseActionComponent? action = null, bool dirty = true)
         {
             if (GameTiming.ApplyingState)
                 return;
@@ -120,7 +123,7 @@ namespace Content.Client.Actions
                 return;
 
             dirty &= !action?.ClientExclusive ?? true;
-            base.RemoveAction(holderId, actionId, comp, action, dirty, actionContainer);
+            base.RemoveAction(holderId, actionId, comp, action, dirty);
 
             if (_playerManager.LocalPlayer?.ControlledEntity != holderId)
                 return;
@@ -192,32 +195,10 @@ namespace Content.Client.Actions
             }
             else
             {
-                var request = new RequestPerformActionEvent(actionId);
+                var request = new RequestPerformActionEvent(GetNetEntity(actionId));
                 EntityManager.RaisePredictiveEvent(request);
             }
         }
-
-        /*public void SaveActionAssignments(string path)
-        {
-
-            // Currently only tested with temporary innate actions (i.e., mapping actions). No guarantee it works with
-            // other actions. If its meant to be used for full game state saving/loading, the entity that provides
-            // actions needs to keep the same uid.
-
-            var sequence = new SequenceDataNode();
-
-            foreach (var (action, assigns) in Assignments.Assignments)
-            {
-                var slot = new MappingDataNode();
-                slot.Add("action", _serializationManager.WriteValue(action));
-                slot.Add("assignments", _serializationManager.WriteValue(assigns));
-                sequence.Add(slot);
-            }
-
-            using var writer = _resourceManager.UserData.OpenWriteText(new ResourcePath(path).ToRootedPath());
-            var stream = new YamlStream { new(sequence.ToSequenceNode()) };
-            stream.Save(new YamlMappingFix(new Emitter(writer)), false);
-        }*/
 
         /// <summary>
         ///     Load actions and their toolbar assignments from a file.
@@ -281,7 +262,7 @@ namespace Content.Client.Actions
                 return;
 
             var removed = new List<EntityUid>();
-            var added = new List<EntityUid>();
+            var added = new List<(EntityUid Id, BaseActionComponent Comp)>();
             var query = GetEntityQuery<ActionsComponent>();
             var queue = new Queue<EntityUid>(_actionHoldersQueue);
             _actionHoldersQueue.Clear();
@@ -305,7 +286,7 @@ namespace Content.Client.Actions
                     if (data.ClientExclusive)
                         continue;
 
-                    if (!container.Contains(act))
+                    if (!holder.Actions.Contains(act))
                     {
                         holder.OldClientActions.Remove(act);
                         if (data.AutoRemove)
@@ -314,13 +295,15 @@ namespace Content.Client.Actions
                 }
 
                 // Anything that remains is a new action
-                foreach (var newAct in container.ContainedEntities)
+                foreach (var newAct in holder.Actions)
                 {
-                    if (!holder.OldClientActions.ContainsKey(newAct))
-                        added.Add(newAct);
+                    if (!TryGetActionData(newAct, out var serverData))
+                        continue;
 
-                    if (TryGetActionData(newAct, out var serverData))
-                        holder.OldClientActions[newAct] = new ActionMetaData(serverData.ClientExclusive, serverData.AutoRemove);
+                    if (!holder.OldClientActions.ContainsKey(newAct))
+                        added.Add((newAct, serverData));
+
+                    holder.OldClientActions[newAct] = new ActionMetaData(serverData.ClientExclusive, serverData.AutoRemove);
                 }
 
                 if (_playerManager.LocalPlayer?.ControlledEntity != holderId)
@@ -331,9 +314,29 @@ namespace Content.Client.Actions
                     ActionRemoved?.Invoke(action);
                 }
 
+                added.Sort(static (a, b) =>
+                {
+                    if (a.Comp.Priority != b.Comp.Priority)
+                        return a.Comp.Priority - b.Comp.Priority;
+
+                    if (a.Comp.Provider != b.Comp.Provider)
+                    {
+                        if (a.Comp.Provider == null)
+                            return -1;
+
+                        if (b.Comp.Provider == null)
+                            return 1;
+
+                        // uid to int casting... it says "Do NOT use this in content". You can't tell me what to do.
+                        return (int) a.Comp.Provider - (int) b.Comp.Provider;
+                    }
+
+                    return 0;
+                });
+
                 foreach (var action in added)
                 {
-                    ActionAdded?.Invoke(action);
+                    ActionAdded?.Invoke(action.Item1);
                 }
 
                 ActionsUpdated?.Invoke();

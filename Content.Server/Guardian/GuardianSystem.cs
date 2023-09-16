@@ -46,7 +46,6 @@ namespace Content.Server.Guardian
             SubscribeLocalEvent<GuardianComponent, PlayerDetachedEvent>(OnGuardianUnplayer);
 
             SubscribeLocalEvent<GuardianHostComponent, ComponentInit>(OnHostInit);
-            SubscribeLocalEvent<GuardianHostComponent, MapInitEvent>(OnHostMapInit);
             SubscribeLocalEvent<GuardianHostComponent, MoveEvent>(OnHostMove);
             SubscribeLocalEvent<GuardianHostComponent, MobStateChangedEvent>(OnHostStateChange);
             SubscribeLocalEvent<GuardianHostComponent, ComponentShutdown>(OnHostShutdown);
@@ -90,10 +89,6 @@ namespace Content.Server.Guardian
         private void OnHostInit(EntityUid uid, GuardianHostComponent component, ComponentInit args)
         {
             component.GuardianContainer = uid.EnsureContainer<ContainerSlot>("GuardianContainer");
-        }
-
-        private void OnHostMapInit(EntityUid uid, GuardianHostComponent component, MapInitEvent args)
-        {
             _actionSystem.AddAction(uid, ref component.ActionEntity, component.Action);
         }
 
@@ -172,7 +167,7 @@ namespace Content.Server.Guardian
                 return;
             }
 
-            _doAfterSystem.TryStartDoAfter(new DoAfterArgs(user, component.InjectionDelay, new GuardianCreatorDoAfterEvent(), injector, target: target, used: injector)
+            _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, user, component.InjectionDelay, new GuardianCreatorDoAfterEvent(), injector, target: target, used: injector)
             {
                 BreakOnTargetMove = true,
                 BreakOnUserMove = true
@@ -305,22 +300,11 @@ namespace Content.Server.Guardian
                 RetractGuardian(hostUid, hostComponent, guardianUid, guardianComponent);
         }
 
-        private bool CanRelease(EntityUid guardian)
-        {
-            return HasComp<ActorComponent>(guardian);
-        }
-
         private void ReleaseGuardian(EntityUid host, GuardianHostComponent hostComponent, EntityUid guardian, GuardianComponent guardianComponent)
         {
             if (guardianComponent.GuardianLoose)
             {
                 DebugTools.Assert(!hostComponent.GuardianContainer.Contains(guardian));
-                return;
-            }
-
-            if (!CanRelease(guardian))
-            {
-                _popupSystem.PopupEntity(Loc.GetString("guardian-no-soul"), host, host);
                 return;
             }
 

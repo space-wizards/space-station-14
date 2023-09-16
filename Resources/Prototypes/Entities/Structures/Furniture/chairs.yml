@@ -324,3 +324,19 @@
   components:
   - type: Foldable
     folded: true
+
+- type: entity
+  name: steel bench
+  id: SteelBench
+  parent: SeatBase
+  description: A long chair made for a metro. Really standard design.
+  components:
+  - type: Transform
+    anchored: true
+  - type: Physics
+    bodyType: Static
+  - type: Anchorable
+  - type: Rotatable
+  - type: Sprite
+    state: steel-bench
+ 
