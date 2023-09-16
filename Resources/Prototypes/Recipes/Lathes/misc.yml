@@ -110,3 +110,30 @@
     Steel: 300
     Glass: 300
     Gold: 500
+
+- type: latheRecipe
+  id: HeavyRayCaster
+  result: HeavyRayCaster
+  completetime: 3
+  materials:
+    Steel: 300
+    Glass: 300
+    Gold: 500
+
+- type: latheRecipe
+  id: TetherPhysicsBox
+  result: TetherPhysicsBox
+  completetime: 3
+  materials:
+    Steel: 100
+    Glass: 400
+    Silver: 200
+
+- type: latheRecipe
+  id: ForcePhysicsBox
+  result: ForcePhysicsBox
+  completetime: 3
+  materials:
+    Steel: 100
+    Glass: 400
+    Silver: 200

@@ -1,4 +1,4 @@
-﻿# Tier 1
+# Tier 1
 
 - type: technology
   id: BasicRobotics
@@ -151,3 +151,7 @@
   recipeUnlocks:
     - WeaponForceGun
     - WeaponTetherGun
+    - SchematicForceGun
+    - SchematicTetherGun
+    - ForcePhysicsBox
+    - TetherPhysicsBox

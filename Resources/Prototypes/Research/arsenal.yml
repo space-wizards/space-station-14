@@ -102,6 +102,7 @@
   recipeUnlocks:
   - WeaponLaserCannon
   - SchematicLaserCannon
+  - HeavyRayCaster
 
 - type: technology
   id: WaveParticleHarnessing

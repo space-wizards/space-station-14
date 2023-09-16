@@ -257,6 +257,8 @@
       - WeaponForceGun
       - WeaponProtoKineticAccelerator
       - WeaponTetherGun
+      - ForcePhysicsBox
+      - TetherPhysicsBox
       - WeaponGrapplingGun
       - ClothingBackpackHolding
       - ClothingBackpackSatchelHolding
@@ -265,8 +267,11 @@
       - JawsOfLife
       - ClothingEyesGlassesChemical
       - RayCaster
+      - HeavyRayCaster
       - ProtoKineticCharger
       - SchematicProtoKineticAccelerator
+      - SchematicTetherGun
+      - SchematicForceGun
   - type: EmagLatheRecipes
     emagDynamicRecipes:
       - ExplosivePayload
