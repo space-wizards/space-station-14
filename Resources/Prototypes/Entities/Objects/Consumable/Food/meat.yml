@@ -846,7 +846,7 @@
           Quantity: 5
   - type: Construction
     graph: GoliathSteak
-    name: goliath steak
+    node: goliath steak
 
 - type: entity
   name: lizard steak
@@ -874,7 +874,7 @@
     slice: FoodMeatLizardCutletCooked
   - type: Construction
     graph: LizardSteak
-    name: lizard steak
+    node: lizard steak
 
 - type: entity
   name: boiled spider leg
