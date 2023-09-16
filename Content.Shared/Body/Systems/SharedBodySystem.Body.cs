@@ -21,6 +21,32 @@ public partial class SharedBodySystem
         SubscribeLocalEvent<BodyComponent, MapInitEvent>(OnBodyMapInit);
         SubscribeLocalEvent<BodyComponent, CanDragEvent>(OnBodyCanDrag);
         SubscribeLocalEvent<BodyComponent, ComponentInit>(OnBodyInit);
+        SubscribeLocalEvent<BodyComponent, ComponentGetState>(OnBodyGetState);
+        SubscribeLocalEvent<BodyComponent, ComponentHandleState>(OnBodyHandleState);
+    }
+
+    private void OnBodyHandleState(EntityUid uid, BodyComponent component, ref ComponentHandleState args)
+    {
+        if (args.Current is not BodyComponentState state)
+            return;
+        component.Prototype = state.Prototype;
+        component.RootContainer = Containers.EnsureContainer<ContainerSlot>(uid, state.ContainerId);
+        component.RootPartSlot = state.RootPartSlot;
+        component.GibSound = state.GibSound;
+        component.RequiredLegs = state.RequiredLegs;
+        component.LegEntities = EntityManager.GetEntitySet(state.LegNetEntities);
+    }
+
+    private void OnBodyGetState(EntityUid uid, BodyComponent component, ref ComponentGetState args)
+    {
+        args.State = new BodyComponentState(
+            component.Prototype,
+            component.RootContainer.ID,
+            component.RootPartSlot,
+            component.GibSound,
+            component.RequiredLegs,
+            EntityManager.GetNetEntitySet(component.LegEntities)
+        );
     }
 
     private void OnBodyInit(EntityUid bodyId, BodyComponent body, ComponentInit args)

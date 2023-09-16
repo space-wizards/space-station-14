@@ -206,7 +206,7 @@ public partial class SharedBodySystem
         {
             DetachPart(partId, part, parentPart);
         }
-        return InternalAttachPart(part.Body, parentPartId, partId.Value, part, slotData.Id, slotData.Container);
+        return InternalAttachPart(parentPart.Body, parentPartId, partId.Value, part, slotData.Id, slotData.Container);
     }
 
     protected virtual bool InternalAttachPart(EntityUid? bodyId, EntityUid? parentId, EntityUid partId ,BodyPartComponent part,
@@ -219,13 +219,16 @@ public partial class SharedBodySystem
         var ev = new BodyPartAddedEvent(slotName, part);
         if (parentId != null)
             RaiseLocalEvent(parentId.Value, ref ev, true);
-        if (part.Body is { } body)
+        if (bodyId is { } body  && TryComp(body, out BodyComponent? bodyComp))
         {
-            if (part.PartType == BodyPartType.Leg)
-                UpdateMovementSpeed(body);
-
             var partAddedEvent = new BodyPartAddedEvent(slotName, part);
-            RaiseLocalEvent(body, ref partAddedEvent);
+            RaiseLocalEvent(body, ref partAddedEvent, true);
+
+            if (part.PartType == BodyPartType.Leg)
+            {
+                bodyComp.LegEntities.Add(partId);
+                UpdateMovementSpeed(bodyId.Value);
+            }
 
             // TODO: Body refactor. Somebody is doing it
             // EntitySystem.Get<SharedHumanoidAppearanceSystem>().BodyPartAdded(Owner, argsAdded);
@@ -236,7 +239,10 @@ public partial class SharedBodySystem
             }
             DirtyAllComponents(body);
         }
-        return container.Insert(partId);
+
+        if (!container.Insert(partId))
+            return false;
+        return true;
     }
 
     public bool DetachPart(EntityUid? partId, BodyPartComponent? part = null, BodyPartComponent? parentPart = null,
@@ -248,38 +254,39 @@ public partial class SharedBodySystem
         return InternalDetachPart(part.Body, partId.Value, part, slotData.Id, slotData.Container, reparent, destination);
     }
 
-    protected virtual bool InternalDetachPart(EntityUid? body, EntityUid partId, BodyPartComponent part, string slotName,
+    protected virtual bool InternalDetachPart(EntityUid? bodyId, EntityUid partId, BodyPartComponent part, string slotName,
         ContainerSlot container, bool reparent,
         EntityCoordinates? coords)
     {
         var ev = new BodyPartRemovedEvent(slotName, part);
         RaiseLocalEvent(partId, ref ev, true);
 
-        if (body != null)
+        if (bodyId != null)
         {
             var args = new BodyPartRemovedEvent(slotName, part);
-            RaiseLocalEvent(body.Value, ref args);
-            var bodyComp = Comp<BodyComponent>(body.Value);
+            RaiseLocalEvent(bodyId.Value, ref args);
+            var bodyComp = Comp<BodyComponent>(bodyId.Value);
             bodyComp.RootPartSlot = null;
             if (part.PartType == BodyPartType.Leg)
             {
-                UpdateMovementSpeed(body.Value, bodyComp);
-                if(!GetBodyChildrenOfType(body, BodyPartType.Leg, bodyComp).Any())
-                    Standing.Down(body.Value);
+                bodyComp.LegEntities.Remove(partId);
+                UpdateMovementSpeed(bodyId.Value, bodyComp);
+                if(!bodyComp.LegEntities.Any())
+                    Standing.Down(bodyId.Value);
             }
 
-            if (part.IsVital && !GetBodyChildrenOfType(body, part.PartType, bodyComp).Any())
+            if (part.IsVital && !GetBodyChildrenOfType(bodyId, part.PartType, bodyComp).Any())
             {
                 // TODO BODY SYSTEM KILL : remove this when wounding and required parts are implemented properly
                 var damage = new DamageSpecifier(Prototypes.Index<DamageTypePrototype>("Bloodloss"), 300);
-                Damageable.TryChangeDamage(body, damage);
+                Damageable.TryChangeDamage(bodyId, damage);
             }
 
             foreach (var (organId, _) in GetPartOrgans(partId, part))
             {
-                RaiseLocalEvent(organId, new RemovedFromBodyEvent(body.Value), true);
+                RaiseLocalEvent(organId, new RemovedFromBodyEvent(bodyId.Value), true);
             }
-            DirtyAllComponents(body.Value);
+            DirtyAllComponents(bodyId.Value);
         }
         part.AttachedToSlot = null;
         part.Parent = null;
@@ -353,30 +360,17 @@ public partial class SharedBodySystem
         if (body.RequiredLegs <= 0)
             return;
 
-        if (body.RootContainer.ContainedEntity is not { } rootPart)
-            return;
-
-        var allSlots = GetAllBodyPartSlots(rootPart).ToHashSet();
-        var allLegs = new HashSet<EntityUid>();
-        foreach (var slot in allSlots)
-        {
-            if (slot is {Type: BodyPartType.Leg, Entity: {  } child})
-                allLegs.Add(child);
-        }
-
         var walkSpeed = 0f;
         var sprintSpeed = 0f;
         var acceleration = 0f;
-        foreach (var leg in allLegs)
+        foreach (var legEntity in body.LegEntities)
         {
-            if (!TryComp<MovementBodyPartComponent>(leg, out var legModifier))
+            if (!TryComp<MovementBodyPartComponent>(legEntity, out var legModifier))
                 continue;
-
             walkSpeed += legModifier.WalkSpeed;
             sprintSpeed += legModifier.SprintSpeed;
             acceleration += legModifier.Acceleration;
         }
-
         walkSpeed /= body.RequiredLegs;
         sprintSpeed /= body.RequiredLegs;
         acceleration /= body.RequiredLegs;

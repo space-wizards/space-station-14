@@ -95,21 +95,21 @@ public sealed class BodySystem : SharedBodySystem
         return true;
     }
 
-    protected override bool InternalDetachPart(EntityUid? body, EntityUid partId, BodyPartComponent part, string slotName,
+    protected override bool InternalDetachPart(EntityUid? bodyId, EntityUid partId, BodyPartComponent part, string slotName,
         ContainerSlot container, bool reparent,
         EntityCoordinates? coords)
     {
-        if (!base.InternalDetachPart(body, partId, part, slotName, container, reparent, coords))
+        if (!base.InternalDetachPart(bodyId, partId, part, slotName, container, reparent, coords))
             return false;
 
-        if (body != null
-            && TryComp<HumanoidAppearanceComponent>(body, out var humanoid))
+        if (bodyId != null
+            && TryComp<HumanoidAppearanceComponent>(bodyId, out var humanoid))
         {
             var layer = part.ToHumanoidLayers();
             if (layer != null)
             {
                 var layers = HumanoidVisualLayersExtension.Sublayers(layer.Value);
-                _humanoidSystem.SetLayersVisibility(body.Value, layers, false, true, humanoid);
+                _humanoidSystem.SetLayersVisibility(bodyId.Value, layers, false, true, humanoid);
             }
         }
 
