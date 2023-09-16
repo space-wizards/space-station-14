@@ -1,9 +1,4 @@
 Entries:
-- author: Emisse
-  changes:
-  - {message: tweaked role times, type: Tweak}
-  id: 4340
-  time: '2023-07-27T05:14:21.0000000+00:00'
 - author: potato1234x
   changes:
   - {message: Added atmos bags to the atmosdrobe!, type: Add}
@@ -2975,3 +2970,8 @@ Entries:
   - {message: Added beacons to station maps., type: Add}
   id: 4839
   time: '2023-09-16T08:11:48.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Fixed objectives not being given in some cases., type: Fix}
+  id: 4840
+  time: '2023-09-16T12:10:06.0000000+00:00'
