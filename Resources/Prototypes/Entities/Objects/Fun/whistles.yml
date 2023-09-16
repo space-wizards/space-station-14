@@ -15,8 +15,7 @@
   - type: Whistle
     sound: 
       collection: BaseWhistle
-    exclamateOnePerson: true
-    loudWhistleDistance: 4
+    distance: 4
 
 - type: entity
   parent: BaseWhistle

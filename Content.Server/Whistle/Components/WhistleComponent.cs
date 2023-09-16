@@ -11,10 +11,7 @@ namespace Content.Server.Whistle.Components
         [DataField("sound", required: true)]
         public SoundSpecifier Sound = default!;
 
-        [DataField("exclamateOnePerson")]
-        public bool exclamatePerson = false;
-
-        [DataField("loudWhistleDistance")]
+        [DataField("distance")]
         public float Distance = 0;
     }
 }
