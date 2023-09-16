@@ -32,6 +32,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Random;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Content.Server.Objectives.Components;
 
 namespace Content.Server.Ninja.Systems;
 
@@ -272,8 +273,8 @@ public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
         _popup.PopupEntity(Loc.GetString("ninja-doorjack-success", ("target", Identity.Entity(args.Target, EntityManager))), uid, uid, PopupType.Medium);
 
         // handle greentext
-        if (_mind.TryGetRole<NinjaRoleComponent>(uid, out var role))
-            role.DoorsJacked++;
+        if (_mind.TryGetObjectiveComp<DoorjackConditionComponent>(uid, out var condition))
+            condition.DoorsJacked++;
     }
 
     /// <summary>

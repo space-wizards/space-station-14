@@ -9,4 +9,6 @@ namespace Content.Server.Objectives.Components;
 [RegisterComponent, Access(typeof(NinjaConditionsSystem))]
 public sealed partial class DoorjackConditionComponent : Component
 {
+    [DataField("doorsJacked")]
+    public int DoorsJacked;
 }

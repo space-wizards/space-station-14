@@ -9,12 +9,6 @@ namespace Content.Server.Roles;
 public sealed partial class NinjaRoleComponent : AntagonistRoleComponent
 {
     /// <summary>
-    /// Number of doors that have been doorjacked, used for objective
-    /// </summary>
-    [DataField("doorsJacked")]
-    public int DoorsJacked;
-
-    /// <summary>
     /// Research nodes that have been downloaded, used for objective
     /// </summary>
     [DataField("downloadedNodes")]

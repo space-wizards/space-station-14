@@ -31,22 +31,16 @@ public sealed class NinjaConditionsSystem : EntitySystem
 
     private void OnDoorjackGetProgress(EntityUid uid, DoorjackConditionComponent comp, ref ObjectiveGetProgressEvent args)
     {
-        args.Progress = DoorjackProgress(args.MindId, _number.GetTarget(uid));
+        args.Progress = DoorjackProgress(comp, _number.GetTarget(uid));
     }
 
-    private float DoorjackProgress(EntityUid mindId, int target)
+    private float DoorjackProgress(DoorjackConditionComponent comp, int target)
     {
         // prevent divide-by-zero
         if (target == 0)
             return 1f;
 
-        if (!TryComp<NinjaRoleComponent>(mindId, out var role))
-            return 0f;
-
-        if (role.DoorsJacked >= target)
-            return 1f;
-
-        return (float) role.DoorsJacked / (float) target;
+        return MathF.Min(comp.DoorsJacked / (float) target, 1f);
     }
 
     // spider charge
