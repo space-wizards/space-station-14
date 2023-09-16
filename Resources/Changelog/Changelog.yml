@@ -1,10 +1,4 @@
 Entries:
-- author: Jackal298
-  changes:
-  - {message: 'Changed the sprites of some shotguns, now the sprite in the hands should
-      look like the sprite of the icon', type: Tweak}
-  id: 4339
-  time: '2023-07-27T02:18:11.0000000+00:00'
 - author: Emisse
   changes:
   - {message: tweaked role times, type: Tweak}
@@ -2976,3 +2970,8 @@ Entries:
       notably stealing the nuke disk.', type: Tweak}
   id: 4838
   time: '2023-09-16T06:18:11.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Added beacons to station maps., type: Add}
+  id: 4839
+  time: '2023-09-16T08:11:48.0000000+00:00'
