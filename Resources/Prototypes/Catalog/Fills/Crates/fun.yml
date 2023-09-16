@@ -23,6 +23,7 @@
       - id: PlushieDiona
       - id: PlushieXeno
       - id: PlushieHampter
+      - id: PlushieMoth
 
 - type: entity
   id: CrateFunInstrumentsVariety

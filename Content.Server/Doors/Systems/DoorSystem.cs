@@ -276,4 +276,3 @@ public sealed class DoorSystem : SharedDoorSystem
         }
     }
 }
-

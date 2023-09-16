@@ -158,6 +158,7 @@ namespace Content.Client.Entry
             _euiManager.Initialize();
             _voteManager.Initialize();
             _userInterfaceManager.SetDefaultTheme("SS14DefaultTheme");
+            _userInterfaceManager.SetActiveTheme(_configManager.GetCVar(CVars.InterfaceTheme));
             _documentParsingManager.Initialize();
 
             _baseClient.RunLevelChanged += (_, args) =>

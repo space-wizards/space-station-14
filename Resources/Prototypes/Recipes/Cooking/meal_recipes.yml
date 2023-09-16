@@ -360,11 +360,10 @@
   result: FoodBreadMimana
   time: 15
   reagents:
-    MilkSoy: 5
-    Nothing: 5 #replace with mimana
+    Nothing: 5
   solids:
     FoodDough: 1
-    FoodTofu: 1
+    FoodMimana: 1
 
 - type: microwaveMealRecipe
   id: RecipeBread
@@ -804,8 +803,7 @@
     Blood: 10
   solids:
     FoodBowlBig: 1
-    FoodTomato: 2
-  #todo Replace with blood tomato
+    FoodBloodTomato: 2
 
 - type: microwaveMealRecipe
   id: RecipeWingFangChuSoup
