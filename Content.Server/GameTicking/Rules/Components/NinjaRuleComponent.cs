@@ -1,6 +1,5 @@
 using Content.Server.Ninja.Systems;
 using Content.Shared.Communications;
-using Content.Shared.Objectives;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
@@ -18,9 +17,9 @@ public sealed partial class NinjaRuleComponent : Component
     public List<EntityUid> Minds = new();
 
     /// <summary>
-    /// List of objective prototype ids to add
+    /// List of objective entity prototypes to add
     /// </summary>
-    [DataField("objectives", required: true, customTypeSerializer: typeof(PrototypeIdListSerializer<ObjectivePrototype>))]
+    [DataField("objectives", required: true, customTypeSerializer: typeof(PrototypeIdListSerializer<EntityPrototype>))]
     public List<string> Objectives = new();
 
     /// <summary>

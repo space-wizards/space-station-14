@@ -11,7 +11,7 @@
     - DoorjackObjective
     - SpiderChargeObjective
     - TerrorObjective
-    - SurviveObjective
+    - NinjaSurviveObjective
     threats:
     - announcement: terror-dragon
       rule: Dragon

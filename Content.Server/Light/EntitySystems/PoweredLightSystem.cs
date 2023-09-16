@@ -1,4 +1,5 @@
 using Content.Server.Administration.Logs;
+using Content.Server.Clothing.Components;
 using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Ghost;
@@ -22,6 +23,7 @@ using Content.Shared.DoAfter;
 using Content.Server.Emp;
 using Content.Server.DeviceLinking.Events;
 using Content.Server.DeviceLinking.Systems;
+using Content.Shared.Inventory;
 
 namespace Content.Server.Light.EntitySystems
 {
@@ -43,6 +45,7 @@ namespace Content.Server.Light.EntitySystems
         [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly PointLightSystem _pointLight = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+        [Dependency] private readonly InventorySystem _inventory = default!;
 
         private static readonly TimeSpan ThunkDelay = TimeSpan.FromSeconds(2);
         public const string LightBulbContainer = "light_bulb";
@@ -105,11 +108,15 @@ namespace Content.Server.Light.EntitySystems
 
             // check if it's possible to apply burn damage to user
             var userUid = args.User;
-            if (EntityManager.TryGetComponent(userUid, out HeatResistanceComponent? heatResist) &&
-                EntityManager.TryGetComponent(bulbUid.Value, out LightBulbComponent? lightBulb))
+            if (EntityManager.TryGetComponent(bulbUid.Value, out LightBulbComponent? lightBulb))
             {
                 // get users heat resistance
-                var res = heatResist.GetHeatResistance();
+                var res = int.MinValue;
+                if (_inventory.TryGetSlotEntity(userUid, "gloves", out var slotEntity) &&
+                    TryComp<GloveHeatResistanceComponent>(slotEntity, out var gloves))
+                {
+                    res = gloves.HeatResistance;
+                }
 
                 // check heat resistance against user
                 var burnedHand = light.CurrentLit && res < lightBulb.BurningTemperature;
