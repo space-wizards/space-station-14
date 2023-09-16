@@ -1,9 +1,4 @@
 Entries:
-- author: potato1234x
-  changes:
-  - {message: Added atmos bags to the atmosdrobe!, type: Add}
-  id: 4341
-  time: '2023-07-27T06:08:25.0000000+00:00'
 - author: Lank
   changes:
   - {message: 'Added .45 AP, which does less damage but ignores armor entirely.',
@@ -2975,3 +2970,11 @@ Entries:
   - {message: Fixed objectives not being given in some cases., type: Fix}
   id: 4840
   time: '2023-09-16T12:10:06.0000000+00:00'
+- author: Flareguy
+  changes:
+  - {message: 'Added several new types of barricades for mappers to use, all using
+      sprites from /vg/station. The regular, full-tile barricade has also received
+      a new sprite from /vg/station.', type: Add}
+  - {message: Barricades are now slightly stronger & cheaper to make., type: Tweak}
+  id: 4841
+  time: '2023-09-16T12:50:48.0000000+00:00'
