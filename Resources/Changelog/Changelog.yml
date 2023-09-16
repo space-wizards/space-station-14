@@ -1,11 +1,4 @@
 Entries:
-- author: AjexRose
-  changes:
-  - {message: 'After numerous complaints from security and salvage, CentCom has authorized
-      the creation of the Ammo TechFab, it''s board may be able to be recovered from
-      remote places.', type: Add}
-  id: 4337
-  time: '2023-07-27T00:41:51.0000000+00:00'
 - author: potato1234x
   changes:
   - {message: Changed robust nukie drink sprite., type: Tweak}
@@ -2976,3 +2969,9 @@ Entries:
   - {message: Entity velocity now resets when buckling., type: Tweak}
   id: 4836
   time: '2023-09-16T04:15:06.0000000+00:00'
+- author: Psychpsyo
+  changes:
+  - {message: 'The janitor''s advanced mop can now be wielded, just like the regular
+      mop.', type: Add}
+  id: 4837
+  time: '2023-09-16T04:33:01.0000000+00:00'
