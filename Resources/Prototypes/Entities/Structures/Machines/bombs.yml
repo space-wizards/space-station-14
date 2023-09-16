@@ -26,7 +26,7 @@
     # Unless, of course, you want the 90 seconds regardless. I can't stop you.
     - type: OnUseTimerTrigger
       delay: 300
-      delayOptions: [300, 600, 900]
+      delayOptions: [180, 240, 300, 600, 900]
       initialBeepDelay: 0
       beepSound: /Audio/Machines/timer.ogg
     - type: Anchorable
