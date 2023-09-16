@@ -41,7 +41,7 @@ public sealed partial class GhostComponent : Component
     [DataField("booMaxTargets")]
     public int BooMaxTargets = 3;
 
-    [DataField, AutoNetworkedField]
+    [DataField]
     public EntProtoId BooAction = "ActionGhostBoo";
 
     [DataField, AutoNetworkedField]
