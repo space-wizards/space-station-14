@@ -44,15 +44,6 @@ public sealed class SmokeSystem : EntitySystem
         SubscribeLocalEvent<SmokeComponent, ReactionAttemptEvent>(OnReactionAttempt);
         SubscribeLocalEvent<SmokeComponent, SpreadNeighborsEvent>(OnSmokeSpread);
         SubscribeLocalEvent<SmokeDissipateSpawnComponent, TimedDespawnEvent>(OnSmokeDissipate);
-        SubscribeLocalEvent<SpreadGroupUpdateRate>(OnSpreadUpdateRate);
-    }
-
-    private void OnSpreadUpdateRate(ref SpreadGroupUpdateRate ev)
-    {
-        if (ev.Name != "smoke")
-            return;
-
-        ev.UpdatesPerSecond = 8;
     }
 
     private void OnSmokeDissipate(EntityUid uid, SmokeDissipateSpawnComponent component, ref TimedDespawnEvent args)
@@ -67,11 +58,11 @@ public sealed class SmokeSystem : EntitySystem
 
     private void OnSmokeSpread(EntityUid uid, SmokeComponent component, ref SpreadNeighborsEvent args)
     {
-        if (component.SpreadAmount == 0 ||
-            !_solutionSystem.TryGetSolution(uid, SmokeComponent.SolutionName, out var solution) ||
-            args.NeighborFreeTiles.Count == 0)
+        if (component.SpreadAmount == 0
+            || args.NeighborFreeTiles.Count == 0
+            || !_solutionSystem.TryGetSolution(uid, SmokeComponent.SolutionName, out var solution))
         {
-            RemCompDeferred<EdgeSpreaderComponent>(uid);
+            RemCompDeferred<ActiveEdgeSpreaderComponent>(uid);
             return;
         }
 
@@ -79,7 +70,7 @@ public sealed class SmokeSystem : EntitySystem
 
         if (prototype == null)
         {
-            RemCompDeferred<EdgeSpreaderComponent>(uid);
+            RemCompDeferred<ActiveEdgeSpreaderComponent>(uid);
             return;
         }
 
@@ -111,7 +102,7 @@ public sealed class SmokeSystem : EntitySystem
 
                 if (component.SpreadAmount == 0)
                 {
-                    RemCompDeferred<EdgeSpreaderComponent>(uid);
+                    RemCompDeferred<ActiveEdgeSpreaderComponent>(uid);
                     break;
                 }
             }
@@ -131,16 +122,13 @@ public sealed class SmokeSystem : EntitySystem
                     continue;
 
                 smoke.SpreadAmount++;
-                args.Updates--;
+                component.SpreadAmount--;
 
                 if (component.SpreadAmount == 0)
                 {
-                    RemCompDeferred<EdgeSpreaderComponent>(uid);
+                    RemCompDeferred<ActiveEdgeSpreaderComponent>(uid);
                     break;
                 }
-
-                if (args.Updates <= 0)
-                    break;
             }
         }
     }
@@ -247,7 +235,7 @@ public sealed class SmokeSystem : EntitySystem
     public void Start(EntityUid uid, SmokeComponent component, Solution solution, float duration)
     {
         TryAddSolution(uid, component, solution);
-        EnsureComp<EdgeSpreaderComponent>(uid);
+        EnsureComp<ActiveEdgeSpreaderComponent>(uid);
         var timer = EnsureComp<TimedDespawnComponent>(uid);
         timer.Lifetime = duration;
     }
