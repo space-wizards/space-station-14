@@ -79,7 +79,7 @@ public sealed class SpreaderSystem : EntitySystem
 
     private void OnAirtightChanged(ref AirtightChanged ev)
     {
-        var neighbors = GetSpreadableNeighbors(ev.Entity, ev.Airtight);
+        var neighbors = GetSpreadableNeighbors(ev.Entity, ev.Airtight, ev.Position);
 
         foreach (var neighbor in neighbors)
         {
@@ -318,16 +318,29 @@ public sealed class SpreaderSystem : EntitySystem
     /// <summary>
     /// Given an entity, this returns a list of all adjacent entities with a <see cref="EdgeSpreaderComponent"/>.
     /// </summary>
-    public List<EntityUid> GetSpreadableNeighbors(EntityUid uid, AirtightComponent? comp = null)
+    public List<EntityUid> GetSpreadableNeighbors(EntityUid uid, AirtightComponent? comp = null,
+        (EntityUid Grid, Vector2i Tile)? position = null)
     {
         Resolve(uid, ref comp, false);
         var neighbors = new List<EntityUid>();
 
-        var transform = Transform(uid);
-        if (!_mapManager.TryGetGrid(transform.GridUid, out var grid))
-            return neighbors;
+        Vector2i tile;
+        MapGridComponent? grid;
 
-        var tile = grid.TileIndicesFor(transform.Coordinates);
+        if (position == null)
+        {
+            var transform = Transform(uid);
+            if (!_mapManager.TryGetGrid(transform.GridUid, out grid))
+                return neighbors;
+            tile = grid.TileIndicesFor(transform.Coordinates);
+        }
+        else
+        {
+            if (!_mapManager.TryGetGrid(position.Value.Grid, out grid))
+                return neighbors;
+            tile = position.Value.Tile;
+        }
+
         var spreaderQuery = GetEntityQuery<EdgeSpreaderComponent>();
 
         for (var i = 0; i < Atmospherics.Directions; i++)
