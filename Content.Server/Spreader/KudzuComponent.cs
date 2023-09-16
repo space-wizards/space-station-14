@@ -11,7 +11,7 @@ public sealed partial class KudzuComponent : Component
     /// <summary>
     /// At level 3 spreading can occur; prior to that we have a chance of increasing our growth level and changing our sprite.
     /// </summary>
-    [DataField("growthLevel")]
+    [DataField]
     public int GrowthLevel = 1;
 
     /// <summary>

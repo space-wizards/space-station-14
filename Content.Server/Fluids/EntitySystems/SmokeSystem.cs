@@ -123,6 +123,7 @@ public sealed class SmokeSystem : EntitySystem
 
                 smoke.SpreadAmount++;
                 component.SpreadAmount--;
+                EnsureComp<ActiveEdgeSpreaderComponent>(neighbor);
 
                 if (component.SpreadAmount == 0)
                 {
