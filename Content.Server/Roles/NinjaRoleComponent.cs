@@ -9,12 +9,6 @@ namespace Content.Server.Roles;
 public sealed partial class NinjaRoleComponent : AntagonistRoleComponent
 {
     /// <summary>
-    /// Research nodes that have been downloaded, used for objective
-    /// </summary>
-    [DataField("downloadedNodes")]
-    public HashSet<string> DownloadedNodes = new();
-
-    /// <summary>
     /// Warp point that the spider charge has to target
     /// </summary>
     [DataField("spiderChargeTarget")]
