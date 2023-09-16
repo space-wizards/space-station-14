@@ -128,7 +128,7 @@ public sealed class DrinkSystem : EntitySystem
     private void OnExamined(EntityUid uid, DrinkComponent component, ExaminedEvent args)
     {
         var hasOpenable = TryComp<OpenableComponent>(uid, out var openable);
-        if (_openable.IsClosed(uid, openable) || !args.IsInDetailsRange || !component.Examinable)
+        if (_openable.IsClosed(uid, null, openable) || !args.IsInDetailsRange || !component.Examinable)
             return;
 
         // put Empty / Xu after Opened, or start a new line
@@ -238,11 +238,8 @@ public sealed class DrinkSystem : EntitySystem
         if (!HasComp<BodyComponent>(target))
             return false;
 
-        if (_openable.IsClosed(item))
-        {
-            _popup.PopupEntity(Loc.GetString("drink-component-try-use-drink-not-open", ("owner", item)), item, user);
+        if (_openable.IsClosed(item, user))
             return true;
-        }
 
         if (!_solutionContainer.TryGetSolution(item, drink.SolutionName, out var drinkSolution) ||
             drinkSolution.Volume <= 0)

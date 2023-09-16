@@ -58,14 +58,6 @@ public sealed partial class FoodComponent : Component
     public string EatMessage = "food-nom";
 
     /// <summary>
-    /// The locale id for the popup shown when the food is openable but closed. Needs a "owner" entity argument passed to it.
-    /// Defaults to the popup drink uses since its "correct".
-    /// It's still generic enough that you should change it if you make openable food, i.e. unwrap it first, peel it first.
-    /// </summary>
-    [DataField("closedPopup")]
-    public string ClosedPopup = "drink-component-try-use-drink-not-open";
-
-    /// <summary>
     /// How long it takes to eat the food personally.
     /// </summary>
     [DataField("delay")]

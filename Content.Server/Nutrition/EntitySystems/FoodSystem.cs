@@ -102,11 +102,8 @@ public sealed class FoodSystem : EntitySystem
         if (!TryComp<BodyComponent>(target, out var body))
             return (false, false);
 
-        if (_openable.IsClosed(food))
-        {
-            _popup.PopupEntity(Loc.GetString(foodComp.ClosedPopup, ("owner", food)), user, user);
+        if (_openable.IsClosed(food, user))
             return (false, true);
-        }
 
         if (!_solutionContainer.TryGetSolution(food, foodComp.SolutionName, out var foodSolution) || foodSolution.Name == null)
             return (false, false);

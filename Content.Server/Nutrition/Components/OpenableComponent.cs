@@ -31,6 +31,14 @@ public sealed partial class OpenableComponent : Component
     public string ExamineText = "drink-component-on-examine-is-opened";
 
     /// <summary>
+    /// The locale id for the popup shown when IsClosed is called and closed. Needs a "owner" entity argument passed to it.
+    /// Defaults to the popup drink uses since its "correct".
+    /// It's still generic enough that you should change it if you make openable non-drinks, i.e. unwrap it first, peel it first.
+    /// </summary>
+    [DataField("closedPopup"), ViewVariables(VVAccess.ReadWrite)]
+    public string ClosedPopup = "drink-component-try-use-drink-not-open";
+
+    /// <summary>
     /// Sound played when opening.
     /// </summary>
     [DataField("sound")]

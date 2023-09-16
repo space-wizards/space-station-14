@@ -5,6 +5,7 @@ using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Nutrition.Components;
+using Content.Shared.Popups;
 using Content.Shared.Weapons.Melee.Events;
 using Robust.Shared.GameObjects;
 
@@ -17,6 +18,7 @@ public sealed class OpenableSystem : EntitySystem
 {
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly SharedPopupSystem _popup = default!;
 
     public override void Initialize()
     {
@@ -82,10 +84,20 @@ public sealed class OpenableSystem : EntitySystem
     /// <summary>
     /// Returns true if the entity both has OpenableComponent and is not opened.
     /// Drinks that don't have OpenableComponent are automatically open, so it returns false.
+    /// If user is not null a popup will be shown to them.
     /// </summary>
-    public bool IsClosed(EntityUid uid, OpenableComponent? comp = null)
+    public bool IsClosed(EntityUid uid, EntityUid? user = null, OpenableComponent? comp = null)
     {
-        return !IsOpen(uid, comp);
+        if (!Resolve(uid, ref comp, false))
+            return false;
+
+        if (comp.Opened)
+            return false;
+
+        if (user != null)
+            _popup.PopupEntity(Loc.GetString(comp.ClosedPopup, ("owner", uid)), user.Value, user.Value);
+
+        return true;
     }
 
     /// <summary>
