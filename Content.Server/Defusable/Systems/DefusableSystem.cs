@@ -306,11 +306,11 @@ public sealed class DefusableSystem : SharedDefusableSystem
     {
         if (comp.Activated)
         {
-            EntityManager.System<DefusableSystem>().TryDetonateBomb(wire.Owner, user, comp);
+            TryDetonateBomb(wire.Owner, user, comp);
         }
         else
         {
-            EntityManager.System<DefusableSystem>().SetUsable(comp, false);
+            SetUsable(comp, false);
         }
         return true;
     }
