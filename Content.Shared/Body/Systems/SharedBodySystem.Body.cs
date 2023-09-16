@@ -34,7 +34,8 @@ public partial class SharedBodySystem
 
     private void OnBodyMapInit(EntityUid bodyId, BodyComponent body, MapInitEvent args)
     {
-        if (body.Prototype == null || body.RootContainer.ContainedEntity == null)
+        body.RootContainer = Containers.EnsureContainer<ContainerSlot>(bodyId, BodyRootContainerId);
+        if (body.Prototype == null)
             return;
         var prototype = Prototypes.Index<BodyPrototype>(body.Prototype);
             InitBody(bodyId, body, prototype);
@@ -48,7 +49,7 @@ public partial class SharedBodySystem
             return;
         var rootPartEntity =  Spawn(protoRoot.Part, bodyEntity.ToCoordinates());
         var rootPart = Comp<BodyPartComponent>(rootPartEntity);
-        rootPart.Body = bodyEntity;
+        AttachPartToRoot(bodyEntity, rootPartEntity, body, rootPart);
         InitParts(bodyEntity, rootPartEntity, rootPart, prototype);
     }
 

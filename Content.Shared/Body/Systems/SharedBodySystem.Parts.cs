@@ -195,7 +195,6 @@ public partial class SharedBodySystem
             !CanAttachPart(parentPartId, slot.Value.Id, partId, parentPart, part)
             || !parentPart.Children.TryGetValue(slot.Value.Id, out var slotData))
             return false;
-
         if (part.Parent != null)
         {
             DetachPart(partId, part, parentPart);
@@ -236,7 +235,7 @@ public partial class SharedBodySystem
     {
         if (!Resolve(bodyId, ref body) || !Resolve(partId, ref part) || !CanAttachToRoot(bodyId, partId, body, part))
             return false;
-
+        body.RootContainer = Containers.EnsureContainer<ContainerSlot>(bodyId, BodySlotContainerId);
         if (part.Parent != null)
         {
             DetachPart(partId, part);
