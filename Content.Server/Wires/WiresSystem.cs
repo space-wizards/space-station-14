@@ -2,6 +2,8 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading;
 using Content.Server.Administration.Logs;
+using Content.Server.Construction;
+using Content.Server.Construction.Components;
 using Content.Server.Power.Components;
 using Content.Server.UserInterface;
 using Content.Shared.Database;
@@ -33,6 +35,7 @@ public sealed class WiresSystem : SharedWiresSystem
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly ConstructionSystem _constructionSystem = default!;
 
     // This is where all the wire layouts are stored.
     [ViewVariables] private readonly Dictionary<string, WireLayout> _layouts = new();
@@ -58,6 +61,7 @@ public sealed class WiresSystem : SharedWiresSystem
         SubscribeLocalEvent<WiresComponent, WireDoAfterEvent>(OnDoAfter);
         SubscribeLocalEvent<ActivatableUIRequiresPanelComponent, ActivatableUIOpenAttemptEvent>(OnAttemptOpenActivatableUI);
         SubscribeLocalEvent<ActivatableUIRequiresPanelComponent, PanelChangedEvent>(OnActivatableUIPanelChanged);
+        SubscribeLocalEvent<WiresPanelSecurityComponent, WiresPanelSecurityEvent>(SetWiresPanelSecurity);
     }
     private void SetOrCreateWireLayout(EntityUid uid, WiresComponent? wires = null)
     {
@@ -459,8 +463,8 @@ public sealed class WiresSystem : SharedWiresSystem
             return;
 
         if (panel.Open &&
-            _protoMan.TryIndex<WiresPanelSecurityLevelPrototype>(panel.CurrentSecurityLevelID, out var securityLevelPrototype) &&
-            securityLevelPrototype.WiresAccessible &&
+            TryComp<WiresPanelSecurityComponent>(uid, out var wiresPanelSecurity) &&
+            wiresPanelSecurity.WiresAccessible &&
             (_toolSystem.HasQuality(args.Used, "Cutting", tool) ||
             _toolSystem.HasQuality(args.Used, "Pulsing", tool)))
         {
@@ -525,6 +529,24 @@ public sealed class WiresSystem : SharedWiresSystem
 
         if (component.WireSeed == 0)
             component.WireSeed = _random.Next(1, int.MaxValue);
+
+        if (TryComp<WiresPanelSecurityComponent>(uid, out var wiresPanelSecurity) &&
+            TryComp<ConstructionComponent>(uid, out var construction))
+        {
+            if (string.IsNullOrEmpty(wiresPanelSecurity.BaseGraph))
+                wiresPanelSecurity.BaseGraph = construction.Graph;
+
+            if (string.IsNullOrEmpty(wiresPanelSecurity.BaseGraph))
+                wiresPanelSecurity.BaseNode = construction.Node;
+
+            if (string.IsNullOrEmpty(wiresPanelSecurity.BaseGraph))
+                wiresPanelSecurity.SecurityGraph = construction.Graph;
+
+            if (string.IsNullOrEmpty(wiresPanelSecurity.BaseGraph))
+                wiresPanelSecurity.SecurityNode = construction.Node;
+
+            _constructionSystem.ChangeGraph(uid, null, wiresPanelSecurity.SecurityGraph, wiresPanelSecurity.SecurityNode, true, construction);
+        }
 
         UpdateUserInterface(uid);
     }
@@ -656,13 +678,15 @@ public sealed class WiresSystem : SharedWiresSystem
         RaiseLocalEvent(uid, ref ev);
     }
 
-    public void SetWiresPanelSecurityData(EntityUid uid, WiresPanelComponent component, string wiresPanelSecurityLevelID)
+    public void SetWiresPanelSecurity(EntityUid uid, WiresPanelSecurityComponent component, WiresPanelSecurityEvent args)
     {
-        component.CurrentSecurityLevelID = wiresPanelSecurityLevelID;
+        component.Examine = args.Examine;
+        component.WiresAccessible = args.WiresAccessible;
+        component.WeldingAllowed = args.WeldingAllowed;
+
         Dirty(uid, component);
 
-        if (_protoMan.TryIndex<WiresPanelSecurityLevelPrototype>(component.CurrentSecurityLevelID, out var securityLevelPrototype) &&
-            securityLevelPrototype.WiresAccessible)
+        if (!args.WiresAccessible)
         {
             _uiSystem.TryCloseAll(uid, WiresUiKey.Key);
         }

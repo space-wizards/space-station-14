@@ -74,6 +74,11 @@
     enabled: false
     usesApcPower: true
   - type: WiresPanel
+  - type: WiresPanelSecurity
+    graph: Airlock
+    node: airlock
+    baseGraph: Airlock
+    baseNode: airlock
   - type: Wires
     BoardName: wires-board-name-airlock
     LayoutId: Airlock

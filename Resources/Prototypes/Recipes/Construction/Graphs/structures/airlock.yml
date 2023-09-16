@@ -220,12 +220,12 @@
     actions:
       - !type:ChangeConstructionGraph
         graph: AirlockSecurity
-        node: medSecurityUnfinished       
+        node: medSecurityUnfinished
 
 ## Change construction graph to make a high security airlock
   - node: highSecurityUnfinished
     actions:
       - !type:ChangeConstructionGraph
         level: AirlockSecurity
-        node: medSecurityUnfinished          
+        node: highSecurityUnfinished          
  

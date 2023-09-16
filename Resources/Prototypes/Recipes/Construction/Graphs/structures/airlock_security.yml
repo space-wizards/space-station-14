@@ -1,6 +1,6 @@
 - type: constructionGraph
   id: AirlockSecurity
-  start: start
+  start: unsecuredAirlock
   graph:
   - node: unsecuredAirlock
     actions:

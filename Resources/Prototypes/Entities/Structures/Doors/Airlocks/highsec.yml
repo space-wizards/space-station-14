@@ -67,7 +67,9 @@
     enabled: false
     usesApcPower: true
   - type: WiresPanel
-    securityLevel: Level5
+  - type: WiresPanelSecurity
+    graph: AirlockSecurity
+    node: maxSecurity
   - type: Wires
     BoardName: wires-board-name-highsec
     LayoutId: HighSec
@@ -94,5 +96,5 @@
     key: walls
     mode: NoSprite
   - type: Construction
-    graph: HighSecDoor
-    node: maxSecurity
+    graph: Airlock
+    node: highSecDoor

@@ -1,4 +1,3 @@
-using Content.Server.Wires;
 using Content.Shared.Construction;
 using Content.Shared.Wires;
 using JetBrains.Annotations;
@@ -20,10 +19,10 @@ public sealed partial class SetWiresPanelSecurity : IGraphAction
 
     public void PerformAction(EntityUid uid, EntityUid? userUid, IEntityManager entityManager)
     {
-        if (entityManager.TryGetComponent(uid, out WiresPanelSecurityComponent? wiresPanelSecurity)
-            && entityManager.TrySystem(out WiresSystem? wiresSystem))
+        if (entityManager.TryGetComponent(uid, out WiresPanelSecurityComponent? _))
         {
-            //wiresSystem.SetWiresPanelSecurityData(uid, wiresPanel, WiresPanelSecurityLevelID);
+            var ev = new WiresPanelSecurityEvent(Examine, WiresAccessible, WeldingAllowed);
+            entityManager.EventBus.RaiseLocalEvent(uid, ev);
         }
     }
 }

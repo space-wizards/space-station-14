@@ -19,7 +19,7 @@ public sealed partial class RemoveWiresPanelSecurity : IGraphAction
 
         if (entityManager.TrySystem(out ConstructionSystem? constructionSystem))
         {
-            constructionSystem.ChangeGraph(uid, userUid, wiresPanelSecurity.StartGraph, wiresPanelSecurity.StartNode, true, construction);
+            constructionSystem.ChangeGraph(uid, userUid, wiresPanelSecurity.BaseGraph, wiresPanelSecurity.BaseNode, true, construction);
         }
     }
 }

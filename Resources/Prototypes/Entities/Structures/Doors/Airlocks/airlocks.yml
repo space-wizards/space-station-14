@@ -69,10 +69,9 @@
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/command.rsi
-  - type: WiresPanel
-    securityLevel: Level2
-  - type: Construction
-    node: airlockMedSecurity
+  - type: WiresPanelSecurity
+    graph: AirlockSecurity
+    node: medSecurity
 
 - type: entity
   parent: Airlock
@@ -218,10 +217,9 @@
     sprite: Structures/Doors/Airlocks/Glass/command.rsi
   - type: PaintableAirlock
     group: Glass
-  - type: WiresPanel
-    securityLevel: Level2
-  - type: Construction
-    node: glassAirlockMedSecurity
+  - type: WiresPanelSecurity
+    graph: AirlockSecurity
+    node: medSecurity
 
 - type: entity
   parent: AirlockGlass

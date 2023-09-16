@@ -32,30 +32,47 @@ public sealed partial class WiresPanelSecurityComponent : Component
     public bool WeldingAllowed = true;
 
     /// <summary>
-    ///     Name of the construction graph to which specifies all the security upgrades for the wires panel
+    ///     Name of the construction graph which contains the entities' security upgrades
     /// </summary>
-    [DataField("startGraph", required: true)]
+    [DataField("graph")]
     [AutoNetworkedField]
-    public string StartGraph = string.Empty;
+    public string SecurityGraph = string.Empty;
 
     /// <summary>
-    ///     Name of the node to use on the starting construction graph
+    ///     Name of the node that the entity will start on
     /// </summary>
-    [DataField("startNode", required: true)]
+    [DataField("node")]
     [AutoNetworkedField]
-    public string StartNode = string.Empty;
+    public string SecurityNode = string.Empty;
 
     /// <summary>
-    ///     Name of the construction graph to use to when all security features are removed from the wires panel
+    ///     Name of the base construction graph
     /// </summary>
-    [DataField("baseGraph", required: true)]
+    [DataField("baseGraph")]
     [AutoNetworkedField]
     public string BaseGraph = string.Empty;
 
     /// <summary>
-    ///     Name of the node to use on the base construction graph
+    ///     Name of the base node for the base construction graph
     /// </summary>
-    [DataField("baseNode", required: true)]
+    [DataField("baseNode")]
     [AutoNetworkedField]
     public string BaseNode = string.Empty;
+}
+
+/// <summary>
+///     This event gets raised when security settings on a wires panel change
+/// </summary>
+public sealed class WiresPanelSecurityEvent : EntityEventArgs
+{
+    public readonly string? Examine;
+    public readonly bool WiresAccessible;
+    public readonly bool WeldingAllowed;
+
+    public WiresPanelSecurityEvent(string? examine, bool wiresAccessible, bool weldingAllowed)
+    {
+        Examine = examine;
+        WiresAccessible = wiresAccessible;
+        WeldingAllowed = weldingAllowed;
+    }
 }
