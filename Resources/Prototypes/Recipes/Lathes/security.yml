@@ -99,6 +99,15 @@
     Glass: 200
 
 - type: latheRecipe
+  id: HoloprojectorSecurity
+  result: HoloprojectorSecurityEmpty
+  completetime: 2
+  materials:
+    Steel: 300
+    Glass: 50
+    Plastic: 50
+
+- type: latheRecipe
   id: RiotShield
   result: RiotShield
   completetime: 4
