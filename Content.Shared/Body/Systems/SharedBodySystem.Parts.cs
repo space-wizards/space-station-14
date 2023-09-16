@@ -200,10 +200,10 @@ public partial class SharedBodySystem
         {
             DetachPart(partId, part, parentPart);
         }
-        return AttachPart_Internal(part.Body, parentPartId, partId.Value, part, slotData.Id, slotData.Container);
+        return InternalAttachPart(part.Body, parentPartId, partId.Value, part, slotData.Id, slotData.Container);
     }
 
-    protected virtual bool AttachPart_Internal(EntityUid? bodyId, EntityUid? parentId, EntityUid partId ,BodyPartComponent part,
+    protected virtual bool InternalAttachPart(EntityUid? bodyId, EntityUid? parentId, EntityUid partId ,BodyPartComponent part,
         string slotId, ContainerSlot container)
     {
         part.Body = bodyId;
@@ -246,7 +246,7 @@ public partial class SharedBodySystem
         {
             DetachPartFromRoot(part.Body, partId, null, part);
         }
-        return AttachPart_Internal(part.Body, null, partId, part, BodyRootSlotId, body.RootContainer);
+        return InternalAttachPart(part.Body, null, partId, part, BodyRootSlotId, body.RootContainer);
     }
 
     public bool DetachPart(EntityUid? partId, BodyPartComponent? part = null, BodyPartComponent? parentPart = null,
@@ -255,10 +255,10 @@ public partial class SharedBodySystem
         if (partId == null || !Resolve(partId.Value, ref part, false) || part.Parent == null
             || !Resolve(part.Parent.Value, ref parentPart) || part.SlotId == null || !parentPart.Children.TryGetValue(part.SlotId, out var slotData))
             return false;
-        return DetachPart_Internal(part.Body, partId.Value, part, slotData.Id, slotData.Container, reparent, destination);
+        return InternalDetachPart(part.Body, partId.Value, part, slotData.Id, slotData.Container, reparent, destination);
     }
 
-    protected virtual bool DetachPart_Internal(EntityUid? body, EntityUid partId, BodyPartComponent part, string slotId,
+    protected virtual bool InternalDetachPart(EntityUid? body, EntityUid partId, BodyPartComponent part, string slotId,
         ContainerSlot container, bool reparent,
         EntityCoordinates? coords)
     {
@@ -301,7 +301,7 @@ public partial class SharedBodySystem
         if (bodyId == null || partId == null || !Resolve(bodyId.Value, ref body) || !Resolve(partId.Value, ref part)
             || part.Parent != null || part.Body == null || part.Body != bodyId)
             return false;
-        return DetachPart_Internal(bodyId, partId.Value, part, BodyRootSlotId, body.RootContainer, reparent, destination);
+        return InternalDetachPart(bodyId, partId.Value, part, BodyRootSlotId, body.RootContainer, reparent, destination);
     }
 
     public virtual bool DropPart(EntityUid? partId, BodyPartComponent? part = null, BodyPartComponent? parentPart = null)

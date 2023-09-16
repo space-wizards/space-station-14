@@ -17,6 +17,7 @@ using Content.Shared.Movement.Events;
 using Content.Shared.Random.Helpers;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
+using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
@@ -38,72 +39,9 @@ public sealed class BodySystem : SharedBodySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<BodyPartComponent, ComponentStartup>(OnPartStartup);
-        SubscribeLocalEvent<BodyComponent, ComponentStartup>(OnBodyStartup);
         SubscribeLocalEvent<BodyComponent, MoveInputEvent>(OnRelayMoveInput);
         SubscribeLocalEvent<BodyComponent, ApplyMetabolicMultiplierEvent>(OnApplyMetabolicMultiplier);
         SubscribeLocalEvent<BodyComponent, BeingMicrowavedEvent>(OnBeingMicrowaved);
-    }
-
-    private void OnPartStartup(EntityUid uid, BodyPartComponent component, ComponentStartup args)
-    {
-        // This inter-entity relationship makes be deeply uncomfortable because its probably going to re-encounter
-        // all of the networking & startup ordering issues that containers and joints have.
-        // TODO just use containers. Please.
-
-        foreach (var slot in component.Children.Values)
-        {
-            DebugTools.Assert(slot.Parent == uid);
-            if (slot.Child == null)
-                continue;
-
-            if (TryComp(slot.Child, out BodyPartComponent? child))
-            {
-                child.ParentSlotOld = slot;
-                Dirty(slot.Child.Value, child);
-                continue;
-            }
-
-            Log.Error($"Body part encountered missing limbs: {ToPrettyString(uid)}. Slot: {slot.Id}");
-            slot.Child = null;
-        }
-
-        foreach (var slot in component.Organs.Values)
-        {
-            DebugTools.Assert(slot.Parent == uid);
-            if (slot.Child == null)
-                continue;
-
-            if (TryComp(slot.Child, out OrganComponent? child))
-            {
-                child.ParentSlot = slot;
-                Dirty(slot.Child.Value, child);
-                continue;
-            }
-
-            Log.Error($"Body part encountered missing organ: {ToPrettyString(uid)}. Slot: {slot.Id}");
-            slot.Child = null;
-        }
-    }
-
-    private void OnBodyStartup(EntityUid uid, BodyComponent component, ComponentStartup args)
-    {
-        if (component.Root is not { } slot)
-            return;
-
-        DebugTools.Assert(slot.Parent == uid);
-        if (slot.Child == null)
-            return;
-
-        if (!TryComp(slot.Child, out BodyPartComponent? child))
-        {
-            Log.Error($"Body part encountered missing limbs: {ToPrettyString(uid)}. Slot: {slot.Id}");
-            slot.Child = null;
-            return;
-        }
-
-        child.ParentSlotOld = slot;
-        Dirty(slot.Child.Value, child);
     }
 
     private void OnRelayMoveInput(EntityUid uid, BodyComponent component, ref MoveInputEvent args)
@@ -137,12 +75,10 @@ public sealed class BodySystem : SharedBodySystem
         args.Handled = true;
     }
 
-    public override bool AttachPart(
-        EntityUid? partId,
-        BodyPartSlot slot,
-        [NotNullWhen(true)] BodyPartComponent? part = null)
+    protected override bool InternalAttachPart(EntityUid? bodyId, EntityUid? parentId, EntityUid partId ,BodyPartComponent part,
+        string slotId, ContainerSlot container)
     {
-        if (!base.AttachPart(partId, slot, part))
+        if (!base.InternalAttachPart(bodyId, parentId, partId, part, slotId, container))
             return false;
 
         if (part.Body is { } body &&
@@ -158,6 +94,17 @@ public sealed class BodySystem : SharedBodySystem
 
         return true;
     }
+
+    protected override bool InternalDetachPart(EntityUid? body, EntityUid partId, BodyPartComponent part, string slotId,
+        ContainerSlot container, bool reparent,
+        EntityCoordinates? coords)
+    {
+        if (!base.InternalAttachPart(body, partId, partId, part, slotId, container, reparent, coords))
+            return false;
+
+    }
+
+
 
     public override bool DropPart(EntityUid? partId, BodyPartComponent? part = null, BodyPartComponent? parentPart = null)
     {
@@ -200,26 +147,31 @@ public sealed class BodySystem : SharedBodySystem
 
         _audio.Play(body.GibSound, filter, coordinates, true, audio);
 
-        if (TryComp(bodyId, out ContainerManagerComponent? container))
+        HashSet<ContainerSlot> containers = new();
+        foreach (var (partId,part) in GetBodyChildren(bodyId, body))
         {
-            foreach (var cont in container.GetAllContainers().ToArray())
+            foreach (var (_,slotData) in part.Children)
             {
-                foreach (var ent in cont.ContainedEntities.ToArray())
-                {
-                    if (deleteItems)
-                    {
-                        QueueDel(ent);
-                    }
-                    else
-                    {
-                        cont.Remove(ent, EntityManager, force: true);
-                        Transform(ent).Coordinates = coordinates;
-                        ent.RandomOffset(0.25f);
-                    }
-                }
+                containers.Add(slotData.Container);
             }
         }
 
+        foreach (var container in containers)
+        {
+            if (container.ContainedEntity == null)
+                continue;
+            var entity = container.ContainedEntity.Value;
+            if (deleteItems)
+            {
+                QueueDel(entity);
+            }
+            else
+            {
+                container.Remove(entity, EntityManager, force: true);
+                SharedTransform.SetCoordinates(entity,coordinates);
+                entity.RandomOffset(0.25f);
+            }
+        }
         RaiseLocalEvent(bodyId.Value, new BeingGibbedEvent(gibs));
         QueueDel(bodyId.Value);
 
