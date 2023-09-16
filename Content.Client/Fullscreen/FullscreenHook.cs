@@ -53,10 +53,6 @@ namespace Content.Client.Fullscreen
                 _cfg.SetCVar(CVars.DisplayWindowMode, (int) WindowMode.Windowed);
                 Logger.InfoS("ToggleFullscreen", "Switched to Windowed mode");
             }
-
-            // Run UpdateApplyButton to update the options values
-
-
         }
 
 

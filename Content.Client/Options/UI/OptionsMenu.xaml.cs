@@ -10,8 +10,6 @@ namespace Content.Client.Options.UI
     [GenerateTypedNameReferences]
     public sealed partial class OptionsMenu : DefaultWindow
     {
-        // Reference to the GraphicsTab, assuming it has an identifiable name in the XAML.
-        // Replace "NameOfGraphicsTabControlInXAML" with its actual name from the XAML file.
         private GraphicsTab GraphicsTabControl => this.FindControl<GraphicsTab>("GraphicsTab");
 
         public OptionsMenu()
@@ -24,11 +22,9 @@ namespace Content.Client.Options.UI
             Tabs.SetTabTitle(2, Loc.GetString("ui-options-tab-audio"));
             Tabs.SetTabTitle(3, Loc.GetString("ui-options-tab-network"));
 
-            // Call the method to update the fullscreen checkbox state every time the options menu is opened
             UpdateTabs();
         }
 
-        // Method that allows external code to trigger the UpdateFullscreenCheckboxState() in the GraphicsTab
         public void UpdateTabs()
         {
             GraphicsTabControl?.UpdateProperties();
