@@ -131,7 +131,7 @@
 - type: entity
   noSpawn: true
   parent: BaseTraitorStealObjective
-  id: HyposprayStealObjective
+  id: CMOHyposprayStealObjective
   components:
   - type: NotJobRequirement
     job: ChiefMedicalOfficer
