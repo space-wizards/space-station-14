@@ -296,7 +296,7 @@ public abstract class SharedMindSystem : EntitySystem
 
     public bool TryGetObjectiveComp<T>(EntityUid uid, [NotNullWhen(true)] out T? objective)
     {
-        if (TryGetMind(uid, out var mindId, out var mind) && TryGetObjectiveComp(mindId, mind, out objective))
+        if (TryGetMind(uid, out var mindId, out var mind) && TryGetObjectiveComp(mindId, out objective, mind))
         {
             return true;
         }
@@ -304,7 +304,7 @@ public abstract class SharedMindSystem : EntitySystem
         return false;
     }
 
-    public bool TryGetObjectiveComp<T>(EntityUid mindId, MindComponent? mind, [NotNullWhen(true)] out T? objective)
+    public bool TryGetObjectiveComp<T>(EntityUid mindId, [NotNullWhen(true)] out T? objective, MindComponent? mind = null)
     {
         if (Resolve(mindId, ref mind))
         {
