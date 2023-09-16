@@ -15,6 +15,7 @@ using Content.Shared.Inventory;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
 using Content.Shared.Roles.Jobs;
+using Content.Shared.Storage;
 using JetBrains.Annotations;
 using Robust.Server.Player;
 using Robust.Shared.Map;
@@ -231,11 +232,11 @@ namespace Content.Server.GameTicking
                 {
                     // Try to find back-mounted storage apparatus
                     if (!_inventory.TryGetSlotEntity(mob, "back", out var item) ||
-                        !EntityManager.TryGetComponent<ServerStorageComponent>(item, out var inventory))
+                        !EntityManager.TryGetComponent<StorageComponent>(item, out var inventory))
                         continue;
 
                     // Try inserting the entity into the storage, if it can't, it leaves the loadout item on the ground
-                    inventory.Storage?.Insert(loadout);
+                    inventory.Container.Insert(loadout);
                 }
             }
 
