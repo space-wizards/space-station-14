@@ -294,6 +294,16 @@ public abstract class SharedMindSystem : EntitySystem
         return true;
     }
 
+    public bool TryGetObjectiveComp<T>(EntityUid uid, [NotNullWhen(true)] out T? objective)
+    {
+        if (TryGetMind(uid, out var mindId, out var mind) && TryGetObjectiveComp(mindId, mind, out objective))
+        {
+            return true;
+        }
+        objective = default;
+        return false;
+    }
+
     public bool TryGetObjectiveComp<T>(EntityUid mindId, MindComponent? mind, [NotNullWhen(true)] out T? objective)
     {
         if (Resolve(mindId, ref mind))
