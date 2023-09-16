@@ -531,6 +531,7 @@
       - MagazineBoxMagnum
       - MagazineBoxRifle
       - MagazineBoxLightRifle
+      - SpeedLoaderMagnum
       - TargetHuman
       - TargetSyndicate
       - TargetClown
@@ -558,6 +559,8 @@
       - VoiceTrigger
       - TimerTrigger
       - Truncheon
+      - TelescopicShield
+      - HoloprojectorSecurity
       - FlashPayload
       - ExplosivePayload
       - WeaponLaserCarbine

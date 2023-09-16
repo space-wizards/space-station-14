@@ -1,6 +1,7 @@
 using Content.Server.Administration.Managers;
 using Content.Shared.Administration;
 using Content.Shared.Ghost;
+using Content.Shared.Hands;
 using Content.Shared.Lock;
 using Content.Shared.Storage;
 using Content.Shared.Storage.Components;
@@ -9,6 +10,7 @@ using Content.Shared.Timing;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
+using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Players;
 using Robust.Shared.Utility;
@@ -118,6 +120,14 @@ public sealed partial class StorageSystem : SharedStorageSystem
         var bui = _uiSystem.GetUiOrNull(uid, StorageComponent.StorageUiKey.Key);
         if (bui != null)
             _uiSystem.OpenUi(bui, player.PlayerSession);
+    }
+
+    /// <inheritdoc />
+    public override void PlayPickupAnimation(EntityUid uid, EntityCoordinates initialCoordinates, EntityCoordinates finalCoordinates,
+        Angle initialRotation, EntityUid? user = null)
+    {
+        var filter = Filter.Pvs(uid).RemoveWhereAttachedEntity(e => e == user);
+        RaiseNetworkEvent(new PickupAnimationEvent(GetNetEntity(uid), GetNetCoordinates(initialCoordinates), GetNetCoordinates(finalCoordinates), initialRotation), filter);
     }
 
     /// <summary>

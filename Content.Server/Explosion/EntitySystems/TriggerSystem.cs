@@ -221,6 +221,14 @@ namespace Content.Server.Explosion.EntitySystems
             return triggerEvent.Handled;
         }
 
+        public void TryDelay(EntityUid uid, float amount, ActiveTimerTriggerComponent? comp = null)
+        {
+            if (!Resolve(uid, ref comp, false))
+                return;
+
+            comp.TimeRemaining += amount;
+        }
+
         public void HandleTimerTrigger(EntityUid uid, EntityUid? user, float delay , float beepInterval, float? initialBeepDelay, SoundSpecifier? beepSound)
         {
             if (delay <= 0)

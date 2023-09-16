@@ -9,11 +9,11 @@ namespace Content.Client.Animations
 {
     public static class ReusableAnimations
     {
-        public static void AnimateEntityPickup(EntityUid entity, EntityCoordinates initialPosition, Vector2 finalPosition, Angle initialAngle, IEntityManager? entMan = null)
+        public static void AnimateEntityPickup(EntityUid entity, EntityCoordinates initialCoords, Vector2 finalPosition, Angle initialAngle, IEntityManager? entMan = null)
         {
             IoCManager.Resolve(ref entMan);
 
-            if (entMan.Deleted(entity) || !initialPosition.IsValid(entMan))
+            if (entMan.Deleted(entity) || !initialCoords.IsValid(entMan))
                 return;
 
             var metadata = entMan.GetComponent<MetaDataComponent>(entity);
@@ -21,7 +21,7 @@ namespace Content.Client.Animations
             if (entMan.IsPaused(entity, metadata))
                 return;
 
-            var animatableClone = entMan.SpawnEntity("clientsideclone", initialPosition);
+            var animatableClone = entMan.SpawnEntity("clientsideclone", initialCoords);
             string val = entMan.GetComponent<MetaDataComponent>(entity).EntityName;
             entMan.System<MetaDataSystem>().SetEntityName(animatableClone, val);
 
@@ -35,7 +35,8 @@ namespace Content.Client.Animations
             sprite.Visible = true;
 
             var animations = entMan.GetComponent<AnimationPlayerComponent>(animatableClone);
-            animations.AnimationCompleted += (_) => {
+            animations.AnimationCompleted += (_) =>
+            {
                 entMan.DeleteEntity(animatableClone);
             };
 
@@ -55,7 +56,7 @@ namespace Content.Client.Animations
                         InterpolationMode = AnimationInterpolationMode.Linear,
                         KeyFrames =
                         {
-                            new AnimationTrackProperty.KeyFrame(initialPosition.Position, 0),
+                            new AnimationTrackProperty.KeyFrame(initialCoords.Position, 0),
                             new AnimationTrackProperty.KeyFrame(finalPosition, 0.125f)
                         }
                     },

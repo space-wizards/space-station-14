@@ -5,6 +5,7 @@ using Content.Shared.Administration.Logs;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Item;
+using Content.Shared.Storage.EntitySystems;
 using Robust.Shared.Containers;
 using Robust.Shared.Input.Binding;
 
@@ -17,6 +18,8 @@ public abstract partial class SharedHandsSystem : EntitySystem
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
     [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
     [Dependency] private readonly SharedItemSystem _items = default!;
+    [Dependency] private readonly SharedStorageSystem _storage = default!;
+    [Dependency] protected readonly SharedTransformSystem TransformSystem = default!;
 
     protected event Action<HandsComponent?>? OnHandSetActive;
 
