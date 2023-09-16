@@ -8,6 +8,16 @@
     state: pink
 
 - type: entity
+  id: WarpPointBeacon
+  parent: MarkerBase
+  name: warp point (beacon)
+  components:
+    - type: WarpPoint
+    - type: Sprite
+      state: pink
+    - type: NavMapBeacon
+
+- type: entity
   parent: WarpPoint
   id: WarpPointBombing
   name: warp point
@@ -19,3 +29,100 @@
     - state: pink
     - sprite: Objects/Weapons/Bombs/spidercharge.rsi
       state: icon
+
+# Departments
+- type: entity
+  id: WarpPointBeaconBar
+  parent: MarkerBase
+  name: warp point (bar)
+  components:
+    - type: WarpPoint
+    - type: Sprite
+      state: pink
+    - type: NavMapBeacon
+      text: bar
+      color: "#791500"
+
+- type: entity
+  id: WarpPointBeaconCargo
+  parent: MarkerBase
+  name: warp point (cargo)
+  components:
+    - type: WarpPoint
+    - type: Sprite
+      state: pink
+    - type: NavMapBeacon
+      text: cargo
+      color: "#A46106"
+
+- type: entity
+  id: WarpPointBeaconCommand
+  parent: MarkerBase
+  name: warp point (command)
+  components:
+    - type: WarpPoint
+    - type: Sprite
+      state: pink
+    - type: NavMapBeacon
+      text: command
+      color: "#334E6D"
+
+- type: entity
+  id: WarpPointBeaconEngineering
+  parent: MarkerBase
+  name: warp point (engineering)
+  components:
+    - type: WarpPoint
+    - type: Sprite
+      state: pink
+    - type: NavMapBeacon
+      text: engineering
+      color: "#EFB341"
+
+- type: entity
+  id: WarpPointBeaconMedical
+  parent: MarkerBase
+  name: warp point (medical)
+  components:
+    - type: WarpPoint
+    - type: Sprite
+      state: pink
+    - type: NavMapBeacon
+      text: medical
+      color: "#52B4E9"
+
+- type: entity
+  id: WarpPointBeaconNeutral
+  parent: MarkerBase
+  name: warp point (neutral)
+  components:
+    - type: WarpPoint
+    - type: Sprite
+      state: pink
+    - type: NavMapBeacon
+      text: neutral
+      color: "#D4D4D4"
+
+- type: entity
+  id: WarpPointBeaconScience
+  parent: MarkerBase
+  name: warp point (science)
+  components:
+    - type: WarpPoint
+    - type: Sprite
+      state: pink
+    - type: NavMapBeacon
+      text: science
+      color: "#D381C9"
+
+- type: entity
+  id: WarpPointBeaconService
+  parent: MarkerBase
+  name: warp point (service)
+  components:
+    - type: WarpPoint
+    - type: Sprite
+      state: pink
+    - type: NavMapBeacon
+      text: service
+      color: "#9FED58"
