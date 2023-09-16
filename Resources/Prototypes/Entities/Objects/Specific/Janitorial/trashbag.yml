@@ -24,7 +24,6 @@
     tags:
     - TrashBag
     - DroneUsable
-    - TrashBagGrey
   - type: Appearance
   - type: StorageFillVisualizer
     maxFillLevels: 4
@@ -49,11 +48,6 @@
     heldPrefix: blue
   - type: StorageFillVisualizer
     fillBaseName: blue-icon
-  - type: Tag
-    tags:
-    - TrashBag
-    - DroneUsable
-    - TrashBagBlue
 
 - type: entity
   name: spell of all-consuming cleanliness
