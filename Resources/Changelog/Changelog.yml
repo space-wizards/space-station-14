@@ -1,9 +1,4 @@
 Entries:
-- author: lzk228
-  changes:
-  - {message: Fixed gas tank inhand spriter, type: Fix}
-  id: 4336
-  time: '2023-07-26T21:29:35.0000000+00:00'
 - author: AjexRose
   changes:
   - {message: 'After numerous complaints from security and salvage, CentCom has authorized
@@ -2976,3 +2971,8 @@ Entries:
   - {message: Fixed succumb and last words actions not appearing, type: Fix}
   id: 4835
   time: '2023-09-15T20:52:49.0000000+00:00'
+- author: Slava0135
+  changes:
+  - {message: Entity velocity now resets when buckling., type: Tweak}
+  id: 4836
+  time: '2023-09-16T04:15:06.0000000+00:00'
