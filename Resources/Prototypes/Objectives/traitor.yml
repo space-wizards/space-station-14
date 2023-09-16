@@ -250,7 +250,7 @@
 - type: entity
   noSpawn: true
   parent: BaseCaptainObjective
-  id: StealNukeDiskObjective
+  id: NukeDiskStealObjective
   components:
   - type: Objective
     # high difficulty since the hardest item both to steal, and to not get caught down the road,
