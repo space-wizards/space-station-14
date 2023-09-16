@@ -1,8 +1,5 @@
 using Robust.Shared.Audio;
-using Content.Shared.Chat.Prototypes;
 using Robust.Shared.GameStates;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Weapons.Melee;
 
