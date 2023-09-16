@@ -1,7 +1,7 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "Schematic sheet sprites by RiceMar1244, pka and laser weapon plans by RiceMar1244",
+    "copyright": "Schematic sheet sprites by RiceMar1244, pka, laser weapon, and physics gun plans by RiceMar1244",
     "size": {
         "x": 32,
         "y": 32
@@ -17,6 +17,8 @@
         { "name": "plan_lasercarbine" },
         { "name": "plan_advancedlaser" },
         { "name": "plan_lasercannon" },
-        { "name": "plan_makeshiftlaser" }
+        { "name": "plan_makeshiftlaser" },
+        { "name": "plan_tethergun" },
+        { "name": "plan_forcegun" }
     ]
 }
