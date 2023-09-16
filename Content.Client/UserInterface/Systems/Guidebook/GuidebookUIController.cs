@@ -255,5 +255,7 @@ public sealed class GuidebookUIController : UIController, IOnStateEntered<LobbyS
     {
         ClydeWindow = null;
         _guideWindow = null;
+        if (GuidebookButton != null)
+            GuidebookButton.Pressed = false;
     }
 }
