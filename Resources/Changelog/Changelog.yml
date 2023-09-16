@@ -1,9 +1,4 @@
 Entries:
-- author: potato1234x
-  changes:
-  - {message: Changed robust nukie drink sprite., type: Tweak}
-  id: 4338
-  time: '2023-07-27T02:17:22.0000000+00:00'
 - author: Jackal298
   changes:
   - {message: 'Changed the sprites of some shotguns, now the sprite in the hands should
@@ -2975,3 +2970,9 @@ Entries:
       mop.', type: Add}
   id: 4837
   time: '2023-09-16T04:33:01.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: 'Some Syndicate objectives have been tweaked to have higher difficulties,
+      notably stealing the nuke disk.', type: Tweak}
+  id: 4838
+  time: '2023-09-16T06:18:11.0000000+00:00'
