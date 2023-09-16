@@ -37,63 +37,20 @@ internal sealed class PowerMonitoringConsoleSystem : EntitySystem
     {
         if (!Resolve(target, ref pmcComp))
             return;
+
         if (!Resolve(target, ref ncComp))
             return;
 
-        var totalSources = 0.0d;
-        var totalLoads = 0.0d;
-        var sources = new List<PowerMonitoringConsoleEntry>();
-        var loads = new List<PowerMonitoringConsoleEntry>();
-        PowerMonitoringConsoleEntry LoadOrSource(Component comp, double rate, bool isBattery)
-        {
-            var md = MetaData(comp.Owner);
-            var prototype = md.EntityPrototype?.ID ?? "";
-            return new PowerMonitoringConsoleEntry(md.EntityName, prototype, rate, isBattery);
-        }
         // Right, so, here's what needs to be considered here.
-        if (!_nodeContainer.TryGetNode<Node>(ncComp, "hv", out var node))
+        if (!_nodeContainer.TryGetNode<Node>(ncComp, pmcComp.LoadNode, out var loadNode))
             return;
 
-        if (node.NodeGroup is PowerNet netQ)
-        {
-            foreach (PowerConsumerComponent pcc in netQ.Consumers)
-            {
-                if (!pcc.ShowInMonitor)
-                    continue;
+        if (!_nodeContainer.TryGetNode<Node>(ncComp, pmcComp.SourceNode, out var sourceNode))
+            return;
 
-                loads.Add(LoadOrSource(pcc, pcc.DrawRate, false));
-                totalLoads += pcc.DrawRate;
-            }
-            foreach (BatteryChargerComponent pcc in netQ.Chargers)
-            {
-                if (!TryComp(pcc.Owner, out PowerNetworkBatteryComponent? batteryComp))
-                {
-                    continue;
-                }
-                var rate = batteryComp.NetworkBattery.CurrentReceiving;
-                loads.Add(LoadOrSource(pcc, rate, true));
-                totalLoads += rate;
-            }
-            foreach (PowerSupplierComponent pcc in netQ.Suppliers)
-            {
-                var supply = pcc.Enabled
-                    ? pcc.MaxSupply
-                    : 0f;
+        var totalLoads = GetTotalLoadsForNode(target, loadNode, out var loads);
+        var totalSources = GetTotalSourcesForNode(target, sourceNode, out var sources);
 
-                sources.Add(LoadOrSource(pcc, supply, false));
-                totalSources += supply;
-            }
-            foreach (BatteryDischargerComponent pcc in netQ.Dischargers)
-            {
-                if (!TryComp(pcc.Owner, out PowerNetworkBatteryComponent? batteryComp))
-                {
-                    continue;
-                }
-                var rate = batteryComp.NetworkBattery.CurrentSupply;
-                sources.Add(LoadOrSource(pcc, rate, true));
-                totalSources += rate;
-            }
-        }
         // Sort
         loads.Sort(CompareLoadOrSources);
         sources.Sort(CompareLoadOrSources);
@@ -101,6 +58,109 @@ internal sealed class PowerMonitoringConsoleSystem : EntitySystem
         // Actually set state.
         if (_userInterfaceSystem.TryGetUi(target, PowerMonitoringConsoleUiKey.Key, out var bui))
             _userInterfaceSystem.SetUiState(bui, new PowerMonitoringConsoleBoundInterfaceState(totalSources, totalLoads, sources.ToArray(), loads.ToArray()));
+    }
+
+    private double GetTotalSourcesForNode(EntityUid uid, Node node, out List<PowerMonitoringConsoleEntry> sources)
+    {
+        var totalSources = 0.0d;
+        sources = new List<PowerMonitoringConsoleEntry>();
+
+        if (node.NodeGroup is not PowerNet netQ)
+            return totalSources;
+
+        foreach (PowerSupplierComponent pcc in netQ.Suppliers)
+        {
+            if (uid == pcc.Owner)
+                continue;
+
+            var supply = pcc.Enabled
+                ? pcc.MaxSupply
+                : 0f;
+
+            sources.Add(LoadOrSource(pcc, supply, false));
+            totalSources += supply;
+        }
+
+        foreach (BatteryDischargerComponent pcc in netQ.Dischargers)
+        {
+            if (uid == pcc.Owner)
+                continue;
+
+            if (!TryComp(pcc.Owner, out PowerNetworkBatteryComponent? batteryComp))
+                continue;
+
+            var rate = batteryComp.NetworkBattery.CurrentSupply;
+            sources.Add(LoadOrSource(pcc, rate, true));
+            totalSources += rate;
+        }
+
+        return totalSources;
+    }
+
+    private double GetTotalLoadsForNode(EntityUid uid, Node node, out List<PowerMonitoringConsoleEntry> loads)
+    {
+        var totalLoads = 0.0d;
+        loads = new List<PowerMonitoringConsoleEntry>();
+
+        if (node.NodeGroup is ApcNet _)
+            return GetTotalLoadsForApcNode(uid, node, out loads);
+
+        if (node.NodeGroup is not PowerNet netQ)
+            return totalLoads;
+
+        foreach (PowerConsumerComponent pcc in netQ.Consumers)
+        {
+            if (uid == pcc.Owner)
+                continue;
+
+            if (!pcc.ShowInMonitor)
+                continue;
+
+            loads.Add(LoadOrSource(pcc, pcc.DrawRate, false));
+            totalLoads += pcc.DrawRate;
+        }
+
+        foreach (BatteryChargerComponent pcc in netQ.Chargers)
+        {
+            if (uid == pcc.Owner)
+                continue;
+
+            if (!TryComp(pcc.Owner, out PowerNetworkBatteryComponent? batteryComp))
+                continue;
+
+            var rate = batteryComp.NetworkBattery.CurrentReceiving;
+            loads.Add(LoadOrSource(pcc, rate, true));
+            totalLoads += rate;
+        }
+
+        return totalLoads;
+    }
+
+    private double GetTotalLoadsForApcNode(EntityUid uid, Node node, out List<PowerMonitoringConsoleEntry> loads)
+    {
+        var totalLoads = 0.0d;
+        loads = new List<PowerMonitoringConsoleEntry>();
+
+        if (node.NodeGroup is not ApcNet netQ)
+            return totalLoads;
+
+        foreach (ApcPowerReceiverComponent pcc in netQ.AllReceivers)
+        {
+            if (uid == pcc.Owner)
+                continue;
+
+            loads.Add(LoadOrSource(pcc, pcc.Load, false));
+            totalLoads += pcc.Load;
+        }
+
+        return totalLoads;
+    }
+
+    private PowerMonitoringConsoleEntry LoadOrSource(Component comp, double rate, bool isBattery)
+    {
+        var md = MetaData(comp.Owner);
+        var prototype = md.EntityPrototype?.ID ?? "";
+        return new PowerMonitoringConsoleEntry(md.EntityName, prototype, rate, isBattery);
     }
 
     private int CompareLoadOrSources(PowerMonitoringConsoleEntry x, PowerMonitoringConsoleEntry y)

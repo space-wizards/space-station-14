@@ -40,17 +40,17 @@
       examinable: true
       nodes:
         input:
-          !type:CableDeviceNode
+          !type:CableTerminalPortNode
           nodeGroupID: HVPower
         output:
-          !type:CableTerminalPortNode
+          !type:CableDeviceNode
           nodeGroupID: HVPower
     - type: BatteryCharger
       voltage: High
-      node: output
+      node: input
     - type: BatteryDischarger
       voltage: High
-      node: input
+      node: output
     - type: PowerNetworkBattery
       maxSupply: 150000
       maxChargeRate: 5000
@@ -87,6 +87,15 @@
       sendBroadcastAttemptEvent: true
       examinableAddress: true
     - type: WiredNetworkConnection
+    - type: PowerMonitoringConsole
+      sourceNode: input
+      loadNode: output
+    - type: ActivatableUI
+      key: enum.PowerMonitoringConsoleUiKey.Key
+    - type: UserInterface
+      interfaces:
+      - key: enum.PowerMonitoringConsoleUiKey.Key
+        type: PowerMonitoringConsoleBoundUserInterface    
 
 # SMES' in use
 
