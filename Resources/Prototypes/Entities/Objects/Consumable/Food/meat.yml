@@ -792,7 +792,7 @@
     count: 3
     slice: FoodMeatDuckCutletCooked
   - type: Construction
-    graph: CookedDuck
+    graph: DuckSteak
     node: cooked duck
 
 - type: entity
