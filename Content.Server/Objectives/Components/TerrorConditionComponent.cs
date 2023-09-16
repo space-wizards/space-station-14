@@ -12,6 +12,6 @@ public sealed partial class TerrorConditionComponent : Component
     /// <summary>
     /// Whether the comms console has been hacked
     /// </summary>
-    [DataField("calledInThreat")]
+    [DataField("calledInThreat"), ViewVariables(VVAccess.ReadWrite)]
     public bool CalledInThreat;
 }

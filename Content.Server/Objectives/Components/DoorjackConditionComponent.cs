@@ -10,6 +10,6 @@ namespace Content.Server.Objectives.Components;
 [RegisterComponent, Access(typeof(NinjaConditionsSystem), typeof(SharedSpaceNinjaSystem))]
 public sealed partial class DoorjackConditionComponent : Component
 {
-    [DataField("doorsJacked")]
+    [DataField("doorsJacked"), ViewVariables(VVAccess.ReadWrite)]
     public int DoorsJacked;
 }
