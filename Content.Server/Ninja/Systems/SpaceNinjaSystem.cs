@@ -47,7 +47,6 @@ public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
     [Dependency] private readonly RoleSystem _role = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedMindSystem _mind = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly StealthClothingSystem _stealthClothing = default!;
 
     public override void Initialize()
@@ -240,7 +239,7 @@ public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
         if (ninja.Suit == null)
             return;
 
-        float wattage = _suit.SuitWattage(ninja.Suit.Value);
+        float wattage = Suit.SuitWattage(ninja.Suit.Value);
 
         SetSuitPowerAlert(uid, ninja);
         if (!TryUseCharge(uid, wattage * frameTime))
@@ -260,7 +259,7 @@ public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
             return;
 
         // this popup is serverside since door emag logic is serverside (power funnies)
-        _popup.PopupEntity(Loc.GetString("ninja-doorjack-success", ("target", Identity.Entity(args.Target, EntityManager))), uid, uid, PopupType.Medium);
+        Popup.PopupEntity(Loc.GetString("ninja-doorjack-success", ("target", Identity.Entity(args.Target, EntityManager))), uid, uid, PopupType.Medium);
 
         // handle greentext
         if (_mind.TryGetObjectiveComp<DoorjackConditionComponent>(uid, out var condition))
@@ -277,7 +276,7 @@ public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
             ? Loc.GetString("ninja-research-steal-fail")
             : Loc.GetString("ninja-research-steal-success", ("count", gained), ("server", args.Target));
 
-        _popup.PopupEntity(str, uid, uid, PopupType.Medium);
+        Popup.PopupEntity(str, uid, uid, PopupType.Medium);
     }
 
     private void OnThreatCalledIn(EntityUid uid, SpaceNinjaComponent comp, ref ThreatCalledInEvent args)
