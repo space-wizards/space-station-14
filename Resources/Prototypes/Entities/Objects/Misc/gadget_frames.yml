@@ -246,7 +246,8 @@
           wiresMissing: { state: frame_0 }
           caseMissing: { state: frame_1 }
           boxMissing: { state: frame_2 }
-          panelUnscrewed: { state: frame_tether }
+          panelUnscrewedTether: { state: frame_tether }
+          panelUnscrewedForce: { state: frame_force }
   - type: Construction
     graph: WeaponPhysicsGun
     node: wiresMissing

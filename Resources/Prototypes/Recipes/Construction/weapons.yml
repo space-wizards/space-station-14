@@ -231,11 +231,22 @@
 
 - type: construction
   hide: true
-  name: physics gun
-  id: WeaponPhysicsGun
+  name: tether gun
+  id: WeaponTetherGun
   graph: WeaponPhysicsGun
   startNode: start
-  targetNode: physicsgun
+  targetNode: tethergun
   category: construction-category-weapons
   icon: { sprite: Objects/Weapons/Guns/Launchers/tether_gun.rsi, state: base }
+  objectType: Item
+
+- type: construction
+  hide: true
+  name: force gun
+  id: WeaponForceGun
+  graph: WeaponPhysicsGun
+  startNode: start
+  targetNode: forcegun
+  category: construction-category-weapons
+  icon: { sprite: Objects/Weapons/Guns/Launchers/force_gun.rsi, state: base }
   objectType: Item

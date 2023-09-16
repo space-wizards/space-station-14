@@ -188,7 +188,7 @@
             False: { visible: false }
     - type: Construction
       graph: WeaponPhysicsGun
-      node: physicsgun
+      node: tethergun
       
 
 - type: entity
@@ -233,6 +233,9 @@
               unshaded:
                 True: { visible: true }
                 False: { visible: false }
+    - type: Construction
+      graph: WeaponPhysicsGun
+      node: forcegun
 
 - type: entity
   name: grappling gun

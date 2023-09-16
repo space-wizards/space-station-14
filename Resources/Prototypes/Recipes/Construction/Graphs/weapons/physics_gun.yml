@@ -35,20 +35,37 @@
     actions:
     - !type:AppearanceChange
     edges:
-    - to: panelUnscrewed
+    - to: panelUnscrewedTether
       steps:
       - tag: TetherPhysicsTechPart
         store: box
-        name: a physics box
+        name: a tether physics box
+    - to: panelUnscrewedForce
+      steps:
+      - tag: ForcePhysicsTechPart
+        store: box
+        name: a force physics box
 
-  - node: panelUnscrewed
+  - node: panelUnscrewedTether
     actions:
     - !type:AppearanceChange
     edges:
-    - to: physicsgun
+    - to: tethergun
       steps:
       - tool: Screwing
         doAfter: 1
 
-  - node: physicsgun
+  - node: panelUnscrewedForce
+    actions:
+    - !type:AppearanceChange
+    edges:
+    - to: forcegun
+      steps:
+      - tool: Screwing
+        doAfter: 1
+
+  - node: tethergun
     entity: WeaponTetherGun
+
+  - node: forcegun
+    entity: WeaponForceGun
