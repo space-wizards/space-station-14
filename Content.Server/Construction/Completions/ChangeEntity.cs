@@ -17,7 +17,7 @@ public sealed partial class ChangeEntity : IGraphAction
 
         if (entityManager.TrySystem(out ConstructionSystem? constructionSystem))
         {
-            constructionSystem.ChangeEntity(uid, userUid, Prototype);
+            constructionSystem.TryChangeEntity(uid, userUid, Prototype, out var _);
         }
     }
 }

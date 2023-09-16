@@ -271,6 +271,19 @@ namespace Content.Server.Construction
             return true;
         }
 
+        ///<summary>
+        ///     Attempts to change an entity prototype change on a construction entity.
+        ///</summary>
+        public bool TryChangeEntity(EntityUid uid, EntityUid? userUid, string newEntity, out EntityUid? newUid,
+            ConstructionComponent? construction = null,
+            MetaDataComponent? metaData = null,
+            TransformComponent? transform = null,
+            ContainerManagerComponent? containerManager = null)
+        {
+            newUid = ChangeEntity(uid, userUid, newEntity, construction, metaData, transform, containerManager);
+            return newUid != null;
+        }
+
         /// <summary>
         ///     Performs an entity prototype change on a construction entity.
         ///     The old entity will be removed, and a new one will be spawned in its place. Some values will be kept,
@@ -285,7 +298,7 @@ namespace Content.Server.Construction
         /// <param name="containerManager">The container manager component of the target entity. Will be resolved if null,
         ///                                but it is an optional component and not required for the method to work.</param>
         /// <returns>The new entity, or null if the method did not succeed.</returns>
-        public EntityUid? ChangeEntity(EntityUid uid, EntityUid? userUid, string newEntity,
+        private EntityUid? ChangeEntity(EntityUid uid, EntityUid? userUid, string newEntity,
             ConstructionComponent? construction = null,
             MetaDataComponent? metaData = null,
             TransformComponent? transform = null,
