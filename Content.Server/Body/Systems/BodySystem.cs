@@ -99,9 +99,21 @@ public sealed class BodySystem : SharedBodySystem
         ContainerSlot container, bool reparent,
         EntityCoordinates? coords)
     {
-        if (!base.InternalAttachPart(body, partId, partId, part, slotId, container, reparent, coords))
+        if (!base.InternalDetachPart(body, partId, part, slotId, container, reparent, coords))
             return false;
 
+        if (body != null
+            && TryComp<HumanoidAppearanceComponent>(body, out var humanoid))
+        {
+            var layer = part.ToHumanoidLayers();
+            if (layer != null)
+            {
+                var layers = HumanoidVisualLayersExtension.Sublayers(layer.Value);
+                _humanoidSystem.SetLayersVisibility(body.Value, layers, false, true, humanoid);
+            }
+        }
+
+        return true;
     }
 
 

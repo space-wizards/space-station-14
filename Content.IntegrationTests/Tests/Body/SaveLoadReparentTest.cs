@@ -54,17 +54,16 @@ public sealed class SaveLoadReparentTest
                 Assert.Multiple(() =>
                 {
                     Assert.That(component.Body, Is.EqualTo(human));
-                    Assert.That(component.ParentSlotOld, Is.Not.Null);
-                    Assert.That(component.ParentSlotOld.Parent, Is.Not.EqualTo(default(EntityUid)));
-                    Assert.That(component.ParentSlotOld.Child, Is.EqualTo(id));
+                    Assert.That(component.Parent, Is.Not.Null);
+                    Assert.That(component.Parent, Is.Not.EqualTo(default(EntityUid)));
                 });
 
-                foreach (var (slotId, slot) in component.ChildrenOld)
+                foreach (var (slotId, slot) in component.Children)
                 {
                     Assert.Multiple(() =>
                     {
                         Assert.That(slot.Id, Is.EqualTo(slotId));
-                        Assert.That(slot.Parent, Is.Not.EqualTo(default(EntityUid)));
+                        Assert.That(slot.Container.ContainedEntity, Is.Not.EqualTo(default(EntityUid)));
                     });
                 }
             }
@@ -74,9 +73,8 @@ public sealed class SaveLoadReparentTest
                 Assert.Multiple(() =>
                 {
                     Assert.That(component.Body, Is.EqualTo(human));
-                    Assert.That(component.ParentSlot, Is.Not.Null);
-                    Assert.That(component.ParentSlot.Parent, Is.Not.EqualTo(default(EntityUid)));
-                    Assert.That(component.ParentSlot.Child, Is.EqualTo(id));
+                    Assert.That(component.Parent, Is.Not.Null);
+                    Assert.That(component.Parent, Is.Not.EqualTo(default(EntityUid)));
                 });
             }
 
@@ -129,17 +127,16 @@ public sealed class SaveLoadReparentTest
                     Assert.Multiple(() =>
                     {
                         Assert.That(component.Body, Is.EqualTo(human));
-                        Assert.That(component.ParentSlotOld, Is.Not.Null);
-                        Assert.That(component.ParentSlotOld.Parent, Is.Not.EqualTo(default(EntityUid)));
-                        Assert.That(component.ParentSlotOld.Child, Is.EqualTo(id));
+                        Assert.That(component.Parent, Is.Not.Null);
+                        Assert.That(component.Parent, Is.Not.EqualTo(default(EntityUid)));
                     });
 
-                    foreach (var (slotId, slot) in component.ChildrenOld)
+                    foreach (var (slotId, slot) in component.Children)
                     {
                         Assert.Multiple(() =>
                         {
                             Assert.That(slot.Id, Is.EqualTo(slotId));
-                            Assert.That(slot.Parent, Is.Not.EqualTo(default(EntityUid)));
+                            Assert.That(slot.Container.ContainedEntity, Is.Not.EqualTo(default(EntityUid)));
                         });
                     }
                 }
@@ -149,9 +146,8 @@ public sealed class SaveLoadReparentTest
                     Assert.Multiple(() =>
                     {
                         Assert.That(component.Body, Is.EqualTo(human));
-                        Assert.That(component.ParentSlot, Is.Not.Null);
-                        Assert.That(component.ParentSlot.Parent, Is.Not.EqualTo(default(EntityUid)));
-                        Assert.That(component.ParentSlot.Child, Is.EqualTo(id));
+                        Assert.That(component.Parent, Is.Not.Null);
+                        Assert.That(component.Parent, Is.Not.EqualTo(default(EntityUid)));
                     });
                 }
 
