@@ -38,7 +38,7 @@
   noSpawn: true
   components:
     - type: SubdermalImplant
-      implantAction: ToggleLight
+      implantAction: ActionToggleLight
     - type: PointLight
       enabled: false
       radius: 2.5
@@ -51,12 +51,6 @@
         - HideContextMenu
         - Flashlight
     - type: UnpoweredFlashlight
-      toggleAction:
-        name: action-name-toggle-light
-        description: action-description-toggle-light
-        icon: { sprite: Objects/Tools/flashlight.rsi, state: flashlight }
-        iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
-        event: !type:ToggleActionEvent
 
 - type: entity
   parent: BaseSubdermalImplant
@@ -66,7 +60,7 @@
   noSpawn: true
   components:
     - type: SubdermalImplant
-      implantAction: ActivateHonkImplant
+      implantAction: ActionActivateHonkImplant
     - type: TriggerImplantAction
     - type: EmitSoundOnTrigger
       sound:
@@ -114,7 +108,7 @@
   noSpawn: true
   components:
     - type: SubdermalImplant
-      implantAction: OpenStorageImplant
+      implantAction: ActionOpenStorageImplant
     - type: Item
       size: 9999
     - type: Storage
@@ -136,7 +130,7 @@
   noSpawn: true
   components:
     - type: SubdermalImplant
-      implantAction: ActivateFreedomImplant
+      implantAction: ActionActivateFreedomImplant
 
 - type: entity
   parent: BaseSubdermalImplant
@@ -146,7 +140,7 @@
   noSpawn: true
   components:
   - type: SubdermalImplant
-    implantAction: OpenUplinkImplant
+    implantAction: ActionOpenUplinkImplant
   - type: Store
     preset: StorePresetUplink
     balance:
@@ -164,7 +158,7 @@
   noSpawn: true
   components:
     - type: SubdermalImplant
-      implantAction: ActivateEmpImplant
+      implantAction: ActionActivateEmpImplant
     - type: TriggerImplantAction
     - type: EmpOnTrigger
       range: 1.75
@@ -179,7 +173,7 @@
   noSpawn: true
   components:
     - type: SubdermalImplant
-      implantAction: ActivateDnaScramblerImplant
+      implantAction: ActionActivateDnaScramblerImplant
 
 #Nuclear Operative/Special Exclusive implants
 
@@ -192,7 +186,7 @@
   components:
     - type: SubdermalImplant
       permanent: true
-      implantAction: ActivateMicroBomb
+      implantAction: ActionActivateMicroBomb
     - type: TriggerOnMobstateChange
       mobState:
       - Dead

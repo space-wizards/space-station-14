@@ -531,7 +531,6 @@
 - type: Tag
   id: HappyHonk
 
-
 - type: Tag
   id: Hardsuit # Prevent melee injectors that can't penetrate hardsuits from injecting the wearer (nettles)
 
@@ -543,6 +542,9 @@
 
 - type: Tag
   id: HideContextMenu
+
+- type: Tag
+  id: HideCorgi # corgi hide for crafting, not for making corgis invisible
 
 - type: Tag
   id: HidesHair # for headwear.
@@ -793,6 +795,14 @@
 - type: Tag
   id: PlushieGhost
 
+- type: Tag
+  id: PlushieSharkBlue
+
+- type: Tag
+  id: PlushieSharkPink
+
+- type: Tag
+  id: PlushieSharkGrey
 
 - type: Tag
   id: PowerCellSmall

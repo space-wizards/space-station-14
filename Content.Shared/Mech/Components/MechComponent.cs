@@ -1,4 +1,3 @@
-using Content.Shared.Actions.ActionTypes;
 using Content.Shared.FixedPoint;
 using Content.Shared.Whitelist;
 using Robust.Shared.Containers;
@@ -142,12 +141,12 @@ public sealed partial class MechComponent : Component
     public List<string> StartingEquipment = new();
 
     #region Action Prototypes
-    [DataField("mechCycleAction", customTypeSerializer: typeof(PrototypeIdSerializer<InstantActionPrototype>))]
-    public string MechCycleAction = "MechCycleEquipment";
-    [DataField("mechUiAction", customTypeSerializer: typeof(PrototypeIdSerializer<InstantActionPrototype>))]
-    public string MechUiAction = "MechOpenUI";
-    [DataField("mechEjectAction", customTypeSerializer: typeof(PrototypeIdSerializer<InstantActionPrototype>))]
-    public string MechEjectAction = "MechEject";
+    [DataField("mechCycleAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    public string MechCycleAction = "ActionMechCycleEquipment";
+    [DataField("mechUiAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    public string MechUiAction = "ActionMechOpenUI";
+    [DataField("mechEjectAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    public string MechEjectAction = "ActionMechEject";
     #endregion
 
     #region Visualizer States
@@ -170,6 +169,6 @@ public sealed class MechComponentState : ComponentState
     public FixedPoint2 MaxIntegrity;
     public FixedPoint2 Energy;
     public FixedPoint2 MaxEnergy;
-    public EntityUid? CurrentSelectedEquipment;
+    public NetEntity? CurrentSelectedEquipment;
     public bool Broken;
 }

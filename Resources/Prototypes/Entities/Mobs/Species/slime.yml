@@ -1,6 +1,6 @@
 - type: entity
   name: Urist McSlime
-  parent: BaseMobOrganic
+  parent: BaseMobSpeciesOrganic
   id: BaseMobSlimePerson
   abstract: true
   components:
@@ -76,12 +76,9 @@
     maxSaturation: 15
 
 - type: entity
-  save: false
-  name: Urist McHands
   parent: MobHumanDummy
   id: MobSlimePersonDummy
   noSpawn: true
-  description: A dummy slime meant to be used in character setup.
   components:
     - type: HumanoidAppearance
       species: SlimePerson

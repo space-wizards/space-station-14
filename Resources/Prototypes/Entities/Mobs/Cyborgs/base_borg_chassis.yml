@@ -48,6 +48,18 @@
   - type: MobThresholds
     thresholds:
       0: Alive
+      100: Dead
+    stateAlertDict:
+      Alive: BorgHealth
+    showOverlays: false
+  - type: HealthExaminable
+    examinableTypes:
+      - Blunt
+      - Slash
+      - Piercing
+      - Heat
+      - Shock
+    locPrefix: silicon
   - type: UserInterface
     interfaces:
     - key: enum.SiliconLawsUiKey.Key
@@ -124,6 +136,15 @@
     damageContainer: Inorganic
   - type: Destructible
     thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Machines/warning_buzzer.ogg
+          params:
+            volume: 5
     - trigger:
         !type:DamageTrigger
         damage: 100

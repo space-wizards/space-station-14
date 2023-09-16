@@ -1,5 +1,5 @@
 ﻿- type: entity
-  parent: BaseMobOrganic
+  parent: BaseMobSpeciesOrganic
   id: BaseMobVox
   abstract: true
   components:
@@ -109,13 +109,12 @@
       Unsexed: UnisexVox
 
 - type: entity
+  parent: BaseSpeciesDummy
   id: MobVoxDummy
-  parent: MobHumanDummy
   noSpawn: true
   components:
   - type: HumanoidAppearance
     species: Vox
   - type: Body
     prototype: Vox
-    requiredLegs: 2
 

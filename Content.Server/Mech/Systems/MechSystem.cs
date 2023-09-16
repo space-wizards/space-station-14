@@ -93,7 +93,7 @@ public sealed partial class MechSystem : SharedMechSystem
 
         if (TryComp<ToolComponent>(args.Used, out var tool) && tool.Qualities.Contains("Prying") && component.BatterySlot.ContainedEntity != null)
         {
-            var doAfterEventArgs = new DoAfterArgs(args.User, component.BatteryRemovalDelay, new RemoveBatteryEvent(), uid, target: uid, used: args.Target)
+            var doAfterEventArgs = new DoAfterArgs(EntityManager, args.User, component.BatteryRemovalDelay, new RemoveBatteryEvent(), uid, target: uid, used: args.Target)
             {
                 BreakOnTargetMove = true,
                 BreakOnUserMove = true,
@@ -146,13 +146,15 @@ public sealed partial class MechSystem : SharedMechSystem
 
     private void OnRemoveEquipmentMessage(EntityUid uid, MechComponent component, MechEquipmentRemoveMessage args)
     {
-        if (!Exists(args.Equipment) || Deleted(args.Equipment))
+        var equip = GetEntity(args.Equipment);
+
+        if (!Exists(equip) || Deleted(equip))
             return;
 
-        if (!component.EquipmentContainer.ContainedEntities.Contains(args.Equipment))
+        if (!component.EquipmentContainer.ContainedEntities.Contains(equip))
             return;
 
-        RemoveEquipment(uid, args.Equipment, component);
+        RemoveEquipment(uid, equip, component);
     }
 
     private void OnOpenUi(EntityUid uid, MechComponent component, MechOpenUiEvent args)
@@ -179,7 +181,7 @@ public sealed partial class MechSystem : SharedMechSystem
                 Text = Loc.GetString("mech-verb-enter"),
                 Act = () =>
                 {
-                    var doAfterEventArgs = new DoAfterArgs(args.User, component.EntryDelay, new MechEntryEvent(), uid, target: uid)
+                    var doAfterEventArgs = new DoAfterArgs(EntityManager, args.User, component.EntryDelay, new MechEntryEvent(), uid, target: uid)
                     {
                         BreakOnUserMove = true,
                     };
@@ -209,7 +211,7 @@ public sealed partial class MechSystem : SharedMechSystem
                         return;
                     }
 
-                    var doAfterEventArgs = new DoAfterArgs(args.User, component.ExitDelay, new MechExitEvent(), uid, target: uid)
+                    var doAfterEventArgs = new DoAfterArgs(EntityManager, args.User, component.ExitDelay, new MechExitEvent(), uid, target: uid)
                     {
                         BreakOnUserMove = true,
                         BreakOnTargetMove = true,
@@ -282,9 +284,11 @@ public sealed partial class MechSystem : SharedMechSystem
     {
         var ev = new MechEquipmentUiMessageRelayEvent(args);
         var allEquipment = new List<EntityUid>(component.EquipmentContainer.ContainedEntities);
+        var argEquip = GetEntity(args.Equipment);
+
         foreach (var equipment in allEquipment)
         {
-            if (args.Equipment == equipment)
+            if (argEquip == equipment)
                 RaiseLocalEvent(equipment, ev);
         }
     }
@@ -307,7 +311,7 @@ public sealed partial class MechSystem : SharedMechSystem
             EquipmentStates = ev.States
         };
         var ui = _ui.GetUi(uid, MechUiKey.Key);
-        UserInterfaceSystem.SetUiState(ui, state);
+        _ui.SetUiState(ui, state);
     }
 
     public override void BreakMech(EntityUid uid, MechComponent? component = null)

@@ -12,14 +12,16 @@ using Content.Shared.Players;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Players;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Mind;
 
 public abstract class SharedMindSystem : EntitySystem
 {
-    [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly IPrototypeManager _proto = default!;
+    [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
     [Dependency] private readonly SharedPlayerSystem _playerSystem = default!;
 
     // This is dictionary is required to track the minds of disconnected players that may have had their entity deleted.
@@ -269,6 +271,23 @@ public abstract class SharedMindSystem : EntitySystem
     }
 
     /// <summary>
+    /// Adds an objective, by id, to this mind.
+    /// </summary>
+    public bool TryAddObjective(EntityUid mindId, string name, MindComponent? mind = null)
+    {
+        if (!Resolve(mindId, ref mind))
+            return false;
+
+        if (!_proto.TryIndex<ObjectivePrototype>(name, out var objective))
+        {
+            Log.Error($"Tried to add unknown objective prototype: {name}");
+            return false;
+        }
+
+        return TryAddObjective(mindId, mind, objective);
+    }
+
+    /// <summary>
     /// Removes an objective to this mind.
     /// </summary>
     /// <returns>Returns true if the removal succeeded.</returns>
@@ -338,6 +357,19 @@ public abstract class SharedMindSystem : EntitySystem
         mindId = default;
         mind = null;
         return _playerSystem.ContentData(player) is { } data && TryGetMind(data, out mindId, out mind);
+    }
+
+    /// <summary>
+    /// Gets a role component from a player's mind.
+    /// </summary>
+    /// <returns>Whether a role was found</returns>
+    public bool TryGetRole<T>(EntityUid user, [NotNullWhen(true)] out T? role) where T : Component
+    {
+        role = null;
+        if (!TryComp<MindContainerComponent>(user, out var mindContainer) || mindContainer.Mind == null)
+            return false;
+
+        return TryComp(mindContainer.Mind, out role);
     }
 
     /// <summary>

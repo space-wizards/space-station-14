@@ -27,10 +27,8 @@ namespace Content.Client.Construction
         [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
 
-        private readonly Dictionary<int, ConstructionGhostComponent> _ghosts = new();
+        private readonly Dictionary<int, EntityUid> _ghosts = new();
         private readonly Dictionary<string, ConstructionGuide> _guideCache = new();
-
-        private int _nextId;
 
         public bool CraftingEnabled { get; private set; }
 
@@ -39,6 +37,7 @@ namespace Content.Client.Construction
         {
             base.Initialize();
 
+            UpdatesOutsidePrediction = true;
             SubscribeLocalEvent<PlayerAttachSysMessage>(HandlePlayerAttached);
             SubscribeNetworkEvent<AckStructureConstructionMessage>(HandleAckStructure);
             SubscribeNetworkEvent<ResponseConstructionGuide>(OnConstructionGuideReceived);
@@ -107,6 +106,7 @@ namespace Content.Client.Construction
 
         private void HandleAckStructure(AckStructureConstructionMessage msg)
         {
+            // We get sent a NetEntity but it actually corresponds to our local Entity.
             ClearGhost(msg.GhostId);
         }
 
@@ -150,13 +150,13 @@ namespace Content.Client.Construction
 
         private bool HandleUse(in PointerInputCmdHandler.PointerInputCmdArgs args)
         {
-            if (!args.EntityUid.IsValid() || !args.EntityUid.IsClientSide())
+            if (!args.EntityUid.IsValid() || !IsClientSide(args.EntityUid))
                 return false;
 
-            if (!EntityManager.TryGetComponent<ConstructionGhostComponent?>(args.EntityUid, out var ghostComp))
+            if (!HasComp<ConstructionGhostComponent>(args.EntityUid))
                 return false;
 
-            TryStartConstruction(ghostComp.GhostId);
+            TryStartConstruction(args.EntityUid);
             return true;
         }
 
@@ -196,9 +196,8 @@ namespace Content.Client.Construction
             ghost = EntityManager.SpawnEntity("constructionghost", loc);
             var comp = EntityManager.GetComponent<ConstructionGhostComponent>(ghost.Value);
             comp.Prototype = prototype;
-            comp.GhostId = _nextId++;
             EntityManager.GetComponent<TransformComponent>(ghost.Value).LocalRotation = dir.ToAngle();
-            _ghosts.Add(comp.GhostId, comp);
+            _ghosts.Add(ghost.Value.Id, ghost.Value);
             var sprite = EntityManager.GetComponent<SpriteComponent>(ghost.Value);
             sprite.Color = new Color(48, 255, 48, 128);
 
@@ -247,23 +246,25 @@ namespace Content.Client.Construction
         {
             foreach (var ghost in _ghosts)
             {
-                if (EntityManager.GetComponent<TransformComponent>(ghost.Value.Owner).Coordinates.Equals(loc)) return true;
+                if (EntityManager.GetComponent<TransformComponent>(ghost.Value).Coordinates.Equals(loc))
+                    return true;
             }
 
             return false;
         }
 
-        public void TryStartConstruction(int ghostId)
+        public void TryStartConstruction(EntityUid ghostId, ConstructionGhostComponent? ghostComp = null)
         {
-            var ghost = _ghosts[ghostId];
+            if (!Resolve(ghostId, ref ghostComp))
+                return;
 
-            if (ghost.Prototype == null)
+            if (ghostComp.Prototype == null)
             {
                 throw new ArgumentException($"Can't start construction for a ghost with no prototype. Ghost id: {ghostId}");
             }
 
-            var transform = EntityManager.GetComponent<TransformComponent>(ghost.Owner);
-            var msg = new TryStartStructureConstructionMessage(transform.Coordinates, ghost.Prototype.ID, transform.LocalRotation, ghostId);
+            var transform = EntityManager.GetComponent<TransformComponent>(ghostId);
+            var msg = new TryStartStructureConstructionMessage(GetNetCoordinates(transform.Coordinates), ghostComp.Prototype.ID, transform.LocalRotation, ghostId.Id);
             RaiseNetworkEvent(msg);
         }
 
@@ -280,11 +281,11 @@ namespace Content.Client.Construction
         /// </summary>
         public void ClearGhost(int ghostId)
         {
-            if (_ghosts.TryGetValue(ghostId, out var ghost))
-            {
-                EntityManager.QueueDeleteEntity(ghost.Owner);
-                _ghosts.Remove(ghostId);
-            }
+            if (!_ghosts.TryGetValue(ghostId, out var ghost))
+                return;
+
+            EntityManager.QueueDeleteEntity(ghost);
+            _ghosts.Remove(ghostId);
         }
 
         /// <summary>
@@ -292,9 +293,9 @@ namespace Content.Client.Construction
         /// </summary>
         public void ClearAllGhosts()
         {
-            foreach (var (_, ghost) in _ghosts)
+            foreach (var ghost in _ghosts.Values)
             {
-                EntityManager.QueueDeleteEntity(ghost.Owner);
+                EntityManager.QueueDeleteEntity(ghost);
             }
 
             _ghosts.Clear();

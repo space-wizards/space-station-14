@@ -40,7 +40,9 @@ The crusher devices are your first and last line of defense against space fauna 
 <GuideEntityEmbed Entity="OreBag"/>
 <GuideEntityEmbed Entity="ClothingBeltUtilityFilled"/>
 </Box>
-Mining equipment and a full utility belt are needed to be able to plunder the full value of a salvage. The mining to quickly gather ore for the ore processor to make usefull, and the tools of the utility belt for breaking things apart and moving high value objects out.
+The pickaxe and mining drill are both useful for mining rocks or breaking structures quickly.
+The ore bag magnetises nearby ore and automatically picks it up if equipped to a belt slot.
+The utility belt can be useful for holding miscellaneous items when not occupied by your ore bag.
 
 ## How to make money as a salvager
 <Box>

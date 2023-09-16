@@ -112,14 +112,16 @@ public abstract partial class SharedTetherGunSystem : EntitySystem
             return;
         }
 
-        if (!msg.Coordinates.TryDistance(EntityManager, TransformSystem, Transform(gunUid.Value).Coordinates,
+        var coords = GetCoordinates(msg.Coordinates);
+
+        if (!coords.TryDistance(EntityManager, TransformSystem, Transform(gunUid.Value).Coordinates,
                 out var distance) ||
             distance > gun.MaxDistance)
         {
             return;
         }
 
-        TransformSystem.SetCoordinates(gun.TetherEntity.Value, msg.Coordinates);
+        TransformSystem.SetCoordinates(gun.TetherEntity.Value, coords);
     }
 
     private void OnTetherRanged(EntityUid uid, TetherGunComponent component, AfterInteractEvent args)
@@ -283,7 +285,7 @@ public abstract partial class SharedTetherGunSystem : EntitySystem
     [Serializable, NetSerializable]
     protected sealed class RequestTetherMoveEvent : EntityEventArgs
     {
-        public EntityCoordinates Coordinates;
+        public NetCoordinates Coordinates;
     }
 
     [Serializable, NetSerializable]
