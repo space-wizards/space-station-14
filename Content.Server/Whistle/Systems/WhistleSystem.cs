@@ -17,31 +17,7 @@ public sealed class WhistleSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<WhistleComponent, BeforeRangedInteractEvent>(OnBeforeInteract);
         SubscribeLocalEvent<WhistleComponent, UseInHandEvent>(OnUseInHand);
-    }
-
-    public void OnBeforeInteract(EntityUid uid, WhistleComponent component, BeforeRangedInteractEvent args)
-    {
-        if (_delaySystem.ActiveDelay(uid))
-            return;
-
-        if(component.exclamatePerson)
-            TryExclamateTarget(uid, args.Target, component);
-
-        _audio.PlayPvs(component.Sound, uid);
-        _delaySystem.BeginDelay(uid);
-
-        args.Handled = true;
-    }
-    private bool TryExclamateTarget(EntityUid uid, EntityUid? target, WhistleComponent component)
-    {
-        if (!HasComp<MobMoverComponent>(target))
-            return false;
-        if (target is null)
-            return false;
-
-        return ExclamateTarget(uid, target.Value, component);
     }
     private bool ExclamateTarget(EntityUid uid, EntityUid target, WhistleComponent component)
     {
