@@ -26,7 +26,8 @@ public sealed class GetItemActionsEvent : EntityEventArgs
     public EntityUid User;
 
     /// <summary>
-    /// The entity that will provide the action. This is used as a default argument to <see cref="AddAction(ref System.Nullable{Robust.Shared.GameObjects.EntityUid},string,Robust.Shared.GameObjects.EntityUid)"/>
+    /// The entity that is being asked to provide the actions. This is used as a default argument to <see cref="AddAction(ref System.Nullable{Robust.Shared.GameObjects.EntityUid},string,Robust.Shared.GameObjects.EntityUid)"/>.
+    /// I.e., if a new action needs to be spawned, then it will be inserted into this entity unless otherwise specified.
     /// </summary>
     public EntityUid Provider;
 

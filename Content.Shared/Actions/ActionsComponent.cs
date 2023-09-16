@@ -12,8 +12,7 @@ public sealed partial class ActionsComponent : Component
     /// List of actions currently granted to this entity.
     /// On the client, this may contain a mixture of client-side and networked entities.
     /// </summary>
-    [DataField("actions")]
-    public HashSet<EntityUid> Actions = new();
+    [DataField] public HashSet<EntityUid> Actions = new();
 }
 
 [Serializable, NetSerializable]

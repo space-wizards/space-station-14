@@ -106,7 +106,7 @@ public abstract partial class BaseActionComponent : Component
     [DataField("checkCanInteract")] public bool CheckCanInteract = true;
 
     /// <summary>
-    ///     If true, this will cause the action to only execute locally without ever sending it to the server.
+    ///     If true, this will cause the action to only execute locally without ever notifying the server.
     /// </summary>
     [DataField("clientExclusive")] public bool ClientExclusive = false;
 

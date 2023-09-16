@@ -237,9 +237,6 @@ namespace Content.Client.Actions
                 return;
             }
 
-            if (Deleted(action.Container))
-                return;
-
             if (action is not InstantActionComponent instantAction)
                 return;
 
