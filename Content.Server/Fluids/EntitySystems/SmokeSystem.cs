@@ -61,7 +61,6 @@ public sealed class SmokeSystem : EntitySystem
     private void OnSmokeSpread(EntityUid uid, SmokeComponent component, ref SpreadNeighborsEvent args)
     {
         if (component.SpreadAmount == 0
-            || args.NeighborFreeTiles.Count == 0
             || !_solutionSystem.TryGetSolution(uid, SmokeComponent.SolutionName, out var solution))
         {
             RemCompDeferred<ActiveEdgeSpreaderComponent>(uid);
@@ -77,45 +76,39 @@ public sealed class SmokeSystem : EntitySystem
         }
 
         TryComp<TimedDespawnComponent>(uid, out var timer);
+        _appearance.TryGetData(uid, SmokeVisuals.Color, out var color);
 
-        var smokePerSpread = component.SpreadAmount / args.NeighborFreeTiles.Count;
-        component.SpreadAmount -= smokePerSpread;
-
+        // wtf is the logic behind any of this.
+        var smokePerSpread = 1 + component.SpreadAmount / args.NeighborFreeTiles.Count;
         foreach (var neighbor in args.NeighborFreeTiles)
         {
             var coords = neighbor.Grid.GridTileToLocal(neighbor.Tile);
-            var ent = Spawn(prototype.ID, coords.SnapToGrid());
+            var ent = Spawn(prototype.ID, coords);
             var neighborSmoke = EnsureComp<SmokeComponent>(ent);
-            neighborSmoke.SpreadAmount = Math.Max(0, smokePerSpread - 1);
+            neighborSmoke.SpreadAmount = Math.Max(0, smokePerSpread - 2); // why - 2? who the fuck knows.
+            component.SpreadAmount--;
             args.Updates--;
 
             // Listen this is the old behaviour iunno
             Start(ent, neighborSmoke, solution.Clone(), timer?.Lifetime ?? 10f);
 
-            if (_appearance.TryGetData(uid, SmokeVisuals.Color, out var color))
-            {
+            if (color != null)
                 _appearance.SetData(ent, SmokeVisuals.Color, color);
-            }
 
-            // Only 1 spread then ig?
-            if (smokePerSpread == 0)
+            if (component.SpreadAmount == 0)
             {
-                component.SpreadAmount--;
-
-                if (component.SpreadAmount == 0)
-                {
-                    RemCompDeferred<ActiveEdgeSpreaderComponent>(uid);
-                    break;
-                }
+                RemCompDeferred<ActiveEdgeSpreaderComponent>(uid);
+                break;
             }
 
             if (args.Updates <= 0)
                 break;
         }
 
-        // Give our spread to neighbor tiles.
         if (args.NeighborFreeTiles.Count > 0 || args.Neighbors.Count == 0 || component.SpreadAmount < 1)
             return;
+
+        // We have no more neighbours to spread to. So instead we will randomly distribute our volume to neighbouring smoke tiles.
 
         var smokeQuery = GetEntityQuery<SmokeComponent>();
 
