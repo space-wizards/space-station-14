@@ -18,8 +18,6 @@ namespace Content.Server.Construction.Conditions
         {
             if (!entityManager.TrySystem<TagSystem>(out var tagSystem))
                 return false;
-            Logger.Debug("Tag: " + Tag);
-            Logger.Debug("Test: " + tagSystem.HasTag(uid, Tag));
 
             return tagSystem.HasTag(uid, Tag);
         }
