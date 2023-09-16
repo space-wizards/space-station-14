@@ -8,6 +8,7 @@ using Content.Shared.Database;
 using Robust.Server.Containers;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
+using System.Linq;
 
 namespace Content.Server.Construction
 {
@@ -271,19 +272,6 @@ namespace Content.Server.Construction
             return true;
         }
 
-        ///<summary>
-        ///     Attempts to change an entity prototype change on a construction entity.
-        ///</summary>
-        public bool TryChangeEntity(EntityUid uid, EntityUid? userUid, string newEntity, out EntityUid? newUid,
-            ConstructionComponent? construction = null,
-            MetaDataComponent? metaData = null,
-            TransformComponent? transform = null,
-            ContainerManagerComponent? containerManager = null)
-        {
-            newUid = ChangeEntity(uid, userUid, newEntity, construction, metaData, transform, containerManager);
-            return newUid != null;
-        }
-
         /// <summary>
         ///     Performs an entity prototype change on a construction entity.
         ///     The old entity will be removed, and a new one will be spawned in its place. Some values will be kept,
@@ -311,8 +299,19 @@ namespace Content.Server.Construction
                 throw new Exception("Missing construction components");
             }
 
+            // Skip if the new entity's prototype is the same as the original, or the prototype is invalid
             if (newEntity == metaData.EntityPrototype?.ID || !_prototypeManager.HasIndex<EntityPrototype>(newEntity))
                 return null;
+
+            // Optional skip if the new entity's prototype is a parent of the original
+            if (GetCurrentNode(uid, construction)?.ChildrenIgnoreEntity == true &&
+                metaData.EntityPrototype?.ID != null)
+            {
+                var parents = _prototypeManager.EnumerateParents<EntityPrototype>(metaData.EntityPrototype.ID)?.ToList();
+
+                if (parents != null && parents.Any(x => x.ID == newEntity))
+                    return null;
+            }
 
             // Optional resolves.
             Resolve(uid, ref containerManager, false);

@@ -1,4 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Construction.NodeEntities;
 using Content.Shared.Construction.Serialization;
 using Robust.Shared.Prototypes;
@@ -30,6 +30,9 @@ namespace Content.Shared.Construction
 
         [DataField("entity", customTypeSerializer: typeof(GraphNodeEntitySerializer), serverOnly:true)]
         public IGraphNodeEntity Entity { get; private set; } = new NullNodeEntity();
+
+        [DataField("childrenIgnoreEntity")]
+        public bool ChildrenIgnoreEntity = false;
 
         public ConstructionGraphEdge? GetEdge(string target)
         {

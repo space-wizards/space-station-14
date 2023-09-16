@@ -67,9 +67,6 @@
     - to: airlock
       conditions:
       - !type:EntityAnchored {}
-      completed:
-      - !type:ChangeEntity
-        prototype: Airlock
       steps:
       - tool: Screwing
         doAfter: 2.5
@@ -95,9 +92,6 @@
     - to: glassAirlock
       conditions:
       - !type:EntityAnchored {}
-      completed:
-      - !type:ChangeEntity
-        prototype: AirlockGlass
       steps:
       - material: ReinforcedGlass
         amount: 1
@@ -118,6 +112,8 @@
 
 ## Glass airlock
   - node: glassAirlock
+    entity: AirlockGlass
+    childrenIgnoreEntity: true
     actions:
     - !type:SetWiresPanelSecurity
       wiresAccessible: true
@@ -157,6 +153,8 @@
         
 ## Standard airlock
   - node: airlock
+    entity: Airlock
+    childrenIgnoreEntity: true
     actions:
     - !type:SetWiresPanelSecurity
       wiresAccessible: true
