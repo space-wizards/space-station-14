@@ -2,7 +2,6 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.Construction.Components;
-using Content.Server.Storage.Components;
 using Content.Server.Storage.EntitySystems;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Construction;
@@ -30,7 +29,6 @@ namespace Content.Server.Construction
         [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
         [Dependency] private readonly EntityLookupSystem _lookupSystem = default!;
-        [Dependency] private readonly StorageSystem _storageSystem = default!;
 
         // --- WARNING! LEGACY CODE AHEAD! ---
         // This entire file contains the legacy code for initial construction.
@@ -51,9 +49,9 @@ namespace Content.Server.Construction
         {
             foreach (var item in _handsSystem.EnumerateHeld(user))
             {
-                if (TryComp(item, out ServerStorageComponent? storage))
+                if (TryComp(item, out StorageComponent? storage))
                 {
-                    foreach (var storedEntity in storage.StoredEntities!)
+                    foreach (var storedEntity in storage.Container.ContainedEntities!)
                     {
                         yield return storedEntity;
                     }
@@ -66,10 +64,12 @@ namespace Content.Server.Construction
             {
                 while (containerSlotEnumerator.MoveNext(out var containerSlot))
                 {
-                    if(!containerSlot.ContainedEntity.HasValue) continue;
-                    if (EntityManager.TryGetComponent(containerSlot.ContainedEntity.Value, out ServerStorageComponent? storage))
+                    if(!containerSlot.ContainedEntity.HasValue)
+                        continue;
+
+                    if (EntityManager.TryGetComponent(containerSlot.ContainedEntity.Value, out StorageComponent? storage))
                     {
-                        foreach (var storedEntity in storage.StoredEntities!)
+                        foreach (var storedEntity in storage.Container.ContainedEntities)
                         {
                             yield return storedEntity;
                         }
@@ -207,12 +207,9 @@ namespace Content.Server.Construction
                                 continue;
 
                             // Dump out any stored entities in used entity
-                            if (TryComp<ServerStorageComponent>(entity, out var storage) && storage.StoredEntities != null)
+                            if (TryComp<StorageComponent>(entity, out var storage))
                             {
-                                foreach (var storedEntity in storage.StoredEntities.ToList())
-                                {
-                                    _storageSystem.RemoveAndDrop(entity, storedEntity, storage);
-                                }
+                                _container.EmptyContainer(storage.Container);
                             }
 
                             if (string.IsNullOrEmpty(arbitraryStep.Store))

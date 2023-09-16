@@ -121,7 +121,7 @@ namespace Content.Client.Administration.UI.Tabs.PlayerTab
                     player.Antag ? "YES" : "NO",
                     new StyleBoxFlat(useAltColor ? _altColor : _defaultColor),
                     player.Connected);
-                entry.PlayerUid = _entManager.GetEntity(player.NetEntity);
+                entry.PlayerEntity = player.NetEntity;
                 entry.OnPressed += args => OnEntryPressed?.Invoke(args);
                 PlayerList.AddChild(entry);
 

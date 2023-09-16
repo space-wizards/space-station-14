@@ -5,6 +5,7 @@ using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface.Controls;
+using Robust.Shared.Graphics;
 
 namespace Content.Client.Kitchen.UI
 {

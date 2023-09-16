@@ -60,7 +60,7 @@ public sealed class EscapeInventorySystem : EntitySystem
         }
 
         // Uncontested
-        if (HasComp<SharedStorageComponent>(container.Owner) || HasComp<InventoryComponent>(container.Owner) || HasComp<SecretStashComponent>(container.Owner))
+        if (HasComp<StorageComponent>(container.Owner) || HasComp<InventoryComponent>(container.Owner) || HasComp<SecretStashComponent>(container.Owner))
             AttemptEscape(uid, container.Owner, component);
     }
 

@@ -1,9 +1,9 @@
 using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Pointing.Components;
-using Content.Server.Visible;
 using Content.Shared.Bed.Sleep;
 using Content.Shared.Database;
+using Content.Shared.Eye;
 using Content.Shared.Ghost;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Input;

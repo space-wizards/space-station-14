@@ -138,7 +138,7 @@ namespace Content.Shared.Examine
         /// </summary>
         public bool IsOccluded(EntityUid uid)
         {
-            return TryComp<SharedEyeComponent>(uid, out var eye) && eye.DrawFov;
+            return TryComp<EyeComponent>(uid, out var eye) && eye.DrawFov;
         }
 
         public static bool InRangeUnOccluded(MapCoordinates origin, MapCoordinates other, float range, Ignored? predicate, bool ignoreInsideBlocker = true, IEntityManager? entMan = null)
