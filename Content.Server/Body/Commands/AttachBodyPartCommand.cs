@@ -106,7 +106,7 @@ namespace Content.Server.Body.Commands
             if (body.RootContainer.ContainedEntity != null)
             {
                 bodySystem.DropPart(partUid, part);
-                bodySystem.AttachPartToRoot(bodyId,partUid.Value,body ,part);
+                bodySystem.AttachPartToRoot(bodyId,partUid.Value, slotId, body ,part);
             }
             else
             {

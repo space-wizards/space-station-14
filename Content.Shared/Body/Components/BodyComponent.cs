@@ -17,6 +17,8 @@ public sealed partial class BodyComponent : Component
 
     [ViewVariables] public ContainerSlot RootContainer;
 
+    [ViewVariables, AutoNetworkedField] public string? RootPartSlot;
+
     [DataField("gibSound"), AutoNetworkedField]
     public SoundSpecifier GibSound = new SoundCollectionSpecifier("gib");
 

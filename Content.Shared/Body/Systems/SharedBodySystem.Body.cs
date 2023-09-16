@@ -16,15 +16,17 @@ namespace Content.Shared.Body.Systems;
 public partial class SharedBodySystem
 {
     [Dependency] private readonly INetManager _netManager = default!;
-
-    private const string BodyPartSlotPrefix = "BodySlot_";
-
     public void InitializeBody()
     {
         SubscribeLocalEvent<BodyComponent, MapInitEvent>(OnBodyMapInit);
         SubscribeLocalEvent<BodyComponent, CanDragEvent>(OnBodyCanDrag);
+        SubscribeLocalEvent<BodyComponent, ComponentInit>(OnBodyInit);
     }
 
+    private void OnBodyInit(EntityUid bodyId, BodyComponent body, ComponentInit args)
+    {
+        body.RootContainer = Containers.EnsureContainer<ContainerSlot>(bodyId, BodyRootContainerId);
+    }
 
 
     private void OnBodyCanDrag(EntityUid uid, BodyComponent component, ref CanDragEvent args)
@@ -34,7 +36,7 @@ public partial class SharedBodySystem
 
     private void OnBodyMapInit(EntityUid bodyId, BodyComponent body, MapInitEvent args)
     {
-        body.RootContainer = Containers.EnsureContainer<ContainerSlot>(bodyId, BodyRootContainerId);
+
         if (body.Prototype == null)
             return;
         var prototype = Prototypes.Index<BodyPrototype>(body.Prototype);
@@ -44,13 +46,16 @@ public partial class SharedBodySystem
     protected void InitBody(EntityUid bodyEntity, BodyComponent body, BodyPrototype prototype)
     {
         var protoRoot = prototype.Slots[prototype.Root];
-        body.RootContainer = Containers.EnsureContainer<ContainerSlot>(bodyEntity, BodySlotContainerId);
+        body.RootContainer = Containers.EnsureContainer<ContainerSlot>(bodyEntity, BodyRootContainerId);
         if (protoRoot.Part == null)
             return;
         var rootPartEntity =  Spawn(protoRoot.Part, bodyEntity.ToCoordinates());
         var rootPart = Comp<BodyPartComponent>(rootPartEntity);
-        AttachPartToRoot(bodyEntity, rootPartEntity, body, rootPart);
-        InitParts(bodyEntity, rootPartEntity, rootPart, prototype);
+        AttachPartToRoot(bodyEntity, rootPartEntity, prototype.Root, body, rootPart);
+        var preExisting = new HashSet<string>(){prototype.Root};
+        InitParts(bodyEntity, rootPartEntity, rootPart, prototype, preExisting);
+        Dirty(rootPartEntity, rootPart);
+        Dirty(bodyEntity, body);
     }
 
     protected void InitParts(EntityUid rootBodyId, EntityUid parentPartId, BodyPartComponent parentPart, BodyPrototype prototype,
@@ -60,7 +65,6 @@ public partial class SharedBodySystem
 
         if (parentPart.SlotId == null || initialized.Contains(parentPart.SlotId))
             return;
-
         initialized.Add(parentPart.SlotId);
 
         var (_, connections, organs) = prototype.Slots[parentPart.SlotId];
@@ -106,7 +110,9 @@ public partial class SharedBodySystem
         foreach (var connection in subConnections)
         {
             InitParts(rootBodyId,connection.childid, connection.child, prototype, initialized);
+            Dirty(connection.childid, connection.child);
         }
+
     }
     public IEnumerable<(EntityUid Id, BodyPartComponent Component)> GetBodyChildren(EntityUid? id, BodyComponent? body = null,
         BodyPartComponent? rootPart = null)

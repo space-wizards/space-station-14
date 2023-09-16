@@ -3,10 +3,11 @@ using Content.Shared.Body.Organ;
 using Content.Shared.Body.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Body.Part;
 
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true)]
 [Access(typeof(SharedBodySystem))]
 public sealed partial class BodyPartComponent : Component
 {
@@ -31,18 +32,19 @@ public sealed partial class BodyPartComponent : Component
     [DataField("symmetry"), AutoNetworkedField]
     public BodyPartSymmetry Symmetry = BodyPartSymmetry.None;
 
-    [ViewVariables] public Dictionary<string, BodyPartSlot> Children = new();
+    [AutoNetworkedField(CloneData = true)] public Dictionary<string, BodyPartSlot> Children = new();
 
-    [ViewVariables] public Dictionary<string, OrganSlot> Organs = new();
+    [AutoNetworkedField(CloneData = true)] public Dictionary<string, OrganSlot> Organs = new();
 
 }
-
-public record struct BodyPartSlot(string Id, BodyPartType Type, ContainerSlot Container)
+[NetSerializable, Serializable]
+public readonly record struct BodyPartSlot(string Id, BodyPartType Type, [field: NonSerialized] ContainerSlot Container)
 {
     public EntityUid? Entity => Container.ContainedEntity;
 };
 
-public record struct OrganSlot(string Id, ContainerSlot Container)
+[NetSerializable, Serializable]
+public readonly record struct OrganSlot(string Id, [field: NonSerialized] ContainerSlot Container)
 {
     public EntityUid? Organ => Container.ContainedEntity;
 };
