@@ -443,7 +443,7 @@
   description: uplink-headset-desc
   productEntity: ClothingHeadsetAltSyndicate
   cost:
-    Telecrystal: 4
+    Telecrystal: 1
   categories:
   - UplinkUtility
 
