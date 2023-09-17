@@ -8,7 +8,7 @@ public sealed partial class LoudAccentComponent : Component
 {
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("yellChance")]
-    public float YellChance = 0.2f;
+    public float YellChance = 0.8f;
 
     [ViewVariables]
     public readonly List<string> YellSuffixes = new()

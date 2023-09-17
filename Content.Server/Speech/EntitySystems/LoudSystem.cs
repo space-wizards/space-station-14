@@ -32,11 +32,15 @@ public sealed class LoudSystem : EntitySystem
 
         //Apply random suffix to var if random chance succeeds
         if (!_random.Prob(component.YellChance))
+        {
+            var pick = _random.Pick(component.YellSuffixes);
+
+            msg = msg + " " + Loc.GetString(pick);
             return msg;
+        }
 
-        var pick = _random.Pick(component.YellSuffixes);
 
-        msg = msg + " " + Loc.GetString(pick);
+
  
         return msg;
     }
