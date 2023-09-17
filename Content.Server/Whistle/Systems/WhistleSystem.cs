@@ -1,4 +1,4 @@
-using Content.Server.Whistle.Components;
+using Content.Shared.Whistle.Components;
 using Content.Shared.Coordinates;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Movement.Components;
