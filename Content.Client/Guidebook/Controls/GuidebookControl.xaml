@@ -1,9 +1,14 @@
 ﻿<Control xmlns="https://spacestation14.io"
          xmlns:fancyTree="clr-namespace:Content.Client.UserInterface.Controls.FancyTree"
          xmlns:customControls="clr-namespace:Content.Client.Administration.UI.CustomControls"
+         xmlns:graphics="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
          SetSize="750 700"
          MinSize="100 200">
-    <SplitContainer Orientation="Horizontal" HorizontalExpand="True" Name="Split">
+    <PanelContainer>
+        <PanelContainer.PanelOverride>
+            <graphics:StyleBoxFlat BackgroundColor="#25252A"/>
+        </PanelContainer.PanelOverride>
+        <SplitContainer Orientation="Horizontal" HorizontalExpand="True" Name="Split">
         <!-- Guide select -->
         <BoxContainer Orientation="Vertical" Name="TreeBox">
             <fancyTree:FancyTree Name="Tree" VerticalExpand="True" HorizontalExpand="True" Access="Public"/>
@@ -30,4 +35,5 @@
             </ScrollContainer>
         </BoxContainer>
     </SplitContainer>
+    </PanelContainer>
 </Control>
