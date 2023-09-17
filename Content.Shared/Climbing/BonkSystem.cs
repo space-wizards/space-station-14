@@ -76,7 +76,7 @@ public sealed partial class BonkSystem : EntitySystem
         if (args.Handled || !HasComp<ClumsyComponent>(args.Dragged))
             return;
 
-        var doAfterArgs = new DoAfterArgs(args.Dragged, component.BonkDelay, new BonkDoAfterEvent(), uid, target: uid)
+        var doAfterArgs = new DoAfterArgs(EntityManager, args.Dragged, component.BonkDelay, new BonkDoAfterEvent(), uid, target: uid)
         {
             BreakOnTargetMove = true,
             BreakOnUserMove = true,

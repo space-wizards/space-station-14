@@ -21,17 +21,6 @@
     - key: enum.SharedGasTankUiKey.Key
       type: GasTankBoundUserInterface
   - type: GasTank
-    toggleAction:
-      name: action-name-internals-toggle
-      description: action-description-internals-toggle
-      icon:
-        sprite: Interface/Alerts/internals.rsi
-        state: internal2
-      iconOn:
-        sprite: Interface/Alerts/internals.rsi
-        state: internal1
-      event: !type:ToggleActionEvent
-      useDelay: 1
     outputPressure: 21.3
     air:
       # If gas tank volume is changed, adjust MinimumTritiumOxyburnEnergy in Atmospherics.cs by the same proportions

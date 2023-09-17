@@ -29,8 +29,11 @@ public sealed class GatewayBoundUserInterface : BoundUserInterface
     protected override void Dispose(bool disposing)
     {
         base.Dispose(disposing);
-        _window?.Dispose();
-        _window = null;
+        if (disposing)
+        {
+            _window?.Dispose();
+            _window = null;
+        }
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)

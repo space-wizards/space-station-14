@@ -26,7 +26,7 @@
   noSpawn: true
   components:
   - type: StationEvent
-    weight: 0
+    weight: 1
     reoccurrenceDelay: 5
     earliestStart: 1
     duration: 1
@@ -61,7 +61,7 @@
   noSpawn: true
   components:
   - type: StationEvent
-    weight: 1
+    weight: 5
     duration: 1
     earliestStart: 45
     minimumPlayers: 20
@@ -70,11 +70,24 @@
 
 - type: entity
   parent: BaseGameRule
+  id: NinjaSpawn
+  noSpawn: true
+  components:
+  - type: StationEvent
+    weight: 10
+    duration: 1
+    earliestStart: 30
+    reoccurrenceDelay: 60
+    minimumPlayers: 40
+  - type: NinjaSpawnRule
+
+- type: entity
+  parent: BaseGameRule
   id: RevenantSpawn
   noSpawn: true
   components:
   - type: StationEvent
-    weight: 5
+    weight: 7.5
     duration: 1
     earliestStart: 45
     minimumPlayers: 20
@@ -107,18 +120,18 @@
     startDelay: 20
   - type: GasLeakRule
 
-- type: entity
-  id: KudzuGrowth
-  parent: BaseGameRule
-  noSpawn: true
-  components:
-  - type: StationEvent
-    earliestStart: 15
-    minimumPlayers: 15
-    weight: 5
-    startDelay: 50
-    duration: 240
-  - type: KudzuGrowthRule
+#- type: entity
+#  id: KudzuGrowth
+#  parent: BaseGameRule
+#  noSpawn: true
+#  components:
+#  - type: StationEvent
+#    earliestStart: 15
+#    minimumPlayers: 15
+#    weight: 5
+#    startDelay: 50
+#    duration: 240
+#  - type: KudzuGrowthRule
 
 - type: entity
   id: MeteorSwarm
@@ -127,8 +140,8 @@
   components:
   - type: StationEvent
     earliestStart: 30
-    weight: 5
-    minimumPlayers: 20
+    weight: 7.5
+    minimumPlayers: 10 #Enough to hopefully have at least one engineering guy
     startAnnouncement: station-event-meteor-swarm-start-announcement
     endAnnouncement: station-event-meteor-swarm-end-announcement
     startAudio:
@@ -176,7 +189,7 @@
       path: /Audio/Announcements/power_off.ogg
       params:
        volume: -4
-    startDelay: 12
+    startDelay: 24
     duration: 60
     maxDuration: 120
   - type: PowerGridCheckRule
@@ -300,7 +313,7 @@
   - type: StationEvent
     earliestStart: 20
     minimumPlayers: 15
-    weight: 2
+    weight: 1
     duration: 60
   - type: VentCrittersRule
     entries:
@@ -314,7 +327,7 @@
   components:
   - type: StationEvent
     earliestStart: 50
-    weight: 2.5
+    weight: 5
     duration: 1
   - type: ZombieRule
     minStartDelay: 0 #let them know immediately
@@ -361,7 +374,7 @@
     startAnnouncement: station-event-immovable-rod-start-announcement
     startAudio:
       path: /Audio/Announcements/attention.ogg
-    weight: 1
+    weight: 5
     duration: 1
     earliestStart: 45
     minimumPlayers: 20
