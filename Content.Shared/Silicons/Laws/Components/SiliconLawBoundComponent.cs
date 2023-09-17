@@ -43,7 +43,7 @@ public record struct GetSiliconLawsEvent(EntityUid Entity)
 {
     public EntityUid Entity = Entity;
 
-    public readonly List<SiliconLaw> Laws = new();
+    public SiliconLawset Laws = new();
 
     public bool Handled = false;
 }

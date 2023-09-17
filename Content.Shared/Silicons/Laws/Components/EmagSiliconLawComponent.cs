@@ -24,13 +24,20 @@ public sealed partial class EmagSiliconLawComponent : Component
     public bool RequireOpenPanel = true;
 
     /// <summary>
-    /// The laws that the borg is given when emagged. 
+    /// The laws that the borg is given when emagged.
+    /// Law 0 is prepended to this, so this can only include the static laws.
     /// </summary>
-    [DataField("emagLaws", required: true, customTypeSerializer: typeof(PrototypeIdListSerializer<SiliconLawPrototype>))]
-    public List<string> EmagLaws = new();
+    [DataField(required: true, customTypeSerializer: typeof(PrototypeIdSerializer<SiliconLawsetPrototype>))]
+    public string EmagLaws = string.Empty;
 
     /// <summary>
-    /// How long the borg is stunned when it's emagged. Setting to 0 will disable it. 
+    /// Lawset created from the prototype id and law 0.
+    /// Cached when getting laws and only modified during an ion storm event.
+    /// </summary>
+    public SiliconLawset? Lawset;
+
+    /// <summary>
+    /// How long the borg is stunned when it's emagged. Setting to 0 will disable it.
     /// </summary>
     [DataField("stunTime"), ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan StunTime = TimeSpan.Zero;
