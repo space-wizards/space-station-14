@@ -214,9 +214,20 @@ public sealed partial class BorgSystem
         if (!TryComp<HandsComponent>(chassis, out var hands))
             return;
 
+        if (LifeStage(uid) >= EntityLifeStage.Terminating)
+        {
+            foreach (var (hand, item) in component.ProvidedItems)
+            {
+                QueueDel(item);
+                _hands.RemoveHand(chassis, hand, hands);
+            }
+            component.ProvidedItems.Clear();
+            return;
+        }
+
         foreach (var (handId, item) in component.ProvidedItems)
         {
-            if (!Deleted(item) && !Terminating(item))
+            if (LifeStage(item) <= EntityLifeStage.MapInitialized)
             {
                 RemComp<UnremoveableComponent>(item);
                 component.ProvidedContainer.Insert(item, EntityManager);
