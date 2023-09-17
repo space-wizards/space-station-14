@@ -1,4 +1,6 @@
 using Content.Server.Nodes.Components;
+using Content.Server.Nodes.Events;
+using Content.Shared.Examine;
 using Robust.Server.GameStates;
 using Robust.Server.Player;
 using Robust.Shared.GameStates;
@@ -39,6 +41,7 @@ public sealed partial class NodeGraphSystem : EntitySystem
         _proxyQuery = GetEntityQuery<ProxyNodeComponent>();
         _xformQuery = GetEntityQuery<TransformComponent>();
 
+
         SubscribeLocalEvent<GraphNodeComponent, ComponentInit>(OnComponentInit);
         SubscribeLocalEvent<NodeGraphComponent, ComponentInit>(OnComponentInit);
         SubscribeLocalEvent<PolyNodeComponent, ComponentStartup>(OnComponentStartup);
@@ -48,6 +51,17 @@ public sealed partial class NodeGraphSystem : EntitySystem
         SubscribeLocalEvent<NodeGraphComponent, ComponentShutdown>(OnComponentShutdown);
         SubscribeLocalEvent<PolyNodeComponent, ComponentShutdown>(OnComponentShutdown);
         SubscribeLocalEvent<ProxyNodeComponent, ComponentShutdown>(OnComponentShutdown);
+
+        // Proxy/Poly node relays:
+        SubscribeLocalEvent<PolyNodeComponent, AnchorStateChangedEvent>(RelayPolyNodeRefEvent<AnchorStateChangedEvent>);
+        SubscribeLocalEvent<PolyNodeComponent, ReAnchorEvent>(RelayPolyNodeRefEvent<ReAnchorEvent>);
+        SubscribeLocalEvent<PolyNodeComponent, MoveEvent>(RelayPolyNodeRefEvent<MoveEvent>);
+        SubscribeLocalEvent<PolyNodeComponent, ExaminedEvent>(RelayPolyNodeValEvent<ExaminedEvent>);
+        SubscribeLocalEvent<ProxyNodeComponent, EdgeAddedEvent>(RelayProxyNodeRefEvent<EdgeAddedEvent>);
+        SubscribeLocalEvent<ProxyNodeComponent, EdgeRemovedEvent>(RelayProxyNodeRefEvent<EdgeRemovedEvent>);
+        SubscribeLocalEvent<ProxyNodeComponent, EdgeChangedEvent>(RelayProxyNodeRefEvent<EdgeChangedEvent>);
+        SubscribeLocalEvent<ProxyNodeComponent, AddedToGraphEvent>(RelayProxyNodeRefEvent<AddedToGraphEvent>);
+        SubscribeLocalEvent<ProxyNodeComponent, RemovedFromGraphEvent>(RelayProxyNodeRefEvent<RemovedFromGraphEvent>);
 
         // Debug info dispatching:
         SubscribeLocalEvent<ExpandPvsEvent>(OnExpandPvs);

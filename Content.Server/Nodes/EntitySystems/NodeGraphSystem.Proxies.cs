@@ -1,4 +1,5 @@
 using Content.Server.Nodes.Components;
+using Content.Server.Nodes.Events;
 using Robust.Shared.Map;
 using Robust.Shared.Utility;
 using System.Numerics;
@@ -107,5 +108,65 @@ public sealed partial class NodeGraphSystem
 
         if (_polyQuery.TryGetComponent(polyId, out var poly))
             DetachProxy(polyId, comp.ProxyKey!, poly);
+    }
+
+
+    /// <summary>Relays a by-value event raised on a proxy node to its host polynode.</summary>
+    /// <remarks>Exists so that the host node can react to graph/edge changes on its proxy nodes.</remarks>
+    private void RelayProxyNodeValEvent<TEvent>(EntityUid uid, ProxyNodeComponent comp, TEvent args)
+    {
+        if (comp.ProxyFor is not { } proxyFor || proxyFor == uid)
+            return;
+
+        var hostEv = new ProxyNodeRelayEvent<TEvent>(uid, args, comp);
+        RaiseLocalEvent(proxyFor, ref hostEv);
+    }
+
+    /// <summary>Relays a by-ref event raised on a proxy node to its host polynode.</summary>
+    /// <remarks>Exists so that the host node can react to graph/edge changes on its proxy nodes.</remarks>
+    private void RelayProxyNodeRefEvent<TEvent>(EntityUid uid, ProxyNodeComponent comp, ref TEvent args)
+    {
+        if (comp.ProxyFor is not { } proxyFor || proxyFor == uid)
+            return;
+
+        var hostEv = new ProxyNodeRelayEvent<TEvent>(uid, args, comp);
+        RaiseLocalEvent(proxyFor, ref hostEv);
+        args = hostEv.Event;
+    }
+
+    /// <summary>Relays a by-value event raised on a polynode to its hosted proxy nodes.</summary>
+    /// <remarks>Exists so that proxy nodes can react to the movement/anchoring/unanchoring of its host polynode.</remarks>
+    private void RelayPolyNodeValEvent<TEvent>(EntityUid uid, PolyNodeComponent comp, TEvent args)
+    {
+        if (comp.ProxyNodes.Count <= 0)
+            return;
+
+        var proxyEv = new PolyNodeRelayEvent<TEvent>(uid, args, comp);
+        foreach (var proxyId in comp.ProxyNodes.Values)
+        {
+            if (proxyId == uid)
+                continue;
+
+            RaiseLocalEvent(proxyId, ref proxyEv);
+        }
+    }
+
+    /// <summary>Relays a by-ref event raised on a polynode to its hosted proxy nodes.</summary>
+    /// <remarks>Exists so that proxy nodes can react to the movement/anchoring/unanchoring of its host polynode.</remarks>
+    private void RelayPolyNodeRefEvent<TEvent>(EntityUid uid, PolyNodeComponent comp, ref TEvent args)
+    {
+        if (comp.ProxyNodes.Count <= 0)
+            return;
+
+        var proxyEv = new PolyNodeRelayEvent<TEvent>(uid, args, comp);
+        foreach (var proxyId in comp.ProxyNodes.Values)
+        {
+            if (proxyId == uid)
+                continue;
+
+            RaiseLocalEvent(proxyId, ref proxyEv);
+        }
+
+        args = proxyEv.Event;
     }
 }
