@@ -1,8 +1,6 @@
 using Content.Server.Whistle.Components;
-using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Movement.Components;
-using Content.Shared.Timing;
 using Robust.Server.GameObjects;
 
 namespace Content.Server.Whistle;
@@ -11,7 +9,6 @@ public sealed class WhistleSystem : EntitySystem
 {
     [Dependency] private readonly TransformSystem _transform = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly UseDelaySystem _delaySystem = default!;
     [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
     public override void Initialize()
     {
@@ -33,26 +30,10 @@ public sealed class WhistleSystem : EntitySystem
     }
     public void OnUseInHand(EntityUid uid, WhistleComponent component, UseInHandEvent args)
     {
-        UseDelayComponent? delayComponent = null;
-
-        if (_delaySystem.ActiveDelay(uid))
-            return;
-
         if (component.Distance > 0)
             MakeLoudWhistle(uid, args.User, component);
 
         _audio.PlayPvs(component.Sound, uid);
-
-        //loud whistle need more time to consume, this prevent loud whistle spaming and this has logic sense
-        if (!Resolve(uid, ref delayComponent))
-            return;
-
-        TimeSpan delayBuffer = delayComponent.Delay;
-        delayComponent.Delay *= 3;
-
-        _delaySystem.BeginDelay(uid, delayComponent);
-
-        delayComponent.Delay = delayBuffer;
 
         args.Handled = true;
     }
