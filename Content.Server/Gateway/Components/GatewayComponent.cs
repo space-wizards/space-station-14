@@ -26,6 +26,12 @@ public sealed partial class GatewayComponent : Component
     public SoundSpecifier CloseSound = new SoundPathSpecifier("/Audio/Effects/Lightning/lightningbolt.ogg");
 
     /// <summary>
+    /// Sound to play when trying to open or close the portal and missing access.
+    /// </summary>
+    [DataField]
+    public SoundSpecifier AccessDeniedSound = new SoundPathSpecifier("/Audio/Machines/custom_deny.ogg");
+
+    /// <summary>
     /// Every other gateway destination on the server.
     /// </summary>
     /// <remarks>
