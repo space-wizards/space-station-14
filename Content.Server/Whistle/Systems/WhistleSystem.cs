@@ -16,14 +16,9 @@ public sealed class WhistleSystem : EntitySystem
 
         SubscribeLocalEvent<WhistleComponent, UseInHandEvent>(OnUseInHand);
     }
-    private bool ExclamateTarget(EntityUid uid, EntityUid target, WhistleComponent component)
+    private bool ExclamateTarget(EntityUid target, WhistleComponent component)
     {
-        TransformComponent? targetTransform = null;
-
-        if (!Resolve(target, ref targetTransform))
-            return false;
-
-        var effect = Spawn(component.effect, targetTransform.MapPosition);
+        var effect = Spawn(component.effect, Transform(target).MapPosition);
         _transform.SetParent(effect, target);
 
         return true;
@@ -39,18 +34,13 @@ public sealed class WhistleSystem : EntitySystem
     }
     private bool MakeLoudWhistle(EntityUid uid, EntityUid owner, WhistleComponent component)
     {
-        TransformComponent? whistleTransform = null;
-
-        if (!Resolve(uid, ref whistleTransform))
-            return false;
-
         foreach (var moverComponent in
-            _entityLookup.GetComponentsInRange<MobMoverComponent>(whistleTransform.Coordinates, component.Distance))
+            _entityLookup.GetComponentsInRange<MobMoverComponent>(Transform(uid).Coordinates, component.Distance))
         {
             if (moverComponent.Owner == owner)
                 continue;
 
-            ExclamateTarget(uid, moverComponent.Owner, component);
+            ExclamateTarget(moverComponent.Owner, component);
         }
 
         return true;
