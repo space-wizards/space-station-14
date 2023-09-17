@@ -1,5 +1,3 @@
-using Robust.Shared.Audio;
-
 namespace Content.Server.Whistle.Components
 {
     [RegisterComponent]
@@ -7,9 +5,6 @@ namespace Content.Server.Whistle.Components
     {
         [DataField("effect")]
         public string? effect = "WhistleExclamation";
-
-        [DataField("sound", required: true)]
-        public SoundSpecifier Sound = default!;
 
         [DataField("distance")]
         public float Distance = 0;
