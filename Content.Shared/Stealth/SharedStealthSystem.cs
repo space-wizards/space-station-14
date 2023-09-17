@@ -1,4 +1,6 @@
 using Content.Shared.Examine;
+using Content.Shared.Mobs;
+using Content.Shared.Mobs.Systems;
 using Content.Shared.Stealth.Components;
 using Robust.Shared.GameStates;
 using Robust.Shared.Timing;
@@ -8,6 +10,7 @@ namespace Content.Shared.Stealth;
 public abstract class SharedStealthSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly MobStateSystem _mobState = default!;
 
     public override void Initialize()
     {
@@ -22,6 +25,7 @@ public abstract class SharedStealthSystem : EntitySystem
         SubscribeLocalEvent<StealthComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<StealthComponent, ExamineAttemptEvent>(OnExamineAttempt);
         SubscribeLocalEvent<StealthComponent, ExaminedEvent>(OnExamined);
+        SubscribeLocalEvent<StealthComponent, MobStateChangedEvent>(OnMobStateChanged);
     }
 
     private void OnExamineAttempt(EntityUid uid, StealthComponent component, ExamineAttemptEvent args)
@@ -54,8 +58,28 @@ public abstract class SharedStealthSystem : EntitySystem
         if (!Resolve(uid, ref component, false) || component.Enabled == value)
             return;
 
+        if (!_mobState.IsDead(uid) && value == false)
+            return;
+
         component.Enabled = value;
         Dirty(component);
+    }
+
+    private void OnMobStateChanged(EntityUid uid, StealthComponent component, MobStateChangedEvent args)
+    {
+        if (args.NewMobState != MobState.Dead)
+        {
+            if (!component.Enabled)
+            {
+                component.Enabled = true;
+                Dirty(component);
+            }
+        }
+        else
+        {
+            component.Enabled = false;
+            Dirty(component);
+        }
     }
 
     private void OnPaused(EntityUid uid, StealthComponent component, ref EntityPausedEvent args)
