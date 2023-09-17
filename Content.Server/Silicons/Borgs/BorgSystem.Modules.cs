@@ -127,7 +127,7 @@ public sealed partial class BorgSystem
             return;
         }
 
-        if (!chassisComp.ModuleContainer.Contains(chassis))
+        if (!chassisComp.ModuleContainer.Contains(moduleUid))
         {
             Log.Error($"{ToPrettyString(chassis)} does not contain the installed module {ToPrettyString(moduleUid)}");
             return;
