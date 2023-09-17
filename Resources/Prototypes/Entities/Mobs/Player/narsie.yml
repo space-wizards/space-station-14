@@ -1,12 +1,21 @@
-# spawn animation, spawns actual narsie when it ends
 - type: entity
-  id: MobNarsieSpawn
+  abstract: true
+  id: MobNarsieBase
   name: Nar'Sie
   description: Your mind begins to bubble and ooze as it tries to comprehend what it sees.
-  suffix: Spawn
   components:
   - type: Sprite
     sprite: Mobs/Demons/narsie.rsi
+    drawdepth: Ghosts
+    shader: unshaded
+
+# spawn animation, spawns actual narsie when it ends
+- type: entity
+  parent: MobNarsieBase
+  id: MobNarsieSpawn
+  suffix: Spawn
+  components:
+  - type: Sprite
     state: spawn
   # spawn animation lasts 3.5 seconds
   - type: TimedDespawn
@@ -15,13 +24,10 @@
     prototype: MobNarsie
 
 - type: entity
-  parent: BaseMob
+  parent: [BaseMob, MobNarsieBase]
   id: MobNarsie
-  name: Nar'Sie
-  description: Your mind begins to bubble and ooze as it tries to comprehend what it sees.
   components:
   - type: Sprite
-    sprite: Mobs/Demons/narsie.rsi
     state: narsie
   - type: AnnounceOnSpawn
     message: narsie-has-risen
@@ -29,3 +35,40 @@
     sound:
       path: /Audio/Misc/narsie_rises.ogg
     color: red
+  - type: CargoSellBlacklist
+  # big nar'sie needs to see the universe
+  - type: ContentEye
+    maxZoom: 2.0,2.0
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 5
+        density: 15
+        mask:
+        - GhostImpassable
+      # TODO: singulose fixtures
+  - type: Input
+    context: "ghost"
+  - type: MovementIgnoreGravity
+  # narnar hears all
+  - type: IntrinsicRadioReceiver
+  - type: ActiveRadio
+    channels:
+    - Binary
+    - Common
+    - Command
+    - CentCom
+    - Engineering
+    - Medical
+    - Science
+    - Security
+    - Service
+    - Supply
+    - Syndicate
+    globalReceive: true
+  - type: Physics
+    bodyType: KinematicController
+    bodyStatus: InAir
+  - type: CanMoveInAir
