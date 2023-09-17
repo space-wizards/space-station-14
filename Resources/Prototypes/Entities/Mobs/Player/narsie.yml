@@ -1,0 +1,30 @@
+# spawn animation, spawns actual narsie when it ends
+- type: entity
+  id: MobNarsieSpawn
+  name: Nar'Sie
+  description: Your mind begins to bubble and ooze as it tries to comprehend what it sees.
+  components:
+  - type: Sprite
+    sprite: Mobs/Demons/narsie.rsi
+    state: spawn
+  # spawn animation lasts 3.5 seconds
+  - type: TimedDespawn
+    lifetime: 3.5
+  - type: SpawnOnDespawn
+    prototype: MobNarsie
+
+- type: entity
+  parent: BaseMob
+  id: MobNarsie
+  name: Nar'Sie
+  description: Your mind begins to bubble and ooze as it tries to comprehend what it sees.
+  components:
+  - type: Sprite
+    sprite: Mobs/Demons/narsie.rsi
+    state: narsie
+  - type: AnnounceOnSpawn
+    message: narsie-has-risen
+    sender: narsie-has-risen-sender
+    sound:
+      path: /Audio/Misc/narsie_rises.ogg
+    color: red
