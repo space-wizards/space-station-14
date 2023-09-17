@@ -41,7 +41,7 @@
           Base: dead
     - type: Firestarter
     - type: Reflect
-      reflectProb: 0.8
+      reflectProb: 0.7
       reflects:
         - Energy
     - type: Physics
@@ -51,7 +51,7 @@
         fix1:
           shape:
             !type:PhysShapeCircle
-          radius: 0.85
+            radius: 0.9
           density: 300
           mask:
           - MobMask
@@ -79,12 +79,12 @@
       damage:
         types:
           Blunt: 150
-          Structural: 50
+          Structural: 60
     - type: FootstepModifier
       footstepSoundCollection:
         collection: FootstepThud
     - type: PointLight
-      radius: 2.0
+      radius: 2
       energy: 4.5
       color: "#ff4242"
       castShadows: false
