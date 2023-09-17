@@ -4,10 +4,7 @@
          xmlns:graphics="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
          SetSize="750 700"
          MinSize="100 200">
-    <PanelContainer>
-        <PanelContainer.PanelOverride>
-            <graphics:StyleBoxFlat BackgroundColor="#25252A"/>
-        </PanelContainer.PanelOverride>
+    <PanelContainer StyleClasses="BackgroundDark">
         <SplitContainer Orientation="Horizontal" HorizontalExpand="True" Name="Split">
         <!-- Guide select -->
         <BoxContainer Orientation="Vertical" Name="TreeBox">
