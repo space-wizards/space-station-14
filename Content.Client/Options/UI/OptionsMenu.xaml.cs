@@ -10,8 +10,6 @@ namespace Content.Client.Options.UI
     [GenerateTypedNameReferences]
     public sealed partial class OptionsMenu : DefaultWindow
     {
-        private GraphicsTab GraphicsTabControl => this.FindControl<GraphicsTab>("GraphicsTab");
-
         public OptionsMenu()
         {
             RobustXamlLoader.Load(this);
@@ -27,7 +25,7 @@ namespace Content.Client.Options.UI
 
         public void UpdateTabs()
         {
-            GraphicsTabControl?.UpdateProperties();
+            GraphicsTab.UpdateProperties();
         }
     }
 }

@@ -50,7 +50,7 @@ namespace Content.Client.Entry
         [Dependency] private readonly IConfigurationManager _configManager = default!;
         [Dependency] private readonly IStylesheetManager _stylesheetManager = default!;
         [Dependency] private readonly IScreenshotHook _screenshotHook = default!;
-        [Dependency] private readonly IFullscreenHook _fullscreenHook = default!;
+        [Dependency] private readonly FullscreenHook _fullscreenHook = default!;
         [Dependency] private readonly ChangelogManager _changelogManager = default!;
         [Dependency] private readonly RulesManager _rulesManager = default!;
         [Dependency] private readonly ViewportManager _viewportManager = default!;

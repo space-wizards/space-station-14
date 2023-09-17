@@ -34,7 +34,7 @@ namespace Content.Client.IoC
             IoCManager.Register<IClientPreferencesManager, ClientPreferencesManager>();
             IoCManager.Register<IStylesheetManager, StylesheetManager>();
             IoCManager.Register<IScreenshotHook, ScreenshotHook>();
-            IoCManager.Register<IFullscreenHook, FullscreenHook>();
+            IoCManager.Register<FullscreenHook, FullscreenHook>();
             IoCManager.Register<IClickMapManager, ClickMapManager>();
             IoCManager.Register<IClientAdminManager, ClientAdminManager>();
             IoCManager.Register<ISharedAdminManager, ClientAdminManager>();

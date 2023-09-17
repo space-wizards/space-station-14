@@ -1,65 +1,44 @@
-using System;
-using System.IO;
-using System.Threading.Tasks;
-using Content.Client.Viewport;
 using Content.Shared.Input;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
-using Robust.Client.State;
-using Robust.Shared.ContentPack;
 using Robust.Shared.Input.Binding;
-using Robust.Shared.IoC;
-using Robust.Shared.Log;
-using Robust.Shared.Utility;
-using SixLabors.ImageSharp;
-using SixLabors.ImageSharp.PixelFormats;
-using Content.Client.UserInterface.Screens;
-using Content.Shared.CCVar;
-using Content.Shared.HUD;
-using Robust.Client.UserInterface;
-using Robust.Client.UserInterface.Controls;
-using Robust.Client.UserInterface.XAML;
 using Robust.Shared;
 using Robust.Shared.Configuration;
-using Robust.Shared.Prototypes;
+using Robust.Shared.Players;
 
-namespace Content.Client.Fullscreen
+namespace Content.Client.Fullscreen;
+
+public sealed class FullscreenHook
 {
-    internal sealed class FullscreenHook : IFullscreenHook
+    [Dependency] private readonly IInputManager _inputManager = default!;
+    [Dependency] private readonly IConfigurationManager _cfg = default!;
+    [Dependency] private readonly ILogManager _logManager = default!;
+    private ISawmill _sawmill = default!;
+
+    public void Initialize()
     {
-        [Dependency] private readonly IInputManager _inputManager = default!;
-        [Dependency] private readonly IConfigurationManager _cfg = default!;
-
-        public void Initialize()
-        {
-            _inputManager.SetInputCommand(ContentKeyFunctions.ToggleFullscreen, InputCmdHandler.FromDelegate(_ =>
-            {
-                ToggleFullscreen();
-            }));
-        }
-
-
-        private void ToggleFullscreen()
-        {
-            var currentWindowMode = _cfg.GetCVar<int>(CVars.DisplayWindowMode);
-
-            if (currentWindowMode == (int) WindowMode.Windowed)
-            {
-                _cfg.SetCVar(CVars.DisplayWindowMode, (int) WindowMode.Fullscreen);
-                Logger.InfoS("ToggleFullscreen", "Switched to Fullscreen mode");
-            }
-            else
-            {
-                _cfg.SetCVar(CVars.DisplayWindowMode, (int) WindowMode.Windowed);
-                Logger.InfoS("ToggleFullscreen", "Switched to Windowed mode");
-            }
-        }
-
-
+        _inputManager.SetInputCommand(ContentKeyFunctions.ToggleFullscreen, InputCmdHandler.FromDelegate(ToggleFullscreen));
+        _sawmill = _logManager.GetSawmill("fullscreen");
     }
 
-    public interface IFullscreenHook
+    private void ToggleFullscreen(ICommonSession? session)
     {
-        void Initialize();
+        var currentWindowMode = _cfg.GetCVar<int>(CVars.DisplayWindowMode);
+
+        switch (currentWindowMode)
+        {
+            case (int) WindowMode.Windowed:
+                _cfg.SetCVar(CVars.DisplayWindowMode, (int) WindowMode.Fullscreen);
+                _sawmill.Info("Switched to Fullscreen mode");
+                break;
+
+            case (int) WindowMode.Fullscreen:
+                _cfg.SetCVar(CVars.DisplayWindowMode, (int) WindowMode.Windowed);
+                _sawmill.Info("Switched to Windowed mode");
+                break;
+
+            default:
+                throw new InvalidOperationException($"Unexpected WindowMode value: {currentWindowMode}");
+        }
     }
 }
