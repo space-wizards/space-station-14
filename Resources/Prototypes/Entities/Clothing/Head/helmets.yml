@@ -336,3 +336,15 @@
     sprite: Clothing/Head/Helmets/ert_janitor.rsi
   - type: Clothing
     sprite: Clothing/Head/Helmets/ert_janitor.rsi
+
+#Gladiator Helmet
+- type: entity
+  parent: ClothingHeadHelmetBasic
+  id: ClothingHeadHelmetGladiator
+  name: Gladiator helmet
+  descriptions: Slightly protects the head from harsh ash winds and spears.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Helmets/gladiator.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Helmets/gladiator.rsi

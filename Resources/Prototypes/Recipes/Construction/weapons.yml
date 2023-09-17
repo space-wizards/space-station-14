@@ -118,3 +118,14 @@
   description: Crude and falling apart. Why would you make this?
   icon: { sprite: Objects/Weapons/Melee/shields.rsi, state: makeshift-icon }
   objectType: Item
+
+- type: construction
+  name: bone spear
+  id: SpearBone
+  graph: SpearBone
+  startNode: start
+  targetNode: spear
+  category: construction-category-weapons
+  description: Bones and silk combined together.
+  icon: { sprite: Objects/Weapons/Melee/bone_spear.rsi, state: spear }
+  objectType: Item
