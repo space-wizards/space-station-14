@@ -131,7 +131,7 @@
 - type: entity
   noSpawn: true
   parent: BaseTraitorStealObjective
-  id: HyposprayStealObjective
+  id: CMOHyposprayStealObjective
   components:
   - type: NotJobRequirement
     job: ChiefMedicalOfficer
@@ -176,7 +176,7 @@
   components:
   - type: Objective
     # hos has a gun ce does not, higher difficulty than most
-    difficulty: 3.5
+    difficulty: 3
   - type: NotJobRequirement
     job: HeadOfSecurity
   - type: StealCondition
@@ -250,13 +250,13 @@
 - type: entity
   noSpawn: true
   parent: BaseCaptainObjective
-  id: StealNukeDiskObjective
+  id: NukeDiskStealObjective
   components:
   - type: Objective
     # high difficulty since the hardest item both to steal, and to not get caught down the road,
     # since anyone with a pinpointer can track you down and kill you
     # it's close to being a stealth loneop
-    difficulty: 4.5
+    difficulty: 4
   - type: NotCommandRequirement
   - type: StealCondition
     prototype: NukeDisk
