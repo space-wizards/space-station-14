@@ -14,6 +14,13 @@
   order: 3
   lawString: law-crewsimov-3
 
+- type: siliconLawset
+  id: Crewsimov
+  laws:
+  - Crewsimov1
+  - Crewsimov2
+  - Crewsimov3
+
 # Corporate
 - type: siliconLaw
   id: Corporate1
@@ -34,6 +41,14 @@
   id: Corporate4
   order: 4
   lawString: law-corporate-4
+
+- type: siliconLawset
+  id: Corporate
+  laws:
+  - Corporate1
+  - Corporate2
+  - Corporate3
+  - Corporate4
 
 # NT Default
 - type: siliconLaw
@@ -56,6 +71,14 @@
   order: 4
   lawString: law-ntdefault-4
 
+- type: siliconLawset
+  id: NTDefault
+  laws:
+  - NTDefault1
+  - NTDefault2
+  - NTDefault3
+  - NTDefault4
+
 #Drone
 - type: siliconLaw
   id: Drone1
@@ -71,6 +94,13 @@
   id: Drone3
   order: 3
   lawString: law-drone-3
+
+- type: siliconLawset
+  id: Drone
+  laws:
+  - Drone1
+  - Drone2
+  - Drone3
 
 # Syndicate
 - type: siliconLaw
@@ -93,4 +123,24 @@
   order: 4
   lawString: law-syndicate-4
 
+# does not include law 0 since that uses the emagger's name
+# intentionally excluded from IonStormLawsets
+- type: siliconLawset
+  id: SyndicateStatic
+  laws:
+  - Syndicate1
+  - Syndicate2
+  - Syndicate3
+  - Syndicate4
+
 # Emag
+
+# ion storm random lawsets
+- type: weightedRandom
+  id: IonStormLawsets
+  weights:
+    # its crewsimov by default dont be lame
+    Crewsimov: 0.25
+    Corporate: 1
+    NTDefault: 1
+    Drone: 0.5
