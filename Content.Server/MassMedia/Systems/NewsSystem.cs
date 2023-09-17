@@ -152,7 +152,7 @@ public sealed class NewsSystem : EntitySystem
         {
             Author = authorName,
             Name = (msg.Name.Length <= maxNameLength ? msg.Name.Trim() : $"{msg.Name.Trim().Substring(0, maxNameLength)}..."),
-            Content = (msg.Content.Length <= maxContentLength ? msg.Name.Trim() : $"{msg.Content.Trim().Substring(0, maxContentLength)}..."),
+            Content = (msg.Content.Length <= maxContentLength ? msg.Content.Trim() : $"{msg.Content.Trim().Substring(0, maxContentLength)}..."),
             ShareTime = _ticker.RoundDuration()
 
         };
