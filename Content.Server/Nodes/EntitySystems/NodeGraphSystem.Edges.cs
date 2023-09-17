@@ -1,6 +1,7 @@
 using Content.Server.Nodes.Components;
 using Content.Server.Nodes.Events;
 using Content.Shared.Nodes;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Nodes.EntitySystems;
@@ -108,7 +109,7 @@ public sealed partial class NodeGraphSystem
         }
 
         var oldFlags = node.Edges[edgeIdx].Flags;
-        if (((oldFlags & EdgeFlags.Manual) != EdgeFlags.None) && (((flags ^ oldFlags) & ~EdgeFlags.SourceMask) == EdgeFlags.None))
+        if ((oldFlags & EdgeFlags.Manual) != EdgeFlags.None && ((flags ^ oldFlags) & ~EdgeFlags.SourceMask) == EdgeFlags.None)
             return true;
 
         SetEdge(nodeId, edgeId, edgeIdx, flags | EdgeFlags.Manual | (oldFlags & EdgeFlags.SourceMask), oldFlags, node, edge);
@@ -298,9 +299,11 @@ public sealed partial class NodeGraphSystem
 
         // Cache commonly derived autolinker values:
         var hostId = GetNodeHost(nodeId, node);
+        var hostXform = _xformQuery.GetComponent(hostId);
+        _mapMan.TryGetGrid(hostXform.GridUid, out var hostGrid);
 
         // Collect edges the autolinkers want to have:
-        var updateEv = new UpdateEdgesEvent(nodeId, hostId, node);
+        var updateEv = new UpdateEdgesEvent(nodeId, hostId, node, hostXform, hostGrid);
         RaiseLocalEvent(nodeId, ref updateEv);
         var newEdges = updateEv.Edges;
 
@@ -315,7 +318,14 @@ public sealed partial class NodeGraphSystem
                 newFlags |= outFlags | EdgeFlags.Auto | EdgeFlags.Out;
 
             var edge = _nodeQuery.GetComponent(edgeId);
-            if (CheckEdge(edgeId, nodeId, edgeFlags.Invert(), out var inFlags, node: edge, edge: node, edgeHostId: hostId))
+            var edgeHostId = GetNodeHost(edgeId, edge);
+            var edgeHostXform = _xformQuery.GetComponent(edgeHostId);
+            _mapMan.TryGetGrid(edgeHostXform.GridUid, out var edgeHostGrid);
+
+            if (CheckEdge(
+                edgeId, nodeId, edgeHostId, hostId, edgeFlags.Invert(), out var inFlags,
+                node: edge, nodeHostXform: edgeHostXform, nodeHostGrid: edgeHostGrid,
+                edge: node, edgeHostXform: hostXform, edgeHostGrid: hostGrid))
                 newFlags |= inFlags | EdgeFlags.Auto | EdgeFlags.In;
 
             // Manually set edges shouldn't be messed with by the autolinker.
@@ -344,7 +354,13 @@ public sealed partial class NodeGraphSystem
             }
 
             var newFlags = edgeFlags | EdgeFlags.Auto | EdgeFlags.Out;
-            if (CheckEdge(edgeId, nodeId, null, out var inFlags, node: edge, edge: node, edgeHostId: hostId))
+            var edgeHostId = GetNodeHost(edgeId, edge);
+            var edgeHostXform = _xformQuery.GetComponent(edgeHostId);
+            _mapMan.TryGetGrid(edgeHostXform.GridUid, out var edgeHostGrid);
+            if (CheckEdge(
+                edgeId, nodeId, edgeHostId, hostId, null, out var inFlags,
+                node: edge, nodeHostXform: edgeHostXform, nodeHostGrid: edgeHostGrid,
+                edge: node, edgeHostXform: hostXform, edgeHostGrid: hostGrid))
                 newFlags |= inFlags | EdgeFlags.In;
 
             AddEdge(nodeId, edgeId, newFlags, node, edge);
@@ -355,12 +371,18 @@ public sealed partial class NodeGraphSystem
     /// Checks whether a node wants an edge to exist between it and another node.
     /// </summary>
     /// <returns>True if the node wants the edge to exist; False otherwise.</returns>
-    private bool CheckEdge(EntityUid nodeId, EntityUid edgeId, EdgeFlags? oldFlags, out EdgeFlags flags, GraphNodeComponent node, GraphNodeComponent edge, EntityUid? nodeHostId = null, EntityUid? edgeHostId = null)
+    private bool CheckEdge(
+        EntityUid nodeId, EntityUid edgeId, EntityUid nodeHostId, EntityUid edgeHostId, EdgeFlags? oldFlags, out EdgeFlags flags,
+        GraphNodeComponent node, TransformComponent nodeHostXform, MapGridComponent? nodeHostGrid,
+        GraphNodeComponent edge, TransformComponent edgeHostXform, MapGridComponent? edgeHostGrid
+    )
     {
-        nodeHostId ??= GetNodeHost(nodeId, node);
-        edgeHostId ??= GetNodeHost(edgeId, edge);
-
-        var checkEv = new CheckEdgeEvent(nodeId, nodeHostId.Value, edgeId, edgeHostId.Value, node, edge, oldFlags);
+        var checkEv = new CheckEdgeEvent(
+            nodeId, nodeHostId, edgeId, edgeHostId,
+            node, nodeHostXform, nodeHostGrid,
+            edge, edgeHostXform, edgeHostGrid,
+            oldFlags
+        );
         RaiseLocalEvent(nodeId, ref checkEv);
         flags = checkEv.Flags;
         return checkEv.Wanted;

@@ -1,5 +1,6 @@
 using Content.Server.Nodes.Components;
 using Content.Shared.Nodes;
+using Robust.Shared.Map.Components;
 
 namespace Content.Server.Nodes.Events;
 
@@ -21,7 +22,7 @@ public readonly record struct EdgeChangedEvent
 
 /// <summary>The event raised when recalculating autolinker-derived edges for a node.</summary>
 [ByRefEvent]
-public record struct UpdateEdgesEvent(EntityUid NodeId, EntityUid HostId, GraphNodeComponent Node)
+public record struct UpdateEdgesEvent(EntityUid NodeId, EntityUid HostId, GraphNodeComponent Node, TransformComponent HostXform, MapGridComponent? HostGrid)
 {
     /// <summary>The uid of the node that is recalculating its edges.</summary>
     public readonly EntityUid NodeId = NodeId;
@@ -29,6 +30,10 @@ public record struct UpdateEdgesEvent(EntityUid NodeId, EntityUid HostId, GraphN
     public readonly EntityUid HostId = HostId;
     /// <summary>The state of the node that is recalculating its edges.</summary>
     public readonly GraphNodeComponent Node = Node;
+    /// <summary>The transform of the entity that the node is acting as a proxy for.</summary>
+    public readonly TransformComponent HostXform = HostXform;
+    /// <summary>The grid that the node host is on, if any.</summary>
+    public readonly MapGridComponent? HostGrid = HostGrid;
 
     /// <summary>The set of nodes that the source node should have edges with.</summary>
     public Dictionary<EntityUid, EdgeFlags>? Edges = null;
@@ -36,7 +41,12 @@ public record struct UpdateEdgesEvent(EntityUid NodeId, EntityUid HostId, GraphN
 
 /// <summary>The event raised when checking whether autolinkers want an edge to exist/continue to exist.</summary>
 [ByRefEvent]
-public record struct CheckEdgeEvent(EntityUid NodeId, EntityUid NodeHostId, EntityUid EdgeId, EntityUid EdgeHostId, GraphNodeComponent Node, GraphNodeComponent Edge, EdgeFlags? OldFlags)
+public record struct CheckEdgeEvent(
+    EntityUid NodeId, EntityUid NodeHostId, EntityUid EdgeId, EntityUid EdgeHostId,
+    GraphNodeComponent Node, TransformComponent NodeHostXform, MapGridComponent? NodeHostGrid,
+    GraphNodeComponent Edge, TransformComponent EdgeHostXform, MapGridComponent? EdgeHostGrid,
+    EdgeFlags? OldFlags
+)
 {
     /// <summary>The uid of the node that is checking whether it wants the edge to exist.</summary>
     public readonly EntityUid NodeId = NodeId;
@@ -48,8 +58,16 @@ public record struct CheckEdgeEvent(EntityUid NodeId, EntityUid NodeHostId, Enti
     public readonly EntityUid EdgeHostId = EdgeHostId;
     /// <summary>The node that is checking whether the given edge should exist.</summary>
     public readonly GraphNodeComponent Node = Node;
+    /// <summary>The transform of the node host.</summary>
+    public readonly TransformComponent NodeHostXform = NodeHostXform;
+    /// <summary>The grid the node host is attached to.</summary>
+    public readonly MapGridComponent? NodeHostGrid = NodeHostGrid;
     /// <summary>The node that is at the other end of the edge being checked.</summary>
     public readonly GraphNodeComponent Edge = Edge;
+    /// <summary>The transform of the edge host.</summary>
+    public readonly TransformComponent EdgeHostXform = EdgeHostXform;
+    /// <summary>The grid the edge host is attached to.</summary>
+    public readonly MapGridComponent? EdgeHostGrid = EdgeHostGrid;
     /// <summary>The set of flags that the edge already had (or null if it didn't exist).</summary>
     public readonly EdgeFlags? OldFlags = OldFlags;
 

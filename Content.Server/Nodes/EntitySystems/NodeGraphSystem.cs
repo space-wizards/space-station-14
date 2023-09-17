@@ -2,6 +2,7 @@ using Content.Server.Nodes.Components;
 using Robust.Server.GameStates;
 using Robust.Server.Player;
 using Robust.Shared.GameStates;
+using Robust.Shared.Map;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
@@ -10,11 +11,13 @@ namespace Content.Server.Nodes.EntitySystems;
 public sealed partial class NodeGraphSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _gameTiming = default!;
+    [Dependency] private readonly IMapManager _mapMan = default!;
     [Dependency] private readonly IPlayerManager _playerMan = default!;
     private EntityQuery<GraphNodeComponent> _nodeQuery = default!;
     private EntityQuery<NodeGraphComponent> _graphQuery = default!;
     private EntityQuery<PolyNodeComponent> _polyQuery = default!;
     private EntityQuery<ProxyNodeComponent> _proxyQuery = default!;
+    private EntityQuery<TransformComponent> _xformQuery = default!;
 
     private readonly Dictionary<string, HashSet<EntityUid>> _graphsByProto = new();
 
@@ -34,6 +37,7 @@ public sealed partial class NodeGraphSystem : EntitySystem
         _graphQuery = GetEntityQuery<NodeGraphComponent>();
         _polyQuery = GetEntityQuery<PolyNodeComponent>();
         _proxyQuery = GetEntityQuery<ProxyNodeComponent>();
+        _xformQuery = GetEntityQuery<TransformComponent>();
 
         SubscribeLocalEvent<GraphNodeComponent, ComponentInit>(OnComponentInit);
         SubscribeLocalEvent<NodeGraphComponent, ComponentInit>(OnComponentInit);

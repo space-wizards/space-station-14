@@ -1,4 +1,5 @@
 using Content.Server.Nodes.Components;
+using Robust.Shared.Map.Components;
 
 namespace Content.Server.Nodes.EntitySystems;
 
@@ -78,4 +79,54 @@ public sealed partial class NodeGraphSystem
             }
         }
     }
+
+
+    /// <summary>
+    /// Enumerates all of the nodes anchored to a tile.
+    /// </summary>
+    public IEnumerable<EntityUid> GetAnchoredNodesOnTile(MapGridComponent grid, Vector2i tileIndices)
+    {
+        foreach (var entityUid in grid.GetAnchoredEntities(tileIndices))
+        {
+            /// Yield return node 
+            if (_nodeQuery.HasComponent(entityUid))
+                yield return entityUid;
+
+            /// Yield return all proxy nodes for polynodes.
+            if (_polyQuery.TryGetComponent(entityUid, out var poly))
+            {
+                foreach (var proxyId in poly.ProxyNodes.Values)
+                {
+                    if (proxyId == entityUid)
+                        continue; // Since the poly node is a node it was already returned above.
+
+                    yield return proxyId;
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    /// Enumerates all of the nodes anchored to a tile.
+    /// </summary>
+    public IEnumerable<(EntityUid, Direction)> GetAnchoredNodesInDirs(MapGridComponent grid, Vector2i tileIndices, Direction[] dirs)
+    {
+        foreach (var dir in dirs)
+        {
+            if (dir == Direction.Invalid)
+            {
+                foreach (var nodeId in GetAnchoredNodesOnTile(grid, tileIndices))
+                    yield return (nodeId, dir);
+
+                continue;
+            }
+
+            foreach (var nodeId in GetAnchoredNodesOnTile(grid, tileIndices.Offset(dir)))
+                yield return (nodeId, dir);
+        }
+    }
+
+    /// <inheritdoc cref="GetAnchoredNodesInDirs" />
+    public IEnumerable<(EntityUid, Direction)> GetAnchoredNodesInDir(MapGridComponent grid, Vector2i tileIndices, params Direction[] dir)
+        => GetAnchoredNodesInDirs(grid, tileIndices, dir);
 }
