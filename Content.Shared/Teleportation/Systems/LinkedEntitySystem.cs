@@ -121,7 +121,7 @@ public sealed class LinkedEntitySystem : EntitySystem
     public bool GetLink(EntityUid uid, [NotNullWhen(true)] out EntityUid? dest, LinkedEntityComponent? comp = null)
     {
         dest = null;
-        if (!Resolve(uid, ref comp))
+        if (!Resolve(uid, ref comp, false))
             return false;
 
         var first = comp.LinkedEntities.FirstOrDefault();
