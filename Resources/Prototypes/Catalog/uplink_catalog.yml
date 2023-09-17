@@ -459,6 +459,17 @@
   - UplinkUtility
 
 - type: listing
+  id: UplinkBinaryTranslatorKey
+  name: uplink-binary-translator-key-name
+  description: uplink-binary-translator-key-desc
+  icon: { sprite: /Textures/Objects/Devices/encryption_keys.rsi, state: rd_label }
+  productEntity: EncryptionKeyBinary
+  cost:
+    Telecrystal: 4
+  categories:
+  - UplinkUtility
+
+- type: listing
   id: UplinkHypopen
   name: uplink-hypopen-name
   description: uplink-hypopen-desc
