@@ -1,0 +1,14 @@
+{
+    "version": 1,
+    "license": "MIT",
+    "copyright": "created by 20kdc https://github.com/ParadiseSS13/Paradise",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "deprecated"
+        }
+    ]
+}
