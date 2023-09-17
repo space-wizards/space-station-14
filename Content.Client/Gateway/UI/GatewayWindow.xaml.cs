@@ -163,7 +163,7 @@ public sealed partial class GatewayWindow : FancyWindow,
             var dest = _destinations[i];
             var nextReady = dest.Item3;
             var busy = dest.Item4;
-            _readyLabels[i].Text = ReadyText(now, nextReady);
+            _readyLabels[i].Text = ReadyText(now, nextReady, busy);
             _openButtons[i].Disabled = _current != null || busy || now < nextReady;
         }
     }
