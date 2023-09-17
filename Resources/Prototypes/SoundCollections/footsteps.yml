@@ -153,3 +153,8 @@
   files:
   - /Audio/Effects/Footsteps/clownspiderstep1.ogg
   - /Audio/Effects/Footsteps/clownspiderstep2.ogg
+
+- type: soundCollection
+  id: FootstepThud
+  files:
+  - /Audio/Effects/Footsteps/largethud.ogg

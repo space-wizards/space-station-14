@@ -254,3 +254,15 @@
     icon: { sprite: Objects/Fun/bikehorn.rsi, state: icon }
     event: !type:ActivateImplantEvent
     useDelay: 1
+
+- type: entity
+  id: ActionFireStarter
+  name: Ignite
+  description: Ignites enemies in a radius around you.
+  noSpawn: true
+  components:
+  - type: InstantAction
+    priority: -1
+    useDelay: 30
+    icon: Interface/Actions/firestarter.png
+    event: !type:FireStarterActionEvent
