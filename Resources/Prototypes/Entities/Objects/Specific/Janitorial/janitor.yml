@@ -125,20 +125,27 @@
         whitelist:
           tags:
             - PlushieSharkGrey
-    sprite: Objects/Fun/sharkplush.rsi
+      mopbucket_carpplush:
+        whitelist:
+          tags:
+            - PlushieCarp
+    sprite: Objects/Specific/Janitorial/janitorial.rsi
   - type: Physics
     bodyType: Dynamic
   - type: Transform
     noRot: true
   - type: ItemSlots
     slots:
-      shark_slot:
-        name: Shark
+      item_slot:
+        name: Item
         whitelist:
           tags:
             - PlushieSharkBlue
             - PlushieSharkPink
             - PlushieSharkGrey
+            - PlushieCarp
+          components:
+            - Rehydratable
         priority: 3 # Higher than drinking priority
   - type: Fixtures
     fixtures:
@@ -163,7 +170,10 @@
     containers:
       storagebase: !type:Container
         ents: []
-      shark_slot: !type:ContainerSlot {}
+      item_slot: !type:ContainerSlot {}
+  - type: ReactiveContainer
+    solution: bucket
+    container: item_slot
   - type: GuideHelp
     guides:
     - Janitorial

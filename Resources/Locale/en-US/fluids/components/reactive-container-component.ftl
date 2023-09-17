@@ -1,0 +1,1 @@
+reactive-container-component-touch-reaction = The solution in {THE($container)} reacts with {THE($entity)}!

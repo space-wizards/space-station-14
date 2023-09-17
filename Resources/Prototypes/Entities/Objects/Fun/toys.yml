@@ -355,6 +355,9 @@
   - type: MeleeWeapon
     soundHit:
       path: /Audio/Effects/bite.ogg
+  - type: Tag
+    tags:
+      - PlushieCarp
 
 - type: entity
   parent: BasePlushie
