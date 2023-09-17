@@ -3,7 +3,7 @@ using Content.Shared.Coordinates;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Movement.Components;
 
-namespace Content.Server.Whistle;
+namespace Content.Client.Whistle;
 
 public sealed class WhistleSystem : EntitySystem
 {
