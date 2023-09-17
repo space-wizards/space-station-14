@@ -6,6 +6,10 @@ using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Shared.Damage;
 
+/// <summary>
+/// Adds an action ability that will cause all flammable targets in a radius to ignite, also heals the owner
+/// of the component when used.
+/// </summary>
 namespace Content.Server.Abilities.Firestarter
 {
     public sealed class FirestarterSystem : EntitySystem
