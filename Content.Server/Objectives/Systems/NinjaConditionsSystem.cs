@@ -51,7 +51,7 @@ public sealed class NinjaConditionsSystem : EntitySystem
 
     private void OnSpiderChargeGetProgress(EntityUid uid, SpiderChargeConditionComponent comp, ref ObjectiveGetProgressEvent args)
     {
-        args.Progress = TryComp<NinjaRoleComponent>(args.MindId, out var role) && role.SpiderChargeDetonated ? 1f : 0f;
+        args.Progress = comp.SpiderChargeDetonated ? 1f : 0f;
     }
 
     private string SpiderChargeTitle(EntityUid mindId)

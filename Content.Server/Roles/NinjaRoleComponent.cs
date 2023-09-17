@@ -13,10 +13,4 @@ public sealed partial class NinjaRoleComponent : AntagonistRoleComponent
     /// </summary>
     [DataField("spiderChargeTarget")]
     public EntityUid? SpiderChargeTarget;
-
-    /// <summary>
-    /// Whether the spider charge has been detonated on the target, used for objective
-    /// </summary>
-    [DataField("spiderChargeDetonated")]
-    public bool SpiderChargeDetonated;
 }
