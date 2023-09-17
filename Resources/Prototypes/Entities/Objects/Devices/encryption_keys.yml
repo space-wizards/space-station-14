@@ -218,7 +218,7 @@
   parent: EncryptionKey
   id: EncryptionKeyBinary
   name: binary translator key
-  description: An encryption key that translates to binary signals used by silicons.
+  description: An encryption key that translates binary signals used by silicons.
   components:
   - type: EncryptionKey
     channels:
