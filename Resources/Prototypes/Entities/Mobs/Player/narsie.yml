@@ -24,7 +24,7 @@
     prototype: MobNarsie
 
 - type: entity
-  parent: [BaseMob, MobNarsieBase]
+  parent: [MobNarsieBase, BaseMob]
   id: MobNarsie
   components:
   - type: Sprite
