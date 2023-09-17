@@ -76,12 +76,10 @@
     interfaces:
     - key: enum.ApcUiKey.Key
       type: ApcBoundUserInterface
-    - key: enum.PowerMonitoringConsoleUiKey.Key
-      type: PowerMonitoringConsoleBoundUserInterface
   - type: ActivatableUI
     inHandsOnly: false
     singleUser: true
-    key: enum.PowerMonitoringConsoleUiKey.Key
+    key: enum.ApcUiKey.Key
   - type: Construction
     graph: APC
     node: apc
@@ -128,9 +126,6 @@
     lowVoltageNode: output
   - type: StaticPrice
     price: 500
-  - type: PowerMonitoringConsole
-    sourceNode: input
-    loadNode: output
 
 # APC under construction
 - type: entity
