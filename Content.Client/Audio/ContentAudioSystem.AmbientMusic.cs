@@ -39,7 +39,7 @@ public sealed partial class ContentAudioSystem
     // Don't need to worry about this being serializable or pauseable as it doesn't affect the sim.
     private TimeSpan _nextAudio;
 
-    private AudioSystem.PlayingStream? _ambientMusicStream;
+    private PlayingStream? _ambientMusicStream;
     private AmbientMusicPrototype? _musicProto;
 
     /// <summary>
@@ -223,7 +223,7 @@ public sealed partial class ContentAudioSystem
 
         if (strim != null)
         {
-            _ambientMusicStream = (AudioSystem.PlayingStream) strim;
+            _ambientMusicStream = (PlayingStream) strim;
 
             if (_musicProto.FadeIn)
             {

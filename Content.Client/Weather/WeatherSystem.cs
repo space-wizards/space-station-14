@@ -65,7 +65,7 @@ public sealed class WeatherSystem : SharedWeatherSystem
         weather.Stream ??= _audio.PlayGlobal(weatherProto.Sound, Filter.Local(), true);
         var volumeMod = MathF.Pow(10, weatherProto.Sound.Params.Volume / 10f);
 
-        var stream = (AudioSystem.PlayingStream) weather.Stream!;
+        var stream = (PlayingStream) weather.Stream!;
         var alpha = weather.LastAlpha;
         alpha = MathF.Pow(alpha, 2f) * volumeMod;
         // TODO: Lerp this occlusion.

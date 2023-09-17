@@ -101,7 +101,7 @@ public sealed class PowerSwitchableGeneratorSystem : SharedPowerSwitchableGenera
             uid,
             user);
 
-        _audio.Play(component.SwitchSound, Filter.Pvs(uid), uid, true);
+        _audio.PlayEntity(component.SwitchSound, Filter.Pvs(uid), uid, true);
 
         Dirty(uid, component);
 

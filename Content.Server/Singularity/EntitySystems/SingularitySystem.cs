@@ -204,9 +204,9 @@ public sealed class SingularitySystem : SharedSingularitySystem
 
         MetaDataComponent? metaData = null;
         if (Resolve(uid, ref metaData) && metaData.EntityLifeStage <= EntityLifeStage.Initializing)
-            _audio.Play(comp.FormationSound, Filter.Pvs(comp.Owner), comp.Owner, true);
+            _audio.PlayEntity(comp.FormationSound, Filter.Pvs(comp.Owner), comp.Owner, true);
 
-        comp.AmbientSoundStream = _audio.Play(comp.AmbientSound, Filter.Pvs(comp.Owner), comp.Owner, true);
+        comp.AmbientSoundStream = _audio.PlayEntity(comp.AmbientSound, Filter.Pvs(comp.Owner), comp.Owner, true);
         UpdateSingularityLevel(uid, comp);
     }
 
@@ -236,7 +236,7 @@ public sealed class SingularitySystem : SharedSingularitySystem
 
         MetaDataComponent? metaData = null;
         if (Resolve(uid, ref metaData) && metaData.EntityLifeStage >= EntityLifeStage.Terminating)
-            _audio.Play(comp.DissipationSound, Filter.Pvs(comp.Owner), comp.Owner, true);
+            _audio.PlayEntity(comp.DissipationSound, Filter.Pvs(comp.Owner), comp.Owner, true);
     }
 
     /// <summary>

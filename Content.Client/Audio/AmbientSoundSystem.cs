@@ -118,7 +118,7 @@ public sealed class AmbientSoundSystem : SharedAmbientSoundSystem
             if (values.Stream == null)
                 continue;
 
-            var stream = (AudioSystem.PlayingStream) values.Stream;
+            var stream = (PlayingStream) values.Stream;
             stream.Volume = _params.Volume + comp.Volume + _ambienceVolume;
         }
     }

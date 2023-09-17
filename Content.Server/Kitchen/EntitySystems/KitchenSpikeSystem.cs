@@ -153,7 +153,7 @@ namespace Content.Server.Kitchen.EntitySystems
                 QueueDel(gib);
             }
 
-            _audio.Play(component.SpikeSound, Filter.Pvs(uid), uid, true);
+            _audio.PlayEntity(component.SpikeSound, Filter.Pvs(uid), uid, true);
         }
 
         private bool TryGetPiece(EntityUid uid, EntityUid user, EntityUid used,

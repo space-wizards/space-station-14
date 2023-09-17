@@ -116,7 +116,7 @@ public sealed class EnergySwordSystem : EntitySystem
         if (comp.IsSharp)
             RemComp<SharpComponent>(uid);
 
-        _audio.Play(comp.DeActivateSound, Filter.Pvs(uid, entityManager: EntityManager), uid, true, comp.DeActivateSound.Params);
+        _audio.PlayEntity(comp.DeActivateSound, Filter.Pvs(uid, entityManager: EntityManager), uid, true, comp.DeActivateSound.Params);
 
         comp.Activated = false;
     }
@@ -143,7 +143,7 @@ public sealed class EnergySwordSystem : EntitySystem
             malus.Malus += comp.LitDisarmMalus;
         }
 
-        _audio.Play(comp.ActivateSound, Filter.Pvs(uid, entityManager: EntityManager), uid, true, comp.ActivateSound.Params);
+        _audio.PlayEntity(comp.ActivateSound, Filter.Pvs(uid, entityManager: EntityManager), uid, true, comp.ActivateSound.Params);
 
         comp.Activated = true;
     }

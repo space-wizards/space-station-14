@@ -6,12 +6,12 @@ namespace Content.Client.Audio;
 public sealed partial class ContentAudioSystem : SharedContentAudioSystem
 {
     // Need how much volume to change per tick and just remove it when it drops below "0"
-    private readonly Dictionary<AudioSystem.PlayingStream, float> _fadingOut = new();
+    private readonly Dictionary<PlayingStream, float> _fadingOut = new();
 
     // Need volume change per tick + target volume.
-    private readonly Dictionary<AudioSystem.PlayingStream, (float VolumeChange, float TargetVolume)> _fadingIn = new();
+    private readonly Dictionary<PlayingStream, (float VolumeChange, float TargetVolume)> _fadingIn = new();
 
-    private readonly List<AudioSystem.PlayingStream> _fadeToRemove = new();
+    private readonly List<PlayingStream> _fadeToRemove = new();
 
     private const float MinVolume = -32f;
     private const float DefaultDuration = 2f;
@@ -42,7 +42,7 @@ public sealed partial class ContentAudioSystem : SharedContentAudioSystem
 
     #region Fades
 
-    public void FadeOut(AudioSystem.PlayingStream? stream, float duration = DefaultDuration)
+    public void FadeOut(PlayingStream? stream, float duration = DefaultDuration)
     {
         if (stream == null || duration <= 0f)
             return;
@@ -54,7 +54,7 @@ public sealed partial class ContentAudioSystem : SharedContentAudioSystem
         _fadingOut.Add(stream, diff / duration);
     }
 
-    public void FadeIn(AudioSystem.PlayingStream? stream, float duration = DefaultDuration)
+    public void FadeIn(PlayingStream? stream, float duration = DefaultDuration)
     {
         if (stream == null || duration <= 0f || stream.Volume < MinVolume)
             return;

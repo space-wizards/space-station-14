@@ -289,7 +289,7 @@ public sealed partial class DragonSystem : EntitySystem
     private void Roar(DragonComponent component)
     {
         if (component.SoundRoar != null)
-            _audioSystem.Play(component.SoundRoar, Filter.Pvs(component.Owner, 4f, EntityManager), component.Owner, true, component.SoundRoar.Params);
+            _audioSystem.PlayEntity(component.SoundRoar, Filter.Pvs(component.Owner, 4f, EntityManager), component.Owner, true, component.SoundRoar.Params);
     }
 
     private void OnStartup(EntityUid uid, DragonComponent component, ComponentStartup args)
