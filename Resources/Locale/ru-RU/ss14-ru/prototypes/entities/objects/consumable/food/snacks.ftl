@@ -42,6 +42,7 @@ ent-FoodSnackMREBrownie = брауни
     .desc = Точно смешанное пирожное-брауни, приготовленное так, чтобы переносить удары и суровые условия. На вкус как дерьмо.
 ent-FoodSnackMREBrownieOpen = брауни
     .desc = { ent-FoodSnackMREBrownie.desc }
+    .suffix = ИРП
 ent-FoodPacketTrash = { ent-BaseItem }
     .desc = Это мусор.
 ent-FoodPacketBoritosTrash = пакетик от боритос

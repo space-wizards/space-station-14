@@ -62,3 +62,5 @@ alerts-bleed-name = [color=red]Кровотечение[/color]
 alerts-bleed-desc = У вас [color=red]кровотечение[/color].
 alerts-pacified-name = [color=green]Пацифизм[/color]
 alerts-pacified-desc = Вы чувствуете себя умиротворенно и не можете атаковать кого-либо напрямую.
+alerts-suit-power-name = Заряд костюма
+alerts-suit-power-desc = Запас энергии вашего костюма космического ниндзя.
