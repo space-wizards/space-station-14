@@ -71,11 +71,8 @@
   - type: SiliconLawBound
   - type: EmagSiliconLaw
     stunTime: 5
-    emagLaws:
-    - Syndicate1
-    - Syndicate2
-    - Syndicate3
-    - Syndicate4
+    emagLaws: SyndicateStatic
+  - type: IonStormTarget
   - type: Hands
     showInHands: false
   - type: IntrinsicRadioReceiver
