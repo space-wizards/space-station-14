@@ -3,6 +3,7 @@
   id: MobNarsieSpawn
   name: Nar'Sie
   description: Your mind begins to bubble and ooze as it tries to comprehend what it sees.
+  suffix: Spawn
   components:
   - type: Sprite
     sprite: Mobs/Demons/narsie.rsi
