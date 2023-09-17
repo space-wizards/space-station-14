@@ -39,7 +39,6 @@ public sealed class WhistleSystem : EntitySystem
     }
     private bool MakeLoudWhistle(EntityUid uid, EntityUid owner, WhistleComponent component)
     {
-        var mobMoverEntities = new HashSet<EntityUid>();
         TransformComponent? whistleTransform = null;
 
         if (!Resolve(uid, ref whistleTransform))
@@ -48,13 +47,11 @@ public sealed class WhistleSystem : EntitySystem
         foreach (var moverComponent in
             _entityLookup.GetComponentsInRange<MobMoverComponent>(whistleTransform.Coordinates, component.Distance))
         {
-            mobMoverEntities.Add(moverComponent.Owner);
+            if (moverComponent.Owner == owner)
+                continue;
+
+            ExclamateTarget(uid, moverComponent.Owner, component);
         }
-
-        mobMoverEntities.Remove(owner);
-
-        foreach (var entity in mobMoverEntities)
-            ExclamateTarget(uid, entity, component);
 
         return true;
     }
