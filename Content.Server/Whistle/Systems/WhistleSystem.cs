@@ -1,13 +1,12 @@
 using Content.Server.Whistle.Components;
+using Content.Shared.Coordinates;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Movement.Components;
-using Robust.Server.GameObjects;
 
 namespace Content.Server.Whistle;
 
 public sealed class WhistleSystem : EntitySystem
 {
-    [Dependency] private readonly TransformSystem _transform = default!;
     [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
     public override void Initialize()
     {
@@ -17,8 +16,7 @@ public sealed class WhistleSystem : EntitySystem
     }
     private bool ExclamateTarget(EntityUid target, WhistleComponent component)
     {
-        var effect = Spawn(component.effect, Transform(target).MapPosition);
-        _transform.SetParent(effect, target);
+        SpawnAttachedTo(component.effect, target.ToCoordinates());
 
         return true;
     }
