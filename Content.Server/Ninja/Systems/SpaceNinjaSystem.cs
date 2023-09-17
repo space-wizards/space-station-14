@@ -229,7 +229,7 @@ public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
         // assign objectives - must happen after spider charge target so that the obj requirement works
         foreach (var objective in config.Objectives)
         {
-            if (!_mind.TryAddObjective(mindId, objective, mind))
+            if (!_mind.TryAddObjective(mindId, mind, objective))
             {
                 Log.Error($"Failed to add {objective} to ninja {mind.OwnedEntity.Value}");
             }

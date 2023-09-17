@@ -13,7 +13,7 @@ public sealed partial class SSDIndicatorComponent : Component
 {
     [ViewVariables(VVAccess.ReadWrite)]
     [AutoNetworkedField]
-    public bool IsSSD = true;
+    public bool IsSSD = false;
 
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("icon", customTypeSerializer: typeof(PrototypeIdSerializer<StatusIconPrototype>))]

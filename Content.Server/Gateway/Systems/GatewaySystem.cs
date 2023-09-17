@@ -1,4 +1,5 @@
 using Content.Server.Gateway.Components;
+using Content.Shared.Access.Systems;
 using Content.Shared.Gateway;
 using Content.Shared.Teleportation.Components;
 using Content.Shared.Teleportation.Systems;
@@ -13,6 +14,7 @@ namespace Content.Server.Gateway.Systems;
 
 public sealed class GatewaySystem : EntitySystem
 {
+    [Dependency] private readonly AccessReaderSystem _accessReader = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly LinkedEntitySystem _linkedEntity = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
@@ -66,7 +68,7 @@ public sealed class GatewaySystem : EntitySystem
 
     private void UpdateUserInterface(EntityUid uid, GatewayComponent comp)
     {
-        var destinations = new List<(NetEntity, String, TimeSpan, bool)>();
+        var destinations = new List<(NetEntity, string, TimeSpan, bool)>();
         foreach (var destUid in comp.Destinations)
         {
             var dest = Comp<GatewayDestinationComponent>(destUid);
@@ -88,6 +90,14 @@ public sealed class GatewaySystem : EntitySystem
 
     private void OnOpenPortal(EntityUid uid, GatewayComponent comp, GatewayOpenPortalMessage args)
     {
+        if (args.Session.AttachedEntity == null)
+            return;
+
+        // if the gateway has an access reader check it before allowing opening
+        var user = args.Session.AttachedEntity.Value;
+        if (!_accessReader.IsAllowed(user, uid))
+            return;
+
         // can't link if portal is already open on either side, the destination is invalid or on cooldown
         var desto = GetEntity(args.Destination);
 
