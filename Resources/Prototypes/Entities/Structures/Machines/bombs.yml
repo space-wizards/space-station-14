@@ -23,8 +23,8 @@
       maxIntensity: 4
     - type: ExplodeOnTrigger
     - type: OnUseTimerTrigger
-      delay: 100
-      delayOptions: [100, 130, 160, 190, 220, 250, 280, 310]
+      delay: 120
+      delayOptions: [120, 150, 180, 210, 240, 270, 300]
       initialBeepDelay: 0
       beepSound: /Audio/Machines/timer.ogg
     - type: Anchorable
