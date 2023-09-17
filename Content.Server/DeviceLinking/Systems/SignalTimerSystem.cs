@@ -56,6 +56,7 @@ public sealed class SignalTimerSystem : EntitySystem
     public void Trigger(EntityUid uid, SignalTimerComponent signalTimer)
     {
         RemComp<ActiveSignalTimerComponent>(uid);
+
         if (signalTimer.DoneSound != null)
         _audio.PlayPvs(signalTimer.DoneSound, uid);
 
@@ -83,14 +84,22 @@ public sealed class SignalTimerSystem : EntitySystem
 
     private void UpdateTimer()
     {
+        List<EntityUid> uids = new List<EntityUid>();
+
         var query = EntityQueryEnumerator<ActiveSignalTimerComponent, SignalTimerComponent>();
         while (query.MoveNext(out var uid, out var active, out var timer))
         {
             if (active.TriggerTime > _gameTiming.CurTime)
                 continue;
+            uids.Add(uid);
+        }
 
-            Trigger(uid, timer);
-            break;
+        foreach (var uid in uids)
+        {
+            if (TryComp(uid, out SignalTimerComponent? activeComp))
+            {
+                Trigger(uid, activeComp);
+            }
         }
     }
 
@@ -136,7 +145,6 @@ public sealed class SignalTimerSystem : EntitySystem
 
     private void OnSignalReceived(EntityUid uid, SignalTimerComponent component, ref SignalReceivedEvent args)
     {
-        RemComp<ActiveSignalTimerComponent>(uid);
         if (args.Port == component.Trigger)
         {
             OnStartTimer(uid, component);
