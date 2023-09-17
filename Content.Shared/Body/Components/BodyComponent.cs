@@ -14,7 +14,7 @@ namespace Content.Shared.Body.Components;
 [Access(typeof(SharedBodySystem))]
 public sealed partial class BodyComponent : Component
 {
-    [DataField("prototype", customTypeSerializer: typeof(PrototypeIdSerializer<BodyPrototype>)), AutoNetworkedField]
+    [DataField("prototype", customTypeSerializer: typeof(PrototypeIdSerializer<BodyPrototype>))]
     public string? Prototype;
 
     [ViewVariables] public ContainerSlot RootContainer;

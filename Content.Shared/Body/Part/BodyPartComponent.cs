@@ -39,8 +39,12 @@ public sealed partial class BodyPartComponent : Component
     [AutoNetworkedField(CloneData = true), ViewVariables]
     public Dictionary<string, OrganSlot> Organs = new();
 
+
+    /// <summary>
+    /// These are only for VV/Debug do not use these for gameplay/systems
+    /// </summary>
     [ViewVariables]
-    public List<ContainerSlot> BodyPartSlots
+    private List<ContainerSlot> BodyPartSlotsVV
     {
         get
         {
@@ -52,9 +56,8 @@ public sealed partial class BodyPartComponent : Component
             return temp;
         }
     }
-
     [ViewVariables]
-    public List<ContainerSlot> OrganSlots
+    private List<ContainerSlot> OrganSlotsVV
     {
         get
         {
