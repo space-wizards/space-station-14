@@ -1,4 +1,4 @@
-namespace Content.Server.Whistle.Components
+namespace Content.Shared.Whistle.Components
 {
     [RegisterComponent]
     public sealed partial class WhistleComponent : Component
