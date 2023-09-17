@@ -23,7 +23,7 @@ public sealed class FullscreenHook
 
     private void ToggleFullscreen(ICommonSession? session)
     {
-        var currentWindowMode = _cfg.GetCVar<int>(CVars.DisplayWindowMode);
+        var currentWindowMode = _cfg.GetCVar(CVars.DisplayWindowMode);
 
         switch (currentWindowMode)
         {
