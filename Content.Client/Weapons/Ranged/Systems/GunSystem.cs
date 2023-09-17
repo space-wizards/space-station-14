@@ -334,7 +334,7 @@ public sealed partial class GunSystem : SharedGunSystem
                 new AnimationTrackComponentProperty
                 {
                     ComponentType = typeof(PointLightComponent),
-                    Property = nameof(PointLightComponent.Enabled),
+                    Property = nameof(PointLightComponent.AnimatedEnable),
                     InterpolationMode = AnimationInterpolationMode.Linear,
                     KeyFrames =
                     {
