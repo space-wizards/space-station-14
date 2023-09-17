@@ -11,7 +11,7 @@
     quickEquip: false
     slots: neck
   - type: UseDelay
-    delay: 1
+    delay: 3
   - type: Whistle
     sound: 
       collection: BaseWhistle
