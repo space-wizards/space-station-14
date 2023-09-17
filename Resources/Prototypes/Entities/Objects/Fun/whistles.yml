@@ -12,9 +12,10 @@
     slots: neck
   - type: UseDelay
     delay: 3
-  - type: Whistle
+  - type: EmitSoundOnUse
     sound: 
       collection: BaseWhistle
+  - type: Whistle
     distance: 4
 
 - type: entity

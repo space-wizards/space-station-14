@@ -8,7 +8,6 @@ namespace Content.Server.Whistle;
 public sealed class WhistleSystem : EntitySystem
 {
     [Dependency] private readonly TransformSystem _transform = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
     public override void Initialize()
     {
@@ -27,8 +26,6 @@ public sealed class WhistleSystem : EntitySystem
     {
         if (component.Distance > 0)
             MakeLoudWhistle(uid, args.User, component);
-
-        _audio.PlayPvs(component.Sound, uid);
 
         args.Handled = true;
     }
