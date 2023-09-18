@@ -1,9 +1,4 @@
 Entries:
-- author: MrGreen and OctoRocket
-  changes:
-  - {message: Added HoS flask., type: Add}
-  id: 4350
-  time: '2023-07-27T19:41:33.0000000+00:00'
 - author: KingFroozy
   changes:
   - {message: Minor sprite changes for jaws of life and power drill, type: Tweak}
@@ -2969,3 +2964,8 @@ Entries:
       winter coats', type: Tweak}
   id: 4849
   time: '2023-09-18T01:10:44.0000000+00:00'
+- author: Nairodian
+  changes:
+  - {message: Fixed Holobarriers being unable to be destroyed., type: Fix}
+  id: 4850
+  time: '2023-09-18T01:22:39.0000000+00:00'
