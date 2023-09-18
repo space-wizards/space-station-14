@@ -235,6 +235,9 @@ uplink-disposable-turret-desc = Looks and functions like a normal electrical too
 uplink-chameleon-name = Chameleon Kit
 uplink-chameleon-desc = A backpack full of items that contain chameleon technology allowing you to disguise as pretty much anything on the station, and more!
 
+uplink-clothing-sneakers-name = Chameleon Sneakers
+uplink-clothing-sneakers-desc = Muffled chameleon shoes that silence your footsteps.
+
 uplink-clothing-no-slips-shoes-name = No-slip Shoes
 uplink-clothing-no-slips-shoes-desc = Chameleon shoes that protect you from slips.
 

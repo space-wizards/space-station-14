@@ -139,6 +139,21 @@
   - type: NoSlip
 
 - type: entity
+  parent: ClothingShoesChameleon
+  id: ClothingShoesChameleonSilent
+  name: black shoes
+  description: Stylish black shoes.
+  suffix: Silent, Chameleon
+  components:
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: FootstepCarpet
+      params:
+        volume: -10
+        maxdistance: 5
+        referenceDistance: 0.2
+
+- type: entity
   parent: ClothingShoesClown
   id: ClothingShoesJester
   name: jester shoes
