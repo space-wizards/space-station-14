@@ -84,4 +84,10 @@ public sealed partial class AmeControllerComponent : SharedAmeControllerComponen
     /// </summary>
     [DataField("safteyLock")] [ViewVariables(VVAccess.ReadWrite)]
     public bool SafetyLock = false;
+
+    /// <summary>
+    /// A warning for when the AME is in an overload state.
+    /// </summary>
+    [DataField("overloadWarning")] [ViewVariables(VVAccess.ReadWrite)]
+    public bool OverloadWarning = false;
 }

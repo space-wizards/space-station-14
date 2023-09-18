@@ -5,7 +5,10 @@
         <BoxContainer Orientation="Horizontal">
             <Label Text="{Loc 'ame-window-engine-status-label'}" />
             <Label Text=" " />
-            <Label Name="InjectionStatus" Text="{Loc 'ame-window-engine-injection-status-not-injecting-label'}" />
+            <Label Name="InjectionStatus" FontColorOverride="#A9A9A9" Text="{Loc 'ame-window-engine-injection-status-not-injecting-label'}" />
+        </BoxContainer>
+        <BoxContainer Orientation="Horizontal">
+            <Label Name="InjectionStatusDescription" Text="" />
         </BoxContainer>
         <BoxContainer Orientation="Horizontal">
             <Button Name="ToggleInjection"

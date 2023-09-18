@@ -18,8 +18,9 @@ public sealed class AmeControllerBoundUserInterfaceState : BoundUserInterfaceSta
     public readonly int InjectionAmount;
     public readonly int CoreCount;
     public readonly bool SafteyProtocols;
+    public readonly bool OverloadWarning;
 
-    public AmeControllerBoundUserInterfaceState(bool hasPower, bool isMaster, bool injecting, bool hasFuelJar, int fuelAmount, int injectionAmount, int coreCount, bool safteyProtocols)
+    public AmeControllerBoundUserInterfaceState(bool hasPower, bool isMaster, bool injecting, bool hasFuelJar, int fuelAmount, int injectionAmount, int coreCount, bool safteyProtocols, bool overloadWarning)
     {
         HasPower = hasPower;
         IsMaster = isMaster;
@@ -29,6 +30,8 @@ public sealed class AmeControllerBoundUserInterfaceState : BoundUserInterfaceSta
         InjectionAmount = injectionAmount;
         CoreCount = coreCount;
         SafteyProtocols = safteyProtocols;
+        OverloadWarning = overloadWarning;
+
     }
 }
 
