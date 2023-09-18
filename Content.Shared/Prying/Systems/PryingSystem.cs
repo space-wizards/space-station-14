@@ -155,7 +155,7 @@ public sealed class PryingSystem : EntitySystem
         PryingComponent? comp = null;
 
         if (args.Used != null && Resolve(args.Used.Value, ref comp))
-            _audioSystem.PlayPvs(comp.UseSound, args.User);
+            _audioSystem.PlayPredicted(comp.UseSound, args.Used.Value, args.User);
 
         var ev = new AfterPryEvent(args.User);
         RaiseLocalEvent(uid, ev, false);

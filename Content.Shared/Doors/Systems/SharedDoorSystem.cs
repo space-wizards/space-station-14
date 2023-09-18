@@ -1,6 +1,4 @@
 using System.Linq;
-using Content.Shared.Database;
-using Content.Shared.Administration.Logs;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.Damage;
@@ -26,15 +24,14 @@ public abstract partial class SharedDoorSystem : EntitySystem
 {
     [Dependency] protected readonly IGameTiming GameTiming = default!;
     [Dependency] protected readonly SharedPhysicsSystem PhysicsSystem = default!;
-    [Dependency] private   readonly DamageableSystem _damageableSystem = default!;
-    [Dependency] private   readonly SharedStunSystem _stunSystem = default!;
+    [Dependency] private readonly DamageableSystem _damageableSystem = default!;
+    [Dependency] private readonly SharedStunSystem _stunSystem = default!;
     [Dependency] protected readonly TagSystem Tags = default!;
     [Dependency] protected readonly SharedAudioSystem Audio = default!;
-    [Dependency] private   readonly EntityLookupSystem _entityLookup = default!;
+    [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
     [Dependency] protected readonly SharedAppearanceSystem AppearanceSystem = default!;
-    [Dependency] private   readonly OccluderSystem _occluder = default!;
-    [Dependency] private   readonly AccessReaderSystem _accessReaderSystem = default!;
-    [Dependency] private readonly ISharedAdminLogManager _adminLog = default!;
+    [Dependency] private readonly OccluderSystem _occluder = default!;
+    [Dependency] private readonly AccessReaderSystem _accessReaderSystem = default!;
 
     /// <summary>
     ///     A body must have an intersection percentage larger than this in order to be considered as colliding with a
@@ -66,7 +63,6 @@ public abstract partial class SharedDoorSystem : EntitySystem
         SubscribeLocalEvent<DoorComponent, StartCollideEvent>(HandleCollide);
         SubscribeLocalEvent<DoorComponent, PreventCollideEvent>(PreventCollision);
 
-        SubscribeLocalEvent<DoorComponent, AfterPryEvent>(OnAfterPry);
     }
 
     protected virtual void OnComponentInit(EntityUid uid, DoorComponent door, ComponentInit args)
@@ -212,23 +208,6 @@ public abstract partial class SharedDoorSystem : EntitySystem
             PlaySound(uid, door.DenySound, AudioParams.Default.WithVolume(-3), user, predicted);
     }
 
-    /// <summary>
-    ///     Open or close a door after it has been successfuly pried.
-    /// </summary>
-    private void OnAfterPry(EntityUid uid, DoorComponent door, AfterPryEvent args)
-    {
-        if (door.State == DoorState.Closed)
-        {
-            _adminLog.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(args.User)} pried {ToPrettyString(uid)} open");
-            StartOpening(uid, door, args.User);
-        }
-        else if (door.State == DoorState.Open)
-        {
-            _adminLog.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(args.User)} pried {ToPrettyString(uid)} closed");
-            StartClosing(uid, door, args.User);
-        }
-    }
-
 
     public bool TryToggleDoor(EntityUid uid, DoorComponent? door = null, EntityUid? user = null, bool predicted = false)
     {
@@ -270,7 +249,7 @@ public abstract partial class SharedDoorSystem : EntitySystem
         if (door.State == DoorState.Welded)
             return false;
 
-        var ev = new BeforeDoorOpenedEvent(){User=user};
+        var ev = new BeforeDoorOpenedEvent() { User = user };
         RaiseLocalEvent(uid, ev, false);
         if (ev.Cancelled)
             return false;
@@ -484,11 +463,11 @@ public abstract partial class SharedDoorSystem : EntitySystem
 
             //TODO: Make only shutters ignore these objects upon colliding instead of all airlocks
             // Excludes Glasslayer for windows, GlassAirlockLayer for windoors, TableLayer for tables
-            if (!otherPhysics.CanCollide || otherPhysics.CollisionLayer == (int) CollisionGroup.GlassLayer || otherPhysics.CollisionLayer == (int) CollisionGroup.GlassAirlockLayer || otherPhysics.CollisionLayer == (int) CollisionGroup.TableLayer)
+            if (!otherPhysics.CanCollide || otherPhysics.CollisionLayer == (int)CollisionGroup.GlassLayer || otherPhysics.CollisionLayer == (int)CollisionGroup.GlassAirlockLayer || otherPhysics.CollisionLayer == (int)CollisionGroup.TableLayer)
                 continue;
 
             //If the colliding entity is a slippable item ignore it by the airlock
-            if (otherPhysics.CollisionLayer == (int) CollisionGroup.SlipLayer && otherPhysics.CollisionMask == (int) CollisionGroup.ItemMask)
+            if (otherPhysics.CollisionLayer == (int)CollisionGroup.SlipLayer && otherPhysics.CollisionMask == (int)CollisionGroup.ItemMask)
                 continue;
 
             if ((physics.CollisionMask & otherPhysics.CollisionLayer) == 0 && (otherPhysics.CollisionMask & physics.CollisionLayer) == 0)
@@ -638,7 +617,7 @@ public abstract partial class SharedDoorSystem : EntitySystem
         }
     }
 
-    protected virtual void CheckDoorBump(DoorComponent component, PhysicsComponent body) {}
+    protected virtual void CheckDoorBump(DoorComponent component, PhysicsComponent body) { }
 
     /// <summary>
     ///     Makes a door proceed to the next state (if applicable).

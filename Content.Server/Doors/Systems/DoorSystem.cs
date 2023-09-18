@@ -38,6 +38,7 @@ public sealed class DoorSystem : SharedDoorSystem
         SubscribeLocalEvent<DoorComponent, WeldableAttemptEvent>(OnWeldAttempt);
         SubscribeLocalEvent<DoorComponent, WeldableChangedEvent>(OnWeldChanged);
         SubscribeLocalEvent<DoorComponent, GotEmaggedEvent>(OnEmagged);
+        SubscribeLocalEvent<DoorComponent, AfterPryEvent>(OnAfterPry);
     }
 
     protected override void OnActivate(EntityUid uid, DoorComponent door, ActivateInWorldEvent args)
@@ -188,6 +189,23 @@ public sealed class DoorSystem : SharedDoorSystem
 
         if (lastState == DoorState.Emagging && TryComp<DoorBoltComponent>(uid, out var doorBoltComponent))
             _bolts.SetBoltsWithAudio(uid, doorBoltComponent, !doorBoltComponent.BoltsDown);
+    }
+
+    /// <summary>
+    ///     Open or close a door after it has been successfuly pried.
+    /// </summary>
+    private void OnAfterPry(EntityUid uid, DoorComponent door, AfterPryEvent args)
+    {
+        if (door.State == DoorState.Closed)
+        {
+            _adminLog.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(args.User)} pried {ToPrettyString(uid)} open");
+            StartOpening(uid, door, args.User);
+        }
+        else if (door.State == DoorState.Open)
+        {
+            _adminLog.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(args.User)} pried {ToPrettyString(uid)} closed");
+            StartClosing(uid, door, args.User);
+        }
     }
 
     protected override void CheckDoorBump(DoorComponent component, PhysicsComponent body)
