@@ -62,7 +62,7 @@ public sealed class PryingSystem : EntitySystem
         id = null;
 
         PryingComponent? comp = null;
-        if (!Resolve(tool, ref comp))
+        if (!Resolve(tool, ref comp, false))
             return false;
 
         if (comp.NeedsComponent)
