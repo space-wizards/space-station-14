@@ -14,6 +14,7 @@ using System.Numerics;
 namespace Content.Server.Dragon;
 
 /// <summary>
+/// Handles events for rift entities and rift updating.
 /// </summary>
 public sealed class DragonRiftSystem : EntitySystem
 {
