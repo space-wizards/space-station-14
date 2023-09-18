@@ -59,7 +59,7 @@ public abstract class SharedStealthSystem : EntitySystem
             return;
 
         component.Enabled = value;
-        Dirty(component);
+        Dirty(uid, component);
     }
 
     private void OnMobStateChanged(EntityUid uid, StealthComponent component, MobStateChangedEvent args)
@@ -78,13 +78,13 @@ public abstract class SharedStealthSystem : EntitySystem
     {
         component.LastVisibility = GetVisibility(uid, component);
         component.LastUpdated = null;
-        Dirty(component);
+        Dirty(uid, component);
     }
 
     private void OnUnpaused(EntityUid uid, StealthComponent component, ref EntityUnpausedEvent args)
     {
         component.LastUpdated = _timing.CurTime;
-        Dirty(component);
+        Dirty(uid, component);
     }
 
     protected virtual void OnInit(EntityUid uid, StealthComponent component, ComponentInit args)
@@ -144,7 +144,7 @@ public abstract class SharedStealthSystem : EntitySystem
         }
 
         component.LastVisibility = Math.Clamp(component.LastVisibility + delta, component.MinVisibility, component.MaxVisibility);
-        Dirty(component);
+        Dirty(uid, component);
     }
 
     /// <summary>
@@ -160,7 +160,7 @@ public abstract class SharedStealthSystem : EntitySystem
         if (component.LastUpdated != null)
             component.LastUpdated = _timing.CurTime;
 
-        Dirty(component);
+        Dirty(uid, component);
     }
 
     /// <summary>
