@@ -28,7 +28,7 @@ public sealed class EmpSystem : SharedEmpSystem
     }
 
     /// <summary>
-    ///   Triggers an EMP pulse at the given location, raising <see cref="EmpPulseEvent"/> on all entities in range.
+    ///   Triggers an EMP pulse at the given location, by first raising an <see cref="EmpAttemptEvent"/>, then a raising <see cref="EmpPulseEvent"/> on all entities in range.
     /// </summary>
     /// <param name="coordinates">The location to trigger the EMP pulse at.</param>
     /// <param name="range">The range of the EMP pulse.</param>
@@ -38,9 +38,25 @@ public sealed class EmpSystem : SharedEmpSystem
     {
         foreach (var uid in _lookup.GetEntitiesInRange(coordinates, range))
         {
-            DoEmpEffects(uid, energyConsumption, duration);
+            TryEmpEffects(uid, energyConsumption, duration);
         }
         Spawn(EmpPulseEffectPrototype, coordinates);
+    }
+
+    /// <summary>
+    ///    Attempts to apply the effects of an EMP pulse onto an entity by first raising an <see cref="EmpAttemptEvent"/>, followed by raising a <see cref="EmpPulseEvent"/> on it.
+    /// </summary>
+    /// <param name="uid">The entity to apply the EMP effects on.</param>
+    /// <param name="energyConsumption">The amount of energy consumed by the EMP.</param>
+    /// <param name="duration">The duration of the EMP effects.</param>
+    public void TryEmpEffects(EntityUid uid, float energyConsumption, float duration)
+    {
+        var attemptEv = new EmpAttemptEvent();
+        RaiseLocalEvent(uid, attemptEv);
+        if (attemptEv.Cancelled)
+            return;
+
+        DoEmpEffects(uid, energyConsumption, duration);
     }
 
     /// <summary>
@@ -51,12 +67,7 @@ public sealed class EmpSystem : SharedEmpSystem
     /// <param name="duration">The duration of the EMP effects.</param>
     public void DoEmpEffects(EntityUid uid, float energyConsumption, float duration)
     {
-        var attemptEv = new EmpAttemptEvent();
-        RaiseLocalEvent(uid, attemptEv);
-        if (attemptEv.Cancelled)
-            continue;
-
-        var ev = new EmpPulseEvent(energyConsumption, false, false);
+        var ev = new EmpPulseEvent(energyConsumption, false, false, TimeSpan.FromSeconds(duration));
         RaiseLocalEvent(uid, ref ev);
         if (ev.Affected)
         {
