@@ -70,12 +70,6 @@
         reagents:
         - ReagentId: Water
           Quantity: 50
-  - type: RefillableSolution
-    solution: spray
-  - type: DrainableSolution
-    solution: spray
-  - type: SolutionTransfer
-  - type: ItemCooldown
   - type: Spray
     transferAmount: 5
     spraySound:
