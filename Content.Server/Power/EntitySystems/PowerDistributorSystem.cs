@@ -3,11 +3,10 @@ using Content.Server.NodeContainer;
 using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NodeContainer.Nodes;
 using Content.Server.Power.Components;
+using Content.Server.Power.Pow3r;
 using Content.Server.Power.NodeGroups;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
-using Content.Server.Power.Pow3r;
-using Content.Shared.APC;
 
 namespace Content.Server.Power.EntitySystems;
 
@@ -19,6 +18,7 @@ internal sealed class PowerDistributorSystem : EntitySystem
 
     [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
     [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
+    [Dependency] private readonly EntityManager _entityManager = default!;
 
     public override void Initialize()
     {
@@ -54,7 +54,6 @@ internal sealed class PowerDistributorSystem : EntitySystem
         if (!Resolve(target, ref netBattery))
             return;
 
-        // Right, so, here's what needs to be considered here.
         if (!_nodeContainer.TryGetNode<Node>(ncComp, pmcComp.LoadNode, out var loadNode))
             return;
 
@@ -64,7 +63,7 @@ internal sealed class PowerDistributorSystem : EntitySystem
         var totalLoads = GetTotalLoadsForNode(target, loadNode, out var loads);
         var totalSources = GetTotalSourcesForNode(target, sourceNode, out var sources);
 
-        // Sort
+        // Sort loads and sources
         loads.Sort(CompareLoadOrSources);
         sources.Sort(CompareLoadOrSources);
 
@@ -73,16 +72,7 @@ internal sealed class PowerDistributorSystem : EntitySystem
         var ext = pmcComp.LastExternalState;
         var charge = battery.CurrentStorage / battery.Capacity;
 
-        ///
-        var extPowerState = CalcExtPowerState(target, battery);
-        if (extPowerState != pmcComp.LastExternalState)
-        {
-            pmcComp.LastExternalState = extPowerState;
-            UpdateUIState(target, pmcComp);
-        }
-        ///
-
-        // Actually set state.
+        // Actually set state
         if (_userInterfaceSystem.TryGetUi(target, PowerDistributorUiKey.Key, out var bui))
             _userInterfaceSystem.SetUiState(bui, new PowerDistributorBoundInterfaceState(power, ext, charge, totalSources, totalLoads, sources.ToArray(), loads.ToArray()));
     }
@@ -164,7 +154,8 @@ internal sealed class PowerDistributorSystem : EntitySystem
     {
         var md = MetaData(comp.Owner);
         var prototype = md.EntityPrototype?.ID ?? "";
-        return new PowerDistributorEntry(md.EntityName, prototype, rate, isBattery);
+        var netEntity = _entityManager.GetNetEntity(comp.Owner);
+        return new PowerDistributorEntry(netEntity, md.EntityName, prototype, rate, isBattery);
     }
 
     private int CompareLoadOrSources(PowerDistributorEntry x, PowerDistributorEntry y)
@@ -172,7 +163,6 @@ internal sealed class PowerDistributorSystem : EntitySystem
         return -x.Size.CompareTo(y.Size);
     }
 
-    // Change the APC's state only when the battery state changes, or when it's first created.
     private void OnBatteryChargeChanged(EntityUid uid, PowerDistributorComponent component, ref ChargeChangedEvent args)
     {
         UpdatePowerDistributorState(uid, component);
@@ -183,7 +173,6 @@ internal sealed class PowerDistributorSystem : EntitySystem
         UpdatePowerDistributorState(uid, component);
     }
 
-    //Update the HasAccess var for UI to read
     private void OnBoundUiOpen(EntityUid uid, PowerDistributorComponent component, BoundUIOpenedEvent args)
     {
         UpdatePowerDistributorState(uid, component);

@@ -10,6 +10,7 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Graphics.RSI;
 using System.Linq;
 using System.Buffers;
+using Robust.Client.UserInterface;
 
 namespace Content.Client.Power.PowerDistributor;
 
@@ -20,7 +21,6 @@ public sealed partial class PowerDistributorWindow : FancyWindow
     [Dependency] private readonly EntityManager _entityManager = default!;
 
     private readonly SpriteSystem _spriteSystem = default!;
-    private EntityUid _owner;
 
     public PowerDistributorWindow(PowerDistributorBoundUserInterface owner)
     {
@@ -34,14 +34,13 @@ public sealed partial class PowerDistributorWindow : FancyWindow
         MasterTabContainer.SetTabTitle(1, Loc.GetString("power-distributor-window-tab-loads"));
 
         EntityView.SetEntity(owner.Owner);
-        _owner = owner.Owner;
+
+        if (_entityManager.TryGetComponent<MetaDataComponent>(owner.Owner, out var meta))
+            Title = meta.EntityName;
     }
 
     public void UpdateState(BoundUserInterfaceState state)
     {
-        if (_entityManager.TryGetComponent<MetaDataComponent>(_owner, out var meta))
-            Title = meta.EntityName;
-
         var castState = (PowerDistributorBoundInterfaceState) state;
 
         if (PowerSupplyLabel != null)
@@ -132,33 +131,47 @@ public sealed partial class PowerDistributorWindow : FancyWindow
             Color.FromHsv(new Vector4(finalHue, saturation, value, alpha));
     }
 
-    public void UpdateList(ItemList list, PowerDistributorEntry[] listVal)
+    public void UpdateList(GridContainer list, PowerDistributorEntry[] listVal)
     {
-        // This magic is important to prevent scrolling issues.
-        while (list.Count > listVal.Length)
-        {
-            list.RemoveAt(list.Count - 1);
-        }
+        if (list.ChildCount > 0)
+            list.RemoveAllChildren();
 
-        while (list.Count < listVal.Length)
-        {
-            list.AddItem("ERROR!", null, false);
-        }
-
-        // Now overwrite the items properly...
         for (var i = 0; i < listVal.Length; i++)
         {
             var ent = listVal[i];
             _prototypeManager.TryIndex(ent.IconEntityPrototypeId, out EntityPrototype? entityPrototype);
 
+            // Get icon
             IRsiStateLike? iconState = null;
             if (entityPrototype != null)
                 iconState = _spriteSystem.GetPrototypeIcon(entityPrototype);
 
-            var icon = iconState?.GetFrame(RsiDirection.South, 0);
-            var item = list[i];
-            item.Text = $"{ent.NameLocalized} {Loc.GetString("power-distributor-window-value", ("value", ent.Size))}";
-            item.Icon = icon;
+            // Add icon
+            //var icon = new TextureRect();
+            //icon.Texture = iconState?.GetFrame(RsiDirection.South, 0);
+            //icon.Margin = new Thickness(10, 0, 0, 0);
+            //list.AddChild(icon);
+
+            var icon = new SpriteView();
+            icon.SetEntity(_entityManager.GetEntity(ent.NetEntity));
+            icon.Margin = new Thickness(10, 0, 0, 0);
+            list.AddChild(icon);
+
+            // Add entity name
+            var label = new Label();
+            label.Text = ent.NameLocalized;
+            label.HorizontalExpand = true;
+            label.HorizontalAlignment = HAlignment.Left;
+            label.Margin = new Thickness(10, 0, 0, 0);
+            list.AddChild(label);
+
+            // Add power value
+            var power = new Label();
+            power.Text = $"{Loc.GetString("power-distributor-window-value", ("value", ent.Size))}";
+            power.HorizontalExpand = true;
+            power.HorizontalAlignment = HAlignment.Right;
+            power.Margin = new Thickness(0, 0, 10, 0);
+            list.AddChild(power);
         }
     }
 }

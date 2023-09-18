@@ -3,7 +3,7 @@
     xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
     xmlns:style="clr-namespace:Content.Client.Stylesheets"
     x:Class="Content.Client.Power.PowerDistributor.PowerDistributorWindow"
-    Resizable="True">
+    Resizable="False">
 
     <BoxContainer Orientation="Vertical">
         <BoxContainer Margin="0 5 10 10" Orientation="Vertical">
@@ -40,14 +40,18 @@
         </BoxContainer>
 
         <!-- Power monitoring -->
-        <BoxContainer Margin="10 10 0 10" Orientation="Vertical" VerticalExpand="True">
+        <BoxContainer Margin="10 5 10 10" Orientation="Vertical" VerticalExpand="True">
             <TabContainer Name="MasterTabContainer" VerticalExpand="True">
-                <ItemList Name="SourcesList" VerticalExpand="True">
-                </ItemList>
+                <ScrollContainer VerticalExpand="True" HorizontalExpand="True">
+                    <GridContainer Name="SourcesList" VerticalExpand="True" HorizontalExpand="True" Columns="3">                       
+                    </GridContainer>
+                </ScrollContainer>
                 <BoxContainer Orientation="Vertical" VerticalExpand="True">
                     <CheckBox Margin="8 8" Name="ShowInactiveConsumersCheckBox" Text="{Loc 'power-distributor-window-show-inactive-consumers'}" />
-                    <ItemList Name="LoadsList" VerticalExpand="True">
-                    </ItemList>
+                    <ScrollContainer VerticalExpand="True" HorizontalExpand="True">
+                        <GridContainer Name="LoadsList" VerticalExpand="True" HorizontalExpand="True" Columns="3">
+                        </GridContainer>
+                    </ScrollContainer>
                 </BoxContainer>
             </TabContainer>
         </BoxContainer>

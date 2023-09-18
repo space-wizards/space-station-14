@@ -1,7 +1,23 @@
-#nullable enable
+using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Power;
+
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+public sealed partial class PowerDistributorComponent : Component
+{
+    [DataField("sourceNode")]
+    [AutoNetworkedField]
+    public string SourceNode = "hv";
+
+    [DataField("loadNode")]
+    [AutoNetworkedField]
+    public string LoadNode = "hv";
+
+    [DataField("lastExternalState")]
+    [AutoNetworkedField]
+    public PowerDistributorExternalPowerState LastExternalState = PowerDistributorExternalPowerState.None;
+}
 
 [Serializable, NetSerializable]
 public sealed class PowerDistributorBoundInterfaceState : BoundUserInterfaceState
@@ -35,12 +51,15 @@ public sealed class PowerDistributorBoundInterfaceState : BoundUserInterfaceStat
 [Serializable, NetSerializable]
 public sealed class PowerDistributorEntry
 {
+    public NetEntity NetEntity;
     public string NameLocalized;
     public string IconEntityPrototypeId;
     public double Size;
     public bool IsBattery;
-    public PowerDistributorEntry(string nl, string ipi, double size, bool isBattery)
+
+    public PowerDistributorEntry(NetEntity netEntity, string nl, string ipi, double size, bool isBattery)
     {
+        NetEntity = netEntity;
         NameLocalized = nl;
         IconEntityPrototypeId = ipi;
         Size = size;
@@ -48,6 +67,7 @@ public sealed class PowerDistributorEntry
     }
 }
 
+[Serializable, NetSerializable]
 public enum PowerDistributorExternalPowerState
 {
     None,

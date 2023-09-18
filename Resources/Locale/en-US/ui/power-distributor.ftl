@@ -1,8 +1,8 @@
 # Distributor status
 power-distributor-window-title = Substation
-power-distributor-window-power-demand-label = Power demand
-power-distributor-window-power-supply-label = Power supply
-power-distributor-window-external-label = External Power
+power-distributor-window-power-demand-label = Total demand:
+power-distributor-window-power-supply-label = Total supply:
+power-distributor-window-external-label = External Power:
 power-distributor-window-charge-label = {$percent} Charged
 power-distributor-window-value = { POWERWATTS($value) }
 

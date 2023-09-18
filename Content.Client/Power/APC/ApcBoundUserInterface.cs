@@ -12,9 +12,6 @@ namespace Content.Client.Power.APC
         [ViewVariables]
         private ApcMenu? _menu;
 
-        [ViewVariables]
-        private PowerMonitoringWindow? _monitoringWindow;
-
         public ApcBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
         {
         }
@@ -26,10 +23,6 @@ namespace Content.Client.Power.APC
             _menu = new ApcMenu(this);
             _menu.OnClose += Close;
             _menu.OpenCentered();
-
-            _monitoringWindow = new PowerMonitoringWindow();
-            _monitoringWindow.OnClose += Close;
-            _monitoringWindow.OpenCenteredRight();
         }
 
         protected override void UpdateState(BoundUserInterfaceState state)
