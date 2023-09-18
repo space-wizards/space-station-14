@@ -108,7 +108,7 @@ public sealed class OpenableSystem : EntitySystem
         if (!Resolve(uid, ref comp))
             return;
 
-        _appearance.SetData(uid, DrinkCanStateVisual.Opened, comp.Opened, appearance);
+        _appearance.SetData(uid, OpenableVisuals.Opened, comp.Opened, appearance);
     }
 
     /// <summary>
