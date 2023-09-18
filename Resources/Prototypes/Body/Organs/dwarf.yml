@@ -26,6 +26,11 @@
     solutions:
       stomach:
         maxVol: 75
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
   - type: Stomach
   - type: Metabolizer
     # mm very yummy
