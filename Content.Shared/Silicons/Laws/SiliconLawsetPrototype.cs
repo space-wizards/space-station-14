@@ -16,6 +16,20 @@ public sealed partial class SiliconLawset
     /// </summary>
     [DataField(required: true), ViewVariables(VVAccess.ReadWrite)]
     public List<SiliconLaw> Laws = new();
+
+    /// <summary>
+    /// A single line used in logging laws.
+    /// </summary>
+    public string LoggingString()
+    {
+        var laws = new List<string>(Laws.Count);
+        foreach (var law in Laws)
+        {
+            laws.Add($"{law.Order}: {Loc.GetString(law.LawString)}");
+        }
+
+        return string.Join(" / ", laws);
+    }
 }
 
 /// <summary>

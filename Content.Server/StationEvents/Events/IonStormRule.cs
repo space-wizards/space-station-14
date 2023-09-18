@@ -2,6 +2,8 @@ using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Silicons.Laws;
 using Content.Server.Station.Components;
 using Content.Server.StationEvents.Components;
+using Content.Shared.Administration.Logs;
+using Content.Shared.Database;
 using Content.Shared.Random;
 using Content.Shared.Random.Helpers;
 using Content.Shared.Silicons.Laws;
@@ -12,6 +14,7 @@ namespace Content.Server.StationEvents.Events;
 
 public sealed class IonStormRule : StationEventSystem<IonStormRuleComponent>
 {
+    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly SiliconLawSystem _siliconLaw = default!;
 
     protected override void Started(EntityUid uid, IonStormRuleComponent comp, GameRuleComponent gameRule, GameRuleStartedEvent args)
@@ -74,6 +77,7 @@ public sealed class IonStormRule : StationEventSystem<IonStormRuleComponent>
             if (RobustRandom.Prob(target.ShuffleChance))
                 RobustRandom.Shuffle(laws.Laws);
 
+            _adminLogger.Add(LogType.Mind, LogImpact.High, $"{ToPrettyString(ent):silicon} had its laws changed by an ion storm to {laws.LoggingString()}");
             var ev = new IonStormLawsEvent(laws);
             RaiseLocalEvent(ent, ref ev);
         }

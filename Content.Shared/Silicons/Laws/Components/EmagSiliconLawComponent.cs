@@ -5,7 +5,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.Silicons.Laws.Components;
 
 /// <summary>
-/// This is used for an entity that grants a special "obey" law when emagge.d
+/// This is used for an entity that grants a special "obey" law when emagged.
 /// </summary>
 [RegisterComponent, NetworkedComponent, Access(typeof(SharedSiliconLawSystem))]
 public sealed partial class EmagSiliconLawComponent : Component
