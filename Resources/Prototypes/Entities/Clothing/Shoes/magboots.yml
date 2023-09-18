@@ -105,6 +105,7 @@
     maxIntensity: 20
   - type: Jetpack
     moleUsage: 0.00085
+  - type: CanMoveInAir
   - type: InputMover
     toParent: true
   - type: MovementSpeedModifier

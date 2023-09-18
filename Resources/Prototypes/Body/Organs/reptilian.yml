@@ -8,3 +8,8 @@
     solutions:
       stomach:
         maxVol: 50
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
