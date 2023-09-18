@@ -1,9 +1,4 @@
 Entries:
-- author: Ilya246
-  changes:
-  - {message: Fixed shuttles sometimes braking rotation incorrectly., type: Fix}
-  id: 4344
-  time: '2023-07-27T07:38:04.0000000+00:00'
 - author: liltenhead
   changes:
   - {message: Reduced Python cost from 13 -> 8 TC, type: Tweak}
@@ -2972,3 +2967,8 @@ Entries:
   - {message: Fixed light animations not working., type: Fix}
   id: 4843
   time: '2023-09-17T17:57:50.0000000+00:00'
+- author: Henry12116
+  changes:
+  - {message: You can now eat most organs. Bon appetit!, type: Add}
+  id: 4844
+  time: '2023-09-18T00:20:11.0000000+00:00'
