@@ -277,3 +277,6 @@
   - type: ExplosionResistance
     damageCoefficient: 0.4
   - type: GroupExamine
+  - type: Construction
+    graph: BoneArmor
+    node: armor

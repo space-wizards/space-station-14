@@ -99,7 +99,7 @@
         - to: spear
           steps:
             - material: Bones
-              amount: 2
+              amount: 4
               doAfter: 2
             - material: WebSilk
               amount: 1

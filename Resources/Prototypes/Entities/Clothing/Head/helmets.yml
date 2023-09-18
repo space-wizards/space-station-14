@@ -348,3 +348,6 @@
     sprite: Clothing/Head/Helmets/bone_helmet.rsi
   - type: Clothing
     sprite: Clothing/Head/Helmets/bone_helmet.rsi
+  - type: Construction
+    graph: BoneHelmet
+    node: helmet
