@@ -43,6 +43,8 @@ public abstract partial class SharedFultonSystem : EntitySystem
         SubscribeLocalEvent<FultonedComponent, EntGotInsertedIntoContainerMessage>(OnFultonContainerInserted);
 
         SubscribeLocalEvent<FultonComponent, AfterInteractEvent>(OnFultonInteract);
+
+        SubscribeLocalEvent<FultonComponent, StackSplitEvent>(OnFultonSplit);
     }
 
     private void OnFultonContainerInserted(EntityUid uid, FultonedComponent component, EntGotInsertedIntoContainerMessage args)
@@ -159,6 +161,13 @@ public abstract partial class SharedFultonSystem : EntitySystem
                 Broadcast = true,
                 NeedHand = true,
             });
+    }
+
+    private void OnFultonSplit(EntityUid uid, FultonComponent component, ref StackSplitEvent args)
+    {
+        var newFulton = EnsureComp<FultonComponent>(args.NewId);
+        newFulton.Beacon = component.Beacon;
+        Dirty(args.NewId, newFulton);
     }
 
     protected virtual void UpdateAppearance(EntityUid uid, FultonedComponent fultoned)
