@@ -1,51 +1,4 @@
 Entries:
-- author: Lank
-  changes:
-  - {message: 'Added .45 AP, which does less damage but ignores armor entirely.',
-    type: Add}
-  - {message: Removed .357 ammo and returned the Python and Mateba to .45 Magnum.,
-    type: Remove}
-  - {message: 'The Syndicate now supplies .45 AP rounds for the Python, and sells
-      both the weapon and the ammo at a lower price.', type: Tweak}
-  - {message: .45 High-Velocity rounds are now significantly more lethal., type: Tweak}
-  id: 4342
-  time: '2023-07-27T07:32:26.0000000+00:00'
-- author: Errant
-  changes:
-  - {message: Unarmed attacks on powered lights now cause electric shock., type: Add}
-  id: 4343
-  time: '2023-07-27T07:37:10.0000000+00:00'
-- author: Ilya246
-  changes:
-  - {message: Fixed shuttles sometimes braking rotation incorrectly., type: Fix}
-  id: 4344
-  time: '2023-07-27T07:38:04.0000000+00:00'
-- author: liltenhead
-  changes:
-  - {message: Reduced Python cost from 13 -> 8 TC, type: Tweak}
-  - {message: Reduced C-20 Bundle cost from 25 -> 17 TC, type: Tweak}
-  - {message: Reduced Bulldog Bundle cost from 25 -> 20 TC, type: Tweak}
-  - {message: Reduced Fake Cap Gun cost from 14 TC -> 9 TC, type: Tweak}
-  id: 4345
-  time: '2023-07-27T08:24:21.0000000+00:00'
-- author: KingFroozy
-  changes:
-  - {message: fixed Syndicate Chief Engineer's jumpsuit., type: Fix}
-  id: 4346
-  time: '2023-07-27T08:43:16.0000000+00:00'
-- author: JoeHammad
-  changes:
-  - {message: 'The syndicate sniper bundle was added to the uplink, containing a Hristov,
-      spare ammo and a clever disguise, happy hunting, agents', type: Add}
-  id: 4347
-  time: '2023-07-27T09:49:22.0000000+00:00'
-- author: Vaaankas
-  changes:
-  - {message: 'The Hristov''s sniper rifle cartridges have been refactored. It is
-      now a way more dangerous weapon, at the cost of decreased firerate. It now stuns
-      on a hit, so drag your allies to safety if they got shot with one!', type: Tweak}
-  id: 4348
-  time: '2023-07-27T09:49:33.0000000+00:00'
 - author: PJB3005
   changes:
   - {message: The defibrillator's "return to body" prompt now works again., type: Fix}
@@ -2978,3 +2931,40 @@ Entries:
   - {message: Barricades are now slightly stronger & cheaper to make., type: Tweak}
   id: 4841
   time: '2023-09-16T12:50:48.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Resized the non-admin Ahelp window to be taller and less wide., type: Tweak}
+  id: 4842
+  time: '2023-09-17T09:04:20.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed light animations not working., type: Fix}
+  id: 4843
+  time: '2023-09-17T17:57:50.0000000+00:00'
+- author: Henry12116
+  changes:
+  - {message: You can now eat most organs. Bon appetit!, type: Add}
+  id: 4844
+  time: '2023-09-18T00:20:11.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Fixed fultons losing their beacon when the stack is split., type: Fix}
+  id: 4845
+  time: '2023-09-18T00:22:26.0000000+00:00'
+- author: Psychpsyo
+  changes:
+  - {message: The advanced mop no longer looks boring when attached to the janitorial
+      trolley., type: Tweak}
+  id: 4846
+  time: '2023-09-18T00:23:35.0000000+00:00'
+- author: lapatison
+  changes:
+  - {message: 'Now you can light matches with certain types (combat, work, merc, explorer)
+      of boots like a cool dude.', type: Add}
+  id: 4847
+  time: '2023-09-18T00:26:21.0000000+00:00'
+- author: JoeHammad
+  changes:
+  - {message: 'security now has access to its own beret, fancy!', type: Add}
+  id: 4848
+  time: '2023-09-18T00:30:31.0000000+00:00'
