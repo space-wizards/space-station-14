@@ -14,19 +14,19 @@ public sealed partial class SiliconLawBoundComponent : Component
     /// <summary>
     /// The sidebar action that toggles the laws screen.
     /// </summary>
-    [DataField("viewLawsAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string ViewLawsAction = "ActionViewLaws";
+    [DataField]
+    public EntProtoId ViewLawsAction = "ActionViewLaws";
 
     /// <summary>
     /// The action for toggling laws. Stored here so we can remove it later.
     /// </summary>
-    [DataField("viewLawsActionEntity")]
+    [DataField]
     public EntityUid? ViewLawsActionEntity;
 
     /// <summary>
     /// The last entity that provided laws to this entity.
     /// </summary>
-    [DataField("lastLawProvider")]
+    [DataField]
     public EntityUid? LastLawProvider;
 }
 

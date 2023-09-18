@@ -1,4 +1,3 @@
-using Content.Shared.Random;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Silicons.Laws.Components;
@@ -13,8 +12,8 @@ public sealed partial class IonStormTargetComponent : Component
     /// <summary>
     /// <see cref="WeightedRandomPrototype"/> for a random lawset to possibly replace the old one with.
     /// </summary>
-    [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<WeightedRandomPrototype>)), ViewVariables(VVAccess.ReadWrite)]
-    public string RandomLawsets = "IonStormLawsets";
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public ProtoId<WeightedRandomPrototype> RandomLawsets = "IonStormLawsets";
 
     /// <summary>
     /// Chance to replace the lawset with a random one

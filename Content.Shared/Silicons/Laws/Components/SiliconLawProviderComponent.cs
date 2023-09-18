@@ -11,8 +11,8 @@ public sealed partial class SiliconLawProviderComponent : Component
     /// <summary>
     /// The id of the lawset that is being provided.
     /// </summary>
-    [DataField(required: true, customTypeSerializer: typeof(PrototypeIdSerializer<SiliconLawsetPrototype>))]
-    public string Laws = string.Empty;
+    [DataField(required: true)]
+    public Protoid<SiliconLawsetPrototype> Laws = string.Empty;
 
     /// <summary>
     /// Lawset created from the prototype id.
