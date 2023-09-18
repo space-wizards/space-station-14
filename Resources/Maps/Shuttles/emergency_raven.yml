@@ -17,7 +17,8 @@ entities:
   entities:
   - uid: 1
     components:
-    - type: MetaData
+    - name: NT Evac Raven
+      type: MetaData
     - pos: -0.546875,-0.53125
       parent: invalid
       type: Transform
@@ -11414,7 +11415,7 @@ entities:
       type: AmbientSound
     - color: '#0055CCFF'
       type: AtmosPipeColor
-- proto: GeneratorUranium
+- proto: GeneratorBasic15kW
   entities:
   - uid: 609
     components:

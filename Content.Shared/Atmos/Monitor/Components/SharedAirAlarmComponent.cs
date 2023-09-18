@@ -118,6 +118,17 @@ public sealed class AirAlarmUpdateDeviceDataMessage : BoundUserInterfaceMessage
 }
 
 [Serializable, NetSerializable]
+public sealed class AirAlarmCopyDeviceDataMessage : BoundUserInterfaceMessage
+{
+    public IAtmosDeviceData Data { get; }
+
+    public AirAlarmCopyDeviceDataMessage(IAtmosDeviceData data)
+    {
+        Data = data;
+    }
+}
+
+[Serializable, NetSerializable]
 public sealed class AirAlarmUpdateAlarmThresholdMessage : BoundUserInterfaceMessage
 {
     public string Address { get; }

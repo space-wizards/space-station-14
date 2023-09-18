@@ -36,7 +36,9 @@ public sealed class LagCompensationSystem : EntitySystem
 
         // Cull any old ones from active updates
         // Probably fine to include ignored.
-        foreach (var (_, comp) in EntityQuery<ActiveLagCompensationComponent, LagCompensationComponent>(true))
+        var query = AllEntityQuery<LagCompensationComponent>();
+
+        while (query.MoveNext(out var comp))
         {
             while (comp.Positions.TryPeek(out var pos))
             {
@@ -48,11 +50,6 @@ public sealed class LagCompensationSystem : EntitySystem
 
                 break;
             }
-
-            if (comp.Positions.Count == 0)
-            {
-                RemComp<ActiveLagCompensationComponent>(comp.Owner);
-            }
         }
     }
 
@@ -61,7 +58,6 @@ public sealed class LagCompensationSystem : EntitySystem
         if (!args.NewPosition.EntityId.IsValid())
             return; // probably being sent to nullspace for deletion.
 
-        EnsureComp<ActiveLagCompensationComponent>(uid);
         component.Positions.Enqueue((_timing.CurTime, args.NewPosition, args.NewRotation));
     }
 

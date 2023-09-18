@@ -30,6 +30,7 @@
     sprite: Clothing/Eyes/Hud/sec.rsi
   - type: Clothing
     sprite: Clothing/Eyes/Hud/sec.rsi
+  - type: ShowSecurityIcons
 
 - type: entity
   parent: ClothingEyesBase
@@ -96,6 +97,7 @@
     sprite: Clothing/Eyes/Hud/medsec.rsi
   - type: Clothing
     sprite: Clothing/Eyes/Hud/medsec.rsi
+  - type: ShowSecurityIcons
 
 - type: entity
   parent: ClothingEyesBase
@@ -107,6 +109,7 @@
     sprite: Clothing/Eyes/Hud/medsecengi.rsi
   - type: Clothing
     sprite: Clothing/Eyes/Hud/medsecengi.rsi
+  - type: ShowSecurityIcons
 
 - type: entity
   parent: ClothingEyesBase
@@ -118,3 +121,4 @@
     sprite: Clothing/Eyes/Hud/omni.rsi
   - type: Clothing
     sprite: Clothing/Eyes/Hud/omni.rsi
+  - type: ShowSecurityIcons

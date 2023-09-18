@@ -15,11 +15,12 @@ public sealed partial class MiniArticleCardControl : Control
     public Action? OnDeletePressed;
     public int ArtcileNum;
 
-    public MiniArticleCardControl(string name)
+    public MiniArticleCardControl(string name, string author)
     {
         RobustXamlLoader.Load(this);
 
-        Name.SetMarkup(name);
+        Name.Text = name;
+        Author.SetMarkup(author);
 
         Delete.OnPressed += _ => OnDeletePressed?.Invoke();
     }

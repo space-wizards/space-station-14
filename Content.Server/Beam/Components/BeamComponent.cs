@@ -2,7 +2,7 @@
 
 namespace Content.Server.Beam.Components;
 [RegisterComponent]
-public sealed class BeamComponent : SharedBeamComponent
+public sealed partial class BeamComponent : SharedBeamComponent
 {
 
 }

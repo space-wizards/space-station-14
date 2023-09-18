@@ -31,7 +31,7 @@ namespace Content.Server.Containers
 
         private void OnDeconstruct(EntityUid uid, EmptyOnMachineDeconstructComponent component, MachineDeconstructedEvent ev)
         {
-            if (!EntityManager.TryGetComponent<IContainerManager>(uid, out var mComp))
+            if (!EntityManager.TryGetComponent<ContainerManagerComponent>(uid, out var mComp))
                 return;
             var baseCoords = EntityManager.GetComponent<TransformComponent>(component.Owner).Coordinates;
             foreach (var v in component.Containers)

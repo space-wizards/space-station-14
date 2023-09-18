@@ -41,7 +41,6 @@ namespace Content.Server.RoundEnd
         /// Countdown to use where there is no station alert countdown to be found.
         /// </summary>
         public TimeSpan DefaultCountdownDuration { get; set; } = TimeSpan.FromMinutes(10);
-        public TimeSpan DefaultRestartRoundDuration { get; set; } = TimeSpan.FromMinutes(2);
 
         private CancellationTokenSource? _countdownTokenSource = null;
         private CancellationTokenSource? _cooldownTokenSource = null;
@@ -202,7 +201,7 @@ namespace Content.Server.RoundEnd
             RaiseLocalEvent(RoundEndSystemChangedEvent.Default);
         }
 
-        public void EndRound()
+        public void EndRound(TimeSpan? countdownTime = null)
         {
             if (_gameTicker.RunLevel != GameRunLevel.InRound) return;
             LastCountdownStart = null;
@@ -211,8 +210,26 @@ namespace Content.Server.RoundEnd
             _gameTicker.EndRound();
             _countdownTokenSource?.Cancel();
             _countdownTokenSource = new();
-            _chatManager.DispatchServerAnnouncement(Loc.GetString("round-end-system-round-restart-eta-announcement", ("minutes", DefaultRestartRoundDuration.Minutes)));
-            Timer.Spawn(DefaultRestartRoundDuration, AfterEndRoundRestart, _countdownTokenSource.Token);
+
+            countdownTime ??= TimeSpan.FromSeconds(_cfg.GetCVar(CCVars.RoundRestartTime));
+            int time;
+            string unitsLocString;
+            if (countdownTime.Value.TotalSeconds < 60)
+            {
+                time = countdownTime.Value.Seconds;
+                unitsLocString = "eta-units-seconds";
+            }
+            else
+            {
+                time = countdownTime.Value.Minutes;
+                unitsLocString = "eta-units-minutes";
+            }
+            _chatManager.DispatchServerAnnouncement(
+                Loc.GetString(
+                    "round-end-system-round-restart-eta-announcement",
+                    ("time", time),
+                    ("units", Loc.GetString(unitsLocString))));
+            Timer.Spawn(countdownTime.Value, AfterEndRoundRestart, _countdownTokenSource.Token);
         }
 
         private void AfterEndRoundRestart()

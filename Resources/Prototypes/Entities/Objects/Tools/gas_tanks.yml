@@ -21,17 +21,12 @@
     - key: enum.SharedGasTankUiKey.Key
       type: GasTankBoundUserInterface
   - type: GasTank
-    toggleAction:
-      name: action-name-internals-toggle
-      description: action-description-internals-toggle
-      icon:
-        sprite: Interface/Alerts/internals.rsi
-        state: internal2
-      iconOn:
-        sprite: Interface/Alerts/internals.rsi
-        state: internal1
-      event: !type:ToggleActionEvent
-      useDelay: 1
+    outputPressure: 21.3
+    air:
+      # If gas tank volume is changed, adjust MinimumTritiumOxyburnEnergy in Atmospherics.cs by the same proportions
+      volume: 5
+      temperature: 293.15
+    tankLowPressure: 30.0
   - type: Explosive
     explosionType: Default
     maxIntensity: 20
@@ -56,12 +51,8 @@
     sprite: Objects/Tanks/oxygen.rsi
   - type: Item
     sprite: Objects/Tanks/oxygen.rsi
-  - type: GasTank
-    outputPressure: 21.3
-    air:
-      volume: 15
-      temperature: 293.15
-    tankLowPressure: 30.0
+  - type: Clothing
+    sprite: Objects/Tanks/oxygen.rsi
 
 - type: entity
   parent: OxygenTank
@@ -77,7 +68,7 @@
     sprite: Objects/Tanks/yellow.rsi
 
 - type: entity
-  parent: OxygenTank
+  parent: GasTankBase
   id: NitrogenTank
   name: nitrogen tank
   description: A standard cylindrical gas tank for nitrogen.
@@ -90,7 +81,7 @@
     sprite: Objects/Tanks/red.rsi
 
 - type: entity
-  parent: OxygenTank
+  parent: GasTankBase
   id: EmergencyOxygenTank
   name: emergency oxygen tank
   description: An easily portable tank for emergencies. Contains very little oxygen, rated for survival use only.
@@ -103,7 +94,7 @@
   - type: GasTank
     outputPressure: 21.3
     air:
-      volume: 2
+      volume: 0.66
       temperature: 293.15
   - type: Clothing
     sprite: Objects/Tanks/emergency.rsi
@@ -132,7 +123,7 @@
   - type: GasTank
     outputPressure: 21.3
     air:
-      volume: 6
+      volume: 1.5
       temperature: 293.15
   - type: Clothing
     sprite: Objects/Tanks/emergency_yellow.rsi
@@ -150,7 +141,7 @@
   - type: GasTank
     outputPressure: 21.3
     air:
-      volume: 10
+      volume: 2.5
       temperature: 293.15
   - type: Clothing
     sprite: Objects/Tanks/emergency_double.rsi
@@ -166,11 +157,15 @@
   name: air tank
   description: Mixed anyone?
   components:
+  - type: Sprite
+    sprite: Objects/Tanks/generic.rsi
   - type: GasTank
     outputPressure: 101.3
     air:
-      volume: 15
+      volume: 5
       temperature: 293.15
+  - type: Clothing
+    sprite: Objects/Tanks/generic.rsi
 
 - type: entity
   parent: GasTankBase
@@ -185,7 +180,7 @@
   - type: GasTank
     outputPressure: 30.4
     air:
-      volume: 15
+      volume: 5
       temperature: 293.15
   - type: Clothing
     sprite: Objects/Tanks/anesthetic.rsi
@@ -203,7 +198,7 @@
   - type: GasTank
     outputPressure: 101.3
     air:
-      volume: 15
+      volume: 5
       temperature: 293.15
   - type: Clothing
     sprite: Objects/Tanks/plasma.rsi

@@ -21,19 +21,21 @@ namespace Content.MapRenderer.Painters
 {
     public sealed class MapPainter
     {
-        public async IAsyncEnumerable<RenderedGridImage<Rgba32>> Paint(string map)
+        public static async IAsyncEnumerable<RenderedGridImage<Rgba32>> Paint(string map)
         {
             var stopwatch = new Stopwatch();
             stopwatch.Start();
 
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings
+            await using var pair = await PoolManager.GetServerClient(new PoolSettings
             {
+                DummyTicker = false,
+                Connected = true,
                 Fresh = true,
                 Map = map
             });
 
-            var server = pairTracker.Pair.Server;
-            var client = pairTracker.Pair.Client;
+            var server = pair.Server;
+            var client = pair.Client;
 
             Console.WriteLine($"Loaded client and server in {(int) stopwatch.Elapsed.TotalMilliseconds} ms");
 
@@ -53,7 +55,7 @@ namespace Content.MapRenderer.Painters
             var sEntityManager = server.ResolveDependency<IServerEntityManager>();
             var sPlayerManager = server.ResolveDependency<IPlayerManager>();
 
-            await PoolManager.RunTicksSync(pairTracker.Pair, 10);
+            await pair.RunTicksSync(10);
             await Task.WhenAll(client.WaitIdleAsync(), server.WaitIdleAsync());
 
             var sMapManager = server.ResolveDependency<IMapManager>();
@@ -76,29 +78,29 @@ namespace Content.MapRenderer.Painters
                 var mapId = sMapManager.GetAllMapIds().Last();
                 grids = sMapManager.GetAllMapGrids(mapId).Select(o => (o.Owner, o)).ToArray();
 
-                foreach (var grid in grids)
+                foreach (var (uid, _) in grids)
                 {
-                    var gridXform = xformQuery.GetComponent(grid.Uid);
+                    var gridXform = xformQuery.GetComponent(uid);
                     xformSystem.SetWorldRotation(gridXform, Angle.Zero);
                 }
             });
 
-            await PoolManager.RunTicksSync(pairTracker.Pair, 10);
+            await pair.RunTicksSync(10);
             await Task.WhenAll(client.WaitIdleAsync(), server.WaitIdleAsync());
 
-            foreach (var grid in grids)
+            foreach (var (uid, grid) in grids)
             {
                 // Skip empty grids
-                if (grid.Grid.LocalAABB.IsEmpty())
+                if (grid.LocalAABB.IsEmpty())
                 {
-                    Console.WriteLine($"Warning: Grid {grid.Uid} was empty. Skipping image rendering.");
+                    Console.WriteLine($"Warning: Grid {uid} was empty. Skipping image rendering.");
                     continue;
                 }
 
-                var tileXSize = grid.Grid.TileSize * TilePainter.TileImageSize;
-                var tileYSize = grid.Grid.TileSize * TilePainter.TileImageSize;
+                var tileXSize = grid.TileSize * TilePainter.TileImageSize;
+                var tileYSize = grid.TileSize * TilePainter.TileImageSize;
 
-                var bounds = grid.Grid.LocalAABB;
+                var bounds = grid.LocalAABB;
 
                 var left = bounds.Left;
                 var right = bounds.Right;
@@ -112,16 +114,16 @@ namespace Content.MapRenderer.Painters
 
                 await server.WaitPost(() =>
                 {
-                    tilePainter.Run(gridCanvas, grid.Uid, grid.Grid);
-                    entityPainter.Run(gridCanvas, grid.Uid, grid.Grid);
+                    tilePainter.Run(gridCanvas, uid, grid);
+                    entityPainter.Run(gridCanvas, uid, grid);
 
                     gridCanvas.Mutate(e => e.Flip(FlipMode.Vertical));
                 });
 
                 var renderedImage = new RenderedGridImage<Rgba32>(gridCanvas)
                 {
-                    GridUid = grid.Uid,
-                    Offset = xformSystem.GetWorldPosition(grid.Uid),
+                    GridUid = uid,
+                    Offset = xformSystem.GetWorldPosition(uid),
                 };
 
                 yield return renderedImage;
@@ -130,7 +132,7 @@ namespace Content.MapRenderer.Painters
             // We don't care if it fails as we have already saved the images.
             try
             {
-                await pairTracker.CleanReturnAsync();
+                await pair.CleanReturnAsync();
             }
             catch
             {

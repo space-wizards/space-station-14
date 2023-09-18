@@ -8,6 +8,7 @@ using Content.Shared.Cuffs.Components;
 using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
+using Content.Shared.Effects;
 using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
@@ -26,7 +27,6 @@ using Content.Shared.Pulling.Events;
 using Content.Shared.Rejuvenate;
 using Content.Shared.Stunnable;
 using Content.Shared.Verbs;
-using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Melee.Events;
 using Robust.Shared.Containers;
 using Robust.Shared.Network;
@@ -36,13 +36,14 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Cuffs
 {
     // TODO remove all the IsServer() checks.
-    public abstract class SharedCuffableSystem : EntitySystem
+    public abstract partial class SharedCuffableSystem : EntitySystem
     {
         [Dependency] private readonly IComponentFactory _componentFactory = default!;
         [Dependency] private readonly INetManager _net = default!;
         [Dependency] private readonly ISharedAdminLogManager _adminLog = default!;
         [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
         [Dependency] private readonly AlertsSystem _alerts = default!;
+        [Dependency] private readonly SharedColorFlashEffectSystem _color = default!;
         [Dependency] private readonly DamageableSystem _damageSystem = default!;
         [Dependency] private readonly MobStateSystem _mobState = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
@@ -140,7 +141,8 @@ namespace Content.Shared.Cuffs
 
         private void OnCuffsRemovedFromContainer(EntityUid uid, CuffableComponent component, EntRemovedFromContainerMessage args)
         {
-            if (args.Container.ID != component.Container.ID)
+            // ReSharper disable once ConditionalAccessQualifierIsNonNullableAccordingToAPIContract
+            if (args.Container.ID != component.Container?.ID)
                 return;
 
             _handVirtualItem.DeleteInHandsMatching(uid, args.Entity);
@@ -477,7 +479,7 @@ namespace Content.Shared.Cuffs
             if (HasComp<DisarmProneComponent>(target))
                 cuffTime = 0.0f; // cuff them instantly.
 
-            var doAfterEventArgs = new DoAfterArgs(user, cuffTime, new AddCuffDoAfterEvent(), handcuff, target, handcuff)
+            var doAfterEventArgs = new DoAfterArgs(EntityManager, user, cuffTime, new AddCuffDoAfterEvent(), handcuff, target, handcuff)
             {
                 BreakOnTargetMove = true,
                 BreakOnUserMove = true,
@@ -564,7 +566,7 @@ namespace Content.Shared.Cuffs
             }
 
             var uncuffTime = isOwner ? cuff.BreakoutTime : cuff.UncuffTime;
-            var doAfterEventArgs = new DoAfterArgs(user, uncuffTime, new UnCuffDoAfterEvent(), target, target, cuffsToRemove)
+            var doAfterEventArgs = new DoAfterArgs(EntityManager, user, uncuffTime, new UnCuffDoAfterEvent(), target, target, cuffsToRemove)
             {
                 BreakOnUserMove = true,
                 BreakOnTargetMove = true,
@@ -592,7 +594,7 @@ namespace Content.Shared.Cuffs
 
                 if (target == user)
                 {
-                    RaiseNetworkEvent(new DamageEffectEvent(Color.Red, new List<EntityUid>() { user }));
+                    _color.RaiseEffect(Color.Red, new List<EntityUid>() { user }, Filter.Pvs(user, entityManager: EntityManager));
                     _popup.PopupEntity(Loc.GetString("cuffable-component-start-uncuffing-self"), user, user);
                 }
                 else
@@ -704,12 +706,12 @@ namespace Content.Shared.Cuffs
         }
 
         [Serializable, NetSerializable]
-        private sealed class UnCuffDoAfterEvent : SimpleDoAfterEvent
+        private sealed partial class UnCuffDoAfterEvent : SimpleDoAfterEvent
         {
         }
 
         [Serializable, NetSerializable]
-        private sealed class AddCuffDoAfterEvent : SimpleDoAfterEvent
+        private sealed partial class AddCuffDoAfterEvent : SimpleDoAfterEvent
         {
         }
     }

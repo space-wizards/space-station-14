@@ -1,7 +1,7 @@
 - type: entity
   save: false
   name: Urist McSkelly
-  parent: BaseMobOrganic
+  parent: BaseMobSpeciesOrganic
   id: BaseMobSkeletonPerson
   abstract: true
   components:
@@ -49,6 +49,7 @@
       60: 0.9
       80: 0.7
   - type: Speech
+    speechVerb: Skeleton
   - type: Vocal
     sounds:
       Male: Skeleton
@@ -69,12 +70,9 @@
           - MobLayer
 
 - type: entity
-  save: false
-  name: Urist McSkelly
-  parent: BaseMobOrganicDummy
+  parent: BaseSpeciesDummy
   id: MobSkeletonPersonDummy
   noSpawn: true
-  description: A dummy skeleton meant to be used in character setup.
   components:
     - type: HumanoidAppearance
       species: Skeleton

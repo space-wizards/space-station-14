@@ -1,5 +1,7 @@
+using Content.Server.Administration.Logs;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Nutrition.Components;
+using Content.Shared.Database;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Item;
@@ -15,6 +17,7 @@ public sealed class LubeSystem : EntitySystem
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SolutionContainerSystem _solutionContainer = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
 
     public override void Initialize()
     {
@@ -36,7 +39,7 @@ public sealed class LubeSystem : EntitySystem
             return;
         }
 
-        if (TryLube(uid, component, target))
+        if (TryLube(uid, component, target, args.User))
         {
             args.Handled = true;
             _audio.PlayPvs(component.Squeeze, uid);
@@ -48,7 +51,7 @@ public sealed class LubeSystem : EntitySystem
         }
     }
 
-    private bool TryLube(EntityUid uid, LubeComponent component, EntityUid target)
+    private bool TryLube(EntityUid uid, LubeComponent component, EntityUid target, EntityUid actor)
     {
         if (HasComp<LubedComponent>(target) || !HasComp<ItemComponent>(target))
         {
@@ -63,6 +66,7 @@ public sealed class LubeSystem : EntitySystem
                 var lubed = EnsureComp<LubedComponent>(target);
                 lubed.SlipsLeft = _random.Next(component.MinSlips * quantity.Int(), component.MaxSlips * quantity.Int());
                 lubed.SlipStrength = component.SlipStrength;
+                _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(actor):actor} lubed {ToPrettyString(target):subject} with {ToPrettyString(uid):tool}");
                 return true;
             }
         }

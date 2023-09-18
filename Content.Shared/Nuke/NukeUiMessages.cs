@@ -2,7 +2,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Nuke
 {
-    public abstract class SharedNukeComponent : Component
+    public abstract partial class SharedNukeComponent : Component
     {
         public const string NukeDiskSlotId = "Nuke";
     }

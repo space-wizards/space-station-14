@@ -409,7 +409,7 @@ namespace Content.Server.NodeContainer.EntitySystems
             RaiseNetworkEvent(msg, player.ConnectedClient);
         }
 
-        private static NodeVis.GroupData VisMakeGroupState(BaseNodeGroup group)
+        private NodeVis.GroupData VisMakeGroupState(BaseNodeGroup group)
         {
             return new()
             {
@@ -421,7 +421,7 @@ namespace Content.Server.NodeContainer.EntitySystems
                     Name = n.Name,
                     NetId = n.NetId,
                     Reachable = n.ReachableNodes.Select(r => r.NetId).ToArray(),
-                    Entity = n.Owner,
+                    Entity = GetNetEntity(n.Owner),
                     Type = n.GetType().Name
                 }).ToArray(),
                 DebugData = group.GetDebugData()
@@ -438,6 +438,7 @@ namespace Content.Server.NodeContainer.EntitySystems
                 NodeGroupID.AMEngine => Color.Purple,
                 NodeGroupID.Pipe => Color.Blue,
                 NodeGroupID.WireNet => Color.DarkMagenta,
+                NodeGroupID.Teg => Color.Red,
                 _ => Color.White
             };
         }

@@ -1,4 +1,4 @@
-﻿- type: gameMap
+- type: gameMap
   id: Cluster
   mapName: 'Cluster'
   mapPath: /Maps/cluster.yml
@@ -19,36 +19,49 @@
           overflowJobs:
             - Passenger
           availableJobs:
-            CargoTechnician: [ 1, 1 ]
-            Passenger: [ -1, -1 ]
+            #service
+            Captain: [ 1, 1 ]
+            HeadOfPersonnel: [ 1, 1 ]
             Bartender: [ 1, 1 ]
             Botanist: [ 2, 2 ]
             Chef: [ 1, 1 ]
-            Clown: [ 1, 1 ]
             Janitor: [ 1, 1 ]
-            Mime: [ 1, 1 ]
-            Captain: [ 1, 1 ]
-            HeadOfPersonnel: [ 1, 1 ]
-            ChiefEngineer: [ 1, 1 ]
-            StationEngineer: [ 2, 2 ]
-            ChiefMedicalOfficer: [ 1, 1 ]
-            MedicalDoctor: [ 1, 1 ]
-            Chemist: [ 1, 1 ]
-            ResearchDirector: [ 1, 1 ]
-            Scientist: [ 2, 2 ]
-            ResearchAssistant: [ 2, 2 ]
-            HeadOfSecurity: [ 1, 1 ]
-            SecurityOfficer: [ 2, 2 ]
             Chaplain: [ 1, 1 ]
-            Warden: [ 1, 1 ]
             Librarian: [ 1, 1 ]
             Lawyer: [ 1, 1 ]
-            Musician: [ 1, 1 ]
-            AtmosphericTechnician: [ 2, 2 ]
-            Detective: [ 1, 1 ]
-            TechnicalAssistant: [ 2, 2 ]
-            MedicalIntern: [ 2, 2 ]
             ServiceWorker: [ 1, 1 ]
+            #engineering
+            ChiefEngineer: [ 1, 1 ]
+            SeniorEngineer: [ 1, 1 ]
+            AtmosphericTechnician: [ 2, 2 ]
+            StationEngineer: [ 2, 2 ]
+            TechnicalAssistant: [ 2, 2 ]
+            #medical
+            ChiefMedicalOfficer: [ 1, 1 ]
+            SeniorPhysician: [ 1, 1 ]
+            Chemist: [ 1, 1 ]
+            MedicalDoctor: [ 1, 1 ]
+            MedicalIntern: [ 2, 2 ]
+            #science
+            ResearchDirector: [ 1, 1 ]
+            SeniorResearcher: [ 1 , 1 ]
+            Scientist: [ 2, 2 ]
+            ResearchAssistant: [ 2, 2 ]
+            Borg: [ 1, 1 ]
+            #security
+            HeadOfSecurity: [ 1, 1 ]
+            Warden: [ 1, 1 ]
+            SeniorOfficer: [ 1, 1 ]
+            Detective: [ 1, 1 ]
+            SecurityOfficer: [ 2, 2 ]
             SecurityCadet: [ 2, 2 ]
-            SalvageSpecialist: [ 2, 2 ]
+            #supply
             Quartermaster: [ 1, 1 ]
+            SalvageSpecialist: [ 2, 2 ]
+            CargoTechnician: [ 1, 1 ]
+            #civillian
+            Passenger: [ -1, -1 ]
+            Clown: [ 1, 1 ]
+            Mime: [ 1, 1 ]
+            Musician: [ 1, 1 ]
+            

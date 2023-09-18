@@ -12,7 +12,7 @@ namespace Content.Shared.Access;
 public sealed class AccessGroupPrototype : IPrototype
 {
     [IdDataField]
-    public string ID { get; } = default!;
+    public string ID { get; private set; } = default!;
 
     [DataField("tags", required: true, customTypeSerializer: typeof(PrototypeIdHashSetSerializer<AccessLevelPrototype>))]
     public HashSet<string> Tags = default!;

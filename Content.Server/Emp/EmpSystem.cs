@@ -51,7 +51,12 @@ public sealed class EmpSystem : SharedEmpSystem
     /// <param name="duration">The duration of the EMP effects.</param>
     public void DoEmpEffects(EntityUid uid, float energyConsumption, float duration)
     {
-        var ev = new EmpPulseEvent(energyConsumption, false, false, TimeSpan.FromSeconds(duration));
+        var attemptEv = new EmpAttemptEvent();
+        RaiseLocalEvent(uid, attemptEv);
+        if (attemptEv.Cancelled)
+            continue;
+
+        var ev = new EmpPulseEvent(energyConsumption, false, false);
         RaiseLocalEvent(uid, ref ev);
         if (ev.Affected)
         {
@@ -116,6 +121,13 @@ public sealed class EmpSystem : SharedEmpSystem
     {
         args.Cancelled = true;
     }
+}
+
+/// <summary>
+/// Raised on an entity before <see cref="EmpPulseEvent"/>. Cancel this to prevent the emp event being raised.
+/// </summary>
+public sealed partial class EmpAttemptEvent : CancellableEntityEventArgs
+{
 }
 
 [ByRefEvent]

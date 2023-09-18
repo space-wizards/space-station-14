@@ -237,6 +237,10 @@ binds:
 - function: ShowDebugConsole
   type: State
   key: Tilde
+- function: InspectEntity
+  type: State
+  key: v
+  mod1: Alt
 - function: MouseMiddle
   type: State
   key: MouseMiddle

@@ -6,7 +6,7 @@ namespace Content.Shared.Gravity;
 
 [RegisterComponent, NetworkedComponent]
 [Access(typeof(SharedFloatingVisualizerSystem))]
-public sealed class FloatingVisualsComponent : Component
+public sealed partial class FloatingVisualsComponent : Component
 {
     /// <summary>
     /// How long it takes to go from the bottom of the animation to the top.

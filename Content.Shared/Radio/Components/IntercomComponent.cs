@@ -7,7 +7,7 @@ namespace Content.Shared.Radio.Components;
 /// Handles intercom ui and is authoritative on the channels an intercom can access.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-public sealed class IntercomComponent : Component
+public sealed partial class IntercomComponent : Component
 {
     /// <summary>
     /// Does this intercom require popwer to function

@@ -5,4 +5,4 @@ namespace Content.Server.Shuttles.Components;
 ///     Useful for small, unimportant items like bullets to avoid generating many contacts.
 /// </summary>
 [RegisterComponent]
-public sealed class SpaceGarbageComponent : Component {}
+public sealed partial class SpaceGarbageComponent : Component {}

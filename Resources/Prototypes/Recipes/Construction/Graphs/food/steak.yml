@@ -86,7 +86,7 @@
       - minTemperature: 345 #apparently trichinellosis is a concern
 
   - node: filet migrawr
-    entity: FoodMealBearsteak
+    entity: FoodMeatBearCooked
 
 # crab steak
 - type: constructionGraph

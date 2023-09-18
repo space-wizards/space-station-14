@@ -11,7 +11,7 @@ using Robust.Shared.Utility;
 namespace Content.Client.Chemistry.Visualizers
 {
     [RegisterComponent]
-    public sealed class SolutionContainerVisualsComponent : Component
+    public sealed partial class SolutionContainerVisualsComponent : Component
     {
         [DataField("maxFillLevels")]
         public int MaxFillLevels = 0;
@@ -32,7 +32,7 @@ namespace Content.Client.Chemistry.Visualizers
         [DataField("metamorphic")]
         public bool Metamorphic = false;
         [DataField("metamorphicDefaultSprite")]
-        public SpriteSpecifier MetamorphicDefaultSprite = SpriteSpecifier.Invalid;
+        public SpriteSpecifier? MetamorphicDefaultSprite;
         [DataField("metamorphicNameFull")]
         public string MetamorphicNameFull = "transformable-container-component-glass";
 
@@ -41,9 +41,12 @@ namespace Content.Client.Chemistry.Visualizers
         /// If not set, will work as default.
         /// </summary>
         [DataField("solutionName")]
-        public string SolutionName = "";
+        public string? SolutionName;
 
+        [DataField("initialName")]
         public string InitialName = string.Empty;
+
+        [DataField("initialDescription")]
         public string InitialDescription = string.Empty;
     }
 }

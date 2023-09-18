@@ -6,7 +6,7 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
     ///     Drop all items from all containers
     /// </summary>
     [DataDefinition]
-    public sealed class EmptyAllContainersBehaviour : IThresholdBehavior
+    public sealed partial class EmptyAllContainersBehaviour : IThresholdBehavior
     {
         public void Execute(EntityUid owner, DestructibleSystem system, EntityUid? cause = null)
         {

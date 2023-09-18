@@ -1,42 +1,33 @@
-using Content.Server.Body.Systems;
+using System.Numerics;
 using Content.Server.Chat.Systems;
 using Content.Server.GameTicking;
 using Content.Server.NPC;
 using Content.Server.NPC.Systems;
 using Content.Server.Popups;
-using Content.Server.Station.Systems;
 using Content.Shared.Actions;
-using Content.Shared.Chemistry.Components;
 using Content.Shared.Damage;
-using Content.Shared.DoAfter;
 using Content.Shared.Dragon;
 using Content.Shared.Examine;
-using Content.Shared.Humanoid;
 using Content.Shared.Maps;
 using Content.Shared.Mobs;
-using Content.Shared.Mobs.Components;
 using Content.Shared.Movement.Systems;
-using Robust.Shared.Containers;
-using Robust.Shared.Player;
+using Content.Shared.Sprite;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
-using Robust.Shared.Random;
-using System.Numerics;
+using Robust.Shared.Player;
+using Robust.Shared.Serialization.Manager;
 
 namespace Content.Server.Dragon;
 
 public sealed partial class DragonSystem : EntitySystem
 {
     [Dependency] private readonly IMapManager _mapManager = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly ISerializationManager _serManager = default!;
     [Dependency] private readonly ITileDefinitionManager _tileDef = default!;
     [Dependency] private readonly ChatSystem _chat = default!;
     [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
-    [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
-    [Dependency] private readonly BloodstreamSystem _bloodstreamSystem = default!;
     [Dependency] private readonly MovementSpeedModifierSystem _movement = default!;
-    [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
     [Dependency] private readonly NPCSystem _npc = default!;
 
@@ -149,8 +140,18 @@ public sealed partial class DragonSystem : EntitySystem
             if (comp.SpawnAccumulator > comp.SpawnCooldown)
             {
                 comp.SpawnAccumulator -= comp.SpawnCooldown;
-                var ent = Spawn(comp.SpawnPrototype, Transform(comp.Owner).MapPosition);
-                _npc.SetBlackboard(ent, NPCBlackboard.FollowTarget, new EntityCoordinates(comp.Owner, Vector2.Zero));
+                var ent = Spawn(comp.SpawnPrototype, Transform(comp.Owner).Coordinates);
+
+                // Update their look to match the leader.
+                if (TryComp<RandomSpriteComponent>(comp.Dragon, out var randomSprite))
+                {
+                    var spawnedSprite = EnsureComp<RandomSpriteComponent>(ent);
+                    _serManager.CopyTo(randomSprite, ref spawnedSprite, notNullableOverride: true);
+                    Dirty(ent, spawnedSprite);
+                }
+
+                if (comp.Dragon != null)
+                    _npc.SetBlackboard(ent, NPCBlackboard.FollowTarget, new EntityCoordinates(comp.Dragon.Value, Vector2.Zero));
             }
         }
     }
@@ -293,10 +294,8 @@ public sealed partial class DragonSystem : EntitySystem
 
     private void OnStartup(EntityUid uid, DragonComponent component, ComponentStartup args)
     {
-        if (component.SpawnRiftAction != null)
-            _actionsSystem.AddAction(uid, component.SpawnRiftAction, null);
-
         Roar(component);
+        _actionsSystem.AddAction(uid, ref component.SpawnRiftActionEntity, component.SpawnRiftAction);
     }
 }
 

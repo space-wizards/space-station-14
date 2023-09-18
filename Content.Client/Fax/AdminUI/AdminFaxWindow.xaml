@@ -1,4 +1,4 @@
-﻿<DefaultWindow xmlns="https://spacestation14.io"
+<DefaultWindow xmlns="https://spacestation14.io"
                Title="{Loc admin-fax-title}"
                MinWidth="400">
     <BoxContainer Orientation="Vertical" VerticalExpand="True">
@@ -21,6 +21,8 @@
             <Control MinWidth="5" />
             <OptionButton Name="StampSelector" HorizontalExpand="True" />
         </BoxContainer>
+        <Label Text="{Loc admin-fax-stamp-color}" />
+        <ColorSelectorSliders Margin="12 0 0 0" Name="StampColorSelector" Color="#BB3232"/>
         <Control MinHeight="10" />
         <Button Name="SendButton" Text="{Loc admin-fax-send}"></Button>
     </BoxContainer>

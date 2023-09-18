@@ -5,14 +5,16 @@ using Content.Server.Explosion.EntitySystems;
 using Content.Server.Popups;
 using Content.Server.Station.Systems;
 using Content.Shared.Audio;
-using Content.Shared.Construction.Components;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Coordinates.Helpers;
 using Content.Shared.DoAfter;
+using Content.Shared.Maps;
 using Content.Shared.Nuke;
 using Content.Shared.Popups;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
 using Robust.Shared.Containers;
+using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 
@@ -23,8 +25,11 @@ public sealed class NukeSystem : EntitySystem
     [Dependency] private readonly AlertLevelSystem _alertLevel = default!;
     [Dependency] private readonly ChatSystem _chatSystem = default!;
     [Dependency] private readonly ExplosionSystem _explosions = default!;
+    [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly ITileDefinitionManager _tileDefManager = default!;
     [Dependency] private readonly ItemSlotsSystem _itemSlots = default!;
+    [Dependency] private readonly PointLightSystem _pointLight = default!;
     [Dependency] private readonly PopupSystem _popups = default!;
     [Dependency] private readonly ServerGlobalSoundSystem _sound = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
@@ -53,9 +58,6 @@ public sealed class NukeSystem : EntitySystem
         SubscribeLocalEvent<NukeComponent, EntInsertedIntoContainerMessage>(OnItemSlotChanged);
         SubscribeLocalEvent<NukeComponent, EntRemovedFromContainerMessage>(OnItemSlotChanged);
 
-        // anchoring logic
-        SubscribeLocalEvent<NukeComponent, AnchorAttemptEvent>(OnAnchorAttempt);
-        SubscribeLocalEvent<NukeComponent, UnanchorAttemptEvent>(OnUnanchorAttempt);
         // Shouldn't need re-anchoring.
         SubscribeLocalEvent<NukeComponent, AnchorStateChangedEvent>(OnAnchorChanged);
 
@@ -133,28 +135,6 @@ public sealed class NukeSystem : EntitySystem
 
     #region Anchor
 
-    private void OnAnchorAttempt(EntityUid uid, NukeComponent component, AnchorAttemptEvent args)
-    {
-        CheckAnchorAttempt(uid, component, args);
-    }
-
-    private void OnUnanchorAttempt(EntityUid uid, NukeComponent component, UnanchorAttemptEvent args)
-    {
-        CheckAnchorAttempt(uid, component, args);
-    }
-
-    private void CheckAnchorAttempt(EntityUid uid, NukeComponent component, BaseAnchoredAttemptEvent args)
-    {
-        // cancel any anchor attempt if armed
-        if (component.Status == NukeStatus.ARMED)
-        {
-            var msg = Loc.GetString("nuke-component-cant-anchor");
-            _popups.PopupEntity(msg, uid, args.User);
-
-            args.Cancel();
-        }
-    }
-
     private void OnAnchorChanged(EntityUid uid, NukeComponent component, ref AnchorStateChangedEvent args)
     {
         UpdateUserInterface(uid, component);
@@ -186,6 +166,22 @@ public sealed class NukeSystem : EntitySystem
         }
         else
         {
+            if (!_mapManager.TryGetGrid(xform.GridUid, out var grid))
+                return;
+
+            var worldPos = _transform.GetWorldPosition(xform);
+
+            foreach (var tile in grid.GetTilesIntersecting(new Circle(worldPos, component.RequiredFloorRadius), false))
+            {
+                if (!tile.IsSpace(_tileDefManager))
+                    continue;
+
+                var msg = Loc.GetString("nuke-component-cant-anchor-floor");
+                _popups.PopupEntity(msg, uid, args.Session, PopupType.MediumCaution);
+
+                return;
+            }
+
             _transform.SetCoordinates(uid, xform, xform.Coordinates.SnapToGrid());
             _transform.AnchorEntity(uid, xform);
         }
@@ -297,7 +293,7 @@ public sealed class NukeSystem : EntitySystem
         // play alert sound if time is running out
         if (nuke.RemainingTime <= nuke.AlertSoundTime && !nuke.PlayedAlertSound)
         {
-            nuke.AlertAudioStream = _audio.Play(nuke.AlertSound, Filter.Broadcast(), uid, true);
+            _sound.PlayGlobalOnStation(uid, _audio.GetSound(nuke.AlertSound), new AudioParams{Volume = -5f});
             _sound.StopStationEventMusic(uid, StationEventMusicType.Nuke);
             nuke.PlayedAlertSound = true;
         }
@@ -381,7 +377,7 @@ public sealed class NukeSystem : EntitySystem
             CooldownTime = (int) component.CooldownTime
         };
 
-        UserInterfaceSystem.SetUiState(ui, state);
+        _ui.SetUiState(ui, state);
     }
 
     private void PlayNukeKeypadSound(EntityUid uid, int number, NukeComponent? component = null)
@@ -460,8 +456,16 @@ public sealed class NukeSystem : EntitySystem
 
         _sound.PlayGlobalOnStation(uid, _audio.GetSound(component.ArmSound));
 
+        // turn on the spinny light
+        _pointLight.SetEnabled(uid, true);
+
         _itemSlots.SetLock(uid, component.DiskSlot, true);
-        _transform.AnchorEntity(uid, nukeXform);
+        if (!nukeXform.Anchored)
+        {
+            // Admin command shenanigans, just make sure.
+            _transform.AnchorEntity(uid, nukeXform);
+        }
+
         component.Status = NukeStatus.ARMED;
         UpdateUserInterface(uid, component);
     }
@@ -493,6 +497,9 @@ public sealed class NukeSystem : EntitySystem
         // disable sound and reset it
         component.PlayedAlertSound = false;
         component.AlertAudioStream?.Stop();
+
+        // turn off the spinny light
+        _pointLight.SetEnabled(uid, false);
 
         // start bomb cooldown
         _itemSlots.SetLock(uid, component.DiskSlot, false);
@@ -561,7 +568,7 @@ public sealed class NukeSystem : EntitySystem
 
     private void DisarmBombDoafter(EntityUid uid, EntityUid user, NukeComponent nuke)
     {
-        var doAfter = new DoAfterArgs(user, nuke.DisarmDoafterLength, new NukeDisarmDoAfterEvent(), uid, target: uid)
+        var doAfter = new DoAfterArgs(EntityManager, user, nuke.DisarmDoafterLength, new NukeDisarmDoAfterEvent(), uid, target: uid)
         {
             BreakOnDamage = true,
             BreakOnTargetMove = true,

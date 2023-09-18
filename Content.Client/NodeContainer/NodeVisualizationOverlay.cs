@@ -65,7 +65,7 @@ namespace Content.Client.NodeContainer
             var mousePos = _inputManager.MouseScreenPosition.Position;
             _mouseWorldPos = args
                 .ViewportControl!
-                .ScreenToMap(new Vector2(mousePos.X, mousePos.Y))
+                .PixelToMap(mousePos)
                 .Position;
 
             if (_hovered == null)
@@ -77,7 +77,7 @@ namespace Content.Client.NodeContainer
             var node = _system.NodeLookup[(groupId, nodeId)];
 
 
-            var xform = _entityManager.GetComponent<TransformComponent>(node.Entity);
+            var xform = _entityManager.GetComponent<TransformComponent>(_entityManager.GetEntity(node.Entity));
             if (!_mapManager.TryGetGrid(xform.GridUid, out var grid))
                 return;
             var gridTile = grid.TileIndicesFor(xform.Coordinates);

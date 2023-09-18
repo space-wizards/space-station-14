@@ -28,10 +28,10 @@
   - type: GasTank
     outputPressure: 21.3
     air:
-      # 94 minutes
-      volume: 15
+      # 31 minutes
+      volume: 5
       moles:
-        - 6.154137219 # oxygen
+        - 2.051379050 # oxygen
       temperature: 293.15
 
 - type: entity
@@ -45,58 +45,58 @@
   parent: EmergencyOxygenTank
   suffix: Filled
   components:
-    - type: GasTank
-      outputPressure: 21.3
-      air:
-        # 13 minutes
-        volume: 2
-        moles:
-          - 0.820551629 # oxygen
-        temperature: 293.15
+  - type: GasTank
+    outputPressure: 21.3
+    air:
+      # 4 minutes
+      volume: 0.66
+      moles:
+        - 0.270782035 # oxygen
+      temperature: 293.15
 
 - type: entity
   id: ExtendedEmergencyOxygenTankFilled
   parent: ExtendedEmergencyOxygenTank
   suffix: Filled
   components:
-    - type: GasTank
-      outputPressure: 21.3
-      air:
-        # 38 minutes
-        volume: 6
-        moles:
-          - 2.461654887 # oxygen
-        temperature: 293.15
+  - type: GasTank
+    outputPressure: 21.3
+    air:
+      # 9 minutes
+      volume: 1.5
+      moles:
+        - 0.615413715 # oxygen
+      temperature: 293.15
 
 - type: entity
   id: DoubleEmergencyOxygenTankFilled
   parent: DoubleEmergencyOxygenTank
   suffix: Filled
   components:
-    - type: GasTank
-      outputPressure: 21.3
-      air:
-        # 63 minutes
-        volume: 10
-        moles:
-          - 4.102758145 # oxygen
-        temperature: 293.15
+  - type: GasTank
+    outputPressure: 21.3
+    air:
+      # 15 minutes
+      volume: 2.5
+      moles:
+        - 1.025689525 # oxygen
+      temperature: 293.15
 
 - type: entity
   id: AirTankFilled
   parent: AirTank
   suffix: Filled
   components:
-    - type: GasTank
-      outputPressure: 101.3
-      air:
-        # 20 minutes due to output pressure
-        volume: 15
-        moles:
-          - 1.353910188 # 22% oxygen
-          - 4.800227031 # 78% nitrogen
-          # 6.154137219       total
-        temperature: 293.15
+  - type: GasTank
+    outputPressure: 101.3
+    air:
+      # 6 minutes due to output pressure
+      volume: 5
+      moles:
+        - 0.451303391 # 22% oxygen
+        - 1.600075659 # 78% nitrogen
+        # 2.051379050       total
+      temperature: 293.15
 
 - type: entity
   id: NitrogenTankFilled
@@ -104,15 +104,15 @@
   suffix: Filled
   name: nitrogen tank
   components:
-    - type: GasTank
-      outputPressure: 21.3
-      air:
-        # 94 minutes
-        volume: 15
-        moles:
-          - 0           # oxygen not included
-          - 6.154137219 # nitrogen
-        temperature: 293.15
+  - type: GasTank
+    outputPressure: 21.3
+    air:
+      # 31 minutes
+      volume: 5
+      moles:
+        - 0           # oxygen not included
+        - 2.051379050 # nitrogen
+      temperature: 293.15
 
 - type: entity
   id: NitrousOxideTankFilled
@@ -120,27 +120,27 @@
   suffix: Filled
   name: nitrous oxide tank
   components:
-    - type: GasTank
-      #      0.21  | % oxygen in normal atmosphere
-      #  /   0.7   | % oxygen in this mixture
-      #  * 101.325 | one atmosphere
-      # __________
-      #    30.3975   optimal output pressure
-      outputPressure: 30.4
-      air:
-        # only 66 minutes due to pressure
-        volume: 15
-        moles:
-          - 4.30789605 # 70% oxygen
-          - 0 # nitrogen
-          - 0 # CO2
-          - 0 # plasma
-          - 0 # tritium
-          - 0 # water vapor
-          - 0 # miasma
-          - 1.84624116 # 30% N2O
-          # 6.15413721       total
-        temperature: 293.15
+  - type: GasTank
+    #      0.21  | % oxygen in normal atmosphere
+    #  /   0.7   | % oxygen in this mixture
+    #  * 101.325 | one atmosphere
+    # __________
+    #    30.3975   optimal output pressure
+    outputPressure: 30.4
+    air:
+      # only 22 minutes due to pressure
+      volume: 5
+      moles:
+        - 1.435965335 # 70% oxygen
+        - 0 # nitrogen
+        - 0 # CO2
+        - 0 # plasma
+        - 0 # tritium
+        - 0 # water vapor
+        - 0 # miasma
+        - 0.615413715 # 30% N2O
+        # 2.051379050       total
+      temperature: 293.15
 
 - type: entity
   id: PlasmaTankFilled
@@ -148,14 +148,14 @@
   name: plasma tank
   suffix: Filled
   components:
-    - type: GasTank
-      outputPressure: 101.3
-      air:
-        # 20 minutes of agony
-        volume: 15
-        moles:
-          - 0           # oxygen
-          - 0           # nitrogen
-          - 0           # CO2
-          - 6.154137219 # plasma
-        temperature: 293.15
+  - type: GasTank
+    outputPressure: 101.3
+    air:
+      # 6 minutes of agony
+      volume: 5
+      moles:
+        - 0           # oxygen
+        - 0           # nitrogen
+        - 0           # CO2
+        - 2.051379050 # plasma
+      temperature: 293.15

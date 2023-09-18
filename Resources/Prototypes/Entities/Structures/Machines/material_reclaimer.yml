@@ -59,7 +59,7 @@
     board: MaterialReclaimerMachineCircuitboard
   - type: WiresPanel
   - type: Wires
-    BoardName: "reclaimer"
+    BoardName: wires-board-name-reclaimer
     LayoutId: Reclaimer
   - type: MaterialReclaimer
     whitelist:

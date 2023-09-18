@@ -1,21 +1,19 @@
 using Content.Server.NPC.Components;
 using Content.Server.StationEvents.Events;
 using Content.Shared.Dataset;
-using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.Roles;
-using Robust.Server.Player;
-using Robust.Shared.Audio;
 using Robust.Shared.Map;
+using Robust.Shared.Players;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Set;
 using Robust.Shared.Utility;
 
 namespace Content.Server.GameTicking.Rules.Components;
 
 [RegisterComponent, Access(typeof(NukeopsRuleSystem), typeof(LoneOpsSpawnRule))]
-public sealed class NukeopsRuleComponent : Component
+public sealed partial class NukeopsRuleComponent : Component
 {
     /// <summary>
     /// The minimum needed amount of players
@@ -43,6 +41,48 @@ public sealed class NukeopsRuleComponent : Component
     /// </summary>
     [DataField("spawnOutpost")]
     public bool SpawnOutpost = true;
+
+    /// <summary>
+    /// Whether or not nukie left their outpost
+    /// </summary>
+    [DataField("leftOutpost")]
+    public bool LeftOutpost = false;
+
+    /// <summary>
+    ///     Enables opportunity to get extra TC for war declaration
+    /// </summary>
+    [DataField("canEnableWarOps")]
+    public bool CanEnableWarOps = true;
+
+    /// <summary>
+    ///     Indicates time when war has been declared, null if not declared
+    /// </summary>
+    [DataField("warDeclaredTime", customTypeSerializer: typeof(TimeOffsetSerializer))]
+    public TimeSpan? WarDeclaredTime;
+
+    /// <summary>
+    ///     This amount of TC will be given to each nukie
+    /// </summary>
+    [DataField("warTCAmountPerNukie")]
+    public int WarTCAmountPerNukie = 40;
+
+    /// <summary>
+    ///     Time allowed for declaration of war
+    /// </summary>
+    [DataField("warDeclarationDelay")]
+    public TimeSpan WarDeclarationDelay = TimeSpan.FromMinutes(6);
+
+    /// <summary>
+    ///     Delay between war declaration and nuke ops arrival on station map. Gives crew time to prepare
+    /// </summary>
+    [DataField("warNukieArriveDelay")]
+    public TimeSpan? WarNukieArriveDelay = TimeSpan.FromMinutes(15);
+
+    /// <summary>
+    ///     Minimal operatives count for war declaration
+    /// </summary>
+    [DataField("warDeclarationMinOps")]
+    public int WarDeclarationMinOps = 4;
 
     [DataField("spawnPointProto", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string SpawnPointPrototype = "SpawnPointNukies";
@@ -98,27 +138,26 @@ public sealed class NukeopsRuleComponent : Component
     ///     Cached starting gear prototypes.
     /// </summary>
     [DataField("startingGearPrototypes")]
-    public readonly Dictionary<string, StartingGearPrototype> StartingGearPrototypes = new ();
+    public Dictionary<string, StartingGearPrototype> StartingGearPrototypes = new ();
 
     /// <summary>
     ///     Cached operator name prototypes.
     /// </summary>
     [DataField("operativeNames")]
-    public readonly Dictionary<string, List<string>> OperativeNames = new();
+    public Dictionary<string, List<string>> OperativeNames = new();
 
     /// <summary>
     ///     Data to be used in <see cref="OnMindAdded"/> for an operative once the Mind has been added.
     /// </summary>
     [DataField("operativeMindPendingData")]
-    public readonly Dictionary<EntityUid, string> OperativeMindPendingData = new();
+    public Dictionary<EntityUid, string> OperativeMindPendingData = new();
 
     /// <summary>
     ///     Players who played as an operative at some point in the round.
-    ///     Stores the session as well as the entity name
+    ///     Stores the mind as well as the entity name
     /// </summary>
-    /// todo: don't store sessions, dingus
     [DataField("operativePlayers")]
-    public readonly Dictionary<string, IPlayerSession> OperativePlayers = new();
+    public Dictionary<string, EntityUid> OperativePlayers = new();
 
     [DataField("faction", customTypeSerializer: typeof(PrototypeIdSerializer<NpcFactionPrototype>), required: true)]
     public string Faction = default!;
