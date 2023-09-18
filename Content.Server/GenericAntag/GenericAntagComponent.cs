@@ -19,7 +19,7 @@ public sealed partial class GenericAntagComponent : Component
     /// This must have <see cref="GenericAntagRuleComponent"/> or it will not work.
     /// </summary>
     [DataField(required: true), ViewVariables(VVAccess.ReadWrite)]
-    public EntProtoid Rule = string.Empty;
+    public EntProtoId Rule = string.Empty;
 
     /// <summary>
     /// The rule that's been spawned.
