@@ -1,10 +1,4 @@
 Entries:
-- author: JoeHammad
-  changes:
-  - {message: 'The syndicate sniper bundle was added to the uplink, containing a Hristov,
-      spare ammo and a clever disguise, happy hunting, agents', type: Add}
-  id: 4347
-  time: '2023-07-27T09:49:22.0000000+00:00'
 - author: Vaaankas
   changes:
   - {message: 'The Hristov''s sniper rifle cartridges have been refactored. It is
@@ -2970,3 +2964,9 @@ Entries:
       trolley., type: Tweak}
   id: 4846
   time: '2023-09-18T00:23:35.0000000+00:00'
+- author: lapatison
+  changes:
+  - {message: 'Now you can light matches with certain types (combat, work, merc, explorer)
+      of boots like a cool dude.', type: Add}
+  id: 4847
+  time: '2023-09-18T00:26:21.0000000+00:00'
