@@ -137,14 +137,6 @@
   description: Stylish black shoes.
   components:
   - type: NoSlip
-
-- type: entity
-  parent: ClothingShoesChameleon
-  id: ClothingShoesChameleonSilent
-  name: black shoes
-  description: Stylish black shoes.
-  suffix: Silent, Chameleon
-  components:
   - type: FootstepModifier
     footstepSoundCollection:
       collection: FootstepCarpet

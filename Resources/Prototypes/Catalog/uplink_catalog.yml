@@ -1010,16 +1010,6 @@
     - UplinkArmor
 
 - type: listing
-  id: UplinkClothingSneakers
-  name: uplink-clothing-sneakers-name
-  description: uplink-clothing-sneakers-desc
-  productEntity: ClothingShoesChameleonSilent
-  cost:
-    Telecrystal: 1
-  categories:
-  - UplinkArmor
-
-- type: listing
   id: UplinkClothingNoSlipsShoes
   name: uplink-clothing-no-slips-shoes-name
   description: uplink-clothing-no-slips-shoes-desc
