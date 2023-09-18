@@ -1,9 +1,4 @@
 Entries:
-- author: crazybrain
-  changes:
-  - {message: Alien artifact intercom no longer has the syndicate channel., type: Tweak}
-  id: 4352
-  time: '2023-07-27T20:03:48.0000000+00:00'
 - author: PrPleGoo
   changes:
   - {message: Changed news article to track an author., type: Tweak}
@@ -2969,3 +2964,9 @@ Entries:
   - {message: Blood-red magboots' jetpack now works again., type: Fix}
   id: 4851
   time: '2023-09-18T06:13:12.0000000+00:00'
+- author: JoeHammad
+  changes:
+  - {message: The syndicate have started using cheaper materials in the manufacture
+      of their over ear headsets, type: Add}
+  id: 4852
+  time: '2023-09-18T19:18:56.0000000+00:00'
