@@ -1,12 +1,4 @@
 Entries:
-- author: liltenhead
-  changes:
-  - {message: Reduced Python cost from 13 -> 8 TC, type: Tweak}
-  - {message: Reduced C-20 Bundle cost from 25 -> 17 TC, type: Tweak}
-  - {message: Reduced Bulldog Bundle cost from 25 -> 20 TC, type: Tweak}
-  - {message: Reduced Fake Cap Gun cost from 14 TC -> 9 TC, type: Tweak}
-  id: 4345
-  time: '2023-07-27T08:24:21.0000000+00:00'
 - author: KingFroozy
   changes:
   - {message: fixed Syndicate Chief Engineer's jumpsuit., type: Fix}
@@ -2972,3 +2964,8 @@ Entries:
   - {message: You can now eat most organs. Bon appetit!, type: Add}
   id: 4844
   time: '2023-09-18T00:20:11.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Fixed fultons losing their beacon when the stack is split., type: Fix}
+  id: 4845
+  time: '2023-09-18T00:22:26.0000000+00:00'
