@@ -35,6 +35,8 @@
         prob: 0.05
       - id: BoxMRE
         prob: 0.1
+      - id: FireExtinguisherMini
+        prob: 0.4
 
 - type: entity
   id: ClosetWallEmergencyFilledRandom
@@ -72,7 +74,6 @@
         - id: ClothingMaskGas
         - id: YellowOxygenTankFilled
         - id: FireExtinguisher
-          prob: 0.25
 - type: entity
   id: ClosetWallFireFilledRandom
   parent: ClosetWallFire
@@ -85,7 +86,6 @@
         - id: ClothingMaskGas
         - id: YellowOxygenTankFilled
         - id: FireExtinguisher
-          prob: 0.25
 - type: entity
   id: ClosetMaintenanceFilledRandom
   suffix: Filled, Random

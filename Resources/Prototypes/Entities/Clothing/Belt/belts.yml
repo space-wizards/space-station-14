@@ -29,6 +29,7 @@
         - HolofanProjector
         - Multitool
         - AppraisalTool
+        - FireExtinguisherMini
       components:
         - SprayPainter
         - NetworkConfigurator
@@ -102,6 +103,7 @@
         - HolofanProjector
         - Multitool
         - AppraisalTool
+        - FireExtinguisherMini
       components:
         - SprayPainter
         - NetworkConfigurator

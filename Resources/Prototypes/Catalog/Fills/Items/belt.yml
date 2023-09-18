@@ -25,6 +25,7 @@
       - id: Wirecutter
       - id: Welder
       - id: Multitool
+      - id: FireExtinguisherMini
 
 - type: entity
   id: ClothingBeltChiefEngineerFilled

@@ -13,11 +13,8 @@
       - id: FlashlightLantern
       - id: FlashlightLantern
         prob: 0.5
-      - id: HarmonicaInstrument
-        prob: 0.15
-        orGroup: HarmonicaOrChocolate
+      - id: FireExtinguisherMini
       - id: FoodSnackChocolate
-        orGroup: HarmonicaOrChocolate
 
 - type: entity
   id: ToolboxElectricalFilled
