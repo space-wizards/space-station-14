@@ -32,7 +32,7 @@ public sealed class AirlockSystem : SharedAirlockSystem
         SubscribeLocalEvent<AirlockComponent, BeforeDoorOpenedEvent>(OnBeforeDoorOpened);
         SubscribeLocalEvent<AirlockComponent, BeforeDoorDeniedEvent>(OnBeforeDoorDenied);
         SubscribeLocalEvent<AirlockComponent, ActivateInWorldEvent>(OnActivate, before: new[] { typeof(DoorSystem) });
-        SubscribeLocalEvent<AirlockComponent, DoorGetPryTimeModifierEvent>(OnGetPryMod);
+        SubscribeLocalEvent<AirlockComponent, GetPryTimeModifierEvent>(OnGetPryMod);
         SubscribeLocalEvent<AirlockComponent, BeforePryEvent>(OnBeforePry);
 
     }
@@ -169,7 +169,7 @@ public sealed class AirlockSystem : SharedAirlockSystem
         }
     }
 
-    private void OnGetPryMod(EntityUid uid, AirlockComponent component, DoorGetPryTimeModifierEvent args)
+    private void OnGetPryMod(EntityUid uid, AirlockComponent component, GetPryTimeModifierEvent args)
     {
         if (_power.IsPowered(uid))
             args.PryTimeModifier *= component.PoweredPryModifier;

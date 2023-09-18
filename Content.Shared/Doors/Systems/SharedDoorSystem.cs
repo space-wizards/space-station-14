@@ -62,6 +62,7 @@ public abstract partial class SharedDoorSystem : EntitySystem
 
         SubscribeLocalEvent<DoorComponent, StartCollideEvent>(HandleCollide);
         SubscribeLocalEvent<DoorComponent, PreventCollideEvent>(PreventCollision);
+        SubscribeLocalEvent<DoorComponent, GetPryTimeModifierEvent>(OnPryTimeModifier);
 
     }
 
@@ -182,6 +183,11 @@ public abstract partial class SharedDoorSystem : EntitySystem
     {
         // avoid client-mispredicts, as the server will definitely handle this event
         args.Handled = true;
+    }
+
+    private void OnPryTimeModifier(EntityUid uid, DoorComponent door, GetPryTimeModifierEvent args)
+    {
+        args.BaseTime = door.PryTime;
     }
 
     /// <summary>

@@ -35,7 +35,7 @@ public sealed class PryingSystem : EntitySystem
         if (args.Handled)
             return;
 
-        args.Handled = TryPry(uid, args.User, comp, out _, args.Used);
+        args.Handled = TryPry(uid, args.User, out _, args.Used);
     }
 
     private void OnDoorAltVerb(EntityUid uid, DoorComponent component, GetVerbsEvent<AlternativeVerb> args)
@@ -50,14 +50,14 @@ public sealed class PryingSystem : EntitySystem
         {
             Text = Loc.GetString("door-pry"),
             Impact = LogImpact.Low,
-            Act = () => TryPry(uid, args.User, component, out _, args.User),
+            Act = () => TryPry(uid, args.User, out _, args.User),
         });
     }
 
     /// <summary>
     /// Attempt to pry an entity.
     /// </summary>
-    public bool TryPry(EntityUid target, EntityUid user, DoorComponent door, out DoAfterId? id, EntityUid tool)
+    public bool TryPry(EntityUid target, EntityUid user, out DoAfterId? id, EntityUid tool)
     {
         id = null;
 
@@ -79,7 +79,7 @@ public sealed class PryingSystem : EntitySystem
             return true;
         }
 
-        StartPry(target, user, door, tool, comp.SpeedModifier, out id);
+        StartPry(target, user, tool, comp.SpeedModifier, out id);
 
         return true;
     }
@@ -87,7 +87,7 @@ public sealed class PryingSystem : EntitySystem
     /// <summary>
     /// Try to pry an entity.
     /// </summary>
-    public bool TryPry(EntityUid target, EntityUid user, DoorComponent door, out DoAfterId? id)
+    public bool TryPry(EntityUid target, EntityUid user, out DoAfterId? id)
     {
         id = null;
 
@@ -96,7 +96,7 @@ public sealed class PryingSystem : EntitySystem
             // to be marked as handled as a popup would be generated on failure.
             return true;
 
-        return StartPry(target, user, door, null, 1.0f, out id);
+        return StartPry(target, user, null, 1.0f, out id);
     }
 
     private bool CanPry(EntityUid target, EntityUid user, PryingComponent? comp = null)
@@ -121,13 +121,13 @@ public sealed class PryingSystem : EntitySystem
         return true;
     }
 
-    private bool StartPry(EntityUid target, EntityUid user, DoorComponent door, EntityUid? tool, float toolModifier, [NotNullWhen(true)] out DoAfterId? id)
+    private bool StartPry(EntityUid target, EntityUid user, EntityUid? tool, float toolModifier, [NotNullWhen(true)] out DoAfterId? id)
     {
-        var modEv = new DoorGetPryTimeModifierEvent(user);
+        var modEv = new GetPryTimeModifierEvent(user);
 
 
         RaiseLocalEvent(target, modEv, false);
-        var doAfterArgs = new DoAfterArgs(EntityManager, user, TimeSpan.FromSeconds(door.PryTime * modEv.PryTimeModifier / toolModifier), new DoorPryDoAfterEvent(), target, target, tool)
+        var doAfterArgs = new DoAfterArgs(EntityManager, user, TimeSpan.FromSeconds(modEv.BaseTime * modEv.PryTimeModifier / toolModifier), new DoorPryDoAfterEvent(), target, target, tool)
         {
             BreakOnDamage = true,
             BreakOnUserMove = true,
@@ -135,11 +135,11 @@ public sealed class PryingSystem : EntitySystem
 
         if (tool != null)
         {
-            _adminLog.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(user)} is using {ToPrettyString(tool.Value)} to pry {ToPrettyString(target)} while it is {door.State}");
+            _adminLog.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(user)} is using {ToPrettyString(tool.Value)} to pry {ToPrettyString(target)}");
         }
         else
         {
-            _adminLog.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(user)} is prying {ToPrettyString(target)} while it is {door.State}");
+            _adminLog.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(user)} is prying {ToPrettyString(target)}");
         }
         return _doAfterSystem.TryStartDoAfter(doAfterArgs, out id);
     }

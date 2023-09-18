@@ -48,7 +48,7 @@ public sealed class DoorSystem : SharedDoorSystem
             return;
 
         if (!TryToggleDoor(uid, door, args.User))
-            _pryingSystem.TryPry(uid, args.User, door, out _);
+            _pryingSystem.TryPry(uid, args.User, out _);
 
         args.Handled = true;
     }

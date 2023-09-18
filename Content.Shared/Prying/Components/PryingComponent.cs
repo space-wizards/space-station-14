@@ -62,12 +62,13 @@ public sealed class AfterPryEvent : EntityEventArgs
 /// Raised to determine how long the door's pry time should be modified by.
 /// Multiply PryTimeModifier by the desired amount.
 /// </summary>
-public sealed partial class DoorGetPryTimeModifierEvent : EntityEventArgs
+public sealed partial class GetPryTimeModifierEvent : EntityEventArgs
 {
     public readonly EntityUid User;
     public float PryTimeModifier = 1.0f;
+    public float BaseTime = 5.0f;
 
-    public DoorGetPryTimeModifierEvent(EntityUid user)
+    public GetPryTimeModifierEvent(EntityUid user)
     {
         User = user;
     }

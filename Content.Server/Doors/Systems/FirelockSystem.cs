@@ -39,7 +39,7 @@ namespace Content.Server.Doors.Systems
             base.Initialize();
 
             SubscribeLocalEvent<FirelockComponent, BeforeDoorOpenedEvent>(OnBeforeDoorOpened);
-            SubscribeLocalEvent<FirelockComponent, DoorGetPryTimeModifierEvent>(OnDoorGetPryTimeModifier);
+            SubscribeLocalEvent<FirelockComponent, GetPryTimeModifierEvent>(OnDoorGetPryTimeModifier);
             SubscribeLocalEvent<FirelockComponent, DoorStateChangedEvent>(OnUpdateState);
 
             SubscribeLocalEvent<FirelockComponent, BeforeDoorAutoCloseEvent>(OnBeforeDoorAutoclose);
@@ -145,7 +145,7 @@ namespace Content.Server.Doors.Systems
                 args.Cancel();
         }
 
-        private void OnDoorGetPryTimeModifier(EntityUid uid, FirelockComponent component, DoorGetPryTimeModifierEvent args)
+        private void OnDoorGetPryTimeModifier(EntityUid uid, FirelockComponent component, GetPryTimeModifierEvent args)
         {
             var state = CheckPressureAndFire(uid, component);
 
