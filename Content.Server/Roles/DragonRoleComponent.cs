@@ -12,6 +12,6 @@ public sealed partial class DragonRoleComponent : AntagonistRoleComponent
     /// <summary>
     /// Number of carp rifts that are fully charged.
     /// </summary>
-    [DataField("riftsCharged")]
+    [DataField]
     public int RiftsCharged;
 }
