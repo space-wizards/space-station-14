@@ -1,22 +1,4 @@
 Entries:
-- author: PrPleGoo
-  changes:
-  - {message: Changed news article to track an author., type: Tweak}
-  - {message: News articles can only be deleted by their tracked author., type: Tweak}
-  id: 4353
-  time: '2023-07-27T20:25:56.0000000+00:00'
-- author: RiceMar
-  changes:
-  - {message: Nanotrasen has yielded to the pleas of the station's newly forming rock
-      bands and has permitted "guitars worn on the back rebelliously" under official
-      dress code., type: Add}
-  id: 4354
-  time: '2023-07-27T23:05:32.0000000+00:00'
-- author: Verslebas
-  changes:
-  - {message: Added champagne!, type: Add}
-  id: 4355
-  time: '2023-07-28T15:54:36.0000000+00:00'
 - author: OctoRocket and Eden
   changes:
   - {message: Removed annoying archaic replacements that involve like and other confusing
@@ -2970,3 +2952,20 @@ Entries:
       of their over ear headsets, type: Add}
   id: 4852
   time: '2023-09-18T19:18:56.0000000+00:00'
+- author: PursuitinAshes
+  changes:
+  - {message: Nanotrasen now properly supplies its captains with appropriate headgear
+      in all of their lockers., type: Fix}
+  id: 4853
+  time: '2023-09-18T19:20:10.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: The Syndicate has cracked the binary radio channel's encryption and
+      is offering keys for 4 TC., type: Add}
+  id: 4854
+  time: '2023-09-18T19:20:56.0000000+00:00'
+- author: liltenhead
+  changes:
+  - {message: Increased the amount of barotrauma damage you receive., type: Tweak}
+  id: 4855
+  time: '2023-09-18T19:21:36.0000000+00:00'
