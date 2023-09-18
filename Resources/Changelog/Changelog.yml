@@ -1,9 +1,4 @@
 Entries:
-- author: KingFroozy
-  changes:
-  - {message: fixed Syndicate Chief Engineer's jumpsuit., type: Fix}
-  id: 4346
-  time: '2023-07-27T08:43:16.0000000+00:00'
 - author: JoeHammad
   changes:
   - {message: 'The syndicate sniper bundle was added to the uplink, containing a Hristov,
@@ -2969,3 +2964,9 @@ Entries:
   - {message: Fixed fultons losing their beacon when the stack is split., type: Fix}
   id: 4845
   time: '2023-09-18T00:22:26.0000000+00:00'
+- author: Psychpsyo
+  changes:
+  - {message: The advanced mop no longer looks boring when attached to the janitorial
+      trolley., type: Tweak}
+  id: 4846
+  time: '2023-09-18T00:23:35.0000000+00:00'
