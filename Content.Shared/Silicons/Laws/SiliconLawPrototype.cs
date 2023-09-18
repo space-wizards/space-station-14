@@ -38,6 +38,19 @@ public partial class SiliconLaw : IComparable<SiliconLaw>
 
         return Order.CompareTo(other.Order);
     }
+
+    /// <summary>
+    /// Return a shallow clone of this law.
+    /// </summary>
+    public SiliconLaw ShallowClone()
+    {
+        return new SiliconLaw()
+        {
+            LawString = LawString,
+            Order = Order,
+            LawIdentifierOverride = LawIdentifierOverride
+        };
+    }
 }
 
 /// <summary>

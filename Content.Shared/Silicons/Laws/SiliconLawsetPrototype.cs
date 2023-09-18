@@ -30,6 +30,24 @@ public sealed partial class SiliconLawset
 
         return string.Join(" / ", laws);
     }
+
+    /// <summary>
+    /// Do a clone of this lawset.
+    /// It will have unique laws but their strings are still shared.
+    /// </summary>
+    public SiliconLawset Clone()
+    {
+        var laws = new List<SiliconLaw>(Laws.Count);
+        foreach (var law in Laws)
+        {
+            laws.Add(law.ShallowClone());
+        }
+
+        return new SiliconLawset()
+        {
+            Laws = laws
+        };
+    }
 }
 
 /// <summary>

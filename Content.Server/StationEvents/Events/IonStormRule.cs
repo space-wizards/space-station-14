@@ -4,6 +4,7 @@ using Content.Server.Station.Components;
 using Content.Server.StationEvents.Components;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
+using Content.Shared.FixedPoint;
 using Content.Shared.Random;
 using Content.Shared.Random.Helpers;
 using Content.Shared.Silicons.Laws;
@@ -35,25 +36,50 @@ public sealed class IonStormRule : StationEventSystem<IonStormRuleComponent>
             if (laws.Laws.Count == 0)
                 continue;
 
-            // first try to swap it out with a random lawset
+            // try to swap it out with a random lawset
             if (RobustRandom.Prob(target.RandomLawsetChance))
             {
                 var lawsets = PrototypeManager.Index<WeightedRandomPrototype>(target.RandomLawsets);
                 var lawset = lawsets.Pick(RobustRandom);
                 laws = _siliconLaw.GetLawset(lawset);
             }
+            else
+            {
+                // clone it so not modifying stations lawset
+                laws = laws.Clone();
+            }
 
-            // second see if we can remove a random law
+            // shuffle them all
+            if (RobustRandom.Prob(target.ShuffleChance))
+            {
+                // hopefully work with existing glitched laws if there are multiple ion storms
+                FixedPoint2 baseOrder = FixedPoint2.New(1);
+                foreach (var law in laws.Laws)
+                {
+                    if (law.Order < baseOrder)
+                        baseOrder = law.Order;
+                }
+
+                RobustRandom.Shuffle(laws.Laws);
+
+                // change order based on shuffled position
+                for (int i = 0; i < laws.Laws.Count; i++)
+                {
+                    laws.Laws[i].Order = baseOrder + i;
+                }
+            }
+
+            // see if we can remove a random law
             if (laws.Laws.Count > 0 && RobustRandom.Prob(target.RemoveChance))
             {
                 var i = RobustRandom.Next(laws.Laws.Count);
                 laws.Laws.RemoveAt(i);
             }
 
-            // third generate a new law...
+            // generate a new law...
             var newLaw = GenerateLaw();
 
-            // fourth see if the law we add will replace a random existing law or be a new glitched order one
+            // see if the law we add will replace a random existing law or be a new glitched order one
             if (laws.Laws.Count > 0 && RobustRandom.Prob(target.ReplaceChance))
             {
                 var i = RobustRandom.Next(laws.Laws.Count);
@@ -73,11 +99,10 @@ public sealed class IonStormRule : StationEventSystem<IonStormRuleComponent>
                 });
             }
 
-            // fifth shuffle them all
-            if (RobustRandom.Prob(target.ShuffleChance))
-                RobustRandom.Shuffle(laws.Laws);
-
             _adminLogger.Add(LogType.Mind, LogImpact.High, $"{ToPrettyString(ent):silicon} had its laws changed by an ion storm to {laws.LoggingString()}");
+
+            // laws unique to this silicon, dont use station laws anymore
+            EnsureComp<SiliconLawProviderComponent>(ent);
             var ev = new IonStormLawsEvent(laws);
             RaiseLocalEvent(ent, ref ev);
         }
