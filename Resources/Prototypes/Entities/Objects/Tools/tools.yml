@@ -155,7 +155,7 @@
       Steel: 100
   - type: StaticPrice
     price: 22
-  - type: DoorPrying
+  - type: Prying
     needsComponent: !type:Bool
       true
 

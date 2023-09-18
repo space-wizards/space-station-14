@@ -1,15 +1,12 @@
 using Content.Server.Access;
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
-using Content.Server.Construction;
 using Content.Shared.Database;
 using Content.Shared.Doors;
 using Content.Shared.Doors.Components;
 using Content.Shared.Doors.Systems;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Interaction;
-using Content.Shared.Tools.Components;
-using Content.Shared.Verbs;
 using Robust.Shared.Audio;
 using Content.Server.Administration.Logs;
 using Content.Server.Power.EntitySystems;
@@ -17,8 +14,8 @@ using Content.Shared.Tools;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
 using Content.Shared.DoAfter;
-using Content.Shared.Doors.Prying.Systems;
-using Content.Shared.Doors.Prying.Components;
+using Content.Shared.Prying.Systems;
+using Content.Shared.Prying.Components;
 using Content.Shared.Tools.Systems;
 
 namespace Content.Server.Doors.Systems;
@@ -30,16 +27,12 @@ public sealed class DoorSystem : SharedDoorSystem
     [Dependency] private readonly AirtightSystem _airtightSystem = default!;
     [Dependency] private readonly SharedToolSystem _toolSystem = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
-    [Dependency] private readonly DoorPryingSystem _pryingSystem = default!;
+    [Dependency] private readonly PryingSystem _pryingSystem = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
-        SubscribeLocalEvent<DoorComponent, InteractUsingEvent>(OnInteractUsing, after: new[] { typeof(ConstructionSystem) });
-
-        // Mob prying doors
-        SubscribeLocalEvent<DoorComponent, GetVerbsEvent<AlternativeVerb>>(OnDoorAltVerb);
 
         SubscribeLocalEvent<DoorComponent, BeforePryEvent>(OnBeforeDoorPry);
         SubscribeLocalEvent<DoorComponent, WeldableAttemptEvent>(OnWeldAttempt);
@@ -115,17 +108,6 @@ public sealed class DoorSystem : SharedDoorSystem
     }
 
     #region DoAfters
-    /// <summary>
-    ///     Weld or pry open a door.
-    /// </summary>
-    private void OnInteractUsing(EntityUid uid, DoorComponent door, InteractUsingEvent args)
-    {
-        if (args.Handled)
-            return;
-
-        args.Handled = _pryingSystem.TryPry(uid, args.User, door, out _, args.Used);
-    }
-
     private void OnWeldAttempt(EntityUid uid, DoorComponent component, WeldableAttemptEvent args)
     {
         if (component.CurrentlyCrushing.Count > 0)
@@ -145,22 +127,6 @@ public sealed class DoorSystem : SharedDoorSystem
             SetState(uid, DoorState.Welded, component);
         else if (component.State == DoorState.Welded)
             SetState(uid, DoorState.Closed, component);
-    }
-
-    private void OnDoorAltVerb(EntityUid uid, DoorComponent component, GetVerbsEvent<AlternativeVerb> args)
-    {
-        if (!args.CanInteract || !args.CanAccess)
-            return;
-
-        if (!TryComp<DoorPryingComponent>(args.User, out var tool))
-            return;
-
-        args.Verbs.Add(new AlternativeVerb()
-        {
-            Text = Loc.GetString("door-pry"),
-            Impact = LogImpact.Low,
-            Act = () => _pryingSystem.TryPry(uid, args.User, component, out _, args.User),
-        });
     }
 
     private void OnBeforeDoorPry(EntityUid id, DoorComponent door, BeforePryEvent args)

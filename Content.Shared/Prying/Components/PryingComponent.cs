@@ -1,17 +1,16 @@
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 
-namespace Content.Shared.Doors.Prying.Components;
+namespace Content.Shared.Prying.Components;
 
 [RegisterComponent, NetworkedComponent]
-public sealed partial class DoorPryingComponent : Component
+public sealed partial class PryingComponent : Component
 {
     /// <summary>
     /// Whether the tool can pry open powered doors
     /// </summary>
     [DataField("pryPowered")]
     public bool PryPowered = false;
-
     /// <summary>
     /// Modifier on the prying time.
     /// Lower values result in more time.
@@ -30,6 +29,12 @@ public sealed partial class DoorPryingComponent : Component
     /// </summary>
     [DataField("needsComponent")]
     public bool NeedsComponent = false;
+
+    /// <summary>
+    /// Whether the entity with the component can pry.
+    /// </summary>
+    [DataField("active")]
+    public bool active = true;
 }
 
 /// <summary>
@@ -50,6 +55,15 @@ public sealed class BeforePryEvent : CancellableEntityEventArgs
 
 }
 
+public sealed class AfterPryEvent : EntityEventArgs
+{
+    public readonly EntityUid User;
+    public AfterPryEvent(EntityUid user)
+    {
+        User = user;
+    }
+}
+
 /// <summary>
 /// Raised to determine how long the door's pry time should be modified by.
 /// Multiply PryTimeModifier by the desired amount.
@@ -64,3 +78,4 @@ public sealed partial class DoorGetPryTimeModifierEvent : EntityEventArgs
         User = user;
     }
 }
+

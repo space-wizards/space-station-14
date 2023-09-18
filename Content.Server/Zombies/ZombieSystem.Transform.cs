@@ -32,7 +32,7 @@ using Content.Shared.Tools.Components;
 using Content.Shared.Weapons.Melee;
 using Content.Shared.Zombies;
 using Robust.Shared.Audio;
-using Content.Shared.Doors.Prying.Components;
+using Content.Shared.Prying.Components;
 
 namespace Content.Server.Zombies
 {
@@ -163,11 +163,11 @@ namespace Content.Server.Zombies
                 melee.Damage = dspec;
 
                 // humanoid zombies get to pry open doors and shit
-                var pryComp = EnsureComp<DoorPryingComponent>(target);
+                var pryComp = EnsureComp<PryingComponent>(target);
                 pryComp.SpeedModifier = 0.75f;
                 pryComp.PryPowered = true;
 
-                Dirty(pryComp);
+                Dirty(target, pryComp);
             }
 
             Dirty(melee);

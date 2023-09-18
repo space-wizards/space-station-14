@@ -1,4 +1,6 @@
 using System.Linq;
+using Content.Shared.Database;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.Damage;
@@ -16,6 +18,7 @@ using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
+using Content.Shared.Prying.Components;
 
 namespace Content.Shared.Doors.Systems;
 
@@ -61,6 +64,8 @@ public abstract partial class SharedDoorSystem : EntitySystem
 
         SubscribeLocalEvent<DoorComponent, StartCollideEvent>(HandleCollide);
         SubscribeLocalEvent<DoorComponent, PreventCollideEvent>(PreventCollision);
+
+        SubscribeLocalEvent<DoorComponent, AfterPryEvent>(OnAfterPry);
     }
 
     protected virtual void OnComponentInit(EntityUid uid, DoorComponent door, ComponentInit args)
@@ -205,6 +210,24 @@ public abstract partial class SharedDoorSystem : EntitySystem
         if (door.DenySound != null)
             PlaySound(uid, door.DenySound, AudioParams.Default.WithVolume(-3), user, predicted);
     }
+
+    /// <summary>
+    ///     Open or close a door after it has been successfuly pried.
+    /// </summary>
+    private void OnAfterPry(EntityUid uid, DoorComponent door, AfterPryEvent args)
+    {
+        if (door.State == DoorState.Closed)
+        {
+            _adminLog.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(args.User)} pried {ToPrettyString(uid)} open");
+            StartOpening(uid, door, args.User);
+        }
+        else if (door.State == DoorState.Open)
+        {
+            _adminLog.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(args.User)} pried {ToPrettyString(uid)} closed");
+            StartClosing(uid, door, args.User);
+        }
+    }
+
 
     public bool TryToggleDoor(EntityUid uid, DoorComponent? door = null, EntityUid? user = null, bool predicted = false)
     {

@@ -1,4 +1,5 @@
-using Content.Shared.Doors.Prying.Components;
+using Content.Shared.Prying.Components;
+using Content.Shared.Verbs;
 using Content.Shared.DoAfter;
 using Robust.Shared.Serialization;
 using Content.Shared.Administration.Logs;
@@ -6,9 +7,12 @@ using Content.Shared.Database;
 using Content.Shared.Doors.Components;
 using Content.Shared.Doors.Systems;
 using Content.Shared.Tools.Components;
+using System.Diagnostics.CodeAnalysis;
+using Content.Shared.Interaction;
 
-namespace Content.Shared.Doors.Prying.Systems;
-public class DoorPryingSystem : EntitySystem
+namespace Content.Shared.Prying.Systems;
+
+public sealed class PryingSystem : EntitySystem
 {
     [Dependency] private readonly ISharedAdminLogManager _adminLog = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
@@ -19,17 +23,45 @@ public class DoorPryingSystem : EntitySystem
     {
         base.Initialize();
 
+        // Mob prying doors
+        SubscribeLocalEvent<DoorComponent, GetVerbsEvent<AlternativeVerb>>(OnDoorAltVerb);
+
         SubscribeLocalEvent<DoorComponent, DoorPryDoAfterEvent>(OnDoAfter);
+        SubscribeLocalEvent<DoorComponent, InteractUsingEvent>(TryPryDoor);
+    }
+
+    private void TryPryDoor(EntityUid uid, DoorComponent comp, InteractUsingEvent args)
+    {
+        if (args.Handled)
+            return;
+
+        args.Handled = TryPry(uid, args.User, comp, out _, args.Used);
+    }
+
+    private void OnDoorAltVerb(EntityUid uid, DoorComponent component, GetVerbsEvent<AlternativeVerb> args)
+    {
+        if (!args.CanInteract || !args.CanAccess)
+            return;
+
+        if (!TryComp<PryingComponent>(args.User, out var tool))
+            return;
+
+        args.Verbs.Add(new AlternativeVerb()
+        {
+            Text = Loc.GetString("door-pry"),
+            Impact = LogImpact.Low,
+            Act = () => TryPry(uid, args.User, component, out _, args.User),
+        });
     }
 
     /// <summary>
-    ///     Pry open a door.
+    /// Try to pry open an entity.
     /// </summary>
     public bool TryPry(EntityUid target, EntityUid user, DoorComponent door, out DoAfterId? id, EntityUid tool)
     {
         id = null;
 
-        DoorPryingComponent? comp = null;
+        PryingComponent? comp = null;
         if (!Resolve(tool, ref comp))
             return false;
 
@@ -40,35 +72,47 @@ public class DoorPryingSystem : EntitySystem
                 return false;
         }
 
-        if (!CanPry(target, user, comp.PryPowered))
+        if (!CanPry(target, user, comp))
         {
+            // If we have reached this point we want the event that caused this
+            // to be marked as handled as a popup would be generated on failure.
             return true;
         }
 
         StartPry(target, user, door, tool, comp.SpeedModifier, out id);
+
         return true;
     }
 
     /// <summary>
-    ///     Pry open a door.
+    /// Try to pry open an entity.
     /// </summary>
     public bool TryPry(EntityUid target, EntityUid user, DoorComponent door, out DoAfterId? id)
     {
         id = null;
 
-        if (!TryComp<PryUnpoweredComponent>(target, out _))
-            return false;
-
-        if (!CanPry(target, user, false))
+        if (!CanPry(target, user))
+            // If we have reached this point we want the event that caused this
+            // to be marked as handled as a popup would be generated on failure.
             return true;
 
-        StartPry(target, user, door, null, 1.0f, out id);
-        return true;
+        return StartPry(target, user, door, null, 1.0f, out id);
     }
 
-    bool CanPry(EntityUid target, EntityUid user, bool pryPowered)
+    private bool CanPry(EntityUid target, EntityUid user, PryingComponent? comp = null)
     {
-        var canev = new BeforePryEvent(user, pryPowered);
+        BeforePryEvent canev;
+
+        if (comp != null)
+        {
+            canev = new BeforePryEvent(user, comp.PryPowered);
+        }
+        else
+        {
+            if (!TryComp<PryUnpoweredComponent>(target, out _))
+                return false;
+            canev = new BeforePryEvent(user, false);
+        }
 
         RaiseLocalEvent(target, canev, false);
 
@@ -77,7 +121,7 @@ public class DoorPryingSystem : EntitySystem
         return true;
     }
 
-    void StartPry(EntityUid target, EntityUid user, DoorComponent door, EntityUid? tool, float toolModifier, out DoAfterId? id)
+    bool StartPry(EntityUid target, EntityUid user, DoorComponent door, EntityUid? tool, float toolModifier, [NotNullWhen(true)] out DoAfterId? id)
     {
         var modEv = new DoorGetPryTimeModifierEvent(user);
 
@@ -97,31 +141,25 @@ public class DoorPryingSystem : EntitySystem
         {
             _adminLog.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(user)} is prying {ToPrettyString(target)} while it is {door.State}");
         }
-        _doAfterSystem.TryStartDoAfter(doAfterArgs, out id);
+        return _doAfterSystem.TryStartDoAfter(doAfterArgs, out id);
     }
 
-    protected void OnDoAfter(EntityUid uid, DoorComponent door, DoorPryDoAfterEvent args)
+    private void OnDoAfter(EntityUid uid, DoorComponent door, DoorPryDoAfterEvent args)
     {
         if (args.Cancelled)
             return;
         if (args.Target is null)
             return;
 
-        DoorPryingComponent? comp = null;
+
+        PryingComponent? comp = null;
 
         if (args.Used != null && Resolve(args.Used.Value, ref comp))
-            _audioSystem.PlayPredicted(comp.UseSound, args.Used.Value, args.User, comp.UseSound.Params.WithVariation(0.175f).AddVolume(-5f));
+            _audioSystem.PlayPvs(comp.UseSound, args.User);
 
-        if (door.State == DoorState.Closed)
-        {
-            _adminLog.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(args.User)} pried {ToPrettyString(args.Target.Value)} open");
-            _doorSystem.StartOpening(args.Target.Value, door, args.Target, true);
-        }
-        else if (door.State == DoorState.Open)
-        {
-            _adminLog.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(args.User)} pried {ToPrettyString(args.Target.Value)} closed");
-            _doorSystem.StartClosing(args.Target.Value, door, args.Target, true);
-        }
+        var ev = new AfterPryEvent(args.User);
+        RaiseLocalEvent(uid, ev, false);
+
     }
 }
 

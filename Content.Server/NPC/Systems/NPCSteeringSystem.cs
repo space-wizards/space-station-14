@@ -30,7 +30,7 @@ using Robust.Shared.Random;
 using Robust.Shared.Threading;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
-using Content.Shared.Doors.Prying.Systems;
+using Content.Shared.Prying.Systems;
 
 namespace Content.Server.NPC.Systems;
 
@@ -63,7 +63,7 @@ public sealed partial class NPCSteeringSystem : SharedNPCSteeringSystem
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SharedCombatModeSystem _combat = default!;
-    [Dependency] private readonly DoorPryingSystem _pryingSystem = default!;
+    [Dependency] private readonly PryingSystem _pryingSystem = default!;
 
     private EntityQuery<FixturesComponent> _fixturesQuery;
     private EntityQuery<MovementSpeedModifierComponent> _modifierQuery;

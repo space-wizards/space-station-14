@@ -1,6 +1,6 @@
 using Content.Shared.Doors.Components;
 using Content.Shared.Popups;
-using Content.Shared.Doors.Prying.Components;
+using Content.Shared.Prying.Components;
 
 namespace Content.Shared.Doors.Systems;
 

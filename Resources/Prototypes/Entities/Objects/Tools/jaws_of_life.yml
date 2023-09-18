@@ -24,7 +24,7 @@
       - Prying
     speed: 1.5
     useSound: /Audio/Items/jaws_pry.ogg
-  - type: DoorPrying
+  - type: Prying
     pryPowered: !type:Bool
       true
     needsComponent: !type:Bool

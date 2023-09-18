@@ -8,7 +8,7 @@ using Content.Shared.Doors.Systems;
 using Content.Shared.Interaction;
 using Robust.Server.GameObjects;
 using Content.Shared.Wires;
-using Content.Shared.Doors.Prying.Components;
+using Content.Shared.Prying.Components;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Doors.Systems;
