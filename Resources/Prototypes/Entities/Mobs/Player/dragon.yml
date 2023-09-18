@@ -180,5 +180,6 @@
   noSpawn: true
   components:
   - type: EntityTargetAction
-    icon: Interface/Actions/devour.png
+    icon: { sprite : Interface/Actions/devour.rsi, state: icon }
+    iconOn: { sprite : Interface/Actions/devour.rsi, state: icon-on }
     event: !type:DevourActionEvent

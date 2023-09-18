@@ -31,7 +31,7 @@ public sealed partial class StorageSystem
             if (entityStorageComp != null && EntityStorage.Insert(ent, uid))
                 continue;
 
-            if (storageComp != null && Insert(uid, ent, storageComp: storageComp, playSound: false))
+            if (storageComp != null && Insert(uid, ent, out _, storageComp: storageComp, playSound: false))
                 continue;
 
             Log.Error($"Tried to StorageFill {item} inside {ToPrettyString(uid)} but can't.");
