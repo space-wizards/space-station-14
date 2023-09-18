@@ -34,6 +34,7 @@ public abstract partial class SharedDoorSystem : EntitySystem
     [Dependency] protected readonly SharedAppearanceSystem AppearanceSystem = default!;
     [Dependency] private   readonly OccluderSystem _occluder = default!;
     [Dependency] private   readonly AccessReaderSystem _accessReaderSystem = default!;
+    [Dependency] private readonly ISharedAdminLogManager _adminLog = default!;
 
     /// <summary>
     ///     A body must have an intersection percentage larger than this in order to be considered as colliding with a
