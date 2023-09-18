@@ -72,8 +72,7 @@ public sealed class MousetrapSystem : EntitySystem
     private void AddMouseDefuseVerb(EntityUid uid, MousetrapComponent component, GetVerbsEvent<Verb> args)
     {
         if (!args.CanInteract
-            || !args.CanAccess
-            || !_tagSystem.HasTag(args.User, "Mouse")) // only for mice
+            || !args.CanAccess)
             return;
 
         if (!TryComp(uid, out DamageUserOnTriggerComponent? damageOnTrigger))
@@ -91,24 +90,22 @@ public sealed class MousetrapSystem : EntitySystem
 
                 _audio.PlayPvs(Comp<EmitSoundOnTriggerComponent>(uid).Sound, uid); // play snAp
 
-                if (_random.Prob(MathF.Min(0.99f, 0.1f * component.Difficulty))) // Chance to die
+                if (_random.Prob(MathF.Min(0.99f, 0.15f * component.Difficulty))) // Chance to die
                 {
-                    if (TryComp(args.User, out PhysicsComponent? physics) && physics.Mass != 0)
+                    if (TryComp(args.User, out PhysicsComponent? physics) && physics.Mass != 0 && TryComp(args.User, out DamageableComponent? damageable))
                     {
-                        var damageable = EntityManager.GetComponent<DamageableComponent>(args.User);
                         var damage = new DamageSpecifier(damageOnTrigger.Damage);
                         damage *= CalculateDamage(component, physics);
 
                         _damageableSystem.SetDamage(args.User, damageable, damage); // die
                     }
-                    _popupSystem.PopupEntity(Loc.GetString("mousetrap-defuse-failed"), args.User, Shared.Popups.PopupType.Small);
+                    _popupSystem.PopupEntity(Loc.GetString("mousetrap-defuse-failed", ("who", Name(args.User))), args.User, Shared.Popups.PopupType.Small);
                     return;
                 }
                 else if (_random.Prob(MathF.Max(0.01f, 1f - component.Difficulty * 0.2f))) // Chance to get some damage & defuse
                 {
-                    if (TryComp(args.User, out PhysicsComponent? physics) && physics.Mass != 0)
+                    if (TryComp(args.User, out PhysicsComponent? physics) && physics.Mass != 0 && TryComp(args.User, out DamageableComponent? damageable))
                     {
-                        var damageable = EntityManager.GetComponent<DamageableComponent>(args.User);
                         var damage = new DamageSpecifier(damageOnTrigger.Damage);
                         damage *= (CalculateDamage(component, physics) / 4);
 
@@ -117,11 +114,11 @@ public sealed class MousetrapSystem : EntitySystem
                 }
                 // else the mouse disarmed the mousetrap without damage
 
-                _popupSystem.PopupEntity(Loc.GetString("mousetrap-defused-by-mouse"), uid, Shared.Popups.PopupType.Medium);
+                _popupSystem.PopupEntity(Loc.GetString("mousetrap-defused-by", ("who", Name(args.User))), uid, Shared.Popups.PopupType.Medium);
                 component.IsActive = false;
                 UpdateVisuals(uid);
             },
-            Text = "Defuse"
+            Text = Loc.GetString("mousetrap-defuse-verb")
         };
         args.Verbs.Add(defuse);
     }
