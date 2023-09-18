@@ -1,9 +1,4 @@
 Entries:
-- author: KingFroozy
-  changes:
-  - {message: Minor sprite changes for jaws of life and power drill, type: Tweak}
-  id: 4351
-  time: '2023-07-27T20:03:28.0000000+00:00'
 - author: crazybrain
   changes:
   - {message: Alien artifact intercom no longer has the syndicate channel., type: Tweak}
@@ -2969,3 +2964,8 @@ Entries:
   - {message: Fixed Holobarriers being unable to be destroyed., type: Fix}
   id: 4850
   time: '2023-09-18T01:22:39.0000000+00:00'
+- author: Ilya246
+  changes:
+  - {message: Blood-red magboots' jetpack now works again., type: Fix}
+  id: 4851
+  time: '2023-09-18T06:13:12.0000000+00:00'
