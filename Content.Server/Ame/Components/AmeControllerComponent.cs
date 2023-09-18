@@ -9,7 +9,7 @@ namespace Content.Server.Ame.Components;
 /// The component used to make an entity the controller/fuel injector port of an AntiMatter Engine.
 /// Connects to adjacent entities with this component or <see cref="AmeShieldComponent"/> to make an AME.
 /// </summary>
-[Access(typeof(AmeControllerSystem), typeof(AmeNodeGroup))]
+[Access(typeof(AmeControllerSystem))]
 [RegisterComponent]
 public sealed partial class AmeControllerComponent : SharedAmeControllerComponent
 {

@@ -48,11 +48,11 @@ public sealed partial class GraphVisState : ComponentState
 public sealed partial class NodeVisState : ComponentState
 {
     public List<EdgeVisState> Edges { get; init; }
-    public EntityUid HostId { get; init; }
-    public EntityUid? GraphId { get; init; }
+    public NetEntity HostId { get; init; }
+    public NetEntity? GraphId { get; init; }
     public string GraphProto { get; init; }
 
-    public NodeVisState(List<EdgeVisState> edges, EntityUid hostId, EntityUid? graphId, string graphProto)
+    public NodeVisState(List<EdgeVisState> edges, NetEntity hostId, NetEntity? graphId, string graphProto)
     {
         Edges = edges;
         HostId = hostId;
@@ -63,9 +63,9 @@ public sealed partial class NodeVisState : ComponentState
 
 /// <summary>A state wrapper used to communicate the visual state of and edge between two nodes to clients.</summary>
 [Serializable, NetSerializable]
-public readonly record struct EdgeVisState(EntityUid Id, EdgeFlags Flags)
+public readonly record struct EdgeVisState(NetEntity Id, EdgeFlags Flags)
 {
-    public void Deconstruct(out EntityUid id, out EdgeFlags flags)
+    public void Deconstruct(out NetEntity id, out EdgeFlags flags)
     {
         id = Id;
         flags = Flags;

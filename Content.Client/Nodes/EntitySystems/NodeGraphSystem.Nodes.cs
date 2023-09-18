@@ -14,8 +14,8 @@ public sealed partial class NodeGraphSystem
             return;
 
         comp.Edges = state.Edges;
-        comp.HostId = state.HostId;
-        comp.GraphId = state.GraphId;
+        comp.HostId = GetEntity(state.HostId); // EntityUid from net entity.
+        comp.GraphId = GetEntity(state.GraphId); // GraphId from net entity.
         comp.GraphProto = state.GraphProto;
     }
 

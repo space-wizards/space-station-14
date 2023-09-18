@@ -147,8 +147,10 @@ public sealed partial class DebugNodeVisualsOverlay : Overlay
             var nodeColor = GetColor(node);
 
             handle.DrawRect(Box2.CenteredAround(nodePos, new Vector2(NodeSize, NodeSize)), nodeColor);
-            foreach (var (edgeId, edgeFlags) in node.Edges)
+            foreach (var (edgeNetId, edgeFlags) in node.Edges)
             {
+                var edgeId = _entMan.GetEntity(edgeNetId);
+
                 if (!_xformQuery.TryGetComponent(edgeId, out var edgeXform))
                     continue;
 

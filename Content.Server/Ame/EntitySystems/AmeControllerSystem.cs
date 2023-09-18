@@ -4,6 +4,10 @@ using Content.Server.Administration.Logs;
 using Content.Server.Ame.Components;
 using Content.Server.Chat.Managers;
 using Content.Server.NodeContainer;
+using Content.Server.Nodes;
+using Content.Server.Nodes.Components;
+using Content.Server.Nodes.EntitySystems;
+using Content.Server.Nodes.Events;
 using Content.Server.Power.Components;
 using Content.Shared.Ame;
 using Content.Shared.Database;
@@ -25,12 +29,14 @@ public sealed class AmeControllerSystem : EntitySystem
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly IChatManager _chatManager = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
+    [Dependency] private readonly AmeSystem _ameSystem = default!;
     [Dependency] private readonly AppearanceSystem _appearanceSystem = default!;
     [Dependency] private readonly ContainerSystem _containerSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
     [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
+    [Dependency] private readonly NodeGraphSystem _nodeSystem = default!;
 
     public override void Initialize()
     {
@@ -40,12 +46,16 @@ public sealed class AmeControllerSystem : EntitySystem
         SubscribeLocalEvent<AmeControllerComponent, InteractUsingEvent>(OnInteractUsing);
         SubscribeLocalEvent<AmeControllerComponent, PowerChangedEvent>(OnPowerChanged);
         SubscribeLocalEvent<AmeControllerComponent, UiButtonPressedMessage>(OnUiButtonPressed);
+        SubscribeLocalEvent<AmeControllerComponent, AddedToGraphEvent>(OnAddedToGraph);
+        SubscribeLocalEvent<AmeControllerComponent, RemovedFromGraphEvent>(OnRemovedFromGraph);
+        SubscribeLocalEvent<AmeControllerComponent, ProxyNodeRelayEvent<AddedToGraphEvent>>(OnAddedToGraph);
+        SubscribeLocalEvent<AmeControllerComponent, ProxyNodeRelayEvent<RemovedFromGraphEvent>>(OnRemovedFromGraph);
     }
 
     public override void Update(float frameTime)
     {
         var curTime = _gameTiming.CurTime;
-        var query = EntityQueryEnumerator<AmeControllerComponent, NodeContainerComponent>();
+        var query = EntityQueryEnumerator<AmeControllerComponent, PolyNodeComponent>();
         while (query.MoveNext(out var uid, out var controller, out var nodes))
         {
             if (controller.NextUpdate <= curTime)
@@ -53,7 +63,7 @@ public sealed class AmeControllerSystem : EntitySystem
         }
     }
 
-    private void UpdateController(EntityUid uid, TimeSpan curTime, AmeControllerComponent? controller = null, NodeContainerComponent? nodes = null)
+    private void UpdateController(EntityUid uid, TimeSpan curTime, AmeControllerComponent? controller = null, PolyNodeComponent? poly = null)
     {
         if (!Resolve(uid, ref controller))
             return;
@@ -63,26 +73,28 @@ public sealed class AmeControllerSystem : EntitySystem
 
         if (!controller.Injecting)
             return;
-        if (!TryGetAMENodeGroup(uid, out var group, nodes))
+        if (!TryGetAmeGraph(uid, out var graphId, out var graph, poly: poly))
             return;
 
         if (TryComp<AmeFuelContainerComponent>(controller.JarSlot.ContainedEntity, out var fuelJar))
         {
             var availableInject = Math.Min(controller.InjectionAmount, fuelJar.FuelAmount);
-            var powerOutput = group.InjectFuel(availableInject, out var overloading);
+            var powerOutput = _ameSystem.InjectFuel(graphId, availableInject, out var overloading, graph);
+            fuelJar.FuelAmount -= availableInject;
+
             if (TryComp<PowerSupplierComponent>(uid, out var powerOutlet))
                 powerOutlet.MaxSupply = powerOutput;
-            fuelJar.FuelAmount -= availableInject;
+
             _audioSystem.PlayPvs(controller.InjectSound, uid, AudioParams.Default.WithVolume(overloading ? 10f : 0f));
             UpdateUi(uid, controller);
         }
 
-        controller.Stability = group.GetTotalStability();
+        controller.Stability = _ameSystem.GetTotalStability(graphId, graph);
 
         UpdateDisplay(uid, controller.Stability, controller);
 
         if (controller.Stability <= 0)
-            group.ExplodeCores();
+            _ameSystem.ExplodeCores(graphId, graph);
     }
 
     public void UpdateUi(EntityUid uid, AmeControllerComponent? controller = null)
@@ -100,7 +112,7 @@ public sealed class AmeControllerSystem : EntitySystem
     private AmeControllerBoundUserInterfaceState GetUiState(EntityUid uid, AmeControllerComponent controller)
     {
         var powered = !TryComp<ApcPowerReceiverComponent>(uid, out var powerSource) || powerSource.Powered;
-        var coreCount = TryGetAMENodeGroup(uid, out var group) ? group.CoreCount : 0;
+        var coreCount = TryGetAmeGraph(uid, out var _, out var graph) ? graph.Cores.Count : 0;
 
         var hasJar = Exists(controller.JarSlot.ContainedEntity);
         if (!hasJar || !TryComp<AmeFuelContainerComponent>(controller.JarSlot.ContainedEntity, out var jar))
@@ -111,23 +123,22 @@ public sealed class AmeControllerSystem : EntitySystem
 
     private bool IsMasterController(EntityUid uid)
     {
-        return TryGetAMENodeGroup(uid, out var group) && group.MasterController == uid;
+        return TryGetAmeGraph(uid, out var _, out var ame) && ame.MasterController == uid;
     }
 
-    private bool TryGetAMENodeGroup(EntityUid uid, [MaybeNullWhen(false)] out AmeNodeGroup group, NodeContainerComponent? nodes = null)
+    private bool TryGetAmeGraph(EntityUid uid, out EntityUid ameId, [MaybeNullWhen(false)] out AmeComponent ame, GraphNodeComponent? node = null, PolyNodeComponent? poly = null)
     {
-        if (!Resolve(uid, ref nodes))
+        foreach (var (graphId, _) in _nodeSystem.EnumerateGraphs(uid, node, poly))
         {
-            group = null;
-            return false;
+            if (!TryComp(graphId, out ame))
+                continue;
+
+            ameId = graphId;
+            return true;
         }
 
-        group = nodes.Nodes.Values
-            .Select(node => node.NodeGroup)
-            .OfType<AmeNodeGroup>()
-            .FirstOrDefault();
-
-        return group != null;
+        (ameId, ame) = (EntityUid.Invalid, null);
+        return false;
     }
 
     public void TryEject(EntityUid uid, EntityUid? user = null, AmeControllerComponent? controller = null)
@@ -189,7 +200,7 @@ public sealed class AmeControllerSystem : EntitySystem
         UpdateUi(uid, controller);
 
         // Logging
-        if (!TryComp<MindContainerComponent>(user, out var mindContainer))
+        if (!HasComp<MindContainerComponent>(user))
             return;
 
         var humanReadableState = controller.Injecting ? "Inject" : "Not inject";
@@ -197,8 +208,8 @@ public sealed class AmeControllerSystem : EntitySystem
 
         // Admin alert
         var safeLimit = 0;
-        if (TryGetAMENodeGroup(uid, out var group))
-            safeLimit = group.CoreCount * 2;
+        if (TryGetAmeGraph(uid, out var _, out var graph))
+            safeLimit = graph.Cores.Count * 2;
 
         if (oldValue <= safeLimit && value > safeLimit)
             _chatManager.SendAdminAlert(user.Value, $"increased AME over safe limit to {controller.InjectionAmount}");
@@ -297,8 +308,8 @@ public sealed class AmeControllerSystem : EntitySystem
                 break;
         }
 
-        if (TryGetAMENodeGroup(uid, out var group))
-            group.UpdateCoreVisuals();
+        if (TryGetAmeGraph(uid, out var graphId, out var graph))
+            _ameSystem.UpdateVisuals(graphId, graph);
 
         UpdateUi(uid, comp);
     }
@@ -323,4 +334,44 @@ public sealed class AmeControllerSystem : EntitySystem
 
         return true;
     }
+
+
+    private void OnAddedToGraph(EntityUid uid, AmeControllerComponent comp, ref AddedToGraphEvent args)
+    {
+        if (!TryComp<AmeComponent>(args.GraphId, out var ame))
+            return;
+
+        if (ame.MasterController is { })
+            return;
+
+        _ameSystem.SetMasterController(args.GraphId, uid, ame);
+
+        UpdateUi(uid, comp);
+    }
+
+    private void OnRemovedFromGraph(EntityUid uid, AmeControllerComponent comp, ref RemovedFromGraphEvent args)
+    {
+        if (!TryComp<AmeComponent>(args.GraphId, out var ame))
+            return;
+
+        if (uid != ame.MasterController)
+            return;
+
+        foreach (var nodeId in args.Graph.Nodes)
+        {
+            if (!HasComp<AmeControllerComponent>(nodeId) || nodeId == uid)
+                continue;
+
+            _ameSystem.SetMasterController(args.GraphId, nodeId, ame);
+            return;
+        }
+
+        _ameSystem.SetMasterController(args.GraphId, null, ame);
+    }
+
+    private void OnAddedToGraph(EntityUid uid, AmeControllerComponent comp, ref ProxyNodeRelayEvent<AddedToGraphEvent> args)
+        => OnAddedToGraph(uid, comp, ref args.Event);
+
+    private void OnRemovedFromGraph(EntityUid uid, AmeControllerComponent comp, ref ProxyNodeRelayEvent<RemovedFromGraphEvent> args)
+        => OnRemovedFromGraph(uid, comp, ref args.Event);
 }

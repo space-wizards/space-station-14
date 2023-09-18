@@ -42,7 +42,7 @@ public sealed partial class GraphNodeComponent : Component
     /// <remarks>
     /// Defaults to a capacity of 4 because the most common types of nodes are cardinally connected.
     /// </remarks>
-    [DataField("edges")]
+    [ViewVariables]
     public List<Edge> Edges = new(4);
 
     /// <summary>
@@ -77,7 +77,6 @@ public enum NodeFlags : byte
 
 /// <summary>
 /// </summary>
-[DataDefinition]
 public readonly partial struct Edge
 {
     /// <summary>
@@ -96,13 +95,13 @@ public readonly partial struct Edge
     /// <summary>
     /// The entity at the other end of this edge.
     /// </summary>
-    [DataField("id", required: true)]
+    [ViewVariables]
     public EntityUid Id { get; init; }
 
     /// <summary>
     /// The current state of this edge as bitflags.
     /// </summary>
-    [DataField("flags")]
+    [ViewVariables]
     public EdgeFlags Flags { get; init; }
 
 

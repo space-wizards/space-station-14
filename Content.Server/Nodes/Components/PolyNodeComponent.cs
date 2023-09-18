@@ -20,6 +20,6 @@ public sealed partial class PolyNodeComponent : Component
     /// <summary>
     /// A map of the nodes acting as proxies for this node container.
     /// </summary>
-    [DataField("proxyNodes")]
+    [ViewVariables]
     public Dictionary<string, EntityUid> ProxyNodes = new();
 }

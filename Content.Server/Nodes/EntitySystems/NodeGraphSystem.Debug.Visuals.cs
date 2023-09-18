@@ -309,13 +309,13 @@ public sealed partial class NodeGraphSystem
         var edges = new List<EdgeVisState>();
         foreach (var (edgeId, edgeFlags) in comp.Edges)
         {
-            edges.Add(new(edgeId, edgeFlags));
+            edges.Add(new(GetNetEntity(edgeId), edgeFlags));
         }
 
         args.State = new NodeVisState(
             edges: edges,
-            hostId: GetNodeHost(uid, comp),
-            graphId: comp.GraphId,
+            hostId: GetNetEntity(GetNodeHost(uid, comp)),
+            graphId: GetNetEntity(comp.GraphId),
             graphProto: comp.GraphProto
         );
     }

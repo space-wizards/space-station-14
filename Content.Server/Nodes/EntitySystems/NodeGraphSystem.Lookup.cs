@@ -25,6 +25,35 @@ public sealed partial class NodeGraphSystem
         return poly.ProxyNodes.TryGetValue(proxyKey, out proxyId);
     }
 
+    /// <summary>Enumerates all of the nodes associated with an entity.</summary>
+    public IEnumerable<(EntityUid NodeId, GraphNodeComponent Node)> EnumerateNodes(EntityUid nodeOrPolyId, GraphNodeComponent? node = null, PolyNodeComponent? poly = null)
+    {
+        if (_nodeQuery.Resolve(nodeOrPolyId, ref node))
+            yield return (nodeOrPolyId, node);
+
+        if (_polyQuery.Resolve(nodeOrPolyId, ref poly))
+        {
+            foreach (var proxyId in poly.ProxyNodes.Values)
+            {
+                if (proxyId == nodeOrPolyId)
+                    continue; // Already handled above.
+
+                if (_nodeQuery.TryGetComponent(proxyId, out var proxyNode))
+                    yield return (proxyId, proxyNode);
+            }
+        }
+    }
+
+    /// <summary>Enumerates all of the graphs associated with an entity.</summary>
+    public IEnumerable<(EntityUid GraphId, NodeGraphComponent Graph)> EnumerateGraphs(EntityUid nodeOrPolyId, GraphNodeComponent? node = null, PolyNodeComponent? poly = null)
+    {
+        foreach (var (_, enumNode) in EnumerateNodes(nodeOrPolyId, node, poly))
+        {
+            if (enumNode.GraphId is { } graphId && _graphQuery.TryGetComponent(graphId, out var graph))
+                yield return (graphId, graph);
+        }
+    }
+
     /// <summary>
     /// Gets the entity acting as a host for a given node.
     /// If the node is a proxy node this is the polynode it is attached to, otherwise it's just itself.
@@ -88,21 +117,8 @@ public sealed partial class NodeGraphSystem
     {
         foreach (var entityUid in grid.GetAnchoredEntities(tileIndices))
         {
-            /// Yield return node 
-            if (_nodeQuery.HasComponent(entityUid))
-                yield return entityUid;
-
-            /// Yield return all proxy nodes for polynodes.
-            if (_polyQuery.TryGetComponent(entityUid, out var poly))
-            {
-                foreach (var proxyId in poly.ProxyNodes.Values)
-                {
-                    if (proxyId == entityUid)
-                        continue; // Since the poly node is a node it was already returned above.
-
-                    yield return proxyId;
-                }
-            }
+            foreach (var (nodeId, _) in EnumerateNodes(entityUid))
+                yield return nodeId;
         }
     }
 

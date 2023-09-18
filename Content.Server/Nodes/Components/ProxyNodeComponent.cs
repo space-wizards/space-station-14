@@ -10,12 +10,12 @@ public sealed partial class ProxyNodeComponent : Component
     /// <summary>
     /// The uid of the poly node/node container that this node is acting as a proxy for.
     /// </summary>
-    [DataField("proxyFor")]
+    [ViewVariables]
     public EntityUid? ProxyFor = null;
 
     /// <summary>
     /// The key this node is being indexed under in its node container.
     /// </summary>
-    [DataField("proxyKey")]
+    [ViewVariables]
     public string? ProxyKey = null;
 }
