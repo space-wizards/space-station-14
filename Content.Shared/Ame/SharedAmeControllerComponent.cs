@@ -17,8 +17,9 @@ public sealed class AmeControllerBoundUserInterfaceState : BoundUserInterfaceSta
     public readonly int FuelAmount;
     public readonly int InjectionAmount;
     public readonly int CoreCount;
+    public readonly bool SafteyProtocols;
 
-    public AmeControllerBoundUserInterfaceState(bool hasPower, bool isMaster, bool injecting, bool hasFuelJar, int fuelAmount, int injectionAmount, int coreCount)
+    public AmeControllerBoundUserInterfaceState(bool hasPower, bool isMaster, bool injecting, bool hasFuelJar, int fuelAmount, int injectionAmount, int coreCount, bool safteyProtocols)
     {
         HasPower = hasPower;
         IsMaster = isMaster;
@@ -27,6 +28,7 @@ public sealed class AmeControllerBoundUserInterfaceState : BoundUserInterfaceSta
         FuelAmount = fuelAmount;
         InjectionAmount = injectionAmount;
         CoreCount = coreCount;
+        SafteyProtocols = safteyProtocols;
     }
 }
 

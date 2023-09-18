@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Content.Client.GameTicking.Managers;
 using Content.Server.Administration.Logs;
 using Content.Server.Ame.Components;
 using Content.Server.Chat.Managers;
@@ -31,6 +32,7 @@ public sealed class AmeControllerSystem : EntitySystem
     [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
+    [Dependency] private readonly ClientGameTicker _gameTicker = default!;
 
     public override void Initialize()
     {
@@ -69,7 +71,14 @@ public sealed class AmeControllerSystem : EntitySystem
         if (TryComp<AmeFuelContainerComponent>(controller.JarSlot.ContainedEntity, out var fuelJar))
         {
             var availableInject = Math.Min(controller.InjectionAmount, fuelJar.FuelAmount);
-            var powerOutput = group.InjectFuel(availableInject, out var overloading);
+            var stationTime = _gameTiming.CurTime.Subtract(_gameTicker.RoundStartTimeSpan);
+            var powerOutput = group.InjectFuel(availableInject, out var overloading,  out var safeInjectionLimit);
+            if (stationTime.Minutes < 30 && overloading)
+            {
+                controller.InjectionAmount = safeInjectionLimit;
+                controller.SafetyLock = true;
+            }
+            controller.SafetyLock = false;
             if (TryComp<PowerSupplierComponent>(uid, out var powerOutlet))
                 powerOutlet.MaxSupply = powerOutput;
             fuelJar.FuelAmount -= availableInject;
@@ -104,9 +113,9 @@ public sealed class AmeControllerSystem : EntitySystem
 
         var hasJar = Exists(controller.JarSlot.ContainedEntity);
         if (!hasJar || !TryComp<AmeFuelContainerComponent>(controller.JarSlot.ContainedEntity, out var jar))
-            return new AmeControllerBoundUserInterfaceState(powered, IsMasterController(uid), false, hasJar, 0, controller.InjectionAmount, coreCount);
+            return new AmeControllerBoundUserInterfaceState(powered, IsMasterController(uid), false, hasJar, 0, controller.InjectionAmount, coreCount, controller.SafetyLock);
 
-        return new AmeControllerBoundUserInterfaceState(powered, IsMasterController(uid), controller.Injecting, hasJar, jar.FuelAmount, controller.InjectionAmount, coreCount);
+        return new AmeControllerBoundUserInterfaceState(powered, IsMasterController(uid), controller.Injecting, hasJar, jar.FuelAmount, controller.InjectionAmount, coreCount, controller.SafetyLock);
     }
 
     private bool IsMasterController(EntityUid uid)

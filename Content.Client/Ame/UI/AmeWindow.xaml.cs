@@ -57,6 +57,11 @@ namespace Content.Client.Ame.UI
             {
                 InjectionStatus.Text = Loc.GetString("ame-window-engine-injection-status-not-injecting-label") + " ";
             }
+
+            if (!castState.SafteyProtocols)
+            {
+                InjectionStatus.Text = Loc.GetString("ame-window-engine-injection-status-safetyLock-label") + " ";
+            }
             else
             {
                 InjectionStatus.Text = Loc.GetString("ame-window-engine-injection-status-injecting-label") + " ";

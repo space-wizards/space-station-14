@@ -20,3 +20,4 @@ ame-window-toggle-injection-button = Toggle Injection
 ame-window-eject-button = Eject
 ame-window-increase-fuel-button = Increase
 ame-window-decrease-fuel-button = Decrease
+ame-window-engine-injection-status-safetyLock-label = Injection set to safe levels for startup.

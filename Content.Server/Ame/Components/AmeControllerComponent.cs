@@ -78,4 +78,10 @@ public sealed partial class AmeControllerComponent : SharedAmeControllerComponen
     [DataField("updatePeriod")]
     [ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan UpdatePeriod = TimeSpan.FromSeconds(10.0);
+
+    /// <summary>
+    /// A saftey lock that prevents overloading injection attempts.
+    /// </summary>
+    [DataField("safteyLock")] [ViewVariables(VVAccess.ReadWrite)]
+    public bool SafetyLock = false;
 }

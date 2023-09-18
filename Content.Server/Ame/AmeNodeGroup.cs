@@ -116,15 +116,17 @@ public sealed class AmeNodeGroup : BaseNodeGroup
         }
     }
 
-    public float InjectFuel(int fuel, out bool overloading)
+    public float InjectFuel(int fuel, out bool overloading, out int safeInjectionLimit)
     {
         overloading = false;
+        safeInjectionLimit = 0;
 
         var shieldQuery = _entMan.GetEntityQuery<AmeShieldComponent>();
         if (fuel <= 0 || CoreCount <= 0)
             return 0;
 
         var safeFuelLimit = CoreCount * 2;
+        safeInjectionLimit = safeFuelLimit;
 
         // Note the float conversions. The maths will completely fail if not done using floats.
         // Oh, and don't ever stuff the result of this in an int. Seriously.
