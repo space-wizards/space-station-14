@@ -66,8 +66,11 @@
         - trigger:
             !type:DamageTrigger
             damage: 30
+          behaviors:
+          - !type:DoActsBehavior
+             acts: [ "Destruction" ]
     - type: TimedDespawn
-      lifetime: 60
+      lifetime: 180
     - type: PointLight
       enabled: true
       radius: 3
