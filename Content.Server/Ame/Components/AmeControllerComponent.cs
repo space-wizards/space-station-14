@@ -61,6 +61,13 @@ public sealed partial class AmeControllerComponent : SharedAmeControllerComponen
     public SoundSpecifier InjectSound = new SoundPathSpecifier("/Audio/Effects/bang.ogg");
 
     /// <summary>
+    /// The sound used when injecting antimatter into the AME.
+    /// </summary>
+    [DataField("overloadSound")]
+    [ViewVariables(VVAccess.ReadWrite)]
+    public SoundSpecifier OverloadSound = new SoundPathSpecifier("/Audio/Announcements/bloblarm.ogg");
+
+    /// <summary>
     /// The last time this could have injected fuel into the AME.
     /// </summary>
     [DataField("lastUpdate")]

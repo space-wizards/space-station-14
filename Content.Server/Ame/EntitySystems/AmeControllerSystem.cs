@@ -69,7 +69,7 @@ public sealed class AmeControllerSystem : EntitySystem
 
         if (TryComp<AmeFuelContainerComponent>(controller.JarSlot.ContainedEntity, out var fuelJar))
         {
-            var minutesBeforeSabotage = 5;
+            var minutesBeforeSabotage = 1;
             var availableInject = Math.Min(controller.InjectionAmount, fuelJar.FuelAmount);
             var stationTime = _gameTiming.CurTime;
             var powerOutput = group.InjectFuel(availableInject, out var overloading,  out var safeInjectionLimit);
@@ -81,10 +81,13 @@ public sealed class AmeControllerSystem : EntitySystem
             else if (stationTime.Minutes >= minutesBeforeSabotage && overloading)
             {
                 controller.OverloadWarning = true;
+wa                var alertAudioParams = AudioParams.Default.WithVolume(15).WithPlayOffset(1).WithMaxDistance(20).WithReferenceDistance(10).WithPitchScale(0.5f);
+                _audioSystem.PlayPvs(controller.OverloadSound, uid, alertAudioParams);
             }
             else
             {
                 controller.SafetyLock = false;
+                controller.OverloadWarning = false;
             }
             if (TryComp<PowerSupplierComponent>(uid, out var powerOutlet))
                 powerOutlet.MaxSupply = powerOutput;
