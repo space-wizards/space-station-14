@@ -1,3 +1,4 @@
+using Content.Shared.Random;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Silicons.Laws.Components;
