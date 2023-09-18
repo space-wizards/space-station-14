@@ -337,14 +337,14 @@
   - type: Clothing
     sprite: Clothing/Head/Helmets/ert_janitor.rsi
 
-#Gladiator Helmet
+#Bone Helmet
 - type: entity
   parent: ClothingHeadHelmetBasic
-  id: ClothingHeadHelmetGladiator
-  name: Gladiator helmet
-  description: Slightly protects the head from harsh ash winds and spears.
+  id: ClothingHeadHelmetBone
+  name: bone helmet
+  description: Cool-looking helmet made of skull of your enemies.
   components:
   - type: Sprite
-    sprite: Clothing/Head/Helmets/gladiator.rsi
+    sprite: Clothing/Head/Helmets/bone_helmet.rsi
   - type: Clothing
-    sprite: Clothing/Head/Helmets/gladiator.rsi
+    sprite: Clothing/Head/Helmets/bone_helmet.rsi
