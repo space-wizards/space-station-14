@@ -13,13 +13,13 @@ public sealed partial class PressurizedDrinkComponent : Component
     /// <summary>
     /// Chance for the drink to burst when thrown while closed.
     /// </summary>
-    [DataField("burstChance"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public float BurstChance = 0.25f;
 
     /// <summary>
     /// Sound played when the drink bursts.
     /// </summary>
-    [DataField("burstSound")]
+    [DataField]
     public SoundSpecifier BurstSound = new SoundPathSpecifier("/Audio/Effects/flash_bang.ogg")
     {
         Params = AudioParams.Default.WithVolume(-4)

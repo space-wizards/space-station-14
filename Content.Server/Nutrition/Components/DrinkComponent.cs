@@ -7,23 +7,23 @@ namespace Content.Server.Nutrition.Components;
 [RegisterComponent, Access(typeof(DrinkSystem))]
 public sealed partial class DrinkComponent : Component
 {
-    [ViewVariables(VVAccess.ReadWrite), DataField("solution")]
+    [DataField("solution"), ViewVariables(VVAccess.ReadWrite)]
     public string SolutionName = DefaultSolutionName;
     public const string DefaultSolutionName = "drink";
 
-    [DataField("useSound")]
+    [DataField]
     public SoundSpecifier UseSound = new SoundPathSpecifier("/Audio/Items/drink.ogg");
 
-    [ViewVariables(VVAccess.ReadWrite), DataField("transferAmount")]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public FixedPoint2 TransferAmount = FixedPoint2.New(5);
 
     /// <summary>
     /// How long it takes to drink this yourself.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("delay")]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public float Delay = 1;
 
-    [ViewVariables(VVAccess.ReadWrite), DataField("examinable")]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public bool Examinable = true;
 
     /// <summary>
@@ -31,12 +31,12 @@ public sealed partial class DrinkComponent : Component
     /// This means other systems such as equipping on use can run.
     /// Example usecase is the bucket.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("ignoreEmpty")]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public bool IgnoreEmpty;
 
     /// <summary>
     ///     This is how many seconds it takes to force feed someone this drink.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("forceFeedDelay")]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public float ForceFeedDelay = 3;
 }

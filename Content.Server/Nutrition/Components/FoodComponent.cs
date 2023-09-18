@@ -11,28 +11,28 @@ namespace Content.Server.Nutrition.Components;
 [RegisterComponent, Access(typeof(FoodSystem))]
 public sealed partial class FoodComponent : Component
 {
-    [DataField("solution")]
+    [DataField]
     public string SolutionName = "food";
 
-    [DataField("useSound")]
+    [DataField]
     public SoundSpecifier UseSound = new SoundPathSpecifier("/Audio/Items/eatfood.ogg");
 
-    [DataField("trash", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string? TrashPrototype;
+    [DataField]
+    public EntProtoid? TrashPrototype;
 
-    [DataField("transferAmount")]
+    [DataField]
     public FixedPoint2? TransferAmount = FixedPoint2.New(5);
 
     /// <summary>
     /// Acceptable utensil to use
     /// </summary>
-    [DataField("utensil")]
+    [DataField]
     public UtensilType Utensil = UtensilType.Fork; //There are more "solid" than "liquid" food
 
     /// <summary>
     /// Is utensil required to eat this food
     /// </summary>
-    [DataField("utensilRequired")]
+    [DataField]
     public bool UtensilRequired;
 
     /// <summary>
@@ -41,32 +41,32 @@ public sealed partial class FoodComponent : Component
     ///     rather than just being digestible by anything that can eat food.
     ///     Whitelist the food component to allow eating of normal food.
     /// </summary>
-    [DataField("requiresSpecialDigestion")]
+    [DataField]
     public bool RequiresSpecialDigestion;
 
     /// <summary>
     ///     Stomachs required to digest this entity.
     ///     Used to simulate 'ruminant' digestive systems (which can digest grass)
     /// </summary>
-    [DataField("requiredStomachs")]
+    [DataField]
     public int RequiredStomachs = 1;
 
     /// <summary>
     /// The localization identifier for the eat message. Needs a "food" entity argument passed to it.
     /// </summary>
-    [DataField("eatMessage")]
+    [DataField]
     public string EatMessage = "food-nom";
 
     /// <summary>
     /// How long it takes to eat the food personally.
     /// </summary>
-    [DataField("delay")]
+    [DataField]
     public float Delay = 1;
 
     /// <summary>
     ///     This is how many seconds it takes to force feed someone this food.
     ///     Should probably be smaller for small items like pills.
     /// </summary>
-    [DataField("forceFeedDelay")]
+    [DataField]
     public float ForceFeedDelay = 3;
 }
