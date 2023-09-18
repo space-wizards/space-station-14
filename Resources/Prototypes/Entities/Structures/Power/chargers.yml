@@ -92,6 +92,7 @@
   components:
   - type: Sprite
     sprite: Structures/Power/recharger.rsi
+    noRot: false
   - type: Machine
     board: WeaponCapacitorRechargerCircuitboard
   # no powercellslot since stun baton etc arent powercells
