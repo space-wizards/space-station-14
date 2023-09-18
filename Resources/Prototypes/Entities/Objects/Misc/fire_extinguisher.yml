@@ -61,7 +61,7 @@
         - state: fire_extinguisher_closed
           map: [ "enabled" ]
   - type: Item
-    sprite: Objects/Misc/fire_extinguisher.rsi
+    sprite: Objects/Misc/fire_extinguisher_mini.rsi
     size: 5
   - type: SolutionContainerManager
     solutions:
