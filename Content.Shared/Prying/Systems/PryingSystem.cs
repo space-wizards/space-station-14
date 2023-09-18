@@ -5,7 +5,6 @@ using Robust.Shared.Serialization;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.Doors.Components;
-using Content.Shared.Doors.Systems;
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Interaction;
 
@@ -16,7 +15,6 @@ public sealed class PryingSystem : EntitySystem
     [Dependency] private readonly ISharedAdminLogManager _adminLog = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
-    [Dependency] private readonly SharedDoorSystem _doorSystem = default!;
 
     public override void Initialize()
     {
