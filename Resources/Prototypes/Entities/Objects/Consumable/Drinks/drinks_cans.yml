@@ -36,7 +36,7 @@
   - type: Appearance
   - type: GenericVisualizer
     visuals:
-      enum.OpenableVisuals.Open:
+      enum.OpenableVisuals.Opened:
         enum.OpenableVisuals.Layer:
           True: {state: "icon_open"}
           False: {state: "icon"}
