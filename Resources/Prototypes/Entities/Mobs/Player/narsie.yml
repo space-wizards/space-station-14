@@ -8,6 +8,7 @@
     sprite: Mobs/Demons/narsie.rsi
     drawdepth: Ghosts
     shader: unshaded
+    scale: 2.0,2.0
 
 # spawn animation, spawns actual narsie when it ends
 - type: entity
