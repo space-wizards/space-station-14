@@ -9,6 +9,7 @@
     anchored: true
   - type: Sprite
     snapCardinals: true
+    noRot: false
   - type: Appearance
   - type: Charger
     slotId: charger_slot
@@ -92,7 +93,6 @@
   components:
   - type: Sprite
     sprite: Structures/Power/recharger.rsi
-    noRot: false
   - type: Machine
     board: WeaponCapacitorRechargerCircuitboard
   # no powercellslot since stun baton etc arent powercells
@@ -113,7 +113,6 @@
   components:
   - type: Sprite
     sprite: Structures/Power/wall_recharger.rsi
-    noRot: false
     layers:
     - map: ["enum.PowerChargerVisualLayers.Base"]
       state: "empty"
