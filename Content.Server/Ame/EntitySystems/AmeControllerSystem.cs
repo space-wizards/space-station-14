@@ -81,7 +81,7 @@ public sealed class AmeControllerSystem : EntitySystem
             else if (stationTime.Minutes >= minutesBeforeSabotage && overloading)
             {
                 controller.OverloadWarning = true;
-wa                var alertAudioParams = AudioParams.Default.WithVolume(15).WithPlayOffset(1).WithMaxDistance(20).WithReferenceDistance(10).WithPitchScale(0.5f);
+                var alertAudioParams = AudioParams.Default.WithVolume(15).WithPlayOffset(1).WithMaxDistance(20).WithReferenceDistance(10).WithPitchScale(0.5f);
                 _audioSystem.PlayPvs(controller.OverloadSound, uid, alertAudioParams);
             }
             else
