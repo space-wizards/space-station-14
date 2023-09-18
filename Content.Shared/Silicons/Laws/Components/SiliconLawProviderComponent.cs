@@ -1,4 +1,4 @@
-﻿using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+﻿using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Silicons.Laws.Components;
 
@@ -12,7 +12,7 @@ public sealed partial class SiliconLawProviderComponent : Component
     /// The id of the lawset that is being provided.
     /// </summary>
     [DataField(required: true)]
-    public Protoid<SiliconLawsetPrototype> Laws = string.Empty;
+    public ProtoId<SiliconLawsetPrototype> Laws = string.Empty;
 
     /// <summary>
     /// Lawset created from the prototype id.
