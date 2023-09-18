@@ -33,6 +33,7 @@
     tags:
       - DroneUsable #No bucket because it holds chems, they can drag the cart or use a drain
       - Mop
+      - MopBasic
   - type: GuideHelp
     guides:
     - Janitorial
@@ -83,6 +84,7 @@
       tags:
         - DroneUsable #No bucket because it holds chems, they can drag the cart or use a drain
         - Mop
+        - MopAdv
 
 - type: entity
   name: mop bucket
@@ -361,7 +363,11 @@
         cart_mop:
           whitelist:
             tags:
-              - Mop
+              - MopBasic
+        cart_advmop:
+          whitelist:
+            tags:
+              - MopAdv
         cart_garbage:
           whitelist:
             tags:
