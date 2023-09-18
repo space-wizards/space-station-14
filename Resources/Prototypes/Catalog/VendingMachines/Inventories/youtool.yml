@@ -11,6 +11,7 @@
     NetworkConfigurator: 3
     GasAnalyzer: 3
     FlashlightLantern: 5
+    FireExtinguisherMini: 5
     ClothingHandsGlovesColorYellowBudget: 3
     SprayPainter: 3
   # Some engineer forgot to take the multitool out the youtool when working on it, happens.
