@@ -69,7 +69,7 @@ public sealed class AmeControllerSystem : EntitySystem
 
         if (TryComp<AmeFuelContainerComponent>(controller.JarSlot.ContainedEntity, out var fuelJar))
         {
-            var minutesBeforeSabotage = 1;
+            var minutesBeforeSabotage = 30;
             var availableInject = Math.Min(controller.InjectionAmount, fuelJar.FuelAmount);
             var stationTime = _gameTiming.CurTime;
             var powerOutput = group.InjectFuel(availableInject, out var overloading,  out var safeInjectionLimit);
