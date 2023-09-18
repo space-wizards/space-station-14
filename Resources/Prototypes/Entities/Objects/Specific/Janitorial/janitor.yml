@@ -213,6 +213,7 @@
   - type: Tag
     tags:
       - WetFloorSign
+      - WhitelistChameleon
 
 
 - type: entity
@@ -258,6 +259,9 @@
     params:
       volume: 1
     examinable: false
+  - type: Tag
+    tags: # ignore "WhitelistChameleon" tag
+      - WetFloorSign
 
 - type: entity
   name: janitorial trolley
