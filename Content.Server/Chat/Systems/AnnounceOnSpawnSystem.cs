@@ -10,10 +10,10 @@ public sealed class AnnounceOnSpawnSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<AnnounceOnSpawnComponent, ComponentInit>(OnInit);
+        SubscribeLocalEvent<AnnounceOnSpawnComponent, MapInitEvent>(OnInit);
     }
 
-    private void OnInit(EntityUid uid, AnnounceOnSpawnComponent comp, ComponentInit args)
+    private void OnInit(EntityUid uid, AnnounceOnSpawnComponent comp, MapInitEvent args)
     {
         var message = Loc.GetString(comp.Message);
         var sender = comp.Sender != null ? Loc.GetString(comp.Sender) : "Central Command";

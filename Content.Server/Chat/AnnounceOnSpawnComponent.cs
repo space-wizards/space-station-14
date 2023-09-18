@@ -5,7 +5,7 @@ using Robust.Shared.Maths;
 namespace Content.Server.Chat;
 
 /// <summary>
-/// Dispatches an announcement to everyone when the entity spawns.
+/// Dispatches an announcement to everyone when the entity is mapinit'd.
 /// </summary>
 [RegisterComponent, Access(typeof(AnnounceOnSpawnSystem))]
 public sealed partial class AnnounceOnSpawnComponent : Component
