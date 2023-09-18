@@ -27,6 +27,7 @@
       - Prying
     useSound:
       path: /Audio/Items/crowbar.ogg
+  - type: ToolForcePowered
   - type: Reactive
     groups:
       Flammable: [Touch]

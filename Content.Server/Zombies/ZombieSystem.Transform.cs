@@ -167,6 +167,9 @@ namespace Content.Server.Zombies
                 tool.Qualities = new ("Prying");
                 tool.UseSound = new SoundPathSpecifier("/Audio/Items/crowbar.ogg");
                 Dirty(tool);
+
+                // allow prying open powered doors
+                EnsureComp<ToolForcePoweredComponent>(target);
             }
 
             Dirty(melee);

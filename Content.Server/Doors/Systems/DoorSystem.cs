@@ -159,7 +159,7 @@ public sealed class DoorSystem : SharedDoorSystem
         {
             Text = Loc.GetString("door-pry"),
             Impact = LogImpact.Low,
-            Act = () => TryPryDoor(uid, args.User, args.User, component, out _, force: true),
+            Act = () => TryPryDoor(uid, args.User, args.User, component, out _),
         });
     }
 
