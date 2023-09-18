@@ -18,13 +18,13 @@ public sealed partial class GenericAntagComponent : Component
     /// Gamerule to start when a mind is added.
     /// This must have <see cref="GenericAntagRuleComponent"/> or it will not work.
     /// </summary>
-    [DataField("rule", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>)), ViewVariables(VVAccess.ReadWrite)]
-    public string Rule = string.Empty;
+    [DataField(required: true), ViewVariables(VVAccess.ReadWrite)]
+    public EntProtoid Rule = string.Empty;
 
     /// <summary>
     /// The rule that's been spawned.
     /// Used to prevent spawning multiple rules.
     /// </summary>
-    [DataField("ruleEntity"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public EntityUid? RuleEntity;
 }

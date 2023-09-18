@@ -14,12 +14,12 @@ public sealed partial class NinjaRuleComponent : Component
     /// <summary>
     /// List of threats that can be called in. Copied onto <see cref="CommsHackerComponent"/> when gloves are enabled.
     /// </summary>
-    [DataField("threats", required: true)]
+    [DataField(required: true)]
     public List<Threat> Threats = new();
 
     /// <summary>
     /// Sound played when making the player a ninja via antag control or ghost role
     /// </summary>
-    [DataField("greetingSound", customTypeSerializer: typeof(SoundSpecifierTypeSerializer))]
+    [DataField]
     public SoundSpecifier? GreetingSound = new SoundPathSpecifier("/Audio/Misc/ninja_greeting.ogg");
 }

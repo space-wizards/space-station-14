@@ -13,18 +13,18 @@ public sealed partial class GenericAntagRuleComponent : Component
     /// <summary>
     /// All antag minds that are using this rule.
     /// </summary>
-    [DataField("minds")]
+    [DataField]
     public List<EntityUid> Minds = new();
 
     /// <summary>
     /// Locale id for the name of the antag used by the roundend summary.
     /// </summary>
-    [DataField("agentName", required: true), ViewVariables(VVAccess.ReadWrite)]
+    [DataField(required: true), ViewVariables(VVAccess.ReadWrite)]
     public string AgentName = string.Empty;
 
     /// <summary>
     /// List of objective entity prototypes to add to the antag when a mind is added.
     /// </summary>
-    [DataField("objectives", required: true, customTypeSerializer: typeof(PrototypeIdListSerializer<EntityPrototype>))]
-    public List<string> Objectives = new();
+    [DataField(required: true)]
+    public List<EntProtoId> Objectives = new();
 }
