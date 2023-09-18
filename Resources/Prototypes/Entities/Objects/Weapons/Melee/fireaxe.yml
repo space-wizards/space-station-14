@@ -39,8 +39,6 @@
   - type: TilePrying
     advanced: true
   - type: Prying
-    needsComponent: !type:Bool
-      true
 
 - type: entity
   id: FireAxeFlaming

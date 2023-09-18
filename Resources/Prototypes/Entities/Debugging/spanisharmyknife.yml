@@ -25,8 +25,6 @@
     qualities:
       - Prying
   - type: Prying
-    needsComponent: !type:Bool
-      true
   - type: MultipleTool
     statusShowBehavior: true
     entries:

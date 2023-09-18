@@ -62,8 +62,6 @@
     qualities:
       - Prying
   - type: Prying
-    needsComponent: !type:Bool
-      true
 
 - type: entity
   name: crusher dagger

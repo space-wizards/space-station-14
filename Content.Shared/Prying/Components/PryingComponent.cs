@@ -25,10 +25,10 @@ public sealed partial class PryingComponent : Component
     public SoundSpecifier UseSound = new SoundPathSpecifier("/Audio/Items/crowbar.ogg");
 
     /// <summary>
-    /// Whether the tool component is needed
+    /// Whether the entity can currently pry things.
     /// </summary>
-    [DataField("needsComponent")]
-    public bool NeedsComponent = false;
+    [DataField("enabled")]
+    public bool Enabled = true;
 }
 
 /// <summary>

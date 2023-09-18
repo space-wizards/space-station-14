@@ -21,5 +21,3 @@
     qualities:
       - Prying
   - type: Prying
-    needsComponent: !type:Bool
-      true

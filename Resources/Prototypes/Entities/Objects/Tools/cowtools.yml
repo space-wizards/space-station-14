@@ -99,8 +99,6 @@
     speed: 0.05
   - type: TilePrying
   - type: Prying
-    needsComponent: !type:Bool
-      true
 
 - type: entity
   name: mooltitool
