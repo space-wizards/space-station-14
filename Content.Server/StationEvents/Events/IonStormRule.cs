@@ -32,6 +32,9 @@ public sealed class IonStormRule : StationEventSystem<IonStormRuleComponent>
             if (CompOrNull<StationMemberComponent>(xform.GridUid)?.Station != chosenStation)
                 continue;
 
+            if (!RobustRandom.Prob(target.Chance))
+                continue;
+
             var laws = _siliconLaw.GetLaws(ent, lawBound);
             if (laws.Laws.Count == 0)
                 continue;

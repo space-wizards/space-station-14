@@ -17,6 +17,12 @@ public sealed partial class IonStormTargetComponent : Component
     public ProtoId<WeightedRandomPrototype> RandomLawsets = "IonStormLawsets";
 
     /// <summary>
+    /// Chance for this borg to be affected at all.
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public float Chance = 0.5f;
+
+    /// <summary>
     /// Chance to replace the lawset with a random one
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
