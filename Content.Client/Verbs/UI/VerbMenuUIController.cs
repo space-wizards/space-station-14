@@ -216,21 +216,25 @@ namespace Content.Client.Verbs.UI
                     return;
             }
 
-            if (verb.ConfirmationPopup)
-            {
-                if (verbElement.SubMenu == null)
-                {
-                    var popupElement = new ConfirmationMenuElement(verb, "Confirm");
-                    verbElement.SubMenu = new ContextMenuPopup(_context, verbElement);
-                    _context.AddElement(verbElement.SubMenu, popupElement);
-                }
-
-                _context.OpenSubMenu(verbElement);
-            }
-            else
+#if DEBUG
+            // No confirmation pop-ups in debug mode.
+            ExecuteVerb(verb);
+#else
+            if (!verb.ConfirmationPopup)
             {
                 ExecuteVerb(verb);
+                return;
             }
+
+            if (verbElement.SubMenu == null)
+            {
+                var popupElement = new ConfirmationMenuElement(verb, "Confirm");
+                verbElement.SubMenu = new ContextMenuPopup(_context, verbElement);
+                _context.AddElement(verbElement.SubMenu, popupElement);
+            }
+
+            _context.OpenSubMenu(verbElement);
+#endif
         }
 
         private void Close()
