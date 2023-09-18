@@ -1,10 +1,4 @@
 Entries:
-- author: OctoRocket and Eden
-  changes:
-  - {message: Removed annoying archaic replacements that involve like and other confusing
-      swaps., type: Tweak}
-  id: 4356
-  time: '2023-07-28T19:51:52.0000000+00:00'
 - author: KingFroozy
   changes:
   - {message: 'Nanotrasen''s vest suppliers have finally started to sew pockets to
@@ -2969,3 +2963,10 @@ Entries:
   - {message: Increased the amount of barotrauma damage you receive., type: Tweak}
   id: 4855
   time: '2023-09-18T19:21:36.0000000+00:00'
+- author: HerCoyote23
+  changes:
+  - {message: 'The Syndicate has grown tired of losing overconfident "Loud" agents,
+      and has reduced their stealth gear prices to encourage a more sneaky approach.',
+    type: Tweak}
+  id: 4856
+  time: '2023-09-18T21:07:00.0000000+00:00'
