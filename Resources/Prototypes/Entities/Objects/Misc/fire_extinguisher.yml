@@ -76,15 +76,6 @@
     damage:
       types:
         Blunt: 6
-    soundHit:
-      path: /Audio/Weapons/smash.ogg
-  - type: Appearance
-  - type: GenericVisualizer
-    visuals:
-      enum.FireExtinguisherVisuals.Safety:
-        enabled:
-          True: { state: fire_extinguisher_closed }
-          False: { state: fire_extinguisher_open }
 
 - type: entity
   name: extinguisher spray
