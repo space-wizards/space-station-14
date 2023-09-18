@@ -216,9 +216,7 @@
 
 
 - type: entity
-  name: wet floor sign
   suffix: Explosive
-  description: Caution! Wet Floor!
   parent: WetFloorSign
   id: WetFloorSignMineExplosive
   components:
