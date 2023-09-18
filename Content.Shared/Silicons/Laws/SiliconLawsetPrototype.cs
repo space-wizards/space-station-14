@@ -32,6 +32,6 @@ public sealed partial class SiliconLawsetPrototype : IPrototype
     /// <summary>
     /// List of law prototype ids in this lawset.
     /// </summary>
-    [DataField(required: true)]
-    public List<ProtoId<SiliconLawPrototype>> Laws = new();
+    [DataField(required: true, customTypeSerializer: typeof(PrototypeIdListSerializer<SiliconLawPrototype>))]
+    public List<string> Laws = new();
 }
