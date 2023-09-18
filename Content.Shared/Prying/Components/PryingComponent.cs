@@ -7,7 +7,7 @@ namespace Content.Shared.Prying.Components;
 public sealed partial class PryingComponent : Component
 {
     /// <summary>
-    /// Whether the tool can pry open powered doors
+    /// Whether the tool can pry open powered and bolted doors
     /// </summary>
     [DataField("pryPowered")]
     public bool PryPowered = false;
@@ -29,12 +29,6 @@ public sealed partial class PryingComponent : Component
     /// </summary>
     [DataField("needsComponent")]
     public bool NeedsComponent = false;
-
-    /// <summary>
-    /// Whether the entity with the component can pry.
-    /// </summary>
-    [DataField("active")]
-    public bool active = true;
 }
 
 /// <summary>
