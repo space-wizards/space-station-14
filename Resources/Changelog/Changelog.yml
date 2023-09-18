@@ -1,11 +1,4 @@
 Entries:
-- author: Vaaankas
-  changes:
-  - {message: 'The Hristov''s sniper rifle cartridges have been refactored. It is
-      now a way more dangerous weapon, at the cost of decreased firerate. It now stuns
-      on a hit, so drag your allies to safety if they got shot with one!', type: Tweak}
-  id: 4348
-  time: '2023-07-27T09:49:33.0000000+00:00'
 - author: PJB3005
   changes:
   - {message: The defibrillator's "return to body" prompt now works again., type: Fix}
@@ -2970,3 +2963,8 @@ Entries:
       of boots like a cool dude.', type: Add}
   id: 4847
   time: '2023-09-18T00:26:21.0000000+00:00'
+- author: JoeHammad
+  changes:
+  - {message: 'security now has access to its own beret, fancy!', type: Add}
+  id: 4848
+  time: '2023-09-18T00:30:31.0000000+00:00'
