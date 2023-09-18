@@ -55,7 +55,7 @@ public sealed class PryingSystem : EntitySystem
     }
 
     /// <summary>
-    /// Try to pry open an entity.
+    /// Attempt to pry an entity.
     /// </summary>
     public bool TryPry(EntityUid target, EntityUid user, DoorComponent door, out DoAfterId? id, EntityUid tool)
     {
@@ -85,7 +85,7 @@ public sealed class PryingSystem : EntitySystem
     }
 
     /// <summary>
-    /// Try to pry open an entity.
+    /// Try to pry an entity.
     /// </summary>
     public bool TryPry(EntityUid target, EntityUid user, DoorComponent door, out DoAfterId? id)
     {
@@ -121,7 +121,7 @@ public sealed class PryingSystem : EntitySystem
         return true;
     }
 
-    bool StartPry(EntityUid target, EntityUid user, DoorComponent door, EntityUid? tool, float toolModifier, [NotNullWhen(true)] out DoAfterId? id)
+    private bool StartPry(EntityUid target, EntityUid user, DoorComponent door, EntityUid? tool, float toolModifier, [NotNullWhen(true)] out DoAfterId? id)
     {
         var modEv = new DoorGetPryTimeModifierEvent(user);
 
