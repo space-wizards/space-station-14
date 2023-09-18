@@ -58,9 +58,6 @@ public abstract class SharedStealthSystem : EntitySystem
         if (!Resolve(uid, ref component, false) || component.Enabled == value)
             return;
 
-        if (!_mobState.IsDead(uid) && value == false)
-            return;
-
         component.Enabled = value;
         Dirty(component);
     }
@@ -69,16 +66,11 @@ public abstract class SharedStealthSystem : EntitySystem
     {
         if (args.NewMobState != MobState.Dead)
         {
-            if (!component.Enabled)
-            {
-                component.Enabled = true;
-                Dirty(component);
-            }
+            SetEnabled(uid, true, component);
         }
         else
         {
-            component.Enabled = false;
-            Dirty(component);
+            SetEnabled(uid, false, component);
         }
     }
 
