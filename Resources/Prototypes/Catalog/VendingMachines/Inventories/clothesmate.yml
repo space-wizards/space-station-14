@@ -58,6 +58,8 @@
     ClothingHeadFishCap: 2
     ClothingHeadRastaHat: 2
     ClothingBeltStorageWaistbag: 3
+    ClothingHeadHatGladiator: 1
+    ClothingUniformJumpsuitGladiator: 1
   contrabandInventory:
     ClothingUniformJumpsuitTacticool: 1
     ClothingUniformJumpskirtTacticool: 1
