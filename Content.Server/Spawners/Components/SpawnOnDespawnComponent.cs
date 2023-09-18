@@ -10,6 +10,6 @@ namespace Content.Server.Spawners.Components;
 [RegisterComponent, Access(typeof(SpawnOnDespawnSystem))]
 public sealed partial class SpawnOnDespawnComponent : Component
 {
-    [DataField("prototype", required: true, customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string Prototype = string.Empty;
+    [DataField(required: true)]
+    public EntProtoId Prototype = string.Empty;
 }
