@@ -22,9 +22,6 @@
     - type: Damageable
       damageContainer: Biological
       damageModifierSet: HellSpawn
-    - type: CombatMode
-    - type: MobMover
-    - type: InputMover
     - type: MovementSpeedModifier
       baseWalkSpeed: 2
       baseSprintSpeed: 3
@@ -44,8 +41,6 @@
       reflectProb: 0.7
       reflects:
         - Energy
-    - type: Physics
-      bodyType: KinematicController
     - type: Fixtures
       fixtures:
         fix1:

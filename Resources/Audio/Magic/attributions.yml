@@ -1,0 +1,35 @@
+- files:
+  - forcewall.ogg
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from Citadel Station"
+  source: "https://github.com/Citadel-Station-13/Citadel-Station-13/blob/master/sound/magic/ForceWall.ogg"
+
+- files:
+  - blink.ogg
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from Citadel Station"
+  source: "https://github.com/Citadel-Station-13/Citadel-Station-13/blob/master/sound/magic/blink.ogg"
+
+- files:
+  - knock.ogg
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from Citadel Station"
+  source: "https://github.com/Citadel-Station-13/Citadel-Station-13/blob/master/sound/magic/Knock.ogg"
+
+- files:
+  - fireball.ogg
+  license: "CC-BY-NC-SA-3.0"
+  copyright: "Taken from tg Station"
+  source: "https://github.com/tgstation/tgstation/commit/906fb0682bab6a0975b45036001c54f021f58ae7"
+
+- files:
+  - disintigrate.ogg
+  license: "CC-BY-NC-SA-3.0"
+  copyright: "Taken from tg Station"
+  source: "https://github.com/tgstation/tgstation/commit/6fde7a49fcd56d6edb844cd31a04ce026065de8b"
+
+- files:
+  - rumble.ogg
+  license: "CC BY 4.0"
+  copyright: "Made by Uzbazur freesound.org, modified by brainfood1183 (github)"
+  source: "https://freesound.org/people/Uzbazur/sounds/221872/"
