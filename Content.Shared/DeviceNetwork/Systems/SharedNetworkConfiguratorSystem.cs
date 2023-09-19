@@ -18,7 +18,7 @@ public abstract class SharedNetworkConfiguratorSystem : EntitySystem
     private void GetNetworkConfiguratorState(EntityUid uid, NetworkConfiguratorComponent comp,
         ref ComponentGetState args)
     {
-        args.State = new NetworkConfiguratorComponentState(comp.ActiveDeviceList, comp.LinkModeActive);
+        args.State = new NetworkConfiguratorComponentState(GetNetEntity(comp.ActiveDeviceList), comp.LinkModeActive);
     }
 
     private void HandleNetworkConfiguratorState(EntityUid uid, NetworkConfiguratorComponent comp,
@@ -29,7 +29,7 @@ public abstract class SharedNetworkConfiguratorSystem : EntitySystem
             return;
         }
 
-        comp.ActiveDeviceList = state.ActiveDeviceList;
+        comp.ActiveDeviceList = EnsureEntity<NetworkConfiguratorComponent>(state.ActiveDeviceList, uid);
         comp.LinkModeActive = state.LinkModeActive;
     }
 }

@@ -1,7 +1,8 @@
 using Content.Shared.Actions;
-using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Clothing.EntitySystems;
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Clothing.Components;
 
@@ -23,14 +24,13 @@ public sealed partial class StealthClothingComponent : Component
     [DataField("visibility"), ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public float Visibility;
 
+    [DataField("toggleAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    public string ToggleAction = "ActionTogglePhaseCloak";
+
     /// <summary>
     /// The action for enabling and disabling stealth.
     /// </summary>
-    [DataField("toggleAction")]
-    public InstantAction ToggleAction = new()
-    {
-        Event = new ToggleStealthEvent()
-    };
+    [DataField("toggleActionEntity")] public EntityUid? ToggleActionEntity;
 }
 
 /// <summary>

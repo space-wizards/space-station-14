@@ -1,18 +1,21 @@
 - type: entity
+  parent: BaseMob
   id: MobObserver
   name: observer
-  noSpawn: true
-  save: false
   description: Boo!
+  noSpawn: true
   components:
+  - type: CargoSellBlacklist
+  - type: Sprite
+    overrideContainerOcclusion: true # Ghosts always show up regardless of where they're contained.
+    drawdepth: Ghosts
+    sprite: Mobs/Ghosts/ghost_human.rsi
+    color: "#fff8"
+    layers:
+    - state: animated
+      shader: unshaded
   - type: ContentEye
     maxZoom: 1.44,1.44
-  - type: MindContainer
-  - type: Clickable
-  - type: InteractionOutline
-  - type: Physics
-    bodyType: KinematicController
-    fixedRotation: true
   - type: Fixtures
     fixtures:
       fix1:
@@ -22,8 +25,6 @@
         density: 15
         mask:
         - GhostImpassable
-  - type: InputMover
-  - type: Appearance
   - type: Eye
     drawFov: false
   - type: Input
@@ -31,6 +32,10 @@
   - type: Examiner
     skipChecks: true
   - type: Ghost
+  - type: MovementSpeedModifier
+    baseSprintSpeed: 12
+    baseWalkSpeed: 8
+  - type: MovementIgnoreGravity
   - type: IntrinsicRadioReceiver
   - type: ActiveRadio
     channels:
@@ -46,20 +51,58 @@
     - Supply
     - Syndicate
     globalReceive: true
-  - type: Sprite
-    overrideContainerOcclusion: true # Ghosts always show up regardless of where they're contained.
-    noRot: true
-    drawdepth: Ghosts
-    sprite: Mobs/Ghosts/ghost_human.rsi
-    state: animated
-    color: "#fff8"
-    layers:
-      - state: animated
-        shader: unshaded
-  - type: MovementSpeedModifier
-    baseSprintSpeed: 12
-    baseWalkSpeed: 8
-  - type: MovementIgnoreGravity
+  - type: Physics
+    bodyType: KinematicController
+    bodyStatus: InAir
+  - type: CanMoveInAir
   - type: Tag
     tags:
-      - BypassInteractionRangeChecks
+    - BypassInteractionRangeChecks
+
+- type: entity
+  id: ActionGhostBoo
+  name: Boo!
+  description: Scare your crew members because of boredom!
+  noSpawn: true
+  components:
+  - type: InstantAction
+    icon: Interface/Actions/scream.png
+    checkCanInteract: false
+    event: !type:BooActionEvent
+    useDelay: 120
+
+- type: entity
+  id: ActionToggleLighting
+  name: Toggle All Lighting
+  description: Toggle all light rendering to better observe dark areas.
+  noSpawn: true
+  components:
+  - type: InstantAction
+    icon: Interface/VerbIcons/light.svg.192dpi.png
+    clientExclusive: true
+    checkCanInteract: false
+    event: !type:ToggleLightingActionEvent
+
+- type: entity
+  id: ActionToggleFov
+  name: Toggle FoV
+  description: Toggles field-of-view in order to see what players see.
+  noSpawn: true
+  components:
+  - type: InstantAction
+    icon: Interface/VerbIcons/vv.svg.192dpi.png
+    clientExclusive: true
+    checkCanInteract: false
+    event: !type:ToggleFoVActionEvent
+
+- type: entity
+  id: ActionToggleGhosts
+  name: Toggle Ghosts
+  description: Toggle the visibility of other ghosts.
+  noSpawn: true
+  components:
+  - type: InstantAction
+    icon: { sprite: Mobs/Ghosts/ghost_human.rsi, state: icon }
+    clientExclusive: true
+    checkCanInteract: false
+    event: !type:ToggleGhostsActionEvent

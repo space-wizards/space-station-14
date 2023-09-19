@@ -1,5 +1,7 @@
 using Content.Server.Shuttles.Components;
 using Content.Server.Station.Systems;
+using Content.Shared.Body.Components;
+using Content.Shared.Maps;
 using Content.Shared.Parallax;
 using Content.Shared.Shuttles.Systems;
 using Content.Shared.StatusEffect;
@@ -17,6 +19,7 @@ using Content.Shared.Buckle.Components;
 using Content.Shared.Doors.Components;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Shuttles.Components;
+using Content.Shared.Throwing;
 using JetBrains.Annotations;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
@@ -75,8 +78,20 @@ public sealed partial class ShuttleSystem
     /// </summary>
     public const float FTLDestinationMass = 500f;
 
+    private EntityQuery<BodyComponent> _bodyQuery;
+    private EntityQuery<BuckleComponent> _buckleQuery;
+    private EntityQuery<PhysicsComponent> _physicsQuery;
+    private EntityQuery<StatusEffectsComponent> _statusQuery;
+    private EntityQuery<TransformComponent> _xformQuery;
+
     private void InitializeFTL()
     {
+        _bodyQuery = GetEntityQuery<BodyComponent>();
+        _buckleQuery = GetEntityQuery<BuckleComponent>();
+        _physicsQuery = GetEntityQuery<PhysicsComponent>();
+        _statusQuery = GetEntityQuery<StatusEffectsComponent>();
+        _xformQuery = GetEntityQuery<TransformComponent>();
+
         SubscribeLocalEvent<StationGridAddedEvent>(OnStationGridAdd);
     }
 
@@ -461,31 +476,58 @@ public sealed partial class ShuttleSystem
     /// </summary>
     private void DoTheDinosaur(TransformComponent xform)
     {
-        var buckleQuery = GetEntityQuery<BuckleComponent>();
-        var statusQuery = GetEntityQuery<StatusEffectsComponent>();
         // Get enumeration exceptions from people dropping things if we just paralyze as we go
         var toKnock = new ValueList<EntityUid>();
+        KnockOverKids(xform, ref toKnock);
 
-        KnockOverKids(xform, buckleQuery, statusQuery, ref toKnock);
-
-        foreach (var child in toKnock)
+        if (TryComp<PhysicsComponent>(xform.GridUid, out var shuttleBody))
         {
-            if (!statusQuery.TryGetComponent(child, out var status)) continue;
-            _stuns.TryParalyze(child, _hyperspaceKnockdownTime, true, status);
+
+            foreach (var child in toKnock)
+            {
+                if (!_statusQuery.TryGetComponent(child, out var status)) continue;
+                _stuns.TryParalyze(child, _hyperspaceKnockdownTime, true, status);
+
+                // If the guy we knocked down is on a spaced tile, throw them too
+                TossIfSpaced(shuttleBody, child);
+            }
         }
     }
 
-    private void KnockOverKids(TransformComponent xform, EntityQuery<BuckleComponent> buckleQuery, EntityQuery<StatusEffectsComponent> statusQuery, ref ValueList<EntityUid> toKnock)
+    private void KnockOverKids(TransformComponent xform, ref ValueList<EntityUid> toKnock)
     {
         // Not recursive because probably not necessary? If we need it to be that's why this method is separate.
         var childEnumerator = xform.ChildEnumerator;
-
         while (childEnumerator.MoveNext(out var child))
         {
-            if (!buckleQuery.TryGetComponent(child.Value, out var buckle) || buckle.Buckled)
+            if (!_buckleQuery.TryGetComponent(child.Value, out var buckle) || buckle.Buckled)
                 continue;
 
             toKnock.Add(child.Value);
+        }
+    }
+
+    /// <summary>
+    /// Throws people who are standing on a spaced tile, tries to throw them towards a neighbouring space tile
+    /// </summary>
+    private void TossIfSpaced(PhysicsComponent shuttleBody, EntityUid tossed)
+    {
+
+        if (!_xformQuery.TryGetComponent(tossed, out var childXform))
+            return;
+
+        if (!_physicsQuery.TryGetComponent(tossed, out var phys))
+            return;
+
+        // only toss if its on lattice/space
+        var tile = childXform.Coordinates.GetTileRef(EntityManager, _mapManager);
+
+        if (tile != null && tile.Value.IsSpace() && _mapManager.TryGetGrid(tile.Value.GridUid, out var grid))
+        {
+            Vector2 direction = -Vector2.UnitY;
+
+            var foo = childXform.LocalPosition - shuttleBody.LocalCenter;
+            _throwing.TryThrow(tossed, foo.Normalized() * 10.0f, 50.0f);
         }
     }
 

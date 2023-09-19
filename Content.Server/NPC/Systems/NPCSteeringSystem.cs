@@ -15,6 +15,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
 using Content.Shared.NPC;
+using Content.Shared.NPC;
 using Content.Shared.NPC.Events;
 using Content.Shared.Physics;
 using Content.Shared.Weapons.Melee;
@@ -268,7 +269,7 @@ public sealed partial class NPCSteeringSystem : SharedNPCSteeringSystem
                 var (uid, steering, mover, _) = npcs[i];
 
                 data.Add(new NPCSteeringDebugData(
-                    uid,
+                    GetNetEntity(uid),
                     mover.CurTickSprintMovement,
                     steering.Interest,
                     steering.Danger,
