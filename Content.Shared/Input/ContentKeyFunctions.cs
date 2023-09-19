@@ -112,5 +112,6 @@ namespace Content.Shared.Input
         public static readonly BoundKeyFunction Vote9 = "Vote9";
         public static readonly BoundKeyFunction EditorCopyObject = "EditorCopyObject";
         public static readonly BoundKeyFunction EditorFlipObject = "EditorFlipObject";
+        public static readonly BoundKeyFunction InspectEntity = "InspectEntity";
     }
 }

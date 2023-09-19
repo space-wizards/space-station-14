@@ -58,29 +58,29 @@ namespace Content.Server.GameTicking.Rules;
 
 public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
 {
+    [Dependency] private readonly ChatSystem _chat = default!;
+    [Dependency] private readonly EmergencyShuttleSystem _emergency = default!;
+    [Dependency] private readonly HumanoidAppearanceSystem _humanoid = default!;
+    [Dependency] private readonly IChatManager _chatManager = default!;
+    [Dependency] private readonly IGameTiming _gameTiming = default!;
+    [Dependency] private readonly IMapManager _mapManager = default!;
+    [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IServerPreferencesManager _prefs = default!;
-    [Dependency] private readonly IChatManager _chatManager = default!;
-    [Dependency] private readonly IMapManager _mapManager = default!;
-    [Dependency] private readonly IPlayerManager _playerSystem = default!;
-    [Dependency] private readonly EmergencyShuttleSystem _emergency = default!;
-    [Dependency] private readonly NpcFactionSystem _npcFaction = default!;
-    [Dependency] private readonly HumanoidAppearanceSystem _humanoidSystem = default!;
-    [Dependency] private readonly StationSpawningSystem _stationSpawningSystem = default!;
-    [Dependency] private readonly RoundEndSystem _roundEndSystem = default!;
-    [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
     [Dependency] private readonly MapLoaderSystem _map = default!;
-    [Dependency] private readonly ShuttleSystem _shuttle = default!;
-    [Dependency] private readonly MindSystem _mindSystem = default!;
-    [Dependency] private readonly SharedRoleSystem _roles = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
-    [Dependency] private readonly IGameTiming _gameTiming = default!;
-    [Dependency] private readonly ChatSystem _chatSystem = default!;
-    [Dependency] private readonly StoreSystem _storeSystem = default!;
-    [Dependency] private readonly TagSystem _tag = default!;
+    [Dependency] private readonly MindSystem _mind = default!;
+    [Dependency] private readonly NpcFactionSystem _npcFaction = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
-    [Dependency] private readonly WarDeclaratorSystem _warDeclaratorSystem = default!;
+    [Dependency] private readonly RoundEndSystem _roundEndSystem = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly SharedRoleSystem _roles = default!;
+    [Dependency] private readonly ShuttleSystem _shuttle = default!;
+    [Dependency] private readonly StationSpawningSystem _stationSpawning = default!;
+    [Dependency] private readonly StoreSystem _store = default!;
+    [Dependency] private readonly TagSystem _tag = default!;
+    [Dependency] private readonly WarDeclaratorSystem _warDeclarator = default!;
 
     [ValidatePrototypeId<CurrencyPrototype>]
     private const string TelecrystalCurrencyPrototype = "Telecrystal";
@@ -147,7 +147,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
             if (!GameTicker.IsGameRuleAdded(ruleEnt, gameRule))
                 continue;
 
-            var found = nukeops.OperativePlayers.Values.Any(v => v.AttachedEntity == opUid);
+            var found = nukeops.OperativePlayers.Values.Any(v => v == opUid);
             if (found)
             {
                 comps = (nukeops, gameRule);
@@ -233,9 +233,9 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
 
         var nukieRule = comps.Value.Item1;
         nukieRule.WarDeclaredTime = _gameTiming.CurTime;
-        _chatSystem.DispatchGlobalAnnouncement(msg, title, colorOverride: colorOverride);
+        _chat.DispatchGlobalAnnouncement(msg, title, colorOverride: colorOverride);
         DistributeExtraTC(nukieRule, lone);
-        _warDeclaratorSystem.RefreshAllUI(comps.Value.Item1, comps.Value.Item2);
+        _warDeclarator.RefreshAllUI(comps.Value.Item1, comps.Value.Item2);
     }
 
     private void DistributeExtraTC(NukeopsRuleComponent nukieRule, LoneOpsSpawnRuleComponent? lone = null)
@@ -262,7 +262,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
             }
             // SS220 lone-ops-war end
 
-            _storeSystem.TryAddCurrency(new () { { TelecrystalCurrencyPrototype, nukieRule.WarTCAmountPerNukie } }, uid, component);
+            _store.TryAddCurrency(new () { { TelecrystalCurrencyPrototype, nukieRule.WarTCAmountPerNukie } }, uid, component);
 
             var msg = Loc.GetString("store-currency-war-boost-given", ("target", uid));
             _popupSystem.PopupEntity(msg, uid);
@@ -278,13 +278,11 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
                 continue;
 
             // If entity has a prior mind attached, add them to the players list.
-            if (!_mindSystem.TryGetMind(uid, out _, out var mind))
+            if (!_mind.TryGetMind(uid, out var mind, out _))
                 continue;
 
-            var session = mind?.Session;
             var name = MetaData(uid).EntityName;
-            if (session != null)
-                nukeops.OperativePlayers.Add(name, session);
+            nukeops.OperativePlayers.Add(name, mind);
             // Corvax-DionaPacifist-Start: Allow dionas nukes to harm
             RemComp<PacifiedComponent>(uid);
             // Corvax-DionaPacifist-End
@@ -398,7 +396,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
         while (query.MoveNext(out _, out var nukeops, out var actor))
         {
             _chatManager.DispatchServerMessage(actor.PlayerSession, Loc.GetString("nukeops-welcome", ("station", component.TargetStation.Value)));
-            _audioSystem.PlayGlobal(nukeops.GreetSoundNotification, actor.PlayerSession);
+            _audio.PlayGlobal(nukeops.GreetSoundNotification, actor.PlayerSession);
             filter.AddPlayer(actor.PlayerSession);
         }
     }
@@ -446,14 +444,28 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
         }
 
         var allAlive = true;
-        foreach (var (_, state) in EntityQuery<NukeOperativeComponent, MobStateComponent>())
+        var mindQuery = GetEntityQuery<MindComponent>();
+        var mobStateQuery = GetEntityQuery<MobStateComponent>();
+        foreach (var (_, mindId) in component.OperativePlayers)
         {
-            if (state.CurrentState is MobState.Alive)
+            // mind got deleted somehow so ignore it
+            if (!mindQuery.TryGetComponent(mindId, out var mind))
                 continue;
+
+            // check if player got gibbed or ghosted or something - count as dead
+            if (mind.OwnedEntity != null &&
+                // if the player somehow isn't a mob anymore that also counts as dead
+                mobStateQuery.TryGetComponent(mind.OwnedEntity.Value, out var mobState) &&
+                // have to be alive, not crit or dead
+                mobState.CurrentState is MobState.Alive)
+            {
+                continue;
+            }
 
             allAlive = false;
             break;
         }
+
         // If all nuke ops were alive at the end of the round,
         // the nuke ops win. This is to prevent people from
         // running away the moment nuke ops appear.
@@ -496,6 +508,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
 
     private void OnRoundEndText(RoundEndTextAppendEvent ev)
     {
+        var mindQuery = GetEntityQuery<MindComponent>();
         foreach (var nukeops in EntityQuery<NukeopsRuleComponent>())
         {
             var winText = Loc.GetString($"nukeops-{nukeops.WinType.ToString().ToLower()}");
@@ -510,10 +523,16 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
             }
 
             ev.AddLine(Loc.GetString("nukeops-list-start"));
-            foreach (var (name, session) in nukeops.OperativePlayers)
+            foreach (var (name, mindId) in nukeops.OperativePlayers)
             {
-                var listing = Loc.GetString("nukeops-list-name", ("name", name), ("user", session.Name));
-                ev.AddLine(listing);
+                if (mindQuery.TryGetComponent(mindId, out var mind) && mind.Session != null)
+                {
+                    ev.AddLine(Loc.GetString("nukeops-list-name-user", ("name", name), ("user", mind.Session.Name)));
+                }
+                else
+                {
+                    ev.AddLine(Loc.GetString("nukeops-list-name", ("name", name)));
+                }
             }
         }
     }
@@ -601,7 +620,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
 
     private void OnMobStateChanged(EntityUid uid, NukeOperativeComponent component, MobStateChangedEvent ev)
     {
-        if(ev.NewMobState == MobState.Dead)
+        if (ev.NewMobState == MobState.Dead)
             CheckRoundShouldEnd();
     }
 
@@ -654,7 +673,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
                 }
             }
 
-            var numNukies = MathHelper.Clamp(_playerSystem.PlayerCount / playersPerOperative, 1, maxOperatives);
+            var numNukies = MathHelper.Clamp(_playerManager.PlayerCount / playersPerOperative, 1, maxOperatives);
 
             for (var i = 0; i < numNukies; i++)
             {
@@ -746,11 +765,14 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
             {
                 ev.PlayerPool.Remove(session);
                 GameTicker.PlayerJoinGame(session);
+
+                if (!_mind.TryGetMind(session, out var mind, out _))
+                    continue;
+
                 var name = session.AttachedEntity == null
                     ? string.Empty
-                    : MetaData(session.AttachedEntity.Value).EntityName;
-                // TODO: Fix this being able to have duplicates
-                nukeops.OperativePlayers[name] = session;
+                    : Name(session.AttachedEntity.Value);
+                nukeops.OperativePlayers[name] = mind;
             }
         }
     }
@@ -786,7 +808,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
 
     private void OnMindAdded(EntityUid uid, NukeOperativeComponent component, MindAddedMessage args)
     {
-        if (!_mindSystem.TryGetMind(uid, out var mindId, out var mind))
+        if (!_mind.TryGetMind(uid, out var mindId, out var mind))
             return;
 
         foreach (var (nukeops, gameRule) in EntityQuery<NukeopsRuleComponent, GameRuleComponent>())
@@ -801,13 +823,11 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
             if (mind.Session is not { } playerSession)
                 return;
 
-            if (nukeops.OperativePlayers.ContainsValue(playerSession))
+            if (nukeops.OperativePlayers.ContainsValue(mindId))
                 return;
 
-            var name = MetaData(uid).EntityName;
-
-            nukeops.OperativePlayers.Add(name, playerSession);
-            _warDeclaratorSystem.RefreshAllUI(nukeops, gameRule);
+            nukeops.OperativePlayers.Add(Name(uid), mindId);
+            _warDeclarator.RefreshAllUI(nukeops, gameRule);
 
             if (GameTicker.RunLevel != GameRunLevel.InRound)
                 return;
@@ -817,7 +837,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
                 _chatManager.DispatchServerMessage(playerSession, Loc.GetString("nukeops-welcome", ("station", nukeops.TargetStation.Value)));
 
                  // Notificate player about new role assignment
-                 _audioSystem.PlayGlobal(component.GreetSoundNotification, playerSession);
+                 _audio.PlayGlobal(component.GreetSoundNotification, playerSession);
             }
         }
     }
@@ -919,11 +939,11 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
 
         if (profile != null)
         {
-            _humanoidSystem.LoadProfile(mob, profile);
+            _humanoid.LoadProfile(mob, profile);
         }
 
         if (component.StartingGearPrototypes.TryGetValue(gear, out var gearPrototype))
-            _stationSpawningSystem.EquipStartingGear(mob, gearPrototype, profile);
+            _stationSpawning.EquipStartingGear(mob, gearPrototype, profile);
 
         _npcFaction.RemoveFaction(mob, "NanoTrasen", false);
         _npcFaction.AddFaction(mob, "Syndicate");
@@ -938,7 +958,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
         var spawns = new List<EntityCoordinates>();
 
         // Forgive me for hardcoding prototypes
-        foreach (var (_, meta, xform) in EntityManager.EntityQuery<SpawnPointComponent, MetaDataComponent, TransformComponent>(true))
+        foreach (var (_, meta, xform) in EntityQuery<SpawnPointComponent, MetaDataComponent, TransformComponent>(true))
         {
             if (meta.EntityPrototype?.ID != component.SpawnPointPrototype)
                 continue;
@@ -952,7 +972,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
 
         if (spawns.Count == 0)
         {
-            spawns.Add(EntityManager.GetComponent<TransformComponent>(outpostUid).Coordinates);
+            spawns.Add(Transform(outpostUid).Coordinates);
             Logger.WarningS("nukies", $"Fell back to default spawn for nukies!");
         }
 
@@ -970,17 +990,17 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
                     species = _prototypeManager.Index<SpeciesPrototype>(SharedHumanoidAppearanceSystem.DefaultSpecies);
                 }
 
-                var mob = EntityManager.SpawnEntity(species.Prototype, _random.Pick(spawns));
+                var mob = Spawn(species.Prototype, _random.Pick(spawns));
                 SetupOperativeEntity(mob, spawnDetails.Name, spawnDetails.Gear, profile, component);
-                var newMind = _mindSystem.CreateMind(session.UserId, spawnDetails.Name);
-                _mindSystem.SetUserId(newMind, session.UserId);
+                var newMind = _mind.CreateMind(session.UserId, spawnDetails.Name);
+                _mind.SetUserId(newMind, session.UserId);
                 _roles.MindAddRole(newMind, new NukeopsRoleComponent { PrototypeId = spawnDetails.Role });
 
-                _mindSystem.TransferTo(newMind, mob);
+                _mind.TransferTo(newMind, mob);
             }
             else if (addSpawnPoints)
             {
-                var spawnPoint = EntityManager.SpawnEntity(component.GhostSpawnPointProto, _random.Pick(spawns));
+                var spawnPoint = Spawn(component.GhostSpawnPointProto, _random.Pick(spawns));
                 var ghostRole = EnsureComp<GhostRoleComponent>(spawnPoint);
                 EnsureComp<GhostRoleMobSpawnerComponent>(spawnPoint);
                 ghostRole.RoleName = Loc.GetString(nukeOpsAntag.Name);
@@ -1008,7 +1028,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
         var playersPerOperative = component.PlayersPerOperative;
         var maxOperatives = component.MaxOperatives;
 
-        var playerPool = _playerSystem.ServerSessions.ToList();
+        var playerPool = _playerManager.ServerSessions.ToList();
         var numNukies = MathHelper.Clamp(playerPool.Count / playersPerOperative, 1, maxOperatives);
 
         var operatives = new List<IPlayerSession>();
@@ -1137,7 +1157,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
                 nukeops.LeftOutpost = true;
 
                 if (TryGetRuleFromGrid(gridUid.Value, out var comps))
-                    _warDeclaratorSystem.RefreshAllUI(comps.Value.Item1, comps.Value.Item2);
+                    _warDeclarator.RefreshAllUI(comps.Value.Item1, comps.Value.Item2);
             }
         }
     }
@@ -1183,13 +1203,13 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
         var query = EntityQuery<NukeOperativeComponent, MindContainerComponent, MetaDataComponent>(true);
         foreach (var (_, mindComp, metaData) in query)
         {
-            if (!mindComp.HasMind || !_mindSystem.TryGetSession(mindComp.Mind.Value, out var session))
+            if (!mindComp.HasMind)
                 continue;
-            component.OperativePlayers.Add(metaData.EntityName, session);
+
+            component.OperativePlayers.Add(metaData.EntityName, mindComp.Mind.Value);
         }
 
         if (GameTicker.RunLevel == GameRunLevel.InRound)
             SpawnOperativesForGhostRoles(uid, component);
     }
-
 }

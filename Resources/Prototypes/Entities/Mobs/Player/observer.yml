@@ -5,6 +5,7 @@
   description: Boo!
   noSpawn: true
   components:
+  - type: CargoSellBlacklist
   - type: Sprite
     overrideContainerOcclusion: true # Ghosts always show up regardless of where they're contained.
     drawdepth: Ghosts
