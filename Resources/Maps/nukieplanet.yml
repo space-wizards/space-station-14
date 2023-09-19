@@ -158,7 +158,7 @@ entities:
             color: '#FFFFFFFF'
             id: Basalt1
           decals:
-            369: 26.834131,4.97881
+            368: 26.834131,4.97881
         - node:
             color: '#FFFFFFFF'
             id: Bot
@@ -791,7 +791,7 @@ entities:
             color: '#AB0000FF'
             id: d
           decals:
-            374: 21.412256,2.9944348
+            373: 21.412256,2.9944348
         - node:
             color: '#FFFFFFFF'
             id: grasssnowa1
@@ -801,7 +801,7 @@ entities:
             47: -2.8426914,5.7681084
             84: 16.072964,17.452217
             85: -4.644718,19.141476
-            370: 26.896631,2.9944348
+            369: 26.896631,2.9944348
         - node:
             color: '#FFFFFFFF'
             id: grasssnowa2
@@ -896,38 +896,38 @@ entities:
             color: '#AB0000FF'
             id: i
           decals:
-            375: 21.677881,2.8381848
+            374: 21.677881,2.8381848
         - node:
             color: '#AB0000FF'
             id: k
           decals:
-            380: 23.427881,2.8069348
+            377: 23.427881,2.8069348
         - node:
             color: '#AB0000FF'
             id: n
           decals:
-            373: 20.943506,2.9006848
-            381: 22.959131,2.9631848
+            372: 20.943506,2.9006848
+            378: 22.959131,2.9631848
         - node:
             color: '#AB0000FF'
             id: r
           decals:
-            376: 22.099756,2.7913098
+            375: 22.099756,2.7913098
         - node:
             color: '#AB0000FF'
             id: s
           decals:
-            371: 20.224756,2.9788098
+            370: 20.224756,2.9788098
         - node:
             color: '#AB0000FF'
             id: shortline
           decals:
-            377: 22.552881,2.8381848
+            376: 22.552881,2.8381848
         - node:
             color: '#AB0000FF'
             id: y
           decals:
-            372: 20.568506,2.9319348
+            371: 20.568506,2.9319348
       type: DecalGrid
     - version: 2
       data:
@@ -1660,28 +1660,6 @@ entities:
     - pos: -11.5,6.5
       parent: 104
       type: Transform
-- proto: AirlockExternalGlass
-  entities:
-  - uid: 148
-    components:
-    - pos: 3.5,1.5
-      parent: 104
-      type: Transform
-  - uid: 1088
-    components:
-    - pos: -1.5,-3.5
-      parent: 104
-      type: Transform
-  - uid: 1089
-    components:
-    - pos: -5.5,-3.5
-      parent: 104
-      type: Transform
-  - uid: 2448
-    components:
-    - pos: 3.5,3.5
-      parent: 104
-      type: Transform
 - proto: AirlockGlassShuttle
   entities:
   - uid: 412
@@ -1764,75 +1742,95 @@ entities:
     - pos: 8.5,-16.5
       parent: 104
       type: Transform
-- proto: AirlockSecurity
-  entities:
-  - uid: 272
-    components:
-    - pos: 14.5,-1.5
-      parent: 104
-      type: Transform
 - proto: AirlockSecurityGlass
   entities:
-  - uid: 49
-    components:
-    - pos: 16.5,-7.5
-      parent: 104
-      type: Transform
-  - uid: 55
-    components:
-    - pos: 23.5,-7.5
-      parent: 104
-      type: Transform
-  - uid: 65
-    components:
-    - pos: 9.5,-9.5
-      parent: 104
-      type: Transform
-  - uid: 109
-    components:
-    - pos: 11.5,-7.5
-      parent: 104
-      type: Transform
-  - uid: 112
-    components:
-    - pos: 8.5,-0.5
-      parent: 104
-      type: Transform
-  - uid: 122
-    components:
-    - pos: 17.5,-7.5
-      parent: 104
-      type: Transform
-  - uid: 131
-    components:
-    - pos: 20.5,-10.5
-      parent: 104
-      type: Transform
-  - uid: 136
-    components:
-    - pos: 10.5,-2.5
-      parent: 104
-      type: Transform
   - uid: 190
     components:
     - pos: 16.5,-13.5
       parent: 104
       type: Transform
-  - uid: 317
+- proto: AirlockSyndicate
+  entities:
+  - uid: 1089
     components:
-    - pos: 20.5,-4.5
+    - pos: 14.5,-1.5
       parent: 104
       type: Transform
-  - uid: 348
+- proto: AirlockSyndicateGlassLocked
+  entities:
+  - uid: 49
+    components:
+    - pos: 3.5,3.5
+      parent: 104
+      type: Transform
+  - uid: 55
+    components:
+    - pos: -1.5,-3.5
+      parent: 104
+      type: Transform
+  - uid: 65
+    components:
+    - pos: 3.5,1.5
+      parent: 104
+      type: Transform
+  - uid: 96
+    components:
+    - pos: -5.5,-3.5
+      parent: 104
+      type: Transform
+  - uid: 109
+    components:
+    - pos: 8.5,-0.5
+      parent: 104
+      type: Transform
+  - uid: 112
+    components:
+    - pos: 23.5,-7.5
+      parent: 104
+      type: Transform
+  - uid: 122
+    components:
+    - pos: 16.5,-7.5
+      parent: 104
+      type: Transform
+  - uid: 131
+    components:
+    - pos: 6.5,-9.5
+      parent: 104
+      type: Transform
+  - uid: 136
+    components:
+    - pos: 9.5,-9.5
+      parent: 104
+      type: Transform
+  - uid: 148
     components:
     - pos: 14.5,-5.5
       parent: 104
       type: Transform
-- proto: AirlockVirologyGlass
-  entities:
-  - uid: 96
+  - uid: 272
     components:
-    - pos: 6.5,-9.5
+    - pos: 20.5,-10.5
+      parent: 104
+      type: Transform
+  - uid: 282
+    components:
+    - pos: 17.5,-7.5
+      parent: 104
+      type: Transform
+  - uid: 317
+    components:
+    - pos: 10.5,-2.5
+      parent: 104
+      type: Transform
+  - uid: 348
+    components:
+    - pos: 20.5,-4.5
+      parent: 104
+      type: Transform
+  - uid: 1088
+    components:
+    - pos: 11.5,-7.5
       parent: 104
       type: Transform
 - proto: AlwaysPoweredLightExterior
@@ -11157,9 +11155,9 @@ entities:
       type: Transform
 - proto: NukeDiskFake
   entities:
-  - uid: 282
+  - uid: 1473
     components:
-    - pos: 12.149857,15.427643
+    - pos: 12.358097,15.523893
       parent: 104
       type: Transform
 - proto: OperatingTable
@@ -13051,7 +13049,7 @@ entities:
     components:
     - flags: SessionSpecific
       type: MetaData
-    - pos: 1.4711013,-3.6405277
+    - pos: 1.4803444,-3.5611887
       parent: 104
       type: Transform
 - proto: SyringeInaprovaline
