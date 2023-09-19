@@ -102,40 +102,15 @@ public sealed class BodySystem : SharedBodySystem
         if (!base.InternalDetachPart(bodyId, partId, part, slotName, container, reparent, coords))
             return false;
 
-        if (bodyId != null
-            && TryComp<HumanoidAppearanceComponent>(bodyId, out var humanoid))
-        {
-            var layer = part.ToHumanoidLayers();
-            if (layer != null)
-            {
-                var layers = HumanoidVisualLayersExtension.Sublayers(layer.Value);
-                _humanoidSystem.SetLayersVisibility(bodyId.Value, layers, false, true, humanoid);
-            }
-        }
-
-        return true;
-    }
-
-
-
-    public override bool DropPart(EntityUid? partId, BodyPartComponent? part = null, BodyPartComponent? parentPart = null)
-    {
-        if (partId == null || !Resolve(partId.Value, ref part))
-            return false;
-
-        if (!base.DropPart(partId, part))
-            return false;
-
-        var oldBody = part.Body;
-        if (oldBody == null || !TryComp<HumanoidAppearanceComponent>(oldBody, out var humanoid))
+        if (bodyId == null
+            || !TryComp<HumanoidAppearanceComponent>(bodyId, out var humanoid))
             return true;
-
         var layer = part.ToHumanoidLayers();
         if (layer == null)
             return true;
-
         var layers = HumanoidVisualLayersExtension.Sublayers(layer.Value);
-        _humanoidSystem.SetLayersVisibility(oldBody.Value, layers, false, true, humanoid);
+        _humanoidSystem.SetLayersVisibility(bodyId.Value, layers, false, true, humanoid);
+
         return true;
     }
 

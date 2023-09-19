@@ -54,8 +54,21 @@ public sealed class SaveLoadReparentTest
                 Assert.Multiple(() =>
                 {
                     Assert.That(component.Body, Is.EqualTo(human));
-                    Assert.That(component.Parent, Is.Not.Null);
+                    Assert.That(component.Body, Is.Not.Null);
                     Assert.That(component.Parent, Is.Not.EqualTo(default(EntityUid)));
+                    if (!bodySystem.IsPartRoot(component.Body.Value, id, null, component))
+                    {
+                        Assert.That(component.Parent, Is.Not.Null);
+                        Assert.That(component.AttachedToSlot != null);
+
+
+                    }
+                    else
+                    {
+                        Assert.That(component.Parent, Is.Null);
+                        var bodyComp = entities.GetComponent<BodyComponent>(component.Body.Value);
+                        Assert.That(bodyComp.RootPartSlot == component.AttachedToSlot);
+                    }
                 });
 
                 foreach (var (slotId, slot) in component.Children)
