@@ -14,8 +14,6 @@ materials-unit-bunch = bunch
 materials-unit-slab = slab
 # webs of silk
 materials-unit-web = web
-# bones
-materials-unit-bones = bones
 
 # bills of spesos... not very good but they are not (yet?) used for crafting anything
 # also the lathe/atm would need bigger denominations to output...

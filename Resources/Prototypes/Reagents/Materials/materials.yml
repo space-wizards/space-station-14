@@ -95,7 +95,7 @@
 - type: material
   id: Bones
   name: materials-bones
-  unit: materials-unit-bones
+  unit: materials-unit-piece
   icon: { sprite: Objects/Materials/materials.rsi, state: bones }
   color: "#896f5e"
   price: 0
