@@ -43,6 +43,7 @@
   - type: MovementSpeedModifier
   - type: Polymorphable
   - type: StatusIcon
+  - type: TTS # Corvax-TTS
 
 # Used for mobs that have health and can take damage.
 - type: entity
