@@ -1,0 +1,23 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Ogiginal is taken from tgstation  https://github.com/tgstation/tgstation/commit/d91390a4474e511279b6ee7525c5982266b9a858 and modified by DanTheSynth, then modified again by VladIsLove for SS220 ",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "icon"
+        },
+        {
+            "name": "primed",
+            "delays": [
+                [
+                    0.1,
+                    0.1
+                ]
+            ]
+        }
+    ]
+}

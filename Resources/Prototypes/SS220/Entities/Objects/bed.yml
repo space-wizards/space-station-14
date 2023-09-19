@@ -1,0 +1,10 @@
+- type: entity
+  id: BedsheetUSSP
+  parent: BedsheetBase
+  name: коммунистическое одеяло
+  description: Одеяло для коллективных народных снов
+  components:
+  - type: Sprite
+    state: sheetUSSP
+  - type: Clothing
+    sprite: SS220/Clothing/Neck/Bedsheets/USSP.rsi

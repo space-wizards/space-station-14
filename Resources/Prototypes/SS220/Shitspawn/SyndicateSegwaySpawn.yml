@@ -4,6 +4,7 @@
   name: Спавнер сегвей синдиката
   id: SpawnVehicleSyndicateSegway
   parent: MarkerBase
+  suffix: Ebent
   components:
   - type: Sprite
     layers:

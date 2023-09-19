@@ -3,7 +3,7 @@
 - type: entity
   parent: ClothingBeltUsspWebbing
   id: ClothingBeltUsspWebbingFilled
-  suffix: Shitspawn, Ebent, СССП
+  suffix: Ebent, СССП, Заполненный
   components:
   - type: StorageFill
     contents:
@@ -17,7 +17,7 @@
 - type: entity
   parent: ClothingBackpackUSSP
   id: ClothingBackpackUSSPFilled
-  suffix: Shitspawn, СССП, Маршал
+  suffix: Ebent, СССП, Заполненный
   components:
     - type: StorageFill
       contents:
@@ -27,13 +27,15 @@
       - id: FlashlightSecliteUssp
       - id: PowerCellHyper
       - id: WeaponRifleAk
+      - id: CombatHammer
+      - id: CombatSickle
 
 #Leader
 - type: entity
   parent: UsspCloset
   id: LockerEbentUSSPLeader
   name: "шкаф маршала СССП"
-  suffix: Filled, Shitspawn, СССП
+  suffix: Ebent
   components:
   - type: AccessReader
     access: []
@@ -53,7 +55,7 @@
   equipment:
     jumpsuit: ClothingUniformJumpsuitColorRed
     back: ClothingBackpackUSSPFilled
-    shoes: ClothingShoesBootsMagSyndie
+    shoes: ClothingShoesBootsMagUssp
     mask: ClothingMaskGasUssp
     gloves: ClothingHandsGlovesLeatherUSSPBlack
     outerClothing: ClothingOuterHardsuitUSSP
@@ -100,7 +102,7 @@
 - type: entity
   parent: UsspIDCard
   id: UsspIDCardCmdLeader
-  suffix: СССП, Щитспавн, Ebent
+  suffix: СССП, Ebent
   components:
   - type: PresetIdCard
     job: USSPLeader
@@ -108,7 +110,7 @@
 - type: entity
   parent: UsspPDA
   id: UsspPDALeader
-  suffix: СССП, Щитспавн, Ebent
+  suffix: СССП, Ebent
   components:
   - type: Pda
     id: UsspIDCardCmdLeader
@@ -118,7 +120,7 @@
   parent: UsspCloset
   id: LockerEbentUSSPEngineer
   name: "шкаф заслуженного инженера СССП"
-  suffix: Filled, Shitspawn, СССП
+  suffix: Filled, Ebent, СССП
   components:
   - type: AccessReader
     access: []
@@ -138,7 +140,7 @@
   equipment:
     jumpsuit: ClothingUniformJumpsuitColorRed
     back: ClothingBackpackUSSPFilled
-    shoes: ClothingShoesBootsMagSyndie
+    shoes: ClothingShoesBootsMagUssp
     mask: ClothingMaskGasUssp
     gloves: ClothingHandsGlovesLeatherUSSPBlack
     outerClothing: ClothingOuterHardsuitUSSP
@@ -185,7 +187,7 @@
 - type: entity
   parent: UsspIDCard
   id: UsspIDCardCmdEngineer
-  suffix: СССП, Щитспавн, Ebent
+  suffix: СССП, Ebent
   components:
   - type: PresetIdCard
     job: USSPEngineer
@@ -193,7 +195,7 @@
 - type: entity
   parent: UsspPDA
   id: UsspPDAEngineer
-  suffix: СССП, Щитспавн, Ebent
+  suffix: СССП, Ebent
   components:
   - type: Pda
     id: UsspIDCardCmdEngineer
@@ -203,7 +205,7 @@
   parent: UsspCloset
   id: LockerEbentUSSPCorpsman
   name: "шкаф полевого врача СССП"
-  suffix: Filled, Shitspawn, СССП
+  suffix: Ebent, СССП
   components:
   - type: AccessReader
     access: []
@@ -223,7 +225,7 @@
   equipment:
     jumpsuit: ClothingUniformJumpsuitColorRed
     back: ClothingBackpackUSSPFilled
-    shoes: ClothingShoesBootsMagSyndie
+    shoes: ClothingShoesBootsMagUssp
     mask: ClothingMaskGasUssp
     gloves: ClothingHandsGlovesLeatherUSSPBlack
     outerClothing: ClothingOuterHardsuitUSSP
@@ -270,7 +272,7 @@
 - type: entity
   parent: UsspIDCard
   id: UsspIDCardCorpsman
-  suffix: СССП, Щитспавн, Ebent
+  suffix: СССП, Ebent
   components:
   - type: PresetIdCard
     job: USSPCorpsman
@@ -278,7 +280,7 @@
 - type: entity
   parent: UsspMedicalPDA
   id: UsspPDACorpsman
-  suffix: СССП, Щитспавн, Ebent
+  suffix: СССП, Ebent
   components:
   - type: Pda
     id: UsspIDCardCorpsman
@@ -288,7 +290,7 @@
   parent: UsspCloset
   id: LockerEbentUSSPCMO
   name: "шкаф народного врача СССП"
-  suffix: Filled, Shitspawn, СССП
+  suffix: Filled, Ebent, СССП
   components:
   - type: AccessReader
     access: []
@@ -308,7 +310,7 @@
   equipment:
     jumpsuit: ClothingUniformJumpsuitColorRed
     back: ClothingBackpackUSSPFilled
-    shoes: ClothingShoesBootsMagSyndie
+    shoes: ClothingShoesBootsMagUssp
     mask: ClothingMaskGasUssp
     gloves: ClothingHandsGlovesLeatherUSSPBlack
     outerClothing: ClothingOuterHardsuitUSSP
@@ -355,7 +357,7 @@
 - type: entity
   parent: UsspIDCard
   id: UsspIDCardCmdCMO
-  suffix: СССП, Щитспавн, Ebent
+  suffix: СССП, Ebent
   components:
   - type: PresetIdCard
     job: USSPCMO
@@ -363,7 +365,7 @@
 - type: entity
   parent: UsspMedicalPDA
   id: UsspPDACMO
-  suffix: СССП, Щитспавн, Ebent
+  suffix: СССП, Ebent
   components:
   - type: Pda
     id: UsspIDCardCmdCMO
@@ -373,7 +375,7 @@
   parent: UsspCloset
   id: LockerEbentUSSPTrooper
   name: "шкаф красноармейца"
-  suffix: Filled, Shitspawn, СССП
+  suffix: Filled, Ebent, СССП
   components:
   - type: AccessReader
     access: []
@@ -393,7 +395,7 @@
   equipment:
     jumpsuit: ClothingUniformJumpsuitColorRed
     back: ClothingBackpackUSSPFilled
-    shoes: ClothingShoesBootsMagSyndie
+    shoes: ClothingShoesBootsMagUssp
     mask: ClothingMaskGasUssp
     gloves: ClothingHandsGlovesLeatherUSSPBlack
     outerClothing: ClothingOuterHardsuitUSSP
@@ -440,7 +442,7 @@
 - type: entity
   parent: UsspIDCard
   id: UsspIDCardFighter
-  suffix: СССП, Щитспавн, Ebent
+  suffix: СССП, Ebent
   components:
   - type: PresetIdCard
     job: USSPFighter
@@ -448,7 +450,7 @@
 - type: entity
   parent: UsspPDA
   id: UsspPDAFighter
-  suffix: СССП, Щитспавн, Ebent
+  suffix: СССП, Ebent
   components:
   - type: Pda
     id: UsspIDCardFighter

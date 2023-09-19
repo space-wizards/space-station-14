@@ -1,0 +1,29 @@
+- type: entity
+  parent: ClothingOuterHardsuitBase
+  id: ClothingOuterHardsuitUSSPHeavy
+  name: тяжёлый боевой скафандр СССП
+  description: Этот тяжёлый костюм выполнен по всем стандартам ГОСТа советского производства. Обеспечивает отличную защиту и путь в светлое будущее
+  suffix: Ebent
+  components:
+  - type: Sprite
+    sprite: SS220/Clothing/OuterClothing/Hardsuits/sssp_heavy.rsi
+  - type: Clothing
+    sprite: SS220/Clothing/OuterClothing/Hardsuits/sssp_heavy.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.45
+    lowPressureMultiplier: 10000
+  - type: ClothingSpeedModifier
+    walkModifier: 0.85
+    sprintModifier: 0.85
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.1
+        Slash: 0.15
+        Piercing: 0.2
+        Heat: 0.15
+        Stamina: 0.05
+  - type: ExplosionResistance
+    damageCoefficient: 0.3
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitUSSP

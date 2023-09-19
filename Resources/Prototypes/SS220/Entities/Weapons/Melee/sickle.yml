@@ -1,0 +1,24 @@
+- type: entity
+  name: серп
+  suffix: Ebent
+  parent: BaseKnife
+  id: CombatSickle
+  description: Сгодится как для скоса пшена, так и для скоса врагов народа. Выглядит острым.
+  components:
+  - type: Tag
+    tags:
+    - Knife
+  - type: Sprite
+    sprite: SS220/Objects/Weapons/Melee/combat_sickle.rsi
+    size: 2
+    state: icon
+  - type: MeleeWeapon
+    attackRate: 1
+    damage:
+      types:
+        Slash: 30
+  - type: Item
+    size: 20
+    sprite: SS220/Objects/Weapons/Melee/combat_sickle.rsi
+  - type: DisarmMalus
+    malus: 0.225

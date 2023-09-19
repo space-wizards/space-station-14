@@ -50,13 +50,13 @@
 - type: entity
   name: "фонарик СССП"
   description: "Надежный фонарь, используемый СССП."
-  suffix: СССП
+  suffix: Ebent
   parent: FlashlightSeclite
   id: FlashlightSecliteUssp
 
 - type: entity
   name: табельный револьвер СССП
-  suffix: СССП
+  suffix: Ebent
   parent: WeaponRevolverInspector
   id: WeaponRevolverInspectorUssp
   description: Стандартый револьвер армии СССП. Его предком является наган, но за годы он был доработан настолько, что от оригинала мало что осталось.
@@ -65,5 +65,15 @@
   parent: ClothingBeltMercWebbing
   id: ClothingBeltUsspWebbing
   name: РПС СССП
-  suffix: СССП
+  suffix: Ebent
   description: "Идеально подходит для хранения всего: от патронов до оружия и предметов боевой необходимости."
+
+- type: entity
+  parent: ClothingShoesBootsMagSyndie
+  id: ClothingShoesBootsMagUssp
+  name: магнитные ботинки СССП
+  description: Созданные по технологии реверс-инжиниринга магнитные ботинки. Собственность СССП.
+  suffix: Ebent
+  components:
+  - type: Sprite
+    sprite: SS220/Clothing/Shoes/Boots/magboots-ussp.rsi

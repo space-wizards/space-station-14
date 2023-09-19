@@ -1,0 +1,25 @@
+#The explosive values for these are pretty god damn mediocre, but SS14's explosion system is hard to understand - this is a good enough approximation of how it was in SS13.
+#Ideally, there should be a weak radius around the bomb outside of its gibbing / spacing range capable of dealing fair damage to players / structures.
+- type: entity
+  name: минибомба СССП
+  description: Взрывное устройство, производимое СССП, используемое, чтобы сеять хаос и разрушения.
+  parent: SyndieMiniBomb
+  id: UsspMiniBomb
+  suffix: Ebent
+  components:
+  - type: Sprite
+    sprite: SS220/Objects/Weapons/Grenades/usspnade.rsi
+  - type: OnUseTimerTrigger
+    delay: 5
+  - type: ExplodeOnTrigger
+  - type: Explosive
+    explosionType: Minibomb
+    totalIntensity: 200
+    intensitySlope: 30 #Will destroy the tile under it reliably, space 1-2 more to rods. Only does any significant damage in a 5-tile cross.
+    maxIntensity: 60
+  - type: Appearance
+  - type: TimerTriggerVisuals
+    primingSound:
+      path: /Audio/Effects/minibombcountdown.ogg
+      params:
+        volume: 12

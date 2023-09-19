@@ -12,6 +12,8 @@
   - type: Clothing
     sprite: SS220/Clothing/Head/Hardsuits/sssp.rsi
   - type: PointLight
+    radius: 5
+    energy: 3.5
     color: orange
   - type: PressureProtection
     highPressureMultiplier: 0.08

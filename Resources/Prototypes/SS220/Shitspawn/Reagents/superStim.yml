@@ -1,0 +1,50 @@
+- type: reagent
+  id: UnknownSuperStim
+  name: неизвестный раствор
+  group: Medicine
+  desc: reagent-desc-leporazine
+  physicalDesc: Раствор неизвестного происхождения.
+  flavor: medicine
+  color: "#ff7db5"
+  # Just in case you REALLY want to water your plants
+  plantMetabolism:
+  - !type:PlantAdjustWater
+    amount: 0.5
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 1.5
+    # Dragon doesn't require airloss healing, so omnizine is still best for humans.
+    Medicine:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Bloodloss: -20
+            Burn: -20
+            Brute: -20
+            Toxin: -20
+            Poison: -20
+            Airloss: -20
+            Asphyxiation: -20
+            Radiation: -20
+            Blood: 20
+            Caustic: -20
+      - !type:GenericStatusEffect
+        key: Stutter
+        component: ScrambledAccent
+    Narcotic:
+      effects:
+      - !type:MovespeedModifier
+        walkSpeedModifier: 1.35
+        sprintSpeedModifier: 1.35
+      - !type:Jitter
+      - !type:GenericStatusEffect
+        key: Stun
+        time: 3
+        type: Remove
+      - !type:GenericStatusEffect
+        key: KnockedDown
+        time: 3
+        type: Remove

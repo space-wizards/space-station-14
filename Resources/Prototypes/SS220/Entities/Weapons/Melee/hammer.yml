@@ -1,0 +1,24 @@
+- type: entity
+  name: молот
+  suffix: Ebent
+  parent: BaseKnife
+  id: CombatHammer
+  description: Им можно пробивать как самые твёрдые стены, так и самые толстые черепушки
+  components:
+  - type: Tag
+    tags: []
+  - type: Sprite
+    sprite: SS220/Objects/Weapons/Melee/combat_hammer.rsi
+    size: 2
+    state: icon
+  - type: MeleeWeapon
+    attackRate: 0.5
+    damage:
+      types:
+        Blunt: 10
+        Structural: 60
+  - type: Item
+    size: 20
+    sprite: SS220/Objects/Weapons/Melee/combat_hammer.rsi
+  - type: DisarmMalus
+    malus: 0.225
