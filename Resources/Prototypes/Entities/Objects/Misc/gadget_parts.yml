@@ -45,6 +45,21 @@
 
 - type: entity
   parent: BaseItem
+  id: AdvancedRayCaster
+  name: advanced ray caster
+  description: #todo
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/advanced_ray_caster.rsi
+    state: icon
+  - type: Item
+    size: 5
+  - type: Tag
+    tags:
+    - AdvancedLaserTechPart
+
+- type: entity
+  parent: BaseItem
   id: ModularReceiver
   name: modular receiver
   description: #todo

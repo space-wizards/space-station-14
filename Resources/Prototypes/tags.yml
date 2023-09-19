@@ -1,4 +1,7 @@
 - type: Tag
+  id: AdvancedLaserTechPart
+
+- type: Tag
   id: AirAlarm
 
 - type: Tag
