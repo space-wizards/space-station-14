@@ -31,6 +31,9 @@ public sealed class RandomEntityStorageSpawnRule : StationEventSystem<RandomEnti
             validLockers.Add((ent, storage, xform));
         }
 
+        if (validLockers.Count == 0)
+            return;
+
         var (locker, storageComp, xformComp) = RobustRandom.Pick(validLockers);
         var spawn = Spawn(comp.Prototype, xformComp.Coordinates);
         if (!_entityStorage.Insert(spawn, locker, storageComp))
