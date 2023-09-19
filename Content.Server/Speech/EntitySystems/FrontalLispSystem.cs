@@ -15,13 +15,15 @@ public sealed class FrontalLispSystem : EntitySystem
     {
         var message = args.Message;
 
-        // handles uppercase
-        message = Regex.Replace(message, @"[S][C]|[T]?[S]+|[C](?=[IEY])|[Z]+|[P][S]+|[T](?=[I])", "TH");
-        // handles lowercase
-        message = Regex.Replace(message, @"[Ss][Cc]|[Tt]?[Ss]+|[Cc](?=[IiEeYy])|[Zz]+|[Pp][Ss]+|[Tt](?=[Ii])", "th");
-        // handles 'ex'
+        // handles ts, c(iey),ps, ti
+        message = Regex.Replace(message, @"[T]+[S]+|[C]+(?=[IEY])|[Z]+|[P][S]+|[T](?=[I])", "TH");
+        message = Regex.Replace(message, @"[Tt]+[Ss]+|[Cc]+(?=[IiEeYy])|[Zz]+|[Pp][Ss]+|[Tt](?=[Ii])", "th");
+        // handles ex
         message = Regex.Replace(message, @"(?![E])[X]", "KTH");
         message = Regex.Replace(message, @"(?![Ee])[Xx]", "kth");
+        // handles sth and s
+        message = Regex.Replace(message, "[S]+[T]?[H]?", "TH");
+        message = Regex.Replace(message, "[Ss]+[Tt]?[Hh]?", "th");
 
         args.Message = message;
     }
