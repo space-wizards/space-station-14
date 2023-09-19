@@ -188,7 +188,7 @@ namespace Content.Shared.Humanoid
             return new(color.RByte, color.GByte, color.BByte);
         }
 
-        public static HumanoidCharacterAppearance EnsureValid(HumanoidCharacterAppearance appearance, string species, string[] sponsorMarkings)
+        public static HumanoidCharacterAppearance EnsureValid(HumanoidCharacterAppearance appearance, string species, Sex sex, string[] sponsorMarkings)
         {
             var hairStyleId = appearance.HairStyleId;
             var facialHairStyleId = appearance.FacialHairStyleId;
@@ -204,7 +204,7 @@ namespace Content.Shared.Humanoid
             {
                 hairStyleId = HairStyles.DefaultHairStyle;
             }
-            
+
             // Corvax-Sponsors-Start
             if (proto.TryIndex(hairStyleId, out MarkingPrototype? hairProto) &&
                 hairProto.SponsorOnly &&
@@ -218,7 +218,7 @@ namespace Content.Shared.Humanoid
             {
                 facialHairStyleId = HairStyles.DefaultFacialHairStyle;
             }
-            
+
             // Corvax-Sponsors-Start
             if (proto.TryIndex(facialHairStyleId, out MarkingPrototype? facialHairProto) &&
                 facialHairProto.SponsorOnly &&
@@ -242,6 +242,7 @@ namespace Content.Shared.Humanoid
 
                 markingSet.EnsureSpecies(species, skinColor, markingManager);
                 markingSet.FilterSponsor(sponsorMarkings, markingManager); // Corvax-Sponsors
+                markingSet.EnsureSexes(sex, markingManager);
             }
 
             return new HumanoidCharacterAppearance(
