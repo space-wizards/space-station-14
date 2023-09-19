@@ -21,7 +21,7 @@ namespace Content.Server.Power.NodeGroups
             foreach (var node in groupNodes)
             {
                 // TODO POWER PERFORMANCE
-                // Replace this with TryComps or some other sane way of doing this. This is awfully.
+                // Replace this with TryComps or some other sane way of doing this, the current solution is awful.
                 // This allocates an array, copies ALL of an entities components over, and then iterates over them to
                 // yield any that implement the interface.
                 foreach (var comp in EntMan.GetComponents<IBaseNetConnectorComponent<TNetType>>(node.Owner))
