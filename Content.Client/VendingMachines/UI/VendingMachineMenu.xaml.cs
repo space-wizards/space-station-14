@@ -54,7 +54,7 @@ namespace Content.Client.VendingMachines.UI
 
             while (inventory.Count != VendingContents.Count)
             {
-                if(inventory.Count > VendingContents.Count)
+                if (inventory.Count > VendingContents.Count)
                     VendingContents.AddItem(string.Empty);
                 else
                     VendingContents.RemoveAt(VendingContents.Count - 1);
