@@ -72,7 +72,7 @@
     actions:
     - !type:AppearanceChange
     edges:
-    - to: lasercannon
+    - to: laserCannon
       steps:
       - material: Plasteel
         amount: 5

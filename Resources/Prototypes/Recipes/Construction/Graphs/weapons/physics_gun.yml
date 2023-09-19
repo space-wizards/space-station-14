@@ -76,7 +76,7 @@
     actions:
     - !type:AppearanceChange
     edges:
-    - to: tethergun
+    - to: tetherGun
       steps:
       - tool: Screwing
         doAfter: 1
@@ -93,7 +93,7 @@
     actions:
     - !type:AppearanceChange
     edges:
-    - to: forcegun
+    - to: forceGun
       steps:
       - tool: Screwing
         doAfter: 1

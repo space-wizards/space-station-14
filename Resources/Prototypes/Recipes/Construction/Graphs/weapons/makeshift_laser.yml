@@ -53,7 +53,7 @@
     actions:
     - !type:AppearanceChange
     edges:
-    - to: makeshiftlaserpistol
+    - to: makeshiftLaserPistol
       steps:
       - material: Cable
         amount: 2

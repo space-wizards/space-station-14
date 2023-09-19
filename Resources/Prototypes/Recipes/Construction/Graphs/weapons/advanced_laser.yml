@@ -72,7 +72,7 @@
     actions:
     - !type:AppearanceChange
     edges:
-    - to: advancedlaserpistol
+    - to: advancedLaserPistol
       steps:
       - material: Plasteel
         amount: 3

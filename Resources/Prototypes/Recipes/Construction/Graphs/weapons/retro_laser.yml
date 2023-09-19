@@ -55,7 +55,7 @@
     actions:
     - !type:AppearanceChange
     edges:
-    - to: retrolaserblaster
+    - to: retroLaserBlaster
       steps:
       - tool: Screwing
         doAfter: 1
