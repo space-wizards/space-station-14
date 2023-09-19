@@ -5,5 +5,13 @@ namespace Content.Client.Actions;
 /// </summary>
 public sealed class FillActionSlotEvent : EntityEventArgs
 {
-    public EntityUid? Action;
+    public EntityUid? Action; ;;;;
+
+//hi
+
+
+
+
+
+
 }
