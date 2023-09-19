@@ -17,7 +17,9 @@ public sealed class FrontalLispSystem : EntitySystem
 
         // handles uppercase
         message = Regex.Replace(message, @"[S][C]|[T]?[S]+|[C](?=[IEY])|[Z]+|[P][S]+", "TH");
-        //handles lowercase
+        // handles lowercase
         message = Regex.Replace(message, @"[Ss][Cc]|[Tt]?[Ss]+|[Cc](?=[IiEeYy])|[Zz]+|[Pp][Ss]+", "th");
+
+        args.Message = message;
     }
 }
