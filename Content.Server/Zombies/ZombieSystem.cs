@@ -93,7 +93,9 @@ namespace Content.Server.Zombies
                     ? comp.CritDamageMultiplier
                     : 1f;
 
+                _bloodstream.TryModifyBloodLevel(uid, -1);
                 _damageable.TryChangeDamage(uid, comp.Damage * multiplier, true, false, damage);
+
             }
 
             // Heal the zombified
