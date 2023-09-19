@@ -1,41 +1,45 @@
 using Content.Client.Gameplay;
 using Content.Client.Storage.Systems;
 using Content.Shared.Storage;
+using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controllers;
 
 namespace Content.Client.Storage.UI;
 
 public sealed class StorageUIController : UIController, IOnSystemChanged<StorageSystem>, IOnStateExited<GameplayState>
 {
-    // This is mainly to keep legacy functionality for now.
-    private readonly Dictionary<EntityUid, StorageWindow> _storageWindows = new();
+    [UISystemDependency] private readonly StorageSystem _storage = default!;
+
+    private StorageWindow? _window;
 
     public override void Initialize()
     {
         base.Initialize();
         EntityManager.EventBus.SubscribeLocalEvent<StorageComponent, ComponentShutdown>(OnStorageShutdown);
     }
+
     public StorageWindow EnsureStorageWindow(EntityUid uid)
     {
-        if (_storageWindows.TryGetValue(uid, out var window))
+        if (_window == null)
         {
-            UIManager.WindowRoot.AddChild(window);
-            return window;
+            _window = new StorageWindow(EntityManager);
+            _window.OpenCenteredLeft();
+        }
+        // If it's not already open for another entity.
+        else if (!_window.VisibleInTree)
+        {
+            UIManager.WindowRoot.AddChild(_window);
         }
 
-        window = new StorageWindow(EntityManager);
-        _storageWindows[uid] = window;
-        window.OpenCenteredLeft();
-        return window;
+        return _window;
     }
 
     private void OnStorageShutdown(EntityUid uid, StorageComponent component, ComponentShutdown args)
     {
-        if (!_storageWindows.TryGetValue(uid, out var window))
+        if (uid != _storage.OpenEntity || _window == null)
             return;
 
-        _storageWindows.Remove(uid);
-        window.Dispose();
+        _window.Visible = false;
     }
 
     private void OnStorageUpdate(EntityUid uid, StorageComponent component)
@@ -61,11 +65,7 @@ public sealed class StorageUIController : UIController, IOnSystemChanged<Storage
 
     public void OnStateExited(GameplayState state)
     {
-        foreach (var window in _storageWindows.Values)
-        {
-            window.Dispose();
-        }
-
-        _storageWindows.Clear();
+        _window?.Dispose();
+        _window = null;
     }
 }

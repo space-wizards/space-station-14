@@ -4,6 +4,7 @@ using Content.Shared.Storage;
 using Content.Shared.Storage.EntitySystems;
 using Robust.Shared.Map;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Client.Storage.Systems;
 
@@ -11,6 +12,14 @@ namespace Content.Client.Storage.Systems;
 public sealed class StorageSystem : SharedStorageSystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
+
+    /// <summary>
+    /// Entity that the storage window is currently open for.
+    /// </summary>
+    /// <remarks>
+    /// Needed here so verbs can correctly reflect it.
+    /// </remarks>
+    public EntityUid? OpenEntity;
 
     public event Action<EntityUid, StorageComponent>? StorageUpdated;
 
@@ -20,6 +29,22 @@ public sealed class StorageSystem : SharedStorageSystem
 
         SubscribeNetworkEvent<PickupAnimationEvent>(HandlePickupAnimation);
         SubscribeNetworkEvent<AnimateInsertingEntitiesEvent>(HandleAnimatingInsertingEntities);
+
+        SubscribeLocalEvent<StorageComponent, BoundUIClosedEvent>(OnStorageClosed);
+    }
+
+    private void OnStorageClosed(EntityUid uid, StorageComponent component, BoundUIClosedEvent args)
+    {
+        // Was going to assert here but due to verb being on server can sometimes trip.
+        // DebugTools.Assert(OpenEntity == null);
+        OpenEntity = null;
+    }
+
+    protected override void OnBoundUIOpen(EntityUid uid, StorageComponent storageComp, BoundUIOpenedEvent args)
+    {
+        // DebugTools.Assert(OpenEntity == null);
+        base.OnBoundUIOpen(uid, storageComp, args);
+        OpenEntity = uid;
     }
 
     public override void UpdateUI(EntityUid uid, StorageComponent component)

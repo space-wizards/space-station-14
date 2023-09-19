@@ -363,7 +363,7 @@ public abstract class SharedStorageSystem : EntitySystem
         PlayerInsertHeldEntity(uid, args.Session.AttachedEntity.Value, storageComp);
     }
 
-    private void OnBoundUIOpen(EntityUid uid, StorageComponent storageComp, BoundUIOpenedEvent args)
+    protected virtual void OnBoundUIOpen(EntityUid uid, StorageComponent storageComp, BoundUIOpenedEvent args)
     {
         if (!storageComp.IsUiOpen)
         {
