@@ -38,7 +38,8 @@
   - type: Sprite
     state: muffin-berry
   - type: Tag
-    id: Fruit
+    tags:
+    - Fruit
 
 - type: entity
   name: cherry muffin

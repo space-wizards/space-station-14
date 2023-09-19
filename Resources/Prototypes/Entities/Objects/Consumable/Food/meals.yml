@@ -196,7 +196,8 @@
         - ReagentId: Vitamin
           Quantity: 2
   - type: Tag
-    id: Fruit
+    tags:
+    - Fruit
 # Tastes like eggplant, cheese.
 
 - type: entity

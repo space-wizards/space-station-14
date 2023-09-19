@@ -297,7 +297,8 @@
   - type: SliceableFood
     slice: FoodCakeAppleSlice
   - type: Tag
-    id: Fruit
+    tags:
+    - Fruit
 
 - type: entity
   name: slice of apple cake
