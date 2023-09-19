@@ -28,6 +28,8 @@
   - type: Prying
     pryPowered: !type:Bool
         true
+    force: !type:Bool
+      true
     useSound:
       path: /Audio/Items/crowbar.ogg
   - type: Reactive

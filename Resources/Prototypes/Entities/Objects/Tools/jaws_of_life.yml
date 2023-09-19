@@ -27,6 +27,8 @@
   - type: Prying
     pryPowered: !type:Bool
       true
+    force: !type:Bool
+      true
     useSound: /Audio/Items/jaws_pry.ogg
   - type: ToolForcePowered
   - type: MultipleTool

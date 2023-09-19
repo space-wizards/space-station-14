@@ -166,6 +166,7 @@ namespace Content.Server.Zombies
                 var pryComp = EnsureComp<PryingComponent>(target);
                 pryComp.SpeedModifier = 0.75f;
                 pryComp.PryPowered = true;
+                pryComp.Force = true;
 
                 Dirty(target, pryComp);
             }

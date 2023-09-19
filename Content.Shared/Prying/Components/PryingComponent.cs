@@ -7,10 +7,16 @@ namespace Content.Shared.Prying.Components;
 public sealed partial class PryingComponent : Component
 {
     /// <summary>
-    /// Whether the tool can pry open powered and bolted doors
+    /// Whether the entity can pry open powered doors
     /// </summary>
     [DataField("pryPowered")]
     public bool PryPowered = false;
+
+    /// <summary>
+    /// Whether the tool can bypass certain restrictions when prying.
+    /// For example door bolts.
+    [DataField("force")]
+    public bool Force = false;
     /// <summary>
     /// Modifier on the prying time.
     /// Lower values result in more time.
@@ -41,10 +47,13 @@ public sealed class BeforePryEvent : CancellableEntityEventArgs
 
     public readonly bool PryPowered;
 
-    public BeforePryEvent(EntityUid user, bool pry_powered)
+    public readonly bool Force;
+
+    public BeforePryEvent(EntityUid user, bool pry_powered, bool force)
     {
         User = user;
         PryPowered = pry_powered;
+        Force = force;
     }
 
 }
