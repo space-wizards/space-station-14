@@ -39,6 +39,46 @@
     - !type:CleanDecalsReaction {}
 
 - type: reagent
+  id: SoapReagent
+  name: reagent-name-soap
+  desc: reagent-desc-soap
+  physicalDesc: reagent-physical-desc-soapy
+  flavor: soapy
+  color: "#c8dfc9"
+  recognizable: true
+  boilingPoint: 100.0
+  meltingPoint: 60.0
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 3
+      - !type:ChemVomit
+
+- type: reagent
+  id: SoapyWater
+  parent: Water
+  name: reagent-name-soapy-water
+  desc: reagent-desc-soapy-water
+  physicalDesc: reagent-physical-desc-soapy
+  flavor: soapy
+  color: "#9ec8dc"
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 3
+      - !type:ChemVomit
+  plantMetabolism:
+  - !type:PlantAdjustWater
+    amount: .8
+  tileReactions:
+    - !type:CleanDecalsReaction
+      cleanCost: 5
+    - !type:ExtinguishTileReaction { }
+    - !type:SpillIfPuddlePresentTileReaction { }
+
+- type: reagent
   id: SpaceLube
   name: reagent-name-space-lube
   desc: reagent-desc-space-lube

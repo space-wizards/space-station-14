@@ -8,22 +8,76 @@
   },
   "states": [
     {
-      "name": "soap"
+      "name": "soap-1"
     },
     {
-      "name": "deluxe"
+      "name": "soap-2"
     },
     {
-      "name": "gibs"
+      "name": "soap-3"
     },
     {
-      "name": "nt"
+      "name": "soap-4"
     },
     {
-      "name": "omega"
+      "name": "deluxe-1"
     },
     {
-      "name": "syndie"
+      "name": "deluxe-2"
+    },
+    {
+      "name": "deluxe-3"
+    },
+    {
+      "name": "deluxe-4"
+    },
+    {
+      "name": "gibs-1"
+    },
+    {
+      "name": "gibs-2"
+    },
+    {
+      "name": "gibs-3"
+    },
+    {
+      "name": "gibs-4"
+    },
+    {
+      "name": "nt-1"
+    },
+    {
+      "name": "nt-2"
+    },
+    {
+      "name": "nt-3"
+    },
+    {
+      "name": "nt-4"
+    },
+    {
+      "name": "omega-1"
+    },
+    {
+      "name": "omega-2"
+    },
+    {
+      "name": "omega-3"
+    },
+    {
+      "name": "omega-4"
+    },
+    {
+      "name": "syndie-1"
+    },
+    {
+      "name": "syndie-2"
+    },
+    {
+      "name": "syndie-3"
+    },
+    {
+      "name": "syndie-4"
     },
     {
       "name": "inhand-left",
