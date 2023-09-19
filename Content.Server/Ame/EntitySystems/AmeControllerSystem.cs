@@ -18,6 +18,8 @@ using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.Timing;
 using Content.Server.GameTicking;
+using Robust.Shared;
+using Robust.Shared.Configuration;
 
 namespace Content.Server.Ame.EntitySystems;
 
@@ -32,6 +34,7 @@ public sealed class AmeControllerSystem : EntitySystem
     [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
+    [Dependency] private readonly IConfigurationManager _cfg = default!;
 
     public override void Initialize()
     {
@@ -69,7 +72,7 @@ public sealed class AmeControllerSystem : EntitySystem
 
         if (TryComp<AmeFuelContainerComponent>(controller.JarSlot.ContainedEntity, out var fuelJar))
         {
-            var minutesBeforeSabotage = 30;
+            var minutesBeforeSabotage = _cfg.GetCVar(CVars.GameMinutesUntilSabotage);
             var availableInject = Math.Min(controller.InjectionAmount, fuelJar.FuelAmount);
             var stationTime = _gameTiming.CurTime;
             var powerOutput = group.InjectFuel(availableInject, out var overloading,  out var safeInjectionLimit);
