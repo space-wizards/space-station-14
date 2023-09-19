@@ -1,9 +1,4 @@
 Entries:
-- author: Jackal298
-  changes:
-  - {message: Improved sprites SMG Drozd and sprite WT 550 behind, type: Tweak}
-  id: 4358
-  time: '2023-07-28T19:55:46.0000000+00:00'
 - author: Misha_Unity
   changes:
   - {message: News tab has been turned into an PDA application, type: Tweak}
@@ -2970,3 +2965,10 @@ Entries:
   - {message: Seeds for the bungo fruit are included in the exotic seed crate., type: Add}
   id: 4857
   time: '2023-09-19T03:29:28.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Skeletons have been reported in the closets of various station officials.
+      And maintenance., type: Add}
+  - {message: Skeletons can no longer have a pitch-black coloration., type: Tweak}
+  id: 4858
+  time: '2023-09-19T05:05:18.0000000+00:00'
