@@ -10,7 +10,6 @@ using Content.Shared.Mobs.Components;
 using Content.Shared.Revolutionary.Components;
 using Content.Shared.Roles;
 using Robust.Shared.Prototypes;
-using System.Linq;
 using Content.Shared.Stunnable;
 using Content.Server.Chat.Systems;
 using Content.Server.Shuttles.Components;
@@ -283,8 +282,6 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
     private bool CheckCommandLose()
     {
         var commandLost = false;
-        var headJobs = _prototypeManager.Index<DepartmentPrototype>("Command");
-        var secJobs = _prototypeManager.Index<DepartmentPrototype>("Security");
         var commandList = new List<EntityUid>();
 
         var heads = AllEntityQuery<CommandStaffComponent, MobStateComponent>();
@@ -308,19 +305,6 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
                         if (TryComp<CommandStaffComponent>(command, out var comp))
                         {
                             comp.HeadsDied = true;
-                        }
-                    }
-                    foreach (var station in _stationSystem.GetStations())
-                    {
-                        var jobs = _stationJobs.GetJobs(station).Keys.ToList();
-                        _chat.DispatchStationAnnouncement(station, Loc.GetString("rev-all-heads-dead"), "Revolutionary", colorOverride: Color.FromHex("#5e9cff"));
-                        foreach (var job in jobs)
-                        {
-                            var currentJob = job.Replace(" ", "");
-                            if (headJobs.Roles.Contains(currentJob) || secJobs.Roles.Contains(currentJob))
-                            {
-                                _stationJobs.TrySetJobSlot(station, job, 0);
-                            }
                         }
                     }
                 }
