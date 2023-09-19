@@ -113,7 +113,7 @@
 ## Glass airlock
   - node: glassAirlock
     entity: AirlockGlass
-    childrenIgnoreEntity: true
+    doNotReplaceInheritingEntities: true
     actions:
     - !type:SetWiresPanelSecurity
       wiresAccessible: true
@@ -154,7 +154,7 @@
 ## Standard airlock
   - node: airlock
     entity: Airlock
-    childrenIgnoreEntity: true
+    doNotReplaceInheritingEntities: true
     actions:
     - !type:SetWiresPanelSecurity
       wiresAccessible: true

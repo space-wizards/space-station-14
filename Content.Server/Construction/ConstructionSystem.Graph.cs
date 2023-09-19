@@ -304,7 +304,7 @@ namespace Content.Server.Construction
                 return null;
 
             // Optional skip if the new entity's prototype is a parent of the original
-            if (GetCurrentNode(uid, construction)?.ChildrenIgnoreEntity == true &&
+            if (GetCurrentNode(uid, construction)?.DoNotReplaceInheritingEntities == true &&
                 metaData.EntityPrototype?.ID != null)
             {
                 var parents = _prototypeManager.EnumerateParents<EntityPrototype>(metaData.EntityPrototype.ID)?.ToList();

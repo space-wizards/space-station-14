@@ -35,7 +35,7 @@ public sealed class WiresSystem : SharedWiresSystem
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly ConstructionSystem _constructionSystem = default!;
+    [Dependency] private readonly ConstructionSystem _construction = default!;
 
     // This is where all the wire layouts are stored.
     [ViewVariables] private readonly Dictionary<string, WireLayout> _layouts = new();
@@ -533,7 +533,7 @@ public sealed class WiresSystem : SharedWiresSystem
         if (TryComp<WiresPanelSecurityComponent>(uid, out var wiresPanelSecurity) &&
             !string.IsNullOrEmpty(wiresPanelSecurity.SecurityLevel) &&
             TryComp<ConstructionComponent>(uid, out var construction))
-            _constructionSystem.ChangeNode(uid, null, wiresPanelSecurity.SecurityLevel, true, construction);
+            _construction.ChangeNode(uid, null, wiresPanelSecurity.SecurityLevel, true, construction);
 
         UpdateUserInterface(uid);
     }

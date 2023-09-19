@@ -4,16 +4,29 @@ using JetBrains.Annotations;
 
 namespace Content.Server.Construction.Completions;
 
+/// <summary>
+///     This graph action is used to set values on entities with the <see cref="WiresPanelSecurityComponent"/>
+/// </summary>
+
 [UsedImplicitly]
 [DataDefinition]
 public sealed partial class SetWiresPanelSecurity : IGraphAction
 {
+    /// <summary>
+    ///     Sets the Examine field on the entity's <see cref="WiresPanelSecurityComponent"/>
+    /// </summary>
     [DataField("examine")]
     public string Examine = string.Empty;
 
+    /// <summary>
+    ///     Sets the WiresAccessible field on the entity's <see cref="WiresPanelSecurityComponent"/>
+    /// </summary>
     [DataField("wiresAccessible")]
     public bool WiresAccessible = true;
 
+    /// <summary>
+    ///     Sets the WeldingAllowed field on the entity's <see cref="WiresPanelSecurityComponent"/>
+    /// </summary>
     [DataField("weldingAllowed")]
     public bool WeldingAllowed = true;
 

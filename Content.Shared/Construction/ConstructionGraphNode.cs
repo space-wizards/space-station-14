@@ -31,8 +31,16 @@ namespace Content.Shared.Construction
         [DataField("entity", customTypeSerializer: typeof(GraphNodeEntitySerializer), serverOnly:true)]
         public IGraphNodeEntity Entity { get; private set; } = new NullNodeEntity();
 
-        [DataField("childrenIgnoreEntity")]
-        public bool ChildrenIgnoreEntity = false;
+        /// <summary>
+        ///     Ignore requests to change the entity if the entity's current prototype inherits from specified replacement 
+        /// </summary>
+        /// <remarks>
+        ///     When this bool is true and a construction node specifies that the current entity should be replaced with a new entity,
+        ///     if the current entity has an entity prototype which inherits from the replacement entity prototype,
+        ///     entity replacement will not occur 
+        /// </remarks>
+        [DataField("doNotReplaceInheritingEntities")]
+        public bool DoNotReplaceInheritingEntities = false;
 
         public ConstructionGraphEdge? GetEdge(string target)
         {
