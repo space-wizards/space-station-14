@@ -1,14 +1,12 @@
 // © SS220, An EULA/CLA with a hosting restriction, full text: https://raw.githubusercontent.com/SerbiaStrong-220/space-station-14/master/CLA.txt
 
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using System.Globalization;
 using Content.Server.Chat.Systems;
 using Content.Server.Forensics;
 using Content.Server.Hands.Systems;
 using Content.Server.Mind;
 using Content.Server.Objectives;
-using Content.Server.Objectives.Conditions;
 using Content.Server.Station.Systems;
 using Content.Server.StationRecords.Systems;
 using Content.Shared.Access.Systems;
@@ -25,8 +23,8 @@ using Robust.Shared.Containers;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using Content.Shared.Mind;
-using Content.Shared.Objectives;
 using Content.Shared.Storage;
+using Content.Server.Objectives.Components;
 
 namespace Content.Server.SS220.CryopodSSD;
 
@@ -210,21 +208,29 @@ public sealed class SSDStorageConsoleSystem : EntitySystem
                 continue;
             }
 
-            IEnumerable<Objective> objectiveToReplace = mind.AllObjectives
-                .Where(objective =>
-                    objective.Conditions.Any(condition => (condition as KillPersonCondition)?.IsTarget(uid) ?? false))
-                .ToArray();
+            List<EntityUid> objectiveToReplace = new();
+            foreach (var objective in mind.AllObjectives)
+            {
+                if (!TryComp<TargetObjectiveComponent>(objective, out var target))
+                    continue;
+
+                if (target.Target != uid)
+                    continue;
+
+                objectiveToReplace.Add(objective);
+            }
 
             foreach (var objective in objectiveToReplace)
             {
-                _mindSystem.TryRemoveObjective(mind, objective);
+                _mindSystem.TryRemoveObjective(mindId, mind, objective);
                 var newObjective = _objectives.GetRandomObjective(mindId, mind, "TraitorObjectiveGroups");
-                if (newObjective is null || !_mindSystem.TryAddObjective(mindId, mind, newObjective))
+                if (newObjective is null)
                 {
                     _sawmill.Error($"{ToPrettyString(mind.OwnedEntity.Value)}'s target get in cryo, so he lost his objective and didn't get a new one");
                     continue;
                 }
 
+                _mindSystem.AddObjective(mindId, mind, newObjective.Value);
                 _sawmill.Info($"{ToPrettyString(mind.OwnedEntity.Value)}'s target get in cryo, so he get a new one");
             }
         }

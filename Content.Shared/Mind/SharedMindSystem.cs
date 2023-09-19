@@ -294,10 +294,12 @@ public abstract class SharedMindSystem : EntitySystem
         return true;
     }
 
-    public bool TryRemoveObjective(MindComponent mind, Objective objective)
+    //SS220 CryopodSSD-begin
+    public bool TryRemoveObjective(EntityUid mindId, MindComponent mind, EntityUid objective)
     {
-        return TryRemoveObjective(mind, mind.Objectives.IndexOf(objective));
+        return TryRemoveObjective(mindId, mind, mind.Objectives.IndexOf(objective));
     }
+    //SS220 CryopodSSD-end
 
     public bool TryGetSession(EntityUid? mindId, [NotNullWhen(true)] out ICommonSession? session)
     {
