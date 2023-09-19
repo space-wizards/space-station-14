@@ -7,7 +7,6 @@ using Robust.Shared.Configuration;
 using Robust.Shared.Players;
 
 namespace Content.Client.Fullscreen;
-
 public sealed class FullscreenHook
 {
     [Dependency] private readonly IInputManager _inputManager = default!;
