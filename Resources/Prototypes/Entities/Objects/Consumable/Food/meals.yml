@@ -576,7 +576,8 @@
         - ReagentId: Kelotane
           Quantity: 5
   - type: Tag
-    id: Fruit
+    tags:
+    - Fruit
 
 - type: entity
   name: taco

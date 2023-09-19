@@ -354,7 +354,8 @@
         - ReagentId: Vitamin
           Quantity: 11
   - type: Tag
-    id: Fruit
+    tags:
+    - Fruit
 
 - type: entity
   name: slice of pumpkin-spice cake
@@ -374,7 +375,8 @@
         - ReagentId: Vitamin
           Quantity: 2.2
   - type: Tag
-    id: Fruit
+    tags:
+    - Fruit
 # Tastes like sweetness, cake, pumpkin.
 
 - type: entity
