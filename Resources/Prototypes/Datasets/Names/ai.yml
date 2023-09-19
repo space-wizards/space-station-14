@@ -1,91 +1,87 @@
-﻿- type: dataset
+- type: dataset
   id: names_ai
   values:
   - 16-20
   - 790
-  - Adaptive Manipulator
-  - ALICE
-  - Allied Mastercomputer
-  - Alpha 2
-  - Alpha 3
-  - Alpha 4  
-  - Alpha 5
-  - Alpha 6
-  - Alpha 7
-  - Alpha 8
-  - Alpha 9
-  - AmigoBot
-  - Android
-  - Aniel
-  - AOL
-  - Asimov
-  - Bishop
-  - Blitz
-  - Box
-  - Cassandra
-  - Cell
-  - Chii
-  - Chip
-  - Computer
-  - Cutie
-  - Daedalus
-  - Dee Model
-  - Dial Up
-  - Dorfl
-  - Duey
-  - Emma-2
-  - Erasmus
-  - Everything
-  - Ez-27
-  - FRIEND COMPUTER
-  - Faith
-  - Fi
-  - Frost
-  - George
-  - H.E.L.P
-  - Hadaly
-  - Helios
-  - Hivebot Overmind
-  - Huey
-  - Icarus
-  - Jinx
-  - K.I.N.G
-  - Klapaucius
-  - Knight
-  - Louie
-  - MARK13
-  - Maria
-  - Marvin
-  - Max 404
-  - Metalhead
-  - M.I.M.I
-  - MK ULTRA
-  - MoMMI
-  - Mugsy3000
-  - Multivac
-  - NCH
-  - PTO
-  - Project Y2K
-  - Revelation
-  - Robot Devil
-  - S.A.M.
-  - S.H.O.C.K.
-  - S.H.R.O.U.D.
-  - S.O.P.H.I.E.
-  - Samaritan
-  - Shrike
-  - Solo
-  - Station Control Program
-  - Super 35
-  - Surgeon General
-  - TWA
-  - Terminus
-  - Tidy
-  - Ulysses
-  - W1k1
-  - X-5
-  - XERXES
-  - Z-1
-  - Z-2
-  - Z-3
-  - Zed
+  - Адаптивный Манипулятор
+  - АЛИСА
+  - Союзный Мастер-Компьютер
+  - Альфа 2
+  - Альфа 3
+  - Альфа 4  
+  - Альфа 5
+  - Альфа 6
+  - Альфа 7
+  - Альфа 8
+  - Альфа 9
+  - АмигоБот
+  - Андроид
+  - Эниэл
+  - Азимов
+  - Бишоп
+  - Блиц
+  - Коробка
+  - Кассандра
+  - Клетка
+  - Чи
+  - Чип
+  - Компьютер 
+  - Милаш
+  - Дедал
+  - Модель Ди
+  - Модем
+  - Дорфл
+  - Дьюи
+  - Эмма-2
+  - Эразм
+  - Абсолют
+  - Лег-Ко-27
+  - КОМПДРУГ
+  - Судьба
+  - Фи
+  - Фрост
+  - Джордж
+  - Хадали
+  - Гелиос
+  - УлейБот Сверхразум
+  - Хьюи
+  - Икар
+  - Джинкс
+  - К.О.Р.О.Л.Ь
+  - Клапаций
+  - Рыцарь
+  - Луи
+  - МАРК13
+  - Мария 
+  - Марвин
+  - Макс 404
+  - Металоголовый
+  - М.И.М.И
+  - МК УЛЬТРА 
+  - МаММи
+  - Дурной3000
+  - Мультивак
+  - Проект Y2K
+  - Откровение
+  - РобоДьявол
+  - С.Э.М
+  - Ш.О.К
+  - П.О.К.Р.О.В
+  - С.О.Ф.И
+  - Самаритянин
+  - Сорокопут
+  - Соло
+  - Программа Контроля Станции
+  - Супер 35
+  - Генерал Хирург
+  - Термин
+  - Аккурат
+  - Улисс
+  - В1к1
+  - ИКС-5
+  - Ксеркс
+  - Зед
+  - Зефир
+  - Орион
+  - Астрид
+  - Луна
