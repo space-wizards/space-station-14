@@ -83,17 +83,14 @@ public sealed partial class DungeonJob
         var lastDirection = new Dictionary<Vector2i, Direction>();
         costSoFar[start] = 0f;
         lastDirection[start] = Direction.Invalid;
-        var tagQuery = _entManager.GetEntityQuery<TagComponent>();
 
-        // TODO:
-        // Pick a random node to start
-        // Then, dijkstra out from it. Add like +10 if it's a wall or smth
-        // When we hit another cable then mark it as found and iterate cameFrom and add to the thingie.
         while (remaining.Count > 0)
         {
             if (frontier.Count == 0)
             {
-                frontier.Enqueue(remaining.First(), 0f);
+                var newStart = remaining.First();
+                frontier.Enqueue(newStart, 0f);
+                lastDirection[newStart] = Direction.Invalid;
             }
 
             var node = frontier.Dequeue();
