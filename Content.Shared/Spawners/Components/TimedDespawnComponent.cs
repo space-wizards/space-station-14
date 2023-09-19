@@ -5,7 +5,7 @@ namespace Content.Shared.Spawners.Components;
 /// <summary>
 /// Put this component on something you would like to despawn after a certain amount of time
 /// </summary>
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent]
 public sealed partial class TimedDespawnComponent : Component
 {
     /// <summary>
