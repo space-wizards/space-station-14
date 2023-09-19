@@ -63,6 +63,7 @@
   physicalDesc: reagent-physical-desc-soapy
   flavor: soapy
   color: "#9ec8dc"
+  recognizable: true
   metabolisms:
     Drink:
       effects:
