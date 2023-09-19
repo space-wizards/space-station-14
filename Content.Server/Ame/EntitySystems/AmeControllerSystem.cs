@@ -17,9 +17,12 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.Timing;
-using Content.Server.GameTicking;
+using Content.Server.Radio.EntitySystems;
+using Content.Shared.CCVar;
+using Content.Shared.Radio;
 using Robust.Shared;
 using Robust.Shared.Configuration;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Ame.EntitySystems;
 
@@ -35,6 +38,8 @@ public sealed class AmeControllerSystem : EntitySystem
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
+    [Dependency] private readonly RadioSystem _radioSystem = default!;
+    [Dependency] private readonly IPrototypeManager _prototype = default!;
 
     public override void Initialize()
     {
@@ -72,7 +77,7 @@ public sealed class AmeControllerSystem : EntitySystem
 
         if (TryComp<AmeFuelContainerComponent>(controller.JarSlot.ContainedEntity, out var fuelJar))
         {
-            var minutesBeforeSabotage = _cfg.GetCVar(CVars.GameMinutesUntilSabotage);
+            var minutesBeforeSabotage = _cfg.GetCVar(CCVars.GameMinutesUntilSabotage);
             var availableInject = Math.Min(controller.InjectionAmount, fuelJar.FuelAmount);
             var stationTime = _gameTiming.CurTime;
             var powerOutput = group.InjectFuel(availableInject, out var overloading,  out var safeInjectionLimit);
@@ -84,13 +89,17 @@ public sealed class AmeControllerSystem : EntitySystem
             else if (stationTime.Minutes >= minutesBeforeSabotage && overloading)
             {
                 controller.OverloadWarning = true;
-                var alertAudioParams = AudioParams.Default.WithVolume(15).WithPlayOffset(1).WithMaxDistance(20).WithReferenceDistance(10).WithPitchScale(0.5f);
+                var alertAudioParams = AudioParams.Default.WithVolume(5).WithPlayOffset(1).WithMaxDistance(20).WithReferenceDistance(10).WithPitchScale(0.5f);
                 _audioSystem.PlayPvs(controller.OverloadSound, uid, alertAudioParams);
             }
             else
             {
                 controller.SafetyLock = false;
                 controller.OverloadWarning = false;
+            }
+            if (availableInject > safeInjectionLimit)
+            {
+                AlertStability(uid, controller.Stability, controller);
             }
             if (TryComp<PowerSupplierComponent>(uid, out var powerOutlet))
                 powerOutlet.MaxSupply = powerOutput;
@@ -105,6 +114,26 @@ public sealed class AmeControllerSystem : EntitySystem
 
         if (controller.Stability <= 0)
             group.ExplodeCores();
+    }
+
+    public void AlertStability(EntityUid uid, int stability, AmeControllerComponent controller)
+    {
+        if (stability < 10)
+        {
+            _radioSystem.SendRadioMessage(uid, "EMERGENCY! AME DETONATION IMMINENT! EVACUATE IMMEDIATELY!", _prototype.Index<RadioChannelPrototype>(controller.EngineeringChannel), uid);
+        }
+        else if (stability < 30)
+        {
+            _radioSystem.SendRadioMessage(uid, "ALERT! CRITICAL AME DETONATION RISK!", _prototype.Index<RadioChannelPrototype>(controller.EngineeringChannel), uid);
+        }
+        else if (stability < 60)
+        {
+            _radioSystem.SendRadioMessage(uid, "WARNING! MAJOR AME OVERLOAD OCCURRING!", _prototype.Index<RadioChannelPrototype>(controller.EngineeringChannel), uid);
+        }
+        else if (stability < 90)
+        {
+            _radioSystem.SendRadioMessage(uid, "ALERT! AME OVERLOAD DETECTED!", _prototype.Index<RadioChannelPrototype>(controller.EngineeringChannel), uid);
+        }
     }
 
     public void UpdateUi(EntityUid uid, AmeControllerComponent? controller = null)

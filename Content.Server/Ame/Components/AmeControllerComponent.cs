@@ -1,7 +1,9 @@
 using Content.Server.Ame.EntitySystems;
 using Content.Shared.Ame;
+using Content.Shared.Radio;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Ame.Components;
 
@@ -97,4 +99,10 @@ public sealed partial class AmeControllerComponent : SharedAmeControllerComponen
     /// </summary>
     [DataField("overloadWarning")] [ViewVariables(VVAccess.ReadWrite)]
     public bool OverloadWarning = false;
+
+    /// <summary>
+    /// RadioChannel for engineering for alerting
+    /// </summary>
+    [DataField("EngineeringChannel", customTypeSerializer: typeof(PrototypeIdSerializer<RadioChannelPrototype>))]
+    public string EngineeringChannel = "Engineering";
 }

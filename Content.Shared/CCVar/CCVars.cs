@@ -318,6 +318,12 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<float> RoundRestartTime =
             CVarDef.Create("game.round_restart_time", 120f, CVar.SERVERONLY);
 
+        /// <summary>
+        /// Minutes prior to mas sabotage actions that can be taken.
+        /// </summary>
+        public static readonly CVarDef<int> GameMinutesUntilSabotage =
+            CVarDef.Create("game.game_minutes_until_sabotage", 2, CVar.SERVERONLY);
+
         /*
          * Discord
          */

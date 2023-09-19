@@ -65,13 +65,13 @@ namespace Content.Client.Ame.UI
                 SetInjectionStatus(Color.White, "ame-window-engine-injection-status-not-injecting-label");
             }
 
-            if (castState.SafteyProtocols)
+            if (castState is { SafteyProtocols: true, Injecting: true })
             {
                 SetInjectionStatus(Color.Yellow, "ame-window-engine-injection-status-safetyLock-label",
                     "ame-window-engine-injection-status-safetyLock-description");
             }
 
-            if (castState.OverloadWarning)
+            if (castState is { OverloadWarning: true, Injecting: true })
             {
                 SetInjectionStatus(Color.Red,"ame-window-engine-injection-status-overload-label",
                     "ame-window-engine-injection-status-overload-description");
