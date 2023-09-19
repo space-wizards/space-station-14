@@ -554,6 +554,13 @@
       - MagazineBoxMagnumIncendiary
       - MagazineBoxLightRifleIncendiary
       - MagazineBoxRifleIncendiary
+      - ShellShotgunPractice
+      - MagazineBoxPistolPractice
+      - MagazineBoxMagnumPractice
+      - MagazineBoxLightRiflePractice
+      - MagazineBoxRiflePractice
+      - WeaponLaserCarbinePractice
+      - WeaponDisablerPractice
       - Signaller
       - SignalTrigger
       - VoiceTrigger
