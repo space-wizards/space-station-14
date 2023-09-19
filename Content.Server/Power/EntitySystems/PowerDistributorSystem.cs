@@ -46,34 +46,36 @@ internal sealed class PowerDistributorSystem : EntitySystem
         }
     }
 
-    public void UpdateUIState(EntityUid target, PowerDistributorComponent? pmcComp = null, NodeContainerComponent? ncComp = null, PowerNetworkBatteryComponent? netBattery = null)
+    public void UpdateUIState(EntityUid uid, PowerDistributorComponent? pdc = null, NodeContainerComponent? ncComp = null, PowerNetworkBatteryComponent? netBattery = null)
     {
-        if (!Resolve(target, ref pmcComp, ref ncComp))
+        if (!Resolve(uid, ref pdc, ref ncComp))
             return;
 
-        if (!Resolve(target, ref netBattery))
+        if (!Resolve(uid, ref netBattery))
             return;
 
-        if (!_nodeContainer.TryGetNode<Node>(ncComp, pmcComp.LoadNode, out var loadNode))
+        if (!_nodeContainer.TryGetNode<Node>(ncComp, pdc.LoadNode, out var loadNode))
             return;
 
-        if (!_nodeContainer.TryGetNode<Node>(ncComp, pmcComp.SourceNode, out var sourceNode))
+        if (!_nodeContainer.TryGetNode<Node>(ncComp, pdc.SourceNode, out var sourceNode))
             return;
 
-        var totalLoads = GetTotalLoadsForNode(target, loadNode, out var loads);
-        var totalSources = GetTotalSourcesForNode(target, sourceNode, out var sources);
+        var totalLoads = GetTotalLoadsForNode(uid, loadNode, out var loads);
+        var totalSources = GetTotalSourcesForNode(uid, sourceNode, out var sources);
 
         // Sort loads and sources
         loads.Sort(CompareLoadOrSources);
         sources.Sort(CompareLoadOrSources);
 
         var battery = netBattery.NetworkBattery;
-        var power = (int) MathF.Ceiling(battery.CurrentSupply);
-        var ext = pmcComp.LastExternalState;
+        var power = (int) MathF.Ceiling(battery.CurrentReceiving);
+        var ext = pdc.LastExternalState;
         var charge = battery.CurrentStorage / battery.Capacity;
 
+        
+
         // Actually set state
-        if (_userInterfaceSystem.TryGetUi(target, PowerDistributorUiKey.Key, out var bui))
+        if (_userInterfaceSystem.TryGetUi(uid, PowerDistributorUiKey.Key, out var bui))
             _userInterfaceSystem.SetUiState(bui, new PowerDistributorBoundInterfaceState(power, ext, charge, totalSources, totalLoads, sources.ToArray(), loads.ToArray()));
     }
 
@@ -195,16 +197,14 @@ internal sealed class PowerDistributorSystem : EntitySystem
 
     private PowerDistributorExternalPowerState CalcExtPowerState(EntityUid uid, PowerState.Battery battery)
     {
-        if (battery.CurrentReceiving == 0 && !MathHelper.CloseTo(battery.CurrentStorage / battery.Capacity, 1))
-        {
+        if (MathHelper.CloseTo(battery.CurrentReceiving, 0))
             return PowerDistributorExternalPowerState.None;
-        }
 
-        var delta = battery.CurrentSupply - battery.CurrentReceiving;
-        if (!MathHelper.CloseToPercent(delta, 0, 0.1f) && delta < 0)
-        {
+        if (MathHelper.CloseToPercent(battery.CurrentReceiving, battery.CurrentSupply, 0.05f))
+            return PowerDistributorExternalPowerState.Stable;
+
+        if (battery.CurrentReceiving - battery.CurrentSupply < 0f)
             return PowerDistributorExternalPowerState.Low;
-        }
 
         return PowerDistributorExternalPowerState.Good;
     }

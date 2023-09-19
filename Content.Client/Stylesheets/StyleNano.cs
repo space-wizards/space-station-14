@@ -131,6 +131,7 @@ namespace Content.Client.Stylesheets
         //Used by the APC and SMES menus
         public const string StyleClassPowerStateNone = "PowerStateNone";
         public const string StyleClassPowerStateLow = "PowerStateLow";
+        public const string StyleClassPowerStateStable = "PowerStateStable";
         public const string StyleClassPowerStateGood = "PowerStateGood";
 
         public const string StyleClassItemStatus = "ItemStatus";
@@ -1067,6 +1068,11 @@ namespace Content.Client.Stylesheets
                 new StyleRule(new SelectorElement(typeof(Label), new[] {StyleClassPowerStateLow}, null, null), new[]
                 {
                     new StyleProperty(Label.StylePropertyFontColor, new Color(0.9f, 0.36f, 0.0f))
+                }),
+
+                new StyleRule(new SelectorElement(typeof(Label), new[] {StyleClassPowerStateStable}, null, null), new[]
+                {
+                    new StyleProperty(Label.StylePropertyFontColor, new Color(0.9f, 0.9f, 0.0f))
                 }),
 
                 new StyleRule(new SelectorElement(typeof(Label), new[] {StyleClassPowerStateGood}, null, null), new[]

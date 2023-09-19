@@ -14,13 +14,11 @@
                 </PanelContainer>
                 <!-- Data -->
                 <BoxContainer Orientation="Vertical" HorizontalExpand="True">
-                    <GridContainer Margin="10 0 0 0" Columns="2">
+                    <GridContainer Margin="10 5 0 0" Columns="2">
                         <!-- Charging Status -->
                         <Label Text="{Loc 'power-distributor-window-external-label'}" StyleClasses="StatusFieldTitle" MinWidth="120" />
                         <Label Name="ExternalPowerStateLabel" Text="{Loc 'power-distributor-window-power-state-good'}" />
                         <!-- Power network status -->
-                        <Label Text="{Loc 'power-distributor-window-power-supply-label'}" StyleClasses="StatusFieldTitle" MinWidth="120" />
-                        <Label Name="PowerSupplyLabel"/>
                         <Label Text="{Loc 'power-distributor-window-power-demand-label'}" StyleClasses="StatusFieldTitle" MinWidth="120" />
                         <Label Name="PowerDemandLabel"/>
                     </GridContainer>

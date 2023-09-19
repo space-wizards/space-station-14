@@ -72,6 +72,7 @@ public enum PowerDistributorExternalPowerState
 {
     None,
     Low,
+    Stable,
     Good,
 }
 

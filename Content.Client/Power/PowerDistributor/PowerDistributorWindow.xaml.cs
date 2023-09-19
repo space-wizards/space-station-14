@@ -43,9 +43,6 @@ public sealed partial class PowerDistributorWindow : FancyWindow
     {
         var castState = (PowerDistributorBoundInterfaceState) state;
 
-        if (PowerSupplyLabel != null)
-            PowerSupplyLabel.Text = Loc.GetString("power-distributor-window-value", ("value", castState.TotalSources));
-
         if (PowerDemandLabel != null)
             PowerDemandLabel.Text = Loc.GetString("power-distributor-window-value", ("value", castState.TotalLoads));
 
@@ -60,6 +57,10 @@ public sealed partial class PowerDistributorWindow : FancyWindow
                 case PowerDistributorExternalPowerState.Low:
                     ExternalPowerStateLabel.Text = Loc.GetString("power-distributor-window-power-state-low");
                     ExternalPowerStateLabel.SetOnlyStyleClass(StyleNano.StyleClassPowerStateLow);
+                    break;
+                case PowerDistributorExternalPowerState.Stable:
+                    ExternalPowerStateLabel.Text = Loc.GetString("power-distributor-window-power-state-stable");
+                    ExternalPowerStateLabel.SetOnlyStyleClass(StyleNano.StyleClassPowerStateStable);
                     break;
                 case PowerDistributorExternalPowerState.Good:
                     ExternalPowerStateLabel.Text = Loc.GetString("power-distributor-window-power-state-good");
@@ -133,45 +134,58 @@ public sealed partial class PowerDistributorWindow : FancyWindow
 
     public void UpdateList(GridContainer list, PowerDistributorEntry[] listVal)
     {
-        if (list.ChildCount > 0)
-            list.RemoveAllChildren();
+        // Remove excess children
+        while (list.ChildCount > listVal.Length * 3)
+        {
+            list.RemoveChild(list.GetChild(list.ChildCount - 1));
+        }
 
-        for (var i = 0; i < listVal.Length; i++)
+        // Add missing children
+        while (list.ChildCount < listVal.Length * 3)
+        {
+            list.AddChild(new SpriteView());
+            list.AddChild(new Label());
+            list.AddChild(new Label());
+        }
+
+        // Update all remaining children
+        for (int i = 0; i < listVal.Length; i++)
         {
             var ent = listVal[i];
             _prototypeManager.TryIndex(ent.IconEntityPrototypeId, out EntityPrototype? entityPrototype);
 
-            // Get icon
-            IRsiStateLike? iconState = null;
-            if (entityPrototype != null)
-                iconState = _spriteSystem.GetPrototypeIcon(entityPrototype);
+            // Icon
+            var icon = list.GetChild(3 * i) as SpriteView;
 
-            // Add icon
-            //var icon = new TextureRect();
-            //icon.Texture = iconState?.GetFrame(RsiDirection.South, 0);
-            //icon.Margin = new Thickness(10, 0, 0, 0);
-            //list.AddChild(icon);
+            if (icon != null)
+            {
+                icon.SetEntity(_entityManager.GetEntity(ent.NetEntity));
+                icon.OverrideDirection = Direction.South;
+                icon.SetSize = new System.Numerics.Vector2(32, 32);
+                icon.Margin = new Thickness(10, 0, 0, 0);
+            }
 
-            var icon = new SpriteView();
-            icon.SetEntity(_entityManager.GetEntity(ent.NetEntity));
-            icon.Margin = new Thickness(10, 0, 0, 0);
-            list.AddChild(icon);
+            // Entity name
+            var label = list.GetChild(3 * i + 1) as Label;
 
-            // Add entity name
-            var label = new Label();
-            label.Text = ent.NameLocalized;
-            label.HorizontalExpand = true;
-            label.HorizontalAlignment = HAlignment.Left;
-            label.Margin = new Thickness(10, 0, 0, 0);
-            list.AddChild(label);
+            if (label != null)
+            {
+                label.Text = ent.NameLocalized;
+                label.HorizontalExpand = true;
+                label.HorizontalAlignment = HAlignment.Left;
+                label.Margin = new Thickness(10, 0, 0, 0);
+            }
 
-            // Add power value
-            var power = new Label();
-            power.Text = $"{Loc.GetString("power-distributor-window-value", ("value", ent.Size))}";
-            power.HorizontalExpand = true;
-            power.HorizontalAlignment = HAlignment.Right;
-            power.Margin = new Thickness(0, 0, 10, 0);
-            list.AddChild(power);
+            // Power value
+            var power = list.GetChild(3 * i + 2) as Label;
+
+            if (power != null)
+            {
+                power.Text = $"{Loc.GetString("power-distributor-window-value", ("value", ent.Size))}";
+                power.HorizontalExpand = true;
+                power.HorizontalAlignment = HAlignment.Right;
+                power.Margin = new Thickness(0, 0, 10, 0);
+            }
         }
     }
 }

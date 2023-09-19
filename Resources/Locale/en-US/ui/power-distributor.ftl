@@ -13,6 +13,7 @@ power-distributor-window-tab-loads = Loads
 
 # For the power state label
 power-distributor-window-power-state-good = Good
+power-distributor-window-power-state-stable = Stable
 power-distributor-window-power-state-low = Low
 power-distributor-window-power-state-none = None
 
