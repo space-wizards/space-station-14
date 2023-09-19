@@ -195,13 +195,30 @@
 - type: entity
   name: practice laser rifle
   suffix: Empty
-  parent: WeaponLaserCarbineEmpty
+  parent: BaseWeaponBattery
   id: WeaponLaserCarbinePracticeEmpty
   description: This modified laser rifle fires harmless beams in the 40-watt range, for target practice.
   components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Battery/laser_gun.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-unshaded-4
+      map: ["enum.GunVisualLayers.MagUnshaded"]
+      shader: unshaded
+  - type: Clothing
+    sprite: Objects/Weapons/Guns/Battery/laser_gun.rsi
+  - type: Gun
+    selectedMode: SemiAuto
+    availableModes:
+    - SemiAuto
   - type: HitscanBatteryAmmoProvider
     proto: RedLaserPractice
     fireCost: 62.5
+  - type: Battery
+    maxCharge: 1000
+    startingCharge: 0
 
 - type: entity
   name: practice laser rifle
