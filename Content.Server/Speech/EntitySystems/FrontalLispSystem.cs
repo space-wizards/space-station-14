@@ -15,12 +15,9 @@ public sealed class FrontalLispSystem : EntitySystem
     {
         var message = args.Message;
 
-        // replaces any instance of s/S or z/Z
-        message = Regex.Replace(message, "s+", "th");
-        message = Regex.Replace(message, "z+", "th");
-        message = Regex.Replace(message, "S+", "TH");
-        message = Regex.Replace(message, "Z+", "TH");
-
-        args.Message = message;
+        // handles uppercase
+        message = Regex.Replace(message, @"[S][C]|[T]?[S]+|[C](?=[IEY])|[Z]+|[P][S]+", "TH");
+        //handles lowercase
+        message = Regex.Replace(message, @"[Ss][Cc]|[Tt]?[Ss]+|[Cc](?=[IiEeYy])|[Zz]+|[Pp][Ss]+", "th");
     }
 }

@@ -33,4 +33,4 @@ trait-wheelchair-bound-name = Wheelchair Bound
 trait-wheelchair-bound-desc = You cannot move without your wheelchair. Wheelchair included.
 
 trait-frontal-lisp-name = Frontal Lisp
-trait-frontal-lisp-desc = You thpeak with a lithp. At leatht you'll never have to order a pitha on the phone.
+trait-frontal-lisp-desc = You thpeak with a lithp
