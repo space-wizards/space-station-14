@@ -1,11 +1,4 @@
 Entries:
-- author: Misha_Unity
-  changes:
-  - {message: News tab has been turned into an PDA application, type: Tweak}
-  - {message: Added cooldown to mass-media console, type: Add}
-  - {message: Added function to turn off new news notifications, type: Add}
-  id: 4359
-  time: '2023-07-28T19:59:03.0000000+00:00'
 - author: Skarlet
   changes:
   - {message: 'Changed the Captain''s wardrobe with a new default outfit, a new carapace
@@ -2972,3 +2965,12 @@ Entries:
   - {message: Skeletons can no longer have a pitch-black coloration., type: Tweak}
   id: 4858
   time: '2023-09-19T05:05:18.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: 'Expeditions have been massively tweaked. Timer is 7 minutes, loot count
+      is significantly up, added significantly more loot to the loot table, mob count
+      is significantly up, and mobs overall have been nerfed (no more 15 damage carps
+      ending you). It also has a flat 13 minute cooldown. Better bring your fultons
+      if you expect to bring stuff back.', type: Tweak}
+  id: 4859
+  time: '2023-09-19T12:52:01.0000000+00:00'
