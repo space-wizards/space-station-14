@@ -9,5 +9,5 @@ objectives-player-user = [color=gray]{ $user }[/color]
 objectives-player-named = [color=White]{ $name }[/color]
 objectives-no-objectives = { $title } – { $agent }.
 objectives-with-objectives = { $title } – { $agent } со следующими целями:
-objectives-condition-success = { $condition } | [color={ $markupColor }]Успех![/color]
-objectives-condition-fail = { $condition } | [color={ $markupColor }]Провал![/color] ({ $progress }%)
+objectives-objective-success = { $objective } | [color={ $markupColor }]Успех![/color]
+objectives-objective-fail = { $objective } | [color={ $markupColor }]Провал![/color] ({ $progress }%)
