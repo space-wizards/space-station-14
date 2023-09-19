@@ -30,7 +30,7 @@ public sealed class CharacterInfoSystem : EntitySystem
             return;
         }
 
-        RaiseNetworkEvent(new RequestCharacterInfoEvent(entity.Value));
+        RaiseNetworkEvent(new RequestCharacterInfoEvent(GetNetEntity(entity.Value)));
     }
 
     private void OnPlayerAttached(PlayerAttachSysMessage msg)
@@ -43,7 +43,9 @@ public sealed class CharacterInfoSystem : EntitySystem
 
     private void OnCharacterInfoEvent(CharacterInfoEvent msg, EntitySessionEventArgs args)
     {
-        var data = new CharacterData(msg.EntityUid, msg.JobTitle, msg.Objectives, msg.Briefing, Name(msg.EntityUid));
+        var entity = GetEntity(msg.NetEntity);
+        var data = new CharacterData(entity, msg.JobTitle, msg.Objectives, msg.Briefing, Name(entity));
+
         OnCharacterUpdate?.Invoke(data);
     }
 
@@ -57,7 +59,7 @@ public sealed class CharacterInfoSystem : EntitySystem
     public readonly record struct CharacterData(
         EntityUid Entity,
         string Job,
-        Dictionary<string, List<ConditionInfo>> Objectives,
+        Dictionary<string, List<ObjectiveInfo>> Objectives,
         string? Briefing,
         string EntityName
     );

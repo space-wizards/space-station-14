@@ -38,6 +38,7 @@
     - type: Appearance
     - type: Sprite
       sprite: Structures/Power/Generation/portable_generator.rsi
+      noRot: true
 
     # Construction, interaction
     - type: WiresPanel

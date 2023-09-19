@@ -7,10 +7,10 @@ namespace Content.Shared.Administration
     [Serializable, NetSerializable]
     public sealed class EditSolutionsEuiState : EuiStateBase
     {
-        public readonly EntityUid Target;
+        public readonly NetEntity Target;
         public readonly Dictionary<string, Solution>? Solutions;
 
-        public EditSolutionsEuiState(EntityUid target, Dictionary<string, Solution>? solutions)
+        public EditSolutionsEuiState(NetEntity target, Dictionary<string, Solution>? solutions)
         {
             Target = target;
             Solutions = solutions;
