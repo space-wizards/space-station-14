@@ -1,10 +1,4 @@
 Entries:
-- author: KingFroozy
-  changes:
-  - {message: 'Nanotrasen''s vest suppliers have finally started to sew pockets to
-      their hi-viz vests, and now you can safely put explosives in it.', type: Add}
-  id: 4357
-  time: '2023-07-28T19:53:59.0000000+00:00'
 - author: Jackal298
   changes:
   - {message: Improved sprites SMG Drozd and sprite WT 550 behind, type: Tweak}
@@ -2970,3 +2964,9 @@ Entries:
     type: Tweak}
   id: 4856
   time: '2023-09-18T21:07:00.0000000+00:00'
+- author: Doru991
+  changes:
+  - {message: Berry seeds are now available from the MegaSeed Servitor., type: Add}
+  - {message: Seeds for the bungo fruit are included in the exotic seed crate., type: Add}
+  id: 4857
+  time: '2023-09-19T03:29:28.0000000+00:00'
