@@ -37,7 +37,7 @@
     edges:
     - to: casterUnsecured
       steps:
-      - tag: LaserTechPart
+      - tag: AdvancedLaserTechPart
         store: caster
         name: a ray caster
 
