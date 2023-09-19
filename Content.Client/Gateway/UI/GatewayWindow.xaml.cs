@@ -18,9 +18,9 @@ public sealed partial class GatewayWindow : FancyWindow,
 {
     private readonly IGameTiming _timing;
 
-    public event Action<EntityUid>? OpenPortal;
-    private List<(EntityUid, string, TimeSpan, bool)> _destinations = default!;
-    private EntityUid? _current;
+    public event Action<NetEntity>? OpenPortal;
+    private List<(NetEntity, string, TimeSpan, bool)> _destinations = default!;
+    private NetEntity? _current;
     private TimeSpan _nextClose;
     private TimeSpan _lastOpen;
     private List<Label> _readyLabels = default!;
@@ -29,7 +29,8 @@ public sealed partial class GatewayWindow : FancyWindow,
     public GatewayWindow()
     {
         RobustXamlLoader.Load(this);
-        _timing = IoCManager.Resolve<IGameTiming>();
+        var dependencies = IoCManager.Instance!;
+        _timing = dependencies.Resolve<IGameTiming>();
     }
 
     public void UpdateState(GatewayBoundUserInterfaceState state)
@@ -64,7 +65,7 @@ public sealed partial class GatewayWindow : FancyWindow,
         var now = _timing.CurTime;
         foreach (var dest in _destinations)
         {
-            var uid = dest.Item1;
+            var ent = dest.Item1;
             var name = dest.Item2;
             var nextReady = dest.Item3;
             var busy = dest.Item4;
@@ -82,7 +83,7 @@ public sealed partial class GatewayWindow : FancyWindow,
 
             var readyLabel = new Label
             {
-                Text = ReadyText(now, nextReady),
+                Text = ReadyText(now, nextReady, busy),
                 Margin = new Thickness(10f, 0f, 0f, 0f)
             };
             _readyLabels.Add(readyLabel);
@@ -91,17 +92,17 @@ public sealed partial class GatewayWindow : FancyWindow,
             var openButton = new Button()
             {
                 Text = Loc.GetString("gateway-window-open-portal"),
-                Pressed = uid == _current,
+                Pressed = ent == _current,
                 ToggleMode = true,
                 Disabled = _current != null || busy || now < nextReady
             };
 
             openButton.OnPressed += args =>
             {
-                OpenPortal?.Invoke(uid);
+                OpenPortal?.Invoke(ent);
             };
 
-            if (uid == state.Current)
+            if (ent == _current)
             {
                 openButton.AddStyleClass(StyleBase.ButtonCaution);
             }
@@ -162,13 +163,16 @@ public sealed partial class GatewayWindow : FancyWindow,
             var dest = _destinations[i];
             var nextReady = dest.Item3;
             var busy = dest.Item4;
-            _readyLabels[i].Text = ReadyText(now, nextReady);
+            _readyLabels[i].Text = ReadyText(now, nextReady, busy);
             _openButtons[i].Disabled = _current != null || busy || now < nextReady;
         }
     }
 
-    private string ReadyText(TimeSpan now, TimeSpan nextReady)
+    private string ReadyText(TimeSpan now, TimeSpan nextReady, bool busy)
     {
+        if (busy)
+            return Loc.GetString("gateway-window-already-active");
+
         if (now < nextReady)
         {
             var time = nextReady - now;

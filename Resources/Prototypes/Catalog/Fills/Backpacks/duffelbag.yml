@@ -293,6 +293,7 @@
       - id: BoxSurvivalSyndicate
       - id: WeaponPistolViper
       - id: PinpointerNuclear
+      - id: MicroBombImplanter
 
 
 - type: entity
@@ -303,18 +304,15 @@
   components:
   - type: StorageFill
     contents:
-      - id: Hemostat
-      - id: SawAdvanced
-      - id: Drill
-      - id: Cautery
-      - id: Retractor
-      - id: ScalpelAdvanced
       - id: BoxSurvivalSyndicate
+      - id: SawAdvanced
+      - id: Cautery
       - id: CombatKnife
       - id: WeaponPistolViper
       - id: PinpointerNuclear
       - id: HandheldHealthAnalyzer
       - id: CombatMedipen
+      - id: MicroBombImplanter
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateMedicalBundle

@@ -6,7 +6,7 @@ namespace Content.Shared.Body.Part;
 [Serializable, NetSerializable]
 public sealed class BodyPartComponentState : ComponentState
 {
-    public readonly EntityUid? Body;
+    public readonly NetEntity? Body;
     public readonly BodyPartSlot? ParentSlot;
     public readonly Dictionary<string, BodyPartSlot> Children;
     public readonly Dictionary<string, OrganSlot> Organs;
@@ -15,7 +15,7 @@ public sealed class BodyPartComponentState : ComponentState
     public readonly BodyPartSymmetry Symmetry;
 
     public BodyPartComponentState(
-        EntityUid? body,
+        NetEntity? body,
         BodyPartSlot? parentSlot,
         Dictionary<string, BodyPartSlot> children,
         Dictionary<string, OrganSlot> organs,
