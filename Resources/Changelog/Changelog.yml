@@ -1,10 +1,4 @@
 Entries:
-- author: Skarlet
-  changes:
-  - {message: 'Changed the Captain''s wardrobe with a new default outfit, a new carapace
-      and updates older clothing for the sake of consistency.', type: Tweak}
-  id: 4360
-  time: '2023-07-29T00:09:20.0000000+00:00'
 - author: Vasilis
   changes:
   - {message: The local Clown on Station 14 wore a plunger on their head and became
@@ -2974,3 +2968,9 @@ Entries:
       if you expect to bring stuff back.', type: Tweak}
   id: 4859
   time: '2023-09-19T12:52:01.0000000+00:00'
+- author: Repo
+  changes:
+  - {message: Time out for particular uplink items for balancing. Syndicate Bomb can
+      only be purchased after 30min., type: Add}
+  id: 4860
+  time: '2023-09-19T23:51:15.0000000+00:00'
