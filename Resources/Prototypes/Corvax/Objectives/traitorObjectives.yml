@@ -2,12 +2,12 @@
   noSpawn: true
   parent: [BaseTraitorObjective, BaseLivingObjective]
   id: HijackShuttleObjective
-  name: Steal the shuttle, prventing anyone but you from boarding it until it departs.
-  description: One of our undercover agents will debrief you when you arrive. Don't show up in cuffs.
+  name: Hijack emergency shuttle
+  description: Leave on the shuttle free and clear of the loyal Nanotrasen crew on board. Use ANY methods available to you. Syndicate agents, Nanotrasen enemies, and handcuffed hostages may remain alive on the shuttle. Ignore assistance from anyone other than a support agent.
   components:
   - type: Objective
-    difficulty: 1.3
+    difficulty: 2.75
     icon:
-      sprite: Structures/Furniture/chairs.rsi
-      state: shuttle
+      sprite: Objects/Tools/emag.rsi
+      state: icon
   - type: HijackShuttleCondition
