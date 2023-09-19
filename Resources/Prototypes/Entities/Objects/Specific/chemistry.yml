@@ -410,6 +410,9 @@
         transferForensics: true
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: Tag
+    tags:
+    - Pill
 
 - type: entity
   name: pill canister
