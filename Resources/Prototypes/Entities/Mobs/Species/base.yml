@@ -235,7 +235,7 @@
   - type: Barotrauma
     damage:
       types:
-        Blunt: 0.35 #per second, scales with pressure and other constants.
+        Blunt: 0.55 #per second, scales with pressure and other constants.
   # Organs
   - type: StatusEffects
     allowed:

@@ -1,40 +1,6 @@
 Entries:
 - author: KingFroozy
   changes:
-  - {message: Minor sprite changes for jaws of life and power drill, type: Tweak}
-  id: 4351
-  time: '2023-07-27T20:03:28.0000000+00:00'
-- author: crazybrain
-  changes:
-  - {message: Alien artifact intercom no longer has the syndicate channel., type: Tweak}
-  id: 4352
-  time: '2023-07-27T20:03:48.0000000+00:00'
-- author: PrPleGoo
-  changes:
-  - {message: Changed news article to track an author., type: Tweak}
-  - {message: News articles can only be deleted by their tracked author., type: Tweak}
-  id: 4353
-  time: '2023-07-27T20:25:56.0000000+00:00'
-- author: RiceMar
-  changes:
-  - {message: Nanotrasen has yielded to the pleas of the station's newly forming rock
-      bands and has permitted "guitars worn on the back rebelliously" under official
-      dress code., type: Add}
-  id: 4354
-  time: '2023-07-27T23:05:32.0000000+00:00'
-- author: Verslebas
-  changes:
-  - {message: Added champagne!, type: Add}
-  id: 4355
-  time: '2023-07-28T15:54:36.0000000+00:00'
-- author: OctoRocket and Eden
-  changes:
-  - {message: Removed annoying archaic replacements that involve like and other confusing
-      swaps., type: Tweak}
-  id: 4356
-  time: '2023-07-28T19:51:52.0000000+00:00'
-- author: KingFroozy
-  changes:
   - {message: 'Nanotrasen''s vest suppliers have finally started to sew pockets to
       their hi-viz vests, and now you can safely put explosives in it.', type: Add}
   id: 4357
@@ -2969,3 +2935,38 @@ Entries:
   - {message: Fixed Holobarriers being unable to be destroyed., type: Fix}
   id: 4850
   time: '2023-09-18T01:22:39.0000000+00:00'
+- author: Ilya246
+  changes:
+  - {message: Blood-red magboots' jetpack now works again., type: Fix}
+  id: 4851
+  time: '2023-09-18T06:13:12.0000000+00:00'
+- author: JoeHammad
+  changes:
+  - {message: The syndicate have started using cheaper materials in the manufacture
+      of their over ear headsets, type: Add}
+  id: 4852
+  time: '2023-09-18T19:18:56.0000000+00:00'
+- author: PursuitinAshes
+  changes:
+  - {message: Nanotrasen now properly supplies its captains with appropriate headgear
+      in all of their lockers., type: Fix}
+  id: 4853
+  time: '2023-09-18T19:20:10.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: The Syndicate has cracked the binary radio channel's encryption and
+      is offering keys for 4 TC., type: Add}
+  id: 4854
+  time: '2023-09-18T19:20:56.0000000+00:00'
+- author: liltenhead
+  changes:
+  - {message: Increased the amount of barotrauma damage you receive., type: Tweak}
+  id: 4855
+  time: '2023-09-18T19:21:36.0000000+00:00'
+- author: HerCoyote23
+  changes:
+  - {message: 'The Syndicate has grown tired of losing overconfident "Loud" agents,
+      and has reduced their stealth gear prices to encourage a more sneaky approach.',
+    type: Tweak}
+  id: 4856
+  time: '2023-09-18T21:07:00.0000000+00:00'
