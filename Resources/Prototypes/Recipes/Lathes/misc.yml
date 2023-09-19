@@ -121,6 +121,15 @@
     Gold: 500
 
 - type: latheRecipe
+  id: AdvancedRayCaster
+  result: AdvancedRayCaster
+  completetime: 3
+  materials:
+    Steel: 300
+    Glass: 300
+    Gold: 500
+
+- type: latheRecipe
   id: TetherPhysicsBox
   result: TetherPhysicsBox
   completetime: 3
