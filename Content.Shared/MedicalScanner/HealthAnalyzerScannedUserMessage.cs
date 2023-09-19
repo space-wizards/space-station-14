@@ -1,3 +1,4 @@
+using Content.Shared.Chemistry.Components;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.MedicalScanner;
@@ -11,12 +12,15 @@ public sealed class HealthAnalyzerScannedUserMessage : BoundUserInterfaceMessage
     public readonly NetEntity? TargetEntity;
     public float Temperature;
     public float BloodLevel;
+    public Solution? ChemStream;
 
-    public HealthAnalyzerScannedUserMessage(NetEntity? targetEntity, float temperature, float bloodLevel)
+
+    public HealthAnalyzerScannedUserMessage(NetEntity? targetEntity, float temperature, float bloodLevel, Solution? chemStream)
     {
         TargetEntity = targetEntity;
         Temperature = temperature;
         BloodLevel = bloodLevel;
+        ChemStream = chemStream;
     }
 }
 

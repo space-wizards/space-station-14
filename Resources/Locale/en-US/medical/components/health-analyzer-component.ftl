@@ -28,3 +28,6 @@ health-analyzer-window-damage-type-Radiation = Radiation
 
 health-analyzer-window-damage-group-Genetic = Genetic
 health-analyzer-window-damage-type-Cellular = Cellular
+
+blood-analyzer-window-entity-chems-text = Chemicals:
+blood-analyzer-window-entity-chems-none-text = None.

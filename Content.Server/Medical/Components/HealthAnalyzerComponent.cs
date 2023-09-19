@@ -30,5 +30,6 @@ namespace Content.Server.Medical.Components
         /// </summary>
         [DataField("scanningEndSound")]
         public SoundSpecifier? ScanningEndSound;
+
     }
 }
