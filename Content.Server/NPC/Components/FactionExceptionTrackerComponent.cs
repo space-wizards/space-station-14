@@ -5,7 +5,7 @@ namespace Content.Server.NPC.Components;
 /// <summary>
 /// This is used for tracking entities stored in <see cref="FactionExceptionComponent"/>
 /// </summary>
-[RegisterComponent, Access(typeof(FactionExceptionSystem))]
+[RegisterComponent, Access(typeof(NpcFactionSystem))]
 public sealed partial class FactionExceptionTrackerComponent : Component
 {
     /// <summary>

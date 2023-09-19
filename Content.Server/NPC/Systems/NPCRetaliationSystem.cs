@@ -10,7 +10,7 @@ namespace Content.Server.NPC.Systems;
 public sealed class NPCRetaliationSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly FactionExceptionSystem _factionException = default!;
+    [Dependency] private readonly NpcFactionSystem _factionException = default!;
     [Dependency] private readonly NpcFactionSystem _npcFaction = default!;
 
     /// <inheritdoc/>

@@ -9,7 +9,7 @@ namespace Content.Server.Friends.Systems;
 
 public sealed class PettableFriendSystem : EntitySystem
 {
-    [Dependency] private readonly FactionExceptionSystem _factionException = default!;
+    [Dependency] private readonly NpcFactionSystem _factionException = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
 
     public override void Initialize()

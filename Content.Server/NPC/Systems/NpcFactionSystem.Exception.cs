@@ -6,15 +6,13 @@ namespace Content.Server.NPC.Systems;
 /// <summary>
 /// Prevents an NPC from attacking some entities from an enemy faction.
 /// </summary>
-public sealed class FactionExceptionSystem : EntitySystem
+public sealed partial class NpcFactionSystem
 {
     private EntityQuery<FactionExceptionComponent> _exceptionQuery;
     private EntityQuery<FactionExceptionTrackerComponent> _trackerQuery;
 
-    public override void Initialize()
+    public void InitializeException()
     {
-        base.Initialize();
-
         _exceptionQuery = GetEntityQuery<FactionExceptionComponent>();
         _trackerQuery = GetEntityQuery<FactionExceptionTrackerComponent>();
 
@@ -26,9 +24,9 @@ public sealed class FactionExceptionSystem : EntitySystem
     {
         foreach (var ent in component.Hostiles.Union(component.Ignored))
         {
-            if (!_trackerQuery.TryGetComponent(ent, out var comp))
+            if (!_trackerQuery.TryGetComponent(ent, out var trackerComponent))
                 continue;
-            comp.Entities.Remove(uid);
+            trackerComponent.Entities.Remove(uid);
         }
     }
 
@@ -36,10 +34,10 @@ public sealed class FactionExceptionSystem : EntitySystem
     {
         foreach (var ent in component.Entities)
         {
-            if (!_exceptionQuery.TryGetComponent(ent, out var comp))
+            if (!_exceptionQuery.TryGetComponent(ent, out var exceptionComponent))
                 continue;
-            comp.Ignored.Remove(uid);
-            comp.Hostiles.Remove(uid);
+            exceptionComponent.Ignored.Remove(uid);
+            exceptionComponent.Hostiles.Remove(uid);
         }
     }
 
@@ -102,7 +100,8 @@ public sealed class FactionExceptionSystem : EntitySystem
     /// </summary>
     public void DeAggroEntity(EntityUid uid, EntityUid target, FactionExceptionComponent? comp = null)
     {
-        comp ??= EnsureComp<FactionExceptionComponent>(uid);
+        if (!Resolve(uid, ref comp, false))
+            return;
         if (!comp.Hostiles.Remove(target) || !_trackerQuery.TryGetComponent(target, out var tracker))
             return;
         tracker.Entities.Remove(uid);
