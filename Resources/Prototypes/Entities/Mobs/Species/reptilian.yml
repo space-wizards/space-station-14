@@ -1,7 +1,7 @@
 - type: entity
   save: false
   name: Urisst' Mzhand
-  parent: BaseMobOrganic
+  parent: BaseMobSpeciesOrganic
   id: BaseMobReptilian
   abstract: true
   components:
@@ -61,9 +61,7 @@
   - type: Perishable
 
 - type: entity
-  save: false
-  name: Urist McHands
-  parent: MobHumanDummy
+  parent: BaseSpeciesDummy
   id: MobReptilianDummy
   noSpawn: true
   description: A dummy reptilian meant to be used in character setup.

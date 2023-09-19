@@ -88,17 +88,11 @@ namespace Content.Client.Preferences.UI
         private readonly List<AntagPreferenceSelector> _antagPreferences;
         private readonly List<TraitPreferenceSelector> _traitPreferences;
 
-        private Control _previewSpriteControl => CSpriteViewFront;
-        private Control _previewSpriteSideControl => CSpriteViewSide;
-
+        private SpriteView _previewSpriteView => CSpriteView;
+        private Button _previewRotateLeftButton => CSpriteRotateLeft;
+        private Button _previewRotateRightButton => CSpriteRotateRight;
+        private Direction _previewRotation = Direction.North;
         private EntityUid? _previewDummy;
-
-        /// <summary>
-        /// Used to avoid unnecessarily re-creating the entity.
-        /// </summary>
-        private string? _lastSpecies;
-        private SpriteView? _previewSprite;
-        private SpriteView? _previewSpriteSide;
 
         private BoxContainer _rgbSkinColorContainer => CRgbSkinColorContainer;
         private ColorSelectorSliders _rgbSkinColorSelector;
@@ -479,6 +473,18 @@ namespace Content.Client.Preferences.UI
             #endregion FlavorText
 
             #region Dummy
+
+            _previewRotateLeftButton.OnPressed += _ =>
+            {
+                _previewRotation = _previewRotation.TurnCw();
+                _needUpdatePreview = true;
+            };
+            _previewRotateRightButton.OnPressed += _ =>
+            {
+                _previewRotation = _previewRotation.TurnCcw();
+                _needUpdatePreview = true;
+            };
+
             var species = Profile?.Species ?? SharedHumanoidAppearanceSystem.DefaultSpecies;
             var dollProto = _prototypeManager.Index<SpeciesPrototype>(species).DollPrototype;
 
@@ -486,27 +492,7 @@ namespace Content.Client.Preferences.UI
                 _entMan.DeleteEntity(_previewDummy!.Value);
 
             _previewDummy = _entMan.SpawnEntity(dollProto, MapCoordinates.Nullspace);
-            _lastSpecies = species;
-
-            _previewSprite = new SpriteView
-            {
-                Scale = new Vector2(6, 6),
-                OverrideDirection = Direction.South,
-                VerticalAlignment = VAlignment.Center,
-                SizeFlagsStretchRatio = 1
-            };
-            _previewSprite.SetEntity(_previewDummy.Value);
-            _previewSpriteControl.AddChild(_previewSprite);
-
-            _previewSpriteSide = new SpriteView
-            {
-                Scale = new Vector2(6, 6),
-                OverrideDirection = Direction.East,
-                VerticalAlignment = VAlignment.Center,
-                SizeFlagsStretchRatio = 1
-            };
-            _previewSpriteSide.SetEntity(_previewDummy.Value);
-            _previewSpriteSideControl.AddChild(_previewSpriteSide);
+            _previewSpriteView.SetEntity(_previewDummy);
             #endregion Dummy
 
             #endregion Left
@@ -726,35 +712,7 @@ namespace Content.Client.Preferences.UI
                 _entMan.DeleteEntity(_previewDummy!.Value);
 
             _previewDummy = _entMan.SpawnEntity(dollProto, MapCoordinates.Nullspace);
-            _lastSpecies = species;
-
-            if (_previewSprite == null)
-            {
-                // Front
-                _previewSprite = new SpriteView
-                {
-                    Scale = new Vector2(6, 6),
-                    OverrideDirection = Direction.South,
-                    VerticalAlignment = VAlignment.Center,
-                    SizeFlagsStretchRatio = 1
-                };
-                _previewSpriteControl.AddChild(_previewSprite);
-            }
-            _previewSprite.SetEntity(_previewDummy.Value);
-
-            if (_previewSpriteSide == null)
-            {
-                _previewSpriteSide = new SpriteView
-                {
-                    Scale = new Vector2(6, 6),
-                    OverrideDirection = Direction.East,
-                    VerticalAlignment = VAlignment.Center,
-                    SizeFlagsStretchRatio = 1
-                };
-                _previewSpriteSideControl.AddChild(_previewSpriteSide);
-            }
-            _previewSpriteSide.SetEntity(_previewDummy.Value);
-
+            _previewSpriteView.SetEntity(_previewDummy);
             _needUpdatePreview = true;
         }
 
@@ -790,6 +748,7 @@ namespace Content.Client.Preferences.UI
                     break;
             }
             UpdateGenderControls();
+            CMarkings.SetSex(newSex);
             IsDirty = true;
         }
 
@@ -959,7 +918,7 @@ namespace Content.Client.Preferences.UI
             }
 
             CMarkings.SetData(Profile.Appearance.Markings, Profile.Species,
-                Profile.Appearance.SkinColor, Profile.Appearance.EyeColor
+                Profile.Sex, Profile.Appearance.SkinColor, Profile.Appearance.EyeColor
             );
         }
 
@@ -1044,7 +1003,7 @@ namespace Content.Client.Preferences.UI
                 _markingManager.Markings.TryGetValue(Profile.Appearance.HairStyleId, out var hairProto)
             )
             {
-                if (_markingManager.CanBeApplied(Profile.Species, hairProto, _prototypeManager))
+                if (_markingManager.CanBeApplied(Profile.Species, Profile.Sex, hairProto, _prototypeManager))
                 {
                     if (_markingManager.MustMatchSkin(Profile.Species, HumanoidVisualLayers.Hair, out var _, _prototypeManager))
                     {
@@ -1079,7 +1038,7 @@ namespace Content.Client.Preferences.UI
                 _markingManager.Markings.TryGetValue(Profile.Appearance.FacialHairStyleId, out var facialHairProto)
             )
             {
-                if (_markingManager.CanBeApplied(Profile.Species, facialHairProto, _prototypeManager))
+                if (_markingManager.CanBeApplied(Profile.Species, Profile.Sex, facialHairProto, _prototypeManager))
                 {
                     if (_markingManager.MustMatchSkin(Profile.Species, HumanoidVisualLayers.Hair, out var _, _prototypeManager))
                     {
@@ -1127,6 +1086,8 @@ namespace Content.Client.Preferences.UI
 
             if (ShowClothes.Pressed)
                 LobbyCharacterPreviewPanel.GiveDummyJobClothes(_previewDummy!.Value, Profile);
+
+            _previewSpriteView.OverrideDirection = (Direction) ((int) _previewRotation % 4 * 2);
         }
 
         public void UpdateControls()
@@ -1162,7 +1123,6 @@ namespace Content.Client.Preferences.UI
             if (_needUpdatePreview)
             {
                 UpdatePreview();
-
                 _needUpdatePreview = false;
             }
         }

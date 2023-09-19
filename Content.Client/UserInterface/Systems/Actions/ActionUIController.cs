@@ -961,6 +961,8 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
         StopTargeting();
 
         SelectingTargetFor = actionId;
+        // TODO inform the server
+        action.Toggled = true;
 
         // override "held-item" overlay
         var provider = action.Provider;
@@ -975,6 +977,15 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
                 handOverlay.IconOverride = _spriteSystem.Frame0(action.IconOn);
             else if (action.Icon != null)
                 handOverlay.IconOverride = _spriteSystem.Frame0(action.Icon);
+        }
+
+        if (_container != null)
+        {
+            foreach (var button in _container.GetButtons())
+            {
+                if (button.ActionId == actionId)
+                    button.UpdateIcons();
+            }
         }
 
         // TODO: allow world-targets to check valid positions. E.g., maybe:
@@ -1005,9 +1016,26 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
         if (SelectingTargetFor == null)
             return;
 
+        var oldAction = SelectingTargetFor;
+        if (_actionsSystem != null && _actionsSystem.TryGetActionData(oldAction, out var action))
+        {
+            // TODO inform the server
+            action.Toggled = false;
+        }
+
         SelectingTargetFor = null;
+
         _targetOutline?.Disable();
         _interactionOutline?.SetEnabled(true);
+
+        if (_container != null)
+        {
+            foreach (var button in _container.GetButtons())
+            {
+                if (button.ActionId == oldAction)
+                    button.UpdateIcons();
+            }
+        }
 
         if (!_overlays.TryGetOverlay<ShowHandItemOverlay>(out var handOverlay))
             return;
