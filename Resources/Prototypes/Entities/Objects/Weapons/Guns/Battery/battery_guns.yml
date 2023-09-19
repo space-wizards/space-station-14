@@ -79,7 +79,7 @@
       - RayCaster
   - type: Construction
     graph: WeaponLaserGun
-    node: retrolaserblaster
+    node: retroLaserBlaster
     containers:
     - caster
 
@@ -126,7 +126,7 @@
       - RayCaster
   - type: Construction
     graph: WeaponMakeshiftLaser
-    node: makeshiftlaserpistol
+    node: makeshiftLaserPistol
     containers:
     - caster
 
@@ -177,7 +177,7 @@
       - RayCaster
   - type: Construction
     graph: WeaponLaserCarbine
-    node: laserrifle
+    node: laserRifle
     containers:
     - caster
 
@@ -386,7 +386,7 @@
       - HeavyRayCaster
   - type: Construction
     graph: WeaponLaserCannon
-    node: lasercannon
+    node: laserCannon
     containers:
     - caster
 
@@ -628,7 +628,7 @@
       - RayCaster
   - type: Construction
     graph: WeaponAntiqueLaser
-    node: antiquelaserpistol
+    node: antiqueLaserPistol
     containers:
     - caster
 
@@ -689,7 +689,7 @@
       - RayCaster
   - type: Construction
     graph: WeaponAdvancedLaser
-    node: advancedlaserpistol
+    node: advancedLaserPistol
     containers:
     - caster
 

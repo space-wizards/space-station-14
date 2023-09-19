@@ -82,7 +82,7 @@
       - tool: Screwing
         doAfter: 1
 
-  - node: lasercannon
+  - node: laserCannon
     entity: WeaponLaserCannonEmpty
     edges:
     - to: caseMissing

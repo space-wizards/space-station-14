@@ -82,7 +82,7 @@
       - tool: Screwing
         doAfter: 1
 
-  - node: antiquelaserpistol
+  - node: antiqueLaserPistol
     entity: WeaponAntiqueLaserEmpty
     edges:
     - to: caseMissing

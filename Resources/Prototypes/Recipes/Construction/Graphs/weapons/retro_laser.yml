@@ -68,7 +68,7 @@
       - tool: Prying
         doAfter: 0.5
 
-  - node: retrolaserblaster
+  - node: retroLaserBlaster
     entity: WeaponLaserGunEmpty
     edges:
     - to: casterUnsecured

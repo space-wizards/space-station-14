@@ -82,7 +82,7 @@
       - tool: Screwing
         doAfter: 1
 
-  - node: laserrifle
+  - node: laserRifle
     entity: WeaponLaserCarbineEmpty
     edges:
     - to: caseMissing

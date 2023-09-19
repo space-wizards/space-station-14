@@ -195,7 +195,7 @@
         - TetherPhysicsBox
     - type: Construction
       graph: WeaponPhysicsGun
-      node: tethergun
+      node: tetherGun
       containers:
       - box
       
@@ -251,7 +251,7 @@
         - ForcePhysicsBox
     - type: Construction
       graph: WeaponPhysicsGun
-      node: forcegun
+      node: forceGun
       containers:
       - box
 

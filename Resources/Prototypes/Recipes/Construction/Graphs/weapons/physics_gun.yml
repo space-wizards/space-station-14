@@ -105,7 +105,7 @@
       - tool: Prying
         doAfter: 0.5
 
-  - node: tethergun
+  - node: tetherGun
     entity: WeaponTetherGun
     edges:
     - to: panelUnscrewedTether
@@ -113,7 +113,7 @@
       - tool: Screwing
         doAfter: 1
 
-  - node: forcegun
+  - node: forceGun
     entity: WeaponForceGun
     edges:
     - to: panelUnscrewedForce

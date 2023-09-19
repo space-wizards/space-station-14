@@ -64,7 +64,7 @@
       - tool: Screwing
         doAfter: 1
 
-  - node: makeshiftlaserpistol
+  - node: makeshiftLaserPistol
     entity: WeaponMakeshiftLaserEmpty
     edges:
     - to: wiresMissing
