@@ -417,16 +417,10 @@
     flavors:
       - apple
   - type: Sprite
-<<<<<<< HEAD
     state: gapple
-=======
-    layers:
-    - state: plate-tart
-    - state: gapple
   - type: Tag
     tags:
     - Fruit
->>>>>>> 3ab4b8dfb9 (basic lizard diet implementation)
 # Tastes like tart, apple, expensive metal.
 
 - type: entity

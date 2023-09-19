@@ -223,6 +223,7 @@
     tags:
     - Fruit
     
+- type: entity
   name: mimana
   parent: FoodProduceBase
   id: FoodMimana
@@ -615,6 +616,9 @@
         solution: food
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: Tag
+    tags:
+    - Fruit
 
 - type: entity
   name: blue tomato
@@ -656,6 +660,9 @@
         solution: food
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: Tag
+    tags:
+    - Fruit
 
 - type: entity
   name: blood tomato
@@ -1486,7 +1493,6 @@
       reagents:
       - ReagentId: JuiceGrape
         Quantity: 10
-<<<<<<< HEAD
 
 - type: entity
   name: berries
@@ -1515,6 +1521,9 @@
       reagents:
       - ReagentId: JuiceBerry
         Quantity: 10
+  - type: Tag
+    tags:
+    - Fruit
 
 - type: entity
   name: bungo fruit
@@ -1553,6 +1562,7 @@
     tags:
     - Recyclable
     - Trash
+    - Fruit
   - type: SolutionContainerManager
     solutions:
       food:
@@ -1568,8 +1578,3 @@
     seedId: bungo
   - type: SpaceGarbage
   - type: BadFood
-=======
-  - type: Tag
-    tags:
-    - Fruit
->>>>>>> 3ab4b8dfb9 (basic lizard diet implementation)
