@@ -20,8 +20,8 @@ jobs:
     steps:
     - name: defense-less
       if: runner.os == 'Windows'
-      shell: pwsh
-      run: Add-MpPreference -ExclusionPath "C:\"
+      shell: cmd
+      run: \"C:\\Program Files\\PowerShell\\7\\pwsh.exe\" -NoLogo -Sta -NoProfile -NonInteractive -ExecutionPolicy Unrestricted -Command & 'D:\\a\\_actions\\actions\\setup-dotnet\\v3.2.0\\externals\\install-dotnet.ps1' -Channel 7.0
       
     - name: Checkout Master
       uses: actions/checkout@v3.6.0
