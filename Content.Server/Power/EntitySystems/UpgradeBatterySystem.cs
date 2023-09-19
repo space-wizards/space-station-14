@@ -23,7 +23,7 @@ namespace Content.Server.Power.EntitySystems
 
             if (TryComp<BatteryComponent>(uid, out var batteryComp))
             {
-                _batterySystem.SetMaxCharge(uid, MathF.Pow(component.MaxChargeMultiplier, powerCellRating - 2) * component.BaseMaxCharge, batteryComp);
+                _batterySystem.SetMaxCharge(uid, MathF.Pow(component.MaxChargeMultiplier, powerCellRating - 1) * component.BaseMaxCharge, batteryComp);
             }
         }
 

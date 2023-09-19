@@ -33,8 +33,8 @@
       maxChargeMultiplier: 2
       baseMaxCharge: 8000000
     - type: UpgradePowerSupplyRamping
-      scaling: Exponential
-      supplyRampingMultiplier: 2     
+      scaling: Linear
+      supplyRampingMultiplier: 1     
     - type: Appearance
     - type: Battery
       startingCharge: 0

@@ -16,5 +16,5 @@
 - type: machinePart
   id: PowerCell
   name: machine-part-name-power-cell
-  stockPartPrototype: PowerCellMedium
+  stockPartPrototype: PowerCellSmall
 

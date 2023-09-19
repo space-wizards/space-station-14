@@ -80,7 +80,7 @@ public sealed class UpgradePowerSystem : EntitySystem
         switch (component.Scaling)
         {
             case MachineUpgradeScalingType.Linear:
-                supply += component.BaseSupplyRate * (rating - 1);
+                supply += component.PowerSupplyMultiplier * component.BaseSupplyRate * (rating - 1);
                 break;
             case MachineUpgradeScalingType.Exponential:
                 supply *= MathF.Pow(component.PowerSupplyMultiplier, rating - 1);
@@ -115,7 +115,7 @@ public sealed class UpgradePowerSystem : EntitySystem
         switch (component.Scaling)
         {
             case MachineUpgradeScalingType.Linear:
-                rampRate += component.BaseRampRate * (rating - 1);
+                rampRate += component.SupplyRampingMultiplier * component.BaseRampRate * (rating - 1);
                 break;
             case MachineUpgradeScalingType.Exponential:
                 rampRate *= MathF.Pow(component.SupplyRampingMultiplier, rating - 1);

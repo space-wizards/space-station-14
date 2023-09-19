@@ -557,7 +557,7 @@
       prototype: SubstationBasicEmpty
       requirements:
         Capacitor: 1
-        PowerCell: 2
+        PowerCell: 1
       materialRequirements:
         CableMV: 5
         CableHV: 5
