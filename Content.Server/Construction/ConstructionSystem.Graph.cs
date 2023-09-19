@@ -362,9 +362,6 @@ namespace Content.Server.Construction
                 {
                     if (!_container.TryGetContainer(uid, container, out var ourContainer, containerManager))
                         continue;
-                    // затычка для клонерки, clonepod-bodyContainer это ContainerSlot, перенос контента осуществляется в OnComponentInit клонерки
-                    if (container == "clonepod-bodyContainer")
-                        continue;
 
                     if (!_container.TryGetContainer(newUid, container, out var otherContainer, newContainerManager))
                     {
