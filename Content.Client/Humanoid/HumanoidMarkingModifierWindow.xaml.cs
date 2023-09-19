@@ -63,6 +63,7 @@ public sealed partial class HumanoidMarkingModifierWindow : DefaultWindow
     public void SetState(
         MarkingSet markings,
         string species,
+        Sex sex,
         Color skinColor,
         Dictionary<HumanoidVisualLayers, CustomBaseLayerInfo> info
     )
@@ -84,7 +85,7 @@ public sealed partial class HumanoidMarkingModifierWindow : DefaultWindow
             eyesColor = eyes.Color.Value;
         }
 
-        MarkingPickerWidget.SetData(markings, species, skinColor, eyesColor);
+        MarkingPickerWidget.SetData(markings, species, sex, skinColor, eyesColor);
     }
 
     private sealed class HumanoidBaseLayerModifier : BoxContainer

@@ -76,7 +76,7 @@ public sealed partial class ExplosionSystem : EntitySystem
         SubscribeLocalEvent<ExplosionResistanceComponent, GetExplosionResistanceEvent>(OnGetResistance);
 
         // as long as explosion-resistance mice are never added, this should be fine (otherwise a mouse-hat will transfer it's power to the wearer).
-        SubscribeLocalEvent<ExplosionResistanceComponent, InventoryRelayedEvent<GetExplosionResistanceEvent>>((e, c, ev) => OnGetResistance(e, c, ev.Args));
+        SubscribeLocalEvent<ExplosionResistanceComponent, InventoryRelayedEvent<GetExplosionResistanceEvent>>(RelayedResistance);
 
         SubscribeLocalEvent<TileChangedEvent>(OnTileChanged);
 
@@ -112,10 +112,17 @@ public sealed partial class ExplosionSystem : EntitySystem
         _pathfindingSystem.PauseUpdating = false;
     }
 
-    private void OnGetResistance(EntityUid uid, ExplosionResistanceComponent component, GetExplosionResistanceEvent args)
+    private void RelayedResistance(EntityUid uid, ExplosionResistanceComponent component,
+        InventoryRelayedEvent<GetExplosionResistanceEvent> args)
+    {
+        var a = args.Args;
+        OnGetResistance(uid, component, ref a);
+    }
+
+    private void OnGetResistance(EntityUid uid, ExplosionResistanceComponent component, ref GetExplosionResistanceEvent args)
     {
         args.DamageCoefficient *= component.DamageCoefficient;
-        if (component.Modifiers.TryGetValue(args.ExplotionPrototype, out var modifier))
+        if (component.Modifiers.TryGetValue(args.ExplosionPrototype, out var modifier))
             args.DamageCoefficient *= modifier;
     }
 
