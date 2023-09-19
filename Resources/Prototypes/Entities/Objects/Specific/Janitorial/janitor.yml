@@ -33,6 +33,7 @@
     tags:
       - DroneUsable #No bucket because it holds chems, they can drag the cart or use a drain
       - Mop
+      - MopBasic
   - type: GuideHelp
     guides:
     - Janitorial
@@ -52,6 +53,11 @@
           Blunt: 10
     - type: Spillable
       solution: absorbed
+    - type: Wieldable
+    - type: IncreaseDamageOnWield
+      damage:
+        types:
+          Blunt: 5
     - type: Item
       size: 15
       sprite: Objects/Specific/Janitorial/advmop.rsi
@@ -78,6 +84,7 @@
       tags:
         - DroneUsable #No bucket because it holds chems, they can drag the cart or use a drain
         - Mop
+        - MopAdv
 
 - type: entity
   name: mop bucket
@@ -356,7 +363,11 @@
         cart_mop:
           whitelist:
             tags:
-              - Mop
+              - MopBasic
+        cart_advmop:
+          whitelist:
+            tags:
+              - MopAdv
         cart_garbage:
           whitelist:
             tags:
