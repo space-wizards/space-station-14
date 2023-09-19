@@ -48,3 +48,16 @@
   - type: Loadout
     prototypes: [SkeletonBiker]
   - type: RandomHumanoidAppearance
+
+- type: entity
+  parent: MobSkeletonPerson
+  id: MobSkeletonCloset
+  name: Closet Skeleton
+  components:
+  - type: GhostRole
+    name: ghost-role-information-closet-skeleton-name
+    description: ghost-role-information-closet-skeleton-description
+  - type: GhostTakeoverAvailable
+  - type: Loadout
+    prototypes: [LimitedPassengerGear]
+  - type: RandomHumanoidAppearance
