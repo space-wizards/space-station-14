@@ -1,0 +1,28 @@
+name: Update Contrib and Patreons in credits
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: 0 0 * * 0
+    
+jobs:
+  get_credits:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v3.6.0
+        with:
+          ref: master
+        
+      - name: Get this week's Contributors
+        shell: pwsh
+        run: Tools/dump_github_contributors.ps1 > Resources/Credits/GitHub.txt
+        
+      #- name: Get this week's Patreons
+      #  run: Tools/script2dumppatreons > Resources/Credits/Patrons.yml        
+        
+      - name: Commit new credit files
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: Update Credits
+          commit_author: PJBot <pieterjan.briers+bot@gmail.com>
