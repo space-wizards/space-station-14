@@ -2,8 +2,8 @@
             MinSize="250 100"
             SetSize="250 100">
     <BoxContainer Orientation="Vertical">
-        <Label
+        <RichTextLabel
             Name="Diagnostics"
-            Text="{Loc health-analyzer-window-no-patient-data-text}"/>
+        />
     </BoxContainer>
 </DefaultWindow>
