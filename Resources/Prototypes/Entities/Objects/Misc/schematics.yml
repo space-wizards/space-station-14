@@ -31,7 +31,7 @@
           False: {visible: true}
 
 - type: entity
-  parent: [ BaseSchematic, SchematicFoldable]
+  parent: [ BaseSchematic, SchematicFoldable ]
   id: SchematicProtoKineticAccelerator
   name: proto-kinetic accelerator schematic
   description: A schematic for building a proto-kinetic accelerator using a proto-kinetic charger. The first step is to build a frame for the device using steel. #automate this maybe
@@ -50,7 +50,7 @@
     prototype: WeaponProtoKineticAccelerator
 
 - type: entity
-  parent: [ BaseSchematic, SchematicFoldable]
+  parent: [ BaseSchematic, SchematicFoldable ]
   id: SchematicLaserCarbine
   name: laser rifle schematic
   description: A schematic for building a laser rifle using a ray caster. The first step is to build a frame for the device using steel.
@@ -69,7 +69,7 @@
     prototype: WeaponLaserCarbine
 
 - type: entity
-  parent: [ BaseSchematic, SchematicFoldable]
+  parent: [ BaseSchematic, SchematicFoldable ]
   id: SchematicAdvancedLaser
   name: advanced laser pistol schematic
   description: A schematic for building an advanced laser pistol using a ray caster. The first step is to build a frame for the device using steel.
@@ -88,7 +88,7 @@
     prototype: WeaponAdvancedLaser
 
 - type: entity
-  parent: [ BaseSchematic, SchematicFoldable]
+  parent: [ BaseSchematic, SchematicFoldable ]
   id: SchematicLaserCannon
   name: laser cannon schematic
   description: A schematic for building a laser cannon using a ray caster. The first step is to build a frame for the device using steel.
@@ -107,7 +107,7 @@
     prototype: WeaponLaserCannon
 
 - type: entity
-  parent: [ BaseSchematic, SchematicFoldable]
+  parent: [ BaseSchematic, SchematicFoldable ]
   id: SchematicMakeshiftLaser
   name: makeshift laser pistol schematic
   description: A schematic for building a makeshift laser pistol using a ray caster. The first step is to build a frame for the device using steel.
