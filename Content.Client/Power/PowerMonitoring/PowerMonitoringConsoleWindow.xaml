@@ -8,12 +8,16 @@
             <Label Text="{Loc 'power-monitoring-window-total-loads'}"/><Label Name="TotalLoadsNum" Text="?"/>
         </GridContainer>
         <TabContainer Name="MasterTabContainer" VerticalExpand="True">
-            <ItemList Name="SourcesList" VerticalExpand="True">
-            </ItemList>
+            <ScrollContainer VerticalExpand="True" HorizontalExpand="True">
+                <GridContainer Name="SourcesList" VerticalExpand="True" HorizontalExpand="True" Columns="3">
+                </GridContainer>
+            </ScrollContainer>
             <BoxContainer Orientation="Vertical" VerticalExpand="True">
-                <CheckBox Margin="8 8" Name="ShowInactiveConsumersCheckBox" Text="{Loc 'power-monitoring-window-show-inactive-consumers'}" />
-                <ItemList Name="LoadsList" VerticalExpand="True">
-                </ItemList>
+                <CheckBox Margin="8 8" Name="ShowInactiveConsumersCheckBox" Text="{Loc 'power-distributor-window-show-inactive-consumers'}" />
+                <ScrollContainer VerticalExpand="True" HorizontalExpand="True">
+                    <GridContainer Name="LoadsList" VerticalExpand="True" HorizontalExpand="True" Columns="3">
+                    </GridContainer>
+                </ScrollContainer>
             </BoxContainer>
         </TabContainer>
     </BoxContainer>

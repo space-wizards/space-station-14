@@ -5,7 +5,7 @@ using System.Runtime.CompilerServices;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Robust.Shared.Utility;
-using static Content.Server.Power.Pow3r.PowerState;
+using Content.Shared.Power;
 
 namespace Content.Server.Power.Pow3r
 {
@@ -460,6 +460,12 @@ namespace Content.Server.Power.Pow3r
             /// </summary>
             [ViewVariables]
             public float MaxEffectiveSupply;
+
+            /// <summary>
+            ///   Categorically describes the quality of any external power sources
+            /// </summary>
+            [ViewVariables(VVAccess.ReadWrite)] [JsonIgnore]
+            public ExternalPowerState LastExternalPowerState;
         }
 
         // Readonly breaks json serialization.

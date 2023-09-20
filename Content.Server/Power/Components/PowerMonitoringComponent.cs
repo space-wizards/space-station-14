@@ -1,7 +1,7 @@
 namespace Content.Server.Power.Components;
 
 [RegisterComponent]
-public sealed partial class PowerMonitoringConsoleComponent : Component
+public sealed partial class PowerMonitoringComponent : Component
 {
     [DataField("sourceNode")]
     public string SourceNode = "hv";

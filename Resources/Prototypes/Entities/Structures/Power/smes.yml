@@ -87,15 +87,15 @@
       sendBroadcastAttemptEvent: true
       examinableAddress: true
     - type: WiredNetworkConnection
-    - type: PowerDistributor
+    - type: PowerMonitoring
       sourceNode: input
       loadNode: output
     - type: ActivatableUI
-      key: enum.PowerDistributorUiKey.Key
+      key: enum.PowerMonitoringDistributorUiKey.Key
     - type: UserInterface
       interfaces:
-      - key: enum.PowerDistributorUiKey.Key
-        type: PowerDistributorBoundUserInterface    
+      - key: enum.PowerMonitoringDistributorUiKey.Key
+        type: PowerMonitoringDistributorBoundUserInterface    
 
 # SMES' in use
 

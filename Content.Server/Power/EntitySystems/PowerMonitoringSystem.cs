@@ -7,11 +7,12 @@ using Content.Server.Power.Pow3r;
 using Content.Server.Power.NodeGroups;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
+using Content.Shared.Power.Systems;
 
 namespace Content.Server.Power.EntitySystems;
 
 [UsedImplicitly]
-internal sealed class PowerDistributorSystem : EntitySystem
+public sealed class PowerMonitoringSystem : SharedPowerMonitoringSystem
 {
     private float _updateTimer = 0.0f;
     private const float UpdateTime = 1.0f;
@@ -26,9 +27,9 @@ internal sealed class PowerDistributorSystem : EntitySystem
 
         UpdatesAfter.Add(typeof(PowerNetSystem));
 
-        SubscribeLocalEvent<PowerDistributorComponent, BoundUIOpenedEvent>(OnBoundUiOpen);
-        SubscribeLocalEvent<PowerDistributorComponent, MapInitEvent>(OnMapInit);
-        SubscribeLocalEvent<PowerDistributorComponent, ChargeChangedEvent>(OnBatteryChargeChanged);
+        SubscribeLocalEvent((ComponentEventHandler<PowerMonitoringComponent, BoundUIOpenedEvent>) OnBoundUiOpen);
+        SubscribeLocalEvent((ComponentEventHandler<PowerMonitoringComponent, MapInitEvent>) OnMapInit);
+        SubscribeLocalEvent((ComponentEventRefHandler<PowerMonitoringComponent, ChargeChangedEvent>) OnBatteryChargeChanged);
     }
 
     public override void Update(float frameTime)
@@ -38,7 +39,7 @@ internal sealed class PowerDistributorSystem : EntitySystem
         {
             _updateTimer -= UpdateTime;
 
-            var query = EntityQueryEnumerator<PowerDistributorComponent>();
+            var query = EntityQueryEnumerator<PowerMonitoringComponent>();
             while (query.MoveNext(out var uid, out var component))
             {
                 UpdateUIState(uid, component);
@@ -46,12 +47,12 @@ internal sealed class PowerDistributorSystem : EntitySystem
         }
     }
 
-    public void UpdateUIState(EntityUid uid, PowerDistributorComponent? pdc = null, NodeContainerComponent? ncComp = null, PowerNetworkBatteryComponent? netBattery = null)
+    public void UpdateUIState(EntityUid uid, PowerMonitoringComponent? pdc = null, NodeContainerComponent? ncComp = null, PowerNetworkBatteryComponent? netBattery = null)
     {
         if (!Resolve(uid, ref pdc, ref ncComp))
             return;
 
-        if (!Resolve(uid, ref netBattery))
+        if (!Resolve(uid, ref netBattery, false))
             return;
 
         if (!_nodeContainer.TryGetNode<Node>(ncComp, pdc.LoadNode, out var loadNode))
@@ -69,20 +70,18 @@ internal sealed class PowerDistributorSystem : EntitySystem
 
         var battery = netBattery.NetworkBattery;
         var power = (int) MathF.Ceiling(battery.CurrentReceiving);
-        var ext = pdc.LastExternalState;
+        var ext = netBattery.LastExternalPowerState;
         var charge = battery.CurrentStorage / battery.Capacity;
 
-        
-
         // Actually set state
-        if (_userInterfaceSystem.TryGetUi(uid, PowerDistributorUiKey.Key, out var bui))
-            _userInterfaceSystem.SetUiState(bui, new PowerDistributorBoundInterfaceState(power, ext, charge, totalSources, totalLoads, sources.ToArray(), loads.ToArray()));
+        if (_userInterfaceSystem.TryGetUi(uid, PowerMonitoringDistributorUiKey.Key, out var bui))
+            _userInterfaceSystem.SetUiState(bui, new PowerMonitoringBoundInterfaceState(power, ext, charge, totalSources, totalLoads, sources.ToArray(), loads.ToArray()));
     }
 
-    private double GetTotalSourcesForNode(EntityUid uid, Node node, out List<PowerDistributorEntry> sources)
+    private double GetTotalSourcesForNode(EntityUid uid, Node node, out List<PowerMonitoringEntry> sources)
     {
         var totalSources = 0.0d;
-        sources = new List<PowerDistributorEntry>();
+        sources = new List<PowerMonitoringEntry>();
 
         if (node.NodeGroup is not PowerNet netQ)
             return totalSources;
@@ -116,10 +115,10 @@ internal sealed class PowerDistributorSystem : EntitySystem
         return totalSources;
     }
 
-    private double GetTotalLoadsForNode(EntityUid uid, Node node, out List<PowerDistributorEntry> loads)
+    private double GetTotalLoadsForNode(EntityUid uid, Node node, out List<PowerMonitoringEntry> loads)
     {
         var totalLoads = 0.0d;
-        loads = new List<PowerDistributorEntry>();
+        loads = new List<PowerMonitoringEntry>();
 
         if (node.NodeGroup is not PowerNet netQ)
             return totalLoads;
@@ -152,60 +151,60 @@ internal sealed class PowerDistributorSystem : EntitySystem
         return totalLoads;
     }
 
-    private PowerDistributorEntry LoadOrSource(Component comp, double rate, bool isBattery)
+    private PowerMonitoringEntry LoadOrSource(Component comp, double rate, bool isBattery)
     {
         var md = MetaData(comp.Owner);
         var prototype = md.EntityPrototype?.ID ?? "";
         var netEntity = _entityManager.GetNetEntity(comp.Owner);
-        return new PowerDistributorEntry(netEntity, md.EntityName, prototype, rate, isBattery);
+        return new PowerMonitoringEntry(netEntity, md.EntityName, prototype, rate, isBattery);
     }
 
-    private int CompareLoadOrSources(PowerDistributorEntry x, PowerDistributorEntry y)
+    private int CompareLoadOrSources(PowerMonitoringEntry x, PowerMonitoringEntry y)
     {
         return -x.Size.CompareTo(y.Size);
     }
 
-    private void OnBatteryChargeChanged(EntityUid uid, PowerDistributorComponent component, ref ChargeChangedEvent args)
+    private void OnBatteryChargeChanged(EntityUid uid, PowerMonitoringComponent component, ref ChargeChangedEvent args)
     {
         UpdatePowerDistributorState(uid, component);
     }
 
-    private void OnMapInit(EntityUid uid, PowerDistributorComponent component, MapInitEvent args)
+    private void OnMapInit(EntityUid uid, PowerMonitoringComponent component, MapInitEvent args)
     {
         UpdatePowerDistributorState(uid, component);
     }
 
-    private void OnBoundUiOpen(EntityUid uid, PowerDistributorComponent component, BoundUIOpenedEvent args)
+    private void OnBoundUiOpen(EntityUid uid, PowerMonitoringComponent component, BoundUIOpenedEvent args)
     {
         UpdatePowerDistributorState(uid, component);
     }
 
     public void UpdatePowerDistributorState(EntityUid uid,
-        PowerDistributorComponent? pdc = null,
+        PowerMonitoringComponent? powerMonitoring = null,
         PowerNetworkBatteryComponent? battery = null)
     {
-        if (!Resolve(uid, ref pdc, ref battery, false))
+        if (!Resolve(uid, ref powerMonitoring, ref battery, false))
             return;
 
         var extPowerState = CalcExtPowerState(uid, battery.NetworkBattery);
-        if (extPowerState != pdc.LastExternalState)
+        if (extPowerState != battery.NetworkBattery.LastExternalPowerState)
         {
-            pdc.LastExternalState = extPowerState;
-            UpdateUIState(uid, pdc);
+            battery.NetworkBattery.LastExternalPowerState = extPowerState;
+            UpdateUIState(uid, powerMonitoring);
         }
     }
 
-    private PowerDistributorExternalPowerState CalcExtPowerState(EntityUid uid, PowerState.Battery battery)
+    private ExternalPowerState CalcExtPowerState(EntityUid uid, PowerState.Battery battery)
     {
         if (MathHelper.CloseTo(battery.CurrentReceiving, 0))
-            return PowerDistributorExternalPowerState.None;
+            return ExternalPowerState.None;
 
         if (MathHelper.CloseToPercent(battery.CurrentReceiving, battery.CurrentSupply, 0.05f))
-            return PowerDistributorExternalPowerState.Stable;
+            return ExternalPowerState.Stable;
 
         if (battery.CurrentReceiving - battery.CurrentSupply < 0f)
-            return PowerDistributorExternalPowerState.Low;
+            return ExternalPowerState.Low;
 
-        return PowerDistributorExternalPowerState.Good;
+        return ExternalPowerState.Good;
     }
 }

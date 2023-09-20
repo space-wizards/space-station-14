@@ -1,4 +1,5 @@
-﻿using Content.Server.Power.Pow3r;
+using Content.Server.Power.Pow3r;
+using Content.Shared.Power;
 
 namespace Content.Server.Power.Components
 {
@@ -108,6 +109,14 @@ namespace Content.Server.Power.Components
         {
             get => NetworkBattery.Efficiency;
             set => NetworkBattery.Efficiency = value;
+        }
+
+        [DataField("lastExternalState")]
+        [ViewVariables(VVAccess.ReadWrite)]
+        public ExternalPowerState LastExternalPowerState
+        {
+            get => NetworkBattery.LastExternalPowerState;
+            set => NetworkBattery.LastExternalPowerState = value;
         }
 
         [ViewVariables]

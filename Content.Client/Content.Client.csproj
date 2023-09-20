@@ -23,6 +23,14 @@
     <ProjectReference Include="..\RobustToolbox\Robust.Client\Robust.Client.csproj" />
     <ProjectReference Include="..\Content.Shared\Content.Shared.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Compile Update="Power\PowerMonitoring\PowerMonitoringDistributorWindow.xaml.cs">
+      <DependentUpon>PowerMonitoringDistributorWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Power\PowerMonitoring\PowerMonitoringConsoleWindow.xaml.cs">
+      <DependentUpon>PowerMonitoringConsoleWindow.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
   <Import Project="..\RobustToolbox\MSBuild\Robust.Properties.targets" />
   <Import Project="..\RobustToolbox\MSBuild\XamlIL.targets" />
 </Project>

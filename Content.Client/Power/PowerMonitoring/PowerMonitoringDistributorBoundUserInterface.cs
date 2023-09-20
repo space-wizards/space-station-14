@@ -1,15 +1,15 @@
 using Content.Shared.Power;
 using JetBrains.Annotations;
 
-namespace Content.Client.Power.PowerDistributor
+namespace Content.Client.Power.PowerMonitoring
 {
     [UsedImplicitly]
-    public sealed class PowerDistributorBoundUserInterface : BoundUserInterface
+    public sealed class PowerMonitoringDistributorBoundUserInterface : BoundUserInterface
     {
         [ViewVariables]
-        private PowerDistributorWindow? _window;
+        private PowerMonitoringDistributorWindow? _window;
 
-        public PowerDistributorBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
+        public PowerMonitoringDistributorBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
         {
         }
 
@@ -17,7 +17,7 @@ namespace Content.Client.Power.PowerDistributor
         {
             base.Open();
 
-            _window = new PowerDistributorWindow(this);
+            _window = new PowerMonitoringDistributorWindow(this);
             _window.OnClose += Close;
             _window.OpenCentered();
         }
@@ -26,7 +26,7 @@ namespace Content.Client.Power.PowerDistributor
         {
             base.UpdateState(state);
 
-            var castState = (PowerDistributorBoundInterfaceState) state;
+            var castState = (PowerMonitoringBoundInterfaceState) state;
             _window?.UpdateState(castState);
         }
 
