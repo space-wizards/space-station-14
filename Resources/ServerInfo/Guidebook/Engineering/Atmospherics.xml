@@ -27,6 +27,32 @@ Should you encounter a situation where scrubbers aren't cleaning a room fast eno
 <Box>
 <GuideEntityEmbed Entity="PortableScrubber"/>
 </Box>
+# Gas mixes and Burn chambers
+In the event you finish all the tasks at hand, you can make some extra power or money by creating new chemical gasses.
+
+##Tritium
+Tritium is a clear, green gas that is highly flammable, radioactive, and allergic to air making it very helpful when running the [color=#a4885c]TEG.[/color]
+It can be made by burning Plasma and Oxygen in the Burn Chamber. You can extract this gas through scrubbers.
+
+<Box>
+<GuideEntityEmbed Entity="PlasmaCanister" />
+<GuideEntityEmbed Entity="NitrogenCanister" />
+<GuideEntityEmbed Entity="GasVentScrubber"/>
+<GuideEntityEmbed Entity="TritiumCanister" />
+</Box>
+
+##Frezon
+Frezon is a bluish-green gas that is very complex and very dangerous. To obtain frezon, you must mix Tritium, Oxygen, and Nitrogen in a 70K room to prevent the Tritium from combusting with the oxygen.
+
+<Box>
+<GuideEntityEmbed Entity="TritiumCanister" />
+<GuideEntityEmbed Entity="AirCanister" />
+<GuideEntityEmbed Entity="GasVentScrubber"/>
+<GuideEntityEmbed Entity="StorageCanister" Caption="Frezon Canister"/>
+</Box>
+
+It is critical to understand that a frezon leak can devastate the station, causing a wintery hell filled with itchy sweaters and cold burns.
+
 ## Reference Sheet
 - Standard atmospheric mix is [color=#a4885c]78% N2 and 22% O2 at 101.24kPa.[/color]
 - Gas obeys real math. You can use the equation PV = nRT (Pressure kPa * Volume L = Moles * R * Temperature K) to derive information you might need to know about a gas. R is approximately 8.31446
