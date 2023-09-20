@@ -63,12 +63,9 @@ public abstract class SharedObjectivesSystem : EntitySystem
             return null;
         }
 
-        Log.Debug($"Created objective {proto} ({uid})");
-
         if (!CanBeAssigned(uid, mindId, mind, comp))
         {
-            Del(uid);
-            Log.Warning($"Objective {uid} did not match the requirements for {_mind.MindOwnerLoggingString(mind)}, deleted it");
+            Log.Warning($"Objective {proto} did not match the requirements for {_mind.MindOwnerLoggingString(mind)}, deleted it");
             return null;
         }
 
@@ -77,7 +74,7 @@ public abstract class SharedObjectivesSystem : EntitySystem
         if (ev.Cancelled)
         {
             Del(uid);
-            Log.Warning($"Could not assign objective {uid}, deleted it");
+            Log.Warning($"Could not assign objective {proto}, deleted it");
             return null;
         }
 
@@ -85,6 +82,7 @@ public abstract class SharedObjectivesSystem : EntitySystem
         var afterEv = new ObjectiveAfterAssignEvent(mindId, mind, comp, MetaData(uid));
         RaiseLocalEvent(uid, ref afterEv);
 
+        Log.Debug($"Created objective {ToPrettyString(uid):objective}");
         return uid;
     }
 

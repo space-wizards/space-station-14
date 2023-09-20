@@ -57,7 +57,7 @@ public sealed partial class ToolSystem
 
     private bool TryPryTile(EntityUid toolEntity, EntityUid user, TilePryingComponent component, EntityCoordinates clickLocation)
     {
-        if (!TryComp<ToolComponent?>(toolEntity, out var tool) && component.ToolComponentNeeded)
+        if (!TryComp<ToolComponent>(toolEntity, out var tool) && component.ToolComponentNeeded)
             return false;
 
         if (!_mapManager.TryFindGridAt(clickLocation.ToMap(EntityManager, _transformSystem), out _, out var mapGrid))
