@@ -32,5 +32,8 @@ trait-accentless-desc = You don't have the accent that your species would usuall
 trait-wheelchair-bound-name = Wheelchair Bound
 trait-wheelchair-bound-desc = You cannot move without your wheelchair. Wheelchair included.
 
+trait-frontal-lisp-name = Frontal Lisp
+trait-frontal-lisp-desc = You thpeak with a lithp
+
 trait-loud-mouth-name = Loud Mouth
 trait-loud-mouth-desc = YOU CAN'T HELP BUT YELL CONSTANTLY!! GRAAAHHH!!

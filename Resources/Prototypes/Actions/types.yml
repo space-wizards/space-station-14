@@ -162,6 +162,7 @@
   id: ActionChangeVoiceMask
   name: Set name
   description: Change the name others hear to something else.
+  noSpawn: true
   components:
   - type: InstantAction
     icon: Interface/Actions/scream.png # somebody else can figure out a better icon for this
