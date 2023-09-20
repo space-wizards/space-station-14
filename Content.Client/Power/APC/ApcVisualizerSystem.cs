@@ -86,7 +86,7 @@ enum ApcVisualLayers : byte
     /// <summary>
     /// The sprite layer used for the interface lock indicator light overlay.
     /// </summary>
-    InterfaceLock,
+    InterfaceLock = 0,
     /// <summary>
     /// The sprite layer used for the panel lock indicator light overlay.
     /// </summary>
