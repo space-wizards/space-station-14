@@ -15,7 +15,7 @@ public sealed class FrontalLispSystem : EntitySystem
     {
         var message = args.Message;
 
-        // handles ts, c(iey),ps, ti
+        // handles ts, c(iey), z, ps, ti
         message = Regex.Replace(message, @"[T]+[S]+|[C]+(?=[IEY])|[Z]+|[P][S]+|[T](?=[I])", "TH");
         message = Regex.Replace(message, @"[Tt]+[Ss]+|[Cc]+(?=[IiEeYy])|[Zz]+|[Pp][Ss]+|[Tt](?=[Ii])", "th");
         // handles ex
