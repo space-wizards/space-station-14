@@ -1,12 +1,4 @@
 Entries:
-- author: Jackal298
-  changes:
-  - {message: Raised the price of the sniper bundle from 6 to 12 TC and reduced the
-      ammo supply from 30 to 10, type: Tweak}
-  - {message: Fixed the issue of not being able to put the Anti-Material Ammo back
-      into the Anti-Material Ammo Box, type: Fix}
-  id: 4362
-  time: '2023-07-29T06:09:33.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Truncate gun fire rate examines so they don't show 20 digits., type: Fix}
@@ -2973,3 +2965,8 @@ Entries:
   - {message: Reduced the crafting costs of the buckler and makeshift shield., type: Tweak}
   id: 4861
   time: '2023-09-20T04:49:43.0000000+00:00'
+- author: dahnte
+  changes:
+  - {message: Added frontal lisp as a character trait for all species!, type: Add}
+  id: 4862
+  time: '2023-09-20T04:51:50.0000000+00:00'
