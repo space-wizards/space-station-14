@@ -83,6 +83,8 @@
     - BirdToyInstrument
     - PlushieXeno
     - BeachBall
+    - PlushieMoth
+    - PlushieHampter
   - type: WiresPanel
   - type: Wires
     LayoutId: Arcade

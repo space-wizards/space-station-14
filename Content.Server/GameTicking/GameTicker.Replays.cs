@@ -43,9 +43,7 @@ public sealed partial class GameTicker
         {
             var baseReplayPath = new ResPath(_cfg.GetCVar(CVars.ReplayDirectory)).ToRootedPath();
             moveToPath = baseReplayPath / finalPath;
-
-            var fileName = finalPath.Filename;
-            recordPath = new ResPath(tempDir) / fileName;
+            recordPath = new ResPath(tempDir) / finalPath;
 
             _sawmillReplays.Debug($"Replay will record in temporary position: {recordPath}");
         }
@@ -74,13 +72,14 @@ public sealed partial class GameTicker
         if (data.State is not ReplayRecordState state)
             return;
 
-        if (state.MoveToPath != null)
-        {
-            _sawmillReplays.Info($"Moving replay into final position: {state.MoveToPath}");
+        if (state.MoveToPath == null)
+            return;
 
-            _taskManager.BlockWaitOnTask(_replays.WaitWriteTasks());
-            data.Directory.Rename(data.Path, state.MoveToPath.Value);
-        }
+        _sawmillReplays.Info($"Moving replay into final position: {state.MoveToPath}");
+        _taskManager.BlockWaitOnTask(_replays.WaitWriteTasks());
+        DebugTools.Assert(!_replays.IsWriting());
+        data.Directory.CreateDir(state.MoveToPath.Value.Directory);
+        data.Directory.Rename(data.Path, state.MoveToPath.Value);
     }
 
     private ResPath GetAutoReplayPath()

@@ -2,7 +2,8 @@
 ﻿using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Mind;
 using Content.Shared.Mind;
-using Content.Shared.Objectives;
+using Content.Shared.Objectives.Components;
+using Content.Shared.Objectives.Systems;
 using Content.Shared.Random;
 using Content.Shared.Random.Helpers;
 using Robust.Shared.Prototypes;
@@ -11,7 +12,7 @@ using System.Linq;
 
 namespace Content.Server.Objectives;
 
-public sealed class ObjectivesSystem : EntitySystem
+public sealed class ObjectivesSystem : SharedObjectivesSystem
 {
     [Dependency] private readonly GameTicker _gameTicker = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
@@ -30,6 +31,8 @@ public sealed class ObjectivesSystem : EntitySystem
     /// </summary>
     private void OnRoundEndText(RoundEndTextAppendEvent ev)
     {
+        // go through each gamerule getting data for the roundend summary.
+        var summaries = new Dictionary<string, Dictionary<string, List<EntityUid>>>();
         var query = EntityQueryEnumerator<GameRuleComponent>();
         while (query.MoveNext(out var uid, out var gameRule))
         {
@@ -41,90 +44,133 @@ public sealed class ObjectivesSystem : EntitySystem
             if (info.Minds.Count == 0)
                 continue;
 
+            // first group the gamerules by their agents, for example 2 different dragons
             var agent = info.AgentName;
-            var result = Loc.GetString("objectives-round-end-result", ("count", info.Minds.Count), ("agent", agent));
-            var prepend = new ObjectivesTextPrependEvent(result);
+            if (!summaries.ContainsKey(agent))
+                summaries[agent] = new Dictionary<string, List<EntityUid>>();
+
+            var prepend = new ObjectivesTextPrependEvent("");
             RaiseLocalEvent(uid, ref prepend);
-            // space between the start text and player list
-            result = prepend.Text + "\n";
 
-            foreach (var mindId in info.Minds)
+            // next group them by their prepended texts
+            // for example with traitor rule, group them by the codewords they share
+            var summary = summaries[agent];
+            if (summary.ContainsKey(prepend.Text))
             {
-                if (!TryComp(mindId, out MindComponent? mind))
-                    continue;
+                // same prepended text (usually empty) so combine them
+                summary[prepend.Text].AddRange(info.Minds);
+            }
+            else
+            {
+                summary[prepend.Text] = info.Minds;
+            }
+        }
 
-                var name = mind.CharacterName;
-                _mind.TryGetSession(mindId, out var session);
-                var username = session?.Name;
+        // convert the data into summary text
+        foreach (var (agent, summary) in summaries)
+        {
+            // first get the total number of players that were in these game rules combined
+            var total = 0;
+            foreach (var (_, minds) in summary)
+            {
+                total += minds.Count;
+            }
 
-                string title;
-                if (username != null)
-                {
-                    if (name != null)
-                        title = Loc.GetString("objectives-player-user-named", ("user", username), ("name", name));
-                    else
-                        title = Loc.GetString("objectives-player-user", ("user", username));
-                }
-                else
-                {
-                    // nothing to identify the player by, just give up
-                    if (name == null)
-                        continue;
+            var result = Loc.GetString("objectives-round-end-result", ("count", total), ("agent", agent));
+            // next add all the players with its own prepended text
+            foreach (var (prepend, minds) in summary)
+            {
+                if (prepend != string.Empty)
+                    result += prepend;
 
-                    title = Loc.GetString("objectives-player-named", ("name", name));
-                }
-
+                // add space between the start text and player list
                 result += "\n";
 
-                var objectives = mind.AllObjectives.ToArray();
-                if (objectives.Length == 0)
-                {
-                    result += Loc.GetString("objectives-no-objectives", ("title", title), ("agent", agent));
-                    continue;
-                }
-
-                result += Loc.GetString("objectives-with-objectives", ("title", title), ("agent", agent));
-
-                foreach (var objectiveGroup in objectives.GroupBy(o => o.Prototype.Issuer))
-                {
-                    result += "\n" + Loc.GetString($"objective-issuer-{objectiveGroup.Key}");
-
-                    foreach (var objective in objectiveGroup)
-                    {
-                        foreach (var condition in objective.Conditions)
-                        {
-                            var progress = condition.Progress;
-                            if (progress > 0.99f)
-                            {
-                                result += "\n- " + Loc.GetString(
-                                    "objectives-condition-success",
-                                    ("condition", condition.Title),
-                                    ("markupColor", "green")
-                                );
-                            }
-                            else
-                            {
-                                result += "\n- " + Loc.GetString(
-                                    "objectives-condition-fail",
-                                    ("condition", condition.Title),
-                                    ("progress", (int) (progress * 100)),
-                                    ("markupColor", "red")
-                                );
-                            }
-                        }
-                    }
-                }
+                AddSummary(ref result, agent, minds);
             }
 
             ev.AddLine(result + "\n");
         }
     }
 
-    public ObjectivePrototype? GetRandomObjective(EntityUid mindId, MindComponent mind, string objectiveGroupProto)
+    private void AddSummary(ref string result, string agent, List<EntityUid> minds)
+    {
+        foreach (var mindId in minds)
+        {
+            if (!TryComp(mindId, out MindComponent? mind))
+                continue;
+
+            var name = mind.CharacterName;
+            _mind.TryGetSession(mindId, out var session);
+            var username = session?.Name;
+
+            string title;
+            if (username != null)
+            {
+                if (name != null)
+                    title = Loc.GetString("objectives-player-user-named", ("user", username), ("name", name));
+                else
+                    title = Loc.GetString("objectives-player-user", ("user", username));
+            }
+            else
+            {
+                // nothing to identify the player by, just give up
+                if (name == null)
+                    continue;
+
+                title = Loc.GetString("objectives-player-named", ("name", name));
+            }
+
+            result += "\n";
+
+            var objectives = mind.AllObjectives.ToArray();
+            if (objectives.Length == 0)
+            {
+                result += Loc.GetString("objectives-no-objectives", ("title", title), ("agent", agent));
+                continue;
+            }
+
+            result += Loc.GetString("objectives-with-objectives", ("title", title), ("agent", agent));
+
+            foreach (var objectiveGroup in objectives.GroupBy(o => Comp<ObjectiveComponent>(o).Issuer))
+            {
+                result += "\n" + Loc.GetString($"objective-issuer-{objectiveGroup.Key}");
+
+                foreach (var objective in objectiveGroup)
+                {
+                    var info = GetInfo(objective, mindId, mind);
+                    if (info == null)
+                        continue;
+
+                    var objectiveTitle = info.Value.Title;
+                    var progress = info.Value.Progress;
+                    if (progress > 0.99f)
+                    {
+                        result += "\n- " + Loc.GetString(
+                            "objectives-objective-success",
+                            ("objective", objectiveTitle),
+                            ("markupColor", "green")
+                        );
+                    }
+                    else
+                    {
+                        result += "\n- " + Loc.GetString(
+                            "objectives-objective-fail",
+                            ("objective", objectiveTitle),
+                            ("progress", (int) (progress * 100)),
+                            ("markupColor", "red")
+                        );
+                    }
+                }
+            }
+        }
+    }
+
+    public EntityUid? GetRandomObjective(EntityUid mindId, MindComponent mind, string objectiveGroupProto)
     {
         if (!_prototypeManager.TryIndex<WeightedRandomPrototype>(objectiveGroupProto, out var groups))
         {
-            Log.Error("Tried to get a random objective, but can't index WeightedRandomPrototype " + objectiveGroupProto);
+            Log.Error($"Tried to get a random objective, but can't index WeightedRandomPrototype {objectiveGroupProto}");
             return null;
         }
 
@@ -137,15 +183,16 @@ public sealed class ObjectivesSystem : EntitySystem
 
             if (!_prototypeManager.TryIndex<WeightedRandomPrototype>(groupName, out var group))
             {
-                Log.Error("Couldn't index objective group prototype" + groupName);
+                Log.Error($"Couldn't index objective group prototype {groupName}");
                 return null;
             }
 
-            if (_prototypeManager.TryIndex<ObjectivePrototype>(group.Pick(_random), out var objective)
-                && objective.CanBeAssigned(mindId, mind))
+            var proto = group.Pick(_random);
+            var objective = TryCreateObjective(mindId, mind, proto);
+            if (objective != null)
                 return objective;
-            else
-                tries++;
+
+            tries++;
         }
 
         return null;

@@ -81,7 +81,7 @@ namespace Content.Server.Forensics
         {
             var ev = new ForensicPadDoAfterEvent(sample);
 
-            var doAfterEventArgs = new DoAfterArgs(user, pad.ScanDelay, ev, used, target: target, used: used)
+            var doAfterEventArgs = new DoAfterArgs(EntityManager, user, pad.ScanDelay, ev, used, target: target, used: used)
             {
                 BreakOnTargetMove = true,
                 BreakOnUserMove = true,

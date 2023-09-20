@@ -93,21 +93,7 @@
       - FootstepSound
   - type: NoSlip
   - type: RatKing
-    actionRaiseArmy:
-      useDelay: 4
-      icon: Interface/Actions/ratKingArmy.png
-      name: rat-king-raise-army-name
-      description: rat-king-raise-army-description
-      itemIconStyle: NoItem
-      event: !type:RatKingRaiseArmyActionEvent
     hungerPerArmyUse: 25
-    actionDomain:
-      useDelay: 10
-      icon: Interface/Actions/ratKingDomain.png
-      name: rat-king-domain-name
-      description: rat-king-domain-description
-      itemIconStyle: NoItem
-      event: !type:RatKingDomainActionEvent
     hungerPerDomainUse: 50
   - type: MobsterAccent
   - type: Speech
@@ -289,3 +275,27 @@
   - type: GuideHelp
     guides:
     - MinorAntagonists
+
+- type: entity
+  id: ActionRatKingRaiseArmy
+  name: Raise Army
+  description: Spend some hunger to summon an allied rat to help defend you.
+  noSpawn: true
+  components:
+  - type: InstantAction
+    icon: Interface/Actions/ratKingArmy.png
+    itemIconStyle: NoItem
+    event: !type:RatKingRaiseArmyActionEvent
+    useDelay: 4
+
+- type: entity
+  id: ActionRatKingDomain
+  name: Rat King's Domain
+  description: Spend some hunger to release a cloud of miasma into the air.
+  noSpawn: true
+  components:
+  - type: InstantAction
+    useDelay: 10
+    icon: Interface/Actions/ratKingDomain.png
+    itemIconStyle: NoItem
+    event: !type:RatKingDomainActionEvent
