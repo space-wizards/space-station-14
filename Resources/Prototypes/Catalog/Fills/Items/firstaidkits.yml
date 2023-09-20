@@ -59,7 +59,7 @@
     contents:
       - id: SyringeIpecac
       - id: SyringeEthylredoxrazine
-      - id: PoisonAutoInjector
+      - id: AntiPoisonMedipen
       - id: PillDylovene
         amount: 5
       - id: PillCharcoal
