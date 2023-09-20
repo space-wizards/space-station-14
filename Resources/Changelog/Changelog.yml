@@ -1,10 +1,4 @@
 Entries:
-- author: Vasilis
-  changes:
-  - {message: The local Clown on Station 14 wore a plunger on their head and became
-      a sensation overnight! Many try to replicate their style, type: Add}
-  id: 4361
-  time: '2023-07-29T00:10:45.0000000+00:00'
 - author: Jackal298
   changes:
   - {message: Raised the price of the sniper bundle from 6 to 12 TC and reduced the
@@ -2974,3 +2968,8 @@ Entries:
       only be purchased after 30min., type: Add}
   id: 4860
   time: '2023-09-19T23:51:15.0000000+00:00'
+- author: liltenhead
+  changes:
+  - {message: Reduced the crafting costs of the buckler and makeshift shield., type: Tweak}
+  id: 4861
+  time: '2023-09-20T04:49:43.0000000+00:00'
