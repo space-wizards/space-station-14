@@ -7,7 +7,7 @@
         - to: girder
           completed:
             - !type:SnapToGrid
-              southRotation: false
+              southRotation: true
           steps:
             - material: Steel
               amount: 2
@@ -325,7 +325,7 @@
             - material: Plasteel
               amount: 2
               doAfter: 1
-        
+
         - to: diagonalshuttleWall
           completed:
             - !type:SnapToGrid
