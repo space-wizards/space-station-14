@@ -539,7 +539,6 @@
   parent: MaterialBase
   id: MaterialBones
   name: bones
-  description: Apply to a wolf
   suffix: Full
   components:
   - type: Stack
