@@ -1,7 +1,7 @@
 ﻿- type: entity
   id: ActionVehicleHorn
-  name: action-name-honk
-  description: action-desc-honk
+  name: Honk
+  description: Honk!
   noSpawn: true
   components:
   - type: InstantAction

@@ -53,7 +53,7 @@ public abstract class SharedDevourSystem : EntitySystem
                 case MobState.Critical:
                 case MobState.Dead:
 
-                    _doAfterSystem.TryStartDoAfter(new DoAfterArgs(uid, component.DevourTime, new DevourDoAfterEvent(), uid, target: target, used: uid)
+                    _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, uid, component.DevourTime, new DevourDoAfterEvent(), uid, target: target, used: uid)
                     {
                         BreakOnTargetMove = true,
                         BreakOnUserMove = true,
@@ -72,7 +72,7 @@ public abstract class SharedDevourSystem : EntitySystem
         if (component.SoundStructureDevour != null)
             _audioSystem.PlayPredicted(component.SoundStructureDevour, uid, uid, component.SoundStructureDevour.Params);
 
-        _doAfterSystem.TryStartDoAfter(new DoAfterArgs(uid, component.StructureDevourTime, new DevourDoAfterEvent(), uid, target: target, used: uid)
+        _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, uid, component.StructureDevourTime, new DevourDoAfterEvent(), uid, target: target, used: uid)
         {
             BreakOnTargetMove = true,
             BreakOnUserMove = true,
