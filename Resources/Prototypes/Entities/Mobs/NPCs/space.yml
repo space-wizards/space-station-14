@@ -257,16 +257,16 @@
     damage:
       types:
         Piercing: 6
-        Poison: 2
+        Poison: 4
   - type: SolutionContainerManager
     solutions:
       melee:
         reagents:
         - ReagentId: ChloralHydrate
-          Quantity: 60
+          Quantity: 80
   - type: MeleeChemicalInjector
     solution: melee
-    transferAmount: 3
+    transferAmount: 4
   - type: ReplacementAccent
     accent: xeno
   - type: InteractionPopup
