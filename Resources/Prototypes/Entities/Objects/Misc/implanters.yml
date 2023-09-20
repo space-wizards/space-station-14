@@ -82,7 +82,7 @@
   components:
     - type: Item
       sprite: Objects/Specific/Medical/implanter.rsi
-      state: implanter0
+      size: 3
     - type: Sprite
       sprite: Objects/Specific/Medical/implanter.rsi
       state: implanter1
