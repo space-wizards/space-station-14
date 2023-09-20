@@ -6,6 +6,7 @@ using Content.Shared.VendingMachines.Components;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using System.Linq;
+using Content.Shared.Containers.ItemSlots;
 
 namespace Content.Shared.VendingMachines;
 
@@ -130,13 +131,19 @@ public abstract partial class SharedVendingMachineSystem : EntitySystem
             return;
         }
 
-        foreach (var (id, amount) in entries)
+        foreach (var item in inventory)
         {
-            foreach (var item in inventory)
-            {
-                if(item.ItemId == id)
-                    item.Amount = Math.Min(item.Amount + amount, 3 * amount);
-            }
+            if(!entries.ContainsKey(item.ItemId) ||
+               !entries.TryGetValue(item.ItemId, out var amount))
+                continue;
+
+            // Prevent a machine's stock from going over three times
+            // the prototype's normal amount. This is an arbitrary
+            // number and meant to be a convenience for someone
+            // restocking a machine who doesn't want to force vend out
+            // all the items just to restock one empty slot without
+            // losing the rest of the restock.
+            item.Amount = Math.Min(item.Amount + amount, 3 * amount);
         }
 
         component.Items.Remove(typeId);
