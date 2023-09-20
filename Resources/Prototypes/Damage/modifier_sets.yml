@@ -139,20 +139,10 @@
     Shock: 1.2
 
 - type: damageModifierSet
-  id: Arachnid # Exo-skeleton, should have simillarities to skeleton resistances.
-  coefficients:
-    Blunt: 1.1
-    Heat: 1.5
-
-- type: damageModifierSet
   id: Moth # Slightly worse at everything but cold
   coefficients:
-    Blunt: 1
-    Piercing: 1.15
-    Slash: 1.15
     Cold: 0.7
     Heat: 1.3
-    Poison: 1.1
 
 - type: damageModifierSet
   id: Zombie #Blunt resistant and immune to biological threats, but can be hacked apart and burned

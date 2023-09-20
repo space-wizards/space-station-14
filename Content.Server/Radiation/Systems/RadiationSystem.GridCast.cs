@@ -3,17 +3,24 @@ using Content.Server.Radiation.Components;
 using Content.Server.Radiation.Events;
 using Content.Shared.Radiation.Components;
 using Content.Shared.Radiation.Systems;
+using Content.Shared.Stacks;
 using Robust.Shared.Collections;
-using Robust.Shared.Map;
+using Robust.Shared.Containers;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+using System.Linq;
 
 namespace Content.Server.Radiation.Systems;
 
 // main algorithm that fire radiation rays to target
 public partial class RadiationSystem
 {
+    [Dependency] private readonly SharedStackSystem _stack = default!;
+    [Dependency] private readonly SharedContainerSystem _container = default!;
+
+    private EntityQuery<RadiationBlockingContainerComponent> _radiationBlockingContainers;
+
     private void UpdateGridcast()
     {
         // should we save debug information into rays?
@@ -23,19 +30,22 @@ public partial class RadiationSystem
         var stopwatch = new Stopwatch();
         stopwatch.Start();
 
-        var sources = EntityQuery<RadiationSourceComponent, TransformComponent>();
+        var sources = EntityQueryEnumerator<RadiationSourceComponent, TransformComponent>();
         var destinations = EntityQuery<RadiationReceiverComponent, TransformComponent>();
         var resistanceQuery = GetEntityQuery<RadiationGridResistanceComponent>();
         var transformQuery = GetEntityQuery<TransformComponent>();
         var gridQuery = GetEntityQuery<MapGridComponent>();
+        var stackQuery = GetEntityQuery<StackComponent>();
+
+        _radiationBlockingContainers = GetEntityQuery<RadiationBlockingContainerComponent>();
 
         // precalculate world positions for each source
         // so we won't need to calc this in cycle over and over again
-        var sourcesData = new ValueList<(RadiationSourceComponent, TransformComponent, Vector2)>();
-        foreach (var (source, sourceTrs) in sources)
+        var sourcesData = new ValueList<(EntityUid, RadiationSourceComponent, TransformComponent, Vector2)>();
+        while (sources.MoveNext(out var uid, out var source, out var sourceTrs))
         {
             var worldPos = _transform.GetWorldPosition(sourceTrs, transformQuery);
-            var data = (source, sourceTrs, worldPos);
+            var data = (uid, source, sourceTrs, worldPos);
             sourcesData.Add(data);
         }
 
@@ -47,12 +57,15 @@ public partial class RadiationSystem
             var destWorld = _transform.GetWorldPosition(destTrs, transformQuery);
 
             var rads = 0f;
-            foreach (var (source, sourceTrs, sourceWorld) in sourcesData)
+            foreach (var (uid, source, sourceTrs, sourceWorld) in sourcesData)
             {
+                stackQuery.TryGetComponent(uid, out var stack);
+                var intensity = source.Intensity * _stack.GetCount(uid, stack);
+
                 // send ray towards destination entity
-                var ray = Irradiate(sourceTrs.Owner, sourceTrs, sourceWorld,
+                var ray = Irradiate(uid, sourceTrs, sourceWorld,
                     destTrs.Owner, destTrs, destWorld,
-                    source.Intensity, source.Slope, saveVisitedTiles, resistanceQuery, transformQuery, gridQuery);
+                    intensity, source.Slope, saveVisitedTiles, resistanceQuery, transformQuery, gridQuery);
                 if (ray == null)
                     continue;
 
@@ -63,6 +76,9 @@ public partial class RadiationSystem
                 if (ray.ReachedDestination)
                     rads += ray.Rads;
             }
+
+            // Apply modifier if the destination entity is hidden within a radiation blocking container
+            rads = GetAdjustedRadiationIntensity(dest.Owner, rads);
 
             receiversTotalRads.Add((dest, rads));
         }
@@ -82,7 +98,7 @@ public partial class RadiationSystem
 
             // also send an event with combination of total rad
             if (rads > 0)
-                IrradiateEntity(receiver.Owner, rads,GridcastUpdateRate);
+                IrradiateEntity(receiver.Owner, rads, GridcastUpdateRate);
         }
 
         // raise broadcast event that radiation system has updated
@@ -107,15 +123,20 @@ public partial class RadiationSystem
         // check if receiver is too far away
         if (dist > GridcastMaxDistance)
             return null;
+
         // will it even reach destination considering distance penalty
         var rads = incomingRads - slope * dist;
+
+        // Apply rad modifier if the source is enclosed within a radiation blocking container
+        rads = GetAdjustedRadiationIntensity(sourceUid, rads);
+
         if (rads <= MinIntensity)
             return null;
 
         // create a new radiation ray from source to destination
         // at first we assume that it doesn't hit any radiation blockers
         // and has only distance penalty
-        var ray = new RadiationRay(mapId, sourceUid, sourceWorld, destUid, destWorld, rads);
+        var ray = new RadiationRay(mapId, GetNetEntity(sourceUid), sourceWorld, GetNetEntity(destUid), destWorld, rads);
 
         // if source and destination on the same grid it's possible that
         // between them can be another grid (ie. shuttle in center of donut station)
@@ -207,8 +228,19 @@ public partial class RadiationSystem
 
         // save data for debug if needed
         if (saveVisitedTiles && blockers.Count > 0)
-            ray.Blockers.Add(gridUid, blockers);
+            ray.Blockers.Add(GetNetEntity(gridUid), blockers);
 
         return ray;
+    }
+
+    private float GetAdjustedRadiationIntensity(EntityUid uid, float rads)
+    {
+        var radblockingComps = new List<RadiationBlockingContainerComponent>();
+        if (_container.TryFindComponentsOnEntityContainerOrParent(uid, _radiationBlockingContainers, radblockingComps))
+        {
+            rads -= radblockingComps.Sum(x => x.RadResistance);
+        }
+
+        return float.Max(rads, 0);
     }
 }

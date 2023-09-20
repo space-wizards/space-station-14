@@ -1,11 +1,14 @@
-﻿- type: instantAction
-  id: Knock
-  name: action-name-spell-knock
-  description: action-description-spell-knock
-  useDelay: 10
-  itemIconStyle: BigAction
-  icon:
-    sprite: Objects/Magic/magicactions.rsi
-    state: knock
-  serverEvent: !type:KnockSpellEvent
-    speech: action-speech-spell-knock
+﻿- type: entity
+  id: ActionKnock
+  name: Knock
+  description: This spell opens nearby doors.
+  noSpawn: true
+  components:
+  - type: InstantAction
+    useDelay: 10
+    itemIconStyle: BigAction
+    icon:
+      sprite: Objects/Magic/magicactions.rsi
+      state: knock
+    event: !type:KnockSpellEvent
+      speech: action-speech-spell-knock

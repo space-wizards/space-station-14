@@ -7,7 +7,6 @@ using Content.Server.UserInterface;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.Actions;
-using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Broke;
 using Content.Shared.Damage;
 using Content.Shared.Destructible;
@@ -49,6 +48,7 @@ namespace Content.Server.VendingMachines
 
             _sawmill = Logger.GetSawmill("vending");
 
+            SubscribeLocalEvent<VendingMachineComponent, MapInitEvent>(OnComponentMapInit);
             SubscribeLocalEvent<VendingMachineVisualStateComponent, PowerChangedEvent>(OnPowerChanged);
             SubscribeLocalEvent<VendingMachineInventoryComponent, PriceCalculationEvent>(OnVendingPrice);
             SubscribeLocalEvent<VendingMachineEjectComponent, VendingMachineEjectMessage>(OnInventoryEjectMessage);
@@ -61,6 +61,12 @@ namespace Content.Server.VendingMachines
             SubscribeLocalEvent<VendingMachineRestockComponent, PriceCalculationEvent>(OnPriceCalculation);
             SubscribeLocalEvent<BrokeComponent, EmpPulseEvent>(OnEmpPulse);
             SubscribeLocalEvent<VendingMachineInventoryComponent, GotEmaggedEvent>(OnEmagged);
+        }
+
+        private void OnComponentMapInit(EntityUid uid, VendingMachineComponent component, MapInitEvent args)
+        {
+            _action.AddAction(uid, ref component.ActionEntity, component.Action, uid);
+            Dirty(uid, component);
         }
 
         private void OnVendingPrice(EntityUid uid,
@@ -97,12 +103,6 @@ namespace Content.Server.VendingMachines
             {
                 UpdateVisualState(uid);
             }
-
-            if (component.Action == null)
-                return;
-
-            var action = new InstantAction(PrototypeManager.Index<InstantActionPrototype>(component.Action));
-            _action.AddAction(uid, action, uid);
         }
 
 
@@ -214,7 +214,7 @@ namespace Content.Server.VendingMachines
             if (!Resolve(uid, ref vendComponent))
                 return false;
 
-            if (!TryComp<AccessReaderComponent?>(uid, out var accessReader))
+            if (!TryComp<AccessReaderComponent>(uid, out var accessReader))
                 return true;
 
             if (_accessReader.IsAllowed(sender, uid, accessReader) || HasComp<EmaggedComponent>(uid))

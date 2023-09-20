@@ -5,14 +5,12 @@ lathe-menu-sync = Sync
 lathe-menu-search-designs = Search designs
 lathe-menu-search-filter = Filter
 lathe-menu-amount = Amount:
-lathe-menu-material-display = {$material} ({ $amount ->
-        [1] {NATURALFIXED($amount, 2)} sheet
-        *[other] {NATURALFIXED($amount, 2)} sheets
-    })
-lathe-menu-tooltip-display = { $amount ->
-        [1] {NATURALFIXED($amount, 2)} sheet
-        *[other] {NATURALFIXED($amount, 2)} sheets
-    } of {$material}
+lathe-menu-material-display = {$material} ({$amount})
+lathe-menu-tooltip-display = {$amount} of {$material}
+lathe-menu-material-amount = { $amount ->
+    [1] {NATURALFIXED($amount, 2)} {$unit}
+    *[other] {NATURALFIXED($amount, 2)} {MAKEPLURAL($unit)}
+}
 lathe-menu-no-materials-message = No materials loaded.
 lathe-menu-fabricating-message = Fabricating...
 lathe-menu-materials-title = Materials

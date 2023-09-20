@@ -3,8 +3,8 @@
   inventory:
     FoodSnackCheesie: 3
     FoodSnackChips: 3
-    FoodSnackBoritos: 2
-    FoodSnackPopcorn: 1
-    FoodSnackEnergy: 2
+    FoodSnackBoritos: 3
+    FoodSnackPopcorn: 3
+    FoodSnackEnergy: 3
     CigPackMixed: 2
   inventoryType: RegularInventory

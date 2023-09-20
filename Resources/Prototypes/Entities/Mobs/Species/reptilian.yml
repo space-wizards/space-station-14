@@ -1,7 +1,7 @@
 - type: entity
   save: false
   name: Urisst' Mzhand
-  parent: BaseMobOrganic
+  parent: BaseMobSpeciesOrganic
   id: BaseMobReptilian
   abstract: true
   components:
@@ -43,8 +43,7 @@
     animation: WeaponArcPunch
     damage:
       types:
-        # Actually does 5 damage due to +25% damage bonus on all single target melee attacks
-        Piercing: 4
+        Piercing: 5
   - type: Temperature
     heatDamageThreshold: 400
     coldDamageThreshold: 285
@@ -62,9 +61,7 @@
   - type: Perishable
 
 - type: entity
-  save: false
-  name: Urist McHands
-  parent: MobHumanDummy
+  parent: BaseSpeciesDummy
   id: MobReptilianDummy
   noSpawn: true
   description: A dummy reptilian meant to be used in character setup.
