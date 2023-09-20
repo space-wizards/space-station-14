@@ -559,3 +559,12 @@
     sprite: Structures/Storage/Crates/trashcart_jani.rsi
   - type: AccessReader
     access: [["Janitor"]]
+
+- type: entity
+  parent: CrateTrashCartJani
+  id: CrateTrashCartJaniLethal
+  components:
+  - type: Shredder
+    whitelist:
+      components:
+        - Body

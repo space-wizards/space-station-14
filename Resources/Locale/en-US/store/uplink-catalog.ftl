@@ -231,6 +231,9 @@ uplink-chimp-upgrade-kit-desc = Insert this chip into a standard C.H.I.M.P. hand
 uplink-proximity-mine-name = Proximity Mine
 uplink-proximity-mine-desc = A mine disguised as a wet floor sign.
 
+uplink-trash-compactor-name = Trash Compactor
+uplink-trash-compactor-desc = A modified trash cart that'll make quick work of any body placed inside. Keep hands and fingers away while operating and be sure to clean up the mess once you're done.
+
 uplink-disposable-turret-name = Disposable Ballistic Turret
 uplink-disposable-turret-desc = Looks and functions like a normal electrical toolbox. Upon hitting the toolbox it will transform into a ballistic turret, theoretically shooting at anyone except members of the syndicate. Can be turned back into a toolbox using a screwdriver and repaired using a wrench.
 

@@ -1,6 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Body.Components;
+using Content.Server.Containers;
 using Content.Server.GameTicking;
 using Content.Server.Humanoid;
 using Content.Server.Kitchen.Components;
@@ -43,6 +44,7 @@ public sealed class BodySystem : SharedBodySystem
         SubscribeLocalEvent<BodyComponent, MoveInputEvent>(OnRelayMoveInput);
         SubscribeLocalEvent<BodyComponent, ApplyMetabolicMultiplierEvent>(OnApplyMetabolicMultiplier);
         SubscribeLocalEvent<BodyComponent, BeingMicrowavedEvent>(OnBeingMicrowaved);
+        SubscribeLocalEvent<BodyComponent, BeingShreddedEvent>(OnBeingShredded);
     }
 
     private void OnPartStartup(EntityUid uid, BodyPartComponent component, ComponentStartup args)
@@ -134,6 +136,15 @@ public sealed class BodySystem : SharedBodySystem
         _appearance.SetData(args.Microwave, MicrowaveVisualState.Bloody, true);
         GibBody(uid, false, component);
 
+        args.Handled = true;
+    }
+
+    private void OnBeingShredded(EntityUid uid, BodyComponent component, BeingShreddedEvent args)
+    {
+        if (args.Handled)
+            return;
+
+        GibBody(uid, true, component);
         args.Handled = true;
     }
 

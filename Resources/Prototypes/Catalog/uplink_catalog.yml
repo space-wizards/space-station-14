@@ -990,6 +990,24 @@
       - SurplusBundle
 
 - type: listing
+  id: uplinkTrashCompactor
+  name: uplink-trash-compactor-name
+  description: uplink-trash-compactor-desc
+  productEntity: CrateTrashCartJaniLethal
+  cost:
+    Telecrystal: 4
+  categories:
+  - UplinkJob
+  conditions:
+  - !type:BuyerJobCondition
+    whitelist:
+    - Janitor
+  - !type:BuyerWhitelistCondition
+    blacklist:
+      components:
+      - SurplusBundle
+
+- type: listing
   id: UplinkSyndicateSpongeBox
   name: uplink-syndicate-sponge-box-name
   description: uplink-syndicate-sponge-box-desc
