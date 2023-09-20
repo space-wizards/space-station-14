@@ -1,5 +1,5 @@
 namespace Content.Server.Bible.Components
 {
     [RegisterComponent]
-    public sealed class BibleUserComponent : Component {}
+    public sealed partial class BibleUserComponent : Component {}
 }

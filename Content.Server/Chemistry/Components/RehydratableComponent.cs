@@ -11,7 +11,7 @@ namespace Content.Server.Chemistry.Components;
 /// But specifically, this component deletes the entity and spawns in a new entity when the entity is exposed to a certain amount of a given reagent.
 /// </summary>
 [RegisterComponent, Access(typeof(RehydratableSystem))]
-public sealed class RehydratableComponent : Component
+public sealed partial class RehydratableComponent : Component
 {
     /// <summary>
     /// The reagent that must be present to count as hydrated.

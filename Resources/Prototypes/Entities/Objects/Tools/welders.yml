@@ -33,7 +33,6 @@
     damage:
       types:
         Blunt: 5 #i mean... i GUESS you could use it like that
-  - type: ItemStatus
   - type: RefillableSolution
     solution: Welder
   - type: SolutionContainerManager

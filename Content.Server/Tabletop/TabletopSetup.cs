@@ -4,7 +4,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.Tabletop
 {
     [ImplicitDataDefinitionForInheritors]
-    public abstract class TabletopSetup
+    public abstract partial class TabletopSetup
     {
         /// <summary>
         ///     Method for setting up a tabletop. Use this to spawn the board and pieces, etc.

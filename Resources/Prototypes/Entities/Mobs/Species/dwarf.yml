@@ -1,7 +1,7 @@
 - type: entity
   save: false
   name: Urist McHands The Dwarf
-  parent: BaseMobOrganic
+  parent: BaseMobSpeciesOrganic
   id: BaseMobDwarf
   abstract: true
   components:
@@ -12,7 +12,7 @@
         Bloodloss: 0.5
   - type: Thirst
   - type: Icon
-    sprite: Mobs/Species/Slime/parts.rsi # It was like this beforehand, no idea why. 
+    sprite: Mobs/Species/Slime/parts.rsi # It was like this beforehand, no idea why.
     state: full
   - type: Respirator
     damage:
@@ -58,14 +58,9 @@
   - type: Perishable
 
 - type: entity
-  save: false
-  name: Urist McHands
-  parent: MobHumanDummy
+  parent: BaseSpeciesDummy
   id: MobDwarfDummy
   noSpawn: true
-  description: A dummy human meant to be used in character setup.
   components:
   - type: Sprite
-    noRot: true
-    drawdepth: Mobs
     scale: 1, 0.8

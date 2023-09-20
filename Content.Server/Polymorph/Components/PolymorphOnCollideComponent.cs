@@ -6,7 +6,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.Polymorph.Components;
 
 [RegisterComponent]
-public sealed class PolymorphOnCollideComponent : Component
+public sealed partial class PolymorphOnCollideComponent : Component
 {
     [DataField("polymorph", required: true, customTypeSerializer:typeof(PrototypeIdSerializer<PolymorphPrototype>))]
     public string Polymorph = default!;

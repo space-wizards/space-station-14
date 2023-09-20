@@ -8,7 +8,7 @@ namespace Content.Shared.PneumaticCannon;
 ///     Handles gas powered guns--cancels shooting if no gas is available, and takes gas from the given container slot.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-public sealed class PneumaticCannonComponent : Component
+public sealed partial class PneumaticCannonComponent : Component
 {
     public const string TankSlotId = "gas_tank";
 

@@ -83,10 +83,12 @@
     - BirdToyInstrument
     - PlushieXeno
     - BeachBall
+    - PlushieMoth
+    - PlushieHampter
   - type: WiresPanel
   - type: Wires
     LayoutId: Arcade
-    BoardName: "Arcade"
+    BoardName: wires-board-name-arcade
   - type: ActivatableUI
     key: enum.SpaceVillainArcadeUiKey.Key
   - type: ActivatableUIRequiresPower
@@ -107,7 +109,7 @@
   - type: SpaceVillainArcade
     rewardMinAmount: 5
     rewardMaxAmount: 8
-    
+
 - type: entity
   id: BlockGameArcade
   description: An arcade cabinet with a strangely familiar game.
@@ -128,7 +130,7 @@
   - type: WiresPanel
   - type: Wires
     LayoutId: Arcade
-    BoardName: "Arcade"
+    BoardName: wires-board-name-arcade
   - type: UserInterface
     interfaces:
       - key: enum.BlockGameUiKey.Key

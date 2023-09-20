@@ -16,7 +16,7 @@ namespace Content.Server.Nuke
     /// </summary>
     [RegisterComponent]
     [Access(typeof(NukeSystem))]
-    public sealed class NukeComponent : SharedNukeComponent
+    public sealed partial class NukeComponent : SharedNukeComponent
     {
         /// <summary>
         ///     Default bomb timer value in seconds.

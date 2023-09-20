@@ -438,20 +438,28 @@
      Glass: 900
 
 - type: latheRecipe
-  id: GeneratorPlasmaMachineCircuitboard
-  result: GeneratorPlasmaMachineCircuitboard
+  id: PortableGeneratorPacmanMachineCircuitboard
+  result: PortableGeneratorPacmanMachineCircuitboard
   completetime: 4
   materials:
      Steel: 50
      Glass: 350
 
 - type: latheRecipe
-  id: GeneratorUraniumMachineCircuitboard
-  result: GeneratorUraniumMachineCircuitboard
+  id: PortableGeneratorSuperPacmanMachineCircuitboard
+  result: PortableGeneratorSuperPacmanMachineCircuitboard
   completetime: 4
   materials:
      Steel: 50
      Glass: 350
+
+- type: latheRecipe
+  id: PortableGeneratorJrPacmanMachineCircuitboard
+  result: PortableGeneratorJrPacmanMachineCircuitboard
+  completetime: 4
+  materials:
+    Steel: 50
+    Glass: 350
 
 - type: latheRecipe
   id: WallmountGeneratorElectronics

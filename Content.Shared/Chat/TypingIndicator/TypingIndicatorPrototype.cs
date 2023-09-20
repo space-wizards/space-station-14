@@ -11,7 +11,7 @@ namespace Content.Shared.Chat.TypingIndicator;
 public sealed class TypingIndicatorPrototype : IPrototype
 {
     [IdDataField]
-    public string ID { get; } = default!;
+    public string ID { get; private set; } = default!;
 
     [DataField("spritePath")]
     public ResPath SpritePath = new("/Textures/Effects/speech.rsi");

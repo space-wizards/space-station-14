@@ -48,6 +48,18 @@
   - type: MobThresholds
     thresholds:
       0: Alive
+      100: Dead
+    stateAlertDict:
+      Alive: BorgHealth
+    showOverlays: false
+  - type: HealthExaminable
+    examinableTypes:
+      - Blunt
+      - Slash
+      - Piercing
+      - Heat
+      - Shock
+    locPrefix: silicon
   - type: UserInterface
     interfaces:
     - key: enum.SiliconLawsUiKey.Key
@@ -58,6 +70,12 @@
     key: enum.BorgUiKey.Key
   - type: SiliconLawBound
   - type: EmagSiliconLaw
+    stunTime: 5
+    emagLaws:
+    - Syndicate1
+    - Syndicate2
+    - Syndicate3
+    - Syndicate4
   - type: Hands
     showInHands: false
   - type: IntrinsicRadioReceiver
@@ -106,6 +124,7 @@
   - type: TypingIndicator
     proto: robot
   - type: Speech
+    speechVerb: Robotic
     speechSounds: Pai
   - type: Construction
     graph: Cyborg
@@ -117,6 +136,15 @@
     damageContainer: Inorganic
   - type: Destructible
     thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Machines/warning_buzzer.ogg
+          params:
+            volume: 5
     - trigger:
         !type:DamageTrigger
         damage: 100
@@ -138,13 +166,10 @@
     behaviours:
     - !type:FadeBehaviour
       id: radiating
-      interpolate: Linear
       maxDuration: 2.0
       startValue: 3.0
       endValue: 2.0
       isLooped: true
-      property: Radius
-      enabled: false
       reverseWhenFinished: true
     - !type:PulseBehaviour
       id: blinking
@@ -153,8 +178,6 @@
       minValue: 0.1
       maxValue: 2.0
       isLooped: true
-      property: Radius
-      enabled: false
   - type: ToggleableLightVisuals
   - type: PointLight
     enabled: false

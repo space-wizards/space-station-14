@@ -10,7 +10,7 @@ namespace Content.Shared.Administration
         string IdentityName,
         string StartingJob,
         bool Antag,
-        EntityUid? EntityUid,
+        NetEntity? NetEntity,
         NetUserId SessionId,
         bool Connected,
         bool ActiveThisRound);

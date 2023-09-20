@@ -6,13 +6,13 @@ using Robust.Shared.Serialization;
 namespace Content.Server.UserInterface
 {
     [RegisterComponent]
-    public sealed class ActivatableUIComponent : Component,
+    public sealed partial class ActivatableUIComponent : Component,
             ISerializationHooks
     {
         [ViewVariables]
         public Enum? Key { get; set; }
 
-        [ViewVariables] public BoundUserInterface? UserInterface => (Key != null) ? Owner.GetUIOrNull(Key) : null;
+        [ViewVariables] public PlayerBoundUserInterface? UserInterface => (Key != null) ? Owner.GetUIOrNull(Key) : null;
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("inHandsOnly")]

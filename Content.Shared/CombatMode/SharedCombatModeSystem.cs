@@ -1,47 +1,35 @@
 using Content.Shared.Actions;
-using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Popups;
 using Content.Shared.Targeting;
 using Robust.Shared.Network;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.CombatMode;
 
 public abstract class SharedCombatModeSystem : EntitySystem
 {
-    [Dependency] private readonly IPrototypeManager _protoMan = default!;
-    [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly INetManager _netMan = default!;
+    [Dependency] protected readonly IGameTiming Timing = default!;
+    [Dependency] private   readonly INetManager _netMan = default!;
+    [Dependency] private   readonly SharedActionsSystem _actionsSystem = default!;
+    [Dependency] private   readonly SharedPopupSystem _popup = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
-        SubscribeLocalEvent<CombatModeComponent, ComponentStartup>(OnStartup);
+        SubscribeLocalEvent<CombatModeComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<CombatModeComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<CombatModeComponent, ToggleCombatActionEvent>(OnActionPerform);
     }
 
-    private void OnStartup(EntityUid uid, CombatModeComponent component, ComponentStartup args)
+    private void OnMapInit(EntityUid uid, CombatModeComponent component, MapInitEvent args)
     {
-        if (component.CombatToggleAction == null
-            && _protoMan.TryIndex(component.CombatToggleActionId, out InstantActionPrototype? toggleProto))
-        {
-            component.CombatToggleAction = new(toggleProto);
-        }
-
-        if (component.CombatToggleAction != null)
-            _actionsSystem.AddAction(uid, component.CombatToggleAction, null);
+        _actionsSystem.AddAction(uid, ref component.CombatToggleActionEntity, component.CombatToggleAction);
     }
 
     private void OnShutdown(EntityUid uid, CombatModeComponent component, ComponentShutdown args)
     {
-        if (component.CombatToggleAction != null)
-            _actionsSystem.RemoveAction(uid, component.CombatToggleAction);
+        _actionsSystem.RemoveAction(uid, component.CombatToggleActionEntity);
     }
 
     private void OnActionPerform(EntityUid uid, CombatModeComponent component, ToggleCombatActionEvent args)
@@ -55,7 +43,7 @@ public abstract class SharedCombatModeSystem : EntitySystem
         // TODO better handling of predicted pop-ups.
         // This probably breaks if the client has prediction disabled.
 
-        if (!_netMan.IsClient || !_timing.IsFirstTimePredicted)
+        if (!_netMan.IsClient || !Timing.IsFirstTimePredicted)
             return;
 
         var msg = component.IsInCombatMode ? "action-popup-combat-enabled" : "action-popup-combat-disabled";
@@ -75,13 +63,19 @@ public abstract class SharedCombatModeSystem : EntitySystem
         return entity != null && Resolve(entity.Value, ref component, false) && component.IsInCombatMode;
     }
 
-    public virtual void SetInCombatMode(EntityUid entity, bool inCombatMode,
-        CombatModeComponent? component = null)
+    public virtual void SetInCombatMode(EntityUid entity, bool value, CombatModeComponent? component = null)
     {
         if (!Resolve(entity, ref component))
             return;
 
-        component.IsInCombatMode = inCombatMode;
+        if (component.IsInCombatMode == value)
+            return;
+
+        component.IsInCombatMode = value;
+        Dirty(entity, component);
+
+        if (component.CombatToggleActionEntity != null)
+            _actionsSystem.SetToggled(component.CombatToggleActionEntity, component.IsInCombatMode);
     }
 
     public virtual void SetActiveZone(EntityUid entity, TargetingZone zone,
@@ -92,19 +86,6 @@ public abstract class SharedCombatModeSystem : EntitySystem
 
         component.ActiveZone = zone;
     }
-
-    [Serializable, NetSerializable]
-    protected sealed class CombatModeComponentState : ComponentState
-    {
-        public bool IsInCombatMode { get; }
-        public TargetingZone TargetingZone { get; }
-
-        public CombatModeComponentState(bool isInCombatMode, TargetingZone targetingZone)
-        {
-            IsInCombatMode = isInCombatMode;
-            TargetingZone = targetingZone;
-        }
-    }
 }
 
-public sealed class ToggleCombatActionEvent : InstantActionEvent { }
+public sealed partial class ToggleCombatActionEvent : InstantActionEvent { }

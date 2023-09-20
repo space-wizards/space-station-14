@@ -50,7 +50,7 @@ public abstract class SharedPortalSystem : EntitySystem
     private void OnGetVerbs(EntityUid uid, PortalComponent component, GetVerbsEvent<AlternativeVerb> args)
     {
         // Traversal altverb for ghosts to use that bypasses normal functionality
-        if (!args.CanAccess || !HasComp<SharedGhostComponent>(args.User))
+        if (!args.CanAccess || !HasComp<GhostComponent>(args.User))
             return;
 
         // Don't use the verb with unlinked or with multi-output portals
@@ -79,25 +79,25 @@ public abstract class SharedPortalSystem : EntitySystem
 
     private void OnGetState(EntityUid uid, PortalTimeoutComponent component, ref ComponentGetState args)
     {
-        args.State = new PortalTimeoutComponentState(component.EnteredPortal);
+        args.State = new PortalTimeoutComponentState(GetNetEntity(component.EnteredPortal));
     }
 
     private void OnHandleState(EntityUid uid, PortalTimeoutComponent component, ref ComponentHandleState args)
     {
         if (args.Current is PortalTimeoutComponentState state)
-            component.EnteredPortal = state.EnteredPortal;
+            component.EnteredPortal = EnsureEntity<PortalTimeoutComponent>(state.EnteredPortal, uid);
     }
 
-    private bool ShouldCollide(Fixture our, Fixture other)
+    private bool ShouldCollide(string ourId, string otherId, Fixture our, Fixture other)
     {
         // most non-hard fixtures shouldn't pass through portals, but projectiles are non-hard as well
         // and they should still pass through
-        return our.ID == PortalFixture && (other.Hard || other.ID == ProjectileFixture);
+        return ourId == PortalFixture && (other.Hard || otherId == ProjectileFixture);
     }
 
     private void OnCollide(EntityUid uid, PortalComponent component, ref StartCollideEvent args)
     {
-        if (!ShouldCollide(args.OurFixture, args.OtherFixture))
+        if (!ShouldCollide(args.OurFixtureId, args.OtherFixtureId, args.OurFixture, args.OtherFixture))
             return;
 
         var subject = args.OtherEntity;
@@ -163,7 +163,7 @@ public abstract class SharedPortalSystem : EntitySystem
 
     private void OnEndCollide(EntityUid uid, PortalComponent component, ref EndCollideEvent args)
     {
-        if (!ShouldCollide(args.OurFixture, args.OtherFixture))
+        if (!ShouldCollide(args.OurFixtureId, args.OtherFixtureId,args.OurFixture, args.OtherFixture))
             return;
 
         var subject = args.OtherEntity;

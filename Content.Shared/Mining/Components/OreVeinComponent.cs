@@ -8,7 +8,7 @@ namespace Content.Server.Mining.Components;
 /// Defines an entity that will drop a random ore after being destroyed.
 /// </summary>
 [RegisterComponent]
-public sealed class OreVeinComponent : Component
+public sealed partial class OreVeinComponent : Component
 {
     /// <summary>
     /// How often an entity will be seeded with ore. Note: the amount of ore

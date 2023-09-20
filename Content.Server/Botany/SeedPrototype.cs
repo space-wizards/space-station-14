@@ -54,7 +54,7 @@ public enum HarvestType : byte
 */
 
 [DataDefinition]
-public struct SeedChemQuantity
+public partial struct SeedChemQuantity
 {
     [DataField("Min")] public int Min;
     [DataField("Max")] public int Max;
@@ -64,7 +64,7 @@ public struct SeedChemQuantity
 // TODO reduce the number of friends to a reasonable level. Requires ECS-ing things like plant holder component.
 [Virtual, DataDefinition]
 [Access(typeof(BotanySystem), typeof(PlantHolderSystem), typeof(SeedExtractorSystem), typeof(PlantHolderComponent), typeof(ReagentEffect), typeof(MutationSystem))]
-public class SeedData
+public partial class SeedData
 {
     #region Tracking
 
@@ -168,7 +168,7 @@ public class SeedData
     [DataField("seedless")] public bool Seedless = false;
 
     /// <summary>
-    ///     If true, rapidly decrease health while growing. Used to kill off
+    ///     If false, rapidly decrease health while growing. Used to kill off
     ///     plants with "bad" mutations.
     /// </summary>
     [DataField("viable")] public bool Viable = true;
@@ -228,6 +228,12 @@ public class SeedData
 
     #endregion
 
+    /// <summary>
+    ///     The seed prototypes this seed may mutate into when prompted to.
+    /// </summary>
+    [DataField("mutationPrototypes", customTypeSerializer: typeof(PrototypeIdListSerializer<SeedPrototype>))]
+    public List<string> MutationPrototypes = new();
+
     public SeedData Clone()
     {
         DebugTools.Assert(!Immutable, "There should be no need to clone an immutable seed.");
@@ -241,6 +247,7 @@ public class SeedData
 
             PacketPrototype = PacketPrototype,
             ProductPrototypes = new List<string>(ProductPrototypes),
+            MutationPrototypes = new List<string>(MutationPrototypes),
             Chemicals = new Dictionary<string, SeedChemQuantity>(Chemicals),
             ConsumeGasses = new Dictionary<Gas, float>(ConsumeGasses),
             ExudeGasses = new Dictionary<Gas, float>(ExudeGasses),

@@ -21,8 +21,6 @@
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/atmospherics.rsi
-  - type: Construction
-    node: airlockMedSecurity
 
 - type: entity
   parent: Airlock
@@ -71,8 +69,10 @@
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/command.rsi
+  - type: WiresPanel
+    securityLevel: Level2
   - type: Construction
-    node: airlockMaxSecurity
+    node: airlockMedSecurity
 
 - type: entity
   parent: Airlock
@@ -81,8 +81,6 @@
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/security.rsi
-  - type: Construction
-    node: airlockMedSecurity
 
 - type: entity
   parent: Airlock
@@ -91,6 +89,14 @@
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/maint.rsi
+
+- type: entity
+  parent: Airlock
+  id: AirlockSyndicate
+  suffix: Syndicate
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Standard/syndicate.rsi
 
 # Glass
 
@@ -162,8 +168,6 @@
     sprite: Structures/Doors/Airlocks/Glass/atmospherics.rsi
   - type: PaintableAirlock
     group: Glass
-  - type: Construction
-    node: glassAirlockMedSecurity
 
 - type: entity
   parent: AirlockGlass
@@ -214,8 +218,10 @@
     sprite: Structures/Doors/Airlocks/Glass/command.rsi
   - type: PaintableAirlock
     group: Glass
+  - type: WiresPanel
+    securityLevel: Level2
   - type: Construction
-    node: glassAirlockMaxSecurity
+    node: glassAirlockMedSecurity
 
 - type: entity
   parent: AirlockGlass
@@ -226,5 +232,13 @@
     sprite: Structures/Doors/Airlocks/Glass/security.rsi
   - type: PaintableAirlock
     group: Glass
-  - type: Construction
-    node: glassAirlockMedSecurity
+
+- type: entity
+  parent: AirlockGlass
+  id: AirlockSyndicateGlass
+  suffix: Syndicate
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Glass/syndicate.rsi
+  - type: PaintableAirlock
+    group: Glass

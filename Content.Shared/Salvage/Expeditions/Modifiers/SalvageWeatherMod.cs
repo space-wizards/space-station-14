@@ -10,15 +10,15 @@ public sealed class SalvageWeatherMod : IPrototype, IBiomeSpecificMod
 {
     [IdDataField] public string ID { get; } = default!;
 
-    [DataField("desc")] public string Description { get; } = string.Empty;
+    [DataField("desc")] public string Description { get; private set; } = string.Empty;
 
     /// <inheritdoc/>
     [DataField("cost")]
-    public float Cost { get; } = 0f;
+    public float Cost { get; private set; } = 0f;
 
     /// <inheritdoc/>
-    [DataField("biomes", customTypeSerializer: typeof(PrototypeIdListSerializer<SalvageBiomeMod>))]
-    public List<string>? Biomes { get; } = null;
+    [DataField("biomes", customTypeSerializer: typeof(PrototypeIdListSerializer<SalvageBiomeModPrototype>))]
+    public List<string>? Biomes { get; private set; } = null;
 
     /// <summary>
     /// Weather prototype to use on the planet.

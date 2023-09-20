@@ -29,6 +29,7 @@
     spawned:
     - id: FoodMeatCorgi
       amount: 2
+    - id: MaterialHideCorgi
   - type: Tag
     tags:
     - CannotSuicide
@@ -57,6 +58,7 @@
     - id: FoodMeatCorgi
       amount: 2
     - id: SheetSteel1
+    - id: MaterialHideCorgi
 
 - type: entity
   name: Lisa
@@ -381,6 +383,10 @@
   components:
   - type: InteractionPopup
     successChance: 1.0 # Hey, c'mon, this is Morty we're talking about here.
+    interactSuccessString: petting-success-possum
+    interactFailureString: petting-failure-possum
+    interactSuccessSound:
+      path: /Audio/Animals/snake_hiss.ogg
   - type: Grammar
     attributes:
       proper: true
@@ -398,6 +404,10 @@
   components:
   - type: InteractionPopup
     successChance: 0.7
+    interactSuccessString: petting-success-raccoon
+    interactFailureString: petting-failure-raccoon
+    interactSuccessSound:
+      path: /Audio/Animals/raccoon_chatter.ogg
   - type: Grammar
     attributes:
       proper: true
@@ -413,6 +423,12 @@
   id: MobAlexander
   description: Chef's finest colleague.
   components:
+  - type: InteractionPopup
+    successChance: 1
+    interactSuccessString: petting-success-pig
+    interactFailureString: petting-failure-pig
+    interactSuccessSound:
+      path: /Audio/Animals/pig_oink.ogg
   - type: Grammar
     attributes:
       gender: male
@@ -429,6 +445,10 @@
   components:
   - type: InteractionPopup
     successChance: 1
+    interactSuccessString: petting-success-soft-floofy
+    interactFailureString: petting-failure-generic
+    interactSuccessSound:
+      path: /Audio/Animals/fox_squeak.ogg
   - type: Butcherable
     spawned:
     - id: FoodMeat
@@ -465,6 +485,10 @@
   - type: GhostTakeoverAvailable
   - type: InteractionPopup
     successChance: 1
+    interactSuccessString: petting-success-hamster
+    interactFailureString: petting-failure-hamster
+    interactSuccessSound:
+      path: /Audio/Animals/fox_squeak.ogg
   - type: Butcherable
     spawned:
     - id: FoodMeat
@@ -485,6 +509,12 @@
   id: MobSpiderShiva
   description: The first defender of the station.
   components:
+  - type: InteractionPopup
+    successChance: 0.5 # spider is mean
+    interactSuccessString: petting-success-tarantula
+    interactFailureString: petting-failure-hamster
+    interactSuccessSound:
+      path: /Audio/Animals/snake_hiss.ogg
   - type: NpcFactionMember
     factions:
       - PetsNT
@@ -555,7 +585,11 @@
   description: Willow the boxing kangaroo.
   components:
   - type: InteractionPopup
-    successChance: 1
+    successChance: 0.8
+    interactSuccessString: petting-success-kangaroo
+    interactFailureString: petting-failure-kangaroo
+    interactSuccessSound:
+      path: /Audio/Animals/kangaroo_grunt.ogg
   - type: Grammar
     attributes:
       proper: true
@@ -648,6 +682,10 @@
     flavorKind: station-event-random-sentience-flavor-slime
   - type: MobPrice
     price: 3000 # it is a truly valuable creature
+  - type: GhostRole
+    makeSentient: true
+    name: ghost-role-information-smile-name
+    description: ghost-role-information-smile-description
 
 - type: entity
   name: Pun Pun
@@ -674,5 +712,6 @@
     tags:
     - CannotSuicide
     - DoorBumpOpener
+    - VimPilot
   - type: Loadout
     prototypes: [ MobMonkeyGear ]

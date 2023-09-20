@@ -10,7 +10,7 @@ namespace Content.Server.Body.Components
     ///     Handles metabolizing various reagents with given effects.
     /// </summary>
     [RegisterComponent, Access(typeof(MetabolizerSystem))]
-    public sealed class MetabolizerComponent : Component
+    public sealed partial class MetabolizerComponent : Component
     {
         public float AccumulatedFrametime = 0.0f;
 
@@ -70,7 +70,7 @@ namespace Content.Server.Body.Components
     ///     This allows metabolizers to remove certain groups much faster, or not at all.
     /// </summary>
     [DataDefinition]
-    public sealed class MetabolismGroupEntry
+    public sealed partial class MetabolismGroupEntry
     {
         [DataField("id", required: true, customTypeSerializer:typeof(PrototypeIdSerializer<MetabolismGroupPrototype>))]
         public string Id = default!;

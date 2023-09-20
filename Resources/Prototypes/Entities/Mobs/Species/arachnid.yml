@@ -1,31 +1,27 @@
 - type: entity
   save: false
-  name: Urist McWeb
-  parent: BaseMobOrganic
+  name: Urist McWebs
+  parent: BaseMobSpeciesOrganic
   id: BaseMobArachnid
   abstract: true
   components:
-  # The important nessessities
   - type: Body
     prototype: Arachnid
-    requiredLegs: 2
+    requiredLegs: 2 # It would be funny if arachnids could use their little back limbs to move around once they lose their legs, but just something to consider post-woundmed
   - type: Perishable
   - type: HumanoidAppearance
     species: Arachnid
   - type: Hunger
-    baseDecayRate: 0.0125
-    starvationDamage: # Not sure if this should be changed.
+    baseDecayRate: 0.0125 # Spiders have slow metabolisms all things considered, so I decided to just make their hunger drain slower.
+    starvationDamage:
       types:
         Cold: 0.5
         Bloodloss: 0.5
   - type: Thirst
-    baseDecayRate: 0.0125
+    baseDecayRate: 0.0125 # Read comment in hunger
   # Damage (Self)
-  - type: Damageable
-    damageContainer: Biological
-    damageModifierSet: Arachnid
   - type: Bloodstream
-    bloodReagent: SpiderBlood
+    bloodReagent: SpiderBlood # would be cool if they had to drink copper instead of iron but that might just be more bloat to deal with.
   # Damage (Others)
   - type: MeleeWeapon
     animation: WeaponArcClaw
@@ -34,6 +30,17 @@
     damage:
       types: # Realisically this is more like 5 slash
         Slash: 4
+  # Fun
+  - type: Sericulture
+    action: ActionSericulture
+    productionLength: 3
+    entityProduced: MaterialWebSilk1
+    hungerCost: 9 # Should total to 12 total silk on full hunger
+  - type: Butcherable
+    butcheringType: Spike
+    spawned:
+      - id: FoodMeatSpider
+        amount: 5
   # Visual & Audio
   - type: DamageVisuals
     damageOverlayGroups:
@@ -41,16 +48,16 @@
         sprite: Mobs/Effects/brute_damage.rsi
         color: "#162581"
   - type: Speech
-    speechVerb: Insect
+    speechVerb: Arachnid
     speechSounds: Arachnid
   - type: Vocal
     sounds:
       Male: UnisexArachnid
       Female: UnisexArachnid
       Unsexed: UnisexArachnid
-  - type: Sprite
-    noRot: true
-    drawdepth: Mobs
+  - type: TypingIndicator
+    proto: spider
+  - type: Sprite # I'd prefer if these maps were better. Insert map pun here.
     layers:
       - map: [ "enum.HumanoidVisualLayers.Chest" ]
       - map: [ "enum.HumanoidVisualLayers.Head" ]
@@ -82,7 +89,7 @@
       - map: [ "outerClothing" ]
       - map: [ "eyes" ]
       - map: [ "belt" ]
-      - map: [ "enum.HumanoidVisualLayers.Tail" ] # Better here?
+      - map: [ "enum.HumanoidVisualLayers.Tail" ] # Mentioned in moth code: This needs renaming lol.
       - map: [ "neck" ]
       - map: [ "back" ]
       - map: [ "enum.HumanoidVisualLayers.FacialHair" ]
@@ -100,30 +107,14 @@
         visible: false
       - map: [ "clownedon" ] # Dynamically generated
         sprite: "Effects/creampie.rsi"
-        state: "creampie_human"
+        state: "creampie_arachnid"
         visible: false
-  # Misc
-  - type: Sericulture
-    actionProto: SericultureAction
-    productionLength: 3
-    entityProduced: MaterialWebSilk1
-    hungerCost: 5
-  - type: Butcherable
-    butcheringType: Spike
-    spawned:
-      - id: FoodMeatSpider
-        amount: 5
 
 - type: entity
-  save: false
-  name: Urist McFluff
-  parent: MobHumanDummy
+  parent: BaseSpeciesDummy
   id: MobArachnidDummy
   noSpawn: true
-  description: A dummy arachnid meant to be used in character setup. # Hey! It's not dumb :(
   components:
-  - type: Inventory
-    templateId: arachnid
   - type: HumanoidAppearance
     species: Arachnid
 

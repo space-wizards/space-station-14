@@ -9,7 +9,7 @@ namespace Content.Server.StationEvents.Components;
 ///     Solar Flare event specific configuration
 /// </summary>
 [RegisterComponent, Access(typeof(SolarFlareRule))]
-public sealed class SolarFlareRuleComponent : Component
+public sealed partial class SolarFlareRuleComponent : Component
 {
     /// <summary>
     ///     If true, only headsets affected, but e.g. handheld radio will still work
@@ -21,7 +21,7 @@ public sealed class SolarFlareRuleComponent : Component
     ///     Channels that will be disabled for a duration of event
     /// </summary>
     [DataField("affectedChannels", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<RadioChannelPrototype>))]
-    public readonly HashSet<string> AffectedChannels = new();
+    public HashSet<string> AffectedChannels = new();
 
     /// <summary>
     ///     List of extra channels that can be random disabled on top of the starting channels.
@@ -30,7 +30,7 @@ public sealed class SolarFlareRuleComponent : Component
     ///     Channels are not removed from this, so its possible to roll the same channel multiple times.
     /// </remarks>
     [DataField("extraChannels", customTypeSerializer: typeof(PrototypeIdListSerializer<RadioChannelPrototype>))]
-    public readonly List<String> ExtraChannels = new();
+    public List<String> ExtraChannels = new();
 
     /// <summary>
     ///     Number of times to roll a channel from ExtraChannels.

@@ -145,10 +145,8 @@ namespace Content.Server.Paper
             if (string.IsNullOrEmpty(args.Text))
                 return;
 
-            var text = FormattedMessage.EscapeText(args.Text);
-
-            if (text.Length + paperComp.Content.Length <= paperComp.ContentSize)
-                paperComp.Content = text;
+            if (args.Text.Length + paperComp.Content.Length <= paperComp.ContentSize)
+                paperComp.Content = args.Text;
 
             if (TryComp<AppearanceComponent>(uid, out var appearance))
                 _appearance.SetData(uid, PaperVisuals.Status, PaperStatus.Written, appearance);
@@ -215,7 +213,7 @@ namespace Content.Server.Paper
                 return;
 
             if (_uiSystem.TryGetUi(uid, PaperUiKey.Key, out var bui))
-                UserInterfaceSystem.SetUiState(bui, new PaperBoundUserInterfaceState(paperComp.Content, paperComp.StampedBy, paperComp.Mode), session);
+                _uiSystem.SetUiState(bui, new PaperBoundUserInterfaceState(paperComp.Content, paperComp.StampedBy, paperComp.Mode), session);
         }
     }
 

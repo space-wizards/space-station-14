@@ -1,5 +1,5 @@
-﻿using Content.Shared.Actions;
-using Content.Shared.Actions.ActionTypes;
+using Content.Shared.Actions;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
@@ -9,19 +9,19 @@ namespace Content.Shared.Silicons.Laws.Components;
 /// This is used for entities which are bound to silicon laws and can view them.
 /// </summary>
 [RegisterComponent, Access(typeof(SharedSiliconLawSystem))]
-public sealed class SiliconLawBoundComponent : Component
+public sealed partial class SiliconLawBoundComponent : Component
 {
     /// <summary>
     /// The sidebar action that toggles the laws screen.
     /// </summary>
-    [DataField("viewLawsAction", customTypeSerializer: typeof(PrototypeIdSerializer<InstantActionPrototype>))]
-    public string ViewLawsAction = "ViewLaws";
+    [DataField("viewLawsAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    public string ViewLawsAction = "ActionViewLaws";
 
     /// <summary>
     /// The action for toggling laws. Stored here so we can remove it later.
     /// </summary>
-    [DataField("providedAction")]
-    public InstantAction? ProvidedAction;
+    [DataField("viewLawsActionEntity")]
+    public EntityUid? ViewLawsActionEntity;
 
     /// <summary>
     /// The last entity that provided laws to this entity.
@@ -48,7 +48,7 @@ public record struct GetSiliconLawsEvent(EntityUid Entity)
     public bool Handled = false;
 }
 
-public sealed class ToggleLawsScreenEvent : InstantActionEvent
+public sealed partial class ToggleLawsScreenEvent : InstantActionEvent
 {
 
 }
@@ -63,9 +63,11 @@ public enum SiliconLawsUiKey : byte
 public sealed class SiliconLawBuiState : BoundUserInterfaceState
 {
     public List<SiliconLaw> Laws;
+    public HashSet<string>? RadioChannels;
 
-    public SiliconLawBuiState(List<SiliconLaw> laws)
+    public SiliconLawBuiState(List<SiliconLaw> laws, HashSet<string>? radioChannels)
     {
         Laws = laws;
+        RadioChannels = radioChannels;
     }
 }

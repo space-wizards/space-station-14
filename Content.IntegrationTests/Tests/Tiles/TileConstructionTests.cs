@@ -42,7 +42,7 @@ public sealed class TileConstructionTests : InteractionTest
 
         // Place Lattice
         var oldPos = TargetCoords;
-        TargetCoords = new EntityCoordinates(MapData.MapUid, 1, 0);
+        TargetCoords = SEntMan.GetNetCoordinates(new EntityCoordinates(MapData.MapUid, 1, 0));
         await Interact(Rod);
         TargetCoords = oldPos;
         await AssertTile(Lattice);
@@ -75,7 +75,7 @@ public sealed class TileConstructionTests : InteractionTest
 
         // Space -> Lattice
         var oldPos = TargetCoords;
-        TargetCoords = new EntityCoordinates(MapData.MapUid, 1, 0);
+        TargetCoords = SEntMan.GetNetCoordinates(new EntityCoordinates(MapData.MapUid, 1, 0));
         await Interact(Rod);
         TargetCoords = oldPos;
         await AssertTile(Lattice);
