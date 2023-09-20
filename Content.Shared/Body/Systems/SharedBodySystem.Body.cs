@@ -1,5 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using System.Linq;
+﻿using System.Linq;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Organ;
 using Content.Shared.Body.Part;
@@ -29,8 +28,8 @@ public partial class SharedBodySystem
     {
         if (args.Current is not BodyComponentState state)
             return;
+
         component.Prototype = state.Prototype;
-        component.RootContainer = Containers.EnsureContainer<ContainerSlot>(uid, state.ContainerId);
         component.RootPartSlot = state.RootPartSlot;
         component.GibSound = state.GibSound;
         component.RequiredLegs = state.RequiredLegs;
@@ -41,7 +40,6 @@ public partial class SharedBodySystem
     {
         args.State = new BodyComponentState(
             component.Prototype,
-            component.RootContainer.ID,
             component.RootPartSlot,
             component.GibSound,
             component.RequiredLegs,
@@ -54,7 +52,6 @@ public partial class SharedBodySystem
         body.RootContainer = Containers.EnsureContainer<ContainerSlot>(bodyId, BodyRootContainerId);
     }
 
-
     private void OnBodyCanDrag(EntityUid uid, BodyComponent component, ref CanDragEvent args)
     {
         args.Handled = true;
@@ -62,20 +59,20 @@ public partial class SharedBodySystem
 
     private void OnBodyMapInit(EntityUid bodyId, BodyComponent body, MapInitEvent args)
     {
-
         if (body.Prototype == null)
             return;
+
         var prototype = Prototypes.Index<BodyPrototype>(body.Prototype);
-            InitBody(bodyId, body, prototype);
+        InitBody(bodyId, body, prototype);
     }
 
-    protected void InitBody(EntityUid bodyEntity, BodyComponent body, BodyPrototype prototype)
+    private void InitBody(EntityUid bodyEntity, BodyComponent body, BodyPrototype prototype)
     {
         var protoRoot = prototype.Slots[prototype.Root];
-        body.RootContainer = Containers.EnsureContainer<ContainerSlot>(bodyEntity, BodyRootContainerId);
         if (protoRoot.Part == null)
             return;
-        var rootPartEntity =  Spawn(protoRoot.Part, bodyEntity.ToCoordinates());
+
+        var rootPartEntity = SpawnAttachedTo(protoRoot.Part, bodyEntity.ToCoordinates());
         var rootPart = Comp<BodyPartComponent>(rootPartEntity);
         AttachPartToRoot(bodyEntity, rootPartEntity, prototype.Root, body, rootPart);
         InitParts(bodyEntity, rootPartEntity, rootPart, prototype);
@@ -83,13 +80,14 @@ public partial class SharedBodySystem
         Dirty(bodyEntity, body);
     }
 
-    protected void InitParts(EntityUid rootBodyId, EntityUid parentPartId, BodyPartComponent parentPart, BodyPrototype prototype,
+    private void InitParts(EntityUid rootBodyId, EntityUid parentPartId, BodyPartComponent parentPart, BodyPrototype prototype,
         HashSet<string>? initialized = null)
     {
         initialized ??= new HashSet<string>();
 
         if (parentPart.AttachedToSlot == null || initialized.Contains(parentPart.AttachedToSlot))
             return;
+
         initialized.Add(parentPart.AttachedToSlot);
 
         var (_, connections, organs) = prototype.Slots[parentPart.AttachedToSlot];
@@ -109,7 +107,7 @@ public partial class SharedBodySystem
             var slot = CreatePartSlot(parentPartId, connection, childPartComponent.PartType, parentPart);
             if (slot == null)
             {
-                Logger.Error($"Could not create slot for connection {connection} in body {prototype.ID}");
+                Log.Error($"Could not create slot for connection {connection} in body {prototype.ID}");
                 continue;
             }
 
@@ -125,7 +123,7 @@ public partial class SharedBodySystem
             var slot = CreateOrganSlot(organSlotName, parentPartId, parentPart);
             if (slot == null)
             {
-                Logger.Error($"Could not create slot for connection {organSlotName} in body {prototype.ID}");
+                Log.Error($"Could not create slot for connection {organSlotName} in body {prototype.ID}");
                 continue;
             }
 
@@ -193,7 +191,7 @@ public partial class SharedBodySystem
         if (!Resolve(partId, ref part, false))
             yield break;
 
-        foreach (var (slotId,slot) in part.Children)
+        foreach (var slot in part.Children.Values)
         {
             if (!TryComp<BodyPartComponent>(slot.Entity, out var childPart))
                 continue;

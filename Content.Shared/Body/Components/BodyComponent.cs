@@ -36,16 +36,14 @@ public sealed partial class BodyComponent : Component
 public sealed class BodyComponentState : ComponentState
 {
     public string? Prototype;
-    public string ContainerId;
     public string? RootPartSlot;
     public SoundSpecifier GibSound;
     public int RequiredLegs;
     public HashSet<NetEntity> LegNetEntities;
-    public BodyComponentState(string? prototype, string containerId, string? rootPartSlot, SoundSpecifier gibSound,
+    public BodyComponentState(string? prototype, string? rootPartSlot, SoundSpecifier gibSound,
         int requiredLegs, HashSet<NetEntity> legNetEntities)
     {
         Prototype = prototype;
-        ContainerId = containerId;
         RootPartSlot = rootPartSlot;
         GibSound = gibSound;
         RequiredLegs = requiredLegs;

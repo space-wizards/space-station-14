@@ -18,11 +18,15 @@ public partial class SharedBodySystem
 {
     private void InitializeParts()
     {
-        SubscribeLocalEvent<BodyPartComponent, ComponentRemove>(OnPartRemoved);
+        SubscribeLocalEvent<BodyPartComponent, ComponentShutdown>(OnPartShutdown);
         SubscribeLocalEvent<BodyPartComponent, AfterAutoHandleStateEvent>(OnPartStateHandled);
     }
     private void OnPartStateHandled(EntityUid uid, BodyPartComponent component, ref AfterAutoHandleStateEvent args)
     {
+        component.Children.Clear();
+        component.Organs.Clear();
+
+        // SlotData is a struct so should be fine?
         foreach (var (slotName, slotData) in component.Children)
         {
             component.Children[slotName] = slotData with
@@ -39,15 +43,20 @@ public partial class SharedBodySystem
             };
         }
     }
-    private void OnPartRemoved(EntityUid uid, BodyPartComponent part, ComponentRemove args)
+    private void OnPartShutdown(EntityUid uid, BodyPartComponent part, ComponentShutdown args)
     {
+        // No point touching parts if the entity is deleting anyway.
+        if (LifeStage(uid) >= EntityLifeStage.Terminating)
+            return;
+
         if (part.Parent is { } parent)
         {
             DetachPart(uid, part);
             DirtyAllComponents(parent);
         }
+
         //TODO: drop all parts otherwise the entities will desync from the sprites
-        foreach (var (_,slot) in part.Children)
+        foreach (var slot in part.Children.Values)
         {
             DropPart(slot.Entity);
         }
@@ -197,15 +206,20 @@ public partial class SharedBodySystem
     public virtual bool AttachPart(EntityUid? parentPartId, BodyPartSlot? slot, EntityUid? partId,
         BodyPartComponent? parentPart = null, BodyPartComponent? part = null)
     {
-        if (parentPartId == null || partId == null || slot == null || !Resolve(parentPartId.Value, ref parentPart, false) ||
+        if (parentPartId == null || partId == null || slot == null ||
+            !Resolve(parentPartId.Value, ref parentPart, false) ||
             !Resolve(partId.Value, ref part, false) ||
             !CanAttachPart(parentPartId, slot.Value.Id, partId, parentPart, part)
             || !parentPart.Children.TryGetValue(slot.Value.Id, out var slotData))
+        {
             return false;
+        }
+
         if (part.Parent != null)
         {
             DetachPart(partId, part, parentPart);
         }
+
         return InternalAttachPart(parentPart.Body, parentPartId, partId.Value, part, slotData.Id, slotData.Container);
     }
 

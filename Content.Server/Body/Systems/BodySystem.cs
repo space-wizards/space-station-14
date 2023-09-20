@@ -33,7 +33,6 @@ public sealed class BodySystem : SharedBodySystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedMindSystem _mindSystem = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     public override void Initialize()
     {
@@ -68,7 +67,7 @@ public sealed class BodySystem : SharedBodySystem
             return;
 
         // Don't microwave animals, kids
-        _transform.AttachToGridOrMap(uid);
+        SharedTransform.AttachToGridOrMap(uid);
         _appearance.SetData(args.Microwave, MicrowaveVisualState.Bloody, true);
         GibBody(uid, false, component);
 
