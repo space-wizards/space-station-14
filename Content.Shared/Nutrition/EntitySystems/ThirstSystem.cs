@@ -162,15 +162,17 @@ public sealed class ThirstSystem : EntitySystem
         {
             if (_timing.CurTime < thirst.NextUpdateTime)
                 continue;
-            thirst.NextUpdateTime = _timing.CurTime + thirst.UpdateRate;
+
+            thirst.NextUpdateTime += thirst.UpdateRate;
 
             UpdateThirst(thirst, -thirst.ActualDecayRate);
             var calculatedThirstThreshold = GetThirstThreshold(thirst, thirst.CurrentThirst);
-            if (calculatedThirstThreshold != thirst.CurrentThirstThreshold)
-            {
-                thirst.CurrentThirstThreshold = calculatedThirstThreshold;
-                UpdateEffects(uid, thirst);
-            }
+
+            if (calculatedThirstThreshold == thirst.CurrentThirstThreshold)
+                continue;
+
+            thirst.CurrentThirstThreshold = calculatedThirstThreshold;
+            UpdateEffects(uid, thirst);
             Dirty(thirst);
         }
     }
