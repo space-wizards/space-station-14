@@ -191,9 +191,6 @@
     drawdepth: WallTops
     sprite: Structures/Walls/railing.rsi
     state: round
-  - type: Icon
-    sprite: Structures/Walls/railing.rsi
-    state: round
   - type: Physics
     bodyType: Static
   - type: Fixtures
@@ -201,12 +198,30 @@
       fix1:
         shape:
           !type:PhysShapeAabb
-          bounds: "-0.45,-0.45,0.45,0.45"
+          bounds: "-0.49,-0.49,0.49,-0.25"
         density: 1000
         mask:
-        - TableMask
+          - TableMask
         layer:
-        - TableLayer
+          - TableLayer
+      fix2:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.49,-0.49,-0.25,0.49"
+        density: 1000
+        mask:
+          - TableMask
+        layer:
+          - TableLayer
+      fix3:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "0.25,-0.49,0.49,0.49"
+        density: 1000
+        mask:
+          - TableMask
+        layer:
+          - TableLayer
   - type: InteractionOutline
   - type: Repairable
   - type: Damageable
