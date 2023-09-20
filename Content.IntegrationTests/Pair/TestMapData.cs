@@ -16,4 +16,9 @@ public sealed class TestMapData
     public EntityCoordinates GridCoords { get; set; }
     public MapCoordinates MapCoords { get; set; }
     public TileRef Tile { get; set; }
+
+    // Client-side uids
+    public EntityUid CMapUid { get; set; }
+    public EntityUid CGridUid { get; set; }
+    public EntityCoordinates CGridCoords { get; set; }
 }

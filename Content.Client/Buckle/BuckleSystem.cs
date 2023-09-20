@@ -25,11 +25,11 @@ internal sealed class BuckleSystem : SharedBuckleSystem
             return;
 
         component.Buckled = state.Buckled;
-        component.BuckledTo = state.BuckledTo;
-        component.LastEntityBuckledTo = state.LastEntityBuckledTo;
+        component.BuckledTo = EnsureEntity<BuckleComponent>(state.BuckledTo, uid);
+        component.LastEntityBuckledTo = EnsureEntity<BuckleComponent>(state.LastEntityBuckledTo, uid);
         component.DontCollide = state.DontCollide;
 
-        ActionBlockerSystem.UpdateCanMove(uid);
+        ActionBlocker.UpdateCanMove(uid);
 
         if (!TryComp<SpriteComponent>(uid, out var ownerSprite))
             return;
@@ -65,8 +65,8 @@ internal sealed class BuckleSystem : SharedBuckleSystem
         if (!TryComp<RotationVisualsComponent>(uid, out var rotVisuals))
             return;
 
-        if (!AppearanceSystem.TryGetData<int>(uid, StrapVisuals.RotationAngle, out var angle, args.Component) ||
-            !AppearanceSystem.TryGetData<bool>(uid, BuckleVisuals.Buckled, out var buckled, args.Component) ||
+        if (!Appearance.TryGetData<int>(uid, StrapVisuals.RotationAngle, out var angle, args.Component) ||
+            !Appearance.TryGetData<bool>(uid, BuckleVisuals.Buckled, out var buckled, args.Component) ||
             !buckled ||
             args.Sprite == null)
         {

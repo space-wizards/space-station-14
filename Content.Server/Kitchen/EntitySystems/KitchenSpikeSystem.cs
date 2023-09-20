@@ -252,7 +252,7 @@ namespace Content.Server.Kitchen.EntitySystems
             butcherable.BeingButchered = true;
             component.InUse = true;
 
-            var doAfterArgs = new DoAfterArgs(userUid, component.SpikeDelay + butcherable.ButcherDelay, new SpikeDoAfterEvent(), uid, target: victimUid, used: uid)
+            var doAfterArgs = new DoAfterArgs(EntityManager, userUid, component.SpikeDelay + butcherable.ButcherDelay, new SpikeDoAfterEvent(), uid, target: victimUid, used: uid)
             {
                 BreakOnTargetMove = true,
                 BreakOnUserMove = true,

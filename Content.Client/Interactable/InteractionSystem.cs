@@ -1,5 +1,5 @@
-using Content.Client.Storage;
 using Content.Shared.Interaction;
+using Content.Shared.Storage;
 using Robust.Shared.Containers;
 
 namespace Content.Client.Interactable
@@ -14,7 +14,7 @@ namespace Content.Client.Interactable
             if (!target.TryGetContainer(out var container))
                 return false;
 
-            if (!TryComp(container.Owner, out ClientStorageComponent? storage))
+            if (!TryComp(container.Owner, out StorageComponent? storage))
                 return false;
 
             // we don't check if the user can access the storage entity itself. This should be handed by the UI system.

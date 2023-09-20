@@ -38,7 +38,7 @@ namespace Content.Shared.Throwing
 
         private void OnGetState(EntityUid uid, ThrownItemComponent component, ref ComponentGetState args)
         {
-            args.State = new ThrownItemComponentState(component.Thrower);
+            args.State = new ThrownItemComponentState(GetNetEntity(component.Thrower));
         }
 
         private void OnHandleState(EntityUid uid, ThrownItemComponent component, ref ComponentHandleState args)
@@ -49,7 +49,7 @@ namespace Content.Shared.Throwing
                 return;
             }
 
-            component.Thrower = state.Thrower.Value;
+            component.Thrower = EnsureEntity<ThrownItemComponent>(state.Thrower.Value, uid);
         }
 
         private void ThrowItem(EntityUid uid, ThrownItemComponent component, ThrownEvent args)
