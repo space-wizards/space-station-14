@@ -3,7 +3,7 @@
 namespace Content.Shared.VendingMachines.Components;
 
 [RegisterComponent, NetworkedComponent]
-public sealed class VendingMachineVisualStateComponent : Component
+public sealed partial class VendingMachineVisualStateComponent : Component
 {
     /// <summary>
     /// RSI state for when the vending machine is unpowered.

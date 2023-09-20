@@ -4,7 +4,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 namespace Content.Shared.DispenseOnHit;
 
 [RegisterComponent, NetworkedComponent]
-public sealed class DispenseOnHitComponent : Component
+public sealed partial class DispenseOnHitComponent : Component
 {
     /// <summary>
     ///     The chance that a vending machine will randomly dispense an item on hit.
@@ -27,7 +27,7 @@ public sealed class DispenseOnHitComponent : Component
     ///     and can be circumvented with forced ejections.
     /// </summary>
     [DataField("delay", customTypeSerializer:typeof(TimeOffsetSerializer))]
-    public readonly TimeSpan Delay = TimeSpan.FromSeconds(1.0f);
+    public TimeSpan Delay = TimeSpan.FromSeconds(1.0f);
 
     /// <summary>
     ///    Data for understanding when the hit action was performed

@@ -4,7 +4,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 namespace Content.Shared.VendingMachines.Components;
 
 [RegisterComponent, NetworkedComponent]
-public sealed class VendingMachineEmpEjectComponent : Component
+public sealed partial class VendingMachineEmpEjectComponent : Component
 {
     /// <summary>
     ///     While disabled by EMP it randomly ejects items

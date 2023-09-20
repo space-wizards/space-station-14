@@ -68,7 +68,7 @@ public enum EjectWireKey : byte
     StatusKey,
 }
 
-public sealed class VendingMachineSelfDispenseEvent : InstantActionEvent
+public sealed partial class VendingMachineSelfDispenseEvent : InstantActionEvent
 {
 
 };
