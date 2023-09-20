@@ -6,7 +6,6 @@ using Content.Shared.VendingMachines.Components;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using System.Linq;
-using Content.Shared.Containers.ItemSlots;
 
 namespace Content.Shared.VendingMachines;
 
