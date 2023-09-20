@@ -277,6 +277,96 @@
     Glass: 500
 
 - type: latheRecipe
+  id: CEModBoots
+  result: CEModBoots
+  completetime: 4
+  materials:
+    Steel: 1000
+
+- type: latheRecipe
+  id: CEModChestplate
+  result: CEModChestplate
+  completetime: 4
+  materials:
+    Plasteel: 1500
+    Steel: 1500
+
+- type: latheRecipe
+  id: CEModGauntlets
+  result: CEModGauntlets
+  completetime: 4
+  materials:
+    Steel: 800
+
+- type: latheRecipe
+  id: CEModHelmet
+  result: CEModHelmet
+  completetime: 4
+  materials:
+    Steel: 1500
+    Glass: 1000
+
+- type: latheRecipe
+  id: CaptainModBoots
+  result: CaptainModBoots
+  completetime: 4
+  materials:
+    Steel: 1000
+
+- type: latheRecipe
+  id: CaptainModChestplate
+  result: CaptainModChestplate
+  completetime: 4
+  materials:
+    Plasteel: 1500
+    Steel: 1500
+
+- type: latheRecipe
+  id: CaptainModGauntlets
+  result: CaptainModGauntlets
+  completetime: 4
+  materials:
+    Steel: 800
+
+- type: latheRecipe
+  id: CaptainModHelmet
+  result: CaptainModHelmet
+  completetime: 4
+  materials:
+    Steel: 1500
+    Glass: 1000
+
+- type: latheRecipe
+  id: BlueshieldModBoots
+  result: BlueshieldModBoots
+  completetime: 4
+  materials:
+    Steel: 1000
+
+- type: latheRecipe
+  id: BlueshieldModChestplate
+  result: BlueshieldModChestplate
+  completetime: 4
+  materials:
+    Plasteel: 1500
+    Steel: 1500
+
+- type: latheRecipe
+  id: BlueshieldModGauntlets
+  result: BlueshieldModGauntlets
+  completetime: 4
+  materials:
+    Steel: 800
+
+- type: latheRecipe
+  id: BlueshieldModHelmet
+  result: BlueshieldModHelmet
+  completetime: 4
+  materials:
+    Steel: 1500
+    Glass: 1000
+
+- type: latheRecipe
   id: MedicalJacket
   result: MedicalJacket
   completetime: 4

@@ -8,9 +8,6 @@
   tier: 1
   cost: 2500
   recipeUnlocks:
-  - MedicalJacket
-  - RNDJacket
-  - WorkJacket
   - MedicalModHelmet
   - MedicalModChestplate
   - MedicalModGauntlets
@@ -34,7 +31,6 @@
   tier: 2
   cost: 5000
   recipeUnlocks:
-  - FullMetalJacket
   - AtmosModHelmet
   - AtmosModChestplate
   - AtmosModGauntlets
@@ -53,8 +49,8 @@
   id: ModsuitsEPIC
   name: research-technology-epic-modsuits
   icon:
-    sprite: Clothing/Head/Modsuits/security-red.rsi
-    state: icon
+    sprite: Objects/Specific/Modsuits/Construction/ce.rsi
+    state: Helmet
   discipline: Experimental
   tier: 3
   cost: 7500
@@ -67,6 +63,15 @@
   - CMOModChestplate
   - CMOModGauntlets
   - CMOModBoots
-  - ModsuitEnhancedSomething
-  - ModsuitEnhancedCore
-  - ModsuitEnhancedBox
+  - CEModHelmet
+  - CEModChestplate
+  - CEModGauntlets
+  - CEModBoots
+  - CaptainModHelmet
+  - CaptainModChestplate
+  - CaptainModGauntlets
+  - CaptainModBoots
+  - BlueshieldModHelmet
+  - BlueshieldModChestplate
+  - BlueshieldModGauntlets
+  - BlueshieldModBoots

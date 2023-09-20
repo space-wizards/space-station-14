@@ -4,6 +4,8 @@
   name: modsuitfab 
   description: Prints equipment for use by the medbay.
   components:
+  - type: Machine
+    board: ExosuitFabricatorMachineCircuitboard
   - type: Sprite
     netsync: false
     sprite: Structures/Machines/modsuit_fabricator.rsi
@@ -64,6 +66,15 @@
       - SalvageModChestplate
       - SalvageModGauntlets
       - SalvageModBoots
-      - ModsuitEnhancedBox
-      - ModsuitEnhancedCore
-      - ModsuitEnhancedSomething
+      - CEModHelmet
+      - CEModChestplate
+      - CEModGauntlets
+      - CEModBoots
+      - CaptainModHelmet
+      - CaptainModChestplate
+      - CaptainModGauntlets
+      - CaptainModBoots
+      - BlueshieldModHelmet
+      - BlueshieldModChestplate
+      - BlueshieldModGauntlets
+      - BlueshieldModBoots

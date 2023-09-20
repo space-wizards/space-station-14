@@ -1,6 +1,7 @@
 - type: entity #в комментах у характеристик будут оригинальные значения.
   parent: ClothingOuterHardsuitBase
-  id: ClothingOuterModsuitBase #не маппить
+  id: ClothingOuterModsuitBase 
+  noSpawn: true
   name: engineering modsuit
   description: A special suit that protects against hazardous, low pressure environments. Has radiation shielding.
   components:
@@ -123,7 +124,7 @@
 - type: entity
   parent: ClothingOuterModsuitBase
   id: ClothingOuterModsuitCMO
-  name: better CMO modsuit
+  name: CMO modsuit
   description: A special suit that protects against hazardous, low pressure environments. Has radiation shielding.
   components:
   - type: Sprite
@@ -136,17 +137,17 @@
   - type: TemperatureProtection
     coefficient: 0.05
   - type: ExplosionResistance
-    damageCoefficient: 0.5
+    damageCoefficient: 0.3
   - type: ClothingSpeedModifier
     walkModifier: 0.9 
     sprintModifier: 0.95 
   - type: Armor
     modifiers:
       coefficients:
-        Shock: 0.9 
+        Shock: 0.8  
         Caustic: 0.1 #0.1
         Radiation: 0.4 
-        Heat: 0.6
+        Heat: 0.5
   - type: PointLight
     enabled: false
     radius: 9
@@ -869,11 +870,11 @@
       coefficients:
         Blunt: 0.3
         Slash: 0.3 
-        Piercing: 0.25 #0.5
+        Piercing: 0.2 
         Shock: 0.1 
-        Caustic: 0.1 #0.6
-        Radiation: 0.2 #0.4
-        Heat: 0.1 #0.25 
+        Caustic: 0.1 
+        Radiation: 0.2 
+        Heat: 0.1 
   - type: ClothingSpeedModifier
     walkModifier: 0.85 
     sprintModifier: 0.85

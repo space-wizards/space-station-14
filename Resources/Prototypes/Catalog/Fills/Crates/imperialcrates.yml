@@ -12,7 +12,7 @@
 - type: entity
   id: CrateModsuitEngineer
   name: engi modsuit
-  description: 22
+  description: Maintains an engineer's modsuit core
   parent: CrateEngineeringSecure
   components:
   - type: StorageFill
@@ -22,7 +22,7 @@
 - type: entity
   id: CrateModsuitAtmos
   name: atmos modsuit
-  description: 22
+  description: Maintains an atmos modsuit core
   parent: CrateEngineeringSecure
   components:
   - type: StorageFill
@@ -32,7 +32,7 @@
 - type: entity
   id: CrateModsuitCivillian
   name: civic modsuit
-  description: 22
+  description: Maintains a civillian modsuit core
   parent: CrateEngineeringSecure
   components:
   - type: StorageFill
@@ -41,7 +41,7 @@
 
 - type: entity
   id: CrateModsuitMedical
-  name: medica modsuit
+  name: Maintains a medical modsuit core
   description: 22
   parent: CrateMedicalSecure
   components:
@@ -52,7 +52,7 @@
 - type: entity
   id: CrateModsuitRND
   name: rnd modsuit
-  description: 22
+  description: Maintains a RND modsuit core
   parent: CrateScienceSecure
   components:
   - type: StorageFill
@@ -62,7 +62,7 @@
 - type: entity
   id: CrateModsuitSalvage
   name: salvage modsuit
-  description: 22
+  description: Maintains a salvage modsuit  core
   parent: CrateSecure
   components:
   - type: StorageFill
@@ -72,7 +72,7 @@
 - type: entity
   id: CrateModsuitSecurity
   name: security modsuit
-  description: 22
+  description: Maintains a security modsuit core
   parent: CrateSecurityRiot
   components:
   - type: StorageFill

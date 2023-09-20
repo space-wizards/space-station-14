@@ -69,21 +69,6 @@
     state: workjacket
 # Оболочки конец
 
-- type: Tag
-  id: AtmosModBoots
-
-- type: Tag
-  id: AtmosModChestplate
-
-- type: Tag
-  id: AtmosModGauntlets
-
-- type: Tag
-  id: AtmosModHardsuitcore
-
-- type: Tag
-  id: AtmosModHelmet
-
 - type: entity
   parent: BaseItem
   id: AtmosModBoots
@@ -170,6 +155,9 @@
   - type: Sprite
     sprite: Objects/Specific/Modsuits/Construction/capspace.rsi
     state: boots
+  - type: Tag
+    tags:
+    - CaptainModBoots
 
 - type: entity
   parent: BaseItem
@@ -182,6 +170,9 @@
   - type: Sprite
     sprite: Objects/Specific/Modsuits/Construction/capspace.rsi
     state: Chestplate
+  - type: Tag
+    tags:
+    - CaptainModChestplate
 
 - type: entity
   parent: BaseItem
@@ -194,6 +185,9 @@
   - type: Sprite
     sprite: Objects/Specific/Modsuits/Construction/capspace.rsi
     state: Gauntlets
+  - type: Tag
+    tags:
+    - CaptainModGauntlets
 
 - type: entity
   parent: BaseItem
@@ -206,6 +200,9 @@
   - type: Sprite
     sprite: Objects/Specific/Modsuits/Construction/capspace.rsi
     state: Hardsuit-core
+  - type: Tag
+    tags:
+    - CaptainModHardsuitcore
 
 - type: entity
   parent: BaseItem
@@ -218,6 +215,9 @@
   - type: Sprite
     sprite: Objects/Specific/Modsuits/Construction/capspace.rsi
     state: Helmet
+  - type: Tag
+    tags:
+    - CaptainModHelmet
 
 - type: entity
   parent: BaseItem
@@ -230,6 +230,9 @@
   - type: Sprite
     sprite: Objects/Specific/Modsuits/Construction/ce.rsi
     state: boots
+  - type: Tag
+    tags:
+    - CEModBoots
 
 - type: entity
   parent: BaseItem
@@ -242,6 +245,9 @@
   - type: Sprite
     sprite: Objects/Specific/Modsuits/Construction/ce.rsi
     state: Chestplate
+  - type: Tag
+    tags:
+    - CEModChestplate
 
 - type: entity
   parent: BaseItem
@@ -254,6 +260,9 @@
   - type: Sprite
     sprite: Objects/Specific/Modsuits/Construction/ce.rsi
     state: Gauntlets
+  - type: Tag
+    tags:
+    - CEModGauntlets
 
 - type: entity
   parent: BaseItem
@@ -266,6 +275,9 @@
   - type: Sprite
     sprite: Objects/Specific/Modsuits/Construction/ce.rsi
     state: Hardsuit-core
+  - type: Tag
+    tags:
+    - CEModHardsuitcore
 
 - type: entity
   parent: BaseItem
@@ -278,6 +290,9 @@
   - type: Sprite
     sprite: Objects/Specific/Modsuits/Construction/ce.rsi
     state: Helmet
+  - type: Tag
+    tags:
+    - CEModHelmet
 
 - type: entity
   parent: BaseItem
@@ -893,6 +908,81 @@
   - type: Tag
     tags:
     - SalvageModHelmet
+
+- type: entity
+  parent: BaseItem
+  id: BlueshieldModBoots
+  name: AtmosModBoots
+  description: AtmosModBoots
+  components:
+  - type: Item
+    size: 20
+  - type: Sprite
+    sprite: Objects/Specific/Modsuits/Construction/blueshield.rsi
+    state: boots
+  - type: Tag
+    tags:
+    - BlueshieldModBoots
+
+- type: entity
+  parent: BaseItem
+  id: BlueshieldModChestplate
+  name: AtmosModChestplate
+  description: AtmosModChestplate
+  components:
+  - type: Item
+    size: 60
+  - type: Sprite
+    sprite: Objects/Specific/Modsuits/Construction/blueshield.rsi
+    state: Chestplate
+  - type: Tag
+    tags:
+    - BlueshieldModChestplate
+
+- type: entity
+  parent: BaseItem
+  id: BlueshieldModGauntlets
+  name: AtmosModGauntlets
+  description: AtmosModGauntlets
+  components:
+  - type: Item
+    size: 10
+  - type: Sprite
+    sprite: Objects/Specific/Modsuits/Construction/blueshield.rsi
+    state: Gauntlets
+  - type: Tag
+    tags:
+    - BlueshieldModGauntlets
+
+- type: entity
+  parent: BaseItem
+  id: BlueshieldModHardsuitcore
+  name: AtmosModHardsuitcore
+  description: AtmosModHardsuitcore
+  components:
+  - type: Item
+    size: 20
+  - type: Sprite
+    sprite: Objects/Specific/Modsuits/Construction/blueshield.rsi
+    state: Hardsuit-core
+  - type: Tag
+    tags:
+    - BlueshieldModHardsuitcore
+
+- type: entity
+  parent: BaseItem
+  id: BlueshieldModHelmet
+  name: BlueshieldModHelmet
+  description: BlueshieldModHelmet
+  components:
+  - type: Item
+    size: 20
+  - type: Sprite
+    sprite: Objects/Specific/Modsuits/Construction/blueshield.rsi
+    state: Helmet
+  - type: Tag
+    tags:
+    - BlueshieldModHelmet
 
 - type: entity
   parent: BaseItem

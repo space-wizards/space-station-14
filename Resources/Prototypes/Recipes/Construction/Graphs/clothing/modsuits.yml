@@ -376,34 +376,157 @@
         - to: modsuitSalvage
           steps:
             - tag: SalvageModBoots
-              name: A Salvage suit
+              name: Ботинки модсьюта утилизатора
               icon:
                 sprite: Objects/Specific/Modsuits/Construction/salvage.rsi
                 state: boots
               doAfter: 1
             - tag: SalvageModGauntlets
-              name: Salvage Gauntlets
+              name: Рукавицы модсьюта утилизатора
               icon:
                 sprite: Objects/Specific/Modsuits/Construction/salvage.rsi
                 state: Gauntlets
               doAfter: 1
             - tag: SalvageModChestplate
-              name: Salvage Chestplate
+              name: Нагрудник модсьюта утилизатора
               icon:
                 sprite: Objects/Specific/Modsuits/Construction/salvage.rsi
                 state: Chestplate
               doAfter: 1
             - tag: SalvageModHelmet
-              name: Salvage Helmet
+              name: Шлем модсьюта утилизатора
               icon:
                 sprite: Objects/Specific/Modsuits/Construction/salvage.rsi
                 state: Helmet
               doAfter: 1
             - tag: SalvageModHardsuitcore
-              name: Salvage hardsuit core
+              name: Р.И.Г модсьюта утилизатора
               icon:
                 sprite: Objects/Specific/Modsuits/Construction/salvage.rsi
                 state: Hardsuit-core
               doAfter: 1
     - node: modsuitSalvage
       entity: ClothingOuterModsuitSalvage
+
+- type: constructionGraph
+  id: ModsuitBlueshield
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: modsuitBlueshield
+          steps:
+            - tag: BlueshieldModBoots
+              name: Ботинки модсьюта "Синего щита"
+              icon:
+                sprite: Objects/Specific/Modsuits/Construction/blueshield.rsi
+                state: boots
+              doAfter: 1
+            - tag: BlueshieldModGauntlets
+              name: Рукавицы модсьюта "Синего щита"
+              icon:
+                sprite: Objects/Specific/Modsuits/Construction/blueshield.rsi
+                state: Gauntlets
+              doAfter: 1
+            - tag: BlueshieldModChestplate
+              name: Нагрудник модсьюта "Синего щита"
+              icon:
+                sprite: Objects/Specific/Modsuits/Construction/blueshield.rsi
+                state: Chestplate
+              doAfter: 1
+            - tag: BlueshieldModHelmet
+              name: Шлем модсьюта "Синего щита"
+              icon:
+                sprite: Objects/Specific/Modsuits/Construction/blueshield.rsi
+                state: Helmet
+              doAfter: 1
+            - tag: BlueshieldModHardsuitcore
+              name: Р.И.Г "Синего щита"
+              icon:
+                sprite: Objects/Specific/Modsuits/Construction/blueshield.rsi
+                state: Hardsuit-core
+              doAfter: 1
+    - node: modsuitBlueshield
+      entity: ClothingOuterModsuitBlueshield
+
+- type: constructionGraph
+  id: ModsuitCaptain
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: modsuitCaptain
+          steps:
+            - tag: CaptainModBoots
+              name: Ботинки капитанского модсьюта
+              icon:
+                sprite: Objects/Specific/Modsuits/Construction/capspace.rsi
+                state: boots
+              doAfter: 1
+            - tag: CaptainModGauntlets
+              name: Рукавицы капитанского модсьюта
+              icon:
+                sprite: Objects/Specific/Modsuits/Construction/capspace.rsi
+                state: Gauntlets
+              doAfter: 1
+            - tag: CaptainModChestplate
+              name: Нагрудник капитанского модсьюта
+              icon:
+                sprite: Objects/Specific/Modsuits/Construction/capspace.rsi
+                state: Chestplate
+              doAfter: 1
+            - tag: CaptainModHelmet
+              name: Шлем капитанского модсьюта
+              icon:
+                sprite: Objects/Specific/Modsuits/Construction/capspace.rsi
+                state: Helmet
+              doAfter: 1
+            - tag: CaptainModHardsuitcore
+              name: Р.И.Г Капитанского модсьюта
+              icon:
+                sprite: Objects/Specific/Modsuits/Construction/capspace.rsi
+                state: Hardsuit-core
+              doAfter: 1
+    - node: modsuitCaptain
+      entity: ClothingOuterModsuitCaptain
+
+- type: constructionGraph
+  id: ModsuitCE
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: modsuitCE
+          steps:
+            - tag: CEModBoots
+              name: Ботинки капитанского модсьюта
+              icon:
+                sprite: Objects/Specific/Modsuits/Construction/ce.rsi
+                state: boots
+              doAfter: 1
+            - tag: CEModGauntlets
+              name: Рукавицы капитанского модсьюта
+              icon:
+                sprite: Objects/Specific/Modsuits/Construction/ce.rsi
+                state: Gauntlets
+              doAfter: 1
+            - tag: CEModChestplate
+              name: Нагрудник капитанского модсьюта
+              icon:
+                sprite: Objects/Specific/Modsuits/Construction/ce.rsi
+                state: Chestplate
+              doAfter: 1
+            - tag: CEModHelmet
+              name: Шлем капитанского модсьюта
+              icon:
+                sprite: Objects/Specific/Modsuits/Construction/ce.rsi
+                state: Helmet
+              doAfter: 1
+            - tag: CEModHardsuitcore
+              name: Р.И.Г Капитанского модсьюта
+              icon:
+                sprite: Objects/Specific/Modsuits/Construction/ce.rsi
+                state: Hardsuit-core
+              doAfter: 1
+    - node: modsuitCE
+      entity: ClothingOuterModsuitCE

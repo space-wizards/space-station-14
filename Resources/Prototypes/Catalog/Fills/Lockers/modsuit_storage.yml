@@ -1,6 +1,6 @@
 - type: entity
-  name: y64362352
-  description: 6932050h
+  name: ModSuit Storage CE
+  description: ModSuit Storage
   id: ModSuitStorageCE
   parent: SuitStorageBase
   suffix: Chief Engineer
@@ -15,8 +15,8 @@
         - id: ClothingMaskGasAtmos
 
 - type: entity
-  name: y64362352 #маппить обязательно ↑↓
-  description: 6932050h
+  name: ModSuit Storage Captain
+  description: ModSuit Storage
   id: ModSuitStorageCapSpace
   parent: SuitStorageBase
   suffix: Cap Space
@@ -29,8 +29,8 @@
         - id: ClothingMaskGasCaptain
 
 - type: entity
-  name: y64362352 #маппить необязательно ↓↓↓↓↓↓↓↓↓↓
-  description: 6932050h
+  name: ModSuit storage Civillian
+  description: ModSuit storage
   id: ModSuitStorageCivillian
   parent: SuitStorageBase
   suffix: Civ suit
@@ -43,8 +43,8 @@
         - id: ClothingMaskBreath
 
 - type: entity
-  name: y64362352
-  description: 6932050h
+  name: ModSuit Storage CMO
+  description: ModSuit Storage
   id: ModSuitStorageCMO
   parent: SuitStorageBase
   suffix: СMO
@@ -57,8 +57,8 @@
         - id: ClothingMaskBreath
 
 - type: entity
-  name: y64362352
-  description: 6932050h
+  name: ModSuit Storage RND
+  description: ModSuit Storage
   id: ModSuitStorageRND
   parent: SuitStorageBase
   suffix: RND
@@ -72,8 +72,8 @@
 
 
 - type: entity
-  name: y64362352
-  description: 6932050h
+  name: ModSuit Storage Medical
+  description: ModSuit Storage 
   id: ModSuitStorageMedical
   parent: SuitStorageBase
   suffix: Medical
@@ -86,8 +86,8 @@
         - id: ClothingMaskBreath
 
 - type: entity
-  name: y64362352
-  description: 6932050h
+  name: ModSuit Storage Security
+  description: ModSuit Storage 
   id: ModSuitStorageSecurity
   parent: SuitStorageBase
   suffix: Security
@@ -100,8 +100,8 @@
         - id: ClothingMaskGasSecurity
 
 - type: entity
-  name: y64362352
-  description: 6932050h
+  name: ModSuit Storage Brigmedic
+  description: ModSuit Storage 
   id: ModSuitStorageBrigmedic
   parent: SuitStorageBase
   suffix: Brigmedic
@@ -114,8 +114,8 @@
         - id: ClothingMaskGasSecurity
 
 - type: entity
-  name: y64362352
-  description: 6932050h
+  name: ModSuit Storage Salvage
+  description: ModSuit Storage
   id: ModSuitStorageSalvage
   parent: SuitStorageBase
   suffix: Salvage
@@ -129,8 +129,8 @@
         - id: ClothingShoesBootsMag
 
 - type: entity
-  name: y64362352
-  description: 6932050h
+  name: ModSuit Storage Engineer
+  description: ModSuit Storage
   id: ModSuitStorageEngineer
   parent: SuitStorageBase
   suffix: Engineer
@@ -144,8 +144,8 @@
         - id: ClothingShoesBootsMag
 
 - type: entity
-  name: y64362352
-  description: 6932050h
+  name: ModSuit Storage Atmos
+  description: ModSuit Storage
   id: ModSuitStorageAtmos
   parent: SuitStorageBase
   suffix: Atmos
@@ -159,8 +159,8 @@
         - id: ClothingShoesBootsMag
 
 - type: entity
-  name: y64362352
-  description: 6932050h
+  name: ModSuit Storage HOS
+  description: ModSuit Storage
   id: ModSuitStorageHOS
   parent: SuitStorageBase
   suffix: HOS
@@ -174,8 +174,8 @@
         - id: JetpackSecurityFilled
 
 - type: entity
-  name: y64362352
-  description: 6932050h
+  name: ModSuit Storage Centcom
+  description: ModSuit Storage
   id: ModSuitStorageCentcom
   parent: SuitStorageBase
   suffix: HOS
@@ -189,8 +189,8 @@
         - id: JetpackSecurityFilled
 
 - type: entity
-  name: y64362352
-  description: 6932050h
+  name: ModSuit Storage Interdyne
+  description: ModSuit Storage
   id: ModSuitStorageInterdyne
   parent: SuitStorageBase
   suffix: HOS
@@ -203,8 +203,8 @@
         - id: ClothingMaskBreath
 
 - type: entity
-  name: y64362352
-  description: 6932050h
+  name: ModSuit Storage Blueshield
+  description: ModSuit Storage
   id: ModSuitStorageBlueshield
   parent: SuitStorageBase
   suffix: HOS
