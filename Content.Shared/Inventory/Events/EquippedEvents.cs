@@ -37,6 +37,9 @@ public abstract class EquippedEventBase : EntityEventArgs
     }
 }
 
+/// <summary>
+/// Raised directed on an equipee when something is equipped.
+/// </summary>
 public sealed class DidEquipEvent : EquippedEventBase
 {
     public DidEquipEvent(EntityUid equipee, EntityUid equipment, SlotDefinition slotDefinition) : base(equipee, equipment, slotDefinition)
@@ -44,6 +47,9 @@ public sealed class DidEquipEvent : EquippedEventBase
     }
 }
 
+/// <summary>
+/// Raised directed on equipment when it's equipped to an equipee
+/// </summary>
 public sealed class GotEquippedEvent : EquippedEventBase
 {
     public GotEquippedEvent(EntityUid equipee, EntityUid equipment, SlotDefinition slotDefinition) : base(equipee, equipment, slotDefinition)

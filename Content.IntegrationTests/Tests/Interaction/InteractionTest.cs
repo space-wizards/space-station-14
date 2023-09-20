@@ -5,7 +5,6 @@ using Content.Client.Construction;
 using Content.Client.Examine;
 using Content.IntegrationTests.Pair;
 using Content.Server.Body.Systems;
-using Content.Server.Mind;
 using Content.Server.Players;
 using Content.Server.Stack;
 using Content.Server.Tools;
@@ -14,6 +13,7 @@ using Content.Shared.DoAfter;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
+using Content.Shared.Mind;
 using Robust.Client.Input;
 using Robust.Client.UserInterface;
 using Robust.Server.GameObjects;
@@ -41,11 +41,11 @@ public abstract partial class InteractionTest
 {
     protected virtual string PlayerPrototype => "InteractionTestMob";
 
-    protected TestPair PairTracker = default!;
-    protected TestMapData MapData => PairTracker.TestMap!;
+    protected TestPair Pair = default!;
+    protected TestMapData MapData => Pair.TestMap!;
 
-    protected RobustIntegrationTest.ServerIntegrationInstance Server => PairTracker.Server;
-    protected RobustIntegrationTest.ClientIntegrationInstance Client => PairTracker.Client;
+    protected RobustIntegrationTest.ServerIntegrationInstance Server => Pair.Server;
+    protected RobustIntegrationTest.ClientIntegrationInstance Client => Pair.Client;
 
     protected MapId MapId => MapData.MapId;
 
@@ -53,21 +53,23 @@ public abstract partial class InteractionTest
     /// Target coordinates. Note that this does not necessarily correspond to the position of the <see cref="Target"/>
     /// entity.
     /// </summary>
-    protected EntityCoordinates TargetCoords;
+    protected NetCoordinates TargetCoords;
 
     /// <summary>
     /// Initial player coordinates. Note that this does not necessarily correspond to the position of the
     /// <see cref="Player"/> entity.
     /// </summary>
-    protected EntityCoordinates PlayerCoords;
+    protected NetCoordinates PlayerCoords;
 
     /// <summary>
     /// The player entity that performs all these interactions. Defaults to an admin-observer with 1 hand.
     /// </summary>
-    protected EntityUid Player;
+    protected NetEntity Player;
 
     protected ICommonSession ClientSession = default!;
     protected IPlayerSession ServerSession = default!;
+
+    public EntityUid? ClientTarget;
 
     /// <summary>
     /// The current target entity. This is the default entity for various helper functions.
@@ -77,7 +79,7 @@ public abstract partial class InteractionTest
     /// interactions often swap out entities, and there are helper methods that attempt to automatically upddate
     /// the target entity. See <see cref="CheckTargetChange"/>
     /// </remarks>
-    protected EntityUid? Target;
+    protected NetEntity? Target;
 
     /// <summary>
     /// When attempting to start construction, this is the client-side ID of the construction ghost.
@@ -141,7 +143,7 @@ public abstract partial class InteractionTest
     [SetUp]
     public virtual async Task Setup()
     {
-        PairTracker = await PoolManager.GetServerClient(new PoolSettings { Connected = true });
+        Pair = await PoolManager.GetServerClient(new PoolSettings { Connected = true });
 
         // server dependencies
         SEntMan = Server.ResolveDependency<IEntityManager>();
@@ -173,9 +175,9 @@ public abstract partial class InteractionTest
         CLogger = Client.ResolveDependency<ILogManager>().RootSawmill;
 
         // Setup map.
-        await PairTracker.CreateTestMap();
-        PlayerCoords = MapData.GridCoords.Offset(new Vector2(0.5f, 0.5f)).WithEntityId(MapData.MapUid, Transform, SEntMan);
-        TargetCoords = MapData.GridCoords.Offset(new Vector2(1.5f, 0.5f)).WithEntityId(MapData.MapUid, Transform, SEntMan);
+        await Pair.CreateTestMap();
+        PlayerCoords = SEntMan.GetNetCoordinates(MapData.GridCoords.Offset(new Vector2(0.5f, 0.5f)).WithEntityId(MapData.MapUid, Transform, SEntMan));
+        TargetCoords = SEntMan.GetNetCoordinates(MapData.GridCoords.Offset(new Vector2(1.5f, 0.5f)).WithEntityId(MapData.MapUid, Transform, SEntMan));
         await SetTile(Plating, grid: MapData.MapGrid);
 
         // Get player data
@@ -192,18 +194,19 @@ public abstract partial class InteractionTest
         {
             // Fuck you mind system I want an hour of my life back
             // Mind system is a time vampire
-            SEntMan.System<MindSystem>().WipeMind(ServerSession.ContentData()?.Mind);
+            SEntMan.System<SharedMindSystem>().WipeMind(ServerSession.ContentData()?.Mind);
 
             old = cPlayerMan.LocalPlayer.ControlledEntity;
-            Player = SEntMan.SpawnEntity(PlayerPrototype, PlayerCoords);
-            Actor.Attach(Player, ServerSession);
-            Hands = SEntMan.GetComponent<HandsComponent>(Player);
-            DoAfters = SEntMan.GetComponent<DoAfterComponent>(Player);
+            Player = SEntMan.GetNetEntity(SEntMan.SpawnEntity(PlayerPrototype, SEntMan.GetCoordinates(PlayerCoords)));
+            var serverPlayerEnt = SEntMan.GetEntity(Player);
+            Actor.Attach(serverPlayerEnt, ServerSession);
+            Hands = SEntMan.GetComponent<HandsComponent>(serverPlayerEnt);
+            DoAfters = SEntMan.GetComponent<DoAfterComponent>(serverPlayerEnt);
         });
 
         // Check player got attached.
         await RunTicks(5);
-        Assert.That(cPlayerMan.LocalPlayer.ControlledEntity, Is.EqualTo(Player));
+        Assert.That(CEntMan.GetNetEntity(cPlayerMan.LocalPlayer.ControlledEntity), Is.EqualTo(Player));
 
         // Delete old player entity.
         await Server.WaitPost(() =>
@@ -216,7 +219,7 @@ public abstract partial class InteractionTest
         await Server.WaitPost(() =>
         {
             var bodySystem = SEntMan.System<BodySystem>();
-            var hands = bodySystem.GetBodyChildrenOfType(Player, BodyPartType.Hand).ToArray();
+            var hands = bodySystem.GetBodyChildrenOfType(SEntMan.GetEntity(Player), BodyPartType.Hand).ToArray();
 
             for (var i = 1; i < hands.Length; i++)
             {
@@ -226,11 +229,11 @@ public abstract partial class InteractionTest
         });
 
         // Final player asserts/checks.
-        await PairTracker.ReallyBeIdle(5);
+        await Pair.ReallyBeIdle(5);
         Assert.Multiple(() =>
         {
-            Assert.That(cPlayerMan.LocalPlayer.ControlledEntity, Is.EqualTo(Player));
-            Assert.That(sPlayerMan.GetSessionByUserId(ClientSession.UserId).AttachedEntity, Is.EqualTo(Player));
+            Assert.That(CEntMan.GetNetEntity(cPlayerMan.LocalPlayer.ControlledEntity), Is.EqualTo(Player));
+            Assert.That(sPlayerMan.GetSessionByUserId(ClientSession.UserId).AttachedEntity, Is.EqualTo(SEntMan.GetEntity(Player)));
         });
     }
 
@@ -238,7 +241,7 @@ public abstract partial class InteractionTest
     public async Task TearDownInternal()
     {
         await Server.WaitPost(() => MapMan.DeleteMap(MapId));
-        await PairTracker.CleanReturnAsync();
+        await Pair.CleanReturnAsync();
         await TearDown();
     }
 

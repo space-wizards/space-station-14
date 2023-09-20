@@ -1,17 +1,15 @@
 using Content.Server.Actions;
 using Content.Server.Humanoid;
 using Content.Server.Inventory;
-using Content.Server.Mind;
 using Content.Server.Mind.Commands;
-using Content.Server.Mind.Components;
 using Content.Server.Nutrition;
 using Content.Server.Polymorph.Components;
 using Content.Shared.Actions;
-using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Buckle;
 using Content.Shared.Damage;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.IdentityManagement;
+using Content.Shared.Mind;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Polymorph;
@@ -42,9 +40,12 @@ namespace Content.Server.Polymorph.Systems
         [Dependency] private readonly SharedHandsSystem _hands = default!;
         [Dependency] private readonly SharedPopupSystem _popup = default!;
         [Dependency] private readonly TransformSystem _transform = default!;
-        [Dependency] private readonly MindSystem _mindSystem = default!;
+        [Dependency] private readonly SharedMindSystem _mindSystem = default!;
+        [Dependency] private readonly MetaDataSystem _metaData = default!;
 
         private ISawmill _sawmill = default!;
+
+        private const string RevertPolymorphId = "ActionRevertPolymorph";
 
         public override void Initialize()
         {
@@ -97,23 +98,21 @@ namespace Content.Server.Polymorph.Systems
             if (proto.Forced)
                 return;
 
-            var act = new InstantAction
+            var actionId = Spawn(RevertPolymorphId);
+            if (_actions.TryGetActionData(actionId, out var action))
             {
-                Event = new RevertPolymorphActionEvent(),
-                EntityIcon = component.Parent,
-                DisplayName = Loc.GetString("polymorph-revert-action-name"),
-                Description = Loc.GetString("polymorph-revert-action-description"),
-                UseDelay = TimeSpan.FromSeconds(proto.Delay),
-            };
+                action.EntityIcon = component.Parent;
+                action.UseDelay = TimeSpan.FromSeconds(proto.Delay);
+            }
 
-            _actions.AddAction(uid, act, null);
+            _actions.AddAction(uid, actionId, null, null, action);
         }
 
         private void OnBeforeFullyEaten(EntityUid uid, PolymorphedEntityComponent comp, BeforeFullyEatenEvent args)
         {
             if (!_proto.TryIndex<PolymorphPrototype>(comp.Prototype, out var proto))
             {
-                _sawmill.Error("Invalid polymorph prototype {comp.Prototype}");
+                _sawmill.Error($"Invalid polymorph prototype {comp.Prototype}");
                 return;
             }
 
@@ -220,20 +219,16 @@ namespace Content.Server.Polymorph.Systems
                 }
             }
 
-            if (proto.TransferName &&
-                TryComp<MetaDataComponent>(uid, out var targetMeta) &&
-                TryComp<MetaDataComponent>(child, out var childMeta))
-            {
-                childMeta.EntityName = targetMeta.EntityName;
-            }
+            if (proto.TransferName && TryComp<MetaDataComponent>(uid, out var targetMeta))
+                _metaData.SetEntityName(child, targetMeta.EntityName);
 
             if (proto.TransferHumanoidAppearance)
             {
                 _humanoid.CloneAppearance(uid, child);
             }
 
-            if (_mindSystem.TryGetMind(uid, out var mind))
-                _mindSystem.TransferTo(mind, child);
+            if (_mindSystem.TryGetMind(uid, out var mindId, out var mind))
+                _mindSystem.TransferTo(mindId, child, mind: mind);
 
             //Ensures a map to banish the entity to
             EnsurePausesdMap();
@@ -306,8 +301,8 @@ namespace Content.Server.Polymorph.Systems
                 }
             }
 
-            if (_mindSystem.TryGetMind(uid, out var mind))
-                _mindSystem.TransferTo(mind, parent);
+            if (_mindSystem.TryGetMind(uid, out var mindId, out var mind))
+                _mindSystem.TransferTo(mindId, parent, mind: mind);
 
             // if an item polymorph was picked up, put it back down after reverting
             Transform(parent).AttachToGridOrMap();
@@ -338,23 +333,19 @@ namespace Content.Server.Polymorph.Systems
                 return;
 
             var entproto = _proto.Index<EntityPrototype>(polyproto.Entity);
-
-            var act = new InstantAction
+            var actionId = Spawn(RevertPolymorphId);
+            if (_actions.TryGetActionData(actionId, out var baseAction) &&
+                baseAction is InstantActionComponent action)
             {
-                Event = new PolymorphActionEvent
-                {
-                    Prototype = polyproto,
-                },
-                DisplayName = Loc.GetString("polymorph-self-action-name", ("target", entproto.Name)),
-                Description = Loc.GetString("polymorph-self-action-description", ("target", entproto.Name)),
-                Icon = new SpriteSpecifier.EntityPrototype(polyproto.Entity),
-                ItemIconStyle = ItemActionIconStyle.NoItem,
-            };
+                action.Event = new PolymorphActionEvent { Prototype = polyproto };
+                action.Icon = new SpriteSpecifier.EntityPrototype(polyproto.Entity);
+                _metaData.SetEntityName(actionId, Loc.GetString("polymorph-self-action-name", ("target", entproto.Name)));
+                _metaData.SetEntityDescription(actionId, Loc.GetString("polymorph-self-action-description", ("target", entproto.Name)));
 
-            polycomp.PolymorphActions ??= new();
-
-            polycomp.PolymorphActions.Add(id, act);
-            _actions.AddAction(target, act, target);
+                polycomp.PolymorphActions ??= new Dictionary<string, EntityUid>();
+                polycomp.PolymorphActions.Add(id, actionId);
+                _actions.AddAction(target, actionId, target);
+            }
         }
 
         [PublicAPI]
@@ -402,19 +393,5 @@ namespace Content.Server.Polymorph.Systems
 
             UpdateCollide();
         }
-    }
-
-    public sealed partial class PolymorphActionEvent : InstantActionEvent
-    {
-        /// <summary>
-        /// The polymorph prototype containing all the information about
-        /// the specific polymorph.
-        /// </summary>
-        public PolymorphPrototype Prototype = default!;
-    }
-
-    public sealed partial class RevertPolymorphActionEvent : InstantActionEvent
-    {
-
     }
 }

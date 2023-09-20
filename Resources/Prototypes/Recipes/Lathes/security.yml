@@ -99,12 +99,29 @@
     Glass: 200
 
 - type: latheRecipe
+  id: HoloprojectorSecurity
+  result: HoloprojectorSecurityEmpty
+  completetime: 2
+  materials:
+    Steel: 300
+    Glass: 50
+    Plastic: 50
+
+- type: latheRecipe
   id: RiotShield
   result: RiotShield
   completetime: 4
   materials:
     Steel: 400
     Glass: 400
+
+- type: latheRecipe
+  id: TelescopicShield
+  result: TelescopicShield
+  completetime: 4
+  materials:
+    Steel: 300
+    Glass: 800
 
 - type: latheRecipe
   id: Flash
@@ -232,6 +249,27 @@
     Steel: 500
 
 - type: latheRecipe
+  id: MagazinePistol
+  result: MagazinePistol
+  completetime: 5
+  materials:
+    Steel: 100
+
+- type: latheRecipe
+  id: MagazinePistolSubMachineGun
+  result: MagazinePistolSubMachineGun
+  completetime: 5
+  materials:
+    Steel: 300
+
+- type: latheRecipe
+  id: MagazinePistolSubMachineGunTopMounted
+  result: MagazinePistolSubMachineGunTopMounted
+  completetime: 5
+  materials:
+    Steel: 300
+
+- type: latheRecipe
   id: MagazineBoxPistol
   result: MagazineBoxPistol
   completetime: 5
@@ -262,6 +300,20 @@
     Plastic: 300
 
 - type: latheRecipe
+  id: MagazineRifle
+  result: MagazineRifle
+  completetime: 5
+  materials:
+    Steel: 375
+
+- type: latheRecipe
+  id: MagazineLightRifle
+  result: MagazineLightRifle
+  completetime: 5
+  materials:
+    Steel: 375
+
+- type: latheRecipe
   id: MagazineBoxRifle
   result: MagazineBoxRifle
   completetime: 5
@@ -290,6 +342,13 @@
   materials:
     Steel: 350
     Plastic: 600
+
+- type: latheRecipe
+  id: SpeedLoaderMagnum
+  result: SpeedLoaderMagnum
+  completetime: 5
+  materials:
+    Steel: 200
 
 - type: latheRecipe
   id: ShellShotgunIncendiary

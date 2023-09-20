@@ -93,7 +93,7 @@ public sealed class GeigerSystem : SharedGeigerSystem
             CurrentRadiation = component.CurrentRadiation,
             DangerLevel = component.DangerLevel,
             IsEnabled = component.IsEnabled,
-            User = component.User
+            User = GetNetEntity(component.User)
         };
     }
 

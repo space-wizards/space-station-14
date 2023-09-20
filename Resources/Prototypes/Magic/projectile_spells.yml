@@ -1,17 +1,20 @@
-﻿- type: worldTargetAction
-  id: Fireball
-  name: action-name-spell-fireball
-  description: action-description-spell-fireball
-  useDelay: 30
-  itemIconStyle: BigAction
-  checkCanAccess: false
-  range: 60
-  sound: !type:SoundPathSpecifier
-    path: /Audio/Magic/fireball.ogg
-  icon:
-    sprite: Objects/Magic/magicactions.rsi
-    state: fireball
-  serverEvent: !type:ProjectileSpellEvent
-    prototype: ProjectileFireball
-    posData: !type:TargetCasterPos
-    speech: action-speech-spell-fireball
+﻿- type: entity
+  id: ActionFireball
+  name: Fireball
+  description: Fires an explosive fireball towards the clicked location.
+  noSpawn: true
+  components:
+  - type: WorldTargetAction
+    useDelay: 30
+    itemIconStyle: BigAction
+    checkCanAccess: false
+    range: 60
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Magic/fireball.ogg
+    icon:
+      sprite: Objects/Magic/magicactions.rsi
+      state: fireball
+    event: !type:ProjectileSpellEvent
+      prototype: ProjectileFireball
+      posData: !type:TargetCasterPos
+      speech: action-speech-spell-fireball

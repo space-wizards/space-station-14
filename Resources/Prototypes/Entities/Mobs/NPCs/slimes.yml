@@ -117,6 +117,8 @@
     makeSentient: true
     name: ghost-role-information-slimes-name
     description: ghost-role-information-slimes-description
+  - type: Speech
+    speechVerb: Slime
 
 - type: entity
   name: blue slime

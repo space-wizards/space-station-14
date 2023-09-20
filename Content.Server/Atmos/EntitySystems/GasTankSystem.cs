@@ -7,14 +7,17 @@ using Content.Server.UserInterface;
 using Content.Shared.Actions;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
-using Content.Shared.Toggleable;
 using Content.Shared.Examine;
+using Content.Shared.Toggleable;
+using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
+using Robust.Shared.Physics.Systems;
 using Robust.Shared.Player;
+using Robust.Shared.Random;
 
 namespace Content.Server.Atmos.EntitySystems
 {
@@ -28,6 +31,8 @@ namespace Content.Server.Atmos.EntitySystems
         [Dependency] private readonly SharedContainerSystem _containers = default!;
         [Dependency] private readonly SharedActionsSystem _actions = default!;
         [Dependency] private readonly UserInterfaceSystem _ui = default!;
+        [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+        [Dependency] private readonly IRobustRandom _random = default!;
 
         private const float TimerDelay = 0.5f;
         private float _timer = 0f;
@@ -45,6 +50,7 @@ namespace Content.Server.Atmos.EntitySystems
             SubscribeLocalEvent<GasTankComponent, GasTankToggleInternalsMessage>(OnGasTankToggleInternals);
             SubscribeLocalEvent<GasTankComponent, GasAnalyzerScanEvent>(OnAnalyzed);
             SubscribeLocalEvent<GasTankComponent, PriceCalculationEvent>(OnGasTankPrice);
+            SubscribeLocalEvent<GasTankComponent, GetVerbsEvent<AlternativeVerb>>(OnGetAlternativeVerb);
         }
 
         private void OnGasShutdown(EntityUid uid, GasTankComponent component, ComponentShutdown args)
@@ -62,12 +68,15 @@ namespace Content.Server.Atmos.EntitySystems
 
         private void OnGasTankSetPressure(EntityUid uid, GasTankComponent component, GasTankSetPressureMessage args)
         {
-            component.OutputPressure = args.Pressure;
+            var pressure = Math.Min(args.Pressure, component.MaxOutputPressure);
+
+            component.OutputPressure = pressure;
+
+            UpdateUserInterface(component, true);
         }
 
         public void UpdateUserInterface(GasTankComponent component, bool initialUpdate = false)
         {
-            var internals = GetInternalsComponent(component);
             _ui.TrySetUiState(component.Owner, SharedGasTankUiKey.Key,
                 new GasTankBoundUserInterfaceState
                 {
@@ -94,7 +103,7 @@ namespace Content.Server.Atmos.EntitySystems
 
         private void OnGetActions(EntityUid uid, GasTankComponent component, GetItemActionsEvent args)
         {
-            args.Actions.Add(component.ToggleAction);
+            args.AddAction(ref component.ToggleActionEntity, component.ToggleAction);
         }
 
         private void OnExamined(EntityUid uid, GasTankComponent component, ExaminedEvent args)
@@ -103,6 +112,7 @@ namespace Content.Server.Atmos.EntitySystems
                 args.PushMarkup(Loc.GetString("comp-gas-tank-examine", ("pressure", Math.Round(component.Air?.Pressure ?? 0))));
             if (component.IsConnected)
                 args.PushMarkup(Loc.GetString("comp-gas-tank-connected"));
+            args.PushMarkup(Loc.GetString(component.IsValveOpen ? "comp-gas-tank-examine-open-valve" : "comp-gas-tank-examine-closed-valve"));
         }
 
         private void OnActionToggle(EntityUid uid, GasTankComponent component, ToggleActionEvent args)
@@ -123,25 +133,48 @@ namespace Content.Server.Atmos.EntitySystems
             if (_timer < TimerDelay) return;
             _timer -= TimerDelay;
 
-            foreach (var gasTank in EntityManager.EntityQuery<GasTankComponent>())
+            var query = EntityQueryEnumerator<GasTankComponent>();
+            while (query.MoveNext(out var uid, out var gasTank))
             {
+                if (gasTank.IsValveOpen && !gasTank.IsLowPressure)
+                {
+                    ReleaseGas(uid, gasTank);
+                }
+
                 if (gasTank.CheckUser)
                 {
                     gasTank.CheckUser = false;
-                    if (Transform(gasTank.Owner).ParentUid != gasTank.User)
+                    if (Transform(uid).ParentUid != gasTank.User)
                     {
                         DisconnectFromInternals(gasTank);
                         continue;
                     }
                 }
 
-                _atmosphereSystem.React(gasTank.Air, gasTank);
+                if (gasTank.Air != null)
+                {
+                    _atmosphereSystem.React(gasTank.Air, gasTank);
+                }
                 CheckStatus(gasTank);
-                if (_ui.IsUiOpen(gasTank.Owner, SharedGasTankUiKey.Key))
+                if (_ui.IsUiOpen(uid, SharedGasTankUiKey.Key))
                 {
                     UpdateUserInterface(gasTank);
                 }
             }
+        }
+
+        private void ReleaseGas(EntityUid uid, GasTankComponent component)
+        {
+            var removed = RemoveAirVolume(component, component.ValveOutputRate * TimerDelay);
+            var environment = _atmosphereSystem.GetContainingMixture(uid, false, true);
+            if (environment != null)
+            {
+                _atmosphereSystem.Merge(environment, removed);
+            }
+            var impulse = removed.TotalMoles * removed.Temperature;
+            _physics.ApplyLinearImpulse(uid, _random.NextAngle().ToWorldVec() * impulse);
+            _physics.ApplyAngularImpulse(uid, _random.NextFloat(-3f, 3f));
+            _audioSys.PlayPvs(component.RuptureSound, uid);
         }
 
         private void ToggleInternals(GasTankComponent component)
@@ -183,7 +216,7 @@ namespace Content.Server.Atmos.EntitySystems
         public bool CanConnectToInternals(GasTankComponent component)
         {
             var internals = GetInternalsComponent(component);
-            return internals != null && internals.BreathToolEntity != null;
+            return internals != null && internals.BreathToolEntity != null && !component.IsValveOpen;
         }
 
         public void ConnectToInternals(GasTankComponent component)
@@ -198,7 +231,7 @@ namespace Content.Server.Atmos.EntitySystems
             if (_internals.TryConnectTank(internals, component.Owner))
                 component.User = internals.Owner;
 
-            _actions.SetToggled(component.ToggleAction, component.IsConnected);
+            _actions.SetToggled(component.ToggleActionEntity, component.IsConnected);
 
             // Couldn't toggle!
             if (!component.IsConnected)
@@ -220,7 +253,7 @@ namespace Content.Server.Atmos.EntitySystems
             var internals = GetInternalsComponent(component);
             component.User = null;
 
-            _actions.SetToggled(component.ToggleAction, false);
+            _actions.SetToggled(component.ToggleActionEntity, false);
 
             _internals.DisconnectTank(internals);
             component.DisconnectStream?.Stop();
@@ -329,6 +362,22 @@ namespace Content.Server.Atmos.EntitySystems
         private void OnGasTankPrice(EntityUid uid, GasTankComponent component, ref PriceCalculationEvent args)
         {
             args.Price += _atmosphereSystem.GetPrice(component.Air);
+        }
+
+        private void OnGetAlternativeVerb(EntityUid uid, GasTankComponent component, GetVerbsEvent<AlternativeVerb> args)
+        {
+            if (!args.CanAccess || !args.CanInteract || args.Hands == null)
+                return;
+            args.Verbs.Add(new AlternativeVerb()
+            {
+                Text = component.IsValveOpen ? Loc.GetString("comp-gas-tank-close-valve") : Loc.GetString("comp-gas-tank-open-valve"),
+                Act = () =>
+                {
+                    component.IsValveOpen = !component.IsValveOpen;
+                    _audioSys.PlayPvs(component.ValveSound, uid);
+                },
+                Disabled = component.IsConnected,
+            });
         }
     }
 }

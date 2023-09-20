@@ -1,0 +1,46 @@
+- type: entity
+  id: Stairs
+  name: stairs
+  description: The greatest invention since rocket-propelled grenades.
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Clickable
+  - type: Sprite
+    sprite: Structures/stairs.rsi
+    state: stairs
+    drawdepth: FloorTiles
+  - type: Transform
+    anchored: true
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 500
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1:
+            min: 2
+            max: 4
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
+- type: entity
+  id: StairStage
+  parent: Stairs
+  suffix: stage
+  components:
+  - type: Sprite
+    sprite: Structures/stairs.rsi
+    state: stairs_stage
+    drawdepth: FloorTiles

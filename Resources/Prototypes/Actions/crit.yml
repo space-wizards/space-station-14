@@ -1,34 +1,43 @@
 ﻿# Actions added to mobs in crit.
-- type: instantAction
-  id: CritSuccumb
-  name: action-name-crit-succumb
-  description: action-description-crit-succumb
-  itemIconStyle: NoItem
-  checkCanInteract: false
-  icon:
-    sprite: Mobs/Ghosts/ghost_human.rsi
-    state: icon
-  serverEvent: !type:CritSuccumbEvent
+- type: entity
+  id: ActionCritSuccumb
+  name: Succumb
+  description: Accept your fate.
+  noSpawn: true
+  components:
+  - type: InstantAction
+    itemIconStyle: NoItem
+    checkCanInteract: false
+    icon:
+      sprite: Mobs/Ghosts/ghost_human.rsi
+      state: icon
+    event: !type:CritSuccumbEvent
 
-- type: instantAction
-  id: CritFakeDeath
-  name: action-name-crit-fake-death
-  description: action-description-crit-fake-death
-  itemIconStyle: NoItem
-  checkCanInteract: false
-  icon:
-    sprite: Interface/Actions/actions_crit.rsi
-    state: fakedeath
-  serverEvent: !type:CritFakeDeathEvent
-  useDelay: 30
+- type: entity
+  id: ActionCritFakeDeath
+  name: Fake Death
+  description: Pretend to take your final breath while staying alive.
+  noSpawn: true
+  components:
+  - type: InstantAction
+    itemIconStyle: NoItem
+    checkCanInteract: false
+    icon:
+      sprite: Interface/Actions/actions_crit.rsi
+      state: fakedeath
+    event: !type:CritFakeDeathEvent
+    useDelay: 30
 
-- type: instantAction
-  id: CritLastWords
-  name: action-name-crit-last-words
-  description: action-description-crit-last-words
-  itemIconStyle: NoItem
-  checkCanInteract: false
-  icon:
-    sprite: Interface/Actions/actions_crit.rsi
-    state: lastwords
-  serverEvent: !type:CritLastWordsEvent
+- type: entity
+  id: ActionCritLastWords
+  name: Say Last Words
+  description: Whisper your last words to anyone nearby, and then succumb to your fate. You only have 30 characters to work with.
+  noSpawn: true
+  components:
+  - type: InstantAction
+    itemIconStyle: NoItem
+    checkCanInteract: false
+    icon:
+      sprite: Interface/Actions/actions_crit.rsi
+      state: lastwords
+    event: !type:CritLastWordsEvent

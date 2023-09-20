@@ -25,13 +25,6 @@
   - type: Input
     context: "human"
   - type: PAI
-    midiAction:
-      name: action-name-pai-play-midi
-      checkCanInteract: false
-      icon: Interface/Actions/pai-midi.png
-      description: action-description-pai-play-midi
-      event: !type:OpenUiActionEvent
-        key: enum.InstrumentUiKey.Key
   - type: BlockMovement
   - type: ToggleableGhostRole
     examineTextMindPresent: pai-system-pai-installed
@@ -104,3 +97,15 @@
           Off: { state: syndicate-pai-off-overlay }
           Searching: { state: syndicate-pai-searching-overlay }
           On: { state: syndicate-pai-on-overlay }
+
+- type: entity
+  id: ActionPAIPlayMidi
+  name: Play MIDI
+  description: Open your portable MIDI interface to soothe your owner.
+  noSpawn: true
+  components:
+  - type: InstantAction
+    checkCanInteract: false
+    icon: Interface/Actions/pai-midi.png
+    event: !type:OpenUiActionEvent
+      key: enum.InstrumentUiKey.Key

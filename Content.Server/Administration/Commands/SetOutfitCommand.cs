@@ -20,7 +20,6 @@ namespace Content.Server.Administration.Commands
     public sealed class SetOutfitCommand : IConsoleCommand
     {
         [Dependency] private readonly IEntityManager _entities = default!;
-        [Dependency] private readonly IPrototypeManager _prototypes = default!;
 
         public string Command => "setoutfit";
 
