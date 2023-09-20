@@ -7,10 +7,9 @@ namespace Content.Server.Speech.Components;
 public sealed partial class LoudAccentComponent : Component
 {
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("yellChance")]
-    public float YellChance = 0.8f;
+    [DataField]
+    public float YellChance = 0.2f;
 
-    [ViewVariables]
     public readonly List<string> YellSuffixes = new()
     {
         "accent-loud-suffix-1",

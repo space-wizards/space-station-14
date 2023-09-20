@@ -17,11 +17,9 @@ public sealed class LoudSystem : EntitySystem
     }
     public string Accentuate(string message, LoudAccentComponent component)
     {
-
         var msg = message;
 
         //Makes everything you say caps
-
         msg = msg.ToString().ToUpper();
 
         //Appends !! so that you yell and chat is bold
@@ -30,18 +28,13 @@ public sealed class LoudSystem : EntitySystem
         //Get .ftl file with suffixes
         msg = _replacement.ApplyReplacements(msg, "loud");
 
-        //Apply random suffix to var if random chance succeeds
+        //Apply random suffix to var with random chance
         if (!_random.Prob(component.YellChance))
-        {
-            var pick = _random.Pick(component.YellSuffixes);
-
-            msg = msg + " " + Loc.GetString(pick);
             return msg;
-        }
 
+        var pick = _random.Pick(component.YellSuffixes);
 
-
- 
+        msg = msg + " " + Loc.GetString(pick);
         return msg;
     }
 
