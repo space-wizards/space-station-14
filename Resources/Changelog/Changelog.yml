@@ -1,9 +1,4 @@
 Entries:
-- author: liltenhead
-  changes:
-  - {message: Fixed incorrect cheese wheel guidebook recipe, type: Fix}
-  id: 4367
-  time: '2023-07-29T13:14:00.0000000+00:00'
 - author: eclips_e
   changes:
   - {message: Renamed the chemical compendium to chempendium, type: Tweak}
@@ -2971,3 +2966,8 @@ Entries:
       headsets.', type: Fix}
   id: 4866
   time: '2023-09-20T12:01:54.0000000+00:00'
+- author: ike709
+  changes:
+  - {message: Added a search filter to vending machines, type: Add}
+  id: 4867
+  time: '2023-09-20T19:40:41.0000000+00:00'
