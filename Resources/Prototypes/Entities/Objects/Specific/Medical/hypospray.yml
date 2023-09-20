@@ -127,7 +127,7 @@
 - type: entity
   name: poison auto-injector
   parent: ChemicalMedipen
-  id: PoisonAutoInjector
+  id: AntiPoisonMedipen
   description: A rapid dose of anti-poison. Contains ultravasculine and epinephrine.
   components:
   - type: Sprite
