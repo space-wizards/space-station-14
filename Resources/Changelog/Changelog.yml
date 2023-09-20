@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Truncate gun fire rate examines so they don't show 20 digits., type: Fix}
-  id: 4363
-  time: '2023-07-29T06:09:43.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Initial Infected can now use the "turn undead" action while in crit.,
@@ -2970,3 +2965,8 @@ Entries:
   - {message: Added frontal lisp as a character trait for all species!, type: Add}
   id: 4862
   time: '2023-09-20T04:51:50.0000000+00:00'
+- author: Alekshhh
+  changes:
+  - {message: Changed most medkit fills, type: Tweak}
+  id: 4863
+  time: '2023-09-20T07:50:19.0000000+00:00'
