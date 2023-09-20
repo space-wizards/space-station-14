@@ -180,8 +180,6 @@
   components:
     - type: Implanter
       implant: DnaScramblerImplant
-      currentMode: Inject
-      implantOnly: false
 
 #Nuclear Operative/Special implanters
 
