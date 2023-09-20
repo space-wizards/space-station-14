@@ -48,7 +48,7 @@ namespace Content.Server.VendingMachines
 
             _sawmill = Logger.GetSawmill("vending");
 
-            SubscribeLocalEvent<VendingMachineComponent, MapInitEvent>(OnComponentMapInit);
+            SubscribeLocalEvent<VendingMachineInventoryComponent, MapInitEvent>(OnComponentMapInit);
             SubscribeLocalEvent<VendingMachineVisualStateComponent, PowerChangedEvent>(OnPowerChanged);
             SubscribeLocalEvent<VendingMachineInventoryComponent, PriceCalculationEvent>(OnVendingPrice);
             SubscribeLocalEvent<VendingMachineEjectComponent, VendingMachineEjectMessage>(OnInventoryEjectMessage);
@@ -63,7 +63,7 @@ namespace Content.Server.VendingMachines
             SubscribeLocalEvent<VendingMachineInventoryComponent, GotEmaggedEvent>(OnEmagged);
         }
 
-        private void OnComponentMapInit(EntityUid uid, VendingMachineComponent component, MapInitEvent args)
+        private void OnComponentMapInit(EntityUid uid, VendingMachineInventoryComponent component, MapInitEvent args)
         {
             _action.AddAction(uid, ref component.ActionEntity, component.Action, uid);
             Dirty(uid, component);
