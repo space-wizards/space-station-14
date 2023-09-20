@@ -49,10 +49,11 @@
   boilingPoint: 100.0
   meltingPoint: 60.0
   metabolisms:
+    Food:
+      effects:
+      - !type:ChemVomit
     Drink:
       effects:
-      - !type:SatiateThirst
-        factor: 3
       - !type:ChemVomit
 
 - type: reagent
@@ -70,6 +71,8 @@
       - !type:SatiateThirst
         factor: 3
       - !type:ChemVomit
+        thirstAmount: -10.0
+        hungerAmount: -10.0
   plantMetabolism:
   - !type:PlantAdjustWater
     amount: .8

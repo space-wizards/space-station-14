@@ -373,7 +373,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
             {
                 args.PushMarkup(Loc.GetString("puddle-component-examine-evaporating"));
             }
-            else if (solution?.ContainsPrototype(EvaporationReagent) == true)
+            else if (solution?.GetTotalPrototypeQuantity(EvaporationReagents) > FixedPoint2.Zero)
             {
                 args.PushMarkup(Loc.GetString("puddle-component-examine-evaporating-partial"));
             }

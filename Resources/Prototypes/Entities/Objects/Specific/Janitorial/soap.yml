@@ -164,3 +164,10 @@
   - type: StepTrigger
   - type: Item
     heldPrefix: omega
+  - type: SolutionContainerManager
+    solutions:
+      soap:
+        maxVol: 800
+        reagents:
+        - ReagentId: SoapReagent
+          Quantity: 800

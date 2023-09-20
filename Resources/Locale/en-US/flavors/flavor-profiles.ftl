@@ -29,6 +29,7 @@ flavor-base-chalky = chalky
 flavor-base-oily = oily
 flavor-base-peppery = peppery
 flavor-base-slimy = slimy
+flavor-base-soapy = soapy
 flavor-base-magical = magical
 flavor-base-fiber = fibrous
 flavor-base-cold = cold
