@@ -15,6 +15,11 @@
   description: flavor-base-salty
 
 - type: flavor
+  id: soapy
+  flavorType: Base
+  description: flavor-base-soapy
+
+- type: flavor
   id: sour
   flavorType: Base
   description: flavor-base-sour
