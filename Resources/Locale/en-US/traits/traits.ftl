@@ -34,3 +34,6 @@ trait-wheelchair-bound-desc = You cannot move without your wheelchair. Wheelchai
 
 trait-frontal-lisp-name = Frontal Lisp
 trait-frontal-lisp-desc = You thpeak with a lithp
+
+trait-loud-mouth-name = Loud Mouth
+trait-loud-mouth-desc = YOU CAN'T HELP BUT YELL CONSTANTLY!! GRAAAHHH!!
