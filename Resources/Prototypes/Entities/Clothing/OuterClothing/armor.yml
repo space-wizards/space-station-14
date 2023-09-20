@@ -260,7 +260,7 @@
   parent: ClothingOuterBaseLarge
   id: ClothingOuterArmorBone
   name: bone armor
-  description: Seats on you like a second skelet.
+  description: Sits on you like a second skin.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Armor/bone_armor.rsi
@@ -271,9 +271,9 @@
       coefficients:
         Blunt: 0.6
         Slash: 0.8
-        Piercing: 0.2
+        Piercing: 0.4
   - type: ClothingSpeedModifier
-    walkModifier: 0.2
+    walkModifier: 0.8
   - type: ExplosionResistance
     damageCoefficient: 0.4
   - type: GroupExamine
