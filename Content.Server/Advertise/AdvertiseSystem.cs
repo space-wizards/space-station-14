@@ -91,7 +91,7 @@ namespace Content.Server.Advertise
         private void OnVendingEnableChangeAttempt(EntityUid uid, BrokeComponent component, AdvertiseEnableChangeAttemptEvent args)
         {
             // TODO: Improve this...
-            if(args.NewState && component.Broken)
+            if(args.NewState && component.IsBroken)
                 args.Cancel();
         }
 

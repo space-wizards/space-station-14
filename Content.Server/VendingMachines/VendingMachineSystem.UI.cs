@@ -10,7 +10,7 @@ public sealed partial class VendingMachineSystem
     private void OnActivatableUIOpenAttempt(EntityUid uid, BrokeComponent component,
         ActivatableUIOpenAttemptEvent args)
     {
-        if (component.Broken)
+        if (component.IsBroken)
             args.Cancel();
     }
 

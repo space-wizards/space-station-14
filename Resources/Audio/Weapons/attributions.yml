@@ -8,7 +8,6 @@
   copyright: "User tosha73 on freesound.org"
   source: "https://freesound.org/people/tosha73/sounds/509902/"
 
-
 - files: ["chainsaw.ogg, chainsawidle.ogg, chainsawwield.ogg"]
   license: "Custom"
   copyright: "https://www.soundjay.com/tos.html"
@@ -28,3 +27,8 @@
   license: "CC-BY-SA-3.0"
   copyright: "Based on genhit3.ogg from tgstation, modified by deltanedas on github."
   source: "https://github.com/deltanedas"
+
+- files: ["telescopicon.ogg, telescopicoff.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "User Nimfar11 on GitHub."
+  source: "https://github.com/Nimfar11"

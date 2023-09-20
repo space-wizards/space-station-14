@@ -15,6 +15,7 @@ using Content.Shared.Broke;
 using Content.Shared.DispenseOnHit;
 using Content.Shared.Prototypes;
 using Content.Shared.VendingMachines.Components;
+using Content.Shared.Storage.Components;
 
 namespace Content.IntegrationTests.Tests
 {

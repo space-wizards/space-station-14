@@ -5,7 +5,6 @@ using Content.Server.Radio.Components;
 using Content.Server.Roles;
 using Content.Server.Station.Systems;
 using Content.Shared.Actions;
-using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Administration;
 using Content.Shared.Chat;
 using Content.Shared.Emag.Components;
@@ -43,7 +42,6 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<SiliconLawBoundComponent, ComponentStartup>(OnComponentStartup);
         SubscribeLocalEvent<SiliconLawBoundComponent, ComponentShutdown>(OnComponentShutdown);
         SubscribeLocalEvent<SiliconLawBoundComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<SiliconLawBoundComponent, MindAddedMessage>(OnMindAdded);
@@ -58,20 +56,15 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
         SubscribeLocalEvent<EmagSiliconLawComponent, ExaminedEvent>(OnExamined);
     }
 
-    private void OnComponentStartup(EntityUid uid, SiliconLawBoundComponent component, ComponentStartup args)
-    {
-        component.ProvidedAction = new(_prototype.Index<InstantActionPrototype>(component.ViewLawsAction));
-        _actions.AddAction(uid, component.ProvidedAction, null);
-    }
-
     private void OnComponentShutdown(EntityUid uid, SiliconLawBoundComponent component, ComponentShutdown args)
     {
-        if (component.ProvidedAction != null)
-            _actions.RemoveAction(uid, component.ProvidedAction);
+        if (component.ViewLawsActionEntity != null)
+            _actions.RemoveAction(uid, component.ViewLawsActionEntity);
     }
 
     private void OnMapInit(EntityUid uid, SiliconLawBoundComponent component, MapInitEvent args)
     {
+        _actions.AddAction(uid, ref component.ViewLawsActionEntity, component.ViewLawsAction);
         GetLaws(uid, component);
     }
 

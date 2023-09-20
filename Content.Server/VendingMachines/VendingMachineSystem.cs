@@ -7,7 +7,6 @@ using Content.Server.UserInterface;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.Actions;
-using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Broke;
 using Content.Shared.Damage;
 using Content.Shared.Destructible;
@@ -49,6 +48,7 @@ namespace Content.Server.VendingMachines
 
             _sawmill = Logger.GetSawmill("vending");
 
+            SubscribeLocalEvent<VendingMachineInventoryComponent, MapInitEvent>(OnComponentMapInit);
             SubscribeLocalEvent<VendingMachineVisualStateComponent, PowerChangedEvent>(OnPowerChanged);
             SubscribeLocalEvent<VendingMachineInventoryComponent, PriceCalculationEvent>(OnVendingPrice);
             SubscribeLocalEvent<VendingMachineEjectComponent, VendingMachineEjectMessage>(OnInventoryEjectMessage);
@@ -61,6 +61,12 @@ namespace Content.Server.VendingMachines
             SubscribeLocalEvent<VendingMachineRestockComponent, PriceCalculationEvent>(OnPriceCalculation);
             SubscribeLocalEvent<BrokeComponent, EmpPulseEvent>(OnEmpPulse);
             SubscribeLocalEvent<VendingMachineInventoryComponent, GotEmaggedEvent>(OnEmagged);
+        }
+
+        private void OnComponentMapInit(EntityUid uid, VendingMachineInventoryComponent component, MapInitEvent args)
+        {
+            _action.AddAction(uid, ref component.ActionEntity, component.Action, uid);
+            Dirty(uid, component);
         }
 
         private void OnVendingPrice(EntityUid uid,
@@ -102,12 +108,6 @@ namespace Content.Server.VendingMachines
             {
                 UpdateVisualState(uid);
             }
-
-            if (component.Action == null)
-                return;
-
-            var action = new InstantAction(PrototypeManager.Index<InstantActionPrototype>(component.Action));
-            _action.AddAction(uid, action, uid);
         }
 
 
@@ -195,10 +195,10 @@ namespace Content.Server.VendingMachines
             if (!Resolve(uid, ref vendComponent))
                 return;
 
-            if (vendComponent.Denying)
+            if (vendComponent.IsDenying)
                 return;
 
-            vendComponent.Denying = true;
+            vendComponent.IsDenying = true;
             vendComponent.DenyCooldown = _timing.CurTime + vendComponent.DenyDelay;
 
             Audio.PlayPvs(vendComponent.SoundDeny, uid, AudioParams.Default.WithVolume(-2f));
@@ -219,7 +219,7 @@ namespace Content.Server.VendingMachines
             if (!Resolve(uid, ref vendComponent))
                 return false;
 
-            if (!TryComp<AccessReaderComponent?>(uid, out var accessReader))
+            if (!TryComp<AccessReaderComponent>(uid, out var accessReader))
                 return true;
 
             if (_accessReader.IsAllowed(sender, uid, accessReader) || HasComp<EmaggedComponent>(uid))
@@ -252,7 +252,7 @@ namespace Content.Server.VendingMachines
             if (!TryComp<BrokeComponent>(uid, out var brokeComponent))
                 return;
 
-            if (vendComponent.Ejecting || brokeComponent.Broken || !this.IsPowered(uid, EntityManager))
+            if (vendComponent.IsEjecting || brokeComponent.IsBroken || !this.IsPowered(uid, EntityManager))
             {
                 return;
             }
@@ -280,10 +280,10 @@ namespace Content.Server.VendingMachines
                 return;
 
             // Start Ejecting, and prevent users from ordering while anim playing
-            vendComponent.Ejecting = true;
+            vendComponent.IsEjecting = true;
             vendComponent.Cooldown = _timing.CurTime + vendComponent.Delay;
             vendComponent.NextItemToEject = entry.Uids;
-            vendComponent.ThrowNextItem = throwItem;
+            vendComponent.IsThrowNextItem = throwItem;
 
             entry.Amount--;
 
@@ -340,7 +340,7 @@ namespace Content.Server.VendingMachines
             if (forceEject)
             {
                 ejectComponent.NextItemToEject = item.Uids;
-                ejectComponent.ThrowNextItem = throwItem;
+                ejectComponent.IsThrowNextItem = throwItem;
 
                 var entry = GetEntry(uid, item.Uids, item.TypeId, inventoryComponent);
 
@@ -368,12 +368,12 @@ namespace Content.Server.VendingMachines
 
             if (string.IsNullOrEmpty(vendComponent.NextItemToEject))
             {
-                vendComponent.ThrowNextItem = false;
+                vendComponent.IsThrowNextItem = false;
                 return;
             }
 
             var ent = Spawn(vendComponent.NextItemToEject, Transform(uid).Coordinates);
-            if (vendComponent.ThrowNextItem)
+            if (vendComponent.IsThrowNextItem)
             {
                 var range = vendComponent.NonLimitedEjectRange;
                 var direction = new Vector2(_random.NextFloat(-range, range), _random.NextFloat(-range, range));
@@ -381,7 +381,7 @@ namespace Content.Server.VendingMachines
             }
 
             vendComponent.NextItemToEject = null;
-            vendComponent.ThrowNextItem = false;
+            vendComponent.IsThrowNextItem = false;
         }
 
         /// <summary>
@@ -411,7 +411,7 @@ namespace Content.Server.VendingMachines
                 }
                 case VendingMachinesInventoryTypeNames.Contraband:
                 {
-                    if (!inventoryComponent.Contraband)
+                    if (!inventoryComponent.IsContrabandEnabled)
                         return null;
 
                     return FindEntry(inventoryComponent, entryId, typeId);
@@ -456,16 +456,16 @@ namespace Content.Server.VendingMachines
 
             while (query.MoveNext(out var uid, out var comp))
             {
-                if (comp.Ejecting && CheckCooldownIsOver(ref comp.Cooldown, comp.Delay))
+                if (comp.IsEjecting && CheckCooldownIsOver(ref comp.Cooldown, comp.Delay))
                 {
-                    comp.Ejecting = false;
+                    comp.IsEjecting = false;
 
                     EjectItem(uid, comp);
                 }
 
-                if (comp.Denying && CheckCooldownIsOver(ref comp.DenyCooldown, comp.DenyDelay))
+                if (comp.IsDenying && CheckCooldownIsOver(ref comp.DenyCooldown, comp.DenyDelay))
                 {
-                    comp.Denying = false;
+                    comp.IsDenying = false;
 
                     EjectItem(uid, comp);
                 }

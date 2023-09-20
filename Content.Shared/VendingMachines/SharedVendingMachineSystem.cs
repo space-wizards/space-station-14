@@ -57,10 +57,8 @@ public abstract partial class SharedVendingMachineSystem : EntitySystem
         foreach (var pack in component.PackPrototypeId)
         {
             if (!PrototypeManager.TryIndex(pack,
-                    out VendingMachineInventoryPrototype? packPrototype))
-                continue;
-
-            if (!PrototypeManager.TryIndex(packPrototype.InventoryTypePrototypeId,
+                    out VendingMachineInventoryPrototype? packPrototype) ||
+                !PrototypeManager.TryIndex(packPrototype.InventoryTypePrototypeId,
                     out VendingMachineInventoryTypePrototype? inventoryType))
                 continue;
 
@@ -189,14 +187,16 @@ public abstract partial class SharedVendingMachineSystem : EntitySystem
                 }
                 case VendingMachinesInventoryTypeNames.Contraband:
                 {
-                    if (component.Contraband)
+                    if (component.IsContrabandEnabled)
                         inventory.AddRange(items.Value);
 
                     continue;
                 }
                 default:
+                {
                     inventory.AddRange(items.Value);
                     break;
+                }
             }
         }
 

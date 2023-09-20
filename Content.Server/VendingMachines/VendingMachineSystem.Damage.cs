@@ -11,7 +11,7 @@ public sealed partial class VendingMachineSystem
 {
     private void OnBreak(EntityUid uid, BrokeComponent component, BreakageEventArgs eventArgs)
     {
-        component.Broken = true;
+        component.IsBroken = true;
 
         UpdateVisualState(uid);
     }
@@ -21,7 +21,7 @@ public sealed partial class VendingMachineSystem
         if (!TryComp<DispenseOnHitComponent>(uid, out var dispenseComponent))
             return;
 
-        if (brokeComponent.Broken || dispenseComponent.CoolingDown ||
+        if (brokeComponent.IsBroken || dispenseComponent.CoolingDown ||
             dispenseComponent.Chance == null || args.DamageDelta == null)
             return;
 

@@ -13,6 +13,9 @@ reagent-desc-polytrinic-acid = An extremely corrosive chemical substance. Severe
 reagent-name-chloral-hydrate = chloral hydrate
 reagent-desc-chloral-hydrate = A sedative and hypnotic chemical. Commonly used to put other people to sleep, whether they want to or not.
 
+reagent-name-ferrochromic-acid = ferrochromic acid
+reagent-desc-ferrochromic-acid = A mildy corrosive solution, unable of causing severe danger unless ingested.
+
 reagent-name-fluorosulfuric-acid = fluorosulfuric acid
 reagent-desc-fluorosulfuric-acid = A highly corrosive chemical, capable of leaving quite a mark on your skin.
 
@@ -60,3 +63,6 @@ reagent-desc-honk = A toxin found in bananium. Causes severe honking and interna
 
 reagent-name-lead = lead
 reagent-desc-lead = A slow-acting but incredibly lethal toxin found in steel, albiet in trace amounts. Tasteless.
+
+reagent-name-bungotoxin = bungotoxin
+reagent-desc-bungotoxin = A moderately slow-acting poison found within the pit of the bungo fruit.

@@ -11,5 +11,5 @@ public sealed partial class BrokeComponent : Component
     /// <summary>
     /// It is used as a flag indicating that the object is broken.
     /// </summary>
-    public bool Broken;
+    public bool IsBroken;
 }
