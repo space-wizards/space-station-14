@@ -14,7 +14,6 @@ namespace Content.Shared.Body.Systems;
 
 public partial class SharedBodySystem
 {
-    [Dependency] private readonly INetManager _netManager = default!;
     public void InitializeBody()
     {
         SubscribeLocalEvent<BodyComponent, MapInitEvent>(OnBodyMapInit);
@@ -33,7 +32,7 @@ public partial class SharedBodySystem
         component.RootPartSlot = state.RootPartSlot;
         component.GibSound = state.GibSound;
         component.RequiredLegs = state.RequiredLegs;
-        component.LegEntities = EntityManager.GetEntitySet(state.LegNetEntities);
+        component.LegEntities = EntityManager.EnsureEntitySet<BodyComponent>(state.LegNetEntities, uid);
     }
 
     private void OnBodyGetState(EntityUid uid, BodyComponent component, ref ComponentGetState args)

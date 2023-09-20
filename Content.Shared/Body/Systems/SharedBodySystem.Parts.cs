@@ -167,7 +167,7 @@ public partial class SharedBodySystem
     {
         if (!Resolve(bodyId, ref body) || !Resolve(partId, ref part) || !CanAttachToRoot(bodyId, partId, body, part))
             return false;
-        body.RootContainer = Containers.EnsureContainer<ContainerSlot>(bodyId, BodyRootContainerId);
+
         body.RootPartSlot = slotName;
         if (part.Parent != null)
         {
@@ -329,7 +329,7 @@ public partial class SharedBodySystem
             return false;
 
         if (TryComp(partId.Value, out TransformComponent? transform))
-            SharedTransform.SetCoordinates(partId.Value,dropAt);
+            SharedTransform.SetCoordinates(partId.Value, transform, dropAt);
         return true;
     }
 

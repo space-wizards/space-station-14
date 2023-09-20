@@ -151,7 +151,7 @@ public partial class SharedBodySystem
             return false;
 
         if (TryComp(organId.Value, out TransformComponent? transform))
-            SharedTransform.SetCoordinates(organId.Value,dropAt);
+            SharedTransform.SetCoordinates(organId.Value, transform, dropAt);
         return true;
     }
 
