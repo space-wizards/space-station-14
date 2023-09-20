@@ -30,6 +30,7 @@ namespace Content.Client.VendingMachines
 
             _menu.OnClose += Close;
             _menu.OnItemSelected += OnItemSelected;
+            _menu.OnSearchChanged += OnSearchChanged;
 
             _menu.Populate(_cachedInventory);
 
@@ -73,6 +74,11 @@ namespace Content.Client.VendingMachines
             _menu.OnItemSelected -= OnItemSelected;
             _menu.OnClose -= Close;
             _menu.Dispose();
+        }
+
+        private void OnSearchChanged(string? filter)
+        {
+            _menu?.Populate(_cachedInventory, filter);
         }
     }
 }
