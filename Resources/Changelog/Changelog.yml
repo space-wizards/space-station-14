@@ -1,9 +1,4 @@
 Entries:
-- author: Potato1234_x
-  changes:
-  - {message: Added bags for cargo techs., type: Add}
-  id: 4366
-  time: '2023-07-29T06:12:42.0000000+00:00'
 - author: liltenhead
   changes:
   - {message: Fixed incorrect cheese wheel guidebook recipe, type: Fix}
@@ -2970,3 +2965,9 @@ Entries:
   - {message: Increased popcorn cooking time., type: Tweak}
   id: 4865
   time: '2023-09-20T09:51:09.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: 'Fix some do_afters mispredicting, e.g. removing encryption keys from
+      headsets.', type: Fix}
+  id: 4866
+  time: '2023-09-20T12:01:54.0000000+00:00'
