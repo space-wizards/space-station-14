@@ -125,9 +125,9 @@
 
 
 - type: entity
-  name: anti-poison medipen
+  name: poison auto-injector
   parent: ChemicalMedipen
-  id: AntiPoisonMedipen
+  id: PoisonAutoInjector
   description: A rapid dose of anti-poison. Contains ultravasculine and epinephrine.
   components:
   - type: Sprite
@@ -196,6 +196,32 @@
           Quantity: 10
         - ReagentId: Leporazine
           Quantity: 10
+  - type: Tag
+    tags: []
+
+- type: entity
+  name: rad auto-injector
+  parent: ChemicalMedipen
+  id: RadAutoInjector
+  description: A rapid dose of anti-radiation. Contains arithrazine and bicardine.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Medical/medipen.rsi
+    layers:
+    - state: arithpen
+      map: ["enum.SolutionContainerLayers.Fill"]
+  - type: Hypospray
+    solutionName: pen
+    transferAmount: 20
+  - type: SolutionContainerManager
+    solutions:
+      pen:
+        maxVol: 20
+        reagents:
+        - ReagentId: Arithrazine
+          Quantity: 15
+        - ReagentId: Bicaridine
+          Quantity: 5
   - type: Tag
     tags: []
 
