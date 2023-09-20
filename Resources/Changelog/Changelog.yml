@@ -1,58 +1,4 @@
 Entries:
-- author: KingFroozy
-  changes:
-  - {message: 'Nanotrasen''s vest suppliers have finally started to sew pockets to
-      their hi-viz vests, and now you can safely put explosives in it.', type: Add}
-  id: 4357
-  time: '2023-07-28T19:53:59.0000000+00:00'
-- author: Jackal298
-  changes:
-  - {message: Improved sprites SMG Drozd and sprite WT 550 behind, type: Tweak}
-  id: 4358
-  time: '2023-07-28T19:55:46.0000000+00:00'
-- author: Misha_Unity
-  changes:
-  - {message: News tab has been turned into an PDA application, type: Tweak}
-  - {message: Added cooldown to mass-media console, type: Add}
-  - {message: Added function to turn off new news notifications, type: Add}
-  id: 4359
-  time: '2023-07-28T19:59:03.0000000+00:00'
-- author: Skarlet
-  changes:
-  - {message: 'Changed the Captain''s wardrobe with a new default outfit, a new carapace
-      and updates older clothing for the sake of consistency.', type: Tweak}
-  id: 4360
-  time: '2023-07-29T00:09:20.0000000+00:00'
-- author: Vasilis
-  changes:
-  - {message: The local Clown on Station 14 wore a plunger on their head and became
-      a sensation overnight! Many try to replicate their style, type: Add}
-  id: 4361
-  time: '2023-07-29T00:10:45.0000000+00:00'
-- author: Jackal298
-  changes:
-  - {message: Raised the price of the sniper bundle from 6 to 12 TC and reduced the
-      ammo supply from 30 to 10, type: Tweak}
-  - {message: Fixed the issue of not being able to put the Anti-Material Ammo back
-      into the Anti-Material Ammo Box, type: Fix}
-  id: 4362
-  time: '2023-07-29T06:09:33.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Truncate gun fire rate examines so they don't show 20 digits., type: Fix}
-  id: 4363
-  time: '2023-07-29T06:09:43.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Initial Infected can now use the "turn undead" action while in crit.,
-    type: Fix}
-  id: 4364
-  time: '2023-07-29T06:09:54.0000000+00:00'
-- author: lzk228
-  changes:
-  - {message: Added hairflower to authodrobe!, type: Add}
-  id: 4365
-  time: '2023-07-29T06:10:15.0000000+00:00'
 - author: Potato1234_x
   changes:
   - {message: Added bags for cargo techs., type: Add}
@@ -2970,3 +2916,57 @@ Entries:
     type: Tweak}
   id: 4856
   time: '2023-09-18T21:07:00.0000000+00:00'
+- author: Doru991
+  changes:
+  - {message: Berry seeds are now available from the MegaSeed Servitor., type: Add}
+  - {message: Seeds for the bungo fruit are included in the exotic seed crate., type: Add}
+  id: 4857
+  time: '2023-09-19T03:29:28.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Skeletons have been reported in the closets of various station officials.
+      And maintenance., type: Add}
+  - {message: Skeletons can no longer have a pitch-black coloration., type: Tweak}
+  id: 4858
+  time: '2023-09-19T05:05:18.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: 'Expeditions have been massively tweaked. Timer is 7 minutes, loot count
+      is significantly up, added significantly more loot to the loot table, mob count
+      is significantly up, and mobs overall have been nerfed (no more 15 damage carps
+      ending you). It also has a flat 13 minute cooldown. Better bring your fultons
+      if you expect to bring stuff back.', type: Tweak}
+  id: 4859
+  time: '2023-09-19T12:52:01.0000000+00:00'
+- author: Repo
+  changes:
+  - {message: Time out for particular uplink items for balancing. Syndicate Bomb can
+      only be purchased after 30min., type: Add}
+  id: 4860
+  time: '2023-09-19T23:51:15.0000000+00:00'
+- author: liltenhead
+  changes:
+  - {message: Reduced the crafting costs of the buckler and makeshift shield., type: Tweak}
+  id: 4861
+  time: '2023-09-20T04:49:43.0000000+00:00'
+- author: dahnte
+  changes:
+  - {message: Added frontal lisp as a character trait for all species!, type: Add}
+  id: 4862
+  time: '2023-09-20T04:51:50.0000000+00:00'
+- author: Alekshhh
+  changes:
+  - {message: Changed most medkit fills, type: Tweak}
+  id: 4863
+  time: '2023-09-20T07:50:19.0000000+00:00'
+- author: Alekshhh
+  changes:
+  - {message: Added U-shaped rails, type: Add}
+  id: 4864
+  time: '2023-09-20T08:26:17.0000000+00:00'
+- author: Just_Art
+  changes:
+  - {message: Added corn in butter., type: Add}
+  - {message: Increased popcorn cooking time., type: Tweak}
+  id: 4865
+  time: '2023-09-20T09:51:09.0000000+00:00'
