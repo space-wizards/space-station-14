@@ -60,11 +60,11 @@ public sealed partial class VendingMachineEjectComponent : Component
     // Yoinked from: https://github.com/discordia-space/CEV-Eris/blob/35bbad6764b14e15c03a816e3e89aa1751660ba9/sound/machines/Custom_deny.ogg
     public SoundSpecifier SoundDeny = new SoundPathSpecifier("/Audio/Machines/custom_deny.ogg");
 
-    public bool Ejecting;
-    public bool Denying;
+    public bool IsEjecting;
+    public bool IsDenying;
 
     public string? NextItemToEject;
-    public bool ThrowNextItem = false;
+    public bool IsThrowNextItem = false;
 
     public float NonLimitedEjectForce = 7.5f;
     public float NonLimitedEjectRange = 5f;

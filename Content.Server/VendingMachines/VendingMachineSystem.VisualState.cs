@@ -38,15 +38,15 @@ public sealed partial class VendingMachineSystem
 
         var finalState = VendingMachineVisualState.Normal;
 
-        if (brokeComponent.Broken)
+        if (brokeComponent.IsBroken)
         {
             finalState = VendingMachineVisualState.Broken;
         }
-        else if (ejectComponent.Ejecting)
+        else if (ejectComponent.IsDenying)
         {
             finalState = VendingMachineVisualState.Eject;
         }
-        else if (ejectComponent.Denying)
+        else if (ejectComponent.IsDenying)
         {
             finalState = VendingMachineVisualState.Deny;
         }

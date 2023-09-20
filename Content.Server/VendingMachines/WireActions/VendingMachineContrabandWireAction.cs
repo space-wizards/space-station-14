@@ -17,7 +17,7 @@ public sealed partial class VendingMachineContrabandWireAction : BaseToggleWireA
     {
         if (EntityManager.TryGetComponent(wire.Owner, out VendingMachineInventoryComponent? vending))
         {
-            return vending.Contraband
+            return vending.IsContrabandEnabled
                 ? StatusLightState.BlinkingSlow
                 : StatusLightState.On;
         }
@@ -29,12 +29,12 @@ public sealed partial class VendingMachineContrabandWireAction : BaseToggleWireA
     {
         if (EntityManager.TryGetComponent(owner, out VendingMachineInventoryComponent? vending))
         {
-            vending.Contraband = !setting;
+            vending.IsContrabandEnabled = !setting;
         }
     }
 
     public override bool GetValue(EntityUid owner)
     {
-        return EntityManager.TryGetComponent(owner, out VendingMachineInventoryComponent? vending) && !vending.Contraband;
+        return EntityManager.TryGetComponent(owner, out VendingMachineInventoryComponent? vending) && !vending.IsContrabandEnabled;
     }
 }

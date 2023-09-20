@@ -33,5 +33,5 @@ public sealed partial class VendingMachineInventoryComponent : Component
 
     public Container? Storage;
 
-    public bool Contraband;
+    public bool IsContrabandEnabled;
 }

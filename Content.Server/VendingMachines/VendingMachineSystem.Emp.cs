@@ -13,7 +13,7 @@ public sealed partial class VendingMachineSystem
         if (!TryComp<VendingMachineEmpEjectComponent>(uid, out var empEjectComponent))
             return;
 
-        if (!component.Broken && this.IsPowered(uid, EntityManager))
+        if (!component.IsBroken && this.IsPowered(uid, EntityManager))
         {
             args.Affected = true;
             args.Disabled = true;

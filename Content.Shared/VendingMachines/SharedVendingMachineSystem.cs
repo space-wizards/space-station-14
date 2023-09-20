@@ -41,10 +41,8 @@ public abstract partial class SharedVendingMachineSystem : EntitySystem
         foreach (var pack in component.PackPrototypeId)
         {
             if (!PrototypeManager.TryIndex(pack,
-                    out VendingMachineInventoryPrototype? packPrototype))
-                continue;
-
-            if (!PrototypeManager.TryIndex(packPrototype.InventoryTypePrototypeId,
+                    out VendingMachineInventoryPrototype? packPrototype) ||
+                !PrototypeManager.TryIndex(packPrototype.InventoryTypePrototypeId,
                     out VendingMachineInventoryTypePrototype? inventoryType))
                 continue;
 
@@ -70,23 +68,28 @@ public abstract partial class SharedVendingMachineSystem : EntitySystem
 
         foreach (var items in component.Items)
         {
-            if (items.Key == VendingMachinesInventoryTypeNames.Emagged)
+            switch (items.Key)
             {
-                if(HasComp<EmaggedComponent>(uid))
+                case VendingMachinesInventoryTypeNames.Emagged:
+                {
+                    if (HasComp<EmaggedComponent>(uid))
+                        inventory.AddRange(items.Value);
+
+                    continue;
+                }
+                case VendingMachinesInventoryTypeNames.Contraband:
+                {
+                    if (component.IsContrabandEnabled)
+                        inventory.AddRange(items.Value);
+
+                    continue;
+                }
+                default:
+                {
                     inventory.AddRange(items.Value);
-
-                continue;
+                    break;
+                }
             }
-
-            if (items.Key == VendingMachinesInventoryTypeNames.Contraband)
-            {
-                if(component.Contraband)
-                    inventory.AddRange(items.Value);
-
-                continue;
-            }
-
-            inventory.AddRange(items.Value);
         }
 
         return inventory;
@@ -143,16 +146,23 @@ public abstract partial class SharedVendingMachineSystem : EntitySystem
     private List<VendingMachineInventoryEntry> GetInventory(string typeId,
         VendingMachineInventoryComponent component)
     {
+        var empty = new List<VendingMachineInventoryEntry>();
+
         foreach (var itemsTypeId in component.Items.Keys)
         {
             if (typeId != itemsTypeId)
                 continue;
 
-            component.Items.TryGetValue(itemsTypeId, out var inventory);
-
-            return inventory ?? new List<VendingMachineInventoryEntry>();
+            if (component.Items.TryGetValue(itemsTypeId, out var inventory))
+            {
+                return inventory;
+            }
+            else
+            {
+                return empty;
+            }
         }
 
-        return new List<VendingMachineInventoryEntry>();
+        return empty;
     }
 }
