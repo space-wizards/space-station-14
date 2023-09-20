@@ -1,13 +1,13 @@
-﻿using Content.Shared.Actions.ActionTypes;
-using Content.Shared.Whitelist;
+﻿using Content.Shared.Whitelist;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
 namespace Content.Shared.VendingMachines.Components;
 
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class VendingMachineInventoryComponent : Component
 {
     /// <summary>
@@ -20,14 +20,13 @@ public sealed partial class VendingMachineInventoryComponent : Component
     /// <summary>
     ///     The action available to the player controlling the vending machine
     /// </summary>
-    [DataField("action", customTypeSerializer: typeof(PrototypeIdSerializer<InstantActionPrototype>))]
-    public string? Action = "VendingThrow";
+    [DataField("action", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    [AutoNetworkedField]
+    public string? Action = "ActionVendingThrow";
 
-    /// <summary>
-    ///
-    /// </summary>
-    [DataField("whiteList")]
-    public EntityWhitelist? Whitelist = null;
+    [DataField("actionEntity")]
+    [AutoNetworkedField]
+    public EntityUid? ActionEntity;
 
     [ViewVariables]
     public Dictionary<string, List<VendingMachineInventoryEntry>> Items = new();
