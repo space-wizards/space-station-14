@@ -1,7 +1,6 @@
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Popups;
 using Content.Shared.Chemistry.Components;
-using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Content.Shared.Fluids;
 using Content.Shared.Fluids.Components;
@@ -9,6 +8,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Timing;
 using Content.Shared.Weapons.Melee;
 using Robust.Server.GameObjects;
+using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
@@ -17,6 +17,7 @@ namespace Content.Server.Fluids.EntitySystems;
 /// <inheritdoc/>
 public sealed class AbsorbentSystem : SharedAbsorbentSystem
 {
+    [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly AudioSystem _audio = default!;
     [Dependency] private readonly PopupSystem _popups = default!;
@@ -240,6 +241,13 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
 
         var puddleSplit = puddleSoln.SplitSolutionWithout(transferAmount, PuddleSystem.EvaporationReagents);
         var absorberSplit = absorberSoln.SplitSolutionWithOnly(puddleSplit.Volume, PuddleSystem.EvaporationReagents);
+
+        // Do tile reactions first
+        var coordinates = EntityManager.GetComponent<TransformComponent>(target).Coordinates;
+        if (_mapManager.TryGetGrid(coordinates.GetGridUid(EntityManager), out var mapGrid))
+        {
+            _puddleSystem.DoTileReactions(mapGrid.GetTileRef(coordinates), absorberSplit);
+        }
 
         puddleSoln.AddSolution(absorberSplit, _prototype);
         absorberSoln.AddSolution(puddleSplit, _prototype);
