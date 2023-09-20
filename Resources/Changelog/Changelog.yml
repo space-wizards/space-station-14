@@ -1,10 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Initial Infected can now use the "turn undead" action while in crit.,
-    type: Fix}
-  id: 4364
-  time: '2023-07-29T06:09:54.0000000+00:00'
 - author: lzk228
   changes:
   - {message: Added hairflower to authodrobe!, type: Add}
@@ -2970,3 +2964,8 @@ Entries:
   - {message: Changed most medkit fills, type: Tweak}
   id: 4863
   time: '2023-09-20T07:50:19.0000000+00:00'
+- author: Alekshhh
+  changes:
+  - {message: Added U-shaped rails, type: Add}
+  id: 4864
+  time: '2023-09-20T08:26:17.0000000+00:00'
