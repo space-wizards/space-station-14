@@ -185,6 +185,9 @@ public sealed class ImplantRelayEvent<T> where T : notnull
     }
 }
 
+/// <summary>
+/// Event that is raised whenever someone is implanted. Raised on the Implanted person and the Implant.
+/// </summary>
 [ByRefEvent]
 public readonly struct ImplantCheckEvent
 {

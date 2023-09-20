@@ -44,7 +44,7 @@ rev-all-heads-dead = All the heads are dead, now finish up the rest of the crew!
 
 rev-won = The Head Revs survived and killed all of command.
 
-rev-lost = Command surived and killed all of the Head Revs.
+rev-lost = Command survived and killed all of the Head Revs.
 
 rev-stalemate = All of the Head Revs died and so did all of command. We'll call it a draw.
 
