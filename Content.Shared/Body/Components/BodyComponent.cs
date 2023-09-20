@@ -1,11 +1,9 @@
-using Content.Shared.Body.Part;
 using Content.Shared.Body.Prototypes;
 using Content.Shared.Body.Systems;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-using System;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Body.Components;
@@ -14,22 +12,34 @@ namespace Content.Shared.Body.Components;
 [Access(typeof(SharedBodySystem))]
 public sealed partial class BodyComponent : Component
 {
-    [DataField("prototype", customTypeSerializer: typeof(PrototypeIdSerializer<BodyPrototype>))]
-    public string? Prototype;
+    /// <summary>
+    /// Relevant template to spawn for this body.
+    /// </summary>
+    [DataField]
+    public ProtoId<BodyPrototype>? Prototype;
 
-    [ViewVariables] public ContainerSlot RootContainer;
+    /// <summary>
+    /// Container that holds the root body part.
+    /// </summary>
+    /// <remarks>
+    /// Typically is the torso.
+    /// </remarks>
+    [ViewVariables] public ContainerSlot RootContainer = default!;
 
-    [ViewVariables] public string? RootPartSlot;
+    [ViewVariables]
+    public string RootPartSlot => RootContainer.ID;
 
-    [DataField("gibSound")] public SoundSpecifier GibSound = new SoundCollectionSpecifier("gib");
+    [DataField] public SoundSpecifier GibSound = new SoundCollectionSpecifier("gib");
 
     /// <summary>
     /// The amount of legs required to move at full speed.
     /// If 0, then legs do not impact speed.
     /// </summary>
-    [DataField("requiredLegs")] public int RequiredLegs;
+    [DataField] public int RequiredLegs;
 
-    [ViewVariables] public HashSet<EntityUid> LegEntities = new();
+    [ViewVariables]
+    [DataField]
+    public HashSet<EntityUid> LegEntities = new();
 }
 
 [Serializable, NetSerializable]
@@ -40,6 +50,7 @@ public sealed class BodyComponentState : ComponentState
     public SoundSpecifier GibSound;
     public int RequiredLegs;
     public HashSet<NetEntity> LegNetEntities;
+
     public BodyComponentState(string? prototype, string? rootPartSlot, SoundSpecifier gibSound,
         int requiredLegs, HashSet<NetEntity> legNetEntities)
     {

@@ -8,11 +8,9 @@ namespace Content.Shared.Body.Organ;
 [Access(typeof(SharedBodySystem))]
 public sealed partial class OrganComponent : Component
 {
+    /// <summary>
+    /// Relevant body this organ is attached to.
+    /// </summary>
     [DataField("body"), AutoNetworkedField]
     public EntityUid? Body;
-
-    [ViewVariables] public string? AttachedToSlot;
-
-    [AutoNetworkedField, ViewVariables] public EntityUid? Parent;
-
 }

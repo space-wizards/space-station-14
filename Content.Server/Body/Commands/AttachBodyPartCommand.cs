@@ -110,7 +110,7 @@ namespace Content.Server.Body.Commands
             }
             else
             {
-                var (rootPartId,rootPart) = bodySystem.GetRootPart(bodyId, body)!.Value;
+                var (rootPartId,rootPart) = bodySystem.GetRootPartOrNull(bodyId, body)!.Value;
                 if (!bodySystem.TryCreatePartSlotAndAttach(rootPartId, slotId, partUid, part.PartType, rootPart, part))
                 {
                     shell.WriteError($"Could not create slot {slotId} on entity {_entManager.ToPrettyString(bodyId)}");

@@ -8,16 +8,27 @@ namespace Content.Shared.Body.Systems;
 
 public abstract partial class SharedBodySystem : EntitySystem
 {
-    protected const string BodySlotContainerIdPrefix = "bodyslot_";
-    protected const string BodyRootContainerId = "rootpart";
-    protected const string OrganSlotContainerIdPrefix = "organslot_";
+    /// <summary>
+    /// Container ID prefix for any body parts.
+    /// </summary>
+    protected const string PartSlotContainerIdPrefix = "body_part_slot_";
+
+    /// <summary>
+    /// Container ID for the ContainerSlot on the body entity itself.
+    /// </summary>
+    protected const string BodyRootContainerId = "body_root_part";
+
+    /// <summary>
+    /// Container ID prefix for any body organs.
+    /// </summary>
+    protected const string OrganSlotContainerIdPrefix = "body_organ_slot_";
 
     [Dependency] protected readonly IPrototypeManager Prototypes = default!;
-    [Dependency] protected readonly SharedContainerSystem Containers = default!;
     [Dependency] protected readonly DamageableSystem Damageable = default!;
-    [Dependency] protected readonly StandingStateSystem Standing = default!;
     [Dependency] protected readonly MovementSpeedModifierSystem Movement = default!;
+    [Dependency] protected readonly SharedContainerSystem Containers = default!;
     [Dependency] protected readonly SharedTransformSystem SharedTransform = default!;
+    [Dependency] protected readonly StandingStateSystem Standing = default!;
 
     public override void Initialize()
     {
@@ -28,13 +39,19 @@ public abstract partial class SharedBodySystem : EntitySystem
         InitializeOrgans();
     }
 
-    public static string GetBodySlotContainerName(string slotName)
+    /// <summary>
+    /// Gets the container Id for the specified slotId.
+    /// </summary>
+    public static string GetPartSlotContainerId(string slotId)
     {
-        return BodySlotContainerIdPrefix + slotName;
+        return PartSlotContainerIdPrefix + slotId;
     }
 
-    public static string GetOrganContainerName(string slotName)
+    /// <summary>
+    /// Gets the container Id for the specified slotId.
+    /// </summary>
+    public static string GetOrganContainerId(string slotId)
     {
-        return OrganSlotContainerIdPrefix + slotName;
+        return OrganSlotContainerIdPrefix + slotId;
     }
 }

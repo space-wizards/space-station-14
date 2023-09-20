@@ -60,8 +60,6 @@ public sealed class SaveLoadReparentTest
                     {
                         Assert.That(component.Parent, Is.Not.Null);
                         Assert.That(component.AttachedToSlot != null);
-
-
                     }
                     else
                     {

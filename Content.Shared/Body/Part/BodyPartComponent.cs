@@ -1,5 +1,4 @@
 ﻿using Content.Shared.Body.Components;
-using Content.Shared.Body.Organ;
 using Content.Shared.Body.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
@@ -7,18 +6,18 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Body.Part;
 
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true)]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 [Access(typeof(SharedBodySystem))]
 public sealed partial class BodyPartComponent : Component
 {
-    [DataField("body"), AutoNetworkedField]
+    // Need to set this on container changes as it may be several transform parents up the hierarchy.
+    /// <summary>
+    /// Parent body for this part.
+    /// </summary>
+    [DataField, AutoNetworkedField]
     public EntityUid? Body;
 
-    [AutoNetworkedField, ViewVariables] public EntityUid? Parent;
-
-    [AutoNetworkedField, ViewVariables] public string? AttachedToSlot = null;
-
-    [DataField("partType"), AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public BodyPartType PartType = BodyPartType.Other;
 
     // TODO BODY Replace with a simulation of organs
@@ -29,16 +28,20 @@ public sealed partial class BodyPartComponent : Component
     [DataField("vital"), AutoNetworkedField]
     public bool IsVital;
 
-    [DataField("symmetry"), AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public BodyPartSymmetry Symmetry = BodyPartSymmetry.None;
 
-    [AutoNetworkedField(CloneData = true), ViewVariables]
+    /// <summary>
+    /// Child body parts attached to this body part.
+    /// </summary>
+    [DataField, AutoNetworkedField(CloneData = true)]
     public Dictionary<string, BodyPartSlot> Children = new();
 
-
-    [AutoNetworkedField(CloneData = true), ViewVariables]
+    /// <summary>
+    /// Organs attached to this body part.
+    /// </summary>
+    [DataField, AutoNetworkedField(CloneData = true)]
     public Dictionary<string, OrganSlot> Organs = new();
-
 
     /// <summary>
     /// These are only for VV/Debug do not use these for gameplay/systems
@@ -56,13 +59,14 @@ public sealed partial class BodyPartComponent : Component
             return temp;
         }
     }
+
     [ViewVariables]
     private List<ContainerSlot> OrganSlotsVV
     {
         get
         {
             List<ContainerSlot> temp = new();
-            foreach (var (_,slotData) in Organs)
+            foreach (var (_, slotData) in Organs)
             {
                 temp.Add(slotData.Container);
             }
@@ -70,16 +74,36 @@ public sealed partial class BodyPartComponent : Component
         }
     }
 }
+
+/// <summary>
+/// Contains metadata about a body part in relation to its slot.
+/// </summary>
 [NetSerializable, Serializable]
-public readonly record struct BodyPartSlot([field: ViewVariables] string Id,[field: ViewVariables] BodyPartType Type, [field: NonSerialized] ContainerSlot Container)
+[DataRecord]
+public partial struct BodyPartSlot
 {
-    [ViewVariables]
-    public EntityUid? Entity => Container.ContainedEntity;
+    public string Id;
+    public BodyPartType Type;
+
+    public BodyPartSlot(string id, BodyPartType type)
+    {
+        Id = id;
+        Type = type;
+    }
 };
 
+/// <summary>
+/// Contains metadata about an organ part in relation to its slot.
+/// </summary>
 [NetSerializable, Serializable]
-public readonly record struct OrganSlot([field: ViewVariables] string Name, [field: NonSerialized] ContainerSlot Container)
+[DataRecord]
+public partial struct OrganSlot
 {
-    [ViewVariables]
-    public EntityUid? Organ => Container.ContainedEntity;
+    [DataField]
+    public string Id;
+
+    public OrganSlot(string id)
+    {
+        Id = id;
+    }
 };
