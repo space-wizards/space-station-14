@@ -29,7 +29,6 @@ flavor-base-chalky = chalky
 flavor-base-oily = oily
 flavor-base-peppery = peppery
 flavor-base-slimy = slimy
-flavor-base-soapy = soapy
 flavor-base-magical = magical
 flavor-base-fiber = fibrous
 flavor-base-cold = cold
@@ -44,6 +43,7 @@ flavor-base-piquant = piquant
 flavor-base-sharp = sharp
 flavor-base-syrupy = syrupy
 flavor-base-spaceshroom = mysterious
+flavor-base-clean = clean
 
 # lmao
 flavor-base-terrible = terrible
@@ -212,3 +212,4 @@ flavor-complex-carpet = like a handful of fur
 flavor-complex-bee = unbeelievable
 flavor-complex-sax = like jazz
 flavor-complex-bottledlightning = like lightning in a bottle
+flavor-complex-punishment = like punishment

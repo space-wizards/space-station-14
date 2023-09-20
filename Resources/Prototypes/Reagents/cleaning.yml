@@ -43,7 +43,7 @@
   name: reagent-name-soap
   desc: reagent-desc-soap
   physicalDesc: reagent-physical-desc-soapy
-  flavor: soapy
+  flavor: clean
   color: "#c8dfc9"
   recognizable: true
   boilingPoint: 100.0
@@ -62,7 +62,7 @@
   name: reagent-name-soapy-water
   desc: reagent-desc-soapy-water
   physicalDesc: reagent-physical-desc-soapy
-  flavor: soapy
+  flavor: clean
   color: "#9ec8dc"
   recognizable: true
   metabolisms:

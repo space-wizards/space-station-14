@@ -15,11 +15,6 @@
   description: flavor-base-salty
 
 - type: flavor
-  id: soapy
-  flavorType: Base
-  description: flavor-base-soapy
-
-- type: flavor
   id: sour
   flavorType: Base
   description: flavor-base-sour
@@ -173,6 +168,11 @@
   id: syrupy
   flavorType: Base
   description: flavor-base-syrupy
+
+- type: flavor
+  id: clean
+  flavorType: Base
+  description: flavor-base-clean
 
 - type: flavor
   id: nothing
@@ -843,3 +843,8 @@
   id: spaceshroomcooked
   flavorType: Complex
   description: flavor-complex-spaceshroom-cooked
+
+- type: flavor
+  id: punishment
+  flavorType: Complex
+  description: flavor-complex-punishment

@@ -63,7 +63,7 @@
     solution: soap
   - type: FlavorProfile
     flavors:
-      - soapy
+      - clean
   - type: Food
     solution: soap
 
@@ -123,6 +123,10 @@
   - type: StepTrigger
   - type: Item
     heldPrefix: syndie
+  - type: FlavorProfile
+    flavors:
+      - clean
+      - punishment
 
 - type: entity
   name: soap
@@ -143,7 +147,7 @@
     heldPrefix: gibs
   - type: FlavorProfile
     flavors:
-      - soapy
+      - clean
       - meaty
 
 - type: entity
