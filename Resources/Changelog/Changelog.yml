@@ -1,221 +1,4 @@
 Entries:
-- author: Nairodian
-  changes:
-  - {message: Changed captain's starting loadout not to have their gloves and carapace.,
-    type: Tweak}
-  id: 4329
-  time: '2023-07-26T07:30:44.0000000+00:00'
-- author: Hebiman
-  changes:
-  - {message: Added filter for reagents, type: Add}
-  id: 4330
-  time: '2023-07-26T08:05:09.0000000+00:00'
-- author: Emisse
-  changes:
-  - {message: Pun-Pun is now always a ghost role, type: Tweak}
-  id: 4331
-  time: '2023-07-26T10:02:02.0000000+00:00'
-- author: Hebiman
-  changes:
-  - {message: Removed Alt Click interaction with implanter syringe, type: Fix}
-  id: 4332
-  time: '2023-07-26T18:41:29.0000000+00:00'
-- author: Misha_Unity
-  changes:
-  - {message: Added a news tab in PDA, type: Add}
-  - {message: Added a mass-media console to reporter, type: Add}
-  - {message: 'Added a popup, when PDA ringing', type: Add}
-  id: 4333
-  time: '2023-07-26T18:49:38.0000000+00:00'
-- author: chromiumboy
-  changes:
-  - {message: reinforced uranium windows now prevent a large amount of radiation from
-      passing through them, type: Add}
-  id: 4334
-  time: '2023-07-26T21:28:45.0000000+00:00'
-- author: Lank
-  changes:
-  - {message: Senior roles now require less playtime in specific roles., type: Tweak}
-  id: 4335
-  time: '2023-07-26T21:29:05.0000000+00:00'
-- author: lzk228
-  changes:
-  - {message: Fixed gas tank inhand spriter, type: Fix}
-  id: 4336
-  time: '2023-07-26T21:29:35.0000000+00:00'
-- author: AjexRose
-  changes:
-  - {message: 'After numerous complaints from security and salvage, CentCom has authorized
-      the creation of the Ammo TechFab, it''s board may be able to be recovered from
-      remote places.', type: Add}
-  id: 4337
-  time: '2023-07-27T00:41:51.0000000+00:00'
-- author: potato1234x
-  changes:
-  - {message: Changed robust nukie drink sprite., type: Tweak}
-  id: 4338
-  time: '2023-07-27T02:17:22.0000000+00:00'
-- author: Jackal298
-  changes:
-  - {message: 'Changed the sprites of some shotguns, now the sprite in the hands should
-      look like the sprite of the icon', type: Tweak}
-  id: 4339
-  time: '2023-07-27T02:18:11.0000000+00:00'
-- author: Emisse
-  changes:
-  - {message: tweaked role times, type: Tweak}
-  id: 4340
-  time: '2023-07-27T05:14:21.0000000+00:00'
-- author: potato1234x
-  changes:
-  - {message: Added atmos bags to the atmosdrobe!, type: Add}
-  id: 4341
-  time: '2023-07-27T06:08:25.0000000+00:00'
-- author: Lank
-  changes:
-  - {message: 'Added .45 AP, which does less damage but ignores armor entirely.',
-    type: Add}
-  - {message: Removed .357 ammo and returned the Python and Mateba to .45 Magnum.,
-    type: Remove}
-  - {message: 'The Syndicate now supplies .45 AP rounds for the Python, and sells
-      both the weapon and the ammo at a lower price.', type: Tweak}
-  - {message: .45 High-Velocity rounds are now significantly more lethal., type: Tweak}
-  id: 4342
-  time: '2023-07-27T07:32:26.0000000+00:00'
-- author: Errant
-  changes:
-  - {message: Unarmed attacks on powered lights now cause electric shock., type: Add}
-  id: 4343
-  time: '2023-07-27T07:37:10.0000000+00:00'
-- author: Ilya246
-  changes:
-  - {message: Fixed shuttles sometimes braking rotation incorrectly., type: Fix}
-  id: 4344
-  time: '2023-07-27T07:38:04.0000000+00:00'
-- author: liltenhead
-  changes:
-  - {message: Reduced Python cost from 13 -> 8 TC, type: Tweak}
-  - {message: Reduced C-20 Bundle cost from 25 -> 17 TC, type: Tweak}
-  - {message: Reduced Bulldog Bundle cost from 25 -> 20 TC, type: Tweak}
-  - {message: Reduced Fake Cap Gun cost from 14 TC -> 9 TC, type: Tweak}
-  id: 4345
-  time: '2023-07-27T08:24:21.0000000+00:00'
-- author: KingFroozy
-  changes:
-  - {message: fixed Syndicate Chief Engineer's jumpsuit., type: Fix}
-  id: 4346
-  time: '2023-07-27T08:43:16.0000000+00:00'
-- author: JoeHammad
-  changes:
-  - {message: 'The syndicate sniper bundle was added to the uplink, containing a Hristov,
-      spare ammo and a clever disguise, happy hunting, agents', type: Add}
-  id: 4347
-  time: '2023-07-27T09:49:22.0000000+00:00'
-- author: Vaaankas
-  changes:
-  - {message: 'The Hristov''s sniper rifle cartridges have been refactored. It is
-      now a way more dangerous weapon, at the cost of decreased firerate. It now stuns
-      on a hit, so drag your allies to safety if they got shot with one!', type: Tweak}
-  id: 4348
-  time: '2023-07-27T09:49:33.0000000+00:00'
-- author: PJB3005
-  changes:
-  - {message: The defibrillator's "return to body" prompt now works again., type: Fix}
-  id: 4349
-  time: '2023-07-27T19:13:17.0000000+00:00'
-- author: MrGreen and OctoRocket
-  changes:
-  - {message: Added HoS flask., type: Add}
-  id: 4350
-  time: '2023-07-27T19:41:33.0000000+00:00'
-- author: KingFroozy
-  changes:
-  - {message: Minor sprite changes for jaws of life and power drill, type: Tweak}
-  id: 4351
-  time: '2023-07-27T20:03:28.0000000+00:00'
-- author: crazybrain
-  changes:
-  - {message: Alien artifact intercom no longer has the syndicate channel., type: Tweak}
-  id: 4352
-  time: '2023-07-27T20:03:48.0000000+00:00'
-- author: PrPleGoo
-  changes:
-  - {message: Changed news article to track an author., type: Tweak}
-  - {message: News articles can only be deleted by their tracked author., type: Tweak}
-  id: 4353
-  time: '2023-07-27T20:25:56.0000000+00:00'
-- author: RiceMar
-  changes:
-  - {message: Nanotrasen has yielded to the pleas of the station's newly forming rock
-      bands and has permitted "guitars worn on the back rebelliously" under official
-      dress code., type: Add}
-  id: 4354
-  time: '2023-07-27T23:05:32.0000000+00:00'
-- author: Verslebas
-  changes:
-  - {message: Added champagne!, type: Add}
-  id: 4355
-  time: '2023-07-28T15:54:36.0000000+00:00'
-- author: OctoRocket and Eden
-  changes:
-  - {message: Removed annoying archaic replacements that involve like and other confusing
-      swaps., type: Tweak}
-  id: 4356
-  time: '2023-07-28T19:51:52.0000000+00:00'
-- author: KingFroozy
-  changes:
-  - {message: 'Nanotrasen''s vest suppliers have finally started to sew pockets to
-      their hi-viz vests, and now you can safely put explosives in it.', type: Add}
-  id: 4357
-  time: '2023-07-28T19:53:59.0000000+00:00'
-- author: Jackal298
-  changes:
-  - {message: Improved sprites SMG Drozd and sprite WT 550 behind, type: Tweak}
-  id: 4358
-  time: '2023-07-28T19:55:46.0000000+00:00'
-- author: Misha_Unity
-  changes:
-  - {message: News tab has been turned into an PDA application, type: Tweak}
-  - {message: Added cooldown to mass-media console, type: Add}
-  - {message: Added function to turn off new news notifications, type: Add}
-  id: 4359
-  time: '2023-07-28T19:59:03.0000000+00:00'
-- author: Skarlet
-  changes:
-  - {message: 'Changed the Captain''s wardrobe with a new default outfit, a new carapace
-      and updates older clothing for the sake of consistency.', type: Tweak}
-  id: 4360
-  time: '2023-07-29T00:09:20.0000000+00:00'
-- author: Vasilis
-  changes:
-  - {message: The local Clown on Station 14 wore a plunger on their head and became
-      a sensation overnight! Many try to replicate their style, type: Add}
-  id: 4361
-  time: '2023-07-29T00:10:45.0000000+00:00'
-- author: Jackal298
-  changes:
-  - {message: Raised the price of the sniper bundle from 6 to 12 TC and reduced the
-      ammo supply from 30 to 10, type: Tweak}
-  - {message: Fixed the issue of not being able to put the Anti-Material Ammo back
-      into the Anti-Material Ammo Box, type: Fix}
-  id: 4362
-  time: '2023-07-29T06:09:33.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Truncate gun fire rate examines so they don't show 20 digits., type: Fix}
-  id: 4363
-  time: '2023-07-29T06:09:43.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Initial Infected can now use the "turn undead" action while in crit.,
-    type: Fix}
-  id: 4364
-  time: '2023-07-29T06:09:54.0000000+00:00'
-- author: lzk228
-  changes:
-  - {message: Added hairflower to authodrobe!, type: Add}
-  id: 4365
-  time: '2023-07-29T06:10:15.0000000+00:00'
 - author: Potato1234_x
   changes:
   - {message: Added bags for cargo techs., type: Add}
@@ -2979,3 +2762,211 @@ Entries:
   - {message: Fixed some missing localization., type: Fix}
   id: 4828
   time: '2023-09-14T10:08:03.0000000+00:00'
+- author: Nairodian
+  changes:
+  - {message: Holobarrier projectors can now be researched and produced in the security
+      techfab., type: Tweak}
+  id: 4829
+  time: '2023-09-14T23:34:43.0000000+00:00'
+- author: Lank
+  changes:
+  - {message: Training bombs are now unable to space tiles., type: Tweak}
+  id: 4830
+  time: '2023-09-14T23:51:47.0000000+00:00'
+- author: kseandi
+  changes:
+  - {message: HUD theme selection is now works!, type: Fix}
+  id: 4831
+  time: '2023-09-15T02:05:56.0000000+00:00'
+- author: Morb0
+  changes:
+  - {message: NPS no longer have an SSD indicator, type: Fix}
+  id: 4832
+  time: '2023-09-15T02:15:26.0000000+00:00'
+- author: Doru991
+  changes:
+  - {message: It is now easier to tell how damaged cyborgs are., type: Tweak}
+  id: 4833
+  time: '2023-09-15T03:14:47.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Swapping between guns now has a small delay before you can fire., type: Tweak}
+  id: 4834
+  time: '2023-09-15T04:15:43.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Fixed succumb and last words actions not appearing, type: Fix}
+  id: 4835
+  time: '2023-09-15T20:52:49.0000000+00:00'
+- author: Slava0135
+  changes:
+  - {message: Entity velocity now resets when buckling., type: Tweak}
+  id: 4836
+  time: '2023-09-16T04:15:06.0000000+00:00'
+- author: Psychpsyo
+  changes:
+  - {message: 'The janitor''s advanced mop can now be wielded, just like the regular
+      mop.', type: Add}
+  id: 4837
+  time: '2023-09-16T04:33:01.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: 'Some Syndicate objectives have been tweaked to have higher difficulties,
+      notably stealing the nuke disk.', type: Tweak}
+  id: 4838
+  time: '2023-09-16T06:18:11.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Added beacons to station maps., type: Add}
+  id: 4839
+  time: '2023-09-16T08:11:48.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Fixed objectives not being given in some cases., type: Fix}
+  id: 4840
+  time: '2023-09-16T12:10:06.0000000+00:00'
+- author: Flareguy
+  changes:
+  - {message: 'Added several new types of barricades for mappers to use, all using
+      sprites from /vg/station. The regular, full-tile barricade has also received
+      a new sprite from /vg/station.', type: Add}
+  - {message: Barricades are now slightly stronger & cheaper to make., type: Tweak}
+  id: 4841
+  time: '2023-09-16T12:50:48.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Resized the non-admin Ahelp window to be taller and less wide., type: Tweak}
+  id: 4842
+  time: '2023-09-17T09:04:20.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed light animations not working., type: Fix}
+  id: 4843
+  time: '2023-09-17T17:57:50.0000000+00:00'
+- author: Henry12116
+  changes:
+  - {message: You can now eat most organs. Bon appetit!, type: Add}
+  id: 4844
+  time: '2023-09-18T00:20:11.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Fixed fultons losing their beacon when the stack is split., type: Fix}
+  id: 4845
+  time: '2023-09-18T00:22:26.0000000+00:00'
+- author: Psychpsyo
+  changes:
+  - {message: The advanced mop no longer looks boring when attached to the janitorial
+      trolley., type: Tweak}
+  id: 4846
+  time: '2023-09-18T00:23:35.0000000+00:00'
+- author: lapatison
+  changes:
+  - {message: 'Now you can light matches with certain types (combat, work, merc, explorer)
+      of boots like a cool dude.', type: Add}
+  id: 4847
+  time: '2023-09-18T00:26:21.0000000+00:00'
+- author: JoeHammad
+  changes:
+  - {message: 'security now has access to its own beret, fancy!', type: Add}
+  id: 4848
+  time: '2023-09-18T00:30:31.0000000+00:00'
+- author: peptron1
+  changes:
+  - {message: 'The chaplain hoodie now comes with its hood as an action, similar to
+      winter coats', type: Tweak}
+  id: 4849
+  time: '2023-09-18T01:10:44.0000000+00:00'
+- author: Nairodian
+  changes:
+  - {message: Fixed Holobarriers being unable to be destroyed., type: Fix}
+  id: 4850
+  time: '2023-09-18T01:22:39.0000000+00:00'
+- author: Ilya246
+  changes:
+  - {message: Blood-red magboots' jetpack now works again., type: Fix}
+  id: 4851
+  time: '2023-09-18T06:13:12.0000000+00:00'
+- author: JoeHammad
+  changes:
+  - {message: The syndicate have started using cheaper materials in the manufacture
+      of their over ear headsets, type: Add}
+  id: 4852
+  time: '2023-09-18T19:18:56.0000000+00:00'
+- author: PursuitinAshes
+  changes:
+  - {message: Nanotrasen now properly supplies its captains with appropriate headgear
+      in all of their lockers., type: Fix}
+  id: 4853
+  time: '2023-09-18T19:20:10.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: The Syndicate has cracked the binary radio channel's encryption and
+      is offering keys for 4 TC., type: Add}
+  id: 4854
+  time: '2023-09-18T19:20:56.0000000+00:00'
+- author: liltenhead
+  changes:
+  - {message: Increased the amount of barotrauma damage you receive., type: Tweak}
+  id: 4855
+  time: '2023-09-18T19:21:36.0000000+00:00'
+- author: HerCoyote23
+  changes:
+  - {message: 'The Syndicate has grown tired of losing overconfident "Loud" agents,
+      and has reduced their stealth gear prices to encourage a more sneaky approach.',
+    type: Tweak}
+  id: 4856
+  time: '2023-09-18T21:07:00.0000000+00:00'
+- author: Doru991
+  changes:
+  - {message: Berry seeds are now available from the MegaSeed Servitor., type: Add}
+  - {message: Seeds for the bungo fruit are included in the exotic seed crate., type: Add}
+  id: 4857
+  time: '2023-09-19T03:29:28.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Skeletons have been reported in the closets of various station officials.
+      And maintenance., type: Add}
+  - {message: Skeletons can no longer have a pitch-black coloration., type: Tweak}
+  id: 4858
+  time: '2023-09-19T05:05:18.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: 'Expeditions have been massively tweaked. Timer is 7 minutes, loot count
+      is significantly up, added significantly more loot to the loot table, mob count
+      is significantly up, and mobs overall have been nerfed (no more 15 damage carps
+      ending you). It also has a flat 13 minute cooldown. Better bring your fultons
+      if you expect to bring stuff back.', type: Tweak}
+  id: 4859
+  time: '2023-09-19T12:52:01.0000000+00:00'
+- author: Repo
+  changes:
+  - {message: Time out for particular uplink items for balancing. Syndicate Bomb can
+      only be purchased after 30min., type: Add}
+  id: 4860
+  time: '2023-09-19T23:51:15.0000000+00:00'
+- author: liltenhead
+  changes:
+  - {message: Reduced the crafting costs of the buckler and makeshift shield., type: Tweak}
+  id: 4861
+  time: '2023-09-20T04:49:43.0000000+00:00'
+- author: dahnte
+  changes:
+  - {message: Added frontal lisp as a character trait for all species!, type: Add}
+  id: 4862
+  time: '2023-09-20T04:51:50.0000000+00:00'
+- author: Alekshhh
+  changes:
+  - {message: Changed most medkit fills, type: Tweak}
+  id: 4863
+  time: '2023-09-20T07:50:19.0000000+00:00'
+- author: Alekshhh
+  changes:
+  - {message: Added U-shaped rails, type: Add}
+  id: 4864
+  time: '2023-09-20T08:26:17.0000000+00:00'
+- author: Just_Art
+  changes:
+  - {message: Added corn in butter., type: Add}
+  - {message: Increased popcorn cooking time., type: Tweak}
+  id: 4865
+  time: '2023-09-20T09:51:09.0000000+00:00'

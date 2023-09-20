@@ -11,8 +11,13 @@
     solutions:
       stomach:
         maxVol: 50
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
   - type: Metabolizer
-    maxReagents: 6
+    maxReagents: 3
     metabolizerTypes: [ Moth ]
     removeEmpty: true
     groups:

@@ -284,6 +284,15 @@
     jumpsuit: ClothingUniformJumpsuitJacketMonkey
     id: BartenderIDCard
 
+# Passenger but without the ID, bag, or headset
+
+- type: startingGear
+  id: LimitedPassengerGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorGrey
+    shoes: ClothingShoesColorBlack
+  innerclothingskirt: ClothingUniformJumpskirtColorGrey
+
 # DeathMatch Gear
 
 - type: startingGear
