@@ -61,7 +61,7 @@ namespace Content.Client.HealthAnalyzer.UI
                     {
                         continue;
                     }
-                        text.Append($"\n{Loc.GetString("health-analyzer-window-damage-group-text", ("damageGroup", Loc.GetString("health-analyzer-window-damage-group-" + damageGroupId)), ("amount", damageAmount))}");
+                    text.Append($"\n{Loc.GetString("health-analyzer-window-damage-group-text", ("damageGroup", Loc.GetString("health-analyzer-window-damage-group-" + damageGroupId)), ("amount", damageAmount))}");
 
                     // Show the damage for each type in that group.
                     var group = protos.Index<DamageGroupPrototype>(damageGroupId);
