@@ -26,6 +26,11 @@
     radius: 10.0
     energy: 5.0
     netsync: false
+  - type: NavMapBeacon
+    color: "#ff0000"
+    text: carp rift
+    # only show after making the announcement at 50%
+    enabled: false
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Metallic

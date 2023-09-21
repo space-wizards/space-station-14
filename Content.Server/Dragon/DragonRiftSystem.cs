@@ -1,6 +1,7 @@
 using Content.Server.Chat.Systems;
 using Content.Server.NPC;
 using Content.Server.NPC.Systems;
+using Content.Server.Pinpointer;
 using Content.Shared.Damage;
 using Content.Shared.Dragon;
 using Content.Shared.Examine;
@@ -21,6 +22,7 @@ public sealed class DragonRiftSystem : EntitySystem
     [Dependency] private readonly ChatSystem _chat = default!;
     [Dependency] private readonly DragonSystem _dragon = default!;
     [Dependency] private readonly ISerializationManager _serManager = default!;
+    [Dependency] private readonly NavMapSystem _navMap = default!;
     [Dependency] private readonly NPCSystem _npc = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
 
@@ -68,6 +70,7 @@ public sealed class DragonRiftSystem : EntitySystem
                 var location = xform.LocalPosition;
                 _chat.DispatchGlobalAnnouncement(Loc.GetString("carp-rift-warning", ("location", location)), playSound: false, colorOverride: Color.Red);
                 _audio.PlayGlobal("/Audio/Misc/notice1.ogg", Filter.Broadcast(), true);
+                _navMap.SetBeaconEnabled(uid, true);
             }
 
             if (comp.SpawnAccumulator > comp.SpawnCooldown)
