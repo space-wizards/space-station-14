@@ -242,7 +242,7 @@ public sealed class NavMapSystem : SharedNavMapSystem
     /// </summary>
     public void SetBeaconEnabled(EntityUid uid, bool enabled, NavMapBeaconComponent? comp = null)
     {
-        if (!Resolve(uid, ref comp) || comp.Enabled = enabled)
+        if (!Resolve(uid, ref comp) || comp.Enabled == enabled)
             return;
 
         comp.Enabled = enabled;
