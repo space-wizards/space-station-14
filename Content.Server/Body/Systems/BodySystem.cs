@@ -77,6 +77,19 @@ public sealed class BodySystem : SharedBodySystem
         args.Handled = true;
     }
 
+    private void OnStartBeingShredded(EntityUid uid, BodyComponent component, StartBeingShreddedEvent args)
+    {
+        args.Handled = true;
+    }
+    private void OnDoneBeingShredded(EntityUid uid, BodyComponent component, DoneBeingShreddedEvent args)
+    {
+        if (args.Handled)
+            return;
+
+        GibBody(uid, true, component);
+        args.Handled = true;
+    }
+
     protected override void AddPart(
         EntityUid bodyUid,
         EntityUid partUid,

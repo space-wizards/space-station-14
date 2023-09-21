@@ -11,6 +11,7 @@ using Content.Shared.Storage.Components;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
+using Robust.Shared.Containers;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Lock;
@@ -24,6 +25,7 @@ public sealed class LockSystem : EntitySystem
     [Dependency] private readonly AccessReaderSystem _accessReader = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
     [Dependency] private readonly SharedPopupSystem _sharedPopupSystem = default!;
 
     /// <inheritdoc />
@@ -188,6 +190,9 @@ public sealed class LockSystem : EntitySystem
     public bool CanToggleLock(EntityUid uid, EntityUid user, bool quiet = true)
     {
         if (!HasComp<HandsComponent>(user))
+            return false;
+
+        if (_containerSystem.TryGetContainingContainer(user, out var container) && container.Owner == uid)
             return false;
 
         var ev = new LockToggleAttemptEvent(user, quiet);
