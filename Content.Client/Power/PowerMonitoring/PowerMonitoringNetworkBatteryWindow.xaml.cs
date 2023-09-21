@@ -6,12 +6,12 @@ using Content.Shared.Power;
 namespace Content.Client.Power.PowerMonitoring;
 
 [GenerateTypedNameReferences]
-public sealed partial class PowerMonitoringDistributorWindow : FancyWindow
+public sealed partial class PowerMonitoringNetworkBatteryWindow : FancyWindow
 {
     [Dependency] private readonly EntityManager _entityManager = default!;
     private readonly PowerMonitoringSystem? _powerMonitoring = default!;
 
-    public PowerMonitoringDistributorWindow(PowerMonitoringDistributorBoundUserInterface owner)
+    public PowerMonitoringNetworkBatteryWindow(PowerMonitoringNetworkBatteryBoundUserInterface owner)
     {
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);

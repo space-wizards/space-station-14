@@ -26,17 +26,10 @@ public sealed class PowerMonitoringSystem : EntitySystem
 
         UpdatesAfter.Add(typeof(PowerNetSystem));
 
-        SubscribeLocalEvent<PowerMonitoringConsoleComponent, MapInitEvent>(OnMapInit);
-        SubscribeLocalEvent<PowerMonitoringConsoleComponent, BoundUIOpenedEvent>(OnBoundUiOpen);
-        SubscribeLocalEvent<PowerMonitoringConsoleComponent, ChargeChangedEvent>(OnBatteryChargeChanged);
-        SubscribeLocalEvent<PowerMonitoringConsoleComponent, PowerMonitoringSetUIStateEvent>(OnPowerMonitoringConsoleChanged);
-
-        SubscribeLocalEvent<PowerMonitoringDistributorComponent, MapInitEvent>(OnMapInit);
-        SubscribeLocalEvent<PowerMonitoringDistributorComponent, BoundUIOpenedEvent>(OnBoundUiOpen);
-        SubscribeLocalEvent<PowerMonitoringDistributorComponent, ChargeChangedEvent>(OnBatteryChargeChanged);
-        SubscribeLocalEvent<PowerMonitoringDistributorComponent, PowerMonitoringSetUIStateEvent>(OnPowerMonitoringDistributorChanged);
+        SubscribeLocalEvent<PowerMonitoringComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<PowerMonitoringComponent, BoundUIOpenedEvent>(OnBoundUiOpen);
+        SubscribeLocalEvent<PowerMonitoringComponent, ChargeChangedEvent>(OnBatteryChargeChanged);
     }
-
     public override void Update(float frameTime)
     {
         _updateTimer += frameTime;
@@ -44,11 +37,9 @@ public sealed class PowerMonitoringSystem : EntitySystem
         {
             _updateTimer -= UpdateTime;
 
-            var query = EntityQueryEnumerator<PowerMonitoringComponent>();
-            while (query.MoveNext(out var uid, out var component))
-            {
+            var queryConsoles = EntityQueryEnumerator<PowerMonitoringComponent>();
+            while (queryConsoles.MoveNext(out var uid, out var component))
                 UpdateUIState(uid, component);
-            }
         }
     }
 
@@ -79,10 +70,11 @@ public sealed class PowerMonitoringSystem : EntitySystem
         var external = netBattery != null ? netBattery.NetworkBattery.LastExternalPowerState : ExternalPowerState.None;
         var charge = netBattery != null ? netBattery.NetworkBattery.CurrentStorage / netBattery.NetworkBattery.Capacity : 0f;
 
-        // Raise event to set the new UI state
+        // Set the new UI state
         var state = new PowerMonitoringBoundInterfaceState(totalSources, totalLoads, sources.ToArray(), loads.ToArray(), charge, external);
-        var ev = new PowerMonitoringSetUIStateEvent(uid, state);
-        RaiseLocalEvent(uid, ev);
+
+        if (powerMonitoring.Key != null && _userInterfaceSystem.TryGetUi(uid, powerMonitoring.Key, out var bui))
+            _userInterfaceSystem.SetUiState(bui, state);
     }
 
     private double GetTotalSourcesForNode(EntityUid uid, Node node, out List<PowerMonitoringEntry> sources)
@@ -158,16 +150,17 @@ public sealed class PowerMonitoringSystem : EntitySystem
 
     public ExternalPowerState CalcExtPowerState(EntityUid uid, PowerState.Battery battery)
     {
-        if (MathHelper.CloseTo(battery.CurrentReceiving, 0))
-            return ExternalPowerState.None;
+        if (!MathHelper.CloseTo(battery.CurrentStorage / battery.Capacity, 1f))
+        {
+            if (MathHelper.CloseTo(battery.CurrentReceiving, 0))
+                return ExternalPowerState.None;
 
-        if (!MathHelper.CloseTo(battery.CurrentStorage / battery.Capacity, 1f) &&
-            MathHelper.CloseToPercent(battery.CurrentReceiving, battery.CurrentSupply, 0.05f))
-            return ExternalPowerState.Stable;
+            if (MathHelper.CloseToPercent(battery.CurrentReceiving, battery.CurrentSupply, 0.1f))
+                return ExternalPowerState.Stable;
 
-        if (!MathHelper.CloseTo(battery.CurrentStorage / battery.Capacity, 1f) &&
-            battery.CurrentReceiving - battery.CurrentSupply < 0f)
-            return ExternalPowerState.Low;
+            if (battery.CurrentReceiving - battery.CurrentSupply < 0f)
+                return ExternalPowerState.Low;
+        }
 
         return ExternalPowerState.Good;
     }
@@ -205,17 +198,5 @@ public sealed class PowerMonitoringSystem : EntitySystem
             battery.NetworkBattery.LastExternalPowerState = extPowerState;
             UpdateUIState(uid, component);
         }
-    }
-
-    private void OnPowerMonitoringConsoleChanged(EntityUid uid, PowerMonitoringConsoleComponent component, PowerMonitoringSetUIStateEvent args)
-    {
-        if (_userInterfaceSystem.TryGetUi(uid, PowerMonitoringConsoleUiKey.Key, out var bui))
-            _userInterfaceSystem.SetUiState(bui, args.State);
-    }
-
-    private void OnPowerMonitoringDistributorChanged(EntityUid uid, PowerMonitoringDistributorComponent component, PowerMonitoringSetUIStateEvent args)
-    {
-        if (_userInterfaceSystem.TryGetUi(uid, PowerMonitoringDistributorUiKey.Key, out var bui))
-            _userInterfaceSystem.SetUiState(bui, args.State);
     }
 }

@@ -105,15 +105,16 @@
     requirePower: true
     highVoltageNode: input
     mediumVoltageNode: output
-  - type: PowerMonitoringDistributor
+  - type: PowerMonitoring
     sourceNode: input
     loadNode: output
+    key: enum.PowerMonitoringNetworkBatteryUiKey.Key
   - type: ActivatableUI
-    key: enum.PowerMonitoringDistributorUiKey.Key
+    key: enum.PowerMonitoringNetworkBatteryUiKey.Key
   - type: UserInterface
     interfaces:
-    - key: enum.PowerMonitoringDistributorUiKey.Key
-      type: PowerMonitoringDistributorBoundUserInterface
+    - key: enum.PowerMonitoringNetworkBatteryUiKey.Key
+      type: PowerMonitoringNetworkBatteryBoundUserInterface
 
 # Compact Wall Substation Base
 - type: entity

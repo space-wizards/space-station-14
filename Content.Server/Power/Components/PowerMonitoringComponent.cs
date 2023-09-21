@@ -1,38 +1,38 @@
-using Content.Shared.Power;
+using Content.Server.NodeContainer;
+using Content.Server.Power.EntitySystems;
+using Robust.Shared.Reflection;
+using Robust.Shared.Serialization;
 
 namespace Content.Server.Power.Components;
 
-[RegisterComponent]
-public abstract partial class PowerMonitoringComponent : Component
+[RegisterComponent, Access(typeof(PowerMonitoringSystem))]
+public sealed partial class PowerMonitoringComponent : Component, ISerializationHooks
 {
+    /// <summary>
+    ///     Name of the node that the power monitor will read its sources (see <see cref="NodeContainerComponent"/>)
+    /// </summary>
     [DataField("sourceNode")]
     public string SourceNode = "hv";
 
+    /// <summary>
+    ///     Name of the node that the power monitor will read its loads (see <see cref="NodeContainerComponent"/>)
+    /// </summary>
     [DataField("loadNode")]
     public string LoadNode = "hv";
-}
 
-[RegisterComponent]
-public sealed partial class PowerMonitoringConsoleComponent : PowerMonitoringComponent
-{
+    /// <summary>
+    ///     The UI key associated with the <see cref="BoundUserInterface"/> that displays the power monitor data
+    /// </summary>
+    [DataField("key", required: true)]
+    private string _keyRaw = default!;
 
-}
+    [ViewVariables]
+    public Enum? Key { get; set; }
 
-[RegisterComponent]
-public sealed partial class PowerMonitoringDistributorComponent : PowerMonitoringComponent
-{
-
-}
-
-public sealed class PowerMonitoringSetUIStateEvent : EntityEventArgs
-{
-    public readonly EntityUid Entity;
-    public readonly PowerMonitoringBoundInterfaceState State;
-
-    public PowerMonitoringSetUIStateEvent(EntityUid entity, PowerMonitoringBoundInterfaceState state)
+    void ISerializationHooks.AfterDeserialization()
     {
-        Entity = entity;
-        State = state;
+        var reflectionManager = IoCManager.Resolve<IReflectionManager>();
+        if (reflectionManager.TryParseEnumReference(_keyRaw, out var key))
+            Key = key;
     }
 }
-

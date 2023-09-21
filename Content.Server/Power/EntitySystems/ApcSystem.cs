@@ -30,7 +30,7 @@ public sealed class ApcSystem : EntitySystem
         UpdatesAfter.Add(typeof(PowerNetSystem));
 
         SubscribeLocalEvent<ApcComponent, BoundUIOpenedEvent>(OnBoundUiOpen);
-        SubscribeLocalEvent<ApcComponent, MapInitEvent>(OnApcInit);
+        SubscribeLocalEvent<ApcComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<ApcComponent, ChargeChangedEvent>(OnBatteryChargeChanged);
         SubscribeLocalEvent<ApcComponent, ApcToggleMainBreakerMessage>(OnToggleMainBreaker);
         SubscribeLocalEvent<ApcComponent, GotEmaggedEvent>(OnEmagged);
@@ -56,7 +56,7 @@ public sealed class ApcSystem : EntitySystem
         UpdateApcState(uid, component);
     }
 
-    private void OnApcInit(EntityUid uid, ApcComponent component, MapInitEvent args)
+    private void OnMapInit(EntityUid uid, ApcComponent component, MapInitEvent args)
     {
         UpdateApcState(uid, component);
     }
@@ -100,7 +100,7 @@ public sealed class ApcSystem : EntitySystem
         apc.MainBreakerEnabled = !apc.MainBreakerEnabled;
         battery.CanDischarge = apc.MainBreakerEnabled;
 
-        UpdateUIState(uid, apc);
+        UpdateApcState(uid, apc);
         _audio.PlayPvs(apc.OnReceiveMessageSound, uid, AudioParams.Default.WithVolume(-2f));
     }
 
@@ -126,9 +126,7 @@ public sealed class ApcSystem : EntitySystem
             apc.LastChargeStateTime = _gameTiming.CurTime;
 
             if (TryComp(uid, out AppearanceComponent? appearance))
-            {
                 _appearance.SetData(uid, ApcVisuals.ChargeState, newState, appearance);
-            }
         }
 
         var extPowerState = _powerMonitoring.CalcExtPowerState(uid, battery);

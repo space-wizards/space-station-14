@@ -18,7 +18,7 @@
                         <Label Text="{Loc 'power-monitoring-window-external-label'}" StyleClasses="StatusFieldTitle" MinWidth="120" />
                         <Label Name="ExternalPowerStateLabel" Text="{Loc 'power-monitoring-window-power-state-good'}" />
                         <!-- Power network status -->
-                        <Label Text="{Loc 'power-monitoring-window-power-load'}" StyleClasses="StatusFieldTitle" MinWidth="120" />
+                        <Label Text="{Loc 'power-monitoring-window-total-loads'}" StyleClasses="StatusFieldTitle" MinWidth="120" />
                         <Label Name="PowerDemandLabel"/>
                     </GridContainer>
                 </BoxContainer>

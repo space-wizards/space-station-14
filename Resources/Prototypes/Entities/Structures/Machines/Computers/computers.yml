@@ -238,9 +238,10 @@
     color: "#c9c042"
   - type: Computer
     board: PowerComputerCircuitboard
-  - type: PowerMonitoringConsole
+  - type: PowerMonitoring
     sourceNode: hv
     loadNode: hv
+    key: enum.PowerMonitoringConsoleUiKey.Key
   - type: NodeContainer
     examinable: true
     nodes:
