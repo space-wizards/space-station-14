@@ -47,6 +47,15 @@ public sealed partial class BuckleComponent : Component
     [DataField("pullStrap")]
     public bool PullStrap;
 
+    //SS220-Vehicle-doafter-fix begin
+    /// <summary>
+    /// Time required for others to unbuckle us from a vehicle
+    /// </summary>
+    [DataField("vehicleUnbuckleTime")]
+    [ViewVariables(VVAccess.ReadWrite)]
+    public float VehicleUnbuckleTime = .75f;
+    //SS220-Vehicle-doafter-fix end
+
     /// <summary>
     /// The amount of time that must pass for this entity to
     /// be able to unbuckle after recently buckling.
@@ -85,11 +94,12 @@ public sealed partial class BuckleComponent : Component
 [Serializable, NetSerializable]
 public sealed class BuckleComponentState : ComponentState
 {
-    public BuckleComponentState(bool buckled, bool fastenedSeatbelt, NetEntity? buckledTo, NetEntity? lastEntityBuckledTo,
+    public BuckleComponentState(bool buckled, bool fastenedSeatbelt, float vehicleUnbuckleTime, NetEntity? buckledTo, NetEntity? lastEntityBuckledTo,
         bool dontCollide)
     {
         Buckled = buckled;
         FastenedSeatbelt = fastenedSeatbelt; //SS220-Gravpull-seatbelt-fix
+        VehicleUnbuckleTime = vehicleUnbuckleTime; //SS220-Vehicle-doafter-fix
         BuckledTo = buckledTo;
         LastEntityBuckledTo = lastEntityBuckledTo;
         DontCollide = dontCollide;
@@ -97,6 +107,7 @@ public sealed class BuckleComponentState : ComponentState
 
     public readonly bool Buckled;
     public readonly bool FastenedSeatbelt; //SS220-Gravpull-seatbelt-fix
+    public readonly float VehicleUnbuckleTime; //SS220-Vehicle-doafter-fix
     public readonly NetEntity? BuckledTo;
     public readonly NetEntity? LastEntityBuckledTo;
     public readonly bool DontCollide;
