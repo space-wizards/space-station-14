@@ -44,6 +44,21 @@ public abstract partial class SharedBodySystem : EntitySystem
     }
 
     /// <summary>
+    /// Inverse of <see cref="GetPartSlotContainerId"/>
+    /// </summary>
+    protected static string? GetPartSlotContainerIdFromContainer(string containerSlotId)
+    {
+        // This is blursed
+        var slotIndex = containerSlotId.IndexOf(PartSlotContainerIdPrefix, StringComparison.Ordinal);
+
+        if (slotIndex < -1)
+            return null;
+
+        var slotId = containerSlotId.Remove(slotIndex, PartSlotContainerIdPrefix.Length);
+        return slotId;
+    }
+
+    /// <summary>
     /// Gets the container Id for the specified slotId.
     /// </summary>
     public static string GetPartSlotContainerId(string slotId)

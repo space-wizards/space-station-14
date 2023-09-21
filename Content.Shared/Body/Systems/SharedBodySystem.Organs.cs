@@ -121,9 +121,7 @@ public partial class SharedBodySystem
     public bool RemoveOrgan(EntityUid organId, OrganComponent? organ = null)
     {
         if (!Containers.TryGetContainingContainer(organId, out var container))
-        {
             return false;
-        }
 
         var parent = container.Owner;
 

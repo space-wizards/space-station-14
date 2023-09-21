@@ -3,6 +3,7 @@ using System.Linq;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Systems;
 using Robust.Server.GameObjects;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 
@@ -31,6 +32,7 @@ public sealed class SaveLoadReparentTest
         var maps = server.ResolveDependency<IMapManager>();
         var mapLoader = entities.System<MapLoaderSystem>();
         var bodySystem = entities.System<SharedBodySystem>();
+        var containerSystem = entities.System<SharedContainerSystem>();
 
         await server.WaitAssertion(() =>
         {
@@ -55,17 +57,15 @@ public sealed class SaveLoadReparentTest
                 {
                     Assert.That(component.Body, Is.EqualTo(human));
                     Assert.That(component.Body, Is.Not.Null);
-                    Assert.That(component.Parent, Is.Not.EqualTo(default(EntityUid)));
+                    var parent = bodySystem.GetParentPartOrNull(id);
+                    Assert.That(parent, Is.Not.EqualTo(default(EntityUid)));
                     if (!bodySystem.IsPartRoot(component.Body.Value, id, null, component))
                     {
-                        Assert.That(component.Parent, Is.Not.Null);
-                        Assert.That(component.AttachedToSlot != null);
+                        Assert.That(parent, Is.Not.Null);
                     }
                     else
                     {
-                        Assert.That(component.Parent, Is.Null);
-                        var bodyComp = entities.GetComponent<BodyComponent>(component.Body.Value);
-                        Assert.That(bodyComp.RootPartSlot == component.AttachedToSlot);
+                        Assert.That(parent, Is.Null);
                     }
                 });
 
@@ -74,18 +74,22 @@ public sealed class SaveLoadReparentTest
                     Assert.Multiple(() =>
                     {
                         Assert.That(slot.Id, Is.EqualTo(slotId));
-                        Assert.That(slot.Container.ContainedEntity, Is.Not.EqualTo(default(EntityUid)));
+                        var container =
+                            containerSystem.GetContainer(id, SharedBodySystem.GetPartSlotContainerId(slotId));
+                        Assert.That(container.ContainedEntities, Is.Not.Empty);
                     });
                 }
             }
 
             foreach (var (id, component) in organs)
             {
+                var parent = bodySystem.GetParentPartOrNull(id);
+
                 Assert.Multiple(() =>
                 {
                     Assert.That(component.Body, Is.EqualTo(human));
-                    Assert.That(component.Parent, Is.Not.Null);
-                    Assert.That(component.Parent, Is.Not.EqualTo(default(EntityUid)));
+                    Assert.That(parent, Is.Not.Null);
+                    Assert.That(parent.Value, Is.Not.EqualTo(default(EntityUid)));
                 });
             }
 
@@ -135,11 +139,13 @@ public sealed class SaveLoadReparentTest
 
                 foreach (var (id, component) in parts)
                 {
+                    var parent = bodySystem.GetParentPartOrNull(id);
+
                     Assert.Multiple(() =>
                     {
                         Assert.That(component.Body, Is.EqualTo(human));
-                        Assert.That(component.Parent, Is.Not.Null);
-                        Assert.That(component.Parent, Is.Not.EqualTo(default(EntityUid)));
+                        Assert.That(parent, Is.Not.Null);
+                        Assert.That(parent.Value, Is.Not.EqualTo(default(EntityUid)));
                     });
 
                     foreach (var (slotId, slot) in component.Children)
@@ -147,18 +153,22 @@ public sealed class SaveLoadReparentTest
                         Assert.Multiple(() =>
                         {
                             Assert.That(slot.Id, Is.EqualTo(slotId));
-                            Assert.That(slot.Container.ContainedEntity, Is.Not.EqualTo(default(EntityUid)));
+                            var container =
+                                containerSystem.GetContainer(id, SharedBodySystem.GetPartSlotContainerId(slotId));
+                            Assert.That(container.ContainedEntities, Is.Not.Empty);
                         });
                     }
                 }
 
                 foreach (var (id, component) in organs)
                 {
+                    var parent = bodySystem.GetParentPartOrNull(id);
+
                     Assert.Multiple(() =>
                     {
                         Assert.That(component.Body, Is.EqualTo(human));
-                        Assert.That(component.Parent, Is.Not.Null);
-                        Assert.That(component.Parent, Is.Not.EqualTo(default(EntityUid)));
+                        Assert.That(parent, Is.Not.Null);
+                        Assert.That(parent.Value, Is.Not.EqualTo(default(EntityUid)));
                     });
                 }
 

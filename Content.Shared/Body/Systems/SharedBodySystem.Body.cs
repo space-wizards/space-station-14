@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Numerics;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Organ;
 using Content.Shared.Body.Part;
@@ -6,6 +7,7 @@ using Content.Shared.Body.Prototypes;
 using Content.Shared.DragDrop;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
+using Robust.Shared.Map;
 using MapInitEvent = Robust.Shared.GameObjects.MapInitEvent;
 
 namespace Content.Shared.Body.Systems;
@@ -121,16 +123,17 @@ public partial class SharedBodySystem
                 var parentEntity = cameFromEntities[currentSlotId];
                 var parentPartComponent = Comp<BodyPartComponent>(parentEntity);
 
-                var childPart = SpawnInContainerOrDrop(connectionSlot.Part, parentEntity, GetPartSlotContainerId(connection));
+                // Spawn the entity on the target
+                // then get the body part type, create the slot, and finally
+                // we can insert it into the container.
+                var childPart = Spawn(connectionSlot.Part, new EntityCoordinates(parentEntity, Vector2.Zero));
                 cameFromEntities[connection] = childPart;
 
-                // Add slot afterwards though it probably shouldn't matter? Unless some event from above relies on it.
-                // Worst case we just spawn it on the entity and insert to container afterwards and not use the helper method.
-                // IF YOU END UP DOING THIS, JUST MAKE A "SPAWNORGANS" METHOD SO ROOT PART ENTITY CAN ALSO DO IT!
                 var childPartComponent = Comp<BodyPartComponent>(childPart);
                 var partSlot = CreatePartSlot(parentEntity, connection, childPartComponent.PartType, parentPartComponent);
+                var cont = Containers.GetContainer(parentEntity, GetPartSlotContainerId(connection));
 
-                if (partSlot == null)
+                if (partSlot == null || !cont.Insert(childPart))
                 {
                     Log.Error($"Could not create slot for connection {connection} in body {prototype.ID}");
                     QueueDel(childPart);
@@ -150,9 +153,9 @@ public partial class SharedBodySystem
     {
         foreach (var (organSlotId, organProto) in organs)
         {
+            var slot = CreateOrganSlot(organSlotId, partId, partComponent);
             SpawnInContainerOrDrop(organProto, partId, GetOrganContainerId(organSlotId));
 
-            var slot = CreateOrganSlot(organSlotId, partId, partComponent);
             if (slot == null)
             {
                 Log.Error($"Could not create organ for slot {organSlotId} in {ToPrettyString(partId)}");

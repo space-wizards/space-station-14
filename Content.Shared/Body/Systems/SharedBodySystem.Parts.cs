@@ -167,6 +167,44 @@ public partial class SharedBodySystem
     }
 
     /// <summary>
+    /// Tries to get the parent body part to this if applicable.
+    /// Doesn't validate if it's a part of body system.
+    /// </summary>
+    public EntityUid? GetParentPartOrNull(EntityUid uid)
+    {
+        if (!Containers.TryGetContainingContainer(uid, out var container))
+            return null;
+
+        var parent = container.Owner;
+
+        if (!HasComp<BodyPartComponent>(parent))
+            return null;
+
+        return parent;
+    }
+
+    /// <summary>
+    /// Tries to get the parent body part and slot to this if applicable.
+    /// </summary>
+    public (EntityUid Parent, string Slot)? GetParentPartAndSlotOrNull(EntityUid uid)
+    {
+        if (!Containers.TryGetContainingContainer(uid, out var container))
+            return null;
+
+        var slotId = GetPartSlotContainerIdFromContainer(container.ID);
+
+        if (string.IsNullOrEmpty(slotId))
+            return null;
+
+        var parent = container.Owner;
+
+        if (!TryComp<BodyPartComponent>(parent, out var parentBody) || !parentBody.Children.ContainsKey(slotId))
+            return null;
+
+        return (parent, slotId);
+    }
+
+    /// <summary>
     /// Tries to get the relevant parent body part to this if it exists.
     /// It won't exist if this is the root body part or if it's not in a body.
     /// </summary>
@@ -354,7 +392,7 @@ public partial class SharedBodySystem
     /// <summary>
     /// Attaches a body part to the specified body part parent.
     /// </summary>
-     public virtual bool AttachPart(
+     public bool AttachPart(
          EntityUid parentPartId,
          string slotId,
          EntityUid partId,
@@ -373,7 +411,7 @@ public partial class SharedBodySystem
     /// <summary>
     /// Attaches a body part to the specified body part parent.
     /// </summary>
-    public virtual bool AttachPart(
+    public bool AttachPart(
         EntityUid parentPartId,
         BodyPartSlot slot,
         EntityUid partId,
@@ -383,7 +421,7 @@ public partial class SharedBodySystem
         if (!Resolve(parentPartId, ref parentPart, false) ||
             !Resolve(partId, ref part, false) ||
             !CanAttachPart(parentPartId, slot.Id, partId, parentPart, part) ||
-            !parentPart.Children.TryGetValue(slot.Id, out var slotData))
+            !parentPart.Children.ContainsKey(slot.Id))
         {
             return false;
         }
@@ -441,7 +479,9 @@ public partial class SharedBodySystem
 
         foreach (var slotId in part.Organs.Keys)
         {
-            if (!Containers.TryGetContainer(partId, slotId, out var container))
+            var containerSlotId = GetOrganContainerId(slotId);
+
+            if (!Containers.TryGetContainer(partId, containerSlotId, out var container))
                 continue;
 
             foreach (var containedEnt in container.ContainedEntities)
@@ -454,6 +494,9 @@ public partial class SharedBodySystem
         }
     }
 
+    /// <summary>
+    /// Gets all BaseContainers for body parts on this entity and its child entities.
+    /// </summary>
     public IEnumerable<BaseContainer> GetPartContainers(EntityUid id, BodyPartComponent? part = null)
     {
         if (!Resolve(id, ref part, false) ||
@@ -464,7 +507,9 @@ public partial class SharedBodySystem
 
         foreach (var slotId in part.Children.Keys)
         {
-            if (!Containers.TryGetContainer(id, slotId, out var container))
+            var containerSlotId = GetPartSlotContainerId(slotId);
+
+            if (!Containers.TryGetContainer(id, containerSlotId, out var container))
                 continue;
 
             yield return container;
@@ -491,7 +536,9 @@ public partial class SharedBodySystem
 
         foreach (var slotId in part.Children.Keys)
         {
-            if (Containers.TryGetContainer(partId, slotId, out var container))
+            var containerSlotId = GetPartSlotContainerId(slotId);
+
+            if (Containers.TryGetContainer(partId, containerSlotId, out var container))
             {
                 foreach (var containedEnt in container.ContainedEntities)
                 {
@@ -519,7 +566,9 @@ public partial class SharedBodySystem
         {
             yield return slot;
 
-            if (Containers.TryGetContainer(partId, slotId, out var container))
+            var containerSlotId = GetOrganContainerId(slotId);
+
+            if (Containers.TryGetContainer(partId, containerSlotId, out var container))
             {
                 foreach (var containedEnt in container.ContainedEntities)
                 {
@@ -668,7 +717,7 @@ public partial class SharedBodySystem
 
         foreach (var slotId in part.Children.Keys)
         {
-            var container = Containers.GetContainer(partId, slotId);
+            var container = Containers.GetContainer(partId, GetPartSlotContainerId(slotId));
 
             foreach (var containedEnt in container.ContainedEntities)
             {
