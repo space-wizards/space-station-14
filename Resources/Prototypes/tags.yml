@@ -742,6 +742,9 @@
   id: NukeOpsUplink
 
 - type: Tag
+  id: LoneOpsUplink
+
+- type: Tag
   id: Ointment
 
 - type: Tag

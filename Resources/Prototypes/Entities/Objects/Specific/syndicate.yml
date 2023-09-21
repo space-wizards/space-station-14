@@ -114,6 +114,19 @@
 
 - type: entity
   parent: BaseUplinkRadio
+  id: LoneOpsUplinkRadio40TC
+  suffix: 40 TC, LoneOps
+  components:
+  - type: Store
+    preset: StorePresetUplink
+    balance:
+      Telecrystal: 40
+  - type: Tag
+    tags:
+    - LoneOpsUplink
+
+- type: entity
+  parent: BaseUplinkRadio
   id: BaseUplinkRadioDebug
   suffix: Debug
   components:

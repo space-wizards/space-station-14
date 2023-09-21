@@ -100,6 +100,7 @@
       blacklist:
         tags:
           - NukeOpsUplink
+          - LoneOpsUplink
 
 - type: listing
   id: UplinkDisposableTurret
@@ -115,6 +116,7 @@
       blacklist:
         tags:
           - NukeOpsUplink
+          - LoneOpsUplink
 
 # Explosives
 
@@ -342,6 +344,7 @@
     blacklist:
       tags:
       - NukeOpsUplink
+      - LoneOpsUplink
 
 - type: listing
   id: UplinkHolster
@@ -398,6 +401,7 @@
       blacklist:
         tags:
           - NukeOpsUplink
+          - LoneOpsUplink
 
 - type: listing
   id: UplinkReinforcementRadioSyndicateNukeops # Version for Nukeops that spawns an agent with the NukeOperative component.
@@ -414,6 +418,9 @@
       whitelist:
         tags:
           - NukeOpsUplink
+      blacklist:
+        tags:
+          - LoneOpsUplink
 
 - type: listing
   id: UplinkReinforcementRadioSyndicateMonkey
@@ -425,6 +432,11 @@
     Telecrystal: 8
   categories:
   - UplinkUtility
+  conditions:
+    - !type:StoreWhitelistCondition
+      blacklist:
+        tags:
+          - LoneOpsUplink
 
 - type: listing
   id: UplinkStealthBox
@@ -517,6 +529,7 @@
       blacklist:
         tags:
           - NukeOpsUplink
+          - LoneOpsUplink
 
 - type: listing
   id: UplinkFreedomImplanter
@@ -586,6 +599,7 @@
       blacklist:
         tags:
           - NukeOpsUplink
+          - LoneOpsUplink
 
 - type: listing
   id: UplinkDeathRattle
@@ -745,6 +759,7 @@
     blacklist:
       tags:
       - NukeOpsUplink
+      - LoneOpsUplink
   - !type:BuyerWhitelistCondition
     blacklist:
       components:
@@ -764,6 +779,7 @@
     blacklist:
       tags:
       - NukeOpsUplink
+      - LoneOpsUplink
   - !type:BuyerWhitelistCondition
     blacklist:
       components:
@@ -830,6 +846,7 @@
     blacklist:
       tags:
       - NukeOpsUplink
+      - LoneOpsUplink
 
 # Job Specific
 
