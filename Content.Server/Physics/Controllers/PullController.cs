@@ -152,7 +152,7 @@ namespace Content.Server.Physics.Controllers
                     continue;
                 }
 
-                if (!TryComp<PhysicsComponent?>(pullableEnt, out var physics) ||
+                if (!TryComp<PhysicsComponent>(pullableEnt, out var physics) ||
                     physics.BodyType == BodyType.Static ||
                     movingTo.MapId != pullableXform.MapID)
                 {

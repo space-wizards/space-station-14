@@ -248,6 +248,7 @@
     Telecrystal: 11
   categories:
     - UplinkExplosives
+  restockTime: 30
 
 # Ammo
 

@@ -250,7 +250,7 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
 
         var ent = closestResult.Value.HitEntity;
 
-        if (!TryComp<ContainmentFieldGeneratorComponent?>(ent, out var otherFieldGeneratorComponent) ||
+        if (!TryComp<ContainmentFieldGeneratorComponent>(ent, out var otherFieldGeneratorComponent) ||
             otherFieldGeneratorComponent == component ||
             !TryComp<PhysicsComponent>(ent, out var collidableComponent) ||
             collidableComponent.BodyType != BodyType.Static ||

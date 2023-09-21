@@ -1,6 +1,5 @@
 using Content.Server.GameTicking;
 using Content.Server.GameTicking.Rules;
-using Content.Server.Ninja.Systems;
 using Content.Server.Zombies;
 using Content.Shared.Administration;
 using Content.Shared.Database;
@@ -19,7 +18,6 @@ public sealed partial class AdminVerbSystem
 {
     [Dependency] private readonly ZombieSystem _zombie = default!;
     [Dependency] private readonly TraitorRuleSystem _traitorRule = default!;
-    [Dependency] private readonly SpaceNinjaSystem _ninja = default!;
     [Dependency] private readonly NukeopsRuleSystem _nukeopsRule = default!;
     [Dependency] private readonly PiratesRuleSystem _piratesRule = default!;
     [Dependency] private readonly RevolutionaryRuleSystem _revolutionaryRule = default!;
