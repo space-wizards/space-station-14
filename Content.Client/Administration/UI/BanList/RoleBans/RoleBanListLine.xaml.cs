@@ -4,16 +4,16 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
 using static Robust.Client.UserInterface.Controls.BaseButton;
 
-namespace Content.Client.Administration.UI.BanList;
+namespace Content.Client.Administration.UI.BanList.RoleBans;
 
 [GenerateTypedNameReferences]
-public sealed partial class BanListLine : BoxContainer, IBanListLine<SharedServerBan>
+public sealed partial class RoleBanListLine : BoxContainer, IBanListLine<SharedServerRoleBan>
 {
-    public SharedServerBan Ban { get; }
+    public SharedServerRoleBan Ban { get; }
 
-    public event Action<BanListLine>? IdsClicked;
+    public event Action<RoleBanListLine>? IdsClicked;
 
-    public BanListLine(SharedServerBan ban)
+    public RoleBanListLine(SharedServerRoleBan ban)
     {
         RobustXamlLoader.Load(this);
 
@@ -21,6 +21,7 @@ public sealed partial class BanListLine : BoxContainer, IBanListLine<SharedServe
         IdsHidden.OnPressed += IdsPressed;
 
         BanListEui.SetData(this, ban);
+        Role.Text = ban.Role;
     }
 
     private void IdsPressed(ButtonEventArgs buttonEventArgs)
@@ -36,3 +37,4 @@ public sealed partial class BanListLine : BoxContainer, IBanListLine<SharedServe
         IdsClicked = null;
     }
 }
+

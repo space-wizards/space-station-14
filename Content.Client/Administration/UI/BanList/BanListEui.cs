@@ -1,4 +1,6 @@
 ﻿using System.Numerics;
+using Content.Client.Administration.UI.BanList.Bans;
+using Content.Client.Administration.UI.BanList.RoleBans;
 using Content.Client.Eui;
 using Content.Shared.Administration.BanList;
 using Content.Shared.Eui;

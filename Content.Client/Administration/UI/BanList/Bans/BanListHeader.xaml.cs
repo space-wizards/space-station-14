@@ -2,12 +2,12 @@
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
 
-namespace Content.Client.Administration.UI.BanList;
+namespace Content.Client.Administration.UI.BanList.Bans;
 
 [GenerateTypedNameReferences]
-public sealed partial class RoleBanListHeader : ContainerButton
+public sealed partial class BanListHeader : ContainerButton
 {
-    public RoleBanListHeader()
+    public BanListHeader()
     {
         RobustXamlLoader.Load(this);
     }
