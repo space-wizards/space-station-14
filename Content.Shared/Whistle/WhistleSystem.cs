@@ -11,18 +11,21 @@ public sealed class SharedWhistleSystem : EntitySystem
     {
         base.Initialize();
     }
+
     private bool ExclamateTarget(EntityUid target, WhistleComponent component)
     {
         SpawnAttachedTo(component.effect, target.ToCoordinates());
 
         return true;
     }
+
     public void OnUseInHand(EntityUid uid, WhistleComponent component, UseInHandEvent args)
     {
         TryMakeLoudWhistle(uid, args.User, component);
 
         args.Handled = true;
     }
+
     public bool TryMakeLoudWhistle(EntityUid uid, EntityUid owner, WhistleComponent component)
     {
         if (component.Distance <= 0)
@@ -31,6 +34,7 @@ public sealed class SharedWhistleSystem : EntitySystem
         MakeLoudWhistle(uid, owner, component);
         return true;
     }
+
     private bool MakeLoudWhistle(EntityUid uid, EntityUid owner, WhistleComponent component)
     {
         foreach (var moverComponent in
