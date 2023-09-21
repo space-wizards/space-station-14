@@ -10,12 +10,15 @@ namespace Content.Client.Power.PowerMonitoring;
 [GenerateTypedNameReferences]
 public sealed partial class PowerMonitoringConsoleWindow : DefaultWindow, IComputerWindow<PowerMonitoringBoundInterfaceState>
 {
-    [Dependency] private readonly PowerMonitoringSystem _powerMonitoring = default!;
+    [Dependency] private readonly EntityManager _entityManager = default!;
+    private readonly PowerMonitoringSystem? _powerMonitoring = default!;
 
     public PowerMonitoringConsoleWindow()
     {
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
+
+        _entityManager.TrySystem(out _powerMonitoring);
 
         SetSize = MinSize = new Vector2(300, 450);
 
@@ -25,6 +28,15 @@ public sealed partial class PowerMonitoringConsoleWindow : DefaultWindow, ICompu
 
     public void UpdateState(PowerMonitoringBoundInterfaceState state)
     {
+        if (TotalSources != null)
+            TotalSources.Text = Loc.GetString("power-distributor-window-value", ("value", state.TotalSources));
+
+        if (TotalLoads != null)
+            TotalLoads.Text = Loc.GetString("power-distributor-window-value", ("value", state.TotalLoads));
+
+        if (_powerMonitoring == null)
+            return;
+
         _powerMonitoring.UpdateSourcesList(SourcesList, state.Sources);
         _powerMonitoring.UpdateLoadsList(LoadsList, state.Loads, ShowInactiveConsumersCheckBox.Pressed);
     }

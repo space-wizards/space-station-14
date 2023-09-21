@@ -2,12 +2,17 @@
     xmlns="https://spacestation14.io"
     Title="{Loc 'power-monitoring-window-title'}">
     <BoxContainer Orientation="Vertical" VerticalExpand="True">
+
+        <!-- Power monitoring overview -->
         <GridContainer Columns="2">
-            <!-- Grid is used here to align things. -->
-            <Label Text="{Loc 'power-monitoring-window-total-sources'}"/><Label Name="TotalSourcesNum" Text="?"/>
-            <Label Text="{Loc 'power-monitoring-window-total-loads'}"/><Label Name="TotalLoadsNum" Text="?"/>
+            <Label Text="{Loc 'power-monitoring-window-total-sources'}" StyleClasses="StatusFieldTitle" MinWidth="120"/>
+            <Label Name="TotalSources" Text="?"/>
+            <Label Text="{Loc 'power-monitoring-window-total-loads'}" StyleClasses="StatusFieldTitle" MinWidth="120"/>
+            <Label Name="TotalLoads" Text="?"/>
         </GridContainer>
-        <TabContainer Name="MasterTabContainer" VerticalExpand="True">
+        
+        <!-- Power monitoring list -->
+        <TabContainer Name="MasterTabContainer" VerticalExpand="True" Margin="0 10 0 0">
             <ScrollContainer VerticalExpand="True" HorizontalExpand="True">
                 <GridContainer Name="SourcesList" VerticalExpand="True" HorizontalExpand="True" Columns="3">
                 </GridContainer>
@@ -20,5 +25,17 @@
                 </ScrollContainer>
             </BoxContainer>
         </TabContainer>
+        
+        <!-- Footer -->
+        <BoxContainer Orientation="Vertical">
+            <PanelContainer StyleClasses="LowDivider" />
+            <BoxContainer Orientation="Horizontal" Margin="10 2 5 0" VerticalAlignment="Bottom">
+                <Label Text="{Loc 'power-distributor-window-flavor-left'}" StyleClasses="WindowFooterText" />
+                <Label Text="{Loc 'power-distributor-window-flavor-right'}" StyleClasses="WindowFooterText"
+                        HorizontalAlignment="Right" HorizontalExpand="True"  Margin="0 0 5 0" />
+                <TextureRect StyleClasses="NTLogoDark" Stretch="KeepAspectCentered"
+                        VerticalAlignment="Center" HorizontalAlignment="Right" SetSize="19 19"/>
+            </BoxContainer>
+        </BoxContainer>
     </BoxContainer>
 </DefaultWindow>

@@ -9,12 +9,14 @@ namespace Content.Client.Power.PowerMonitoring;
 public sealed partial class PowerMonitoringDistributorWindow : FancyWindow
 {
     [Dependency] private readonly EntityManager _entityManager = default!;
-    [Dependency] private readonly PowerMonitoringSystem _powerMonitoring = default!;
+    private readonly PowerMonitoringSystem? _powerMonitoring = default!;
 
     public PowerMonitoringDistributorWindow(PowerMonitoringDistributorBoundUserInterface owner)
     {
-        IoCManager.InjectDependencies(this);
         RobustXamlLoader.Load(this);
+        IoCManager.InjectDependencies(this);
+
+        _entityManager.TrySystem(out _powerMonitoring);
 
         SetSize = MinSize = new System.Numerics.Vector2(300, 450);
 
@@ -31,6 +33,9 @@ public sealed partial class PowerMonitoringDistributorWindow : FancyWindow
     {
         if (PowerDemandLabel != null)
             PowerDemandLabel.Text = Loc.GetString("power-distributor-window-value", ("value", state.TotalLoads));
+
+        if (_powerMonitoring == null)
+            return;
 
         if (ExternalPowerStateLabel != null)
         {

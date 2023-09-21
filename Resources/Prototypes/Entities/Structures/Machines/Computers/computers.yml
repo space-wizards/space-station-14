@@ -238,7 +238,9 @@
     color: "#c9c042"
   - type: Computer
     board: PowerComputerCircuitboard
-  - type: PowerMonitoring
+  - type: PowerMonitoringConsole
+    sourceNode: hv
+    loadNode: hv
   - type: NodeContainer
     examinable: true
     nodes:

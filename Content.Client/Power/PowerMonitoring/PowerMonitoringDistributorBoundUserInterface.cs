@@ -35,9 +35,7 @@ namespace Content.Client.Power.PowerMonitoring
             base.Dispose(disposing);
 
             if (disposing)
-            {
                 _window?.Dispose();
-            }
         }
     }
 }

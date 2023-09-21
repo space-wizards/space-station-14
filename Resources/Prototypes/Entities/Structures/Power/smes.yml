@@ -87,7 +87,7 @@
       sendBroadcastAttemptEvent: true
       examinableAddress: true
     - type: WiredNetworkConnection
-    - type: PowerMonitoring
+    - type: PowerMonitoringDistributor
       sourceNode: input
       loadNode: output
     - type: ActivatableUI

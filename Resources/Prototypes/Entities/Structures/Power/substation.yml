@@ -105,7 +105,7 @@
     requirePower: true
     highVoltageNode: input
     mediumVoltageNode: output
-  - type: PowerMonitoring
+  - type: PowerMonitoringDistributor
     sourceNode: input
     loadNode: output
   - type: ActivatableUI
