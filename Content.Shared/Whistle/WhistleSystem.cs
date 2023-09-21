@@ -3,16 +3,14 @@ using Content.Shared.Coordinates;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Movement.Components;
 
-namespace Content.Client.Whistle;
+namespace Content.Shared.Whistle;
 
-public sealed class WhistleSystem : EntitySystem
+public sealed class SharedWhistleSystem : EntitySystem
 {
     [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
     public override void Initialize()
     {
         base.Initialize();
-
-        SubscribeLocalEvent<WhistleComponent, UseInHandEvent>(OnUseInHand);
     }
     private bool ExclamateTarget(EntityUid target, WhistleComponent component)
     {
