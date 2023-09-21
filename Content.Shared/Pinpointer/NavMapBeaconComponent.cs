@@ -16,4 +16,10 @@ public sealed partial class NavMapBeaconComponent : Component
 
     [ViewVariables(VVAccess.ReadWrite), DataField, AutoNetworkedField]
     public Color Color = Color.Orange;
+
+    /// <summary>
+    /// Only enabled beacons can be seen on a station map.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField, AutoNetworkedField]
+    public bool Enabled = true;
 }

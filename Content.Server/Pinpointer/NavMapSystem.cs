@@ -130,7 +130,7 @@ public sealed class NavMapSystem : SharedNavMapSystem
 
         while (beaconQuery.MoveNext(out var beaconUid, out var beacon, out var xform))
         {
-            if (xform.GridUid != uid || !CanBeacon(beaconUid, xform))
+            if (!beacon.Enabled || xform.GridUid != uid || !CanBeacon(beaconUid, xform))
                 continue;
 
             // TODO: Make warp points use metadata name instead.
