@@ -30,7 +30,7 @@
   noSpawn: true
   parent: BaseTerminatorObjective
   id: ShutDownObjective
-  title: Shut down
+  name: Shut down
   description: Once the mission is complete die to prevent our technology from being stolen.
   components:
   - type: Objective
