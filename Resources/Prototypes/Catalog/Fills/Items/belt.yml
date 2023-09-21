@@ -27,6 +27,20 @@
       - id: Multitool
 
 - type: entity
+  id: ClothingBeltUtilitySyndicate
+  parent: ClothingBeltUtility
+  suffix: Syndicate
+  components:
+  - type: StorageFill
+    contents:
+      - id: CrowbarRed
+      - id: WrenchCombat
+      - id: Screwdriver
+      - id: Wirecutter
+      - id: Welder
+      - id: Multitool
+
+- type: entity
   id: ClothingBeltChiefEngineerFilled
   parent: ClothingBeltChiefEngineer
   suffix: Filled

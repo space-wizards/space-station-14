@@ -121,6 +121,27 @@
     price: 22
 
 - type: entity
+  name: combat wrench
+  parent: Wrench
+  id: WrenchCombat
+  description: 'A heavily reinforced wrench designed for quick disassembly of objects and opposing forces'
+  components:
+  - type: Sprite
+    sprite: Objects/Tools/wrench_combat.rsi
+    state: icon
+  - type: Item
+    sprite: Objects/Tools/wrench_combat.rsi
+  - type: ItemCooldown
+  - type: MeleeWeapon
+    attackRate: 1
+    damage:
+      types:
+        Blunt: 12
+    qualities:
+      - Anchoring
+    speed: 1.2
+
+- type: entity
   name: crowbar
   parent: BaseItem
   id: Crowbar
