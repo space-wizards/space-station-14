@@ -132,7 +132,7 @@ public abstract partial class SharedVendingMachineSystem : EntitySystem
 
         foreach (var item in inventory)
         {
-            if(!entries.ContainsKey(item.ItemId) &&
+            if(!entries.ContainsKey(item.ItemId) ||
                !entries.TryGetValue(item.ItemId, out var amount))
                 continue;
 
