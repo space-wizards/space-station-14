@@ -9,42 +9,26 @@ namespace Content.Shared.Body.Systems;
 
 public partial class SharedBodySystem
 {
-    private void InitializeOrgans()
+    private void AddOrgan(EntityUid uid, EntityUid bodyUid, EntityUid partUid, OrganComponent component)
     {
-        SubscribeLocalEvent<OrganComponent, EntGotInsertedIntoContainerMessage>(OnOrganInserted);
-        SubscribeLocalEvent<OrganComponent, EntGotRemovedFromContainerMessage>(OnOrganRemoved);
+        component.Body = bodyUid;
+        RaiseLocalEvent(uid, new AddedToPartEvent(bodyUid));
+
+        if (component.Body != null)
+            RaiseLocalEvent(uid, new AddedToPartInBodyEvent(component.Body.Value, partUid));
+
+        Dirty(uid, component);
     }
 
-    private void OnOrganInserted(EntityUid uid, OrganComponent component, EntGotInsertedIntoContainerMessage args)
+    private void RemoveOrgan(EntityUid uid, EntityUid bodyUid, EntityUid parentPartUid, OrganComponent component)
     {
-        var parent = args.Container.Owner;
+        RaiseLocalEvent(uid, new RemovedFromPartEvent(bodyUid));
 
-        if (TryComp<BodyPartComponent>(parent, out var parentBodyPart))
-        {
-            component.Body = parentBodyPart.Body;
-            RaiseLocalEvent(uid, new AddedToPartEvent(parent));
+        if (component.Body != null)
+            RaiseLocalEvent(uid, new RemovedFromPartInBodyEvent(component.Body.Value, parentPartUid));
 
-            if (parentBodyPart.Body != null)
-                RaiseLocalEvent(uid, new AddedToPartInBodyEvent(parentBodyPart.Body.Value, parent));
-
-            Dirty(uid, component);
-        }
-    }
-
-    private void OnOrganRemoved(EntityUid uid, OrganComponent component, EntGotRemovedFromContainerMessage args)
-    {
-        var parent = args.Container.Owner;
-
-        if (TryComp<BodyPartComponent>(parent, out var parentBodyPart))
-        {
-            RaiseLocalEvent(uid, new RemovedFromPartEvent(parent));
-
-            if (parentBodyPart.Body != null)
-                RaiseLocalEvent(uid, new RemovedFromPartInBodyEvent(parentBodyPart.Body.Value, parent));
-
-            component.Body = null;
-            Dirty(uid, component);
-        }
+        component.Body = null;
+        Dirty(uid, component);
     }
 
     /// <summary>

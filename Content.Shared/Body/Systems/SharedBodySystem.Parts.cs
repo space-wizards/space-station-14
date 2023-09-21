@@ -38,6 +38,11 @@ public partial class SharedBodySystem
         {
             AddPart(uid, entity, slotId, childPart);
         }
+
+        if (TryComp(entity, out OrganComponent? organ))
+        {
+            AddOrgan(entity, uid, uid, organ);
+        }
     }
 
     private void OnBodyRemoved(EntityUid uid, BodyComponent component, EntRemovedFromContainerMessage args)
@@ -58,6 +63,11 @@ public partial class SharedBodySystem
         {
             RemovePart(uid, entity, slotId, childPart);
         }
+
+        if (TryComp(entity, out OrganComponent? organ))
+        {
+            RemoveOrgan(entity, uid, uid, organ);
+        }
     }
 
     private void OnBodyPartInserted(EntityUid uid, BodyPartComponent component, EntInsertedIntoContainerMessage args)
@@ -66,9 +76,17 @@ public partial class SharedBodySystem
         var entity = args.Entity;
         var slotId = args.Container.ID;
 
-        if (component.Body != null && TryComp(entity, out BodyPartComponent? childPart))
+        if (component.Body != null)
         {
-            AddPart(component.Body.Value, entity, slotId, childPart);
+            if (TryComp(entity, out BodyPartComponent? childPart))
+            {
+                AddPart(component.Body.Value, entity, slotId, childPart);
+            }
+
+            if (TryComp(entity, out OrganComponent? organ))
+            {
+                AddOrgan(entity, component.Body.Value, uid, organ);
+            }
         }
     }
 
@@ -80,12 +98,17 @@ public partial class SharedBodySystem
 
         // Body part removed from another body part.
         var entity = args.Entity;
-
-        if (!TryComp(entity, out BodyPartComponent? childPart) || childPart.Body == null)
-            return;
-
         var slotId = args.Container.ID;
-        RemovePart(childPart.Body.Value, entity, slotId, component);
+
+        if (TryComp(entity, out BodyPartComponent? childPart) && childPart.Body != null)
+        {
+            RemovePart(childPart.Body.Value, entity, slotId, component);
+        }
+
+        if (TryComp(entity, out OrganComponent? organ))
+        {
+            RemoveOrgan(entity, organ);
+        }
     }
 
     protected virtual void AddPart(
