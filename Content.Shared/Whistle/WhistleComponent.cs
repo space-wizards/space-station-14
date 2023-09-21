@@ -1,6 +1,4 @@
-
-
-namespace Content.Shared.Whistle.Components
+namespace Content.Shared.Whistle
 {
     /// <summary>
     /// Spawn attached entity for entities in range with MobMoverComponent.
