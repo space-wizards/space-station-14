@@ -70,6 +70,9 @@ namespace Content.Server.Stack
                 stackComp.Unlimited = false;
             }
 
+            var ev = new StackSplitEvent(entity);
+            RaiseLocalEvent(uid, ref ev);
+
             return entity;
         }
 
