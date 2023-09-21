@@ -33,6 +33,7 @@ public partial class SharedBodySystem
             if (TryComp(entity, out BodyPartComponent? childPart))
             {
                 AddPart(component.Body.Value, entity, slotId, childPart);
+                RecursiveBodyUpdate(entity, component.Body.Value, childPart);
             }
 
             if (TryComp(entity, out OrganComponent? organ))
@@ -55,11 +56,41 @@ public partial class SharedBodySystem
         if (TryComp(entity, out BodyPartComponent? childPart) && childPart.Body != null)
         {
             RemovePart(childPart.Body.Value, entity, slotId, childPart);
+            RecursiveBodyUpdate(entity, null, childPart);
         }
 
         if (TryComp(entity, out OrganComponent? organ))
         {
             RemoveOrgan(entity, organ);
+        }
+    }
+
+    private void RecursiveBodyUpdate(EntityUid uid, EntityUid? bodyUid, BodyPartComponent component)
+    {
+        foreach (var children in GetBodyPartChildren(uid, component))
+        {
+            if (children.Component.Body != bodyUid)
+            {
+                children.Component.Body = bodyUid;
+                Dirty(children.Id, children.Component);
+
+                foreach (var slotId in children.Component.Organs.Keys)
+                {
+                    var organContainerId = GetOrganContainerId(slotId);
+
+                    if (!Containers.TryGetContainer(children.Id, organContainerId, out var container))
+                        continue;
+
+                    foreach (var organ in container.ContainedEntities)
+                    {
+                        if (TryComp(organ, out OrganComponent? organComp))
+                        {
+                            organComp.Body = bodyUid;
+                            Dirty(organ, organComp);
+                        }
+                    }
+                }
+            }
         }
     }
 

@@ -47,6 +47,7 @@ public partial class SharedBodySystem
         if (TryComp(entity, out BodyPartComponent? childPart))
         {
             AddPart(uid, entity, slotId, childPart);
+            RecursiveBodyUpdate(entity, uid, childPart);
         }
 
         if (TryComp(entity, out OrganComponent? organ))
@@ -72,6 +73,7 @@ public partial class SharedBodySystem
         if (TryComp(entity, out BodyPartComponent? childPart))
         {
             RemovePart(uid, entity, slotId, childPart);
+            RecursiveBodyUpdate(entity, null, childPart);
         }
 
         if (TryComp(entity, out OrganComponent? organ))
