@@ -1,9 +1,4 @@
 Entries:
-- author: eclips_e
-  changes:
-  - {message: Renamed the chemical compendium to chempendium, type: Tweak}
-  id: 4368
-  time: '2023-07-29T15:16:31.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Fixed a bug causing some machine construction requirements to not work
@@ -2971,3 +2966,9 @@ Entries:
   - {message: Added a search filter to vending machines, type: Add}
   id: 4867
   time: '2023-09-20T19:40:41.0000000+00:00'
+- author: waylon531
+  changes:
+  - {message: Centcomm is tired of the crew drunkenly wandering the station and starting
+      brawls. Many mixed drinks now have half as much alcohol., type: Tweak}
+  id: 4868
+  time: '2023-09-21T00:58:57.0000000+00:00'
