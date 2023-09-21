@@ -1725,3 +1725,214 @@
     FoodCorn: 1
     FoodPlate: 1
     FoodButter: 1
+
+# Steak
+- type: microwaveMealRecipe
+  id: RecipeMeatSteak
+  name: steak recipe
+  result: FoodMeatCooked
+  time: 15
+  solids:
+    FoodMeat: 1
+
+- type: microwaveMealRecipe
+  id: RecipePenguinSteak
+  name: penguin filet recipe
+  result: FoodMeatPenguinCooked
+  time: 15
+  solids:
+    FoodMeatPenguin: 1
+
+- type: microwaveMealRecipe
+  id: RecipeChickenSteak
+  name: cooked duck recipe
+  result: FoodMeatChickenCooked
+  time: 15
+  solids:
+    FoodMeatChicken: 1
+
+- type: microwaveMealRecipe
+  id: RecipeDuckSteak
+  name: cooked duck recipe
+  result: FoodMeatDuckCooked
+  time: 15
+  solids:
+    FoodMeatDuck: 1
+
+- type: microwaveMealRecipe
+  id: RecipeLizardSteak
+  name: lizard steak recipe
+  result: FoodMeatLizardCooked
+  time: 15
+  solids:
+    FoodMeatLizard: 1
+
+- type: microwaveMealRecipe
+  id: RecipeBearSteak
+  name: cooked bear recipe
+  result: FoodMeatBearCooked # plain cooked bear steak
+  time: 15
+  solids:
+    FoodMeatBear: 1
+
+- type: microwaveMealRecipe
+  id: RecipeFiletMigrawr
+  name: filet migrawr recipe
+  result: FoodMealBearsteak # filet migrawr (flaming bear steak)
+  time: 15
+  solids:
+    FoodMeatBear: 1
+  reagents:
+    Vodka: 5
+
+- type: microwaveMealRecipe
+  id: RecipeCrabSteak
+  name: cooked crab recipe
+  result: FoodMeatCrabCooked
+  time: 15
+  solids:
+    FoodMeatCrab: 1
+
+- type: microwaveMealRecipe
+  id: RecipeSpiderLeg
+  name: cooked spider leg recipe
+  result: FoodMeatSpiderlegCooked # TODO: Standardise Spiderleg or SpiderLeg
+  time: 15
+  solids:
+    FoodMeatSpiderLeg: 1 # TODO: Standardise Spiderleg or SpiderLeg
+
+# TODO: Implement cooking spider meat whole instead of just cutlets (Needs Sprite)
+# - type: microwaveMealRecipe
+#   id: RecipeSpiderSteak
+#   name: cooked spider steak recipe
+#   result: FoodMeatSpiderCooked
+#   time: 15
+#   solids:
+#     FoodMeatSpider: 1
+
+# TODO: Implement baked fish (Needs Sprite)
+# - type: microwaveMealRecipe
+#   id: RecipeBakedFish
+#   name: baked fish recipe
+#   result: FoodMeatFishCooked
+#   time: 15
+#   solids:
+#     FoodMeatFish: 1
+
+# TODO: Implement cooking Xeno meat whole instead of just cutlets (Needs Sprite)
+# - type: microwaveMealRecipe
+#   id: RecipeXenoSteak
+#   name: cooked xeno steak recipe
+#   result: FoodMeatXenoCooked
+#   time: 15
+#   solids:
+#     FoodMeatXeno: 1
+
+# TODO: Implement cooking FoodMeatHumanCooked
+# - type: microwaveMealRecipe
+#   id: RecipeHumanSteak
+#   name: cooked human steak recipe
+#   result: FoodMeatHumanCooked
+#   time: 15
+#   solids:
+#     FoodMeatHuman: 1
+
+# TODO: Implement cooking FoodMeatRatCooked
+# - type: microwaveMealRecipe
+#   id: RecipeRatSteak
+#   name: cooked rat steak recipe
+#   result: FoodMeatRatCooked
+#   time: 15
+#   solids:
+#     FoodMeatRat: 1
+
+# Decription in meat.yml mentions "lava cooked" so perhaps not a good recipe for the microwave
+# - type: microwaveMealRecipe
+#   id: RecipeGoliathSteak
+#   name: cooked goliath steak recipe
+#   result: FoodMeatGoliathCooked
+#   time: 15
+#   solids:
+#     FoodMeatGoliath: 1
+
+# Meat Cutlets
+- type: microwaveMealRecipe
+  id: RecipeBacon
+  name: cooked bacon recipe
+  result: FoodMeatBaconCooked
+  time: 10
+  solids:
+    FoodMeatBacon: 1
+
+- type: microwaveMealRecipe
+  id: RecipeMeatSteakCutlet
+  name: steak cutlet recipe
+  result: FoodMeatCutletCooked
+  time: 10
+  solids:
+    FoodMeatCutlet: 1
+
+- type: microwaveMealRecipe
+  id: RecipeBearSteakCutlet
+  name: cooked bear cutlet recipe
+  result: FoodMeatBearCutletCooked
+  time: 10
+  solids:
+    FoodMeatBearCutlet: 1
+
+- type: microwaveMealRecipe
+  id: RecipePenguinSteakCutlet
+  name: penguin filet cutlet recipe
+  result: FoodMeatPenguinCutletCooked
+  time: 10
+  solids:
+    FoodMeatPenguinCutlet: 1
+
+- type: microwaveMealRecipe
+  id: RecipeChickenSteakCutlet
+  name: cooked duck cutlet recipe
+  result: FoodMeatChickenCutletCooked
+  time: 10
+  solids:
+    FoodMeatChickenCutlet: 1
+
+- type: microwaveMealRecipe
+  id: RecipeDuckSteakCutlet
+  name: cooked duck cutlet recipe
+  result: FoodMeatDuckCutletCooked
+  time: 10
+  solids:
+    FoodMeatDuckCutlet: 1
+
+- type: microwaveMealRecipe
+  id: RecipeLizardSteakCutlet
+  name: lizard steak recipe
+  result: FoodMeatLizardCutletCooked
+  time: 10
+  solids:
+    FoodMeatLizardCutlet: 1
+
+- type: microwaveMealRecipe
+  id: RecipeSpiderSteakCutlet
+  name: cooked spider cutlet recipe
+  result: FoodMeatSpiderCutletCooked
+  time: 10
+  solids:
+    FoodMeatSpiderCutlet: 1
+
+- type: microwaveMealRecipe
+  id: RecipeXenoSteakCutlet
+  name: cooked xeno cutlet recipe
+  result: FoodMeatXenoCutletCooked
+  time: 10
+  solids:
+    FoodMeatXenoCutlet: 1
+
+# Decription in meat.yml mentions "lava cooked" so perhaps not a good recipe for the microwave
+# - type: microwaveMealRecipe
+#   id: RecipeGoliathSteakCutlet
+#   name: cooked goliath cutlet recipe
+#   result: FoodMeatGoliathCutletCooked
+#   time: 10
+#   solids:
+#     FoodMeatGoliathCutlet: 1
