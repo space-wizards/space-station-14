@@ -31,7 +31,7 @@ namespace Content.Server.Power.NodeGroups
         [ViewVariables] private int TotalReceivers => Providers.Sum(provider => provider.LinkedReceivers.Count);
 
         [ViewVariables]
-        public IEnumerable<ApcPowerReceiverComponent> AllReceivers =>
+        private IEnumerable<ApcPowerReceiverComponent> AllReceivers =>
             Providers.SelectMany(provider => provider.LinkedReceivers);
 
         public override void Initialize(Node sourceNode, IEntityManager entMan)

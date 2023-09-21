@@ -39,10 +39,13 @@
         <!-- Power monitoring -->
         <BoxContainer Margin="10 5 10 10" Orientation="Vertical" VerticalExpand="True">
             <TabContainer Name="MasterTabContainer" VerticalExpand="True">
-                <ScrollContainer VerticalExpand="True" HorizontalExpand="True">
-                    <GridContainer Name="SourcesList" VerticalExpand="True" HorizontalExpand="True" Columns="3">                       
-                    </GridContainer>
-                </ScrollContainer>
+                <BoxContainer Orientation="Vertical" VerticalExpand="True">
+                    <Control Margin="0 10 0 0"/>
+                    <ScrollContainer VerticalExpand="True" HorizontalExpand="True">
+                        <GridContainer Name="SourcesList" VerticalExpand="True" HorizontalExpand="True" Columns="3">                       
+                        </GridContainer>
+                    </ScrollContainer>
+                </BoxContainer>
                 <BoxContainer Orientation="Vertical" VerticalExpand="True">
                     <CheckBox Margin="8 8" Name="ShowInactiveConsumersCheckBox" Text="{Loc 'power-monitoring-window-show-inactive-consumers'}" />
                     <ScrollContainer VerticalExpand="True" HorizontalExpand="True">
