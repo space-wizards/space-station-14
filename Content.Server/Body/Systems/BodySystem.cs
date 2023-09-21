@@ -74,92 +74,88 @@ public sealed class BodySystem : SharedBodySystem
         args.Handled = true;
     }
 
-    protected override bool InternalAttachPart(EntityUid? bodyId, EntityUid? parentId, EntityUid partId ,BodyPartComponent part,
-        string slotName, ContainerSlot container)
+    protected override void AddPart(
+        EntityUid bodyUid,
+        EntityUid partUid,
+        string slotId,
+        BodyPartComponent component,
+        BodyComponent? bodyComp = null)
     {
-        if (!base.InternalAttachPart(bodyId, parentId, partId, part, slotName, container))
-            return false;
+        // TODO: Predict this probably.
+        base.AddPart(bodyUid, partUid, slotId, component, bodyComp);
 
-        if (part.Body is { } body &&
-            TryComp<HumanoidAppearanceComponent>(body, out var humanoid))
+        if (TryComp<HumanoidAppearanceComponent>(bodyUid, out var humanoid))
         {
-            var layer = part.ToHumanoidLayers();
+            var layer = component.ToHumanoidLayers();
             if (layer != null)
             {
                 var layers = HumanoidVisualLayersExtension.Sublayers(layer.Value);
-                _humanoidSystem.SetLayersVisibility(body, layers, true, true, humanoid);
+                _humanoidSystem.SetLayersVisibility(bodyUid, layers, true, true, humanoid);
             }
         }
-
-        return true;
     }
 
-    protected override bool InternalDetachPart(EntityUid? bodyId, EntityUid partId, BodyPartComponent part, string slotName,
-        ContainerSlot container, bool reparent,
-        EntityCoordinates? coords)
+    protected override void RemovePart(
+        EntityUid bodyUid,
+        EntityUid partUid,
+        string slotId,
+        BodyPartComponent component,
+        BodyComponent? bodyComp = null)
     {
-        if (!base.InternalDetachPart(bodyId, partId, part, slotName, container, reparent, coords))
-            return false;
+        base.RemovePart(bodyUid, partUid, slotId, component, bodyComp);
 
-        if (bodyId == null
-            || !TryComp<HumanoidAppearanceComponent>(bodyId, out var humanoid))
-            return true;
-        var layer = part.ToHumanoidLayers();
+        if (!TryComp<HumanoidAppearanceComponent>(bodyUid, out var humanoid))
+            return;
+
+        var layer = component.ToHumanoidLayers();
+
         if (layer == null)
-            return true;
-        var layers = HumanoidVisualLayersExtension.Sublayers(layer.Value);
-        _humanoidSystem.SetLayersVisibility(bodyId.Value, layers, false, true, humanoid);
+            return;
 
-        return true;
+        var layers = HumanoidVisualLayersExtension.Sublayers(layer.Value);
+        _humanoidSystem.SetLayersVisibility(bodyUid, layers, false, true, humanoid);
     }
 
-    public override HashSet<EntityUid> GibBody(EntityUid? bodyId, bool gibOrgans = false, BodyComponent? body = null, bool deleteItems = false)
+    public override HashSet<EntityUid> GibBody(EntityUid bodyId, bool gibOrgans = false, BodyComponent? body = null, bool deleteItems = false)
     {
-        if (bodyId == null || !Resolve(bodyId.Value, ref body, false))
+        if (!Resolve(bodyId, ref body, false))
             return new HashSet<EntityUid>();
 
-        if (LifeStage(bodyId.Value) >= EntityLifeStage.Terminating || EntityManager.IsQueuedForDeletion(bodyId.Value))
+        if (LifeStage(bodyId) >= EntityLifeStage.Terminating || EntityManager.IsQueuedForDeletion(bodyId))
             return new HashSet<EntityUid>();
 
-        var xform = Transform(bodyId.Value);
+        var xform = Transform(bodyId);
         if (xform.MapUid == null)
             return new HashSet<EntityUid>();
 
         var gibs = base.GibBody(bodyId, gibOrgans, body, deleteItems);
 
         var coordinates = xform.Coordinates;
-        var filter = Filter.Pvs(bodyId.Value, entityManager: EntityManager);
+        var filter = Filter.Pvs(bodyId, entityManager: EntityManager);
         var audio = AudioParams.Default.WithVariation(0.025f);
 
         _audio.Play(body.GibSound, filter, coordinates, true, audio);
 
-        HashSet<ContainerSlot> containers = new();
-        foreach (var (partId,part) in GetBodyChildren(bodyId, body))
-        {
-            foreach (var (_,slotData) in part.Children)
-            {
-                containers.Add(slotData.Container);
-            }
-        }
+        var containers = GetBodyContainers(bodyId, body: body).ToList();
 
         foreach (var container in containers)
         {
-            if (container.ContainedEntity == null)
-                continue;
-            var entity = container.ContainedEntity.Value;
-            if (deleteItems)
+            foreach (var entity in container.ContainedEntities)
             {
-                QueueDel(entity);
-            }
-            else
-            {
-                container.Remove(entity, EntityManager, force: true);
-                SharedTransform.SetCoordinates(entity,coordinates);
-                entity.RandomOffset(0.25f);
+                if (deleteItems)
+                {
+                    QueueDel(entity);
+                }
+                else
+                {
+                    container.Remove(entity, EntityManager, force: true);
+                    SharedTransform.SetCoordinates(entity,coordinates);
+                    entity.RandomOffset(0.25f);
+                }
             }
         }
-        RaiseLocalEvent(bodyId.Value, new BeingGibbedEvent(gibs));
-        QueueDel(bodyId.Value);
+        RaiseLocalEvent(bodyId, new BeingGibbedEvent(gibs));
+        QueueDel(bodyId);
 
         return gibs;
     }

@@ -8,6 +8,10 @@ namespace Content.Shared.Body.Systems;
 
 public abstract partial class SharedBodySystem : EntitySystem
 {
+    /*
+     * See the body partial for how this works.
+     */
+
     /// <summary>
     /// Container ID prefix for any body parts.
     /// </summary>

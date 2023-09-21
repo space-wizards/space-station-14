@@ -27,9 +27,4 @@ public sealed class BodyPrototype : IPrototype
 }
 
 [DataRecord]
-public sealed record BodyPrototypeSlot
-{
-    public EntProtoId? Part;
-    public readonly HashSet<string> Connections = new();
-    public readonly Dictionary<string, string> Organs = new();
-}
+public sealed record BodyPrototypeSlot(EntProtoId? Part, HashSet<string> Connections, Dictionary<string, string> Organs);

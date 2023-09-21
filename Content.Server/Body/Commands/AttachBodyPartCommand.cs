@@ -94,7 +94,7 @@ namespace Content.Server.Body.Commands
             }
 
             var bodySystem = _entManager.System<BodySystem>();
-            if (bodySystem.BodyHasChild(bodyId, partUid, body, part))
+            if (bodySystem.BodyHasChild(bodyId, partUid.Value, body, part))
             {
                 shell.WriteLine($"Body part {_entManager.GetComponent<MetaDataComponent>(partUid.Value).EntityName} with uid {partUid} is already attached to entity {_entManager.GetComponent<MetaDataComponent>(bodyId).EntityName} with uid {bodyId}");
                 return;
@@ -105,13 +105,12 @@ namespace Content.Server.Body.Commands
             // ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
             if (body.RootContainer.ContainedEntity != null)
             {
-                bodySystem.DropPart(partUid, part);
-                bodySystem.AttachPartToRoot(bodyId,partUid.Value, slotId, body ,part);
+                bodySystem.AttachPartToRoot(bodyId,partUid.Value, body ,part);
             }
             else
             {
                 var (rootPartId,rootPart) = bodySystem.GetRootPartOrNull(bodyId, body)!.Value;
-                if (!bodySystem.TryCreatePartSlotAndAttach(rootPartId, slotId, partUid, part.PartType, rootPart, part))
+                if (!bodySystem.TryCreatePartSlotAndAttach(rootPartId, slotId, partUid.Value, part.PartType, rootPart, part))
                 {
                     shell.WriteError($"Could not create slot {slotId} on entity {_entManager.ToPrettyString(bodyId)}");
                     return;

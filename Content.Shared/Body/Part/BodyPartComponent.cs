@@ -52,10 +52,13 @@ public sealed partial class BodyPartComponent : Component
         get
         {
             List<ContainerSlot> temp = new();
-            foreach (var (_,slotData) in Children)
+            var containerSystem = IoCManager.Resolve<IEntityManager>().System<SharedContainerSystem>();
+
+            foreach (var slotId in Children.Keys)
             {
-                temp.Add(slotData.Container);
+                temp.Add((ContainerSlot) containerSystem.GetContainer(Owner, slotId));
             }
+
             return temp;
         }
     }
@@ -66,10 +69,13 @@ public sealed partial class BodyPartComponent : Component
         get
         {
             List<ContainerSlot> temp = new();
-            foreach (var (_, slotData) in Organs)
+            var containerSystem = IoCManager.Resolve<IEntityManager>().System<SharedContainerSystem>();
+
+            foreach (var slotId in Organs.Keys)
             {
-                temp.Add(slotData.Container);
+                temp.Add((ContainerSlot) containerSystem.GetContainer(Owner, slotId));
             }
+
             return temp;
         }
     }

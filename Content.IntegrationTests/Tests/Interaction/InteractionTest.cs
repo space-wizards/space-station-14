@@ -223,7 +223,6 @@ public abstract partial class InteractionTest
 
             for (var i = 1; i < hands.Length; i++)
             {
-                bodySystem.DropPart(hands[i].Id);
                 SEntMan.DeleteEntity(hands[i].Id);
             }
         });

@@ -12,6 +12,13 @@ namespace Content.Shared.Body.Systems;
 
 public partial class SharedBodySystem
 {
+    /*
+     * tl;dr of how bobby works
+     * - BodyComponent uses a BodyPrototype as a template.
+     * - On MapInit we spawn the root entity in the prototype and spawn all connections outwards from here
+     * - Each "connection" is a body part (e.g. arm, hand, etc.) and each part can also contain organs.
+     */
+
     private void InitializeBody()
     {
         SubscribeLocalEvent<BodyComponent, ComponentInit>(OnBodyInit);
@@ -153,6 +160,24 @@ public partial class SharedBodySystem
         }
     }
 
+    public IEnumerable<BaseContainer> GetBodyContainers(EntityUid id, BodyComponent? body = null,
+        BodyPartComponent? rootPart = null)
+    {
+        if (!Resolve(id, ref body, false) ||
+            body.RootContainer.ContainedEntity == null ||
+            !Resolve(body.RootContainer.ContainedEntity.Value, ref rootPart))
+        {
+            yield break;
+        }
+
+        yield return body.RootContainer;
+
+        foreach (var childContainer in GetPartContainers(body.RootContainer.ContainedEntity.Value, rootPart))
+        {
+            yield return childContainer;
+        }
+    }
+
     public IEnumerable<(EntityUid Id, BodyPartComponent Component)> GetBodyChildren(EntityUid? id, BodyComponent? body = null,
         BodyPartComponent? rootPart = null)
     {
@@ -203,21 +228,20 @@ public partial class SharedBodySystem
         }
     }
 
-    public virtual HashSet<EntityUid> GibBody(EntityUid partId, bool gibOrgans = false,
+    public virtual HashSet<EntityUid> GibBody(EntityUid bodyId, bool gibOrgans = false,
         BodyComponent? body = null, bool deleteItems = false)
     {
         var gibs = new HashSet<EntityUid>();
 
-        if (!Resolve(partId, ref body, false))
+        if (!Resolve(bodyId, ref body, false))
             return gibs;
 
-        var parts = GetBodyChildren(partId, body).ToArray();
+        var parts = GetBodyChildren(bodyId, body).ToArray();
         gibs.EnsureCapacity(parts.Length);
 
         foreach (var part in parts)
         {
-            // TODO: Attachtogridorwhatever
-            DropPart(part.Id, part.Component);
+            SharedTransform.AttachToGridOrMap(part.Id);
             gibs.Add(part.Id);
 
             if (!gibOrgans)
@@ -225,8 +249,7 @@ public partial class SharedBodySystem
 
             foreach (var organ in GetPartOrgans(part.Id, part.Component))
             {
-                // TODO: Attachtogridorwhatever
-                DropOrgan(organ.Id, organ.Component);
+                SharedTransform.AttachToGridOrMap(organ.Id);
                 gibs.Add(organ.Id);
             }
         }
