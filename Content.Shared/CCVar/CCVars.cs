@@ -322,7 +322,7 @@ namespace Content.Shared.CCVar
         /// Minutes prior to mas sabotage actions that can be taken.
         /// </summary>
         public static readonly CVarDef<int> GameMinutesUntilSabotage =
-            CVarDef.Create("game.game_minutes_until_sabotage", 2, CVar.SERVERONLY);
+            CVarDef.Create("game.game_minutes_until_sabotage", 30, CVar.SERVERONLY);
 
         /*
          * Discord
