@@ -89,7 +89,7 @@ public sealed class PowerMonitoringSystem : EntitySystem
             // This means filtering out loads that are not either:
             // + Batteries (always important)
             // + Meaningful (size above 0)
-            loads = loads.Where(a => a.IsBattery || a.Size > 0.0f).ToArray();
+            loads = loads.Where(a => a.Size > 0.0f).ToArray();
         }
 
         UpdateSourceLoadList(loadsList, loads);

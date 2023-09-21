@@ -108,13 +108,13 @@
   - type: PowerMonitoring
     sourceNode: input
     loadNode: output
-    key: enum.PowerMonitoringNetworkBatteryUiKey.Key
+    key: enum.PowerMonitoringSubstationUiKey.Key
   - type: ActivatableUI
-    key: enum.PowerMonitoringNetworkBatteryUiKey.Key
+    key: enum.PowerMonitoringSubstationUiKey.Key
   - type: UserInterface
     interfaces:
-    - key: enum.PowerMonitoringNetworkBatteryUiKey.Key
-      type: PowerMonitoringNetworkBatteryBoundUserInterface
+    - key: enum.PowerMonitoringSubstationUiKey.Key
+      type: PowerMonitoringSubstationBoundUserInterface
 
 # Compact Wall Substation Base
 - type: entity

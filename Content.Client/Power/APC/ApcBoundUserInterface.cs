@@ -31,8 +31,11 @@ namespace Content.Client.Power.APC
             _menu?.UpdateState(castState);
         }
 
-        public void BreakerPressed()
+        public void BreakerPressed(bool toggled)
         {
+            if (!toggled)
+                return;
+
             SendMessage(new ApcToggleMainBreakerMessage());
         }
 

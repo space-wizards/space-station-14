@@ -56,7 +56,13 @@ public enum ExternalPowerState
 }
 
 [Serializable, NetSerializable]
-public enum PowerMonitoringNetworkBatteryUiKey
+public enum PowerMonitoringSMESUiKey
+{
+    Key
+}
+
+[Serializable, NetSerializable]
+public enum PowerMonitoringSubstationUiKey
 {
     Key
 }

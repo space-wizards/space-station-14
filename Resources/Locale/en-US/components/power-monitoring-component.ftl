@@ -22,6 +22,8 @@ power-monitoring-window-power-state-none = None
 # For the flavor text on the footer
 power-monitoring-console-window-flavor-left = user@nanotrasen:~$ querypowernet  
 power-monitoring-console-window-flavor-right = v0.9
-power-monitoring-network-battery-window-flavor-left = DANGER — HIGH VOLTAGE INSIDE
-power-monitoring-network-battery-window-flavor-right = v1.2
+power-monitoring-smes-window-flavor-left = Magnetic containment field: Online
+power-monitoring-smes-window-flavor-right = v0.4
+power-monitoring-substation-window-flavor-left = DANGER — HIGH VOLTAGE INSIDE
+power-monitoring-substation-window-flavor-right = v1.2
 

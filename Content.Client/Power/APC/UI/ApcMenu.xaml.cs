@@ -27,7 +27,10 @@ namespace Content.Client.Power.APC.UI
             _entityManager.TrySystem(out _powerMonitoring);
 
             EntityView.SetEntity(owner.Owner);
-            BreakerButton.OnPressed += _ => owner.BreakerPressed();
+
+            BreakerOnButton.OnPressed += _ => owner.BreakerPressed(!BreakerOnButton.Pressed);
+            BreakerOffButton.OnPressed += _ => owner.BreakerPressed(!BreakerOffButton.Pressed);
+
             _owner = _entityManager.GetNetEntity(owner.Owner);
 
             if (_entityManager.TryGetComponent<MetaDataComponent>(owner.Owner, out var meta))
@@ -40,11 +43,18 @@ namespace Content.Client.Power.APC.UI
                 _accessReader != null &&
                 _accessReader.IsAllowed(_playerManager.LocalPlayer.ControlledEntity.Value, _entityManager.GetEntity(_owner));
 
-            if (BreakerButton != null)
+            if (BreakerOnButton != null)
             {
-                BreakerButton.Disabled = !hasAccess;
-                BreakerButton.ToolTip = !hasAccess ? Loc.GetString("apc-component-insufficient-access") : null;
-                BreakerButton.Pressed = state.MainBreaker;
+                BreakerOnButton.Disabled = !hasAccess;
+                BreakerOnButton.ToolTip = !hasAccess ? Loc.GetString("apc-component-insufficient-access") : null;
+                BreakerOnButton.Pressed = state.MainBreaker;
+            }
+
+            if (BreakerOffButton != null)
+            {
+                BreakerOffButton.Disabled = !hasAccess;
+                BreakerOffButton.ToolTip = !hasAccess ? Loc.GetString("apc-component-insufficient-access") : null;
+                BreakerOffButton.Pressed = !state.MainBreaker;
             }
 
             if (PowerLabel != null)

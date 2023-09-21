@@ -90,13 +90,13 @@
     - type: PowerMonitoring
       sourceNode: input
       loadNode: output
-      key: enum.PowerMonitoringNetworkBatteryUiKey.Key
+      key: enum.PowerMonitoringSMESUiKey.Key
     - type: ActivatableUI
-      key: enum.PowerMonitoringNetworkBatteryUiKey.Key
+      key: enum.PowerMonitoringSMESUiKey.Key
     - type: UserInterface
       interfaces:
-      - key: enum.PowerMonitoringNetworkBatteryUiKey.Key
-        type: PowerMonitoringNetworkBatteryBoundUserInterface    
+      - key: enum.PowerMonitoringSMESUiKey.Key
+        type: PowerMonitoringSMESBoundUserInterface    
 
 # SMES' in use
 

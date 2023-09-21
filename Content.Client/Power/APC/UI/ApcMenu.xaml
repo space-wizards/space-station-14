@@ -18,7 +18,8 @@
                         <Label Text="{Loc 'apc-menu-breaker-label'}" HorizontalExpand="True"
                                 StyleClasses="StatusFieldTitle" MinWidth="120"/>
                         <BoxContainer Orientation="Horizontal" MinWidth="90">
-                            <Button Name="BreakerButton" Text="{Loc 'apc-menu-breaker-button'}" HorizontalExpand="True"/>
+                            <Button Name="BreakerOffButton" Text="{Loc 'apc-menu-breaker-button-off'}" HorizontalExpand="True" StyleClasses="OpenRight"/>
+                            <Button Name="BreakerOnButton" Text="{Loc 'apc-menu-breaker-button-on'}" HorizontalExpand="True" StyleClasses="OpenLeft"/>
                         </BoxContainer>
                         <!--Charging Status-->
                         <Label Text="{Loc 'power-monitoring-window-external-label'}" StyleClasses="StatusFieldTitle" MinWidth="120" />
