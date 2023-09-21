@@ -36,8 +36,8 @@ public sealed partial class SericultureComponent : Component
     [AutoNetworkedField]
     public string Action = string.Empty;
 
-    [DataField("actionEntity")]
     [AutoNetworkedField]
+    [DataField("actionEntity")]
     public EntityUid? ActionEntity;
 
     /// <summary>

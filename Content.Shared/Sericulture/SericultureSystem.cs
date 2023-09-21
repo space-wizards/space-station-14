@@ -28,7 +28,7 @@ public abstract partial class SharedSericultureSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<SericultureComponent, ComponentInit>(OnCompInit);
+        SubscribeLocalEvent<SericultureComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<SericultureComponent, ComponentShutdown>(OnCompRemove);
         SubscribeLocalEvent<SericultureComponent, SericultureActionEvent>(OnSericultureStart);
         SubscribeLocalEvent<SericultureComponent, SericultureDoAfterEvent>(OnSericultureDoAfter);
@@ -37,9 +37,9 @@ public abstract partial class SharedSericultureSystem : EntitySystem
     /// <summary>
     /// Giveths the action to preform sericulture on the entity
     /// </summary>
-    private void OnCompInit(EntityUid uid, SericultureComponent comp, ComponentInit args)
+    private void OnMapInit(EntityUid uid, SericultureComponent comp, MapInitEvent args)
     {
-        _actionsSystem.AddAction(uid, ref comp.ActionEntity, comp.Action, uid);
+        _actionsSystem.AddAction(uid, ref comp.ActionEntity, comp.Action);
     }
 
     /// <summary>
@@ -55,7 +55,7 @@ public abstract partial class SharedSericultureSystem : EntitySystem
         if (TryComp<HungerComponent>(uid, out var hungerComp)
         && _hungerSystem.IsHungerBelowState(uid, comp.MinHungerThreshold, hungerComp.CurrentHunger - comp.HungerCost, hungerComp))
         {
-            _popupSystem.PopupEntity(Loc.GetString(comp.PopupText), uid, uid);
+            _popupSystem.PopupClient(Loc.GetString(comp.PopupText), uid, uid);
             return;
         }
 
@@ -79,7 +79,7 @@ public abstract partial class SharedSericultureSystem : EntitySystem
         if (TryComp<HungerComponent>(uid, out var hungerComp) // A check, just incase the doafter is somehow performed when the entity is not in the right hunger state.
         && _hungerSystem.IsHungerBelowState(uid, comp.MinHungerThreshold, hungerComp.CurrentHunger - comp.HungerCost, hungerComp))
         {
-            _popupSystem.PopupEntity(Loc.GetString(comp.PopupText), uid, uid);
+            _popupSystem.PopupClient(Loc.GetString(comp.PopupText), uid, uid);
             return;
         }
 
