@@ -18,10 +18,11 @@ namespace Content.Server.Singularity.EntitySystems;
 public sealed class ContainmentFieldGeneratorSystem : EntitySystem
 {
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly TagSystem _tags = default!;
-    [Dependency] private readonly PopupSystem _popupSystem = default!;
-    [Dependency] private readonly PhysicsSystem _physics = default!;
     [Dependency] private readonly AppearanceSystem _visualizer = default!;
+    [Dependency] private readonly PhysicsSystem _physics = default!;
+    [Dependency] private readonly PopupSystem _popupSystem = default!;
+    [Dependency] private readonly SharedPointLightSystem _light = default!;
+    [Dependency] private readonly TagSystem _tags = default!;
 
     public override void Initialize()
     {
@@ -249,7 +250,7 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
 
         var ent = closestResult.Value.HitEntity;
 
-        if (!TryComp<ContainmentFieldGeneratorComponent?>(ent, out var otherFieldGeneratorComponent) ||
+        if (!TryComp<ContainmentFieldGeneratorComponent>(ent, out var otherFieldGeneratorComponent) ||
             otherFieldGeneratorComponent == component ||
             !TryComp<PhysicsComponent>(ent, out var collidableComponent) ||
             collidableComponent.BodyType != BodyType.Static ||
@@ -325,9 +326,9 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
     /// </summary>
     public void UpdateConnectionLights(ContainmentFieldGeneratorComponent component)
     {
-        if (EntityManager.TryGetComponent<PointLightComponent>(component.Owner, out var pointLightComponent))
+        if (_light.TryGetLight(component.Owner, out var pointLightComponent))
         {
-            pointLightComponent.Enabled = component.Connections.Count > 0;
+            _light.SetEnabled(component.Owner, component.Connections.Count > 0, pointLightComponent);
         }
     }
 

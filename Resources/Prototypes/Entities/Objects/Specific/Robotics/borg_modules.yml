@@ -24,6 +24,17 @@
       provided_container: !type:Container { }
 
 - type: entity
+  id: ActionBorgSwapModule
+  name: Swap Module
+  description: Select this module, enabling you to use the tools it provides.
+  noSpawn: true
+  components:
+  - type: InstantAction
+    itemIconStyle: BigItem
+    useDelay: 0.5
+    event: !type:BorgModuleActionSelectedEvent
+
+- type: entity
   id: BaseBorgModuleCargo
   parent: BaseBorgModule
   abstract: true

@@ -49,10 +49,10 @@ namespace Content.IntegrationTests.Tests.Buckle
         [Test]
         public async Task BuckleUnbuckleCooldownRangeTest()
         {
-            await using var pairTracker = await PoolManager.GetServerClient();
-            var server = pairTracker.Pair.Server;
+            await using var pair = await PoolManager.GetServerClient();
+            var server = pair.Server;
 
-            var testMap = await PoolManager.CreateTestMap(pairTracker);
+            var testMap = await pair.CreateTestMap();
             var coordinates = testMap.GridCoords;
             var entityManager = server.ResolveDependency<IEntityManager>();
             var actionBlocker = entityManager.System<ActionBlockerSystem>();
@@ -236,16 +236,16 @@ namespace Content.IntegrationTests.Tests.Buckle
                 });
             });
 
-            await pairTracker.CleanReturnAsync();
+            await pair.CleanReturnAsync();
         }
 
         [Test]
         public async Task BuckledDyingDropItemsTest()
         {
-            await using var pairTracker = await PoolManager.GetServerClient();
-            var server = pairTracker.Pair.Server;
+            await using var pair = await PoolManager.GetServerClient();
+            var server = pair.Server;
 
-            var testMap = await PoolManager.CreateTestMap(pairTracker);
+            var testMap = await pair.CreateTestMap();
             var coordinates = testMap.GridCoords;
 
             EntityUid human = default;
@@ -258,6 +258,7 @@ namespace Content.IntegrationTests.Tests.Buckle
             var entityManager = server.ResolveDependency<IEntityManager>();
             var handsSys = entityManager.EntitySysManager.GetEntitySystem<SharedHandsSystem>();
             var buckleSystem = entityManager.EntitySysManager.GetEntitySystem<SharedBuckleSystem>();
+            var xformSystem = entityManager.System<SharedTransformSystem>();
 
             await server.WaitAssertion(() =>
             {
@@ -309,7 +310,7 @@ namespace Content.IntegrationTests.Tests.Buckle
                 // Break our guy's kneecaps
                 foreach (var leg in legs)
                 {
-                    bodySystem.DropPart(leg.Id, leg.Component);
+                    xformSystem.DetachParentToNull(leg.Id, entityManager.GetComponent<TransformComponent>(leg.Id));
                 }
             });
 
@@ -329,16 +330,16 @@ namespace Content.IntegrationTests.Tests.Buckle
                 buckleSystem.TryUnbuckle(human, human, true, buckleComp: buckle);
             });
 
-            await pairTracker.CleanReturnAsync();
+            await pair.CleanReturnAsync();
         }
 
         [Test]
         public async Task ForceUnbuckleBuckleTest()
         {
-            await using var pairTracker = await PoolManager.GetServerClient();
-            var server = pairTracker.Pair.Server;
+            await using var pair = await PoolManager.GetServerClient();
+            var server = pair.Server;
 
-            var testMap = await PoolManager.CreateTestMap(pairTracker);
+            var testMap = await pair.CreateTestMap();
             var coordinates = testMap.GridCoords;
             var entityManager = server.ResolveDependency<IEntityManager>();
             var buckleSystem = entityManager.System<SharedBuckleSystem>();
@@ -405,7 +406,7 @@ namespace Content.IntegrationTests.Tests.Buckle
                     Assert.That(buckle.Buckled);
                 });
             });
-            await pairTracker.CleanReturnAsync();
+            await pair.CleanReturnAsync();
         }
     }
 }

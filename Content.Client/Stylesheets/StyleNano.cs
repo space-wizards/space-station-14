@@ -14,6 +14,7 @@ using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
+using Robust.Shared.Graphics;
 using static Robust.Client.UserInterface.StylesheetHelpers;
 
 namespace Content.Client.Stylesheets
@@ -369,13 +370,13 @@ namespace Content.Client.Stylesheets
             {
                 BackgroundColor = new Color(0.25f, 0.25f, 0.25f)
             };
-            progressBarBackground.SetContentMarginOverride(StyleBox.Margin.Vertical, 5);
+            progressBarBackground.SetContentMarginOverride(StyleBox.Margin.Vertical, 14.5f);
 
             var progressBarForeground = new StyleBoxFlat
             {
                 BackgroundColor = new Color(0.25f, 0.50f, 0.25f)
             };
-            progressBarForeground.SetContentMarginOverride(StyleBox.Margin.Vertical, 5);
+            progressBarForeground.SetContentMarginOverride(StyleBox.Margin.Vertical, 14.5f);
 
             // CheckBox
             var checkBoxTextureChecked = resCache.GetTexture("/Textures/Interface/Nano/checkbox_checked.svg.96dpi.png");

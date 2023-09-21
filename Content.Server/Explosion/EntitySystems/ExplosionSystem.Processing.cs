@@ -1,13 +1,12 @@
 using System.Linq;
 using System.Numerics;
 using Content.Server.Explosion.Components;
-using Content.Server.Mind.Components;
 using Content.Shared.CCVar;
 using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.Explosion;
-using Content.Shared.FixedPoint;
 using Content.Shared.Maps;
+using Content.Shared.Mind.Components;
 using Content.Shared.Physics;
 using Content.Shared.Projectiles;
 using Content.Shared.Spawners.Components;
@@ -391,7 +390,7 @@ public sealed partial class ExplosionSystem : EntitySystem
         if (damage != null && damageQuery.TryGetComponent(uid, out var damageable))
         {
             var ev = new GetExplosionResistanceEvent(id);
-            RaiseLocalEvent(uid, ev, false);
+            RaiseLocalEvent(uid, ref ev, false);
 
             ev.DamageCoefficient = Math.Max(0, ev.DamageCoefficient);
 

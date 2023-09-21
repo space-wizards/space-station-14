@@ -51,7 +51,7 @@ public sealed class PricingSystem : EntitySystem
 
         foreach (var gid in args)
         {
-            if (!EntityUid.TryParse(gid, out var gridId) || !gridId.IsValid())
+            if (!EntityManager.TryParseNetEntity(gid, out var gridId) || !gridId.Value.IsValid())
             {
                 shell.WriteError($"Invalid grid ID \"{gid}\".");
                 continue;
@@ -90,12 +90,13 @@ public sealed class PricingSystem : EntitySystem
 
         if (!TryComp<BodyComponent>(uid, out var body) || !TryComp<MobStateComponent>(uid, out var state))
         {
-            Logger.ErrorS("pricing", $"Tried to get the mob price of {ToPrettyString(uid)}, which has no {nameof(BodyComponent)} and no {nameof(MobStateComponent)}.");
+            Log.Error($"Tried to get the mob price of {ToPrettyString(uid)}, which has no {nameof(BodyComponent)} and no {nameof(MobStateComponent)}.");
             return;
         }
 
-        var partList = _bodySystem.GetBodyAllSlots(uid, body).ToList();
-        var totalPartsPresent = partList.Sum(x => x.Child != null ? 1 : 0);
+        // TODO: Better handling of missing.
+        var partList = _bodySystem.GetBodyChildren(uid, body).ToList();
+        var totalPartsPresent = partList.Sum(_ => 1);
         var totalParts = partList.Count;
 
         var partRatio = totalPartsPresent / (double) totalParts;
@@ -110,11 +111,13 @@ public sealed class PricingSystem : EntitySystem
 
         foreach (var solution in component.Solutions.Values)
         {
-            foreach (var reagent in solution.Contents)
+            foreach (var (reagent, quantity) in solution.Contents)
             {
-                if (!_prototypeManager.TryIndex<ReagentPrototype>(reagent.ReagentId, out var reagentProto))
+                if (!_prototypeManager.TryIndex<ReagentPrototype>(reagent.Prototype, out var reagentProto))
                     continue;
-                price += (float) reagent.Quantity * reagentProto.PricePerUnit;
+
+                // TODO check ReagentData for price information?
+                price += (float) quantity * reagentProto.PricePerUnit;
             }
         }
 

@@ -1,7 +1,7 @@
 - type: entity
   save: false
   name: Urist McFluff
-  parent: BaseMobOrganic
+  parent: BaseMobSpeciesOrganic
   id: BaseMobMoth
   abstract: true
   components:
@@ -23,7 +23,7 @@
     damageContainer: Biological
     damageModifierSet: Moth
   - type: Speech
-    speechVerb: Insect
+    speechVerb: Moth
   - type: TypingIndicator
     proto: moth
   - type: Butcherable
@@ -113,12 +113,9 @@
         visible: false
 
 - type: entity
-  save: false
-  name: Urist McFluff
-  parent: MobHumanDummy
+  parent: BaseSpeciesDummy
   id: MobMothDummy
   noSpawn: true
-  description: A dummy moth meant to be used in character setup.
   components:
   - type: HumanoidAppearance
     species: Moth

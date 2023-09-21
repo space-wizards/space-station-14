@@ -106,6 +106,17 @@
 
 - type: entity
   parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitChiefEngineerTurtle
+  name: chief engineer's turtleneck
+  description: A yellow turtleneck designed specifically for work in conditions of the engineering department.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/ceturtle.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/ceturtle.rsi
+
+- type: entity
+  parent: ClothingUniformBase
   id: ClothingUniformJumpsuitChaplain
   name: chaplain's jumpsuit
   description: It's a black jumpsuit, often worn by religious folk.
@@ -922,6 +933,17 @@
     sprite: Clothing/Uniforms/Jumpsuit/mercenary.rsi
 
 - type: entity
+  parent: UnsensoredClothingUniformBase
+  id: ClothingUniformJumpsuitNinja
+  name: ninja jumpsuit
+  description: A nano-enhanced jumpsuit designed for maximum comfort and tacticality.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/ninja.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/ninja.rsi
+
+- type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitAtmos
   name: atmospheric technician jumpsuit
@@ -1248,3 +1270,45 @@
     sprite: Clothing/Uniforms/Jumpsuit/senior_officer.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/senior_officer.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitWeb
+  name: web jumpsuit
+  description: Makes it clear that you are one with the webs.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/web.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/web.rsi
+  - type: Butcherable
+    butcheringType: Knife
+    spawned:
+    - id: MaterialWebSilk1
+      amount: 8
+  - type: FlavorProfile
+    flavors:
+      - cobwebs
+    ignoreReagents:
+      - Fiber
+  - type: SolutionContainerManager
+    solutions: # 24 (3 (fiber count of web) * 8 (to craft)) + 6 (magical crafting bonus)
+      food:
+        maxVol: 30
+        reagents:
+        - ReagentId: Fiber
+          Quantity: 30
+  - type: Construction
+    graph: WebObjects
+    node: jumpsuit
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitLoungewear
+  name: loungewear
+  description: A long stretch of fabric that wraps around your body for comfort.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/loungewear.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/loungewear.rsi

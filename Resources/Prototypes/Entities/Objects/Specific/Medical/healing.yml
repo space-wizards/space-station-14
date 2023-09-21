@@ -253,8 +253,8 @@
       - Biological
     damage:
       types:
-        Slash: -2.5
-        Piercing: -2.5
+        Slash: -5
+        Piercing: -10
     bloodlossModifier: -10
     healingBeginSound:
       path: "/Audio/Items/Medical/brutepack_begin.ogg"
@@ -297,6 +297,32 @@
   - type: Stack
     stackType: AloeCream
     count: 10
+
+- type: entity
+  parent: BaseHealingItem
+  id: HealingToolbox
+  name: healing toolbox
+  description: A powerful toolbox imbued with robust energy. It can heal your wounds and fill you with murderous intent.
+  suffix: Do Not Map
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Medical/healing_toolbox.rsi
+    state: icon
+  - type: Healing
+    damageContainers:
+    - Biological
+    damage:
+      groups: # these are all split across multiple types
+        Brute: -150
+        Burn: -150
+        Toxin: -150
+    bloodlossModifier: -20
+    delay: 1
+    selfHealPenaltyMultiplier: 0
+    healingBeginSound:
+      path: "/Audio/Items/Medical/ointment_begin.ogg"
+    healingEndSound:
+      path: "/Audio/Items/Medical/ointment_end.ogg"
 
 # Pills
 - type: entity
@@ -414,6 +440,22 @@
         maxVol: 20
         reagents:
         - ReagentId: Bicaridine
+          Quantity: 10
+
+- type: entity
+  name: charcoal pill (10u)
+  parent: Pill
+  id: PillCharcoal
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Chemistry/pills.rsi
+    state: pill21
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: Charcoal
           Quantity: 10
 
 - type: entity
@@ -558,6 +600,58 @@
           maxVol: 15
           reagents:
             - ReagentId: Ambuzol
+              Quantity: 15
+
+- type: entity
+  name: sigynate syringe
+  parent: BaseSyringe
+  id: SyringeSigynate
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        injector:
+          maxVol: 15
+          reagents:
+            - ReagentId: Sigynate
+              Quantity: 15
+
+- type: entity
+  name: ethylredoxrazine syringe
+  parent: BaseSyringe
+  id: SyringeEthylredoxrazine
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        injector:
+          maxVol: 15
+          reagents:
+            - ReagentId: Ethylredoxrazine
+              Quantity: 15
+
+- type: entity
+  name: phalanximine syringe
+  parent: BaseSyringe
+  id: SyringePhalanximine
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        injector:
+          maxVol: 15
+          reagents:
+            - ReagentId: Phalanximine
+              Quantity: 15
+
+- type: entity
+  name: saline syringe
+  parent: BaseSyringe
+  id: SyringeSaline
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        injector:
+          maxVol: 15
+          reagents:
+            - ReagentId: Saline
               Quantity: 15
 
 #this is where all the syringes are so i didn't know where to put it

@@ -1,5 +1,5 @@
 - type: entity
-  parent: SimpleSpaceMobBase
+  parent: [ SimpleSpaceMobBase, FlyingMobBase ]
   id: BaseMobDragon
   suffix: ""
   name: space dragon
@@ -76,8 +76,8 @@
   - type: MobStateActions
     actions:
       Critical:
-      - CritSuccumb
-      - CritLastWords
+      - ActionCritSuccumb
+      - ActionCritLastWords
   - type: MobThresholds
     thresholds:
       0: Alive
@@ -90,8 +90,6 @@
     groups:
     - id: Medicine
     - id: Poison
-  - type: MovementAlwaysTouching
-  - type: NoSlip
   - type: Butcherable
     spawned:
     - id: FoodMeatDragon
@@ -123,11 +121,6 @@
       - Door
       tags:
       - Wall
-    devourAction:
-      event: !type:DevourActionEvent
-      icon: Interface/Actions/devour.png
-      name: action-name-devour
-      description: action-description-devour
   - type: Tag
     tags:
     - CannotSuicide
@@ -139,14 +132,7 @@
   - type: Dragon
     spawnsLeft: 2
     spawnsProto: MobCarpDragon
-    spawnRiftAction:
-      event: !type:DragonSpawnRiftActionEvent
-      icon:
-        sprite: Interface/Actions/carp_rift.rsi
-        state: icon
-      name: action-name-carp-rift
-      description: action-description-carp-rift
-      useDelay: 1
+    spawnRiftAction: ActionSpawnRift
   - type: GuideHelp
     guides:
     - MinorAntagonists
@@ -158,18 +144,43 @@
   components:
   - type: GhostRole
     description: ghost-role-information-space-dragon-dungeon-description
-  # less tanky, no crit
+  - type: SlowOnDamage
+    speedModifierThresholds:
+      100: 0.7
   - type: MobThresholds
     thresholds:
       0: Alive
-      300: Dead
+      200: Dead
   # less meat spawned since it's a lot easier to kill
   - type: Butcherable
     spawned:
     - id: FoodMeatDragon
       amount: 1
-  # half damage, spread evenly
   - type: MeleeWeapon
     damage:
       groups:
-        Brute: 15
+        Brute: 12
+
+- type: entity
+  id: ActionSpawnRift
+  name: Summon Carp Rift
+  description: Summons a carp rift that will periodically spawns carps.
+  noSpawn: true
+  components:
+  - type: InstantAction
+    icon:
+      sprite: Interface/Actions/carp_rift.rsi
+      state: icon
+    event: !type:DragonSpawnRiftActionEvent
+    useDelay: 1
+
+- type: entity
+  id: ActionDevour
+  name: "[color=red]Devour[/color]"
+  description: Attempt to break a structure with your jaws or swallow a creature.
+  noSpawn: true
+  components:
+  - type: EntityTargetAction
+    icon: { sprite : Interface/Actions/devour.rsi, state: icon }
+    iconOn: { sprite : Interface/Actions/devour.rsi, state: icon-on }
+    event: !type:DevourActionEvent

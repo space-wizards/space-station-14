@@ -1,11 +1,10 @@
 using Content.Server.Body.Components;
 using Content.Server.Ghost.Components;
-using Content.Server.Mind;
-using Content.Server.Mind.Components;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Events;
 using Content.Shared.Body.Organ;
-using Content.Shared.Body.Part;
+using Content.Shared.Mind;
+using Content.Shared.Mind.Components;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
 
@@ -14,7 +13,7 @@ namespace Content.Server.Body.Systems
     public sealed class BrainSystem : EntitySystem
     {
         [Dependency] private readonly MovementSpeedModifierSystem _movementSpeed = default!;
-        [Dependency] private readonly MindSystem _mindSystem = default!;
+        [Dependency] private readonly SharedMindSystem _mindSystem = default!;
 
         public override void Initialize()
         {
@@ -31,17 +30,18 @@ namespace Content.Server.Body.Systems
         private void OnRemovedFromBody(EntityUid uid, BrainComponent component, RemovedFromBodyEvent args)
         {
             // This one needs to be special, okay?
-            if (!EntityManager.TryGetComponent(uid, out OrganComponent? organ) ||
-                organ.ParentSlot is not {Parent: var parent})
+            if (!EntityManager.TryGetComponent(uid, out OrganComponent? organ))
+            {
                 return;
+            }
 
-            HandleMind(parent, args.Old);
+            HandleMind(uid, args.Old);
         }
 
         private void HandleMind(EntityUid newEntity, EntityUid oldEntity)
         {
             EnsureComp<MindContainerComponent>(newEntity);
-            var oldMind = EnsureComp<MindContainerComponent>(oldEntity);
+            EnsureComp<MindContainerComponent>(oldEntity);
 
             var ghostOnMove = EnsureComp<GhostOnMoveComponent>(newEntity);
             if (HasComp<BodyComponent>(newEntity))
@@ -57,10 +57,10 @@ namespace Content.Server.Body.Systems
                 _movementSpeed.ChangeBaseSpeed(newEntity, 0, 0 , 0, move);
             }
 
-            if (!_mindSystem.TryGetMind(oldEntity, out var mind, oldMind))
+            if (!_mindSystem.TryGetMind(oldEntity, out var mindId, out var mind))
                 return;
 
-            _mindSystem.TransferTo(mind, newEntity);
+            _mindSystem.TransferTo(mindId, newEntity, mind: mind);
         }
     }
 }

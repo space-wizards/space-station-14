@@ -1,16 +1,13 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.Body.Components;
-using Content.Shared.Body.Events;
 using Content.Shared.Body.Organ;
 using Content.Shared.Body.Part;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.Movement.Components;
-using Content.Shared.Random.Helpers;
 using Robust.Shared.Containers;
-using Robust.Shared.GameStates;
-using Robust.Shared.Map;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Body.Systems;
 
@@ -18,438 +15,644 @@ public partial class SharedBodySystem
 {
     private void InitializeParts()
     {
-        SubscribeLocalEvent<BodyPartComponent, ComponentRemove>(OnPartRemoved);
-        SubscribeLocalEvent<BodyPartComponent, ComponentGetState>(OnPartGetState);
-        SubscribeLocalEvent<BodyPartComponent, ComponentHandleState>(OnPartHandleState);
+        // TODO: This doesn't handle comp removal on child ents.
+
+        // If you modify this also see the Body partial for root parts.
+        SubscribeLocalEvent<BodyPartComponent, EntInsertedIntoContainerMessage>(OnBodyPartInserted);
+        SubscribeLocalEvent<BodyPartComponent, EntRemovedFromContainerMessage>(OnBodyPartRemoved);
     }
 
-    private void OnPartGetState(EntityUid uid, BodyPartComponent part, ref ComponentGetState args)
+    private void OnBodyPartInserted(EntityUid uid, BodyPartComponent component, EntInsertedIntoContainerMessage args)
     {
-        args.State = new BodyPartComponentState(
-            part.Body,
-            part.ParentSlot,
-            part.Children,
-            part.Organs,
-            part.PartType,
-            part.IsVital,
-            part.Symmetry
-        );
+        // Body part inserted into another body part.
+        var entity = args.Entity;
+        var slotId = args.Container.ID;
+
+        if (component.Body != null)
+        {
+            if (TryComp(entity, out BodyPartComponent? childPart))
+            {
+                AddPart(component.Body.Value, entity, slotId, childPart);
+                RecursiveBodyUpdate(entity, component.Body.Value, childPart);
+            }
+
+            if (TryComp(entity, out OrganComponent? organ))
+            {
+                AddOrgan(entity, component.Body.Value, uid, organ);
+            }
+        }
     }
 
-    private void OnPartHandleState(EntityUid uid, BodyPartComponent part, ref ComponentHandleState args)
+    private void OnBodyPartRemoved(EntityUid uid, BodyPartComponent component, EntRemovedFromContainerMessage args)
     {
-        if (args.Current is not BodyPartComponentState state)
+        // TODO: lifestage shenanigans
+        if (LifeStage(uid) >= EntityLifeStage.Terminating)
             return;
 
-        part.Body = state.Body;
-        part.ParentSlot = state.ParentSlot; // TODO use containers. This is broken and does not work.
-        part.Children = state.Children; // TODO use containers. This is broken and does not work.
-        part.Organs = state.Organs; // TODO end my suffering.
-        part.PartType = state.PartType;
-        part.IsVital = state.IsVital;
-        part.Symmetry = state.Symmetry;
+        // Body part removed from another body part.
+        var entity = args.Entity;
+        var slotId = args.Container.ID;
+
+        if (TryComp(entity, out BodyPartComponent? childPart) && childPart.Body != null)
+        {
+            RemovePart(childPart.Body.Value, entity, slotId, childPart);
+            RecursiveBodyUpdate(entity, null, childPart);
+        }
+
+        if (TryComp(entity, out OrganComponent? organ))
+        {
+            RemoveOrgan(entity, organ);
+        }
     }
 
-    private void OnPartRemoved(EntityUid uid, BodyPartComponent part, ComponentRemove args)
+    private void RecursiveBodyUpdate(EntityUid uid, EntityUid? bodyUid, BodyPartComponent component)
     {
-        if (part.ParentSlot is { } slot)
+        foreach (var children in GetBodyPartChildren(uid, component))
         {
-            slot.Child = null;
-            DirtyAllComponents(slot.Parent);
-        }
+            if (children.Component.Body != bodyUid)
+            {
+                children.Component.Body = bodyUid;
+                Dirty(children.Id, children.Component);
 
-        foreach (var childSlot in part.Children.Values.ToArray())
-        {
-            DropPart(childSlot.Child);
+                foreach (var slotId in children.Component.Organs.Keys)
+                {
+                    var organContainerId = GetOrganContainerId(slotId);
+
+                    if (!Containers.TryGetContainer(children.Id, organContainerId, out var container))
+                        continue;
+
+                    foreach (var organ in container.ContainedEntities)
+                    {
+                        if (TryComp(organ, out OrganComponent? organComp))
+                        {
+                            organComp.Body = bodyUid;
+                            Dirty(organ, organComp);
+                        }
+                    }
+                }
+            }
         }
     }
 
-    private BodyPartSlot? CreatePartSlot(
+    protected virtual void AddPart(
+        EntityUid bodyUid,
+        EntityUid partUid,
         string slotId,
-        EntityUid parent,
+        BodyPartComponent component,
+        BodyComponent? bodyComp = null)
+    {
+        DebugTools.AssertOwner(partUid, component);
+        Dirty(partUid, component);
+        component.Body = bodyUid;
+
+        var ev = new BodyPartAddedEvent(slotId, component);
+        RaiseLocalEvent(bodyUid, ref ev);
+
+        AddLeg(partUid, bodyUid, component, bodyComp);
+    }
+
+    protected virtual void RemovePart(
+        EntityUid bodyUid,
+        EntityUid partUid,
+        string slotId,
+        BodyPartComponent component,
+        BodyComponent? bodyComp = null)
+    {
+        DebugTools.AssertOwner(partUid, component);
+        Resolve(bodyUid, ref bodyComp, false);
+        Dirty(partUid, component);
+        component.Body = null;
+
+        var ev = new BodyPartRemovedEvent(slotId, component);
+        RaiseLocalEvent(bodyUid, ref ev);
+
+        RemoveLeg(partUid, bodyUid, component);
+        PartRemoveDamage(bodyUid, component, bodyComp);
+    }
+
+    private void AddLeg(EntityUid uid, EntityUid bodyUid, BodyPartComponent component, BodyComponent? bodyComp = null)
+    {
+        if (!Resolve(bodyUid, ref bodyComp, false))
+            return;
+
+        if (component.PartType == BodyPartType.Leg)
+        {
+            bodyComp.LegEntities.Add(uid);
+            UpdateMovementSpeed(bodyUid);
+            Dirty(bodyUid, bodyComp);
+        }
+    }
+
+    private void RemoveLeg(EntityUid uid, EntityUid bodyUid, BodyPartComponent component, BodyComponent? bodyComp = null)
+    {
+        if (!Resolve(bodyUid, ref bodyComp, false))
+            return;
+
+        if (component.PartType == BodyPartType.Leg)
+        {
+            bodyComp.LegEntities.Remove(uid);
+            UpdateMovementSpeed(bodyUid);
+            Dirty(bodyUid, bodyComp);
+
+            if (!bodyComp.LegEntities.Any())
+            {
+                Standing.Down(bodyUid);
+            }
+        }
+    }
+
+    private void PartRemoveDamage(EntityUid parent, BodyPartComponent component, BodyComponent? bodyComp = null)
+    {
+        if (!Resolve(parent, ref bodyComp, false))
+            return;
+
+        if (component.IsVital && !GetBodyChildrenOfType(parent, component.PartType, bodyComp).Any())
+        {
+            // TODO BODY SYSTEM KILL : remove this when wounding and required parts are implemented properly
+            var damage = new DamageSpecifier(Prototypes.Index<DamageTypePrototype>("Bloodloss"), 300);
+            Damageable.TryChangeDamage(parent, damage);
+        }
+    }
+
+    /// <summary>
+    /// Tries to get the parent body part to this if applicable.
+    /// Doesn't validate if it's a part of body system.
+    /// </summary>
+    public EntityUid? GetParentPartOrNull(EntityUid uid)
+    {
+        if (!Containers.TryGetContainingContainer(uid, out var container))
+            return null;
+
+        var parent = container.Owner;
+
+        if (!HasComp<BodyPartComponent>(parent))
+            return null;
+
+        return parent;
+    }
+
+    /// <summary>
+    /// Tries to get the parent body part and slot to this if applicable.
+    /// </summary>
+    public (EntityUid Parent, string Slot)? GetParentPartAndSlotOrNull(EntityUid uid)
+    {
+        if (!Containers.TryGetContainingContainer(uid, out var container))
+            return null;
+
+        var slotId = GetPartSlotContainerIdFromContainer(container.ID);
+
+        if (string.IsNullOrEmpty(slotId))
+            return null;
+
+        var parent = container.Owner;
+
+        if (!TryComp<BodyPartComponent>(parent, out var parentBody) || !parentBody.Children.ContainsKey(slotId))
+            return null;
+
+        return (parent, slotId);
+    }
+
+    /// <summary>
+    /// Tries to get the relevant parent body part to this if it exists.
+    /// It won't exist if this is the root body part or if it's not in a body.
+    /// </summary>
+    public bool TryGetParentBodyPart(
+        EntityUid partUid,
+        [NotNullWhen(true)] out EntityUid? parentUid,
+        [NotNullWhen(true)] out BodyPartComponent? parentComponent)
+    {
+        DebugTools.Assert(HasComp<BodyPartComponent>(partUid));
+        parentUid = null;
+        parentComponent = null;
+
+        if (Containers.TryGetContainingContainer(partUid, out var container) &&
+            TryComp(container.Owner, out parentComponent))
+        {
+            parentUid = container.Owner;
+            return true;
+        }
+
+        return false;
+    }
+
+    #region Slots
+
+    /// <summary>
+    /// Creates a BodyPartSlot on the specified partUid.
+    /// </summary>
+    private BodyPartSlot? CreatePartSlot(
+        EntityUid partUid,
+        string slotId,
         BodyPartType partType,
         BodyPartComponent? part = null)
     {
-        if (!Resolve(parent, ref part, false))
+        if (!Resolve(partUid, ref part, false))
             return null;
 
-        var slot = new BodyPartSlot(slotId, parent, partType);
-        part.Children.Add(slotId, slot);
-
-        return slot;
+        Containers.EnsureContainer<ContainerSlot>(partUid, GetPartSlotContainerId(slotId));
+        var partSlot = new BodyPartSlot(slotId, partType);
+        part.Children.Add(slotId, partSlot);
+        Dirty(partUid, part);
+        return partSlot;
     }
 
+    /// <summary>
+    /// Tries to create a BodyPartSlot on the specified partUid.
+    /// </summary>
+    /// <returns>false if not relevant or can't add it.</returns>
     public bool TryCreatePartSlot(
-        EntityUid? parentId,
-        string id,
+        EntityUid? partId,
+        string slotId,
+        BodyPartType partType,
         [NotNullWhen(true)] out BodyPartSlot? slot,
-        BodyPartComponent? parent = null)
+        BodyPartComponent? part = null)
     {
         slot = null;
 
-        if (parentId == null ||
-            !Resolve(parentId.Value, ref parent, false))
-            return false;
-
-        slot = new BodyPartSlot(id, parentId.Value, null);
-        if (!parent.Children.TryAdd(id, slot))
+        if (partId == null ||
+            !Resolve(partId.Value, ref part, false))
         {
-            slot = null;
             return false;
         }
 
+        Containers.EnsureContainer<ContainerSlot>(partId.Value, GetPartSlotContainerId(slotId));
+        slot = new BodyPartSlot(slotId, partType);
+
+        if (!part.Children.TryAdd(slotId, slot.Value))
+            return false;
+
+        Dirty(partId.Value, part);
         return true;
     }
 
     public bool TryCreatePartSlotAndAttach(
-        EntityUid? parentId,
-        string id,
-        EntityUid? childId,
+        EntityUid parentId,
+        string slotId,
+        EntityUid childId,
+        BodyPartType partType,
         BodyPartComponent? parent = null,
         BodyPartComponent? child = null)
     {
-        return TryCreatePartSlot(parentId, id, out var slot, parent) && AttachPart(childId, slot, child);
+        return TryCreatePartSlot(parentId, slotId, partType, out _, parent)
+               && AttachPart(parentId, slotId, childId, parent, child);
     }
 
-    public IEnumerable<(EntityUid Id, BodyPartComponent Component)> GetPartChildren(EntityUid? id, BodyPartComponent? part = null)
+    #endregion
+
+    #region RootPartManagement
+
+    /// <summary>
+    /// Returns true if the partId is the root body container for the specified bodyId.
+    /// </summary>
+    public bool IsPartRoot(EntityUid bodyId, EntityUid partId, BodyComponent? body = null, BodyPartComponent? part = null)
     {
-        if (id == null || !Resolve(id.Value, ref part, false))
-            yield break;
+        if (!Resolve(partId, ref part)|| !Resolve(bodyId, ref body))
+            return false;
 
-        foreach (var slot in part.Children.Values)
-        {
-            if (!TryComp(slot.Child, out BodyPartComponent? childPart))
-                continue;
-
-            yield return (slot.Child.Value, childPart);
-
-            foreach (var subChild in GetPartChildren(slot.Child, childPart))
-            {
-                yield return subChild;
-            }
-        }
+        return Containers.TryGetContainingContainer(bodyId, partId, out var container) && container.ID == BodyRootContainerId;
     }
 
-    public IEnumerable<(EntityUid Id, OrganComponent Component)> GetPartOrgans(EntityUid? partId, BodyPartComponent? part = null)
+    /// <summary>
+    /// Returns true if we can attach the partId to the bodyId as the root entity.
+    /// </summary>
+    public bool CanAttachToRoot(EntityUid bodyId, EntityUid partId, BodyComponent? body = null,
+        BodyPartComponent? part = null)
     {
-        if (partId == null || !Resolve(partId.Value, ref part, false))
-            yield break;
-
-        foreach (var slot in part.Organs.Values)
-        {
-            if (!TryComp(slot.Child, out OrganComponent? organ))
-                continue;
-
-            yield return (slot.Child.Value, organ);
-        }
+        return Resolve(bodyId, ref body) &&
+               Resolve(partId, ref part) &&
+               body.RootContainer.ContainedEntity == null &&
+               bodyId != part.Body;
     }
 
-    public IEnumerable<BodyPartSlot> GetPartAllSlots(EntityUid? partId, BodyPartComponent? part = null)
+    /// <summary>
+    /// Returns the root part of this body if it exists.
+    /// </summary>
+    public (EntityUid Entity, BodyPartComponent BodyPart)? GetRootPartOrNull(EntityUid bodyId, BodyComponent? body = null)
     {
-        if (partId == null ||
-            !Resolve(partId.Value, ref part, false))
-            yield break;
+        if (!Resolve(bodyId, ref body) || body.RootContainer.ContainedEntity == null)
+            return null;
 
-        foreach (var slot in part.Children.Values)
-        {
-            yield return slot;
-
-            if (!TryComp(slot.Child, out BodyComponent? childPart))
-                continue;
-
-            foreach (var subChild in GetBodyAllSlots(slot.Child, childPart))
-            {
-                yield return subChild;
-            }
-        }
+        return (body.RootContainer.ContainedEntity.Value,
+            Comp<BodyPartComponent>(body.RootContainer.ContainedEntity.Value));
     }
 
-    public bool CanAttachPart([NotNullWhen(true)] EntityUid? partId, BodyPartSlot slot, BodyPartComponent? part = null)
-    {
-        return partId != null &&
-               slot.Child == null &&
-               Resolve(partId.Value, ref part, false) &&
-               (slot.Type == null || slot.Type == part.PartType) &&
-               Containers.TryGetContainer(slot.Parent, BodyContainerId, out var container) &&
-               container.CanInsert(partId.Value);
-    }
-
-    public virtual bool AttachPart(
-        EntityUid? partId,
+    /// <summary>
+    /// Returns true if the partId can be attached to the parentId in the specified slot.
+    /// </summary>
+    public bool CanAttachPart(
+        EntityUid parentId,
         BodyPartSlot slot,
-        [NotNullWhen(true)] BodyPartComponent? part = null)
+        EntityUid partId,
+        BodyPartComponent? parentPart = null,
+        BodyPartComponent? part = null)
     {
-        if (partId == null ||
-            !Resolve(partId.Value, ref part, false) ||
-            !CanAttachPart(partId, slot, part))
+        if (!Resolve(partId, ref part, false) ||
+            !Resolve(parentId, ref parentPart, false))
+        {
             return false;
-
-        DropPart(slot.Child);
-        DropPart(partId, part);
-
-        var container = Containers.EnsureContainer<Container>(slot.Parent, BodyContainerId);
-        if (!container.Insert(partId.Value))
-            return false;
-
-        slot.Child = partId;
-        part.ParentSlot = slot;
-
-        if (TryComp(slot.Parent, out BodyPartComponent? parentPart))
-        {
-            part.Body = parentPart.Body;
-        }
-        else if (TryComp(slot.Parent, out BodyComponent? parentBody))
-        {
-            part.Body = parentBody.Owner;
-        }
-        else
-        {
-            part.Body = null;
         }
 
-        DirtyAllComponents(slot.Parent);
-        DirtyAllComponents(partId.Value);
-
-        if (part.Body is { } newBody)
-        {
-            if (part.PartType == BodyPartType.Leg)
-                UpdateMovementSpeed(newBody);
-
-            var partAddedEvent = new BodyPartAddedEvent(slot.Id, part);
-            RaiseLocalEvent(newBody, ref partAddedEvent);
-
-            // TODO: Body refactor. Somebody is doing it
-            // EntitySystem.Get<SharedHumanoidAppearanceSystem>().BodyPartAdded(Owner, argsAdded);
-
-            foreach (var organ in GetPartOrgans(partId, part))
-            {
-                RaiseLocalEvent(organ.Id, new AddedToBodyEvent(newBody), true);
-            }
-
-            DirtyAllComponents(newBody);
-        }
-
-        return true;
+        return CanAttachPart(parentId, slot.Id, partId, parentPart, part);
     }
 
-    public virtual bool DropPart(EntityUid? partId, BodyPartComponent? part = null)
+    /// <summary>
+    /// Returns true if we can attach the specified partId to the parentId in the specified slot.
+    /// </summary>
+    public bool CanAttachPart(
+        EntityUid parentId,
+        string slotId,
+        EntityUid partId,
+        BodyPartComponent? parentPart = null,
+        BodyPartComponent? part = null)
     {
-        if (partId == null ||
-            !Resolve(partId.Value, ref part, false) ||
-            part.ParentSlot is not { } slot)
-            return false;
-
-        var oldBodyNullable = part.Body;
-
-        slot.Child = null;
-        part.ParentSlot = null;
-        part.Body = null;
-
-        if (Containers.TryGetContainer(slot.Parent, BodyContainerId, out var container))
-            container.Remove(partId.Value);
-
-        if (TryComp(partId, out TransformComponent? transform))
-            transform.AttachToGridOrMap();
-
-        part.Owner.RandomOffset(0.25f);
-
-        if (oldBodyNullable is { } oldBody)
+        if (!Resolve(partId, ref part, false) ||
+            !Resolve(parentId, ref parentPart, false) ||
+            !parentPart.Children.TryGetValue(slotId, out var parentSlotData))
         {
-            var args = new BodyPartRemovedEvent(slot.Id, part);
-            RaiseLocalEvent(oldBody, ref args);
-
-            if (part.PartType == BodyPartType.Leg)
-            {
-                UpdateMovementSpeed(oldBody);
-                if(!GetBodyChildrenOfType(oldBody, BodyPartType.Leg).Any())
-                    Standing.Down(oldBody);
-            }
-
-            if (part.IsVital && !GetBodyChildrenOfType(oldBody, part.PartType).Any())
-            {
-                // TODO BODY SYSTEM KILL : Find a more elegant way of killing em than just dumping bloodloss damage.
-                var damage = new DamageSpecifier(Prototypes.Index<DamageTypePrototype>("Bloodloss"), 300);
-                Damageable.TryChangeDamage(part.Owner, damage);
-            }
-
-            foreach (var organSlot in part.Organs.Values)
-            {
-                if (organSlot.Child is not { } child)
-                    continue;
-
-                RaiseLocalEvent(child, new RemovedFromBodyEvent(oldBody), true);
-            }
+            return false;
         }
 
-        DirtyAllComponents(slot.Parent);
-        DirtyAllComponents(partId.Value);
-
-        return true;
+        return part.PartType == parentSlotData.Type &&
+               Containers.TryGetContainer(parentId, GetPartSlotContainerId(slotId), out var container) &&
+               Containers.CanInsert(partId, container);
     }
 
-    public void UpdateMovementSpeed(EntityUid body, BodyComponent? component = null, MovementSpeedModifierComponent? movement = null)
+    public bool AttachPartToRoot(
+        EntityUid bodyId,
+        EntityUid partId,
+        BodyComponent? body = null,
+        BodyPartComponent? part = null)
     {
-        if (!Resolve(body, ref component, ref movement, false))
-            return;
-
-        if (component.RequiredLegs <= 0)
-            return;
-
-        if (component.Root?.Child is not { } root)
-            return;
-
-        var allSlots = GetAllBodyPartSlots(root).ToHashSet();
-        var allLegs = new HashSet<EntityUid>();
-        foreach (var slot in allSlots)
+        if (!Resolve(bodyId, ref body) ||
+            !Resolve(partId, ref part) ||
+            !CanAttachToRoot(bodyId, partId, body, part))
         {
-            if (slot.Type == BodyPartType.Leg && slot.Child is {  } child)
-                allLegs.Add(child);
+            return false;
         }
+
+        return body.RootContainer.Insert(partId);
+    }
+
+    #endregion
+
+    #region Attach/Detach
+
+    /// <summary>
+    /// Attaches a body part to the specified body part parent.
+    /// </summary>
+     public bool AttachPart(
+         EntityUid parentPartId,
+         string slotId,
+         EntityUid partId,
+         BodyPartComponent? parentPart = null,
+         BodyPartComponent? part = null)
+    {
+        if (!Resolve(parentPartId, ref parentPart, false) ||
+            !parentPart.Children.TryGetValue(slotId, out var slot))
+        {
+            return false;
+        }
+
+        return AttachPart(parentPartId, slot, partId, parentPart, part);
+    }
+
+    /// <summary>
+    /// Attaches a body part to the specified body part parent.
+    /// </summary>
+    public bool AttachPart(
+        EntityUid parentPartId,
+        BodyPartSlot slot,
+        EntityUid partId,
+        BodyPartComponent? parentPart = null,
+        BodyPartComponent? part = null)
+    {
+        if (!Resolve(parentPartId, ref parentPart, false) ||
+            !Resolve(partId, ref part, false) ||
+            !CanAttachPart(parentPartId, slot.Id, partId, parentPart, part) ||
+            !parentPart.Children.ContainsKey(slot.Id))
+        {
+            return false;
+        }
+
+        if (!Containers.TryGetContainer(parentPartId, GetPartSlotContainerId(slot.Id), out var container))
+        {
+            DebugTools.Assert($"Unable to find body slot {slot.Id} for {ToPrettyString(parentPartId)}");
+            return false;
+        }
+
+        return container.Insert(partId);
+    }
+
+    #endregion
+
+    #region Misc
+
+    public void UpdateMovementSpeed(EntityUid bodyId, BodyComponent? body = null, MovementSpeedModifierComponent? movement = null)
+    {
+        if (!Resolve(bodyId, ref body, ref movement, false))
+            return;
+
+        if (body.RequiredLegs <= 0)
+            return;
 
         var walkSpeed = 0f;
         var sprintSpeed = 0f;
         var acceleration = 0f;
-        foreach (var leg in allLegs)
+        foreach (var legEntity in body.LegEntities)
         {
-            if (!TryComp<MovementBodyPartComponent>(leg, out var legModifier))
+            if (!TryComp<MovementBodyPartComponent>(legEntity, out var legModifier))
                 continue;
 
             walkSpeed += legModifier.WalkSpeed;
             sprintSpeed += legModifier.SprintSpeed;
             acceleration += legModifier.Acceleration;
         }
-
-        walkSpeed /= component.RequiredLegs;
-        sprintSpeed /= component.RequiredLegs;
-        acceleration /= component.RequiredLegs;
-        Movement.ChangeBaseSpeed(body, walkSpeed, sprintSpeed, acceleration, movement);
+        walkSpeed /= body.RequiredLegs;
+        sprintSpeed /= body.RequiredLegs;
+        acceleration /= body.RequiredLegs;
+        Movement.ChangeBaseSpeed(bodyId, walkSpeed, sprintSpeed, acceleration, movement);
     }
 
-    public bool DropPartAt(EntityUid? partId, EntityCoordinates dropAt, BodyPartComponent? part = null)
+    #endregion
+
+    #region Queries
+
+    /// <summary>
+    /// Get all organs for the specified body part.
+    /// </summary>
+    public IEnumerable<(EntityUid Id, OrganComponent Component)> GetPartOrgans(EntityUid partId, BodyPartComponent? part = null)
     {
-        if (partId == null || !DropPart(partId, part))
-            return false;
+        if (!Resolve(partId, ref part, false))
+            yield break;
 
-        if (TryComp(partId.Value, out TransformComponent? transform))
-            transform.Coordinates = dropAt;
-
-        return true;
-    }
-
-    public bool OrphanPart(EntityUid? partId, BodyPartComponent? part = null)
-    {
-        if (partId == null || !Resolve(partId.Value, ref part, false))
-            return false;
-
-        DropPart(partId, part);
-
-        foreach (var slot in part.Children.Values)
+        foreach (var slotId in part.Organs.Keys)
         {
-            DropPart(slot.Child);
+            var containerSlotId = GetOrganContainerId(slotId);
+
+            if (!Containers.TryGetContainer(partId, containerSlotId, out var container))
+                continue;
+
+            foreach (var containedEnt in container.ContainedEntities)
+            {
+                if (!TryComp(containedEnt, out OrganComponent? organ))
+                    continue;
+
+                yield return (containedEnt, organ);
+            }
+        }
+    }
+
+    /// <summary>
+    /// Gets all BaseContainers for body parts on this entity and its child entities.
+    /// </summary>
+    public IEnumerable<BaseContainer> GetPartContainers(EntityUid id, BodyPartComponent? part = null)
+    {
+        if (!Resolve(id, ref part, false) ||
+            part.Children.Count == 0)
+        {
+            yield break;
         }
 
+        foreach (var slotId in part.Children.Keys)
+        {
+            var containerSlotId = GetPartSlotContainerId(slotId);
+
+            if (!Containers.TryGetContainer(id, containerSlotId, out var container))
+                continue;
+
+            yield return container;
+
+            foreach (var ent in container.ContainedEntities)
+            {
+                foreach (var childContainer in GetPartContainers(ent))
+                {
+                    yield return childContainer;
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    /// Returns all body part components for this entity including itself.
+    /// </summary>
+    public IEnumerable<(EntityUid Id, BodyPartComponent Component)> GetBodyPartChildren(EntityUid partId, BodyPartComponent? part = null)
+    {
+        if (!Resolve(partId, ref part, false))
+            yield break;
+
+        yield return (partId, part);
+
+        foreach (var slotId in part.Children.Keys)
+        {
+            var containerSlotId = GetPartSlotContainerId(slotId);
+
+            if (Containers.TryGetContainer(partId, containerSlotId, out var container))
+            {
+                foreach (var containedEnt in container.ContainedEntities)
+                {
+                    if (!TryComp(containedEnt, out BodyPartComponent? childPart))
+                        continue;
+
+                    foreach (var value in GetBodyPartChildren(containedEnt, childPart))
+                    {
+                        yield return value;
+                    }
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    /// Returns all body part slots for this entity.
+    /// </summary>
+    public IEnumerable<BodyPartSlot> GetAllBodyPartSlots(EntityUid partId, BodyPartComponent? part = null)
+    {
+        if (!Resolve(partId, ref part, false))
+            yield break;
+
+        foreach (var (slotId, slot) in part.Children)
+        {
+            yield return slot;
+
+            var containerSlotId = GetOrganContainerId(slotId);
+
+            if (Containers.TryGetContainer(partId, containerSlotId, out var container))
+            {
+                foreach (var containedEnt in container.ContainedEntities)
+                {
+                    if (!TryComp(containedEnt, out BodyPartComponent? childPart))
+                        continue;
+
+                    foreach (var subSlot in GetAllBodyPartSlots(containedEnt, childPart))
+                    {
+                        yield return subSlot;
+                    }
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    /// Returns true if the bodyId has any parts of this type.
+    /// </summary>
+    public bool BodyHasPartType(EntityUid bodyId, BodyPartType type, BodyComponent? body = null)
+    {
+        return GetBodyChildrenOfType(bodyId, type, body).Any();
+    }
+
+    /// <summary>
+    /// Returns true if the parentId has the specified childId.
+    /// </summary>
+    public bool PartHasChild(
+        EntityUid parentId,
+        EntityUid childId,
+        BodyPartComponent? parent,
+        BodyPartComponent? child)
+    {
+        if (!Resolve(parentId, ref parent, false) ||
+            !Resolve(childId, ref child, false))
+        {
+            return false;
+        }
+
+        foreach (var (foundId, _) in GetBodyPartChildren(parentId, parent))
+        {
+            if (foundId == childId)
+                return true;
+        }
         return false;
     }
 
-    public bool DeletePart(EntityUid? id, BodyPartComponent? part = null)
+    /// <summary>
+    /// Returns true if the bodyId has the specified partId.
+    /// </summary>
+    public bool BodyHasChild(
+        EntityUid bodyId,
+        EntityUid partId,
+        BodyComponent? body = null,
+        BodyPartComponent? part = null)
     {
-        if (id == null || !Resolve(id.Value, ref part, false))
+        if (!Resolve(bodyId, ref body, false) ||
+            body.RootContainer.ContainedEntity == null ||
+            !Resolve(partId, ref part, false) ||
+            !TryComp(body.RootContainer.ContainedEntity, out BodyPartComponent? rootPart))
+        {
             return false;
+        }
 
-        DropPart(id, part);
-
-        if (Deleted(id.Value))
-            return false;
-
-        Del(id.Value);
-        return true;
+        return PartHasChild(body.RootContainer.ContainedEntity.Value, partId, rootPart, part);
     }
 
-    public IEnumerable<(EntityUid Id, BodyPartComponent Component)> GetBodyChildrenOfType(EntityUid? bodyId, BodyPartType type, BodyComponent? body = null)
+    public IEnumerable<(EntityUid Id, BodyPartComponent Component)> GetBodyChildrenOfType(
+        EntityUid bodyId,
+        BodyPartType type,
+        BodyComponent? body = null)
     {
         foreach (var part in GetBodyChildren(bodyId, body))
         {
             if (part.Component.PartType == type)
                 yield return part;
         }
-    }
-
-    public bool BodyHasChildOfType(EntityUid? bodyId, BodyPartType type, BodyComponent? body = null)
-    {
-        return GetBodyChildrenOfType(bodyId, type, body).Any();
-    }
-
-    public bool BodyHasChild(
-        EntityUid? parentId,
-        EntityUid? childId,
-        BodyComponent? parent = null,
-        BodyPartComponent? child = null)
-    {
-        if (parentId == null ||
-            !Resolve(parentId.Value, ref parent, false) ||
-            childId == null ||
-            !Resolve(childId.Value, ref child, false))
-            return false;
-
-        return child.ParentSlot?.Child == parentId;
-    }
-
-    public IEnumerable<EntityUid> GetBodyPartAdjacentParts(EntityUid partId, BodyPartComponent? part = null)
-    {
-        if (!Resolve(partId, ref part, false))
-            yield break;
-
-        if (part.ParentSlot != null)
-            yield return part.ParentSlot.Parent;
-
-        foreach (var slot in part.Children.Values)
-        {
-            if (slot.Child != null)
-                yield return slot.Child.Value;
-        }
-    }
-
-    public IEnumerable<(EntityUid AdjacentId, T Component)> GetBodyPartAdjacentPartsComponents<T>(
-        EntityUid partId,
-        BodyPartComponent? part = null)
-        where T : Component
-    {
-        if (!Resolve(partId, ref part, false))
-            yield break;
-
-        var query = GetEntityQuery<T>();
-        foreach (var adjacentId in GetBodyPartAdjacentParts(partId, part))
-        {
-            if (query.TryGetComponent(adjacentId, out var component))
-                yield return (adjacentId, component);
-        }
-    }
-
-    public bool TryGetBodyPartAdjacentPartsComponents<T>(
-        EntityUid partId,
-        [NotNullWhen(true)] out List<(EntityUid AdjacentId, T Component)>? comps,
-        BodyPartComponent? part = null)
-        where T : Component
-    {
-        if (!Resolve(partId, ref part, false))
-        {
-            comps = null;
-            return false;
-        }
-
-        var query = GetEntityQuery<T>();
-        comps = new List<(EntityUid AdjacentId, T Component)>();
-        foreach (var adjacentId in GetBodyPartAdjacentParts(partId, part))
-        {
-            if (query.TryGetComponent(adjacentId, out var component))
-                comps.Add((adjacentId, component));
-        }
-
-        if (comps.Count != 0)
-            return true;
-
-        comps = null;
-        return false;
     }
 
     /// <summary>
@@ -469,6 +672,7 @@ public partial class SharedBodySystem
 
         var query = GetEntityQuery<T>();
         var list = new List<(T Comp, OrganComponent Organ)>();
+
         foreach (var organ in GetPartOrgans(uid, part))
         {
             if (query.TryGetComponent(organ.Id, out var comp))
@@ -507,4 +711,72 @@ public partial class SharedBodySystem
         comps = null;
         return false;
     }
+
+    /// <summary>
+    /// Gets the parent body part and all immediate child body parts for the partId.
+    /// </summary>
+    public IEnumerable<EntityUid> GetBodyPartAdjacentParts(EntityUid partId, BodyPartComponent? part = null)
+    {
+        if (!Resolve(partId, ref part, false))
+            yield break;
+
+        if (TryGetParentBodyPart(partId, out var parentUid, out _))
+            yield return parentUid.Value;
+
+        foreach (var slotId in part.Children.Keys)
+        {
+            var container = Containers.GetContainer(partId, GetPartSlotContainerId(slotId));
+
+            foreach (var containedEnt in container.ContainedEntities)
+            {
+                yield return containedEnt;
+            }
+        }
+    }
+
+    public IEnumerable<(EntityUid AdjacentId, T Component)> GetBodyPartAdjacentPartsComponents<T>(
+        EntityUid partId,
+        BodyPartComponent? part = null)
+        where T : Component
+    {
+        if (!Resolve(partId, ref part, false))
+            yield break;
+
+        var query = GetEntityQuery<T>();
+        foreach (var adjacentId in GetBodyPartAdjacentParts(partId, part))
+        {
+            if (query.TryGetComponent(adjacentId, out var component))
+                yield return (adjacentId, component);
+        }
+    }
+
+    public bool TryGetBodyPartAdjacentPartsComponents<T>(
+        EntityUid partId,
+        [NotNullWhen(true)] out List<(EntityUid AdjacentId, T Component)>? comps,
+        BodyPartComponent? part = null)
+        where T : Component
+    {
+        if (!Resolve(partId, ref part, false))
+        {
+            comps = null;
+            return false;
+        }
+
+        var query = GetEntityQuery<T>();
+        comps = new List<(EntityUid AdjacentId, T Component)>();
+
+        foreach (var adjacentId in GetBodyPartAdjacentParts(partId, part))
+        {
+            if (query.TryGetComponent(adjacentId, out var component))
+                comps.Add((adjacentId, component));
+        }
+
+        if (comps.Count != 0)
+            return true;
+
+        comps = null;
+        return false;
+    }
+
+    #endregion
 }

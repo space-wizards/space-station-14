@@ -26,6 +26,7 @@ law-emag-require-panel = The panel must be open to use the EMAG.
 
 laws-ui-menu-title = Laws
 laws-ui-law-header = Law {$id}
+laws-ui-state-law = State law:
 
 laws-notify = You are bound to silicon laws, which you can view via the sidebar action. You are required to always follow your laws.
 laws-update-notify = Your laws have been updated. You can view the changes via the sidebar action.

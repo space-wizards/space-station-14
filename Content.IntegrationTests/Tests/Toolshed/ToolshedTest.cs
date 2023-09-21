@@ -15,7 +15,7 @@ namespace Content.IntegrationTests.Tests.Toolshed;
 [FixtureLifeCycle(LifeCycle.InstancePerTestCase)]
 public abstract class ToolshedTest : IInvocationContext
 {
-    protected TestPair PairTracker = default!;
+    protected TestPair Pair = default!;
 
     protected virtual bool Connected => false;
     protected virtual bool AssertOnUnexpectedError => true;
@@ -32,7 +32,7 @@ public abstract class ToolshedTest : IInvocationContext
     [TearDown]
     public async Task TearDownInternal()
     {
-        await PairTracker.CleanReturnAsync();
+        await Pair.CleanReturnAsync();
         await TearDown();
     }
 
@@ -45,12 +45,12 @@ public abstract class ToolshedTest : IInvocationContext
     [SetUp]
     public virtual async Task Setup()
     {
-        PairTracker = await PoolManager.GetServerClient(new PoolSettings {Connected = Connected});
-        Server = PairTracker.Server;
+        Pair = await PoolManager.GetServerClient(new PoolSettings {Connected = Connected});
+        Server = Pair.Server;
 
         if (Connected)
         {
-            Client = PairTracker.Client;
+            Client = Pair.Client;
             await Client.WaitIdleAsync();
         }
 

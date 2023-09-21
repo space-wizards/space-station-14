@@ -32,3 +32,18 @@
   license: "CC0-1.0"
   copyright: "Created by BasedUser#2215 on discord"
   source: "https://discord.com/channels/310555209753690112/536955542913024015/1066824680188690452"
+
+- files: ["generator-tug-1.ogg", "generator-tug-1-empty.ogg", "generator-tug-2.ogg", "generator-tug-2-empty.ogg", "generator-tug-3.ogg", "generator-tug-3-empty.ogg"]
+  license: "CC0-1.0"
+  copyright: "Modified from https://freesound.org/people/Pagey1969/sounds/566048/"
+  source: "https://github.com/space-wizards/ss14-raw-assets/tree/99fcffb02d9953f031991fc8f9980f0c3abd3803/Audio"
+
+- files: ["timer.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from /tg/station"
+  source: "https://github.com/tgstation/tgstation/blob/d4f678a1772007ff8d7eddd21cf7218c8e07bfc0/sound/items/timer.ogg"
+
+- files: ["warning_buzzer.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from TG station."
+  source: "https://github.com/tgstation/tgstation/blob/d4f678a1772007ff8d7eddd21cf7218c8e07bfc0/sound/machines/warning-buzzer.ogg"

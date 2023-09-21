@@ -1,7 +1,7 @@
 - type: entity
   save: false
   name: Urist McPlants
-  parent: BaseMobOrganic
+  parent: BaseMobSpeciesOrganic
   id: BaseMobDiona
   abstract: true
   components:
@@ -35,6 +35,44 @@
         amount: 5
   - type: Bloodstream
     bloodReagent: Water
+  - type: Reactive
+    groups:
+      Flammable: [ Touch ]
+      Extinguish: [ Touch ]
+      Acidic: [Touch, Ingestion]
+    reactions:
+    - reagents: [Water, SpaceCleaner]
+      methods: [Touch]
+      effects:
+      - !type:WashCreamPieReaction
+    - reagents: [ PlantBGone ]
+      methods: [ Touch ]
+      effects:
+      - !type:HealthChange
+        scaled: true
+        damage:
+          types:
+            Blunt: 2
+            Slash: 2
+            Piercing: 3
+      - !type:PopupMessage
+        type: Local
+        visualType: Large
+        messages: [ "diona-hurt-by-herbicide-popup" ]
+        probability: 0.66
+    - reagents: [ WeedKiller ]
+      methods: [ Touch ]
+      effects:
+      - !type:HealthChange
+        scaled: true
+        damage:
+          types:
+            Poison: 5
+      - !type:PopupMessage
+        type: Local
+        visualType: Large
+        messages: [ "diona-hurt-by-herbicide-popup" ]
+        probability: 0.66
   - type: Fixtures
     fixtures:
       fix1:
@@ -49,10 +87,11 @@
           - MobLayer
   - type: Inventory
     templateId: diona
-  - type: InventorySlots
   - type: MovementSpeedModifier
     baseWalkSpeed : 1.5
     baseSprintSpeed : 3.5
+  - type: Speech
+    speechVerb: Plant
   - type: Vocal
     sounds:
       Male: UnisexDiona
@@ -63,15 +102,11 @@
   - type: IgnoreKudzu
 
 - type: entity
-  save: false
-  name: Urist McHands
-  parent: MobHumanDummy
+  parent: BaseSpeciesDummy
   id: MobDionaDummy
   noSpawn: true
-  description: A dummy diona meant to be used in character setup.
   components:
   - type: Inventory
     templateId: diona
-  - type: InventorySlots
   - type: HumanoidAppearance
     species: Diona
