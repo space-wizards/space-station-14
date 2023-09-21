@@ -119,7 +119,7 @@ public sealed class AmbientSoundSystem : SharedAmbientSoundSystem
                 continue;
 
             var stream = (AudioSystem.PlayingStream) values.Stream;
-            stream.Volume = _params.Volume + comp.Volume + _ambienceVolume;
+            stream.Volume = _params.Volume ?? 0 + comp.Volume + _ambienceVolume;
         }
     }
     private void SetCooldown(float value) => _cooldown = value;

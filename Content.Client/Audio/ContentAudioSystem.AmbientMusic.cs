@@ -83,7 +83,7 @@ public sealed partial class ContentAudioSystem
 
         if (_ambientMusicStream != null && _musicProto != null)
         {
-            _ambientMusicStream.Volume = _musicProto.Sound.Params.Volume + _volumeSlider;
+            _ambientMusicStream.Volume = _musicProto.Sound.Params.Volume ?? 0 + _volumeSlider;
         }
     }
 
@@ -219,7 +219,7 @@ public sealed partial class ContentAudioSystem
             track.ToString(),
             Filter.Local(),
             false,
-            AudioParams.Default.WithVolume(_musicProto.Sound.Params.Volume + _volumeSlider));
+            AudioParams.Default.WithVolume(_musicProto.Sound.Params.Volume ?? 0 + _volumeSlider));
 
         if (strim != null)
         {
