@@ -17,57 +17,9 @@ public partial class SharedBodySystem
     {
         // TODO: This doesn't handle comp removal on child ents.
 
-        // Body here to handle root body parts.
-        SubscribeLocalEvent<BodyComponent, EntInsertedIntoContainerMessage>(OnBodyInserted);
-        SubscribeLocalEvent<BodyComponent, EntRemovedFromContainerMessage>(OnBodyRemoved);
+        // If you modify this also see the Body partial for root parts.
         SubscribeLocalEvent<BodyPartComponent, EntInsertedIntoContainerMessage>(OnBodyPartInserted);
         SubscribeLocalEvent<BodyPartComponent, EntRemovedFromContainerMessage>(OnBodyPartRemoved);
-    }
-
-    private void OnBodyInserted(EntityUid uid, BodyComponent component, EntInsertedIntoContainerMessage args)
-    {
-        // Root body part?
-        var slotId = args.Container.ID;
-
-        if (slotId != BodyRootContainerId)
-            return;
-
-        var entity = args.Entity;
-
-        if (TryComp(entity, out BodyPartComponent? childPart))
-        {
-            AddPart(uid, entity, slotId, childPart);
-        }
-
-        if (TryComp(entity, out OrganComponent? organ))
-        {
-            AddOrgan(entity, uid, uid, organ);
-        }
-    }
-
-    private void OnBodyRemoved(EntityUid uid, BodyComponent component, EntRemovedFromContainerMessage args)
-    {
-        // TODO: lifestage shenanigans
-        if (LifeStage(uid) >= EntityLifeStage.Terminating)
-            return;
-
-        // Root body part?
-        var slotId = args.Container.ID;
-
-        if (slotId != BodyRootContainerId)
-            return;
-
-        var entity = args.Entity;
-
-        if (TryComp(entity, out BodyPartComponent? childPart))
-        {
-            RemovePart(uid, entity, slotId, childPart);
-        }
-
-        if (TryComp(entity, out OrganComponent? organ))
-        {
-            RemoveOrgan(entity, uid, uid, organ);
-        }
     }
 
     private void OnBodyPartInserted(EntityUid uid, BodyPartComponent component, EntInsertedIntoContainerMessage args)
@@ -423,7 +375,7 @@ public partial class SharedBodySystem
          BodyPartComponent? part = null)
     {
         if (!Resolve(parentPartId, ref parentPart, false) ||
-            parentPart.Children.TryGetValue(slotId, out var slot))
+            !parentPart.Children.TryGetValue(slotId, out var slot))
         {
             return false;
         }

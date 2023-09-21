@@ -23,11 +23,61 @@ public partial class SharedBodySystem
 
     private void InitializeBody()
     {
+        // Body here to handle root body parts.
+        SubscribeLocalEvent<BodyComponent, EntInsertedIntoContainerMessage>(OnBodyInserted);
+        SubscribeLocalEvent<BodyComponent, EntRemovedFromContainerMessage>(OnBodyRemoved);
+
         SubscribeLocalEvent<BodyComponent, ComponentInit>(OnBodyInit);
         SubscribeLocalEvent<BodyComponent, MapInitEvent>(OnBodyMapInit);
         SubscribeLocalEvent<BodyComponent, CanDragEvent>(OnBodyCanDrag);
         SubscribeLocalEvent<BodyComponent, ComponentGetState>(OnBodyGetState);
         SubscribeLocalEvent<BodyComponent, ComponentHandleState>(OnBodyHandleState);
+    }
+
+    private void OnBodyInserted(EntityUid uid, BodyComponent component, EntInsertedIntoContainerMessage args)
+    {
+        // Root body part?
+        var slotId = args.Container.ID;
+
+        if (slotId != BodyRootContainerId)
+            return;
+
+        var entity = args.Entity;
+
+        if (TryComp(entity, out BodyPartComponent? childPart))
+        {
+            AddPart(uid, entity, slotId, childPart);
+        }
+
+        if (TryComp(entity, out OrganComponent? organ))
+        {
+            AddOrgan(entity, uid, uid, organ);
+        }
+    }
+
+    private void OnBodyRemoved(EntityUid uid, BodyComponent component, EntRemovedFromContainerMessage args)
+    {
+        // TODO: lifestage shenanigans
+        if (LifeStage(uid) >= EntityLifeStage.Terminating)
+            return;
+
+        // Root body part?
+        var slotId = args.Container.ID;
+
+        if (slotId != BodyRootContainerId)
+            return;
+
+        var entity = args.Entity;
+
+        if (TryComp(entity, out BodyPartComponent? childPart))
+        {
+            RemovePart(uid, entity, slotId, childPart);
+        }
+
+        if (TryComp(entity, out OrganComponent? organ))
+        {
+            RemoveOrgan(entity, uid, uid, organ);
+        }
     }
 
     private void OnBodyHandleState(EntityUid uid, BodyComponent component, ref ComponentHandleState args)
