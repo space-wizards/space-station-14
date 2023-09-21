@@ -1,9 +1,8 @@
-﻿<controls:FancyWindow  xmlns="https://spacestation14.io"
+<controls:FancyWindow  xmlns="https://spacestation14.io"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
     xmlns:style="clr-namespace:Content.Client.Stylesheets"
     Name="APCMenu"
-    Title="{Loc 'apc-menu-title'}"
     Resizable="False">
 
     <BoxContainer Orientation="Vertical">
@@ -20,13 +19,13 @@
                         <Label Text="{Loc 'apc-menu-breaker-label'}" HorizontalExpand="True"
                                 StyleClasses="StatusFieldTitle" MinWidth="120"/>
                         <BoxContainer Orientation="Horizontal" MinWidth="90">
-                            <Button Name="BreakerButton" Text="{Loc 'apc-menu-breaker-button'}" HorizontalExpand="True"/>
+                            <Button Name="BreakerButton" Text="{Loc 'apc-menu-breaker-button-on'}" HorizontalExpand="True"/>
                         </BoxContainer>
                         <!--Charging Status-->
-                        <Label Text="{Loc 'apc-menu-external-label'}" StyleClasses="StatusFieldTitle" MinWidth="120" />
-                        <Label Name="ExternalPowerStateLabel" Text="{Loc 'apc-menu-power-state-good'}" />
+                        <Label Text="{Loc 'power-monitoring-window-external-label'}" StyleClasses="StatusFieldTitle" MinWidth="120" />
+                        <Label Name="ExternalPowerStateLabel" Text="{Loc 'power-monitoring-window-power-state-good'}" />
                         <!--Battery Power-->
-                        <Label Text="{Loc 'apc-menu-power-label'}" StyleClasses="StatusFieldTitle" MinWidth="120" />
+                        <Label Text="{Loc 'power-monitoring-window-power-load'}" StyleClasses="StatusFieldTitle" MinWidth="120" />
                         <Label Name="PowerLabel"/>
                     </GridContainer>
                 </BoxContainer>
@@ -48,8 +47,8 @@
         <BoxContainer Orientation="Vertical">
             <PanelContainer StyleClasses="LowDivider" />
             <BoxContainer Orientation="Horizontal" Margin="10 2 5 0" VerticalAlignment="Bottom">
-                <Label Text="{Loc 'apc-menu-flavor-left'}" StyleClasses="WindowFooterText" />
-                <Label Text="{Loc 'apc-menu-flavor-right'}" StyleClasses="WindowFooterText"
+                <Label Text="{Loc 'power-monitoring-window-flavor-left'}" StyleClasses="WindowFooterText" />
+                <Label Text="{Loc 'power-monitoring-window-flavor-right'}" StyleClasses="WindowFooterText"
                         HorizontalAlignment="Right" HorizontalExpand="True"  Margin="0 0 5 0" />
                 <TextureRect StyleClasses="NTLogoDark" Stretch="KeepAspectCentered"
                         VerticalAlignment="Center" HorizontalAlignment="Right" SetSize="19 19"/>

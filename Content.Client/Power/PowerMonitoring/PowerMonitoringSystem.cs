@@ -1,6 +1,5 @@
 using Content.Client.Stylesheets;
 using Content.Shared.Power;
-using Content.Shared.Power.Systems;
 using JetBrains.Annotations;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface.Controls;
@@ -10,7 +9,7 @@ using static Robust.Client.UserInterface.Control;
 namespace Content.Client.Power.PowerMonitoring;
 
 [UsedImplicitly]
-public sealed class PowerMonitoringSystem : SharedPowerMonitoringSystem
+public sealed class PowerMonitoringSystem : EntitySystem
 {
     [Dependency] private readonly EntityManager _entityManager = default!;
 
@@ -19,19 +18,19 @@ public sealed class PowerMonitoringSystem : SharedPowerMonitoringSystem
         switch (externalPowerState)
         {
             case ExternalPowerState.None:
-                externalPowerStateLabel.Text = Loc.GetString("power-distributor-window-power-state-none");
+                externalPowerStateLabel.Text = Loc.GetString("power-monitoring-window-power-state-none");
                 externalPowerStateLabel.SetOnlyStyleClass(StyleNano.StyleClassPowerStateNone);
                 break;
             case ExternalPowerState.Low:
-                externalPowerStateLabel.Text = Loc.GetString("power-distributor-window-power-state-low");
+                externalPowerStateLabel.Text = Loc.GetString("power-monitoring-window-power-state-low");
                 externalPowerStateLabel.SetOnlyStyleClass(StyleNano.StyleClassPowerStateLow);
                 break;
             case ExternalPowerState.Stable:
-                externalPowerStateLabel.Text = Loc.GetString("power-distributor-window-power-state-stable");
+                externalPowerStateLabel.Text = Loc.GetString("power-monitoring-window-power-state-stable");
                 externalPowerStateLabel.SetOnlyStyleClass(StyleNano.StyleClassPowerStateStable);
                 break;
             case ExternalPowerState.Good:
-                externalPowerStateLabel.Text = Loc.GetString("power-distributor-window-power-state-good");
+                externalPowerStateLabel.Text = Loc.GetString("power-monitoring-window-power-state-good");
                 externalPowerStateLabel.SetOnlyStyleClass(StyleNano.StyleClassPowerStateGood);
                 break;
             default:
@@ -144,7 +143,7 @@ public sealed class PowerMonitoringSystem : SharedPowerMonitoringSystem
 
             if (power != null)
             {
-                power.Text = $"{Loc.GetString("power-distributor-window-value", ("value", ent.Size))}";
+                power.Text = $"{Loc.GetString("power-monitoring-window-value", ("value", ent.Size))}";
                 power.HorizontalExpand = true;
                 power.HorizontalAlignment = HAlignment.Right;
                 power.Margin = new Thickness(0, 0, 10, 0);

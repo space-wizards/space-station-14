@@ -1,8 +1,6 @@
 using Content.Client.Power.APC.UI;
 using Content.Shared.APC;
-using Content.Shared.Power;
 using JetBrains.Annotations;
-using Robust.Client.GameObjects;
 
 namespace Content.Client.Power.APC
 {

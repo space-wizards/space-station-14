@@ -20,8 +20,8 @@ public sealed partial class PowerMonitoringDistributorWindow : FancyWindow
 
         SetSize = MinSize = new System.Numerics.Vector2(300, 450);
 
-        MasterTabContainer.SetTabTitle(0, Loc.GetString("power-distributor-window-tab-sources"));
-        MasterTabContainer.SetTabTitle(1, Loc.GetString("power-distributor-window-tab-loads"));
+        MasterTabContainer.SetTabTitle(0, Loc.GetString("power-monitoring-window-tab-sources"));
+        MasterTabContainer.SetTabTitle(1, Loc.GetString("power-monitoring-window-tab-loads"));
 
         EntityView.SetEntity(owner.Owner);
 
@@ -32,7 +32,7 @@ public sealed partial class PowerMonitoringDistributorWindow : FancyWindow
     public void UpdateState(PowerMonitoringBoundInterfaceState state)
     {
         if (PowerDemandLabel != null)
-            PowerDemandLabel.Text = Loc.GetString("power-distributor-window-value", ("value", state.TotalLoads));
+            PowerDemandLabel.Text = Loc.GetString("power-monitoring-window-value", ("value", state.TotalLoads));
 
         if (_powerMonitoring == null)
             return;
@@ -47,7 +47,7 @@ public sealed partial class PowerMonitoringDistributorWindow : FancyWindow
             ChargeBar.Value = state.Charge;
             _powerMonitoring.UpdateChargeBarColor(ChargeBar, state.Charge);
             var chargePercentage = state.Charge / ChargeBar.MaxValue;
-            ChargePercentage.Text = Loc.GetString("power-distributor-window-charge-label", ("percent", chargePercentage.ToString("P0")));
+            ChargePercentage.Text = Loc.GetString("power-monitoring-window-charge-label", ("percent", chargePercentage.ToString("P0")));
         }
 
         _powerMonitoring.UpdateSourcesList(SourcesList, state.Sources);

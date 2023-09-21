@@ -7,12 +7,11 @@ using Content.Server.Power.Pow3r;
 using Content.Server.Power.NodeGroups;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
-using Content.Shared.Power.Systems;
 
 namespace Content.Server.Power.EntitySystems;
 
 [UsedImplicitly]
-public sealed class PowerMonitoringSystem : SharedPowerMonitoringSystem
+public sealed class PowerMonitoringSystem : EntitySystem
 {
     private float _updateTimer = 0.0f;
     private const float UpdateTime = 1.0f;
@@ -156,15 +155,18 @@ public sealed class PowerMonitoringSystem : SharedPowerMonitoringSystem
 
         return totalLoads;
     }
-    private ExternalPowerState CalcExtPowerState(EntityUid uid, PowerState.Battery battery)
+
+    public ExternalPowerState CalcExtPowerState(EntityUid uid, PowerState.Battery battery)
     {
         if (MathHelper.CloseTo(battery.CurrentReceiving, 0))
             return ExternalPowerState.None;
 
-        if (MathHelper.CloseToPercent(battery.CurrentReceiving, battery.CurrentSupply, 0.05f))
+        if (!MathHelper.CloseTo(battery.CurrentStorage / battery.Capacity, 1f) &&
+            MathHelper.CloseToPercent(battery.CurrentReceiving, battery.CurrentSupply, 0.05f))
             return ExternalPowerState.Stable;
 
-        if (battery.CurrentReceiving - battery.CurrentSupply < 0f)
+        if (!MathHelper.CloseTo(battery.CurrentStorage / battery.Capacity, 1f) &&
+            battery.CurrentReceiving - battery.CurrentSupply < 0f)
             return ExternalPowerState.Low;
 
         return ExternalPowerState.Good;

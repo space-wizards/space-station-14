@@ -18,7 +18,7 @@
                 </GridContainer>
             </ScrollContainer>
             <BoxContainer Orientation="Vertical" VerticalExpand="True">
-                <CheckBox Margin="8 8" Name="ShowInactiveConsumersCheckBox" Text="{Loc 'power-distributor-window-show-inactive-consumers'}" />
+                <CheckBox Margin="8 8" Name="ShowInactiveConsumersCheckBox" Text="{Loc 'power-monitoring-window-show-inactive-consumers'}" />
                 <ScrollContainer VerticalExpand="True" HorizontalExpand="True">
                     <GridContainer Name="LoadsList" VerticalExpand="True" HorizontalExpand="True" Columns="3">
                     </GridContainer>
@@ -30,8 +30,8 @@
         <BoxContainer Orientation="Vertical">
             <PanelContainer StyleClasses="LowDivider" />
             <BoxContainer Orientation="Horizontal" Margin="10 2 5 0" VerticalAlignment="Bottom">
-                <Label Text="{Loc 'power-distributor-window-flavor-left'}" StyleClasses="WindowFooterText" />
-                <Label Text="{Loc 'power-distributor-window-flavor-right'}" StyleClasses="WindowFooterText"
+                <Label Text="{Loc 'power-monitoring-window-flavor-left'}" StyleClasses="WindowFooterText" />
+                <Label Text="{Loc 'power-monitoring-window-flavor-right'}" StyleClasses="WindowFooterText"
                         HorizontalAlignment="Right" HorizontalExpand="True"  Margin="0 0 5 0" />
                 <TextureRect StyleClasses="NTLogoDark" Stretch="KeepAspectCentered"
                         VerticalAlignment="Center" HorizontalAlignment="Right" SetSize="19 19"/>
