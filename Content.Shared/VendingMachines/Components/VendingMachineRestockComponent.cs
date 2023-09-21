@@ -13,7 +13,7 @@ public sealed partial class VendingMachineRestockComponent : Component
     /// The time (in seconds) that it takes to restock a machine.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("restockDelay")]
+    [DataField]
     public TimeSpan RestockDelay = TimeSpan.FromSeconds(5.0f);
 
     /// <summary>
@@ -21,14 +21,14 @@ public sealed partial class VendingMachineRestockComponent : Component
     /// This is checked against the VendingMachineComponent's pack value.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("canRestock", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<VendingMachineInventoryPrototype>))]
+    [DataField(customTypeSerializer: typeof(PrototypeIdHashSetSerializer<VendingMachineInventoryPrototype>))]
     public HashSet<string> CanRestock = new();
 
     /// <summary>
     ///     Sound that plays when starting to restock a machine.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("soundRestockStart")]
+    [DataField]
     public SoundSpecifier SoundRestockStart = new SoundPathSpecifier("/Audio/Machines/vending_restock_start.ogg")
     {
         Params = new AudioParams
@@ -42,7 +42,7 @@ public sealed partial class VendingMachineRestockComponent : Component
     ///     Sound that plays when finished restocking a machine.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("soundRestockDone")]
+    [DataField]
     public SoundSpecifier SoundRestockDone = new SoundPathSpecifier("/Audio/Machines/vending_restock_done.ogg");
 }
 

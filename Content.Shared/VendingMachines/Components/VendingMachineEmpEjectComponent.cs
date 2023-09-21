@@ -9,6 +9,6 @@ public sealed partial class VendingMachineEmpEjectComponent : Component
     /// <summary>
     ///     While disabled by EMP it randomly ejects items
     /// </summary>
-    [DataField("nextEmpEject", customTypeSerializer: typeof(TimeOffsetSerializer))]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
     public TimeSpan NextEmpEject = TimeSpan.Zero;
 }

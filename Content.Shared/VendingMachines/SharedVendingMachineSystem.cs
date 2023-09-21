@@ -160,7 +160,7 @@ public abstract partial class SharedVendingMachineSystem : EntitySystem
 
     /// <summary>
     /// Returns all of the vending machine's inventory. Only includes emagged and contraband inventories if
-    /// <see cref="EmaggedComponent"/> exists and <see cref="VendingMachineInventoryComponent.Contraband"/>
+    /// <see cref="EmaggedComponent"/> exists and <see cref="VendingMachineInventoryComponent.IsContrabandEnabled"/>
     /// is true are <c>true</c> respectively.
     /// </summary>
     /// <param name="uid"></param>
