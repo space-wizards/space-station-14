@@ -83,6 +83,33 @@ public sealed class LockSystem : EntitySystem
     }
 
     /// <summary>
+    /// Forces a given entity to be locked
+    /// </summary>
+    /// <param name="uid">The entity with the lock</param>
+    /// <param name="user">The person locking it. Can be null</param>
+    /// <param name="lockComp"></param>
+    public void Lock(EntityUid uid, EntityUid? user, LockComponent? lockComp = null)
+    {
+        if (!Resolve(uid, ref lockComp))
+            return;
+
+        if (user is { Valid: true })
+        {
+            _sharedPopupSystem.PopupClient(Loc.GetString("lock-comp-do-lock-success",
+                ("entityName", Identity.Name(uid, EntityManager))), uid, user.Value);
+        }
+
+        _audio.PlayPredicted(lockComp.LockSound, uid, user, AudioParams.Default.WithVolume(-5));
+
+        lockComp.Locked = true;
+        _appearanceSystem.SetData(uid, StorageVisuals.Locked, true);
+        Dirty(lockComp);
+
+        var ev = new LockToggledEvent(true);
+        RaiseLocalEvent(uid, ref ev, true);
+    }
+
+    /// <summary>
     /// Attmempts to lock a given entity
     /// </summary>
     /// <param name="uid">The entity with the lock</param>
@@ -100,16 +127,7 @@ public sealed class LockSystem : EntitySystem
         if (!HasUserAccess(uid, user, quiet: false))
             return false;
 
-        _sharedPopupSystem.PopupClient(Loc.GetString("lock-comp-do-lock-success",
-                ("entityName", Identity.Name(uid, EntityManager))), uid, user);
-        _audio.PlayPredicted(lockComp.LockSound, uid, user, AudioParams.Default.WithVolume(-5));
-
-        lockComp.Locked = true;
-        _appearanceSystem.SetData(uid, StorageVisuals.Locked, true);
-        Dirty(lockComp);
-
-        var ev = new LockToggledEvent(true);
-        RaiseLocalEvent(uid, ref ev, true);
+        Lock(uid, user, lockComp);
         return true;
     }
 

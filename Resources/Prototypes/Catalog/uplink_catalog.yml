@@ -995,7 +995,7 @@
   description: uplink-trash-compactor-desc
   productEntity: CrateTrashCartJaniLethal
   cost:
-    Telecrystal: 4
+    Telecrystal: 7
   categories:
   - UplinkJob
   conditions:

@@ -44,7 +44,8 @@ public sealed class BodySystem : SharedBodySystem
         SubscribeLocalEvent<BodyComponent, MoveInputEvent>(OnRelayMoveInput);
         SubscribeLocalEvent<BodyComponent, ApplyMetabolicMultiplierEvent>(OnApplyMetabolicMultiplier);
         SubscribeLocalEvent<BodyComponent, BeingMicrowavedEvent>(OnBeingMicrowaved);
-        SubscribeLocalEvent<BodyComponent, BeingShreddedEvent>(OnBeingShredded);
+        SubscribeLocalEvent<BodyComponent, StartBeingShreddedEvent>(OnStartBeingShredded);
+        SubscribeLocalEvent<BodyComponent, DoneBeingShreddedEvent>(OnDoneBeingShredded);
     }
 
     private void OnPartStartup(EntityUid uid, BodyPartComponent component, ComponentStartup args)
@@ -139,7 +140,12 @@ public sealed class BodySystem : SharedBodySystem
         args.Handled = true;
     }
 
-    private void OnBeingShredded(EntityUid uid, BodyComponent component, BeingShreddedEvent args)
+    private void OnStartBeingShredded(EntityUid uid, BodyComponent component, StartBeingShreddedEvent args)
+    {
+        args.Handled = true;
+    }
+
+    private void OnDoneBeingShredded(EntityUid uid, BodyComponent component, DoneBeingShreddedEvent args)
     {
         if (args.Handled)
             return;

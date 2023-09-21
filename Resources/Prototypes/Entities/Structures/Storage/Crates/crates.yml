@@ -565,6 +565,8 @@
   id: CrateTrashCartJaniLethal
   components:
   - type: Shredder
+    container: entity_storage
     whitelist:
       components:
         - Body
+    doShake: true
