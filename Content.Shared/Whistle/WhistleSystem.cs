@@ -20,10 +20,17 @@ public sealed class SharedWhistleSystem : EntitySystem
     }
     public void OnUseInHand(EntityUid uid, WhistleComponent component, UseInHandEvent args)
     {
-        if (component.Distance > 0)
-            MakeLoudWhistle(uid, args.User, component);
+        TryMakeLoudWhistle(uid, args.User, component);
 
         args.Handled = true;
+    }
+    public bool TryMakeLoudWhistle(EntityUid uid, EntityUid owner, WhistleComponent component)
+    {
+        if (component.Distance <= 0)
+            return false;
+
+        MakeLoudWhistle(uid, owner, component);
+        return true;
     }
     private bool MakeLoudWhistle(EntityUid uid, EntityUid owner, WhistleComponent component)
     {
