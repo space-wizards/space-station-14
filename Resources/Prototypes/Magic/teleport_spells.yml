@@ -1,7 +1,7 @@
 ﻿- type: entity
   id: ActionBlink
-  name: action-name-spell-blink
-  description: action-description-spell-blink
+  name: Blink
+  description: Teleport to the clicked location.
   noSpawn: true
   components:
   - type: WorldTargetAction

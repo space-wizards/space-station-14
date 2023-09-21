@@ -22,6 +22,7 @@ using static Content.Shared.Interaction.SharedInteractionSystem;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Item;
+using Direction = Robust.Shared.Maths.Direction;
 
 namespace Content.Client.Examine
 {

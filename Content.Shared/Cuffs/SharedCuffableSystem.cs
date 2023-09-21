@@ -451,7 +451,7 @@ namespace Content.Shared.Cuffs
             if (!Resolve(handcuff, ref handcuffComponent) || !Resolve(target, ref cuffable, false))
                 return false;
 
-            if (!TryComp<HandsComponent?>(target, out var hands))
+            if (!TryComp<HandsComponent>(target, out var hands))
             {
                 if (_net.IsServer)
                 {

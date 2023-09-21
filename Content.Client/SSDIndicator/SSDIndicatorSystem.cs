@@ -24,7 +24,9 @@ public sealed class SSDIndicatorSystem : EntitySystem
 
     private void OnGetStatusIcon(EntityUid uid, SSDIndicatorComponent component, ref GetStatusIconsEvent args)
     {
-        if (!component.IsSSD || !_cfg.GetCVar(CCVars.ICShowSSDIndicator))
+        if (!component.IsSSD ||
+            !_cfg.GetCVar(CCVars.ICShowSSDIndicator) ||
+            args.InContainer)
             return;
 
         args.StatusIcons.Add(_prototype.Index<StatusIconPrototype>(component.Icon));
