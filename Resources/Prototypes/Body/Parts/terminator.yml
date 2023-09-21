@@ -9,7 +9,8 @@
   - type: Icon
     sprite: Mobs/Species/Terminator/parts.rsi
   - type: Damageable
-    damageContainer: Cybernetic
+    damageContainer: Inorganic
+    damageModifierSet: Cybernetic
   - type: BodyPart
   - type: ContainerContainer
     containers:
