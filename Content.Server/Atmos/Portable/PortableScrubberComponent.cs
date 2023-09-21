@@ -5,13 +5,13 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.Atmos.Portable
 {
     [RegisterComponent]
-    public sealed class PortableScrubberComponent : Component
+    public sealed partial class PortableScrubberComponent : Component
     {
         /// <summary>
         /// The air inside this machine.
         /// </summary>
         [DataField("gasMixture"), ViewVariables(VVAccess.ReadWrite)]
-        public GasMixture Air { get; } = new();
+        public GasMixture Air { get; private set; } = new();
 
         [DataField("port"), ViewVariables(VVAccess.ReadWrite)]
         public string PortName { get; set; } = "port";

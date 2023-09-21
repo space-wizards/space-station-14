@@ -6,7 +6,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.Forensics
 {
     [RegisterComponent]
-    public sealed class ForensicScannerComponent : Component
+    public sealed partial class ForensicScannerComponent : Component
     {
         public CancellationTokenSource? CancelToken;
 

@@ -103,8 +103,8 @@ namespace Content.Shared.Atmos.EntitySystems
         [Serializable, NetSerializable]
         public sealed class GasOverlayUpdateEvent : EntityEventArgs
         {
-            public Dictionary<EntityUid, List<GasOverlayChunk>> UpdatedChunks = new();
-            public Dictionary<EntityUid, HashSet<Vector2i>> RemovedChunks = new();
+            public Dictionary<NetEntity, List<GasOverlayChunk>> UpdatedChunks = new();
+            public Dictionary<NetEntity, HashSet<Vector2i>> RemovedChunks = new();
         }
     }
 }

@@ -12,7 +12,7 @@
   - type: Input
     context: "human"
   - type: DoAfter
-  - type: PuppetDummy
+  - type: VentriloquistPuppet
   - type: Item
     size: 30
   - type: Muted

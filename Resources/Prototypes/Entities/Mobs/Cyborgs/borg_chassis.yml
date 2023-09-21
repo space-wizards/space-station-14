@@ -1,6 +1,6 @@
 - type: entity
   id: BorgChassisGeneric
-  parent: BaseBorgChassis
+  parent: BaseBorgChassisNT
   components:
   - type: Sprite
     layers:
@@ -22,10 +22,12 @@
     noMindState: robot_e_r
   - type: Construction
     node: cyborg
+  - type: Speech
+    speechVerb: Robotic
 
 - type: entity
   id: BorgChassisMining
-  parent: BaseBorgChassis
+  parent: BaseBorgChassisNT
   name: salvage cyborg
   components:
   - type: Sprite
@@ -52,7 +54,7 @@
 
 - type: entity
   id: BorgChassisEngineer
-  parent: BaseBorgChassis
+  parent: BaseBorgChassisNT
   name: engineer cyborg
   components:
   - type: Sprite
@@ -79,7 +81,7 @@
 
 - type: entity
   id: BorgChassisJanitor
-  parent: BaseBorgChassis
+  parent: BaseBorgChassisNT
   name: janitor cyborg
   components:
   - type: Sprite
@@ -106,7 +108,7 @@
 
 - type: entity
   id: BorgChassisMedical
-  parent: BaseBorgChassis
+  parent: BaseBorgChassisNT
   name: medical cyborg
   components:
   - type: Sprite
@@ -133,7 +135,7 @@
 
 - type: entity
   id: BorgChassisService
-  parent: BaseBorgChassis
+  parent: BaseBorgChassisNT
   name: service cyborg
   components:
   - type: Sprite

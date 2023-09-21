@@ -7,27 +7,30 @@ namespace Content.Shared.Humanoid.Markings
     public sealed class MarkingPrototype : IPrototype
     {
         [IdDataField]
-        public string ID { get; } = "uwu";
+        public string ID { get; private set; } = "uwu";
 
         public string Name { get; private set; } = default!;
 
         [DataField("bodyPart", required: true)]
-        public HumanoidVisualLayers BodyPart { get; } = default!;
+        public HumanoidVisualLayers BodyPart { get; private set; } = default!;
 
         [DataField("markingCategory", required: true)]
-        public MarkingCategories MarkingCategory { get; } = default!;
-        
+        public MarkingCategories MarkingCategory { get; private set; } = default!;
+
         [DataField("speciesRestriction")]
-        public List<string>? SpeciesRestrictions { get; }
+        public List<string>? SpeciesRestrictions { get; private set; }
+
+        [DataField("sexRestriction")]
+        public Sex? SexRestriction { get; private set; }
 
         [DataField("followSkinColor")]
-        public bool FollowSkinColor { get; } = false;
+        public bool FollowSkinColor { get; private set; } = false;
 
         [DataField("forcedColoring")]
-        public bool ForcedColoring { get; } = false;
+        public bool ForcedColoring { get; private set; } = false;
 
         [DataField("coloring")]
-        public MarkingColors Coloring { get; } = new();
+        public MarkingColors Coloring { get; private set; } = new();
 
         [DataField("sprites", required: true)]
         public List<SpriteSpecifier> Sprites { get; private set; } = default!;

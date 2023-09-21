@@ -7,7 +7,7 @@ namespace Content.Shared.Ensnaring.Components;
 /// Use this on an entity that you would like to be ensnared by anything that has the <see cref="EnsnaringComponent"/>
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-public sealed class EnsnareableComponent : Component
+public sealed partial class EnsnareableComponent : Component
 {
     /// <summary>
     /// How much should this slow down the entities walk?

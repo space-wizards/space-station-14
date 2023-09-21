@@ -6,7 +6,7 @@ namespace Content.Shared.StatusEffect
     [RegisterComponent]
     [NetworkedComponent]
     [Access(typeof(StatusEffectsSystem))]
-    public sealed class StatusEffectsComponent : Component
+    public sealed partial class StatusEffectsComponent : Component
     {
         [ViewVariables]
         public Dictionary<string, StatusEffectState> ActiveEffects = new();
@@ -19,7 +19,7 @@ namespace Content.Shared.StatusEffect
     }
 
     [RegisterComponent]
-    public sealed class ActiveStatusEffectsComponent : Component {}
+    public sealed partial class ActiveStatusEffectsComponent : Component {}
 
     /// <summary>
     ///     Holds information about an active status effect.

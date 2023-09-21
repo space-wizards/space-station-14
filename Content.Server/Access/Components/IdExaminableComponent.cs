@@ -3,6 +3,6 @@
 namespace Content.Server.Access.Components;
 
 [RegisterComponent, Access(typeof(IdExaminableSystem))]
-public sealed class IdExaminableComponent : Component
+public sealed partial class IdExaminableComponent : Component
 {
 }

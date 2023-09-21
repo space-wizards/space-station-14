@@ -7,7 +7,7 @@ namespace Content.Shared.Damage.Components;
 /// Add to an entity to paralyze it whenever it reaches critical amounts of Stamina DamageType.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-public sealed class StaminaComponent : Component
+public sealed partial class StaminaComponent : Component
 {
     /// <summary>
     /// Have we reached peak stamina damage and been paralyzed?
@@ -38,6 +38,12 @@ public sealed class StaminaComponent : Component
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("critThreshold")]
     public float CritThreshold = 100f;
+
+    /// <summary>
+    /// How long will this mob be stunned for?
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField("stunTime")]
+    public TimeSpan StunTime = TimeSpan.FromSeconds(6);
 
     /// <summary>
     /// To avoid continuously updating our data we track the last time we updated so we can extrapolate our current stamina.

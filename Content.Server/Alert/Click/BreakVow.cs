@@ -7,13 +7,13 @@ namespace Content.Server.Alert.Click
     /// Break your mime vows
     ///</summary>
     [DataDefinition]
-    public sealed class BreakVow : IAlertClick
+    public sealed partial class BreakVow : IAlertClick
     {
         public void AlertClicked(EntityUid player)
         {
             var entManager = IoCManager.Resolve<IEntityManager>();
 
-           if (entManager.TryGetComponent<MimePowersComponent?>(player, out var mimePowers))
+           if (entManager.TryGetComponent(player, out MimePowersComponent? mimePowers))
            {
                 entManager.System<MimePowersSystem>().BreakVow(player, mimePowers);
            }

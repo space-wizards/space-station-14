@@ -8,7 +8,7 @@ namespace Content.Shared.Construction.Components;
 /// todo: in a pr that isn't 6k loc, combine this with MechAssemblyComponent
 /// </summary>
 [RegisterComponent]
-public sealed class PartAssemblyComponent : Component
+public sealed partial class PartAssemblyComponent : Component
 {
     /// <summary>
     /// A dictionary of a set of parts to a list of tags for each assembly.

@@ -210,6 +210,9 @@ internal sealed class ChargerSystem : EntitySystem
         if (!receiverComponent.Powered)
             return;
 
+        if (component.Whitelist?.IsValid(targetEntity, EntityManager) == false)
+            return;
+
         if (!SearchForBattery(targetEntity, out var heldBattery))
             return;
 

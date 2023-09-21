@@ -5,9 +5,9 @@
   parent: MarkerBase
   components:
   - type: GhostRole
-    name: Rat King
-    description: You are the Rat King, scavenge food in order to produce rat minions to do your bidding.
-    rules: You are an antagonist, scavenge, attack, and grow your hoard!
+    name: ghost-role-information-rat-king-name
+    description: ghost-role-information-rat-king-description
+    rules: ghost-role-information-rat-king-rules
   - type: GhostRoleMobSpawner
     prototype: MobRatKing
   - type: Sprite
@@ -24,9 +24,9 @@
   parent: MarkerBase
   components:
   - type: GhostRole
-    name: Remilia, the chaplain's familiar
-    description: Obey your master. Eat fruit.
-    rules: You are an intelligent fruit bat. Follow the chaplain around. Don't cause any trouble unless the chaplain tells you to.
+    name: ghost-role-information-remilia-name
+    description: ghost-role-information-remilia-description
+    rules: ghost-role-information-remilia-rules
   - type: GhostRoleMobSpawner
     prototype: MobBatRemilia
   - type: Sprite
@@ -43,9 +43,9 @@
   parent: MarkerBase
   components:
   - type: GhostRole
-    name: Cerberus, Evil Familiar
-    description: Obey your master. Spread chaos.
-    rules: You are an intelligent, demonic dog. Try to help the chaplain and any of his flock. As an antagonist, you're otherwise unrestrained.
+    name: ghost-role-information-cerberus-name
+    description: ghost-role-information-cerberus-description
+    rules: ghost-role-information-cerberus-rules
   - type: GhostRoleMobSpawner
     prototype: MobCorgiCerberus
   - type: Sprite
@@ -63,7 +63,7 @@
   parent: MarkerBase
   components:
   - type: GhostRole
-    rules: You are a syndicate operative tasked with the destruction of the station. As an antagonist, do whatever is required to complete this task.
+    rules: ghost-role-information-nukeop-rules
   - type: GhostRoleMobSpawner
     prototype: MobHumanNukeOp
   - type: Sprite
@@ -81,9 +81,9 @@
   parent: MarkerBase
   components:
   - type: GhostRole
-    name: Lone Operative
-    description: You are a lone nuclear operative. Destroy the station!
-    rules: You are a syndicate operative tasked with the destruction of the station. As an antagonist, do whatever is required to complete this task.
+    name: ghost-role-information-loneop-name
+    description: ghost-role-information-loneop-description
+    rules: ghost-role-information-loneop-rules
   - type: GhostRoleMobSpawner
     prototype: MobHumanLoneNuclearOperative
   - type: Sprite
@@ -111,3 +111,22 @@
     - state: green
     - sprite: Mobs/Aliens/Carps/dragon.rsi
       state: alive
+
+- type: entity
+  id: SpawnPointGhostSpaceNinja
+  name: ghost role spawn point
+  suffix: space ninja
+  parent: MarkerBase
+  components:
+  - type: GhostRole
+    name: Space Ninja
+    description: Use stealth and deception to sabotage the station.
+    rules: You are an elite mercenary of the Spider Clan. You aren't required to follow your objectives, yet your NINJA HONOR demands you try.
+  - type: GhostRoleMobSpawner
+    prototype: MobHumanSpaceNinja
+  - type: Sprite
+    sprite: Markers/jobs.rsi
+    layers:
+    - state: green
+    - sprite: Objects/Weapons/Melee/energykatana.rsi
+      state: icon

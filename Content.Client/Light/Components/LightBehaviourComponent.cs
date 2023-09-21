@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using Content.Shared.Light.Component;
+using Content.Shared.Light.Components;
 using JetBrains.Annotations;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
@@ -16,7 +16,7 @@ namespace Content.Client.Light.Components
     /// </summary>
     [Serializable]
     [ImplicitDataDefinitionForInheritors]
-    public abstract class LightBehaviourAnimationTrack : AnimationTrackProperty
+    public abstract partial class LightBehaviourAnimationTrack : AnimationTrackProperty
     {
         protected IEntityManager _entMan = default!;
         protected IRobustRandom _random = default!;
@@ -24,7 +24,7 @@ namespace Content.Client.Light.Components
         [DataField("id")] public string ID { get; set; } = string.Empty;
 
         [DataField("property")]
-        public virtual string Property { get; protected set; } = "Radius";
+        public virtual string Property { get; protected set; } = nameof(PointLightComponent.AnimatedRadius);
 
         [DataField("isLooped")] public bool IsLooped { get; set; }
 
@@ -53,7 +53,7 @@ namespace Content.Client.Light.Components
 
             if (Enabled && _entMan.TryGetComponent(_parent, out PointLightComponent? light))
             {
-                light.Enabled = true;
+                _entMan.System<PointLightSystem>().SetEnabled(_parent, true, light);
             }
 
             OnInitialize();
@@ -63,7 +63,7 @@ namespace Content.Client.Light.Components
         {
             if (_entMan.TryGetComponent(_parent, out PointLightComponent? light))
             {
-                light.Enabled = true;
+                _entMan.System<PointLightSystem>().SetEnabled(_parent, true, light);
             }
 
             if (MinDuration > 0)
@@ -111,7 +111,7 @@ namespace Content.Client.Light.Components
     /// A light behaviour that alternates between StartValue and EndValue
     /// </summary>
     [UsedImplicitly]
-    public sealed class PulseBehaviour : LightBehaviourAnimationTrack
+    public sealed partial class PulseBehaviour : LightBehaviourAnimationTrack
     {
         public override (int KeyFrameIndex, float FramePlayingTime) AdvancePlayback(
             object context, int prevKeyFrameIndex, float prevPlayingTime, float frameTime)
@@ -119,7 +119,7 @@ namespace Content.Client.Light.Components
             var playingTime = prevPlayingTime + frameTime;
             var interpolateValue = playingTime / MaxTime;
 
-            if (Property == "Enabled") // special case for boolean
+            if (Property == nameof(PointLightComponent.AnimatedEnable)) // special case for boolean
             {
                 ApplyProperty(interpolateValue < 0.5f);
                 return (-1, playingTime);
@@ -166,7 +166,7 @@ namespace Content.Client.Light.Components
     /// A light behaviour that interpolates from StartValue to EndValue
     /// </summary>
     [UsedImplicitly]
-    public sealed class FadeBehaviour : LightBehaviourAnimationTrack
+    public sealed partial class FadeBehaviour : LightBehaviourAnimationTrack
     {
         /// <summary>
         /// Automatically reverse the animation when EndValue is reached. In this particular case, MaxTime specifies the
@@ -181,7 +181,7 @@ namespace Content.Client.Light.Components
             var playingTime = prevPlayingTime + frameTime;
             var interpolateValue = playingTime / MaxTime;
 
-            if (Property == "Enabled") // special case for boolean
+            if (Property == nameof(PointLightComponent.AnimatedEnable)) // special case for boolean
             {
                 ApplyProperty(interpolateValue < EndValue);
                 return (-1, playingTime);
@@ -229,7 +229,7 @@ namespace Content.Client.Light.Components
     /// A light behaviour that interpolates using random values chosen between StartValue and EndValue.
     /// </summary>
     [UsedImplicitly]
-    public sealed class RandomizeBehaviour : LightBehaviourAnimationTrack
+    public sealed partial class RandomizeBehaviour : LightBehaviourAnimationTrack
     {
         private float _randomValue1;
         private float _randomValue2;
@@ -245,7 +245,7 @@ namespace Content.Client.Light.Components
 
         public override void OnStart()
         {
-            if (Property == "Enabled") // special case for boolean, we randomize it
+            if (Property == nameof(PointLightComponent.AnimatedEnable)) // special case for boolean, we randomize it
             {
                 ApplyProperty(_random.NextDouble() < 0.5);
                 return;
@@ -267,7 +267,7 @@ namespace Content.Client.Light.Components
             var playingTime = prevPlayingTime + frameTime;
             var interpolateValue = playingTime / MaxTime;
 
-            if (Property == "Enabled")
+            if (Property == nameof(PointLightComponent.AnimatedEnable))
             {
                 return (-1, playingTime);
             }
@@ -295,10 +295,10 @@ namespace Content.Client.Light.Components
     /// </summary>
     [UsedImplicitly]
     [DataDefinition]
-    public sealed class ColorCycleBehaviour : LightBehaviourAnimationTrack, ISerializationHooks
+    public sealed partial class ColorCycleBehaviour : LightBehaviourAnimationTrack, ISerializationHooks
     {
         [DataField("property")]
-        public override string Property { get; protected set; } = "Color";
+        public override string Property { get; protected set; } = nameof(PointLightComponent.Color);
 
         [DataField("colors")] public List<Color> ColorsToCycle { get; set; } = new();
 
@@ -357,7 +357,7 @@ namespace Content.Client.Light.Components
     /// A component which applies a specific behaviour to a PointLightComponent on its owner.
     /// </summary>
     [RegisterComponent]
-    public sealed class LightBehaviourComponent : SharedLightBehaviourComponent, ISerializationHooks
+    public sealed partial class LightBehaviourComponent : SharedLightBehaviourComponent, ISerializationHooks
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
@@ -381,7 +381,7 @@ namespace Content.Client.Light.Components
 
         [ViewVariables(VVAccess.ReadOnly)]
         [DataField("behaviours")]
-        public readonly List<LightBehaviourAnimationTrack> Behaviours = new();
+        public List<LightBehaviourAnimationTrack> Behaviours = new();
 
         [ViewVariables(VVAccess.ReadOnly)]
         public readonly List<AnimationContainer> Animations = new();

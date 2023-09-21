@@ -7,10 +7,16 @@ namespace Content.Shared.Pinpointer;
 /// Used to store grid poly data to be used for UIs.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-public sealed class NavMapComponent : Component
+public sealed partial class NavMapComponent : Component
 {
+    /*
+     * Don't need DataFields as this can be reconstructed
+     */
+
     [ViewVariables]
     public readonly Dictionary<Vector2i, NavMapChunk> Chunks = new();
+
+    [ViewVariables] public readonly List<SharedNavMapSystem.NavMapBeacon> Beacons = new();
 }
 
 public sealed class NavMapChunk

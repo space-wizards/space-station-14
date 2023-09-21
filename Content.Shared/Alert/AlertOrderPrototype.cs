@@ -9,11 +9,11 @@ namespace Content.Shared.Alert
     /// </summary>
     [Prototype("alertOrder")]
     [DataDefinition]
-    public sealed class AlertOrderPrototype : IPrototype, IComparer<AlertPrototype>
+    public sealed partial class AlertOrderPrototype : IPrototype, IComparer<AlertPrototype>
     {
         [ViewVariables]
         [IdDataField]
-        public string ID { get; } = default!;
+        public string ID { get; private set; } = default!;
 
         [DataField("order")]
         private (string type, string alert)[] Order

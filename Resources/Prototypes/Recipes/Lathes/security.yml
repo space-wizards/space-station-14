@@ -42,9 +42,9 @@
   result: WeaponAdvancedLaser
   completetime: 5
   materials:
-    Steel: 1000
-    Glass: 500
-    Gold: 150
+    Steel: 1500
+    Glass: 1000
+    Gold: 850
 
 - type: latheRecipe
   id: WeaponLaserCannon
@@ -53,7 +53,7 @@
   materials:
     Steel: 1250
     Plastic: 750
-    Gold: 100
+    Gold: 500
 
 - type: latheRecipe
   id: WeaponXrayCannon
@@ -99,12 +99,29 @@
     Glass: 200
 
 - type: latheRecipe
+  id: HoloprojectorSecurity
+  result: HoloprojectorSecurityEmpty
+  completetime: 2
+  materials:
+    Steel: 300
+    Glass: 50
+    Plastic: 50
+
+- type: latheRecipe
   id: RiotShield
   result: RiotShield
   completetime: 4
   materials:
     Steel: 400
     Glass: 400
+
+- type: latheRecipe
+  id: TelescopicShield
+  result: TelescopicShield
+  completetime: 4
+  materials:
+    Steel: 300
+    Glass: 800
 
 - type: latheRecipe
   id: Flash
@@ -208,27 +225,6 @@
     Glass: 5
 
 - type: latheRecipe
-  id: CartridgeAnomalousParticleDelta
-  result: CartridgeAnomalousParticleDelta
-  completetime: 2
-  materials:
-    Plastic: 25
-
-- type: latheRecipe
-  id: CartridgeAnomalousParticleEpsilon
-  result: CartridgeAnomalousParticleEpsilon
-  completetime: 2
-  materials:
-    Plastic: 25
-
-- type: latheRecipe
-  id: CartridgeAnomalousParticleZeta
-  result: CartridgeAnomalousParticleZeta
-  completetime: 2
-  materials:
-    Plastic: 25
-
-- type: latheRecipe
   id: TargetHuman
   result: TargetHuman
   completetime: 5
@@ -251,6 +247,27 @@
   applyMaterialDiscount: false # ingredients dropped when destroyed
   materials:
     Steel: 500
+
+- type: latheRecipe
+  id: MagazinePistol
+  result: MagazinePistol
+  completetime: 5
+  materials:
+    Steel: 100
+
+- type: latheRecipe
+  id: MagazinePistolSubMachineGun
+  result: MagazinePistolSubMachineGun
+  completetime: 5
+  materials:
+    Steel: 300
+
+- type: latheRecipe
+  id: MagazinePistolSubMachineGunTopMounted
+  result: MagazinePistolSubMachineGunTopMounted
+  completetime: 5
+  materials:
+    Steel: 300
 
 - type: latheRecipe
   id: MagazineBoxPistol
@@ -283,6 +300,20 @@
     Plastic: 300
 
 - type: latheRecipe
+  id: MagazineRifle
+  result: MagazineRifle
+  completetime: 5
+  materials:
+    Steel: 375
+
+- type: latheRecipe
+  id: MagazineLightRifle
+  result: MagazineLightRifle
+  completetime: 5
+  materials:
+    Steel: 375
+
+- type: latheRecipe
   id: MagazineBoxRifle
   result: MagazineBoxRifle
   completetime: 5
@@ -311,6 +342,13 @@
   materials:
     Steel: 350
     Plastic: 600
+
+- type: latheRecipe
+  id: SpeedLoaderMagnum
+  result: SpeedLoaderMagnum
+  completetime: 5
+  materials:
+    Steel: 200
 
 - type: latheRecipe
   id: ShellShotgunIncendiary

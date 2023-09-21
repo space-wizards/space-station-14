@@ -24,7 +24,7 @@
     sprite: Objects/Specific/Medical/firstaidkits.rsi
     state: burnkit
   product: CrateEmergencyBurnKit
-  cost: 2100
+  cost: 700
   category: Medical
   group: market
 
@@ -34,7 +34,7 @@
     sprite: Objects/Specific/Medical/firstaidkits.rsi
     state: toxinkit
   product: CrateEmergencyToxinKit
-  cost: 700
+  cost: 600
   category: Medical
   group: market
 
@@ -44,7 +44,7 @@
     sprite: Objects/Specific/Medical/firstaidkits.rsi
     state: o2kit
   product: CrateEmergencyO2Kit
-  cost: 1100
+  cost: 600
   category: Medical
   group: market
 
@@ -54,7 +54,7 @@
     sprite: Objects/Specific/Medical/firstaidkits.rsi
     state: brutekit
   product: CrateEmergencyBruteKit
-  cost: 3600
+  cost: 600
   category: Medical
   group: market
 
@@ -64,7 +64,7 @@
     sprite: Objects/Specific/Medical/firstaidkits.rsi
     state: advkit
   product: CrateEmergencyAdvancedKit
-  cost: 3700
+  cost: 1200
   category: Medical
   group: market
 
@@ -74,7 +74,7 @@
     sprite: Objects/Specific/Medical/firstaidkits.rsi
     state: radkit
   product: CrateEmergencyRadiationKit
-  cost: 2500
+  cost: 600
   category: Medical
   group: market
 

@@ -1,11 +1,12 @@
 ﻿using Content.Shared.SensorMonitoring;
 using Robust.Server.Player;
 using Robust.Shared.Collections;
+using Robust.Shared.Players;
 
 namespace Content.Server.SensorMonitoring;
 
 [RegisterComponent]
-public sealed class SensorMonitoringConsoleComponent : Component
+public sealed partial class SensorMonitoringConsoleComponent : Component
 {
     /// <summary>
     /// Used to assign network IDs for sensors and sensor streams.
@@ -16,7 +17,7 @@ public sealed class SensorMonitoringConsoleComponent : Component
     /// If enabled, additional data streams are shown intended to only be visible for debugging.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("debug_streams")]
+    [DataField("debugStreams")]
     public bool DebugStreams = false;
 
     [ViewVariables(VVAccess.ReadWrite)]
@@ -26,7 +27,7 @@ public sealed class SensorMonitoringConsoleComponent : Component
     public TimeSpan RetentionTime = TimeSpan.FromMinutes(1);
 
     // UI update tracking stuff.
-    public HashSet<IPlayerSession> InitialUIStateSent = new();
+    public HashSet<ICommonSession> InitialUIStateSent = new();
     public TimeSpan LastUIUpdate;
     public ValueList<int> RemovedSensors;
 

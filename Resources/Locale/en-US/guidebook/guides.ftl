@@ -1,12 +1,15 @@
 guide-entry-engineering = Engineering
 guide-entry-construction = Construction
+guide-entry-airlock-security = Airlock Upgrades
 guide-entry-atmospherics = Atmospherics
 guide-entry-botany = Botany
 guide-entry-fires = Fires & Space
 guide-entry-shuttle-craft = Shuttle-craft
 guide-entry-networking = Networking
 guide-entry-network-configurator = Network Configurator
+guide-entry-access-configurator = Access Configurator
 guide-entry-power = Power
+guide-entry-portable-generator = Portable Generators
 guide-entry-ame = Antimatter Engine (AME)
 guide-entry-singularity = Singularity
 guide-entry-teg = Thermo-electric Generator (TEG)
@@ -39,12 +42,15 @@ guide-entry-artifact-reports = Artifact Reports
 guide-entry-traversal-distorter = Traversal Distorter
 guide-entry-machine-upgrading = Machine Upgrading
 guide-entry-robotics = Robotics
-
 guide-entry-security = Security
 guide-entry-dna = DNA
+guide-entry-defusal = Large Bomb Defusal
 
 guide-entry-antagonists = Antagonists
 guide-entry-nuclear-operatives = Nuclear Operatives
 guide-entry-traitors = Traitors
 guide-entry-zombies = Zombies
 guide-entry-minor-antagonists = Minor Antagonists
+guide-entry-space-ninja = Space Ninja
+
+guide-entry-writing = Writing

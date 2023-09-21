@@ -7,7 +7,7 @@ namespace Content.Shared.Physics;
 /// Use this to allow a specific UID to prevent collides
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-public sealed class PreventCollideComponent : Component
+public sealed partial class PreventCollideComponent : Component
 {
     public EntityUid Uid;
 }
@@ -15,10 +15,10 @@ public sealed class PreventCollideComponent : Component
 [Serializable, NetSerializable]
 public sealed class PreventCollideComponentState : ComponentState
 {
-    public EntityUid Uid;
+    public NetEntity Uid;
 
-    public PreventCollideComponentState(PreventCollideComponent component)
+    public PreventCollideComponentState(NetEntity netEntity)
     {
-        Uid = component.Uid;
+        Uid = netEntity;
     }
 }

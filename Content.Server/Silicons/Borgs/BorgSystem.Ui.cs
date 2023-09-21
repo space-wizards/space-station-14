@@ -69,8 +69,14 @@ public sealed partial class BorgSystem
         if (TryComp<NameIdentifierComponent>(uid, out var identifier))
             name = $"{name} {identifier.FullIdentifier}";
 
-        _metaData.SetEntityName(uid, name);
+        var metaData = MetaData(uid);
+
+        // don't change the name if the value doesn't actually change
+        if (metaData.EntityName.Equals(name, StringComparison.InvariantCulture))
+            return;
+
         _adminLog.Add(LogType.Action, LogImpact.High, $"{ToPrettyString(attachedEntity):player} set borg \"{ToPrettyString(uid)}\"'s name to: {name}");
+        _metaData.SetEntityName(uid, name, metaData);
     }
 
     private void OnRemoveModuleBuiMessage(EntityUid uid, BorgChassisComponent component, BorgRemoveModuleBuiMessage args)
@@ -78,13 +84,15 @@ public sealed partial class BorgSystem
         if (args.Session.AttachedEntity is not { } attachedEntity)
             return;
 
-        if (!component.ModuleContainer.Contains(args.Module))
+        var module = GetEntity(args.Module);
+
+        if (!component.ModuleContainer.Contains(module))
             return;
 
         _adminLog.Add(LogType.Action, LogImpact.Medium,
-            $"{ToPrettyString(attachedEntity):player} removed module {ToPrettyString(args.Module)} from borg {ToPrettyString(uid)}");
-        component.ModuleContainer.Remove(args.Module);
-        _hands.TryPickupAnyHand(attachedEntity, args.Module);
+            $"{ToPrettyString(attachedEntity):player} removed module {ToPrettyString(module)} from borg {ToPrettyString(uid)}");
+        component.ModuleContainer.Remove(module);
+        _hands.TryPickupAnyHand(attachedEntity, module);
 
         UpdateUI(uid, component);
     }

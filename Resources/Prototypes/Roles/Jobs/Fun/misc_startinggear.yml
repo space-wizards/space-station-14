@@ -23,16 +23,23 @@
 - type: startingGear
   id: SpaceNinjaGear
   equipment:
-    jumpsuit: ClothingUniformJumpsuitColorBlack
-    back: ClothingBackpackFilled
+    jumpsuit: ClothingUniformJumpsuitNinja
+    # belt holds katana so satchel has the tools for sabotaging things
+    back: ClothingBackpackSatchelTools
+    mask: ClothingMaskNinja
     head: ClothingHeadHelmetSpaceNinja
+    eyes: ClothingEyesVisorNinja
     gloves: ClothingHandsGlovesSpaceNinja
-    outerClothing: ClothingOuterSuitSpaceninja
+    outerClothing: ClothingOuterSuitSpaceNinja
     shoes: ClothingShoesSpaceNinja
-    id: PassengerPDA
-  innerclothingskirt: ClothingUniformJumpskirtColorBlack
-  satchel: ClothingBackpackSatchelFilled
-  duffelbag: ClothingBackpackDuffelFilled
+    id: AgentIDCard
+    ears: ClothingHeadsetGrey
+    pocket1: SpiderCharge
+    pocket2: PinpointerStation
+    belt: EnergyKatana
+    suitstorage: YellowOxygenTankFilled
+  inhand:
+    left hand: JetpackBlackFilled
 
 #Deathsquad Outfit
 - type: startingGear
@@ -53,7 +60,7 @@
   innerclothingskirt: ClothingUniformJumpskirtColorBlack
   satchel: ClothingBackpackDuffelSyndicateAmmo
   duffelbag: ClothingBackpackDuffelSyndicateAmmo
-  
+
 # Syndicate Operative Outfit - Monkey
 - type: startingGear
   id: SyndicateOperativeGearMonkey
@@ -103,7 +110,7 @@
     gloves: ClothingHandsGlovesCombat
     outerClothing: ClothingOuterHardsuitSyndie
     shoes: ClothingShoesBootsCombatFilled
-    id: AgentIDCard
+    id: NukieAgentIDCard
     pocket1: DoubleEmergencyOxygenTankFilled
     pocket2: BaseUplinkRadio40TC
     belt: ClothingBeltMilitaryWebbing
@@ -128,6 +135,8 @@
     pocket1: DoubleEmergencyOxygenTankFilled
     pocket2: BaseUplinkRadio40TC
     belt: ClothingBeltMilitaryWebbing
+  inhand:
+    right hand: NukeOpsDeclarationOfWar
   innerclothingskirt: ClothingUniformJumpskirtOperative
   satchel: ClothingBackpackDuffelSyndicateOperative
   duffelbag: ClothingBackpackDuffelSyndicateOperative
@@ -138,7 +147,7 @@
   equipment:
     jumpsuit: ClothingUniformJumpsuitOperative
     back: ClothingBackpackDuffelSyndicateOperativeMedic
-    mask: ClothingMaskBreathMedicalSecurity
+    mask: ClothingMaskGasSyndicate
     eyes: ClothingEyesHudMedical
     ears: ClothingHeadsetAltSyndicate
     gloves: ClothingHandsGlovesCombat
@@ -271,8 +280,31 @@
   id: MobMonkeyGear
   equipment:
     head: ClothingHeadHatTophat
+    ears: ClothingHeadsetService
     jumpsuit: ClothingUniformJumpsuitJacketMonkey
     id: BartenderIDCard
+
+# Passenger but without the ID, bag, or headset
+
+- type: startingGear
+  id: LimitedPassengerGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorGrey
+    shoes: ClothingShoesColorBlack
+  innerclothingskirt: ClothingUniformJumpskirtColorGrey
+
+# DeathMatch Gear
+
+- type: startingGear
+  id: DeathMatchGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorWhite
+    shoes: ClothingShoesBootsJack
+    ears: ClothingHeadsetGrey
+    gloves: ClothingHandsGlovesFingerless
+  innerclothingskirt: ClothingUniformJumpskirtColorWhite
+  inhand:
+    left hand: WeaponMeleeToolboxRobust
 
 #Brigmedic
 
@@ -281,7 +313,7 @@
   equipment:
     jumpsuit: ClothingUniformJumpsuitBrigmedic
     outerClothing: ClothingOuterCoatAMG
-    back: ClothingBackpackBrigmedicFilled
+    back: ClothingBackpackBrigmedic
     shoes: ClothingShoesColorRed
     gloves: ClothingHandsGlovesNitrile
     eyes: ClothingEyesHudMedical

@@ -7,12 +7,6 @@
   components:
   - type: Sharp
   - type: UnpoweredFlashlight
-    toggleAction:
-      name: action-name-toggle-light
-      description: action-description-toggle-light
-      icon: { sprite: Objects/Tools/flashlight.rsi, state: flashlight }
-      iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
-      event: !type:ToggleActionEvent
   - type: PointLight
     color: "#ffeead"
     enabled: false
@@ -52,10 +46,14 @@
   - type: MeleeWeapon
     damage:
       types:
-        Blunt: 10
-        Slash: 5
+        Blunt: 8
+        Slash: 2
   - type: Wieldable
-  - type: MeleeRequiresWield
+  - type: IncreaseDamageOnWield
+    damage:
+      types:
+        Blunt: 2.5
+        Slash: 2.5
   - type: GunRequiresWield
   - type: Item
     size: 150

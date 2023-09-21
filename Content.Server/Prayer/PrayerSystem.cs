@@ -36,7 +36,7 @@ public sealed class PrayerSystem : EntitySystem
     private void AddPrayVerb(EntityUid uid, PrayableComponent comp, GetVerbsEvent<ActivationVerb> args)
     {
         // if it doesn't have an actor and we can't reach it then don't add the verb
-        if (!EntityManager.TryGetComponent<ActorComponent?>(args.User, out var actor))
+        if (!EntityManager.TryGetComponent(args.User, out ActorComponent? actor))
             return;
 
         // this is to prevent ghosts from using it

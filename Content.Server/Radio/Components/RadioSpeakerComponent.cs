@@ -10,7 +10,7 @@ namespace Content.Server.Radio.Components;
 /// </summary>
 [RegisterComponent]
 [Access(typeof(RadioDeviceSystem))]
-public sealed class RadioSpeakerComponent : Component
+public sealed partial class RadioSpeakerComponent : Component
 {
     /// <summary>
     /// Whether or not interacting with this entity

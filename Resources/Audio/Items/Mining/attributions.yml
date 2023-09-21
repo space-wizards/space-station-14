@@ -1,0 +1,4 @@
+- files: ["fultext_deploy.ogg", "fultext_launch.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from tgstation"
+  source: "https://github.com/tgstation/tgstation/tree/893e5b0180f3fffe192d2e241325cfac937f5257/sound/items"

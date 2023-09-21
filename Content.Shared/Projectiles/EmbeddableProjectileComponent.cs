@@ -1,4 +1,5 @@
 using System.Numerics;
+using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Projectiles;
@@ -33,4 +34,10 @@ public sealed partial class EmbeddableProjectileComponent : Component
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("offset"), AutoNetworkedField]
     public Vector2 Offset = Vector2.Zero;
+
+    /// <summary>
+    /// Sound to play after embedding into a hit target.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField("sound"), AutoNetworkedField]
+    public SoundSpecifier? Sound;
 }

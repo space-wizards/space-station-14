@@ -15,6 +15,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
 using Content.Shared.NPC;
+using Content.Shared.NPC;
 using Content.Shared.NPC.Events;
 using Content.Shared.Physics;
 using Content.Shared.Weapons.Melee;
@@ -49,7 +50,6 @@ public sealed partial class NPCSteeringSystem : SharedNPCSteeringSystem
     [Dependency] private readonly IConfigurationManager _configManager = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
-    [Dependency] private readonly IParallelManager _parallel = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly ClimbSystem _climb = default!;
     [Dependency] private readonly DoAfterSystem _doAfter = default!;
@@ -89,17 +89,12 @@ public sealed partial class NPCSteeringSystem : SharedNPCSteeringSystem
     {
         base.Initialize();
 
+        Log.Level = LogLevel.Info;
         _fixturesQuery = GetEntityQuery<FixturesComponent>();
         _modifierQuery = GetEntityQuery<MovementSpeedModifierComponent>();
         _factionQuery = GetEntityQuery<NpcFactionMemberComponent>();
         _physicsQuery = GetEntityQuery<PhysicsComponent>();
         _xformQuery = GetEntityQuery<TransformComponent>();
-
-#if DEBUG
-        Log.Level = LogLevel.Warning;
-#else
-        Log.Level = LogLevel.Debug;
-#endif
 
         for (var i = 0; i < InterestDirections; i++)
         {
@@ -274,7 +269,7 @@ public sealed partial class NPCSteeringSystem : SharedNPCSteeringSystem
                 var (uid, steering, mover, _) = npcs[i];
 
                 data.Add(new NPCSteeringDebugData(
-                    uid,
+                    GetNetEntity(uid),
                     mover.CurTickSprintMovement,
                     steering.Interest,
                     steering.Danger,

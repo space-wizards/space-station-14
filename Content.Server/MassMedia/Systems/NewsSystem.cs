@@ -13,9 +13,13 @@ using Content.Server.CartridgeLoader.Cartridges;
 using Content.Shared.CartridgeLoader;
 using Content.Shared.CartridgeLoader.Cartridges;
 using Content.Server.CartridgeLoader;
+using Content.Server.GameTicking;
 using Robust.Shared.Timing;
 using Content.Server.Popups;
+using Content.Server.StationRecords.Systems;
 using Content.Shared.Database;
+using Robust.Shared.Containers;
+using Robust.Shared.Utility;
 
 namespace Content.Server.MassMedia.Systems;
 
@@ -24,14 +28,15 @@ public sealed class NewsSystem : EntitySystem
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
     [Dependency] private readonly RingerSystem _ringer = default!;
-    [Dependency] private readonly CartridgeLoaderSystem? _cartridgeLoaderSystem = default!;
+    [Dependency] private readonly CartridgeLoaderSystem _cartridgeLoaderSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-
+    [Dependency] private readonly GameTicker _ticker = default!;
     [Dependency] private readonly AccessReaderSystem _accessReader = default!;
+    [Dependency] private readonly StationRecordsSystem _stationRecords = default!;
 
-
+    // TODO remove this. Dont store data on systems
     private readonly List<NewsArticle> _articles = new List<NewsArticle>();
 
     public override void Initialize()
@@ -103,45 +108,51 @@ public sealed class NewsSystem : EntitySystem
         if (message.Action == NewsReadUiAction.NotificationSwith)
             component.NotificationOn = !component.NotificationOn;
 
-        UpdateReadUi(uid, args.LoaderUid, component);
+        UpdateReadUi(uid, GetEntity(args.LoaderUid), component);
     }
 
     public void OnWriteUiShareMessage(EntityUid uid, NewsWriteComponent component, NewsWriteShareMessage msg)
     {
-        var article = msg.Article;
+        // dont blindly trust input from clients.
+        if (msg.Session.AttachedEntity is not {} author)
+            return;
 
-        var author = msg.Session.AttachedEntity;
-        if (author.HasValue
-            && _accessReader.FindAccessItemsInventory(author.Value, out var items)
-            && _accessReader.FindStationRecordKeys(author.Value, out var stationRecordKeys, items))
+        if (!_accessReader.FindAccessItemsInventory(author, out var items))
+            return;
+
+        if (!_accessReader.FindStationRecordKeys(author, out var stationRecordKeys, items))
+            return;
+
+        string? authorName = null;
+        foreach (var item in items)
         {
-            article.AuthorStationRecordKeyIds = stationRecordKeys;
-
-            foreach (var item in items)
+            // ID Card
+            if (TryComp(item, out IdCardComponent? id))
             {
-                // ID Card
-                if (TryComp(item, out IdCardComponent? id))
-                {
-                    article.Author = id.FullName;
-                    break;
-                }
-                // PDA
-                else if (TryComp(item, out PdaComponent? pda)
-                    && pda.ContainedId != null
-                    && TryComp(pda.ContainedId, out id))
-                {
-                    article.Author = id.FullName;
-                    break;
-                }
+                authorName = id.FullName;
+                break;
+            }
+
+            if (TryComp(item, out PdaComponent? pda)
+                     && pda.ContainedId != null
+                     && TryComp(pda.ContainedId, out id))
+            {
+                authorName = id.FullName;
+                break;
             }
         }
 
-        _audio.PlayPvs(component.ConfirmSound, uid);
+        NewsArticle article = new NewsArticle
+        {
+            Author = authorName,
+            Name = (msg.Name.Length <= 25 ? msg.Name.Trim() : $"{msg.Name.Trim().Substring(0, 25)}..."),
+            Content = msg.Content,
+            ShareTime = _ticker.RoundDuration()
 
-        if (author != null)
-            _adminLogger.Add(LogType.Chat, LogImpact.Medium, $"{ToPrettyString(author.Value):actor} created news article {article.Name} by {article.Author}: {article.Content}");
-        else
-            _adminLogger.Add(LogType.Chat, LogImpact.Medium, $"{msg.Session.Name:actor} created news article {article.Name}: {article.Content}");
+        };
+
+        _audio.PlayPvs(component.ConfirmSound, uid);
+        _adminLogger.Add(LogType.Chat, LogImpact.Medium, $"{ToPrettyString(author):actor} created news article {article.Name} by {article.Author}: {article.Content}");
         _articles.Add(article);
 
         component.ShareAvalible = false;
@@ -192,18 +203,15 @@ public sealed class NewsSystem : EntitySystem
 
     private void TryNotify()
     {
-        var query = EntityQueryEnumerator<CartridgeLoaderComponent, RingerComponent>();
+        var query = EntityQueryEnumerator<CartridgeLoaderComponent, RingerComponent, ContainerManagerComponent>();
 
-        while (query.MoveNext(out var owner, out var comp, out var ringer))
+        while (query.MoveNext(out var uid, out var comp, out var ringer, out var cont))
         {
-            foreach (var app in comp.InstalledPrograms)
-            {
-                if (EntityManager.TryGetComponent<NewsReadCartridgeComponent>(app, out var cartridge) && cartridge.NotificationOn)
-                {
-                    _ringer.RingerPlayRingtone(owner, ringer);
-                    break;
-                }
-            }
+            if (!_cartridgeLoaderSystem.HasProgram<NewsReadCartridgeComponent>(uid, false, comp, cont))
+                continue;
+
+            _ringer.RingerPlayRingtone(uid, ringer);
+            break;
         }
     }
 
@@ -232,7 +240,7 @@ public sealed class NewsSystem : EntitySystem
     {
         if (EntityManager.TryGetComponent<AccessReaderComponent>(device, out var accessReader) &&
             user.HasValue &&
-            _accessReader.IsAllowed(user.Value, accessReader))
+            _accessReader.IsAllowed(user.Value, device, accessReader))
         {
             return true;
         }
@@ -242,9 +250,11 @@ public sealed class NewsSystem : EntitySystem
         {
             return true;
         }
+
+        var conv = _stationRecords.Convert(articleToDelete.AuthorStationRecordKeyIds);
         if (user.HasValue
             && _accessReader.FindStationRecordKeys(user.Value, out var recordKeys)
-            && recordKeys.Intersect(articleToDelete.AuthorStationRecordKeyIds).Any())
+            && recordKeys.Intersect(conv).Any())
         {
             return true;
         }

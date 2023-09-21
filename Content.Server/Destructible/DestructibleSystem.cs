@@ -1,5 +1,6 @@
 using System.Linq;
 using Content.Server.Administration.Logs;
+using Content.Server.Atmos.EntitySystems;
 using Content.Server.Body.Systems;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Construction;
@@ -26,6 +27,7 @@ namespace Content.Server.Destructible
         [Dependency] public readonly IRobustRandom Random = default!;
         public new IEntityManager EntityManager => base.EntityManager;
 
+        [Dependency] public readonly AtmosphereSystem AtmosphereSystem = default!;
         [Dependency] public readonly AudioSystem AudioSystem = default!;
         [Dependency] public readonly BodySystem BodySystem = default!;
         [Dependency] public readonly ConstructionSystem ConstructionSystem = default!;

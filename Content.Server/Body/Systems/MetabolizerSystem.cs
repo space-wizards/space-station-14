@@ -128,9 +128,9 @@ namespace Content.Server.Body.Systems
             _random.Shuffle(list);
 
             int reagents = 0;
-            foreach (var reagent in list)
+            foreach (var (reagent, quantity) in list)
             {
-                if (!_prototypeManager.TryIndex<ReagentPrototype>(reagent.ReagentId, out var proto))
+                if (!_prototypeManager.TryIndex<ReagentPrototype>(reagent.Prototype, out var proto))
                     continue;
 
                 var mostToRemove = FixedPoint2.Zero;
@@ -138,7 +138,7 @@ namespace Content.Server.Body.Systems
                 {
                     if (meta.RemoveEmpty)
                     {
-                        _solutionContainerSystem.TryRemoveReagent(solutionEntityUid.Value, solution, reagent.ReagentId,
+                        _solutionContainerSystem.RemoveReagent(solutionEntityUid.Value, solution, reagent,
                             FixedPoint2.New(1));
                     }
 
@@ -168,7 +168,7 @@ namespace Content.Server.Body.Systems
 
                     mostToRemove *= group.MetabolismRateModifier;
 
-                    mostToRemove = FixedPoint2.Clamp(mostToRemove, 0, reagent.Quantity);
+                    mostToRemove = FixedPoint2.Clamp(mostToRemove, 0, quantity);
 
                     float scale = (float) mostToRemove / (float) entry.MetabolismRate;
 
@@ -204,8 +204,7 @@ namespace Content.Server.Body.Systems
                 // remove a certain amount of reagent
                 if (mostToRemove > FixedPoint2.Zero)
                 {
-                    _solutionContainerSystem.TryRemoveReagent(solutionEntityUid.Value, solution, reagent.ReagentId,
-                        mostToRemove);
+                    _solutionContainerSystem.RemoveReagent(solutionEntityUid.Value, solution, reagent, mostToRemove);
                 }
             }
         }

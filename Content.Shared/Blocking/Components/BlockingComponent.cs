@@ -1,7 +1,7 @@
-using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Damage;
 using Robust.Shared.Audio;
 using Robust.Shared.Physics.Collision.Shapes;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Blocking;
@@ -10,7 +10,7 @@ namespace Content.Shared.Blocking;
 /// This component goes on an item that you want to use to block
 /// </summary>
 [RegisterComponent]
-public sealed class BlockingComponent : Component
+public sealed partial class BlockingComponent : Component
 {
     /// <summary>
     /// The entity that's blocking
@@ -47,11 +47,11 @@ public sealed class BlockingComponent : Component
     [DataField("activeBlockModifier", required: true)]
     public DamageModifierSet ActiveBlockDamageModifier = default!;
 
-    [DataField("blockingToggleActionId", customTypeSerializer: typeof(PrototypeIdSerializer<InstantActionPrototype>))]
-    public string BlockingToggleActionId = "ToggleBlock";
+    [DataField("blockingToggleAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    public string BlockingToggleAction = "ActionToggleBlock";
 
-    [DataField("blockingToggleAction")]
-    public InstantAction? BlockingToggleAction;
+    [DataField("blockingToggleActionEntity")]
+    public EntityUid? BlockingToggleActionEntity;
 
     /// <summary>
     /// The sound to be played when you get hit while actively blocking

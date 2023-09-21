@@ -13,17 +13,17 @@
   - type: ItemCooldown
   - type: MeleeWeapon
     damage:
+      groups:
+        Brute: 5
       types:
-        Piercing: 5
-        Blunt: 5
-        Structural: 15
+        Structural: 10
   - type: Wieldable
   - type: IncreaseDamageOnWield
     damage:
+      groups:
+        Brute: 10
       types:
-        Blunt: 5
-        Piercing: 5
-        Structural: 15
+        Structural: 10
   - type: Item
     size: 80
     sprite: Objects/Weapons/Melee/pickaxe.rsi
@@ -44,7 +44,7 @@
   - type: MeleeWeapon
     attackRate: 1.5
     damage:
+      groups:
+        Brute: 10
       types:
-        Blunt: 5
-        Piercing: 5
-        Structural: 15
+        Structural: 10

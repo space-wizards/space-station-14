@@ -66,10 +66,7 @@
       interactSuccessSound:
         path: /Audio/Effects/double_beep.ogg
     - type: CombatMode
-      combatToggleAction:
-        enabled: false
-        autoPopulate: false
-        name: action-name-combat
+      combatToggleAction: ActionCombatModeToggleOff
     - type: Damageable
       damageContainer: Inorganic
     - type: Destructible
@@ -156,7 +153,6 @@
     - type: BallisticAmmoProvider
       proto: CartridgePistol
       capacity: 50
-      cycleable: false
     - type: Construction
       deconstructionTarget: null
       graph: WeaponTurretSyndicateDisposable

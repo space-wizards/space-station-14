@@ -53,14 +53,13 @@
       - !type:PlaySoundBehavior
         sound:
           collection: desecration
+      - !type:SpillBehavior
+        solution: food
       - !type:SpawnEntitiesBehavior
         spawn:
           Eggshells:
             min: 1
             max: 1
-          PuddleEgg:
-            min: 1
-            max: 2
           # Wow double-yolk you're so lucky!
       - !type:DoActsBehavior
         acts: [ "Destruction" ]

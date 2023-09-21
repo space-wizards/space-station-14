@@ -15,14 +15,14 @@ namespace Content.Shared.Containers.ItemSlots
     [RegisterComponent]
     [Access(typeof(ItemSlotsSystem))]
     [NetworkedComponent]
-    public sealed class ItemSlotsComponent : Component
+    public sealed partial class ItemSlotsComponent : Component
     {
         /// <summary>
         ///     The dictionary that stores all of the item slots whose interactions will be managed by the <see
         ///     cref="ItemSlotsSystem"/>.
         /// </summary>
         [DataField("slots", readOnly:true)]
-        public readonly Dictionary<string, ItemSlot> Slots = new();
+        public Dictionary<string, ItemSlot> Slots = new();
 
         // There are two ways to use item slots:
         //
@@ -58,7 +58,7 @@ namespace Content.Shared.Containers.ItemSlots
     [DataDefinition]
     [Access(typeof(ItemSlotsSystem))]
     [Serializable, NetSerializable]
-    public sealed class ItemSlot
+    public sealed partial class ItemSlot
     {
         public ItemSlot() { }
 
@@ -111,6 +111,15 @@ namespace Content.Shared.Containers.ItemSlots
         [DataField("locked", readOnly: true)]
         [ViewVariables(VVAccess.ReadWrite)]
         public bool Locked = false;
+
+        /// <summary>
+        /// Prevents adding the eject alt-verb, but still lets you swap items.
+        /// </summary>
+        /// <remarks>
+        ///     This does not affect EjectOnInteract, since if you do that you probably want ejecting to work.
+        /// </remarks>
+        [DataField("disableEject"), ViewVariables(VVAccess.ReadWrite)]
+        public bool DisableEject = false;
 
         /// <summary>
         ///     Whether the item slots system will attempt to insert item from the user's hands into this slot when interacted with.

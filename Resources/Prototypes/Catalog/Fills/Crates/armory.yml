@@ -30,12 +30,21 @@
         amount: 5
 
 - type: entity
+  parent: CrateWeaponSecure
+  id: CrateTrainingBombs
+  components:
+  - type: StorageFill
+    contents:
+    - id: TrainingBomb
+      amount: 3
+
+- type: entity
   id: CrateArmoryLaser
   parent: CrateWeaponSecure
   components:
   - type: StorageFill
     contents:
-      - id: WeaponLaserGun
+      - id: WeaponLaserCarbine
         amount: 3
 
 - type: entity

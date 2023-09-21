@@ -138,6 +138,7 @@ public sealed partial class StaminaSystem : EntitySystem
 
         component.StaminaDamage = 0;
         RemComp<ActiveStaminaComponent>(uid);
+        SetStaminaAlert(uid, component);
         Dirty(component);
     }
 
@@ -248,8 +249,9 @@ public sealed partial class StaminaSystem : EntitySystem
     /// </summary>
     public bool TryTakeStamina(EntityUid uid, float value, StaminaComponent? component = null, EntityUid? source = null, EntityUid? with = null)
     {
+        // Something that has no Stamina component automatically passes stamina checks
         if (!Resolve(uid, ref component, false))
-            return false;
+            return true;
 
         var oldStam = component.StaminaDamage;
 
@@ -392,11 +394,10 @@ public sealed partial class StaminaSystem : EntitySystem
         component.Critical = true;
         component.StaminaDamage = component.CritThreshold;
 
-        var stunTime = TimeSpan.FromSeconds(6);
-        _stunSystem.TryParalyze(uid, stunTime, true);
+        _stunSystem.TryParalyze(uid, component.StunTime, true);
 
         // Give them buffer before being able to be re-stunned
-        component.NextUpdate = _timing.CurTime + stunTime + StamCritBufferTime;
+        component.NextUpdate = _timing.CurTime + component.StunTime + StamCritBufferTime;
         EnsureComp<ActiveStaminaComponent>(uid);
         Dirty(component);
         _adminLogger.Add(LogType.Stamina, LogImpact.Medium, $"{ToPrettyString(uid):user} entered stamina crit");

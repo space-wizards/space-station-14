@@ -8,7 +8,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Access.Systems
 {
     [UsedImplicitly]
-    public abstract class SharedAccessOverriderSystem : EntitySystem
+    public abstract partial class SharedAccessOverriderSystem : EntitySystem
     {
         [Dependency] private readonly ItemSlotsSystem _itemSlotsSystem = default!;
         [Dependency] private readonly ILogManager _log = default!;
@@ -60,7 +60,7 @@ namespace Content.Shared.Access.Systems
         }
 
         [Serializable, NetSerializable]
-        public sealed class AccessOverriderDoAfterEvent : DoAfterEvent
+        public sealed partial class AccessOverriderDoAfterEvent : DoAfterEvent
         {
             public AccessOverriderDoAfterEvent()
             {

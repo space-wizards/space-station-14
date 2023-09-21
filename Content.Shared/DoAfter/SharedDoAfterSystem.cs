@@ -100,7 +100,7 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
 
     private void OnDoAfterGetState(EntityUid uid, DoAfterComponent comp, ref ComponentGetState args)
     {
-        args.State = new DoAfterComponentState(comp);
+        args.State = new DoAfterComponentState(EntityManager, comp);
     }
 
     private void OnDoAfterHandleState(EntityUid uid, DoAfterComponent comp, ref ComponentHandleState args)
@@ -115,7 +115,18 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
         comp.DoAfters.Clear();
         foreach (var (id, doAfter) in state.DoAfters)
         {
-            comp.DoAfters.Add(id, new(doAfter));
+            var newDoAfter = new DoAfter(EntityManager, doAfter);
+            comp.DoAfters.Add(id, newDoAfter);
+
+            // Networking yay (if you have an easier way dear god please).
+            newDoAfter.UserPosition = EnsureCoordinates<DoAfterComponent>(newDoAfter.NetUserPosition, uid);
+            newDoAfter.InitialItem = EnsureEntity<DoAfterComponent>(newDoAfter.NetInitialItem, uid);
+
+            var doAfterArgs = newDoAfter.Args;
+            doAfterArgs.Target = EnsureEntity<DoAfterComponent>(doAfterArgs.NetTarget, uid);
+            doAfterArgs.Used = EnsureEntity<DoAfterComponent>(doAfterArgs.NetUsed, uid);
+            doAfterArgs.User = EnsureEntity<DoAfterComponent>(doAfterArgs.NetUser, uid);
+            doAfterArgs.EventTarget = EnsureEntity<DoAfterComponent>(doAfterArgs.NetEventTarget, uid);
         }
 
         comp.NextId = state.NextId;
@@ -195,6 +206,12 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
         id = new DoAfterId(args.User, comp.NextId++);
         var doAfter = new DoAfter(id.Value.Index, args, GameTiming.CurTime);
 
+        // Networking yay
+        args.NetTarget = GetNetEntity(args.Target);
+        args.NetUsed = GetNetEntity(args.Used);
+        args.NetUser = GetNetEntity(args.User);
+        args.NetEventTarget = GetNetEntity(args.EventTarget);
+
         if (args.BreakOnUserMove || args.BreakOnTargetMove)
             doAfter.UserPosition = Transform(args.User).Coordinates;
 
@@ -204,6 +221,8 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
             var targetPosition = Transform(args.Target.Value).Coordinates;
             doAfter.UserPosition.TryDistance(EntityManager, targetPosition, out doAfter.TargetDistance);
         }
+
+        doAfter.NetUserPosition = GetNetCoordinates(doAfter.UserPosition);
 
         // For this we need to stay on the same hand slot and need the same item in that hand slot
         // (or if there is no item there we need to keep it free).
@@ -216,7 +235,9 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
             doAfter.InitialItem = handsComponent.ActiveHandEntity;
         }
 
-        // Inital checks
+        doAfter.NetInitialItem = GetNetEntity(doAfter.InitialItem);
+
+        // Initial checks
         if (ShouldCancel(doAfter, GetEntityQuery<TransformComponent>(), GetEntityQuery<HandsComponent>()))
             return false;
 
@@ -322,7 +343,7 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
         }
 
         InternalCancel(doAfter, comp);
-        Dirty(comp);
+        Dirty(entity, comp);
     }
 
     private void InternalCancel(DoAfter doAfter, DoAfterComponent component)

@@ -89,7 +89,7 @@
     CogChamp: 3
   sound:
     path: /Audio/Magic/Cults/ClockCult/steam_whoosh.ogg
-    
+
 - type: reaction
   id: Barefoot
   reactants:
@@ -186,9 +186,9 @@
   id: CubaLibre
   reactants:
     Cola:
-      amount: 1
-    Rum:
       amount: 2
+    Rum:
+      amount: 1
   products:
     CubaLibre: 3
 
@@ -304,9 +304,9 @@
   id: GinTonic
   reactants:
     Gin:
-      amount: 2
-    TonicWater:
       amount: 1
+    TonicWater:
+      amount: 2
   products:
     GinTonic: 3
 
@@ -326,9 +326,11 @@
     Rum:
       amount: 1
     Water:
+      amount: 2
+    Sugar:
       amount: 1
   products:
-    Grog: 2
+    Grog: 4
 
 - type: reaction
   id: HippiesDelight
@@ -668,9 +670,9 @@
   id: ScrewdriverCocktail
   reactants:
     JuiceOrange:
-      amount: 1
-    Vodka:
       amount: 2
+    Vodka:
+      amount: 1
   products:
     ScrewdriverCocktail: 3
 
@@ -797,9 +799,9 @@
   id: VodkaTonic
   reactants:
     Vodka:
-      amount: 2
-    TonicWater:
       amount: 1
+    TonicWater:
+      amount: 2
   products:
     VodkaTonic: 3
 
@@ -807,9 +809,9 @@
   id: WhiskeyCola
   reactants:
     Cola:
-      amount: 1
-    Whiskey:
       amount: 2
+    Whiskey:
+      amount: 1
   products:
     WhiskeyCola: 3
 
@@ -827,9 +829,9 @@
   id: WhiskeySoda
   reactants:
     SodaWater:
-      amount: 1
-    Whiskey:
       amount: 2
+    Whiskey:
+      amount: 1
   products:
     WhiskeySoda: 3
 

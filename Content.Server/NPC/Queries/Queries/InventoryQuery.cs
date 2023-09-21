@@ -3,7 +3,7 @@ namespace Content.Server.NPC.Queries.Queries;
 /// <summary>
 /// Returns inventory entities recursively.
 /// </summary>
-public sealed class InventoryQuery : UtilityQuery
+public sealed partial class InventoryQuery : UtilityQuery
 {
 
 }

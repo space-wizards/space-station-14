@@ -2,7 +2,7 @@
 
 namespace Content.Shared.Speech.Components;
 [RegisterComponent, NetworkedComponent]
-public sealed class RatvarianLanguageComponent : Component
+public sealed partial class RatvarianLanguageComponent : Component
 {
 
 }

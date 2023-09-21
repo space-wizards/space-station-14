@@ -1,7 +1,7 @@
 - type: entity
   save: false
   name: Urist McHands
-  parent: [BaseMobHuman, BaseMob]
+  parent: BaseMobHuman
   id: MobHuman
 
 #Syndie
@@ -54,10 +54,23 @@
       factions:
       - Syndicate
 
-# DNA Scrambler
+# Space Ninja
 - type: entity
+  noSpawn: true
+  name: Space Ninja
   parent: MobHuman
-  id: MobHumanScrambled
-  name: Scrambled Human
+  id: MobHumanSpaceNinja
   components:
-    - type: RandomHumanoidAppearance
+  - type: Loadout
+    prototypes: [SpaceNinjaGear]
+  - type: NpcFactionMember
+    factions:
+    - Syndicate
+  - type: SpaceNinja
+  - type: AutoImplant
+    implants:
+    - MicroBombImplant
+  - type: RandomMetadata
+    nameSegments:
+    - names_ninja_title
+    - names_ninja
