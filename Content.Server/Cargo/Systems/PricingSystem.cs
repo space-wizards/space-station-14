@@ -94,6 +94,7 @@ public sealed class PricingSystem : EntitySystem
             return;
         }
 
+        // TODO: Better handling of missing.
         var partList = _bodySystem.GetBodyChildren(uid, body).ToList();
         var totalPartsPresent = partList.Sum(_ => 1);
         var totalParts = partList.Count;

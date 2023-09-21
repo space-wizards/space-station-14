@@ -105,7 +105,6 @@ public partial struct BodyPartSlot
 [DataRecord]
 public partial struct OrganSlot
 {
-    [DataField]
     public string Id;
 
     public OrganSlot(string id)
