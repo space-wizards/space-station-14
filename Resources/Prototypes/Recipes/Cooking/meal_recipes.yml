@@ -1745,7 +1745,7 @@
 
 - type: microwaveMealRecipe
   id: RecipeChickenSteak
-  name: cooked duck recipe
+  name: cooked chicken recipe
   result: FoodMeatChickenCooked
   time: 15
   solids:
@@ -1769,7 +1769,7 @@
 
 - type: microwaveMealRecipe
   id: RecipeBearSteak
-  name: cooked bear recipe
+  name: bear steak recipe
   result: FoodMeatBearCooked # plain cooked bear steak
   time: 15
   solids:
@@ -1890,7 +1890,7 @@
 
 - type: microwaveMealRecipe
   id: RecipeChickenSteakCutlet
-  name: cooked duck cutlet recipe
+  name: cooked chicken cutlet recipe
   result: FoodMeatChickenCutletCooked
   time: 10
   solids:
@@ -1906,7 +1906,7 @@
 
 - type: microwaveMealRecipe
   id: RecipeLizardSteakCutlet
-  name: lizard steak recipe
+  name: cooked lizard cutlet recipe
   result: FoodMeatLizardCutletCooked
   time: 10
   solids:
