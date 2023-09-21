@@ -1,6 +1,6 @@
 using Content.Shared.Coordinates;
+using Content.Shared.Humanoid;
 using Content.Shared.Interaction.Events;
-using Content.Shared.Movement.Components;
 
 namespace Content.Shared.Whistle;
 
@@ -34,7 +34,7 @@ public sealed class SharedWhistleSystem : EntitySystem
     private bool MakeLoudWhistle(EntityUid uid, EntityUid owner, WhistleComponent component)
     {
         foreach (var moverComponent in
-            _entityLookup.GetComponentsInRange<MobMoverComponent>(Transform(uid).Coordinates, component.Distance))
+            _entityLookup.GetComponentsInRange<HumanoidAppearanceComponent>(Transform(uid).Coordinates, component.Distance))
         {
             if (moverComponent.Owner == owner)
                 continue;
