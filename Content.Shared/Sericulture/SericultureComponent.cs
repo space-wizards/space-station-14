@@ -34,11 +34,11 @@ public sealed partial class SericultureComponent : Component
     [DataField("action", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     [ViewVariables(VVAccess.ReadWrite)]
     [AutoNetworkedField]
-    public string ActionProto = string.Empty;
+    public string Action = string.Empty;
 
     [DataField("actionEntity")]
     [AutoNetworkedField]
-    public EntityUid? StoredInstantAction;
+    public EntityUid? ActionEntity;
 
     /// <summary>
     /// How long will it take to make.
