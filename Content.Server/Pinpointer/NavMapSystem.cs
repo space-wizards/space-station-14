@@ -246,7 +246,6 @@ public sealed class NavMapSystem : SharedNavMapSystem
             return;
 
         comp.Enabled = enabled;
-        Dirty(uid, comp);
 
         RefreshNavGrid(uid);
     }
