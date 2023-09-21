@@ -87,7 +87,7 @@ namespace Content.Shared.Atmos
         /// <summary>
         ///     Minimum number of moles a gas can have.
         /// </summary>
-        public const float GasMinMoles = 0.00000005f;
+        public const float GasMinMoles = 0.001f;
 
         public const float OpenHeatTransferCoefficient = 0.4f;
 
