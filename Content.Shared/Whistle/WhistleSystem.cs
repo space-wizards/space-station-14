@@ -4,7 +4,7 @@ using Content.Shared.Interaction.Events;
 
 namespace Content.Shared.Whistle;
 
-public sealed class SharedWhistleSystem : EntitySystem
+public abstract class SharedWhistleSystem : EntitySystem
 {
     [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
     public override void Initialize()
@@ -37,13 +37,13 @@ public sealed class SharedWhistleSystem : EntitySystem
 
     private bool MakeLoudWhistle(EntityUid uid, EntityUid owner, WhistleComponent component)
     {
-        foreach (var moverComponent in
+        foreach (var iterator in
             _entityLookup.GetComponentsInRange<HumanoidAppearanceComponent>(Transform(uid).Coordinates, component.Distance))
         {
-            if (moverComponent.Owner == owner)
+            if (iterator.Owner == owner)
                 continue;
 
-            ExclamateTarget(moverComponent.Owner, component);
+            ExclamateTarget(iterator.Owner, component);
         }
 
         return true;
