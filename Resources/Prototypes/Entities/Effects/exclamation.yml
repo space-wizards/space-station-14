@@ -20,11 +20,20 @@
         
         
 - type: entity
-  parent: Exclamation
   id: WhistleExclamation
+  name: exclamation
   noSpawn: true
   components:
     - type: Sprite
+      sprite: Structures/Storage/closet.rsi
+      state: cardboard_special
+      drawdepth: Effects
       offset: 0, 1
+      noRot: true
+    - type: Transform
+      noRot: true
     - type: TimedDespawn
       lifetime: 0.8
+    - type: Tag
+      tags:
+        - HideContextMenu
