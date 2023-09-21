@@ -11,12 +11,12 @@
   - type: Armor
     modifiers:
       coefficients:
-        Blunt: 0.5
+        Blunt: 0.9
         Slash: 0.9
         Piercing: 0.9
         Heat: 0.75
   - type: ExplosionResistance
-    damageCoefficient: 0.2
+    damageCoefficient: 0.15
   - type: GroupExamine
   - type: Tag
     tags:

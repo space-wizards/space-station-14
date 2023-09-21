@@ -164,7 +164,14 @@
   parent: MobCarp
   suffix: Dungeon
   components:
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      50: Dead
+  - type: SlowOnDamage
+    speedModifierThresholds:
+      25: 0.7
   - type: MeleeWeapon
     damage:
       types:
-        Slash: 5
+        Slash: 6
