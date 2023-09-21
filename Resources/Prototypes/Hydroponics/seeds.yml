@@ -1235,7 +1235,8 @@
   production: 6
   yield: 6
   idealLight: 7
-  waterConsumption: 6
+  waterConsumption: 1
+  nutrientConsumption: 0.8
   idealHeat: 298
   chemicals:
     Vitamin:
@@ -1246,3 +1247,58 @@
       Min: 1
       Max: 2
       PotencyDivisor: 50
+
+- type: seed
+  id: berries
+  name: seeds-berries-name
+  noun: seeds-noun-seeds
+  displayName: seeds-berries-display-name
+  plantRsi: Objects/Specific/Hydroponics/berries.rsi
+  packetPrototype: BerrySeeds
+  productPrototypes:
+    - FoodBerries
+  harvestRepeat: Repeat
+  lifespan: 50
+  maturation: 6
+  production: 6
+  yield: 4
+  idealLight: 7
+  nutrientConsumption: 0.6
+  chemicals:
+    Nutriment:
+      Min: 2
+      Max: 5
+      PotencyDivisor: 30
+    Vitamin:
+      Min: 1
+      Max: 4
+      PotencyDivisor: 40	
+
+- type: seed
+  id: bungo
+  name: seeds-bungo-name
+  noun: seeds-noun-seeds
+  displayName: seeds-bungo-display-name
+  plantRsi: Objects/Specific/Hydroponics/bungo.rsi
+  packetPrototype: BungoSeeds
+  productPrototypes:
+    - FoodBungo
+  harvestRepeat: Repeat
+  lifespan: 50
+  maturation: 8
+  production: 6
+  potency: 10
+  yield: 3
+  idealLight: 8
+  idealHeat: 298
+  growthStages: 4
+  waterConsumption: 0.6
+  chemicals:
+    Nutriment:
+      Min: 5
+      Max: 10
+      PotencyDivisor: 20
+    Enzyme:
+      Min: 5
+      Max: 10
+      PotencyDivisor: 20

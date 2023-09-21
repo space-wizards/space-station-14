@@ -1,195 +1,170 @@
+#TODO: Remove all of these when possible, apparently decals aren't possible to just remove right now without causing mapper issues.
+#Please do not make any of these into the new entity stairs unless you want to make new sprites for them.
+
 - type: decal
   id: StairsMaterialE
-  tags: ["station", "stairs"]
   sprite:
-    sprite: Decals/stairs.rsi
-    state: material_e
+    sprite: deprecated.rsi
+    state: deprecated
 
 - type: decal
   id: StairsMaterialN
-  tags: ["station", "stairs"]
   sprite:
-    sprite: Decals/stairs.rsi
-    state: material_n
+    sprite: deprecated.rsi
+    state: deprecated
 
 - type: decal
   id: StairsMaterialS
-  tags: ["station", "stairs"]
   sprite:
-    sprite: Decals/stairs.rsi
-    state: material_s
+    sprite: deprecated.rsi
+    state: deprecated
 
 - type: decal
   id: StairsMaterialW
-  tags: ["station", "stairs"]
   sprite:
-    sprite: Decals/stairs.rsi
-    state: material_w
+    sprite: deprecated.rsi
+    state: deprecated
 
 - type: decal
   id: StairsE
-  tags: ["station", "stairs"]
   sprite:
-    sprite: Decals/stairs.rsi
-    state: stairs_e
+    sprite: deprecated.rsi
+    state: deprecated
 
 - type: decal
   id: StairsN
-  tags: ["station", "stairs"]
   sprite:
-    sprite: Decals/stairs.rsi
-    state: stairs_n
+    sprite: deprecated.rsi
+    state: deprecated
 
 - type: decal
   id: StairsS
-  tags: ["station", "stairs"]
   sprite:
-    sprite: Decals/stairs.rsi
-    state: stairs_s
+    sprite: deprecated.rsi
+    state: deprecated
 
 - type: decal
   id: StairsW
-  tags: ["station", "stairs"]
   sprite:
-    sprite: Decals/stairs.rsi
-    state: stairs_w
+    sprite: deprecated.rsi
+    state: deprecated
 
 - type: decal
   id: StairsLE
-  tags: ["station", "stairs"]
   sprite:
-    sprite: Decals/stairs.rsi
-    state: stairs_l_e
+    sprite: deprecated.rsi
+    state: deprecated
 
 - type: decal
   id: StairsLN
-  tags: ["station", "stairs"]
   sprite:
-    sprite: Decals/stairs.rsi
-    state: stairs_l_n
+    sprite: deprecated.rsi
+    state: deprecated
 
 - type: decal
   id: StairsLS
-  tags: ["station", "stairs"]
   sprite:
-    sprite: Decals/stairs.rsi
-    state: stairs_l_s
+    sprite: deprecated.rsi
+    state: deprecated
 
 - type: decal
   id: StairsLW
-  tags: ["station", "stairs"]
   sprite:
-    sprite: Decals/stairs.rsi
-    state: stairs_l_w
+    sprite: deprecated.rsi
+    state: deprecated
 
 - type: decal
   id: StairsME
-  tags: ["station", "stairs"]
   sprite:
-    sprite: Decals/stairs.rsi
-    state: stairs_m_e
+    sprite: deprecated.rsi
+    state: deprecated
 
 - type: decal
   id: StairsMN
-  tags: ["station", "stairs"]
   sprite:
-    sprite: Decals/stairs.rsi
-    state: stairs_m_n
+    sprite: deprecated.rsi
+    state: deprecated
 
 - type: decal
   id: StairsMS
-  tags: ["station", "stairs"]
   sprite:
-    sprite: Decals/stairs.rsi
-    state: stairs_m_s
+    sprite: deprecated.rsi
+    state: deprecated
 
 - type: decal
   id: StairsMW
-  tags: ["station", "stairs"]
   sprite:
-    sprite: Decals/stairs.rsi
-    state: stairs_m_w
+    sprite: deprecated.rsi
+    state: deprecated
 
 - type: decal
   id: StairsRE
-  tags: ["station", "stairs"]
   sprite:
-    sprite: Decals/stairs.rsi
-    state: stairs_r_e
+    sprite: deprecated.rsi
+    state: deprecated
 
 - type: decal
   id: StairsRN
-  tags: ["station", "stairs"]
   sprite:
-    sprite: Decals/stairs.rsi
-    state: stairs_r_n
+    sprite: deprecated.rsi
+    state: deprecated
 
 - type: decal
   id: StairsRS
-  tags: ["station", "stairs"]
   sprite:
-    sprite: Decals/stairs.rsi
-    state: stairs_r_s
+    sprite: deprecated.rsi
+    state: deprecated
 
 - type: decal
   id: StairsRW
-  tags: ["station", "stairs"]
   sprite:
-    sprite: Decals/stairs.rsi
-    state: stairs_r_w
+    sprite: deprecated.rsi
+    state: deprecated
 
 - type: decal
   id: StairsStoneE
-  tags: ["station", "stairs"]
   sprite:
-    sprite: Decals/stairs.rsi
-    state: stone_e
+    sprite: deprecated.rsi
+    state: deprecated
 
 - type: decal
   id: StairsStoneN
-  tags: ["station", "stairs"]
   sprite:
-    sprite: Decals/stairs.rsi
-    state: stone_n
+    sprite: deprecated.rsi
+    state: deprecated
 
 - type: decal
   id: StairsStoneS
-  tags: ["station", "stairs"]
   sprite:
-    sprite: Decals/stairs.rsi
-    state: stone_s
+    sprite: deprecated.rsi
+    state: deprecated
 
 - type: decal
   id: StairsStoneW
-  tags: ["station", "stairs"]
   sprite:
-    sprite: Decals/stairs.rsi
-    state: stone_w
+    sprite: deprecated.rsi
+    state: deprecated
 
 - type: decal
   id: StairsWoodE
-  tags: ["station", "stairs"]
   sprite:
-    sprite: Decals/stairs.rsi
-    state: wood_e
+    sprite: deprecated.rsi
+    state: deprecated
 
 - type: decal
   id: StairsWoodN
-  tags: ["station", "stairs"]
   sprite:
-    sprite: Decals/stairs.rsi
-    state: wood_n
+    sprite: deprecated.rsi
+    state: deprecated
 
 - type: decal
   id: StairsWoodS
-  tags: ["station", "stairs"]
   sprite:
-    sprite: Decals/stairs.rsi
-    state: wood_s
+    sprite: deprecated.rsi
+    state: deprecated
 
 - type: decal
   id: StairsWoodW
-  tags: ["station", "stairs"]
   sprite:
-    sprite: Decals/stairs.rsi
-    state: wood_w
+    sprite: deprecated.rsi
+    state: deprecated
