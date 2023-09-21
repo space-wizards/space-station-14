@@ -240,7 +240,7 @@ namespace Content.Server.Ghost.Roles
                 if (metaQuery.GetComponent(uid).EntityPaused)
                     continue;
 
-                roles.Add(new GhostRoleInfo {Identifier = id, Name = role.RoleName, Description = role.RoleDescription, Rules = role.RoleRules});
+                roles.Add(new GhostRoleInfo {Identifier = id, Name = role.RoleName, Description = role.RoleDescription, Rules = role.RoleRules, Requirements = role.Requirements});
             }
 
             return roles.ToArray();
