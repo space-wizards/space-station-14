@@ -44,7 +44,6 @@ namespace Content.Client.Power.APC.UI
 
             if (BreakerButton != null)
             {
-                BreakerButton.Text = Loc.GetString(state.MainBreaker ? "apc-menu-breaker-button-on" : "apc-menu-breaker-button-off");
                 BreakerButton.Disabled = !hasAccess;
                 BreakerButton.ToolTip = !hasAccess ? Loc.GetString("apc-component-insufficient-access") : null;
                 BreakerButton.Pressed = state.MainBreaker;
