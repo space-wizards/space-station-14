@@ -30,17 +30,18 @@ namespace Content.Server.Body.Systems
         private void OnRemovedFromBody(EntityUid uid, BrainComponent component, RemovedFromBodyEvent args)
         {
             // This one needs to be special, okay?
-            if (!EntityManager.TryGetComponent(uid, out OrganComponent? organ) ||
-                organ.ParentSlot is not {Parent: var parent})
+            if (!EntityManager.TryGetComponent(uid, out OrganComponent? organ))
+            {
                 return;
+            }
 
-            HandleMind(parent, args.Old);
+            HandleMind(uid, args.Old);
         }
 
         private void HandleMind(EntityUid newEntity, EntityUid oldEntity)
         {
             EnsureComp<MindContainerComponent>(newEntity);
-            var oldMind = EnsureComp<MindContainerComponent>(oldEntity);
+            EnsureComp<MindContainerComponent>(oldEntity);
 
             var ghostOnMove = EnsureComp<GhostOnMoveComponent>(newEntity);
             if (HasComp<BodyComponent>(newEntity))
