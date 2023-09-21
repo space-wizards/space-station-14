@@ -17,7 +17,12 @@
     <cc:VSeparator/>
     <Label Name="Reason"
            Access="Public"
-           SizeFlagsStretchRatio="6"
+           SizeFlagsStretchRatio="4.5"
+           HorizontalExpand="True"
+           VerticalExpand="True"/>
+    <cc:VSeparator/>
+    <Label Name="Role"
+           SizeFlagsStretchRatio="1.5"
            HorizontalExpand="True"
            VerticalExpand="True"/>
     <cc:VSeparator/>

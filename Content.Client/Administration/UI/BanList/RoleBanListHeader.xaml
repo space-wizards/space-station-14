@@ -11,7 +11,11 @@
                    HorizontalExpand="True"/>
             <cc:VSeparator/>
             <Label Text="{Loc ban-list-header-reason}"
-                   SizeFlagsStretchRatio="6"
+                   SizeFlagsStretchRatio="4.5"
+                   HorizontalExpand="True"/>
+            <cc:VSeparator Name="ReasonSeparator" Access="Public"/>
+            <Label Text="{Loc ban-list-header-role}"
+                   SizeFlagsStretchRatio="1.5"
                    HorizontalExpand="True"/>
             <cc:VSeparator/>
             <Label Text="{Loc ban-list-header-time}"

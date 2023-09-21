@@ -10,6 +10,9 @@ public sealed partial class BanListWindow : DefaultWindow
     public BanListWindow()
     {
         RobustXamlLoader.Load(this);
+
+        TabContainer.SetTabTitle(0, Loc.GetString("ban-list-bans"));
+        TabContainer.SetTabTitle(1, Loc.GetString("ban-list-role-bans"));
     }
 
     public void SetTitlePlayer(string playerName)
