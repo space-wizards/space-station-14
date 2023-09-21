@@ -2,7 +2,7 @@
   parent: BaseItem
   id: ProtoKineticCharger
   name: proto-kinetic charger
-  description: #todo
+  description: The mechanism of kinetic energy that powers proto-kinetic technology. Its two-part mechanism features a turbine and a force amplifier.
   components:
   - type: Sprite
     sprite: Objects/Misc/protokinetic_charger.rsi
@@ -17,7 +17,7 @@
   parent: BaseItem
   id: RayCaster
   name: ray caster
-  description: #todo
+  description: The basic internal parts of many lethal laser technologies. Focuses searing beams with intent to harm.
   components:
   - type: Sprite
     sprite: Objects/Misc/ray_caster.rsi
@@ -32,7 +32,7 @@
   parent: BaseItem
   id: HeavyRayCaster
   name: heavy ray caster
-  description: #todo
+  description: The internal heat cannon for heavy laser weaponry. The size of the beam it fires could melt somebody's heart, entirely.
   components:
   - type: Sprite
     sprite: Objects/Misc/heavy_ray_caster.rsi
@@ -47,7 +47,7 @@
   parent: BaseItem
   id: AdvancedRayCaster
   name: advanced ray caster
-  description: #todo
+  description: A refined version of the ray caster, capable of recharging itself. As per corporate fashion, it is exclusively compatible with premium models that sport auto-recharging as a selling point.
   components:
   - type: Sprite
     sprite: Objects/Misc/advanced_ray_caster.rsi
@@ -62,7 +62,7 @@
   parent: BaseItem
   id: ModularReceiver
   name: modular receiver
-  description: #todo
+  description: A vital part used in the creation of firearms.
   components:
   - type: Sprite
     sprite: Objects/Misc/modular_receiver.rsi
@@ -79,7 +79,7 @@
   parent: BaseItem
   id: TetherPhysicsBox
   name: tether physics box
-  description: #todo
+  description: A small glass chamber used in devices that manipulate physics with fine articulation. Its weight sways like a swinging double pendulum.
   components:
   - type: Sprite
     sprite: Objects/Misc/physics_box.rsi
@@ -95,7 +95,7 @@
   parent: BaseItem
   id: ForcePhysicsBox
   name: force physics box
-  description: #todo
+  description: A small glass chamber used in devices that manipulate physics with great force. It pulses with a trapped energy, and rattles with each pulse.
   components:
   - type: Sprite
     sprite: Objects/Misc/physics_box.rsi
