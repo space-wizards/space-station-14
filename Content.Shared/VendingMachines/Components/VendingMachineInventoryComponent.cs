@@ -18,13 +18,13 @@ public sealed partial class VendingMachineInventoryComponent : Component
     public List<string> PackPrototypeId = new();
 
     /// <summary>
-    ///     The action available to the player controlling the vending machine
+    /// The action available to the player controlling the vending machine
     /// </summary>
-    [DataField("action", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     [AutoNetworkedField]
     public string? Action = "ActionVendingThrow";
 
-    [DataField("actionEntity")]
+    [DataField]
     [AutoNetworkedField]
     public EntityUid? ActionEntity;
 
