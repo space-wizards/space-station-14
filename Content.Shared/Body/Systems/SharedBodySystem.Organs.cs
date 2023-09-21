@@ -9,13 +9,13 @@ namespace Content.Shared.Body.Systems;
 
 public partial class SharedBodySystem
 {
-    private void AddOrgan(EntityUid uid, EntityUid bodyUid, EntityUid partUid, OrganComponent component)
+    private void AddOrgan(EntityUid uid, EntityUid bodyUid, EntityUid parentPartUid, OrganComponent component)
     {
         component.Body = bodyUid;
         RaiseLocalEvent(uid, new AddedToPartEvent(bodyUid));
 
         if (component.Body != null)
-            RaiseLocalEvent(uid, new AddedToPartInBodyEvent(component.Body.Value, partUid));
+            RaiseLocalEvent(uid, new AddedToPartInBodyEvent(component.Body.Value, parentPartUid));
 
         Dirty(uid, component);
     }

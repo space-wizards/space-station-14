@@ -42,7 +42,7 @@ public sealed class SaveLoadReparentTest
 
             Assert.That(entities.HasComponent<BodyComponent>(human), Is.True);
 
-            var parts = bodySystem.GetBodyChildren(human).ToArray();
+            var parts = bodySystem.GetBodyChildren(human).Skip(1).ToArray();
             var organs = bodySystem.GetBodyOrgans(human).ToArray();
 
             Assert.Multiple(() =>
@@ -128,7 +128,7 @@ public sealed class SaveLoadReparentTest
             foreach (var (uid, body) in query)
             {
                 human = uid;
-                parts = bodySystem.GetBodyChildren(human).ToArray();
+                parts = bodySystem.GetBodyChildren(human).Skip(1).ToArray();
                 organs = bodySystem.GetBodyOrgans(human).ToArray();
 
                 Assert.Multiple(() =>

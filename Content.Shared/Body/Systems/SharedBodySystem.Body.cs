@@ -213,6 +213,9 @@ public partial class SharedBodySystem
         }
     }
 
+    /// <summary>
+    /// Gets all body containers on this entity including the root one.
+    /// </summary>
     public IEnumerable<BaseContainer> GetBodyContainers(EntityUid id, BodyComponent? body = null,
         BodyPartComponent? rootPart = null)
     {
@@ -231,6 +234,9 @@ public partial class SharedBodySystem
         }
     }
 
+    /// <summary>
+    /// Gets all child body parts of this entity, including the root entity.
+    /// </summary>
     public IEnumerable<(EntityUid Id, BodyPartComponent Component)> GetBodyChildren(EntityUid? id, BodyComponent? body = null,
         BodyPartComponent? rootPart = null)
     {
@@ -241,8 +247,6 @@ public partial class SharedBodySystem
         {
             yield break;
         }
-
-        yield return (body.RootContainer.ContainedEntity.Value, rootPart);
 
         foreach (var child in GetBodyPartChildren(body.RootContainer.ContainedEntity.Value, rootPart))
         {

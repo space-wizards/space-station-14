@@ -54,7 +54,7 @@ public partial class SharedBodySystem
 
         if (TryComp(entity, out BodyPartComponent? childPart) && childPart.Body != null)
         {
-            RemovePart(childPart.Body.Value, entity, slotId, component);
+            RemovePart(childPart.Body.Value, entity, slotId, childPart);
         }
 
         if (TryComp(entity, out OrganComponent? organ))
@@ -70,6 +70,7 @@ public partial class SharedBodySystem
         BodyPartComponent component,
         BodyComponent? bodyComp = null)
     {
+        DebugTools.AssertOwner(partUid, component);
         Dirty(partUid, component);
         component.Body = bodyUid;
 
@@ -86,6 +87,7 @@ public partial class SharedBodySystem
         BodyPartComponent component,
         BodyComponent? bodyComp = null)
     {
+        DebugTools.AssertOwner(partUid, component);
         Resolve(bodyUid, ref bodyComp, false);
         Dirty(partUid, component);
         component.Body = null;
