@@ -1,9 +1,9 @@
 ﻿using System.Numerics;
 using Content.Client.Viewport;
 using Content.Shared.CCVar;
-using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Configuration;
+using Robust.Shared.Graphics;
 
 namespace Content.Client.UserInterface.Controls
 {
@@ -11,25 +11,38 @@ namespace Content.Client.UserInterface.Controls
     ///     Wrapper for <see cref="ScalingViewport"/> that listens to configuration variables.
     ///     Also does NN-snapping within tolerances.
     /// </summary>
-    public sealed class MainViewport : UIWidget
+    [Virtual]
+    public class MainViewport : UIWidget
     {
-        [Dependency] private readonly IConfigurationManager _cfg = default!;
+        [Dependency] protected readonly IConfigurationManager CfgMan = default!;
         [Dependency] private readonly ViewportManager _vpManager = default!;
 
-        public ScalingViewport Viewport { get; }
+        public ScalingViewport Viewport;
 
         public MainViewport()
         {
-            IoCManager.InjectDependencies(this);
+            LayoutContainer.SetAnchorPreset(this, LayoutContainer.LayoutPreset.Wide);
 
             Viewport = new ScalingViewport
             {
+                HorizontalExpand = true,
+                VerticalExpand = true,
                 AlwaysRender = true,
                 RenderScaleMode = ScalingViewportRenderScaleMode.CeilInt,
                 MouseFilter = MouseFilterMode.Stop
             };
 
             AddChild(Viewport);
+        }
+
+        public virtual IEye Eye
+        {
+            set => Viewport.Eye = value;
+        }
+
+        public virtual Vector2i ViewportSize
+        {
+            set => Viewport.ViewportSize = value;
         }
 
         protected override void EnteredTree()
@@ -46,29 +59,31 @@ namespace Content.Client.UserInterface.Controls
             _vpManager.RemoveViewport(this);
         }
 
-        public void UpdateCfg()
+        public void UpdateCfg(ScalingViewport viewport)
         {
-            var stretch = _cfg.GetCVar(CCVars.ViewportStretch);
-            var renderScaleUp = _cfg.GetCVar(CCVars.ViewportScaleRender);
-            var fixedFactor = _cfg.GetCVar(CCVars.ViewportFixedScaleFactor);
+            var stretch = CfgMan.GetCVar(CCVars.ViewportStretch);
+            var renderScaleUp = CfgMan.GetCVar(CCVars.ViewportScaleRender);
+            var fixedFactor = CfgMan.GetCVar(CCVars.ViewportFixedScaleFactor);
 
             if (stretch)
             {
-                var snapFactor = CalcSnappingFactor();
+                var snapFactor = CalcSnappingFactor(viewport);
                 if (snapFactor == null)
                 {
                     // Did not find a snap, enable stretching.
-                    Viewport.FixedStretchSize = null;
-                    Viewport.StretchMode = ScalingViewportStretchMode.Bilinear;
+                    viewport.FixedStretchSize = null;
+                    viewport.StretchMode = ScalingViewportStretchMode.Bilinear;
+                    viewport.FixedStretchSize = null;
+                    viewport.StretchMode = ScalingViewportStretchMode.Bilinear;
 
                     if (renderScaleUp)
                     {
-                        Viewport.RenderScaleMode = ScalingViewportRenderScaleMode.CeilInt;
+                        viewport.RenderScaleMode = ScalingViewportRenderScaleMode.CeilInt;
                     }
                     else
                     {
-                        Viewport.RenderScaleMode = ScalingViewportRenderScaleMode.Fixed;
-                        Viewport.FixedRenderScale = 1;
+                        viewport.RenderScaleMode = ScalingViewportRenderScaleMode.Fixed;
+                        viewport.FixedRenderScale = 1;
                     }
 
                     return;
@@ -78,31 +93,31 @@ namespace Content.Client.UserInterface.Controls
                 fixedFactor = snapFactor.Value;
             }
 
-            Viewport.FixedStretchSize = Viewport.ViewportSize * fixedFactor;
-            Viewport.StretchMode = ScalingViewportStretchMode.Nearest;
+            viewport.FixedStretchSize = viewport.ViewportSize * fixedFactor;
+            viewport.StretchMode = ScalingViewportStretchMode.Nearest;
 
             if (renderScaleUp)
             {
-                Viewport.RenderScaleMode = ScalingViewportRenderScaleMode.Fixed;
-                Viewport.FixedRenderScale = fixedFactor;
+                viewport.RenderScaleMode = ScalingViewportRenderScaleMode.Fixed;
+                viewport.FixedRenderScale = fixedFactor;
             }
             else
             {
                 // Snapping but forced to render scale at scale 1 so...
                 // At least we can NN.
-                Viewport.RenderScaleMode = ScalingViewportRenderScaleMode.Fixed;
-                Viewport.FixedRenderScale = 1;
+                viewport.RenderScaleMode = ScalingViewportRenderScaleMode.Fixed;
+                viewport.FixedRenderScale = 1;
             }
         }
 
-        private int? CalcSnappingFactor()
+        private int? CalcSnappingFactor(ScalingViewport viewport)
         {
             // Margin tolerance is tolerance of "the window is too big"
             // where we add a margin to the viewport to make it fit.
-            var cfgToleranceMargin = _cfg.GetCVar(CCVars.ViewportSnapToleranceMargin);
+            var cfgToleranceMargin = CfgMan.GetCVar(CCVars.ViewportSnapToleranceMargin);
             // Clip tolerance is tolerance of "the window is too small"
             // where we are clipping the viewport to make it fit.
-            var cfgToleranceClip = _cfg.GetCVar(CCVars.ViewportSnapToleranceClip);
+            var cfgToleranceClip = CfgMan.GetCVar(CCVars.ViewportSnapToleranceClip);
 
             // Calculate if the viewport, when rendered at an integer scale,
             // is close enough to the control size to enable "snapping" to NN,
@@ -117,7 +132,7 @@ namespace Content.Client.UserInterface.Controls
             {
                 var toleranceMargin = i * cfgToleranceMargin;
                 var toleranceClip = i * cfgToleranceClip;
-                var scaled = (Vector2) Viewport.ViewportSize * i;
+                var scaled = (Vector2) viewport.ViewportSize * i;
                 var (dx, dy) = PixelSize - scaled;
 
                 // The rule for which snap fits is that at LEAST one axis needs to be in the tolerance size wise.
@@ -148,6 +163,11 @@ namespace Content.Client.UserInterface.Controls
             base.Resized();
 
             UpdateCfg();
+        }
+
+        public virtual void UpdateCfg()
+        {
+            UpdateCfg(Viewport);
         }
     }
 }

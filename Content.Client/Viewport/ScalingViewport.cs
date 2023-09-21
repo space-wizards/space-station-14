@@ -1,17 +1,11 @@
-using System;
-using System.Collections.Generic;
 using System.Numerics;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Graphics;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
-using Robust.Shared.Timing;
 using Robust.Shared.Utility;
-using Robust.Shared.ViewVariables;
 using SixLabors.ImageSharp.PixelFormats;
 
 namespace Content.Client.Viewport
@@ -37,6 +31,10 @@ namespace Content.Client.Viewport
         private readonly List<CopyPixelsDelegate<Rgba32>> _queuedScreenshots = new();
 
         public int CurrentRenderScale => _curRenderScale;
+
+        public event Action? BeforeDraw;
+        public event Func<Vector2i>? SizeOverride;
+        public event Func<Vector2i>? GlobalPositionOverride;
 
         /// <summary>
         ///     The eye to render.
@@ -134,6 +132,7 @@ namespace Content.Client.Viewport
 
         protected override void Draw(DrawingHandleScreen handle)
         {
+            BeforeDraw?.Invoke();
             EnsureViewportCreated();
 
             DebugTools.AssertNotNull(_viewport);
@@ -156,9 +155,9 @@ namespace Content.Client.Viewport
             }
 
             var drawBox = GetDrawBox();
-            var drawBoxGlobal = drawBox.Translated(GlobalPixelPosition);
+            var drawBoxGlobal = drawBox.Translated(GlobalPositionOverride?.Invoke() ?? GlobalPixelPosition);
             _viewport.RenderScreenOverlaysBelow(handle, this, drawBoxGlobal);
-            handle.DrawTextureRect(_viewport.RenderTarget.Texture, drawBox);
+            handle.DrawTextureRect(_viewport.RenderTarget.Texture, drawBox.Translated(-PixelPosition));
             _viewport.RenderScreenOverlaysAbove(handle, this, drawBoxGlobal);
         }
 
@@ -173,7 +172,7 @@ namespace Content.Client.Viewport
             DebugTools.AssertNotNull(_viewport);
 
             var vpSize = _viewport!.Size;
-            var ourSize = (Vector2) PixelSize;
+            var ourSize = (Vector2) (SizeOverride?.Invoke() ?? PixelSize);
 
             if (FixedStretchSize == null)
             {
@@ -199,7 +198,7 @@ namespace Content.Client.Viewport
             DebugTools.AssertNull(_viewport);
 
             var vpSizeBase = ViewportSize;
-            var ourSize = PixelSize;
+            var ourSize = (SizeOverride?.Invoke() ?? PixelSize);
             var (ratioX, ratioY) = ourSize / (Vector2) vpSizeBase;
             var ratio = Math.Min(ratioX, ratioY);
             var renderScale = 1;

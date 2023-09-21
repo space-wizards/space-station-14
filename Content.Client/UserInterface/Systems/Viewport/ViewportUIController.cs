@@ -5,6 +5,7 @@ using Robust.Client.Graphics;
 using Robust.Client.Player;
 using Robust.Client.UserInterface.Controllers;
 using Robust.Shared.Configuration;
+using Robust.Shared.Console;
 using Robust.Shared.Timing;
 
 namespace Content.Client.UserInterface.Systems.Viewport;
@@ -15,10 +16,11 @@ public sealed class ViewportUIController : UIController
     [Dependency] private readonly IPlayerManager _playerMan = default!;
     [Dependency] private readonly IEntityManager _entMan = default!;
     [Dependency] private readonly IConfigurationManager _configurationManager = default!;
+    [Dependency] private readonly IConsoleHost _conHost = default!;
 
-    public static readonly Vector2i ViewportSize = (EyeManager.PixelsPerMeter * 21, EyeManager.PixelsPerMeter * 15);
     public const int ViewportHeight = 15;
-    private MainViewport? Viewport => UIManager.ActiveScreen?.GetWidget<MainViewport>();
+
+    public MainViewport? Viewport => (UIManager.ActiveScreen?.GetWidget<MainViewport>() ?? UIManager.ActiveScreen?.GetWidget<SplitViewportWidget>());
 
     public override void Initialize()
     {
@@ -28,10 +30,48 @@ public sealed class ViewportUIController : UIController
 
         var gameplayStateLoad = UIManager.GetUIController<GameplayStateLoadController>();
         gameplayStateLoad.OnScreenLoad += OnScreenLoad;
+        gameplayStateLoad.OnScreenUnload += OnUnload;
     }
 
     private void OnScreenLoad()
     {
+        ReloadViewport();
+        _conHost.RegisterCommand($"split_viewport",
+            Loc.GetString("cmd-split-viewport-help"),
+            Loc.GetString("cmd-split-viewport-description"),
+            SplitViewport);
+    }
+
+    private void OnUnload()
+    {
+        _conHost.UnregisterCommand($"split_viewport");
+    }
+
+    private void SplitViewport(IConsoleShell shell, string argstr, string[] args)
+    {
+        if (UIManager.ActiveScreen is not {} screen)
+            return;
+
+        MainViewport newViewport;
+        if (screen.TryGetWidget<MainViewport>(out var old))
+        {
+            var oldParent = old.Parent;
+            screen.RemoveWidget<MainViewport>();
+            newViewport = new SplitViewportWidget();
+            oldParent!.AddChild(newViewport);
+            if (oldParent != screen)
+                screen.AddWidgetDirect(newViewport);
+        }
+        else if (screen.TryGetWidget<SplitViewportWidget>(out var oldSplit))
+        {
+            var oldParent = oldSplit.Parent;
+            screen.RemoveWidget<SplitViewportWidget>();
+            newViewport = new MainViewport();
+            oldParent!.AddChild(newViewport);
+            if (oldParent != screen)
+                screen.AddWidgetDirect(newViewport);
+        }
+
         ReloadViewport();
     }
 
@@ -51,7 +91,7 @@ public sealed class ViewportUIController : UIController
             width = CCVars.ViewportWidth.DefaultValue;
         }
 
-        Viewport.Viewport.ViewportSize = (EyeManager.PixelsPerMeter * width, EyeManager.PixelsPerMeter * ViewportHeight);
+        Viewport.ViewportSize = (EyeManager.PixelsPerMeter * width, EyeManager.PixelsPerMeter * ViewportHeight);
     }
 
     public void ReloadViewport()
@@ -62,9 +102,8 @@ public sealed class ViewportUIController : UIController
         }
 
         UpdateViewportRatio();
-        Viewport.Viewport.HorizontalExpand = true;
-        Viewport.Viewport.VerticalExpand = true;
         _eyeManager.MainViewport = Viewport.Viewport;
+        Viewport.UpdateCfg();
     }
 
     public override void FrameUpdate(FrameEventArgs e)
@@ -76,7 +115,7 @@ public sealed class ViewportUIController : UIController
 
         base.FrameUpdate(e);
 
-        Viewport.Viewport.Eye = _eyeManager.CurrentEye;
+        Viewport.Eye = _eyeManager.CurrentEye;
 
         // verify that the current eye is not "null". Fuck IEyeManager.
 

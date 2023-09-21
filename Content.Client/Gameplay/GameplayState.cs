@@ -2,6 +2,7 @@ using Content.Client.Hands;
 using Content.Client.UserInterface.Controls;
 using Content.Client.UserInterface.Screens;
 using Content.Client.UserInterface.Systems.Gameplay;
+using Content.Client.UserInterface.Systems.Viewport;
 using Content.Client.Viewport;
 using Content.Shared.CCVar;
 using Robust.Client.Graphics;
@@ -24,15 +25,17 @@ namespace Content.Client.Gameplay
 
         private FpsCounter _fpsCounter = default!;
 
-        public MainViewport Viewport => _uiManager.ActiveScreen!.GetWidget<MainViewport>()!;
+        public MainViewport Viewport => _viewportController.Viewport!;
 
         private readonly GameplayStateLoadController _loadController;
+        private readonly ViewportUIController _viewportController;
 
         public GameplayState()
         {
             IoCManager.InjectDependencies(this);
 
             _loadController = _uiManager.GetUIController<GameplayStateLoadController>();
+            _viewportController = _uiManager.GetUIController<ViewportUIController>();
         }
 
         protected override void Startup()
@@ -73,10 +76,8 @@ namespace Content.Client.Gameplay
 
         public void ReloadMainScreen()
         {
-            if (_uiManager.ActiveScreen?.GetWidget<MainViewport>() == null)
-            {
+            if (Viewport == null)
                 return;
-            }
 
             UnloadMainScreen();
             LoadMainScreen();
@@ -112,9 +113,17 @@ namespace Content.Client.Gameplay
         protected override void OnKeyBindStateChanged(ViewportBoundKeyEventArgs args)
         {
             if (args.Viewport == null)
-                base.OnKeyBindStateChanged(new ViewportBoundKeyEventArgs(args.KeyEventArgs, Viewport.Viewport));
-            else
+            {
+
                 base.OnKeyBindStateChanged(args);
+                return;
+            }
+
+            var viewport = Viewport;
+            if (viewport == null)
+                return;
+
+            base.OnKeyBindStateChanged(new ViewportBoundKeyEventArgs(args.KeyEventArgs, viewport.Viewport));
         }
     }
 }

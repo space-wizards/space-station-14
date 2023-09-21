@@ -13,7 +13,7 @@
     VerticalAlignment="Bottom"
     HorizontalAlignment="Center">
     <LayoutContainer Name="ViewportContainer" HorizontalExpand="True" VerticalExpand="True">
-        <controls:MainViewport Name="MainViewport"/>
+        <controls:MainViewport/>
     </LayoutContainer>
     <BoxContainer Name="TopLeft" Access="Protected" Orientation="Vertical">
         <BoxContainer Orientation="Horizontal">
