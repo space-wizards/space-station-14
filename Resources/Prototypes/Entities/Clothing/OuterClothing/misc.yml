@@ -92,15 +92,17 @@
     proto: robot
 
 - type: entity
-  parent: ClothingOuterBase
+  parent: ClothingOuterBaseToggleable
   id: ClothingOuterHoodieChaplain
-  name: chaplain hoodie
+  name: chaplain's hoodie
   description: Black and strict chaplain hoodie.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Misc/chaplain_hoodie.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Misc/chaplain_hoodie.rsi
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHatHoodChaplainHood
 
 - type: entity
   parent: ClothingOuterBase
