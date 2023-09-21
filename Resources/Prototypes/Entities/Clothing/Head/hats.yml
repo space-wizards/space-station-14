@@ -368,7 +368,8 @@
     sprite: Clothing/Head/Hats/sombrero.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/sombrero.rsi
-  - type: SpanishAccent
+  - type: AddAccentClothing
+    accent: SpanishAccent
 
 - type: entity
   parent: ClothingHeadBase
