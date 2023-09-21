@@ -137,10 +137,12 @@
     damage:
       types:
         Blunt: 12
+  -type: Tool
     qualities:
       - Anchoring
     speed: 1.2
-
+    useSound:
+      path: /Audio/Items/ratchet.ogg
 - type: entity
   name: crowbar
   parent: BaseItem
