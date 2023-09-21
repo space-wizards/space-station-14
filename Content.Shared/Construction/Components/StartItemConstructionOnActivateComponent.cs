@@ -5,7 +5,7 @@ using Content.Shared.Construction.Prototypes;
 namespace Content.Shared.Construction;
 
 /// <summary>
-/// Used for starting a certain item crafting recipe when activated.
+/// Used by <see cref="StartItemConstructionOnActivateSystem"/> for starting a certain item crafting recipe on entity activation.
 /// </summary>
 [RegisterComponent]
 public sealed partial class StartItemConstructionOnActivateComponent : Component
