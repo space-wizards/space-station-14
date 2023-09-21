@@ -4,6 +4,7 @@
   id: BaseTerminatorObjective
   components:
   - type: Objective
+    difficulty: 1
     issuer: susnet
   - type: RoleRequirement
     roles:
@@ -14,10 +15,9 @@
   noSpawn: true
   parent: [BaseTerminatorObjective, BaseKillObjective]
   id: TerminateObjective
+  description: Follow your programming and terminate the target.
   components:
   - type: Objective
-    description: objective-terminate-description
-    difficulty: 1
     unique: false
   - type: TargetObjective
     title: objective-terminate-title
@@ -30,12 +30,11 @@
   noSpawn: true
   parent: BaseTerminatorObjective
   id: ShutDownObjective
+  title: Shut down
+  description: Once the mission is complete die to prevent our technology from being stolen.
   components:
   - type: Objective
-    title: objective-shut-down-title
-    description: objective-shut-down-description
     icon:
       sprite: Mobs/Species/Terminator/parts.rsi
       state: skull_icon
-    difficulty: 1
   - type: DieCondition
