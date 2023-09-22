@@ -204,6 +204,19 @@ public abstract class SharedActionsSystem : EntitySystem
         Dirty(actionId.Value, action);
     }
 
+    public void StartUseDelay(EntityUid? actionId)
+    {
+        if (actionId == null)
+            return;
+
+        var action = GetActionData(actionId);
+        if (action == null || action.UseDelay == null)
+            return;
+
+        action.Cooldown = (GameTiming.CurTime, GameTiming.CurTime + action.UseDelay.Value);
+        Dirty(actionId.Value, action);
+    }
+
     #region ComponentStateManagement
     public virtual void Dirty(EntityUid? actionId)
     {
