@@ -122,12 +122,16 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
             if (!GameTicker.IsGameRuleAdded(ruleEnt, gameRule))
                 continue;
 
-            var found = nukeops.OperativePlayers.Values.Any(v => v == opUid);
-            if (found)
+            if (_mind.TryGetMind(opUid, out var mind, out _))
             {
-                comps = (nukeops, gameRule);
-                return true;
+                var found = nukeops.OperativePlayers.Values.Any(v => v == mind);
+                if (found)
+                {
+                    comps = (nukeops, gameRule);
+                    return true;
+                }
             }
+
         }
 
         return false;
