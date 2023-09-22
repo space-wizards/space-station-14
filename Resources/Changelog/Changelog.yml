@@ -1,9 +1,4 @@
 Entries:
-- author: lzk228
-  changes:
-  - {message: The hair flower and flower crown have new crafting recipes., type: Add}
-  id: 4370
-  time: '2023-07-29T18:46:29.0000000+00:00'
 - author: chromiumboy
   changes:
   - {message: 'The detection range of the anomaly locator has been doubled, and its
@@ -2971,3 +2966,10 @@ Entries:
   - {message: Fix xeno ghost roles showing up for expeditions., type: Fix}
   id: 4869
   time: '2023-09-21T13:21:43.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'Added improvised bows & arrows to construction, have fun embedding
+      people with arrows', type: Add}
+  - {message: Added quivers as random maint loot drops, type: Add}
+  id: 4870
+  time: '2023-09-22T09:45:21.0000000+00:00'
