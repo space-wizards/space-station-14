@@ -40,7 +40,7 @@
   category: construction-category-weapons
   description: A uranium shard with a piece of cloth wrapped around it.
   icon: { sprite: Objects/Weapons/Melee/uranium_shiv.rsi, state: icon }
-  objectType: Item
+  objectType: Item 
 
 - type: construction
   name: crude spear
@@ -140,7 +140,6 @@
   description: A shoddily constructed bow made out of wood and cloth. It's not much, but it's gotten the job done for millennia.
   icon: { sprite: Objects/Weapons/Guns/Bow/bow.rsi, state: unwielded }
   objectType: Item
-<<<<<<< HEAD
 
 - type: construction
   name: bone spear
@@ -152,5 +151,3 @@
   description: Bones and silk combined together.
   icon: { sprite: Objects/Weapons/Melee/bone_spear.rsi, state: spear }
   objectType: Item
-=======
->>>>>>> origin/HEAD
