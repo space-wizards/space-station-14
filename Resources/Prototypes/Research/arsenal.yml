@@ -121,6 +121,8 @@
   cost: 8000
   recipeUnlocks:
   - Truncheon
+  - TelescopicShield
+  - HoloprojectorSecurity
 
 # Tier 3
 

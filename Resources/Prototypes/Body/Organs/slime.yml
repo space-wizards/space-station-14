@@ -21,6 +21,11 @@
       solutions:
         stomach:
           maxVol: 50.0
+        food:
+          maxVol: 5
+          reagents:
+          - ReagentId: Nutriment
+            Quantity: 5
 
 
 - type: entity
@@ -51,3 +56,8 @@
       Lung:
         maxVol: 100.0
         canReact: false
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5

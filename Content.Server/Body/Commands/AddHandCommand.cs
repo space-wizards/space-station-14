@@ -118,7 +118,7 @@ namespace Content.Server.Body.Commands
                 }
             }
 
-            if (!_entManager.TryGetComponent(entity, out BodyComponent? body) || body.Root == null)
+            if (!_entManager.TryGetComponent(entity, out BodyComponent? body) || body.RootContainer.ContainedEntity == null)
             {
                 var text = $"You have no body{(_random.Prob(0.2f) ? " and you must scream." : ".")}";
 
@@ -140,7 +140,7 @@ namespace Content.Server.Body.Commands
 
             var slotId = part.GetHashCode().ToString();
 
-            if (!bodySystem.TryCreatePartSlotAndAttach(attachAt.Id, slotId, hand, attachAt.Component, part))
+            if (!bodySystem.TryCreatePartSlotAndAttach(attachAt.Id, slotId, hand, BodyPartType.Hand,attachAt.Component, part))
             {
                 shell.WriteError($"Couldn't create a slot with id {slotId} on entity {_entManager.ToPrettyString(entity)}");
                 return;
