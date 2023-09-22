@@ -663,6 +663,21 @@
   categories:
   - ERTUplinkMedial
 
+# - type: listing
+#   id: ErtCallUplinkPillAmbuzolPlus
+#   name: ert-uplink-medical-pillambuzolplus-name
+#   description: ert-uplink-medical-pillambuzolplus-desc
+#   productEntity: PillAmbuzolPlus
+#   cost:
+#     BlueSpaceCube: 2
+#   categories:
+#   - ERTUplinkMedial
+#   conditions:
+#     - !type:StoreWhitelistCondition
+#       whitelist:
+#         tags:
+#           - ErtUplinkCBURN
+
 #TODO
 # - type: listing
 #   id: ErtCallUplinkBoxOfModuleGrenade

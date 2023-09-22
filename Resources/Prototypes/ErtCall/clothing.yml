@@ -54,7 +54,7 @@
     - type: StorageFill
       contents:
         - id: BoxSurvival
-        - id: PillRomerol
+        # - id: PillAmbuzolPlus
 
 - type: entity
   noSpawn: false
