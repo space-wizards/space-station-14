@@ -1,6 +1,6 @@
 ﻿using System.Linq;
-using Content.Server.Mind;
 using Content.Shared.Ghost;
+using Content.Shared.Mind;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
@@ -124,7 +124,7 @@ public sealed partial class MindTests
     {
         await using var pair = await SetupPair();
         var entMan = pair.Server.ResolveDependency<IEntityManager>();
-        var mindSys = entMan.System<MindSystem>();
+        var mindSys = entMan.System<SharedMindSystem>();
         var mind = GetMind(pair);
 
         // Make player visit a new mob

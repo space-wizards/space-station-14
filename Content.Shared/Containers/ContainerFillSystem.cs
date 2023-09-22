@@ -7,7 +7,6 @@ namespace Content.Shared.Containers;
 public sealed class ContainerFillSystem : EntitySystem
 {
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     public override void Initialize()
     {
@@ -18,10 +17,7 @@ public sealed class ContainerFillSystem : EntitySystem
     private void OnMapInit(EntityUid uid, ContainerFillComponent component, MapInitEvent args)
     {
         if (!TryComp(uid, out ContainerManagerComponent? containerComp))
-        {
-            Log.Error($"Entity {ToPrettyString(uid)} with a {nameof(ContainerFillComponent)} has no {nameof(ContainerManagerComponent)}.");
             return;
-        }
 
         var xform = Transform(uid);
         var coords = new EntityCoordinates(uid, Vector2.Zero);
@@ -40,7 +36,7 @@ public sealed class ContainerFillSystem : EntitySystem
                 if (!container.Insert(ent, EntityManager, null, xform))
                 {
                     Log.Error($"Entity {ToPrettyString(uid)} with a {nameof(ContainerFillComponent)} failed to insert an entity: {ToPrettyString(ent)}.");
-                    _transform.AttachToGridOrMap(ent);
+                    Transform(ent).AttachToGridOrMap();
                     break;
                 }
             }

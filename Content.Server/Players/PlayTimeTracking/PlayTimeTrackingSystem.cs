@@ -2,11 +2,12 @@ using System.Linq;
 using Content.Server.Afk;
 using Content.Server.Afk.Events;
 using Content.Server.GameTicking;
-using Content.Server.Roles;
+using Content.Server.Mind;
 using Content.Shared.CCVar;
 using Content.Shared.GameTicking;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
+using Content.Shared.Players;
 using Content.Shared.Players.PlayTimeTracking;
 using Content.Shared.Roles;
 using Robust.Server.GameObjects;
@@ -27,6 +28,7 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypes = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
+    [Dependency] private readonly MindSystem _minds = default!;
     [Dependency] private readonly PlayTimeTrackingManager _tracking = default!;
 
     public override void Initialize()
@@ -103,18 +105,14 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
 
     private void OnRoleRemove(RoleRemovedEvent ev)
     {
-        if (ev.Mind.Session == null)
-            return;
-
-        _tracking.QueueRefreshTrackers(ev.Mind.Session);
+        if (_minds.TryGetSession(ev.Mind, out var session))
+            _tracking.QueueRefreshTrackers(session);
     }
 
     private void OnRoleAdd(RoleAddedEvent ev)
     {
-        if (ev.Mind.Session == null)
-            return;
-
-        _tracking.QueueRefreshTrackers(ev.Mind.Session);
+        if (_minds.TryGetSession(ev.Mind, out var session))
+            _tracking.QueueRefreshTrackers(session);
     }
 
     private void OnRoundEnd(RoundRestartCleanupEvent ev)
@@ -167,7 +165,7 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
 
         var playTimes = _tracking.GetTrackerTimes(player);
 
-        return JobRequirements.TryRequirementsMet(job, playTimes, out _, _prototypes);
+        return JobRequirements.TryRequirementsMet(job, playTimes, out _, EntityManager, _prototypes);
     }
 
     public HashSet<string> GetDisallowedJobs(IPlayerSession player)
@@ -184,7 +182,7 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
             {
                 foreach (var requirement in job.Requirements)
                 {
-                    if (JobRequirements.TryRequirementMet(requirement, playTimes, out _, _prototypes))
+                    if (JobRequirements.TryRequirementMet(requirement, playTimes, out _, EntityManager, _prototypes))
                         continue;
 
                     goto NoRole;
@@ -207,7 +205,7 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
         if (!_tracking.TryGetTrackerTimes(player, out var playTimes))
         {
             // Sorry mate but your playtimes haven't loaded.
-            Logger.ErrorS("playtime", $"Playtimes weren't ready yet for {player} on roundstart!");
+            Log.Error($"Playtimes weren't ready yet for {player} on roundstart!");
             playTimes ??= new Dictionary<string, TimeSpan>();
         }
 
@@ -222,7 +220,7 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
 
             foreach (var requirement in jobber.Requirements)
             {
-                if (JobRequirements.TryRequirementMet(requirement, playTimes, out _, _prototypes))
+                if (JobRequirements.TryRequirementMet(requirement, playTimes, out _, EntityManager, _prototypes))
                     continue;
 
                 jobs.RemoveSwap(i);

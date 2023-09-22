@@ -344,7 +344,7 @@ public sealed class ListContainer : Control
     }
 }
 
-public sealed class ListContainerButton : ContainerButton
+public sealed class ListContainerButton : ContainerButton, IEntityControl
 {
     public readonly ListData Data;
     // public PanelContainer Background;
@@ -359,6 +359,8 @@ public sealed class ListContainerButton : ContainerButton
         //     PanelOverride = new StyleBoxFlat {BackgroundColor = new Color(55, 55, 68)}
         // });
     }
+
+    public EntityUid? UiEntity => (Data as EntityListData)?.Uid;
 }
 
 #region Data

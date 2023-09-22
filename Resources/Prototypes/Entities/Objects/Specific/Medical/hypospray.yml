@@ -18,6 +18,7 @@
   - type: ExaminableSolution
     solution: hypospray
   - type: Hypospray
+    onlyMobs: false
   - type: UseDelay
     delay: 0.5
   - type: StaticPrice
@@ -46,8 +47,23 @@
   - type: ExaminableSolution
     solution: hypospray
   - type: Hypospray
+    onlyMobs: false
   - type: UseDelay
     delay: 0.5
+
+- type: entity
+  name: experimental hypospray
+  suffix: Admeme
+  parent: SyndiHypo
+  description: The ultimate application of bluespace technology and rapid chemical administration.
+  id: AdminHypo
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        hypospray:
+          maxVol: 3000
+    - type: UseDelay
+      delay: 0.0
 
 - type: entity
   name: chemical medipen
@@ -109,7 +125,7 @@
 
 
 - type: entity
-  name: anti-poison medipen
+  name: poison auto-injector
   parent: ChemicalMedipen
   id: AntiPoisonMedipen
   description: A rapid dose of anti-poison. Contains ultravasculine and epinephrine.
@@ -180,6 +196,32 @@
           Quantity: 10
         - ReagentId: Leporazine
           Quantity: 10
+  - type: Tag
+    tags: []
+
+- type: entity
+  name: rad auto-injector
+  parent: ChemicalMedipen
+  id: RadAutoInjector
+  description: A rapid dose of anti-radiation. Contains arithrazine and bicardine.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Medical/medipen.rsi
+    layers:
+    - state: arithpen
+      map: ["enum.SolutionContainerLayers.Fill"]
+  - type: Hypospray
+    solutionName: pen
+    transferAmount: 20
+  - type: SolutionContainerManager
+    solutions:
+      pen:
+        maxVol: 20
+        reagents:
+        - ReagentId: Arithrazine
+          Quantity: 15
+        - ReagentId: Bicaridine
+          Quantity: 5
   - type: Tag
     tags: []
 
@@ -316,6 +358,7 @@
   - type: ExaminableSolution
     solution: hypospray
   - type: Hypospray
+    onlyMobs: false
   - type: UseDelay
     delay: 0.5
   - type: StaticPrice # A new shitcurity meta

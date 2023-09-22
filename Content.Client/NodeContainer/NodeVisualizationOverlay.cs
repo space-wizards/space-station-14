@@ -19,7 +19,6 @@ namespace Content.Client.NodeContainer
         private readonly IMapManager _mapManager;
         private readonly IInputManager _inputManager;
         private readonly IEntityManager _entityManager;
-        private readonly SharedTransformSystem _transform;
 
         private readonly Dictionary<(int, int), NodeRenderData> _nodeIndex = new();
         private readonly Dictionary<EntityUid, Dictionary<Vector2i, List<(GroupData, NodeDatum)>>> _gridIndex = new ();
@@ -45,7 +44,6 @@ namespace Content.Client.NodeContainer
             _mapManager = mapManager;
             _inputManager = inputManager;
             _entityManager = entityManager;
-            _transform = entityManager.System<SharedTransformSystem>();
 
             _font = cache.GetFont("/Fonts/NotoSans/NotoSans-Regular.ttf", 12);
         }
@@ -79,7 +77,7 @@ namespace Content.Client.NodeContainer
             var node = _system.NodeLookup[(groupId, nodeId)];
 
 
-            var xform = _entityManager.GetComponent<TransformComponent>(node.Entity);
+            var xform = _entityManager.GetComponent<TransformComponent>(_entityManager.GetEntity(node.Entity));
             if (!_mapManager.TryGetGrid(xform.GridUid, out var grid))
                 return;
             var gridTile = grid.TileIndicesFor(xform.Coordinates);
@@ -143,7 +141,7 @@ namespace Content.Client.NodeContainer
             foreach (var (gridId, gridDict) in _gridIndex)
             {
                 var grid = _mapManager.GetGrid(gridId);
-                var (_, _, worldMatrix, invMatrix) = _transform.GetWorldPositionRotationMatrixWithInv(gridId);
+                var (_, _, worldMatrix, invMatrix) = _entityManager.GetComponent<TransformComponent>(grid.Owner).GetWorldPositionRotationMatrixWithInv();
 
                 var lCursorBox = invMatrix.TransformBox(cursorBox);
                 foreach (var (pos, list) in gridDict)

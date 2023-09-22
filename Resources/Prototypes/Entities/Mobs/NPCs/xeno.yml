@@ -60,6 +60,9 @@
     thresholds:
       0: Alive
       50: Dead
+  - type: SlowOnDamage
+    speedModifierThresholds:
+      25: 0.5
   - type: Stamina
     critThreshold: 200
   - type: Bloodstream
@@ -111,6 +114,8 @@
   - type: NoSlip
   - type: Perishable #Ummmm the acid kills a lot of the bacteria or something
     molsPerSecondPerUnitMass: 0.0005
+  - type: Speech
+    speechVerb: LargeMob
 
 - type: entity
   name: Praetorian
@@ -127,7 +132,7 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      75: Dead
+      100: Dead
   - type: Stamina
     critThreshold: 300
   - type: SlowOnDamage
@@ -160,18 +165,16 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      150: Dead
+      80: Dead
+  - type: SlowOnDamage
+    speedModifierThresholds:
+      40: 0.7
   - type: MeleeWeapon
     damage:
       groups:
-        Brute: 5
+        Brute: 6
   - type: MovementSpeedModifier
-    baseWalkSpeed: 2.0
-    baseSprintSpeed: 2.5
-  - type: SlowOnDamage
-    speedModifierThresholds:
-      100: 0.4
-      50: 0.7
+    baseSprintSpeed: 4
   - type: Fixtures
     fixtures:
       fix1:
@@ -200,20 +203,15 @@
     thresholds:
       0: Alive
       300: Dead
-  - type: Stamina
-    critThreshold: 1500
+  - type: SlowOnDamage
+    speedModifierThresholds:
+      150: 0.7
   - type: MovementSpeedModifier
-    baseWalkSpeed: 2.8
-    baseSprintSpeed: 3.8
   - type: MeleeWeapon
     hidden: true
     damage:
      groups:
-       Brute: 20
-  - type: SlowOnDamage
-    speedModifierThresholds:
-      250: 0.4
-      200: 0.7
+       Brute: 12
   - type: Fixtures
     fixtures:
       fix1:
@@ -244,12 +242,9 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      200: Dead
-  - type: Stamina
-    critThreshold: 550
+      100: Dead
   - type: MovementSpeedModifier
-    baseWalkSpeed: 2.3
-    baseSprintSpeed: 4.2
+    baseSprintSpeed: 4
   - type: MeleeWeapon
     hidden: true
     damage:
@@ -257,8 +252,7 @@
        Brute: 10
   - type: SlowOnDamage
     speedModifierThresholds:
-      150: 0.5
-      100: 0.7
+      50: 0.7
   - type: Fixtures
     fixtures:
       fix1:
@@ -283,16 +277,13 @@
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: running
-  - type: Stamina
-    critThreshold: 250
   - type: MovementSpeedModifier
-    baseWalkSpeed: 2.7
     baseSprintSpeed: 6.0
   - type: MeleeWeapon
     hidden: true
     damage:
      groups:
-       Brute: 3
+       Brute: 5
   - type: Fixtures
     fixtures:
       fix1:
@@ -330,12 +321,13 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      75: Dead
+      50: Dead
+  - type: SlowOnDamage
+    speedModifierThresholds:
+      25: 0.7
   - type: HTN
     rootTask:
       task: SimpleRangedHostileCompound
-  - type: Stamina
-    critThreshold: 300
   - type: RechargeBasicEntityAmmo
     rechargeCooldown: 0.75
   - type: BasicEntityAmmoProvider
@@ -349,9 +341,6 @@
     availableModes:
       - FullAuto
     soundGunshot: /Audio/Weapons/Xeno/alien_spitacid.ogg
-  - type: SlowOnDamage
-    speedModifierThresholds:
-      50: 0.4
   - type: Fixtures
     fixtures:
       fix1:

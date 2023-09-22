@@ -13,7 +13,7 @@ namespace Content.Shared.Chat
         public ChatChannel Channel;
         public string Message;
         public string WrappedMessage;
-        public EntityUid SenderEntity;
+        public NetEntity SenderEntity;
         public bool HideChat;
         public Color? MessageColorOverride;
         public string? AudioPath;
@@ -22,7 +22,7 @@ namespace Content.Shared.Chat
         [NonSerialized]
         public bool Read;
 
-        public ChatMessage(ChatChannel channel, string message, string wrappedMessage, EntityUid source, bool hideChat = false, Color? colorOverride = null, string? audioPath = null, float audioVolume = 0)
+        public ChatMessage(ChatChannel channel, string message, string wrappedMessage, NetEntity source, bool hideChat = false, Color? colorOverride = null, string? audioPath = null, float audioVolume = 0)
         {
             Channel = channel;
             Message = message;

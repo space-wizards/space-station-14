@@ -29,13 +29,15 @@ public sealed class NavMapSystem : SharedNavMapSystem
                 TileData = data,
             });
         }
+
+        component.Beacons.Clear();
+        component.Beacons.AddRange(state.Beacons);
     }
 }
 
 public sealed class NavMapOverlay : Overlay
 {
     private readonly IEntityManager _entManager;
-    private readonly SharedTransformSystem _transform;
     private readonly IMapManager _mapManager;
 
     public override OverlaySpace Space => OverlaySpace.WorldSpace;
@@ -43,7 +45,6 @@ public sealed class NavMapOverlay : Overlay
     public NavMapOverlay(IEntityManager entManager, IMapManager mapManager)
     {
         _entManager = entManager;
-        _transform = entManager.System<SharedTransformSystem>();
         _mapManager = mapManager;
     }
 
@@ -59,7 +60,7 @@ public sealed class NavMapOverlay : Overlay
                 continue;
 
             // TODO: Faster helper method
-            var (_, _, matrix, invMatrix) = _transform.GetWorldPositionRotationMatrixWithInv(xform);
+            var (_, _, matrix, invMatrix) = xform.GetWorldPositionRotationMatrixWithInv();
 
             var localAABB = invMatrix.TransformBox(args.WorldBounds);
             Matrix3.Multiply(in scale, in matrix, out var matty);

@@ -6,14 +6,14 @@ namespace Content.Shared.Placeable;
 /// <summary>
 /// Detects items placed on it that match a whitelist.
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState, Access(typeof(ItemPlacerSystem))]
+[RegisterComponent, NetworkedComponent, Access(typeof(ItemPlacerSystem))]
 public sealed partial class ItemPlacerComponent : Component
 {
     /// <summary>
     /// The entities that are currently on top of the placer.
-    /// Guaranteed to have less than <see cref="MaxEntities"/> enitites if it is set.
-    /// <summary>
-    [DataField("placedEntities"), AutoNetworkedField]
+    /// Guaranteed to have less than <see cref="MaxEntities"/> enitities if it is set.
+    /// </summary>
+    [DataField("placedEntities")]
     public HashSet<EntityUid> PlacedEntities = new();
 
     /// <summary>
@@ -26,6 +26,6 @@ public sealed partial class ItemPlacerComponent : Component
     /// The max amount of entities that can be placed at the same time.
     /// If 0, there is no limit.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("maxEntities"), AutoNetworkedField]
+    [ViewVariables(VVAccess.ReadWrite), DataField("maxEntities")]
     public uint MaxEntities = 1;
 }

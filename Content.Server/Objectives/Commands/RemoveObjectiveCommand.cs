@@ -1,6 +1,6 @@
 ﻿using Content.Server.Administration;
-using Content.Server.Mind;
 using Content.Shared.Administration;
+using Content.Shared.Mind;
 using Robust.Server.Player;
 using Robust.Shared.Console;
 
@@ -23,14 +23,14 @@ namespace Content.Server.Objectives.Commands
             }
 
             var mgr = IoCManager.Resolve<IPlayerManager>();
-            var minds = _entityManager.System<MindSystem>();
+            var minds = _entityManager.System<SharedMindSystem>();
             if (!mgr.TryGetSessionByUsername(args[0], out var session))
             {
                 shell.WriteLine("Can't find the playerdata.");
                 return;
             }
 
-            if (!minds.TryGetMind(session, out _, out var mind))
+            if (!minds.TryGetMind(session, out var mindId, out var mind))
             {
                 shell.WriteLine("Can't find the mind.");
                 return;
@@ -38,8 +38,8 @@ namespace Content.Server.Objectives.Commands
 
             if (int.TryParse(args[1], out var i))
             {
-                var mindSystem = _entityManager.System<MindSystem>();
-                shell.WriteLine(mindSystem.TryRemoveObjective(mind, i)
+                var mindSystem = _entityManager.System<SharedMindSystem>();
+                shell.WriteLine(mindSystem.TryRemoveObjective(mindId, mind, i)
                     ? "Objective successfully removed!"
                     : "Objective removing failed. Maybe the index is out of bounds? Check lsobjectives!");
             }
