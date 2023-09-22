@@ -30,7 +30,7 @@ public sealed class ApcSystem : EntitySystem
         UpdatesAfter.Add(typeof(PowerNetSystem));
 
         SubscribeLocalEvent<ApcComponent, BoundUIOpenedEvent>(OnBoundUiOpen);
-        SubscribeLocalEvent<ApcComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<ApcComponent, MapInitEvent>(OnApcInit);
         SubscribeLocalEvent<ApcComponent, ChargeChangedEvent>(OnBatteryChargeChanged);
         SubscribeLocalEvent<ApcComponent, ApcToggleMainBreakerMessage>(OnToggleMainBreaker);
         SubscribeLocalEvent<ApcComponent, GotEmaggedEvent>(OnEmagged);
@@ -56,7 +56,7 @@ public sealed class ApcSystem : EntitySystem
         UpdateApcState(uid, component);
     }
 
-    private void OnMapInit(EntityUid uid, ApcComponent component, MapInitEvent args)
+    private void OnApcInit(EntityUid uid, ApcComponent component, MapInitEvent args)
     {
         UpdateApcState(uid, component);
     }
@@ -75,21 +75,20 @@ public sealed class ApcSystem : EntitySystem
         var attemptEv = new ApcToggleMainBreakerAttemptEvent();
         RaiseLocalEvent(uid, ref attemptEv);
 
-        if (attemptEv.Cancelled)
-        {
-            _popup.PopupCursor(Loc.GetString("apc-component-on-toggle-cancel"),
-                args.Session, PopupType.Medium);
-            return;
-        }
-
         if (args.Session.AttachedEntity == null)
             return;
+
+        if (attemptEv.Cancelled)
+        {
+            _popup.PopupEntity(Loc.GetString("apc-component-on-toggle-cancel"), uid, args.Session.AttachedEntity.Value, PopupType.Medium);
+            return;
+        }
 
         if (_accessReader.IsAllowed(args.Session.AttachedEntity.Value, uid))
             ApcToggleBreaker(uid, component);
 
         else
-            _popup.PopupCursor(Loc.GetString("apc-component-insufficient-access"), args.Session, PopupType.Medium);
+            _popup.PopupEntity(Loc.GetString("apc-component-insufficient-access"), uid, args.Session.AttachedEntity.Value, PopupType.Medium);
     }
 
     public void ApcToggleBreaker(EntityUid uid, ApcComponent? apc = null, PowerNetworkBatteryComponent? battery = null)
@@ -112,13 +111,12 @@ public sealed class ApcSystem : EntitySystem
 
     public void UpdateApcState(EntityUid uid,
         ApcComponent? apc = null,
-        PowerNetworkBatteryComponent? netBat = null)
+        PowerNetworkBatteryComponent? battery = null)
     {
-        if (!Resolve(uid, ref apc, ref netBat, false))
+        if (!Resolve(uid, ref apc, ref battery, false))
             return;
 
-        var battery = netBat.NetworkBattery;
-        var newState = CalcChargeState(uid, battery);
+        var newState = CalcChargeState(uid, battery.NetworkBattery);
 
         if (newState != apc.LastChargeState && apc.LastChargeStateTime + ApcComponent.VisualsChangeDelay < _gameTiming.CurTime)
         {
@@ -129,11 +127,11 @@ public sealed class ApcSystem : EntitySystem
                 _appearance.SetData(uid, ApcVisuals.ChargeState, newState, appearance);
         }
 
-        var extPowerState = _powerMonitoring.CalcExtPowerState(uid, battery);
-        if (extPowerState != battery.LastExternalPowerState)
+        var extPowerState = _powerMonitoring.CalcExtPowerState(uid, battery.NetworkBattery);
+        if (extPowerState != battery.LastExternalState)
         {
-            battery.LastExternalPowerState = extPowerState;
-            UpdateUIState(uid, apc, netBat);
+            battery.LastExternalState = extPowerState;
+            UpdateUIState(uid, apc, battery);
         }
     }
 
@@ -149,7 +147,7 @@ public sealed class ApcSystem : EntitySystem
 
         var state = new ApcBoundInterfaceState(apc.MainBreakerEnabled,
             (int) MathF.Ceiling(battery.CurrentSupply),
-            battery.LastExternalPowerState,
+            battery.LastExternalState,
             battery.CurrentStorage / battery.Capacity);
 
         _ui.TrySetUiState(uid, ApcUiKey.Key, state, ui: ui);

@@ -1,5 +1,6 @@
 using Content.Server.Power.NodeGroups;
 using Content.Shared.APC;
+using Content.Shared.Power;
 using Robust.Shared.Audio;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
@@ -13,8 +14,12 @@ public sealed partial class ApcComponent : BaseApcNetComponent
 
     [DataField("lastChargeState")]
     public ApcChargeState LastChargeState;
+
     [DataField("lastChargeStateTime", customTypeSerializer: typeof(TimeOffsetSerializer))]
     public TimeSpan LastChargeStateTime;
+
+    [DataField("lastExternalState"), Obsolete("Use the 'LastExternalState' field on PowerNetworkBatteryComponent instead")]
+    public ExternalPowerState LastExternalState;
 
     /// <summary>
     /// Time the ui was last updated automatically.
@@ -26,6 +31,10 @@ public sealed partial class ApcComponent : BaseApcNetComponent
 
     [DataField("enabled")]
     public bool MainBreakerEnabled = true;
+
+    // TODO: remove this since it probably breaks when 2 people use it
+    [DataField("hasAccess"), Obsolete("Do not use this field to store access permissions.")]
+    public bool HasAccess = false;
 
     public const float HighPowerThreshold = 0.9f;
     public static TimeSpan VisualsChangeDelay = TimeSpan.FromSeconds(1);

@@ -465,7 +465,7 @@ namespace Content.Server.Power.Pow3r
             ///   Categorically describes the quality of any external power sources
             /// </summary>
             [ViewVariables(VVAccess.ReadWrite)] [JsonIgnore]
-            public ExternalPowerState LastExternalPowerState;
+            public ExternalPowerState LastExternalState;
         }
 
         // Readonly breaks json serialization.

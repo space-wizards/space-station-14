@@ -113,10 +113,10 @@ namespace Content.Server.Power.Components
 
         [DataField("lastExternalState")]
         [ViewVariables(VVAccess.ReadWrite)]
-        public ExternalPowerState LastExternalPowerState
+        public ExternalPowerState LastExternalState
         {
-            get => NetworkBattery.LastExternalPowerState;
-            set => NetworkBattery.LastExternalPowerState = value;
+            get => NetworkBattery.LastExternalState;
+            set => NetworkBattery.LastExternalState = value;
         }
 
         [ViewVariables]

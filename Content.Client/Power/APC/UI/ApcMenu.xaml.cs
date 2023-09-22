@@ -28,8 +28,8 @@ namespace Content.Client.Power.APC.UI
 
             EntityView.SetEntity(owner.Owner);
 
-            BreakerOnButton.OnPressed += _ => owner.BreakerPressed(!BreakerOnButton.Pressed);
-            BreakerOffButton.OnPressed += _ => owner.BreakerPressed(!BreakerOffButton.Pressed);
+            BreakerOnButton.OnPressed += _ => TryToggleBreaker(owner, !BreakerOnButton.Pressed);
+            BreakerOffButton.OnPressed += _ => TryToggleBreaker(owner, !BreakerOffButton.Pressed);
 
             _owner = _entityManager.GetNetEntity(owner.Owner);
 
@@ -37,40 +37,48 @@ namespace Content.Client.Power.APC.UI
                 Title = meta.EntityName;
         }
 
-        public void UpdateState(ApcBoundInterfaceState state)
+        public void TryToggleBreaker(ApcBoundUserInterface owner, bool toggle)
         {
+            if (!toggle)
+                return;
+
+            owner.BreakerPressed();
+        }
+
+        public void UpdateState(BoundUserInterfaceState state)
+        {
+            var castState = (ApcBoundInterfaceState) state;
+
             bool hasAccess = _playerManager.LocalPlayer?.ControlledEntity != null &&
                 _accessReader != null &&
                 _accessReader.IsAllowed(_playerManager.LocalPlayer.ControlledEntity.Value, _entityManager.GetEntity(_owner));
 
             if (BreakerOnButton != null)
             {
-                BreakerOnButton.Disabled = !hasAccess;
                 BreakerOnButton.ToolTip = !hasAccess ? Loc.GetString("apc-component-insufficient-access") : null;
-                BreakerOnButton.Pressed = state.MainBreaker;
+                BreakerOnButton.Pressed = castState.MainBreaker;
             }
 
             if (BreakerOffButton != null)
             {
-                BreakerOffButton.Disabled = !hasAccess;
                 BreakerOffButton.ToolTip = !hasAccess ? Loc.GetString("apc-component-insufficient-access") : null;
-                BreakerOffButton.Pressed = !state.MainBreaker;
+                BreakerOffButton.Pressed = !castState.MainBreaker;
             }
 
             if (PowerLabel != null)
-                PowerLabel.Text = Loc.GetString("power-monitoring-window-value", ("value", state.Power));
+                PowerLabel.Text = Loc.GetString("power-monitoring-window-value", ("value", castState.Power));
 
             if (_powerMonitoring == null)
                 return;
 
             if (ExternalPowerStateLabel != null)
-                _powerMonitoring.UpdateExternalPowerStateLabel(ExternalPowerStateLabel, state.ExternalPower);
+                _powerMonitoring.UpdateExternalPowerStateLabel(ExternalPowerStateLabel, castState.ExternalPower);
 
             if (ChargeBar != null)
             {
-                ChargeBar.Value = state.Charge;
-                _powerMonitoring.UpdateChargeBarColor(ChargeBar, state.Charge);
-                var chargePercentage = state.Charge / ChargeBar.MaxValue;
+                ChargeBar.Value = castState.Charge;
+                _powerMonitoring.UpdateChargeBarColor(ChargeBar, castState.Charge);
+                var chargePercentage = castState.Charge / ChargeBar.MaxValue;
                 ChargePercentage.Text = Loc.GetString("power-monitoring-window-charge-label", ("percent", chargePercentage.ToString("P0")));
             }
         }

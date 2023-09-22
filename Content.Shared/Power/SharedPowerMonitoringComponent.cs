@@ -46,6 +46,12 @@ public sealed class PowerMonitoringEntry
     }
 }
 
+
+[Serializable, NetSerializable]
+public sealed class PowerMonitoringUIChangedMessage : BoundUserInterfaceMessage
+{
+}
+
 [Serializable, NetSerializable]
 public enum ExternalPowerState
 {
@@ -68,7 +74,7 @@ public enum PowerMonitoringSubstationUiKey
 }
 
 [Serializable, NetSerializable]
-public enum PowerMonitoringConsoleUiKey
+public enum PowerMonitoringUiKey
 {
     Key
 }

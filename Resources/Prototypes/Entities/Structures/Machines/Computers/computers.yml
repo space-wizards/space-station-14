@@ -241,7 +241,7 @@
   - type: PowerMonitoring
     sourceNode: hv
     loadNode: hv
-    key: enum.PowerMonitoringConsoleUiKey.Key
+    key: enum.PowerMonitoringUiKey.Key
   - type: NodeContainer
     examinable: true
     nodes:
@@ -249,11 +249,11 @@
         !type:CableDeviceNode
         nodeGroupID: HVPower
   - type: ActivatableUI
-    key: enum.PowerMonitoringConsoleUiKey.Key
+    key: enum.PowerMonitoringUiKey.Key
   - type: UserInterface
     interfaces:
-    - key: enum.PowerMonitoringConsoleUiKey.Key
-      type: PowerMonitoringConsoleBoundUserInterface
+    - key: enum.PowerMonitoringUiKey.Key
+      type: PowerMonitoringBoundUserInterface
 
 - type: entity
   parent: BaseComputer

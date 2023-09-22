@@ -24,7 +24,7 @@
                 </ScrollContainer>
             </BoxContainer>
             <BoxContainer Orientation="Vertical" VerticalExpand="True">
-                <CheckBox Margin="8 8" Name="ShowInactiveConsumersCheckBox" Text="{Loc 'power-monitoring-window-show-inactive-consumers'}" />
+                <CheckBox Margin="8 8" Name="ShowInactiveConsumersCheckBox" Text="{Loc 'power-monitoring-window-show-inactive-consumers'}" Pressed="True"/>
                 <ScrollContainer VerticalExpand="True" HorizontalExpand="True">
                     <GridContainer Name="LoadsList" VerticalExpand="True" HorizontalExpand="True" Columns="3">
                     </GridContainer>
