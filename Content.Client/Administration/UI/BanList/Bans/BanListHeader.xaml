@@ -25,7 +25,6 @@
             <Label Text="{Loc ban-list-header-banning-admin}"
                    SizeFlagsStretchRatio="2"
                    HorizontalExpand="True"/>
-            <cc:VSeparator/>
         </BoxContainer>
     </PanelContainer>
 </ContainerButton>
