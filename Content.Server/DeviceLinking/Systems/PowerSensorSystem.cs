@@ -10,6 +10,7 @@ using Content.Shared.Popups;
 using Content.Shared.Power.Generator;
 using Content.Shared.Timing;
 using Content.Shared.Tools;
+using Robust.Shared.Map;
 using Robust.Shared.Timing;
 
 namespace Content.Server.DeviceLinking.Systems;
@@ -18,15 +19,22 @@ public sealed class PowerSensorSystem : EntitySystem
 {
     [Dependency] private readonly DeviceLinkSystem _deviceLink = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly PowerNetSystem _powerNet = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedToolSystem _tool = default!;
     [Dependency] private readonly UseDelaySystem _useDelay = default!;
 
+    private EntityQuery<NodeContainerComponent> _nodeQuery;
+    private EntityQuery<TransformComponent> _xformQuery;
+
     public override void Initialize()
     {
         base.Initialize();
+
+        _nodeQuery = GetEntityQuery<NodeContainerComponent>();
+        _xformQuery = GetEntityQuery<TransformComponent>();
 
         SubscribeLocalEvent<PowerSensorComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<PowerSensorComponent, ExaminedEvent>(OnExamined);
@@ -39,7 +47,7 @@ public sealed class PowerSensorSystem : EntitySystem
         while (query.MoveNext(out var uid, out var comp))
         {
             var now = _timing.CurTime;
-            if (comp.NextCheck < now)
+            if (comp.NextCheck > now)
                 continue;
 
             comp.NextCheck = now + comp.CheckDelay;
@@ -89,19 +97,27 @@ public sealed class PowerSensorSystem : EntitySystem
         var powerSwitchable = Comp<PowerSwitchableComponent>(uid);
         var cable = powerSwitchable.Cables[powerSwitchable.ActiveIndex];
         var nodeContainer = Comp<NodeContainerComponent>(uid);
-        var node = (CableDeviceNode) nodeContainer.Nodes[cable.Node];
+        var deviceNode = (CableDeviceNode) nodeContainer.Nodes[cable.Node];
 
-        // update state based on the power stats retrieved
         var charge = 0f;
         var chargingState = false;
         var dischargingState = false;
-        if (node.NodeGroup != null)
+
+        // update state based on the power stats retrieved from the selected power network
+        var xform = _xformQuery.GetComponent(uid);
+        _mapManager.TryGetGrid(xform.GridUid, out var grid);
+        var cables = deviceNode.GetReachableNodes(xform, _nodeQuery, _xformQuery, grid, EntityManager);
+        foreach (var node in cables)
         {
+            if (node.NodeGroup == null)
+                continue;
+
             var group = (IBasePowerNet) node.NodeGroup;
             var stats = _powerNet.GetNetworkStatistics(group.NetworkNode);
             charge = comp.Output ? stats.OutStorageCurrent : stats.InStorageCurrent;
-            chargingState = comp.LastCharge > charge;
-            dischargingState = comp.LastCharge < charge;
+            chargingState = charge > comp.LastCharge;
+            dischargingState = charge < comp.LastCharge;
+            break;
         }
 
         comp.LastCharge = charge;
