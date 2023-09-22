@@ -1,10 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: Fixed a bug causing some machine construction requirements to not work
-      properly., type: Fix}
-  id: 4369
-  time: '2023-07-29T17:29:59.0000000+00:00'
 - author: lzk228
   changes:
   - {message: The hair flower and flower crown have new crafting recipes., type: Add}
@@ -2972,3 +2966,8 @@ Entries:
       brawls. Many mixed drinks now have half as much alcohol., type: Tweak}
   id: 4868
   time: '2023-09-21T00:58:57.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix xeno ghost roles showing up for expeditions., type: Fix}
+  id: 4869
+  time: '2023-09-21T13:21:43.0000000+00:00'
