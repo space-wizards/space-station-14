@@ -128,21 +128,5 @@ public sealed partial class AdminVerbSystem
         };
         args.Verbs.Add(headRev);
 
-        Verb spaceNinja = new()
-        {
-            Text = Loc.GetString("admin-verb-text-make-space-ninja"),
-            Category = VerbCategory.Antag,
-            Icon = new SpriteSpecifier.Rsi(new ResPath("/Textures/Objects/Weapons/Melee/energykatana.rsi"), "icon"),
-            Act = () =>
-            {
-                if (!_minds.TryGetMind(args.Target, out var mindId, out var mind))
-                    return;
-
-                _ninja.MakeNinja(mindId, mind);
-            },
-            Impact = LogImpact.High,
-            Message = Loc.GetString("admin-verb-make-space-ninja"),
-        };
-        args.Verbs.Add(spaceNinja);
     }
 }
