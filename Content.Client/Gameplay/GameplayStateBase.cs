@@ -1,9 +1,8 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
 using Content.Client.Clickable;
-using Content.Client.ContextMenu.UI;
+using Content.Client.UserInterface;
+using Content.Shared.Input;
 using Robust.Client.ComponentTrees;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
@@ -11,10 +10,13 @@ using Robust.Client.Input;
 using Robust.Client.Player;
 using Robust.Client.State;
 using Robust.Client.UserInterface;
+using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
-using Robust.Shared.Containers;
+using Robust.Shared.Console;
 using Robust.Shared.Input;
+using Robust.Shared.Input.Binding;
 using Robust.Shared.Map;
+using Robust.Shared.Players;
 using Robust.Shared.Timing;
 
 namespace Content.Client.Gameplay
@@ -34,28 +36,36 @@ namespace Content.Client.Gameplay
         [Dependency] protected readonly IUserInterfaceManager UserInterfaceManager = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly IViewVariablesManager _vvm = default!;
+        [Dependency] private readonly IConsoleHost _conHost = default!;
 
         private ClickableEntityComparer _comparer = default!;
 
-        private (ViewVariablesPath? path, string[] segments) ResolveVVHoverObject(string path)
+        private (ViewVariablesPath? path, string[] segments) ResolveVvHoverObject(string path)
         {
-            // VVs the currently hovered entity. For a nifty vv keybinding you can use:
-            //
-            // /bind v command "vv /c/enthover"
-            // /svbind
-            //
-            // Though you probably want to include a modifier like alt, as otherwise this would open VV even when typing
-            // a message into chat containing the letter v.
-
             var segments = path.Split('/');
+            var uid = RecursivelyFindUiEntity(UserInterfaceManager.CurrentlyHovered);
+            var netUid = _entityManager.GetNetEntity(uid);
+            return (netUid != null ? new ViewVariablesInstancePath(netUid) : null, segments);
+        }
 
-            EntityUid? uid = null;
-            if (UserInterfaceManager.CurrentlyHovered is IViewportControl vp && _inputManager.MouseScreenPosition.IsValid)
-                uid = GetClickedEntity(vp.PixelToMap(_inputManager.MouseScreenPosition.Position));
-            else if (UserInterfaceManager.CurrentlyHovered is EntityMenuElement element)
-                uid = element.Entity;
+        private EntityUid? RecursivelyFindUiEntity(Control? control)
+        {
+            if (control == null)
+                return null;
 
-            return (uid != null ? new ViewVariablesInstancePath(uid) : null, segments);
+            switch (control)
+            {
+                case IViewportControl vp:
+                    if (_inputManager.MouseScreenPosition.IsValid)
+                        return GetClickedEntity(vp.PixelToMap(_inputManager.MouseScreenPosition.Position));
+                    return null;
+                case SpriteView sprite:
+                    return sprite.Entity;
+                case IEntityControl ui:
+                    return ui.UiEntity;
+            }
+
+            return RecursivelyFindUiEntity(control.Parent);
         }
 
         private IEnumerable<string>? ListVVHoverPaths(string[] segments)
@@ -65,15 +75,25 @@ namespace Content.Client.Gameplay
 
         protected override void Startup()
         {
-            _vvm.RegisterDomain("enthover", ResolveVVHoverObject, ListVVHoverPaths);
+            _vvm.RegisterDomain("enthover", ResolveVvHoverObject, ListVVHoverPaths);
             _inputManager.KeyBindStateChanged += OnKeyBindStateChanged;
             _comparer = new ClickableEntityComparer();
+            CommandBinds.Builder
+                .Bind(ContentKeyFunctions.InspectEntity, new PointerInputCmdHandler(HandleInspect, outsidePrediction: true))
+                .Register<GameplayStateBase>();
         }
 
         protected override void Shutdown()
         {
             _vvm.UnregisterDomain("enthover");
             _inputManager.KeyBindStateChanged -= OnKeyBindStateChanged;
+            CommandBinds.Unregister<GameplayStateBase>();
+        }
+
+        private bool HandleInspect(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
+        {
+            _conHost.ExecuteCommand($"vv /c/enthover");
+            return true;
         }
 
         public EntityUid? GetClickedEntity(MapCoordinates coordinates)
@@ -174,9 +194,13 @@ namespace Content.Client.Gameplay
                     EntityCoordinates.FromMap(_mapManager, mousePosWorld);
             }
 
-            var message = new FullInputCmdMessage(_timing.CurTick, _timing.TickFraction, funcId, kArgs.State,
-                coordinates , kArgs.PointerLocation,
-                entityToClick ?? default); // TODO make entityUid nullable
+            var message = new ClientFullInputCmdMessage(_timing.CurTick, _timing.TickFraction, funcId)
+            {
+                State = kArgs.State,
+                Coordinates = coordinates,
+                ScreenCoordinates = kArgs.PointerLocation,
+                Uid = entityToClick ?? default,
+            }; // TODO make entityUid nullable
 
             // client side command handlers will always be sent the local player session.
             var session = _playerManager.LocalPlayer?.Session;

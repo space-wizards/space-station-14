@@ -23,6 +23,7 @@
       - id: PlushieDiona
       - id: PlushieXeno
       - id: PlushieHampter
+      - id: PlushieMoth
 
 - type: entity
   id: CrateFunInstrumentsVariety
@@ -203,8 +204,9 @@
   - type: StorageFill
     contents:
       - id: WeaponWaterBlaster
+        amount: 2
       - id: WeaponWaterPistol
-        amount: 5
+        amount: 4
 
 - type: entity
   id: CrateFunSyndicateSegway

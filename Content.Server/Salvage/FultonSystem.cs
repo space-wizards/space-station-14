@@ -55,14 +55,18 @@ public sealed class FultonSystem : SharedFultonSystem
             !_container.IsEntityOrParentInContainer(component.Beacon.Value, xform: beaconXform))
         {
             var xform = Transform(uid);
+            var metadata = MetaData(uid);
             var oldCoords = xform.Coordinates;
             var offset = _random.NextVector2(1.5f);
-            TransformSystem.SetCoordinates(uid, new EntityCoordinates(beaconXform.ParentUid, offset));
+            var localPos = TransformSystem.GetInvWorldMatrix(beaconXform.ParentUid)
+                .Transform(TransformSystem.GetWorldPosition(beaconXform)) + offset;
+
+            TransformSystem.SetCoordinates(uid, new EntityCoordinates(beaconXform.ParentUid, localPos));
 
             RaiseNetworkEvent(new FultonAnimationMessage()
             {
-                Entity = uid,
-                Coordinates = oldCoords,
+                Entity = GetNetEntity(uid, metadata),
+                Coordinates = GetNetCoordinates(oldCoords),
             });
         }
 

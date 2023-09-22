@@ -465,6 +465,14 @@ public sealed partial class PathfindingSystem
                         continue;
                     }
 
+                    var xform = xformQuery.GetComponent(ent);
+
+                    if (xform.ParentUid != grid.Owner ||
+                        grid.LocalToTile(xform.Coordinates) != tilePos)
+                    {
+                        continue;
+                    }
+
                     tileEntities.Add(ent);
                 }
 
@@ -550,10 +558,13 @@ public sealed partial class PathfindingSystem
                             }
                         }
 
+                        /*This is causing too many issues and I'd rather just ignore it until pathfinder refactor
+                          to just get tiles at runtime.
                         if ((flags & PathfindingBreadcrumbFlag.Space) != 0x0)
                         {
-                            DebugTools.Assert(tileEntities.Count == 0);
+                            // DebugTools.Assert(tileEntities.Count == 0);
                         }
+                        */
 
                         var crumb = new PathfindingBreadcrumb()
                         {

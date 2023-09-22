@@ -1,121 +1,22 @@
 - type: entity
   save: false
-  abstract: true
-  id: SimpleSpaceMobBase # Mob without barotrauma, freezing and asphyxiation (for space carps!?)
+  parent:
+  - BaseMob
+  - MobDamageable
+  - MobAtmosExposed
+  id: BaseSimpleMob
   suffix: AI
+  abstract: true
   components:
-  - type: LagCompensation
-  - type: Tag
-    tags:
-    - DoorBumpOpener
   - type: Reactive
     groups:
       Flammable: [Touch]
       Extinguish: [Touch]
       Acidic: [Touch, Ingestion]
-  - type: InputMover
-  - type: MobMover
-  - type: HTN
-    rootTask:
-      task: IdleCompound
-  - type: Input
-    context: "human"
-  - type: NpcFactionMember
-    factions:
-    - SimpleNeutral
+  - type: Internals
   - type: MovementSpeedModifier
     baseWalkSpeed : 4
     baseSprintSpeed : 4
-  - type: HealthExaminable
-    examinableTypes:
-    - Blunt
-    - Slash
-    - Piercing
-    - Heat
-    - Shock
-  - type: MovedByPressure
-  - type: DamageOnHighSpeedImpact
-    damage:
-      types:
-        Blunt: 5
-    soundHit:
-      path: /Audio/Effects/hit_kick.ogg
-  - type: Sprite
-    noRot: true
-    drawdepth: Mobs
-  - type: Clickable
-  - type: InteractionOutline
-  - type: Physics
-    bodyType: KinematicController # Same for all inheritors
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape:
-          # Circles, cuz rotation of rectangles looks very bad
-          !type:PhysShapeCircle
-          radius: 0.35
-        density: 50
-        mask:
-        - MobMask
-        layer:
-        - MobLayer
-  - type: SolutionContainerManager
-  - type: Bloodstream
-    bloodlossDamage:
-      types:
-        Bloodloss:
-          1
-    bloodlossHealDamage:
-      types:
-        Bloodloss:
-          -1
-  - type: Damageable
-    damageContainer: Biological
-  - type: RadiationReceiver
-  - type: AtmosExposed
-  - type: Flammable
-    fireSpread: true
-    canResistFire: true
-    damage:
-      types:
-        Heat: 1 #per second, scales with number of fire 'stacks'
-  - type: Temperature
-    heatDamageThreshold: 360
-    coldDamageThreshold: 0
-    currentTemperature: 310.15
-    coldDamage:
-      types:
-        Cold : 0.1 #per second, scales with temperature & other constants
-    specificHeat: 42
-    heatDamage:
-      types:
-        Heat : 0.1 #per second, scales with temperature & other constants
-  - type: MobState
-  - type: Deathgasp
-  - type: MobStateActions
-    actions:
-      Critical:
-      - CritSuccumb
-      - CritFakeDeath
-      - CritLastWords
-  - type: MobThresholds
-    thresholds:
-      0: Alive
-      50: Critical
-      100: Dead
-  - type: Stamina
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTypeTrigger
-        damageType: Blunt
-        damage: 400
-      behaviors:
-      - !type:GibBehavior { }
-  - type: HeatResistance
-  - type: CombatMode
-  - type: Internals
-  - type: StatusIcon
   - type: StatusEffects
     allowed:
     - SlowedDown
@@ -124,34 +25,35 @@
     - ForcedSleep
     - TemporaryBlindness
     - Pacified
-  - type: Body
-    prototype: Animal
-  - type: InjectableSolution
-    solution: chemicals
-  - type: Examiner
-  - type: MeleeWeapon
-    hidden: true
-    angle: 0
-    animation: WeaponArcBite
-    damage:
-      groups:
-        Brute: 5
-  - type: Appearance
-  - type: RotationVisuals
-    defaultRotation: 0
-    horizontalRotation: 0
-  - type: FireVisuals
-    sprite: Mobs/Effects/onfire.rsi
-    normalState: Generic_mob_burning
-  - type: Actions
-  - type: DoAfter
-  - type: Climbing
-  - type: Flashable
-  - type: Polymorphable
-  - type: Pullable
   - type: Buckle
   - type: StandingState
-  - type: Alerts
+  - type: Tag
+    tags:
+    - DoorBumpOpener
+
+- type: entity
+  abstract: true
+  parent:
+  - BaseSimpleMob
+  - MobCombat
+  - MobBloodstream
+  - MobFlammable
+  id: SimpleSpaceMobBase # Mob without barotrauma, freezing and asphyxiation (for space carps!?)
+  suffix: AI
+  components:
+  - type: NpcFactionMember
+    factions:
+    - SimpleNeutral
+  - type: HTN
+    rootTask:
+      task: IdleCompound
+  - type: MeleeWeapon
+    angle: 0
+    animation: WeaponArcBite
+  - type: Body
+    prototype: Animal
+  - type: Climbing
+  - type: Flashable
   - type: NameIdentifier
     group: GenericNumber
   - type: SlowOnDamage
@@ -163,14 +65,14 @@
   - type: Perishable
 
 - type: entity
-  save: false
-  abstract: true
+  parent:
+  - MobRespirator
+  - MobAtmosStandard
+  - SimpleSpaceMobBase
   id: SimpleMobBase # for air breathers
-  parent: SimpleSpaceMobBase
   suffix: AI
+  abstract: true
   components:
-  - type: InputMover
-  - type: MobMover
   - type: Hunger
     thresholds: # only animals and rats are derived from this prototype so let's override it here and in rats' proto
       Overfed: 100
@@ -187,10 +89,6 @@
       Parched: 50
       Dead: 0
     baseDecayRate: 0.04
-  - type: Barotrauma
-    damage:
-      types:
-        Blunt: 0.15 #per second, scales with pressure and other constants.
   - type: StatusEffects
     allowed:
       - Stun
@@ -202,32 +100,6 @@
       - TemporaryBlindness
       - Pacified
       - StaminaModifier
-  - type: ThermalRegulator
-    metabolismHeat: 800
-    radiatedHeat: 100
-    implicitHeatRegulation: 250
-    sweatHeatRegulation: 500
-    shiveringHeatRegulation: 500
-    normalBodyTemperature: 310.15
-    thermalRegulationTemperatureThreshold: 25
-  - type: Respirator
-    damage:
-      types:
-        Asphyxiation: 2
-    damageRecovery:
-      types:
-        Asphyxiation: -1.0
-  - type: Temperature
-    heatDamageThreshold: 360
-    coldDamageThreshold: 260
-    currentTemperature: 310.15
-    specificHeat: 42
-    coldDamage:
-      types:
-        Cold : 1 #per second, scales with temperature & other constants
-    heatDamage:
-      types:
-        Heat : 1 #per second, scales with temperature & other constants
   - type: Bloodstream
     bloodMaxVolume: 150
   - type: MobPrice

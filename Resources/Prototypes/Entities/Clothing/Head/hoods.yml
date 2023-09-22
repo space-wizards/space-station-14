@@ -19,7 +19,7 @@
   id: ClothingHeadHatHoodBioCmo
   name: bio hood
   suffix: CMO
-  description: An advanced hood for chief medical officer that protects the head and face from biological contaminants.
+  description: An advanced hood for chief medical officers that protects the head and face from biological contaminants.
   components:
   - type: Sprite
     sprite: Clothing/Head/Hoods/Bio/cmo.rsi
@@ -77,7 +77,8 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatHoodChaplainHood
-  name: chaplain hood
+  noSpawn: true
+  name: chaplain's hood
   description: Maximum piety in this star system.
   components:
   - type: Sprite
@@ -144,6 +145,36 @@
 
 - type: entity
   parent: ClothingHeadBase
+  id: ClothingHeadHatHoodIan
+  noSpawn: true
+  name: ian hood
+  description: A hood to complete the 'Good boy' look.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hoods/iansuit.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hoods/iansuit.rsi
+  - type: Tag
+    tags:
+    - HidesHair
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatHoodCarp
+  noSpawn: true
+  name: carp hood
+  description: A gnarly hood adorned with plastic space carp teeth.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hoods/carpsuit.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hoods/carpsuit.rsi
+  - type: Tag
+    tags:
+    - HidesHair
+
+- type: entity
+  parent: ClothingHeadBase
   id: ClothingHeadHatHoodMoth
   name: moth mask
   description: A mask in the form of a moths head is usually made of lightweight materials. It mimics the shape of a moths head with large eyes and long antennae. Such masks are often used in cosplay, or when shooting movies and videos.
@@ -157,3 +188,281 @@
     tags:
     - HidesHair
     - WhitelistChameleon
+
+#Winter Coat Hoods
+- type: entity
+  parent: ClothingHeadHatHoodWinterBase
+  id: ClothingHeadHatHoodWinterDefault
+  noSpawn: true
+  name: default winter coat hood
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hoods/Coat/hooddefault.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hoods/Coat/hooddefault.rsi
+
+- type: entity
+  parent: ClothingHeadHatHoodWinterBase
+  id: ClothingHeadHatHoodWinterBartender
+  noSpawn: true
+  name: bartender winter coat hood
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hoods/Coat/hoodbartender.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hoods/Coat/hoodbartender.rsi
+
+- type: entity
+  parent: ClothingHeadHatHoodWinterBase
+  id: ClothingHeadHatHoodWinterCaptain
+  noSpawn: true
+  name: captain's winter coat hood
+  description: An expensive hood, to keep the captain's head warm.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hoods/Coat/hoodcaptain.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hoods/Coat/hoodcaptain.rsi
+
+- type: entity
+  parent: ClothingHeadHatHoodWinterBase
+  id: ClothingHeadHatHoodWinterCargo
+  noSpawn: true
+  name: cargo winter coat hood
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hoods/Coat/hoodcargo.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hoods/Coat/hoodcargo.rsi
+
+- type: entity
+  parent: ClothingHeadHatHoodWinterBase
+  id: ClothingHeadHatHoodWinterCE
+  noSpawn: true
+  name: chief engineer's winter coat hood
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hoods/Coat/hoodce.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hoods/Coat/hoodce.rsi
+
+- type: entity
+  parent: ClothingHeadHatHoodWinterBase
+  id: ClothingHeadHatHoodWinterCentcom
+  noSpawn: true
+  name: Centcom winter coat hood
+  description: A hood for keeping the central comander's head warm.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hoods/Coat/hoodcentcom.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hoods/Coat/hoodcentcom.rsi
+
+- type: entity
+  parent: ClothingHeadHatHoodWinterBase
+  id: ClothingHeadHatHoodWinterChem
+  noSpawn: true
+  name: chemist winter coat hood
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hoods/Coat/hoodchemist.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hoods/Coat/hoodchemist.rsi
+
+- type: entity
+  parent: ClothingHeadHatHoodWinterBase
+  id: ClothingHeadHatHoodWinterCMO
+  noSpawn: true
+  name: chief medical officer's winter coat hood
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hoods/Coat/hoodcmo.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hoods/Coat/hoodcmo.rsi
+
+- type: entity
+  parent: ClothingHeadHatHoodWinterBase
+  id: ClothingHeadHatHoodWinterEngineer
+  noSpawn: true
+  name: engineer winter coat hood
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hoods/Coat/hoodengi.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hoods/Coat/hoodengi.rsi
+
+- type: entity
+  parent: ClothingHeadHatHoodWinterBase
+  id: ClothingHeadHatHoodWinterHOP
+  noSpawn: true
+  name: head of personel's winter coat hood
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hoods/Coat/hoodhop.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hoods/Coat/hoodhop.rsi
+
+- type: entity
+  parent: ClothingHeadHatHoodWinterBase
+  id: ClothingHeadHatHoodWinterHOS
+  noSpawn: true
+  name: head of security's winter coat hood
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hoods/Coat/hoodhos.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hoods/Coat/hoodhos.rsi
+
+- type: entity
+  parent: ClothingHeadHatHoodWinterBase
+  id: ClothingHeadHatHoodWinterHydro
+  noSpawn: true
+  name: hydroponics coat hood
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hoods/Coat/hoodhydro.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hoods/Coat/hoodhydro.rsi
+
+- type: entity
+  parent: ClothingHeadHatHoodWinterBase
+  id: ClothingHeadHatHoodWinterJani
+  noSpawn: true
+  name: janitor coat hood
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hoods/Coat/hoodjani.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hoods/Coat/hoodjani.rsi
+
+- type: entity
+  parent: ClothingHeadHatHoodWinterBase
+  id: ClothingHeadHatHoodWinterMed
+  noSpawn: true
+  name: medic coat hood
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hoods/Coat/hoodmed.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hoods/Coat/hoodmed.rsi
+
+- type: entity
+  parent: ClothingHeadHatHoodWinterBase
+  id: ClothingHeadHatHoodWinterMime
+  noSpawn: true
+  name: mime coat hood
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hoods/Coat/hoodmime.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hoods/Coat/hoodmime.rsi
+
+- type: entity
+  parent: ClothingHeadHatHoodWinterBase
+  id: ClothingHeadHatHoodWinterMiner
+  noSpawn: true
+  name: miner coat hood
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hoods/Coat/hoodminer.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hoods/Coat/hoodminer.rsi
+
+- type: entity
+  parent: ClothingHeadHatHoodWinterBase
+  id: ClothingHeadHatHoodWinterPara
+  noSpawn: true
+  name: paramedic coat hood
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hoods/Coat/hoodpara.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hoods/Coat/hoodpara.rsi
+
+- type: entity
+  parent: ClothingHeadHatHoodWinterBase
+  id: ClothingHeadHatHoodWinterQM
+  noSpawn: true
+  name: quartermaster's coat hood
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hoods/Coat/hoodqm.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hoods/Coat/hoodqm.rsi
+
+- type: entity
+  parent: ClothingHeadHatHoodWinterBase
+  id: ClothingHeadHatHoodWinterRD
+  noSpawn: true
+  name: research director's coat hood
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hoods/Coat/hoodrd.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hoods/Coat/hoodrd.rsi
+
+- type: entity
+  parent: ClothingHeadHatHoodWinterBase
+  id: ClothingHeadHatHoodWinterRobo
+  noSpawn: true
+  name: robotics coat hood
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hoods/Coat/hoodrobo.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hoods/Coat/hoodrobo.rsi
+
+- type: entity
+  parent: ClothingHeadHatHoodWinterBase
+  id: ClothingHeadHatHoodWinterSci
+  noSpawn: true
+  name: scientist coat hood
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hoods/Coat/hoodsci.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hoods/Coat/hoodsci.rsi
+
+- type: entity
+  parent: ClothingHeadHatHoodWinterBase
+  id: ClothingHeadHatHoodWinterSec
+  noSpawn: true
+  name: security coat hood
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hoods/Coat/hoodsec.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hoods/Coat/hoodsec.rsi
+
+- type: entity
+  parent: ClothingHeadHatHoodWinterBase
+  id: ClothingHeadHatHoodWinterSyndie
+  noSpawn: true
+  name: syndicate coat hood
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hoods/Coat/hoodsyndicate.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hoods/Coat/hoodsyndicate.rsi
+
+- type: entity
+  parent: ClothingHeadHatHoodWinterBase
+  id: ClothingHeadHatHoodWinterWarden
+  noSpawn: true
+  name: warden's coat hood
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hoods/Coat/hoodsec.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hoods/Coat/hoodsec.rsi
+
+- type: entity
+  parent: ClothingHeadHatHoodWinterBase
+  id: ClothingHeadHatHoodWinterWeb
+  noSpawn: true
+  name: web coat hood
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hoods/Coat/hoodweb.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hoods/Coat/hoodweb.rsi

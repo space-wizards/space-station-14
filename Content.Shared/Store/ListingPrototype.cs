@@ -1,12 +1,11 @@
+using System.Linq;
+using Content.Shared.FixedPoint;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 using Robust.Shared.Utility;
-using Content.Shared.Actions.ActionTypes;
-using Content.Shared.FixedPoint;
-using System.Linq;
 
 namespace Content.Shared.Store;
 
@@ -71,7 +70,7 @@ public partial class ListingData : IEquatable<ListingData>, ICloneable
     /// <summary>
     /// The action that is given when the listing is purchased.
     /// </summary>
-    [DataField("productAction", customTypeSerializer: typeof(PrototypeIdSerializer<InstantActionPrototype>))]
+    [DataField("productAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string? ProductAction;
 
     /// <summary>
@@ -84,6 +83,12 @@ public partial class ListingData : IEquatable<ListingData>, ICloneable
     /// used internally for tracking how many times an item was purchased.
     /// </summary>
     public int PurchaseAmount = 0;
+
+    /// <summary>
+    /// Used to delay purchase of some items.
+    /// </summary>
+    [DataField("restockTime")]
+    public int RestockTime;
 
     public bool Equals(ListingData? listing)
     {
@@ -137,6 +142,7 @@ public partial class ListingData : IEquatable<ListingData>, ICloneable
             ProductAction = ProductAction,
             ProductEvent = ProductEvent,
             PurchaseAmount = PurchaseAmount,
+            RestockTime = RestockTime,
         };
     }
 }
