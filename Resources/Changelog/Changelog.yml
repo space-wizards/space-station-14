@@ -1,15 +1,4 @@
 Entries:
-- author: Keiku
-  changes:
-  - {message: Improve hunger and thirst warning icons, type: Tweak}
-  id: 4373
-  time: '2023-07-29T19:19:09.0000000+00:00'
-- author: Dygon
-  changes:
-  - {message: 'When firing a gun, casings now eject with a bit of force instead of
-      dropping straight to the floor.', type: Tweak}
-  id: 4374
-  time: '2023-07-29T21:07:32.0000000+00:00'
 - author: liltenhead
   changes:
   - {message: Added filter for bartender recipes in the guidebook, type: Add}
@@ -2976,3 +2965,19 @@ Entries:
   - {message: Station records console works properly again, type: Fix}
   id: 4872
   time: '2023-09-22T19:57:06.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: 'The rat king can now rummage through disposal units to get trash, cheese,
+      or gold.', type: Add}
+  - {message: 'The rat king now can command its servants to do various actions. They
+      can sit, follow, attack a target, or go buck-wild, all at the King''s command',
+    type: Add}
+  - {message: Rat servants are no longer ghost roles., type: Remove}
+  id: 4873
+  time: '2023-09-22T20:01:05.0000000+00:00'
+- author: waylon531
+  changes:
+  - {message: The surgeons at Centcomm have made it so drinking too much alcohol will
+      now cause liver failure instead of heart failure. Alcoholics rejoice!, type: Fix}
+  id: 4874
+  time: '2023-09-22T20:01:42.0000000+00:00'
