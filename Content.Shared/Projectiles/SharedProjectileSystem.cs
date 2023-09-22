@@ -76,7 +76,8 @@ public abstract partial class SharedProjectileSystem : EntitySystem
         // Reset whether the projectile has damaged anything if it successfully was removed
         if (TryComp<ProjectileComponent>(uid, out var projectile))
         {
-            projectile.WasFired = false;
+            projectile.Shooter = null;
+            projectile.Weapon = null;
             projectile.DamagedEntity = false;
         }
 

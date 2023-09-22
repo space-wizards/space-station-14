@@ -30,7 +30,7 @@ public sealed class ProjectileSystem : SharedProjectileSystem
     {
         // This is so entities that shouldn't get a collision are ignored.
         if (args.OurFixtureId != ProjectileFixture || !args.OtherFixture.Hard
-            || component.DamagedEntity || component is { WasFired: false, OnlyCollideWhenShot: true })
+            || component.DamagedEntity || component is { Weapon: null, OnlyCollideWhenShot: true })
             return;
 
         var target = args.OtherEntity;

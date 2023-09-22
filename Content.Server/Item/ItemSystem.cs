@@ -18,7 +18,7 @@ public sealed class ItemSystem : SharedItemSystem
             !TryComp<StorageComponent>(container.Owner, out var storage))
             return;
 
-        _storage.RecalculateStorageUsed(storage);
+        _storage.RecalculateStorageUsed(container.Owner, storage);
         _storage.UpdateUI(container.Owner, storage);
     }
 }

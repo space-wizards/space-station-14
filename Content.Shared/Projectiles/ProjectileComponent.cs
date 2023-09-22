@@ -43,7 +43,7 @@ public sealed partial class ProjectileComponent : Component
     public bool ForceSound = false;
 
     /// <summary>
-    ///     Whether this projectile will only collide with entities if it was shot from a gun (<see cref="WasFired"/>)
+    ///     Whether this projectile will only collide with entities if it was shot from a gun (if <see cref="Weapon"/> is not null)
     /// </summary>
     [DataField("onlyCollideWhenShot")]
     public bool OnlyCollideWhenShot = false;
@@ -52,10 +52,4 @@ public sealed partial class ProjectileComponent : Component
     ///     Whether this projectile has already damaged an entity.
     /// </summary>
     public bool DamagedEntity;
-
-    /// <summary>
-    ///     If this projectile was fired from a gun or not.
-    /// </summary>
-    [DataField("wasFired")]
-    public bool WasFired;
 }
