@@ -9,7 +9,6 @@ using Content.Shared.Projectiles;
 using Robust.Server.GameObjects;
 using Robust.Shared.Player;
 using Robust.Shared.Physics.Events;
-using Content.Shared.Effects;
 
 namespace Content.Server.Projectiles;
 
@@ -30,7 +29,8 @@ public sealed class ProjectileSystem : SharedProjectileSystem
     private void OnStartCollide(EntityUid uid, ProjectileComponent component, ref StartCollideEvent args)
     {
         // This is so entities that shouldn't get a collision are ignored.
-        if (args.OurFixtureId != ProjectileFixture || !args.OtherFixture.Hard || component.DamagedEntity)
+        if (args.OurFixtureId != ProjectileFixture || !args.OtherFixture.Hard
+            || component.DamagedEntity || component is { Weapon: null, OnlyCollideWhenShot: true })
             return;
 
         var target = args.OtherEntity;
@@ -60,7 +60,7 @@ public sealed class ProjectileSystem : SharedProjectileSystem
 
             _adminLogger.Add(LogType.BulletHit,
                 HasComp<ActorComponent>(target) ? LogImpact.Extreme : LogImpact.High,
-                $"Projectile {ToPrettyString(uid):projectile} shot by {ToPrettyString(component.Shooter):user} hit {otherName:target} and dealt {modifiedDamage.Total:damage} damage");
+                $"Projectile {ToPrettyString(uid):projectile} shot by {ToPrettyString(component.Shooter!.Value):user} hit {otherName:target} and dealt {modifiedDamage.Total:damage} damage");
         }
 
         if (!deleted)

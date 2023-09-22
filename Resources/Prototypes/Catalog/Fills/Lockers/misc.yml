@@ -204,6 +204,8 @@
           prob: 0.2
         - id: ClothingHandsGlovesColorYellow
           prob: 0.05
+        - id: ClothingBeltQuiver
+          prob: 0.02
         - id: ClothingBeltUtility
           prob: 0.10
         - id: ClothingHeadHatCone
