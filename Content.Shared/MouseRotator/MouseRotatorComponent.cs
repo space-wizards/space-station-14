@@ -14,21 +14,20 @@ public sealed partial class MouseRotatorComponent : Component
     /// <summary>
     ///     How much the desired angle needs to change before a predictive event is sent
     /// </summary>
-    [DataField("angleTolerance")]
+    [DataField]
     [ViewVariables(VVAccess.ReadWrite)]
     public Angle AngleTolerance = Angle.FromDegrees(5.0);
 
     /// <summary>
     ///     The angle that will be lerped to
     /// </summary>
-    [AutoNetworkedField]
-    [ViewVariables]
+    [AutoNetworkedField, DataField]
     public Angle? GoalRotation;
 
     /// <summary>
     ///     Max degrees the entity can rotate per second
     /// </summary>
-    [DataField("rotationSpeed")]
+    [DataField]
     [ViewVariables(VVAccess.ReadWrite)]
     public double RotationSpeed = float.MaxValue;
 }
