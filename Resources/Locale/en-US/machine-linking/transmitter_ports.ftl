@@ -45,3 +45,9 @@ signal-port-description-air-warning = This port is invoked with HIGH when in war
 
 signal-port-name-air-normal = Normal
 signal-port-description-air-normal = This port is invoked with HIGH when in normal mode and LOW when not.
+
+signal-port-name-power-charging = Charging
+signal-port-description-power-charging = This port is invoked with HIGH when the battery is gaining charge and LOW when not.
+
+signal-port-name-power-discharging = Discharging
+signal-port-description-power-discharging = This port is invoked with HIGH when the battery is losing charge and LOW when not.
