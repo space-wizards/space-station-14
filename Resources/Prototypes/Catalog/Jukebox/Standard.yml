@@ -1,0 +1,43 @@
+- type: musicList
+  id: MusicStandard
+  songs:
+    - name: A-Guy - Revolution
+      path: /Audio/Music/Jukebox/A-Guy - Revolution.ogg
+      songLength: 389
+    - name: Bug - Space Junk
+      path: /Audio/Music/Jukebox/Bug - Space Junk.ogg
+      songLength: 118
+    - name: Chris Remo - Space Asshole Original
+      path: /Audio/Music/Jukebox/ChrisRemo - Space Asshole original.ogg
+      songLength: 256
+    - name: Chris Remo - Space Asshole Remaster
+      path: /Audio/Music/Jukebox/ChrisRemo - Space Asshole remaster.ogg
+      songLength: 234
+    - name: Chris Remo - The Wizard Original
+      path: /Audio/Music/Jukebox/ChrisRemo - The_Wizard_Original.ogg
+      songLength: 106
+    - name: Chris Remo - The Wizard Remaster
+      path: /Audio/Music/Jukebox/TheWizard-ChrisRemo.ogg
+      songLength: 170
+    - name: Jeroen Tel - Tintin on the Moon - Remix by Cuboos
+      path: /Audio/Music/Jukebox/title3.ogg
+      songLength: 232
+    - name: Jhariah - PRESSURE BOMB 3?!?!
+      path: /Audio/Music/Jukebox/Jhariah - PRESSURE BOMB 3.ogg
+      songLength: 197
+    - name: MashedByMachines - Sector11
+      path: /Audio/Music/Jukebox/MashedByMachines - Sector11.ogg
+      songLength: 202
+    - name: Qwertyquerty - Constellations
+      path: /Audio/Music/Jukebox/Qwertyquerty - Constellations.ogg
+      songLength: 152
+    - name: Qwertyquerty - Drifting
+      path: /Audio/Music/Jukebox/Qwertyquerty - Drifting.ogg
+      songLength: 152
+    - name: Qwertyquerty - Starlight
+      path: /Audio/Music/Jukebox/Qwertyquerty - Starlight.ogg
+      songLength: 247
+    - name: X-CEED - Flip Flop
+      path: /Audio/Music/Jukebox/title1.ogg
+      songLength: 150
+

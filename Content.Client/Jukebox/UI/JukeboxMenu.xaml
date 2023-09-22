@@ -1,0 +1,16 @@
+<DefaultWindow xmlns="https://spacestation14.io" SetSize="400 500" Title="{Loc 'jukebox-menu-title'}">
+    <BoxContainer Margin="4 0" Orientation="Vertical">
+        <ItemList Name="MusicList" SelectMode="Button" Margin="3 3 3 3"
+        HorizontalExpand="True" VerticalExpand="True" SizeFlagsStretchRatio="8"/>
+        <BoxContainer Orientation="Vertical">
+            <Label Name="SongSelected" Text="{Loc 'jukebox-menu-selectedsong'}" />
+            <Label Name="SongName" Text="---" />
+            <Slider Name="PlaybackSlider" HorizontalExpand="True" />
+        </BoxContainer>
+        <BoxContainer Orientation="Horizontal" HorizontalExpand="true"
+        VerticalExpand="false" SizeFlagsStretchRatio="1">
+            <Button Name="PausePlayButton" Text="{Loc 'jukebox-menu-buttonplay'}" />
+            <Button Name="StopButton" Text="{Loc 'jukebox-menu-buttonstop'}" />
+        </BoxContainer>
+    </BoxContainer>
+</DefaultWindow>
