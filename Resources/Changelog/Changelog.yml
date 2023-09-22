@@ -1,10 +1,4 @@
 Entries:
-- author: chromiumboy
-  changes:
-  - {message: 'The detection range of the anomaly locator has been doubled, and its
-      battery life increased by a factor of five', type: Tweak}
-  id: 4371
-  time: '2023-07-29T18:51:36.0000000+00:00'
 - author: lzk228
   changes:
   - {message: Fix display of ghost role rules., type: Fix}
@@ -2973,3 +2967,12 @@ Entries:
   - {message: Added quivers as random maint loot drops, type: Add}
   id: 4870
   time: '2023-09-22T09:45:21.0000000+00:00'
+- author: Vasilis
+  changes:
+  - {message: The guidebook now has a pop-out button. This will turn it into a system
+      window that you can drag wherever is convenient such as a second monitor., type: Add}
+  - {message: 'The Steam overlay has been disabled due to conflicts with pop-out windows.
+      Due to a bug with Steam, the game''s graphics will corrupt when overlay is enabled
+      and a popout window is opened.', type: Remove}
+  id: 4871
+  time: '2023-09-22T19:52:31.0000000+00:00'
