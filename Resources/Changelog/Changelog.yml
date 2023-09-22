@@ -1,9 +1,4 @@
 Entries:
-- author: lzk228
-  changes:
-  - {message: Fix display of ghost role rules., type: Fix}
-  id: 4372
-  time: '2023-07-29T18:56:59.0000000+00:00'
 - author: Keiku
   changes:
   - {message: Improve hunger and thirst warning icons, type: Tweak}
@@ -2976,3 +2971,8 @@ Entries:
       and a popout window is opened.', type: Remove}
   id: 4871
   time: '2023-09-22T19:52:31.0000000+00:00'
+- author: TheArturZh
+  changes:
+  - {message: Station records console works properly again, type: Fix}
+  id: 4872
+  time: '2023-09-22T19:57:06.0000000+00:00'
