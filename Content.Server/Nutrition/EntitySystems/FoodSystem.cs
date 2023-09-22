@@ -105,7 +105,7 @@ public sealed class FoodSystem : EntitySystem
         if (_openable.IsClosed(food, user))
             return (false, true);
 
-        if (!_solutionContainer.TryGetSolution(food, foodComp.SolutionName, out var foodSolution) || foodSolution.Name == null)
+        if (!_solutionContainer.TryGetSolution(food, foodComp.Solution, out var foodSolution) || foodSolution.Name == null)
             return (false, false);
 
         if (!_body.TryGetBodyOrganComponents<StomachComponent>(target, out var stomachs, body))
@@ -504,7 +504,7 @@ public sealed class FoodSystem : EntitySystem
         if (!Resolve(uid, ref comp))
             return 0;
 
-        if (!_solutionContainer.TryGetSolution(uid, comp.SolutionName, out var solution) || solution.Volume == 0)
+        if (!_solutionContainer.TryGetSolution(uid, comp.Solution, out var solution) || solution.Volume == 0)
             return 0;
 
         // eat all in 1 go, so non empty is 1 bite

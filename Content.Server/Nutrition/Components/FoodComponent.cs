@@ -12,7 +12,7 @@ namespace Content.Server.Nutrition.Components;
 public sealed partial class FoodComponent : Component
 {
     [DataField]
-    public string SolutionName = "food";
+    public string Solution = "food";
 
     [DataField]
     public SoundSpecifier UseSound = new SoundPathSpecifier("/Audio/Items/eatfood.ogg");

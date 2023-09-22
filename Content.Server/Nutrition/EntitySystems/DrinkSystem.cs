@@ -77,7 +77,7 @@ public sealed class DrinkSystem : EntitySystem
         if (!Resolve(uid, ref component))
             return FixedPoint2.Zero;
 
-        if (!_solutionContainer.TryGetSolution(uid, component.SolutionName, out var sol))
+        if (!_solutionContainer.TryGetSolution(uid, component.Solution, out var sol))
             return FixedPoint2.Zero;
 
         return sol.Volume;
@@ -99,7 +99,7 @@ public sealed class DrinkSystem : EntitySystem
         if (!Resolve(uid, ref comp))
             return 0f;
 
-        if (!_solutionContainer.TryGetSolution(uid, comp.SolutionName, out var solution))
+        if (!_solutionContainer.TryGetSolution(uid, comp.Solution, out var solution))
             return 0f;
 
         var total = 0f;
@@ -183,7 +183,7 @@ public sealed class DrinkSystem : EntitySystem
 
         if (!openable.Opened &&
             _random.Prob(comp.BurstChance) &&
-            _solutionContainer.TryGetSolution(uid, drink.SolutionName, out var interactions))
+            _solutionContainer.TryGetSolution(uid, drink.Solution, out var interactions))
         {
             // using SetOpen instead of TryOpen to not play 2 sounds
             _openable.SetOpen(uid, true, openable);
@@ -200,20 +200,20 @@ public sealed class DrinkSystem : EntitySystem
         if (TryComp<DrainableSolutionComponent>(uid, out var existingDrainable))
         {
             // Beakers have Drink component but they should use the existing Drainable
-            component.SolutionName = existingDrainable.Solution;
+            component.Solution = existingDrainable.Solution;
         }
         else
         {
-            _solutionContainer.EnsureSolution(uid, component.SolutionName);
+            _solutionContainer.EnsureSolution(uid, component.Solution);
         }
 
         UpdateAppearance(uid, component);
 
         if (TryComp(uid, out RefillableSolutionComponent? refillComp))
-            refillComp.Solution = component.SolutionName;
+            refillComp.Solution = component.Solution;
 
         if (TryComp(uid, out DrainableSolutionComponent? drainComp))
-            drainComp.Solution = component.SolutionName;
+            drainComp.Solution = component.Solution;
     }
 
     private void OnSolutionChange(EntityUid uid, DrinkComponent component, SolutionChangedEvent args)
@@ -241,7 +241,7 @@ public sealed class DrinkSystem : EntitySystem
         if (_openable.IsClosed(item, user))
             return true;
 
-        if (!_solutionContainer.TryGetSolution(item, drink.SolutionName, out var drinkSolution) ||
+        if (!_solutionContainer.TryGetSolution(item, drink.Solution, out var drinkSolution) ||
             drinkSolution.Volume <= 0)
         {
             if (drink.IgnoreEmpty)

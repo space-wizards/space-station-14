@@ -7,9 +7,8 @@ namespace Content.Server.Nutrition.Components;
 [RegisterComponent, Access(typeof(DrinkSystem))]
 public sealed partial class DrinkComponent : Component
 {
-    [DataField("solution"), ViewVariables(VVAccess.ReadWrite)]
-    public string SolutionName = DefaultSolutionName;
-    public const string DefaultSolutionName = "drink";
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public string Solution = "drink";
 
     [DataField]
     public SoundSpecifier UseSound = new SoundPathSpecifier("/Audio/Items/drink.ogg");
