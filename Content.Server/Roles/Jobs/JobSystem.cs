@@ -4,17 +4,22 @@ using Content.Server.Mind;
 using Content.Shared.Mind;
 using Content.Shared.Roles;
 using Content.Shared.Roles.Jobs;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Roles.Jobs;
 
+/// <summary>
+///     Handles the job data on mind entities.
+/// </summary>
 public sealed class JobSystem : SharedJobSystem
 {
     [Dependency] private readonly IChatManager _chat = default!;
-    [Dependency] private readonly MindSystem _minds = default!;
-    [Dependency] private readonly SharedRoleSystem _roles = default!;
+    [Dependency] private readonly MindSystem _mind = default!;
+    [Dependency] private readonly RoleSystem _roles = default!;
 
     public override void Initialize()
     {
+        base.Initialize();
         SubscribeLocalEvent<MindComponent, MindRoleAddedEvent>(MindOnDoGreeting);
     }
 
@@ -23,7 +28,7 @@ public sealed class JobSystem : SharedJobSystem
         if (args.Silent)
             return;
 
-        if (!_minds.TryGetSession(mindId, out var session))
+        if (!_mind.TryGetSession(mindId, out var session))
             return;
 
         if (!MindTryGetJob(mindId, out _, out var prototype))

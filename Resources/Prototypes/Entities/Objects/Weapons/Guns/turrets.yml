@@ -66,6 +66,7 @@
       interactSuccessSound:
         path: /Audio/Effects/double_beep.ogg
     - type: CombatMode
+      combatToggleAction: ActionCombatModeToggleOff
     - type: Damageable
       damageContainer: Inorganic
     - type: Destructible

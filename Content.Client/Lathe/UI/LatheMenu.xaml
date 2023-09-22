@@ -18,18 +18,6 @@
                 VerticalExpand="True"
                 HorizontalExpand="True"
                 SeparationOverride="5">
-                <BoxContainer
-                    Orientation="Horizontal"
-                    Align="End"
-                    HorizontalExpand="True">
-                    <Button
-                        Name="ServerListButton"
-                        Text="{Loc 'lathe-menu-server-list'}"
-                        TextAlign="Center"
-                        Mode="Press"
-                        StyleClasses="OpenLeft">
-                    </Button>
-                </BoxContainer>
                 <BoxContainer Orientation="Horizontal"
                     HorizontalExpand="True">
                     <LineEdit
@@ -77,17 +65,28 @@
                 </BoxContainer>
             </BoxContainer>
         </BoxContainer>
-
+        <BoxContainer MinWidth="5"/>
         <!-- Right Col-->
         <BoxContainer
             Orientation="Vertical"
             VerticalExpand="True"
             HorizontalExpand="True"
-            SeparationOverride="5"
-        >
-            <BoxContainer Orientation="Vertical"  MinHeight="225">
+            SeparationOverride="5">
+            <BoxContainer Orientation="Vertical" MinHeight="225">
+                <BoxContainer
+                    Orientation="Horizontal"
+                    Align="End"
+                    HorizontalExpand="True">
+                    <Button
+                        Name="ServerListButton"
+                        Text="{Loc 'lathe-menu-server-list'}"
+                        TextAlign="Center"
+                        Mode="Press">
+                    </Button>
+                </BoxContainer>
                 <Label Text="{Loc 'lathe-menu-queue-title'}" Margin="5 5 5 5" HorizontalAlignment="Center"/>
                 <BoxContainer
+                    Name="FabricatingContainer"
                     Orientation="Horizontal"
                     HorizontalExpand="True"
                     SizeFlagsStretchRatio="2">
@@ -99,16 +98,16 @@
                             <gfx:StyleBoxFlat BackgroundColor="#408040" />
                         </PanelContainer.PanelOverride>
                         <Label
-                        Name="FabricatingActiveLabel"
-                        RectClipContent="False"
-                        HorizontalAlignment="Left"
-                        Margin="5 0 0 0">
+                            RectClipContent="False"
+                            HorizontalAlignment="Left"
+                            Margin="5 0 0 0"
+                            Text="{Loc 'lathe-menu-fabricating-message'}">
                         </Label>
                         <TextureRect
-                        Name="Icon"
-                        HorizontalExpand="True"
-                        SizeFlagsStretchRatio="2"
-                        Margin="100 0 0 0">
+                            Name="Icon"
+                            HorizontalExpand="True"
+                            SizeFlagsStretchRatio="2"
+                            Margin="100 0 0 0">
                         </TextureRect>
                         <Label
                             Name="NameLabel"

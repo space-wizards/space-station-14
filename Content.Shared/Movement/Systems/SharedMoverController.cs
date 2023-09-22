@@ -53,6 +53,7 @@ namespace Content.Shared.Movement.Systems
         protected EntityQuery<RelayInputMoverComponent> RelayQuery;
         protected EntityQuery<SharedPullableComponent> PullableQuery;
         protected EntityQuery<TransformComponent> XformQuery;
+        protected EntityQuery<CanMoveInAirComponent> CanMoveInAirQuery;
         protected EntityQuery<NoRotateOnMoveComponent> NoRotateQuery;
 
         private const float StepSoundMoveDistanceRunning = 2;
@@ -85,6 +86,7 @@ namespace Content.Shared.Movement.Systems
             PullableQuery = GetEntityQuery<SharedPullableComponent>();
             XformQuery = GetEntityQuery<TransformComponent>();
             NoRotateQuery = GetEntityQuery<NoRotateOnMoveComponent>();
+            CanMoveInAirQuery = GetEntityQuery<CanMoveInAirComponent>();
 
             InitializeFootsteps();
             InitializeInput();
@@ -152,27 +154,16 @@ namespace Content.Shared.Movement.Systems
             LerpRotation(uid, mover, frameTime);
 
             if (!canMove
-                || physicsComponent.BodyStatus != BodyStatus.OnGround
+                || physicsComponent.BodyStatus != BodyStatus.OnGround && !CanMoveInAirQuery.HasComponent(uid)
                 || PullableQuery.TryGetComponent(uid, out var pullable) && pullable.BeingPulled)
             {
                 UsedMobMovement[uid] = false;
                 return;
             }
 
-            // Get current tile def for things like speed/weightless mods
-            ContentTileDefinition? tileDef = null;
-
-            if (_mapManager.TryFindGridAt(xform.MapPosition, out var grid, out var gridComp)
-                && _mapSystem.TryGetTileRef(grid, gridComp, xform.Coordinates, out var tile))
-            {
-                tileDef = (ContentTileDefinition) _tileDefinitionManager[tile.Tile.TypeId];
-            }
 
             UsedMobMovement[uid] = true;
             // Specifically don't use mover.Owner because that may be different to the actual physics body being moved.
-
-            // We differentiate between grav/other sources of weightless for tiles which want to use weightless accel (like ice)
-            // but don't care about requiring touching etc
             var weightless = _gravity.IsWeightless(physicsUid, physicsComponent, xform);
             var (walkDir, sprintDir) = GetVelocityInput(mover);
             var touching = false;
@@ -193,6 +184,18 @@ namespace Content.Shared.Movement.Systems
                     if (!touching && TryComp<MobMoverComponent>(uid, out var mobMover))
                         touching |= IsAroundCollider(PhysicsSystem, xform, mobMover, physicsUid, physicsComponent);
                 }
+            }
+
+            // Get current tile def for things like speed/friction mods
+            ContentTileDefinition? tileDef = null;
+
+            // Don't bother getting the tiledef here if we're weightless or in-air
+            // since no tile-based modifiers should be applying in that situation
+            if (_mapManager.TryFindGridAt(xform.MapPosition, out var grid, out var gridComp)
+                && _mapSystem.TryGetTileRef(grid, gridComp, xform.Coordinates, out var tile)
+                && !(weightless || physicsComponent.BodyStatus == BodyStatus.InAir))
+            {
+                tileDef = (ContentTileDefinition) _tileDefinitionManager[tile.Tile.TypeId];
             }
 
             // Regular movement.

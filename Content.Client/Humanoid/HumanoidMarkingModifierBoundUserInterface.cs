@@ -42,7 +42,7 @@ public sealed class HumanoidMarkingModifierBoundUserInterface : BoundUserInterfa
             return;
         }
 
-        _window.SetState(cast.MarkingSet, cast.Species, cast.SkinColor, cast.CustomBaseLayers);
+        _window.SetState(cast.MarkingSet, cast.Species, cast.Sex, cast.SkinColor, cast.CustomBaseLayers);
     }
 
     private void SendMarkingSet(MarkingSet set)

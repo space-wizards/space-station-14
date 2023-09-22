@@ -66,6 +66,8 @@
     energy: 2
     color: "#4faffb"
   - type: GhostTakeoverAvailable
+  - type: Speech
+    speechVerb: LargeMob
 
 - type: entity
   name: space bear
@@ -181,9 +183,6 @@
     interfaces:
     - key: enum.StrippingUiKey.Key
       type: StrippableBoundUserInterface
-    radius: 1.2
-    energy: 2
-    color: "#4faffb"
   - type: GhostRole
     prob: 0.25
     name: ghost-role-information-space-kangaroo-name
@@ -284,6 +283,8 @@
     prob: 0.30
     name: ghost-role-information-space-spider-name
     description: ghost-role-information-space-spider-description
+  - type: Speech
+    speechVerb: Arachnid
 
 - type: entity
   id: MobSpiderSpaceSalvage

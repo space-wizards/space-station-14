@@ -1,0 +1,144 @@
+- type: entity
+  abstract: true
+  parent: BaseStructure
+  id: BaseHardBomb
+  description: Just keep talking and nobody will explode.
+  name: hardbomb
+  components:
+    - type: Appearance
+    - type: WiresVisuals
+    - type: InteractionOutline
+    - type: UserInterface
+      interfaces:
+        - key: enum.WiresUiKey.Key
+          type: WiresBoundUserInterface
+    - type: Wires
+      LayoutId: Defusable
+      alwaysRandomize: true
+    - type: Defusable
+    - type: Explosive
+      explosionType: Default
+      totalIntensity: 20.0
+      intensitySlope: 5
+      maxIntensity: 4
+    - type: ExplodeOnTrigger
+    # If you nerf the syndicate bomb in any major way, this should probably drop down to at least 100s (not 90s to compensate for slower movement speed & less lag in SS14)
+    # Unless, of course, you want the 90 seconds regardless. I can't stop you.
+    - type: OnUseTimerTrigger
+      delay: 180
+      delayOptions: [180, 240, 300, 600, 900]
+      initialBeepDelay: 0
+      beepSound: /Audio/Machines/timer.ogg
+    - type: Anchorable
+      delay: 5
+    - type: Physics
+      bodyType: Static
+    - type: Transform
+      noRot: true
+    - type: Fixtures
+      fixtures:
+        fix1:
+          shape:
+            !type:PhysShapeAabb
+            bounds: "-0.45,-0.45,0.45,0.45"
+          density: 190
+          mask:
+            - MachineMask
+          layer:
+            - MachineLayer
+    - type: WiresPanel
+    - type: GuideHelp
+      openOnActivation: true
+      guides:
+        - Defusal
+
+- type: entity
+  parent: BaseHardBomb
+  id: TrainingBomb
+  name: training bomb
+  description: A bomb for dummies, manual not included.
+  components:
+    - type: Wires
+      LayoutId: Defusable
+      alwaysRandomize: true
+    - type: Sprite
+      sprite: Structures/Machines/bomb.rsi
+      layers:
+        - state: training-bomb
+        - state: training-bomb-active
+          visible: false
+          map: [ "primed" ]
+        - state: training-bomb-wires
+          visible: false
+          map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+    - type: GenericVisualizer
+      visuals:
+        enum.DefusableVisuals.Active:
+          primed:
+            True: { visible: true }
+            False: { visible: false }
+        enum.WiresVisualLayers.MaintenancePanel:
+          enum.WiresVisualLayers.MaintenancePanel:
+            True: { visible: true }
+            False: { visible: false }
+    - type: PointLight
+      color: "#0063C7"
+      radius: 1.1
+      softness: 1
+    - type: Explosive
+      explosionType: Default
+      totalIntensity: 5.0
+      intensitySlope: 5
+      maxIntensity: 4
+      canCreateVacuum: false
+    - type: Defusable
+      disposable: false
+
+- type: entity
+  parent: BaseHardBomb
+  id: SyndicateBomb
+  name: syndicate bomb
+  description: A bomb for Syndicate operatives and agents alike. The real deal, no more training, get to it!
+  components:
+    - type: Sprite
+      sprite: Structures/Machines/bomb.rsi
+      layers:
+        - state: syndicate-bomb
+        - state: syndicate-bomb-active
+          visible: false
+          map: [ "primed" ]
+        - state: syndicate-bomb-wires
+          visible: false
+          map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+    - type: GenericVisualizer
+      visuals:
+        enum.DefusableVisuals.Active:
+          primed:
+            True: { visible: true }
+            False: { visible: false }
+        enum.WiresVisualLayers.MaintenancePanel:
+          enum.WiresVisualLayers.MaintenancePanel:
+            True: { visible: true }
+            False: { visible: false }
+    - type: PointLight
+      color: "#C7001B"
+      radius: 1.1
+      softness: 1
+    - type: Explosive
+      explosionType: HardBomb
+      totalIntensity: 4000.0
+      intensitySlope: 3
+      maxIntensity: 400
+
+- type: entity
+  parent: SyndicateBomb
+  id: DebugHardBomb
+  name: debug bomb
+  suffix: DEBUG
+  description: Holy shit this is gonna explode
+  components:
+    - type: Defusable
+      disposable: true
+    - type: OnUseTimerTrigger
+      delay: 10
+      delayOptions: [10, 20, 30, 60, 90, 120, 150, 180, 210, 240, 270, 300]

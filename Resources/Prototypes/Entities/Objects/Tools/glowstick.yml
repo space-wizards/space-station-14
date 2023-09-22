@@ -60,7 +60,6 @@
           maxDuration: 10 # 300.0
           startValue: 5.0
           endValue: 1.5
-          property: Radius
 
 - type: entity
   name: red glowstick
@@ -69,9 +68,7 @@
   components:
     - type: ExpendableLight
       spentName: expendable-light-spent-red-glowstick-name
-      glowDuration: 10 # time in seconds
       glowColorLit: "#FF0000"
-      fadeOutDuration: 5
     - type: PointLight
       color: "#FF0000"
 
@@ -201,7 +198,7 @@
           minDuration: 0.2
           maxDuration: 1.0
           maxValue: 0.2
-          property: Enabled
+          property: AnimatedEnable
           isLooped: true
           enabled: true
         - !type:ColorCycleBehaviour
@@ -274,7 +271,6 @@
           minValue: 2.0
           maxValue: 10.0
           isLooped: true
-          property: Radius
           enabled: true
 
 - type: entity
@@ -306,5 +302,4 @@
           minValue: 10.0
           maxValue: 25.0
           isLooped: true
-          property: Radius
           enabled: true

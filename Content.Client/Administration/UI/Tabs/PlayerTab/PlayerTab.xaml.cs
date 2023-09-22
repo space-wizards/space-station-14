@@ -18,6 +18,7 @@ namespace Content.Client.Administration.UI.Tabs.PlayerTab
         private const string ArrowDown = "↓";
         private readonly Color _altColor = Color.FromHex("#292B38");
         private readonly Color _defaultColor = Color.FromHex("#2F2F3B");
+        private IEntityManager _entManager;
         private readonly AdminSystem _adminSystem;
         private IReadOnlyList<PlayerInfo> _players = new List<PlayerInfo>();
 
@@ -29,7 +30,8 @@ namespace Content.Client.Administration.UI.Tabs.PlayerTab
 
         public PlayerTab()
         {
-            _adminSystem = EntitySystem.Get<AdminSystem>();
+            _entManager = IoCManager.Resolve<IEntityManager>();
+            _adminSystem = _entManager.System<AdminSystem>();
             RobustXamlLoader.Load(this);
             RefreshPlayerList(_adminSystem.PlayerList);
 
@@ -119,7 +121,7 @@ namespace Content.Client.Administration.UI.Tabs.PlayerTab
                     player.Antag ? "YES" : "NO",
                     new StyleBoxFlat(useAltColor ? _altColor : _defaultColor),
                     player.Connected);
-                entry.PlayerUid = player.EntityUid;
+                entry.PlayerEntity = player.NetEntity;
                 entry.OnPressed += args => OnEntryPressed?.Invoke(args);
                 PlayerList.AddChild(entry);
 

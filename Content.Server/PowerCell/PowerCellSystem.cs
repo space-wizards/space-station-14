@@ -1,6 +1,7 @@
 using Content.Server.Administration.Logs;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Explosion.EntitySystems;
+using Content.Server.Emp;
 using Content.Server.Power.Components;
 using Content.Shared.Database;
 using Content.Shared.Examine;
@@ -38,6 +39,7 @@ public sealed partial class PowerCellSystem : SharedPowerCellSystem
 
         SubscribeLocalEvent<PowerCellComponent, ChargeChangedEvent>(OnChargeChanged);
         SubscribeLocalEvent<PowerCellComponent, ExaminedEvent>(OnCellExamined);
+        SubscribeLocalEvent<PowerCellComponent, EmpAttemptEvent>(OnCellEmpAttempt);
 
         SubscribeLocalEvent<PowerCellDrawComponent, EntityUnpausedEvent>(OnUnpaused);
         SubscribeLocalEvent<PowerCellDrawComponent, ChargeChangedEvent>(OnDrawChargeChanged);
@@ -231,6 +233,14 @@ public sealed partial class PowerCellSystem : SharedPowerCellSystem
     {
         TryComp<BatteryComponent>(uid, out var battery);
         OnBatteryExamined(uid, battery, args);
+    }
+
+    private void OnCellEmpAttempt(EntityUid uid, PowerCellComponent component, EmpAttemptEvent args)
+    {
+        var parent = Transform(uid).ParentUid;
+        // relay the attempt event to the slot so it can cancel it
+        if (HasComp<PowerCellSlotComponent>(parent))
+            RaiseLocalEvent(parent, args);
     }
 
     private void OnCellSlotExamined(EntityUid uid, PowerCellSlotComponent component, ExaminedEvent args)

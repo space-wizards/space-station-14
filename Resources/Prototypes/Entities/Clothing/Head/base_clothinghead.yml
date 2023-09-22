@@ -90,8 +90,6 @@
         startValue: 3.0
         endValue: 2.0
         isLooped: true
-        property: Radius
-        enabled: false
         reverseWhenFinished: true
       - !type:PulseBehaviour
         id: blinking
@@ -100,8 +98,6 @@
         minValue: 0.1
         maxValue: 2.0
         isLooped: true
-        property: Radius
-        enabled: false
   - type: PowerCellSlot
     cellSlotId: cell_slot
   - type: ItemSlots
@@ -209,8 +205,6 @@
         startValue: 3.0
         endValue: 2.0
         isLooped: true
-        property: Radius
-        enabled: false
         reverseWhenFinished: true
       - !type:PulseBehaviour
         id: blinking
@@ -219,11 +213,31 @@
         minValue: 0.1
         maxValue: 2.0
         isLooped: true
-        property: Radius
-        enabled: false
   - type: Battery
     maxCharge: 600 #lights drain 3/s but recharge of 2 makes this 1/s. Therefore 600 is 10 minutes of light.
     startingCharge: 600
   - type: BatterySelfRecharger
     autoRecharge: true
     autoRechargeRate: 2 #recharge of 2 makes total drain 1w / s so max charge is 1:1 with time. Time to fully charge should be 5 minutes. Having recharge gives light an extended flicker period which gives you some warning to return to light area.
+
+- type: entity
+  abstract: true
+  id: ClothingHeadHatHoodWinterBase
+  name: base winter coat hood
+  description: A hood, made to keep your head warm.
+  noSpawn: true
+  components:
+  - type: Sprite
+    state: icon
+  - type: Clickable
+  - type: Clothing
+    equipSound: /Audio/Effects/rustle1.ogg
+    unequipSound: /Audio/Effects/rustle2.ogg
+    quickEquip: false
+    slots: [ HEAD ]
+  - type: TemperatureProtection
+    coefficient: 0.7
+  - type: GroupExamine
+  - type: Tag
+    tags:
+    - HidesHair
