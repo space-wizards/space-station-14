@@ -2,6 +2,7 @@ using Content.Shared.Actions;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Ghost;
@@ -14,31 +15,40 @@ public sealed partial class GhostComponent : Component
     [ViewVariables]
     public bool IsAttached;
 
-    [DataField("toggleLightingAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string ToggleLightingAction = "ActionToggleLighting";
+    // Actions
+    [DataField]
+    public EntProtoId ToggleLightingAction = "ActionToggleLighting";
 
-    [DataField("toggleLightingActionEntity")]
+    [DataField]
     public EntityUid? ToggleLightingActionEntity;
 
-    [DataField("toggleFovAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string ToggleFoVAction = "ActionToggleFov";
+    [DataField]
+    public EntProtoId ToggleFoVAction = "ActionToggleFov";
 
-    [DataField("toggleFovActionEntity")]
+    [DataField]
     public EntityUid? ToggleFoVActionEntity;
 
-    [DataField("toggleGhostsAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string ToggleGhostsAction = "ActionToggleGhosts";
+    [DataField]
+    public EntProtoId ToggleGhostsAction = "ActionToggleGhosts";
 
-    [DataField("toggleGhostsActionEntity")]
+    [DataField]
     public EntityUid? ToggleGhostsActionEntity;
 
-    [DataField("toggleGhostHearingAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string ToggleGhostHearingAction = "GhostToggleHearing";
+    [DataField]
+    public EntProtoId ToggleGhostHearingAction = "ActionToggleGhostHearing";
 
-    [DataField("toggleGhostHearingActionEntity")]
+    [DataField]
     public EntityUid? ToggleGhostHearingActionEntity;
 
-    [ViewVariables(VVAccess.ReadWrite), DataField("timeOfDeath", customTypeSerializer:typeof(TimeOffsetSerializer))]
+    [DataField]
+    public EntProtoId Action = "ActionGhostBoo";
+
+    [DataField("actionEntity")]
+    public EntityUid? ActionEntity;
+
+    // End actions
+
+    [ViewVariables(VVAccess.ReadWrite), DataField]
     public TimeSpan TimeOfDeath = TimeSpan.Zero;
 
     [DataField("booRadius")]
@@ -46,11 +56,6 @@ public sealed partial class GhostComponent : Component
 
     [DataField("booMaxTargets")]
     public int BooMaxTargets = 3;
-
-    [DataField("action", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string Action = "ActionGhostBoo";
-
-    [DataField("actionEntity")] public EntityUid? ActionEntity;
 
     // TODO: instead of this funny stuff just give it access and update in system dirtying when needed
     [ViewVariables(VVAccess.ReadWrite)]

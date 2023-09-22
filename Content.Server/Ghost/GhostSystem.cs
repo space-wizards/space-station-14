@@ -2,12 +2,10 @@ using System.Linq;
 using System.Numerics;
 using Content.Server.GameTicking;
 using Content.Server.Ghost.Components;
-using Content.Server.Visible;
 using Content.Server.Mind;
 using Content.Server.Roles.Jobs;
 using Content.Server.Warps;
 using Content.Shared.Actions;
-using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Administration;
 using Content.Shared.Examine;
 using Content.Shared.Eye;
@@ -18,6 +16,7 @@ using Content.Shared.Mind.Components;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Movement.Events;
+using Content.Shared.Popups;
 using Content.Shared.Storage.Components;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
@@ -46,11 +45,6 @@ namespace Content.Server.Ghost
         [Dependency] private readonly GameTicker _ticker = default!;
         [Dependency] private readonly TransformSystem _transformSystem = default!;
         [Dependency] private readonly VisibilitySystem _visibilitySystem = default!;
-        [Dependency] private readonly EntityLookupSystem _lookup = default!;
-        [Dependency] private readonly FollowerSystem _followerSystem = default!;
-        [Dependency] private readonly MobStateSystem _mobState = default!;
-        [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-        [Dependency] private readonly SharedTransformSystem _transform = default!;
         [Dependency] private readonly SharedPopupSystem _popup = default!;
 
         public override void Initialize()
@@ -148,8 +142,6 @@ namespace Content.Server.Ghost
             var time = _gameTiming.CurTime;
             component.TimeOfDeath = time;
 
-            var booAction = new InstantAction(_prototype.Index<InstantActionPrototype>(component.BooAction));
-
             // TODO ghost: remove once ghosts are persistent and aren't deleted when returning to body
             var action = _actions.AddAction(uid, ref component.ActionEntity, component.Action);
             if (action?.UseDelay != null)
@@ -158,6 +150,7 @@ namespace Content.Server.Ghost
                 Dirty(component.ActionEntity!.Value, action);
             }
 
+            _actions.AddAction(uid, ref component.ToggleGhostHearingActionEntity, component.ToggleGhostHearingAction);
             _actions.AddAction(uid, ref component.ToggleLightingActionEntity, component.ToggleLightingAction);
             _actions.AddAction(uid, ref component.ToggleFoVActionEntity, component.ToggleFoVAction);
             _actions.AddAction(uid, ref component.ToggleGhostsActionEntity, component.ToggleGhostsAction);

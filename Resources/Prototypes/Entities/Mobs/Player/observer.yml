@@ -107,3 +107,16 @@
     clientExclusive: true
     checkCanInteract: false
     event: !type:ToggleGhostsActionEvent
+
+- type: entity
+  id: ActionToggleGhostHearing
+  name: Toggle Ghost Hearing
+  description: Toggle between hearing all messages and hearing only radio & nearby messages.
+  noSpawn: true
+  components:
+  - type: InstantAction
+    checkCanInteract: false
+    icon:
+      sprite: Clothing/Ears/Headsets/base.rsi
+      state: icon
+    event: !type:ToggleGhostHearingActionEvent

@@ -1,13 +1,11 @@
 using Content.Client.Movement.Systems;
 using Content.Shared.Actions;
-using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Ghost;
 using Content.Shared.Popups;
 using Robust.Client.Console;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
-using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
 namespace Content.Client.Ghost
@@ -86,7 +84,6 @@ namespace Content.Client.Ghost
             _actions.AddAction(uid, ref component.ToggleLightingActionEntity, component.ToggleGhostsAction);
             _actions.AddAction(uid, ref component.ToggleFoVActionEntity, component.ToggleFoVAction);
             _actions.AddAction(uid, ref component.ToggleGhostsActionEntity, component.ToggleGhostsAction);
-            _actions.AddAction(uid, ref component.ToggleGhostHearingAction, component.ToggleGhostHearingAction);
         }
 
         private void OnToggleLighting(EntityUid uid, GhostComponent component, ToggleLightingActionEvent args)
