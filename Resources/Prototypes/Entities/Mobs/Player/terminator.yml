@@ -36,6 +36,8 @@
     allowedStates:
     - Alive
     - Dead
+  # endoskeleton need it
+  - type: TransferMindOnGib
   - type: MobThresholds
     thresholds:
       0: Alive
@@ -161,3 +163,9 @@
         Structural: 5
   - type: Puller
     needsHands: false
+  - type: Tag
+    tags:
+    - DoorBumpOpener
+    - ShoesRequiredStepTriggerImmune
+    # let mind transfer on gib work
+    - MindTransferTarget
