@@ -114,3 +114,13 @@
   name: signal-port-name-air-normal
   description: signal-port-description-air-normal
   defaultLinks: [ DoorBolt ]
+
+- type: sourcePort
+  id: PowerCharging
+  name: signal-port-name-power-charging
+  description: signal-port-description-power-charging
+
+- type: sourcePort
+  id: PowerDischarging
+  name: signal-port-name-power-discharging
+  description: signal-port-description-power-discharging
