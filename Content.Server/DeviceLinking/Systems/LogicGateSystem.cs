@@ -3,8 +3,9 @@ using Content.Server.DeviceNetwork;
 using Content.Shared.DeviceLinking;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
-using Content.Shared.Tools;
 using Content.Shared.Popups;
+using Content.Shared.Timing;
+using Content.Shared.Tools;
 using SignalReceivedEvent = Content.Server.DeviceLinking.Events.SignalReceivedEvent;
 
 namespace Content.Server.DeviceLinking.Systems;
@@ -16,6 +17,7 @@ public sealed class LogicGateSystem : EntitySystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedToolSystem _tool = default!;
+    [Dependency] private readonly UseDelaySystem _useDelay = default!;
 
     private readonly int GateCount = Enum.GetValues(typeof(LogicGate)).Length;
 
@@ -68,6 +70,10 @@ public sealed class LogicGateSystem : EntitySystem
         if (args.Handled || !_tool.HasQuality(args.Used, comp.CycleQuality))
             return;
 
+        // no sound spamming
+        if (TryComp<UseDelayComponent>(uid, out var useDelay) && _useDelay.ActiveDelay(uid, useDelay))
+            return;
+
         // cycle through possible gates
         var gate = (int) comp.Gate;
         gate = ++gate % GateCount;
@@ -81,6 +87,8 @@ public sealed class LogicGateSystem : EntitySystem
         var msg = Loc.GetString("logic-gate-cycle", ("gate", comp.Gate.ToString().ToUpper()));
         _popup.PopupEntity(msg, uid, args.User);
         _appearance.SetData(uid, LogicGateVisuals.Gate, comp.Gate);
+
+        _useDelay.BeginDelay(uid, useDelay);
     }
 
     private void OnSignalReceived(EntityUid uid, LogicGateComponent comp, ref SignalReceivedEvent args)
