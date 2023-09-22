@@ -3,7 +3,6 @@ using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Ghost;
 using Content.Shared.Popups;
-using JetBrains.Annotations;
 using Robust.Client.Console;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
@@ -84,9 +83,10 @@ namespace Content.Client.Ghost
                 sprite.Visible = GhostVisibility;
             }
 
-            _actions.AddAction(uid, new InstantAction(_prototype.Index<InstantActionPrototype>(component.ToggleLightingAction)), null);
-            _actions.AddAction(uid, new InstantAction(_prototype.Index<InstantActionPrototype>(component.ToggleFoVAction)), null);
-            _actions.AddAction(uid, new InstantAction(_prototype.Index<InstantActionPrototype>(component.ToggleGhostsAction)), null);
+            _actions.AddAction(uid, ref component.ToggleLightingActionEntity, component.ToggleGhostsAction);
+            _actions.AddAction(uid, ref component.ToggleFoVActionEntity, component.ToggleFoVAction);
+            _actions.AddAction(uid, ref component.ToggleGhostsActionEntity, component.ToggleGhostsAction);
+            _actions.AddAction(uid, ref component.ToggleGhostHearingAction, component.ToggleGhostHearingAction);
         }
 
         private void OnToggleLighting(EntityUid uid, GhostComponent component, ToggleLightingActionEvent args)
@@ -121,9 +121,10 @@ namespace Content.Client.Ghost
 
         private void OnGhostRemove(EntityUid uid, GhostComponent component, ComponentRemove args)
         {
-            _actions.RemoveAction(uid, new InstantAction(_prototype.Index<InstantActionPrototype>(component.ToggleLightingAction)));
-            _actions.RemoveAction(uid, new InstantAction(_prototype.Index<InstantActionPrototype>(component.ToggleFoVAction)));
-            _actions.RemoveAction(uid, new InstantAction(_prototype.Index<InstantActionPrototype>(component.ToggleGhostsAction)));
+            _actions.RemoveAction(uid, component.ToggleLightingActionEntity);
+            _actions.RemoveAction(uid, component.ToggleFoVActionEntity);
+            _actions.RemoveAction(uid, component.ToggleGhostsActionEntity);
+            _actions.RemoveAction(uid, component.ToggleGhostHearingActionEntity);
 
             if (uid != _playerManager.LocalPlayer?.ControlledEntity)
                 return;

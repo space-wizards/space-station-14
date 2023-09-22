@@ -22,11 +22,17 @@ namespace Content.Server.Atmos.Commands
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            if (args.Length < 4) return;
-            if(!int.TryParse(args[0], out var x)
-               || !int.TryParse(args[1], out var y)
-               || !EntityUid.TryParse(args[2], out var gridId)
-               || !float.TryParse(args[3], out var temperature)) return;
+            if (args.Length < 4)
+                return;
+
+            if (!int.TryParse(args[0], out var x)
+                || !int.TryParse(args[1], out var y)
+                || !NetEntity.TryParse(args[2], out var gridIdNet)
+                || !_entities.TryGetEntity(gridIdNet, out var gridId)
+                || !float.TryParse(args[3], out var temperature))
+            {
+                return;
+            }
 
             if (temperature < Atmospherics.TCMB)
             {

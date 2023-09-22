@@ -1,37 +1,45 @@
 using Content.Shared.Actions;
-using Content.Shared.Actions.ActionTypes;
 using Robust.Shared.GameStates;
-using Robust.Shared.Serialization;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Ghost;
 
 [RegisterComponent, NetworkedComponent, Access(typeof(SharedGhostSystem))]
-[AutoGenerateComponentState]
+[AutoGenerateComponentState(true)]
 public sealed partial class GhostComponent : Component
 {
     // I have no idea what this means I just wanted to kill comp references.
     [ViewVariables]
     public bool IsAttached;
 
-    #region Ghost Actions
+    [DataField("toggleLightingAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    public string ToggleLightingAction = "ActionToggleLighting";
 
-    [DataField("toggleLightingAction", customTypeSerializer: typeof(PrototypeIdSerializer<InstantActionPrototype>))]
-    public string ToggleLightingAction = "GhostToggleLighting";
+    [DataField("toggleLightingActionEntity")]
+    public EntityUid? ToggleLightingActionEntity;
 
-    [DataField("toggleFoVAction", customTypeSerializer: typeof(PrototypeIdSerializer<InstantActionPrototype>))]
-    public string ToggleFoVAction = "GhostToggleFoV";
+    [DataField("toggleFovAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    public string ToggleFoVAction = "ActionToggleFov";
 
-    [DataField("toggleGhostsAction", customTypeSerializer: typeof(PrototypeIdSerializer<InstantActionPrototype>))]
-    public string ToggleGhostsAction = "GhostToggleGhostVisibility";
+    [DataField("toggleFovActionEntity")]
+    public EntityUid? ToggleFoVActionEntity;
 
-    [DataField("toggleGhostHearingAction", customTypeSerializer: typeof(PrototypeIdSerializer<InstantActionPrototype>))]
+    [DataField("toggleGhostsAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    public string ToggleGhostsAction = "ActionToggleGhosts";
+
+    [DataField("toggleGhostsActionEntity")]
+    public EntityUid? ToggleGhostsActionEntity;
+
+    [DataField("toggleGhostHearingAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string ToggleGhostHearingAction = "GhostToggleHearing";
 
-    [DataField("booAction", customTypeSerializer:typeof(PrototypeIdSerializer<InstantActionPrototype>))]
-    public string BooAction = "GhostBoo";
+    [DataField("toggleGhostHearingActionEntity")]
+    public EntityUid? ToggleGhostHearingActionEntity;
+
+    [ViewVariables(VVAccess.ReadWrite), DataField("timeOfDeath", customTypeSerializer:typeof(TimeOffsetSerializer))]
+    public TimeSpan TimeOfDeath = TimeSpan.Zero;
 
     [DataField("booRadius")]
     public float BooRadius = 3;
@@ -39,10 +47,10 @@ public sealed partial class GhostComponent : Component
     [DataField("booMaxTargets")]
     public int BooMaxTargets = 3;
 
-    #endregion
+    [DataField("action", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    public string Action = "ActionGhostBoo";
 
-    [ViewVariables(VVAccess.ReadWrite), DataField("timeOfDeath", customTypeSerializer:typeof(TimeOffsetSerializer))]
-    public TimeSpan TimeOfDeath = TimeSpan.Zero;
+    [DataField("actionEntity")] public EntityUid? ActionEntity;
 
     // TODO: instead of this funny stuff just give it access and update in system dirtying when needed
     [ViewVariables(VVAccess.ReadWrite)]
@@ -80,8 +88,7 @@ public sealed partial class GhostComponent : Component
     /// Ghost color
     /// </summary>
     /// <remarks>Used to allow admins to change ghost colors. Should be removed if the capability to edit existing sprite colors is ever added back.</remarks>
-    [DataField("color"), AutoNetworkedField]
-    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("color"), ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public Color color = Color.White;
 
     [DataField("canReturnToBody"), AutoNetworkedField]

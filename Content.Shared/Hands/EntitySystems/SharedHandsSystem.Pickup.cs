@@ -58,7 +58,7 @@ public abstract partial class SharedHandsSystem : EntitySystem
         if (hand == null)
             return false;
 
-        return TryPickup(uid, entity, hand, checkActionBlocker, animateUser, animate, handsComp, item);
+        return TryPickup(uid, entity, hand, checkActionBlocker, animate, handsComp, item);
     }
 
     /// <summary>
@@ -83,7 +83,7 @@ public abstract partial class SharedHandsSystem : EntitySystem
         if (!TryGetEmptyHand(uid, out var hand, handsComp))
             return false;
 
-        return TryPickup(uid, entity, hand, checkActionBlocker, animateUser, animate, handsComp, item);
+        return TryPickup(uid, entity, hand, checkActionBlocker, animate, handsComp, item);
     }
 
     public bool TryPickup(
@@ -91,7 +91,6 @@ public abstract partial class SharedHandsSystem : EntitySystem
         EntityUid entity,
         Hand hand,
         bool checkActionBlocker = true,
-        bool animateUser = false,
         bool animate = true,
         HandsComponent? handsComp = null,
         ItemComponent? item = null)
@@ -117,7 +116,7 @@ public abstract partial class SharedHandsSystem : EntitySystem
                 && MetaData(entity).VisibilityMask == MetaData(uid).VisibilityMask) // Don't animate aghost pickups.
             {
                 var initialPosition = EntityCoordinates.FromMap(coordinateEntity, itemPos, EntityManager);
-                PickupAnimation(entity, initialPosition, xform.LocalPosition, itemXform.LocalRotation, animateUser ? null : uid);
+                _storage.PlayPickupAnimation(entity, initialPosition, xform.Coordinates, itemXform.LocalRotation, uid);
             }
         }
         DoPickup(uid, hand, entity, handsComp);
@@ -181,7 +180,7 @@ public abstract partial class SharedHandsSystem : EntitySystem
             return false;
 
         // check can insert (including raising attempt events).
-        return handContainer.CanInsert(entity, EntityManager);
+        return _containerSystem.CanInsert(entity, handContainer);
     }
 
     /// <summary>
@@ -199,7 +198,7 @@ public abstract partial class SharedHandsSystem : EntitySystem
         if (uid == null
             || !Resolve(uid.Value, ref handsComp, false)
             || !TryGetEmptyHand(uid.Value, out var hand, handsComp)
-            || !TryPickup(uid.Value, entity, hand, checkActionBlocker, animateUser, animate, handsComp, item))
+            || !TryPickup(uid.Value, entity, hand, checkActionBlocker, animate, handsComp, item))
         {
             // TODO make this check upwards for any container, and parent to that.
             // Currently this just checks the direct parent, so items can still teleport through containers.
@@ -227,12 +226,9 @@ public abstract partial class SharedHandsSystem : EntitySystem
 
         _adminLogger.Add(LogType.Pickup, LogImpact.Low, $"{ToPrettyString(uid):user} picked up {ToPrettyString(entity):entity}");
 
-        Dirty(hands);
+        Dirty(uid, hands);
 
         if (hand == hands.ActiveHand)
             RaiseLocalEvent(entity, new HandSelectedEvent(uid), false);
     }
-
-    public abstract void PickupAnimation(EntityUid item, EntityCoordinates initialPosition, Vector2 finalPosition, Angle initialAngle,
-        EntityUid? exclude);
 }

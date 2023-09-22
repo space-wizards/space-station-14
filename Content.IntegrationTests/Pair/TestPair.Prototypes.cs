@@ -26,7 +26,11 @@ public sealed partial class TestPair
             instance.ProtoMan.LoadString(file, changed: changed);
         }
 
-        await instance.WaitPost(() => instance.ProtoMan.ReloadPrototypes(changed));
+        await instance.WaitPost(() =>
+        {
+            instance.ProtoMan.ResolveResults();
+            instance.ProtoMan.ReloadPrototypes(changed);
+        });
 
         foreach (var (kind, ids) in changed)
         {

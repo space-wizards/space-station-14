@@ -11,6 +11,18 @@
 
 - type: entity
   parent: ClothingOuterStorageBase
+  id: ClothingOuterApronBar
+  suffix: Bartender
+  name: apron
+  description: A darker apron designed for bartenders.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Misc/apronbar.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Misc/apronbar.rsi
+
+- type: entity
+  parent: ClothingOuterStorageBase
   id: ClothingOuterApronBotanist
   name: apron
   suffix: Botanical
@@ -80,15 +92,17 @@
     proto: robot
 
 - type: entity
-  parent: ClothingOuterBase
+  parent: ClothingOuterBaseToggleable
   id: ClothingOuterHoodieChaplain
-  name: chaplain hoodie
+  name: chaplain's hoodie
   description: Black and strict chaplain hoodie.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Misc/chaplain_hoodie.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Misc/chaplain_hoodie.rsi
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHatHoodChaplainHood
 
 - type: entity
   parent: ClothingOuterBase

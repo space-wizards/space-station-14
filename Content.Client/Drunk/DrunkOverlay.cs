@@ -1,6 +1,5 @@
 using Content.Shared.Drunk;
 using Content.Shared.StatusEffect;
-using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
 using Robust.Shared.Enums;

@@ -18,12 +18,12 @@ namespace Content.Server.Mind;
 public sealed class MindSystem : SharedMindSystem
 {
     [Dependency] private readonly ActorSystem _actor = default!;
-    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly GameTicker _gameTicker = default!;
-    [Dependency] private readonly SharedGhostSystem _ghosts = default!;
+    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly IMapManager _maps = default!;
-    [Dependency] private readonly MetaDataSystem _metaData = default!;
     [Dependency] private readonly IPlayerManager _players = default!;
+    [Dependency] private readonly MetaDataSystem _metaData = default!;
+    [Dependency] private readonly SharedGhostSystem _ghosts = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     public override void Initialize()
@@ -277,10 +277,13 @@ public sealed class MindSystem : SharedMindSystem
         }
     }
 
+    /// <summary>
+    /// Sets the Mind's UserId, Session, and updates the player's PlayerData. This should have no direct effect on the
+    /// entity that any mind is connected to, except as a side effect of the fact that it may change a player's
+    /// attached entity. E.g., ghosts get deleted.
+    /// </summary>
     public override void SetUserId(EntityUid mindId, NetUserId? userId, MindComponent? mind = null)
     {
-        base.SetUserId(mindId, userId, mind);
-
         if (!Resolve(mindId, ref mind))
             return;
 
