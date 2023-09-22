@@ -54,7 +54,6 @@ public sealed class DrunkOverlay : Overlay
 
 
         CurrentBoozePower += 8f * (0.5f*timeLeft - CurrentBoozePower) * args.DeltaSeconds / (timeLeft+1);
-        Logger.Debug($"Current power: {CurrentBoozePower}  Time Left: {timeLeft}");
     }
 
     protected override bool BeforeDraw(in OverlayDrawArgs args)

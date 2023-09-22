@@ -130,16 +130,9 @@ namespace Content.Server.Body.Systems
             int reagents = 0;
             foreach (var (reagent, quantity) in list)
             {
-                var debug = true;
-                if (reagent.Prototype == "Beer" || reagent.Prototype == "Ethanol" || reagent.Prototype == "Vodka")
-                    debug = true;
-
-                if (debug) Logger.Debug("------------------------------");
-                if (debug) Logger.Debug($"Reagent: {reagent} - Quantity: {quantity}");
                 if (!_prototypeManager.TryIndex<ReagentPrototype>(reagent.Prototype, out var proto))
                     continue;
 
-                if (debug) Logger.Debug("Checkpoint 1");
                 var mostToRemove = FixedPoint2.Zero;
                 if (proto.Metabolisms == null)
                 {
@@ -152,49 +145,27 @@ namespace Content.Server.Body.Systems
                     continue;
                 }
 
-                if (debug) Logger.Debug("Checkpoint 2");
-                if (debug) Logger.Debug($"Number of reagents: {reagents} List length: {list.Length} Max: {meta.MaxReagentsProcessable}");
                 // we're done here entirely if this is true
                 if (reagents >= meta.MaxReagentsProcessable)
                     return;
 
 
-                if (debug) Logger.Debug("Checkpoint 2.5");
-
                 // loop over all our groups and see which ones apply
                 if (meta.MetabolismGroups == null)
                     continue;
 
-                if (debug) Logger.Debug("Checkpoint 3");
-
                 foreach (var group in meta.MetabolismGroups)
                 {
-                    if (debug) Logger.Debug($"Metabolism group: {group.Id}");
                     if (!proto.Metabolisms.ContainsKey(group.Id))
                         continue;
 
                     var entry = proto.Metabolisms[group.Id];
-                    // Is this calculation right?
-                    // The rate modifier seems to be buggy
-                    if (debug) Logger.Debug($"Metab rate: {entry.MetabolismRate}  Modifier: {group.MetabolismRateModifier}");
                     var rate = entry.MetabolismRate * group.MetabolismRateModifier;
 
-                    // we don't remove reagent for every group, just whichever had the biggest rate
-                    // this comment is misleading, or the code is super broken
-                    // also this shouldn't be true anyways, as liver and stomach are both referenced
-                    // as processing at the same time somewhere else
-                    if (rate > mostToRemove)
-                        mostToRemove = rate;
+                    // Remove $rate, as long as there's enough reagent there to actually remove that much
+                    mostToRemove = FixedPoint2.Clamp(rate, 0, quantity);
 
-                    // Don't remove more reagent than rate
-                    if (mostToRemove > rate)
-                        mostToRemove = rate;
-
-                    mostToRemove = FixedPoint2.Clamp(mostToRemove, 0, quantity);
-
-                    // Rate is bugged? Huhh????
                     float scale = (float) mostToRemove / (float) rate;
-                    if (debug) Logger.Debug($"Scale: {scale}  Remove: {mostToRemove}  Rate: {rate}");
 
                     // if it's possible for them to be dead, and they are,
                     // then we shouldn't process any effects, but should probably
@@ -208,12 +179,10 @@ namespace Content.Server.Body.Systems
                     var actualEntity = organ?.Body ?? solutionEntityUid.Value;
                     var args = new ReagentEffectArgs(actualEntity, uid, solution, proto, mostToRemove,
                         EntityManager, null, scale);
-                    if (debug) Logger.Debug($"Reagent: {reagent}");
 
                     // do all effects, if conditions apply
                     foreach (var effect in entry.Effects)
                     {
-                        // Logger.Debug("Maybe effecting target");
                         if (!effect.ShouldApply(args, _random))
                             continue;
 
@@ -222,7 +191,6 @@ namespace Content.Server.Body.Systems
                             _adminLogger.Add(LogType.ReagentEffect, effect.LogImpact,
                                 $"Metabolism effect {effect.GetType().Name:effect} of reagent {proto.LocalizedName:reagent} applied on entity {actualEntity:entity} at {Transform(actualEntity).Coordinates:coordinates}");
                         }
-                        if (debug) Logger.Debug($"Metabolism effect {effect.GetType().Name:effect}");
 
                         effect.Effect(args);
                     }
@@ -231,7 +199,6 @@ namespace Content.Server.Body.Systems
                 // remove a certain amount of reagent
                 if (mostToRemove > FixedPoint2.Zero)
                 {
-                    Logger.Debug($"Removing {mostToRemove} reagent from {solution.Name}");
                     _solutionContainerSystem.RemoveReagent(solutionEntityUid.Value, solution, reagent, mostToRemove);
 
                     // We have processed a reagant, so count it towards the cap
