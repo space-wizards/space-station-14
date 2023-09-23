@@ -122,10 +122,10 @@
       gas: 5 # The ID of Water Vapor
     - !type:ExplosionReactionEffect
       explosionType: Default
-      maxIntensity: 8
-      intensityPerUnit: 1
+      maxIntensity: 4
+      intensityPerUnit: 0.25
       intensitySlope: .5
-      maxTotalIntensity: 30
+      maxTotalIntensity: 20
 
 - type: reaction
   id: Smoke
