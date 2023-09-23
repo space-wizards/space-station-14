@@ -155,7 +155,7 @@ public sealed class AmeControllerSystem : EntitySystem
             return;
 
         controller.Injecting = value;
-        _appearanceSystem.SetData(uid, AmeControllerVisuals.DisplayState, value ? AmeControllerState.On : AmeControllerState.Off);
+        UpdateDisplay(uid, controller.Stability, controller);
         if (!value && TryComp<PowerSupplierComponent>(uid, out var powerOut))
             powerOut.MaxSupply = 0;
 
@@ -215,15 +215,20 @@ public sealed class AmeControllerSystem : EntitySystem
         if (!Resolve(uid, ref controller, ref appearance))
             return;
 
+        var ameControllerState = stability switch
+        {
+            < 10 => AmeControllerState.Fuck,
+            < 50 => AmeControllerState.Critical,
+            _ => AmeControllerState.On,
+        };
+
+        if (!controller.Injecting)
+            ameControllerState = AmeControllerState.Off;
+
         _appearanceSystem.SetData(
             uid,
             AmeControllerVisuals.DisplayState,
-            stability switch
-            {
-                < 10 => AmeControllerState.Fuck,
-                < 50 => AmeControllerState.Critical,
-                _ => AmeControllerState.On,
-            },
+            ameControllerState,
             appearance
         );
     }
