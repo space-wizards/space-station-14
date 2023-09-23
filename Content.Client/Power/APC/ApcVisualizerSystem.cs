@@ -13,13 +13,9 @@ public sealed class ApcVisualizerSystem : VisualizerSystem<ApcVisualsComponent>
         if (args.Sprite == null)
             return;
 
-
-
         // get the mapped layer index of the first lock layer and the first channel layer
         var lockIndicatorOverlayStart = args.Sprite.LayerMapGet(ApcVisualLayers.InterfaceLock);
         var channelIndicatorOverlayStart = args.Sprite.LayerMapGet(ApcVisualLayers.Equipment);
-
-
 
         // Handle APC screen overlay:
         if(!AppearanceSystem.TryGetData<ApcChargeState>(uid, ApcVisuals.ChargeState, out var chargeState, args.Component))
