@@ -126,8 +126,6 @@
       intensityPerUnit: 1
       intensitySlope: .5
       maxTotalIntensity: 30
-  products:
-    Water: 0.1
 
 - type: reaction
   id: Smoke
