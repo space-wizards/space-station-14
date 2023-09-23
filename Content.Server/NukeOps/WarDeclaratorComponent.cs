@@ -13,7 +13,7 @@ public sealed partial class WarDeclaratorComponent : Component
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("message")]
-    public string? Message;
+    public string Message;
 
     /// <summary>
     /// Permission to customize message text
