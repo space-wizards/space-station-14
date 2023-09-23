@@ -12,7 +12,7 @@ public sealed class IntrinsicUISystem : EntitySystem
 
     public override void Initialize()
     {
-        SubscribeLocalEvent<IntrinsicUIComponent, ComponentStartup>(OnGetActions);
+        SubscribeLocalEvent<IntrinsicUIComponent, MapInitEvent>(InitActions);
         SubscribeLocalEvent<IntrinsicUIComponent, ToggleIntrinsicUIEvent>(OnActionToggle);
     }
 
@@ -21,14 +21,11 @@ public sealed class IntrinsicUISystem : EntitySystem
         args.Handled = InteractUI(uid, args.Key, component);
     }
 
-    private void OnGetActions(EntityUid uid, IntrinsicUIComponent component, ComponentStartup args)
+    private void InitActions(EntityUid uid, IntrinsicUIComponent component, MapInitEvent args)
     {
-        if (!TryComp<ActionsComponent>(uid, out var actions))
-            return;
-
         foreach (var entry in component.UIs)
         {
-            _actionsSystem.AddAction(uid, ref entry.ToggleActionEntity, entry.ToggleAction, null, actions);
+            _actionsSystem.AddAction(uid, ref entry.ToggleActionEntity, entry.ToggleAction);
         }
     }
 
