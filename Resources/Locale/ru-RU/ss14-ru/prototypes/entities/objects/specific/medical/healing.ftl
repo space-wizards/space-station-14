@@ -99,4 +99,5 @@ ent-SyringeSaline = шприц салина
     .desc = { ent-BaseSyringe.desc }
 ent-PillCharcoal = таблетка активированного угля (10ед)
     .desc = { ent-Pill.desc }
+ent-HealingToolbox = целительный тулбокс
     .desc = Мощный ящик для инструментов, наполняющий вас робастной энергией. Может залечивать ваши раны и наполнять вас жаждой крови.
