@@ -1,0 +1,2 @@
+objective-condition-doorjack-title = Взломать {$count} шлюзов на станции.
+objective-condition-doorjack-description = Ваши перчатки могут взламывать шлюзы. Совершите это действие {$count} раз на территории станции.

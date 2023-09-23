@@ -14,20 +14,20 @@ implanter-contained-implant-text = [color=green]{ $desc }[/color]
 
 ## Implanter Actions
 
-open-storage-implant-action-name = Открыть имплант Хранилище
-open-storage-implant-action-description = Открывает доступ к хранилищу, спрятанному под вашей кожей.
-activate-micro-bomb-action-name = Активировать имплант Микробомба
-activate-micro-bomb-action-description = Активирует вживлённую микробомбу, полностью уничтожая вас и ваше снаряжение.
-use-freedom-implant-action-name = Активировать имплант Свобода
-use-freedom-implant-action-description = Освобождает вас от наручников и других ограничителей.
-open-uplink-implant-action-name = Открыть аплинк
-open-uplink-implant-action-description = Открывает аплинк Синдиката, скрытый под вашей кожей.
-action-name-honk = Хонк!
-action-desc-honk = Активирует ваш хонк-имплант, который будет издавать фирменный звук клоуна.
-use-emp-implant-action-name = Активировать ЭМИ
-use-emp-implant-action-description = Вызывает небольшой ЭМИ-импульс вокруг вас
-use-dna-scrambler-implant-action-name = Перемешать ДНК
-use-dna-scrambler-implant-action-description = Случайным образом изменяет ваше имя и внешность.
+ent-ActionOpenStorageImplant = Открыть имплант Хранилище
+    .desc = Открывает доступ к хранилищу, спрятанному под вашей кожей.
+ent-ActionActivateMicroBomb = Активировать имплант Микробомба
+    .desc = Активирует вживлённую микробомбу, полностью уничтожая вас и ваше снаряжение.
+ent-ActionUseFreedomImplant = Активировать имплант Свобода
+    .desc = Освобождает вас от наручников и других ограничителей.
+ent-ActionOpenUplinkImplant = Открыть аплинк
+    .desc = Открывает аплинк Синдиката, скрытый под вашей кожей.
+ent-ActionHonk = Хонк!
+    .desc = Активирует ваш хонк-имплант, который будет издавать фирменный звук клоуна.
+ent-ActionUseEmpImplant = Активировать ЭМИ
+    .desc = Вызывает небольшой ЭМИ-импульс вокруг вас
+ent-ActionUseDnaScramblerImplant = Перемешать ДНК
+    .desc = Случайным образом изменяет ваше имя и внешность.
 scramble-attempt-while-scrambled-popup = Обнаружено перемешивание ДНК. Пожалуйста, извлеките имплант, прежде чем отменять текущее перемешивание.
 scramble-implant-activated-popup = Ваш внешний вид деформируется и изменяется!
 deathrattle-implant-dead-message = Зафиксирована смерть { $user } по координатам { $position }.

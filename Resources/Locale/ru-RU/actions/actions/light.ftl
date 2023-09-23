@@ -1,2 +1,2 @@
-action-name-toggle-light = Переключить фонарь
-action-description-toggle-light = Включает или выключает фонарь.
+ent-ActionToggleLight = Переключить фонарь
+    .desc = Включает или выключает фонарь.

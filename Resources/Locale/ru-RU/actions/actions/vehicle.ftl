@@ -1,2 +1,2 @@
-action-name-honk = Хонк
-action-desc-honk = Хонк!
+ent-ActionHonk = Хонк
+    .desc = Хонк!

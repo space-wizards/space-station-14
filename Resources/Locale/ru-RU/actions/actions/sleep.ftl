@@ -1,7 +1,7 @@
-action-name-sleep = Спать
-action-desc-sleep = Лечь спать.
-action-name-wake = Проснуться
-action-desc-wake = Перестать спать.
+ent-ActionSleep = Спать
+    .desc = Лечь спать.
+ent-ActionWake = Проснуться
+    .desc = Перестать спать.
 sleep-onomatopoeia = Zzz...
 sleep-examined = [color=lightblue]{ CAPITALIZE($target) } спит.[/color]
 wake-other-success = Вы разбудили { $target }.

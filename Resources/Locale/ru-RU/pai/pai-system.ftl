@@ -14,4 +14,8 @@ pai-system-wipe-device-verb-text = Удалить пИИ
 pai-system-wiped-device = пИИ был стерт с устройства.
 pai-system-stop-searching-verb-text = Прекратить поиск
 pai-system-stopped-searching = Устройство прекратило поиск пИИ.
-pai-system-pai-name = пИИ { CAPITALIZE($owner) }
+pai-system-pai-name = пИИ { $owner }
+pai-system-pai-name-raw = пИИ {$name}
+
+pai-system-brick-popup = Что-то лопается во внутренних микросхемах пИИ!
+pai-system-scramble-popup = Микросхемы пИИ перегружены током!

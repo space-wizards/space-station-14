@@ -38,6 +38,7 @@ namespace Content.Server.Speech.EntitySystems
                 .Replace("на", "ня").Replace("На", "Ня").Replace("нА", "нЯ").Replace("НА", "НЯ")
                 .Replace("ма", "мя").Replace("Ма", "Мя").Replace("мА", "мЯ").Replace("МА", "МЯ")
                 .Replace("!", "~!").Replace("?", "~?")
+                .Replace("-!", "~!").Replace("-?", "~?")
                 .Replace("с", "ф").Replace("С", "Ф");
         }
 

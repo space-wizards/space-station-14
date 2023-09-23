@@ -1,2 +1,2 @@
-action-name-magboot-toggle = Переключить магнитные ботинки
-action-description-magboot-toggle = Включает или выключает магнитные ботинки.
+ent-ActionMagbootToggle = Переключить магнитные ботинки
+    .desc = Включает или выключает магнитные ботинки.

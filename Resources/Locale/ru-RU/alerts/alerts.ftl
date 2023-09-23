@@ -62,3 +62,5 @@ alerts-battery-name = Заряд
 alerts-battery-desc = Если ваш заряд полностью истощится, вы не сможете использовать свои способности.
 alerts-no-battery-name = Разряжен
 alerts-no-battery-desc = У вас отсутствует заряд. Вы не можете использовать или заряжать свои способности.
+alerts-suit-power-name = Заряд костюма
+alerts-suit-power-desc = Уровень заряда костюма космического ниндзя.

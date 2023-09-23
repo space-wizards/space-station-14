@@ -106,6 +106,7 @@ flavor-complex-orange = как апельсины
 flavor-complex-watermelon = как арбуз
 flavor-complex-garlic = как чеснок
 flavor-complex-grape = как виноград
+flavor-complex-berry = как ягоды
 flavor-complex-meatballs = как фрикадельки
 flavor-complex-nettles = как крапива
 flavor-complex-jungle = как джунгли

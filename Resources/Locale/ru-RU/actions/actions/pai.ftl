@@ -1,2 +1,2 @@
-action-name-pai-play-midi = Запустить MIDI
-action-description-pai-play-midi = Откройте портативный MIDI-интерфейс, чтобы развлечь своего владельца.
+ent-ActionPaiPlayMidi = Запустить MIDI
+    .desc = Откройте портативный MIDI-интерфейс, чтобы развлечь своего владельца.

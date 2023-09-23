@@ -1,2 +1,2 @@
-turn-undead-action-name = Обратиться в зомби
-turn-undead-action-description = Поддайтесь заражению и превратитесь в зомби.
+ent-ActionTurnUndead = Обратиться в зомби
+    .desc = Поддайтесь заражению и превратитесь в зомби.

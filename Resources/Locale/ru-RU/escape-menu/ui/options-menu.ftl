@@ -149,6 +149,7 @@ ui-options-function-editor-copy-object = Копировать
 ui-options-function-open-abilities-menu = Открыть меню действий
 ui-options-function-show-debug-console = Открыть консоль
 ui-options-function-show-debug-monitors = Показать дебаг информацию
+ui-options-function-inspect-entity = Инспектировать
 ui-options-function-hide-ui = Спрятать интерфейс
 ui-options-function-hotbar1 = 1 слот хотбара
 ui-options-function-hotbar2 = 2 слот хотбара

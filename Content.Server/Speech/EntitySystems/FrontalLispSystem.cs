@@ -24,6 +24,13 @@ public sealed class FrontalLispSystem : EntitySystem
         // handles sth and s
         message = Regex.Replace(message, "[S]+[T]?[H]?", "TH");
         message = Regex.Replace(message, "[Ss]+[Tt]?[Hh]?", "th");
+		
+		// В -> Ф
+		// Ш -> Ф
+		message = Regex.Replace(message, "ш", "ф");
+		message = Regex.Replace(message, "Ш", "Ф");
+		message = Regex.Replace(message, "в", "ф");
+		message = Regex.Replace(message, "В", "Ф");
 
         args.Message = message;
     }

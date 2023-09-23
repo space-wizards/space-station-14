@@ -11,8 +11,8 @@ guardian-available = У вашего стража теперь есть душа
 
 # Guardian action
 
-action-name-guardian = Призвать/отозвать стража
-action-description-guardian = Призывает либо отзывает стража обратно в ваше тело
+ent-ActionGuardian = Призвать/отозвать стража
+    .desc = Призывает либо отзывает стража обратно в ваше тело
 
 ## Guardian entity specific
 

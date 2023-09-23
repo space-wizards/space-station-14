@@ -3,5 +3,5 @@ disarm-action-popup-message-other-clients = { CAPITALIZE($performerName) } об�
 disarm-action-popup-message-cursor = { CAPITALIZE($targetName) } обезоружен!
 disarm-action-shove-popup-message-other-clients = { CAPITALIZE($performerName) } толкает { $targetName }!
 disarm-action-shove-popup-message-cursor = Вы толкаете { $targetName }!
-action-name-disarm = [color=red]Обезоруживание[/color]
-action-description-disarm = Попытаться кого-либо [color=red]обезоружить[/color].
+ent-ActionDisarm = [color=red]Обезоруживание[/color]
+    .desc = Попытаться кого-либо [color=red]обезоружить[/color].
