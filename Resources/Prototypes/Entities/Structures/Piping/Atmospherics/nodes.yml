@@ -20,6 +20,9 @@
     volume: 200
   - type: DirNode
     tag: AtmosPipe
+  - type: Tag
+    tags:
+    - AtmosPipe
 
 - type: entity
   id: AtmosPipeNodeNorth
@@ -34,11 +37,6 @@
 - type: entity
   id: AtmosPipeNodeEast
   parent: [ BaseAtmosPipeNode, BaseDirNodeEast ]
-  noSpawn: true
-
-- type: entity
-  id: AtmosPipeNodeWest
-  parent: [ BaseAtmosPipeNode, BaseDirNodeWest ]
   noSpawn: true
 
 - type: entity
@@ -142,9 +140,12 @@
   - type: GraphNode
     graphProto: PipeNet
   - type: AtmosPipeNode
-    volume: 0
+    volume: 1
   - type: PortNode
     tag: AtmosPortable
+  - type: Tag
+    tags:
+    - AtmosPort
 
 - type: entity
   id: AtmosPortableNode
@@ -153,9 +154,13 @@
   - type: GraphNode
     graphProto: PipeNet
   - type: AtmosPipeNode
-    volume: 0
+    volume: 1
   - type: PortNode
     tag: AtmosPort
+    connectionsEnabled: false # Most canisters start unanchored TODO: Find a better way to do this.
+  - type: Tag
+    tags:
+    - AtmosPortable
 
 - type: entity
   id: AtmosPortNodeWithPipe
@@ -165,3 +170,7 @@
   - type: DirNode
     baseDirection: South
     tag: AtmosPipe
+  - type: Tag
+    tags:
+    - AtmosPipe
+    - AtmosPort

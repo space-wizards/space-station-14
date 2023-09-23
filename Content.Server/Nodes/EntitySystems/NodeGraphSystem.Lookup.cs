@@ -74,10 +74,10 @@ public sealed partial class NodeGraphSystem
     /// <summary>Enumerates all of the nodes associated with an entity.</summary>
     public IEnumerable<(EntityUid NodeId, GraphNodeComponent Node)> EnumerateNodes(EntityUid nodeOrPolyId, GraphNodeComponent? node = null, PolyNodeComponent? poly = null)
     {
-        if (_nodeQuery.Resolve(nodeOrPolyId, ref node))
+        if (_nodeQuery.Resolve(nodeOrPolyId, ref node, logMissing: false))
             yield return (nodeOrPolyId, node);
 
-        if (_polyQuery.Resolve(nodeOrPolyId, ref poly))
+        if (_polyQuery.Resolve(nodeOrPolyId, ref poly, logMissing: false))
         {
             foreach (var proxyId in poly.ProxyNodes.Values)
             {

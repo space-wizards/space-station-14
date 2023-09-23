@@ -82,6 +82,14 @@ public sealed partial class NodeGraphSystem
         }
     }
 
+    private void OnMapInit(EntityUid uid, PolyNodeComponent comp, MapInitEvent args)
+    {
+        foreach (var (_, proxyId) in comp.ProxyNodes)
+        {
+            EntityManager.RunMapInit(proxyId, MetaData(proxyId));
+        }
+    }
+
     /// <summary>
     /// Detaches and deletes any proxy nodes associated with polynodes that are becoming not such.
     /// </summary>

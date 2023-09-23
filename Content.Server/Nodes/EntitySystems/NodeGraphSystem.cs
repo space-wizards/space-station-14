@@ -46,6 +46,7 @@ public sealed partial class NodeGraphSystem : EntitySystem
         SubscribeLocalEvent<NodeGraphComponent, ComponentInit>(OnComponentInit);
         SubscribeLocalEvent<PolyNodeComponent, ComponentStartup>(OnComponentStartup);
         SubscribeLocalEvent<GraphNodeComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<PolyNodeComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<NodeGraphComponent, EntityTerminatingEvent>(OnEntityTerminating);
         SubscribeLocalEvent<GraphNodeComponent, ComponentShutdown>(OnComponentShutdown);
         SubscribeLocalEvent<NodeGraphComponent, ComponentShutdown>(OnComponentShutdown);

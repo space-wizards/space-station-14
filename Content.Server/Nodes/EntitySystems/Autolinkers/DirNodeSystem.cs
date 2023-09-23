@@ -133,6 +133,9 @@ public sealed partial class DirNodeSystem : EntitySystem
             _ => PipeDirection.None,
         };
 
+        if (dir == PipeDirection.None)
+            return;
+
         if (!comp.CurrentDirection.HasDirection(dir))
             return;
 

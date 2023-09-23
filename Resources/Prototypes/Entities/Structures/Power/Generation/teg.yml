@@ -35,14 +35,6 @@
     baseDirection: West
     tag: Generator
 
-- type: entity
-  id: PipeNet
-  noSpawn: true
-  components:
-  - type: NodeGraph
-    color: "#00FFFF"
-  - type: AtmosPipeNet
-
 
 - type: entity
   id: TegCenter

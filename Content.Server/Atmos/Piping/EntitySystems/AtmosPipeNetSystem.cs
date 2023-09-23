@@ -104,7 +104,7 @@ public sealed partial class AtmosPipeNetSystem : EntitySystem
 
         // We want to do this whether or not the pipe is getting moved to a new graph
         // If it is we handle moving the gases in OnSplit/OnMerge.
-        comp.Air.Multiply(1f - pipe.Volume / comp.Air.Volume);
+        comp.Air.Multiply(comp.Air.Volume <= pipe.Volume ? 1f - pipe.Volume / comp.Air.Volume : 0f);
         comp.Air.Volume -= pipe.Volume;
     }
 
@@ -113,7 +113,7 @@ public sealed partial class AtmosPipeNetSystem : EntitySystem
     /// </summary>
     private void OnSplit(EntityUid uid, AtmosPipeNetComponent comp, ref SplitEvent args)
     {
-        if (!_netQuery.TryGetComponent(args.SplitId, out var split))
+        if (!_netQuery.TryGetComponent(args.SplitId, out var split) || comp.Air.Volume + split.Air.Volume <= 0)
             return;
 
         _atmosSystem.DivideInto(comp.Air, new List<GasMixture>(2) { comp.Air, split.Air });

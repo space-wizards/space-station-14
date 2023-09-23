@@ -85,7 +85,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
                 removed.SetMoles(filterDevice.FilteredGas.Value, 0f);
 
                 var target = filterGas.Pressure < Atmospherics.MaxOutputPressure ? filterNode : inletNode;
-                _atmosphereSystem.Merge(outletGas, filteredOut);
+                _atmosphereSystem.Merge(filterGas, filteredOut);
                 _ambientSoundSystem.SetAmbience(uid, filteredOut.TotalMoles > 0f);
             }
 

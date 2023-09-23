@@ -5,7 +5,6 @@ using Content.Server.Atmos.Piping.Components;
 using Content.Server.Atmos.Piping.EntitySystems;
 using Content.Server.Atmos.Piping.Unary.Components;
 using Content.Server.Cargo.Systems;
-using Content.Server.NodeContainer;
 using Content.Server.Nodes.EntitySystems;
 using Content.Server.Popups;
 using Content.Shared.Atmos;
@@ -84,10 +83,10 @@ public sealed class GasCanisterSystem : EntitySystem
     }
 
     private void DirtyUI(EntityUid uid,
-        GasCanisterComponent? canister = null, NodeContainerComponent? nodeContainer = null,
+        GasCanisterComponent? canister = null,
         ContainerManagerComponent? containerManager = null)
     {
-        if (!Resolve(uid, ref canister, ref nodeContainer, ref containerManager))
+        if (!Resolve(uid, ref canister, ref containerManager))
             return;
 
         var portStatus = false;
@@ -163,8 +162,7 @@ public sealed class GasCanisterSystem : EntitySystem
     {
         _atmos.React(canister.Air, canister);
 
-        if (!TryComp<NodeContainerComponent>(uid, out var nodeContainer)
-            || !TryComp<AppearanceComponent>(uid, out var appearance))
+        if (!TryComp<AppearanceComponent>(uid, out var appearance))
             return;
 
         if (_nodeSystem.TryGetNode<AtmosPipeNodeComponent>(uid, canister.PortName, out var portId, out var portName, out var port)
@@ -196,7 +194,7 @@ public sealed class GasCanisterSystem : EntitySystem
         if (MathHelper.CloseToPercent(canister.Air.Pressure, canister.LastPressure))
             return;
 
-        DirtyUI(uid, canister, nodeContainer, containerManager);
+        DirtyUI(uid, canister, containerManager);
 
         canister.LastPressure = canister.Air.Pressure;
 
