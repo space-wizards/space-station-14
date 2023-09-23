@@ -39,7 +39,7 @@ public sealed partial class DragonSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<DragonComponent, ComponentStartup>(OnStartup);
+        SubscribeLocalEvent<DragonComponent, MapInitEvent>(OnInit);
         SubscribeLocalEvent<DragonComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<DragonComponent, DragonSpawnRiftActionEvent>(OnSpawnRift);
         SubscribeLocalEvent<DragonComponent, RefreshMovementSpeedModifiersEvent>(OnDragonMove);
@@ -93,7 +93,7 @@ public sealed partial class DragonSystem : EntitySystem
         }
     }
 
-    private void OnStartup(EntityUid uid, DragonComponent component, ComponentStartup args)
+    private void OnMapInit(EntityUid uid, DragonComponent component, MapInitEvent args)
     {
         Roar(uid, component);
         _actions.AddAction(uid, ref component.SpawnRiftActionEntity, component.SpawnRiftAction);
@@ -260,4 +260,3 @@ public sealed partial class DragonSystem : EntitySystem
         _popup.PopupEntity(Loc.GetString("carp-rift-destroyed"), uid, uid);
     }
 }
-

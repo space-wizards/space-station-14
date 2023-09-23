@@ -3,24 +3,11 @@
   parent: BaseMobSkeletonPerson
   id: MobSkeletonPerson
   components:
-    - type: InteractionPopup
-      successChance: 1
-      interactSuccessString: hugging-success-generic
-      interactSuccessSound: /Audio/Effects/thudswoosh.ogg
-      messagePerceivedByOthers: hugging-success-generic-others
-    - type: Input
-      context: "human"
-    - type: MobMover
-    - type: InputMover
-    - type: Alerts
-    - type: Actions
-    - type: Eye
-    - type: CameraRecoil
-    - type: Examiner
-    - type: CanHostGuardian
-    - type: NpcFactionMember
-      factions:
-        - NanoTrasen
+  - type: InteractionPopup
+    successChance: 1
+    interactSuccessString: hugging-success-generic
+    interactSuccessSound: /Audio/Effects/thudswoosh.ogg
+    messagePerceivedByOthers: hugging-success-generic-others
 
 - type: entity
   name: Skeleton Pirate

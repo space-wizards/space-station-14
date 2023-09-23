@@ -1,23 +1,24 @@
-using Content.Server.Nutrition.Components;
+using Content.Shared.Alert;
+using Content.Shared.Movement.Components;
+using Content.Shared.Movement.Systems;
+using Content.Shared.Nutrition.Components;
+using Content.Shared.Rejuvenate;
 using JetBrains.Annotations;
 using Robust.Shared.Random;
-using Content.Shared.Movement.Components;
-using Content.Shared.Alert;
-using Content.Shared.Movement.Systems;
-using Content.Shared.Rejuvenate;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Nutrition.EntitySystems;
 
 [UsedImplicitly]
 public sealed class ThirstSystem : EntitySystem
 {
+    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly AlertsSystem _alerts = default!;
     [Dependency] private readonly MovementSpeedModifierSystem _movement = default!;
     [Dependency] private readonly SharedJetpackSystem _jetpack = default!;
 
     private ISawmill _sawmill = default!;
-    private float _accumulatedFrameTime;
 
     public override void Initialize()
     {
@@ -28,6 +29,7 @@ public sealed class ThirstSystem : EntitySystem
         SubscribeLocalEvent<ThirstComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshMovespeed);
         SubscribeLocalEvent<ThirstComponent, ComponentStartup>(OnComponentStartup);
         SubscribeLocalEvent<ThirstComponent, RejuvenateEvent>(OnRejuvenate);
+        SubscribeLocalEvent<ThirstComponent, EntityUnpausedEvent>(OnUnpaused);
     }
 
     private void OnComponentStartup(EntityUid uid, ThirstComponent component, ComponentStartup args)
@@ -154,22 +156,30 @@ public sealed class ThirstSystem : EntitySystem
 
     public override void Update(float frameTime)
     {
-        _accumulatedFrameTime += frameTime;
+        base.Update(frameTime);
 
-        if (_accumulatedFrameTime > 1)
+        var query = EntityQueryEnumerator<ThirstComponent>();
+        while (query.MoveNext(out var uid, out var thirst))
         {
-            var query = EntityManager.EntityQueryEnumerator<ThirstComponent>();
-            while (query.MoveNext(out var uid, out var comp))
-            {
-                UpdateThirst(comp, - comp.ActualDecayRate);
-                var calculatedThirstThreshold = GetThirstThreshold(comp, comp.CurrentThirst);
-                if (calculatedThirstThreshold != comp.CurrentThirstThreshold)
-                {
-                    comp.CurrentThirstThreshold = calculatedThirstThreshold;
-                    UpdateEffects(uid, comp);
-                }
-            }
-            _accumulatedFrameTime -= 1;
+            if (_timing.CurTime < thirst.NextUpdateTime)
+                continue;
+
+            thirst.NextUpdateTime += thirst.UpdateRate;
+
+            UpdateThirst(thirst, -thirst.ActualDecayRate);
+            var calculatedThirstThreshold = GetThirstThreshold(thirst, thirst.CurrentThirst);
+
+            if (calculatedThirstThreshold == thirst.CurrentThirstThreshold)
+                continue;
+
+            thirst.CurrentThirstThreshold = calculatedThirstThreshold;
+            UpdateEffects(uid, thirst);
+            Dirty(uid, thirst);
         }
+    }
+
+    private void OnUnpaused(EntityUid uid, ThirstComponent component, ref EntityUnpausedEvent args)
+    {
+        component.NextUpdateTime += args.PausedTime;
     }
 }

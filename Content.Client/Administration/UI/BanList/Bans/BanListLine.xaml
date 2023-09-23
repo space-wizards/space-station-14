@@ -16,23 +16,26 @@
     </BoxContainer>
     <cc:VSeparator/>
     <Label Name="Reason"
+           Access="Public"
            SizeFlagsStretchRatio="6"
            HorizontalExpand="True"
            VerticalExpand="True"/>
     <cc:VSeparator/>
     <Label Name="BanTime"
+           Access="Public"
            SizeFlagsStretchRatio="2"
            HorizontalExpand="True"
            ClipText="True"/>
     <cc:VSeparator/>
     <Label Name="Expires"
+           Access="Public"
            SizeFlagsStretchRatio="4"
            HorizontalExpand="True"
            ClipText="True"/>
     <cc:VSeparator/>
     <Label Name="BanningAdmin"
+           Access="Public"
            SizeFlagsStretchRatio="2"
            HorizontalExpand="True"
            ClipText="True"/>
-    <cc:VSeparator/>
 </BoxContainer>
