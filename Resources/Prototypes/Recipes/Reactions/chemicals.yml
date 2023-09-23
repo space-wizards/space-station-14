@@ -108,6 +108,28 @@
       maxTotalIntensity: 30
 
 - type: reaction
+  id: HydrogenExplosion
+  impact: High
+  priority: 20
+  minTemp: 300 # Room temperature is 293
+  reactants:
+    Hydrogen:
+      amount: 2
+    Oxygen:
+      amount: 1
+  effects:
+    - !type:CreateGas
+      gas: 5 # The ID of Water Vapor
+    - !type:ExplosionReactionEffect
+      explosionType: Default
+      maxIntensity: 8
+      intensityPerUnit: 1
+      intensitySlope: .5
+      maxTotalIntensity: 30
+  products:
+    Water: 0.1
+
+- type: reaction
   id: Smoke
   priority: 10
   impact: High
