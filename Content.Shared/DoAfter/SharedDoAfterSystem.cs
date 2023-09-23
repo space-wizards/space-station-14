@@ -207,9 +207,6 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
         var doAfter = new DoAfter(id.Value.Index, args, GameTiming.CurTime);
 
         // Networking yay
-        doAfter.NetInitialItem = GetNetEntity(doAfter.InitialItem);
-
-        // Networking yay
         args.NetTarget = GetNetEntity(args.Target);
         args.NetUsed = GetNetEntity(args.Used);
         args.NetUser = GetNetEntity(args.User);
@@ -237,6 +234,8 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
             doAfter.InitialHand = handsComponent.ActiveHand?.Name;
             doAfter.InitialItem = handsComponent.ActiveHandEntity;
         }
+
+        doAfter.NetInitialItem = GetNetEntity(doAfter.InitialItem);
 
         // Initial checks
         if (ShouldCancel(doAfter, GetEntityQuery<TransformComponent>(), GetEntityQuery<HandsComponent>()))
