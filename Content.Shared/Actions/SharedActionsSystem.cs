@@ -120,8 +120,7 @@ public abstract class SharedActionsSystem : EntitySystem
         if (actionId == null)
             return;
 
-        var action = GetActionData(actionId);
-        if (action == null || action.UseDelay == null)
+        if (!TryGetActionData(actionId, out var action) || action.UseDelay == null)
             return;
 
         action.Cooldown = (GameTiming.CurTime, GameTiming.CurTime + action.UseDelay.Value);
