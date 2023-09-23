@@ -111,7 +111,7 @@
   id: HydrogenExplosion
   impact: High
   priority: 20
-  minTemp: 300 # Room temperature is 293
+  minTemp: 370 # IRL the min temp for this reaction is ~700K but we're keeping it player-friendly here
   reactants:
     Hydrogen:
       amount: 2
