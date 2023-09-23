@@ -41,7 +41,7 @@ public abstract class SharedMouseRotatorSystem : EntitySystem
             {
                 // Stop rotating if we finished
                 rotator.GoalRotation = null;
-                Dirty(uid, rotater);
+                Dirty(uid, rotator);
             }
         }
     }
