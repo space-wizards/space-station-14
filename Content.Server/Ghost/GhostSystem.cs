@@ -43,7 +43,6 @@ namespace Content.Server.Ghost
         [Dependency] private readonly GameTicker _ticker = default!;
         [Dependency] private readonly TransformSystem _transformSystem = default!;
         [Dependency] private readonly VisibilitySystem _visibilitySystem = default!;
-        [Dependency] private readonly SharedPopupSystem _popup = default!;
 
         public override void Initialize()
         {
@@ -74,16 +73,24 @@ namespace Content.Server.Ghost
 
         private void OnGhostHearingAction(EntityUid uid, GhostComponent component, ToggleGhostHearingActionEvent args)
         {
+            args.Handled = true;
+
             if (HasComp<GhostHearingComponent>(uid))
+            {
                 RemComp<GhostHearingComponent>(uid);
+                _actions.SetToggled(component.ToggleGhostHearingActionEntity, true);
+            }
             else
+            {
                 AddComp<GhostHearingComponent>(uid);
+                _actions.SetToggled(component.ToggleGhostHearingActionEntity, false);
+            }
 
             var str = HasComp<GhostHearingComponent>(uid)
                 ? Loc.GetString("ghost-gui-toggle-hearing-popup-on")
                 : Loc.GetString("ghost-gui-toggle-hearing-popup-off");
 
-            _popup.PopupEntity(str, uid, uid);
+            Popup.PopupEntity(str, uid, uid);
             Dirty(uid, component);
         }
 
