@@ -5,8 +5,8 @@
   description: It's a boring old bucket.
   components:
   - type: Drink
-    isOpen: true
     solution: bucket
+    ignoreEmpty: true
   - type: Clickable
   - type: Sprite
     sprite: Objects/Tools/bucket.rsi

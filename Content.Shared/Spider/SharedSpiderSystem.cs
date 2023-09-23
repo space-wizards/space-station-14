@@ -1,4 +1,5 @@
 using Content.Shared.Actions;
+using Robust.Shared.Network;
 using Robust.Shared.Random;
 
 namespace Content.Shared.Spider;
@@ -6,6 +7,7 @@ namespace Content.Shared.Spider;
 public abstract class SharedSpiderSystem : EntitySystem
 {
     [Dependency] private readonly SharedActionsSystem _action = default!;
+    [Dependency] private readonly INetManager _net = default!;
     [Dependency] private readonly IRobustRandom _robustRandom = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
@@ -13,17 +15,18 @@ public abstract class SharedSpiderSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<SpiderComponent, MapInitEvent>(OnSpiderMapInit);
+        SubscribeLocalEvent<SpiderComponent, MapInitEvent>(OnInit);
         SubscribeLocalEvent<SpiderWebObjectComponent, ComponentStartup>(OnWebStartup);
     }
 
-    private void OnSpiderMapInit(EntityUid uid, SpiderComponent component, MapInitEvent args)
+    private void OnInit(EntityUid uid, SpiderComponent component, MapInitEvent args)
     {
-        _action.AddAction(uid, Spawn(component.WebAction), null);
+        _action.AddAction(uid, ref component.Action, component.WebAction, uid);
     }
 
     private void OnWebStartup(EntityUid uid, SpiderWebObjectComponent component, ComponentStartup args)
     {
+        // TODO dont use this. use some general random appearance system
         _appearance.SetData(uid, SpiderWebVisuals.Variant, _robustRandom.Next(1, 3));
     }
 }

@@ -128,7 +128,7 @@ public sealed class ClimbSystem : SharedClimbSystem
         if (climbing.IsClimbing)
             return true;
 
-        var args = new DoAfterArgs(user, comp.ClimbDelay, new ClimbDoAfterEvent(), entityToMove, target: climbable, used: entityToMove)
+        var args = new DoAfterArgs(EntityManager, user, comp.ClimbDelay, new ClimbDoAfterEvent(), entityToMove, target: climbable, used: entityToMove)
         {
             BreakOnTargetMove = true,
             BreakOnUserMove = true,
@@ -300,8 +300,8 @@ public sealed class ClimbSystem : SharedClimbSystem
 
         if (!HasComp<ClimbingComponent>(user)
             || !TryComp(user, out BodyComponent? body)
-            || !_bodySystem.BodyHasChildOfType(user, BodyPartType.Leg, body)
-            || !_bodySystem.BodyHasChildOfType(user, BodyPartType.Foot, body))
+            || !_bodySystem.BodyHasPartType(user, BodyPartType.Leg, body)
+            || !_bodySystem.BodyHasPartType(user, BodyPartType.Foot, body))
         {
             reason = Loc.GetString("comp-climbable-cant-climb");
             return false;

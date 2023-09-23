@@ -21,6 +21,7 @@ public sealed class AccessReaderSystem : EntitySystem
     [Dependency] private readonly InventorySystem _inventorySystem = default!;
     [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
+    [Dependency] private readonly SharedStationRecordsSystem _records = default!;
 
     public override void Initialize()
     {
@@ -36,7 +37,7 @@ public sealed class AccessReaderSystem : EntitySystem
     private void OnGetState(EntityUid uid, AccessReaderComponent component, ref ComponentGetState args)
     {
         args.State = new AccessReaderComponentState(component.Enabled, component.DenyTags, component.AccessLists,
-            component.AccessKeys);
+            _records.Convert(component.AccessKeys));
     }
 
     private void OnHandleState(EntityUid uid, AccessReaderComponent component, ref ComponentHandleState args)
@@ -44,7 +45,16 @@ public sealed class AccessReaderSystem : EntitySystem
         if (args.Current is not AccessReaderComponentState state)
             return;
         component.Enabled = state.Enabled;
-        component.AccessKeys = new(state.AccessKeys);
+        component.AccessKeys.Clear();
+        foreach (var key in state.AccessKeys)
+        {
+            var id = EnsureEntity<AccessReaderComponent>(key.Item1, uid);
+            if (!id.IsValid())
+                continue;
+
+            component.AccessKeys.Add(new StationRecordKey(key.Item2, id));
+        }
+
         component.AccessLists = new(state.AccessLists);
         component.DenyTags = new(state.DenyTags);
     }

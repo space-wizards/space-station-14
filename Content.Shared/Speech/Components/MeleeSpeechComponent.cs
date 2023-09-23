@@ -27,8 +27,7 @@ public sealed partial class MeleeSpeechComponent : Component
     [AutoNetworkedField]
     public int MaxBattlecryLength = 12;
 
-    [DataField("configureAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string? ConfigureAction = "ActionConfigureMeleeSpeech";
+    [DataField] public EntProtoId  ConfigureAction = "ActionConfigureMeleeSpeech";
 
     /// <summary>
     /// The action to open the battlecry UI
@@ -37,7 +36,7 @@ public sealed partial class MeleeSpeechComponent : Component
 }
 
 /// <summary>
-/// Key representing which <see cref="BoundUserInterface"/> is currently open.
+/// Key representing which <see cref="PlayerBoundUserInterface"/> is currently open.
 /// Useful when there are multiple UI for an object. Here it's future-proofing only.
 /// </summary>
 [Serializable, NetSerializable]

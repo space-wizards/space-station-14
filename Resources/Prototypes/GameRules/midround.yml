@@ -1,0 +1,21 @@
+# doesnt spawn a ninja or anything, just stores configuration for it
+# see NinjaSpawn event for spawning
+- type: entity
+  id: Ninja
+  parent: BaseGameRule
+  noSpawn: true
+  components:
+  - type: GenericAntagRule
+    agentName: ninja-round-end-agent-name
+    objectives:
+    - StealResearchObjective
+    - DoorjackObjective
+    - SpiderChargeObjective
+    - TerrorObjective
+    - NinjaSurviveObjective
+  - type: NinjaRule
+    threats:
+    - announcement: terror-dragon
+      rule: Dragon
+    - announcement: terror-revenant
+      rule: RevenantSpawn

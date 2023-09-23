@@ -24,13 +24,16 @@ namespace Content.Client.HealthAnalyzer.UI
         {
             var text = new StringBuilder();
             var entities = IoCManager.Resolve<IEntityManager>();
+            var target = entities.GetEntity(msg.TargetEntity);
 
-            if (msg.TargetEntity != null && entities.TryGetComponent<DamageableComponent>(msg.TargetEntity, out var damageable))
+            if (msg.TargetEntity != null && entities.TryGetComponent<DamageableComponent>(target, out var damageable))
             {
                 string entityName = "Unknown";
                 if (msg.TargetEntity != null &&
-                    entities.TryGetComponent<MetaDataComponent>(msg.TargetEntity.Value, out var metaData))
-                    entityName = Identity.Name(msg.TargetEntity.Value, entities);
+                    entities.HasComponent<MetaDataComponent>(target.Value))
+                {
+                    entityName = Identity.Name(target.Value, entities);
+                }
 
                 IReadOnlyDictionary<string, FixedPoint2> damagePerGroup = damageable.DamagePerGroup;
                 IReadOnlyDictionary<string, FixedPoint2> damagePerType = damageable.Damage.DamageDict;

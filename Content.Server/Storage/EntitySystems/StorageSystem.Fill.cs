@@ -1,9 +1,6 @@
-using Content.Server.Spawners.Components;
 using Content.Server.Storage.Components;
-using Content.Shared.Prototypes;
 using Content.Shared.Storage;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Utility;
+using Content.Shared.Storage.Components;
 
 namespace Content.Server.Storage.EntitySystems;
 
@@ -14,10 +11,10 @@ public sealed partial class StorageSystem
         if (component.Contents.Count == 0)
             return;
 
-        TryComp<ServerStorageComponent>(uid, out var serverStorageComp);
+        TryComp<StorageComponent>(uid, out var storageComp);
         TryComp<EntityStorageComponent>(uid, out var entityStorageComp);
 
-        if (entityStorageComp == null && serverStorageComp == null)
+        if (entityStorageComp == null && storageComp == null)
         {
             Log.Error($"StorageFillComponent couldn't find any StorageComponent ({uid})");
             return;
@@ -25,20 +22,16 @@ public sealed partial class StorageSystem
 
         var coordinates = Transform(uid).Coordinates;
 
-        var spawnItems = EntitySpawnCollection.GetSpawns(component.Contents, _random);
+        var spawnItems = EntitySpawnCollection.GetSpawns(component.Contents, Random);
         foreach (var item in spawnItems)
         {
-            // No, you are not allowed to fill a container with entity spawners.
-            DebugTools.Assert(!_prototype.Index<EntityPrototype>(item)
-                .HasComponent(typeof(RandomSpawnerComponent)));
-
             var ent = EntityManager.SpawnEntity(item, coordinates);
 
             // handle depending on storage component, again this should be unified after ECS
-            if (_entityStorage.Insert(ent, uid))
-               continue;
+            if (entityStorageComp != null && EntityStorage.Insert(ent, uid))
+                continue;
 
-            if (Insert(uid, ent, serverStorageComp, false))
+            if (storageComp != null && Insert(uid, ent, out _, storageComp: storageComp, playSound: false))
                 continue;
 
             Log.Error($"Tried to StorageFill {item} inside {ToPrettyString(uid)} but can't.");

@@ -1,0 +1,84 @@
+﻿- type: entity
+  parent: BaseItem
+  id: BaseArrow
+  abstract: true
+  components:
+  - type: Item
+    size: 10
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/arrows.rsi
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PhysShapeCircle
+          radius: 0.2
+        density: 5
+        mask:
+        - ItemMask
+        restitution: 0.3
+        friction: 0.2
+      projectile:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.1,-0.1,0.1,0.1"
+        hard: false
+        mask:
+        - Impassable
+        - BulletImpassable
+  - type: EmbeddableProjectile
+    sound: /Audio/Weapons/star_hit.ogg
+    embedOnThrow: false
+  - type: ThrowingAngle
+    angle: 0
+  - type: Ammo
+    muzzleFlash: null
+  - type: Tag
+    tags:
+    - Arrow
+  - type: Projectile
+    deleteOnCollide: false
+    onlyCollideWhenShot: true
+    damage:
+      types:
+        Piercing: 25
+
+- type: entity
+  parent: BaseArrow
+  id: ArrowRegular
+  name: arrow
+  description: You can feel the power of the steppe within you.
+  components:
+  - type: Sprite
+    layers:
+    - state: tail
+      color: red
+    - state: rod
+      color: brown
+    - state: tip
+  - type: Projectile
+    damage:
+      types:
+        Piercing: 35
+
+- type: entity
+  parent: BaseArrow
+  id: ArrowImprovised
+  name: glass shard arrow
+  description: The greyshirt's preferred projectile.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/arrows.rsi
+    layers:
+    - state: tail
+      color: white
+    - state: rod
+      color: darkgray
+    - state: tip
+      color: lightblue
+  - type: Projectile
+    damage:
+      types:
+        Piercing: 25
+  - type: Construction
+    graph: ImprovisedArrow
+    node: ImprovisedArrow
