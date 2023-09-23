@@ -1,0 +1,39 @@
+- files: ["A-Guy-Revolution.ogg"]
+  license: "CC0-1.0"
+  copyright: "Revolution by A-Guy. Converted to mono OGG."
+  source: "https://github.com/A-Guy173/Music"
+
+- files: ["ChrisRemo-Space_Asshole_original.ogg"]
+  license: "Custom"
+  copyright: "Space Asshole by ChrisRemo. According to the Audio/Lobby/attributions.yml, usage of this song is allowed by the author if the project remains non-commerical and open source. Converted to mono OGG. https://chrisremo.bandcamp.com/"
+  source: "https://idlethumbs.bandcamp.com/track/space-asshole"
+
+- files: ["MashedByMachines-Sector11.ogg"]
+  license: "CC-BY-NC-SA-3.0"
+  copyright: "-Sector11 by MashedByMachines. Converted to mono OGG."
+  source: "https://www.newgrounds.com/audio/listen/312622"
+
+- files: ["mod.flip-flap.ogg"]
+  license: "Custom"
+  copyright: "Flip Flap by X-ceed is licensed under a short but clear license (see flip-flap.txt in Audio/Lobby) and is free for non-commercial use. Converted to mono OGG."
+  source: "http://aminet.net/package/mods/xceed/Flipflap"
+
+- files: ["title3.ogg"]
+  license: "CC-BY-NC-SA-3.0"
+  copyright: "Title3 by Cuboos. It is a remix of the song 'Tintin on the Moon'. Converted to mono OGG."
+  source: "https://www.youtube.com/watch?v=YKVmXn-Gv0M"
+
+- files: ["Qwertyquerty-Constellations.ogg"]
+  license: "CC-BY-3.0"
+  copyright: "Constellations by Qwertyquerty. Converted to mono OGG."
+  source: "https://www.youtube.com/watch?v=ufwRj1LI3aw"
+
+- files: ["Qwertyquerty-Drifting.ogg"]
+  license: "CC-BY-3.0"
+  copyright: "Drifting by Qwertyquerty. Converted to mono OGG."
+  source: "https://www.youtube.com/watch?v=8I3ivc8JcmM"
+
+- files: ["Qwertyquerty-Starlight.ogg"]
+  license: "CC-BY-3.0"
+  copyright: "Starlight by Qwertyquerty. Converted to mono OGG."
+  source: "https://www.youtube.com/watch?v=XTfPEFfmhrA"
