@@ -23,27 +23,20 @@ namespace Content.Server.Power.NodeGroups
     [UsedImplicitly]
     public sealed partial class PowerNet : BasePowerNet<IPowerNet>, IPowerNet
     {
-        private PowerNetSystem? _powerNetSystem;
-        private IEntityManager? _entMan;
-
         [ViewVariables] public readonly List<BatteryChargerComponent> Chargers = new();
         [ViewVariables] public readonly List<BatteryDischargerComponent> Dischargers = new();
 
         public override void Initialize(Node sourceNode, IEntityManager entMan)
         {
             base.Initialize(sourceNode, entMan);
-
-            _entMan = entMan;
-
-            _powerNetSystem = entMan.EntitySysManager.GetEntitySystem<PowerNetSystem>();
-            _powerNetSystem.InitPowerNet(this);
+            PowerNetSystem.InitPowerNet(this);
         }
 
         public override void AfterRemake(IEnumerable<IGrouping<INodeGroup?, Node>> newGroups)
         {
             base.AfterRemake(newGroups);
 
-            _powerNetSystem?.DestroyPowerNet(this);
+            PowerNetSystem?.DestroyPowerNet(this);
         }
 
         protected override void SetNetConnectorNet(IBaseNetConnectorComponent<IPowerNet> netConnectorComponent)
@@ -53,10 +46,10 @@ namespace Content.Server.Power.NodeGroups
 
         public void AddDischarger(BatteryDischargerComponent discharger)
         {
-            if (_entMan == null)
+            if (EntMan == null)
                 return;
 
-            var battery = _entMan.GetComponent<PowerNetworkBatteryComponent>(discharger.Owner);
+            var battery = EntMan.GetComponent<PowerNetworkBatteryComponent>(discharger.Owner);
             DebugTools.Assert(battery.NetworkBattery.LinkedNetworkDischarging == default);
             battery.NetworkBattery.LinkedNetworkDischarging = default;
             Dischargers.Add(discharger);
@@ -65,11 +58,11 @@ namespace Content.Server.Power.NodeGroups
 
         public void RemoveDischarger(BatteryDischargerComponent discharger)
         {
-            if (_entMan == null)
+            if (EntMan == null)
                 return;
 
             // Can be missing if the entity is being deleted, not a big deal.
-            if (_entMan.TryGetComponent(discharger.Owner, out PowerNetworkBatteryComponent? battery))
+            if (EntMan.TryGetComponent(discharger.Owner, out PowerNetworkBatteryComponent? battery))
             {
                 // Linked network can be default if it was re-connected twice in one tick.
                 DebugTools.Assert(battery.NetworkBattery.LinkedNetworkDischarging == default || battery.NetworkBattery.LinkedNetworkDischarging == NetworkNode.Id);
@@ -82,10 +75,10 @@ namespace Content.Server.Power.NodeGroups
 
         public void AddCharger(BatteryChargerComponent charger)
         {
-            if (_entMan == null)
+            if (EntMan == null)
                 return;
 
-            var battery = _entMan.GetComponent<PowerNetworkBatteryComponent>(charger.Owner);
+            var battery = EntMan.GetComponent<PowerNetworkBatteryComponent>(charger.Owner);
             DebugTools.Assert(battery.NetworkBattery.LinkedNetworkCharging == default);
             battery.NetworkBattery.LinkedNetworkCharging = default;
             Chargers.Add(charger);
@@ -94,11 +87,11 @@ namespace Content.Server.Power.NodeGroups
 
         public void RemoveCharger(BatteryChargerComponent charger)
         {
-            if (_entMan == null)
+            if (EntMan == null)
                 return;
 
             // Can be missing if the entity is being deleted, not a big deal.
-            if (_entMan.TryGetComponent(charger.Owner, out PowerNetworkBatteryComponent? battery))
+            if (EntMan.TryGetComponent(charger.Owner, out PowerNetworkBatteryComponent? battery))
             {
                 // Linked network can be default if it was re-connected twice in one tick.
                 DebugTools.Assert(battery.NetworkBattery.LinkedNetworkCharging == default || battery.NetworkBattery.LinkedNetworkCharging == NetworkNode.Id);
@@ -111,16 +104,16 @@ namespace Content.Server.Power.NodeGroups
 
         public override void QueueNetworkReconnect()
         {
-            _powerNetSystem?.QueueReconnectPowerNet(this);
+            PowerNetSystem?.QueueReconnectPowerNet(this);
         }
 
         public override string? GetDebugData()
         {
-            if (_powerNetSystem == null)
+            if (PowerNetSystem == null)
                 return null;
 
             // This is just recycling the multi-tool examine.
-            var ps = _powerNetSystem.GetNetworkStatistics(NetworkNode);
+            var ps = PowerNetSystem.GetNetworkStatistics(NetworkNode);
 
             float storageRatio = ps.InStorageCurrent / Math.Max(ps.InStorageMax, 1.0f);
             float outStorageRatio = ps.OutStorageCurrent / Math.Max(ps.OutStorageMax, 1.0f);

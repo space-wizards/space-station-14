@@ -1,140 +1,4 @@
 Entries:
-- author: crazybrain
-  changes:
-  - {message: Alien artifact intercom no longer has the syndicate channel., type: Tweak}
-  id: 4352
-  time: '2023-07-27T20:03:48.0000000+00:00'
-- author: PrPleGoo
-  changes:
-  - {message: Changed news article to track an author., type: Tweak}
-  - {message: News articles can only be deleted by their tracked author., type: Tweak}
-  id: 4353
-  time: '2023-07-27T20:25:56.0000000+00:00'
-- author: RiceMar
-  changes:
-  - {message: Nanotrasen has yielded to the pleas of the station's newly forming rock
-      bands and has permitted "guitars worn on the back rebelliously" under official
-      dress code., type: Add}
-  id: 4354
-  time: '2023-07-27T23:05:32.0000000+00:00'
-- author: Verslebas
-  changes:
-  - {message: Added champagne!, type: Add}
-  id: 4355
-  time: '2023-07-28T15:54:36.0000000+00:00'
-- author: OctoRocket and Eden
-  changes:
-  - {message: Removed annoying archaic replacements that involve like and other confusing
-      swaps., type: Tweak}
-  id: 4356
-  time: '2023-07-28T19:51:52.0000000+00:00'
-- author: KingFroozy
-  changes:
-  - {message: 'Nanotrasen''s vest suppliers have finally started to sew pockets to
-      their hi-viz vests, and now you can safely put explosives in it.', type: Add}
-  id: 4357
-  time: '2023-07-28T19:53:59.0000000+00:00'
-- author: Jackal298
-  changes:
-  - {message: Improved sprites SMG Drozd and sprite WT 550 behind, type: Tweak}
-  id: 4358
-  time: '2023-07-28T19:55:46.0000000+00:00'
-- author: Misha_Unity
-  changes:
-  - {message: News tab has been turned into an PDA application, type: Tweak}
-  - {message: Added cooldown to mass-media console, type: Add}
-  - {message: Added function to turn off new news notifications, type: Add}
-  id: 4359
-  time: '2023-07-28T19:59:03.0000000+00:00'
-- author: Skarlet
-  changes:
-  - {message: 'Changed the Captain''s wardrobe with a new default outfit, a new carapace
-      and updates older clothing for the sake of consistency.', type: Tweak}
-  id: 4360
-  time: '2023-07-29T00:09:20.0000000+00:00'
-- author: Vasilis
-  changes:
-  - {message: The local Clown on Station 14 wore a plunger on their head and became
-      a sensation overnight! Many try to replicate their style, type: Add}
-  id: 4361
-  time: '2023-07-29T00:10:45.0000000+00:00'
-- author: Jackal298
-  changes:
-  - {message: Raised the price of the sniper bundle from 6 to 12 TC and reduced the
-      ammo supply from 30 to 10, type: Tweak}
-  - {message: Fixed the issue of not being able to put the Anti-Material Ammo back
-      into the Anti-Material Ammo Box, type: Fix}
-  id: 4362
-  time: '2023-07-29T06:09:33.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Truncate gun fire rate examines so they don't show 20 digits., type: Fix}
-  id: 4363
-  time: '2023-07-29T06:09:43.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Initial Infected can now use the "turn undead" action while in crit.,
-    type: Fix}
-  id: 4364
-  time: '2023-07-29T06:09:54.0000000+00:00'
-- author: lzk228
-  changes:
-  - {message: Added hairflower to authodrobe!, type: Add}
-  id: 4365
-  time: '2023-07-29T06:10:15.0000000+00:00'
-- author: Potato1234_x
-  changes:
-  - {message: Added bags for cargo techs., type: Add}
-  id: 4366
-  time: '2023-07-29T06:12:42.0000000+00:00'
-- author: liltenhead
-  changes:
-  - {message: Fixed incorrect cheese wheel guidebook recipe, type: Fix}
-  id: 4367
-  time: '2023-07-29T13:14:00.0000000+00:00'
-- author: eclips_e
-  changes:
-  - {message: Renamed the chemical compendium to chempendium, type: Tweak}
-  id: 4368
-  time: '2023-07-29T15:16:31.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Fixed a bug causing some machine construction requirements to not work
-      properly., type: Fix}
-  id: 4369
-  time: '2023-07-29T17:29:59.0000000+00:00'
-- author: lzk228
-  changes:
-  - {message: The hair flower and flower crown have new crafting recipes., type: Add}
-  id: 4370
-  time: '2023-07-29T18:46:29.0000000+00:00'
-- author: chromiumboy
-  changes:
-  - {message: 'The detection range of the anomaly locator has been doubled, and its
-      battery life increased by a factor of five', type: Tweak}
-  id: 4371
-  time: '2023-07-29T18:51:36.0000000+00:00'
-- author: lzk228
-  changes:
-  - {message: Fix display of ghost role rules., type: Fix}
-  id: 4372
-  time: '2023-07-29T18:56:59.0000000+00:00'
-- author: Keiku
-  changes:
-  - {message: Improve hunger and thirst warning icons, type: Tweak}
-  id: 4373
-  time: '2023-07-29T19:19:09.0000000+00:00'
-- author: Dygon
-  changes:
-  - {message: 'When firing a gun, casings now eject with a bit of force instead of
-      dropping straight to the floor.', type: Tweak}
-  id: 4374
-  time: '2023-07-29T21:07:32.0000000+00:00'
-- author: liltenhead
-  changes:
-  - {message: Added filter for bartender recipes in the guidebook, type: Add}
-  id: 4375
-  time: '2023-07-29T22:59:59.0000000+00:00'
 - author: liltenhead
   changes:
   - {message: Changed the placeholder comms computer description, type: Tweak}
@@ -2969,3 +2833,151 @@ Entries:
   - {message: Blood-red magboots' jetpack now works again., type: Fix}
   id: 4851
   time: '2023-09-18T06:13:12.0000000+00:00'
+- author: JoeHammad
+  changes:
+  - {message: The syndicate have started using cheaper materials in the manufacture
+      of their over ear headsets, type: Add}
+  id: 4852
+  time: '2023-09-18T19:18:56.0000000+00:00'
+- author: PursuitinAshes
+  changes:
+  - {message: Nanotrasen now properly supplies its captains with appropriate headgear
+      in all of their lockers., type: Fix}
+  id: 4853
+  time: '2023-09-18T19:20:10.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: The Syndicate has cracked the binary radio channel's encryption and
+      is offering keys for 4 TC., type: Add}
+  id: 4854
+  time: '2023-09-18T19:20:56.0000000+00:00'
+- author: liltenhead
+  changes:
+  - {message: Increased the amount of barotrauma damage you receive., type: Tweak}
+  id: 4855
+  time: '2023-09-18T19:21:36.0000000+00:00'
+- author: HerCoyote23
+  changes:
+  - {message: 'The Syndicate has grown tired of losing overconfident "Loud" agents,
+      and has reduced their stealth gear prices to encourage a more sneaky approach.',
+    type: Tweak}
+  id: 4856
+  time: '2023-09-18T21:07:00.0000000+00:00'
+- author: Doru991
+  changes:
+  - {message: Berry seeds are now available from the MegaSeed Servitor., type: Add}
+  - {message: Seeds for the bungo fruit are included in the exotic seed crate., type: Add}
+  id: 4857
+  time: '2023-09-19T03:29:28.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Skeletons have been reported in the closets of various station officials.
+      And maintenance., type: Add}
+  - {message: Skeletons can no longer have a pitch-black coloration., type: Tweak}
+  id: 4858
+  time: '2023-09-19T05:05:18.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: 'Expeditions have been massively tweaked. Timer is 7 minutes, loot count
+      is significantly up, added significantly more loot to the loot table, mob count
+      is significantly up, and mobs overall have been nerfed (no more 15 damage carps
+      ending you). It also has a flat 13 minute cooldown. Better bring your fultons
+      if you expect to bring stuff back.', type: Tweak}
+  id: 4859
+  time: '2023-09-19T12:52:01.0000000+00:00'
+- author: Repo
+  changes:
+  - {message: Time out for particular uplink items for balancing. Syndicate Bomb can
+      only be purchased after 30min., type: Add}
+  id: 4860
+  time: '2023-09-19T23:51:15.0000000+00:00'
+- author: liltenhead
+  changes:
+  - {message: Reduced the crafting costs of the buckler and makeshift shield., type: Tweak}
+  id: 4861
+  time: '2023-09-20T04:49:43.0000000+00:00'
+- author: dahnte
+  changes:
+  - {message: Added frontal lisp as a character trait for all species!, type: Add}
+  id: 4862
+  time: '2023-09-20T04:51:50.0000000+00:00'
+- author: Alekshhh
+  changes:
+  - {message: Changed most medkit fills, type: Tweak}
+  id: 4863
+  time: '2023-09-20T07:50:19.0000000+00:00'
+- author: Alekshhh
+  changes:
+  - {message: Added U-shaped rails, type: Add}
+  id: 4864
+  time: '2023-09-20T08:26:17.0000000+00:00'
+- author: Just_Art
+  changes:
+  - {message: Added corn in butter., type: Add}
+  - {message: Increased popcorn cooking time., type: Tweak}
+  id: 4865
+  time: '2023-09-20T09:51:09.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: 'Fix some do_afters mispredicting, e.g. removing encryption keys from
+      headsets.', type: Fix}
+  id: 4866
+  time: '2023-09-20T12:01:54.0000000+00:00'
+- author: ike709
+  changes:
+  - {message: Added a search filter to vending machines, type: Add}
+  id: 4867
+  time: '2023-09-20T19:40:41.0000000+00:00'
+- author: waylon531
+  changes:
+  - {message: Centcomm is tired of the crew drunkenly wandering the station and starting
+      brawls. Many mixed drinks now have half as much alcohol., type: Tweak}
+  id: 4868
+  time: '2023-09-21T00:58:57.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix xeno ghost roles showing up for expeditions., type: Fix}
+  id: 4869
+  time: '2023-09-21T13:21:43.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'Added improvised bows & arrows to construction, have fun embedding
+      people with arrows', type: Add}
+  - {message: Added quivers as random maint loot drops, type: Add}
+  id: 4870
+  time: '2023-09-22T09:45:21.0000000+00:00'
+- author: Vasilis
+  changes:
+  - {message: The guidebook now has a pop-out button. This will turn it into a system
+      window that you can drag wherever is convenient such as a second monitor., type: Add}
+  - {message: 'The Steam overlay has been disabled due to conflicts with pop-out windows.
+      Due to a bug with Steam, the game''s graphics will corrupt when overlay is enabled
+      and a popout window is opened.', type: Remove}
+  id: 4871
+  time: '2023-09-22T19:52:31.0000000+00:00'
+- author: TheArturZh
+  changes:
+  - {message: Station records console works properly again, type: Fix}
+  id: 4872
+  time: '2023-09-22T19:57:06.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: 'The rat king can now rummage through disposal units to get trash, cheese,
+      or gold.', type: Add}
+  - {message: 'The rat king now can command its servants to do various actions. They
+      can sit, follow, attack a target, or go buck-wild, all at the King''s command',
+    type: Add}
+  - {message: Rat servants are no longer ghost roles., type: Remove}
+  id: 4873
+  time: '2023-09-22T20:01:05.0000000+00:00'
+- author: waylon531
+  changes:
+  - {message: The surgeons at Centcomm have made it so drinking too much alcohol will
+      now cause liver failure instead of heart failure. Alcoholics rejoice!, type: Fix}
+  id: 4874
+  time: '2023-09-22T20:01:42.0000000+00:00'
+- author: dahnte
+  changes:
+  - {message: Improved lisp letter matching and clarity., type: Fix}
+  id: 4875
+  time: '2023-09-23T05:39:47.0000000+00:00'
