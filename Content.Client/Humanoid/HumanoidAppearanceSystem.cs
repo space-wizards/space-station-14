@@ -171,11 +171,11 @@ public sealed class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
         var facialHair = new Marking(profile.Appearance.FacialHairStyleId,
             new[] { facialHairColor });
 
-        if (_markingManager.CanBeApplied(profile.Species, hair, _prototypeManager))
+        if (_markingManager.CanBeApplied(profile.Species, profile.Sex, hair, _prototypeManager))
         {
             markings.AddBack(MarkingCategories.Hair, hair);
         }
-        if (_markingManager.CanBeApplied(profile.Species, facialHair, _prototypeManager))
+        if (_markingManager.CanBeApplied(profile.Species, profile.Sex, facialHair, _prototypeManager))
         {
             markings.AddBack(MarkingCategories.FacialHair, facialHair);
         }
@@ -193,12 +193,13 @@ public sealed class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
         }
 
         markings.EnsureSpecies(profile.Species, profile.Appearance.SkinColor, _markingManager, _prototypeManager);
+        markings.EnsureSexes(profile.Sex, _markingManager);
         markings.EnsureDefault(
             profile.Appearance.SkinColor,
             profile.Appearance.EyeColor,
             _markingManager);
 
-        DebugTools.Assert(uid.IsClientSide());
+        DebugTools.Assert(IsClientSide(uid));
 
         var state = new HumanoidAppearanceState(markings,
             new(),

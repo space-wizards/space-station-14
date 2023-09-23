@@ -20,6 +20,7 @@ using Robust.Client.Player;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controllers;
 using Robust.Client.UserInterface.Controls;
+using Robust.Shared.Graphics.RSI;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Timing;
@@ -240,7 +241,7 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
             _actionsSystem.PerformAction(user, actionComp, actionId, action, action.Event, _timing.CurTime);
         }
         else
-            EntityManager.RaisePredictiveEvent(new RequestPerformActionEvent(actionId, coords));
+            EntityManager.RaisePredictiveEvent(new RequestPerformActionEvent(EntityManager.GetNetEntity(actionId), EntityManager.GetNetCoordinates(coords)));
 
         if (!action.Repeat)
             StopTargeting();
@@ -253,7 +254,9 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
         if (_actionsSystem == null)
             return false;
 
-        if (!_actionsSystem.ValidateEntityTarget(user, args.EntityUid, action))
+        var entity = args.EntityUid;
+
+        if (!_actionsSystem.ValidateEntityTarget(user, entity, action))
         {
             if (action.DeselectOnMiss)
                 StopTargeting();
@@ -265,14 +268,14 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
         {
             if (action.Event != null)
             {
-                action.Event.Target = args.EntityUid;
+                action.Event.Target = entity;
                 action.Event.Performer = user;
             }
 
             _actionsSystem.PerformAction(user, actionComp, actionId, action, action.Event, _timing.CurTime);
         }
         else
-            EntityManager.RaisePredictiveEvent(new RequestPerformActionEvent(actionId, args.EntityUid));
+            EntityManager.RaisePredictiveEvent(new RequestPerformActionEvent(EntityManager.GetNetEntity(actionId), EntityManager.GetNetEntity(args.EntityUid)));
 
         if (!action.Repeat)
             StopTargeting();
@@ -741,10 +744,12 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
     {
         if (_actionsSystem != null && _actionsSystem.TryGetActionData(_menuDragHelper.Dragged?.ActionId, out var action))
         {
-            if (action.EntityIcon != null)
+            var entIcon = action.EntityIcon;
+
+            if (entIcon != null)
             {
-                _dragShadow.Texture = EntityManager.GetComponent<SpriteComponent>(action.EntityIcon.Value).Icon?
-                    .GetFrame(RSI.State.Direction.South, 0);
+                _dragShadow.Texture = EntityManager.GetComponent<SpriteComponent>(entIcon.Value).Icon?
+                    .GetFrame(RsiDirection.South, 0);
             }
             else if (action.Icon != null)
             {
@@ -956,18 +961,31 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
         StopTargeting();
 
         SelectingTargetFor = actionId;
+        // TODO inform the server
+        action.Toggled = true;
 
         // override "held-item" overlay
+        var provider = action.Provider;
+
         if (action.TargetingIndicator && _overlays.TryGetOverlay<ShowHandItemOverlay>(out var handOverlay))
         {
             if (action.ItemIconStyle == ItemActionIconStyle.BigItem && action.Provider != null)
             {
-                handOverlay.EntityOverride = action.Provider;
+                handOverlay.EntityOverride = provider;
             }
             else if (action.Toggled && action.IconOn != null)
                 handOverlay.IconOverride = _spriteSystem.Frame0(action.IconOn);
             else if (action.Icon != null)
                 handOverlay.IconOverride = _spriteSystem.Frame0(action.Icon);
+        }
+
+        if (_container != null)
+        {
+            foreach (var button in _container.GetButtons())
+            {
+                if (button.ActionId == actionId)
+                    button.UpdateIcons();
+            }
         }
 
         // TODO: allow world-targets to check valid positions. E.g., maybe:
@@ -979,9 +997,10 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
             return;
 
         Func<EntityUid, bool>? predicate = null;
+        var attachedEnt = entityAction.AttachedEntity;
 
         if (!entityAction.CanTargetSelf)
-            predicate = e => e != entityAction.AttachedEntity;
+            predicate = e => e != attachedEnt;
 
         var range = entityAction.CheckCanAccess ? action.Range : -1;
 
@@ -997,9 +1016,26 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
         if (SelectingTargetFor == null)
             return;
 
+        var oldAction = SelectingTargetFor;
+        if (_actionsSystem != null && _actionsSystem.TryGetActionData(oldAction, out var action))
+        {
+            // TODO inform the server
+            action.Toggled = false;
+        }
+
         SelectingTargetFor = null;
+
         _targetOutline?.Disable();
         _interactionOutline?.SetEnabled(true);
+
+        if (_container != null)
+        {
+            foreach (var button in _container.GetButtons())
+            {
+                if (button.ActionId == oldAction)
+                    button.UpdateIcons();
+            }
+        }
 
         if (!_overlays.TryGetOverlay<ShowHandItemOverlay>(out var handOverlay))
             return;

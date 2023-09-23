@@ -24,7 +24,7 @@ namespace Content.Client.Light.Components
         [DataField("id")] public string ID { get; set; } = string.Empty;
 
         [DataField("property")]
-        public virtual string Property { get; protected set; } = "Radius";
+        public virtual string Property { get; protected set; } = nameof(PointLightComponent.AnimatedRadius);
 
         [DataField("isLooped")] public bool IsLooped { get; set; }
 
@@ -53,7 +53,7 @@ namespace Content.Client.Light.Components
 
             if (Enabled && _entMan.TryGetComponent(_parent, out PointLightComponent? light))
             {
-                light.Enabled = true;
+                _entMan.System<PointLightSystem>().SetEnabled(_parent, true, light);
             }
 
             OnInitialize();
@@ -63,7 +63,7 @@ namespace Content.Client.Light.Components
         {
             if (_entMan.TryGetComponent(_parent, out PointLightComponent? light))
             {
-                light.Enabled = true;
+                _entMan.System<PointLightSystem>().SetEnabled(_parent, true, light);
             }
 
             if (MinDuration > 0)
@@ -119,7 +119,7 @@ namespace Content.Client.Light.Components
             var playingTime = prevPlayingTime + frameTime;
             var interpolateValue = playingTime / MaxTime;
 
-            if (Property == "Enabled") // special case for boolean
+            if (Property == nameof(PointLightComponent.AnimatedEnable)) // special case for boolean
             {
                 ApplyProperty(interpolateValue < 0.5f);
                 return (-1, playingTime);
@@ -181,7 +181,7 @@ namespace Content.Client.Light.Components
             var playingTime = prevPlayingTime + frameTime;
             var interpolateValue = playingTime / MaxTime;
 
-            if (Property == "Enabled") // special case for boolean
+            if (Property == nameof(PointLightComponent.AnimatedEnable)) // special case for boolean
             {
                 ApplyProperty(interpolateValue < EndValue);
                 return (-1, playingTime);
@@ -245,7 +245,7 @@ namespace Content.Client.Light.Components
 
         public override void OnStart()
         {
-            if (Property == "Enabled") // special case for boolean, we randomize it
+            if (Property == nameof(PointLightComponent.AnimatedEnable)) // special case for boolean, we randomize it
             {
                 ApplyProperty(_random.NextDouble() < 0.5);
                 return;
@@ -267,7 +267,7 @@ namespace Content.Client.Light.Components
             var playingTime = prevPlayingTime + frameTime;
             var interpolateValue = playingTime / MaxTime;
 
-            if (Property == "Enabled")
+            if (Property == nameof(PointLightComponent.AnimatedEnable))
             {
                 return (-1, playingTime);
             }
@@ -298,7 +298,7 @@ namespace Content.Client.Light.Components
     public sealed partial class ColorCycleBehaviour : LightBehaviourAnimationTrack, ISerializationHooks
     {
         [DataField("property")]
-        public override string Property { get; protected set; } = "Color";
+        public override string Property { get; protected set; } = nameof(PointLightComponent.Color);
 
         [DataField("colors")] public List<Color> ColorsToCycle { get; set; } = new();
 

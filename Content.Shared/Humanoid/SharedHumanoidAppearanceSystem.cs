@@ -37,7 +37,7 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
 
     private void OnInit(EntityUid uid, HumanoidAppearanceComponent humanoid, ComponentInit args)
     {
-        if (string.IsNullOrEmpty(humanoid.Species) || _netManager.IsClient && !uid.IsClientSide())
+        if (string.IsNullOrEmpty(humanoid.Species) || _netManager.IsClient && !IsClientSide(uid))
         {
             return;
         }
@@ -256,6 +256,7 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
 
         var oldSex = humanoid.Sex;
         humanoid.Sex = sex;
+        humanoid.MarkingSet.EnsureSexes(sex, _markingManager);
         RaiseLocalEvent(uid, new SexChangedEvent(oldSex, sex));
 
         if (sync)
@@ -310,13 +311,13 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
             ? profile.Appearance.SkinColor.WithAlpha(facialHairAlpha) : profile.Appearance.FacialHairColor;
 
         if (_markingManager.Markings.TryGetValue(profile.Appearance.HairStyleId, out var hairPrototype) &&
-            _markingManager.CanBeApplied(profile.Species, hairPrototype, _prototypeManager))
+            _markingManager.CanBeApplied(profile.Species, profile.Sex, hairPrototype, _prototypeManager))
         {
             AddMarking(uid, profile.Appearance.HairStyleId, hairColor, false);
         }
 
         if (_markingManager.Markings.TryGetValue(profile.Appearance.FacialHairStyleId, out var facialHairPrototype) &&
-            _markingManager.CanBeApplied(profile.Species, facialHairPrototype, _prototypeManager))
+            _markingManager.CanBeApplied(profile.Species, profile.Sex, facialHairPrototype, _prototypeManager))
         {
             AddMarking(uid, profile.Appearance.FacialHairStyleId, facialHairColor, false);
         }

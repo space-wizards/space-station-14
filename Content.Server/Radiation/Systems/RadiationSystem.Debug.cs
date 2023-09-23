@@ -56,18 +56,14 @@ public partial class RadiationSystem
         if (_debugSessions.Count == 0)
             return;
 
-        var query = GetEntityQuery<RadiationGridResistanceComponent>();
-        var dict = new Dictionary<EntityUid, Dictionary<Vector2i, float>>();
+        var dict = new Dictionary<NetEntity, Dictionary<Vector2i, float>>();
 
-        var gridQuery = AllEntityQuery<MapGridComponent>();
+        var gridQuery = AllEntityQuery<MapGridComponent, RadiationGridResistanceComponent>();
 
-        while (gridQuery.MoveNext(out var gridUid, out var grid))
+        while (gridQuery.MoveNext(out var gridUid, out _, out var resistance))
         {
-            if (!query.TryGetComponent(gridUid, out var resistance))
-                continue;
-
             var resMap = resistance.ResistancePerTile;
-            dict.Add(gridUid, resMap);
+            dict.Add(GetNetEntity(gridUid), resMap);
         }
 
         var ev = new OnRadiationOverlayResistanceUpdateEvent(dict);

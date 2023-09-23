@@ -19,7 +19,7 @@ public sealed partial class WorldTargetActionComponent : BaseTargetActionCompone
 [Serializable, NetSerializable]
 public sealed class WorldTargetActionComponentState : BaseActionComponentState
 {
-    public WorldTargetActionComponentState(WorldTargetActionComponent component) : base(component)
+    public WorldTargetActionComponentState(WorldTargetActionComponent component, IEntityManager entManager) : base(component, entManager)
     {
     }
 }

@@ -12,12 +12,14 @@ using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Actions;
 
 public abstract class SharedActionsSystem : EntitySystem
 {
     private const string ActionContainerId = "ActionContainer";
+    private const string ProvidedActionContainerId = "ProvidedActionContainer";
 
     [Dependency] protected readonly IGameTiming GameTiming = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
@@ -54,25 +56,29 @@ public abstract class SharedActionsSystem : EntitySystem
         SubscribeLocalEvent<EntityTargetActionComponent, GetActionDataEvent>(OnGetActionData);
         SubscribeLocalEvent<WorldTargetActionComponent, GetActionDataEvent>(OnGetActionData);
 
+        SubscribeLocalEvent<InstantActionComponent, EntGotRemovedFromContainerMessage>(OnEntGotRemovedFromContainer);
+        SubscribeLocalEvent<EntityTargetActionComponent, EntGotRemovedFromContainerMessage>(OnEntGotRemovedFromContainer);
+        SubscribeLocalEvent<WorldTargetActionComponent, EntGotRemovedFromContainerMessage>(OnEntGotRemovedFromContainer);
+
         SubscribeAllEvent<RequestPerformActionEvent>(OnActionRequest);
     }
 
     private void OnInstantGetState(EntityUid uid, InstantActionComponent component, ref ComponentGetState args)
     {
-        args.State = new InstantActionComponentState(component);
+        args.State = new InstantActionComponentState(component, EntityManager);
     }
 
     private void OnEntityTargetGetState(EntityUid uid, EntityTargetActionComponent component, ref ComponentGetState args)
     {
-        args.State = new EntityTargetActionComponentState(component);
+        args.State = new EntityTargetActionComponentState(component, EntityManager);
     }
 
     private void OnWorldTargetGetState(EntityUid uid, WorldTargetActionComponent component, ref ComponentGetState args)
     {
-        args.State = new WorldTargetActionComponentState(component);
+        args.State = new WorldTargetActionComponentState(component, EntityManager);
     }
 
-    private void BaseHandleState(BaseActionComponent component, BaseActionComponentState state)
+    private void BaseHandleState<T>(EntityUid uid, BaseActionComponent component, BaseActionComponentState state) where T : BaseActionComponent
     {
         component.Icon = state.Icon;
         component.IconOn = state.IconOn;
@@ -83,12 +89,12 @@ public abstract class SharedActionsSystem : EntitySystem
         component.Cooldown = state.Cooldown;
         component.UseDelay = state.UseDelay;
         component.Charges = state.Charges;
-        component.Provider = state.Provider;
-        component.EntityIcon = state.EntityIcon;
+        component.Provider = EnsureEntity<T>(state.Provider, uid);
+        component.EntityIcon = EnsureEntity<T>(state.EntityIcon, uid);
         component.CheckCanInteract = state.CheckCanInteract;
         component.ClientExclusive = state.ClientExclusive;
         component.Priority = state.Priority;
-        component.AttachedEntity = state.AttachedEntity;
+        component.AttachedEntity = EnsureEntity<T>(state.AttachedEntity, uid);
         component.AutoPopulate = state.AutoPopulate;
         component.AutoRemove = state.AutoRemove;
         component.Temporary = state.Temporary;
@@ -101,7 +107,7 @@ public abstract class SharedActionsSystem : EntitySystem
         if (args.Current is not InstantActionComponentState state)
             return;
 
-        BaseHandleState(component, state);
+        BaseHandleState<InstantActionComponent>(uid, component, state);
     }
 
     private void OnEntityTargetHandleState(EntityUid uid, EntityTargetActionComponent component, ref ComponentHandleState args)
@@ -109,7 +115,7 @@ public abstract class SharedActionsSystem : EntitySystem
         if (args.Current is not EntityTargetActionComponentState state)
             return;
 
-        BaseHandleState(component, state);
+        BaseHandleState<EntityTargetActionComponent>(uid, component, state);
         component.Whitelist = state.Whitelist;
         component.CanTargetSelf = state.CanTargetSelf;
     }
@@ -119,12 +125,27 @@ public abstract class SharedActionsSystem : EntitySystem
         if (args.Current is not WorldTargetActionComponentState state)
             return;
 
-        BaseHandleState(component, state);
+        BaseHandleState<WorldTargetActionComponent>(uid, component, state);
     }
 
     private void OnGetActionData<T>(EntityUid uid, T component, ref GetActionDataEvent args) where T : BaseActionComponent
     {
         args.Action = component;
+    }
+
+    private void OnEntGotRemovedFromContainer<T>(EntityUid uid, T component, EntGotRemovedFromContainerMessage args) where T : BaseActionComponent
+    {
+        if (args.Container.ID != ProvidedActionContainerId)
+            return;
+
+        if (TryComp(component.AttachedEntity, out ActionsComponent? actions))
+        {
+            actions.Actions.Remove(uid);
+            Dirty(component.AttachedEntity.Value, actions);
+
+            if (TryGetActionData(uid, out var action))
+                action.AttachedEntity = null;
+        }
     }
 
     public BaseActionComponent? GetActionData(EntityUid? actionId)
@@ -147,17 +168,27 @@ public abstract class SharedActionsSystem : EntitySystem
         return actionId != null && (action = GetActionData(actionId)) != null;
     }
 
-    protected Container EnsureContainer(EntityUid holderId)
+    protected Container EnsureContainer(EntityUid holderId, EntityUid? providerId)
     {
-        return _containerSystem.EnsureContainer<Container>(holderId, ActionContainerId);
+        return providerId == null
+            ? _containerSystem.EnsureContainer<Container>(holderId, ActionContainerId)
+            : _containerSystem.EnsureContainer<Container>(providerId.Value, ProvidedActionContainerId);
     }
 
     protected bool TryGetContainer(
         EntityUid holderId,
-        [NotNullWhen(true)] out IContainer? container,
+        [NotNullWhen(true)] out BaseContainer? container,
         ContainerManagerComponent? containerManager = null)
     {
         return _containerSystem.TryGetContainer(holderId, ActionContainerId, out container, containerManager);
+    }
+
+    protected bool TryGetProvidedContainer(
+        EntityUid providerId,
+        [NotNullWhen(true)] out BaseContainer? container,
+        ContainerManagerComponent? containerManager = null)
+    {
+        return _containerSystem.TryGetContainer(providerId, ProvidedActionContainerId, out container, containerManager);
     }
 
     public void SetCooldown(EntityUid? actionId, TimeSpan start, TimeSpan end)
@@ -173,6 +204,19 @@ public abstract class SharedActionsSystem : EntitySystem
         Dirty(actionId.Value, action);
     }
 
+    public void StartUseDelay(EntityUid? actionId)
+    {
+        if (actionId == null)
+            return;
+
+        var action = GetActionData(actionId);
+        if (action == null || action.UseDelay == null)
+            return;
+
+        action.Cooldown = (GameTiming.CurTime, GameTiming.CurTime + action.UseDelay.Value);
+        Dirty(actionId.Value, action);
+    }
+
     #region ComponentStateManagement
     public virtual void Dirty(EntityUid? actionId)
     {
@@ -184,7 +228,9 @@ public abstract class SharedActionsSystem : EntitySystem
         if (action.AttachedEntity == null)
             return;
 
-        if (!TryComp(action.AttachedEntity, out ActionsComponent? comp))
+        var ent = action.AttachedEntity;
+
+        if (!TryComp(ent, out ActionsComponent? comp))
         {
             action.AttachedEntity = null;
             return;
@@ -231,16 +277,12 @@ public abstract class SharedActionsSystem : EntitySystem
 
     private void OnActionsMapInit(EntityUid uid, ActionsComponent component, MapInitEvent args)
     {
-        EnsureContainer(uid);
+        EnsureContainer(uid, null);
     }
 
     private void OnActionsGetState(EntityUid uid, ActionsComponent component, ref ComponentGetState args)
     {
-        var actions = new List<EntityUid>();
-        if (TryGetContainer(uid, out var container))
-            actions.AddRange(container.ContainedEntities);
-
-        args.State = new ActionsComponentState(actions);
+        args.State = new ActionsComponentState(GetNetEntitySet(component.Actions));
     }
 
     private void OnActionsShutdown(EntityUid uid, ActionsComponent component, ComponentShutdown args)
@@ -264,20 +306,22 @@ public abstract class SharedActionsSystem : EntitySystem
         if (!TryComp(user, out ActionsComponent? component))
             return;
 
-        if (!TryComp(ev.Action, out MetaDataComponent? metaData))
+        var actionEnt = GetEntity(ev.Action);
+
+        if (!TryComp(actionEnt, out MetaDataComponent? metaData))
             return;
 
-        var name = Name(ev.Action, metaData);
+        var name = Name(actionEnt, metaData);
 
         // Does the user actually have the requested action?
-        if (!TryGetContainer(user, out var container) || !container.Contains(ev.Action))
+        if (!component.Actions.Contains(actionEnt))
         {
             _adminLogger.Add(LogType.Action,
                 $"{ToPrettyString(user):user} attempted to perform an action that they do not have: {name}.");
             return;
         }
 
-        var action = GetActionData(ev.Action);
+        var action = GetActionData(actionEnt);
         if (action == null || !action.Enabled)
             return;
 
@@ -291,11 +335,13 @@ public abstract class SharedActionsSystem : EntitySystem
         switch (action)
         {
             case EntityTargetActionComponent entityAction:
-                if (ev.EntityTarget is not { Valid: true } entityTarget)
+                if (ev.EntityTarget is not { Valid: true } netTarget)
                 {
                     Log.Error($"Attempted to perform an entity-targeted action without a target! Action: {name}");
                     return;
                 }
+
+                var entityTarget = GetEntity(netTarget);
 
                 var targetWorldPos = _transformSystem.GetWorldPosition(entityTarget);
                 _rotateToFaceSystem.TryFaceCoordinates(user, targetWorldPos);
@@ -317,18 +363,19 @@ public abstract class SharedActionsSystem : EntitySystem
                 if (entityAction.Event != null)
                 {
                     entityAction.Event.Target = entityTarget;
-                    Dirty(ev.Action, entityAction);
+                    Dirty(actionEnt, entityAction);
                     performEvent = entityAction.Event;
                 }
 
                 break;
             case WorldTargetActionComponent worldAction:
-                if (ev.EntityCoordinatesTarget is not { } entityCoordinatesTarget)
+                if (ev.EntityCoordinatesTarget is not { } netCoordinatesTarget)
                 {
                     Log.Error($"Attempted to perform a world-targeted action without a target! Action: {name}");
                     return;
                 }
 
+                var entityCoordinatesTarget = GetCoordinates(netCoordinatesTarget);
                 _rotateToFaceSystem.TryFaceCoordinates(user, entityCoordinatesTarget.Position);
 
                 if (!ValidateWorldTarget(user, entityCoordinatesTarget, worldAction))
@@ -348,7 +395,7 @@ public abstract class SharedActionsSystem : EntitySystem
                 if (worldAction.Event != null)
                 {
                     worldAction.Event.Target = entityCoordinatesTarget;
-                    Dirty(ev.Action, worldAction);
+                    Dirty(actionEnt, worldAction);
                     performEvent = worldAction.Event;
                 }
 
@@ -376,7 +423,7 @@ public abstract class SharedActionsSystem : EntitySystem
             performEvent.Performer = user;
 
         // All checks passed. Perform the action!
-        PerformAction(user, component, ev.Action, action, performEvent, curTime);
+        PerformAction(user, component, actionEnt, action, performEvent, curTime);
     }
 
     public bool ValidateEntityTarget(EntityUid user, EntityUid target, EntityTargetActionComponent action)
@@ -450,11 +497,12 @@ public abstract class SharedActionsSystem : EntitySystem
         {
             // This here is required because of client-side prediction (RaisePredictiveEvent results in event re-use).
             actionEvent.Handled = false;
+            var provider = action.Provider;
 
-            if (action.Provider == null)
+            if (provider == null)
                 RaiseLocalEvent(performer, (object) actionEvent, broadcast: true);
             else
-                RaiseLocalEvent(action.Provider.Value, (object) actionEvent, broadcast: true);
+                RaiseLocalEvent(provider.Value, (object) actionEvent, broadcast: true);
 
             handled = actionEvent.Handled;
         }
@@ -523,7 +571,7 @@ public abstract class SharedActionsSystem : EntitySystem
     /// <param name="holder">Component of <see cref="holderId"/></param>
     /// <param name="action">Component of <see cref="actionId"/></param>
     /// <param name="actionContainer">Action container of <see cref="holderId"/></param>
-    public virtual void AddAction(EntityUid holderId, EntityUid actionId, EntityUid? provider, ActionsComponent? holder = null, BaseActionComponent? action = null, bool dirty = true, IContainer? actionContainer = null)
+    public virtual void AddAction(EntityUid holderId, EntityUid actionId, EntityUid? provider, ActionsComponent? holder = null, BaseActionComponent? action = null, bool dirty = true, BaseContainer? actionContainer = null)
     {
         action ??= GetActionData(actionId);
         // TODO remove when action subscriptions are split up
@@ -538,16 +586,18 @@ public abstract class SharedActionsSystem : EntitySystem
         action.AttachedEntity = holderId;
         Dirty(actionId, action);
 
-        actionContainer ??= EnsureContainer(holderId);
-        AddActionInternal(actionId, actionContainer);
+        actionContainer ??= EnsureContainer(holderId, provider);
+        AddActionInternal(holderId, actionId, actionContainer, holder);
 
         if (dirty)
             Dirty(holderId, holder);
     }
 
-    protected virtual void AddActionInternal(EntityUid actionId, IContainer container)
+    protected virtual void AddActionInternal(EntityUid holderId, EntityUid actionId, BaseContainer container, ActionsComponent holder)
     {
         container.Insert(actionId);
+        holder.Actions.Add(actionId);
+        Dirty(holderId, holder);
     }
 
     /// <summary>
@@ -561,7 +611,7 @@ public abstract class SharedActionsSystem : EntitySystem
         comp ??= EnsureComp<ActionsComponent>(holderId);
 
         var allClientExclusive = true;
-        var container = EnsureContainer(holderId);
+        var container = EnsureContainer(holderId, provider);
 
         foreach (var actionId in actions)
         {
@@ -577,15 +627,12 @@ public abstract class SharedActionsSystem : EntitySystem
             Dirty(holderId, comp);
     }
 
-    public IEnumerable<(EntityUid Id, BaseActionComponent Comp)> GetActions(EntityUid holderId, IContainer? container = null)
+    public IEnumerable<(EntityUid Id, BaseActionComponent Comp)> GetActions(EntityUid holderId, ActionsComponent? actions = null)
     {
-        if (container == null &&
-            !TryGetContainer(holderId, out container))
-        {
+        if (!Resolve(holderId, ref actions, false))
             yield break;
-        }
 
-        foreach (var actionId in container.ContainedEntities)
+        foreach (var actionId in actions.Actions)
         {
             if (!TryGetActionData(actionId, out var action))
                 continue;
@@ -597,37 +644,39 @@ public abstract class SharedActionsSystem : EntitySystem
     /// <summary>
     ///     Remove any actions that were enabled by some other entity. Useful when unequiping items that grant actions.
     /// </summary>
-    public void RemoveProvidedActions(EntityUid holderId, EntityUid provider, ActionsComponent? comp = null, ContainerManagerComponent? actionContainer = null)
+    public void RemoveProvidedActions(EntityUid holderId, EntityUid provider, ActionsComponent? comp = null)
     {
-        if (!Resolve(holderId, ref comp, ref actionContainer, false))
+        if (!Resolve(holderId, ref comp, false))
             return;
 
-        if (!TryGetContainer(holderId, out var container, actionContainer))
+        if (!TryGetProvidedContainer(provider, out var container))
             return;
 
         foreach (var actionId in container.ContainedEntities.ToArray())
         {
             var action = GetActionData(actionId);
             if (action?.Provider == provider)
-                RemoveAction(holderId, actionId, comp, dirty: false, actionContainer: actionContainer);
+                RemoveAction(holderId, actionId, comp, dirty: false);
         }
 
         Dirty(holderId, comp);
     }
 
-    public virtual void RemoveAction(EntityUid holderId, EntityUid? actionId, ActionsComponent? comp = null, BaseActionComponent? action = null, bool dirty = true, ContainerManagerComponent? actionContainer = null)
+    public virtual void RemoveAction(EntityUid holderId, EntityUid? actionId, ActionsComponent? comp = null, BaseActionComponent? action = null, bool dirty = true)
     {
         if (actionId == null ||
-            !Resolve(holderId, ref comp, ref actionContainer, false) ||
-            !TryGetContainer(holderId, out var container, actionContainer) ||
-            !container.Contains(actionId.Value) ||
+            !Resolve(holderId, ref comp, false) ||
             TerminatingOrDeleted(actionId.Value))
         {
             return;
         }
 
         action ??= GetActionData(actionId);
-        container.Remove(actionId.Value);
+
+        if (TryGetContainer(holderId, out var container) && container.Contains(actionId.Value))
+            QueueDel(actionId.Value);
+
+        comp.Actions.Remove(actionId.Value);
 
         if (action != null)
         {
@@ -637,14 +686,16 @@ public abstract class SharedActionsSystem : EntitySystem
 
         if (dirty)
             Dirty(holderId, comp);
+
+        DebugTools.Assert(Transform(actionId.Value).ParentUid.IsValid());
     }
 
     /// <summary>
     ///     Removes all actions with the given prototype id.
     /// </summary>
-    public void RemoveAction(EntityUid holderId, string actionPrototypeId, ActionsComponent? holderComp = null, ContainerManagerComponent? actionContainer = null)
+    public void RemoveAction(EntityUid holderId, string actionPrototypeId, ActionsComponent? holderComp = null)
     {
-        if (!Resolve(holderId, ref holderComp, ref actionContainer, false))
+        if (!Resolve(holderId, ref holderComp, false))
             return;
 
         var actions = new List<(EntityUid Id, BaseActionComponent Comp)>();
@@ -654,9 +705,12 @@ public abstract class SharedActionsSystem : EntitySystem
                 actions.Add((id, comp));
         }
 
+        if (actions.Count == 0)
+            return;
+
         foreach (var action in actions)
         {
-            RemoveAction(holderId, action.Id, holderComp, action.Comp, actionContainer: actionContainer);
+            RemoveAction(holderId, action.Id, holderComp, action.Comp);
         }
     }
 

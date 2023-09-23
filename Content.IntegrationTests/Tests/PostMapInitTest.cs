@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -57,6 +57,7 @@ namespace Content.IntegrationTests.Tests
             "CentComm",
 			"CentComm-Ganimed",
             "Box",
+            "Europa",
             "Barratry",
             "Saltern",
             "Core",
@@ -187,6 +188,7 @@ namespace Content.IntegrationTests.Tests
 
                 var grids = mapManager.GetAllMapGrids(mapId).ToList();
                 var gridUids = grids.Select(o => o.Owner).ToList();
+                targetGrid = gridUids.First();
 
                 foreach (var grid in grids)
                 {
