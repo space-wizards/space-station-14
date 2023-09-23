@@ -66,7 +66,6 @@
       interactSuccessSound:
         path: /Audio/Effects/double_beep.ogg
     - type: CombatMode
-      combatToggleAction: ActionCombatModeToggleOff
     - type: Damageable
       damageContainer: Inorganic
     - type: Destructible
@@ -110,6 +109,12 @@
           3.141
         SoundTargetInLOS: !type:SoundPathSpecifier
           path: /Audio/Effects/double_beep.ogg
+    - type: MouseRotator
+      rotationSpeed: 180
+    - type: NoRotateOnInteract
+    - type: NoRotateOnMove
+    - type: Input
+      context: "human"
 
 - type: entity
   parent: BaseWeaponTurret

@@ -2,34 +2,8 @@
                 xmlns:cc="clr-namespace:Content.Client.Administration.UI.CustomControls"
                 xmlns:fancyTree="clr-namespace:Content.Client.UserInterface.Controls.FancyTree"
                 xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
-                SetSize="750 700"
-                MinSize="100 200"
+                xmlns:controls1="clr-namespace:Content.Client.Guidebook.Controls"
                 Resizable="True"
                 Title="{Loc 'guidebook-window-title'}">
-    <SplitContainer Orientation="Horizontal" HorizontalExpand="True" Name="Split">
-        <!-- Guide select -->
-        <BoxContainer Orientation="Horizontal" Name="TreeBox">
-            <fancyTree:FancyTree Name="Tree" VerticalExpand="True" HorizontalExpand="True" Access="Public"/>
-            <cc:VSeparator StyleClasses="LowDivider" Margin="0 -2"/>
-        </BoxContainer>
-        <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True">
-            <BoxContainer Name="SearchContainer" Visible="False" HorizontalExpand="True">
-                <LineEdit
-                    Name="SearchBar"
-                    PlaceHolder="{Loc 'guidebook-filter-placeholder-text'}"
-                    HorizontalExpand="True"
-                    Margin="0 5 10 5">                
-                </LineEdit>
-            </BoxContainer>
-            <ScrollContainer Name="Scroll" HScrollEnabled="False" HorizontalExpand="True" VerticalExpand="True">
-                <Control>
-                    <BoxContainer Orientation="Vertical" Name="EntryContainer" Margin="5 5 5 5" Visible="False"/>
-                    <BoxContainer Orientation="Vertical" Name="Placeholder" Margin="5 5 5 5">
-                        <Label HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Loc 'guidebook-placeholder-text'}"/>
-                        <Label HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Loc 'guidebook-placeholder-text-2'}"/>
-                    </BoxContainer>
-                </Control>
-            </ScrollContainer>
-        </BoxContainer>
-    </SplitContainer>
+    <controls1:GuidebookControl Name="Guidebook" Access="Public"/>
 </controls:FancyWindow>
