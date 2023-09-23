@@ -26,6 +26,14 @@
         reagents:
         - ReagentId: Fiber
           Quantity: 30
+      stains:
+        maxVol: 30
+  - type: ExaminableSolution
+    solution: stains
+  - type: RefillableSolution
+    solution: stains
+  - type: Stainable
+  - type: Reactive
   - type: Tag
     tags:
     - ClothMade
