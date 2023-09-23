@@ -2,11 +2,11 @@
 
 on:
   push:
-    branches: [ master, staging, trying ]
+    branches: [ master, staging, trying, upstream-sync, ganimed-main ]
   merge_group:
   pull_request:
     types: [ opened, reopened, synchronize, ready_for_review ]
-    branches: [ master ]
+    branches: [ master, ganimed-main ]
 
 jobs:
   build:
