@@ -7,7 +7,6 @@
   - type: AccessReader
     access: [["Service"]]
 
-
 - type: entity
   parent: DoorElectronics
   id: DoorElectronicsTheatre
@@ -15,7 +14,6 @@
   components:
   - type: AccessReader
     access: [["Theatre"]]
-
 
 - type: entity
   parent: DoorElectronics
@@ -25,7 +23,6 @@
   - type: AccessReader
     access: [["Chapel"]]
 
-
 - type: entity
   parent: DoorElectronics
   id: DoorElectronicsJanitor
@@ -33,7 +30,6 @@
   components:
   - type: AccessReader
     access: [["Janitor"]]
-
 
 - type: entity
   parent: DoorElectronics
@@ -43,7 +39,6 @@
   - type: AccessReader
     access: [["Kitchen"]]
 
-
 - type: entity
   parent: DoorElectronics
   id: DoorElectronicsBar
@@ -51,7 +46,6 @@
   components:
   - type: AccessReader
     access: [["Bar"]]
-
 
 - type: entity
   parent: DoorElectronics
@@ -61,7 +55,6 @@
   - type: AccessReader
     access: [["Hydroponics"]]
 
-
 - type: entity
   parent: DoorElectronics
   id: DoorElectronicsCaptain
@@ -69,7 +62,6 @@
   components:
   - type: AccessReader
     access: [["Captain"]]
-
 
 - type: entity
   parent: DoorElectronics
@@ -79,7 +71,6 @@
   - type: AccessReader
     access: [["External"]]
 
-
 - type: entity
   parent: DoorElectronics
   id: DoorElectronicsCargo
@@ -87,7 +78,6 @@
   components:
   - type: AccessReader
     access: [["Cargo"]]
-
 
 - type: entity
   parent: DoorElectronics
@@ -97,7 +87,6 @@
   - type: AccessReader
     access: [["Engineering"]]
 
-
 - type: entity
   parent: DoorElectronics
   id: DoorElectronicsAtmospherics
@@ -105,7 +94,6 @@
   components:
   - type: AccessReader
     access: [["Atmospherics"]]
-
 
 - type: entity
   parent: DoorElectronics
@@ -115,7 +103,6 @@
   - type: AccessReader
     access: [["Kitchen"], ["Hydroponics"]]
 
-
 - type: entity
   parent: DoorElectronics
   id: DoorElectronicsSalvage
@@ -123,7 +110,6 @@
   components:
   - type: AccessReader
     access: [["Salvage"]]
-
 
 - type: entity
   parent: DoorElectronics
@@ -133,7 +119,6 @@
   - type: AccessReader
     access: [["Medical"]]
 
-
 - type: entity
   parent: DoorElectronics
   id: DoorElectronicsChemistry
@@ -141,7 +126,6 @@
   components:
   - type: AccessReader
     access: [["Chemistry"]]
-
 
 - type: entity
   parent: DoorElectronics
@@ -151,7 +135,6 @@
   - type: AccessReader
     access: [["Research"]]
 
-
 - type: entity
   parent: DoorElectronics
   id: DoorElectronicsScience
@@ -159,7 +142,6 @@
   components:
   - type: AccessReader
     access: [["Research"], ["Medical"]]
-
 
 - type: entity
   parent: DoorElectronics
@@ -169,7 +151,6 @@
   - type: AccessReader
     access: [["Command"]]
 
-
 - type: entity
   parent: DoorElectronics
   id: DoorElectronicsChiefMedicalOfficer
@@ -177,7 +158,6 @@
   components:
   - type: AccessReader
     access: [["ChiefMedicalOfficer"]]
-
 
 - type: entity
   parent: DoorElectronics
@@ -187,7 +167,6 @@
   - type: AccessReader
     access: [["ChiefEngineer"]]
 
-
 - type: entity
   parent: DoorElectronics
   id: DoorElectronicsHeadOfSecurity
@@ -195,7 +174,6 @@
   components:
   - type: AccessReader
     access: [["HeadOfSecurity"]]
-
 
 - type: entity
   parent: DoorElectronics
@@ -205,7 +183,6 @@
   - type: AccessReader
     access: [["ResearchDirector"]]
 
-
 - type: entity
   parent: DoorElectronics
   id: DoorElectronicsHeadOfPersonnel
@@ -213,7 +190,6 @@
   components:
   - type: AccessReader
     access: [["HeadOfPersonnel"]]
-
 
 - type: entity
   parent: DoorElectronics
@@ -223,7 +199,6 @@
   - type: AccessReader
     access: [["Quartermaster"]]
 
-
 - type: entity
   parent: DoorElectronics
   id: DoorElectronicsSecurity
@@ -231,7 +206,6 @@
   components:
   - type: AccessReader
     access: [["Security"]]
-
 
 - type: entity
   parent: DoorElectronics
@@ -241,7 +215,6 @@
   - type: AccessReader
     access: [["Detective"]]
 
-
 - type: entity
   parent: DoorElectronics
   id: DoorElectronicsBrig
@@ -249,7 +222,6 @@
   components:
   - type: AccessReader
     access: [["Brig"]]
-
 
 - type: entity
   parent: DoorElectronics
@@ -259,7 +231,6 @@
   - type: AccessReader
     access: [["Armory"]]
 
-
 - type: entity
   parent: DoorElectronics
   id: DoorElectronicsVault
@@ -268,7 +239,6 @@
   - type: AccessReader
     access: [["Security", "Command"]]
 
-
 - type: entity
   parent: DoorElectronics
   id: DoorElectronicsMaintenance
@@ -276,7 +246,6 @@
   components:
   - type: AccessReader
     access: [["Maintenance"]]
-
 
 - type: entity
   parent: DoorElectronics
