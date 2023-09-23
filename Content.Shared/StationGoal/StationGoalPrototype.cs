@@ -2,7 +2,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.StationGoal
 {
-    [Serializable, Prototype("stationGoal")]
+    [Prototype("stationGoal")]
     public sealed class StationGoalPrototype : IPrototype
     {
         [IdDataFieldAttribute] public string ID { get; } = default!;

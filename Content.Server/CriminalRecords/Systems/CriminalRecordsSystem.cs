@@ -26,7 +26,7 @@ public sealed class CriminalRecordsSystem : EntitySystem
             Reason = string.Empty
         };
 
-        _stationRecordsSystem.AddRecordEntry(ev.Key, record);
+        _stationRecordsSystem.AddRecordEntry(ev.Key.OriginStation, record);
         _stationRecordsSystem.Synchronize(ev.Key.OriginStation);
     }
 }

@@ -77,7 +77,7 @@ public sealed class GeneralCriminalRecordsConsoleSystem : EntitySystem
 
         TryComp<StationRecordsComponent>(station, out var stationRecordsComponent);
 
-        _stationRecordsSystem.TryGetRecord(station!.Value, component.ActiveKey!.Value, out GeneralCriminalRecord? record, stationRecordsComponent);
+        _stationRecordsSystem.TryGetRecord(station!.Value, _stationRecordsSystem.Convert(component.ActiveKey!.Value), out GeneralCriminalRecord? record, stationRecordsComponent);
 
         if (msg.Reason != string.Empty && msg.Reason != null && msg.Name != null && msg.Session.AttachedEntity != null && record != null && record.Status != null)
         {
@@ -112,7 +112,7 @@ public sealed class GeneralCriminalRecordsConsoleSystem : EntitySystem
 
         TryComp<StationRecordsComponent>(station, out var stationRecordsComponent);
 
-        _stationRecordsSystem.TryGetRecord(station!.Value, component.ActiveKey!.Value, out GeneralCriminalRecord? record, stationRecordsComponent);
+        _stationRecordsSystem.TryGetRecord(station!.Value, _stationRecordsSystem.Convert(component.ActiveKey!.Value), out GeneralCriminalRecord? record, stationRecordsComponent);
 
         if (msg.Reason != string.Empty && msg.Reason != null && msg.Name != null && msg.Session.AttachedEntity != null && record != null && record.Status != null)
         {
@@ -147,7 +147,7 @@ public sealed class GeneralCriminalRecordsConsoleSystem : EntitySystem
 
         TryComp<StationRecordsComponent>(station, out var stationRecordsComponent);
 		
-        _stationRecordsSystem.TryGetRecord(station!.Value, component.ActiveKey!.Value, out GeneralCriminalRecord? record, stationRecordsComponent);
+        _stationRecordsSystem.TryGetRecord(station!.Value, _stationRecordsSystem.Convert(component.ActiveKey!.Value), out GeneralCriminalRecord? record, stationRecordsComponent);
 
         if (msg.Reason != string.Empty && msg.Reason != null && msg.Name != null && msg.Session.AttachedEntity != null && record != null && record.Status != null)
         {
@@ -214,7 +214,7 @@ public sealed class GeneralCriminalRecordsConsoleSystem : EntitySystem
         var consoleRecords =
             _stationRecordsSystem.GetRecordsOfType<GeneralStationRecord>(owningStation.Value, stationRecordsComponent);
 
-        var listing = new Dictionary<StationRecordKey, string>();
+        var listing = new Dictionary<(NetEntity, uint), string>();
         foreach (var pair in consoleRecords)
         {
             if (console != null && console.Filter != null
@@ -223,7 +223,7 @@ public sealed class GeneralCriminalRecordsConsoleSystem : EntitySystem
                 continue;
             }
 
-            listing.Add(pair.Item1, pair.Item2.Name);
+            listing.Add(_stationRecordsSystem.Convert(pair.Item1), pair.Item2.Name);
         }
 
         if (listing.Count == 0)
@@ -240,14 +240,14 @@ public sealed class GeneralCriminalRecordsConsoleSystem : EntitySystem
         GeneralStationRecord? stationRecord = null;
         if (console!.ActiveKey != null)
         {
-            _stationRecordsSystem.TryGetRecord(owningStation.Value, console.ActiveKey.Value, out stationRecord,
+            _stationRecordsSystem.TryGetRecord(owningStation.Value, _stationRecordsSystem.Convert(console.ActiveKey.Value), out stationRecord,
                 stationRecordsComponent);
         }
 
         GeneralCriminalRecord? criminalRecord = null;
         if (console.ActiveKey != null)
         {
-            _stationRecordsSystem.TryGetRecord(owningStation.Value, console.ActiveKey.Value, out criminalRecord,
+            _stationRecordsSystem.TryGetRecord(owningStation.Value, _stationRecordsSystem.Convert(console.ActiveKey.Value), out criminalRecord,
                 stationRecordsComponent);
         }
 

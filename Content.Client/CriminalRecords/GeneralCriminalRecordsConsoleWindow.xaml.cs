@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Client.Message;
 using Content.Shared.CriminalRecords;
 using Content.Shared.Security;
@@ -13,7 +14,7 @@ namespace Content.Client.CriminalRecords;
 [GenerateTypedNameReferences]
 public sealed partial class GeneralCriminalRecordsConsoleWindow : DefaultWindow
 {
-    public Action<StationRecordKey?>? OnKeySelected;
+    public Action<(NetEntity, uint)?>? OnKeySelected;
     public Action<GeneralStationRecordFilterType, string>? OnFiltersChanged;
     public Action<BaseButton.ButtonEventArgs, string?, string?>? OnArrestButtonPressed;
     public Action<BaseButton.ButtonEventArgs, string?, string?>? OnReleaseButtonPressed;
@@ -35,7 +36,7 @@ public sealed partial class GeneralCriminalRecordsConsoleWindow : DefaultWindow
 
         RecordListing.OnItemSelected += args =>
         {
-            if (_isPopulating || RecordListing[args.ItemIndex].Metadata is not StationRecordKey cast)
+            if (_isPopulating || RecordListing[args.ItemIndex].Metadata is not ValueTuple<NetEntity, uint> cast)
             {
                 return;
             }
@@ -158,7 +159,7 @@ public sealed partial class GeneralCriminalRecordsConsoleWindow : DefaultWindow
         }
     }
 
-    private void PopulateRecordListing(Dictionary<StationRecordKey, string> listing, StationRecordKey? selected)
+    private void PopulateRecordListing(Dictionary<(NetEntity, uint), string> listing, (NetEntity, uint)? selected)
     {
         RecordListing.Clear();
         RecordListing.ClearSelected();
@@ -169,7 +170,7 @@ public sealed partial class GeneralCriminalRecordsConsoleWindow : DefaultWindow
             var item = RecordListing.AddItem(name);
             item.Metadata = key;
 
-            if (selected != null && key.ID == selected.Value.ID)
+            if (selected != null && key.Item1 == selected.Value.Item1 && key.Item2 == selected.Value.Item2)
             {
                 item.Selected = true;
             }

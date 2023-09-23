@@ -6,10 +6,12 @@ namespace Content.Client.CriminalRecords;
 
 public sealed class GeneralCriminalRecordsConsoleBoundUserInterface : BoundUserInterface
 {
-    private GeneralCriminalRecordsConsoleWindow? _window = default!;
+    [ViewVariables]
+	private GeneralCriminalRecordsConsoleWindow? _window = default!;
 
     public GeneralCriminalRecordsConsoleBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
-    {}
+    {
+	}
 
     protected override void Open()
     {
@@ -27,7 +29,7 @@ public sealed class GeneralCriminalRecordsConsoleBoundUserInterface : BoundUserI
 		_window.OnWantedButtonPressed += (_, reason, name) => SendMessage(new CriminalRecordWantedButtonPressed(reason, name));
     }
 
-    private void OnKeySelected(StationRecordKey? key)
+    private void OnKeySelected((NetEntity, uint)? key)
     {
         SendMessage(new SelectGeneralCriminalRecord(key));
     }

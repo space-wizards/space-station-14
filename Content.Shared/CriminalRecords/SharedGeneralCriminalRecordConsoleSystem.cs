@@ -34,13 +34,13 @@ public sealed class GeneralCriminalRecordsConsoleState : BoundUserInterfaceState
     /// <summary>
     ///     Current selected key.
     /// </summary>
-    public StationRecordKey? SelectedKey { get; }
+    public (NetEntity, uint)? SelectedKey { get; }
     public GeneralCriminalRecord? CriminalRecord { get; }
     public GeneralStationRecord? StationRecord { get; }
-    public Dictionary<StationRecordKey, string>? RecordListing { get; }
+    public Dictionary<(NetEntity, uint), string>? RecordListing { get; }
     public GeneralStationRecordsFilter? Filter { get; }
 
-    public GeneralCriminalRecordsConsoleState(StationRecordKey? key, GeneralStationRecord? stationRecord, GeneralCriminalRecord? criminalRecord, Dictionary<StationRecordKey, string>? recordListing, GeneralStationRecordsFilter? newFilter)
+    public GeneralCriminalRecordsConsoleState((NetEntity, uint)? key, GeneralStationRecord? stationRecord, GeneralCriminalRecord? criminalRecord, Dictionary<(NetEntity, uint), string>? recordListing, GeneralStationRecordsFilter? newFilter)
     {
         SelectedKey = key;
         StationRecord = stationRecord;
@@ -55,9 +55,9 @@ public sealed class GeneralCriminalRecordsConsoleState : BoundUserInterfaceState
 [Serializable, NetSerializable]
 public sealed class SelectGeneralCriminalRecord : BoundUserInterfaceMessage
 {
-    public StationRecordKey? SelectedKey { get; }
+    public (NetEntity, uint)? SelectedKey { get; }
 
-    public SelectGeneralCriminalRecord(StationRecordKey? selectedKey)
+    public SelectGeneralCriminalRecord((NetEntity, uint)? selectedKey)
     {
         SelectedKey = selectedKey;
     }
