@@ -79,8 +79,9 @@ public sealed class MagicSystem : EntitySystem
 
         foreach (var (id, charges) in component.SpellActions)
         {
+            // TOOD store spells entity ids on some sort of innate magic user component or something like that.
             EntityUid? actionId = null;
-            if (_actionsSystem.AddAction(uid, ref actionId, id))
+            if (_actionsSystem.AddAction(args.Args.User, ref actionId, id))
                 _actionsSystem.SetCharges(actionId, charges < 0 ? null : charges);
         }
 
@@ -89,7 +90,7 @@ public sealed class MagicSystem : EntitySystem
 
     private void OnInit(EntityUid uid, SpellbookComponent component, MapInitEvent args)
     {
-        if (!component.LearnPermanently)
+        if (component.LearnPermanently)
             return;
 
         foreach (var (id, charges) in component.SpellActions)
