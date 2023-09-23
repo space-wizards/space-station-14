@@ -113,6 +113,7 @@
     - type: MouseRotator
       angleTolerance: 5
       rotationSpeed: 180
+      simple4DirMode: false
     - type: NoRotateOnInteract
     - type: NoRotateOnMove
     - type: Input
