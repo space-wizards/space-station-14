@@ -909,18 +909,6 @@
     normalState: normal-unshaded
     denyState: deny-unshaded
     loopDeny: false
-    whitelist:
-      components:
-      - Pill
-      - Seed
-      - Produce
-      tags:
-      - Bottle
-      - Ointment
-      - Bloodpack
-      - Brutepack
-      - GlassBeaker
-      - PillCanister
   - type: Advertise
     pack: SmartFridgeAds
   - type: Speech

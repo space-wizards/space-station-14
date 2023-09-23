@@ -1,5 +1,4 @@
 using System.Linq;
-using Content.Server.Administration.Logs;
 using System.Numerics;
 using Content.Server.Cargo.Systems;
 using Content.Server.Emp;
@@ -10,21 +9,16 @@ using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.Actions;
 using Content.Shared.Damage;
-using Content.Shared.Database;
 using Content.Shared.Destructible;
 using Content.Shared.DoAfter;
 using Content.Shared.Emag.Components;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Emp;
-using Content.Shared.Hands.Components;
-using Content.Shared.Hands.EntitySystems;
-using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Throwing;
 using Content.Shared.VendingMachines;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
-using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
@@ -41,9 +35,6 @@ namespace Content.Server.VendingMachines
         [Dependency] private readonly ThrowingSystem _throwingSystem = default!;
         [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
         [Dependency] private readonly IGameTiming _timing = default!;
-        [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
-        [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
-        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
 
         private ISawmill _sawmill = default!;
 
@@ -62,7 +53,6 @@ namespace Content.Server.VendingMachines
 
             SubscribeLocalEvent<VendingMachineComponent, ActivatableUIOpenAttemptEvent>(OnActivatableUIOpenAttempt);
             SubscribeLocalEvent<VendingMachineComponent, BoundUIOpenedEvent>(OnBoundUIOpened);
-            SubscribeLocalEvent<VendingMachineComponent, AfterInteractUsingEvent>(HandleAfterInteractUsing);
             SubscribeLocalEvent<VendingMachineComponent, VendingMachineEjectMessage>(OnInventoryEjectMessage);
 
             SubscribeLocalEvent<VendingMachineComponent, VendingMachineSelfDispenseEvent>(OnSelfDispense);
@@ -243,73 +233,6 @@ namespace Content.Server.VendingMachines
             Deny(uid, vendComponent);
             return false;
         }
-		
-		private void HandleAfterInteractUsing(EntityUid uid, VendingMachineComponent component, AfterInteractUsingEvent args)
-        {
-            if (args.Handled || !args.CanReach)
-                return;
-
-            if (!HasComp<HandsComponent>(args.User))
-                return;
-
-            if (!IsAuthorized(uid, args.User, component))
-                return;
-
-            if (!TryInsertItem(uid, args.User, args.Used, component))
-                return;
-
-            _adminLogger.Add(LogType.Action, LogImpact.Medium,
-                $"{ToPrettyString(args.User):player} inserted {ToPrettyString(args.Used)} into {ToPrettyString(uid)}");
-            args.Handled = true;
-        }
-		
-		private bool TryInsertItem(EntityUid vendUid, EntityUid userUid, EntityUid entityUid, VendingMachineComponent vendComponent)
-        {
-            if (!TryGetItemCode(entityUid, out var itemId))
-                return false;
-
-            if (!ItemIsInWhitelist(entityUid, itemId, vendComponent))
-                return false;
-
-            if (!_handsSystem.IsHolding(userUid, entityUid, out var hand) || !_handsSystem.CanDropHeld(userUid, hand))
-                return false;
-
-            if (vendComponent.Ejecting || vendComponent.Broken || !this.IsPowered(vendUid, EntityManager))
-                return false;
-
-            if (!_handsSystem.TryDropIntoContainer(userUid, entityUid, vendComponent.Container))
-                return false;
-
-            if (vendComponent.Inventory.ContainsKey(itemId) &&
-                vendComponent.Inventory.TryGetValue(itemId, out var entry))
-            {
-                entry.Amount++;
-                entry.EntityUids.Add(entityUid);
-				UpdateVendingMachineInterfaceState(vendUid, vendComponent);
-                return true;
-            }
-
-            vendComponent.Inventory.Add(itemId,
-                new VendingMachineInventoryEntry(InventoryType.Regular, itemId, 1, entityUid)
-            );
-			UpdateVendingMachineInterfaceState(vendUid, vendComponent);
-            return true;
-        }
-		
-		private bool ItemIsInWhitelist(EntityUid item, string itemCode, VendingMachineComponent vendComponent)
-        {
-            if (vendComponent.Inventory.ContainsKey(itemCode))
-                return true;
-
-            return vendComponent.Whitelist != null && vendComponent.Whitelist.IsValid(item);
-        }
-		
-		private bool TryGetItemCode(EntityUid entityUid, out string code)
-        {
-            var metadata = IoCManager.Resolve<IEntityManager>().GetComponentOrNull<MetaDataComponent>(entityUid);
-            code = metadata?.EntityPrototype?.ID ?? "";
-            return !string.IsNullOrEmpty(code);
-        }
 
         /// <summary>
         /// Tries to eject the provided item. Will do nothing if the vending machine is incapable of ejecting, already ejecting
@@ -352,7 +275,7 @@ namespace Content.Server.VendingMachines
 
             // Start Ejecting, and prevent users from ordering while anim playing
             vendComponent.Ejecting = true;
-            GetItemToEject(ref vendComponent, entry);
+            vendComponent.NextItemToEject = entry.ID;
             vendComponent.ThrowNextItem = throwItem;
             entry.Amount--;
             UpdateVendingMachineInterfaceState(uid, vendComponent);
@@ -425,7 +348,7 @@ namespace Content.Server.VendingMachines
 
             if (forceEject)
             {
-                GetItemToEject(ref vendComponent, item);
+                vendComponent.NextItemToEject = item.ID;
                 vendComponent.ThrowNextItem = throwItem;
                 var entry = GetEntry(uid, item.ID, item.Type, vendComponent);
                 if (entry != null)
@@ -435,19 +358,6 @@ namespace Content.Server.VendingMachines
             else
             {
                 TryEjectVendorItem(uid, item.Type, item.ID, throwItem, vendComponent);
-            }
-        }
-		
-		private void GetItemToEject(ref VendingMachineComponent vendComponent, VendingMachineInventoryEntry item)
-        {
-            if (item.EntityUids.Count > 0)
-            {
-                vendComponent.NextEntityToEject = item.EntityUids[0];
-                item.EntityUids.RemoveAt(0);
-            }
-            else
-            {
-                vendComponent.NextItemToEject = item.ID;
             }
         }
 
@@ -460,26 +370,13 @@ namespace Content.Server.VendingMachines
             if (!forceEject)
                 TryUpdateVisualState(uid, vendComponent);
 
-            if (string.IsNullOrEmpty(vendComponent.NextItemToEject) && vendComponent.NextEntityToEject == null)
+            if (string.IsNullOrEmpty(vendComponent.NextItemToEject))
             {
                 vendComponent.ThrowNextItem = false;
                 return;
             }
 
-            EntityUid ent;
-
-            if (vendComponent.NextEntityToEject is { } entityUid)
-            {
-                vendComponent.Container.Remove(entityUid);
-                ent = entityUid;
-            }
-            else
-            {
-                ent = Spawn(vendComponent.NextItemToEject, Transform(uid).Coordinates);
-            }
-			
-			
-			
+            var ent = Spawn(vendComponent.NextItemToEject, Transform(uid).Coordinates);
             if (vendComponent.ThrowNextItem)
             {
                 var range = vendComponent.NonLimitedEjectRange;
@@ -487,8 +384,7 @@ namespace Content.Server.VendingMachines
                 _throwingSystem.TryThrow(ent, direction, vendComponent.NonLimitedEjectForce);
             }
 
-            vendComponent.NextEntityToEject = null;
-			vendComponent.NextItemToEject = null;
+            vendComponent.NextItemToEject = null;
             vendComponent.ThrowNextItem = false;
         }
 
