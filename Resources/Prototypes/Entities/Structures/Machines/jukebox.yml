@@ -2,7 +2,7 @@
   id: Jukebox
   name: jukebox
   parent: BaseMachinePowered
-  description: music
+  description: A machine capable of playing a wide variety of tunes. Enjoyment not guaranteed.
   components:
   - type: Sprite
     sprite: Structures/Machines/jukebox.rsi
