@@ -1,9 +1,4 @@
 Entries:
-- author: liltenhead
-  changes:
-  - {message: Changed the placeholder comms computer description, type: Tweak}
-  id: 4376
-  time: '2023-07-30T02:35:54.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Fix some cargo gifts not spawning correctly., type: Fix}
@@ -2981,3 +2976,8 @@ Entries:
   - {message: Improved lisp letter matching and clarity., type: Fix}
   id: 4875
   time: '2023-09-23T05:39:47.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Skeletons no longer asphyxiate due to their lack of lungs., type: Fix}
+  id: 4876
+  time: '2023-09-23T08:24:58.0000000+00:00'
