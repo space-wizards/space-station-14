@@ -176,7 +176,7 @@ public sealed class ActionContainerSystem : EntitySystem
         {
             // TODO Actions
             // log an error or warning here once gibbing code is fixed.
-            QueueDel(uid);
+            QueueDel(args.Entity);
         }
     }
 }
