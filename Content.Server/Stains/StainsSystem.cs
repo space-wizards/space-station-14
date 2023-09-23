@@ -36,7 +36,9 @@ public sealed class StainsSystem : SharedStainsSystem
     {
         if (@event.Solution.Name == component.Solution)
         {
-            component.StainColor = @event.Solution.GetColor(_prototype);
+            var color = @event.Solution.GetColor(_prototype);
+            var lambda = @event.Solution.FillFraction / 4;
+            component.StainColor = Color.InterpolateBetween(Color.White, color, lambda);
             Dirty(uid, component);
         }
     }
