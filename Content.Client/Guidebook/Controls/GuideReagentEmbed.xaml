@@ -26,7 +26,8 @@
                             </BoxContainer>
                             <BoxContainer Orientation="Vertical"  VerticalAlignment="Center">
                                 <TextureRect TexturePath="/Textures/Interface/Misc/beakerlarge.png"/>
-                                <Label Text="{Loc 'guidebook-reagent-recipes-mix'}"
+                                <Label Name="MixLabel"
+                                       Text="{Loc 'guidebook-reagent-recipes-mix'}"
                                        HorizontalAlignment="Center"/>
                             </BoxContainer>
                             <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalAlignment="Center">
