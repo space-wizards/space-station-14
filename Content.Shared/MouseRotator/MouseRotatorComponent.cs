@@ -16,7 +16,7 @@ public sealed partial class MouseRotatorComponent : Component
     /// </summary>
     [DataField]
     [ViewVariables(VVAccess.ReadWrite)]
-    public Angle AngleTolerance = Angle.FromDegrees(5.0);
+    public Angle AngleTolerance = Angle.FromDegrees(20.0);
 
     /// <summary>
     ///     The angle that will be lerped to
