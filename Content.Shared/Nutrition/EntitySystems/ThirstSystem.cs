@@ -29,6 +29,7 @@ public sealed class ThirstSystem : EntitySystem
         SubscribeLocalEvent<ThirstComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshMovespeed);
         SubscribeLocalEvent<ThirstComponent, ComponentStartup>(OnComponentStartup);
         SubscribeLocalEvent<ThirstComponent, RejuvenateEvent>(OnRejuvenate);
+        SubscribeLocalEvent<ThirstComponent, EntityUnpausedEvent>(OnUnpaused);
     }
 
     private void OnComponentStartup(EntityUid uid, ThirstComponent component, ComponentStartup args)
@@ -175,5 +176,10 @@ public sealed class ThirstSystem : EntitySystem
             UpdateEffects(uid, thirst);
             Dirty(thirst);
         }
+    }
+
+    private void OnUnpaused(EntityUid uid, ThirstComponent component, ref EntityUnpausedEvent args)
+    {
+        component.NextUpdateTime += args.PausedTime;
     }
 }
