@@ -1,10 +1,4 @@
 Entries:
-- author: JoeHammad
-  changes:
-  - {message: The syndicate has decided to add slightly more gear to their EVA and
-      hardsuit bundles, type: Add}
-  id: 4379
-  time: '2023-07-30T18:54:45.0000000+00:00'
 - author: liltenhead
   changes:
   - {message: Fixed typo in emergency medipen description, type: Fix}
@@ -2982,3 +2976,8 @@ Entries:
   - {message: Fixed spellbooks not granting spell actions., type: Fix}
   id: 4878
   time: '2023-09-23T16:33:39.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Armed nuclear explosives can be seen on station maps., type: Tweak}
+  id: 4879
+  time: '2023-09-23T19:15:05.0000000+00:00'
