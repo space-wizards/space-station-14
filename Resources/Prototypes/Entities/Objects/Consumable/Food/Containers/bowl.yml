@@ -23,7 +23,6 @@
         Blunt: 5
   - type: Drink
     solution: food
-    isOpen: true
   - type: DrawableSolution
     solution: food
   - type: Damageable

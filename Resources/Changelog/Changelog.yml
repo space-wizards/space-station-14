@@ -1,26 +1,4 @@
 Entries:
-- author: liltenhead
-  changes:
-  - {message: Added filter for bartender recipes in the guidebook, type: Add}
-  id: 4375
-  time: '2023-07-29T22:59:59.0000000+00:00'
-- author: liltenhead
-  changes:
-  - {message: Changed the placeholder comms computer description, type: Tweak}
-  id: 4376
-  time: '2023-07-30T02:35:54.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Fix some cargo gifts not spawning correctly., type: Fix}
-  id: 4377
-  time: '2023-07-30T18:53:54.0000000+00:00'
-- author: JoeHammad
-  changes:
-  - {message: The syndicate has managed to secure a deal with lockheed-michael to
-      get the necessary stock to place 10 round .60 antimateriel rounds into the uplink
-      for 2TC, type: Add}
-  id: 4378
-  time: '2023-07-30T18:54:14.0000000+00:00'
 - author: JoeHammad
   changes:
   - {message: The syndicate has decided to add slightly more gear to their EVA and
@@ -2981,3 +2959,26 @@ Entries:
       now cause liver failure instead of heart failure. Alcoholics rejoice!, type: Fix}
   id: 4874
   time: '2023-09-22T20:01:42.0000000+00:00'
+- author: dahnte
+  changes:
+  - {message: Improved lisp letter matching and clarity., type: Fix}
+  id: 4875
+  time: '2023-09-23T05:39:47.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Skeletons no longer asphyxiate due to their lack of lungs., type: Fix}
+  id: 4876
+  time: '2023-09-23T08:24:58.0000000+00:00'
+- author: PrPleGoo
+  changes:
+  - {message: Added onion goggles for the chef. It displays hunger icons for hungry/overfed
+      mobs. Can also be eaten., type: Add}
+  - {message: The beer goggles now display thirst icons for thirsty/overhydrated mobs.,
+    type: Tweak}
+  id: 4877
+  time: '2023-09-23T13:14:06.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed spellbooks not granting spell actions., type: Fix}
+  id: 4878
+  time: '2023-09-23T16:33:39.0000000+00:00'
