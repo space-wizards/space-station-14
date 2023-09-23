@@ -44,4 +44,8 @@ public sealed partial class GasPowerReceiverComponent : Component
 
     [DataField("powered"), ViewVariables(VVAccess.ReadWrite)]
     public bool Powered = true;
+
+    [DataField("pipeName")]
+    [ViewVariables(VVAccess.ReadWrite)]
+    public string? PipeName = "pipe";
 }

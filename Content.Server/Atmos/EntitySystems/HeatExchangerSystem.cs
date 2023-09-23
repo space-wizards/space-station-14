@@ -1,16 +1,9 @@
-using Content.Server.Atmos.EntitySystems;
-using Content.Server.Atmos.Piping.Components;
-using Content.Server.Atmos.Piping.Unary.Components;
-using Content.Server.Atmos;
 using Content.Server.Atmos.Components;
-using Content.Server.NodeContainer.EntitySystems;
-using Content.Server.NodeContainer.Nodes;
-using Content.Server.NodeContainer;
-using Content.Shared.Atmos.Piping;
+using Content.Server.Atmos.Piping.Components;
+using Content.Server.Atmos.Piping.EntitySystems;
+using Content.Server.Nodes.EntitySystems;
 using Content.Shared.Atmos;
 using Content.Shared.CCVar;
-using Content.Shared.Interaction;
-using JetBrains.Annotations;
 using Robust.Shared.Configuration;
 
 namespace Content.Server.Atmos.EntitySystems;
@@ -19,9 +12,10 @@ public sealed class HeatExchangerSystem : EntitySystem
 {
     [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
-    [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
+    [Dependency] private readonly NodeGraphSystem _nodeSystem = default!;
+    [Dependency] private readonly AtmosPipeNetSystem _pipeNodeSystem = default!;
 
-    float tileLoss;
+    private float _tileLoss;
 
     public override void Initialize()
     {
@@ -40,23 +34,24 @@ public sealed class HeatExchangerSystem : EntitySystem
 
     private void CacheTileLoss(float val)
     {
-        tileLoss = val;
+        _tileLoss = val;
     }
 
     private void OnAtmosUpdate(EntityUid uid, HeatExchangerComponent comp, AtmosDeviceUpdateEvent args)
     {
-        if (!TryComp(uid, out NodeContainerComponent? nodeContainer)
-                || !TryComp(uid, out AtmosDeviceComponent? device)
-                || !_nodeContainer.TryGetNode(nodeContainer, comp.InletName, out PipeNode? inlet)
-                || !_nodeContainer.TryGetNode(nodeContainer, comp.OutletName, out PipeNode? outlet))
-        {
+        if (!TryComp<AtmosDeviceComponent>(uid, out var device))
             return;
-        }
+        if (!_nodeSystem.TryGetNode<AtmosPipeNodeComponent>(uid, comp.InletName, out var inletId, out var inletNode, out var inlet)
+        || !_pipeNodeSystem.TryGetGas(inletId, out var inletGas, inlet, inletNode))
+            return;
+        if (!_nodeSystem.TryGetNode<AtmosPipeNodeComponent>(uid, comp.OutletName, out var outletId, out var outletNode, out var outlet)
+        || !_pipeNodeSystem.TryGetGas(outletId, out var outletGas, outlet, outletNode))
+            return;
 
         var dt = args.dt;
 
         // Let n = moles(inlet) - moles(outlet), really a Δn
-        var P = inlet.Air.Pressure - outlet.Air.Pressure; // really a ΔP
+        var P = inletGas.Pressure - outletGas.Pressure; // really a ΔP
         // Such that positive P causes flow from the inlet to the outlet.
 
         // We want moles transferred to be proportional to the pressure difference, i.e.
@@ -65,7 +60,7 @@ public sealed class HeatExchangerSystem : EntitySystem
         // To solve this we need to write dn in terms of P. Since PV=nRT, dP/dn=RT/V.
         // This assumes that the temperature change from transferring dn moles is negligible.
         // Since we have P=Pi-Po, then dP/dn = dPi/dn-dPo/dn = R(Ti/Vi - To/Vo):
-        float dPdn = Atmospherics.R * (outlet.Air.Temperature / outlet.Air.Volume + inlet.Air.Temperature / inlet.Air.Volume);
+        float dPdn = Atmospherics.R * (outletGas.Temperature / outletGas.Volume + inletGas.Temperature / inletGas.Volume);
 
         // Multiplying both sides of the differential equation by dP/dn:
         // dn/dt * dP/dn = dP/dt = G*P * (dP/dn)
@@ -79,9 +74,9 @@ public sealed class HeatExchangerSystem : EntitySystem
 
         GasMixture xfer;
         if (n > 0)
-            xfer = inlet.Air.Remove(n);
+            xfer = inletGas.Remove(n);
         else
-            xfer = outlet.Air.Remove(-n);
+            xfer = outletGas.Remove(-n);
 
         float CXfer = _atmosphereSystem.GetHeatCapacity(xfer);
         if (CXfer < Atmospherics.MinimumHeatCapacity)
@@ -109,7 +104,7 @@ public sealed class HeatExchangerSystem : EntitySystem
         // Radiation
         float dTR = xfer.Temperature - radTemp;
         float dTRA = MathF.Abs(dTR);
-        float a0 = tileLoss / MathF.Pow(Atmospherics.T20C, 4);
+        float a0 = _tileLoss / MathF.Pow(Atmospherics.T20C, 4);
         // ΔT' = -kΔT^4, k = -ΔT'/ΔT^4
         float kR = comp.alpha * a0 * TdivQ;
         // Based on the fact that ((3t)^(-1/3))' = -(3t)^(-4/3) = -((3t)^(-1/3))^4, and ΔT' = -kΔT^4.
@@ -133,9 +128,9 @@ public sealed class HeatExchangerSystem : EntitySystem
         }
 
         if (n > 0)
-            _atmosphereSystem.Merge(outlet.Air, xfer);
+            _atmosphereSystem.Merge(outletGas, xfer);
         else
-            _atmosphereSystem.Merge(inlet.Air, xfer);
+            _atmosphereSystem.Merge(inletGas, xfer);
 
     }
 }

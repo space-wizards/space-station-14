@@ -2,12 +2,11 @@ using Content.Server.Administration.Logs;
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Piping.Components;
+using Content.Server.Atmos.Piping.EntitySystems;
 using Content.Server.Atmos.Piping.Unary.Components;
 using Content.Server.Cargo.Systems;
 using Content.Server.NodeContainer;
-using Content.Server.NodeContainer.EntitySystems;
-using Content.Server.NodeContainer.NodeGroups;
-using Content.Server.NodeContainer.Nodes;
+using Content.Server.Nodes.EntitySystems;
 using Content.Server.Popups;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Piping.Binary.Components;
@@ -30,7 +29,8 @@ public sealed class GasCanisterSystem : EntitySystem
     [Dependency] private readonly SharedHandsSystem _hands = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
-    [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
+    [Dependency] private readonly NodeGraphSystem _nodeSystem = default!;
+    [Dependency] private readonly AtmosPipeNetSystem _pipeNodeSystem = default!;
 
     public override void Initialize()
     {
@@ -94,7 +94,7 @@ public sealed class GasCanisterSystem : EntitySystem
         string? tankLabel = null;
         var tankPressure = 0f;
 
-        if (_nodeContainer.TryGetNode(nodeContainer, canister.PortName, out PipeNode? portNode) && portNode.NodeGroup?.Nodes.Count > 1)
+        if (_nodeSystem.TryGetNode<AtmosPipeNodeComponent>(uid, canister.PortName, out _, out var portNode, out _) && portNode.NumMergeableEdges > 0)
             portStatus = true;
 
         if (containerManager.TryGetContainer(canister.ContainerName, out var tankContainer)
@@ -150,7 +150,7 @@ public sealed class GasCanisterSystem : EntitySystem
 
         for (int i = 0; i < containedGasArray.Length; i++)
         {
-            containedGasDict.Add((Gas)i, canister.Air.Moles[i]);
+            containedGasDict.Add((Gas) i, canister.Air.Moles[i]);
         }
 
         _adminLogger.Add(LogType.CanisterValve, impact, $"{ToPrettyString(args.Session.AttachedEntity.GetValueOrDefault()):player} set the valve on {ToPrettyString(uid):canister} to {args.Valve:valveState} while it contained [{string.Join(", ", containedGasDict)}]");
@@ -167,13 +167,9 @@ public sealed class GasCanisterSystem : EntitySystem
             || !TryComp<AppearanceComponent>(uid, out var appearance))
             return;
 
-        if (!_nodeContainer.TryGetNode(nodeContainer, canister.PortName, out PortablePipeNode? portNode))
-            return;
-
-        if (portNode.NodeGroup is PipeNet {NodeCount: > 1} net)
-        {
-            MixContainerWithPipeNet(canister.Air, net.Air);
-        }
+        if (_nodeSystem.TryGetNode<AtmosPipeNodeComponent>(uid, canister.PortName, out var portId, out var portName, out var port)
+        && _pipeNodeSystem.TryGetGas(portId, out var portGas, port, portName) && portGas.Volume > 0f)
+            MixContainerWithPipeNet(canister.Air, portGas);
 
         ContainerManagerComponent? containerManager = null;
 
@@ -325,7 +321,7 @@ public sealed class GasCanisterSystem : EntitySystem
     /// </summary>
     private void OnAnalyzed(EntityUid uid, GasCanisterComponent component, GasAnalyzerScanEvent args)
     {
-        args.GasMixtures = new Dictionary<string, GasMixture?> { {Name(uid), component.Air} };
+        args.GasMixtures = new Dictionary<string, GasMixture?> { { Name(uid), component.Air } };
     }
 
     private void OnLockToggled(EntityUid uid, GasCanisterComponent component, ref LockToggledEvent args)

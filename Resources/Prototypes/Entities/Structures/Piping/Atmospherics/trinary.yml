@@ -12,20 +12,11 @@
     - type: SubFloorHide
       blockInteractions: false
       blockAmbience: false
-    - type: NodeContainer
-      nodes:
-        inlet:
-          !type:PipeNode
-          nodeGroupID: Pipe
-          pipeDirection: North
-        filter:
-          !type:PipeNode
-          nodeGroupID: Pipe
-          pipeDirection: West
-        outlet:
-          !type:PipeNode
-          nodeGroupID: Pipe
-          pipeDirection: South
+    - type: PolyNode
+      proxies:
+        inlet: AtmosPipeNodeNorth
+        filter: AtmosPipeNodeWest
+        outlet: AtmosPipeNodeSouth
 
 - type: entity
   parent: GasTrinaryBase
@@ -100,20 +91,11 @@
           True: { state: gasFilterFOn }
           False: { state: gasFilterF }
   - type: PipeColorVisuals
-  - type: NodeContainer
-    nodes:
-      inlet:
-        !type:PipeNode
-        nodeGroupID: Pipe
-        pipeDirection: South
-      filter:
-        !type:PipeNode
-        nodeGroupID: Pipe
-        pipeDirection: West
-      outlet:
-        !type:PipeNode
-        nodeGroupID: Pipe
-        pipeDirection: North
+  - type: PolyNode
+    proxies:
+      inlet: AtmosPipeNodeSouth
+      filter: AtmosPipeNodeWest
+      outlet: AtmosPipeNodeNorth
 
 - type: entity
   parent: GasTrinaryBase
@@ -185,20 +167,11 @@
   - type: PipeColorVisuals
   - type: Flippable
     mirrorEntity: GasMixer
-  - type: NodeContainer
-    nodes:
-      inlet:
-        !type:PipeNode
-        nodeGroupID: Pipe
-        pipeDirection: South
-      filter:
-        !type:PipeNode
-        nodeGroupID: Pipe
-        pipeDirection: West
-      outlet:
-        !type:PipeNode
-        nodeGroupID: Pipe
-        pipeDirection: North
+  - type: PolyNode
+    proxies:
+      inlet: AtmosPipeNodeSouth
+      filter: AtmosPipeNodeWest
+      outlet: AtmosPipeNodeNorth
 
 - type: entity
   parent: GasPipeBase
@@ -215,20 +188,11 @@
     - type: SubFloorHide
       blockInteractions: false
       blockAmbience: false
-    - type: NodeContainer
-      nodes:
-        inlet:
-          !type:PipeNode
-          nodeGroupID: Pipe
-          pipeDirection: North
-        control:
-          !type:PipeNode
-          nodeGroupID: Pipe
-          pipeDirection: West
-        outlet:
-          !type:PipeNode
-          nodeGroupID: Pipe
-          pipeDirection: South
+    - type: PolyNode
+      proxies:
+        inlet: AtmosPipeNodeNorth
+        control: AtmosPipeNodeWest
+        outlet: AtmosPipeNodeSouth
     - type: Sprite
       sprite: Structures/Piping/Atmospherics/pneumaticvalve.rsi
       layers:

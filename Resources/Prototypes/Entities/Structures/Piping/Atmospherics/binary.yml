@@ -12,16 +12,10 @@
   - type: SubFloorHide
     blockInteractions: false
     blockAmbience: false
-  - type: NodeContainer
-    nodes:
-      inlet:
-        !type:PipeNode
-        nodeGroupID: Pipe
-        pipeDirection: North
-      outlet:
-        !type:PipeNode
-        nodeGroupID: Pipe
-        pipeDirection: South
+  - type: PolyNode
+    proxies:
+      inlet: AtmosPipeNodeNorth
+      outlet: AtmosPipeNodeSouth
 
 - type: entity
   parent: GasBinaryBase
@@ -166,18 +160,10 @@
             False: { state: pumpManualValve }
     - type: PipeColorVisuals
     - type: GasValve
-    - type: NodeContainer
-      nodes:
-        inlet:
-          !type:PipeNode
-          nodeGroupID: Pipe
-          pipeDirection: North
-          volume: 100
-        outlet:
-          !type:PipeNode
-          nodeGroupID: Pipe
-          pipeDirection: South
-          volume: 100
+    - type: PolyNode
+      proxies:
+        inlet: AtmosPipeNodeNorthHalved
+        outlet: AtmosPipeNodeSouthHalved
     - type: Construction
       graph: GasBinary
       node: valve
@@ -224,18 +210,10 @@
       - Open
       - Close
       - Toggle
-  - type: NodeContainer
-    nodes:
-      inlet:
-        !type:PipeNode
-        nodeGroupID: Pipe
-        pipeDirection: North
-        volume: 100
-      outlet:
-        !type:PipeNode
-        nodeGroupID: Pipe
-        pipeDirection: South
-        volume: 100
+  - type: PolyNode
+    proxies:
+      inlet: AtmosPipeNodeNorthHalved
+      outlet: AtmosPipeNodeSouthHalved
   - type: Construction
     graph: GasBinary
     node: signalvalve
@@ -265,12 +243,9 @@
     - type: Appearance
     - type: PipeColorVisuals
     - type: GasPort
-    - type: NodeContainer
-      nodes:
-        connected:
-          !type:PortPipeNode
-          nodeGroupID: Pipe
-          pipeDirection: South
+    - type: PolyNode
+      proxies:
+        connected: AtmosPortNodeWithPipe
     - type: Construction
       graph: GasBinary
       node: port
@@ -317,16 +292,10 @@
     - type: Construction
       graph: GasBinary
       node: dualportventpump
-    - type: NodeContainer
-      nodes:
-        inlet:
-          !type:PipeNode
-          nodeGroupID: Pipe
-          pipeDirection: North
-        outlet:
-          !type:PipeNode
-          nodeGroupID: Pipe
-          pipeDirection: South
+    - type: PolyNode
+      proxies:
+        inlet: AtmosPipeNodeNorth
+        outlet: AtmosPipeNodeSouth
     - type: AmbientSound
       enabled: true
 
@@ -357,16 +326,10 @@
   - type: PipeColorVisuals
   - type: Rotatable
   - type: GasRecycler
-  - type: NodeContainer
-    nodes:
-      inlet:
-        !type:PipeNode
-        nodeGroupID: Pipe
-        pipeDirection: North
-      outlet:
-        !type:PipeNode
-        nodeGroupID: Pipe
-        pipeDirection: South
+  - type: PolyNode
+    proxies:
+      inlet: AtmosPipeNodeNorth
+      outlet: AtmosPipeNodeSouth
   - type: AtmosDevice
   - type: AtmosPipeColor
   - type: AmbientSound
@@ -414,16 +377,10 @@
   - type: PipeColorVisuals
   - type: AtmosDevice
   - type: HeatExchanger
-  - type: NodeContainer
-    nodes:
-      inlet:
-        !type:PipeNode
-        nodeGroupID: Pipe
-        pipeDirection: North
-      outlet:
-        !type:PipeNode
-        nodeGroupID: Pipe
-        pipeDirection: South
+  - type: PolyNode
+    proxies:
+      inlet: AtmosPipeNodeNorth
+      outlet: AtmosPipeNodeSouth
   - type: Construction
     graph: GasBinary
     node: radiator

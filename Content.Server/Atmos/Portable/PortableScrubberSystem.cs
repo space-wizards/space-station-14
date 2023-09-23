@@ -1,20 +1,20 @@
+using Content.Server.Atmos.Piping.Components;
+using Content.Server.Atmos.Piping.EntitySystems;
 using Content.Server.Atmos.Piping.Unary.EntitySystems;
 using Content.Shared.Atmos.Piping.Unary.Components;
 using Content.Shared.Atmos.Visuals;
 using Content.Shared.Examine;
 using Content.Shared.Destructible;
-using Content.Server.Atmos.Piping.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Power.Components;
-using Content.Server.NodeContainer;
-using Robust.Server.GameObjects;
-using Content.Server.NodeContainer.Nodes;
-using Content.Server.NodeContainer.NodeGroups;
+using Content.Server.Nodes.Components.Autolinkers;
+using Content.Server.Nodes.EntitySystems;
+using Content.Server.Nodes.EntitySystems.Autolinkers;
 using Content.Server.Audio;
 using Content.Server.Administration.Logs;
 using Content.Server.Construction;
-using Content.Server.NodeContainer.EntitySystems;
 using Content.Shared.Database;
+using Robust.Server.GameObjects;
 
 namespace Content.Server.Atmos.Portable
 {
@@ -28,7 +28,9 @@ namespace Content.Server.Atmos.Portable
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly AmbientSoundSystem _ambientSound = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-        [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
+        [Dependency] private readonly NodeGraphSystem _nodeSystem = default!;
+        [Dependency] private readonly AtmosPipeNetSystem _pipeNodeSystem = default!;
+        [Dependency] private readonly PortNodeSystem _portNodeSystem = default!;
 
         public override void Initialize()
         {
@@ -59,13 +61,11 @@ namespace Content.Server.Atmos.Portable
                 return;
 
             // If we are on top of a connector port, empty into it.
-            if (TryComp<NodeContainerComponent>(uid, out var nodeContainer)
-                && _nodeContainer.TryGetNode(nodeContainer, component.PortName, out PortablePipeNode? portableNode)
-                && portableNode.ConnectionsEnabled)
+            if (_nodeSystem.TryGetNode<AtmosPipeNodeComponent>(uid, component.PortName, out var portId, out var portNode, out var port) && portNode.NumMergeableEdges > 0)
             {
-                _atmosphereSystem.React(component.Air, portableNode);
-                if (portableNode.NodeGroup is PipeNet {NodeCount: > 1} net)
-                    _canisterSystem.MixContainerWithPipeNet(component.Air, net.Air);
+                _atmosphereSystem.React(component.Air, port);
+                if (_pipeNodeSystem.TryGetGas(portId, out var portGas, port, portNode) && portGas.Volume > 0f)
+                    _canisterSystem.MixContainerWithPipeNet(component.Air, portGas);
             }
 
             if (IsFull(component))
@@ -101,15 +101,12 @@ namespace Content.Server.Atmos.Portable
         /// </summary>
         private void OnAnchorChanged(EntityUid uid, PortableScrubberComponent component, ref AnchorStateChangedEvent args)
         {
-            if (!TryComp(uid, out NodeContainerComponent? nodeContainer))
+            if (!_nodeSystem.TryGetNode<PortNodeComponent>(uid, component.PortName, out var portId, out _, out var port))
                 return;
 
-            if (!_nodeContainer.TryGetNode(nodeContainer, component.PortName, out PipeNode? portableNode))
-                return;
+            _portNodeSystem.SetConnectable(portId, args.Anchored && _gasPortableSystem.FindGasPortIn(Transform(uid).GridUid, Transform(uid).Coordinates, out _), port);
 
-            portableNode.ConnectionsEnabled = (args.Anchored && _gasPortableSystem.FindGasPortIn(Transform(uid).GridUid, Transform(uid).Coordinates, out _));
-
-            _appearance.SetData(uid, PortableScrubberVisuals.IsDraining, portableNode.ConnectionsEnabled);
+            _appearance.SetData(uid, PortableScrubberVisuals.IsDraining, port.ConnectionsEnabled);
         }
 
         private void OnPowerChanged(EntityUid uid, PortableScrubberComponent component, ref PowerChangedEvent args)
@@ -163,12 +160,12 @@ namespace Content.Server.Atmos.Portable
         private void OnScrubberAnalyzed(EntityUid uid, PortableScrubberComponent component, GasAnalyzerScanEvent args)
         {
             var gasMixDict = new Dictionary<string, GasMixture?> { { Name(uid), component.Air } };
+
             // If it's connected to a port, include the port side
-            if (TryComp(uid, out NodeContainerComponent? nodeContainer))
-            {
-                if (_nodeContainer.TryGetNode(nodeContainer, component.PortName, out PipeNode? port))
-                    gasMixDict.Add(component.PortName, port.Air);
-            }
+            if (_nodeSystem.TryGetNode<AtmosPipeNodeComponent>(uid, component.PortName, out var portId, out var portNode, out var port)
+            && _pipeNodeSystem.TryGetGas(portId, out var portGas, port, portNode))
+                gasMixDict.Add(component.PortName, portGas);
+
             args.GasMixtures = gasMixDict;
         }
 

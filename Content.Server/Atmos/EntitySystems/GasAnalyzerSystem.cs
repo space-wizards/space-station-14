@@ -1,7 +1,11 @@
 using Content.Server.Atmos;
 using Content.Server.Atmos.Components;
+using Content.Server.Atmos.Piping.Components;
+using Content.Server.Atmos.Piping.EntitySystems;
 using Content.Server.NodeContainer;
 using Content.Server.NodeContainer.Nodes;
+using Content.Server.Nodes.Components;
+using Content.Server.Nodes.EntitySystems;
 using Content.Server.Popups;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
@@ -21,6 +25,8 @@ namespace Content.Server.Atmos.EntitySystems
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
         [Dependency] private readonly UserInterfaceSystem _userInterface = default!;
         [Dependency] private readonly TransformSystem _transform = default!;
+        [Dependency] private readonly AtmosPipeNetSystem _pipeNetSystem = default!;
+        [Dependency] private readonly NodeGraphSystem _nodeSystem = default!;
 
         public override void Initialize()
         {
@@ -202,7 +208,7 @@ namespace Content.Server.Atmos.EntitySystems
                 {
                     foreach (var mixes in ev.GasMixtures)
                     {
-                        if(mixes.Value != null)
+                        if (mixes.Value != null)
                             gasMixList.Add(new GasMixEntry(mixes.Key, mixes.Value.Pressure, mixes.Value.Temperature, GenerateGasEntryArray(mixes.Value)));
                     }
 
@@ -211,13 +217,14 @@ namespace Content.Server.Atmos.EntitySystems
                 else
                 {
                     // No override, fetch manually, to handle flippable devices you must subscribe to GasAnalyzerScanEvent
-                    if (TryComp(component.Target, out NodeContainerComponent? node))
+                    foreach (var (nodeId, _) in _nodeSystem.EnumerateNodes(component.Target.Value))
                     {
-                        foreach (var pair in node.Nodes)
-                        {
-                            if (pair.Value is PipeNode pipeNode)
-                                gasMixList.Add(new GasMixEntry(pair.Key, pipeNode.Air.Pressure, pipeNode.Air.Temperature, GenerateGasEntryArray(pipeNode.Air)));
-                        }
+                        if (!TryComp<AtmosPipeNodeComponent>(nodeId, out var pipeNode)
+                        || !_pipeNetSystem.TryGetGas(nodeId, out var pipeGas, pipeNode))
+                            continue;
+
+                        var name = TryComp<ProxyNodeComponent>(nodeId, out var proxy) ? proxy.ProxyKey : Name(uid);
+                        gasMixList.Add(new GasMixEntry("", pipeGas.Pressure, pipeGas.Temperature, GenerateGasEntryArray(pipeGas)));
                     }
                 }
             }

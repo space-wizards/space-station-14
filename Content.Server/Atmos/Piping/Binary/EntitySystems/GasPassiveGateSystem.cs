@@ -1,9 +1,8 @@
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Piping.Binary.Components;
 using Content.Server.Atmos.Piping.Components;
-using Content.Server.NodeContainer;
-using Content.Server.NodeContainer.EntitySystems;
-using Content.Server.NodeContainer.Nodes;
+using Content.Server.Atmos.Piping.EntitySystems;
+using Content.Server.Nodes.EntitySystems;
 using Content.Shared.Atmos;
 using Content.Shared.Examine;
 using JetBrains.Annotations;
@@ -14,7 +13,8 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
     public sealed class GasPassiveGateSystem : EntitySystem
     {
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
-        [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
+        [Dependency] private readonly NodeGraphSystem _nodeSystem = default!;
+        [Dependency] private readonly AtmosPipeNetSystem _pipeNodeSystem = default!;
 
         public override void Initialize()
         {
@@ -26,21 +26,21 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
 
         private void OnPassiveGateUpdated(EntityUid uid, GasPassiveGateComponent gate, AtmosDeviceUpdateEvent args)
         {
-            if (!EntityManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer))
+            if (!_nodeSystem.TryGetNode<AtmosPipeNodeComponent>(uid, gate.InletName, out var inletId, out var inletNode, out var inlet)
+            || !_pipeNodeSystem.TryGetGas(inletId, out var inletGas, inlet, inletNode))
+                return;
+            if (!_nodeSystem.TryGetNode<AtmosPipeNodeComponent>(uid, gate.OutletName, out var outletId, out var outletNode, out var outlet)
+            || !_pipeNodeSystem.TryGetGas(outletId, out var outletGas, outlet, outletNode))
                 return;
 
-            if (!_nodeContainer.TryGetNode(nodeContainer, gate.InletName, out PipeNode? inlet)
-                || !_nodeContainer.TryGetNode(nodeContainer, gate.OutletName, out PipeNode? outlet))
-                return;
-
-            var n1 = inlet.Air.TotalMoles;
-            var n2 = outlet.Air.TotalMoles;
-            var P1 = inlet.Air.Pressure;
-            var P2 = outlet.Air.Pressure;
-            var V1 = inlet.Air.Volume;
-            var V2 = outlet.Air.Volume;
-            var T1 = inlet.Air.Temperature;
-            var T2 = outlet.Air.Temperature;
+            var n1 = inletGas.TotalMoles;
+            var n2 = outletGas.TotalMoles;
+            var P1 = inletGas.Pressure;
+            var P2 = outletGas.Pressure;
+            var V1 = inletGas.Volume;
+            var V2 = outletGas.Volume;
+            var T1 = inletGas.Temperature;
+            var T2 = outletGas.Temperature;
             var pressureDelta = P1 - P2;
 
             float dt = 1/_atmosphereSystem.AtmosTickRate;
@@ -70,7 +70,7 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
                 dV = n1*Atmospherics.R*T1/P1;
 
                 // Actually transfer the gas.
-                _atmosphereSystem.Merge(outlet.Air, inlet.Air.Remove(transferMoles));
+                _atmosphereSystem.Merge(outletGas, inletGas.Remove(transferMoles));
             }
 
             // Update transfer rate with an exponential moving average.
@@ -81,7 +81,7 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
 
         private void OnExamined(EntityUid uid, GasPassiveGateComponent gate, ExaminedEvent args)
         {
-            if (!EntityManager.GetComponent<TransformComponent>(gate.Owner).Anchored || !args.IsInDetailsRange) // Not anchored? Out of range? No status.
+            if (!EntityManager.GetComponent<TransformComponent>(uid).Anchored || !args.IsInDetailsRange) // Not anchored? Out of range? No status.
                 return;
 
             var str = Loc.GetString("gas-passive-gate-examined", ("flowRate", $"{gate.FlowRate:0.#}"));

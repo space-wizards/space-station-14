@@ -1,15 +1,12 @@
 using Content.Server.Atmos.Piping.Binary.Components;
-using Content.Server.NodeContainer;
-using Content.Server.NodeContainer.EntitySystems;
-using Content.Server.NodeContainer.Nodes;
+using Content.Server.Nodes.EntitySystems;
 using Content.Shared.Atmos.Piping;
 using Content.Shared.Audio;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
+using Content.Shared.Nodes;
 using JetBrains.Annotations;
-using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
-using Robust.Shared.Player;
 
 namespace Content.Server.Atmos.Piping.Binary.EntitySystems
 {
@@ -18,7 +15,8 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
     {
         [Dependency] private readonly SharedAmbientSoundSystem _ambientSoundSystem = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-        [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
+        [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
+        [Dependency] private readonly NodeGraphSystem _nodeSystem = default!;
 
         public override void Initialize()
         {
@@ -31,7 +29,7 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
 
         private void OnExamined(EntityUid uid, GasValveComponent valve, ExaminedEvent args)
         {
-            if (!Comp<TransformComponent>(valve.Owner).Anchored || !args.IsInDetailsRange) // Not anchored? Out of range? No status.
+            if (!Comp<TransformComponent>(uid).Anchored || !args.IsInDetailsRange) // Not anchored? Out of range? No status.
                 return;
 
             if (Loc.TryGetString("gas-valve-system-examined", out var str,
@@ -50,32 +48,30 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
         private void OnActivate(EntityUid uid, GasValveComponent component, ActivateInWorldEvent args)
         {
             Toggle(uid, component);
-            SoundSystem.Play(component.ValveSound.GetSound(), Filter.Pvs(component.Owner), component.Owner, AudioHelpers.WithVariation(0.25f));
+            _audioSystem.PlayPvs(component.ValveSound, uid, AudioParams.Default.WithVariation(0.25f));
         }
 
         public void Set(EntityUid uid, GasValveComponent component, bool value)
         {
             component.Open = value;
-            if (TryComp(uid, out NodeContainerComponent? nodeContainer)
-                && _nodeContainer.TryGetNode(nodeContainer, component.InletName, out PipeNode? inlet)
-                && _nodeContainer.TryGetNode(nodeContainer, component.OutletName, out PipeNode? outlet))
+            if (!_nodeSystem.TryGetNode(uid, component.InletName, out var inletId, out var inletNode)
+            || !_nodeSystem.TryGetNode(uid, component.OutletName, out var outletId, out var outletNode))
+                return;
+
+            if (TryComp<AppearanceComponent>(uid, out var appearance))
             {
-                if (TryComp<AppearanceComponent>(component.Owner,out var appearance))
-                {
-                    _appearance.SetData(uid, FilterVisuals.Enabled, component.Open, appearance);
-                }
-                if (component.Open)
-                {
-                    inlet.AddAlwaysReachable(outlet);
-                    outlet.AddAlwaysReachable(inlet);
-                    _ambientSoundSystem.SetAmbience(component.Owner, true);
-                }
-                else
-                {
-                    inlet.RemoveAlwaysReachable(outlet);
-                    outlet.RemoveAlwaysReachable(inlet);
-                    _ambientSoundSystem.SetAmbience(component.Owner, false);
-                }
+                _appearance.SetData(uid, FilterVisuals.Enabled, component.Open, appearance);
+            }
+
+            if (component.Open)
+            {
+                _nodeSystem.TrySetEdge(inletId, outletId, EdgeFlags.None, inletNode, outletNode);
+                _ambientSoundSystem.SetAmbience(uid, true);
+            }
+            else
+            {
+                _nodeSystem.TrySetEdge(inletId, outletId, EdgeFlags.NoMerge, inletNode, outletNode);
+                _ambientSoundSystem.SetAmbience(uid, false);
             }
         }
 

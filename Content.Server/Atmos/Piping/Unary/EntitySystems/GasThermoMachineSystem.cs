@@ -1,14 +1,13 @@
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Monitor.Systems;
 using Content.Server.Atmos.Piping.Components;
+using Content.Server.Atmos.Piping.EntitySystems;
 using Content.Server.Atmos.Piping.Unary.Components;
 using Content.Server.Construction;
 using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Components;
 using Content.Server.DeviceNetwork.Systems;
-using Content.Server.NodeContainer;
-using Content.Server.NodeContainer.EntitySystems;
-using Content.Server.NodeContainer.Nodes;
+using Content.Server.Nodes.EntitySystems;
 using Content.Server.Power.Components;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Piping.Unary.Components;
@@ -25,7 +24,8 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
         [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
         [Dependency] private readonly PowerReceiverSystem _power = default!;
-        [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
+        [Dependency] private readonly NodeGraphSystem _nodeSystem = default!;
+        [Dependency] private readonly AtmosPipeNetSystem _pipeNodeSystem = default!;
         [Dependency] private readonly DeviceNetworkSystem _deviceNetwork = default!;
 
 
@@ -48,9 +48,10 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
         private void OnThermoMachineUpdated(EntityUid uid, GasThermoMachineComponent thermoMachine, AtmosDeviceUpdateEvent args)
         {
-            if (!(_power.IsPowered(uid) && TryComp<ApcPowerReceiverComponent>(uid, out var receiver))
-                || !TryComp<NodeContainerComponent>(uid, out var nodeContainer)
-                || !_nodeContainer.TryGetNode(nodeContainer, thermoMachine.InletName, out PipeNode? inlet))
+            if (!_power.IsPowered(uid)
+            || !TryComp<ApcPowerReceiverComponent>(uid, out var receiver)
+            || !_nodeSystem.TryGetNode<AtmosPipeNodeComponent>(uid, thermoMachine.InletName, out var inletId, out var inletNode, out var inlet)
+            || !_pipeNodeSystem.TryGetGas(inletId, out var inletGas, inlet, inletNode))
             {
                 return;
             }
@@ -58,7 +59,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             float sign = Math.Sign(thermoMachine.Cp); // 1 if heater, -1 if freezer
             float targetTemp = thermoMachine.TargetTemperature;
             float highTemp = targetTemp + sign * thermoMachine.TemperatureTolerance;
-            float temp = inlet.Air.Temperature;
+            float temp = inletGas.Temperature;
 
             if (sign * temp >= sign * highTemp) // upper bound
                 thermoMachine.HysteresisState = false; // turn off
@@ -80,9 +81,9 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             float dQ = thermoMachine.HeatCapacity * thermoMachine.Cp * args.dt;
 
             // Clamps the heat transferred to not overshoot
-            float Cin = _atmosphereSystem.GetHeatCapacity(inlet.Air);
+            float inC = _atmosphereSystem.GetHeatCapacity(inletGas);
             float dT = targetTemp - temp;
-            float dQLim = dT * Cin;
+            float dQLim = dT * inC;
             float scale = 1f;
             if (Math.Abs(dQ) > Math.Abs(dQLim))
             {
@@ -90,7 +91,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                 thermoMachine.HysteresisState = false; // turn off
             }
             float dQActual = dQ * scale;
-            _atmosphereSystem.AddHeat(inlet.Air, dQActual);
+            _atmosphereSystem.AddHeat(inletGas, dQActual);
             receiver.Load = thermoMachine.HeatCapacity;// * scale; // we're not ready for dynamic load yet, see note above
         }
 
@@ -111,7 +112,8 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                 thermoMachine.MaxTemperature = thermoMachine.BaseMaxTemperature + thermoMachine.MaxTemperatureDelta * temperatureRangePartRating;
                 thermoMachine.MinTemperature = Atmospherics.T20C;
             }
-            else {
+            else
+            {
                 // 73.15K with stock parts.
                 thermoMachine.MinTemperature = MathF.Max(
                     thermoMachine.BaseMinTemperature - thermoMachine.MinTemperatureDelta * temperatureRangePartRating, Atmospherics.TCMB);
@@ -150,7 +152,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             DirtyUI(uid, thermoMachine);
         }
 
-        private void DirtyUI(EntityUid uid, GasThermoMachineComponent? thermoMachine, UserInterfaceComponent? ui=null)
+        private void DirtyUI(EntityUid uid, GasThermoMachineComponent? thermoMachine, UserInterfaceComponent? ui = null)
         {
             if (!Resolve(uid, ref thermoMachine, ref ui, false))
                 return;
@@ -171,7 +173,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             if (Loc.TryGetString("gas-thermomachine-system-examined", out var str,
                         ("machineName", !IsHeater(thermoMachine) ? "freezer" : "heater"),
                         ("tempColor", !IsHeater(thermoMachine) ? "deepskyblue" : "red"),
-                        ("temp", Math.Round(thermoMachine.TargetTemperature,2))
+                        ("temp", Math.Round(thermoMachine.TargetTemperature, 2))
                ))
 
                 args.PushMarkup(str);

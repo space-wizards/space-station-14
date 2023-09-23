@@ -9,12 +9,9 @@
     - type: SubFloorHide
       blockInteractions: false
       blockAmbience: false
-    - type: NodeContainer
-      nodes:
-        pipe:
-          !type:PipeNode
-          nodeGroupID: Pipe
-          pipeDirection: South
+    - type: PolyNode
+      proxies:
+        pipe: AtmosPipeNodeSouth
     - type: CollideOnAnchor
 
 - type: entity
@@ -244,12 +241,9 @@
       BoardName: wires-board-name-thermomachine
       LayoutId: Thermomachine
     - type: WiresVisuals
-    - type: NodeContainer
-      nodes:
-        pipe:
-          !type:PipeNode
-          nodeGroupID: Pipe
-          pipeDirection: South
+    - type: PolyNode
+      proxies:
+        pipe: AtmosPipeNodeSouth
     - type: Transform
       noRot: false
     - type: DeviceNetwork

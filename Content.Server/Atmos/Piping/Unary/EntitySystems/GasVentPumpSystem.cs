@@ -1,15 +1,14 @@
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Monitor.Systems;
 using Content.Server.Atmos.Piping.Components;
+using Content.Server.Atmos.Piping.EntitySystems;
 using Content.Server.Atmos.Piping.Unary.Components;
 using Content.Server.DeviceLinking.Events;
 using Content.Server.DeviceLinking.Systems;
 using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Components;
 using Content.Server.DeviceNetwork.Systems;
-using Content.Server.NodeContainer;
-using Content.Server.NodeContainer.EntitySystems;
-using Content.Server.NodeContainer.Nodes;
+using Content.Server.Nodes.EntitySystems;
 using Content.Server.Power.Components;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Monitor;
@@ -19,7 +18,6 @@ using Content.Shared.Audio;
 using Content.Shared.Examine;
 using Content.Shared.Tools.Systems;
 using JetBrains.Annotations;
-using Robust.Server.GameObjects;
 
 namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 {
@@ -29,7 +27,8 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
         [Dependency] private readonly DeviceNetworkSystem _deviceNetSystem = default!;
         [Dependency] private readonly DeviceLinkSystem _signalSystem = default!;
-        [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
+        [Dependency] private readonly NodeGraphSystem _nodeSystem = default!;
+        [Dependency] private readonly AtmosPipeNetSystem _pipeNodeSystem = default!;
         [Dependency] private readonly SharedAmbientSoundSystem _ambientSoundSystem = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
         [Dependency] private readonly WeldableSystem _weldable = default!;
@@ -67,9 +66,9 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             };
 
             if (!vent.Enabled
-                || !TryComp(uid, out AtmosDeviceComponent? device)
-                || !TryComp(uid, out NodeContainerComponent? nodeContainer)
-                || !_nodeContainer.TryGetNode(nodeContainer, nodeName, out PipeNode? pipe))
+            || !TryComp(uid, out AtmosDeviceComponent? device)
+            || !_nodeSystem.TryGetNode<AtmosPipeNodeComponent>(uid, nodeName, out var pipeId, out var pipeNode, out var pipe)
+            || !_pipeNodeSystem.TryGetGas(pipeId, out var pipeGas, pipe, pipeNode))
             {
                 return;
             }
@@ -82,10 +81,10 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                 return;
             }
 
-            var timeDelta =  args.dt;
+            var timeDelta = args.dt;
             var pressureDelta = timeDelta * vent.TargetPressureChange;
 
-            if (vent.PumpDirection == VentPumpDirection.Releasing && pipe.Air.Pressure > 0)
+            if (vent.PumpDirection == VentPumpDirection.Releasing && pipeGas.Pressure > 0)
             {
                 if (environment.Pressure > vent.MaxPressure)
                     return;
@@ -98,7 +97,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                     //   pressure, up to a limit.
                     // This also means supply pipe pressure indicates minimum pressure on the station, with lower pressure
                     //   sections getting air first.
-                    var supplyPressure = MathF.Min(pipe.Air.Pressure * vent.PumpPower, vent.ExternalPressureBound);
+                    var supplyPressure = MathF.Min(pipeGas.Pressure * vent.PumpPower, vent.ExternalPressureBound);
                     // Calculate the ratio of supply pressure to current pressure.
                     pressureDelta = MathF.Min(pressureDelta, supplyPressure - environment.Pressure);
                 }
@@ -108,13 +107,13 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
                 // how many moles to transfer to change external pressure by pressureDelta
                 // (ignoring temperature differences because I am lazy)
-                var transferMoles = pressureDelta * environment.Volume / (pipe.Air.Temperature * Atmospherics.R);
+                var transferMoles = pressureDelta * environment.Volume / (pipeGas.Temperature * Atmospherics.R);
 
                 if (vent.UnderPressureLockout)
                 {
                     // Leak only a small amount of gas as a proportion of supply pipe pressure.
-                    var pipeDelta = pipe.Air.Pressure - environment.Pressure;
-                    transferMoles = (float)timeDelta * pipeDelta * vent.UnderPressureLockoutLeaking;
+                    var pipeDelta = pipeGas.Pressure - environment.Pressure;
+                    transferMoles = (float) timeDelta * pipeDelta * vent.UnderPressureLockoutLeaking;
                     if (transferMoles < 0.0)
                         return;
                 }
@@ -122,31 +121,31 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                 // limit transferMoles so the source doesn't go below its bound.
                 if ((vent.PressureChecks & VentPressureBound.InternalBound) != 0)
                 {
-                    var internalDelta = pipe.Air.Pressure - vent.InternalPressureBound;
+                    var internalDelta = pipeGas.Pressure - vent.InternalPressureBound;
 
                     if (internalDelta <= 0)
                         return;
 
-                    var maxTransfer = internalDelta * pipe.Air.Volume / (pipe.Air.Temperature * Atmospherics.R);
+                    var maxTransfer = internalDelta * pipeGas.Volume / (pipeGas.Temperature * Atmospherics.R);
                     transferMoles = MathF.Min(transferMoles, maxTransfer);
                 }
 
-                _atmosphereSystem.Merge(environment, pipe.Air.Remove(transferMoles));
+                _atmosphereSystem.Merge(environment, pipeGas.Remove(transferMoles));
             }
             else if (vent.PumpDirection == VentPumpDirection.Siphoning && environment.Pressure > 0)
             {
-                if (pipe.Air.Pressure > vent.MaxPressure)
+                if (pipeGas.Pressure > vent.MaxPressure)
                     return;
 
                 if ((vent.PressureChecks & VentPressureBound.InternalBound) != 0)
-                    pressureDelta = MathF.Min(pressureDelta, vent.InternalPressureBound - pipe.Air.Pressure);
+                    pressureDelta = MathF.Min(pressureDelta, vent.InternalPressureBound - pipeGas.Pressure);
 
                 if (pressureDelta <= 0)
                     return;
 
                 // how many moles to transfer to change internal pressure by pressureDelta
                 // (ignoring temperature differences because I am lazy)
-                var transferMoles = pressureDelta * pipe.Air.Volume / (environment.Temperature * Atmospherics.R);
+                var transferMoles = pressureDelta * pipeGas.Volume / (environment.Temperature * Atmospherics.R);
 
                 // limit transferMoles so the source doesn't go below its bound.
                 if ((vent.PressureChecks & VentPressureBound.ExternalBound) != 0)
@@ -161,7 +160,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                     transferMoles = MathF.Min(transferMoles, maxTransfer);
                 }
 
-                _atmosphereSystem.Merge(pipe.Air, environment.Remove(transferMoles));
+                _atmosphereSystem.Merge(pipeGas, environment.Remove(transferMoles));
             }
         }
 
@@ -294,9 +293,6 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
         /// </summary>
         private void OnAnalyzed(EntityUid uid, GasVentPumpComponent component, GasAnalyzerScanEvent args)
         {
-            if (!EntityManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer))
-                return;
-
             var gasMixDict = new Dictionary<string, GasMixture?>();
 
             // these are both called pipe, above it switches using this so I duplicated that...?
@@ -306,8 +302,9 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                 VentPumpDirection.Siphoning => component.Outlet,
                 _ => throw new ArgumentOutOfRangeException()
             };
-            if (_nodeContainer.TryGetNode(nodeContainer, nodeName, out PipeNode? pipe))
-                gasMixDict.Add(nodeName, pipe.Air);
+            if (_nodeSystem.TryGetNode<AtmosPipeNodeComponent>(uid, nodeName, out var pipeId, out var pipeNode, out var pipe)
+            && _pipeNodeSystem.TryGetGas(pipeId, out var pipeGas, pipe, pipeNode))
+                gasMixDict.Add(nodeName, pipeGas);
 
             args.GasMixtures = gasMixDict;
         }

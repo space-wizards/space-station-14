@@ -1,10 +1,8 @@
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Piping.Components;
+using Content.Server.Atmos.Piping.EntitySystems;
 using Content.Server.Atmos.Piping.Unary.Components;
-using Content.Server.NodeContainer;
-using Content.Server.NodeContainer.EntitySystems;
-using Content.Server.NodeContainer.Nodes;
-using Content.Shared.Atmos;
+using Content.Server.Nodes.EntitySystems;
 using JetBrains.Annotations;
 
 namespace Content.Server.Atmos.Piping.Unary.EntitySystems
@@ -13,7 +11,8 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
     public sealed class GasPassiveVentSystem : EntitySystem
     {
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
-        [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
+        [Dependency] private readonly NodeGraphSystem _nodeSystem = default!;
+        [Dependency] private readonly AtmosPipeNetSystem _pipeNodeSystem = default!;
 
         public override void Initialize()
         {
@@ -29,20 +28,18 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             if (environment == null)
                 return;
 
-            if (!EntityManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer))
+            if (!_nodeSystem.TryGetNode<AtmosPipeNodeComponent>(uid, vent.InletName, out var inletId, out var inletNode, out var inlet)
+            || !_pipeNodeSystem.TryGetGas(inletId, out var inletGas, inlet, inletNode))
                 return;
 
-            if (!_nodeContainer.TryGetNode(nodeContainer, vent.InletName, out PipeNode? inlet))
-                return;
-
-            var inletAir = inlet.Air.RemoveRatio(1f);
+            var inletAir = inletGas.RemoveRatio(1f);
             var envAir = environment.RemoveRatio(1f);
 
             var mergeAir = new GasMixture(inletAir.Volume + envAir.Volume);
             _atmosphereSystem.Merge(mergeAir, inletAir);
             _atmosphereSystem.Merge(mergeAir, envAir);
 
-            _atmosphereSystem.Merge(inlet.Air, mergeAir.RemoveVolume(inletAir.Volume));
+            _atmosphereSystem.Merge(inletGas, mergeAir.RemoveVolume(inletAir.Volume));
             _atmosphereSystem.Merge(environment, mergeAir);
         }
     }

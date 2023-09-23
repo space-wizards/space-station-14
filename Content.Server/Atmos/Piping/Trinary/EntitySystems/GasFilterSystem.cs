@@ -1,10 +1,10 @@
 using Content.Server.Administration.Logs;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Piping.Components;
+using Content.Server.Atmos.Piping.EntitySystems;
 using Content.Server.Atmos.Piping.Trinary.Components;
-using Content.Server.NodeContainer;
-using Content.Server.NodeContainer.EntitySystems;
-using Content.Server.NodeContainer.Nodes;
+using Content.Server.Nodes.Components.Autolinkers;
+using Content.Server.Nodes.EntitySystems;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Piping;
 using Content.Shared.Atmos.Piping.Trinary.Components;
@@ -14,7 +14,6 @@ using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
-using Robust.Shared.Player;
 
 namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
 {
@@ -27,7 +26,8 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
         [Dependency] private readonly SharedAmbientSoundSystem _ambientSoundSystem = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
         [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
-        [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
+        [Dependency] private readonly NodeGraphSystem _nodeSystem = default!;
+        [Dependency] private readonly AtmosPipeNetSystem _pipeNodeSystem = default!;
 
         public override void Initialize()
         {
@@ -50,44 +50,46 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
             UpdateAppearance(uid, filter);
         }
 
-        private void OnFilterUpdated(EntityUid uid, GasFilterComponent filter, AtmosDeviceUpdateEvent args)
+        private void OnFilterUpdated(EntityUid uid, GasFilterComponent filterDevice, AtmosDeviceUpdateEvent args)
         {
-            if (!filter.Enabled
-                || !EntityManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer)
-                || !EntityManager.TryGetComponent(uid, out AtmosDeviceComponent? device)
-                || !_nodeContainer.TryGetNode(nodeContainer, filter.InletName, out PipeNode? inletNode)
-                || !_nodeContainer.TryGetNode(nodeContainer, filter.FilterName, out PipeNode? filterNode)
-                || !_nodeContainer.TryGetNode(nodeContainer, filter.OutletName, out PipeNode? outletNode)
-                || outletNode.Air.Pressure >= Atmospherics.MaxOutputPressure) // No need to transfer if target is full.
+            if (!filterDevice.Enabled
+            || !TryComp<AtmosDeviceComponent>(uid, out var device)
+            || !_nodeSystem.TryGetNode<AtmosPipeNodeComponent>(uid, filterDevice.InletName, out var inletId, out var inletNode, out var inlet)
+            || !_pipeNodeSystem.TryGetGas(inletId, out var inletGas, inlet, inletNode)
+            || !_nodeSystem.TryGetNode<AtmosPipeNodeComponent>(uid, filterDevice.FilterName, out var filterId, out var filterNode, out var filter)
+            || !_pipeNodeSystem.TryGetGas(filterId, out var filterGas, filter, filterNode)
+            || !_nodeSystem.TryGetNode<AtmosPipeNodeComponent>(uid, filterDevice.OutletName, out var outletId, out var outletNode, out var outlet)
+            || !_pipeNodeSystem.TryGetGas(outletId, out var outletGas, outlet, outletNode)
+            || outletGas.Pressure >= Atmospherics.MaxOutputPressure) // No need to transfer if target is full.
             {
-                _ambientSoundSystem.SetAmbience(filter.Owner, false);
+                _ambientSoundSystem.SetAmbience(uid, false);
                 return;
             }
 
             // We multiply the transfer rate in L/s by the seconds passed since the last process to get the liters.
-            var transferVol = (float)(filter.TransferRate * args.dt);
+            var transferVol = (float) (filterDevice.TransferRate * args.dt);
 
             if (transferVol <= 0)
             {
-                _ambientSoundSystem.SetAmbience(filter.Owner, false);
+                _ambientSoundSystem.SetAmbience(uid, false);
                 return;
             }
 
-            var removed = inletNode.Air.RemoveVolume(transferVol);
+            var removed = inletGas.RemoveVolume(transferVol);
 
-            if (filter.FilteredGas.HasValue)
+            if (filterDevice.FilteredGas.HasValue)
             {
-                var filteredOut = new GasMixture() {Temperature = removed.Temperature};
+                var filteredOut = new GasMixture() { Temperature = removed.Temperature };
 
-                filteredOut.SetMoles(filter.FilteredGas.Value, removed.GetMoles(filter.FilteredGas.Value));
-                removed.SetMoles(filter.FilteredGas.Value, 0f);
+                filteredOut.SetMoles(filterDevice.FilteredGas.Value, removed.GetMoles(filterDevice.FilteredGas.Value));
+                removed.SetMoles(filterDevice.FilteredGas.Value, 0f);
 
-                var target = filterNode.Air.Pressure < Atmospherics.MaxOutputPressure ? filterNode : inletNode;
-                _atmosphereSystem.Merge(target.Air, filteredOut);
-                _ambientSoundSystem.SetAmbience(filter.Owner, filteredOut.TotalMoles > 0f);
+                var target = filterGas.Pressure < Atmospherics.MaxOutputPressure ? filterNode : inletNode;
+                _atmosphereSystem.Merge(outletGas, filteredOut);
+                _ambientSoundSystem.SetAmbience(uid, filteredOut.TotalMoles > 0f);
             }
 
-            _atmosphereSystem.Merge(outletNode.Air, removed);
+            _atmosphereSystem.Merge(outletGas, removed);
         }
 
         private void OnFilterLeaveAtmosphere(EntityUid uid, GasFilterComponent filter, AtmosDeviceDisabledEvent args)
@@ -95,7 +97,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
             filter.Enabled = false;
 
             UpdateAppearance(uid, filter);
-            _ambientSoundSystem.SetAmbience(filter.Owner, false);
+            _ambientSoundSystem.SetAmbience(uid, false);
 
             DirtyUI(uid, filter);
             _userInterfaceSystem.TryCloseAll(uid, GasFilterUiKey.Key);
@@ -106,7 +108,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
             if (!EntityManager.TryGetComponent(args.User, out ActorComponent? actor))
                 return;
 
-            if (EntityManager.GetComponent<TransformComponent>(filter.Owner).Anchored)
+            if (EntityManager.GetComponent<TransformComponent>(uid).Anchored)
             {
                 _userInterfaceSystem.TryOpen(uid, GasFilterUiKey.Key, actor.PlayerSession);
                 DirtyUI(uid, filter);
@@ -125,7 +127,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
                 return;
 
             _userInterfaceSystem.TrySetUiState(uid, GasFilterUiKey.Key,
-                new GasFilterBoundUserInterfaceState(EntityManager.GetComponent<MetaDataComponent>(filter.Owner).EntityName, filter.TransferRate, filter.Enabled, filter.FilteredGas));
+                new GasFilterBoundUserInterfaceState(EntityManager.GetComponent<MetaDataComponent>(uid).EntityName, filter.TransferRate, filter.Enabled, filter.FilteredGas));
         }
 
         private void UpdateAppearance(EntityUid uid, GasFilterComponent? filter = null)
@@ -184,20 +186,20 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
         /// </summary>
         private void OnFilterAnalyzed(EntityUid uid, GasFilterComponent component, GasAnalyzerScanEvent args)
         {
-            if (!EntityManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer))
-                return;
-
             var gasMixDict = new Dictionary<string, GasMixture?>();
 
-            if(_nodeContainer.TryGetNode(nodeContainer, component.InletName, out PipeNode? inlet))
-                gasMixDict.Add(Loc.GetString("gas-analyzer-window-text-inlet"), inlet.Air);
-            if(_nodeContainer.TryGetNode(nodeContainer, component.FilterName, out PipeNode? filterNode))
-                gasMixDict.Add(Loc.GetString("gas-analyzer-window-text-filter"), filterNode.Air);
-            if(_nodeContainer.TryGetNode(nodeContainer, component.OutletName, out PipeNode? outlet))
-                gasMixDict.Add(Loc.GetString("gas-analyzer-window-text-outlet"), outlet.Air);
+            if (_nodeSystem.TryGetNode<AtmosPipeNodeComponent, DirNodeComponent>(uid, component.InletName, out var inletId, out var inletNode, out var inlet, out var inletDir)
+            && _pipeNodeSystem.TryGetGas(inletId, out var inletGas, inlet, inletNode))
+                gasMixDict.Add(Loc.GetString("gas-analyzer-window-text-inlet"), inletGas);
+            if (_nodeSystem.TryGetNode<AtmosPipeNodeComponent, DirNodeComponent>(uid, component.FilterName, out var filterId, out var filterNode, out var filter, out var filterDir)
+            && _pipeNodeSystem.TryGetGas(filterId, out var filterGas, filter, filterNode))
+                gasMixDict.Add(Loc.GetString("gas-analyzer-window-text-filter"), filterGas);
+            if (_nodeSystem.TryGetNode<AtmosPipeNodeComponent>(uid, component.OutletName, out var outletId, out var outletNode, out var outlet)
+            && _pipeNodeSystem.TryGetGas(outletId, out var outletGas, outlet, outletNode))
+                gasMixDict.Add(Loc.GetString("gas-analyzer-window-text-outlet"), outletGas);
 
             args.GasMixtures = gasMixDict;
-            args.DeviceFlipped = inlet != null && filterNode != null && inlet.CurrentPipeDirection.ToDirection() == filterNode.CurrentPipeDirection.ToDirection().GetClockwise90Degrees();
+            args.DeviceFlipped = inletDir != null && filterDir != null && inletDir.CurrentDirection.ToDirection() == filterDir.CurrentDirection.ToDirection().GetClockwise90Degrees();
         }
     }
 }

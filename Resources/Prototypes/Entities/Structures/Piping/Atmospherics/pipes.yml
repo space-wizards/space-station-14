@@ -33,7 +33,7 @@
     visible: false
   - type: Appearance
   - type: PipeColorVisuals
-  - type: NodeContainer
+  - type: PolyNode
   - type: AtmosUnsafeUnanchor
   - type: AtmosPipeColor
   - type: Tag
@@ -58,12 +58,9 @@
   id: GasPipeHalf
   suffix: Half
   components:
-  - type: NodeContainer
-    nodes:
-      pipe:
-        !type:PipeNode
-        nodeGroupID: Pipe
-        pipeDirection: South
+  - type: PolyNode
+    proxies:
+      pipe: AtmosPipeNodeSouth
   - type: Sprite
     layers:
       - state: pipeHalf
@@ -77,12 +74,9 @@
   id: GasPipeStraight
   suffix: Straight
   components:
-  - type: NodeContainer
-    nodes:
-      pipe:
-        !type:PipeNode
-        nodeGroupID: Pipe
-        pipeDirection: Longitudinal
+  - type: PolyNode
+    proxies:
+      pipe: AtmosPipeNodeLongitudinal
   - type: Sprite
     layers:
       - state: pipeStraight
@@ -96,12 +90,9 @@
   id: GasPipeBend
   suffix: Bend
   components:
-  - type: NodeContainer
-    nodes:
-      pipe:
-        !type:PipeNode
-        nodeGroupID: Pipe
-        pipeDirection: SWBend
+  - type: PolyNode
+    proxies:
+      pipe: AtmosPipeNodeSWBend
   - type: Sprite
     layers:
       - state: pipeBend
@@ -115,12 +106,9 @@
   id: GasPipeTJunction
   suffix: TJunction
   components:
-  - type: NodeContainer
-    nodes:
-      pipe:
-        !type:PipeNode
-        nodeGroupID: Pipe
-        pipeDirection: TSouth
+  - type: PolyNode
+    proxies:
+      pipe: AtmosPipeNodeTSouth
   - type: Sprite
     layers:
       - state: pipeTJunction
@@ -136,12 +124,9 @@
   components:
   - type: Transform
     noRot: true
-  - type: NodeContainer
-    nodes:
-      pipe:
-        !type:PipeNode
-        nodeGroupID: Pipe
-        pipeDirection: Fourway
+  - type: PolyNode
+    proxies:
+      pipe: AtmosPipeNodeFourway
   - type: Sprite
     layers:
       - state: pipeFourway

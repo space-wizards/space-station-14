@@ -1,5 +1,6 @@
 using Content.Server.Nodes.Components;
 using Robust.Shared.Map.Components;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Content.Server.Nodes.EntitySystems;
 
@@ -16,13 +17,58 @@ public sealed partial class NodeGraphSystem
     /// <summary>
     /// Gets the proxy node attached to a polynode by a certain key.
     /// </summary>
-    public bool TryGetProxyNode(EntityUid polyId, string proxyKey, out EntityUid proxyId, PolyNodeComponent? poly = null)
+    public bool TryGetNode(EntityUid polyId, string? proxyKey, out EntityUid nodeId, [MaybeNullWhen(false)] out GraphNodeComponent node, PolyNodeComponent? poly = null)
     {
-        proxyId = EntityUid.Invalid;
+        if (proxyKey is not { } key)
+        {
+            nodeId = polyId;
+            return _nodeQuery.TryGetComponent(nodeId, out node);
+        }
+
+        (nodeId, node) = (EntityUid.Invalid, null);
         if (!_polyQuery.Resolve(polyId, ref poly))
             return false;
 
-        return poly.ProxyNodes.TryGetValue(proxyKey, out proxyId);
+        return poly.ProxyNodes.TryGetValue(key, out nodeId) && _nodeQuery.TryGetComponent(nodeId, out node);
+    }
+
+    /// <inheritdoc cref="TryGetNode(EntityUid, string?, EntityUid, GraphNodeComponent, PolyNodeComponent)" />
+    /// <remarks>Variant that check whether the returned node has a specific component.</remarks>
+    public bool TryGetNode<T1>(EntityUid polyId, string? proxyKey, out EntityUid nodeId, [MaybeNullWhen(false)] out GraphNodeComponent node, [MaybeNullWhen(false)] out T1 comp1, PolyNodeComponent? poly = null)
+        where T1 : Component
+    {
+        comp1 = null;
+        return TryGetNode(polyId, proxyKey, out nodeId, out node, poly) && TryComp<T1>(nodeId, out comp1);
+    }
+
+    /// <inheritdoc cref="TryGetNode(EntityUid, string?, EntityUid, GraphNodeComponent, T1, PolyNodeComponent)" />
+    public bool TryGetNode<T1, T2>(EntityUid polyId, string? proxyKey, out EntityUid nodeId, [MaybeNullWhen(false)] out GraphNodeComponent node, [MaybeNullWhen(false)] out T1 comp1, [MaybeNullWhen(false)] out T2 comp2, PolyNodeComponent? poly = null)
+        where T1 : Component
+        where T2 : Component
+    {
+        comp2 = null;
+        return TryGetNode(polyId, proxyKey, out nodeId, out node, out comp1, poly) && TryComp<T2>(nodeId, out comp2);
+    }
+
+    /// <inheritdoc cref="TryGetNode(EntityUid, string?, EntityUid, GraphNodeComponent, T1, T2, PolyNodeComponent)" />
+    public bool TryGetNode<T1, T2, T3>(EntityUid polyId, string? proxyKey, out EntityUid nodeId, [MaybeNullWhen(false)] out GraphNodeComponent node, [MaybeNullWhen(false)] out T1 comp1, [MaybeNullWhen(false)] out T2 comp2, [MaybeNullWhen(false)] out T3 comp3, PolyNodeComponent? poly = null)
+        where T1 : Component
+        where T2 : Component
+        where T3 : Component
+    {
+        comp3 = null;
+        return TryGetNode(polyId, proxyKey, out nodeId, out node, out comp1, out comp2, poly) && TryComp<T3>(nodeId, out comp3);
+    }
+
+    /// <inheritdoc cref="TryGetNode(EntityUid, string?, EntityUid, GraphNodeComponent, T1, T2, T3, PolyNodeComponent)" />
+    public bool TryGetNode<T1, T2, T3, T4>(EntityUid polyId, string? proxyKey, out EntityUid nodeId, [MaybeNullWhen(false)] out GraphNodeComponent node, [MaybeNullWhen(false)] out T1 comp1, [MaybeNullWhen(false)] out T2 comp2, [MaybeNullWhen(false)] out T3 comp3, [MaybeNullWhen(false)] out T4 comp4, PolyNodeComponent? poly = null)
+        where T1 : Component
+        where T2 : Component
+        where T3 : Component
+        where T4 : Component
+    {
+        comp4 = null;
+        return TryGetNode(polyId, proxyKey, out nodeId, out node, out comp1, out comp2, out comp3, poly) && TryComp<T4>(nodeId, out comp4);
     }
 
     /// <summary>Enumerates all of the nodes associated with an entity.</summary>

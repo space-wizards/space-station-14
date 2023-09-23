@@ -1,4 +1,50 @@
 ﻿- type: entity
+  id: Teg
+  parent: BaseNodeGraph
+  noSpawn: true
+  components:
+  - type: NodeGraph
+    color: "#FFFFFF"
+  - type: Teg
+
+- type: entity
+  id: TegNodeBase
+  parent: BaseGraphNode
+  abstract: true
+  noSpawn: true
+  components:
+  - type: GraphNode
+    graphProto: Teg
+  - type: TegNode
+
+- type: entity
+  id: TegNodeGenerator
+  parent: TegNodeBase
+  noSpawn: true
+  components:
+  - type: DirNode
+    baseDirection: Longitudinal
+    tag: Circulator
+
+- type: entity
+  id: TegNodeCirculator
+  parent: TegNodeBase
+  noSpawn: true
+  components:
+  - type: DirNode
+    baseDirection: West
+    tag: Generator
+
+- type: entity
+  id: PipeNet
+  noSpawn: true
+  components:
+  - type: NodeGraph
+    color: "#00FFFF"
+  - type: AtmosPipeNet
+
+
+- type: entity
   id: TegCenter
   name: thermo-electric generator
   description: A high efficiency generator that uses energy transfer between hot and cold gases to produce electricity.
@@ -48,9 +94,9 @@
         output:
           !type:CableDeviceNode
           nodeGroupID: HVPower
-        teg:
-          !type:TegNodeGenerator
-          nodeGroupID: Teg
+    - type: PolyNode
+      proxies:
+        teg: TegNodeGenerator
     - type: Rotatable
 
     # Note that only the TEG center is an AtmosDevice.
@@ -153,22 +199,11 @@
       guides: [ TEG, Power ]
 
     # functionality
-    - type: NodeContainer
-      nodes:
-        inlet:
-          !type:PipeNode
-          nodeGroupID: Pipe
-          pipeDirection: North
-          volume: 100
-        outlet:
-          !type:PipeNode
-          nodeGroupID: Pipe
-          pipeDirection: South
-          volume: 100
-        circulator:
-          !type:TegNodeCirculator
-          nodeGroupID: Teg
-
+    - type: PolyNode
+      proxies:
+        circulator: TegNodeGenerator
+        inlet: AtmosPipeNodeNorth
+        outlet: AtmosPipeNodeSouth
     - type: AtmosUnsafeUnanchor
     - type: TegCirculator
 

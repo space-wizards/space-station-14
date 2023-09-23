@@ -256,13 +256,13 @@ public partial class AtmosphereSystem
         RaiseLocalEvent(gridUid, ref ev);
     }
 
-    public void AddPipeNet(EntityUid gridUid, PipeNet pipeNet)
+    public void AddPipeNet(EntityUid gridUid, EntityUid pipeNet)
     {
         var ev = new AddPipeNetMethodEvent(gridUid, pipeNet);
         RaiseLocalEvent(gridUid, ref ev);
     }
 
-    public void RemovePipeNet(EntityUid gridUid, PipeNet pipeNet)
+    public void RemovePipeNet(EntityUid gridUid, EntityUid pipeNet)
     {
         var ev = new RemovePipeNetMethodEvent(gridUid, pipeNet);
         RaiseLocalEvent(gridUid, ref ev);
@@ -346,10 +346,10 @@ public partial class AtmosphereSystem
         (EntityUid Grid, Vector2i Tile, bool Handled = false);
 
     [ByRefEvent] private record struct AddPipeNetMethodEvent
-        (EntityUid Grid, PipeNet PipeNet, bool Handled = false);
+        (EntityUid Grid, EntityUid PipeNet, bool Handled = false);
 
     [ByRefEvent] private record struct RemovePipeNetMethodEvent
-        (EntityUid Grid, PipeNet PipeNet, bool Handled = false);
+        (EntityUid Grid, EntityUid PipeNet, bool Handled = false);
 
     [ByRefEvent] private record struct AddAtmosDeviceMethodEvent
         (EntityUid Grid, AtmosDeviceComponent Device, bool Result = false, bool Handled = false);

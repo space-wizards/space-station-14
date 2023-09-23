@@ -1,9 +1,8 @@
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Piping.Components;
+using Content.Server.Atmos.Piping.EntitySystems;
 using Content.Server.Atmos.Piping.Trinary.Components;
-using Content.Server.NodeContainer;
-using Content.Server.NodeContainer.EntitySystems;
-using Content.Server.NodeContainer.Nodes;
+using Content.Server.Nodes.EntitySystems;
 using Content.Shared.Atmos.Piping;
 using Content.Shared.Audio;
 using JetBrains.Annotations;
@@ -17,7 +16,8 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
         [Dependency] private readonly SharedAmbientSoundSystem _ambientSoundSystem = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-        [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
+        [Dependency] private readonly NodeGraphSystem _nodeSystem = default!;
+        [Dependency] private readonly AtmosPipeNetSystem _pipeNodeSystem = default!;
 
         public override void Initialize()
         {
@@ -34,28 +34,26 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
 
         private void OnUpdate(EntityUid uid, PressureControlledValveComponent comp, AtmosDeviceUpdateEvent args)
         {
-            if (!EntityManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer)
-                || !EntityManager.TryGetComponent(uid, out AtmosDeviceComponent? device)
-                || !_nodeContainer.TryGetNode(nodeContainer, comp.InletName, out PipeNode? inletNode)
-                || !_nodeContainer.TryGetNode(nodeContainer, comp.ControlName, out PipeNode? controlNode)
-                || !_nodeContainer.TryGetNode(nodeContainer, comp.OutletName, out PipeNode? outletNode))
+            if (!EntityManager.TryGetComponent(uid, out AtmosDeviceComponent? device)
+            || !_nodeSystem.TryGetNode<AtmosPipeNodeComponent>(uid, comp.InletName, out var inletId, out var inletNode, out var inlet)
+            || !_pipeNodeSystem.TryGetGas(inletId, out var inletGas, inlet, inletNode)
+            || !_nodeSystem.TryGetNode<AtmosPipeNodeComponent>(uid, comp.ControlName, out var controlId, out var controlNode, out var control)
+            || !_pipeNodeSystem.TryGetGas(controlId, out var controlGas, control, controlNode)
+            || !_nodeSystem.TryGetNode<AtmosPipeNodeComponent>(uid, comp.OutletName, out var outletId, out var outletNode, out var outlet)
+            || !_pipeNodeSystem.TryGetGas(outletId, out var outletGas, outlet, outletNode))
             {
-                _ambientSoundSystem.SetAmbience(comp.Owner, false);
                 comp.Enabled = false;
+                _ambientSoundSystem.SetAmbience(uid, false);
                 return;
             }
 
             // If output is higher than input, flip input/output to enable bidirectional flow.
-            if (outletNode.Air.Pressure > inletNode.Air.Pressure)
-            {
-                PipeNode temp = outletNode;
-                outletNode = inletNode;
-                inletNode = temp;
-            }
+            if (outletGas.Pressure > inletGas.Pressure)
+                (inletGas, outletGas) = (outletGas, inletGas);
 
-            float control = (controlNode.Air.Pressure - outletNode.Air.Pressure) - comp.Threshold;
+            float controlDelta = (controlGas.Pressure - outletGas.Pressure) - comp.Threshold;
             float transferRate;
-            if (control < 0)
+            if (controlDelta < 0)
             {
                 comp.Enabled = false;
                 transferRate = 0;
@@ -63,28 +61,28 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
             else
             {
                 comp.Enabled = true;
-                transferRate = Math.Min(control * comp.Gain, comp.MaxTransferRate);
+                transferRate = Math.Min(controlDelta * comp.Gain, comp.MaxTransferRate);
             }
             UpdateAppearance(uid, comp);
 
             // We multiply the transfer rate in L/s by the seconds passed since the last process to get the liters.
-            var transferVolume = (float)(transferRate * args.dt);
+            var transferVolume = (float) (transferRate * args.dt);
             if (transferVolume <= 0)
             {
-                _ambientSoundSystem.SetAmbience(comp.Owner, false);
+                _ambientSoundSystem.SetAmbience(uid, false);
                 return;
             }
 
-            _ambientSoundSystem.SetAmbience(comp.Owner, true);
-            var removed = inletNode.Air.RemoveVolume(transferVolume);
-            _atmosphereSystem.Merge(outletNode.Air, removed);
+            _ambientSoundSystem.SetAmbience(uid, true);
+            var removed = inletGas.RemoveVolume(transferVolume);
+            _atmosphereSystem.Merge(outletGas, removed);
         }
 
         private void OnFilterLeaveAtmosphere(EntityUid uid, PressureControlledValveComponent comp, AtmosDeviceDisabledEvent args)
         {
             comp.Enabled = false;
             UpdateAppearance(uid, comp);
-            _ambientSoundSystem.SetAmbience(comp.Owner, false);
+            _ambientSoundSystem.SetAmbience(uid, false);
         }
 
         private void UpdateAppearance(EntityUid uid, PressureControlledValveComponent? comp = null, AppearanceComponent? appearance = null)

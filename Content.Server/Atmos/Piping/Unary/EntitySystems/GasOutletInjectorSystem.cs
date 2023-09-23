@@ -1,9 +1,8 @@
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Piping.Components;
+using Content.Server.Atmos.Piping.EntitySystems;
 using Content.Server.Atmos.Piping.Unary.Components;
-using Content.Server.NodeContainer;
-using Content.Server.NodeContainer.EntitySystems;
-using Content.Server.NodeContainer.Nodes;
+using Content.Server.Nodes.EntitySystems;
 using Content.Shared.Atmos.Piping;
 using Content.Shared.Interaction;
 using JetBrains.Annotations;
@@ -16,7 +15,8 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
     {
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-        [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
+        [Dependency] private readonly NodeGraphSystem _nodeSystem = default!;
+        [Dependency] private readonly AtmosPipeNetSystem _pipeNodeSystem = default!;
 
         public override void Initialize()
         {
@@ -40,7 +40,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
         public void UpdateAppearance(EntityUid uid, GasOutletInjectorComponent component, AppearanceComponent? appearance = null)
         {
-            if (!Resolve(component.Owner, ref appearance, false))
+            if (!Resolve(uid, ref appearance, false))
                 return;
 
             _appearance.SetData(uid, OutletInjectorVisuals.Enabled, component.Enabled, appearance);
@@ -51,13 +51,11 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             if (!injector.Enabled)
                 return;
 
-            if (!EntityManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer))
+            if (!HasComp<AtmosDeviceComponent>(uid))
                 return;
 
-            if (!TryComp(uid, out AtmosDeviceComponent? device))
-                return;
-
-            if (!_nodeContainer.TryGetNode(nodeContainer, injector.InletName, out PipeNode? inlet))
+            if (!_nodeSystem.TryGetNode<AtmosPipeNodeComponent>(uid, injector.InletName, out var inletId, out var inletNode, out var inlet)
+            || !_pipeNodeSystem.TryGetGas(inletId, out var inletGas, inlet, inletNode))
                 return;
 
             var environment = _atmosphereSystem.GetContainingMixture(uid, true, true);
@@ -65,7 +63,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             if (environment == null)
                 return;
 
-            if (inlet.Air.Temperature < 0)
+            if (inletGas.Temperature < 0)
                 return;
 
             if (environment.Pressure > injector.MaxPressure)
@@ -74,8 +72,8 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             var timeDelta = args.dt;
 
             // TODO adjust ratio so that environment does not go above MaxPressure?
-            var ratio = MathF.Min(1f, timeDelta * injector.TransferRate / inlet.Air.Volume);
-            var removed = inlet.Air.RemoveRatio(ratio);
+            var ratio = MathF.Min(1f, timeDelta * injector.TransferRate / inletGas.Volume);
+            var removed = inletGas.RemoveRatio(ratio);
 
             _atmosphereSystem.Merge(environment, removed);
         }

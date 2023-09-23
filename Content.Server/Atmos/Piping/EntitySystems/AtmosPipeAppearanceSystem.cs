@@ -1,9 +1,8 @@
-using Content.Server.NodeContainer;
-using Content.Server.NodeContainer.EntitySystems;
-using Content.Server.NodeContainer.Nodes;
+using Content.Server.Atmos.Piping.Components;
+using Content.Server.Nodes.EntitySystems;
+using Content.Server.Nodes.Events;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
-using Robust.Server.GameObjects;
 using Robust.Shared.Map;
 
 namespace Content.Server.Atmos.Piping.EntitySystems;
@@ -12,23 +11,26 @@ public sealed class AtmosPipeAppearanceSystem : EntitySystem
 {
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly NodeGraphSystem _nodeSystem = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
-        SubscribeLocalEvent<PipeAppearanceComponent, NodeGroupsRebuilt>(OnNodeUpdate);
+        SubscribeLocalEvent<PipeAppearanceComponent, EdgeAddedEvent>(UpdateAppearanceOnRefEvent);
+        SubscribeLocalEvent<PipeAppearanceComponent, EdgeRemovedEvent>(UpdateAppearanceOnRefEvent);
+        SubscribeLocalEvent<PipeAppearanceComponent, ProxyNodeRelayEvent<EdgeAddedEvent>>(UpdateAppearanceOnRefEvent);
+        SubscribeLocalEvent<PipeAppearanceComponent, ProxyNodeRelayEvent<EdgeRemovedEvent>>(UpdateAppearanceOnRefEvent);
     }
 
-    private void OnNodeUpdate(EntityUid uid, PipeAppearanceComponent component, ref NodeGroupsRebuilt args)
+    private void UpdateAppearanceOnRefEvent<TEvent>(EntityUid uid, PipeAppearanceComponent component, ref TEvent args)
     {
-        UpdateAppearance(args.NodeOwner);
+        UpdateAppearance(uid);
     }
 
-    private void UpdateAppearance(EntityUid uid, AppearanceComponent? appearance = null, NodeContainerComponent? container = null,
-        TransformComponent? xform = null)
+    private void UpdateAppearance(EntityUid uid, AppearanceComponent? appearance = null, TransformComponent? xform = null)
     {
-        if (!Resolve(uid, ref appearance, ref container, ref xform, false))
+        if (!Resolve(uid, ref appearance, ref xform, logMissing: false))
             return;
 
         if (!_mapManager.TryGetGrid(xform.GridUid, out var grid))
@@ -37,17 +39,16 @@ public sealed class AtmosPipeAppearanceSystem : EntitySystem
         // get connected entities
         var anyPipeNodes = false;
         HashSet<EntityUid> connected = new();
-        foreach (var node in container.Nodes.Values)
+        foreach (var (nodeId, node) in _nodeSystem.EnumerateNodes(uid))
         {
-            if (node is not PipeNode)
+            if (!HasComp<AtmosPipeNodeComponent>(nodeId))
                 continue;
 
             anyPipeNodes = true;
-
-            foreach (var connectedNode in node.ReachableNodes)
+            foreach (var (edgeId, _) in node.Edges)
             {
-                if (connectedNode is PipeNode)
-                    connected.Add(connectedNode.Owner);
+                if (HasComp<AtmosPipeNodeComponent>(edgeId))
+                    connected.Add(_nodeSystem.GetNodeHost(edgeId));
             }
         }
 

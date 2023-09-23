@@ -1,13 +1,11 @@
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Piping.Components;
-using Content.Server.NodeContainer;
-using Content.Server.NodeContainer.Nodes;
+using Content.Server.Nodes.EntitySystems;
 using Content.Server.Popups;
 using Content.Shared.Atmos;
 using Content.Shared.Construction.Components;
 using Content.Shared.Popups;
 using JetBrains.Annotations;
-using Robust.Shared.Player;
 
 namespace Content.Server.Atmos.Piping.EntitySystems
 {
@@ -16,6 +14,8 @@ namespace Content.Server.Atmos.Piping.EntitySystems
     {
         [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
         [Dependency] private readonly PopupSystem _popup = default!;
+        [Dependency] private readonly NodeGraphSystem _nodeSystem = default!;
+        [Dependency] private readonly AtmosPipeNetSystem _pipeNodeSystem = default!;
 
         public override void Initialize()
         {
@@ -25,60 +25,61 @@ namespace Content.Server.Atmos.Piping.EntitySystems
 
         private void OnUnanchorAttempt(EntityUid uid, AtmosUnsafeUnanchorComponent component, UnanchorAttemptEvent args)
         {
-            if (!component.Enabled || !EntityManager.TryGetComponent(uid, out NodeContainerComponent? nodes))
+            if (!component.Enabled)
                 return;
 
-            if (_atmosphere.GetContainingMixture(uid, true) is not {} environment)
+            if (_atmosphere.GetContainingMixture(uid, true) is not { } environment)
                 return;
 
-            foreach (var node in nodes.Nodes.Values)
+            foreach (var (nodeId, node) in _nodeSystem.EnumerateNodes(uid))
             {
-                if (node is not PipeNode pipe)
+                if (!TryComp<AtmosPipeNodeComponent>(nodeId, out var pipeNode)
+                || !_pipeNodeSystem.TryGetGas(nodeId, out var nodeGas, pipeNode, node))
                     continue;
 
-                if (pipe.Air.Pressure - environment.Pressure > 2 * Atmospherics.OneAtmosphere)
-                {
-                    args.Delay += 2f;
-                    _popup.PopupEntity(Loc.GetString("comp-atmos-unsafe-unanchor-warning"), pipe.Owner,
-                        args.User, PopupType.MediumCaution);
-                    return; // Show the warning only once.
-                }
+                if (nodeGas.Pressure - environment.Pressure < 2 * Atmospherics.OneAtmosphere)
+                    continue;
+
+                args.Delay += 2f;
+                _popup.PopupEntity(
+                    Loc.GetString("comp-atmos-unsafe-unanchor-warning"),
+                    uid,
+                    args.User, PopupType.MediumCaution
+                );
+                return; // Show the warning only once.
             }
         }
 
         private void OnBeforeUnanchored(EntityUid uid, AtmosUnsafeUnanchorComponent component, BeforeUnanchoredEvent args)
         {
-            if (!component.Enabled || !EntityManager.TryGetComponent(uid, out NodeContainerComponent? nodes))
+            if (!component.Enabled)
                 return;
 
-            if (_atmosphere.GetContainingMixture(uid, true, true) is not {} environment)
+            if (_atmosphere.GetContainingMixture(uid, true, true) is not { } environment)
                 environment = GasMixture.SpaceGas;
 
             var lost = 0f;
             var timesLost = 0;
-
-            foreach (var node in nodes.Nodes.Values)
+            foreach (var (nodeId, node) in _nodeSystem.EnumerateNodes(uid))
             {
-                if (node is not PipeNode pipe)
+                if (!TryComp<AtmosPipeNodeComponent>(nodeId, out var pipeNode)
+                || !_pipeNodeSystem.TryGetGas(nodeId, out var nodeGas, pipeNode, node))
                     continue;
 
-                var difference = pipe.Air.Pressure - environment.Pressure;
+                var difference = nodeGas.Pressure - environment.Pressure;
                 lost += difference * environment.Volume / (environment.Temperature * Atmospherics.R);
                 timesLost++;
             }
 
             var sharedLoss = lost / timesLost;
-            var buffer = new GasMixture();
-
-            foreach (var node in nodes.Nodes.Values)
+            foreach (var (nodeId, node) in _nodeSystem.EnumerateNodes(uid))
             {
-                if (node is not PipeNode pipe)
+                if (!TryComp<AtmosPipeNodeComponent>(nodeId, out var pipeNode)
+                || !_pipeNodeSystem.TryGetGas(nodeId, out var nodeGas, pipeNode, node))
                     continue;
 
-                _atmosphere.Merge(buffer, pipe.Air.Remove(sharedLoss));
+                _atmosphere.Merge(environment, nodeGas.Remove(sharedLoss));
             }
-
-            _atmosphere.Merge(environment, buffer);
         }
     }
 }

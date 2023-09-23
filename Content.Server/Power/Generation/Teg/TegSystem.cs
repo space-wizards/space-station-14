@@ -1,16 +1,18 @@
 ﻿using Content.Server.Atmos;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Piping.Components;
+using Content.Server.Atmos.Piping.EntitySystems;
 using Content.Server.Audio;
 using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Systems;
-using Content.Server.NodeContainer;
-using Content.Server.NodeContainer.Nodes;
+using Content.Server.Nodes.EntitySystems;
+using Content.Server.Nodes.Events;
 using Content.Server.Power.Components;
 using Content.Shared.Examine;
 using Content.Shared.Power.Generation.Teg;
 using Content.Shared.Rounding;
 using Robust.Server.GameObjects;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Power.Generation.Teg;
 
@@ -68,8 +70,9 @@ public sealed class TegSystem : EntitySystem
     [Dependency] private readonly AppearanceSystem _appearance = default!;
     [Dependency] private readonly PointLightSystem _pointLight = default!;
     [Dependency] private readonly AmbientSoundSystem _ambientSound = default!;
+    [Dependency] private readonly NodeGraphSystem _nodeSystem = default!;
+    [Dependency] private readonly AtmosPipeNetSystem _pipeNodeSystem = default!;
 
-    private EntityQuery<NodeContainerComponent> _nodeContainerQuery;
 
     public override void Initialize()
     {
@@ -80,8 +83,79 @@ public sealed class TegSystem : EntitySystem
         SubscribeLocalEvent<TegGeneratorComponent, DeviceNetworkPacketEvent>(DeviceNetworkPacketReceived);
 
         SubscribeLocalEvent<TegGeneratorComponent, ExaminedEvent>(GeneratorExamined);
+    }
 
-        _nodeContainerQuery = GetEntityQuery<NodeContainerComponent>();
+    private void OnNodeAdded(EntityUid uid, TegComponent comp, ref NodeAddedEvent args)
+    {
+        DebugTools.Assert(args.Graph.Nodes.Count <= 3, "The TEG has at most 3 parts");
+
+        var hostId = _nodeSystem.GetNodeHost(args.NodeId);
+        if (HasComp<TegGeneratorComponent>(hostId))
+        {
+            DebugTools.Assert(comp.Generator is null, "The TEG has at most one generator");
+            comp.Generator = hostId;
+        }
+
+        if (comp.Generator is { } genId)
+        {
+            var genDir = Transform(genId).LocalRotation.GetDir();
+
+            foreach (var nodeId in args.Graph.Nodes)
+            {
+                var circHostId = _nodeSystem.GetNodeHost(nodeId);
+
+                if (circHostId == hostId)
+                    continue;
+                if (!HasComp<TegCirculatorComponent>(circHostId))
+                    continue;
+
+                var circDir = Transform(circHostId).LocalRotation.GetDir();
+
+                if (genDir == circDir)
+                    comp.CirculatorA = circHostId;
+                else if (genDir == circDir.GetOpposite())
+                    comp.CirculatorB = circHostId;
+            }
+        }
+
+        comp.IsFullyBuilt = comp.Generator is { } && comp.CirculatorA is { } && comp.CirculatorB is { };
+
+        foreach (var nodeId in args.Graph.Nodes)
+        {
+            hostId = _nodeSystem.GetNodeHost(nodeId);
+
+            if (HasComp<TegGeneratorComponent>(hostId))
+                UpdateGeneratorConnectivity(hostId, comp);
+
+            if (HasComp<TegCirculatorComponent>(hostId))
+                UpdateCirculatorConnectivity(hostId, comp);
+        }
+    }
+
+    private void OnNodeRemoved(EntityUid uid, TegComponent comp, ref NodeRemovedEvent args)
+    {
+        var hostId = _nodeSystem.GetNodeHost(args.NodeId);
+        if (hostId == comp.Generator)
+            comp.Generator = null;
+        else if (hostId == comp.CirculatorA)
+            comp.CirculatorA = null;
+        else if (hostId == comp.CirculatorB)
+            comp.CirculatorB = null;
+        else
+            return;
+
+        comp.IsFullyBuilt = false;
+
+        foreach (var nodeId in args.Graph.Nodes)
+        {
+            hostId = _nodeSystem.GetNodeHost(nodeId);
+
+            if (HasComp<TegGeneratorComponent>(hostId))
+                UpdateGeneratorConnectivity(hostId, comp);
+
+            if (HasComp<TegCirculatorComponent>(hostId))
+                UpdateCirculatorConnectivity(hostId, comp);
+        }
     }
 
     private void GeneratorExamined(EntityUid uid, TegGeneratorComponent component, ExaminedEvent args)
@@ -99,8 +173,7 @@ public sealed class TegSystem : EntitySystem
 
     private void GeneratorUpdate(EntityUid uid, TegGeneratorComponent component, AtmosDeviceUpdateEvent args)
     {
-        var tegGroup = GetNodeGroup(uid);
-        if (tegGroup is not { IsFullyBuilt: true })
+        if (GetNodeGroup(uid) is not { IsFullyBuilt: true } tegGroup)
             return;
 
         var supplier = Comp<PowerSupplierComponent>(uid);
@@ -111,14 +184,14 @@ public sealed class TegSystem : EntitySystem
             return;
         }
 
-        var circA = tegGroup.CirculatorA!.Owner;
-        var circB = tegGroup.CirculatorB!.Owner;
+        var circA = tegGroup.CirculatorA!.Value;
+        var circB = tegGroup.CirculatorB!.Value;
 
         var (inletA, outletA) = GetPipes(circA);
         var (inletB, outletB) = GetPipes(circB);
 
-        var (airA, δpA) = GetCirculatorAirTransfer(inletA.Air, outletA.Air);
-        var (airB, δpB) = GetCirculatorAirTransfer(inletB.Air, outletB.Air);
+        var (airA, δpA) = GetCirculatorAirTransfer(inletA, outletA);
+        var (airB, δpB) = GetCirculatorAirTransfer(inletB, outletB);
 
         var cA = _atmosphere.GetHeatCapacity(airA);
         var cB = _atmosphere.GetHeatCapacity(airB);
@@ -179,8 +252,8 @@ public sealed class TegSystem : EntitySystem
         circBComp.LastPressureDelta = δpB;
         circBComp.LastMolesTransferred = airB.TotalMoles;
 
-        _atmosphere.Merge(outletA.Air, airA);
-        _atmosphere.Merge(outletB.Air, airB);
+        _atmosphere.Merge(outletA, airA);
+        _atmosphere.Merge(outletB, airB);
 
         UpdateAppearance(uid, component, powerReceiver, tegGroup);
     }
@@ -189,7 +262,7 @@ public sealed class TegSystem : EntitySystem
         EntityUid uid,
         TegGeneratorComponent component,
         ApcPowerReceiverComponent powerReceiver,
-        TegNodeGroup nodeGroup)
+        TegComponent teg)
     {
         int powerLevel;
         if (powerReceiver.Powered)
@@ -210,17 +283,16 @@ public sealed class TegSystem : EntitySystem
 
         _appearance.SetData(uid, TegVisuals.PowerOutput, powerLevel);
 
-        if (nodeGroup.IsFullyBuilt)
+        if (teg.IsFullyBuilt)
         {
-            UpdateCirculatorAppearance(nodeGroup.CirculatorA!.Owner, powerReceiver.Powered);
-            UpdateCirculatorAppearance(nodeGroup.CirculatorB!.Owner, powerReceiver.Powered);
+            UpdateCirculatorAppearance(teg.CirculatorA!.Value, powerReceiver.Powered);
+            UpdateCirculatorAppearance(teg.CirculatorB!.Value, powerReceiver.Powered);
         }
     }
 
-    [Access(typeof(TegNodeGroup))]
     public void UpdateGeneratorConnectivity(
         EntityUid uid,
-        TegNodeGroup group,
+        TegComponent group,
         TegGeneratorComponent? component = null)
     {
         if (!Resolve(uid, ref component))
@@ -233,10 +305,9 @@ public sealed class TegSystem : EntitySystem
         UpdateAppearance(uid, component, powerReceiver, group);
     }
 
-    [Access(typeof(TegNodeGroup))]
     public void UpdateCirculatorConnectivity(
         EntityUid uid,
-        TegNodeGroup group,
+        TegComponent group,
         TegCirculatorComponent? component = null)
     {
         if (!Resolve(uid, ref component))
@@ -287,19 +358,15 @@ public sealed class TegSystem : EntitySystem
     }
 
     /// <returns>Null if the node group is not yet available. This can happen during initialization.</returns>
-    private TegNodeGroup? GetNodeGroup(EntityUid uidGenerator)
+    private TegComponent? GetNodeGroup(EntityUid uidGenerator)
     {
-        NodeContainerComponent? nodeContainer = null;
-        if (!_nodeContainerQuery.Resolve(uidGenerator, ref nodeContainer))
+        if (!_nodeSystem.TryGetNode<TegNodeComponent>(uidGenerator, NodeNameTeg, out _, out var tegNode, out _))
             return null;
 
-        if (!nodeContainer.Nodes.TryGetValue(NodeNameTeg, out var tegNode))
+        if (!TryComp<TegComponent>(tegNode.GraphId, out var teg))
             return null;
 
-        if (tegNode.NodeGroup is not TegNodeGroup tegGroup)
-            return null;
-
-        return tegGroup;
+        return teg;
     }
 
     private static (GasMixture, float δp) GetCirculatorAirTransfer(GasMixture airInlet, GasMixture airOutlet)
@@ -326,13 +393,17 @@ public sealed class TegSystem : EntitySystem
         return (new GasMixture(), δp);
     }
 
-    private (PipeNode inlet, PipeNode outlet) GetPipes(EntityUid uidCirculator)
+    private (GasMixture inletGas, GasMixture outletGas) GetPipes(EntityUid uidCirculator)
     {
-        var nodeContainer = _nodeContainerQuery.GetComponent(uidCirculator);
-        var inlet = (PipeNode) nodeContainer.Nodes[NodeNameInlet];
-        var outlet = (PipeNode) nodeContainer.Nodes[NodeNameOutlet];
+        if (!_nodeSystem.TryGetNode<AtmosPipeNodeComponent>(uidCirculator, NodeNameInlet, out var inletId, out var inletNode, out var inlet)
+        || !_pipeNodeSystem.TryGetGas(inletId, out var inletGas, inlet, inletNode))
+            inletGas = new GasMixture();
 
-        return (inlet, outlet);
+        if (!_nodeSystem.TryGetNode<AtmosPipeNodeComponent>(uidCirculator, NodeNameInlet, out var outletId, out var outletNode, out var outlet)
+        || !_pipeNodeSystem.TryGetGas(outletId, out var outletGas, outlet, outletNode))
+            outletGas = new GasMixture();
+
+        return (inletGas, outletGas);
     }
 
     private void DeviceNetworkPacketReceived(
@@ -346,8 +417,7 @@ public sealed class TegSystem : EntitySystem
         switch (cmd)
         {
             case DeviceNetworkCommandSyncData:
-                var group = GetNodeGroup(uid);
-                if (group is not { IsFullyBuilt: true })
+                if (GetNodeGroup(uid) is not { IsFullyBuilt: true } group)
                     return;
 
                 var supplier = Comp<PowerSupplierComponent>(uid);
@@ -357,8 +427,8 @@ public sealed class TegSystem : EntitySystem
                     [DeviceNetworkConstants.Command] = DeviceNetworkCommandSyncData,
                     [DeviceNetworkCommandSyncData] = new TegSensorData
                     {
-                        CirculatorA = GetCirculatorSensorData(group.CirculatorA!.Owner),
-                        CirculatorB = GetCirculatorSensorData(group.CirculatorB!.Owner),
+                        CirculatorA = GetCirculatorSensorData(group.CirculatorA!.Value),
+                        CirculatorB = GetCirculatorSensorData(group.CirculatorB!.Value),
                         LastGeneration = component.LastGeneration,
                         PowerOutput = supplier.CurrentSupply,
                         RampPosition = component.RampPosition
@@ -375,9 +445,9 @@ public sealed class TegSystem : EntitySystem
         var (inlet, outlet) = GetPipes(circulator);
 
         return new TegSensorData.Circulator(
-            inlet.Air.Pressure,
-            outlet.Air.Pressure,
-            inlet.Air.Temperature,
-            outlet.Air.Temperature);
+            inlet.Pressure,
+            outlet.Pressure,
+            inlet.Temperature,
+            outlet.Temperature);
     }
 }

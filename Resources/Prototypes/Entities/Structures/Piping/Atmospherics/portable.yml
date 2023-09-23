@@ -40,13 +40,9 @@
   - type: PortableScrubber
     gasMixture:
       volume: 1250
-  - type: NodeContainer
-    nodes:
-      port:
-        !type:PortablePipeNode
-        nodeGroupID: Pipe
-        rotationsEnabled: false
-        volume: 1
+  - type: PolyNode
+    proxies:
+      port: AtmosPortableNode
   - type: ApcPowerReceiver
     powerLoad: 2000
   - type: ExtensionCableReceiver

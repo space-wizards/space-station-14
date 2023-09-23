@@ -1,13 +1,14 @@
 using System.Diagnostics.CodeAnalysis;
+using Content.Server.Atmos.Piping.Components;
+using Content.Server.Atmos.Piping.EntitySystems;
 using Content.Server.Atmos.Piping.Binary.Components;
 using Content.Server.Atmos.Piping.Unary.Components;
-using Content.Server.NodeContainer;
-using Content.Server.NodeContainer.EntitySystems;
-using Content.Server.NodeContainer.Nodes;
+using Content.Server.Nodes.Components.Autolinkers;
+using Content.Server.Nodes.EntitySystems;
+using Content.Server.Nodes.EntitySystems.Autolinkers;
 using Content.Shared.Atmos.Piping.Unary.Components;
 using Content.Shared.Construction.Components;
 using JetBrains.Annotations;
-using Robust.Server.GameObjects;
 using Robust.Shared.Map;
 
 namespace Content.Server.Atmos.Piping.Unary.EntitySystems
@@ -17,7 +18,9 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-        [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
+        [Dependency] private readonly NodeGraphSystem _nodeSystem = default!;
+        [Dependency] private readonly AtmosPipeNetSystem _pipeNodeSystem = default!;
+        [Dependency] private readonly PortNodeSystem _portNodeSystem = default!;
 
         public override void Initialize()
         {
@@ -34,19 +37,16 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                 return;
 
             // If we can't find any ports, cancel the anchoring.
-            if(!FindGasPortIn(transform.GridUid, transform.Coordinates, out _))
+            if (!FindGasPortIn(transform.GridUid, transform.Coordinates, out _))
                 args.Cancel();
         }
 
         private void OnAnchorChanged(EntityUid uid, GasPortableComponent portable, ref AnchorStateChangedEvent args)
         {
-            if (!EntityManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer))
+            if (!_nodeSystem.TryGetNode<PortNodeComponent>(uid, portable.PortName, out var portId, out _, out var port))
                 return;
 
-            if (!_nodeContainer.TryGetNode(nodeContainer, portable.PortName, out PipeNode? portableNode))
-                return;
-
-            portableNode.ConnectionsEnabled = args.Anchored;
+            _portNodeSystem.SetConnectable(portId, args.Anchored, port);
 
             if (EntityManager.TryGetComponent(uid, out AppearanceComponent? appearance))
             {

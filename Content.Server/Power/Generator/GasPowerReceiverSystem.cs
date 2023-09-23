@@ -1,8 +1,10 @@
 ﻿using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Piping.Components;
+using Content.Server.Atmos.Piping.EntitySystems;
 using Content.Server.NodeContainer;
 using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NodeContainer.Nodes;
+using Content.Server.Nodes.EntitySystems;
 using Content.Server.Power.Components;
 using Content.Shared.Atmos;
 
@@ -14,7 +16,8 @@ namespace Content.Server.Power.Generator;
 public sealed class GasPowerReceiverSystem : EntitySystem
 {
     [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
-    [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
+    [Dependency] private readonly NodeGraphSystem _nodeSystem = default!;
+    [Dependency] private readonly AtmosPipeNetSystem _pipeNodeSystem = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -28,18 +31,19 @@ public sealed class GasPowerReceiverSystem : EntitySystem
 
         if (!HasComp<AtmosDeviceComponent>(uid)
             || !TryComp<NodeContainerComponent>(uid, out var nodeContainer)
-            || !_nodeContainer.TryGetNode<PipeNode>(nodeContainer, "pipe", out var pipe))
+            || !_nodeSystem.TryGetNode<AtmosPipeNodeComponent>(uid, component.PipeName, out var pipeId, out var pipeNode, out var pipe)
+            || !_pipeNodeSystem.TryGetGas(pipeId, out var pipeGas, pipe, pipeNode))
         {
             return;
         }
 
         // if we're below the max temperature, then we are simply consuming our target gas
-        if (pipe.Air.Temperature <= component.MaxTemperature)
+        if (pipeGas.Temperature <= component.MaxTemperature)
         {
             // we have enough gas, so we consume it and are powered
-            if (pipe.Air.Moles[(int) component.TargetGas] > component.MolesConsumedSec * timeDelta)
+            if (pipeGas.Moles[(int) component.TargetGas] > component.MolesConsumedSec * timeDelta)
             {
-                pipe.Air.AdjustMoles(component.TargetGas, -component.MolesConsumedSec * timeDelta);
+                pipeGas.AdjustMoles(component.TargetGas, -component.MolesConsumedSec * timeDelta);
                 SetPowered(uid, component, true);
             }
             else // we do not have enough gas, so we power off
@@ -50,10 +54,10 @@ public sealed class GasPowerReceiverSystem : EntitySystem
         else // we are exceeding the max temp and are now operating in pressure mode
         {
             var pres = component.PressureConsumedSec * timeDelta;
-            if (pipe.Air.Pressure >= pres)
+            if (pipeGas.Pressure >= pres)
             {
                 // remove gas from the pipe
-                var res = pipe.Air.Remove(pres * 100.0f / (Atmospherics.R * pipe.Air.Temperature));
+                var res = pipeGas.Remove(pres * 100.0f / (Atmospherics.R * pipeGas.Temperature));
                 if (component.OffVentGas)
                 {
                     // eject the gas into the atmosphere

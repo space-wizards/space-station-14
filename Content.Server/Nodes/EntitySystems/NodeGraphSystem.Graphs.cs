@@ -20,7 +20,8 @@ public sealed partial class NodeGraphSystem
         var graph = _graphQuery.GetComponent(graphId);
         graph.GraphProto = graphProto;
 
-        EntityManager.InitializeAndStartEntity(graphId);
+        EntityManager.InitializeEntity(graphId);
+        // Startup occurrs after all nodes have been loaded.
         return (graphId, graph);
     }
 
@@ -98,6 +99,8 @@ public sealed partial class NodeGraphSystem
         {
             AddNode(graphId.Value, nodeId, graph: graph, node: node);
         }
+
+        EntityManager.StartEntity(graphId.Value);
     }
 
 

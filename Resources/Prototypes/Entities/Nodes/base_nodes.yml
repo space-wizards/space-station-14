@@ -1,0 +1,154 @@
+- type: entity
+  id: BaseGraphNode
+  abstract: true
+  noSpawn: true
+  components:
+  - type: GraphNode
+
+# Directional nodes...
+- type: entity
+  id: BaseDirNode
+  parent: BaseGraphNode
+  abstract: true
+  noSpawn: true
+  components:
+  - type: DirNode
+
+# Single directions
+- type: entity
+  id: BaseDirNodeSouth
+  parent: BaseDirNode
+  abstract: true
+  noSpawn: true
+  components:
+  - type: DirNode
+    baseDirection: South
+
+- type: entity
+  id: BaseDirNodeNorth
+  parent: BaseDirNode
+  abstract: true
+  noSpawn: true
+  components:
+  - type: DirNode
+    baseDirection: North
+
+- type: entity
+  id: BaseDirNodeEast
+  parent: BaseDirNode
+  abstract: true
+  noSpawn: true
+  components:
+  - type: DirNode
+    baseDirection: East
+
+- type: entity
+  id: BaseDirNodeWest
+  parent: BaseDirNode
+  abstract: true
+  noSpawn: true
+  components:
+  - type: DirNode
+    baseDirection: West
+
+# Straight pipes
+- type: entity
+  id: BaseDirNodeLateral
+  parent: BaseDirNode
+  abstract: true
+  noSpawn: true
+  components:
+  - type: DirNode
+    baseDirection: Lateral
+
+- type: entity
+  id: BaseDirNodeLongitudinal
+  parent: BaseDirNode
+  abstract: true
+  noSpawn: true
+  components:
+  - type: DirNode
+    baseDirection: Longitudinal
+
+# Bends
+- type: entity
+  id: BaseDirNodeSWBend
+  parent: BaseDirNode
+  abstract: true
+  noSpawn: true
+  components:
+  - type: DirNode
+    baseDirection: SWBend
+
+- type: entity
+  id: BaseDirNodeNWBend
+  parent: BaseDirNode
+  abstract: true
+  noSpawn: true
+  components:
+  - type: DirNode
+    baseDirection: NWBend
+
+- type: entity
+  id: BaseDirNodeSEBend
+  parent: BaseDirNode
+  abstract: true
+  noSpawn: true
+  components:
+  - type: DirNode
+    baseDirection: SEBend
+
+- type: entity
+  id: BaseDirNodeNEBend
+  parent: BaseDirNode
+  abstract: true
+  noSpawn: true
+  components:
+  - type: DirNode
+    baseDirection: NEBend
+
+# T junctions
+- type: entity
+  id: BaseDirNodeTSouth
+  parent: BaseDirNode
+  abstract: true
+  noSpawn: true
+  components:
+  - type: DirNode
+    baseDirection: TSouth
+
+- type: entity
+  id: BaseDirNodeTNorth
+  parent: BaseDirNode
+  abstract: true
+  noSpawn: true
+  components:
+  - type: DirNode
+    baseDirection: TNorth
+
+- type: entity
+  id: BaseDirNodeTEast
+  parent: BaseDirNode
+  abstract: true
+  noSpawn: true
+  components:
+  - type: DirNode
+    baseDirection: TEast
+
+- type: entity
+  id: BaseDirNodeTWest
+  parent: BaseDirNode
+  abstract: true
+  noSpawn: true
+  components:
+  - type: DirNode
+    baseDirection: TWest
+
+- type: entity
+  id: BaseDirNodeFourway
+  parent: BaseDirNode
+  abstract: true
+  noSpawn: true
+  components:
+  - type: DirNode
+    baseDirection: Fourway

@@ -1,5 +1,6 @@
 using Content.Server.Administration.Logs;
 using Content.Server.Atmos.Components;
+using Content.Server.Atmos.Piping.EntitySystems;
 using Content.Server.Body.Systems;
 using Content.Server.Maps;
 using Content.Server.NodeContainer.EntitySystems;
@@ -30,6 +31,7 @@ public sealed partial class AtmosphereSystem : SharedAtmosphereSystem
     [Dependency] private readonly GasTileOverlaySystem _gasTileOverlaySystem = default!;
     [Dependency] private readonly TransformSystem _transformSystem = default!;
     [Dependency] private readonly TileSystem _tile = default!;
+    [Dependency] private readonly AtmosPipeNetSystem _pipeNetSystem = default!;
 
     private const float ExposedUpdateDelay = 1f;
     private float _exposedTimer = 0f;

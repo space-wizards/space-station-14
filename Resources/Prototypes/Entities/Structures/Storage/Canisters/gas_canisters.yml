@@ -81,13 +81,9 @@
     - type: ContainerContainer
       containers:
         GasCanisterTankHolder: !type:ContainerSlot {}
-    - type: NodeContainer
-      nodes:
-        port:
-          !type:PortablePipeNode
-          nodeGroupID: Pipe
-          rotationsEnabled: false
-          volume: 1
+    - type: PolyNode
+      proxies:
+        port: AtmosPortableNode
     - type: GasPortable
     - type: GasCanister
     - type: StaticPrice

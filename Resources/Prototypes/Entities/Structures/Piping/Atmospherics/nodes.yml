@@ -1,0 +1,167 @@
+# A collection of pipe nodes...
+- type: entity
+  id: PipeNet
+  parent: BaseNodeGraph
+  noSpawn: true
+  components:
+  - type: NodeGraph
+    color: "#00FFFF" # Cyan
+  - type: AtmosPipeNet
+
+# Variations of pipe nodes...
+- type: entity
+  id: BaseAtmosPipeNode
+  abstract: true
+  noSpawn: true
+  components:
+  - type: GraphNode
+    graphProto: PipeNet
+  - type: AtmosPipeNode
+    volume: 200
+  - type: DirNode
+    tag: AtmosPipe
+
+- type: entity
+  id: AtmosPipeNodeNorth
+  parent: [ BaseAtmosPipeNode, BaseDirNodeNorth ]
+  noSpawn: true
+
+- type: entity
+  id: AtmosPipeNodeSouth
+  parent: [ BaseAtmosPipeNode, BaseDirNodeSouth ]
+  noSpawn: true
+
+- type: entity
+  id: AtmosPipeNodeEast
+  parent: [ BaseAtmosPipeNode, BaseDirNodeEast ]
+  noSpawn: true
+
+- type: entity
+  id: AtmosPipeNodeWest
+  parent: [ BaseAtmosPipeNode, BaseDirNodeWest ]
+  noSpawn: true
+
+- type: entity
+  id: AtmosPipeNodeWest
+  parent: [ BaseAtmosPipeNode, BaseDirNodeWest ]
+  noSpawn: true
+
+- type: entity
+  id: AtmosPipeNodeLateral
+  parent: [ BaseAtmosPipeNode, BaseDirNodeLateral ]
+  noSpawn: true
+
+- type: entity
+  id: AtmosPipeNodeLongitudinal
+  parent: [ BaseAtmosPipeNode, BaseDirNodeLongitudinal ]
+  noSpawn: true
+
+- type: entity
+  id: AtmosPipeNodeSWBend
+  parent: [ BaseAtmosPipeNode, BaseDirNodeSWBend ]
+  noSpawn: true
+
+- type: entity
+  id: AtmosPipeNodeNWBend
+  parent: [ BaseAtmosPipeNode, BaseDirNodeNWBend ]
+  noSpawn: true
+
+- type: entity
+  id: AtmosPipeNodeSEBend
+  parent: [ BaseAtmosPipeNode, BaseDirNodeSEBend ]
+  noSpawn: true
+
+- type: entity
+  id: AtmosPipeNodeNEBend
+  parent: [ BaseAtmosPipeNode, BaseDirNodeNEBend ]
+  noSpawn: true
+
+- type: entity
+  id: AtmosPipeNodeTNorth
+  parent: [ BaseAtmosPipeNode, BaseDirNodeTNorth ]
+  noSpawn: true
+
+- type: entity
+  id: AtmosPipeNodeTSouth
+  parent: [ BaseAtmosPipeNode, BaseDirNodeTSouth ]
+  noSpawn: true
+
+- type: entity
+  id: AtmosPipeNodeTEast
+  parent: [ BaseAtmosPipeNode, BaseDirNodeTEast ]
+  noSpawn: true
+
+- type: entity
+  id: AtmosPipeNodeTWest
+  parent: [ BaseAtmosPipeNode, BaseDirNodeTWest ]
+  noSpawn: true
+
+- type: entity
+  id: AtmosPipeNodeFourway
+  parent: [ BaseAtmosPipeNode, BaseDirNodeFourway ]
+  noSpawn: true
+
+# Half volume nodes for use in valves
+- type: entity
+  id: AtmosPipeNodeNorthHalved
+  parent: [ BaseAtmosPipeNode, BaseDirNodeNorth ]
+  noSpawn: true
+  components:
+  - type: AtmosPipeNode
+    volume: 100
+
+- type: entity
+  id: AtmosPipeNodeSouthHalved
+  parent: [ BaseAtmosPipeNode, BaseDirNodeSouth ]
+  noSpawn: true
+  components:
+  - type: AtmosPipeNode
+    volume: 100
+
+- type: entity
+  id: AtmosPipeNodeEastHalved
+  parent: [ BaseAtmosPipeNode, BaseDirNodeEast ]
+  noSpawn: true
+  components:
+  - type: AtmosPipeNode
+    volume: 100
+
+- type: entity
+  id: AtmosPipeNodeWestHalved
+  parent: [ BaseAtmosPipeNode, BaseDirNodeWest ]
+  noSpawn: true
+  components:
+  - type: AtmosPipeNode
+    volume: 100
+
+# Port
+- type: entity
+  id: AtmosPortNode
+  noSpawn: true
+  components:
+  - type: GraphNode
+    graphProto: PipeNet
+  - type: AtmosPipeNode
+    volume: 0
+  - type: PortNode
+    tag: AtmosPortable
+
+- type: entity
+  id: AtmosPortableNode
+  noSpawn: true
+  components:
+  - type: GraphNode
+    graphProto: PipeNet
+  - type: AtmosPipeNode
+    volume: 0
+  - type: PortNode
+    tag: AtmosPort
+
+- type: entity
+  id: AtmosPortNodeWithPipe
+  parent: AtmosPortNode
+  noSpawn: true
+  components:
+  - type: DirNode
+    baseDirection: South
+    tag: AtmosPipe

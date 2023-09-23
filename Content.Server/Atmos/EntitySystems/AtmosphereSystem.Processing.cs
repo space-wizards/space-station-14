@@ -307,13 +307,13 @@ namespace Content.Server.Atmos.EntitySystems
 
         private bool ProcessPipeNets(GridAtmosphereComponent atmosphere)
         {
-            if(!atmosphere.ProcessingPaused)
-                atmosphere.CurrentRunPipeNet = new Queue<IPipeNet>(atmosphere.PipeNets);
+            if (!atmosphere.ProcessingPaused)
+                atmosphere.CurrentRunPipeNet = new Queue<EntityUid>(atmosphere.PipeNets);
 
             var number = 0;
-            while (atmosphere.CurrentRunPipeNet.TryDequeue(out var pipenet))
+            while (atmosphere.CurrentRunPipeNet.TryDequeue(out var pipeNet))
             {
-                pipenet.Update();
+                _pipeNetSystem.Update(pipeNet);
 
                 if (number++ < LagCheckIterations) continue;
                 number = 0;

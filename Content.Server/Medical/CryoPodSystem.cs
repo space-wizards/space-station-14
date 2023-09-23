@@ -2,6 +2,7 @@ using Content.Server.Administration.Logs;
 using Content.Server.Atmos;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Piping.Components;
+using Content.Server.Atmos.Piping.EntitySystems;
 using Content.Server.Atmos.Piping.Unary.EntitySystems;
 using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
@@ -9,10 +10,7 @@ using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Climbing;
 using Content.Server.Medical.Components;
-using Content.Server.NodeContainer;
-using Content.Server.NodeContainer.EntitySystems;
-using Content.Server.NodeContainer.NodeGroups;
-using Content.Server.NodeContainer.Nodes;
+using Content.Server.Nodes.EntitySystems;
 using Content.Server.Power.Components;
 using Content.Server.UserInterface;
 using Content.Shared.Chemistry;
@@ -35,7 +33,7 @@ using Content.Server.Temperature.Components;
 
 namespace Content.Server.Medical;
 
-public sealed partial class CryoPodSystem: SharedCryoPodSystem
+public sealed partial class CryoPodSystem : SharedCryoPodSystem
 {
     [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
     [Dependency] private readonly GasCanisterSystem _gasCanisterSystem = default!;
@@ -51,7 +49,8 @@ public sealed partial class CryoPodSystem: SharedCryoPodSystem
     [Dependency] private readonly MetaDataSystem _metaDataSystem = default!;
     [Dependency] private readonly ReactiveSystem _reactiveSystem = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
+    [Dependency] private readonly NodeGraphSystem _nodeSystem = default!;
+    [Dependency] private readonly AtmosPipeNetSystem _pipeNodeSystem = default!;
 
     public override void Initialize()
     {
@@ -83,18 +82,20 @@ public sealed partial class CryoPodSystem: SharedCryoPodSystem
         var itemSlotsQuery = GetEntityQuery<ItemSlotsComponent>();
         var fitsInDispenserQuery = GetEntityQuery<FitsInDispenserComponent>();
         var solutionContainerManagerQuery = GetEntityQuery<SolutionContainerManagerComponent>();
-        foreach (var (_, cryoPod) in EntityQuery<ActiveCryoPodComponent, CryoPodComponent>())
+
+        var query = EntityQueryEnumerator<ActiveCryoPodComponent, CryoPodComponent>();
+        while (query.MoveNext(out var uid, out _, out var cryoPod))
         {
-            metaDataQuery.TryGetComponent(cryoPod.Owner, out var metaDataComponent);
-            if (curTime < cryoPod.NextInjectionTime + _metaDataSystem.GetPauseTime(cryoPod.Owner, metaDataComponent))
+            metaDataQuery.TryGetComponent(uid, out var metaDataComponent);
+            if (curTime < cryoPod.NextInjectionTime + _metaDataSystem.GetPauseTime(uid, metaDataComponent))
                 continue;
+
             cryoPod.NextInjectionTime = curTime + TimeSpan.FromSeconds(cryoPod.BeakerTransferTime);
 
-            if (!itemSlotsQuery.TryGetComponent(cryoPod.Owner, out var itemSlotsComponent))
-            {
+            if (!itemSlotsQuery.TryGetComponent(uid, out var itemSlotsComponent))
                 continue;
-            }
-            var container = _itemSlotsSystem.GetItemOrNull(cryoPod.Owner, cryoPod.SolutionContainerName, itemSlotsComponent);
+
+            var container = _itemSlotsSystem.GetItemOrNull(uid, cryoPod.SolutionContainerName, itemSlotsComponent);
             var patient = cryoPod.BodyContainer.ContainedEntity;
             if (container != null
                 && container.Value.Valid
@@ -120,7 +121,7 @@ public sealed partial class CryoPodSystem: SharedCryoPodSystem
     {
         if (!Resolve(uid, ref cryoPodComponent))
             return null;
-        if (cryoPodComponent.BodyContainer.ContainedEntity is not {Valid: true} contained)
+        if (cryoPodComponent.BodyContainer.ContainedEntity is not { Valid: true } contained)
             return null;
         base.EjectBody(uid, cryoPodComponent);
         _climbSystem.ForciblySetClimbing(contained, uid);
@@ -235,20 +236,17 @@ public sealed partial class CryoPodSystem: SharedCryoPodSystem
 
     private void OnCryoPodUpdateAtmosphere(EntityUid uid, CryoPodComponent cryoPod, AtmosDeviceUpdateEvent args)
     {
-        if (!TryComp(uid, out NodeContainerComponent? nodeContainer))
-            return;
-
-        if (!_nodeContainer.TryGetNode(nodeContainer, cryoPod.PortName, out PortablePipeNode? portNode))
-            return;
-
         if (!TryComp(uid, out CryoPodAirComponent? cryoPodAir))
             return;
 
-        _atmosphereSystem.React(cryoPodAir.Air, portNode);
+        if (!_nodeSystem.TryGetNode<AtmosPipeNodeComponent>(uid, cryoPod.PortName, out var portId, out var portNode, out var port))
+            return;
 
-        if (portNode.NodeGroup is PipeNet {NodeCount: > 1} net)
+        _atmosphereSystem.React(cryoPodAir.Air, port);
+
+        if (_pipeNodeSystem.TryGetGas(portId, out var portGas, port, portNode) && portGas.Volume > 0f)
         {
-            _gasCanisterSystem.MixContainerWithPipeNet(cryoPodAir.Air, net.Air);
+            _gasCanisterSystem.MixContainerWithPipeNet(cryoPodAir.Air, portGas);
         }
     }
 
@@ -258,12 +256,12 @@ public sealed partial class CryoPodSystem: SharedCryoPodSystem
             return;
 
         var gasMixDict = new Dictionary<string, GasMixture?> { { Name(uid), cryoPodAir.Air } };
+
         // If it's connected to a port, include the port side
-        if (TryComp(uid, out NodeContainerComponent? nodeContainer))
-        {
-            if (_nodeContainer.TryGetNode(nodeContainer, component.PortName, out PipeNode? port))
-                gasMixDict.Add(component.PortName, port.Air);
-        }
+        if (_nodeSystem.TryGetNode<AtmosPipeNodeComponent>(uid, component.PortName, out var portId, out var portNode, out var port) && portNode.NumMergeableEdges > 0
+        && _pipeNodeSystem.TryGetGas(portId, out var portGas, port, portNode) && portGas.Volume > 0f)
+            gasMixDict.Add(component.PortName, portGas);
+
         args.GasMixtures = gasMixDict;
     }
 

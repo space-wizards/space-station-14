@@ -70,12 +70,9 @@
   - type: ApcPowerReceiver
     powerLoad: 3000
   - type: ExtensionCableReceiver
-  - type: NodeContainer
-    nodes:
-      port:
-        !type:PortablePipeNode
-        nodeGroupID: Pipe
-        pipeDirection: South
+  - type: PolyNode
+    proxies:
+      port: AtmosPortableNode
   - type: ItemSlots
     slots:
       beakerSlot:

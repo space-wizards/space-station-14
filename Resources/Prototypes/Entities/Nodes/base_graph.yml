@@ -1,0 +1,6 @@
+- type: entity
+  id: BaseNodeGraph
+  abstract: true
+  noSpawn: true
+  components:
+  - type: NodeGraph
