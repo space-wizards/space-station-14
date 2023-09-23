@@ -37,12 +37,12 @@ public abstract class SharedRatKingSystem : EntitySystem
         if (!TryComp(uid, out ActionsComponent? comp))
             return;
 
-        _action.AddAction(uid, ref component.ActionRaiseArmyEntity, component.ActionRaiseArmy, holderComp: comp);
-        _action.AddAction(uid, ref component.ActionDomainEntity, component.ActionDomain, holderComp: comp);
-        _action.AddAction(uid, ref component.ActionOrderStayEntity, component.ActionOrderStay, holderComp: comp);
-        _action.AddAction(uid, ref component.ActionOrderFollowEntity, component.ActionOrderFollow, holderComp: comp);
-        _action.AddAction(uid, ref component.ActionOrderCheeseEmEntity, component.ActionOrderCheeseEm, holderComp: comp);
-        _action.AddAction(uid, ref component.ActionOrderLooseEntity, component.ActionOrderLoose, holderComp: comp);
+        _action.AddAction(uid, ref component.ActionRaiseArmyEntity, component.ActionRaiseArmy, component: comp);
+        _action.AddAction(uid, ref component.ActionDomainEntity, component.ActionDomain, component: comp);
+        _action.AddAction(uid, ref component.ActionOrderStayEntity, component.ActionOrderStay, component: comp);
+        _action.AddAction(uid, ref component.ActionOrderFollowEntity, component.ActionOrderFollow, component: comp);
+        _action.AddAction(uid, ref component.ActionOrderCheeseEmEntity, component.ActionOrderCheeseEm, component: comp);
+        _action.AddAction(uid, ref component.ActionOrderLooseEntity, component.ActionOrderLoose, component: comp);
 
         UpdateActions(uid, component);
     }
