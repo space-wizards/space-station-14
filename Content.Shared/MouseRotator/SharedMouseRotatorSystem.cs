@@ -69,7 +69,6 @@ public abstract class SharedMouseRotatorSystem : EntitySystem
             return;
         }
 
-        Log.Info("requested " + ev.Direction);
         rotator.GoalRotation = ev.Direction.ToAngle();
         Dirty(ent, rotator);
     }
