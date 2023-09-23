@@ -512,5 +512,11 @@
         reagents:
         - ReagentId: Fiber
           Quantity: 20
+      stains:
+        maxVol: 20
+  - type: ExaminableSolution
+    solution: stains
+  - type: Stainable
+  - type: Reactive
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHatHoodWinterWeb

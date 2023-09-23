@@ -809,6 +809,12 @@
         reagents:
         - ReagentId: Fiber
           Quantity: 30
+      stains:
+        maxVol: 30
+  - type: ExaminableSolution
+    solution: stains
+  - type: Stainable
+  - type: Reactive
   - type: Construction
     graph: WebObjects
     node: jumpskirt
