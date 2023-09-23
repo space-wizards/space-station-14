@@ -85,7 +85,6 @@
       types:
         Blunt: 5
 
-
 - type: entity
   parent: BikeHorn
   id: GoldenBikeHorn

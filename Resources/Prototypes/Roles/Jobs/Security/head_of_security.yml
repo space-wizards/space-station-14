@@ -46,6 +46,7 @@
     ears: ClothingHeadsetAltSecurity
     belt: ClothingBeltSecurityFilled
     pocket1: WeaponPistolMk58Nonlethal
+    neck: SecWhistle
   innerclothingskirt: ClothingUniformJumpskirtHoS
   satchel: ClothingBackpackSatchelHOSFilled
   duffelbag: ClothingBackpackDuffelHOSFilled

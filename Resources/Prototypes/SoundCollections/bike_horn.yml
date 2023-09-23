@@ -32,3 +32,9 @@
   id: Parp
   files:
   - /Audio/Effects/Emotes/parp1.ogg
+
+- type: soundCollection
+  id: SecWhistle
+  files:
+  - /Audio/Items/secwhistle1.ogg
+  - /Audio/Items/secwhistle2.ogg

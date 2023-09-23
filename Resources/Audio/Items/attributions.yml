@@ -67,3 +67,8 @@
   license: "CC-BY-3.0"
   copyright: "User jzdnvdoosj on freesound.org. Converted to ogg by mirrorcult"
   source: "https://freesound.org/people/jzdnvdoosj/sounds/626262/"
+
+- files: ["secwhistle1.ogg, secwhistle2.ogg"]
+  license: "CC-BY-3.0"
+  copyright: "User 13FPanska_Herkusova_Katerina on freesound.org. split into 2 ogg files by brainfood1183 (github)"
+  source: "https://freesound.org/people/13FPanska_Herkusova_Katerina/sounds/379157/"

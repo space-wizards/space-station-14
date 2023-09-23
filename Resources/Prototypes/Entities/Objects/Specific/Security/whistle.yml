@@ -1,0 +1,27 @@
+- type: entity
+  parent: BaseItem
+  id: SecWhistle
+  name: security whistle
+  description: Your first line of defense against the greytide.
+  components:
+  - type: ItemCooldown
+  - type: UseDelay
+    delay: 1.0
+  - type: Sprite
+    sprite: Objects/Specific/Security/whistle.rsi
+    state: whistle
+  - type: Clothing
+    slots: [Neck]
+    quickEquip: false
+  - type: EmitSoundOnTrigger
+    sound:
+      collection: SecWhistle
+      params:
+        volume: 3
+        variation: 0.03
+  - type: EmitSoundOnUse
+    sound:
+      collection: SecWhistle
+      params:
+        volume: 3
+        variation: 0.03
