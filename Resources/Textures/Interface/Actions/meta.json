@@ -54,6 +54,9 @@
         },
         {
             "name": "web"
+        },
+        {
+            "name": "ghostHearingToggled"
         }
     ]
 }

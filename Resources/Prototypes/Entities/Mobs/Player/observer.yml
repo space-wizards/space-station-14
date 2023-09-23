@@ -119,4 +119,5 @@
     icon:
       sprite: Clothing/Ears/Headsets/base.rsi
       state: icon
+    iconOn: Interface/Actions/ghostHearingToggled.png
     event: !type:ToggleGhostHearingActionEvent

@@ -6,7 +6,6 @@ using Robust.Client.Console;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
-using Robust.Shared.Prototypes;
 
 namespace Content.Client.Ghost
 {
@@ -16,7 +15,6 @@ namespace Content.Client.Ghost
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly SharedActionsSystem _actions = default!;
         [Dependency] private readonly ILightManager _lightManager = default!;
-        [Dependency] private readonly IPrototypeManager _prototype = default!;
         [Dependency] private readonly SharedPopupSystem _popup = default!;
         [Dependency] private readonly ContentEyeSystem _contentEye = default!;
 
