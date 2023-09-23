@@ -16,6 +16,11 @@
         reagents:
         - ReagentId: Nutriment
           Quantity: 10
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
 
 - type: entity
   id: OrganArachnidStomach
@@ -32,6 +37,11 @@
     solutions:
       stomach:
         maxVol: 50
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
   - type: Metabolizer
     updateFrequency: 1.5
 
@@ -64,6 +74,11 @@
       Lung:
         maxVol: 100.0
         canReact: false
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
 
 - type: entity
   id: OrganArachnidHeart

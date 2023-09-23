@@ -33,6 +33,7 @@
     tags:
       - DroneUsable #No bucket because it holds chems, they can drag the cart or use a drain
       - Mop
+      - MopBasic
   - type: GuideHelp
     guides:
     - Janitorial
@@ -83,6 +84,7 @@
       tags:
         - DroneUsable #No bucket because it holds chems, they can drag the cart or use a drain
         - Mop
+        - MopAdv
 
 - type: entity
   name: mop bucket
@@ -165,7 +167,6 @@
         - MobLayer
   - type: Pullable
   - type: Drink
-    isOpen: true
     solution: bucket
   - type: Appearance
   - type: SolutionContainerVisuals
@@ -371,7 +372,11 @@
         cart_mop:
           whitelist:
             tags:
-              - Mop
+              - MopBasic
+        cart_advmop:
+          whitelist:
+            tags:
+              - MopAdv
         cart_garbage:
           whitelist:
             tags:
@@ -418,7 +423,6 @@
       - key: enum.StorageUiKey.Key
         type: StorageBoundUserInterface
     - type: Drink
-      isOpen: true
       solution: bucket
     - type: ContainerContainer
       containers:

@@ -48,6 +48,7 @@ namespace Content.Server.Ghost
             base.Initialize();
 
             SubscribeLocalEvent<GhostComponent, ComponentStartup>(OnGhostStartup);
+            SubscribeLocalEvent<GhostComponent, MapInitEvent>(OnMapInit);
             SubscribeLocalEvent<GhostComponent, ComponentShutdown>(OnGhostShutdown);
 
             SubscribeLocalEvent<GhostComponent, ExaminedEvent>(OnGhostExamine);
@@ -121,18 +122,6 @@ namespace Content.Server.Ghost
 
             var time = _gameTiming.CurTime;
             component.TimeOfDeath = time;
-
-            // TODO ghost: remove once ghosts are persistent and aren't deleted when returning to body
-            var action = _actions.AddAction(uid, ref component.ActionEntity, component.Action);
-            if (action?.UseDelay != null)
-            {
-                action.Cooldown = (time, time + action.UseDelay.Value);
-                Dirty(component.ActionEntity!.Value, action);
-            }
-
-            _actions.AddAction(uid, ref component.ToggleLightingActionEntity, component.ToggleLightingAction);
-            _actions.AddAction(uid, ref component.ToggleFoVActionEntity, component.ToggleFoVAction);
-            _actions.AddAction(uid, ref component.ToggleGhostsActionEntity, component.ToggleGhostsAction);
         }
 
         private void OnGhostShutdown(EntityUid uid, GhostComponent component, ComponentShutdown args)
@@ -151,8 +140,7 @@ namespace Content.Server.Ghost
 
             // Entity can't see ghosts anymore.
             SetCanSeeGhosts(uid, false);
-
-            _actions.RemoveAction(uid, component.ActionEntity);
+            _actions.RemoveAction(uid, component.BooActionEntity);
         }
 
         private void SetCanSeeGhosts(EntityUid uid, bool canSee, EyeComponent? eyeComponent = null)
@@ -164,6 +152,21 @@ namespace Content.Server.Ghost
                 _eye.SetVisibilityMask(uid, eyeComponent.VisibilityMask | (int) VisibilityFlags.Ghost, eyeComponent);
             else
                 _eye.SetVisibilityMask(uid, eyeComponent.VisibilityMask & ~(int) VisibilityFlags.Ghost, eyeComponent);
+        }
+
+        private void OnMapInit(EntityUid uid, GhostComponent component, MapInitEvent args)
+        {
+            if (_actions.AddAction(uid, ref component.BooActionEntity, out var act, component.BooAction)
+                && act.UseDelay != null)
+            {
+                var start = _gameTiming.CurTime;
+                var end = start + act.UseDelay.Value;
+                _actions.SetCooldown(component.BooActionEntity.Value, start, end);
+            }
+
+            _actions.AddAction(uid, ref component.ToggleLightingActionEntity, component.ToggleLightingAction);
+            _actions.AddAction(uid, ref component.ToggleFoVActionEntity, component.ToggleFoVAction);
+            _actions.AddAction(uid, ref component.ToggleGhostsActionEntity, component.ToggleGhostsAction);
         }
 
         private void OnGhostExamine(EntityUid uid, GhostComponent component, ExaminedEvent args)
