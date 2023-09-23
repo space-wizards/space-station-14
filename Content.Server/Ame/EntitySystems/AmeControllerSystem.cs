@@ -68,17 +68,26 @@ public sealed class AmeControllerSystem : EntitySystem
 
         if (TryComp<AmeFuelContainerComponent>(controller.JarSlot.ContainedEntity, out var fuelJar))
         {
-            var availableInject = Math.Min(controller.InjectionAmount, fuelJar.FuelAmount);
-            var powerOutput = group.InjectFuel(availableInject, out var overloading);
-            if (TryComp<PowerSupplierComponent>(uid, out var powerOutlet))
-                powerOutlet.MaxSupply = powerOutput;
-            fuelJar.FuelAmount -= availableInject;
-            _audioSystem.PlayPvs(controller.InjectSound, uid, AudioParams.Default.WithVolume(overloading ? 10f : 0f));
-            UpdateUi(uid, controller);
+            // if the jar is empty shut down the AME
+            if (fuelJar.FuelAmount <= 0)
+            {
+                SetInjecting(uid, false, null, controller);
+            }
+            else
+            {
+                var availableInject = Math.Min(controller.InjectionAmount, fuelJar.FuelAmount);
+                var powerOutput = group.InjectFuel(availableInject, out var overloading);
+                if (TryComp<PowerSupplierComponent>(uid, out var powerOutlet))
+                    powerOutlet.MaxSupply = powerOutput;
+                fuelJar.FuelAmount -= availableInject;
+                _audioSystem.PlayPvs(controller.InjectSound, uid, AudioParams.Default.WithVolume(overloading ? 10f : 0f));
+                UpdateUi(uid, controller);
+            }
         }
 
         controller.Stability = group.GetTotalStability();
 
+        group.UpdateCoreVisuals();
         UpdateDisplay(uid, controller.Stability, controller);
 
         if (controller.Stability <= 0)
