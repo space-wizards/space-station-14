@@ -29,18 +29,13 @@ public sealed partial class DoorElectronicsConfigurationMenu : FancyWindow
 
         foreach (var (id, button) in _buttonsList.ButtonsList)
         {
-            button.OnPressed += _ => UpdateConfiguration();
+            button.OnPressed += _ => _owner.UpdateConfiguration(
+                _buttonsList.ButtonsList.Where(x => x.Value.Pressed).Select(x => x.Key).ToList());
         }
     }
 
     public void UpdateState(DoorElectronicsConfigurationState state)
     {
         _buttonsList.UpdateState(state.accessList);
-    }
-
-    private void UpdateConfiguration()
-    {
-        _owner.UpdateConfiguration(
-            _buttonsList.ButtonsList.Where(x => x.Value.Pressed).Select(x => x.Key).ToList());
     }
 }
