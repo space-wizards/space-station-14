@@ -365,6 +365,7 @@
       - SodaDispenserMachineCircuitboard
       - TelecomServerCircuitboard
       - MassMediaCircuitboard
+      - JukeboxCircuitBoard
   - type: MaterialStorage
     whitelist:
       tags:
