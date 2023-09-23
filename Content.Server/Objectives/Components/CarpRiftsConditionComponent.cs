@@ -9,4 +9,9 @@ namespace Content.Server.Objectives.Components;
 [RegisterComponent, Access(typeof(CarpRiftsConditionSystem))]
 public sealed partial class CarpRiftsConditionComponent : Component
 {
+    /// <summary>
+    /// The number of rifts currently charged.
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public int RiftsCharged;
 }

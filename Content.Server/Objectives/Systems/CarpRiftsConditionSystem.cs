@@ -12,26 +12,45 @@ public sealed class CarpRiftsConditionSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<CarpRiftsConditionComponent, ObjectiveGetInfoEvent>(OnGetInfo);
+        SubscribeLocalEvent<CarpRiftsConditionComponent, ObjectiveGetProgressEvent>(OnGetProgress);
     }
 
-    private void OnGetInfo(EntityUid uid, CarpRiftsConditionComponent comp, ref ObjectiveGetInfoEvent args)
+    private void OnGetProgress(EntityUid uid, CarpRiftsConditionComponent comp, ref ObjectiveGetProgressEvent args)
     {
-        args.Info.Progress = GetProgress(args.MindId, _number.GetTarget(uid));
+        args.Progress = GetProgress(comp, _number.GetTarget(uid));
     }
 
-    private float GetProgress(EntityUid mindId, int target)
+    private float GetProgress(CarpRiftsConditionComponent comp, int target)
     {
         // prevent divide-by-zero
         if (target == 0)
             return 1f;
 
-        if (!TryComp<DragonRoleComponent>(mindId, out var role))
-            return 0f;
-
-        if (role.RiftsCharged >= target)
+        if (comp.RiftsCharged >= target)
             return 1f;
 
-        return (float) role.RiftsCharged / (float) target;
+        return (float) comp.RiftsCharged / (float) target;
+    }
+
+    /// <summary>
+    /// Increments RiftsCharged, called after a rift fully charges.
+    /// </summary>
+    public void RiftCharged(EntityUid uid, CarpRiftsConditionComponent? comp = null)
+    {
+        if (!Resolve(uid, ref comp))
+            return;
+
+        comp.RiftsCharged++;
+    }
+
+    /// <summary>
+    /// Resets RiftsCharged to 0, called after rifts get destroyed.
+    /// </summary>
+    public void ResetRifts(EntityUid uid, CarpRiftsConditionComponent? comp = null)
+    {
+        if (!Resolve(uid, ref comp))
+            return;
+
+        comp.RiftsCharged = 0;
     }
 }
