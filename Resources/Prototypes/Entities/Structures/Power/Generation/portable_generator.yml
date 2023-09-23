@@ -96,19 +96,26 @@
   parent: PortableGeneratorBase
   id: PortableGeneratorSwitchableBase
   components:
-    - type: PowerSwitchableGenerator
-      switchSound:
-        path: /Audio/Machines/button.ogg
-    - type: NodeContainer
-      examinable: true
-      nodes:
-        output_hv:
-          !type:CableDeviceNode
-          nodeGroupID: HVPower
-        output_mv:
-          !type:CableDeviceNode
-          nodeGroupID: MVPower
-          enabled: false
+  - type: PowerSwitchable
+    examineText: power-switchable-generator-examine
+    switchText: power-switchable-generator-switched
+    cables:
+    - voltage: HV
+      node: output_hv
+    - voltage: MV
+      node: output_mv
+  - type: UseDelay
+    delay: 1
+  - type: NodeContainer
+    examinable: true
+    nodes:
+      output_hv:
+        !type:CableDeviceNode
+        nodeGroupID: HVPower
+      output_mv:
+        !type:CableDeviceNode
+        nodeGroupID: MVPower
+        enabled: false
 
 - type: entity
   name: P.A.C.M.A.N.-type portable generator
