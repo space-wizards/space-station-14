@@ -1,4 +1,5 @@
-﻿using Content.Server.Storage.EntitySystems;
+﻿using Content.Server.Storage.Components;
+using Content.Server.Storage.EntitySystems;
 using Content.Shared.Item;
 using Content.Shared.Stacks;
 using Content.Shared.Storage;
@@ -15,11 +16,9 @@ public sealed class ItemSystem : SharedItemSystem
 
         if (!Container.TryGetContainingContainer(uid, out var container) ||
             !TryComp<StorageComponent>(container.Owner, out var storage))
-        {
             return;
-        }
 
-        _storage.RecalculateStorageUsed(storage);
+        _storage.RecalculateStorageUsed(container.Owner, storage);
         _storage.UpdateUI(container.Owner, storage);
     }
 }
