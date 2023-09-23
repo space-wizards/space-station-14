@@ -812,3 +812,36 @@
   - type: Construction
     graph: WebObjects
     node: jumpskirt
+
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtCasualBlue
+  name: casual blue jumpskirt
+  description: A loose worn blue shirt with a grey skirt, perfect for someone looking to relax.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpskirt/casualblue.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpskirt/casualblue.rsi
+
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtCasualPurple
+  name: casual purple jumpskirt
+  description: A loose worn purple shirt with a grey skirt, perfect for someone looking to relax.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpskirt/casualpurple.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpskirt/casualpurple.rsi
+
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtCasualRed
+  name: casual red jumpskirt
+  description: A loose worn red shirt with a grey skirt, perfect for someone looking to relax.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpskirt/casualred.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpskirt/casualred.rsi
