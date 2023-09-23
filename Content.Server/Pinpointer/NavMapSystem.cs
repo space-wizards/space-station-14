@@ -130,7 +130,7 @@ public sealed class NavMapSystem : SharedNavMapSystem
 
         while (beaconQuery.MoveNext(out var beaconUid, out var beacon, out var xform))
         {
-            if (xform.GridUid != uid || !CanBeacon(beaconUid, xform))
+            if (!beacon.Enabled || xform.GridUid != uid || !CanBeacon(beaconUid, xform))
                 continue;
 
             // TODO: Make warp points use metadata name instead.
@@ -235,5 +235,29 @@ public sealed class NavMapSystem : SharedNavMapSystem
             return;
 
         Dirty(component);
+    }
+
+    /// <summary>
+    /// Sets the beacon's Enabled field and refreshes the grid.
+    /// </summary>
+    public void SetBeaconEnabled(EntityUid uid, bool enabled, NavMapBeaconComponent? comp = null)
+    {
+        if (!Resolve(uid, ref comp) || comp.Enabled == enabled)
+            return;
+
+        comp.Enabled = enabled;
+
+        RefreshNavGrid(uid);
+    }
+
+    /// <summary>
+    /// Toggles the beacon's Enabled field and refreshes the grid.
+    /// </summary>
+    public void ToggleBeacon(EntityUid uid, NavMapBeaconComponent? comp = null)
+    {
+        if (!Resolve(uid, ref comp))
+            return;
+
+        SetBeaconEnabled(uid, !comp.Enabled, comp);
     }
 }
