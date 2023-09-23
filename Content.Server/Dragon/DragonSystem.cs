@@ -1,9 +1,12 @@
 using Content.Server.GenericAntag;
+using Content.Server.Objectives.Components;
+using Content.Server.Objectives.Systems;
 using Content.Server.Popups;
 using Content.Server.Roles;
 using Content.Shared.Actions;
 using Content.Shared.Dragon;
 using Content.Shared.Maps;
+using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
 using Content.Shared.Mobs;
 using Content.Shared.Movement.Systems;
@@ -15,6 +18,7 @@ namespace Content.Server.Dragon;
 
 public sealed partial class DragonSystem : EntitySystem
 {
+    [Dependency] private readonly CarpRiftsConditionSystem _carpRifts = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly ITileDefinitionManager _tileDef = default!;
     [Dependency] private readonly MovementSpeedModifierSystem _movement = default!;
@@ -22,6 +26,8 @@ public sealed partial class DragonSystem : EntitySystem
     [Dependency] private readonly RoleSystem _role = default!;
     [Dependency] private readonly SharedActionsSystem _actions = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
+
+    private EntityQuery<CarpRiftsConditionComponent> _objQuery;
 
     /// <summary>
     /// Minimum distance between 2 rifts allowed.
@@ -38,6 +44,8 @@ public sealed partial class DragonSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
+
+        _objQuery = GetEntityQuery<CarpRiftsConditionComponent>();
 
         SubscribeLocalEvent<DragonComponent, MapInitEvent>(OnInit);
         SubscribeLocalEvent<DragonComponent, ComponentShutdown>(OnShutdown);
@@ -93,7 +101,7 @@ public sealed partial class DragonSystem : EntitySystem
         }
     }
 
-    private void OnMapInit(EntityUid uid, DragonComponent component, MapInitEvent args)
+    private void OnInit(EntityUid uid, DragonComponent component, MapInitEvent args)
     {
         Roar(uid, component);
         _actions.AddAction(uid, ref component.SpawnRiftActionEntity, component.SpawnRiftAction);
@@ -176,7 +184,7 @@ public sealed partial class DragonSystem : EntitySystem
         if (component.SoundDeath != null)
             _audio.PlayPvs(component.SoundDeath, uid);
 
-        // role is explicitly not reset so that it will show how many you got before dying in round end text
+        // objective is explicitly not reset so that it will show how many you got before dying in round end text
         DeleteRifts(uid, false, component);
     }
 
@@ -216,14 +224,19 @@ public sealed partial class DragonSystem : EntitySystem
 
         comp.Rifts.Clear();
 
-        // stop here if not trying to reset the role's rift count
+        // stop here if not trying to reset the objective's rift count
         if (!resetRole || !TryComp<MindContainerComponent>(uid, out var mindContainer) || !mindContainer.HasMind)
             return;
 
-        if (!TryComp<DragonRoleComponent>(mindContainer.Mind, out var role))
-            return;
-
-        role.RiftsCharged = 0;
+        var mind = Comp<MindComponent>(mindContainer.Mind.Value);
+        foreach (var objId in mind.AllObjectives)
+        {
+            if (_objQuery.TryGetComponent(objId, out var obj))
+            {
+                _carpRifts.ResetRifts(objId, obj);
+                break;
+            }
+        }
     }
 
     /// <summary>
@@ -237,10 +250,15 @@ public sealed partial class DragonSystem : EntitySystem
         if (!TryComp<MindContainerComponent>(uid, out var mindContainer) || !mindContainer.HasMind)
             return;
 
-        if (!TryComp<DragonRoleComponent>(mindContainer.Mind, out var role))
-            return;
-
-        role.RiftsCharged++;
+        var mind = Comp<MindComponent>(mindContainer.Mind.Value);
+        foreach (var objId in mind.AllObjectives)
+        {
+            if (_objQuery.TryGetComponent(objId, out var obj))
+            {
+                _carpRifts.RiftCharged(objId, obj);
+                break;
+            }
+        }
     }
 
     /// <summary>
