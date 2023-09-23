@@ -1,9 +1,4 @@
 Entries:
-- author: liltenhead
-  changes:
-  - {message: Fixed typo in emergency medipen description, type: Fix}
-  id: 4380
-  time: '2023-07-30T22:38:18.0000000+00:00'
 - author: graevy
   changes:
   - {message: Added reflection to the reflective vest and shuttle walls, type: Add}
@@ -2981,3 +2976,8 @@ Entries:
   - {message: Armed nuclear explosives can be seen on station maps., type: Tweak}
   id: 4879
   time: '2023-09-23T19:15:05.0000000+00:00'
+- author: Repo
+  changes:
+  - {message: Nukies can declare war again., type: Fix}
+  id: 4880
+  time: '2023-09-23T20:00:13.0000000+00:00'
