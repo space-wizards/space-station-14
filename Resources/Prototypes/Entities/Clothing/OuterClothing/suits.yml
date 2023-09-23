@@ -11,12 +11,12 @@
   - type: Armor
     modifiers:
       coefficients:
-        Blunt: 0.5
+        Blunt: 0.9
         Slash: 0.9
         Piercing: 0.9
         Heat: 0.75
   - type: ExplosionResistance
-    damageCoefficient: 0.2
+    damageCoefficient: 0.15
   - type: GroupExamine
   - type: Tag
     tags:
@@ -95,7 +95,7 @@
   parent: ClothingOuterBase
   id: ClothingOuterSuitSpaceNinja
   name: space ninja suit
-  description: This black technologically advanced, cybernetically-enhanced suit provides good protection and many abilities like invisibility or teleportation.
+  description: This black technologically advanced, cybernetically-enhanced suit provides many abilities like invisibility or teleportation.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Suits/spaceninja.rsi
@@ -112,10 +112,10 @@
   - type: Armor
     modifiers:
       coefficients:
-        Blunt: 0.6
-        Slash: 0.6
-        Piercing: 0.6
-        Heat: 0.6
+        Blunt: 0.8
+        Slash: 0.8
+        Piercing: 0.8
+        Heat: 0.8
   - type: NinjaSuit
   - type: PowerCellSlot
     cellSlotId: cell_slot
