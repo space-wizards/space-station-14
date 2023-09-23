@@ -174,7 +174,7 @@ public sealed class ThirstSystem : EntitySystem
 
             thirst.CurrentThirstThreshold = calculatedThirstThreshold;
             UpdateEffects(uid, thirst);
-            Dirty(thirst);
+            Dirty(uid, thirst);
         }
     }
 
