@@ -20,7 +20,7 @@
   components:
     - type: Spellbook
       spells:
-        FlashRune: -1
+        ActionFlashRune: -1
         ActionSpawnMagicarpSpell: -1
 
 - type: entity
