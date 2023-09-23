@@ -19,14 +19,6 @@ public class ActionButtonContainer : GridContainer
     public ActionButton this[int index]
     {
         get => (ActionButton) GetChild(index);
-        set
-        {
-            AddChild(value);
-            value.SetPositionInParent(index);
-            value.ActionPressed += ActionPressed;
-            value.ActionUnpressed += ActionUnpressed;
-            value.ActionFocusExited += ActionFocusExited;
-        }
     }
 
     public void SetActionData(params EntityUid?[] actionTypes)
@@ -61,6 +53,16 @@ public class ActionButtonContainer : GridContainer
         button.ActionPressed += ActionPressed;
         button.ActionUnpressed += ActionUnpressed;
         button.ActionFocusExited += ActionFocusExited;
+    }
+
+    protected override void ChildRemoved(Control newChild)
+    {
+        if (newChild is not ActionButton button)
+            return;
+
+        button.ActionPressed -= ActionPressed;
+        button.ActionUnpressed -= ActionUnpressed;
+        button.ActionFocusExited -= ActionFocusExited;
     }
 
     public bool TryGetButtonIndex(ActionButton button, out int position)

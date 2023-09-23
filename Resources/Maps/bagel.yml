@@ -3246,49 +3246,49 @@ entities:
             color: '#0000004A'
             id: FullTileOverlayGreyscale
           decals:
-            3763: 17,-5
-            3764: 17,-6
-            3765: 17,-7
-            3766: 16,-7
-            3767: 15,-7
-            3768: 15,-6
-            3769: 16,-6
-            3770: 16,-5
-            3771: 15,-5
-            3772: 15,-4
-            3773: 16,-4
-            3774: 17,-4
-            3775: 17,-3
-            3776: 16,-3
-            3777: 15,-3
-            3778: 15,-2
-            3779: 17,-2
-            3780: 16,-2
-            3781: 16,-1
-            3782: 17,-1
-            3783: 15,-1
-            3784: 15,0
-            3785: 15,1
-            3786: 15,2
-            3787: 15,3
-            3788: 15,4
-            3789: 16,4
-            3790: 17,4
-            3791: 17,3
-            3792: 16,3
-            3793: 16,2
-            3794: 17,2
-            3795: 17,1
-            3796: 16,1
-            3797: 16,0
-            3798: 17,0
-            3799: 17,5
-            3800: 16,5
-            3801: 15,5
-            3802: 17,-8
-            3803: 16,-8
-            3804: 15,-8
-            3805: 26,0
+            3762: 17,-5
+            3763: 17,-6
+            3764: 17,-7
+            3765: 16,-7
+            3766: 15,-7
+            3767: 15,-6
+            3768: 16,-6
+            3769: 16,-5
+            3770: 15,-5
+            3771: 15,-4
+            3772: 16,-4
+            3773: 17,-4
+            3774: 17,-3
+            3775: 16,-3
+            3776: 15,-3
+            3777: 15,-2
+            3778: 17,-2
+            3779: 16,-2
+            3780: 16,-1
+            3781: 17,-1
+            3782: 15,-1
+            3783: 15,0
+            3784: 15,1
+            3785: 15,2
+            3786: 15,3
+            3787: 15,4
+            3788: 16,4
+            3789: 17,4
+            3790: 17,3
+            3791: 16,3
+            3792: 16,2
+            3793: 17,2
+            3794: 17,1
+            3795: 16,1
+            3796: 16,0
+            3797: 17,0
+            3798: 17,5
+            3799: 16,5
+            3800: 15,5
+            3801: 17,-8
+            3802: 16,-8
+            3803: 15,-8
+            3804: 26,0
         - node:
             color: '#334E6DC8'
             id: FullTileOverlayGreyscale
@@ -131596,16 +131596,22 @@ entities:
       type: Transform
   - uid: 15744
     components:
+    - name: Engineering SMES 3
+      type: MetaData
     - pos: 1.5,25.5
       parent: 60
       type: Transform
   - uid: 15745
     components:
+    - name: Engineering SMES 2
+      type: MetaData
     - pos: 0.5,25.5
       parent: 60
       type: Transform
   - uid: 15746
     components:
+    - name: Engineering SMES 1
+      type: MetaData
     - pos: -0.5,25.5
       parent: 60
       type: Transform
@@ -131651,16 +131657,22 @@ entities:
       type: Transform
   - uid: 22476
     components:
+    - name: AI SMES
+      type: MetaData
     - pos: -117.5,19.5
       parent: 60
       type: Transform
   - uid: 23083
     components:
+    - name: Spare AI SMES
+      type: MetaData
     - pos: -111.5,31.5
       parent: 60
       type: Transform
   - uid: 23915
     components:
+    - name: Arrival Shuttle SMES
+      type: MetaData
     - pos: 10.5,-73.5
       parent: 60
       type: Transform
@@ -135286,6 +135298,8 @@ entities:
       type: Transform
   - uid: 22477
     components:
+    - name: AI Substation
+      type: MetaData
     - pos: -116.5,19.5
       parent: 60
       type: Transform

@@ -1,9 +1,6 @@
 using Content.Shared.Actions;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-using Robust.Shared.Utility;
 
 namespace Content.Shared.Ghost;
 
@@ -19,19 +16,19 @@ public sealed partial class GhostComponent : Component
     [DataField]
     public EntProtoId ToggleLightingAction = "ActionToggleLighting";
 
-    [DataField]
+    [DataField, AutoNetworkedField]
     public EntityUid? ToggleLightingActionEntity;
 
     [DataField]
     public EntProtoId ToggleFoVAction = "ActionToggleFov";
 
-    [DataField]
+    [DataField, AutoNetworkedField]
     public EntityUid? ToggleFoVActionEntity;
 
     [DataField]
     public EntProtoId ToggleGhostsAction = "ActionToggleGhosts";
 
-    [DataField]
+    [DataField, AutoNetworkedField]
     public EntityUid? ToggleGhostsActionEntity;
 
     [DataField]
@@ -41,10 +38,10 @@ public sealed partial class GhostComponent : Component
     public EntityUid? ToggleGhostHearingActionEntity;
 
     [DataField]
-    public EntProtoId Action = "ActionGhostBoo";
+    public EntProtoId BooAction = "ActionGhostBoo";
 
-    [DataField("actionEntity")]
-    public EntityUid? ActionEntity;
+    [DataField, AutoNetworkedField]
+    public EntityUid? BooActionEntity;
 
     // End actions
 

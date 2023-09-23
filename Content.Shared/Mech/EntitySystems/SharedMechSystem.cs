@@ -179,10 +179,9 @@ public abstract class SharedMechSystem : EntitySystem
         if (_net.IsClient)
             return;
 
-        _actions.AddAction(pilot, Spawn(component.MechCycleAction), mech);
-        _actions.AddAction(pilot, Spawn(component.MechUiAction),
-            mech);
-        _actions.AddAction(pilot, Spawn(component.MechEjectAction), mech);
+        _actions.AddAction(pilot, ref component.MechCycleActionEntity, component.MechCycleAction, mech);
+        _actions.AddAction(pilot, ref component.MechUiActionEntity, component.MechUiAction, mech);
+        _actions.AddAction(pilot, ref component.MechEjectActionEntity, component.MechEjectAction, mech);
     }
 
     private void RemoveUser(EntityUid mech, EntityUid pilot)
