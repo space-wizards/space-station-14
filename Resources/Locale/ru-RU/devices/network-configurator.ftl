@@ -29,7 +29,7 @@ network-configurator-ui-count-label =
         [few] устройства
        *[other] устройств
     }.
-ent-ActionNetworkConfigurationClearNetworkLinkOverlays = Очистить оверлей сетевых соединений
+ent-ActionClearNetworkLinkOverlays = Очистить оверлей сетевых соединений
     .desc = Очищает оверлей сетевых соединений.
 # tooltips
 network-configurator-tooltip-set = Создание списка целевых устройств

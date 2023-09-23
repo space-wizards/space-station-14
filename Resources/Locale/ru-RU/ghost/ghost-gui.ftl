@@ -1,13 +1,13 @@
 ghost-gui-return-to-body-button = Вернуться в тело
 ghost-gui-ghost-warp-button = Телепорт призрака
 ghost-gui-ghost-roles-button = Роли призраков ({ $count })
-ent-ActionGhostGuiToggleGhostVisibility = Переключить призраков
+ent-ActionToggleGhosts = Переключить призраков
     .desc = Переключить видимость других призраков.
 ghost-gui-toggle-ghost-visibility-popup = Видимость других призраков была изменена.
-ent-ActionGhostGuiToggleLightingManager = Переключить освещение
+ent-ActionToggleLighting = Переключить освещение
     .desc = Включите или отключите рендеринг света, чтобы лучше видеть затенённые области.
 ghost-gui-toggle-lighting-manager-popup = Рендеринг света был переключён.
-ent-ActionGhostGuiToggleFov = Переключить поле зрения
+ent-ActionToggleFov = Переключить поле зрения
     .desc = Переключить поле зрения чтобы видеть то же, что и игроки.
 ghost-gui-toggle-fov-popup = Поле зрения было переключено.
 ghost-target-window-title = Телепорт призрака

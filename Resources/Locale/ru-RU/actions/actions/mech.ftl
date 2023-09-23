@@ -1,6 +1,6 @@
-ent-ActionMechCycle = Переключить снаряжение
+ent-ActionMechCycleEquipment = Переключить снаряжение
     .desc = Переключает выбранное снаряжение
-ent-ActionMechControlPanel = Панель управления
+ent-ActionMechOpenUI = Панель управления
     .desc = Открывает панель управления меха
 ent-ActionMechEject = Покинуть
     .desc = Высаживает пилота из меха

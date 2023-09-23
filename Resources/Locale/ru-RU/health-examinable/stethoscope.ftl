@@ -1,4 +1,5 @@
-stethoscope-verb = Прослушать стетоскопом
+ent-ActionStethoscope = Прослушать стетоскопом
+.desc = { "" }
 stethoscope-dead = Вы не слышите ничего.
 stethoscope-normal = Вы слышите нормальное дыхание.
 stethoscope-hyper = Вы слышите гипервентиляцию.

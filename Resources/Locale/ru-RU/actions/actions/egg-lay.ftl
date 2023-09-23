@@ -1,4 +1,4 @@
-ent-ActionLayEgg = Отложить яйцо
+ent-ActionAnimalLayEgg = Отложить яйцо
     .desc = Потратить сытость чтобы отложить яйцо.
 action-popup-lay-egg-user = Вы отложили яйцо.
 action-popup-lay-egg-others = { CAPITALIZE($entity) } откладывает яйцо.

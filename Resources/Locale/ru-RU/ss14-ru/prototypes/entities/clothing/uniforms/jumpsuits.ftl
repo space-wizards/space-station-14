@@ -223,3 +223,7 @@ ent-ClothingUniformJumpsuitChiefEngineerTurtle = водолазка старше
     .desc = Водолазка с высоким воротом для тяжёлой работы в условиях инженерного отдела.
 ent-ClothingUniformJumpsuitWeb = паутинная юбка-комбинезон
     .desc = Четко показывает ваше единство с паутинами.
+ent-ClothingUniformJumpsuitNinja = комбинезон ниндзя
+    .desc = Усиленный наночастицами комбинезон, разработанный для максимального комфорта и эффективности.
+ent-ClothingUniformJumpsuitLoungewear = лаунж-пончо
+    .desc = Длинный отрез ткани, обёрнутый вокруг вашего тела ради большего комфорта.

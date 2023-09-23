@@ -1302,6 +1302,9 @@
 - type: decal # Б
   id: cyr_b
   tags: ["crayon"]
+  defaultCleanable: true
+  defaultCustomColor: true
+  defaultSnap: false
   sprite:
     sprite: Corvax/Effects/crayondecals.rsi
     state: cyr_b
@@ -1309,6 +1312,9 @@
 - type: decal # Ч
   id: cyr_ch
   tags: ["crayon"]
+  defaultCleanable: true
+  defaultCustomColor: true
+  defaultSnap: false
   sprite:
     sprite: Corvax/Effects/crayondecals.rsi
     state: cyr_ch
@@ -1316,6 +1322,9 @@
 - type: decal # Ц
   id: cyr_c
   tags: ["crayon"]
+  defaultCleanable: true
+  defaultCustomColor: true
+  defaultSnap: false
   sprite:
     sprite: Corvax/Effects/crayondecals.rsi
     state: cyr_c
@@ -1323,6 +1332,9 @@
 - type: decal # Д
   id: cyr_d
   tags: ["crayon"]
+  defaultCleanable: true
+  defaultCustomColor: true
+  defaultSnap: false
   sprite:
     sprite: Corvax/Effects/crayondecals.rsi
     state: cyr_d
@@ -1330,6 +1342,9 @@
 - type: decal # Э
   id: cyr_eh
   tags: ["crayon"]
+  defaultCleanable: true
+  defaultCustomColor: true
+  defaultSnap: false
   sprite:
     sprite: Corvax/Effects/crayondecals.rsi
     state: cyr_eh
@@ -1337,6 +1352,9 @@
 - type: decal # Ф
   id: cyr_f
   tags: ["crayon"]
+  defaultCleanable: true
+  defaultCustomColor: true
+  defaultSnap: false
   sprite:
     sprite: Corvax/Effects/crayondecals.rsi
     state: cyr_f
@@ -1344,6 +1362,9 @@
 - type: decal # Г
   id: cyr_g
   tags: ["crayon"]
+  defaultCleanable: true
+  defaultCustomColor: true
+  defaultSnap: false
   sprite:
     sprite: Corvax/Effects/crayondecals.rsi
     state: cyr_g
@@ -1351,6 +1372,9 @@
 - type: decal # И
   id: cyr_i
   tags: ["crayon"]
+  defaultCleanable: true
+  defaultCustomColor: true
+  defaultSnap: false
   sprite:
     sprite: Corvax/Effects/crayondecals.rsi
     state: cyr_i
@@ -1358,6 +1382,9 @@
 - type: decal # Л
   id: cyr_l
   tags: ["crayon"]
+  defaultCleanable: true
+  defaultCustomColor: true
+  defaultSnap: false
   sprite:
     sprite: Corvax/Effects/crayondecals.rsi
     state: cyr_l
@@ -1365,6 +1392,9 @@
 - type: decal # Ь
   id: cyr_soft_sign
   tags: ["crayon"]
+  defaultCleanable: true
+  defaultCustomColor: true
+  defaultSnap: false
   sprite:
     sprite: Corvax/Effects/crayondecals.rsi
     state: cyr_soft_sign
@@ -1372,6 +1402,9 @@
 - type: decal # П
   id: cyr_p
   tags: ["crayon"]
+  defaultCleanable: true
+  defaultCustomColor: true
+  defaultSnap: false
   sprite:
     sprite: Corvax/Effects/crayondecals.rsi
     state: cyr_p
@@ -1379,6 +1412,9 @@
 - type: decal # Щ
   id: cyr_shh
   tags: ["crayon"]
+  defaultCleanable: true
+  defaultCustomColor: true
+  defaultSnap: false
   sprite:
     sprite: Corvax/Effects/crayondecals.rsi
     state: cyr_shh
@@ -1386,6 +1422,9 @@
 - type: decal # Ш
   id: cyr_sh
   tags: ["crayon"]
+  defaultCleanable: true
+  defaultCustomColor: true
+  defaultSnap: false
   sprite:
     sprite: Corvax/Effects/crayondecals.rsi
     state: cyr_sh
@@ -1393,6 +1432,9 @@
 - type: decal # Ъ
   id: cyr_hard_sign
   tags: ["crayon"]
+  defaultCleanable: true
+  defaultCustomColor: true
+  defaultSnap: false
   sprite:
     sprite: Corvax/Effects/crayondecals.rsi
     state: cyr_hard_sign
@@ -1400,6 +1442,9 @@
 - type: decal # Ю
   id: cyr_u
   tags: ["crayon"]
+  defaultCleanable: true
+  defaultCustomColor: true
+  defaultSnap: false
   sprite:
     sprite: Corvax/Effects/crayondecals.rsi
     state: cyr_u
@@ -1407,6 +1452,9 @@
 - type: decal # Я
   id: cyr_ya
   tags: ["crayon"]
+  defaultCleanable: true
+  defaultCustomColor: true
+  defaultSnap: false
   sprite:
     sprite: Corvax/Effects/crayondecals.rsi
     state: cyr_ya
@@ -1414,6 +1462,9 @@
 - type: decal # Ы
   id: cyr_y
   tags: ["crayon"]
+  defaultCleanable: true
+  defaultCustomColor: true
+  defaultSnap: false
   sprite:
     sprite: Corvax/Effects/crayondecals.rsi
     state: cyr_y
@@ -1421,6 +1472,9 @@
 - type: decal # Ж
   id: cyr_zh
   tags: ["crayon"]
+  defaultCleanable: true
+  defaultCustomColor: true
+  defaultSnap: false
   sprite:
     sprite: Corvax/Effects/crayondecals.rsi
     state: cyr_zh
@@ -1428,6 +1482,9 @@
 - type: decal # З
   id: cyr_z
   tags: ["crayon"]
+  defaultCleanable: true
+  defaultCustomColor: true
+  defaultSnap: false
   sprite:
     sprite: Corvax/Effects/crayondecals.rsi
     state: cyr_z

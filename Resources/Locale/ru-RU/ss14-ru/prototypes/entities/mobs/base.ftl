@@ -1,0 +1,16 @@
+ent-BaseMob = { "" }
+    .desc = { "" }
+ent-MobDamageable = { ent-BaseMob }
+    .desc = { ent-BaseMob.desc }
+ent-MobCombat = { ent-BaseMob }
+    .desc = { ent-BaseMob.desc }
+ent-MobAtmosExposed = { ent-BaseMob }
+    .desc = { ent-BaseMob.desc }
+ent-MobAtmosStandard = { ent-BaseMob }
+    .desc = { ent-BaseMob.desc }
+ent-MobFlammable = { ent-BaseMob }
+    .desc = { ent-BaseMob.desc }
+ent-MobRespirator = { ent-BaseMob }
+    .desc = { ent-BaseMob.desc }
+ent-MobBloodstream = { ent-BaseMob }
+    .desc = { ent-BaseMob.desc }

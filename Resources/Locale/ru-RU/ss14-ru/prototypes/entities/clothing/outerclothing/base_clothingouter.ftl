@@ -8,3 +8,7 @@ ent-ClothingOuterHardsuitBase = base hardsuit
     .desc = { ent-ClothingOuterBase.desc }
 ent-ClothingOuterEVASuitBase = base EVA Suit
     .desc = { ent-ClothingOuterBase.desc }
+ent-ClothingOuterStorageToggleableBase = { ent-ClothingOuterStorageBase }
+    .desc = { ent-ClothingOuterStorageBase.desc }
+ent-ClothingOuterBaseToggleable = худи с капюшоном
+    .desc = { ent-ClothingOuterBase.desc }

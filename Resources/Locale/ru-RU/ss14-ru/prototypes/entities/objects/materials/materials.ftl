@@ -68,3 +68,5 @@ ent-MaterialBananium = бананиум
 ent-MaterialBananium1 = { ent-MaterialBananium }
     .suffix = Один
     .desc = { ent-MaterialBananium.desc }
+ent-MaterialHideCorgi = шкура корги
+    .desc = Премиальная шкура, используемая только в самой высококлассной моде. Говорят, их находят, когда щенков корги отправляют куда-то далеко.
