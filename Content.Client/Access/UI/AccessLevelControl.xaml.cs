@@ -12,8 +12,6 @@ namespace Content.Client.Access.UI;
 [GenerateTypedNameReferences]
 public sealed partial class AccessLevelControl : GridContainer
 {
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-
     public readonly Dictionary<string, Button> ButtonsList = new();
 
     public AccessLevelControl(List<string> accessLevels, IPrototypeManager prototypeManager)
