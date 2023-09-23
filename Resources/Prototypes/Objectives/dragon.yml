@@ -33,10 +33,10 @@
   noSpawn: true
   parent: [BaseDragonObjective, BaseSurviveObjective]
   id: DragonSurviveObjective
+  name: Survive
+  description: You have to stay alive to maintain control.
   components:
   - type: Objective
-    title: objective-dragon-survive-title
-    description: objective-dragon-survive-description
     icon:
       sprite: Mobs/Aliens/Carps/dragon.rsi
       state: alive
