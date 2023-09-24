@@ -27,6 +27,7 @@ public sealed class BodySystem : SharedBodySystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedMindSystem _mindSystem = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
 
     public override void Initialize()
     {
@@ -138,9 +139,7 @@ public sealed class BodySystem : SharedBodySystem
             }
             else
             {
-                var random = IoCManager.Resolve<IRobustRandom>();
-                var offset = new Vector2(-.25f + random.NextFloat() * .5f, -.25f + random.NextFloat() * .5f);
-                SharedTransform.SetCoordinates(entity, coordinates.Offset(offset));
+                SharedTransform.SetCoordinates(entity, coordinates.Offset(_random.NextVector2(.3f)));
             }
         }
         RaiseLocalEvent(bodyId, new BeingGibbedEvent(gibs));
