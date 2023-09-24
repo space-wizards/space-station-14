@@ -1,11 +1,4 @@
 Entries:
-- author: Bhijn and Myr
-  changes:
-  - {message: 'The flash overlay is no longer offset towards the actual physical center
-      of your screen when playing with the separated UI layout. Additionally, ultrawide
-      monitors no longer experience an exceptionally stretched flash overlay.', type: Fix}
-  id: 4382
-  time: '2023-07-31T04:41:24.0000000+00:00'
 - author: Misha_Unity
   changes:
   - {message: Command access allows to delete any articles, type: Tweak}
@@ -2981,3 +2974,9 @@ Entries:
   - {message: Trash spawns correctly after food is eaten., type: Fix}
   id: 4881
   time: '2023-09-24T17:20:03.0000000+00:00'
+- author: DrTeaSpoon
+  changes:
+  - {message: Arrows can now be doped with chemicals., type: Tweak}
+  - {message: Spears now correctly transfares chemicals when thrown., type: Fix}
+  id: 4882
+  time: '2023-09-24T19:46:16.0000000+00:00'
