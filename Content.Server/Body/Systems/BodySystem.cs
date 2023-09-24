@@ -138,7 +138,6 @@ public sealed class BodySystem : SharedBodySystem
             }
             else
             {
-                SharedTransform.SetCoordinates(entity, coordinates);
                 entity.RandomOffset(0.25f);
             }
         }
