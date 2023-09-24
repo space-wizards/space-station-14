@@ -51,6 +51,7 @@
       openOnActivation: true
       guides:
         - Defusal
+    - type: CollideOnAnchor
 
 - type: entity
   parent: BaseHardBomb
