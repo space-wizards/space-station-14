@@ -1,22 +1,17 @@
-﻿<changelog:ChangelogWindow xmlns="https://spacestation14.io"
-                           xmlns:changelog="clr-namespace:Content.Client.Changelog"
-                           xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
-                           SetSize="500 400" MouseFilter="Stop">
+﻿<ui:ChangelogWindow xmlns="https://spacestation14.io"
+                    xmlns:ui="clr-namespace:Content.Client.Changelog"
+                    Title="{Loc 'changelog-window-title'}"
+                    MinSize="500 400"
+                    SetSize="500 400">
+
     <PanelContainer StyleClasses="AngleRect" />
     <BoxContainer Orientation="Vertical">
-        <BoxContainer Orientation="Horizontal">
-            <Label Margin="6 0 0 0" HorizontalExpand="True" Text="{Loc 'changelog-window-title'}" VAlign="Center"
-                   StyleClasses="LabelHeading" />
-            <TextureButton Margin="0 0 8 0" Name="CloseButton" StyleClasses="windowCloseButton"
-                           VerticalAlignment="Center" />
-        </BoxContainer>
-        <controls:HighDivider />
 
-        <ScrollContainer VerticalExpand="True" HScrollEnabled="False">
+        <ScrollContainer Margin="5" VerticalExpand="True" HScrollEnabled="False">
             <BoxContainer Orientation="Vertical" Name="ChangelogBody" />
         </ScrollContainer>
 
         <PanelContainer StyleClasses="LowDivider" />
         <Label Name="VersionLabel" HorizontalAlignment="Right" StyleClasses="LabelSubText" Margin="4 0" />
     </BoxContainer>
-</changelog:ChangelogWindow>
+</ui:ChangelogWindow>

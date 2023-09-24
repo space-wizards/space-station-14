@@ -1,14 +1,4 @@
 Entries:
-- author: liltenhead
-  changes:
-  - {message: Added filter for bartender recipes in the guidebook, type: Add}
-  id: 4375
-  time: '2023-07-29T22:59:59.0000000+00:00'
-- author: liltenhead
-  changes:
-  - {message: Changed the placeholder comms computer description, type: Tweak}
-  id: 4376
-  time: '2023-07-30T02:35:54.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Fix some cargo gifts not spawning correctly., type: Fix}
@@ -2981,3 +2971,13 @@ Entries:
       now cause liver failure instead of heart failure. Alcoholics rejoice!, type: Fix}
   id: 4874
   time: '2023-09-22T20:01:42.0000000+00:00'
+- author: dahnte
+  changes:
+  - {message: Improved lisp letter matching and clarity., type: Fix}
+  id: 4875
+  time: '2023-09-23T05:39:47.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Skeletons no longer asphyxiate due to their lack of lungs., type: Fix}
+  id: 4876
+  time: '2023-09-23T08:24:58.0000000+00:00'

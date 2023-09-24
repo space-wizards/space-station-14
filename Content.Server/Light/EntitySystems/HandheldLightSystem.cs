@@ -22,6 +22,7 @@ namespace Content.Server.Light.EntitySystems
     {
         [Dependency] private readonly IPrototypeManager _proto = default!;
         [Dependency] private readonly ActionsSystem _actions = default!;
+        [Dependency] private readonly ActionContainerSystem _actionContainer = default!;
         [Dependency] private readonly PopupSystem _popup = default!;
         [Dependency] private readonly PowerCellSystem _powerCell = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
@@ -97,7 +98,7 @@ namespace Content.Server.Light.EntitySystems
 
         private void OnMapInit(EntityUid uid, HandheldLightComponent component, MapInitEvent args)
         {
-            _actions.AddAction(uid, ref component.ToggleActionEntity, component.ToggleAction);
+            _actionContainer.EnsureAction(uid, ref component.ToggleActionEntity, component.ToggleAction);
         }
 
         private void OnShutdown(EntityUid uid, HandheldLightComponent component, ComponentShutdown args)
