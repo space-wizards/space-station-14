@@ -28,6 +28,8 @@
     solution: food
     useSound:
       path: /Audio/Items/eating_1.ogg
+  - type: Damageable
+    damageContainer: Inorganic
   - type: Spillable
     solution: food
   - type: TrashOnEmpty
@@ -42,8 +44,6 @@
     sound:
       collection: packetOpenSounds
   # packet can be broken open
-  - type: Damageable
-    damageContainer: Inorganic
   - type: Destructible
     thresholds:
     - trigger:
