@@ -31,6 +31,10 @@ bld/
 [Tt]est[Rr]esult*/
 [Bb]uild[Ll]og.*
 
+# PERSONAL
+.run/
+.github/
+
 # NUNIT
 *.VisualState.xml
 TestResult.xml
