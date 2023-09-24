@@ -1,10 +1,4 @@
 Entries:
-- author: Raitononai
-  changes:
-  - {message: Added missing job specific items to Senior Researcher and Senior Engineer
-      traitors., type: Fix}
-  id: 4385
-  time: '2023-07-31T06:03:41.0000000+00:00'
 - author: Alekshhh
   changes:
   - {message: 'The chemical page of the wiki has been heavily reworded, and a few
@@ -2979,3 +2973,8 @@ Entries:
   - {message: Fixed people getting too thirsty., type: Fix}
   id: 4884
   time: '2023-09-24T19:50:41.0000000+00:00'
+- author: PixelTK
+  changes:
+  - {message: Arachnids have one new back marking., type: Add}
+  id: 4885
+  time: '2023-09-24T19:54:39.0000000+00:00'
