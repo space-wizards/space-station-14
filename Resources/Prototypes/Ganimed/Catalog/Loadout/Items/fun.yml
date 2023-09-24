@@ -1,0 +1,63 @@
+- type: loadout
+  id: LoadoutItemsRGBStaff
+  category: loadout-category-items
+  cost: 4
+  exclusive: false
+  prototype: RGBStaff
+  
+- type: loadout
+  id: LoadoutItemsBasketball
+  category: loadout-category-items
+  cost: 1
+  exclusive: false
+  prototype: Basketball
+  
+- type: loadout
+  id: LoadoutItemsPlunger
+  category: loadout-category-items
+  cost: 1
+  exclusive: false
+  prototype: Plunger
+  
+- type: loadout
+  id: LoadoutItemsBucket
+  category: loadout-category-items
+  cost: 1
+  exclusive: false
+  prototype: Bucket
+  
+- type: loadout
+  id: LoadoutItemsVape
+  category: loadout-category-items
+  cost: 1
+  exclusive: false
+  prototype: Vape
+  
+- type: loadout
+  id: LoadoutItemsBikeHorn
+  category: loadout-category-items
+  cost: 2
+  exclusive: false
+  prototype: BikeHorn
+  
+- type: loadout
+  id: LoadoutItemsViolaInstrument
+  category: loadout-category-items
+  cost: 2
+  exclusive: false
+  prototype: ViolaInstrument
+  
+- type: loadout
+  id: LoadoutItemsBalloonCorgi
+  category: loadout-category-items
+  cost: 1
+  exclusive: false
+  prototype: BalloonCorgi
+  
+- type: loadout
+  id: LoadoutItemsHarmonicaInstrument
+  category: loadout-category-items
+  cost: 1
+  exclusive: false
+  prototype: HarmonicaInstrument
+  

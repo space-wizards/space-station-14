@@ -1,0 +1,173 @@
+- type: loadout
+  id: LoadoutItemsWeaponRevolverDeckard
+  category: loadout-category-items
+  cost: 4
+  exclusive: false
+  whitelistJobs:
+    - Captain
+    - HeadOfSecurity
+    - Detective
+    - SeniorOfficer
+  prototype: WeaponRevolverDeckard
+
+- type: loadout
+  id: LoadoutItemsWeaponPistolCHIMP
+  category: loadout-category-items
+  cost: 4
+  exclusive: false
+  whitelistJobs:
+    - ResearchDirector
+    - Scientist
+    - ResearchAssistant
+    - SeniorResearcher
+  prototype: WeaponPistolCHIMP
+
+- type: loadout
+  id: LoadoutItemsWeaponPistolMk58Nonlethal
+  category: loadout-category-items
+  cost: 3
+  exclusive: false
+  whitelistJobs:
+    - SecurityCadet
+    - SecurityOfficer
+    - Warden
+    - Detective
+    - HeadOfSecurity
+    - Captain
+    - SeniorOfficer
+  prototype: WeaponPistolMk58Nonlethal
+
+- type: loadout
+  id: LoadoutItemsBaseBallBat
+  category: loadout-category-items
+  cost: 5
+  exclusive: false
+  prototype: BaseBallBat
+
+- type: loadout
+  id: LoadoutItemsChainsaw
+  category: loadout-category-items
+  cost: 5
+  exclusive: false
+  whitelistJobs:
+    - Warden
+    - HeadOfSecurity
+    - Captain
+    - Botanist
+    - ChiefMedicalOfficer
+  prototype: Chainsaw
+
+- type: loadout
+  id: LoadoutItemsCombatKnife
+  category: loadout-category-items
+  cost: 4
+  exclusive: false
+  whitelistJobs:
+    - SecurityCadet
+    - SecurityOfficer
+    - Warden
+    - Detective
+    - HeadOfSecurity
+    - Captain
+    - SeniorOfficer
+    - SalvageSpecialist
+    - Quartermaster
+  prototype: CombatKnife
+
+- type: loadout
+  id: LoadoutItemsBola
+  category: loadout-category-items
+  cost: 3
+  exclusive: false
+  whitelistJobs:
+    - SecurityCadet
+    - SecurityOfficer
+    - Warden
+    - Detective
+    - HeadOfSecurity
+    - Captain
+    - SeniorOfficer
+  prototype: Bola
+
+- type: loadout
+  id: LoadoutItemsWeaponWaterPistol
+  category: loadout-category-items
+  cost: 2
+  exclusive: false
+  prototype: WeaponWaterPistol
+
+- type: loadout
+  id: LoadoutItemsFlash
+  category: loadout-category-items
+  cost: 2
+  exclusive: false
+  whitelistJobs:
+    - SecurityCadet
+    - SecurityOfficer
+    - Warden
+    - Detective
+    - HeadOfSecurity
+    - Captain
+    - SeniorOfficer
+    - ResearchDirector
+    - ChiefMedicalOfficer
+    - ChiefEngineer
+    - HeadOfPersonnel
+  prototype: Flash
+  
+
+- type: loadout
+  id: LoadoutItemsWeaponCrusherGlaive
+  category: loadout-category-items
+  cost: 5
+  exclusive: false
+  whitelistJobs:
+    - SalvageSpecialist
+    - Quartermaster
+  prototype: WeaponCrusherGlaive
+  
+
+- type: loadout
+  id: LoadoutItemsSawElectric
+  category: loadout-category-items
+  cost: 3
+  exclusive: false
+  whitelistJobs:
+    - ChiefMedicalOfficer
+    - Chemist
+    - Paramedic
+    - MedicalDoctor
+    - MedicalIntern
+    - SeniorPhysician
+  prototype: SawElectric
+
+- type: loadout
+  id: LoadoutItemsTruncheon
+  category: loadout-category-items
+  cost: 4
+  exclusive: false
+  whitelistJobs:
+    - SecurityCadet
+    - SecurityOfficer
+    - Warden
+    - Detective
+    - HeadOfSecurity
+    - Captain
+    - SeniorOfficer
+  prototype: Truncheon
+
+- type: loadout
+  id: LoadoutItemsStunbaton
+  category: loadout-category-items
+  cost: 4
+  exclusive: false
+  whitelistJobs:
+    - SecurityCadet
+    - SecurityOfficer
+    - Warden
+    - Detective
+    - HeadOfSecurity
+    - Captain
+    - SeniorOfficer
+  prototype: Stunbaton
+  

@@ -1,0 +1,106 @@
+- type: loadout
+  id: LoadoutUniformUniformShortsRed
+  category: loadout-category-uniform
+  cost: 1
+  exclusive: true
+  prototype: UniformShortsRed
+
+- type: loadout
+  id: LoadoutUniformUniformShortsRedWithTop
+  category: loadout-category-uniform
+  cost: 1
+  exclusive: true
+  prototype: UniformShortsRedWithTop
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpsuitCentcomOfficer
+  category: loadout-category-uniform
+  cost: 7
+  exclusive: true
+  prototype: ClothingUniformJumpsuitCentcomOfficer
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpsuitHoSAlt
+  category: loadout-category-uniform
+  cost: 1
+  exclusive: true
+  whitelistJobs:
+    - HeadOfSecurity
+  prototype: ClothingUniformJumpsuitHoSAlt
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpskirtHoSAlt
+  category: loadout-category-uniform
+  cost: 1
+  exclusive: true
+  whitelistJobs:
+    - HeadOfSecurity
+  prototype: ClothingUniformJumpskirtHoSAlt
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpsuitQMTurtleneck
+  category: loadout-category-uniform
+  cost: 1
+  exclusive: true
+  whitelistJobs:
+    - Quartermaster
+  prototype: ClothingUniformJumpsuitQMTurtleneck
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpskirtQMTurtleneck
+  category: loadout-category-uniform
+  cost: 1
+  exclusive: true
+  whitelistJobs:
+    - Quartermaster
+  prototype: ClothingUniformJumpskirtQMTurtleneck
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpsuitResearchDirector
+  category: loadout-category-uniform
+  cost: 1
+  exclusive: true
+  whitelistJobs:
+    - ResearchDirector
+  prototype: ClothingUniformJumpsuitResearchDirector
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpskirtResearchDirector
+  category: loadout-category-uniform
+  cost: 1
+  exclusive: true
+  whitelistJobs:
+    - ResearchDirector
+  prototype: ClothingUniformJumpskirtResearchDirector
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpsuitChiefEngineerTurtle
+  category: loadout-category-uniform
+  cost: 1
+  exclusive: true
+  whitelistJobs:
+    - ChiefEngineer
+  prototype: ClothingUniformJumpsuitChiefEngineerTurtle
+
+- type: loadout
+  id: LoadoutUniformUniformJumpskirtChiefEngineerTurtle
+  category: loadout-category-uniform
+  cost: 1
+  exclusive: true
+  whitelistJobs:
+    - ChiefEngineer
+  prototype: ClothingUniformJumpskirtChiefEngineerTurtle
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpsuitSecBlue
+  category: loadout-category-uniform
+  cost: 1
+  exclusive: true
+  prototype: ClothingUniformJumpsuitSecBlue
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpsuitHawaiYellow
+  category: loadout-category-uniform
+  cost: 1
+  exclusive: true
+  prototype: ClothingUniformJumpsuitHawaiYellow

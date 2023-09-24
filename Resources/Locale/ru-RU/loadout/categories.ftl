@@ -1,0 +1,12 @@
+loadout-category-outerClothing = Поверх
+loadout-category-eyes = Глаза
+loadout-category-ears = Уши
+loadout-category-shoes = Обувь
+loadout-category-hands = Руки
+loadout-category-items = Вещи
+loadout-category-belt = Пояс
+loadout-category-masks = Маска
+loadout-category-neck = Шея
+loadout-category-uniform = Униформа
+loadout-category-head = Голова
+loadout-category-back = Спина

@@ -1,0 +1,13 @@
+- type: loadout
+  id: LoadoutNeckClothingNeckTieDet
+  category: loadout-category-neck
+  cost: 1
+  exclusive: true
+  prototype: ClothingNeckTieDet
+
+- type: loadout
+  id: LoadoutNeckClothingNeckTieSci
+  category: loadout-category-neck
+  cost: 1
+  exclusive: true
+  prototype: ClothingNeckTieSci

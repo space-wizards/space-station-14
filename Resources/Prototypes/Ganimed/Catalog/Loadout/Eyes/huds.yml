@@ -1,0 +1,15 @@
+- type: loadout
+  id: LoadoutEyesClothingEyesHudDiagnostic
+  category: loadout-category-eyes
+  cost: 3
+  exclusive: true
+  whitelistJobs:
+    - Quartermaster
+    - CargoTechnician
+    - SalvageSpecialist
+    - ChiefEngineer
+    - SeniorEngineer
+    - AtmosphericTechnician
+    - TechnicalAssistant
+    - StationEngineer
+  prototype: ClothingEyesHudDiagnostic

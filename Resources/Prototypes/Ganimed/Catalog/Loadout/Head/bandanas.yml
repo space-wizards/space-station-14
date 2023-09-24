@@ -1,0 +1,29 @@
+- type: loadout
+  id: LoadoutHeadClothingHeadBandBotany
+  category: loadout-category-head
+  cost: 2
+  exclusive: true
+  prototype: ClothingHeadBandBotany
+
+- type: loadout
+  id: LoadoutHeadClothingHeadBandSkull
+  category: loadout-category-head
+  cost: 2
+  exclusive: true
+  prototype: ClothingHeadBandSkull
+
+- type: loadout
+  id: LoadoutHeadClothingHeadBandMerc
+  category: loadout-category-head
+  cost: 2
+  exclusive: true
+  whitelistJobs:
+    - SecurityCadet
+    - SecurityOfficer
+    - Warden
+    - Detective
+    - HeadOfSecurity
+    - Captain
+    - SeniorOfficer
+  prototype: ClothingHeadBandMerc
+  

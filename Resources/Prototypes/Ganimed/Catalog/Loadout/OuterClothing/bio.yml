@@ -1,0 +1,65 @@
+- type: loadout
+  id: LoadoutOuterClothingClothingOuterBioJanitor
+  category: loadout-category-outerClothing
+  cost: 5
+  exclusive: true
+  whitelistJobs:
+    - Janitor
+  prototype: ClothingOuterBioJanitor
+
+- type: loadout
+  id: LoadoutOuterClothingClothingOuterBioScientist
+  category: loadout-category-outerClothing
+  cost: 5
+  exclusive: true
+  whitelistJobs:
+    - ResearchDirector
+    - ResearchAssistant
+    - Scientist
+    - SeniorResearcher
+  prototype: ClothingOuterBioScientist
+
+- type: loadout
+  id: LoadoutOuterClothingClothingOuterBioGeneral
+  category: loadout-category-outerClothing
+  cost: 8
+  exclusive: true
+  prototype: ClothingOuterBioGeneral
+
+- type: loadout
+  id: LoadoutOuterClothingClothingOuterBioSecurity
+  category: loadout-category-outerClothing
+  cost: 5
+  exclusive: true
+  whitelistJobs:
+    - SecurityCadet
+    - SecurityOfficer
+    - Warden
+    - Detective
+    - HeadOfSecurity
+    - Captain
+    - SeniorOfficer
+  prototype: ClothingOuterBioSecurity
+
+- type: loadout
+  id: LoadoutOuterClothingClothingOuterBioCmo
+  category: loadout-category-outerClothing
+  cost: 4
+  exclusive: true
+  whitelistJobs:
+    - ChiefMedicalOfficer
+  prototype: ClothingOuterBioCmo
+
+- type: loadout
+  id: LoadoutOuterClothingClothingOuterBioVirology
+  category: loadout-category-outerClothing
+  cost: 5
+  exclusive: true
+  whitelistJobs:
+    - ChiefMedicalOfficer
+    - Chemist
+    - Paramedic
+    - MedicalDoctor
+    - MedicalIntern
+    - SeniorPhysician
+  prototype: ClothingOuterBioVirology

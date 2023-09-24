@@ -1,0 +1,84 @@
+- type: loadout
+  id: LoadoutOuterClothingClothingOuterHospitalGown
+  category: loadout-category-outerClothing
+  cost: 1
+  exclusive: true
+  prototype: ClothingOuterHospitalGown
+
+- type: loadout
+  id: LoadoutOuterClothingClothingOuterArmorBasicSlim
+  category: loadout-category-outerClothing
+  cost: 3
+  exclusive: true
+  whitelistJobs:
+    - ChiefMedicalOfficer
+    - Captain
+    - Quartermaster
+    - ChiefEngineer
+    - ResearchDirector
+    - HeadOfPersonnel
+    - SecurityCadet
+    - SecurityOfficer
+    - Warden
+    - Detective
+    - HeadOfSecurity
+    - Captain
+    - SeniorOfficer
+  prototype: ClothingOuterArmorBasicSlim
+
+- type: loadout
+  id: LoadoutOuterClothingClothingOuterArmorBasic
+  category: loadout-category-outerClothing
+  cost: 3
+  exclusive: true
+  whitelistJobs:
+    - ChiefMedicalOfficer
+    - Quartermaster
+    - ChiefEngineer
+    - ResearchDirector
+    - HeadOfPersonnel
+    - SecurityCadet
+    - SecurityOfficer
+    - Warden
+    - Detective
+    - HeadOfSecurity
+    - Captain
+    - SeniorOfficer
+  prototype: ClothingOuterArmorBasic
+
+- type: loadout
+  id: LoadoutOuterClothingClothingOuterDogi
+  category: loadout-category-outerClothing
+  cost: 6
+  exclusive: true
+  prototype: ClothingOuterDogi
+
+- type: loadout
+  id: LoadoutOuterClothingClothingOuterArmorCult
+  category: loadout-category-outerClothing
+  cost: 6
+  exclusive: true
+  whitelistJobs:
+    - Chaplain
+  prototype: ClothingOuterArmorCult
+
+- type: loadout
+  id: LoadoutOuterClothingClothingOuterVest
+  category: loadout-category-outerClothing
+  cost: 1
+  exclusive: true
+  prototype: ClothingOuterVest
+
+- type: loadout
+  id: LoadoutOuterClothingClothingOuterVestDetective
+  category: loadout-category-outerClothing
+  cost: 2
+  exclusive: true
+  whitelistJobs:
+    - HeadOfSecurity
+    - Detective
+    - SeniorOfficer
+    - SecurityCadet
+    - SecurityOfficer
+    - Warden
+  prototype: ClothingOuterVestDetective

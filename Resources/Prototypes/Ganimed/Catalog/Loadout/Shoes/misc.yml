@@ -1,0 +1,65 @@
+- type: loadout
+  id: LoadoutBeltClothingShoesClownLarge
+  category: loadout-category-shoes
+  cost: 3
+  exclusive: true
+  whitelistJobs:
+    - Clown
+  prototype: ClothingShoesClownLarge
+
+- type: loadout
+  id: LoadoutBeltClothingShoesBootsPerformer
+  category: loadout-category-shoes
+  cost: 2
+  exclusive: true
+  prototype: ClothingShoesBootsPerformer
+
+- type: loadout
+  id: LoadoutBeltClothingShoesCult
+  category: loadout-category-shoes
+  cost: 3
+  exclusive: true
+  prototype: ClothingShoesCult
+
+- type: loadout
+  id: LoadoutBeltClothingShoesBootsMerc
+  category: loadout-category-shoes
+  cost: 3
+  exclusive: true
+  whitelistJobs:
+    - SecurityCadet
+    - SecurityOfficer
+    - Warden
+    - Detective
+    - HeadOfSecurity
+    - Captain
+    - SeniorOfficer
+  prototype: ClothingShoesBootsMerc
+
+- type: loadout
+  id: LoadoutBeltClothingShoesSwat
+  category: loadout-category-shoes
+  cost: 3
+  exclusive: true
+  whitelistJobs:
+    - SecurityCadet
+    - SecurityOfficer
+    - Warden
+    - Detective
+    - HeadOfSecurity
+    - Captain
+    - SeniorOfficer
+  prototype: ClothingShoesSwat
+
+- type: loadout
+  id: LoadoutBeltClothingShoesBootsSalvage
+  category: loadout-category-shoes
+  cost: 2
+  exclusive: true
+  whitelistJobs:
+    - SalvageSpecialist
+    - Quartermaster
+    - CargoTechnician
+    - Captain
+    - AtmosphericTechnician
+  prototype: ClothingShoesBootsSalvage

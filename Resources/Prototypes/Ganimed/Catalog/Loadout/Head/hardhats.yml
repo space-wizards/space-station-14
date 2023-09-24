@@ -1,0 +1,15 @@
+- type: loadout
+  id: LoadoutHeadClothingHeadHatHardhatArmored
+  category: loadout-category-head
+  cost: 2
+  exclusive: true
+  whitelistJobs:
+    - SalvageSpecialist
+    - Quartermaster
+    - CargoTechnician
+    - Captain
+    - ChiefEngineer
+    - SeniorEngineer
+    - AtmosphericTechnician
+    - StationEngineer
+  prototype: ClothingHeadHatHardhatArmored

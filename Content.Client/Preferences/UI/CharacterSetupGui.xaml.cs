@@ -178,6 +178,7 @@ namespace Content.Client.Preferences.UI
                 if (humanoid != null)
                 {
                     LobbyCharacterPreviewPanel.GiveDummyJobClothes(_previewDummy, humanoid);
+                    LobbyCharacterPreviewPanel.GiveDummyLoadoutItems(_previewDummy, humanoid);
                 }
 
                 var isSelectedCharacter = profile == preferencesManager.Preferences?.SelectedCharacter;

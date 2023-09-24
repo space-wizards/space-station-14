@@ -1,0 +1,32 @@
+- type: loadout
+  id: LoadoutMasksClothingMaskGasAtmos
+  category: loadout-category-masks
+  cost: 3
+  exclusive: true
+  whitelistJobs:
+    - StationEngineer
+    - SeniorEngineer
+    - ChiefEngineer
+    - AtmosphericTechnician
+  prototype: ClothingMaskGasAtmos
+
+- type: loadout
+  id: LoadoutMasksClothingMaskBreathMedicalSecurity
+  category: loadout-category-masks
+  cost: 3
+  exclusive: true
+  whitelistJobs:
+    - SecurityCadet
+    - SecurityOfficer
+    - Warden
+    - Detective
+    - HeadOfSecurity
+    - Captain
+    - SeniorOfficer
+    - ChiefMedicalOfficer
+    - Chemist
+    - Paramedic
+    - MedicalDoctor
+    - MedicalIntern
+    - SeniorPhysician
+  prototype: ClothingMaskBreathMedicalSecurity

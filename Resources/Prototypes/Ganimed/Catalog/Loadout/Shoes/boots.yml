@@ -1,0 +1,22 @@
+- type: loadout
+  id: LoadoutBeltClothingShoesBootsCombat
+  category: loadout-category-shoes
+  cost: 3
+  exclusive: true
+  whitelistJobs:
+    - SecurityCadet
+    - SecurityOfficer
+    - Warden
+    - Detective
+    - HeadOfSecurity
+    - Captain
+    - SeniorOfficer
+    - Captain
+  prototype: ClothingShoesBootsCombat
+
+- type: loadout
+  id: LoadoutBeltClothingShoesGaloshes
+  category: loadout-category-shoes
+  cost: 4
+  exclusive: true
+  prototype: ClothingShoesGaloshes

@@ -1,0 +1,49 @@
+- type: loadout
+  id: LoadoutHeadClothingHeadHatWatermelon
+  category: loadout-category-head
+  cost: 1
+  exclusive: true
+  prototype: ClothingHeadHatWatermelon
+
+- type: loadout
+  id: LoadoutHeadClothingHeadHatBeaverHat
+  category: loadout-category-head
+  cost: 1
+  exclusive: true
+  prototype: ClothingHeadHatBeaverHat
+
+- type: loadout
+  id: LoadoutHeadClothingHeadHatPaper
+  category: loadout-category-head
+  cost: 1
+  exclusive: true
+  prototype: ClothingHeadHatPaper
+
+- type: loadout
+  id: LoadoutHeadClothingHeadHatWitch
+  category: loadout-category-head
+  cost: 2
+  exclusive: true
+  prototype: ClothingHeadHatWitch
+
+- type: loadout
+  id: LoadoutHeadClothingHeadHatWitch1
+  category: loadout-category-head
+  cost: 2
+  exclusive: true
+  prototype: ClothingHeadHatWitch1
+
+- type: loadout
+  id: LoadoutHeadClothingHeadHatWizard
+  category: loadout-category-head
+  cost: 2
+  exclusive: true
+  prototype: ClothingHeadHatWizard
+
+- type: loadout
+  id: LoadoutHeadClothingHeadHatHetmanHat
+  category: loadout-category-head
+  cost: 2
+  exclusive: true
+  prototype: ClothingHeadHatHetmanHat
+  

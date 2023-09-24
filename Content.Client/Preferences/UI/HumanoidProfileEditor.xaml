@@ -141,6 +141,12 @@
                         <humanoid:MarkingPicker Name="CMarkings" IgnoreCategories="Hair,FacialHair" />
                     </ScrollContainer>
                 </BoxContainer>
+				<BoxContainer Orientation="Vertical" Margin="10" Name="CLoadoutsTab">
+                    <ProgressBar Name="LoadoutPoints" MaxValue="0" Value="0" />
+                    <ScrollContainer VerticalExpand="True">
+                        <TabContainer Name="CLoadoutsTabs" VerticalExpand="True" />
+                    </ScrollContainer>
+                </BoxContainer>
             </TabContainer>
         </BoxContainer>
         <!-- Right side -->

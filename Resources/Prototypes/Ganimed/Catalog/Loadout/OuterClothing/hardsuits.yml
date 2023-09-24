@@ -1,0 +1,30 @@
+- type: loadout
+  id: LoadoutOuterClothingClothingOuterSuitEmergency
+  category: loadout-category-outerClothing
+  cost: 5
+  exclusive: true
+  whitelistJobs:
+    - StationEngineer
+    - SeniorEngineer
+    - ChiefEngineer
+    - AtmosphericTechnician
+    - TechnicalAssistant
+  prototype: ClothingOuterSuitEmergency
+
+- type: loadout
+  id: LoadoutOuterClothingClothingOuterSuitAtmosFire
+  category: loadout-category-outerClothing
+  cost: 5
+  exclusive: true
+  whitelistJobs:
+    - ChiefEngineer
+    - AtmosphericTechnician
+  prototype: ClothingOuterSuitAtmosFire
+
+- type: loadout
+  id: LoadoutOuterClothingClothingOuterHardsuitBasic
+  category: loadout-category-outerClothing
+  cost: 7
+  exclusive: true
+  prototype: ClothingOuterHardsuitBasic
+  

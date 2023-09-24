@@ -7,6 +7,7 @@ using Content.Client.Players.PlayTimeTracking;
 using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.CCVar;
+using Content.Shared.Loadout;
 using Content.Shared.GameTicking;
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Markings;
@@ -80,6 +81,10 @@ namespace Content.Client.Preferences.UI
         private BoxContainer _jobList => CJobList;
         private BoxContainer _antagList => CAntagList;
         private BoxContainer _traitsList => CTraitsList;
+		private ProgressBar _loadoutPoints => LoadoutPoints;
+        private BoxContainer _loadoutsTab => CLoadoutsTab;
+        private TabContainer _loadoutsTabs => CLoadoutsTabs;
+        private readonly int StartLoadoutPoints = 14;
         private readonly List<JobPrioritySelector> _jobPriorities;
         private OptionButton _preferenceUnavailableButton => CPreferenceUnavailableButton;
         private readonly Dictionary<string, BoxContainer> _jobCategories;
@@ -87,6 +92,7 @@ namespace Content.Client.Preferences.UI
         private readonly List<SpeciesPrototype> _speciesList;
         private readonly List<AntagPreferenceSelector> _antagPreferences;
         private readonly List<TraitPreferenceSelector> _traitPreferences;
+        private readonly List<LoadoutPreferenceSelector>? _loadoutPreferences;
 
         private SpriteView _previewSpriteView => CSpriteView;
         private Button _previewRotateLeftButton => CSpriteRotateLeft;
@@ -460,6 +466,116 @@ namespace Content.Client.Preferences.UI
             CMarkings.OnMarkingRankChange += OnMarkingChange;
 
             #endregion Markings
+			
+			#region Loadouts
+
+            _loadoutPoints.MaxValue = StartLoadoutPoints;
+            _tabContainer.SetTabTitle(5, Loc.GetString("humanoid-profile-editor-loadouts-tab"));
+            _loadoutPreferences = new List<LoadoutPreferenceSelector>();
+            var loadouts = prototypeManager.EnumeratePrototypes<LoadoutPrototype>().OrderBy(l => l.ID).ToList();
+
+            if (loadouts.Count >= 0)
+            {
+                // Make Uncategorized category
+                var bocks = new BoxContainer()
+                {
+                    Orientation = LayoutOrientation.Vertical,
+                    VerticalExpand = true,
+                    Name = "Uncategorized_0"
+                };
+
+                _loadoutsTabs.AddChild(bocks);
+                _loadoutsTabs.SetTabTitle(0, "loadout-category-uncategorized");
+
+                // Make categories
+                int currentCategory = 1;
+                foreach (var loadout in loadouts)
+                {
+                    // Check for an existing category
+                    BoxContainer? match = null;
+                    foreach (var child in _loadoutsTabs.Children)
+                    {
+                        if (match != null || child.Name == null) continue;
+                        if (child.Name.Split("_")[0] == loadout.Category)
+                            match = (BoxContainer) child;
+                    }
+
+                    // If there is a category do nothing
+                    if (match != null)
+                        continue;
+                    // If not, make it
+                    var box = new BoxContainer()
+                    {
+                        Orientation = LayoutOrientation.Vertical,
+                        VerticalExpand = true,
+                        Name = $"{loadout.Category}_{currentCategory}"
+                    };
+
+                    _loadoutsTabs.AddChild(box);
+                    _loadoutsTabs.SetTabTitle(currentCategory, Loc.GetString(loadout.Category));
+                    currentCategory++;
+                }
+
+                _loadoutsTabs.CurrentTab = 1;
+
+                // Fill categories
+                foreach (var loadout in loadouts.OrderBy(l => !l.Exclusive))
+                {
+                    var selector = new LoadoutPreferenceSelector(loadout);
+
+                    // Look for an existing loadout category
+                    BoxContainer? match = null;
+                    foreach (var child in _loadoutsTabs.Children)
+                    {
+                        if (match != null || child.Name == null)
+                            continue;
+                        if (child.Name.Split("_")[0] == loadout.Category)
+                            match = (BoxContainer) child;
+                    }
+                    if (match?.Name == null)
+                    {
+                        _loadoutsTabs.SetTabTitle(0, "loadout-category-uncategorized");
+                        bocks.AddChild(selector);
+                    }
+                    else
+                    {
+                        _loadoutsTabs.SetTabTitle(int.Parse(match.Name.Split("_")[1]), Loc.GetString(loadout.Category));
+                        match.AddChild(selector);
+                    }
+
+                    _loadoutPreferences.Add(selector);
+                    selector.PreferenceChanged += preference =>
+                    {
+                        // Make sure they have enough loadout points
+                        if (preference)
+                        {
+                            var remain = _loadoutPoints.Value - loadout.Cost;
+                            if (remain < 0)
+                                preference = false;
+                            else
+                                _loadoutPoints.Value = remain;
+                        }
+                        else
+                            _loadoutPoints.Value += loadout.Cost;
+                        // Update Preference
+                        Profile = Profile?.WithLoadoutPreference(loadout.ID, preference);
+                        IsDirty = true;
+                        UpdateLoadoutPreferences();
+                        RebuildSpriteView();
+                    };
+                }
+
+                if (!bocks.Children.Any())
+                {
+                    _loadoutsTabs.SetTabVisible(0, false);
+                }
+            }
+            else
+            {
+                _loadoutsTab.AddChild(new Label { Text="No loadouts found" });
+            }
+
+            #endregion
 
             #region FlavorText
 
@@ -1106,6 +1222,7 @@ namespace Content.Client.Preferences.UI
             UpdateJobPriorities();
             UpdateAntagPreferences();
             UpdateTraitPreferences();
+            UpdateLoadoutPreferences();
             UpdateMarkings();
             RebuildSpriteView();
             UpdateHairPickers();
@@ -1298,6 +1415,30 @@ namespace Content.Client.Preferences.UI
                 preferenceSelector.Preference = preference;
             }
         }
+		
+		private void UpdateLoadoutPreferences()
+        {
+            _loadoutPoints.Value = StartLoadoutPoints;
+            _loadoutPoints.MaxValue = StartLoadoutPoints;
+
+            if (_loadoutPreferences == null)
+                return;
+
+            var points = StartLoadoutPoints;
+            foreach (var preferenceSelector in _loadoutPreferences)
+            {
+                var loadoutId = preferenceSelector.Loadout.ID;
+                var preference = Profile?.LoadoutPreferences.Contains(loadoutId) ?? false;
+
+                preferenceSelector.Preference = preference;
+
+                if (preference)
+                {
+                    points -= preferenceSelector.Loadout.Cost;
+                    _loadoutPoints.Value = points;
+                }
+            }
+        }
 
         private sealed class AntagPreferenceSelector : RequirementsSelector<AntagPrototype>
         {
@@ -1363,6 +1504,87 @@ namespace Content.Client.Preferences.UI
                 {
                     Orientation = LayoutOrientation.Horizontal,
                     Children = { _checkBox },
+                });
+            }
+
+            private void OnCheckBoxToggled(BaseButton.ButtonToggledEventArgs args)
+            {
+                PreferenceChanged?.Invoke(Preference);
+            }
+        }
+		
+		private sealed class LoadoutPreferenceSelector : Control
+        {
+            public LoadoutPrototype Loadout { get; }
+            private readonly CheckBox _checkBox;
+
+            public bool Preference
+            {
+                get => _checkBox.Pressed;
+                set => _checkBox.Pressed = value;
+            }
+
+            public event Action<bool>? PreferenceChanged;
+
+            public LoadoutPreferenceSelector(LoadoutPrototype loadout)
+            {
+                Loadout = loadout;
+
+                var entman = IoCManager.Resolve<IEntityManager>();
+                var dummyLoadout = entman.SpawnEntity(loadout.Prototype, MapCoordinates.Nullspace);
+                var loadoutMeta = entman.GetComponent<MetaDataComponent>(dummyLoadout);
+                var sprite = entman.GetComponent<SpriteComponent>(dummyLoadout);
+
+                var previewLoadout = new SpriteView
+                {
+                    Sprite = sprite,
+                    Scale = new Vector2(1, 1),
+                    OverrideDirection = Direction.South,
+                    VerticalAlignment = VAlignment.Center,
+                    SizeFlagsStretchRatio = 1
+                };
+
+                _checkBox = new CheckBox
+                {
+                    Text = $"{loadoutMeta.EntityName} [{loadout.Cost}]",
+                    VerticalAlignment = VAlignment.Center
+                };
+                _checkBox.OnToggled += OnCheckBoxToggled;
+
+                var tooltip = "";
+                tooltip += $"{Loc.GetString(loadoutMeta.EntityDescription)}";
+                if (loadout.WhitelistJobs != null || loadout.BlacklistJobs != null || loadout.SpeciesRestrictions != null)
+                    tooltip += "\n";
+
+                if (loadout.WhitelistJobs != null)
+                {
+                    tooltip += Loc.GetString("humanoid-profile-editor-loadouts-selector-whitelist");
+                    if (loadout.WhitelistJobs != null)
+                        foreach (var require in loadout.WhitelistJobs)
+                            tooltip += $"\n - {Loc.GetString($"Job{require}")} ({Loc.GetString("humanoid-profile-editor-loadouts-selector-job")})";
+                }
+
+                if (loadout.SpeciesRestrictions != null || loadout.BlacklistJobs != null)
+                {
+                    tooltip += Loc.GetString("humanoid-profile-editor-loadouts-selector-blacklist");
+                    if (loadout.SpeciesRestrictions != null)
+                        foreach (var require in loadout.SpeciesRestrictions)
+                            tooltip += $"\n - {Loc.GetString($"species-name-{require.ToLower()}")} ({Loc.GetString("humanoid-profile-editor-loadouts-selector-species")})";
+                    if (loadout.BlacklistJobs != null)
+                        foreach (var require in loadout.BlacklistJobs)
+                            tooltip += $"\n - {Loc.GetString($"Job{require}")} ({Loc.GetString("humanoid-profile-editor-loadouts-selector-job")})";
+                }
+
+                if (tooltip != "")
+                {
+                    _checkBox.ToolTip = tooltip;
+                    _checkBox.TooltipDelay = 0.2f;
+                }
+
+                AddChild(new BoxContainer
+                {
+                    Orientation = LayoutOrientation.Horizontal,
+                    Children = { previewLoadout, _checkBox },
                 });
             }
 

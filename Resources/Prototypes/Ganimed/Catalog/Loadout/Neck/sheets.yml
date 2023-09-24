@@ -1,0 +1,6 @@
+- type: loadout
+  id: LoadoutNeckBedsheetWhite
+  category: loadout-category-neck
+  cost: 1
+  exclusive: true
+  prototype: BedsheetWhite

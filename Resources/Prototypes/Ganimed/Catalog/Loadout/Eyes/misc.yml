@@ -1,0 +1,6 @@
+- type: loadout
+  id: LoadoutEyesClothingEyesEyepatch
+  category: loadout-category-eyes
+  cost: 1
+  exclusive: true
+  prototype: ClothingEyesEyepatch

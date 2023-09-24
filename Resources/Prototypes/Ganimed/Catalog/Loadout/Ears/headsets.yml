@@ -1,0 +1,148 @@
+- type: loadout
+  id: LoadoutEarsClothingHeadsetCMO
+  category: loadout-category-ears
+  cost: 1
+  exclusive: true
+  whitelistJobs:
+    - ChiefMedicalOfficer
+  prototype: ClothingHeadsetCMO
+
+- type: loadout
+  id: LoadoutEarsClothingHeadsetQM
+  category: loadout-category-ears
+  cost: 1
+  exclusive: true
+  whitelistJobs:
+    - Quartermaster
+  prototype: ClothingHeadsetQM
+
+- type: loadout
+  id: LoadoutEarsClothingHeadsetCE
+  category: loadout-category-ears
+  cost: 1
+  exclusive: true
+  whitelistJobs:
+    - ChiefEngineer
+  prototype: ClothingHeadsetCE
+
+- type: loadout
+  id: LoadoutEarsClothingHeadsetBrigmedic
+  category: loadout-category-ears
+  cost: 4
+  exclusive: true
+  whitelistJobs:
+    - MedicalDoctor
+    - ChiefMedicalOfficer
+    - Paramedic
+    - Chemist
+    - SeniorPhysician
+    - HeadOfSecurity
+    - SeniorOfficer
+    - Warden
+    - SecurityOfficer
+    - Detective
+  prototype: ClothingHeadsetBrigmedic
+
+- type: loadout
+  id: LoadoutEarsClothingHeadsetEngineering
+  category: loadout-category-ears
+  cost: 1
+  exclusive: true
+  whitelistJobs:
+    - TechnicalAssistant
+    - StationEngineer
+    - AtmosphericEngineer
+    - SeniorEngineer
+    - ChiefEngineer
+  prototype: ClothingHeadsetEngineering
+
+- type: loadout
+  id: LoadoutEarsClothingHeadsetCommand
+  category: loadout-category-ears
+  cost: 1
+  exclusive: true
+  whitelistJobs:
+    - Captain
+    - HeadOfPersonnnel
+  prototype: ClothingHeadsetCommand
+
+- type: loadout
+  id: LoadoutEarsClothingHeadsetMedical
+  category: loadout-category-ears
+  cost: 1
+  exclusive: true
+  whitelistJobs:
+    - ChiefMedicalOfficer
+    - Chemist
+    - Paramedic
+    - MedicalDoctor
+    - MedicalIntern
+    - SeniorPhysician
+  prototype: ClothingHeadsetMedical
+
+- type: loadout
+  id: LoadoutEarsClothingHeadsetScience
+  category: loadout-category-ears
+  cost: 1
+  exclusive: true
+  whitelistJobs:
+    - ResearchDirector
+    - ResearchAssistant
+    - Scientist
+    - SeniorResearcher
+  prototype: ClothingHeadsetScience
+
+- type: loadout
+  id: LoadoutEarsClothingHeadsetCargo
+  category: loadout-category-ears
+  cost: 1
+  exclusive: true
+  whitelistJobs:
+    - Quartermaster
+    - SalvageSpecialist
+    - CargoTechnician
+  prototype: ClothingHeadsetCargo
+
+- type: loadout
+  id: LoadoutEarsClothingHeadsetGrey
+  category: loadout-category-ears
+  cost: 1
+  exclusive: true
+  prototype: ClothingHeadsetGrey
+
+- type: loadout
+  id: LoadoutEarsClothingHeadsetService
+  category: loadout-category-ears
+  cost: 1
+  exclusive: true
+  whitelistJobs:
+    - HeadOfPersonnnel
+    - Bartender
+    - Chef
+    - Janitor
+    - Botanist
+    - ServiceWorker
+    - Boxer
+    - Chaplain
+    - Clown
+    - Mime
+    - Lawyer
+    - Librarian
+    - Musician
+    - Zookeper
+    - Reporter
+  prototype: ClothingHeadsetService
+
+- type: loadout
+  id: LoadoutEarsClothingHeadsetSecurity
+  category: loadout-category-ears
+  cost: 1
+  exclusive: true
+  whitelistJobs:
+    - SecurityCadet
+    - SecurityOfficer
+    - Warden
+    - Detective
+    - HeadOfSecurity
+    - SeniorOfficer
+  prototype: ClothingHeadsetSecurity

@@ -1,0 +1,186 @@
+- type: loadout
+  id: LoadoutNeckClothingBackpackDuffel
+  category: loadout-category-back
+  cost: 1
+  exclusive: true
+  prototype: ClothingBackpackDuffel
+
+- type: loadout
+  id: LoadoutNeckClothingBackpackDuffelAtmospherics
+  category: loadout-category-back
+  cost: 2
+  exclusive: true
+  whitelistJobs:
+    - ChiefEngineer
+    - SeniorEngineer
+    - AtmosphericTechnician
+    - StationEngineer
+  prototype: ClothingBackpackDuffelAtmospherics
+
+- type: loadout
+  id: LoadoutNeckClothingBackpackDuffelHydroponics
+  category: loadout-category-back
+  cost: 2
+  exclusive: true
+  whitelistJobs:
+    - Botanist
+    - ServiceWorker
+  prototype: ClothingBackpackDuffelHydroponics
+
+- type: loadout
+  id: LoadoutNeckClothingBackpackDuffelBrigmedic
+  category: loadout-category-back
+  cost: 3
+  exclusive: true
+  whitelistJobs:
+    - ChiefMedicalOfficer
+    - Chemist
+    - Paramedic
+    - MedicalDoctor
+    - MedicalIntern
+    - SeniorPhysician
+  prototype: ClothingBackpackDuffelBrigmedic
+
+- type: loadout
+  id: LoadoutNeckClothingBackpackDuffelVirology
+  category: loadout-category-back
+  cost: 2
+  exclusive: true
+  whitelistJobs:
+    - ChiefMedicalOfficer
+    - Chemist
+    - Paramedic
+    - MedicalDoctor
+    - MedicalIntern
+    - SeniorPhysician
+  prototype: ClothingBackpackDuffelVirology
+
+- type: loadout
+  id: LoadoutNeckClothingBackpackDuffelGenetics
+  category: loadout-category-back
+  cost: 2
+  exclusive: true
+  whitelistJobs:
+    - ChiefMedicalOfficer
+    - Chemist
+    - Paramedic
+    - MedicalDoctor
+    - MedicalIntern
+    - SeniorPhysician
+  prototype: ClothingBackpackDuffelGenetics
+
+- type: loadout
+  id: LoadoutNeckClothingBackpackDuffelChemistry
+  category: loadout-category-back
+  cost: 2
+  exclusive: true
+  whitelistJobs:
+    - ChiefMedicalOfficer
+    - Chemist
+    - Paramedic
+    - MedicalDoctor
+    - SeniorPhysician
+  prototype: ClothingBackpackDuffelChemistry
+
+- type: loadout
+  id: LoadoutNeckClothingBackpackDuffelCargo
+  category: loadout-category-back
+  cost: 1
+  exclusive: true
+  whitelistJobs:
+    - CargoTechnician
+    - SalvageSpecialist
+    - Quartermaster
+  prototype: ClothingBackpackDuffelCargo
+
+- type: loadout
+  id: LoadoutNeckClothingBackpackDuffelEngineering
+  category: loadout-category-back
+  cost: 1
+  exclusive: true
+  whitelistJobs:
+    - ChiefEngineer
+    - SeniorEngineer
+    - AtmosphericTechnician
+    - TechnicalAssistent
+    - StationEngineer
+  prototype: ClothingBackpackDuffelEngineering
+
+- type: loadout
+  id: LoadoutNeckClothingBackpackDuffelCaptain
+  category: loadout-category-back
+  cost: 1
+  exclusive: true
+  whitelistJobs:
+    - Captain
+  prototype: ClothingBackpackDuffelCaptain
+
+- type: loadout
+  id: LoadoutNeckClothingBackpackDuffelClown
+  category: loadout-category-back
+  cost: 1
+  exclusive: true
+  whitelistJobs:
+    - Clown
+  prototype: ClothingBackpackDuffelClown
+
+- type: loadout
+  id: LoadoutNeckClothingBackpackDuffelMedical
+  category: loadout-category-back
+  cost: 1
+  exclusive: true
+  whitelistJobs:
+    - ChiefMedicalOfficer
+    - Chemist
+    - Paramedic
+    - MedicalDoctor
+    - MedicalIntern
+    - SeniorPhysician
+  prototype: ClothingBackpackDuffelMedical
+
+- type: loadout
+  id: LoadoutNeckClothingBackpackDuffelMime
+  category: loadout-category-back
+  cost: 1
+  exclusive: true
+  whitelistJobs:
+    - Mime
+  prototype: ClothingBackpackDuffelMime
+
+- type: loadout
+  id: LoadoutNeckClothingBackpackDuffelSecurity
+  category: loadout-category-back
+  cost: 1
+  exclusive: true
+  whitelistJobs:
+    - SecurityCadet
+    - SecurityOfficer
+    - Warden
+    - Detective
+    - HeadOfSecurity
+    - Captain
+    - SeniorOfficer
+  prototype: ClothingBackpackDuffelSecurity
+
+- type: loadout
+  id: LoadoutNeckClothingBackpackDuffelSalvage
+  category: loadout-category-back
+  cost: 2
+  exclusive: true
+  whitelistJobs:
+    - CargoTechnician
+    - SalvageSpecialist
+    - Quartermaster
+  prototype: ClothingBackpackDuffelSalvage
+
+- type: loadout
+  id: LoadoutNeckClothingBackpackDuffelScience
+  category: loadout-category-back
+  cost: 1
+  exclusive: true
+  whitelistJobs:
+    - ResearchDirector
+    - ResearchAssistant
+    - Scientist
+    - SeniorResearcher
+  prototype: ClothingBackpackDuffelScience

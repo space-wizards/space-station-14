@@ -1,0 +1,44 @@
+- type: loadout
+  id: LoadoutBeltClothingBeltMilitaryWebbing
+  category: loadout-category-belt
+  cost: 3
+  exclusive: true
+  whitelistJobs:
+    - SecurityCadet
+    - SecurityOfficer
+    - Warden
+    - Detective
+    - HeadOfSecurity
+    - Captain
+    - SeniorOfficer
+  prototype: ClothingBeltMilitaryWebbing
+
+- type: loadout
+  id: LoadoutBeltClothingBeltMilitaryWebbingMed
+  category: loadout-category-belt
+  cost: 3
+  exclusive: true
+  whitelistJobs:
+    - SecurityCadet
+    - SecurityOfficer
+    - Warden
+    - Detective
+    - HeadOfSecurity
+    - Captain
+    - SeniorOfficer
+  prototype: ClothingBeltMilitaryWebbingMed
+
+- type: loadout
+  id: LoadoutBeltClothingBeltBandolier
+  category: loadout-category-belt
+  cost: 3
+  exclusive: true
+  whitelistJobs:
+    - SecurityCadet
+    - SecurityOfficer
+    - Warden
+    - Detective
+    - HeadOfSecurity
+    - Captain
+    - SeniorOfficer
+  prototype: ClothingBeltBandolier

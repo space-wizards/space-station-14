@@ -1,0 +1,55 @@
+- type: loadout
+  id: LoadoutHandsClothingHandsGlovesFingerlessInsulated
+  category: loadout-category-hands
+  cost: 2
+  exclusive: true
+  prototype: ClothingHandsGlovesFingerlessInsulated
+
+- type: loadout
+  id: LoadoutHandsClothingHandsGlovesFingerless
+  category: loadout-category-hands
+  cost: 1
+  exclusive: true
+  prototype: ClothingHandsGlovesFingerless
+
+- type: loadout
+  id: LoadoutHandsClothingHandsGlovesMercFingerless
+  category: loadout-category-hands
+  cost: 2
+  exclusive: true
+  whitelistJobs:
+    - SecurityCadet
+    - SecurityOfficer
+    - Warden
+    - Detective
+    - HeadOfSecurity
+    - Captain
+    - SeniorOfficer
+  prototype: ClothingHandsGlovesMercFingerless
+
+- type: loadout
+  id: LoadoutHandsClothingHandsGlovesCombat
+  category: loadout-category-hands
+  cost: 3
+  exclusive: true
+  whitelistJobs:
+    - HeadOfSecurity
+    - Captain
+  prototype: ClothingHandsGlovesCombat
+
+- type: loadout
+  id: LoadoutHandsClothingHandsMercGlovesCombat
+  category: loadout-category-hands
+  cost: 3
+  exclusive: true
+  whitelistJobs:
+    - HeadOfSecurity
+    - Captain
+  prototype: ClothingHandsMercGlovesCombat
+
+- type: loadout
+  id: LoadoutHandsClothingHandsGlovesColorYellowBudget
+  category: loadout-category-hands
+  cost: 2
+  exclusive: true
+  prototype: ClothingHandsGlovesColorYellowBudget

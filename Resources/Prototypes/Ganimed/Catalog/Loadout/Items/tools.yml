@@ -1,0 +1,80 @@
+- type: loadout
+  id: LoadoutItemsCrowbarRed
+  category: loadout-category-items
+  cost: 3
+  exclusive: false
+  prototype: CrowbarRed
+
+- type: loadout
+  id: LoadoutItemsToolboxEmergencyFilled
+  category: loadout-category-items
+  cost: 3
+  exclusive: false
+  whitelistJobs:
+    - StationEngineer
+    - SeniorEngineer
+    - ChiefEngineer
+    - AtmosphericTechnician
+    - TechnicalAssistant
+  prototype: ToolboxEmergencyFilled
+
+- type: loadout
+  id: LoadoutItemsAcousticGuitarInstrument
+  category: loadout-category-items
+  cost: 3
+  exclusive: false
+  prototype: AcousticGuitarInstrument
+
+- type: loadout
+  id: LoadoutItemsHandheldHealthAnalyzer
+  category: loadout-category-items
+  cost: 2
+  exclusive: false
+  whitelistJobs:
+    - ChiefMedicalOfficer
+    - Chemist
+    - Paramedic
+    - MedicalIntern
+    - MedicalDoctor
+    - SeniorPhysician
+  prototype: ToolboxEmergencyFilled
+
+- type: loadout
+  id: LoadoutItemsMedkitFilled
+  category: loadout-category-items
+  cost: 5
+  exclusive: false
+  prototype: MedkitFilled
+
+- type: loadout
+  id: LoadoutItemsHolofanProjector
+  category: loadout-category-items
+  cost: 3
+  exclusive: false
+  whitelistJobs:
+    - StationEngineer
+    - SeniorEngineer
+    - ChiefEngineer
+    - AtmosphericTechnician
+    - TechnicalAssistant
+  prototype: HolofanProjector
+
+- type: loadout
+  id: LoadoutItemsGasAnalyzer
+  category: loadout-category-items
+  cost: 2
+  exclusive: false
+  whitelistJobs:
+    - StationEngineer
+    - SeniorEngineer
+    - ChiefEngineer
+    - AtmosphericTechnician
+    - TechnicalAssistant
+  prototype: GasAnalyzer
+
+- type: loadout
+  id: LoadoutItemsWrench
+  category: loadout-category-items
+  cost: 1
+  exclusive: false
+  prototype: Wrench

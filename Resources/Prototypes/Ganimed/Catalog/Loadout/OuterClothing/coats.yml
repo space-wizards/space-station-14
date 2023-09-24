@@ -1,0 +1,31 @@
+- type: loadout
+  id: LoadoutOuterClothingClothingOuterCoatGentle
+  category: loadout-category-outerClothing
+  cost: 1
+  exclusive: true
+  prototype: ClothingOuterCoatGentle
+
+- type: loadout
+  id: LoadoutOuterClothingClothingOuterCoatWarden
+  category: loadout-category-outerClothing
+  cost: 2
+  exclusive: true
+  whitelistJobs:
+    - HeadOfSecurity
+    - Warden
+  prototype: ClothingOuterCoatWarden
+
+- type: loadout
+  id: LoadoutOuterClothingClothingOuterCoatParamedicWB
+  category: loadout-category-outerClothing
+  cost: 3
+  exclusive: true
+  whitelistJobs:
+    - ChiefMedicalOfficer
+    - SeniorPhysician
+    - Chemist
+    - MedicalDoctor
+    - MedicalIntern
+    - Paramedic
+  prototype: ClothingOuterCoatParamedicWB
+  

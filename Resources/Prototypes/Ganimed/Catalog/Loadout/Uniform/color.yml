@@ -1,0 +1,27 @@
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpsuitColorTeal
+  category: loadout-category-uniform
+  cost: 1
+  exclusive: false
+  prototype: ClothingUniformJumpsuitColorTeal
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpskirtColorTeal
+  category: loadout-category-uniform
+  cost: 1
+  exclusive: false
+  prototype: ClothingUniformJumpskirtColorTeal
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpsuitColorMaroon
+  category: loadout-category-uniform
+  cost: 1
+  exclusive: false
+  prototype: ClothingUniformJumpsuitColorMaroon
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpskirtColorMaroon
+  category: loadout-category-uniform
+  cost: 1
+  exclusive: false
+  prototype: ClothingUniformJumpskirtColorMaroon
