@@ -14,7 +14,7 @@ public abstract class SharedWhistleSystem : EntitySystem
 
     private bool ExclamateTarget(EntityUid target, WhistleComponent component)
     {
-        SpawnAttachedTo(component.effect, target.ToCoordinates());
+        SpawnAttachedTo(component.Effect, target.ToCoordinates());
 
         return true;
     }
