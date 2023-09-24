@@ -1,9 +1,4 @@
 Entries:
-- author: crazybrain
-  changes:
-  - {message: Updated the HAMTR mech's description to avoid trademark issues., type: Fix}
-  id: 4390
-  time: '2023-07-31T20:30:52.0000000+00:00'
 - author: Raitononai
   changes:
   - {message: 'Gave the toy sword slight stamina damage, like the boxing gloves and
@@ -2981,3 +2976,9 @@ Entries:
       can recall it.', type: Tweak}
   id: 4889
   time: '2023-09-24T20:16:33.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Ghosts can now toggle whether they hear out-of-range local messages
+      using an action, type: Add}
+  id: 4890
+  time: '2023-09-24T20:34:09.0000000+00:00'
