@@ -68,7 +68,6 @@
 - type: entity
   abstract: true
   id: ItemHeftyBase
-  description: hit hard ye
   components:
   - type: DamageOnLand
     damage:
