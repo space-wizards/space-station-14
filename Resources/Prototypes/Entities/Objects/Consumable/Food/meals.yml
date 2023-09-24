@@ -567,7 +567,7 @@
   description: Buttery.
   components:
   - type: Food
-    trash: FoodPlate
+    trashPrototype: FoodPlate
   - type: FlavorProfile
     flavors:
       - corn

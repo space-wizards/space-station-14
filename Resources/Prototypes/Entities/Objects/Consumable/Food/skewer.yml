@@ -6,7 +6,7 @@
   abstract: true
   components:
   - type: Food
-    trash: FoodKebabSkewer
+    trashPrototype: FoodKebabSkewer
   - type: Sprite
     sprite: Objects/Consumable/Food/skewer.rsi
   - type: SolutionContainerManager

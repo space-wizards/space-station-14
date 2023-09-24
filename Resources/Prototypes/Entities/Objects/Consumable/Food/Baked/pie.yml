@@ -124,7 +124,7 @@
       - banana
       - creamy
   - type: Food
-    trash: FoodPlateTin
+    trashPrototype: FoodPlateTin
   - type: Sprite
     layers:
     - state: tin
