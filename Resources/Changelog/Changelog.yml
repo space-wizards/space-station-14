@@ -1,10 +1,4 @@
 Entries:
-- author: Ilya246
-  changes:
-  - {message: Passive vents now equalize pressure both ways between the pipe and environment.,
-    type: Tweak}
-  id: 4384
-  time: '2023-07-31T05:40:31.0000000+00:00'
 - author: Raitononai
   changes:
   - {message: Added missing job specific items to Senior Researcher and Senior Engineer
@@ -2980,3 +2974,8 @@ Entries:
     type: Add}
   id: 4883
   time: '2023-09-24T19:47:42.0000000+00:00'
+- author: Slava0135
+  changes:
+  - {message: Fixed people getting too thirsty., type: Fix}
+  id: 4884
+  time: '2023-09-24T19:50:41.0000000+00:00'
