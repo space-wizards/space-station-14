@@ -457,7 +457,7 @@
   name: boritos bag
   components:
   - type: Sprite
-    state: boritos-trash
+    state: boritos-trashPrototype
   - type: Item
 
 - type: entity
@@ -467,7 +467,7 @@
   name: C&Ds bag
   components:
   - type: Sprite
-    state: cnds-trash
+    state: cnds-trashPrototype
   - type: Item
 
 - type: entity
@@ -477,7 +477,7 @@
   name: cheesie honkers
   components:
   - type: Sprite
-    state: cheesiehonkers-trash
+    state: cheesiehonkers-trashPrototype
   - type: Item
 
 - type: entity
@@ -487,7 +487,7 @@
   name: chips
   components:
   - type: Sprite
-    state: chips-trash
+    state: chips-trashPrototype
   - type: Item
 
 - type: entity
@@ -497,7 +497,7 @@
   name: chocolate wrapper
   components:
   - type: Sprite
-    state: chocolatebar-trash
+    state: chocolatebar-trashPrototype
   - type: Item
 
 - type: entity
@@ -507,7 +507,7 @@
   name: energybar wrapper
   components:
   - type: Sprite
-    state: energybar-trash
+    state: energybar-trashPrototype
   - type: Item
 
 - type: entity
@@ -517,7 +517,7 @@
   name: pistachios packet
   components:
   - type: Sprite
-    state: pistachio-trash
+    state: pistachio-trashPrototype
   - type: Item
 
 - type: entity
@@ -527,7 +527,7 @@
   name: popcorn box
   components:
   - type: Sprite
-    state: popcorn-trash
+    state: popcorn-trashPrototype
   - type: Item
 
 - type: entity
@@ -537,7 +537,7 @@
   name: 4no raisins
   components:
   - type: Sprite
-    state: raisins-trash
+    state: raisins-trashPrototype
   - type: Item
 
 - type: entity
@@ -547,7 +547,7 @@
   name: semki packet
   components:
   - type: Sprite
-    state: semki-trash
+    state: semki-trashPrototype
   - type: Item
 
 - type: entity
@@ -557,7 +557,7 @@
   name: sus jerky
   components:
   - type: Sprite
-    state: susjerky-trash
+    state: susjerky-trashPrototype
   - type: Item
 
 - type: entity
@@ -567,7 +567,7 @@
   name: syndi-cakes box
   components:
   - type: Sprite
-    state: syndicakes-trash
+    state: syndicakes-trashPrototype
   - type: Item
 
 - type: entity
