@@ -21,8 +21,9 @@ namespace Content.Server.Chemistry.ReagentEffects
         /// Satiate thirst if a ThirstComponent can be found
         public override void Effect(ReagentEffectArgs args)
         {
-            if (args.EntityManager.TryGetComponent(args.SolutionEntity, out ThirstComponent? thirst))
-                EntitySystem.Get<ThirstSystem>().UpdateThirst(thirst, HydrationFactor);
+            var uid = args.SolutionEntity;
+            if (args.EntityManager.TryGetComponent(uid, out ThirstComponent? thirst))
+                EntitySystem.Get<ThirstSystem>().ModifyThirst(uid, thirst, HydrationFactor);
         }
 
         protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
