@@ -7,7 +7,7 @@ using JetBrains.Annotations;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
-namespace Content.Server.Nutrition.EntitySystems;
+namespace Content.Shared.Nutrition.EntitySystems;
 
 [UsedImplicitly]
 public sealed class ThirstSystem : EntitySystem
