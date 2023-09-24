@@ -1,10 +1,4 @@
 Entries:
-- author: notafet
-  changes:
-  - {message: 'Bullets, lasers, and disabler bolts now hit vehicles and their occupants.',
-    type: Fix}
-  id: 4389
-  time: '2023-07-31T20:30:24.0000000+00:00'
 - author: crazybrain
   changes:
   - {message: Updated the HAMTR mech's description to avoid trademark issues., type: Fix}
@@ -2980,3 +2974,10 @@ Entries:
   - {message: Lowered the maximum explosion range of canister bombs., type: Tweak}
   id: 4888
   time: '2023-09-24T19:59:05.0000000+00:00'
+- author: CaptainSqrBeard
+  changes:
+  - {message: 'Now after killing all nuclear operatives, the emergency shuttle will
+      be called instead of instant round end. Shuttle arrives in 10 minutes and you
+      can recall it.', type: Tweak}
+  id: 4889
+  time: '2023-09-24T20:16:33.0000000+00:00'
