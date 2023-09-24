@@ -940,22 +940,22 @@
     whitelist:
     - Clown
 
-- type: listing
-  id: uplinkHotPotato
-  name: uplink-hot-potato-name
-  description: uplink-hot-potato-desc
-  productEntity: HotPotato
-  cost:
-    Telecrystal: 4
-  categories:
-  - UplinkJob
-  conditions:
-  - !type:BuyerJobCondition
-    whitelist:
-    - Chef
-    - Botanist
-    - Clown
-    - Mime
+# - type: listing # disabled because sometimes it didn't appear in target hands
+#   id: uplinkHotPotato
+#   name: uplink-hot-potato-name
+#   description: uplink-hot-potato-desc
+#   productEntity: HotPotato
+#   cost:
+#     Telecrystal: 4
+#   categories:
+#   - UplinkJob
+#   conditions:
+#   - !type:BuyerJobCondition
+#     whitelist:
+#     - Chef
+#     - Botanist
+#     - Clown
+#     - Mime
 
 - type: listing
   id: UplinkChimpUpgradeKit
