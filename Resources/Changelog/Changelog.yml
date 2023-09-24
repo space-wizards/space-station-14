@@ -1,21 +1,4 @@
 Entries:
-- author: crazybrain
-  changes:
-  - {message: Updated the HAMTR mech's description to avoid trademark issues., type: Fix}
-  id: 4390
-  time: '2023-07-31T20:30:52.0000000+00:00'
-- author: Raitononai
-  changes:
-  - {message: 'Gave the toy sword slight stamina damage, like the boxing gloves and
-      toy hammer.', type: Tweak}
-  id: 4391
-  time: '2023-07-31T20:32:17.0000000+00:00'
-- author: HerCoyote23
-  changes:
-  - {message: 'Following a recent increase in Behonker activity, Nanotrasen has equipped
-      its security teams with a more harmful alternative to the stun baton.', type: Add}
-  id: 4392
-  time: '2023-07-31T20:37:13.0000000+00:00'
 - author: tom-leys
   changes:
   - {message: 'The roundend summary now shows a picture of your original body, even
@@ -2981,3 +2964,20 @@ Entries:
       can recall it.', type: Tweak}
   id: 4889
   time: '2023-09-24T20:16:33.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Ghosts can now toggle whether they hear out-of-range local messages
+      using an action, type: Add}
+  id: 4890
+  time: '2023-09-24T20:34:09.0000000+00:00'
+- author: daerSeebaer
+  changes:
+  - {message: The AME now shuts down when the inserted fuel jar is empty, type: Add}
+  - {message: The AME no longer makes sounds if no fuel was injected, type: Tweak}
+  id: 4891
+  time: '2023-09-24T20:39:49.0000000+00:00'
+- author: gusxyz
+  changes:
+  - {message: Empty ore boxes are now orderable from cargo., type: Add}
+  id: 4892
+  time: '2023-09-24T20:52:07.0000000+00:00'
