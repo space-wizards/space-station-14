@@ -68,37 +68,31 @@ namespace Content.Server.StationEvents
         private EventManagerSystem? _stationEvent;
 
         [CommandImplementation("lsprob")]
-        public string LsProb()
+        public IEnumerable<(string, float)> LsProb()
         {
             _stationEvent ??= GetSys<EventManagerSystem>();
             var events = _stationEvent.AllEvents();
 
             var totalWeight = events.Sum(x => x.Value.Weight);
 
-            var outputStr = string.Empty;
             foreach (var (proto, comp) in events)
             {
-                outputStr += $"{proto.ID}: {comp.Weight / totalWeight:P1}\n";
+                yield return (proto.ID, comp.Weight / totalWeight);
             }
-
-            return outputStr.Trim();
         }
 
         [CommandImplementation("lsprobtime")]
-        public string LsProbTime([CommandArgument] float time)
+        public IEnumerable<(string, float)> LsProbTime([CommandArgument] float time)
         {
             _stationEvent ??= GetSys<EventManagerSystem>();
             var events = _stationEvent.AllEvents().Where(pair => pair.Value.EarliestStart <= time).ToList();
 
             var totalWeight = events.Sum(x => x.Value.Weight);
 
-            var outputStr = string.Empty;
             foreach (var (proto, comp) in events)
             {
-                outputStr += $"{proto.ID}: {comp.Weight / totalWeight:P1}\n";
+                yield return (proto.ID, comp.Weight / totalWeight);
             }
-
-            return outputStr.Trim();
         }
 
         [CommandImplementation("prob")]
