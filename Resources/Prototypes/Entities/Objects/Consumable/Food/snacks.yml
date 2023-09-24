@@ -40,7 +40,7 @@
     state: boritos
   - type: Item
   - type: Food
-    trashPrototype: FoodPacketBoritosTrash
+    trash: FoodPacketBoritosTrash
 
 - type: entity
   name: C&Ds
@@ -55,7 +55,7 @@
     state: cnds
   - type: Item
   - type: Food
-    trashPrototype: FoodPacketCnDsTrash
+    trash: FoodPacketCnDsTrash
 
 - type: entity
   name: cheesie honkers
@@ -71,7 +71,7 @@
     state: cheesiehonkers
   - type: Item
   - type: Food
-    trashPrototype: FoodPacketCheesieTrash
+    trash: FoodPacketCheesieTrash
 
 - type: entity
   name: chips
@@ -88,7 +88,7 @@
     state: chips
   - type: Item
   - type: Food
-    trashPrototype: FoodPacketChipsTrash
+    trash: FoodPacketChipsTrash
 
 - type: entity
   name: chocolate bar
@@ -182,7 +182,7 @@
     state: pistachio
   - type: Item
   - type: Food
-    trashPrototype: FoodPacketPistachioTrash
+    trash: FoodPacketPistachioTrash
 
 - type: entity
   name: popcorn
@@ -200,7 +200,7 @@
   - type: Item
     heldPrefix: popcorn
   - type: Food
-    trashPrototype: FoodPacketPopcornTrash
+    trash: FoodPacketPopcornTrash
 
 - type: entity
   name: 4no raisins
@@ -215,7 +215,7 @@
     state: raisins
   - type: Item
   - type: Food
-    trashPrototype: FoodPacketRaisinsTrash
+    trash: FoodPacketRaisinsTrash
 
 - type: entity
   name: bob's semki sunflower seeds
@@ -230,7 +230,7 @@
     state: semki
   - type: Item
   - type: Food
-    trashPrototype: FoodPacketSemkiTrash
+    trash: FoodPacketSemkiTrash
 
 - type: entity
   name: sus jerky
@@ -245,7 +245,7 @@
     state: susjerky
   - type: Item
   - type: Food
-    trashPrototype: FoodPacketSusTrash
+    trash: FoodPacketSusTrash
 
 - type: entity
   name: syndi-cakes
@@ -260,7 +260,7 @@
     state: syndicakes
   - type: Item
   - type: Food
-    trashPrototype: FoodPacketSyndiTrash
+    trash: FoodPacketSyndiTrash
 
 - type: entity
   name: chow mein
@@ -286,7 +286,7 @@
         - ReagentId: Soysauce
           Quantity: 2
   - type: Food
-    trashPrototype: FoodPacketChowMeinTrash
+    trash: FoodPacketChowMeinTrash
 
 - type: entity
   name: dan dan noodles
@@ -314,7 +314,7 @@
         - ReagentId: Soysauce
           Quantity: 2
   - type: Food
-    trashPrototype: FoodPacketDanDanTrash
+    trash: FoodPacketDanDanTrash
 
 - type: entity
   name: fortune cookie
@@ -339,7 +339,7 @@
     heldPrefix: packet
     size: 1
   - type: Food
-    trashPrototype: FoodCookieFortune
+    trash: FoodCookieFortune
 
 - type: entity
   id: FoodSnackNutribrick
@@ -457,7 +457,7 @@
   name: boritos bag
   components:
   - type: Sprite
-    state: boritos-trashPrototype
+    state: boritos-trash
   - type: Item
 
 - type: entity
@@ -467,7 +467,7 @@
   name: C&Ds bag
   components:
   - type: Sprite
-    state: cnds-trashPrototype
+    state: cnds-trash
   - type: Item
 
 - type: entity
@@ -477,7 +477,7 @@
   name: cheesie honkers
   components:
   - type: Sprite
-    state: cheesiehonkers-trashPrototype
+    state: cheesiehonkers-trash
   - type: Item
 
 - type: entity
@@ -487,7 +487,7 @@
   name: chips
   components:
   - type: Sprite
-    state: chips-trashPrototype
+    state: chips-trash
   - type: Item
 
 - type: entity
@@ -497,7 +497,7 @@
   name: chocolate wrapper
   components:
   - type: Sprite
-    state: chocolatebar-trashPrototype
+    state: chocolatebar-trash
   - type: Item
 
 - type: entity
@@ -507,7 +507,7 @@
   name: energybar wrapper
   components:
   - type: Sprite
-    state: energybar-trashPrototype
+    state: energybar-trash
   - type: Item
 
 - type: entity
@@ -517,7 +517,7 @@
   name: pistachios packet
   components:
   - type: Sprite
-    state: pistachio-trashPrototype
+    state: pistachio-trash
   - type: Item
 
 - type: entity
@@ -527,7 +527,7 @@
   name: popcorn box
   components:
   - type: Sprite
-    state: popcorn-trashPrototype
+    state: popcorn-trash
   - type: Item
 
 - type: entity
@@ -537,7 +537,7 @@
   name: 4no raisins
   components:
   - type: Sprite
-    state: raisins-trashPrototype
+    state: raisins-trash
   - type: Item
 
 - type: entity
@@ -547,7 +547,7 @@
   name: semki packet
   components:
   - type: Sprite
-    state: semki-trashPrototype
+    state: semki-trash
   - type: Item
 
 - type: entity
@@ -557,7 +557,7 @@
   name: sus jerky
   components:
   - type: Sprite
-    state: susjerky-trashPrototype
+    state: susjerky-trash
   - type: Item
 
 - type: entity
@@ -567,7 +567,7 @@
   name: syndi-cakes box
   components:
   - type: Sprite
-    state: syndicakes-trashPrototype
+    state: syndicakes-trash
   - type: Item
 
 - type: entity

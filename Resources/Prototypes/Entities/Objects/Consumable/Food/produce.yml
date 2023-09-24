@@ -200,7 +200,7 @@
     flavors:
       - banana
   - type: Food
-    trashPrototype: TrashBananaPeel
+    trash: TrashBananaPeel
   - type: SolutionContainerManager
     solutions:
       food:
@@ -231,7 +231,7 @@
       - banana
       - nothing
   - type: Food
-    trashPrototype: TrashMimanaPeel
+    trash: TrashMimanaPeel
   - type: SolutionContainerManager
     solutions:
       food:
@@ -777,7 +777,7 @@
     flavors:
       - corn
   - type: Food
-    trashPrototype: FoodCornTrash
+    trash: FoodCornTrash
   - type: SolutionContainerManager
     solutions:
       food:
@@ -1260,7 +1260,7 @@
   - type: Produce
     seedId: gatfruit
   - type: Food
-    trashPrototype: WeaponRevolverPython
+    trash: WeaponRevolverPython
 
 - type: entity
   name: rice bushel
@@ -1490,7 +1490,7 @@
     flavors:
       - bungo
   - type: Food
-    trashPrototype: FoodBungoPit
+    trash: FoodBungoPit
   - type: SolutionContainerManager
     solutions:
       food:

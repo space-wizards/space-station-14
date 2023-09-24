@@ -10,7 +10,7 @@
     tags:
       - Egg
   - type: Food
-    trashPrototype: Eggshells
+    trash: Eggshells
   - type: Sprite
     sprite: Objects/Consumable/Food/egg.rsi
   - type: Item

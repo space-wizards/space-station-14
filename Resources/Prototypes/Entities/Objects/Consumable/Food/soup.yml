@@ -4,7 +4,7 @@
   abstract: true
   components:
   - type: Food
-    trashPrototype: FoodBowlBig
+    trash: FoodBowlBig
     utensil: Spoon
   - type: SolutionContainerManager
     solutions:
@@ -897,7 +897,7 @@
     flavors:
       - miso
   - type: Food
-    trashPrototype: FoodBowlFancy
+    trash: FoodBowlFancy
   - type: Sprite
     layers:
     - state: bowl2
