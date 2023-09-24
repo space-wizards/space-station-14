@@ -307,7 +307,7 @@
 
 - type: entity
   abstract: true
-  parent: BaseItem
+  parent: FoodBase
   id: FoodBakingBase
   description: Used in various recipes.
   components:
