@@ -15,7 +15,7 @@ namespace Content.Shared.Whistle
         /// Entity prototype to spawn
         /// </summary>
         [DataField("effect", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-        public string? effect = "WhistleExclamation";
+        public string? Effect = "WhistleExclamation";
 
         /// <summary>
         /// Range value.
