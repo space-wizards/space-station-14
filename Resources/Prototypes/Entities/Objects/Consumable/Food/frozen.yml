@@ -247,7 +247,7 @@
   components:
   - type: Sprite
     sprite: Objects/Consumable/Food/frozen.rsi
-    state: cone-trashPrototype
+    state: cone-trash
   - type: Tag
     tags:
     - Trash
