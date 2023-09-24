@@ -157,6 +157,10 @@ public sealed partial class MechComponent : Component
     [DataField("brokenState")]
     public string? BrokenState;
     #endregion
+
+    [DataField] public EntityUid? MechCycleActionEntity;
+    [DataField] public EntityUid? MechUiActionEntity;
+    [DataField] public EntityUid? MechEjectActionEntity;
 }
 
 /// <summary>
@@ -169,6 +173,6 @@ public sealed class MechComponentState : ComponentState
     public FixedPoint2 MaxIntegrity;
     public FixedPoint2 Energy;
     public FixedPoint2 MaxEnergy;
-    public EntityUid? CurrentSelectedEquipment;
+    public NetEntity? CurrentSelectedEquipment;
     public bool Broken;
 }

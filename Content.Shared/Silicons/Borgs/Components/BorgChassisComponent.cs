@@ -33,7 +33,7 @@ public sealed partial class BorgChassisComponent : Component
     public string BrainContainerId = "borg_brain";
 
     [ViewVariables(VVAccess.ReadWrite)]
-    public ContainerSlot BrainContainer = new();
+    public ContainerSlot BrainContainer = default!;
 
     public EntityUid? BrainEntity => BrainContainer.ContainedEntity;
     #endregion

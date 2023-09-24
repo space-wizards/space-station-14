@@ -45,7 +45,7 @@ public sealed partial class SericultureSystem : EntitySystem
             return;
         }
 
-        var doAfter = new DoAfterArgs(uid, comp.ProductionLength, new SericultureDoAfterEvent(), uid)
+        var doAfter = new DoAfterArgs(EntityManager, uid, comp.ProductionLength, new SericultureDoAfterEvent(), uid)
         {
             BreakOnUserMove = true,
             BlockDuplicate = true,

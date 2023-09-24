@@ -390,7 +390,7 @@ public sealed partial class ExplosionSystem : EntitySystem
         if (damage != null && damageQuery.TryGetComponent(uid, out var damageable))
         {
             var ev = new GetExplosionResistanceEvent(id);
-            RaiseLocalEvent(uid, ev, false);
+            RaiseLocalEvent(uid, ref ev, false);
 
             ev.DamageCoefficient = Math.Max(0, ev.DamageCoefficient);
 

@@ -12,7 +12,6 @@
     - type: Clothing
       sprite: Clothing/Shoes/Boots/magboots.rsi
     - type: Magboots
-      toggleAction: ActionToggleMagboots
     - type: ClothingSpeedModifier
       walkModifier: 0.85
       sprintModifier: 0.8
@@ -105,6 +104,7 @@
     maxIntensity: 20
   - type: Jetpack
     moleUsage: 0.00085
+  - type: CanMoveInAir
   - type: InputMover
     toParent: true
   - type: MovementSpeedModifier
@@ -117,8 +117,8 @@
 
 - type: entity
   id: ActionBaseToggleMagboots
-  name: action-name-magboot-toggle
-  description: action-description-magboot-toggle
+  name: Toggle Magboots
+  description: Toggles the magboots on and off.
   noSpawn: true
   components:
   - type: InstantAction

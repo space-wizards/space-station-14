@@ -1,6 +1,6 @@
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Fluids.Components;
-using Content.Server.Nutrition.Components;
+using Content.Server.Nutrition.EntitySystems;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry.Reagent;
@@ -23,11 +23,14 @@ namespace Content.Server.Fluids.EntitySystems;
 
 public sealed partial class PuddleSystem
 {
+    [Dependency] private readonly OpenableSystem _openable = default!;
+
     private void InitializeSpillable()
     {
         SubscribeLocalEvent<SpillableComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<SpillableComponent, LandEvent>(SpillOnLand);
-        SubscribeLocalEvent<SpillableComponent, MeleeHitEvent>(SplashOnMeleeHit);
+        // openable handles the event if its closed
+        SubscribeLocalEvent<SpillableComponent, MeleeHitEvent>(SplashOnMeleeHit, after: new[] { typeof(OpenableSystem) });
         SubscribeLocalEvent<SpillableComponent, GetVerbsEvent<Verb>>(AddSpillVerb);
         SubscribeLocalEvent<SpillableComponent, GotEquippedEvent>(OnGotEquipped);
         SubscribeLocalEvent<SpillableComponent, SolutionSpikeOverflowEvent>(OnSpikeOverflow);
@@ -54,15 +57,15 @@ public sealed partial class PuddleSystem
 
     private void SplashOnMeleeHit(EntityUid uid, SpillableComponent component, MeleeHitEvent args)
     {
+        if (args.Handled)
+            return;
+
         // When attacking someone reactive with a spillable entity,
         // splash a little on them (touch react)
         // If this also has solution transfer, then assume the transfer amount is how much we want to spill.
         // Otherwise let's say they want to spill a quarter of its max volume.
 
         if (!_solutionContainerSystem.TryGetDrainableSolution(uid, out var solution))
-            return;
-
-        if (TryComp<DrinkComponent>(uid, out var drink) && !drink.Opened)
             return;
 
         var hitCount = args.HitEntities.Count;
@@ -80,6 +83,7 @@ public sealed partial class PuddleSystem
         if (totalSplit == 0)
             return;
 
+        args.Handled = true;
         foreach (var hit in args.HitEntities)
         {
             if (!HasComp<ReactiveComponent>(hit))
@@ -135,7 +139,7 @@ public sealed partial class PuddleSystem
         if (!_solutionContainerSystem.TryGetSolution(uid, component.SolutionName, out var solution))
             return;
 
-        if (TryComp<DrinkComponent>(uid, out var drink) && !drink.Opened)
+        if (_openable.IsClosed(uid))
             return;
 
         if (args.User != null)
@@ -156,7 +160,7 @@ public sealed partial class PuddleSystem
         if (!_solutionContainerSystem.TryGetSolution(args.Target, component.SolutionName, out var solution))
             return;
 
-        if (TryComp<DrinkComponent>(args.Target, out var drink) && (!drink.Opened))
+        if (_openable.IsClosed(args.Target))
             return;
 
         if (solution.Volume == FixedPoint2.Zero)
@@ -181,7 +185,7 @@ public sealed partial class PuddleSystem
         {
             verb.Act = () =>
             {
-                _doAfterSystem.TryStartDoAfter(new DoAfterArgs(args.User, component.SpillDelay ?? 0, new SpillDoAfterEvent(), uid, target: uid)
+                _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, args.User, component.SpillDelay ?? 0, new SpillDoAfterEvent(), uid, target: uid)
                 {
                     BreakOnTargetMove = true,
                     BreakOnUserMove = true,

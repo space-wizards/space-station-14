@@ -69,7 +69,7 @@ public abstract class SharedMechSystem : EntitySystem
             MaxIntegrity = component.MaxIntegrity,
             Energy = component.Energy,
             MaxEnergy = component.MaxEnergy,
-            CurrentSelectedEquipment = component.CurrentSelectedEquipment,
+            CurrentSelectedEquipment = GetNetEntity(component.CurrentSelectedEquipment),
             Broken = component.Broken
         };
     }
@@ -83,7 +83,7 @@ public abstract class SharedMechSystem : EntitySystem
         component.MaxIntegrity = state.MaxIntegrity;
         component.Energy = state.Energy;
         component.MaxEnergy = state.MaxEnergy;
-        component.CurrentSelectedEquipment = state.CurrentSelectedEquipment;
+        component.CurrentSelectedEquipment = EnsureEntity<MechComponent>(state.CurrentSelectedEquipment, uid);
         component.Broken = state.Broken;
     }
 
@@ -91,7 +91,7 @@ public abstract class SharedMechSystem : EntitySystem
     {
         args.State = new MechPilotComponentState
         {
-            Mech = component.Mech
+            Mech = GetNetEntity(component.Mech)
         };
     }
 
@@ -100,7 +100,7 @@ public abstract class SharedMechSystem : EntitySystem
         if (args.Current is not MechPilotComponentState state)
             return;
 
-        component.Mech = state.Mech;
+        component.Mech = EnsureEntity<MechPilotComponent>(state.Mech, uid);
     }
 
     #endregion
@@ -179,10 +179,9 @@ public abstract class SharedMechSystem : EntitySystem
         if (_net.IsClient)
             return;
 
-        _actions.AddAction(pilot, Spawn(component.MechCycleAction), mech);
-        _actions.AddAction(pilot, Spawn(component.MechUiAction),
-            mech);
-        _actions.AddAction(pilot, Spawn(component.MechEjectAction), mech);
+        _actions.AddAction(pilot, ref component.MechCycleActionEntity, component.MechCycleAction, mech);
+        _actions.AddAction(pilot, ref component.MechUiActionEntity, component.MechUiAction, mech);
+        _actions.AddAction(pilot, ref component.MechEjectActionEntity, component.MechEjectAction, mech);
     }
 
     private void RemoveUser(EntityUid mech, EntityUid pilot)

@@ -110,7 +110,7 @@ public sealed class StickySystem : EntitySystem
             component.Stick = true;
 
             // start sticking object to target
-            _doAfterSystem.TryStartDoAfter(new DoAfterArgs(user, delay, new StickyDoAfterEvent(), uid, target: target, used: uid)
+            _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, user, delay, new StickyDoAfterEvent(), uid, target: target, used: uid)
             {
                 BreakOnTargetMove = true,
                 BreakOnUserMove = true,
@@ -167,7 +167,7 @@ public sealed class StickySystem : EntitySystem
             component.Stick = false;
 
             // start unsticking object
-            _doAfterSystem.TryStartDoAfter(new DoAfterArgs(user, delay, new StickyDoAfterEvent(), uid, target: uid)
+            _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, user, delay, new StickyDoAfterEvent(), uid, target: uid)
             {
                 BreakOnTargetMove = true,
                 BreakOnUserMove = true,

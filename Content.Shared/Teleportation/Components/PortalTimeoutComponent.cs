@@ -20,9 +20,9 @@ public sealed partial class PortalTimeoutComponent : Component
 [Serializable, NetSerializable]
 public sealed class PortalTimeoutComponentState : ComponentState
 {
-    public EntityUid? EnteredPortal;
+    public NetEntity? EnteredPortal;
 
-    public PortalTimeoutComponentState(EntityUid? enteredPortal)
+    public PortalTimeoutComponentState(NetEntity? enteredPortal)
     {
         EnteredPortal = enteredPortal;
     }

@@ -25,7 +25,6 @@
     maxFillLevels: 6
     fillBaseName: bottle-1-
   - type: Drink
-    isOpen: true
   - type: SolutionContainerManager
     solutions:
       drink: # This solution name and target volume is hard-coded in ChemMasterComponent

@@ -40,6 +40,7 @@ public sealed class NPCUtilitySystem : EntitySystem
     [Dependency] private readonly InventorySystem _inventory = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly NpcFactionSystem _npcFaction = default!;
+    [Dependency] private readonly OpenableSystem _openable = default!;
     [Dependency] private readonly PuddleSystem _puddle = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SolutionContainerSystem _solutions = default!;
@@ -156,6 +157,10 @@ public sealed class NPCUtilitySystem : EntitySystem
                 if (!TryComp<FoodComponent>(targetUid, out var food))
                     return 0f;
 
+                // mice can't eat unpeeled bananas, need monkey's help
+                if (_openable.IsClosed(targetUid))
+                    return 0f;
+
                 if (!_food.IsDigestibleBy(owner, targetUid, food))
                     return 0f;
 
@@ -173,7 +178,11 @@ public sealed class NPCUtilitySystem : EntitySystem
             }
             case DrinkValueCon:
             {
-                if (!TryComp<DrinkComponent>(targetUid, out var drink) || !drink.Opened)
+                if (!TryComp<DrinkComponent>(targetUid, out var drink))
+                    return 0f;
+
+                // can't drink closed drinks
+                if (_openable.IsClosed(targetUid))
                     return 0f;
 
                 // only drink when thirsty
@@ -187,6 +196,16 @@ public sealed class NPCUtilitySystem : EntitySystem
                 // needs to have something that will satiate thirst, mice wont try to drink 100% pure mutagen.
                 var hydration = _drink.TotalHydration(targetUid, drink);
                 if (hydration <= 1.0f)
+                    return 0f;
+
+                return 1f;
+            }
+            case OrderedTargetCon:
+            {
+                if (!blackboard.TryGetValue<EntityUid>(NPCBlackboard.CurrentOrderedTarget, out var orderedTarget, EntityManager))
+                    return 0f;
+
+                if (targetUid != orderedTarget)
                     return 0f;
 
                 return 1f;

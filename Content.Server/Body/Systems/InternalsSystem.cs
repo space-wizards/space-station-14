@@ -105,7 +105,7 @@ public sealed class InternalsSystem : EntitySystem
         var isUser = user == target;
         var delay = !isUser ? internals.Delay : 1.0f;
 
-        _doAfter.TryStartDoAfter(new DoAfterArgs(user, delay, new InternalsDoAfterEvent(), target, target: target)
+        _doAfter.TryStartDoAfter(new DoAfterArgs(EntityManager, user, delay, new InternalsDoAfterEvent(), target, target: target)
         {
             BreakOnUserMove = true,
             BreakOnDamage = true,
