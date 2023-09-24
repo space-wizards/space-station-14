@@ -1,5 +1,7 @@
 using Robust.Shared.GameStates;
 using Content.Shared.Humanoid;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Whistle
 {
@@ -12,8 +14,8 @@ namespace Content.Shared.Whistle
         /// <summary>
         /// Entity prototype to spawn
         /// </summary>
-        [DataField("effect")]
-        public string? effect = "WhistleExclamation"; 
+        [DataField("effect", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+        public string? effect = "WhistleExclamation";
 
         /// <summary>
         /// Range value.
