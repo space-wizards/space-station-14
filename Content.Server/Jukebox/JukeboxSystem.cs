@@ -32,8 +32,8 @@ public sealed class JukeboxSystem : SharedJukeboxSystem
         if (component.Playing)
         {
             var song = component.JukeboxMusicCollection.Songs[component.SelectedSongID];
-            var @params = AudioParams.Default.WithPlayOffset(component.SongTime);
-            component.AudioStream = _audio.PlayPvs(song.Path, uid, @params);
+            var audioparams = AudioParams.Default.WithPlayOffset(component.SongTime);
+            component.AudioStream = _audio.PlayPvs(song.Path, uid, audioparams);
             component.SongStartTime = (float) (_timing.CurTime.TotalSeconds - component.SongTime);
             component.SelectedSong = song;
         }
