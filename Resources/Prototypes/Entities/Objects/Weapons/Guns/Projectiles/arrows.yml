@@ -54,6 +54,10 @@
     blockSlots: NONE
   - type: SolutionTransfer
     maxTransferAmount: 5
+  - type: Appearance
+  - type: SolutionContainerVisuals
+    maxFillLevels: 1
+    fillBaseName: solution
 
 
 - type: entity
@@ -69,6 +73,9 @@
     - state: rod
       color: brown
     - state: tip
+    - state: solution1
+      map: ["enum.SolutionContainerLayers.Fill"]
+      visible: false
   - type: Projectile
     damage:
       types:
@@ -89,6 +96,9 @@
       color: darkgray
     - state: tip
       color: lightblue
+    - state: solution1
+      map: ["enum.SolutionContainerLayers.Fill"]
+      visible: false
   - type: Projectile
     damage:
       types:
