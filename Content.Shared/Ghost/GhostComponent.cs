@@ -17,19 +17,19 @@ public sealed partial class GhostComponent : Component
     [DataField("toggleLightingAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string ToggleLightingAction = "ActionToggleLighting";
 
-    [DataField("toggleLightingActionEntity")]
+    [DataField, AutoNetworkedField]
     public EntityUid? ToggleLightingActionEntity;
 
     [DataField("toggleFovAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string ToggleFoVAction = "ActionToggleFov";
 
-    [DataField("toggleFovActionEntity")]
+    [DataField, AutoNetworkedField]
     public EntityUid? ToggleFoVActionEntity;
 
     [DataField("toggleGhostsAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string ToggleGhostsAction = "ActionToggleGhosts";
 
-    [DataField("toggleGhostsActionEntity")]
+    [DataField, AutoNetworkedField]
     public EntityUid? ToggleGhostsActionEntity;
 
     [ViewVariables(VVAccess.ReadWrite), DataField("timeOfDeath", customTypeSerializer:typeof(TimeOffsetSerializer))]
@@ -41,10 +41,11 @@ public sealed partial class GhostComponent : Component
     [DataField("booMaxTargets")]
     public int BooMaxTargets = 3;
 
-    [DataField("action", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string Action = "ActionGhostBoo";
+    [DataField]
+    public EntProtoId BooAction = "ActionGhostBoo";
 
-    [DataField("actionEntity")] public EntityUid? ActionEntity;
+    [DataField, AutoNetworkedField]
+    public EntityUid? BooActionEntity;
 
     // TODO: instead of this funny stuff just give it access and update in system dirtying when needed
     [ViewVariables(VVAccess.ReadWrite)]

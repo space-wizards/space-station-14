@@ -15,20 +15,18 @@ public abstract class SharedSpiderSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<SpiderComponent, ComponentStartup>(OnSpiderStartup);
+        SubscribeLocalEvent<SpiderComponent, MapInitEvent>(OnInit);
         SubscribeLocalEvent<SpiderWebObjectComponent, ComponentStartup>(OnWebStartup);
     }
 
-    private void OnSpiderStartup(EntityUid uid, SpiderComponent component, ComponentStartup args)
+    private void OnInit(EntityUid uid, SpiderComponent component, MapInitEvent args)
     {
-        if (_net.IsClient)
-            return;
-
-        _action.AddAction(uid, Spawn(component.WebAction), null);
+        _action.AddAction(uid, ref component.Action, component.WebAction, uid);
     }
 
     private void OnWebStartup(EntityUid uid, SpiderWebObjectComponent component, ComponentStartup args)
     {
+        // TODO dont use this. use some general random appearance system
         _appearance.SetData(uid, SpiderWebVisuals.Variant, _robustRandom.Next(1, 3));
     }
 }

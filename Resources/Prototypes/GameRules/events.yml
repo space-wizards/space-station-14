@@ -176,13 +176,11 @@
   - type: VentCrittersRule
     entries:
     - id: MobMouse
-      prob: 0.015
+      prob: 0.02
     - id: MobMouse1
-      prob: 0.015
+      prob: 0.02
     - id: MobMouse2
-      prob: 0.015
-    - id: MobRatServant
-      prob: 0.015
+      prob: 0.02
     specialEntries:
     - id: SpawnPointGhostRatKing
       prob: 0.005
