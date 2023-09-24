@@ -1,10 +1,4 @@
 Entries:
-- author: HerCoyote23
-  changes:
-  - {message: 'Following a recent increase in Behonker activity, Nanotrasen has equipped
-      its security teams with a more harmful alternative to the stun baton.', type: Add}
-  id: 4392
-  time: '2023-07-31T20:37:13.0000000+00:00'
 - author: tom-leys
   changes:
   - {message: 'The roundend summary now shows a picture of your original body, even
@@ -2982,3 +2976,8 @@ Entries:
   - {message: The AME no longer makes sounds if no fuel was injected, type: Tweak}
   id: 4891
   time: '2023-09-24T20:39:49.0000000+00:00'
+- author: gusxyz
+  changes:
+  - {message: Empty ore boxes are now orderable from cargo., type: Add}
+  id: 4892
+  time: '2023-09-24T20:52:07.0000000+00:00'
