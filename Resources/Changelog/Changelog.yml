@@ -1,10 +1,4 @@
 Entries:
-- author: Vasilis
-  changes:
-  - {message: Spilling a liquid will no longer expose the true identity of someone,
-    type: Fix}
-  id: 4394
-  time: '2023-07-31T23:15:17.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Anomaly generators now always generate anomalies on the station., type: Fix}
@@ -2981,3 +2975,10 @@ Entries:
       while in combat mode, type: Add}
   id: 4893
   time: '2023-09-24T21:22:45.0000000+00:00'
+- author: TK-A369
+  changes:
+  - {message: 'After several complaints from chemists, Nanotrasen decided to update
+      their Chemistry Guidebook to include information about environment required
+      by reaction to occur.', type: Add}
+  id: 4894
+  time: '2023-09-24T21:33:25.0000000+00:00'
