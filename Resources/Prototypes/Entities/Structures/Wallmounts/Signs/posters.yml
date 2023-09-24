@@ -70,6 +70,8 @@
     - state: poster_broken
       map: ["stuck"]
       visible: false
+  - type: Icon
+    state: poster_broken
 
 - type: entity
   parent: PosterBrokenRolled
