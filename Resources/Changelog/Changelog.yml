@@ -1,9 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Fixed the guidebook incorrectly showing oculine as damaging eyes., type: Fix}
-  id: 4388
-  time: '2023-07-31T20:29:52.0000000+00:00'
 - author: notafet
   changes:
   - {message: 'Bullets, lasers, and disabler bolts now hit vehicles and their occupants.',
@@ -2980,3 +2975,8 @@ Entries:
   - {message: Added bone armor and spear to please our lava planet habitats., type: Add}
   id: 4887
   time: '2023-09-24T19:57:10.0000000+00:00'
+- author: liltenhead
+  changes:
+  - {message: Lowered the maximum explosion range of canister bombs., type: Tweak}
+  id: 4888
+  time: '2023-09-24T19:59:05.0000000+00:00'
