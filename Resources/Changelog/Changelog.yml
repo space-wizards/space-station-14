@@ -1,10 +1,4 @@
 Entries:
-- author: tom-leys
-  changes:
-  - {message: 'The roundend summary now shows a picture of your original body, even
-      after you ghosted', type: Fix}
-  id: 4393
-  time: '2023-07-31T22:46:06.0000000+00:00'
 - author: Vasilis
   changes:
   - {message: Spilling a liquid will no longer expose the true identity of someone,
@@ -2981,3 +2975,9 @@ Entries:
   - {message: Empty ore boxes are now orderable from cargo., type: Add}
   id: 4892
   time: '2023-09-24T20:52:07.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Your character will now rotate in the direction of your mouse cursor
+      while in combat mode, type: Add}
+  id: 4893
+  time: '2023-09-24T21:22:45.0000000+00:00'
