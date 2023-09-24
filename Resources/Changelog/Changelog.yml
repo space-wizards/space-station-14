@@ -1,9 +1,4 @@
 Entries:
-- author: Raitononai
-  changes:
-  - {message: Adjusted the contents of command staff's lockers to reduce bloat., type: Tweak}
-  id: 4387
-  time: '2023-07-31T20:29:01.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Fixed the guidebook incorrectly showing oculine as damaging eyes., type: Fix}
@@ -2978,3 +2973,10 @@ Entries:
       regulations, type: Remove}
   id: 4886
   time: '2023-09-24T19:56:07.0000000+00:00'
+- author: Tunguso4ka
+  changes:
+  - {message: Added gladiator`s helmet and uniform for both the station and planet
+      gladiators., type: Add}
+  - {message: Added bone armor and spear to please our lava planet habitats., type: Add}
+  id: 4887
+  time: '2023-09-24T19:57:10.0000000+00:00'
