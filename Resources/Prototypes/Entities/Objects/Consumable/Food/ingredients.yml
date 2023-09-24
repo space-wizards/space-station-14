@@ -67,8 +67,7 @@
 
 - type: entity
   abstract: true
-  parent: ReagentPacketBase
-  id: ReagentPacketHeftyBase
+  id: ItemHeftyBase
   description: hit hard ye
   component:
   - type: DamageOnLand
@@ -81,7 +80,7 @@
         Blunt: 1
 
 - type: entity
-  parent: ReagentPacketHeftyBase
+  parent: [ReagentPacketBase, ItemHeftyBase]
   id: ReagentContainerFlour
   name: flour bag
   description: A big bag of flour. Good for baking!
@@ -97,7 +96,7 @@
           Quantity: 50
 
 - type: entity
-  parent: ReagentPacketHeftyBase
+  parent: [ReagentPacketBase, ItemHeftyBase]
   id: ReagentContainerFlourSmall
   name: flour pack
   description: A pack of flour. Good for baking!
