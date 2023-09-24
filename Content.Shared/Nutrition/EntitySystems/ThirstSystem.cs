@@ -41,6 +41,7 @@ public sealed class ThirstSystem : EntitySystem
                 (int) component.ThirstThresholds[ThirstThreshold.Thirsty] + 10,
                 (int) component.ThirstThresholds[ThirstThreshold.Okay] - 1);
         }
+        component.NextUpdateTime = _timing.CurTime;
         component.CurrentThirstThreshold = GetThirstThreshold(component, component.CurrentThirst);
         component.LastThirstThreshold = ThirstThreshold.Okay; // TODO: Potentially change this -> Used Okay because no effects.
         // TODO: Check all thresholds make sense and throw if they don't.
