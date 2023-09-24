@@ -134,6 +134,7 @@ public partial class SharedBodySystem
         Dirty(rootPartEntity, rootPart);
 
         // Setup the rest of the body entities.
+        SetupOrgans(rootPartEntity, rootPart, protoRoot.Organs);
         MapInitParts(rootPartEntity, prototype);
     }
 
@@ -166,7 +167,7 @@ public partial class SharedBodySystem
             foreach (var connection in currentSlot.Connections)
             {
                 // Already been handled
-                if (!cameFrom.TryAdd(connection, currentSlotId))
+                if (!cameFrom.TryAdd(connection, currentSlotId) || connection == rootSlot)
                     continue;
 
                 // Setup part
