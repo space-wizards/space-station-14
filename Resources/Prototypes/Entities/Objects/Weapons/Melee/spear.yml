@@ -166,3 +166,14 @@
         Radiation: 9
   - type: Construction
     graph: SpearUranium
+
+- type: entity
+  name: bone spear
+  parent: Spear
+  id: SpearBone
+  description: A spear made of bones.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/bone_spear.rsi
+  - type: Construction
+    graph: SpearBone
