@@ -156,6 +156,7 @@ public partial class SharedBodySystem
 
         // Child -> Parent connection.
         var cameFrom = new Dictionary<string, string>();
+        cameFrom[rootSlot] = rootSlot;
         // Maps slot to its relevant entity.
         var cameFromEntities = new Dictionary<string, EntityUid>();
         cameFromEntities[rootSlot] = rootPartId;
@@ -167,7 +168,7 @@ public partial class SharedBodySystem
             foreach (var connection in currentSlot.Connections)
             {
                 // Already been handled
-                if (!cameFrom.TryAdd(connection, currentSlotId) || connection == rootSlot)
+                if (!cameFrom.TryAdd(connection, currentSlotId))
                     continue;
 
                 // Setup part
