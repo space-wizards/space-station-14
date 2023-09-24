@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using System.Numerics;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Organ;
@@ -134,7 +134,6 @@ public partial class SharedBodySystem
         Dirty(rootPartEntity, rootPart);
 
         // Setup the rest of the body entities.
-        SetupOrgans(rootPartEntity, rootPart, protoRoot.Organs);
         MapInitParts(rootPartEntity, prototype);
     }
 
