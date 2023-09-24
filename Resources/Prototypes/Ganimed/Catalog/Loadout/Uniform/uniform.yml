@@ -1,18 +1,4 @@
 - type: loadout
-  id: LoadoutUniformUniformShortsRed
-  category: loadout-category-uniform
-  cost: 1
-  exclusive: true
-  prototype: UniformShortsRed
-
-- type: loadout
-  id: LoadoutUniformUniformShortsRedWithTop
-  category: loadout-category-uniform
-  cost: 1
-  exclusive: true
-  prototype: UniformShortsRedWithTop
-
-- type: loadout
   id: LoadoutUniformClothingUniformJumpsuitCentcomOfficer
   category: loadout-category-uniform
   cost: 7
@@ -99,8 +85,614 @@
   prototype: ClothingUniformJumpsuitSecBlue
 
 - type: loadout
-  id: LoadoutUniformClothingUniformJumpsuitHawaiYellow
+  id: LoadoutUniformClothingUniformJumpsuitEngineeringHazard
+  category: loadout-category-uniform
+  cost: 2
+  exclusive: true
+  whitelistJobs:
+    - TechnicalAssistant
+    - StationEngineer
+    - AtmosphericEngineer
+    - SeniorEngineer
+    - ChiefEngineer
+  prototype: ClothingUniformJumpsuitEngineeringHazard
+
+- type: loadout
+  id: LoadoutUniformUniformScrubsColorGreen
+  category: loadout-category-uniform
+  cost: 2
+  exclusive: true
+  whitelistJobs:
+    - ChiefMedicalOfficer
+    - Chemist
+    - Paramedic
+    - MedicalDoctor
+    - Psychologist
+    - MedicalIntern
+    - SeniorPhysician
+  prototype: UniformScrubsColorGreen
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpsuitEngineering
   category: loadout-category-uniform
   cost: 1
   exclusive: true
-  prototype: ClothingUniformJumpsuitHawaiYellow
+  whitelistJobs:
+    - TechnicalAssistant
+    - StationEngineer
+    - AtmosphericEngineer
+    - SeniorEngineer
+    - ChiefEngineer
+  prototype: ClothingUniformJumpsuitEngineering
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpskirtEngineering
+  category: loadout-category-uniform
+  cost: 1
+  exclusive: true
+  whitelistJobs:
+    - TechnicalAssistant
+    - StationEngineer
+    - AtmosphericEngineer
+    - SeniorEngineer
+    - ChiefEngineer
+  prototype: ClothingUniformJumpskirtEngineering
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpsuitNanotrasen
+  category: loadout-category-uniform
+  cost: 3
+  exclusive: true
+  whitelistJobs:
+    - Captain
+    - Lawyer
+    - HeadOfSecurity
+    - HeadOfPersonnel
+  prototype: ClothingUniformJumpsuitNanotrasen
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpsuitAtmos
+  category: loadout-category-uniform
+  cost: 1
+  exclusive: true
+  whitelistJobs:
+    - AtmosphericEngineer
+    - ChiefEngineer
+  prototype: ClothingUniformJumpsuitAtmos
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpskirtAtmos
+  category: loadout-category-uniform
+  cost: 1
+  exclusive: true
+  whitelistJobs:
+    - AtmosphericEngineer
+    - ChiefEngineer
+  prototype: ClothingUniformJumpskirtAtmos
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpsuitHydroponics
+  category: loadout-category-uniform
+  cost: 1
+  exclusive: true
+  whitelistJobs:
+    - AtmosphericEngineer
+    - ChiefEngineer
+  prototype: ClothingUniformJumpsuitHydroponics
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpskirtHydroponics
+  category: loadout-category-uniform
+  cost: 1
+  exclusive: true
+  whitelistJobs:
+    - Botanist
+    - ServiceWorker
+  prototype: ClothingUniformJumpskirtHydroponics
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpsuitBrigmedic
+  category: loadout-category-uniform
+  cost: 5
+  exclusive: true
+  whitelistJobs:
+    - ChiefMedicalOfficer
+    - Chemist
+    - Paramedic
+    - Psychologist
+    - MedicalDoctor
+    - MedicalIntern
+    - SeniorPhysician
+    - SecurityCadet
+    - SecurityOfficer
+    - Warden
+    - Detective
+    - HeadOfSecurity
+    - SeniorOfficer
+  prototype: ClothingUniformJumpsuitBrigmedic
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpsuitSeniorEngineer
+  category: loadout-category-uniform
+  cost: 1
+  exclusive: true
+  whitelistJobs:
+    - SeniorEngineer
+    - ChiefEngineer
+  prototype: ClothingUniformJumpsuitSeniorEngineer
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpsuitVirology
+  category: loadout-category-uniform
+  cost: 2
+  exclusive: true
+  whitelistJobs:
+    - ChiefMedicalOfficer
+    - Chemist
+    - Paramedic
+    - MedicalDoctor
+    - Psychologist
+    - MedicalIntern
+    - SeniorPhysician
+  prototype: ClothingUniformJumpsuitVirology
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpsuitGenetics
+  category: loadout-category-uniform
+  cost: 2
+  exclusive: true
+  whitelistJobs:
+    - ChiefMedicalOfficer
+    - Psychologist
+    - Chemist
+    - Paramedic
+    - MedicalDoctor
+    - MedicalIntern
+    - SeniorPhysician
+  prototype: ClothingUniformJumpsuitGenetics
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpsuitParamedicNT
+  category: loadout-category-uniform
+  cost: 3
+  exclusive: true
+  whitelistJobs:
+    - ChiefMedicalOfficer
+    - Chemist
+    - Psychologist
+    - Paramedic
+    - MedicalDoctor
+    - MedicalIntern
+    - SeniorPhysician
+  prototype: ClothingUniformJumpsuitParamedicNT
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpsuitParamedic
+  category: loadout-category-uniform
+  cost: 2
+  exclusive: true
+  whitelistJobs:
+    - ChiefMedicalOfficer
+    - Chemist
+    - Paramedic
+    - MedicalDoctor
+    - Psychologist
+    - MedicalIntern
+    - SeniorPhysician
+  prototype: ClothingUniformJumpsuitParamedic
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpsuitMedicalDoctor
+  category: loadout-category-uniform
+  cost: 1
+  exclusive: true
+  whitelistJobs:
+    - ChiefMedicalOfficer
+    - Chemist
+    - Paramedic
+    - MedicalDoctor
+    - Psychologist
+    - MedicalIntern
+    - SeniorPhysician
+  prototype: ClothingUniformJumpsuitMedicalDoctor
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpsuitChemistry
+  category: loadout-category-uniform
+  cost: 2
+  exclusive: true
+  whitelistJobs:
+    - ChiefMedicalOfficer
+    - Chemist
+    - Psychologist
+    - Paramedic
+    - MedicalDoctor
+    - MedicalIntern
+    - SeniorPhysician
+  prototype: ClothingUniformJumpsuitChemistry
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpsuitCMO
+  category: loadout-category-uniform
+  cost: 1
+  exclusive: true
+  whitelistJobs:
+    - ChiefMedicalOfficer
+  prototype: ClothingUniformJumpsuitCMO
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpsuitHoP
+  category: loadout-category-uniform
+  cost: 1
+  exclusive: true
+  whitelistJobs:
+    - HeadOfPersonnel
+    - Captain
+  prototype: ClothingUniformJumpsuitHoP
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpsuitHoS
+  category: loadout-category-uniform
+  cost: 1
+  exclusive: true
+  whitelistJobs:
+    - HeadOfSecurity
+  prototype: ClothingUniformJumpsuitHoS
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpsuitCargo
+  category: loadout-category-uniform
+  cost: 1
+  exclusive: true
+  whitelistJobs:
+    - CargoTechnician
+    - Quartermaster
+    - SalvageSpecialist
+  prototype: ClothingUniformJumpsuitCargo
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpsuitSeniorPhysician
+  category: loadout-category-uniform
+  cost: 1
+  exclusive: true
+  whitelistJobs:
+    - SeniorPhysician
+    - ChiefMedicalOfficer
+  prototype: ClothingUniformJumpsuitSeniorPhysician
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpsuitPrisoner
+  category: loadout-category-uniform
+  cost: 4
+  exclusive: true
+  prototype: ClothingUniformJumpsuitPrisoner
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpsuitSeniorOfficer
+  category: loadout-category-uniform
+  cost: 1
+  exclusive: true
+  whitelistJobs:
+    - SeniorOfficer
+    - HeadOfSecurity
+  prototype: ClothingUniformJumpsuitSeniorOfficer
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpsuitCaptain
+  category: loadout-category-uniform
+  cost: 1
+  exclusive: true
+  whitelistJobs:
+    - Captain
+  prototype: ClothingUniformJumpsuitCaptain
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpsuitQM
+  category: loadout-category-uniform
+  cost: 1
+  exclusive: true
+  whitelistJobs:
+    - Quartermaster
+  prototype: ClothingUniformJumpsuitQM
+
+- type: loadout
+  id: LoadoutUniformClothingUniformOveralls
+  category: loadout-category-uniform
+  cost: 2
+  exclusive: true
+  prototype: ClothingUniformOveralls
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpsuitScientist
+  category: loadout-category-uniform
+  cost: 1
+  exclusive: true
+  whitelistJobs:
+    - ResearchDirector
+    - ResearchAssistant
+    - Scientist
+    - SeniorResearcher
+  prototype: ClothingUniformJumpsuitScientist
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpsuitMercenary
+  category: loadout-category-uniform
+  cost: 3
+  exclusive: true
+  whitelistJobs:
+    - SecurityCadet
+    - SecurityOfficer
+    - Warden
+    - Detective
+    - HeadOfSecurity
+    - Captain
+    - SeniorOfficer
+    - SalvageSpecialist
+    - Quartermaster
+  prototype: ClothingUniformJumpsuitScientist
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpsuitRecruitNT
+  category: loadout-category-uniform
+  cost: 3
+  exclusive: true
+  prototype: ClothingUniformJumpsuitRecruitNT
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpsuitRepairmanNT
+  category: loadout-category-uniform
+  cost: 3
+  exclusive: true
+  whitelistJobs:
+    - TechnicalAssistant
+    - StationEngineer
+    - AtmosphericEngineer
+    - SeniorEngineer
+    - ChiefEngineer
+  prototype: ClothingUniformJumpsuitRepairmanNT
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpsuitRoboticist
+  category: loadout-category-uniform
+  cost: 3
+  exclusive: true
+  whitelistJobs:
+    - SeniorResearcher
+    - ResearchAssistant
+    - ResearchDirector
+    - Scientist
+  prototype: ClothingUniformJumpsuitRoboticist
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpsuitChaplain
+  category: loadout-category-uniform
+  cost: 1
+  exclusive: true
+  whitelistJobs:
+    - Chaplain
+    - ServiceWorker
+  prototype: ClothingUniformJumpsuitChaplain
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpsuitSec
+  category: loadout-category-uniform
+  cost: 1
+  exclusive: true
+  whitelistJobs:
+    - SecurityCadet
+    - SecurityOfficer
+    - Warden
+    - Detective
+    - HeadOfSecurity
+    - Captain
+    - SeniorOfficer
+  prototype: ClothingUniformJumpsuitSec
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpsuitSalvageSpecialist
+  category: loadout-category-uniform
+  cost: 2
+  exclusive: true
+  whitelistJobs:
+    - SalvageSpecialist
+    - CargoTechnician
+    - Quartermaster
+  prototype: ClothingUniformJumpsuitSalvageSpecialist
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpsuitChiefEngineer
+  category: loadout-category-uniform
+  cost: 1
+  exclusive: true
+  whitelistJobs:
+    - ChiefEngineer
+  prototype: ClothingUniformJumpsuitChiefEngineer
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpsuitChiefEngineerNT
+  category: loadout-category-uniform
+  cost: 3
+  exclusive: true
+  whitelistJobs:
+    - ChiefEngineer
+  prototype: ClothingUniformJumpsuitChiefEngineerNT
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpsuitSeniorResearcher
+  category: loadout-category-uniform
+  cost: 1
+  exclusive: true
+  whitelistJobs:
+    - SeniorResearcher
+    - ResearchDirector
+  prototype: ClothingUniformJumpsuitSeniorResearcher
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpsuitJanitor
+  category: loadout-category-uniform
+  cost: 1
+  exclusive: true
+  whitelistJobs:
+    - ServiceWorker
+    - Janitor
+  prototype: ClothingUniformJumpsuitJanitor
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpsuitSafari
+  category: loadout-category-uniform
+  cost: 3
+  exclusive: true
+  prototype: ClothingUniformJumpsuitSafari
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpsuitJournalist
+  category: loadout-category-uniform
+  cost: 3
+  exclusive: true
+  prototype: ClothingUniformJumpsuitJournalist
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpsuitMusician
+  category: loadout-category-uniform
+  cost: 3
+  exclusive: true
+  prototype: ClothingUniformJumpsuitMusician
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpsuitPsychologist
+  category: loadout-category-uniform
+  cost: 3
+  exclusive: true
+  prototype: ClothingUniformJumpsuitPsychologist
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpsuitReporter
+  category: loadout-category-uniform
+  cost: 3
+  exclusive: true
+  prototype: ClothingUniformJumpsuitReporter
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpsuitClown
+  category: loadout-category-uniform
+  cost: 1
+  exclusive: true
+  whitelistJobs:
+    - Clown
+  prototype: ClothingUniformJumpsuitClown
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpsuitJesterAlt
+  category: loadout-category-uniform
+  cost: 2
+  exclusive: true
+  whitelistJobs:
+    - Clown
+  prototype: ClothingUniformJumpsuitJesterAlt
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpsuitJester
+  category: loadout-category-uniform
+  cost: 2
+  exclusive: true
+  whitelistJobs:
+    - Clown
+  prototype: ClothingUniformJumpsuitJester
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpsuitMime
+  category: loadout-category-uniform
+  cost: 1
+  exclusive: true
+  whitelistJobs:
+    - Mime
+  prototype: ClothingUniformJumpsuitMime
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpsuitCluwneRemoveable
+  category: loadout-category-uniform
+  cost: 6
+  exclusive: true
+  whitelistJobs:
+    - Clown
+  prototype: ClothingUniformJumpsuitCluwneRemoveable
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpsuitDameDane
+  category: loadout-category-uniform
+  cost: 2
+  exclusive: true
+  prototype: ClothingUniformJumpsuitDameDane
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpsuitLawyerRed
+  category: loadout-category-uniform
+  cost: 2
+  exclusive: true
+  whitelistJobs:
+    - Lawyer
+    - HeadOfSecurity
+    - HeadOfPersonnel
+    - Warden
+    - SeniorOfficer
+  prototype: ClothingUniformJumpsuitLawyerRed
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpskirtLawyerRed
+  category: loadout-category-uniform
+  cost: 2
+  exclusive: true
+  whitelistJobs:
+    - Lawyer
+    - HeadOfSecurity
+    - HeadOfPersonnel
+    - Warden
+    - SeniorOfficer
+  prototype: ClothingUniformJumpskirtLawyerRed
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpsuitLawyerBlue
+  category: loadout-category-uniform
+  cost: 2
+  exclusive: true
+  whitelistJobs:
+    - Lawyer
+    - HeadOfSecurity
+    - HeadOfPersonnel
+    - Warden
+    - SeniorOfficer
+  prototype: ClothingUniformJumpsuitLawyerBlue
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpskirtLawyerBlue
+  category: loadout-category-uniform
+  cost: 2
+  exclusive: true
+  whitelistJobs:
+    - Lawyer
+    - HeadOfSecurity
+    - HeadOfPersonnel
+    - Warden
+    - SeniorOfficer
+  prototype: ClothingUniformJumpskirtLawyerBlue
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpsuitDetectiveGrey
+  category: loadout-category-uniform
+  cost: 3
+  exclusive: true
+  prototype: ClothingUniformJumpsuitDetectiveGrey
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpskirtDetectiveGrey
+  category: loadout-category-uniform
+  cost: 3
+  exclusive: true
+  prototype: ClothingUniformJumpskirtDetectiveGrey
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpsuitJacketMonkey
+  category: loadout-category-uniform
+  cost: 1
+  exclusive: true
+  prototype: ClothingUniformJumpsuitJacketMonkey

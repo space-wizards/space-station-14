@@ -1,0 +1,185 @@
+- type: loadout
+  id: LoadoutItemsBoxCardboard
+  category: loadout-category-items
+  cost: 1
+  exclusive: false
+  prototype: BoxCardboard
+
+- type: loadout
+  id: LoadoutItemsBoxSurvival
+  category: loadout-category-items
+  cost: 3
+  exclusive: false
+  prototype: BoxSurvival
+  
+- type: loadout
+  id: LoadoutItemsBoxLatexGloves
+  category: loadout-category-items
+  cost: 2
+  exclusive: false
+  whitelistJobs:
+    - ChiefMedicalOfficer
+    - Chemist
+    - Paramedic
+    - MedicalDoctor
+    - Psychologist
+    - MedicalIntern
+    - SeniorPhysician
+  prototype: BoxLatexGloves
+  
+- type: loadout
+  id: LoadoutItemsBoxSterileMask
+  category: loadout-category-items
+  cost: 2
+  exclusive: false
+  whitelistJobs:
+    - ChiefMedicalOfficer
+    - Chemist
+    - Paramedic
+    - Psychologist
+    - MedicalDoctor
+    - MedicalIntern
+    - SeniorPhysician
+  prototype: BoxSterileMask
+  
+- type: loadout
+  id: LoadoutItemsBoxBeaker
+  category: loadout-category-items
+  cost: 2
+  exclusive: false
+  whitelistJobs:
+    - ChiefMedicalOfficer
+    - Chemist
+    - Paramedic
+    - MedicalDoctor
+    - MedicalIntern
+    - SeniorPhysician
+    - Psychologist
+	- ResearchDirector
+	- Scientist
+	- ResearchAssistant
+	- SeniorResearcher
+  prototype: BoxBeaker
+  
+- type: loadout
+  id: LoadoutItemsBoxBodyBag
+  category: loadout-category-items
+  cost: 3
+  exclusive: false
+  whitelistJobs:
+    - ChiefMedicalOfficer
+    - Chemist
+    - Paramedic
+    - MedicalDoctor
+    - MedicalIntern
+    - Psychologist
+    - SeniorPhysician
+    - SecurityCadet
+    - SecurityOfficer
+    - Warden
+    - Detective
+    - HeadOfSecurity
+    - SeniorOfficer
+  prototype: BoxBodyBag
+  
+- type: loadout
+  id: LoadoutItemsBoxTrashbag
+  category: loadout-category-items
+  cost: 2
+  exclusive: false
+  whitelistJobs:
+    - Chef
+	- Bartender
+	- ServiceWorker
+	- Janitor
+	- Botanist
+  prototype: BoxTrashbag
+  
+- type: loadout
+  id: LoadoutItemsBoxMousetrap
+  category: loadout-category-items
+  cost: 2
+  exclusive: false
+  whitelistJobs:
+    - Chef
+	- Bartender
+	- ServiceWorker
+	- Janitor
+	- Botanist
+  prototype: BoxMousetrap
+  
+- type: loadout
+  id: LoadoutItemsBoxInflatable
+  category: loadout-category-items
+  cost: 2
+  exclusive: false
+  whitelistJobs:
+    - StationEngineer
+    - SeniorEngineer
+    - ChiefEngineer
+    - AtmosphericTechnician
+    - TechnicalAssistant
+  prototype: BoxInflatable
+  
+- type: loadout
+  id: LoadoutItemsBoxHandcuff
+  category: loadout-category-items
+  cost: 3
+  exclusive: false
+  whitelistJobs:
+    - SecurityCadet
+    - SecurityOfficer
+    - Warden
+    - Detective
+    - HeadOfSecurity
+    - SeniorOfficer
+  prototype: BoxHandcuff
+  
+- type: loadout
+  id: LoadoutItemsBoxCartridgeCap
+  category: loadout-category-items
+  cost: 3
+  exclusive: false
+  prototype: BoxCartridgeCap
+  
+- type: loadout
+  id: LoadoutItemsBoxLightMixed
+  category: loadout-category-items
+  cost: 2
+  exclusive: false
+  whitelistJobs:
+    - StationEngineer
+    - SeniorEngineer
+    - ChiefEngineer
+    - AtmosphericTechnician
+    - TechnicalAssistant
+	- Janitor
+  prototype: BoxLightMixed
+  
+- type: loadout
+  id: LoadoutItemsBoxFlashbang
+  category: loadout-category-items
+  cost: 3
+  exclusive: false
+  whitelistJobs:
+    - Warden
+	- HeadOfSecurity
+	- SeniorOfficer
+  prototype: BoxFlashbang
+  
+- type: loadout
+  id: LoadoutItemsBoxMouthSwab
+  category: loadout-category-items
+  cost: 2
+  exclusive: false
+  whitelistJobs:
+    - Botanist
+	- ServiceWorker
+	- ChiefMedicalOfficer
+    - Psychologist
+    - Chemist
+    - Paramedic
+    - MedicalDoctor
+    - MedicalIntern
+    - SeniorPhysician
+  prototype: BoxMouthSwab

@@ -15,7 +15,7 @@
 - type: loadout
   id: LoadoutHandsClothingHandsGlovesMercFingerless
   category: loadout-category-hands
-  cost: 2
+  cost: 3
   exclusive: true
   whitelistJobs:
     - SecurityCadet
@@ -25,6 +25,8 @@
     - HeadOfSecurity
     - Captain
     - SeniorOfficer
+    - Quartermaster
+    - SalvageSpecialist
   prototype: ClothingHandsGlovesMercFingerless
 
 - type: loadout
@@ -53,3 +55,90 @@
   cost: 2
   exclusive: true
   prototype: ClothingHandsGlovesColorYellowBudget
+
+- type: loadout
+  id: LoadoutHandsClothingHandsGlovesBoxingYellow
+  category: loadout-category-hands
+  cost: 2
+  exclusive: true
+  prototype: ClothingHandsGlovesBoxingYellow
+
+- type: loadout
+  id: LoadoutHandsClothingHandsGlovesBoxingGreen
+  category: loadout-category-hands
+  cost: 2
+  exclusive: true
+  prototype: ClothingHandsGlovesBoxingGreen
+
+- type: loadout
+  id: LoadoutHandsClothingHandsGlovesColorYellow
+  category: loadout-category-hands
+  cost: 2
+  exclusive: true
+  whitelistJobs:
+    - TechnicalAssistant
+    - StationEngineer
+    - AtmosphericEngineer
+    - SeniorEngineer
+    - ChiefEngineer
+  prototype: ClothingHandsGlovesColorYellow
+
+- type: loadout
+  id: LoadoutHandsClothingHandsGlovesCaptain
+  category: loadout-category-hands
+  cost: 1
+  exclusive: true
+  whitelistJobs:
+    - Captain
+  prototype: ClothingHandsGlovesCaptain
+
+- type: loadout
+  id: LoadoutHandsClothingHandsGlovesLeather
+  category: loadout-category-hands
+  cost: 1
+  exclusive: true
+  whitelistJobs:
+    - Botanist
+    - ServiceWorker
+  prototype: ClothingHandsGlovesLeather
+
+- type: loadout
+  id: LoadoutHandsClothingHandsGlovesBoxingRed
+  category: loadout-category-hands
+  cost: 2
+  exclusive: true
+  prototype: ClothingHandsGlovesBoxingRed
+
+- type: loadout
+  id: LoadoutHandsClothingHandsGlovesForensic
+  category: loadout-category-hands
+  cost: 4
+  exclusive: true
+  whitelistJobs:
+    - HeadOfSecurity
+    - Detective
+    - SeniorOfficer
+    - Warden
+  prototype: ClothingHandsGlovesForensic
+
+- type: loadout
+  id: LoadoutHandsClothingHandsGlovesLatex
+  category: loadout-category-hands
+  cost: 2
+  exclusive: true
+  prototype: ClothingHandsGlovesLatex
+
+- type: loadout
+  id: LoadoutHandsClothingHandsGlovesNitrile
+  category: loadout-category-hands
+  cost: 6
+  exclusive: true
+  whitelistJobs:
+    - ChiefMedicalOfficer
+    - Chemist
+    - Paramedic
+    - MedicalDoctor
+    - Psychologist
+    - MedicalIntern
+    - SeniorPhysician
+  prototype: ClothingHandsGlovesNitrile

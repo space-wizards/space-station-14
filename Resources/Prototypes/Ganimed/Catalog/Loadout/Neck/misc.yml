@@ -11,3 +11,131 @@
   cost: 1
   exclusive: true
   prototype: ClothingNeckTieSci
+
+- type: loadout
+  id: LoadoutNeckClothingNeckTieRed
+  category: loadout-category-neck
+  cost: 1
+  exclusive: true
+  prototype: ClothingNeckTieRed
+
+- type: loadout
+  id: LoadoutNeckClothingNeckLawyerbadge
+  category: loadout-category-neck
+  cost: 3
+  exclusive: true
+  whitelistJobs:
+    - Lawyer
+    - Captain
+    - HeadOfPersonnel
+    - HeadOfSecurity
+    - Warden
+    - SeniorOfficer
+    - Detective
+  prototype: ClothingNeckLawyerbadge
+
+- type: loadout
+  id: LoadoutNeckClothingNeckGoldmedal
+  category: loadout-category-neck
+  cost: 7
+  exclusive: true
+  whitelistJobs:
+    - Captain
+    - HeadOfPersonnel
+    - HeadOfSecurity
+    - ChiefMedicalOfficer
+    - ChiefEngineer
+    - ResearchDirector
+  prototype: ClothingNeckGoldmedal
+
+- type: loadout
+  id: LoadoutNeckClothingNeckBronzeheart
+  category: loadout-category-neck
+  cost: 7
+  exclusive: true
+  prototype: ClothingNeckBronzeheart
+
+- type: loadout
+  id: LoadoutNeckClothingNeckClownmedal
+  category: loadout-category-neck
+  cost: 8
+  exclusive: true
+  prototype: ClothingNeckClownmedal
+
+- type: loadout
+  id: LoadoutNeckClothingNeckEngineermedal
+  category: loadout-category-neck
+  cost: 6
+  exclusive: true
+  whitelistJobs:
+    - ChiefEngineer
+    - SeniorEngineer
+    - AtmosphericTechnician
+    - TechnicalAssistant
+    - StationEngineer
+    - Captain
+  prototype: ClothingNeckEngineermedal
+
+- type: loadout
+  id: LoadoutNeckClothingNeckMedicalmedal
+  category: loadout-category-neck
+  cost: 6
+  exclusive: true
+  whitelistJobs:
+    - Captain
+    - ChiefMedicalOfficer
+    - SeniorPhysician
+    - Chemist
+    - Psychologist
+    - MedicalDoctor
+    - MedicalIntern
+    - Paramedic
+  prototype: ClothingNeckMedicalmedal
+
+- type: loadout
+  id: LoadoutNeckClothingNeckSciencemedal
+  category: loadout-category-neck
+  cost: 6
+  exclusive: true
+  whitelistJobs:
+    - Captain
+    - ResearchDirector
+    - ResearchAssistant
+    - SeniorResearcher
+    - Scientist
+  prototype: ClothingNeckSciencemedal
+
+- type: loadout
+  id: LoadoutNeckClothingNeckSecuritymedal
+  category: loadout-category-neck
+  cost: 6
+  exclusive: true
+  whitelistJobs:
+    - Captain
+    - HeadOfSecurity
+    - SeniorOfficer
+    - Warden
+    - SecurityCadet
+    - SecurityOfficer
+    - Detective
+  prototype: ClothingNeckSecuritymedal
+
+- type: loadout
+  id: LoadoutNeckClothingNeckCargomedal
+  category: loadout-category-neck
+  cost: 6
+  exclusive: true
+  whitelistJobs:
+    - Captain
+    - Quartermaster
+    - HeadOfPersonnel
+    - SalvageSpecialist
+    - CargoTechnician
+  prototype: ClothingNeckCargomedal
+
+- type: loadout
+  id: LoadoutNeckClothingNeckHeadphones
+  category: loadout-category-neck
+  cost: 1
+  exclusive: true
+  prototype: ClothingNeckHeadphones

@@ -60,6 +60,7 @@
     - Chemist
     - Paramedic
     - MedicalDoctor
+    - Psychologist
     - MedicalIntern
     - SeniorPhysician
   prototype: ClothingOuterBioVirology

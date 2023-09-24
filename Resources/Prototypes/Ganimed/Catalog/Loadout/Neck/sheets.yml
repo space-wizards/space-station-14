@@ -1,6 +1,201 @@
 - type: loadout
   id: LoadoutNeckBedsheetWhite
   category: loadout-category-neck
-  cost: 1
+  cost: 2
   exclusive: true
   prototype: BedsheetWhite
+
+- type: loadout
+  id: LoadoutNeckBedsheetYellow
+  category: loadout-category-neck
+  cost: 2
+  exclusive: true
+  prototype: BedsheetYellow
+
+- type: loadout
+  id: LoadoutNeckBedsheetGreen
+  category: loadout-category-neck
+  cost: 2
+  exclusive: true
+  prototype: BedsheetGreen
+
+- type: loadout
+  id: LoadoutNeckBedsheetBrown
+  category: loadout-category-neck
+  cost: 2
+  exclusive: true
+  prototype: BedsheetBrown
+
+- type: loadout
+  id: LoadoutNeckBedsheetCosmos
+  category: loadout-category-neck
+  cost: 4
+  exclusive: true
+  prototype: BedsheetCosmos
+
+- type: loadout
+  id: LoadoutNeckBedsheetRed
+  category: loadout-category-neck
+  cost: 2
+  exclusive: true
+  prototype: BedsheetRed
+
+- type: loadout
+  id: LoadoutNeckBedsheetMedical
+  category: loadout-category-neck
+  cost: 2
+  exclusive: true
+  whitelistJobs:
+    - ChiefMedicalOfficer
+    - Chemist
+    - Paramedic
+    - MedicalDoctor
+    - Psychologist
+    - MedicalIntern
+    - SeniorPhysician
+  prototype: BedsheetMedical
+
+- type: loadout
+  id: LoadoutNeckBedsheetNT
+  category: loadout-category-neck
+  cost: 2
+  exclusive: true
+  prototype: BedsheetNT
+
+- type: loadout
+  id: LoadoutNeckBedsheetIan
+  category: loadout-category-neck
+  cost: 2
+  exclusive: true
+  prototype: BedsheetIan
+
+- type: loadout
+  id: LoadoutNeckBedsheetUSA
+  category: loadout-category-neck
+  cost: 2
+  exclusive: true
+  prototype: BedsheetUSA
+
+- type: loadout
+  id: LoadoutNeckBedsheetCentcom
+  category: loadout-category-neck
+  cost: 6
+  exclusive: true
+  prototype: BedsheetCentcom
+
+- type: loadout
+  id: LoadoutNeckBedsheetBrigmedic
+  category: loadout-category-neck
+  cost: 4
+  exclusive: true
+  whitelistJobs:
+    - ChiefMedicalOfficer
+    - SeniorPhysician
+    - Chemist
+    - MedicalDoctor
+    - Psychologist
+    - MedicalIntern
+    - Paramedic
+    - SecurityCadet
+    - SecurityOfficer
+    - Warden
+    - Detective
+    - HeadOfSecurity
+    - Captain
+    - SeniorOfficer
+  prototype: BedsheetBrigmedic
+
+- type: loadout
+  id: LoadoutNeckBedsheetWiz
+  category: loadout-category-neck
+  cost: 3
+  exclusive: true
+  prototype: BedsheetWiz
+
+- type: loadout
+  id: LoadoutNeckBedsheetCMO
+  category: loadout-category-neck
+  cost: 2
+  exclusive: true
+  whitelistJobs:
+    - ChiefMedicalOfficer
+  prototype: BedsheetCMO
+
+- type: loadout
+  id: LoadoutNeckBedsheetHOS
+  category: loadout-category-neck
+  cost: 2
+  exclusive: true
+  whitelistJobs:
+    - HeadOfSecurity
+  prototype: BedsheetHOS
+
+- type: loadout
+  id: LoadoutNeckBedsheetHOP
+  category: loadout-category-neck
+  cost: 2
+  exclusive: true
+  whitelistJobs:
+    - HeadOfPersonnel
+  prototype: BedsheetHOP
+
+- type: loadout
+  id: LoadoutNeckBedsheetCaptain
+  category: loadout-category-neck
+  cost: 2
+  exclusive: true
+  whitelistJobs:
+    - Captain
+  prototype: BedsheetCaptain
+
+- type: loadout
+  id: LoadoutNeckBedsheetQM
+  category: loadout-category-neck
+  cost: 2
+  exclusive: true
+  whitelistJobs:
+    - Quartermaster
+  prototype: BedsheetQM
+
+- type: loadout
+  id: LoadoutNeckBedsheetRD
+  category: loadout-category-neck
+  cost: 2
+  exclusive: true
+  whitelistJobs:
+    - ResearchDirector
+  prototype: BedsheetRD
+
+- type: loadout
+  id: LoadoutNeckBedsheetCE
+  category: loadout-category-neck
+  cost: 2
+  exclusive: true
+  whitelistJobs:
+    - ChiefEngineer
+  prototype: BedsheetCE
+
+- type: loadout
+  id: LoadoutNeckBedsheetClown
+  category: loadout-category-neck
+  cost: 2
+  exclusive: true
+  whitelistJobs:
+    - Clown
+  prototype: BedsheetClown
+
+- type: loadout
+  id: LoadoutNeckBedsheetMime
+  category: loadout-category-neck
+  cost: 2
+  exclusive: true
+  whitelistJobs:
+    - Mime
+  prototype: BedsheetMime
+
+- type: loadout
+  id: LoadoutNeckBedsheetCult
+  category: loadout-category-neck
+  cost: 4
+  exclusive: true
+  prototype: BedsheetCult

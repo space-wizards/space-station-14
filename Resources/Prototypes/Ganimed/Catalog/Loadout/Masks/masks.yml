@@ -27,6 +27,94 @@
     - Chemist
     - Paramedic
     - MedicalDoctor
+    - Psychologist
     - MedicalIntern
     - SeniorPhysician
   prototype: ClothingMaskBreathMedicalSecurity
+
+
+
+- type: loadout
+  id: LoadoutMasksClothingMaskBreathMedical
+  category: loadout-category-masks
+  cost: 5
+  exclusive: true
+  prototype: ClothingMaskBreathMedical
+
+- type: loadout
+  id: LoadoutMasksClothingMaskBreath
+  category: loadout-category-masks
+  cost: 1
+  exclusive: true
+  prototype: ClothingMaskBreath
+
+- type: loadout
+  id: LoadoutMasksClothingMaskScaredMime
+  category: loadout-category-masks
+  cost: 1
+  exclusive: true
+  whitelistJobs:
+    - Mime
+  prototype: ClothingMaskScaredMime
+
+- type: loadout
+  id: LoadoutMasksClothingMaskItalianMoustache
+  category: loadout-category-masks
+  cost: 1
+  exclusive: true
+  prototype: ClothingMaskItalianMoustache
+
+- type: loadout
+  id: LoadoutMasksSmokingPipeFilledTobacco
+  category: loadout-category-masks
+  cost: 1
+  exclusive: true
+  prototype: SmokingPipeFilledTobacco
+
+- type: loadout
+  id: LoadoutMasksClothingMaskCluwneRemoveable
+  category: loadout-category-masks
+  cost: 4
+  exclusive: true
+  whitelistJobs:
+    - Clown
+  prototype: ClothingMaskCluwneRemoveable
+
+- type: loadout
+  id: LoadoutMasksClothingMaskClown
+  category: loadout-category-masks
+  cost: 1
+  exclusive: true
+  whitelistJobs:
+    - Clown
+  prototype: ClothingMaskClown
+
+- type: loadout
+  id: LoadoutMasksClothingMaskMime
+  category: loadout-category-masks
+  cost: 1
+  exclusive: true
+  whitelistJobs:
+    - Mime
+  prototype: ClothingMaskMime
+
+- type: loadout
+  id: LoadoutMasksClothingMaskJoy
+  category: loadout-category-masks
+  cost: 2
+  exclusive: true
+  prototype: ClothingMaskJoy
+
+- type: loadout
+  id: LoadoutMasksClothingMaskPlague
+  category: loadout-category-masks
+  cost: 3
+  exclusive: true
+  prototype: ClothingMaskPlague
+
+- type: loadout
+  id: LoadoutMasksClothingMaskMuzzle
+  category: loadout-category-masks
+  cost: 2
+  exclusive: true
+  prototype: ClothingMaskMuzzle

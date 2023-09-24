@@ -4,3 +4,25 @@
   cost: 1
   exclusive: true
   prototype: ClothingEyesGlassesGarGiga
+
+- type: loadout
+  id: LoadoutEyesClothingEyesGlassesGar
+  category: loadout-category-eyes
+  cost: 1
+  exclusive: true
+  prototype: ClothingEyesGlassesGar
+
+- type: loadout
+  id: LoadoutEyesClothingEyesGlassesMeson
+  category: loadout-category-eyes
+  cost: 4
+  whitelistJobs:
+    - TechnicalAssistant
+    - StationEngineer
+    - AtmosphericEngineer
+    - SeniorEngineer
+    - ChiefEngineer
+    - Quartermaster
+    - SalvageSpecialist
+  exclusive: true
+  prototype: ClothingEyesGlassesMeson

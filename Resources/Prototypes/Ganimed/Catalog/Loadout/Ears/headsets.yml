@@ -36,6 +36,7 @@
     - Paramedic
     - Chemist
     - SeniorPhysician
+    - Psychologist
     - HeadOfSecurity
     - SeniorOfficer
     - Warden
@@ -76,6 +77,7 @@
     - Chemist
     - Paramedic
     - MedicalDoctor
+    - Psychologist
     - MedicalIntern
     - SeniorPhysician
   prototype: ClothingHeadsetMedical
@@ -146,3 +148,22 @@
     - HeadOfSecurity
     - SeniorOfficer
   prototype: ClothingHeadsetSecurity
+
+- type: loadout
+  id: LoadoutEarsClothingHeadsetMedicalScience
+  category: loadout-category-ears
+  cost: 4
+  exclusive: true
+  whitelistJobs:
+    - ChiefMedicalOfficer
+    - Chemist
+    - Paramedic
+    - MedicalDoctor
+    - Psychologist
+    - MedicalIntern
+    - SeniorPhysician
+    - ResearchDirector
+    - ResearchAssistant
+    - Scientist
+    - SeniorResearcher
+  prototype: ClothingHeadsetMedicalScience

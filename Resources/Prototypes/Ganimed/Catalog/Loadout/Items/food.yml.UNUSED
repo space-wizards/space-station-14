@@ -1,0 +1,86 @@
+- type: loadout
+  id: LoadoutItemsMobMouse
+  category: loadout-category-items
+  cost: 3
+  exclusive: false
+  speciesRestriction:
+    - Lizardperson
+  prototype: MobMouse
+  
+- type: loadout
+  id: LoadoutItemsDrinkFlaskBar
+  category: loadout-category-items
+  cost: 1
+  exclusive: false
+  prototype: DrinkFlaskBar
+  
+- type: loadout
+  id: LoadoutItemsFoodDonkpocket
+  category: loadout-category-items
+  cost: 1
+  exclusive: false
+  prototype: FoodDonkpocket
+  
+- type: loadout
+  id: LoadoutItemsFoodBoxDonkpocket
+  category: loadout-category-items
+  cost: 2
+  exclusive: false
+  prototype: FoodBoxDonkpocket
+  
+- type: loadout
+  id: LoadoutItemsMonkeyCubeBox
+  category: loadout-category-items
+  cost: 4
+  exclusive: false
+  prototype: MonkeyCubeBox
+  
+- type: loadout
+  id: LoadoutItemsBoxPizzaFilled
+  category: loadout-category-items
+  cost: 2
+  exclusive: false
+  prototype: BoxPizzaFilled
+  
+- type: loadout
+  id: LoadoutItemsFoodBoxDonut
+  category: loadout-category-items
+  cost: 2
+  exclusive: false
+  prototype: FoodBoxDonut
+  
+- type: loadout
+  id: LoadoutItemsPillSpaceDrugs
+  category: loadout-category-items
+  cost: 5
+  exclusive: false
+  prototype: PillSpaceDrugs
+  
+- type: loadout
+  id: LoadoutItemsDrinkMug
+  category: loadout-category-items
+  cost: 1
+  exclusive: false
+  prototype: DrinkMug
+  
+- type: loadout
+  id: LoadoutItemsDrinkMugMetal
+  category: loadout-category-items
+  cost: 1
+  exclusive: false
+  prototype: DrinkMugMetal
+  
+- type: loadout
+  id: LoadoutItemsDrinkRumBottleFull
+  category: loadout-category-items
+  cost: 2
+  exclusive: false
+  prototype: DrinkRumBottleFull
+  
+- type: loadout
+  id: LoadoutItemsFoodBoxNugget
+  category: loadout-category-items
+  cost: 2
+  exclusive: false
+  prototype: FoodBoxNugget
+  

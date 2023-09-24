@@ -1,0 +1,62 @@
+- type: loadout
+  id: LoadoutNeckClothingNeckTransPin
+  category: loadout-category-neck
+  cost: 1
+  exclusive: true
+  prototype: ClothingNeckTransPin
+
+- type: loadout
+  id: LoadoutNeckClothingNeckAromanticPin
+  category: loadout-category-neck
+  cost: 1
+  exclusive: true
+  prototype: ClothingNeckAromanticPin
+
+- type: loadout
+  id: LoadoutNeckClothingNeckLGBTPin
+  category: loadout-category-neck
+  cost: 1
+  exclusive: true
+  prototype: ClothingNeckLGBTPin
+
+- type: loadout
+  id: LoadoutNeckClothingNeckPansexualPin
+  category: loadout-category-neck
+  cost: 1
+  exclusive: true
+  prototype: ClothingNeckPansexualPin
+
+- type: loadout
+  id: LoadoutNeckClothingNeckLesbianPin
+  category: loadout-category-neck
+  cost: 1
+  exclusive: true
+  prototype: ClothingNeckLesbianPin
+
+- type: loadout
+  id: LoadoutNeckClothingNeckAsexualPin
+  category: loadout-category-neck
+  cost: 1
+  exclusive: true
+  prototype: ClothingNeckAsexualPin
+
+- type: loadout
+  id: LoadoutNeckClothingNeckIntersexPin
+  category: loadout-category-neck
+  cost: 1
+  exclusive: true
+  prototype: ClothingNeckIntersexPin
+
+- type: loadout
+  id: LoadoutNeckClothingNeckNonBinaryPin
+  category: loadout-category-neck
+  cost: 1
+  exclusive: true
+  prototype: ClothingNeckNonBinaryPin
+
+- type: loadout
+  id: LoadoutNeckClothingNeckBisexualPin
+  category: loadout-category-neck
+  cost: 1
+  exclusive: true
+  prototype: ClothingNeckBisexualPin

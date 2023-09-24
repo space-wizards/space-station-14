@@ -128,6 +128,28 @@
   
 
 - type: loadout
+  id: LoadoutItemsWeaponCrusher
+  category: loadout-category-items
+  cost: 5
+  exclusive: false
+  whitelistJobs:
+    - SalvageSpecialist
+    - Quartermaster
+  prototype: WeaponCrusher
+  
+
+- type: loadout
+  id: LoadoutItemsWeaponCrusherDagger
+  category: loadout-category-items
+  cost: 4
+  exclusive: false
+  whitelistJobs:
+    - SalvageSpecialist
+    - Quartermaster
+  prototype: WeaponCrusherDagger
+  
+
+- type: loadout
   id: LoadoutItemsSawElectric
   category: loadout-category-items
   cost: 3
@@ -137,6 +159,7 @@
     - Chemist
     - Paramedic
     - MedicalDoctor
+    - Psychologist
     - MedicalIntern
     - SeniorPhysician
   prototype: SawElectric
@@ -170,4 +193,116 @@
     - Captain
     - SeniorOfficer
   prototype: Stunbaton
+
+- type: loadout
+  id: LoadoutItemsKatana
+  category: loadout-category-items
+  cost: 4
+  exclusive: false
+  whitelistJobs:
+    - HeadOfSecurity
+    - Captain
+  prototype: Katana
+
+- type: loadout
+  id: LoadoutItemsClaymore
+  category: loadout-category-items
+  cost: 4
+  exclusive: false
+  whitelistJobs:
+    - HeadOfSecurity
+    - Captain
+  prototype: Claymore
+
+- type: loadout
+  id: LoadoutItemsPickaxe
+  category: loadout-category-items
+  cost: 4
+  exclusive: false
+  whitelistJobs:
+    - Quartermaster
+    - SalvageSpecialist
+	- CargoTechnician
+  prototype: Pickaxe
+
+- type: loadout
+  id: LoadoutItemsKitchenKnife
+  category: loadout-category-items
+  cost: 2
+  exclusive: false
+  whitelistJobs:
+    - Chef
+    - Bartender
+	- ServiceWorker
+  prototype: KitchenKnife
+
+- type: loadout
+  id: LoadoutItemsButchCleaver
+  category: loadout-category-items
+  cost: 5
+  exclusive: false
+  whitelistJobs:
+    - Chef
+    - Bartender
+	- ServiceWorker
+  prototype: KitchenKnife
+
+- type: loadout
+  id: LoadoutItemsShovel
+  category: loadout-category-items
+  cost: 5
+  exclusive: false
+  prototype: Shovel
+
+- type: loadout
+  id: LoadoutItemsMachete
+  category: loadout-category-items
+  cost: 4
+  exclusive: false
+  whitelistJobs:
+    - Quartermaster
+    - SalvageSpecialist
+	- SecurityCadet
+	- SecurityOfficer
+    - Warden
+    - Detective
+    - HeadOfSecurity
+    - Captain
+    - SeniorOfficer
+	- Captain
+  prototype: Machete
+
+- type: loadout
+  id: LoadoutItemsSurvivalKnife
+  category: loadout-category-items
+  cost: 3
+  exclusive: false
+  whitelistJobs:
+    - Quartermaster
+    - SalvageSpecialist
+	- SecurityCadet
+	- SecurityOfficer
+    - Warden
+    - Detective
+    - HeadOfSecurity
+    - Captain
+    - SeniorOfficer
+	- Captain
+  prototype: SurvivalKnife
+
+- type: loadout
+  id: LoadoutItemsKukriKnife
+  category: loadout-category-items
+  cost: 4
+  exclusive: false
+  whitelistJobs:
+	- SecurityCadet
+	- SecurityOfficer
+    - Warden
+    - Detective
+    - HeadOfSecurity
+    - Captain
+    - SeniorOfficer
+	- Captain
+  prototype: KukriKnife
   

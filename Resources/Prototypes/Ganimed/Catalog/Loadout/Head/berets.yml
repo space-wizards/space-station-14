@@ -46,6 +46,7 @@
     - Chemist
     - Paramedic
     - MedicalDoctor
+    - Psychologist
     - MedicalIntern
     - SeniorPhysician
   prototype: ClothingHeadHatBeretBrigmedic
@@ -53,7 +54,7 @@
 - type: loadout
   id: LoadoutHeadClothingHeadHatBeretMerc
   category: loadout-category-head
-  cost: 2
+  cost: 4
   exclusive: true
   whitelistJobs:
     - SecurityCadet
@@ -63,6 +64,8 @@
     - HeadOfSecurity
     - Captain
     - SeniorOfficer
+    - SalvageSpecialist
+    - Quartermaster
   prototype: ClothingHeadHatBeretMerc
 
 - type: loadout

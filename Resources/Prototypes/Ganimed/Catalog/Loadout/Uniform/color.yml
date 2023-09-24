@@ -25,3 +25,59 @@
   cost: 1
   exclusive: false
   prototype: ClothingUniformJumpskirtColorMaroon
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpsuitColorYellow
+  category: loadout-category-uniform
+  cost: 1
+  exclusive: false
+  prototype: ClothingUniformJumpsuitColorYellow
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpskirtColorYellow
+  category: loadout-category-uniform
+  cost: 1
+  exclusive: false
+  prototype: ClothingUniformJumpskirtColorYellow
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpsuitColorGreen
+  category: loadout-category-uniform
+  cost: 1
+  exclusive: false
+  prototype: ClothingUniformJumpsuitColorGreen
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpskirtColorGreen
+  category: loadout-category-uniform
+  cost: 1
+  exclusive: false
+  prototype: ClothingUniformJumpskirtColorGreen
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpsuitColorBrown
+  category: loadout-category-uniform
+  cost: 1
+  exclusive: false
+  prototype: ClothingUniformJumpsuitColorBrown
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpskirtColorBrown
+  category: loadout-category-uniform
+  cost: 1
+  exclusive: false
+  prototype: ClothingUniformJumpskirtColorBrown
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpsuitColorRed
+  category: loadout-category-uniform
+  cost: 1
+  exclusive: false
+  prototype: ClothingUniformJumpsuitColorRed
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpskirtColorRed
+  category: loadout-category-uniform
+  cost: 1
+  exclusive: false
+  prototype: ClothingUniformJumpskirtColorRed

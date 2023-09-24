@@ -27,4 +27,24 @@
   cost: 7
   exclusive: true
   prototype: ClothingOuterHardsuitBasic
+
+- type: loadout
+  id: LoadoutOuterClothingClothingOuterArmorHeavyRed
+  category: loadout-category-outerClothing
+  cost: 9
+  exclusive: true
+  whitelistJobs:
+    - Captain
+    - HeadOfSecurity
+  prototype: ClothingOuterArmorHeavyRed
+
+- type: loadout
+  id: LoadoutOuterClothingClothingOuterHardsuitSpatio
+  category: loadout-category-outerClothing
+  cost: 5
+  exclusive: true
+  whitelistJobs:
+    - Quartermaster
+    - SalvageSpecialist
+  prototype: ClothingOuterHardsuitSpatio
   

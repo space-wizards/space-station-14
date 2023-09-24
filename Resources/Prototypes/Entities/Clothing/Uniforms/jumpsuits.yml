@@ -1127,6 +1127,17 @@
   - type: Unremoveable
 
 - type: entity
+  parent: ClothingUniformJumpsuitClown
+  id: ClothingUniformJumpsuitCluwneRemoveable
+  name: cluwne suit
+  description: Cursed cluwne suit.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/cluwne.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/cluwne.rsi
+
+- type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitDameDane
   name: yakuza outfit

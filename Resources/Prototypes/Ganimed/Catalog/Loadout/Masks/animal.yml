@@ -1,0 +1,48 @@
+- type: loadout
+  id: LoadoutMasksClothingMaskRaven
+  category: loadout-category-masks
+  cost: 2
+  exclusive: true
+  prototype: ClothingMaskRaven
+
+- type: loadout
+  id: LoadoutMasksClothingMaskRat
+  category: loadout-category-masks
+  cost: 2
+  exclusive: true
+  prototype: ClothingMaskRat
+
+- type: loadout
+  id: LoadoutMasksClothingMaskBat
+  category: loadout-category-masks
+  cost: 2
+  exclusive: true
+  prototype: ClothingMaskBat
+
+- type: loadout
+  id: LoadoutMasksClothingMaskFox
+  category: loadout-category-masks
+  cost: 2
+  exclusive: true
+  prototype: ClothingMaskFox
+
+- type: loadout
+  id: LoadoutMasksClothingMaskBear
+  category: loadout-category-masks
+  cost: 2
+  exclusive: true
+  prototype: ClothingMaskBear
+
+- type: loadout
+  id: LoadoutMasksClothingMaskBee
+  category: loadout-category-masks
+  cost: 2
+  exclusive: true
+  prototype: ClothingMaskBee
+
+- type: loadout
+  id: LoadoutMasksClothingMaskJackal
+  category: loadout-category-masks
+  cost: 2
+  exclusive: true
+  prototype: ClothingMaskJackal

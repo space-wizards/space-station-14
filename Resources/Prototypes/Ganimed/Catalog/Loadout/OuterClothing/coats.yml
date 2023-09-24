@@ -25,7 +25,165 @@
     - SeniorPhysician
     - Chemist
     - MedicalDoctor
+    - Psychologist
     - MedicalIntern
     - Paramedic
   prototype: ClothingOuterCoatParamedicWB
+
+- type: loadout
+  id: LoadoutOuterClothingClothingOuterJacketChef
+  category: loadout-category-outerClothing
+  cost: 2
+  exclusive: true
+  whitelistJobs:
+    - Chef
+    - Bartender
+    - ServiceWorker
+  prototype: ClothingOuterJacketChef
+
+- type: loadout
+  id: LoadoutOuterClothingClothingOuterCoatLab
+  category: loadout-category-outerClothing
+  cost: 2
+  exclusive: true
+  whitelistJobs:
+    - ChiefMedicalOfficer
+    - SeniorPhysician
+    - Chemist
+    - MedicalDoctor
+    - Psychologist
+    - MedicalIntern
+    - Paramedic
+    - ResearchDirector
+    - ResearchAssistant
+    - Scientist
+    - SeniorResearcher
+  prototype: ClothingOuterCoatLab
+
+- type: loadout
+  id: LoadoutOuterClothingClothingOuterCoatLabViro
+  category: loadout-category-outerClothing
+  cost: 3
+  exclusive: true
+  whitelistJobs:
+    - ChiefMedicalOfficer
+    - SeniorPhysician
+    - Chemist
+    - MedicalDoctor
+    - Psychologist
+    - MedicalIntern
+    - Paramedic
+  prototype: ClothingOuterCoatLabViro
+
+- type: loadout
+  id: LoadoutOuterClothingClothingOuterCoatLabGene
+  category: loadout-category-outerClothing
+  cost: 3
+  exclusive: true
+  whitelistJobs:
+    - ChiefMedicalOfficer
+    - SeniorPhysician
+    - Chemist
+    - MedicalDoctor
+    - Psychologist
+    - MedicalIntern
+    - Paramedic
+  prototype: ClothingOuterCoatLabGene
+
+- type: loadout
+  id: LoadoutOuterClothingClothingOuterCoatLabChem
+  category: loadout-category-outerClothing
+  cost: 3
+  exclusive: true
+  whitelistJobs:
+    - ChiefMedicalOfficer
+    - SeniorPhysician
+    - Chemist
+    - MedicalDoctor
+    - Psychologist
+    - MedicalIntern
+    - Paramedic
+  prototype: ClothingOuterCoatLabChem
+
+- type: loadout
+  id: LoadoutOuterClothingClothingOuterCoatLabCmo
+  category: loadout-category-outerClothing
+  cost: 1
+  exclusive: true
+  whitelistJobs:
+    - ChiefMedicalOfficer
+  prototype: ClothingOuterCoatLabCmo
+
+- type: loadout
+  id: LoadoutOuterClothingClothingOuterCoatLabSeniorPhysician
+  category: loadout-category-outerClothing
+  cost: 2
+  exclusive: true
+  whitelistJobs:
+    - ChiefMedicalOfficer
+    - SeniorPhysician
+  prototype: ClothingOuterCoatLabSeniorPhysician
+
+- type: loadout
+  id: LoadoutOuterClothingClothingOuterCoatRnd
+  category: loadout-category-outerClothing
+  cost: 2
+  exclusive: true
+  whitelistJobs:
+    - ResearchDirector
+    - ResearchAssistant
+    - Scientist
+    - SeniorResearcher
+  prototype: ClothingOuterCoatRnd
+
+- type: loadout
+  id: LoadoutOuterClothingClothingOuterCoatRobo
+  category: loadout-category-outerClothing
+  cost: 4
+  exclusive: true
+  whitelistJobs:
+    - ResearchDirector
+    - ResearchAssistant
+    - Scientist
+    - SeniorResearcher
+  prototype: ClothingOuterCoatRobo
+
+- type: loadout
+  id: LoadoutOuterClothingClothingOuterCoatLabSeniorResearcher
+  category: loadout-category-outerClothing
+  cost: 2
+  exclusive: true
+  whitelistJobs:
+    - ResearchDirector
+    - SeniorResearcher
+  prototype: ClothingOuterCoatLabSeniorResearcher
+
+- type: loadout
+  id: LoadoutOuterClothingClothingOuterCoatAMG
+  category: loadout-category-outerClothing
+  cost: 7
+  exclusive: true
+  whitelistJobs:
+    - ChiefMedicalOfficer
+    - SeniorPhysician
+    - Chemist
+    - MedicalDoctor
+    - Psychologist
+    - MedicalIntern
+    - Paramedic
+    - SecurityCadet
+    - SecurityOfficer
+    - Warden
+    - Detective
+    - HeadOfSecurity
+    - Captain
+    - SeniorOfficer
+  prototype: ClothingOuterCoatAMG
+
+- type: loadout
+  id: LoadoutOuterClothingClothingOuterCoatPirate
+  category: loadout-category-outerClothing
+  cost: 4
+  exclusive: true
+  prototype: ClothingOuterCoatPirate
   

@@ -13,3 +13,35 @@
     - AtmosphericTechnician
     - StationEngineer
   prototype: ClothingHeadHatHardhatArmored
+
+- type: loadout
+  id: LoadoutHeadClothingHeadHatHardhatYellow
+  category: loadout-category-head
+  cost: 1
+  exclusive: true
+  whitelistJobs:
+    - SalvageSpecialist
+    - Quartermaster
+    - CargoTechnician
+    - Captain
+    - ChiefEngineer
+    - SeniorEngineer
+    - AtmosphericTechnician
+    - StationEngineer
+  prototype: ClothingHeadHatHardhatYellow
+
+- type: loadout
+  id: LoadoutHeadClothingHeadHatHardhatRed
+  category: loadout-category-head
+  cost: 1
+  exclusive: true
+  whitelistJobs:
+    - SalvageSpecialist
+    - Quartermaster
+    - CargoTechnician
+    - Captain
+    - ChiefEngineer
+    - SeniorEngineer
+    - AtmosphericTechnician
+    - StationEngineer
+  prototype: ClothingHeadHatHardhatRed

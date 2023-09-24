@@ -42,3 +42,17 @@
     - Captain
     - SeniorOfficer
   prototype: ClothingBeltBandolier
+
+- type: loadout
+  id: LoadoutBeltClothingBeltStorageWaistbag
+  category: loadout-category-belt
+  cost: 3
+  exclusive: true
+  prototype: ClothingBeltStorageWaistbag
+
+- type: loadout
+  id: LoadoutBeltClothingBeltQuiver
+  category: loadout-category-belt
+  cost: 3
+  exclusive: true
+  prototype: ClothingBeltQuiver

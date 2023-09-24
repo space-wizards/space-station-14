@@ -1,5 +1,5 @@
 - type: loadout
-  id: LoadoutBeltClothingShoesBootsCombat
+  id: LoadoutShoesClothingShoesBootsCombat
   category: loadout-category-shoes
   cost: 3
   exclusive: true
@@ -15,8 +15,74 @@
   prototype: ClothingShoesBootsCombat
 
 - type: loadout
-  id: LoadoutBeltClothingShoesGaloshes
+  id: LoadoutShoesClothingShoesGaloshes
   category: loadout-category-shoes
   cost: 4
   exclusive: true
   prototype: ClothingShoesGaloshes
+
+- type: loadout
+  id: LoadoutShoesClothingShoesBootsMerc
+  category: loadout-category-shoes
+  cost: 3
+  exclusive: true
+  whitelistJobs:
+    - SecurityCadet
+    - SecurityOfficer
+    - Warden
+    - Detective
+    - HeadOfSecurity
+    - Captain
+    - SeniorOfficer
+    - SalvageSpecialist
+    - Quartermaster
+  prototype: ClothingShoesBootsMerc
+
+- type: loadout
+  id: LoadoutShoesClothingShoesSwat
+  category: loadout-category-shoes
+  cost: 3
+  exclusive: true
+  whitelistJobs:
+    - SecurityCadet
+    - SecurityOfficer
+    - Warden
+    - Detective
+    - HeadOfSecurity
+    - Captain
+    - SeniorOfficer
+  prototype: ClothingShoesSwat
+
+- type: loadout
+  id: LoadoutShoesClothingShoesBootsSalvage
+  category: loadout-category-shoes
+  cost: 2
+  exclusive: true
+  whitelistJobs:
+    - SalvageSpecialist
+    - Quartermaster
+    - CargoTechnician
+    - Captain
+    - AtmosphericTechnician
+  prototype: ClothingShoesBootsSalvage
+
+- type: loadout
+  id: LoadoutShoesClothingShoesLeather
+  category: loadout-category-shoes
+  cost: 3
+  exclusive: true
+  prototype: ClothingShoesLeather
+
+- type: loadout
+  id: LoadoutShoesClothingShoesBootsMag
+  category: loadout-category-shoes
+  cost: 4
+  exclusive: true
+  whitelistJobs:
+    - SalvageSpecialist
+    - Quartermaster
+    - ChiefEngineer
+    - SeniorEngineer
+    - StationEngineer
+    - AtmosphericTechnician
+  prototype: ClothingShoesBootsMag

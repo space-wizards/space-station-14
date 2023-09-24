@@ -1,0 +1,86 @@
+- type: loadout
+  id: LoadoutHeadClothingHeadHatHoodCulthood
+  category: loadout-category-head
+  cost: 3
+  exclusive: true
+  prototype: ClothingHeadHatHoodCulthood
+
+- type: loadout
+  id: LoadoutHeadClothingHeadHatHoodNunHood
+  category: loadout-category-head
+  cost: 3
+  exclusive: true
+  prototype: ClothingHeadHatHoodNunHood
+
+- type: loadout
+  id: LoadoutHeadClothingHeadHatHoodGoliathCloak
+  category: loadout-category-head
+  cost: 3
+  exclusive: true
+  prototype: ClothingHeadHatHoodGoliathCloak
+
+- type: loadout
+  id: LoadoutHeadClothingHeadHatHoodRad
+  category: loadout-category-head
+  cost: 5
+  exclusive: true
+  whitelistJobs:
+    - TechnicalAssistant
+    - StationEngineer
+    - AtmosphericEngineer
+    - SeniorEngineer
+    - ChiefEngineer
+    - ResearchDirector
+    - ResearchAssistant
+    - Scientist
+    - SeniorResearcher
+  prototype: ClothingHeadHatHoodRad
+
+- type: loadout
+  id: LoadoutHeadClothingHeadFishCap
+  category: loadout-category-head
+  cost: 1
+  exclusive: true
+  prototype: ClothingHeadFishCap
+
+- type: loadout
+  id: LoadoutHeadClothingHeadHatAnimalCatBrown
+  category: loadout-category-head
+  cost: 1
+  exclusive: true
+  prototype: ClothingHeadHatAnimalCatBrown
+
+- type: loadout
+  id: LoadoutHeadClothingHeadHatFedoraBrown
+  category: loadout-category-head
+  cost: 2
+  exclusive: true
+  prototype: ClothingHeadHatFedoraBrown
+
+- type: loadout
+  id: LoadoutHeadClothingHeadHatCatEars
+  category: loadout-category-head
+  cost: 7
+  exclusive: true
+  prototype: ClothingHeadHatCatEars
+
+- type: loadout
+  id: LoadoutHeadClothingHeadHatHoodMoth
+  category: loadout-category-head
+  cost: 2
+  exclusive: true
+  prototype: ClothingHeadHatHoodMoth
+
+- type: loadout
+  id: LoadoutHeadMaterialHideBear
+  category: loadout-category-head
+  cost: 4
+  exclusive: true
+  prototype: MaterialHideBear
+
+- type: loadout
+  id: LoadoutHeadClothingHeadHatAnimalMonkey
+  category: loadout-category-head
+  cost: 1
+  exclusive: true
+  prototype: ClothingHeadHatAnimalMonkey

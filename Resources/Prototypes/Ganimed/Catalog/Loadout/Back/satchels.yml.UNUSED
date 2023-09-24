@@ -1,0 +1,6 @@
+- type: loadout
+  id: LoadoutNeckClothingBackpackSatchelLeather
+  category: loadout-category-back
+  cost: 3
+  exclusive: true
+  prototype: ClothingBackpackSatchelLeather

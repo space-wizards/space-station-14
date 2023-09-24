@@ -1,0 +1,81 @@
+- type: loadout
+  id: LoadoutHeadClothingHeadHatYellowsoft
+  category: loadout-category-head
+  cost: 1
+  exclusive: true
+  prototype: ClothingHeadHatYellowsoft
+
+- type: loadout
+  id: LoadoutHeadClothingHeadHatGreensoft
+  category: loadout-category-head
+  cost: 1
+  exclusive: true
+  prototype: ClothingHeadHatGreensoft
+
+- type: loadout
+  id: LoadoutHeadClothingHeadHatSecsoft
+  category: loadout-category-head
+  cost: 1
+  exclusive: true
+  whitelistJobs:
+    - SecurityCadet
+    - SecurityOfficer
+    - Warden
+    - Detective
+    - HeadOfSecurity
+    - SeniorOfficer
+  prototype: ClothingHeadHatSecsoft
+
+- type: loadout
+  id: LoadoutHeadClothingHeadHatCargosoft
+  category: loadout-category-head
+  cost: 1
+  exclusive: true
+  whitelistJobs:
+    - Quartermaster
+    - CargoTechnician
+    - SalvageSpecialist
+  prototype: ClothingHeadHatCargosoft
+
+- type: loadout
+  id: LoadoutHeadClothingHeadHatParamedicsoft
+  category: loadout-category-head
+  cost: 2
+  exclusive: true
+  whitelistJobs:
+    - ChiefMedicalOfficer
+    - Chemist
+    - Paramedic
+    - MedicalDoctor
+    - MedicalIntern
+    - Psychologist
+    - SeniorPhysician
+  prototype: ClothingHeadHatParamedicsoft
+
+- type: loadout
+  id: LoadoutHeadClothingHeadHatBizarreSoft
+  category: loadout-category-head
+  cost: 2
+  exclusive: true
+  prototype: ClothingHeadHatBizarreSoft
+
+- type: loadout
+  id: LoadoutHeadClothingHeadHatCorpsoft
+  category: loadout-category-head
+  cost: 1
+  exclusive: true
+  prototype: ClothingHeadHatCorpsoft
+
+- type: loadout
+  id: LoadoutHeadClothingHeadHatRedsoft
+  category: loadout-category-head
+  cost: 1
+  exclusive: true
+  prototype: ClothingHeadHatRedsoft
+
+- type: loadout
+  id: LoadoutHeadClothingHeadHatMimesoft
+  category: loadout-category-head
+  cost: 2
+  exclusive: true
+  prototype: ClothingHeadHatMimesoft

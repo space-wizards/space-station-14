@@ -82,3 +82,47 @@
     - SecurityOfficer
     - Warden
   prototype: ClothingOuterVestDetective
+
+- type: loadout
+  id: LoadoutOuterClothingClothingOuterPlagueSuit
+  category: loadout-category-outerClothing
+  cost: 3
+  exclusive: true
+  prototype: ClothingOuterPlagueSuit
+
+- type: loadout
+  id: LoadoutOuterClothingClothingOuterWizardRed
+  category: loadout-category-outerClothing
+  cost: 6
+  exclusive: true
+  prototype: ClothingOuterWizardRed
+
+- type: loadout
+  id: LoadoutOuterClothingClothingOuterWizard
+  category: loadout-category-outerClothing
+  cost: 6
+  exclusive: true
+  prototype: ClothingOuterWizard
+
+- type: loadout
+  id: LoadoutOuterClothingClothingOuterNunRobe
+  category: loadout-category-outerClothing
+  cost: 3
+  exclusive: true
+  prototype: ClothingOuterNunRobe
+
+- type: loadout
+  id: LoadoutOuterClothingClothingOuterSuitShrineMaiden
+  category: loadout-category-outerClothing
+  cost: 3
+  exclusive: true
+  prototype: ClothingOuterSuitShrineMaiden
+
+- type: loadout
+  id: LoadoutOuterClothingClothingOuterHoodieChaplain
+  category: loadout-category-outerClothing
+  cost: 2
+  exclusive: true
+  whitelistJobs:
+    - Chaplain
+  prototype: ClothingOuterHoodieChaplain

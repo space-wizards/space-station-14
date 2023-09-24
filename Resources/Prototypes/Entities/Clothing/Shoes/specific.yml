@@ -167,6 +167,17 @@
 
 - type: entity
   parent: ClothingShoesClown
+  id: ClothingShoesCluwneRemoveable
+  name: cluwne shoes
+  description: "Cursed pair of cluwne shoes."
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/Specific/cluwne.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/Specific/cluwne.rsi
+
+- type: entity
+  parent: ClothingShoesClown
   id: ClothingShoesClownLarge
   name: large clown shoes
   description: "When you need to stand out in a room full of clowns!"

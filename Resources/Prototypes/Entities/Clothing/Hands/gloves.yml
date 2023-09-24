@@ -326,6 +326,12 @@
   - type: Unremoveable
 
 - type: entity
+  parent: ClothingHandsGlovesColorWhite
+  id: ClothingHandsGlovesCluwneRemoveable
+  name: cluwne hands
+  description:  A cursed pair of cluwne hands.
+
+- type: entity
   parent: ClothingHandsBase
   id: ClothingHandsGlovesNorthStar
   name: gloves of the north star

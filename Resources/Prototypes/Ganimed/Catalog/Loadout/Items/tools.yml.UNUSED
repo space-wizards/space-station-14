@@ -34,6 +34,7 @@
     - ChiefMedicalOfficer
     - Chemist
     - Paramedic
+    - Psychologist
     - MedicalIntern
     - MedicalDoctor
     - SeniorPhysician
@@ -78,3 +79,72 @@
   cost: 1
   exclusive: false
   prototype: Wrench
+
+- type: loadout
+  id: LoadoutItemsYellowOxygenTankFilled
+  category: loadout-category-items
+  cost: 5
+  exclusive: false
+  prototype: YellowOxygenTankFilled
+
+- type: loadout
+  id: LoadoutItemsForensicScanner
+  category: loadout-category-items
+  cost: 4
+  exclusive: false
+  whitelistJobs:
+    - Detective
+	- HeadOfSecurity
+	- Warden
+	- SeniorOfficer
+  prototype: ForensicScanner
+
+- type: loadout
+  id: LoadoutItemsLightReplacer
+  category: loadout-category-items
+  cost: 3
+  exclusive: false
+  whitelistJobs:
+    - Janitor
+	- ServiceWorker
+	- TechnicalAssistant
+	- StationEngineer
+	- SeniorEngineer
+	- AtmosphericTechnician
+	- ChiefEngineer
+  prototype: ForensicScanner
+
+- type: loadout
+  id: LoadoutItemsLantern
+  category: loadout-category-items
+  cost: 3
+  exclusive: false
+  prototype: Lantern
+
+- type: loadout
+  id: LoadoutItemsMultitool
+  category: loadout-category-items
+  cost: 6
+  exclusive: false
+  prototype: Multitool
+
+- type: loadout
+  id: LoadoutItemsHandcuffs
+  category: loadout-category-items
+  cost: 2
+  exclusive: false
+  whitelistJobs:
+    - SecurityCadet
+    - SecurityOfficer
+    - Warden
+    - Detective
+    - HeadOfSecurity
+    - SeniorOfficer
+  prototype: Handcuffs
+
+- type: loadout
+  id: LoadoutItemsFireExtinguisher
+  category: loadout-category-items
+  cost: 4
+  exclusive: false
+  prototype: FireExtinguisher

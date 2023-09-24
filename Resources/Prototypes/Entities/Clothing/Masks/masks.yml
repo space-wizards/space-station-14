@@ -271,6 +271,19 @@
     accent: StutteringAccent
 
 - type: entity
+  parent: ClothingMaskClownBase
+  id: ClothingMaskCluwneRemoveable
+  name: cluwne face and hair
+  description: Cursed cluwne face and hair.
+  components:
+  - type: Sprite
+    sprite: Clothing/Mask/cluwne.rsi
+  - type: Clothing
+    sprite: Clothing/Mask/cluwne.rsi
+  - type: AddAccentClothing
+    accent: StutteringAccent
+
+- type: entity
   parent: ClothingMaskGasExplorer
   id: ClothingMaskGasSwat
   name: swat gas mask

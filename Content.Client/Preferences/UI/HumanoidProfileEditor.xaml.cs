@@ -519,7 +519,10 @@ namespace Content.Client.Preferences.UI
                 _loadoutsTabs.CurrentTab = 1;
 
                 // Fill categories
-                foreach (var loadout in loadouts.OrderBy(l => !l.Exclusive))
+                var _entman = IoCManager.Resolve<IEntityManager>();
+                foreach (var loadout in loadouts.OrderBy(l => (
+				Loc.GetString(_entman.GetComponent<MetaDataComponent>(_entman.SpawnEntity(l.Prototype, MapCoordinates.Nullspace)).EntityName)
+				)))
                 {
                     var selector = new LoadoutPreferenceSelector(loadout);
 

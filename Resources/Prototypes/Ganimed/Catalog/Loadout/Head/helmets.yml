@@ -1,0 +1,14 @@
+- type: loadout
+  id: LoadoutHeadClothingHeadHelmetRiot
+  category: loadout-category-head
+  cost: 4
+  exclusive: true
+  whitelistJobs:
+    - SecurityOfficer
+    - SecurityCadet
+    - Detective
+    - Warden
+    - HeadOfSecurity
+    - Captain
+    - SeniorOfficer
+  prototype: ClothingHeadHelmetRiot

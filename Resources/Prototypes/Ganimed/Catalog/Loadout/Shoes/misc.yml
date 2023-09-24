@@ -1,5 +1,5 @@
 - type: loadout
-  id: LoadoutBeltClothingShoesClownLarge
+  id: LoadoutShoesClothingShoesClownLarge
   category: loadout-category-shoes
   cost: 3
   exclusive: true
@@ -8,58 +8,47 @@
   prototype: ClothingShoesClownLarge
 
 - type: loadout
-  id: LoadoutBeltClothingShoesBootsPerformer
+  id: LoadoutShoesClothingShoesClown
+  category: loadout-category-shoes
+  cost: 1
+  exclusive: true
+  whitelistJobs:
+    - Clown
+  prototype: ClothingShoesClown
+
+- type: loadout
+  id: LoadoutShoesClothingShoesCluwneRemoveable
+  category: loadout-category-shoes
+  cost: 4
+  exclusive: true
+  whitelistJobs:
+    - Clown
+  prototype: ClothingShoesCluwneRemoveable
+
+- type: loadout
+  id: LoadoutShoesClothingShoesBootsPerformer
   category: loadout-category-shoes
   cost: 2
   exclusive: true
   prototype: ClothingShoesBootsPerformer
 
 - type: loadout
-  id: LoadoutBeltClothingShoesCult
+  id: LoadoutShoesClothingShoesCult
   category: loadout-category-shoes
   cost: 3
   exclusive: true
   prototype: ClothingShoesCult
 
 - type: loadout
-  id: LoadoutBeltClothingShoesBootsMerc
+  id: LoadoutShoesClothingShoesFlippers
+  category: loadout-category-shoes
+  cost: 1
+  exclusive: true
+  prototype: ClothingShoesFlippers
+
+- type: loadout
+  id: LoadoutShoesClothingShoesWizard
   category: loadout-category-shoes
   cost: 3
   exclusive: true
-  whitelistJobs:
-    - SecurityCadet
-    - SecurityOfficer
-    - Warden
-    - Detective
-    - HeadOfSecurity
-    - Captain
-    - SeniorOfficer
-  prototype: ClothingShoesBootsMerc
-
-- type: loadout
-  id: LoadoutBeltClothingShoesSwat
-  category: loadout-category-shoes
-  cost: 3
-  exclusive: true
-  whitelistJobs:
-    - SecurityCadet
-    - SecurityOfficer
-    - Warden
-    - Detective
-    - HeadOfSecurity
-    - Captain
-    - SeniorOfficer
-  prototype: ClothingShoesSwat
-
-- type: loadout
-  id: LoadoutBeltClothingShoesBootsSalvage
-  category: loadout-category-shoes
-  cost: 2
-  exclusive: true
-  whitelistJobs:
-    - SalvageSpecialist
-    - Quartermaster
-    - CargoTechnician
-    - Captain
-    - AtmosphericTechnician
-  prototype: ClothingShoesBootsSalvage
+  prototype: ClothingShoesWizard

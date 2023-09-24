@@ -61,3 +61,52 @@
   exclusive: false
   prototype: HarmonicaInstrument
   
+- type: loadout
+  id: LoadoutItemsGlowstickYellow
+  category: loadout-category-items
+  cost: 1
+  exclusive: false
+  prototype: GlowstickYellow
+  
+- type: loadout
+  id: LoadoutItemsGlowstickGreen
+  category: loadout-category-items
+  cost: 1
+  exclusive: false
+  prototype: GlowstickGreen
+  
+- type: loadout
+  id: LoadoutItemsGlowstickRed
+  category: loadout-category-items
+  cost: 1
+  exclusive: false
+  prototype: GlowstickRed
+  
+- type: loadout
+  id: LoadoutItemsToyNuke
+  category: loadout-category-items
+  cost: 3
+  exclusive: false
+  prototype: ToyNuke
+
+- type: loadout
+  id: LoadoutItemsCrayonBox
+  category: loadout-category-items
+  cost: 3
+  exclusive: false
+  prototype: CrayonBox
+  
+- type: loadout
+  id: LoadoutItemsBackgammonBoard
+  category: loadout-category-items
+  cost: 1
+  exclusive: false
+  prototype: BackgammonBoard
+  
+- type: loadout
+  id: LoadoutItemsSoapNT
+  category: loadout-category-items
+  cost: 1
+  exclusive: false
+  prototype: SoapNT
+  

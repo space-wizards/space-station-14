@@ -1,0 +1,115 @@
+- type: loadout
+  id: LoadoutItemsWhiteCane
+  category: loadout-category-items
+  cost: 1
+  exclusive: false
+  prototype: WhiteCane
+
+- type: loadout
+  id: LoadoutItemsBible
+  category: loadout-category-items
+  cost: 3
+  exclusive: false
+  prototype: Bible
+
+- type: loadout
+  id: LoadoutItemsLargeBeaker
+  category: loadout-category-items
+  cost: 2
+  exclusive: false
+  prototype: LargeBeaker
+
+- type: loadout
+  id: LoadoutItemsCheapLighter
+  category: loadout-category-items
+  cost: 1
+  exclusive: false
+  prototype: CheapLighter
+
+- type: loadout
+  id: LoadoutItemsCheapRollerBedSpawnFolded
+  category: loadout-category-items
+  cost: 4
+  exclusive: false
+  whitelistJobs:
+    - ChiefMedicalOfficer
+    - Chemist
+    - Paramedic
+    - MedicalDoctor
+    - Psychologist
+    - MedicalIntern
+    - SeniorPhysician
+  prototype: CheapRollerBedSpawnFolded
+
+- type: loadout
+  id: LoadoutItemsBookRandom
+  category: loadout-category-items
+  cost: 1
+  exclusive: false
+  prototype: BookRandom
+
+- type: loadout
+  id: LoadoutItemsBriefcaseBrownFilled
+  category: loadout-category-items
+  cost: 3
+  exclusive: false
+  prototype: BriefcaseBrownFilled
+
+- type: loadout
+  id: LoadoutItemsSprayBottleSpaceCleaner
+  category: loadout-category-items
+  cost: 1
+  exclusive: false
+  prototype: SprayBottleSpaceCleaner
+
+- type: loadout
+  id: LoadoutItemsSpaceMedipen
+  category: loadout-category-items
+  cost: 4
+  exclusive: false
+  prototype: SpaceMedipen
+
+- type: loadout
+  id: LoadoutItemsPhoneInstrument
+  category: loadout-category-items
+  cost: 6
+  exclusive: false
+  whitelistJobs:
+    - Captain
+    - HeadOfSecurity
+  prototype: PhoneInstrument
+
+- type: loadout
+  id: LoadoutItemsSpaceCash10
+  category: loadout-category-items
+  cost: 4
+  exclusive: false
+  prototype: SpaceCash10
+
+- type: loadout
+  id: LoadoutItemsTrashBag
+  category: loadout-category-items
+  cost: 1
+  exclusive: false
+  prototype: TrashBag
+
+- type: loadout
+  id: LoadoutItemsBodyBag_Folded
+  category: loadout-category-items
+  cost: 3
+  exclusive: false
+  prototype: BodyBag_Folded
+
+- type: loadout
+  id: LoadoutItemsDiceBag
+  category: loadout-category-items
+  cost: 1
+  exclusive: false
+  prototype: DiceBag
+
+- type: loadout
+  id: LoadoutItemsMicrophoneInstrument
+  category: loadout-category-items
+  cost: 2
+  exclusive: false
+  prototype: MicrophoneInstrument

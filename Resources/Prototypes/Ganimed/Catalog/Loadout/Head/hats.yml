@@ -46,4 +46,34 @@
   cost: 2
   exclusive: true
   prototype: ClothingHeadHatHetmanHat
+
+- type: loadout
+  id: LoadoutHeadClothingHeadHatCaptain
+  category: loadout-category-head
+  cost: 1
+  exclusive: true
+  whitelistJobs:
+    - Captain
+  prototype: ClothingHeadHatCaptain
+
+- type: loadout
+  id: LoadoutHeadClothingHeadHatSantahat
+  category: loadout-category-head
+  cost: 3
+  exclusive: true
+  prototype: ClothingHeadHatSantahat
+
+- type: loadout
+  id: LoadoutHeadClothingHeadHatRedwizard
+  category: loadout-category-head
+  cost: 2
+  exclusive: true
+  prototype: ClothingHeadHatRedwizard
+
+- type: loadout
+  id: LoadoutHeadClothingHeadHatBunny
+  category: loadout-category-head
+  cost: 1
+  exclusive: true
+  prototype: ClothingHeadHatBunny
   

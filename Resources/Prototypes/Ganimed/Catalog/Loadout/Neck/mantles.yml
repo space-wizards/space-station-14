@@ -1,0 +1,59 @@
+- type: loadout
+  id: LoadoutNeckClothingNeckMantleCMO
+  category: loadout-category-neck
+  cost: 3
+  exclusive: true
+  whitelistJobs:
+    - ChiefMedicalOfficer
+    - SeniorPhysician
+  prototype: ClothingNeckMantleCMO
+
+- type: loadout
+  id: LoadoutNeckClothingNeckMantleHOP
+  category: loadout-category-neck
+  cost: 2
+  exclusive: true
+  whitelistJobs:
+    - HeadOfPersonnel
+    - Captain
+  prototype: ClothingNeckMantleHOP
+
+- type: loadout
+  id: LoadoutNeckClothingNeckMantleHOS
+  category: loadout-category-neck
+  cost: 3
+  exclusive: true
+  whitelistJobs:
+    - HeadOfSecurity
+    - Captain
+    - SeniorOfficer
+  prototype: ClothingNeckMantleHOS
+
+- type: loadout
+  id: LoadoutNeckClothingNeckMantleCap
+  category: loadout-category-neck
+  cost: 2
+  exclusive: true
+  whitelistJobs:
+    - Captain
+  prototype: ClothingNeckMantleCap
+
+- type: loadout
+  id: LoadoutNeckClothingNeckMantleRD
+  category: loadout-category-neck
+  cost: 3
+  exclusive: true
+  whitelistJobs:
+    - ResearchDirector
+    - SeniorResearcher
+  prototype: ClothingNeckMantleRD
+
+- type: loadout
+  id: LoadoutNeckClothingNeckMantleCE
+  category: loadout-category-neck
+  cost: 3
+  exclusive: true
+  whitelistJobs:
+    - ChiefEngineer
+    - SeniorEngineer
+  prototype: ClothingNeckMantleCE

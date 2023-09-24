@@ -1,0 +1,27 @@
+- type: loadout
+  id: LoadoutShoesClothingShoesColorYellow
+  category: loadout-category-shoes
+  cost: 1
+  exclusive: true
+  prototype: ClothingShoesColorYellow
+
+- type: loadout
+  id: LoadoutShoesClothingShoesColorGreen
+  category: loadout-category-shoes
+  cost: 1
+  exclusive: true
+  prototype: ClothingShoesColorGreen
+
+- type: loadout
+  id: LoadoutShoesClothingShoesColorBrown
+  category: loadout-category-shoes
+  cost: 1
+  exclusive: true
+  prototype: ClothingShoesColorBrown
+
+- type: loadout
+  id: LoadoutShoesClothingShoesColorRed
+  category: loadout-category-shoes
+  cost: 1
+  exclusive: true
+  prototype: ClothingShoesColorRed
