@@ -1,4 +1,5 @@
-#nullable enable
+using Content.Shared.Coordinates.Helpers;
+using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Power;
@@ -6,28 +7,43 @@ namespace Content.Shared.Power;
 [Serializable, NetSerializable]
 public sealed class PowerMonitoringConsoleBoundInterfaceState : BoundUserInterfaceState
 {
-    public double TotalSources;
-    public double TotalLoads;
-    public PowerMonitoringConsoleEntry[] Sources;
     public PowerMonitoringConsoleEntry[] Loads;
-    public PowerMonitoringConsoleBoundInterfaceState(double totalSources, double totalLoads, PowerMonitoringConsoleEntry[] sources, PowerMonitoringConsoleEntry[] loads)
+    public NetCoordinates[][] HVCables;
+    public NetCoordinates[][] MVCables;
+    public NetCoordinates[][] LVCables;
+    public bool Snap;
+    public float Precision;
+
+    public PowerMonitoringConsoleBoundInterfaceState(PowerMonitoringConsoleEntry[] loads,
+        NetCoordinates[][] hvCables,
+        NetCoordinates[][] mvCables,
+        NetCoordinates[][] lvCables,
+        bool snap,
+        float precision)
     {
-        TotalSources = totalSources;
-        TotalLoads = totalLoads;
-        Sources = sources;
         Loads = loads;
+        HVCables = hvCables;
+        MVCables = mvCables;
+        LVCables = lvCables;
+        Snap = snap;
+        Precision = precision;
     }
 }
 
 [Serializable, NetSerializable]
 public sealed class PowerMonitoringConsoleEntry
 {
+    public NetEntity NetEntity;
+    public NetCoordinates Coordinates;
     public string NameLocalized;
     public string IconEntityPrototypeId;
     public double Size;
     public bool IsBattery;
-    public PowerMonitoringConsoleEntry(string nl, string ipi, double size, bool isBattery)
+
+    public PowerMonitoringConsoleEntry(NetEntity netEntity, NetCoordinates coordinates, string nl, string ipi, double size, bool isBattery)
     {
+        NetEntity = netEntity;
+        Coordinates = coordinates;
         NameLocalized = nl;
         IconEntityPrototypeId = ipi;
         Size = size;

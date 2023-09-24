@@ -6,6 +6,11 @@ using Content.Server.Power.Components;
 using Content.Server.Power.NodeGroups;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
+using Content.Shared.Construction.Components;
+using System.Numerics;
+using Robust.Shared.Map;
+using Content.Server.NodeContainer.NodeGroups;
+using System.Threading.Tasks;
 
 namespace Content.Server.Power.EntitySystems;
 
@@ -15,8 +20,10 @@ internal sealed class PowerMonitoringConsoleSystem : EntitySystem
     private float _updateTimer = 0.0f;
     private const float UpdateTime = 1.0f;
 
+    [Dependency] private readonly EntityManager _entityManager = default!;
     [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
     [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
+    [Dependency] private readonly IMapManager _mapManager = default!;
 
     public override void Update(float frameTime)
     {
@@ -37,70 +44,105 @@ internal sealed class PowerMonitoringConsoleSystem : EntitySystem
     {
         if (!Resolve(target, ref pmcComp))
             return;
+
         if (!Resolve(target, ref ncComp))
             return;
 
-        var totalSources = 0.0d;
-        var totalLoads = 0.0d;
-        var sources = new List<PowerMonitoringConsoleEntry>();
-        var loads = new List<PowerMonitoringConsoleEntry>();
-        PowerMonitoringConsoleEntry LoadOrSource(Component comp, double rate, bool isBattery)
-        {
-            var md = MetaData(comp.Owner);
-            var prototype = md.EntityPrototype?.ID ?? "";
-            return new PowerMonitoringConsoleEntry(md.EntityName, prototype, rate, isBattery);
-        }
-        // Right, so, here's what needs to be considered here.
-        if (!_nodeContainer.TryGetNode<Node>(ncComp, "hv", out var node))
+        if (!_userInterfaceSystem.TryGetUi(target, PowerMonitoringConsoleUiKey.Key, out var bui))
             return;
 
-        if (node.NodeGroup is PowerNet netQ)
+        var consoleXform = _entityManager.GetComponent<TransformComponent>(target);
+        if (consoleXform?.GridUid == null)
+            return;
+
+        var sources = new List<PowerMonitoringConsoleEntry>();
+        var loads = new List<PowerMonitoringConsoleEntry>();
+
+        //PowerConsumerComponent
+        //BatteryChargerComponent
+
+        //PowerSupplierComponent
+        //BatteryDischargerComponent
+
+        var query = AllEntityQuery<PowerNetworkBatteryComponent, TransformComponent>();
+        while (query.MoveNext(out var uid, out var networkBattery, out var xform))
         {
-            foreach (PowerConsumerComponent pcc in netQ.Consumers)
+            if (xform.Anchored)
             {
-                if (!pcc.ShowInMonitor)
-                    continue;
+                var metaData = MetaData(networkBattery.Owner);
+                var prototype = metaData.EntityPrototype?.ID ?? "";
 
-                loads.Add(LoadOrSource(pcc, pcc.DrawRate, false));
-                totalLoads += pcc.DrawRate;
-            }
-            foreach (BatteryChargerComponent pcc in netQ.Chargers)
-            {
-                if (!TryComp(pcc.Owner, out PowerNetworkBatteryComponent? batteryComp))
-                {
-                    continue;
-                }
-                var rate = batteryComp.NetworkBattery.CurrentReceiving;
-                loads.Add(LoadOrSource(pcc, rate, true));
-                totalLoads += rate;
-            }
-            foreach (PowerSupplierComponent pcc in netQ.Suppliers)
-            {
-                var supply = pcc.Enabled
-                    ? pcc.MaxSupply
-                    : 0f;
-
-                sources.Add(LoadOrSource(pcc, supply, false));
-                totalSources += supply;
-            }
-            foreach (BatteryDischargerComponent pcc in netQ.Dischargers)
-            {
-                if (!TryComp(pcc.Owner, out PowerNetworkBatteryComponent? batteryComp))
-                {
-                    continue;
-                }
-                var rate = batteryComp.NetworkBattery.CurrentSupply;
-                sources.Add(LoadOrSource(pcc, rate, true));
-                totalSources += rate;
+                loads.Add(new PowerMonitoringConsoleEntry(_entityManager.GetNetEntity(uid), GetNetCoordinates(xform.Coordinates), metaData.EntityName, prototype, networkBattery.NetworkBattery.CurrentReceiving, true));
             }
         }
+
+        GetPowerCableCoordinates(consoleXform.GridUid.Value, out var hvCableCoords, out var mvCableCoords, out var lvCableCoords);
+
         // Sort
         loads.Sort(CompareLoadOrSources);
         sources.Sort(CompareLoadOrSources);
 
         // Actually set state.
-        if (_userInterfaceSystem.TryGetUi(target, PowerMonitoringConsoleUiKey.Key, out var bui))
-            _userInterfaceSystem.SetUiState(bui, new PowerMonitoringConsoleBoundInterfaceState(totalSources, totalLoads, sources.ToArray(), loads.ToArray()));
+        if (_userInterfaceSystem.TryGetUi(target, PowerMonitoringConsoleUiKey.Key, out bui))
+           _userInterfaceSystem.SetUiState(bui, new PowerMonitoringConsoleBoundInterfaceState(loads.ToArray(), hvCableCoords, mvCableCoords, lvCableCoords, true, 10f));
+    }
+
+    private void GetPowerCableCoordinates(EntityUid gridUid, out NetCoordinates[][] hvCableCoords, out NetCoordinates[][] mvCableCoords, out NetCoordinates[][] lvCableCoords)
+    {
+        var _hvCableCoords = new List<NetCoordinates[]>();
+        var _mvCableCoords = new List<NetCoordinates[]>();
+        var _lvCableCoords = new List<NetCoordinates[]>();
+
+        var query = AllEntityQuery<NodeContainerComponent, TransformComponent>();
+ 
+        while (query.MoveNext(out var uid, out var nodeContainer, out var xform))
+        {
+            if (!_nodeContainer.TryGetNode<Node>(nodeContainer, "power", out var node))
+                continue;
+
+            if (node.NodeGroupID != NodeGroupID.HVPower && node.NodeGroupID != NodeGroupID.MVPower && node.NodeGroupID != NodeGroupID.Apc)
+                continue;
+
+            if (!xform.Anchored)
+                continue;
+
+            if (xform.GridUid != gridUid)
+                continue;
+
+            if (!_mapManager.TryGetGrid(xform.GridUid, out var grid))
+                continue;
+
+            foreach (var adjacent in grid.GetCardinalNeighborCells(xform.Coordinates))
+            {
+                if (!TryComp<TransformComponent>(adjacent, out var adjXform))
+                    continue;
+
+                if (!TryComp<NodeContainerComponent>(adjacent, out var adjNodeContainer))
+                    continue;
+
+                if (!_nodeContainer.TryGetNode<Node>(adjNodeContainer, "power", out var adjNode))
+                    continue;
+
+                if (adjNode.NodeGroupID != node.NodeGroupID)
+                    continue;
+
+                var coords = new NetCoordinates[] { GetNetCoordinates(xform.Coordinates), GetNetCoordinates(adjXform.Coordinates) };
+
+                switch (node.NodeGroupID)
+                {
+                    case NodeGroupID.HVPower:
+                        _hvCableCoords.Add(coords); break;
+                    case NodeGroupID.MVPower:
+                        _mvCableCoords.Add(coords); break;
+                    case NodeGroupID.Apc:
+                        _lvCableCoords.Add(coords); break;
+                }
+            }
+        }
+
+        hvCableCoords = _hvCableCoords.ToArray();
+        mvCableCoords = _mvCableCoords.ToArray();
+        lvCableCoords = _lvCableCoords.ToArray();
     }
 
     private int CompareLoadOrSources(PowerMonitoringConsoleEntry x, PowerMonitoringConsoleEntry y)

@@ -13,6 +13,7 @@ using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Physics.Components;
+using YamlDotNet.Core.Tokens;
 
 namespace Content.Client.Pinpointer.UI;
 
@@ -27,13 +28,18 @@ public sealed class NavMapControl : MapGridControl
     public EntityUid? MapUid;
 
     public Dictionary<EntityCoordinates, (bool Visible, Color Color)> TrackedCoordinates = new();
+    public Dictionary<EntityCoordinates, (bool Visible, Color Color, Texture? Texture)> TrackedEntities = new();
+    public EntityCoordinates[][]? hvCables;
+    public EntityCoordinates[][]? mvCables;
+    public EntityCoordinates[][]? lvCables;
 
     private Vector2 _offset;
     private bool _draggin;
     private bool _recentering = false;
     private readonly float _recenterMinimum = 0.05f;
     private readonly Font _font;
-    private static readonly Color TileColor = new(30, 67, 30);
+    //private static readonly Color TileColor = new(30, 67, 30);
+    private static readonly Color TileColor = new(30, 57, 67);
     private static readonly Color BeaconColor = Color.FromSrgb(TileColor.WithAlpha(0.8f));
 
     // TODO: https://github.com/space-wizards/RobustToolbox/issues/3818
@@ -183,7 +189,8 @@ public sealed class NavMapControl : MapGridControl
         }
 
         var offset = _offset;
-        var lineColor = new Color(102, 217, 102);
+        //var lineColor = new Color(102, 217, 102);
+        var lineColor = new Color(102, 164, 217);
 
         if (_entManager.TryGetComponent<PhysicsComponent>(MapUid, out var physics))
         {
@@ -321,6 +328,97 @@ public sealed class NavMapControl : MapGridControl
             }
         }
 
+        // Draw cables
+        if (hvCables != null)
+        {
+            for (int i = 0; i < hvCables.Length; i++)
+            {
+                var cable = hvCables[i];
+                var pointA = cable[0];
+                var pointB = cable[1];
+                var positionA = new Vector2();
+                var positionB = new Vector2();
+
+                var mapPos = pointA.ToMap(_entManager);
+
+                if (mapPos.MapId != MapId.Nullspace)
+                {
+                    var position = xform.InvWorldMatrix.Transform(mapPos.Position) - offset;
+                    positionA = Scale(new Vector2(position.X, -position.Y));
+                }
+
+                mapPos = pointB.ToMap(_entManager);
+
+                if (mapPos.MapId != MapId.Nullspace)
+                {
+                    var position = xform.InvWorldMatrix.Transform(mapPos.Position) - offset;
+                    positionB = Scale(new Vector2(position.X, -position.Y));
+                }
+
+                handle.DrawLine(positionA, positionB, Color.Orange);
+            }
+        }
+
+        if (mvCables != null)
+        {
+            for (int i = 0; i < mvCables.Length; i++)
+            {
+                var cable = mvCables[i];
+                var pointA = cable[0];
+                var pointB = cable[1];
+                var positionA = new Vector2();
+                var positionB = new Vector2();
+
+                var mapPos = pointA.ToMap(_entManager);
+
+                if (mapPos.MapId != MapId.Nullspace)
+                {
+                    var position = xform.InvWorldMatrix.Transform(mapPos.Position) - offset;
+                    positionA = Scale(new Vector2(position.X + 0.1f, -(position.Y + 0.1f)));
+                }
+
+                mapPos = pointB.ToMap(_entManager);
+
+                if (mapPos.MapId != MapId.Nullspace)
+                {
+                    var position = xform.InvWorldMatrix.Transform(mapPos.Position) - offset;
+                    positionB = Scale(new Vector2(position.X + 0.1f, -(position.Y + 0.1f)));
+                }
+
+                handle.DrawLine(positionA, positionB, Color.Yellow);
+            }
+        }
+
+        if (lvCables != null)
+        {
+            for (int i = 0; i < lvCables.Length; i++)
+            {
+                var cable = lvCables[i];
+                var pointA = cable[0];
+                var pointB = cable[1];
+                var positionA = new Vector2();
+                var positionB = new Vector2();
+
+                var mapPos = pointA.ToMap(_entManager);
+
+                if (mapPos.MapId != MapId.Nullspace)
+                {
+                    var position = xform.InvWorldMatrix.Transform(mapPos.Position) - offset;
+                    positionA = Scale(new Vector2(position.X - 0.1f, -(position.Y - 0.1f)));
+                }
+
+                mapPos = pointB.ToMap(_entManager);
+
+                if (mapPos.MapId != MapId.Nullspace)
+                {
+                    var position = xform.InvWorldMatrix.Transform(mapPos.Position) - offset;
+                    positionB = Scale(new Vector2(position.X - 0.1f, -(position.Y - 0.1f)));
+                }
+
+                handle.DrawLine(positionA, positionB, Color.ForestGreen);
+            }
+        }
+
         var curTime = Timing.RealTime;
         var blinkFrequency = 1f / 1f;
         var lit = curTime.TotalSeconds % blinkFrequency > blinkFrequency / 2f;
@@ -337,6 +435,28 @@ public sealed class NavMapControl : MapGridControl
                     position = Scale(new Vector2(position.X, -position.Y));
 
                     handle.DrawCircle(position, MinimapScale / 2f, value.Color);
+                }
+            }
+        }
+
+        foreach (var (coord, value) in TrackedEntities)
+        {
+            if (lit && value.Visible)
+            {
+                var mapPos = coord.ToMap(_entManager);
+
+                if (mapPos.MapId != MapId.Nullspace)
+                {
+                    var position = xform.InvWorldMatrix.Transform(mapPos.Position) - offset;
+                    position = Scale(new Vector2(position.X, -position.Y));
+
+                    float f = 0.75f;
+                    var rect = new UIBox2(position.X - MinimapScale * f, position.Y - MinimapScale * f, position.X + MinimapScale * f, position.Y + MinimapScale * f);
+
+                    if (value.Texture != null)
+                        handle.DrawTextureRect(value.Texture, rect, value.Color);
+                    else
+                        handle.DrawCircle(position, MinimapScale / 2f, value.Color);
                 }
             }
         }
