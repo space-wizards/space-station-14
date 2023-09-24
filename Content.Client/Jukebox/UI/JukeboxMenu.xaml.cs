@@ -26,7 +26,6 @@ public sealed partial class JukeboxMenu : FancyWindow
         MusicList.OnItemSelected += OnItemSelected;
         PausePlayButton.OnPressed += OnPlayPausePressed;
         StopButton.OnPressed += OnStopPressed;
-        PlaybackSlider.OnValueChanged += PlaybackSliderSeek;
         PlaybackSlider.OnKeyBindUp += PlaybackSliderKeyUp;
     }
 
@@ -55,15 +54,6 @@ public sealed partial class JukeboxMenu : FancyWindow
     private void PlaybackSliderKeyUp(GUIBoundKeyEventArgs args)
     {
         if (args.Function != EngineKeyFunctions.UIClick)
-            return;
-
-        _owner.CLSetTime(PlaybackSlider.Value);
-        _owner.SetTime(PlaybackSlider.Value);
-    }
-
-    private void PlaybackSliderSeek(Range _)
-    {
-        if (PlaybackSlider.Grabbed)
             return;
 
         _owner.CLSetTime(PlaybackSlider.Value);
