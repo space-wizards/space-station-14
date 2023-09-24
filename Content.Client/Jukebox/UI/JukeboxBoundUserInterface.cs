@@ -49,7 +49,7 @@ namespace Content.Client.Jukebox.UI
 
         public void TogglePlaying()
         {
-            SendMessage(new JukeboxComponent.JukeboxPlayingMessage());
+        SendMessage(new JukeboxPlayingMessage());
 
             //var playing = !jukeboxComp.Playing;
 
@@ -63,12 +63,12 @@ namespace Content.Client.Jukebox.UI
 
         public void Stop()
         {
-            SendMessage(new JukeboxComponent.JukeboxStopMessage());
+        SendMessage(new JukeboxStopMessage());
         }
 
         public void SelectSong(int songid)
         {
-            SendMessage(new JukeboxComponent.JukeboxSelectedMessage(songid));
+        SendMessage(new JukeboxSelectedMessage(songid));
 
             if (Jukebox == null)
                 return;
@@ -81,7 +81,7 @@ namespace Content.Client.Jukebox.UI
 
         public void SetTime(float time)
         {
-            SendMessage(new JukeboxComponent.JukeboxSetTimeMessage(time));
+        SendMessage(new JukeboxSetTimeMessage(time));
         }
         public void CLSetTime(float time)
         {

@@ -46,6 +46,7 @@ public partial class JukeboxComponent : Component
 
     [ViewVariables]
     public float SelectAccumulator;
+}
 
     [Serializable, NetSerializable]
     public sealed class JukeboxPlayingMessage : BoundUserInterfaceMessage

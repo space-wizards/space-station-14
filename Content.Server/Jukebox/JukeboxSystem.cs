@@ -13,19 +13,20 @@ public sealed class JukeboxSystem : SharedJukeboxSystem
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
     [Dependency] private readonly AppearanceSystem _appearanceSystem = default!;
+
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<JukeboxComponent, JukeboxComponent.JukeboxSelectedMessage>(OnJukeboxSelected);
-        SubscribeLocalEvent<JukeboxComponent, JukeboxComponent.JukeboxPlayingMessage>(OnJukeboxPlay);
-        SubscribeLocalEvent<JukeboxComponent, JukeboxComponent.JukeboxStopMessage>(OnJukeboxStop);
-        SubscribeLocalEvent<JukeboxComponent, JukeboxComponent.JukeboxSetTimeMessage>(OnJukeboxSetTime);
+        SubscribeLocalEvent<JukeboxComponent, JukeboxSelectedMessage>(OnJukeboxSelected);
+        SubscribeLocalEvent<JukeboxComponent, JukeboxPlayingMessage>(OnJukeboxPlay);
+        SubscribeLocalEvent<JukeboxComponent, JukeboxStopMessage>(OnJukeboxStop);
+        SubscribeLocalEvent<JukeboxComponent, JukeboxSetTimeMessage>(OnJukeboxSetTime);
         SubscribeLocalEvent<JukeboxComponent, ComponentShutdown>(OnComponentRemoved);
 
         SubscribeLocalEvent<JukeboxComponent, PowerChangedEvent>(OnPowerChanged);
     }
 
-    private void OnJukeboxPlay(EntityUid uid, JukeboxComponent component, JukeboxComponent.JukeboxPlayingMessage? args)
+    private void OnJukeboxPlay(EntityUid uid, JukeboxComponent component, JukeboxPlayingMessage? args)
     {
         component.Playing = !component.Playing;
         if (component.Playing)
@@ -48,7 +49,7 @@ public sealed class JukeboxSystem : SharedJukeboxSystem
         DirtyUI(uid, component);
     }
 
-    private void OnJukeboxSetTime(EntityUid uid, JukeboxComponent component, JukeboxComponent.JukeboxSetTimeMessage args)
+    private void OnJukeboxSetTime(EntityUid uid, JukeboxComponent component, JukeboxSetTimeMessage args)
     {
         component.SongTime = args.SongTime;
         if (component.Playing)
@@ -73,7 +74,7 @@ public sealed class JukeboxSystem : SharedJukeboxSystem
         }
     }
 
-    private void OnJukeboxStop(EntityUid uid, JukeboxComponent component, JukeboxComponent.JukeboxStopMessage? args)
+    private void OnJukeboxStop(EntityUid uid, JukeboxComponent component, JukeboxStopMessage? args)
     {
         component.SongTime = 0.0f;
         if (component.AudioStream != null)
@@ -85,7 +86,7 @@ public sealed class JukeboxSystem : SharedJukeboxSystem
         DirtyUI(uid, component);
     }
 
-    private void OnJukeboxSelected(EntityUid uid, JukeboxComponent component, JukeboxComponent.JukeboxSelectedMessage args)
+    private void OnJukeboxSelected(EntityUid uid, JukeboxComponent component, JukeboxSelectedMessage args)
     {
         if (!component.Playing)
         {
