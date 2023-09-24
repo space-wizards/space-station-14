@@ -6,25 +6,30 @@ namespace Content.Shared.Jukebox;
 
 [NetworkedComponent, RegisterComponent]
 [Access(typeof(SharedJukeboxSystem))]
+[AutoGenerateComponentState]
 public partial class JukeboxComponent : Component
 {
     [DataField("playing")]
-    public bool Playing { get; set; }
+    [AutoNetworkedField]
+    public bool Playing;
 
     [DataField("selectedSongId")]
-    public int SelectedSongID { get; set; }
+    [AutoNetworkedField]
+    public int SelectedSongID;
 
     [ViewVariables]
-    public MusicListDefinition? SelectedSong { get; set; }
+    public MusicListDefinition? SelectedSong;
 
     [DataField("songTime")]
-    public float SongTime { get; set; }
+    [AutoNetworkedField]
+    public float SongTime;
 
     [DataField("songStartTime")]
-    public float SongStartTime { get; set; }
+    [AutoNetworkedField]
+    public float SongStartTime;
 
     [ViewVariables]
-    public IPlayingAudioStream? AudioStream { get; set; }
+    public IPlayingAudioStream? AudioStream;
 
     [ValidatePrototypeId<MusicListPrototype>]
     public string MusicCollection = "MusicStandard";
@@ -48,64 +53,41 @@ public partial class JukeboxComponent : Component
     public float SelectAccumulator;
 }
 
-    [Serializable, NetSerializable]
-    public sealed class JukeboxPlayingMessage : BoundUserInterfaceMessage
+[Serializable, NetSerializable]
+public sealed class JukeboxPlayingMessage : BoundUserInterfaceMessage
+{
+    public JukeboxPlayingMessage()
     {
-        public JukeboxPlayingMessage()
-        {
 
-        }
-    }
-
-    [Serializable, NetSerializable]
-    public sealed class JukeboxStopMessage : BoundUserInterfaceMessage
-    {
-        public JukeboxStopMessage()
-        {
-
-        }
-    }
-
-    [Serializable, NetSerializable]
-    public sealed class JukeboxSelectedMessage : BoundUserInterfaceMessage
-    {
-        public int Songid { get; }
-        public JukeboxSelectedMessage(int songid)
-        {
-            Songid = songid;
-        }
-    }
-
-    [Serializable, NetSerializable]
-    public sealed class JukeboxSetTimeMessage : BoundUserInterfaceMessage
-    {
-        public float SongTime { get; }
-        public JukeboxSetTimeMessage(float songTime)
-        {
-            SongTime = songTime;
-        }
     }
 }
 
 [Serializable, NetSerializable]
-public sealed class JukeboxComponentState : ComponentState
+public sealed class JukeboxStopMessage : BoundUserInterfaceMessage
 {
-    public bool Playing { get; }
-
-    public int SelectedSongID { get; }
-
-    public float SongTime { get; }
-    public float SongStartTime { get; }
-
-    public string? MusicCollection { get; }
-
-    public JukeboxComponentState(bool playing, int selectedSongId, float songTime, float songStartTime, string? musicCollection)
+    public JukeboxStopMessage()
     {
-        Playing = playing;
-        SelectedSongID = selectedSongId;
+
+    }
+}
+
+[Serializable, NetSerializable]
+public sealed class JukeboxSelectedMessage : BoundUserInterfaceMessage
+{
+    public int Songid { get; }
+    public JukeboxSelectedMessage(int songid)
+    {
+        Songid = songid;
+    }
+}
+
+[Serializable, NetSerializable]
+public sealed class JukeboxSetTimeMessage : BoundUserInterfaceMessage
+{
+    public float SongTime { get; }
+    public JukeboxSetTimeMessage(float songTime)
+    {
         SongTime = songTime;
-        SongStartTime = songStartTime;
-        MusicCollection = musicCollection;
     }
 }
 
