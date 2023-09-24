@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Server.Body.Components;
 using Content.Server.GameTicking;
 using Content.Server.Humanoid;
@@ -11,10 +10,11 @@ using Content.Shared.Kitchen.Components;
 using Content.Shared.Mind;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Movement.Events;
-using Content.Shared.Random.Helpers;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
+using Robust.Shared.Random;
 using Robust.Shared.Timing;
+using System.Numerics;
 
 namespace Content.Server.Body.Systems;
 
@@ -138,7 +138,9 @@ public sealed class BodySystem : SharedBodySystem
             }
             else
             {
-                entity.RandomOffset(0.25f);
+                var random = IoCManager.Resolve<IRobustRandom>();
+                var offset = new Vector2(-.25f + random.NextFloat() * .5f, -.25f + random.NextFloat() * .5f);
+                SharedTransform.SetCoordinates(entity, coordinates.Offset(offset));
             }
         }
         RaiseLocalEvent(bodyId, new BeingGibbedEvent(gibs));
