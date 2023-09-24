@@ -1,10 +1,4 @@
 Entries:
-- author: Misha_Unity
-  changes:
-  - {message: Command access allows to delete any articles, type: Tweak}
-  - {message: Updated mass-media console interface, type: Tweak}
-  id: 4383
-  time: '2023-07-31T05:34:22.0000000+00:00'
 - author: Ilya246
   changes:
   - {message: Passive vents now equalize pressure both ways between the pipe and environment.,
@@ -2980,3 +2974,9 @@ Entries:
   - {message: Spears now correctly transfares chemicals when thrown., type: Fix}
   id: 4882
   time: '2023-09-24T19:46:16.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: You can now pick up items (and dead pickupable mobs) in combat mode,
+    type: Add}
+  id: 4883
+  time: '2023-09-24T19:47:42.0000000+00:00'
