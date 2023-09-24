@@ -232,6 +232,28 @@
   - type: GroupExamine
 
 - type: entity
+  parent: ClothingOuterBase
+  id: ClothingOuterArmorDebug
+  name: debug armor
+  description: If you are seeing this either the admins really love or really hate you.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Armor/debug.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Armor/debug.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0
+        Slash: 0
+        Piercing: 0
+        Heat: 0
+        Caustic: 0
+  - type: ExplosionResistance
+    damageCoefficient: 0
+  - type: GroupExamine
+
+- type: entity
   parent: ClothingOuterBaseLarge
   id: ClothingOuterArmorChangeling
   name: chitinous armor
