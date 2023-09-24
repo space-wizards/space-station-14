@@ -8,124 +8,124 @@ using Robust.Shared.Input;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Range = Robust.Client.UserInterface.Controls.Range;
+using FancyWindow = Content.Client.UserInterface.Controls.FancyWindow;
 
-namespace Content.Client.Jukebox.UI
+namespace Content.Client.Jukebox.UI;
+
+[GenerateTypedNameReferences]
+public sealed partial class JukeboxMenu : FancyWindow
 {
-    [GenerateTypedNameReferences]
-    public sealed partial class JukeboxMenu : DefaultWindow
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    private readonly JukeboxBoundUserInterface _owner;
+
+    public JukeboxMenu(JukeboxBoundUserInterface owner)
     {
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        private readonly JukeboxBoundUserInterface _owner;
+        RobustXamlLoader.Load(this);
 
-        public JukeboxMenu(JukeboxBoundUserInterface owner) : base()
+        _owner = owner;
+        MusicList.OnItemSelected += OnItemSelected;
+        PausePlayButton.OnPressed += OnPlayPausePressed;
+        StopButton.OnPressed += OnStopPressed;
+        PlaybackSlider.OnValueChanged += PlaybackSliderSeek;
+        PlaybackSlider.OnKeyBindUp += PlaybackSliderKeyUp;
+    }
+
+    private void OnItemSelected(ItemList.ItemListSelectedEventArgs args)
+    {
+        if(_owner.Jukebox is not null)
         {
-            RobustXamlLoader.Load(this);
-
-            _owner = owner;
-            MusicList.OnItemSelected += OnItemSelected;
-            PausePlayButton.OnPressed += OnPlayPausePressed;
-            StopButton.OnPressed += OnStopPressed;
-            PlaybackSlider.OnValueChanged += PlaybackSliderSeek;
-            PlaybackSlider.OnKeyBindUp += PlaybackSliderKeyUp;
-        }
-
-        private void OnItemSelected(ItemList.ItemListSelectedEventArgs args)
-        {
-            if(_owner.Jukebox is not null)
-            {
-                if(_owner.Jukebox.Playing)
-                    return;
-            }
-
-            _owner.SelectSong(args.ItemIndex);
-            _owner.CLSetTime(PlaybackSlider.Value);
-        }
-
-        private void OnPlayPausePressed(BaseButton.ButtonEventArgs obj)
-        {
-            _owner.TogglePlaying();
-        }
-
-        private void OnStopPressed(BaseButton.ButtonEventArgs obj)
-        {
-            _owner.Stop();
-        }
-
-        private void PlaybackSliderKeyUp(GUIBoundKeyEventArgs args)
-        {
-            if (args.Function != EngineKeyFunctions.UIClick)
+            if(_owner.Jukebox.Playing)
                 return;
-
-            _owner.CLSetTime(PlaybackSlider.Value);
-            _owner.SetTime(PlaybackSlider.Value);
         }
 
-        private void PlaybackSliderSeek(Range _)
-        {
-            if (PlaybackSlider.Grabbed)
-                return;
+        _owner.SelectSong(args.ItemIndex);
+        _owner.CLSetTime(PlaybackSlider.Value);
+    }
 
-            _owner.CLSetTime(PlaybackSlider.Value);
-            _owner.SetTime(PlaybackSlider.Value);
+    private void OnPlayPausePressed(BaseButton.ButtonEventArgs obj)
+    {
+        _owner.TogglePlaying();
+    }
+
+    private void OnStopPressed(BaseButton.ButtonEventArgs obj)
+    {
+        _owner.Stop();
+    }
+
+    private void PlaybackSliderKeyUp(GUIBoundKeyEventArgs args)
+    {
+        if (args.Function != EngineKeyFunctions.UIClick)
+            return;
+
+        _owner.CLSetTime(PlaybackSlider.Value);
+        _owner.SetTime(PlaybackSlider.Value);
+    }
+
+    private void PlaybackSliderSeek(Range _)
+    {
+        if (PlaybackSlider.Grabbed)
+            return;
+
+        _owner.CLSetTime(PlaybackSlider.Value);
+        _owner.SetTime(PlaybackSlider.Value);
+    }
+
+    public void Populate(List<MusicListDefinition> MusicDefs)
+    {
+        MusicList.Clear();
+
+        for (var i = 0; i < MusicDefs.Count; i++)
+        {
+            var entry = MusicDefs[i];
+            MusicList.AddItem(entry.Name);
         }
+    }
 
-        public void Populate(List<MusicListDefinition> MusicDefs)
+    public void SetPlayPauseButton(bool Playing)
+    {
+        if(Playing)
         {
-            MusicList.Clear();
-
-            for (var i = 0; i < MusicDefs.Count; i++)
-            {
-                var entry = MusicDefs[i];
-                MusicList.AddItem(entry.Name);
-            }
+            PausePlayButton.Text = Loc.GetString("jukebox-menu-buttonpause");
+            return;
         }
+        PausePlayButton.Text = Loc.GetString("jukebox-menu-buttonplay");
+    }
 
-        public void SetPlayPauseButton(bool Playing)
+    public void SetSelectedSong(MusicListDefinition selected)
+    {
+        SetSelectedSongText(selected.Name);
+        PlaybackSlider.MaxValue = selected.SongLength;
+        PlaybackSlider.SetValueWithoutEvent(0);
+    }
+
+    protected override void FrameUpdate(FrameEventArgs args)
+    {
+        base.FrameUpdate(args);
+
+        if (_owner.Jukebox == null)
+            return;
+
+        if (PlaybackSlider.Grabbed)
+            return;
+
+        if (_owner.Jukebox.Playing)
         {
-            if(Playing)
-            {
-                PausePlayButton.Text = Loc.GetString("jukebox-menu-buttonpause");
-                return;
-            }
-            PausePlayButton.Text = Loc.GetString("jukebox-menu-buttonplay");
+            var time = (float) (_owner._timing.CurTime.TotalSeconds - _owner.Jukebox.SongStartTime);
+            PlaybackSlider.SetValueWithoutEvent(time);
+            return;
         }
+        PlaybackSlider.SetValueWithoutEvent(_owner.Jukebox.SongTime);
+    }
 
-        public void SetSelectedSong(MusicListDefinition selected)
+    public void SetSelectedSongText(string? text)
+    {
+        if(text != null)
         {
-            SetSelectedSongText(selected.Name);
-            PlaybackSlider.MaxValue = selected.SongLength;
-            PlaybackSlider.SetValueWithoutEvent(0);
+            SongName.Text = text;
         }
-
-        protected override void FrameUpdate(FrameEventArgs args)
+        else
         {
-            base.FrameUpdate(args);
-
-            if (_owner.Jukebox == null)
-                return;
-
-            if (PlaybackSlider.Grabbed)
-                return;
-
-            if (_owner.Jukebox.Playing)
-            {
-                var time = (float) (_owner._timing.CurTime.TotalSeconds - _owner.Jukebox.SongStartTime);
-                PlaybackSlider.SetValueWithoutEvent(time);
-                return;
-            }
-            PlaybackSlider.SetValueWithoutEvent(_owner.Jukebox.SongTime);
-        }
-
-        public void SetSelectedSongText(string? text)
-        {
-            if(text != null)
-            {
-                SongName.Text = text;
-            }
-            else
-            {
-                SongName.Text = "---";
-            }
+            SongName.Text = "---";
         }
     }
 }
