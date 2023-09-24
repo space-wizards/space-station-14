@@ -248,6 +248,9 @@
         Slash: 0
         Piercing: 0
         Heat: 0
+        Cold: 0
+        Shock: 0
+        Radiation: 0
         Caustic: 0
   - type: ExplosionResistance
     damageCoefficient: 0
