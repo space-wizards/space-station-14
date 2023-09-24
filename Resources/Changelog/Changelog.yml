@@ -1,9 +1,4 @@
 Entries:
-- author: graevy
-  changes:
-  - {message: Added reflection to the reflective vest and shuttle walls, type: Add}
-  id: 4381
-  time: '2023-07-31T01:07:46.0000000+00:00'
 - author: Bhijn and Myr
   changes:
   - {message: 'The flash overlay is no longer offset towards the actual physical center
@@ -2981,3 +2976,8 @@ Entries:
   - {message: Nukies can declare war again., type: Fix}
   id: 4880
   time: '2023-09-23T20:00:13.0000000+00:00'
+- author: Doru991
+  changes:
+  - {message: Trash spawns correctly after food is eaten., type: Fix}
+  id: 4881
+  time: '2023-09-24T17:20:03.0000000+00:00'
