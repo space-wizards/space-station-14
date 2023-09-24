@@ -777,3 +777,14 @@
     - ClothMade
     - WhitelistChameleon
     - HamsterWearable
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatGladiator
+  name: Gladiator helmet
+  description: Protects the head from harsh ash winds and toy spears.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/gladiator.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/gladiator.rsi
