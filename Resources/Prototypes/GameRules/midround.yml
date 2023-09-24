@@ -5,13 +5,15 @@
   parent: BaseGameRule
   noSpawn: true
   components:
-  - type: NinjaRule
+  - type: GenericAntagRule
+    agentName: ninja-round-end-agent-name
     objectives:
     - StealResearchObjective
     - DoorjackObjective
     - SpiderChargeObjective
     - TerrorObjective
     - NinjaSurviveObjective
+  - type: NinjaRule
     threats:
     - announcement: terror-dragon
       rule: Dragon
