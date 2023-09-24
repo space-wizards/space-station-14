@@ -1,10 +1,4 @@
 Entries:
-- author: Alekshhh
-  changes:
-  - {message: 'The chemical page of the wiki has been heavily reworded, and a few
-      chemicals had their recipes tweaked and effects changed a little', type: Tweak}
-  id: 4386
-  time: '2023-07-31T06:03:49.0000000+00:00'
 - author: Raitononai
   changes:
   - {message: Adjusted the contents of command staff's lockers to reduce bloat., type: Tweak}
@@ -2978,3 +2972,9 @@ Entries:
   - {message: Arachnids have one new back marking., type: Add}
   id: 4885
   time: '2023-09-24T19:54:39.0000000+00:00'
+- author: Slava0135
+  changes:
+  - {message: Syndicate agents can no longer buy hot potatoes because of food safety
+      regulations, type: Remove}
+  id: 4886
+  time: '2023-09-24T19:56:07.0000000+00:00'
