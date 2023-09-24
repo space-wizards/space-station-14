@@ -54,7 +54,6 @@ tilemap:
   100: FloorWhiteDiagonal
   101: FloorWhiteDiagonalMini
   103: FloorWhiteMini
-  105: FloorWhiteOffset
   108: FloorWhitePlastic
   109: FloorWood
   111: Lattice
@@ -207,7 +206,7 @@ entities:
           version: 6
         -3,-3:
           ind: -3,-3
-          tiles: XwAAAAAAcAAAAAAAcAAAAAAAXwAAAAAAXwAAAAAAcAAAAAAAcAAAAAAAcAAAAAAAcAAAAAAAXwAAAAAAXwAAAAAAXwAAAAAAXwAAAAAAXwAAAAAAcAAAAAAAcAAAAAAAcAAAAAAAcAAAAAAAcAAAAAAAcAAAAAAAcAAAAAAAcAAAAAAAcAAAAAAAcAAAAAAAcAAAAAAAcAAAAAAAcAAAAAAAcAAAAAAAcAAAAAAAcAAAAAAAcAAAAAAAcAAAAAAAcAAAAAAAcAAAAAAAcAAAAAAAcAAAAAAAcAAAAAAAcAAAAAAAcAAAAAAAXwAAAAAAcAAAAAAAcAAAAAAAcAAAAAAAcAAAAAAAcAAAAAAAcAAAAAAAcAAAAAAAcAAAAAAAcAAAAAAAcAAAAAAAcAAAAAAAcAAAAAAAbAAAAAAAbAAAAAAAbAAAAAAAYwAAAAADbAAAAAAAcAAAAAAAbAAAAAAAbAAAAAAAcAAAAAAAYwAAAAADYwAAAAAAYwAAAAAAcAAAAAAAcAAAAAAAcAAAAAAAcAAAAAAAbAAAAAAAbAAAAAAAbAAAAAAAYwAAAAADbAAAAAAAcAAAAAAAbAAAAAAAbAAAAAAAYwAAAAABaQAAAAAAaQAAAAAAYwAAAAACcAAAAAAAcAAAAAAAcAAAAAAAcAAAAAAAbAAAAAAAbAAAAAAAbAAAAAAAYwAAAAACbAAAAAAAcAAAAAAAbAAAAAAAbAAAAAAAcAAAAAAAaQAAAAAAaQAAAAAAYwAAAAAAcAAAAAAAcAAAAAAAcAAAAAAAcAAAAAAAbAAAAAAAbAAAAAAAbAAAAAAAcAAAAAAAcAAAAAAAcAAAAAAAbAAAAAAAcAAAAAAAcAAAAAAAYwAAAAADYwAAAAABYwAAAAADcAAAAAAAXwAAAAAAcAAAAAAAcAAAAAAAbAAAAAAAbAAAAAAAbAAAAAAAbAAAAAAAbAAAAAAAbAAAAAAAbAAAAAAAbAAAAAAAcAAAAAAAcAAAAAAAcAAAAAAAcAAAAAAAXwAAAAAAXwAAAAAAcAAAAAAAcAAAAAAAbAAAAAAAbAAAAAAAbAAAAAAAcAAAAAAAbAAAAAAAbAAAAAAAbAAAAAAAbAAAAAAAbAAAAAAAbAAAAAAAbAAAAAAAbAAAAAAAcAAAAAAAcAAAAAAAcAAAAAAAcAAAAAAAYwAAAAACYwAAAAADYwAAAAACYwAAAAABbAAAAAAAbAAAAAAAbAAAAAAAbAAAAAAAbAAAAAAAbAAAAAAAbAAAAAAAbAAAAAAAIwAAAAAAcAAAAAAAXwAAAAAAcAAAAAAAbQAAAAADbQAAAAAAbQAAAAADYwAAAAACbAAAAAAAbAAAAAAAbAAAAAAAbAAAAAAAbAAAAAAAbAAAAAAAbAAAAAAAbAAAAAAAIwAAAAAAcAAAAAAAcAAAAAAAcAAAAAAAbQAAAAABbQAAAAAAbQAAAAACcAAAAAAAbAAAAAAAbAAAAAAAbAAAAAAAbAAAAAAAbAAAAAAAbAAAAAAAbAAAAAAAbAAAAAAAIwAAAAAAcAAAAAAAGgAAAAADGgAAAAAAGgAAAAABGgAAAAACGgAAAAAAcAAAAAAAbAAAAAAAbAAAAAAAbAAAAAAAbAAAAAAAbAAAAAAAbAAAAAAAbAAAAAAAbAAAAAAAIwAAAAAAcAAAAAAAGgAAAAADGgAAAAADGgAAAAAAGgAAAAACGgAAAAAAcAAAAAAAbAAAAAAAbAAAAAAAbAAAAAAAbAAAAAAAbAAAAAAAbAAAAAAAbAAAAAAAbAAAAAAAcAAAAAAAcAAAAAAAcAAAAAAAcAAAAAAAGgAAAAAAcAAAAAAAcAAAAAAAcAAAAAAAcAAAAAAAcAAAAAAAYwAAAAADYwAAAAABcAAAAAAAcAAAAAAAcAAAAAAAYwAAAAAAYwAAAAABYwAAAAACYwAAAAAAYwAAAAACYwAAAAACYwAAAAABYwAAAAAAYwAAAAAAYwAAAAABYwAAAAABYwAAAAABYwAAAAAAYwAAAAABYwAAAAABYwAAAAACYwAAAAAC
+          tiles: XwAAAAAAcAAAAAAAcAAAAAAAXwAAAAAAXwAAAAAAcAAAAAAAcAAAAAAAcAAAAAAAcAAAAAAAXwAAAAAAXwAAAAAAXwAAAAAAXwAAAAAAXwAAAAAAcAAAAAAAcAAAAAAAcAAAAAAAcAAAAAAAcAAAAAAAcAAAAAAAcAAAAAAAcAAAAAAAcAAAAAAAcAAAAAAAcAAAAAAAcAAAAAAAcAAAAAAAcAAAAAAAcAAAAAAAcAAAAAAAcAAAAAAAcAAAAAAAcAAAAAAAcAAAAAAAcAAAAAAAcAAAAAAAcAAAAAAAcAAAAAAAcAAAAAAAXwAAAAAAcAAAAAAAcAAAAAAAcAAAAAAAcAAAAAAAcAAAAAAAcAAAAAAAcAAAAAAAcAAAAAAAcAAAAAAAcAAAAAAAcAAAAAAAcAAAAAAAbAAAAAAAbAAAAAAAbAAAAAAAYwAAAAADbAAAAAAAcAAAAAAAbAAAAAAAbAAAAAAAcAAAAAAAbAAAAAAAbAAAAAAAbAAAAAAAcAAAAAAAcAAAAAAAcAAAAAAAcAAAAAAAbAAAAAAAbAAAAAAAbAAAAAAAYwAAAAADbAAAAAAAcAAAAAAAbAAAAAAAbAAAAAAAbAAAAAAAbAAAAAAAbAAAAAAAbAAAAAAAcAAAAAAAcAAAAAAAcAAAAAAAcAAAAAAAbAAAAAAAbAAAAAAAbAAAAAAAYwAAAAACbAAAAAAAcAAAAAAAbAAAAAAAbAAAAAAAcAAAAAAAbAAAAAAAbAAAAAAAbAAAAAAAcAAAAAAAcAAAAAAAcAAAAAAAcAAAAAAAbAAAAAAAbAAAAAAAbAAAAAAAcAAAAAAAcAAAAAAAcAAAAAAAbAAAAAAAcAAAAAAAcAAAAAAAbAAAAAAAbAAAAAAAbAAAAAAAcAAAAAAAXwAAAAAAcAAAAAAAcAAAAAAAbAAAAAAAbAAAAAAAbAAAAAAAbAAAAAAAbAAAAAAAbAAAAAAAbAAAAAAAbAAAAAAAcAAAAAAAcAAAAAAAcAAAAAAAcAAAAAAAXwAAAAAAXwAAAAAAcAAAAAAAcAAAAAAAbAAAAAAAbAAAAAAAbAAAAAAAcAAAAAAAbAAAAAAAbAAAAAAAbAAAAAAAbAAAAAAAbAAAAAAAbAAAAAAAbAAAAAAAbAAAAAAAcAAAAAAAcAAAAAAAcAAAAAAAcAAAAAAAYwAAAAACYwAAAAADYwAAAAACYwAAAAABbAAAAAAAbAAAAAAAbAAAAAAAbAAAAAAAbAAAAAAAbAAAAAAAbAAAAAAAbAAAAAAAIwAAAAAAcAAAAAAAXwAAAAAAcAAAAAAAbQAAAAADbQAAAAAAbQAAAAADYwAAAAACbAAAAAAAbAAAAAAAbAAAAAAAbAAAAAAAbAAAAAAAbAAAAAAAbAAAAAAAbAAAAAAAIwAAAAAAcAAAAAAAcAAAAAAAcAAAAAAAbQAAAAABbQAAAAAAbQAAAAACcAAAAAAAbAAAAAAAbAAAAAAAbAAAAAAAbAAAAAAAbAAAAAAAbAAAAAAAbAAAAAAAbAAAAAAAIwAAAAAAcAAAAAAAGgAAAAADGgAAAAAAGgAAAAABGgAAAAACGgAAAAAAcAAAAAAAbAAAAAAAbAAAAAAAbAAAAAAAbAAAAAAAbAAAAAAAbAAAAAAAbAAAAAAAbAAAAAAAIwAAAAAAcAAAAAAAGgAAAAADGgAAAAADGgAAAAAAGgAAAAACGgAAAAAAcAAAAAAAbAAAAAAAbAAAAAAAbAAAAAAAbAAAAAAAbAAAAAAAbAAAAAAAbAAAAAAAbAAAAAAAcAAAAAAAcAAAAAAAcAAAAAAAcAAAAAAAGgAAAAAAcAAAAAAAcAAAAAAAcAAAAAAAcAAAAAAAcAAAAAAAYwAAAAADYwAAAAABcAAAAAAAcAAAAAAAcAAAAAAAYwAAAAAAYwAAAAABYwAAAAACYwAAAAAAYwAAAAACYwAAAAACYwAAAAABYwAAAAAAYwAAAAAAYwAAAAABYwAAAAABYwAAAAABYwAAAAAAYwAAAAABYwAAAAABYwAAAAACYwAAAAAC
           version: 6
         -2,-3:
           ind: -2,-3
@@ -543,6 +542,18 @@ entities:
             1233: -56,47
             1234: -56,38
         - node:
+            angle: 1.5707963267948966 rad
+            color: '#52B4E996'
+            id: ArrowsGreyscale
+          decals:
+            5011: -41,-43
+        - node:
+            angle: 4.71238898038469 rad
+            color: '#52B4E996'
+            id: ArrowsGreyscale
+          decals:
+            5010: -42,-41
+        - node:
             color: '#52B4E996'
             id: Bot
           decals:
@@ -656,6 +667,14 @@ entities:
             500: -9,-1
             501: -8,-1
             502: -7,-1
+        - node:
+            zIndex: 1
+            color: '#FFFFFFFF'
+            id: BotLeftGreyscale
+          decals:
+            4957: -44,-44
+            4958: -40,-44
+            4959: -42,-40
         - node:
             color: '#EFB34196'
             id: BotRight
@@ -1367,6 +1386,11 @@ entities:
           decals:
             3489: 5,-12
         - node:
+            color: '#52B4E996'
+            id: BrickTileWhiteCornerNe
+          decals:
+            5012: -30,-35
+        - node:
             color: '#A4610696'
             id: BrickTileWhiteCornerNe
           decals:
@@ -1390,8 +1414,6 @@ entities:
             id: BrickTileWhiteCornerNe
           decals:
             3876: 29,61
-            3996: -34,-43
-            4001: -34,-43
             4074: -17,-29
             4460: -29,-12
         - node:
@@ -1399,6 +1421,11 @@ entities:
             id: BrickTileWhiteCornerNw
           decals:
             3516: 9,-12
+        - node:
+            color: '#52B4E996'
+            id: BrickTileWhiteCornerNw
+          decals:
+            5013: -40,-35
         - node:
             color: '#A4610696'
             id: BrickTileWhiteCornerNw
@@ -1423,11 +1450,14 @@ entities:
             id: BrickTileWhiteCornerNw
           decals:
             3874: 22,61
-            3995: -35,-43
-            4002: -35,-43
-            4004: -35,-43
             4072: -20,-29
             4468: -37,-12
+        - node:
+            color: '#52B4E996'
+            id: BrickTileWhiteCornerSe
+          decals:
+            5014: -30,-40
+            5015: -37,-41
         - node:
             color: '#A4610696'
             id: BrickTileWhiteCornerSe
@@ -1456,10 +1486,13 @@ entities:
             id: BrickTileWhiteCornerSe
           decals:
             3873: 29,58
-            3993: -34,-44
-            4005: -34,-44
             4073: -17,-31
             4458: -29,-14
+        - node:
+            color: '#52B4E996'
+            id: BrickTileWhiteCornerSw
+          decals:
+            5016: -40,-41
         - node:
             color: '#A4610696'
             id: BrickTileWhiteCornerSw
@@ -1483,8 +1516,6 @@ entities:
             id: BrickTileWhiteCornerSw
           decals:
             3875: 22,58
-            3994: -35,-44
-            4003: -35,-44
             4071: -20,-31
             4469: -37,-13
         - node:
@@ -1506,6 +1537,11 @@ entities:
             3572: -10,-3
             4246: -59,51
         - node:
+            color: '#52B4E996'
+            id: BrickTileWhiteInnerNe
+          decals:
+            4992: -52,-37
+        - node:
             color: '#D381C996'
             id: BrickTileWhiteInnerNe
           decals:
@@ -1526,6 +1562,11 @@ entities:
             4247: -57,51
             4773: -24,16
         - node:
+            color: '#52B4E996'
+            id: BrickTileWhiteInnerNw
+          decals:
+            4991: -48,-37
+        - node:
             color: '#D381C996'
             id: BrickTileWhiteInnerNw
           decals:
@@ -1541,6 +1582,12 @@ entities:
           decals:
             3496: 0,-10
         - node:
+            color: '#52B4E996'
+            id: BrickTileWhiteInnerSe
+          decals:
+            4980: -52,-35
+            5017: -37,-40
+        - node:
             color: '#DE3A3A96'
             id: BrickTileWhiteInnerSe
           decals:
@@ -1551,6 +1598,11 @@ entities:
           decals:
             3510: 14,-10
             4772: -24,19
+        - node:
+            color: '#52B4E996'
+            id: BrickTileWhiteInnerSw
+          decals:
+            4978: -48,-35
         - node:
             color: '#DE3A3A96'
             id: BrickTileWhiteInnerSw
@@ -1567,6 +1619,15 @@ entities:
           decals:
             3495: 0,-11
             3523: 5,-13
+        - node:
+            color: '#52B4E996'
+            id: BrickTileWhiteLineE
+          decals:
+            4971: -52,-36
+            5035: -30,-36
+            5036: -30,-37
+            5037: -30,-38
+            5038: -30,-39
         - node:
             color: '#9FED5896'
             id: BrickTileWhiteLineE
@@ -1678,6 +1739,22 @@ entities:
             3571: -6,-3
             4245: -58,51
         - node:
+            color: '#52B4E996'
+            id: BrickTileWhiteLineN
+          decals:
+            4988: -51,-37
+            4989: -50,-37
+            4990: -49,-37
+            5026: -39,-35
+            5027: -38,-35
+            5028: -37,-35
+            5029: -36,-35
+            5030: -35,-35
+            5031: -34,-35
+            5032: -33,-35
+            5033: -32,-35
+            5034: -31,-35
+        - node:
             color: '#A4610696'
             id: BrickTileWhiteLineN
           decals:
@@ -1775,6 +1852,21 @@ entities:
             3507: 11,-10
             3508: 12,-10
             3509: 13,-10
+        - node:
+            color: '#52B4E996'
+            id: BrickTileWhiteLineS
+          decals:
+            4965: -51,-35
+            4966: -50,-35
+            4967: -49,-35
+            5018: -39,-41
+            5019: -38,-41
+            5020: -36,-40
+            5021: -35,-40
+            5022: -34,-40
+            5023: -33,-40
+            5024: -32,-40
+            5025: -31,-40
         - node:
             color: '#A4610696'
             id: BrickTileWhiteLineS
@@ -1886,6 +1978,12 @@ entities:
             id: BrickTileWhiteLineW
           decals:
             4724: -32,15
+            4976: -48,-36
+            5039: -40,-40
+            5040: -40,-39
+            5041: -40,-38
+            5042: -40,-37
+            5043: -40,-36
         - node:
             color: '#A4610696'
             id: BrickTileWhiteLineW
@@ -2167,6 +2265,15 @@ entities:
             4819: 86,-1
         - node:
             color: '#52B4E996'
+            id: CheckerNESW
+          decals:
+            4918: -34,-43
+            4919: -34,-44
+            4982: -51,-36
+            4985: -50,-36
+            4986: -49,-36
+        - node:
+            color: '#52B4E996'
             id: CheckerNWSE
           decals:
             3277: -46,-35
@@ -2230,12 +2337,6 @@ entities:
           decals:
             1046: 37,29
             1207: -64,39
-        - node:
-            color: '#FFFFFFFF'
-            id: Delivery
-          decals:
-            4897: -51,-38
-            4898: -49,-38
         - node:
             color: '#EFB34196'
             id: DeliveryGreyscale
@@ -3220,11 +3321,9 @@ entities:
             2529: -38,-33
             2530: -37,-33
             2531: -32,-33
-            2532: -37,-36
             2533: -39,-38
             2534: -39,-39
             2535: -41,-39
-            2536: -35,-36
             2537: -31,-37
             2538: -31,-38
             2539: -31,-39
@@ -3241,7 +3340,6 @@ entities:
             2550: -35,-41
             2551: -39,-39
             2552: -39,-37
-            2553: -37,-36
             2554: -32,-36
             2555: -32,-36
             2556: -39,-36
@@ -4248,6 +4346,9 @@ entities:
             298: -31,-42
             299: -30,-42
             503: -41,-38
+            4926: -35,-42
+            4927: -34,-42
+            4928: -33,-42
         - node:
             color: '#A4610696'
             id: HalfTileOverlayGreyscale
@@ -4463,6 +4564,9 @@ entities:
             306: -51,-33
             307: -53,-33
             1498: -43,-33
+            4920: -33,-45
+            4921: -34,-45
+            4922: -35,-45
         - node:
             color: '#A4610696'
             id: HalfTileOverlayGreyscale180
@@ -4698,6 +4802,11 @@ entities:
             id: HalfTileOverlayGreyscale270
           decals:
             227: -26,-26
+            5053: -36,-37
+            5054: -35,-37
+            5055: -34,-37
+            5056: -35,-36
+            5057: -35,-38
         - node:
             color: '#9FED5896'
             id: HalfTileOverlayGreyscale270
@@ -4880,6 +4989,15 @@ entities:
             1536: 23,-62
             1537: 22,-63
             1538: 22,-60
+        - node:
+            color: '#52B4E996'
+            id: HalfTileOverlayGreyscale90
+          decals:
+            5058: -36,-37
+            5059: -35,-36
+            5060: -35,-37
+            5061: -35,-38
+            5062: -34,-37
         - node:
             color: '#9FED5896'
             id: HalfTileOverlayGreyscale90
@@ -5254,12 +5372,63 @@ entities:
             3460: 40,-9
         - node:
             color: '#52B4E996'
-            id: OffsetCheckerBOverlay
+            id: MiniTileWhiteCornerNe
           decals:
-            3997: -35,-44
-            3998: -35,-43
-            3999: -34,-43
-            4000: -34,-44
+            4939: -40,-43
+        - node:
+            zIndex: 1
+            color: '#52B4E996'
+            id: MiniTileWhiteCornerNe
+          decals:
+            4960: -42,-40
+        - node:
+            color: '#52B4E996'
+            id: MiniTileWhiteCornerNw
+          decals:
+            4941: -44,-40
+        - node:
+            color: '#52B4E996'
+            id: MiniTileWhiteCornerSe
+          decals:
+            4937: -40,-45
+        - node:
+            color: '#52B4E996'
+            id: MiniTileWhiteCornerSw
+          decals:
+            4938: -44,-45
+        - node:
+            color: '#52B4E996'
+            id: MiniTileWhiteInnerNe
+          decals:
+            4942: -42,-43
+        - node:
+            color: '#52B4E996'
+            id: MiniTileWhiteLineE
+          decals:
+            4949: -42,-41
+            4950: -42,-42
+            4961: -40,-44
+        - node:
+            color: '#52B4E996'
+            id: MiniTileWhiteLineN
+          decals:
+            4947: -43,-40
+            4948: -41,-43
+        - node:
+            color: '#52B4E996'
+            id: MiniTileWhiteLineS
+          decals:
+            4934: -43,-45
+            4935: -42,-45
+            4936: -41,-45
+        - node:
+            color: '#52B4E996'
+            id: MiniTileWhiteLineW
+          decals:
+            4944: -44,-43
+            4945: -44,-42
+            4946: -44,-41
+            4962: -44,-44
         - node:
             color: '#334E6DC8'
             id: QuarterTileOverlayGreyscale
@@ -6202,6 +6371,8 @@ entities:
             3270: 22,17
             3271: 22,16
             3272: 22,15
+            4993: -51,-38
+            4994: -49,-38
         - node:
             color: '#EFB34196'
             id: WarnCornerNE
@@ -18591,7 +18762,7 @@ entities:
     - pos: 34.5,12.5
       parent: 82
       type: Transform
-    - SecondsUntilStateChange: -503299.53
+    - SecondsUntilStateChange: -506834.66
       state: Opening
       type: Door
     - links:
@@ -18602,7 +18773,7 @@ entities:
     - pos: 34.5,14.5
       parent: 82
       type: Transform
-    - SecondsUntilStateChange: -503299.53
+    - SecondsUntilStateChange: -506834.66
       state: Opening
       type: Door
     - links:
@@ -18629,7 +18800,7 @@ entities:
     - pos: 34.5,13.5
       parent: 82
       type: Transform
-    - SecondsUntilStateChange: -503299.53
+    - SecondsUntilStateChange: -506834.66
       state: Opening
       type: Door
     - links:
@@ -18656,7 +18827,7 @@ entities:
     - pos: 53.5,-25.5
       parent: 82
       type: Transform
-    - SecondsUntilStateChange: -501564.47
+    - SecondsUntilStateChange: -505099.6
       state: Opening
       type: Door
     - links:
@@ -18667,7 +18838,7 @@ entities:
     - pos: 53.5,-26.5
       parent: 82
       type: Transform
-    - SecondsUntilStateChange: -501564.47
+    - SecondsUntilStateChange: -505099.6
       state: Opening
       type: Door
     - links:
@@ -18678,7 +18849,7 @@ entities:
     - pos: 53.5,-27.5
       parent: 82
       type: Transform
-    - SecondsUntilStateChange: -501564.47
+    - SecondsUntilStateChange: -505099.6
       state: Opening
       type: Door
     - links:
@@ -18689,7 +18860,7 @@ entities:
     - pos: 53.5,-28.5
       parent: 82
       type: Transform
-    - SecondsUntilStateChange: -501564.47
+    - SecondsUntilStateChange: -505099.6
       state: Opening
       type: Door
     - links:
@@ -18700,7 +18871,7 @@ entities:
     - pos: 53.5,-29.5
       parent: 82
       type: Transform
-    - SecondsUntilStateChange: -501564.47
+    - SecondsUntilStateChange: -505099.6
       state: Opening
       type: Door
     - links:
@@ -18711,7 +18882,7 @@ entities:
     - pos: 53.5,-30.5
       parent: 82
       type: Transform
-    - SecondsUntilStateChange: -501564.47
+    - SecondsUntilStateChange: -505099.6
       state: Opening
       type: Door
     - links:
@@ -18722,7 +18893,7 @@ entities:
     - pos: 56.5,-25.5
       parent: 82
       type: Transform
-    - SecondsUntilStateChange: -501564.47
+    - SecondsUntilStateChange: -505099.6
       state: Opening
       type: Door
     - links:
@@ -18733,7 +18904,7 @@ entities:
     - pos: 56.5,-26.5
       parent: 82
       type: Transform
-    - SecondsUntilStateChange: -501564.47
+    - SecondsUntilStateChange: -505099.6
       state: Opening
       type: Door
     - links:
@@ -18744,7 +18915,7 @@ entities:
     - pos: 56.5,-27.5
       parent: 82
       type: Transform
-    - SecondsUntilStateChange: -501564.47
+    - SecondsUntilStateChange: -505099.6
       state: Opening
       type: Door
     - links:
@@ -18755,7 +18926,7 @@ entities:
     - pos: 56.5,-28.5
       parent: 82
       type: Transform
-    - SecondsUntilStateChange: -501564.47
+    - SecondsUntilStateChange: -505099.6
       state: Opening
       type: Door
     - links:
@@ -18766,7 +18937,7 @@ entities:
     - pos: 56.5,-29.5
       parent: 82
       type: Transform
-    - SecondsUntilStateChange: -501564.47
+    - SecondsUntilStateChange: -505099.6
       state: Opening
       type: Door
     - links:
@@ -18777,7 +18948,7 @@ entities:
     - pos: 56.5,-30.5
       parent: 82
       type: Transform
-    - SecondsUntilStateChange: -501564.47
+    - SecondsUntilStateChange: -505099.6
       state: Opening
       type: Door
     - links:
@@ -18788,7 +18959,7 @@ entities:
     - pos: -21.5,50.5
       parent: 82
       type: Transform
-    - SecondsUntilStateChange: -442219.4
+    - SecondsUntilStateChange: -445754.53
       state: Opening
       type: Door
     - links:
@@ -18799,7 +18970,7 @@ entities:
     - pos: -21.5,48.5
       parent: 82
       type: Transform
-    - SecondsUntilStateChange: -442219.4
+    - SecondsUntilStateChange: -445754.53
       state: Opening
       type: Door
     - links:
@@ -18810,7 +18981,7 @@ entities:
     - pos: -21.5,49.5
       parent: 82
       type: Transform
-    - SecondsUntilStateChange: -442219.4
+    - SecondsUntilStateChange: -445754.53
       state: Opening
       type: Door
     - links:
@@ -18821,7 +18992,7 @@ entities:
     - pos: -21.5,47.5
       parent: 82
       type: Transform
-    - SecondsUntilStateChange: -442219.4
+    - SecondsUntilStateChange: -445754.53
       state: Opening
       type: Door
     - links:
@@ -18886,7 +19057,7 @@ entities:
     - pos: 23.5,14.5
       parent: 82
       type: Transform
-    - SecondsUntilStateChange: -503360.78
+    - SecondsUntilStateChange: -506895.9
       state: Closing
       type: Door
     - links:
@@ -18897,7 +19068,7 @@ entities:
     - pos: 23.5,13.5
       parent: 82
       type: Transform
-    - SecondsUntilStateChange: -503360.78
+    - SecondsUntilStateChange: -506895.9
       state: Closing
       type: Door
     - links:
@@ -18908,7 +19079,7 @@ entities:
     - pos: 23.5,12.5
       parent: 82
       type: Transform
-    - SecondsUntilStateChange: -503360.78
+    - SecondsUntilStateChange: -506895.9
       state: Closing
       type: Door
     - links:
@@ -141148,7 +141319,7 @@ entities:
     - pos: 58.5,-6.5
       parent: 82
       type: Transform
-    - SecondsUntilStateChange: -386396.72
+    - SecondsUntilStateChange: -389931.84
       state: Opening
       type: Door
     - links:
@@ -141159,7 +141330,7 @@ entities:
     - pos: 59.5,-6.5
       parent: 82
       type: Transform
-    - SecondsUntilStateChange: -386396.72
+    - SecondsUntilStateChange: -389931.84
       state: Opening
       type: Door
     - links:
@@ -141171,7 +141342,7 @@ entities:
       pos: 3.5,-19.5
       parent: 82
       type: Transform
-    - SecondsUntilStateChange: -497432.16
+    - SecondsUntilStateChange: -500967.28
       state: Opening
       type: Door
     - links:
@@ -141183,7 +141354,7 @@ entities:
       pos: 2.5,-19.5
       parent: 82
       type: Transform
-    - SecondsUntilStateChange: -497432.16
+    - SecondsUntilStateChange: -500967.28
       state: Opening
       type: Door
     - links:
@@ -141194,7 +141365,7 @@ entities:
     - pos: 1.5,-8.5
       parent: 82
       type: Transform
-    - SecondsUntilStateChange: -497432.16
+    - SecondsUntilStateChange: -500967.28
       state: Opening
       type: Door
     - links:
@@ -141205,7 +141376,7 @@ entities:
     - pos: 2.5,-8.5
       parent: 82
       type: Transform
-    - SecondsUntilStateChange: -497432.16
+    - SecondsUntilStateChange: -500967.28
       state: Opening
       type: Door
     - links:
@@ -141216,7 +141387,7 @@ entities:
     - pos: 3.5,-8.5
       parent: 82
       type: Transform
-    - SecondsUntilStateChange: -497432.16
+    - SecondsUntilStateChange: -500967.28
       state: Opening
       type: Door
     - links:
@@ -141227,7 +141398,7 @@ entities:
     - pos: 5.5,-8.5
       parent: 82
       type: Transform
-    - SecondsUntilStateChange: -497432.16
+    - SecondsUntilStateChange: -500967.28
       state: Opening
       type: Door
     - links:
@@ -141238,7 +141409,7 @@ entities:
     - pos: 6.5,-8.5
       parent: 82
       type: Transform
-    - SecondsUntilStateChange: -497432.16
+    - SecondsUntilStateChange: -500967.28
       state: Opening
       type: Door
     - links:
@@ -141249,7 +141420,7 @@ entities:
     - pos: 7.5,-8.5
       parent: 82
       type: Transform
-    - SecondsUntilStateChange: -497432.16
+    - SecondsUntilStateChange: -500967.28
       state: Opening
       type: Door
     - links:
@@ -141260,7 +141431,7 @@ entities:
     - pos: 8.5,-8.5
       parent: 82
       type: Transform
-    - SecondsUntilStateChange: -497432.16
+    - SecondsUntilStateChange: -500967.28
       state: Opening
       type: Door
     - links:
@@ -141271,7 +141442,7 @@ entities:
     - pos: 9.5,-8.5
       parent: 82
       type: Transform
-    - SecondsUntilStateChange: -497432.16
+    - SecondsUntilStateChange: -500967.28
       state: Opening
       type: Door
     - links:
@@ -141282,7 +141453,7 @@ entities:
     - pos: 11.5,-8.5
       parent: 82
       type: Transform
-    - SecondsUntilStateChange: -497432.16
+    - SecondsUntilStateChange: -500967.28
       state: Opening
       type: Door
     - links:
@@ -141293,7 +141464,7 @@ entities:
     - pos: 12.5,-8.5
       parent: 82
       type: Transform
-    - SecondsUntilStateChange: -497432.16
+    - SecondsUntilStateChange: -500967.28
       state: Opening
       type: Door
     - links:
@@ -141304,7 +141475,7 @@ entities:
     - pos: 13.5,-8.5
       parent: 82
       type: Transform
-    - SecondsUntilStateChange: -497432.16
+    - SecondsUntilStateChange: -500967.28
       state: Opening
       type: Door
     - links:
@@ -141315,7 +141486,7 @@ entities:
     - pos: 14.5,-8.5
       parent: 82
       type: Transform
-    - SecondsUntilStateChange: -497432.16
+    - SecondsUntilStateChange: -500967.28
       state: Opening
       type: Door
     - links:
@@ -141327,7 +141498,7 @@ entities:
       pos: 16.5,-11.5
       parent: 82
       type: Transform
-    - SecondsUntilStateChange: -497432.16
+    - SecondsUntilStateChange: -500967.28
       state: Opening
       type: Door
     - links:
@@ -141339,7 +141510,7 @@ entities:
       pos: 16.5,-10.5
       parent: 82
       type: Transform
-    - SecondsUntilStateChange: -497432.16
+    - SecondsUntilStateChange: -500967.28
       state: Opening
       type: Door
     - links:
@@ -141351,7 +141522,7 @@ entities:
       pos: -1.5,-11.5
       parent: 82
       type: Transform
-    - SecondsUntilStateChange: -497432.16
+    - SecondsUntilStateChange: -500967.28
       state: Opening
       type: Door
     - links:
@@ -141363,7 +141534,7 @@ entities:
       pos: -1.5,-10.5
       parent: 82
       type: Transform
-    - SecondsUntilStateChange: -497432.16
+    - SecondsUntilStateChange: -500967.28
       state: Opening
       type: Door
     - links:
@@ -141375,7 +141546,7 @@ entities:
       pos: 25.5,64.5
       parent: 82
       type: Transform
-    - SecondsUntilStateChange: -397548.97
+    - SecondsUntilStateChange: -401084.1
       state: Opening
       type: Door
     - links:
@@ -141410,7 +141581,7 @@ entities:
     - pos: 62.5,-6.5
       parent: 82
       type: Transform
-    - SecondsUntilStateChange: -386396.72
+    - SecondsUntilStateChange: -389931.84
       state: Opening
       type: Door
     - links:
@@ -141421,7 +141592,7 @@ entities:
     - pos: -8.5,32.5
       parent: 82
       type: Transform
-    - SecondsUntilStateChange: -396240.88
+    - SecondsUntilStateChange: -399776
       state: Opening
       type: Door
     - links:
@@ -141432,7 +141603,7 @@ entities:
     - pos: -9.5,32.5
       parent: 82
       type: Transform
-    - SecondsUntilStateChange: -396240.88
+    - SecondsUntilStateChange: -399776
       state: Opening
       type: Door
     - links:
@@ -141443,7 +141614,7 @@ entities:
     - pos: -7.5,32.5
       parent: 82
       type: Transform
-    - SecondsUntilStateChange: -396240.88
+    - SecondsUntilStateChange: -399776
       state: Opening
       type: Door
     - links:
@@ -141455,7 +141626,7 @@ entities:
       pos: -6.5,34.5
       parent: 82
       type: Transform
-    - SecondsUntilStateChange: -396240.88
+    - SecondsUntilStateChange: -399776
       state: Opening
       type: Door
     - links:
@@ -141467,7 +141638,7 @@ entities:
       pos: -6.5,35.5
       parent: 82
       type: Transform
-    - SecondsUntilStateChange: -396240.88
+    - SecondsUntilStateChange: -399776
       state: Opening
       type: Door
     - links:
@@ -141478,7 +141649,7 @@ entities:
     - pos: 60.5,-6.5
       parent: 82
       type: Transform
-    - SecondsUntilStateChange: -386396.72
+    - SecondsUntilStateChange: -389931.84
       state: Opening
       type: Door
     - links:
@@ -141490,7 +141661,7 @@ entities:
       pos: 44.5,12.5
       parent: 82
       type: Transform
-    - SecondsUntilStateChange: -85738.09
+    - SecondsUntilStateChange: -89273.21
       state: Opening
       type: Door
     - links:
@@ -141502,7 +141673,7 @@ entities:
       pos: 44.5,13.5
       parent: 82
       type: Transform
-    - SecondsUntilStateChange: -85738.09
+    - SecondsUntilStateChange: -89273.21
       state: Opening
       type: Door
     - links:
@@ -141514,7 +141685,7 @@ entities:
       pos: -46.5,-34.5
       parent: 82
       type: Transform
-    - SecondsUntilStateChange: -389182.03
+    - SecondsUntilStateChange: -392717.16
       state: Opening
       type: Door
     - links:
@@ -141526,7 +141697,7 @@ entities:
       pos: 12.5,-19.5
       parent: 82
       type: Transform
-    - SecondsUntilStateChange: -497432.16
+    - SecondsUntilStateChange: -500967.28
       state: Opening
       type: Door
     - links:
@@ -141538,7 +141709,7 @@ entities:
       pos: 11.5,-19.5
       parent: 82
       type: Transform
-    - SecondsUntilStateChange: -497432.16
+    - SecondsUntilStateChange: -500967.28
       state: Opening
       type: Door
     - links:
@@ -141550,7 +141721,7 @@ entities:
       pos: 10.5,-19.5
       parent: 82
       type: Transform
-    - SecondsUntilStateChange: -497432.16
+    - SecondsUntilStateChange: -500967.28
       state: Opening
       type: Door
     - links:
@@ -141562,7 +141733,7 @@ entities:
       pos: 4.5,-19.5
       parent: 82
       type: Transform
-    - SecondsUntilStateChange: -497432.16
+    - SecondsUntilStateChange: -500967.28
       state: Opening
       type: Door
     - links:
@@ -141573,7 +141744,7 @@ entities:
     - pos: 0.5,-8.5
       parent: 82
       type: Transform
-    - SecondsUntilStateChange: -497432.16
+    - SecondsUntilStateChange: -500967.28
       state: Opening
       type: Door
     - links:
@@ -141585,7 +141756,7 @@ entities:
       pos: 44.5,14.5
       parent: 82
       type: Transform
-    - SecondsUntilStateChange: -85738.09
+    - SecondsUntilStateChange: -89273.21
       state: Opening
       type: Door
     - links:
@@ -141597,7 +141768,7 @@ entities:
       pos: -6.5,33.5
       parent: 82
       type: Transform
-    - SecondsUntilStateChange: -396240.88
+    - SecondsUntilStateChange: -399776
       state: Opening
       type: Door
     - links:
@@ -141608,7 +141779,7 @@ entities:
     - pos: -10.5,32.5
       parent: 82
       type: Transform
-    - SecondsUntilStateChange: -396240.88
+    - SecondsUntilStateChange: -399776
       state: Opening
       type: Door
     - links:
@@ -141620,7 +141791,7 @@ entities:
       pos: 25.5,65.5
       parent: 82
       type: Transform
-    - SecondsUntilStateChange: -397548.97
+    - SecondsUntilStateChange: -401084.1
       state: Opening
       type: Door
     - links:
@@ -141631,7 +141802,7 @@ entities:
     - pos: 28.5,67.5
       parent: 82
       type: Transform
-    - SecondsUntilStateChange: -397548.97
+    - SecondsUntilStateChange: -401084.1
       state: Opening
       type: Door
     - links:
@@ -141642,7 +141813,7 @@ entities:
     - pos: 27.5,67.5
       parent: 82
       type: Transform
-    - SecondsUntilStateChange: -397548.97
+    - SecondsUntilStateChange: -401084.1
       state: Opening
       type: Door
     - links:
@@ -141653,7 +141824,7 @@ entities:
     - pos: 28.5,62.5
       parent: 82
       type: Transform
-    - SecondsUntilStateChange: -397548.97
+    - SecondsUntilStateChange: -401084.1
       state: Opening
       type: Door
     - links:
@@ -141664,7 +141835,7 @@ entities:
     - pos: 26.5,62.5
       parent: 82
       type: Transform
-    - SecondsUntilStateChange: -397548.97
+    - SecondsUntilStateChange: -401084.1
       state: Opening
       type: Door
     - links:
@@ -141675,7 +141846,7 @@ entities:
     - pos: 27.5,62.5
       parent: 82
       type: Transform
-    - SecondsUntilStateChange: -397548.97
+    - SecondsUntilStateChange: -401084.1
       state: Opening
       type: Door
     - links:
@@ -141687,7 +141858,7 @@ entities:
       pos: -6.5,36.5
       parent: 82
       type: Transform
-    - SecondsUntilStateChange: -396240.88
+    - SecondsUntilStateChange: -399776
       state: Opening
       type: Door
     - links:
@@ -141699,7 +141870,7 @@ entities:
       pos: -46.5,-35.5
       parent: 82
       type: Transform
-    - SecondsUntilStateChange: -389182.03
+    - SecondsUntilStateChange: -392717.16
       state: Opening
       type: Door
     - links:
@@ -141710,7 +141881,7 @@ entities:
     - pos: -45.5,-33.5
       parent: 82
       type: Transform
-    - SecondsUntilStateChange: -389182.03
+    - SecondsUntilStateChange: -392717.16
       state: Opening
       type: Door
     - links:
@@ -141721,7 +141892,7 @@ entities:
     - pos: -44.5,-33.5
       parent: 82
       type: Transform
-    - SecondsUntilStateChange: -389182.03
+    - SecondsUntilStateChange: -392717.16
       state: Opening
       type: Door
     - links:
@@ -141732,7 +141903,7 @@ entities:
     - pos: -42.5,-33.5
       parent: 82
       type: Transform
-    - SecondsUntilStateChange: -389182.03
+    - SecondsUntilStateChange: -392717.16
       state: Opening
       type: Door
     - links:
@@ -141743,7 +141914,7 @@ entities:
     - pos: -41.5,-33.5
       parent: 82
       type: Transform
-    - SecondsUntilStateChange: -389182.03
+    - SecondsUntilStateChange: -392717.16
       state: Opening
       type: Door
     - links:
@@ -141754,7 +141925,7 @@ entities:
     - pos: 61.5,-6.5
       parent: 82
       type: Transform
-    - SecondsUntilStateChange: -386396.72
+    - SecondsUntilStateChange: -389931.84
       state: Opening
       type: Door
     - links:
@@ -141766,7 +141937,7 @@ entities:
       pos: 57.5,-7.5
       parent: 82
       type: Transform
-    - SecondsUntilStateChange: -386396.72
+    - SecondsUntilStateChange: -389931.84
       state: Opening
       type: Door
     - links:
@@ -141778,7 +141949,7 @@ entities:
       pos: 57.5,-8.5
       parent: 82
       type: Transform
-    - SecondsUntilStateChange: -386396.72
+    - SecondsUntilStateChange: -389931.84
       state: Opening
       type: Door
     - links:
@@ -141790,7 +141961,7 @@ entities:
       pos: 57.5,-10.5
       parent: 82
       type: Transform
-    - SecondsUntilStateChange: -386396.72
+    - SecondsUntilStateChange: -389931.84
       state: Opening
       type: Door
     - links:
@@ -141802,7 +141973,7 @@ entities:
       pos: 57.5,-11.5
       parent: 82
       type: Transform
-    - SecondsUntilStateChange: -386396.72
+    - SecondsUntilStateChange: -389931.84
       state: Opening
       type: Door
     - links:
@@ -141814,7 +141985,7 @@ entities:
       pos: 57.5,-9.5
       parent: 82
       type: Transform
-    - SecondsUntilStateChange: -386396.72
+    - SecondsUntilStateChange: -389931.84
       state: Opening
       type: Door
     - links:
@@ -141826,7 +141997,7 @@ entities:
       pos: 59.5,-14.5
       parent: 82
       type: Transform
-    - SecondsUntilStateChange: -386396.72
+    - SecondsUntilStateChange: -389931.84
       state: Opening
       type: Door
     - links:
@@ -141838,7 +142009,7 @@ entities:
       pos: 59.5,-15.5
       parent: 82
       type: Transform
-    - SecondsUntilStateChange: -386396.72
+    - SecondsUntilStateChange: -389931.84
       state: Opening
       type: Door
     - links:
@@ -142017,7 +142188,7 @@ entities:
     - pos: -26.5,60.5
       parent: 82
       type: Transform
-    - SecondsUntilStateChange: -442232.75
+    - SecondsUntilStateChange: -445767.88
       state: Closing
       type: Door
     - links:
@@ -142028,7 +142199,7 @@ entities:
     - pos: -24.5,60.5
       parent: 82
       type: Transform
-    - SecondsUntilStateChange: -442232.75
+    - SecondsUntilStateChange: -445767.88
       state: Closing
       type: Door
     - links:
@@ -142039,7 +142210,7 @@ entities:
     - pos: -25.5,60.5
       parent: 82
       type: Transform
-    - SecondsUntilStateChange: -442232.75
+    - SecondsUntilStateChange: -445767.88
       state: Closing
       type: Door
     - links:
@@ -142050,7 +142221,7 @@ entities:
     - pos: -23.5,60.5
       parent: 82
       type: Transform
-    - SecondsUntilStateChange: -442232.75
+    - SecondsUntilStateChange: -445767.88
       state: Closing
       type: Door
     - links:
@@ -142061,7 +142232,7 @@ entities:
     - pos: -27.5,60.5
       parent: 82
       type: Transform
-    - SecondsUntilStateChange: -442232.75
+    - SecondsUntilStateChange: -445767.88
       state: Closing
       type: Door
     - links:
@@ -172341,7 +172512,7 @@ entities:
     - pos: -11.5,17.5
       parent: 82
       type: Transform
-    - SecondsUntilStateChange: -567340.1
+    - SecondsUntilStateChange: -570875.25
       state: Opening
       type: Door
   - uid: 4246
@@ -172349,7 +172520,7 @@ entities:
     - pos: -11.5,19.5
       parent: 82
       type: Transform
-    - SecondsUntilStateChange: -567338.4
+    - SecondsUntilStateChange: -570873.5
       state: Opening
       type: Door
   - uid: 8013
