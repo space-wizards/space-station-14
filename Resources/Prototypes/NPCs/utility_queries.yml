@@ -100,6 +100,27 @@
       curve: !type:BoolCurve
 
 - type: utilityQuery
+  id: OrderedTargets
+  query:
+    - !type:NearbyHostilesQuery
+  considerations:
+    - !type:TargetIsAliveCon
+      curve: !type:BoolCurve
+    - !type:TargetDistanceCon
+      curve: !type:PresetCurve
+        preset: TargetDistance
+    - !type:TargetHealthCon
+      curve: !type:PresetCurve
+        preset: TargetHealth
+    - !type:TargetAccessibleCon
+      curve: !type:BoolCurve
+    - !type:TargetInLOSOrCurrentCon
+      curve: !type:BoolCurve
+    # they gotta be what we ordered
+    - !type:OrderedTargetCon
+      curve: !type:BoolCurve
+
+- type: utilityQuery
   id: NearbyMeleeWeapons
   query:
     - !type:ComponentQuery

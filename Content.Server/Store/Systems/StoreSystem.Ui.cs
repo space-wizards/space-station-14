@@ -163,7 +163,8 @@ public sealed partial class StoreSystem
         //give action
         if (!string.IsNullOrWhiteSpace(listing.ProductAction))
         {
-            _actions.AddAction(buyer, Spawn(listing.ProductAction), null);
+            // I guess we just allow duplicate actions?
+            _actions.AddAction(buyer, listing.ProductAction);
         }
 
         //broadcast event

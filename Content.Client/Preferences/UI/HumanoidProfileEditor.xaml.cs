@@ -393,13 +393,16 @@ namespace Content.Client.Preferences.UI
             foreach (var antag in prototypeManager.EnumeratePrototypes<AntagPrototype>().OrderBy(a => Loc.GetString(a.Name)))
             {
                 if (!antag.SetPreference)
-                {
                     continue;
-                }
 
                 var selector = new AntagPreferenceSelector(antag);
                 _antagList.AddChild(selector);
                 _antagPreferences.Add(selector);
+                if (selector.Disabled)
+                {
+                    Profile = Profile?.WithAntagPreference(antag.ID, false);
+                    IsDirty = true;
+                }
 
                 selector.PreferenceChanged += preference =>
                 {
@@ -587,19 +590,15 @@ namespace Content.Client.Preferences.UI
                         foreach (var jobSelector in _jobPriorities)
                         {
                             // Sync other selectors with the same job in case of multiple department jobs
-                            if (jobSelector.Job == selector.Job)
+                            if (jobSelector.Proto == selector.Proto)
                             {
                                 jobSelector.Priority = priority;
                             }
-
-                            // Lower any other high priorities to medium.
-                            if (priority == JobPriority.High)
+                            else if (priority == JobPriority.High && jobSelector.Priority == JobPriority.High)
                             {
-                                if (jobSelector.Job != selector.Job && jobSelector.Priority == JobPriority.High)
-                                {
-                                    jobSelector.Priority = JobPriority.Medium;
-                                    Profile = Profile?.WithJobPriority(jobSelector.Job.ID, JobPriority.Medium);
-                                }
+                                // Lower any other high priorities to medium.
+                                jobSelector.Priority = JobPriority.Medium;
+                                Profile = Profile?.WithJobPriority(jobSelector.Proto.ID, JobPriority.Medium);
                             }
                         }
                     };
@@ -1131,7 +1130,7 @@ namespace Content.Client.Preferences.UI
         {
             foreach (var prioritySelector in _jobPriorities)
             {
-                var jobId = prioritySelector.Job.ID;
+                var jobId = prioritySelector.Proto.ID;
 
                 var priority = Profile?.JobPriorities.GetValueOrDefault(jobId, JobPriority.Never) ?? JobPriority.Never;
 
@@ -1139,55 +1138,29 @@ namespace Content.Client.Preferences.UI
             }
         }
 
-        private sealed class JobPrioritySelector : Control
+        private abstract class RequirementsSelector<T> : Control
         {
-            public JobPrototype Job { get; }
-            private readonly RadioOptions<int> _optionButton;
+            public T Proto { get; }
+            public bool Disabled => _lockStripe.Visible;
 
-            public JobPriority Priority
-            {
-                get => (JobPriority) _optionButton.SelectedValue;
-                set => _optionButton.SelectByValue((int) value);
-            }
-
-            public event Action<JobPriority>? PriorityChanged;
-
+            protected readonly RadioOptions<int> Options;
             private StripeBack _lockStripe;
             private Label _requirementsLabel;
-            private Label _jobTitle;
 
-            public JobPrioritySelector(JobPrototype job, IPrototypeManager prototypeManager)
+            protected RequirementsSelector(T proto)
             {
-                Job = job;
+                Proto = proto;
 
-                _optionButton = new RadioOptions<int>(RadioOptionsLayout.Horizontal)
+                Options = new RadioOptions<int>(RadioOptionsLayout.Horizontal)
                 {
                     FirstButtonStyle = StyleBase.ButtonOpenRight,
                     ButtonStyle = StyleBase.ButtonOpenBoth,
                     LastButtonStyle = StyleBase.ButtonOpenLeft
                 };
                 //Override default radio option button width
-                _optionButton.GenerateItem = GenerateButton;
-                // Text, Value
-                _optionButton.AddItem(Loc.GetString("humanoid-profile-editor-job-priority-high-button"), (int) JobPriority.High);
-                _optionButton.AddItem(Loc.GetString("humanoid-profile-editor-job-priority-medium-button"), (int) JobPriority.Medium);
-                _optionButton.AddItem(Loc.GetString("humanoid-profile-editor-job-priority-low-button"), (int) JobPriority.Low);
-                _optionButton.AddItem(Loc.GetString("humanoid-profile-editor-job-priority-never-button"), (int) JobPriority.Never);
+                Options.GenerateItem = GenerateButton;
 
-                _optionButton.OnItemSelected += args =>
-                {
-                    _optionButton.Select(args.Id);
-                    PriorityChanged?.Invoke(Priority);
-                };
-
-                var icon = new TextureRect
-                {
-                    TextureScale = new Vector2(2, 2),
-                    Stretch = TextureRect.StretchMode.KeepCentered
-                };
-
-                var jobIcon = prototypeManager.Index<StatusIconPrototype>(job.Icon);
-                icon.Texture = jobIcon.Icon.Frame0();
+                Options.OnItemSelected += args => Options.Select(args.Id);
 
                 _requirementsLabel = new Label()
                 {
@@ -1208,30 +1181,40 @@ namespace Content.Client.Preferences.UI
                     }
                 };
 
-                _jobTitle = new Label()
-                {
-                    Margin = new Thickness(5f,0,5f,0),
-                    Text = job.LocalizedName,
-                    MinSize = new Vector2(200, 0),
-                    MouseFilter = MouseFilterMode.Stop
-                };
+                // Setup must be called after
+            }
 
-                if (job.LocalizedDescription != null)
+            /// <summary>
+            /// Actually adds the controls, must be called in the inheriting class' constructor.
+            /// </summary>
+            protected void Setup((string, int)[] items, string title, int titleSize, string? description, TextureRect? icon = null)
+            {
+                foreach (var (text, value) in items)
                 {
-                    _jobTitle.ToolTip = job.LocalizedDescription;
+                    Options.AddItem(Loc.GetString(text), value);
                 }
 
-                AddChild(new BoxContainer
+                var titleLabel = new Label()
+                {
+                    Margin = new Thickness(5f, 0, 5f, 0),
+                    Text = title,
+                    MinSize = new Vector2(titleSize, 0),
+                    MouseFilter = MouseFilterMode.Stop,
+                    ToolTip = description
+                };
+
+                var container = new BoxContainer
                 {
                     Orientation = LayoutOrientation.Horizontal,
-                    Children =
-                    {
-                        icon,
-                        _jobTitle,
-                        _optionButton,
-                        _lockStripe,
-                    }
-                });
+                };
+
+                if (icon != null)
+                    container.AddChild(icon);
+                container.AddChild(titleLabel);
+                container.AddChild(Options);
+                container.AddChild(_lockStripe);
+
+                AddChild(container);
             }
 
             public void LockRequirements(FormattedMessage requirements)
@@ -1240,25 +1223,58 @@ namespace Content.Client.Preferences.UI
                 tooltip.SetMessage(requirements);
                 _lockStripe.TooltipSupplier = _ => tooltip;
                 _lockStripe.Visible = true;
-                _optionButton.Visible = false;
+                Options.Visible = false;
             }
 
             // TODO: Subscribe to roletimers event. I am too lazy to do this RN But I doubt most people will notice fn
             public void UnlockRequirements()
             {
-                _requirementsLabel.Visible = false;
                 _lockStripe.Visible = false;
-                _optionButton.Visible = true;
+                Options.Visible = true;
             }
 
             private Button GenerateButton(string text, int value)
             {
-                var btn = new Button
+                return new Button
                 {
                     Text = text,
                     MinWidth = 90
                 };
-                return btn;
+            }
+        }
+
+        private sealed class JobPrioritySelector : RequirementsSelector<JobPrototype>
+        {
+            public JobPriority Priority
+            {
+                get => (JobPriority) Options.SelectedValue;
+                set => Options.SelectByValue((int) value);
+            }
+
+            public event Action<JobPriority>? PriorityChanged;
+
+            public JobPrioritySelector(JobPrototype proto, IPrototypeManager protoMan)
+                : base(proto)
+            {
+                Options.OnItemSelected += args => PriorityChanged?.Invoke(Priority);
+
+                var items = new[]
+                {
+                    ("humanoid-profile-editor-job-priority-high-button", (int) JobPriority.High),
+                    ("humanoid-profile-editor-job-priority-medium-button", (int) JobPriority.Medium),
+                    ("humanoid-profile-editor-job-priority-low-button", (int) JobPriority.Low),
+                    ("humanoid-profile-editor-job-priority-never-button", (int) JobPriority.Never),
+                };
+
+                var icon = new TextureRect
+                {
+                    TextureScale = new Vector2(2, 2),
+                    Stretch = TextureRect.StretchMode.KeepCentered
+                };
+                var jobIcon = protoMan.Index<StatusIconPrototype>(proto.Icon);
+                icon.Texture = jobIcon.Icon.Frame0();
+
+                Setup(items, proto.LocalizedName, 200, proto.LocalizedDescription, icon);
             }
         }
 
@@ -1266,9 +1282,8 @@ namespace Content.Client.Preferences.UI
         {
             foreach (var preferenceSelector in _antagPreferences)
             {
-                var antagId = preferenceSelector.Antag.ID;
+                var antagId = preferenceSelector.Proto.ID;
                 var preference = Profile?.AntagPreferences.Contains(antagId) ?? false;
-
                 preferenceSelector.Preference = preference;
             }
         }
@@ -1284,44 +1299,38 @@ namespace Content.Client.Preferences.UI
             }
         }
 
-        private sealed class AntagPreferenceSelector : Control
+        private sealed class AntagPreferenceSelector : RequirementsSelector<AntagPrototype>
         {
-            public AntagPrototype Antag { get; }
-            private readonly CheckBox _checkBox;
-
+            // 0 is yes and 1 is no
             public bool Preference
             {
-                get => _checkBox.Pressed;
-                set => _checkBox.Pressed = value;
+                get => Options.SelectedValue == 0;
+                set => Options.Select((value && !Disabled) ? 0 : 1);
             }
 
             public event Action<bool>? PreferenceChanged;
 
-            public AntagPreferenceSelector(AntagPrototype antag)
+            public AntagPreferenceSelector(AntagPrototype proto)
+                : base(proto)
             {
-                Antag = antag;
+                Options.OnItemSelected += args => PreferenceChanged?.Invoke(Preference);
 
-                _checkBox = new CheckBox {Text = Loc.GetString(antag.Name)};
-                _checkBox.OnToggled += OnCheckBoxToggled;
-
-                if (antag.Description != null)
+                var items = new[]
                 {
-                    _checkBox.ToolTip = Loc.GetString(antag.Description);
+                    ("humanoid-profile-editor-antag-preference-yes-button", 0),
+                    ("humanoid-profile-editor-antag-preference-no-button", 1)
+                };
+                var title = Loc.GetString(proto.Name);
+                var description = Loc.GetString(proto.Objective);
+                Setup(items, title, 250, description);
+
+                // immediately lock requirements if they arent met.
+                // another function checks Disabled after creating the selector so this has to be done now
+                var requirements = IoCManager.Resolve<JobRequirementsManager>();
+                if (proto.Requirements != null && !requirements.CheckRoleTime(proto.Requirements, out var reason))
+                {
+                    LockRequirements(reason);
                 }
-
-                AddChild(new BoxContainer
-                {
-                    Orientation = LayoutOrientation.Horizontal,
-                    Children =
-                    {
-                        _checkBox
-                    }
-                });
-            }
-
-            private void OnCheckBoxToggled(BaseButton.ButtonToggledEventArgs args)
-            {
-                PreferenceChanged?.Invoke(Preference);
             }
         }
 

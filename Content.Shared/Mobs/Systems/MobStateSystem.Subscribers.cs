@@ -1,6 +1,7 @@
 ﻿using Content.Shared.Bed.Sleep;
 using Content.Shared.Emoting;
 using Content.Shared.Hands;
+using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Item;
@@ -36,6 +37,7 @@ public partial class MobStateSystem
         SubscribeLocalEvent<MobStateComponent, UpdateCanMoveEvent>(CheckAct);
         SubscribeLocalEvent<MobStateComponent, StandAttemptEvent>(CheckAct);
         SubscribeLocalEvent<MobStateComponent, TryingToSleepEvent>(OnSleepAttempt);
+        SubscribeLocalEvent<MobStateComponent, CombatModeShouldHandInteractEvent>(OnCombatModeShouldHandInteract);
     }
 
     private void OnStateExitSubscribers(EntityUid target, MobStateComponent component, MobState state)
@@ -137,6 +139,14 @@ public partial class MobStateSystem
         // is this a self-equip, or are they being stripped?
         if (args.Unequipee == target)
             CheckAct(target, component, args);
+    }
+
+    private void OnCombatModeShouldHandInteract(EntityUid uid, MobStateComponent component, ref CombatModeShouldHandInteractEvent args)
+    {
+        // Disallow empty-hand-interacting in combat mode
+        // for non-dead mobs
+        if (!IsDead(uid, component))
+            args.Cancelled = true;
     }
 
     #endregion

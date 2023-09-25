@@ -1,0 +1,16 @@
+# threats called in by ninja hacking comms console
+- type: weightedRandom
+  id: NinjaThreats
+  weights:
+    Dragon: 1
+    Revenant: 1
+
+- type: threat
+  id: Dragon
+  announcement: terror-dragon
+  rule: Dragon
+
+- type: threat
+  id: Revenant
+  announcement: terror-revenant
+  rule: RevenantSpawn

@@ -26,6 +26,28 @@
           task: MeleeAttackTargetCompound
 
 - type: htnCompound
+  id: RatServantCombatCompound
+  branches:
+    - preconditions:
+        - !type:ActiveHandComponentPrecondition
+          components:
+            - type: MeleeWeapon
+              damage:
+                types:
+                  Brute: 0
+          invert: true
+      tasks:
+        - !type:HTNCompoundTask
+          task: PickupMeleeCompound
+
+    - tasks:
+        - !type:HTNPrimitiveTask
+          operator: !type:UtilityOperator
+            proto: OrderedTargets
+        - !type:HTNCompoundTask
+          task: MeleeAttackOrderedTargetCompound
+
+- type: htnCompound
   id: PickupMeleeCompound
   branches:
     - tasks:
@@ -78,4 +100,37 @@
             - !type:UtilityService
               id: MeleeService
               proto: NearbyMeleeTargets
+              key: Target
+
+- type: htnCompound
+  id: MeleeAttackOrderedTargetCompound
+  preconditions:
+    - !type:KeyExistsPrecondition
+      key: Target
+  branches:
+    - tasks:
+        - !type:HTNPrimitiveTask
+          operator: !type:MoveToOperator
+            shutdownState: PlanFinished
+            pathfindInPlanning: true
+            removeKeyOnFinish: false
+            targetKey: TargetCoordinates
+            pathfindKey: TargetPathfind
+            rangeKey: MeleeRange
+        - !type:HTNPrimitiveTask
+          operator: !type:JukeOperator
+            jukeType: Away
+        - !type:HTNPrimitiveTask
+          operator: !type:MeleeOperator
+            targetKey: Target
+          preconditions:
+            - !type:KeyExistsPrecondition
+              key: Target
+            - !type:TargetInRangePrecondition
+              targetKey: Target
+              rangeKey: MeleeRange
+          services:
+            - !type:UtilityService
+              id: MeleeService
+              proto: OrderedTargets
               key: Target

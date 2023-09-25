@@ -5,6 +5,9 @@ using Robust.Shared.Utility;
 namespace Content.Shared.Actions;
 
 // TODO this should be an IncludeDataFields of each action component type, not use inheritance
+
+// TODO add access attribute. Need to figure out what to do with decal & mapping actions.
+// [Access(typeof(SharedActionsSystem))]
 public abstract partial class BaseActionComponent : Component
 {
     public abstract BaseActionEvent? BaseEvent { get; }
@@ -46,11 +49,13 @@ public abstract partial class BaseActionComponent : Component
     ///     The toggle can set directly via <see cref="SharedActionsSystem.SetToggled"/>, but it will also be
     ///     automatically toggled for targeted-actions while selecting a target.
     /// </remarks>
+    [DataField]
     public bool Toggled;
 
     /// <summary>
     ///     The current cooldown on the action.
     /// </summary>
+    // TODO serialization
     public (TimeSpan Start, TimeSpan End)? Cooldown;
 
     /// <summary>
@@ -65,21 +70,34 @@ public abstract partial class BaseActionComponent : Component
     [DataField("charges")] public int? Charges;
 
     /// <summary>
-    ///     The entity that enables / provides this action. If the action is innate, this may be the user themselves. If
-    ///     this action has no provider (e.g., mapping tools), the this will result in broadcast events.
+    /// The entity that contains this action. If the action is innate, this may be the user themselves.
+    /// This should almost always be non-null.
     /// </summary>
-    public EntityUid? Provider;
+    [Access(typeof(ActionContainerSystem), typeof(SharedActionsSystem))]
+    [DataField]
+    public EntityUid? Container;
 
     /// <summary>
-    ///     Entity to use for the action icon. Defaults to using <see cref="Provider"/>.
+    ///     Entity to use for the action icon. If no entity is provided and the <see cref="Container"/> differs from
+    ///     <see cref="AttachedEntity"/>, then it will default to using <see cref="Container"/>
     /// </summary>
     public EntityUid? EntityIcon
     {
-        get => _entityIcon ?? Provider;
-        set => _entityIcon = value;
+        get
+        {
+            if (EntIcon != null)
+                return EntIcon;
+
+            if (AttachedEntity != Container)
+                return Container;
+
+            return null;
+        }
+        set => EntIcon = value;
     }
 
-    private EntityUid? _entityIcon;
+    [DataField]
+    public EntityUid? EntIcon;
 
     /// <summary>
     ///     Whether the action system should block this action if the user cannot currently interact. Some spells or
@@ -88,7 +106,7 @@ public abstract partial class BaseActionComponent : Component
     [DataField("checkCanInteract")] public bool CheckCanInteract = true;
 
     /// <summary>
-    ///     If true, will simply execute the action locally without sending to the server.
+    ///     If true, this will cause the action to only execute locally without ever notifying the server.
     /// </summary>
     [DataField("clientExclusive")] public bool ClientExclusive = false;
 
@@ -107,24 +125,10 @@ public abstract partial class BaseActionComponent : Component
     /// </summary>
     [DataField("autoPopulate")] public bool AutoPopulate = true;
 
-
     /// <summary>
-    ///     Whether or not to automatically remove this action to the action bar when it becomes unavailable.
+    ///     Temporary actions are deleted when they get removed a <see cref="ActionsComponent"/>.
     /// </summary>
-    [DataField("autoRemove")] public bool AutoRemove = true;
-
-    /// <summary>
-    ///     Temporary actions are removed from the action component when removed from the action-bar/GUI. Currently,
-    ///     should only be used for client-exclusive actions (server is not notified).
-    /// </summary>
-    /// <remarks>
-    ///     Currently there is no way for a player to just voluntarily remove actions. They can hide them from the
-    ///     toolbar, but not actually remove them. This is undesirable for things like dynamically added mapping
-    ///     entity-selection actions, as the # of actions would just keep increasing.
-    /// </remarks>
     [DataField("temporary")] public bool Temporary;
-    // TODO re-add support for this
-    // UI refactor seems to have just broken it.
 
     /// <summary>
     ///     Determines the appearance of the entity-icon for actions that are enabled via some entity.
@@ -149,20 +153,22 @@ public abstract class BaseActionComponentState : ComponentState
     public (TimeSpan Start, TimeSpan End)? Cooldown;
     public TimeSpan? UseDelay;
     public int? Charges;
-    public NetEntity? Provider;
+    public NetEntity? Container;
     public NetEntity? EntityIcon;
     public bool CheckCanInteract;
     public bool ClientExclusive;
     public int Priority;
     public NetEntity? AttachedEntity;
     public bool AutoPopulate;
-    public bool AutoRemove;
     public bool Temporary;
     public ItemActionIconStyle ItemIconStyle;
     public SoundSpecifier? Sound;
 
     protected BaseActionComponentState(BaseActionComponent component, IEntityManager entManager)
     {
+        Container = entManager.GetNetEntity(component.Container);
+        EntityIcon = entManager.GetNetEntity(component.EntIcon);
+        AttachedEntity = entManager.GetNetEntity(component.AttachedEntity);
         Icon = component.Icon;
         IconOn = component.IconOn;
         IconColor = component.IconColor;
@@ -172,20 +178,10 @@ public abstract class BaseActionComponentState : ComponentState
         Cooldown = component.Cooldown;
         UseDelay = component.UseDelay;
         Charges = component.Charges;
-
-        // TODO ACTION REFACTOR fix bugs
-        if (entManager.TryGetNetEntity(component.Provider, out var provider))
-            Provider = provider;
-        if (entManager.TryGetNetEntity(component.EntityIcon, out var icon))
-            EntityIcon = icon;
-        if (entManager.TryGetNetEntity(component.AttachedEntity, out var attached))
-            AttachedEntity = attached;
-
         CheckCanInteract = component.CheckCanInteract;
         ClientExclusive = component.ClientExclusive;
         Priority = component.Priority;
         AutoPopulate = component.AutoPopulate;
-        AutoRemove = component.AutoRemove;
         Temporary = component.Temporary;
         ItemIconStyle = component.ItemIconStyle;
         Sound = component.Sound;
