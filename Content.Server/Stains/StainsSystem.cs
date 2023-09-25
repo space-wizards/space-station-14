@@ -33,7 +33,7 @@ public sealed class StainsSystem : SharedStainsSystem
         {
             return false;
         }
-        return _solutionContainer.TryAddSolution(uid, addedSolution, targetSolution);
+        return _solutionContainer.TryAddSolution(uid, targetSolution, addedSolution);
     }
 
     public bool CanHaveStains(EntityUid uid, [NotNullWhen(true)] out Solution? solution, StainableComponent? component = null)
