@@ -1324,10 +1324,10 @@
   waterConsumption: 0.5
   chemicals:
     Nutriment:
-      Min: 2
-      Max: 5
+      Min: 1
+      Max: 3
       PotencyDivisor: 30
     Vitamin:
       Min: 1
-      Max: 4
+      Max: 2
       PotencyDivisor: 40

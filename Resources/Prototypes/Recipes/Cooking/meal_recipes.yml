@@ -1277,7 +1277,7 @@
     FoodButter: 2
     FoodSnackChocolateBar: 2
     FoodEgg: 3
-    
+
 #Donks i guess
 - type: microwaveMealRecipe
   id: RecipeWarmDonkpocket
@@ -1562,7 +1562,7 @@
   name: medicated suture recipe
   result: MedicatedSuture
   time: 10
-  solids: 
+  solids:
     FoodPoppy: 1
     Brutepack: 1
     MaterialCloth1: 1
@@ -1581,7 +1581,7 @@
     MaterialCloth1: 1
   reagents:
     Sigynate: 50
-    Dermaline: 50 
+    Dermaline: 50
 
 # Suppermatter
 - type: microwaveMealRecipe
@@ -1725,3 +1725,14 @@
     FoodCorn: 1
     FoodPlate: 1
     FoodButter: 1
+
+- type: microwaveMealRecipe
+  id: RecipePeaSoup
+  name: pea soup recipe
+  result: FoodSoupPea
+  time: 10
+  solids:
+    FoodPeaPod: 2
+    FoodBowlBig: 1
+  reagents:
+    Water: 10
