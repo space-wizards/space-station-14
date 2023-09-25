@@ -5,6 +5,7 @@ using Content.Shared.Hands;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Physics.Pull;
 using Content.Shared.Pulling.Components;
+using Content.Shared.Standing;
 using JetBrains.Annotations;
 
 namespace Content.Shared.Pulling.Systems
@@ -27,12 +28,26 @@ namespace Content.Shared.Pulling.Systems
             SubscribeLocalEvent<SharedPullerComponent, VirtualItemDeletedEvent>(OnVirtualItemDeleted);
             SubscribeLocalEvent<SharedPullerComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshMovespeed);
             SubscribeLocalEvent<SharedPullerComponent, ComponentShutdown>(OnPullerShutdown);
+            SubscribeLocalEvent<SharedPullerComponent, DownedEvent>(OnPullerDowned);
         }
 
         private void OnPullerShutdown(EntityUid uid, SharedPullerComponent component, ComponentShutdown args)
         {
             _why.ForceDisconnectPuller(component);
         }
+
+        //SS220-Animals-pull-fix begin
+        private void OnPullerDowned(EntityUid uid, SharedPullerComponent component, DownedEvent args)
+        {
+            if (component.Pulling == null)
+                return;
+
+            if (!TryComp<SharedPullableComponent>(component.Pulling, out var pullableComp))
+                return;
+
+            _pullSystem.TryStopPull(pullableComp);
+        }
+        //SS220-Animals-pull-fix end
 
         private void OnVirtualItemDeleted(EntityUid uid, SharedPullerComponent component, VirtualItemDeletedEvent args)
         {
