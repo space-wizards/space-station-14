@@ -31,28 +31,30 @@
 - type: latheRecipe
   id: WeaponLaserCarbine
   result: WeaponLaserCarbine
-  completetime: 8
+  completetime: 5
   materials:
-    Steel: 2000
-    Glass: 800
-    Plastic: 500
+    Steel: 1300
+    Plastic: 1000
+    Glass: 200
 
 - type: latheRecipe
   id: WeaponAdvancedLaser
   result: WeaponAdvancedLaser
   completetime: 5
   materials:
-    Steel: 1500
-    Glass: 1000
-    Gold: 850
+    Steel: 1100
+    Plastic: 800
+    Glass: 200
+    Gold: 500
 
 - type: latheRecipe
   id: WeaponLaserCannon
   result: WeaponLaserCannon
   completetime: 5
   materials:
-    Steel: 1250
-    Plastic: 750
+    Steel: 1500
+    Plastic: 1200
+    Glass: 200
     Gold: 500
 
 - type: latheRecipe

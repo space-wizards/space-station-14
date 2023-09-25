@@ -88,9 +88,9 @@
 - type: latheRecipe
   id: ModularReceiver
   result: ModularReceiver
-  completetime: 12
+  completetime: 3
   materials:
-    Steel: 750
+    Steel: 300
     Plastic: 100
 
 - type: latheRecipe
@@ -98,26 +98,25 @@
   result: ProtoKineticCharger
   completetime: 3
   materials:
-    Steel: 300
+    Steel: 200
     Glass: 200
-    Silver: 200
+    Silver: 100
 
 - type: latheRecipe
   id: RayCaster
   result: RayCaster
   completetime: 3
   materials:
-    Steel: 300
-    Glass: 300
-    Gold: 500
+    Steel: 200
+    Glass: 200
 
 - type: latheRecipe
   id: HeavyRayCaster
   result: HeavyRayCaster
   completetime: 3
   materials:
-    Steel: 300
-    Glass: 300
+    Steel: 200
+    Glass: 200
     Gold: 500
 
 - type: latheRecipe
@@ -125,8 +124,8 @@
   result: AdvancedRayCaster
   completetime: 3
   materials:
-    Steel: 300
-    Glass: 300
+    Steel: 200
+    Glass: 200
     Gold: 500
 
 - type: latheRecipe
@@ -134,15 +133,13 @@
   result: TetherPhysicsBox
   completetime: 3
   materials:
-    Steel: 100
     Glass: 400
-    Silver: 200
+    Silver: 100
 
 - type: latheRecipe
   id: ForcePhysicsBox
   result: ForcePhysicsBox
   completetime: 3
   materials:
-    Steel: 100
     Glass: 400
     Silver: 200

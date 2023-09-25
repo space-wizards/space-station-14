@@ -137,7 +137,7 @@
   result: WeaponForceGun
   completetime: 5
   materials:
-    Steel: 500
+    Steel: 1100
     Glass: 400
     Silver: 200
 
@@ -146,8 +146,8 @@
   result: WeaponProtoKineticAccelerator
   completetime: 5
   materials:
-    Steel: 1000
-    Glass: 500
+    Steel: 1500
+    Glass: 400
     Silver: 100
 
 - type: latheRecipe
@@ -155,7 +155,7 @@
   result: WeaponTetherGun
   completetime: 5
   materials:
-    Steel: 500
+    Steel: 1100
     Glass: 400
     Silver: 100
 
