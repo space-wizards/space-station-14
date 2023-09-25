@@ -86,18 +86,20 @@ public partial class SharedBodySystem
                     {
                         if (TryComp(organ, out OrganComponent? organComp))
                         {
+                            var oldBody = organComp.Body;
+                            organComp.Body = bodyUid;
+
                             if (bodyUid != null)
                             {
                                 var ev = new AddedToPartInBodyEvent(bodyUid.Value, children.Id);
                                 RaiseLocalEvent(organ, ev);
                             }
-                            else if (organComp.Body != null)
+                            else if (oldBody != null)
                             {
-                                var ev = new RemovedFromPartInBodyEvent(organComp.Body.Value, children.Id);
+                                var ev = new RemovedFromPartInBodyEvent(oldBody.Value, children.Id);
                                 RaiseLocalEvent(organ, ev);
                             }
 
-                            organComp.Body = bodyUid;
                             Dirty(organ, organComp);
                         }
                     }
