@@ -520,7 +520,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
                     $"{ToPrettyString(user.Value):user} threw {ToPrettyString(uid):entity} which splashed a solution {SolutionContainerSystem.ToPrettyString(solution):solution} onto {ToPrettyString(owner):target}");
             }
 
-            SpillSolutionToTarget(solution, uid, _random.NextFloat(0.05f, 0.30f));
+            SpillSolutionToTarget(solution, owner, _random.NextFloat(0.05f, 0.30f));
 
             targets.Add(owner);
         }
