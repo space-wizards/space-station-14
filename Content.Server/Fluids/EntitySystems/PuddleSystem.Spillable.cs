@@ -92,7 +92,7 @@ public sealed partial class PuddleSystem
                 continue;
             }
 
-            var spilledSolution = SpillSolutionOnTarget(solution, hit, (solution.Volume / (totalSplit * hitCount)).Float());
+            var spilledSolution = SpillSolutionOnTarget(solution, hit, (totalSplit / (solution.Volume * hitCount)).Float());
             _adminLogger.Add(LogType.MeleeHit, $"{ToPrettyString(args.User)} splashed {SolutionContainerSystem.ToPrettyString(spilledSolution):solution} from {ToPrettyString(uid):entity} onto {ToPrettyString(hit):target}");
 
             _popups.PopupEntity(
