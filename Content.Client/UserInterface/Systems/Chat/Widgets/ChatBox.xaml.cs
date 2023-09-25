@@ -22,7 +22,7 @@ public partial class ChatBox : UIWidget
 #pragma warning restore RA0003
 {
     private readonly ChatUIController _controller;
-    private readonly SharedAudioSystem _audio;
+    private readonly IEntityManager _entManager;
 
     public bool Main { get; set; }
 
@@ -31,7 +31,7 @@ public partial class ChatBox : UIWidget
     public ChatBox()
     {
         RobustXamlLoader.Load(this);
-        _audio = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<SharedAudioSystem>();
+        _entManager = IoCManager.Resolve<IEntityManager>();
 
         ChatInput.Input.OnTextEntered += OnTextEntered;
         ChatInput.Input.OnKeyBindDown += OnKeyBindDown;
@@ -58,7 +58,7 @@ public partial class ChatBox : UIWidget
         }
 
         if (msg is { Read: false, AudioPath: { } })
-            _audio.PlayGlobal(msg.AudioPath, Filter.Local(), false, AudioParams.Default.WithVolume(msg.AudioVolume));
+            _entManager.System<AudioSystem>().PlayGlobal(msg.AudioPath, Filter.Local(), false, AudioParams.Default.WithVolume(msg.AudioVolume));
 
         msg.Read = true;
 
