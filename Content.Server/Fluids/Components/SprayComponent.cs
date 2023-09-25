@@ -1,9 +1,7 @@
 using Content.Server.Fluids.EntitySystems;
 using Content.Shared.FixedPoint;
-using Content.Shared.Throwing;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Fluids.Components;
 
@@ -13,7 +11,7 @@ public sealed partial class SprayComponent : Component
 {
     public const string SolutionName = "spray";
 
-    [ViewVariables(VVAccess.ReadWrite), DataField,]
+    [ViewVariables(VVAccess.ReadWrite), DataField]
     public FixedPoint2 TransferAmount = 10;
 
     [ViewVariables(VVAccess.ReadWrite), DataField]
