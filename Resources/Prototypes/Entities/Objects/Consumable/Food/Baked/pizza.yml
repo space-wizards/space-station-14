@@ -113,6 +113,7 @@
   - type: Tag
     tags:
     - Meat
+    - Pizza
 
 - type: entity
   name: slice of meat pizza
@@ -132,6 +133,7 @@
   - type: Tag
     tags:
     - Meat
+    - Pizza
 # Tastes like crust, tomato, cheese, meat.
 
 - type: entity
@@ -258,6 +260,7 @@
   - type: Tag
     tags:
     - Meat
+    - Pizza
 
 
 - type: entity
@@ -286,6 +289,7 @@
   - type: Tag
     tags:
     - Meat
+    - Pizza
 # Tastes like crust, tomato, cheese, meat, laziness.
 
 - type: entity
@@ -365,6 +369,7 @@
   - type: Tag
     tags:
     - Meat
+    - Pizza
 
 - type: entity
   name: slice of sassysage pizza
@@ -384,6 +389,7 @@
   - type: Tag
     tags:
     - Meat
+    - Pizza
 # Tastes like crust, tomato, cheese, sausage, sass.
 
 - type: entity
@@ -424,6 +430,7 @@
   - type: Tag
     tags:
     - Meat
+    - Pizza
 # Tastes like crust, tomato, cheese, pineapple, ham.
 
 #TODO: This is a meme pizza from /tg/. It has specially coded mechanics.
@@ -461,6 +468,7 @@
   - type: Tag
     tags:
     - Meat
+    - Pizza
 
 - type: entity
   name: slice of Arnold's pizza
@@ -494,6 +502,7 @@
   - type: Tag
     tags:
     - Meat
+    - Pizza
 # Tastes like crust, tomato, cheese, pepperoni, 9 millimeter bullets.
 
 #TODO: Make this do poison damage and make cut pizza slices eventually rot into this.

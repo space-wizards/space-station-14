@@ -95,6 +95,7 @@
   - type: Tag
     tags:
     - Fruit
+    - Bread
 # Tastes like bread, banana, nut.
 
 - type: entity
@@ -243,6 +244,7 @@
   - type: Tag
     tags:
     - Meat
+    - Bread
 # Tastes like bread, meat.
 
 - type: entity
@@ -385,6 +387,7 @@
   - type: Tag
     tags:
     - Meat
+    - Bread
 
 - type: entity
   name: sausage bread slice
@@ -445,6 +448,7 @@
   - type: Tag
     tags:
     - Meat
+    - Bread
 # Tastes like bread, cobwebs.
 
 - type: entity
@@ -555,6 +559,7 @@
   - type: Tag
     tags:
     - Meat
+    - Bread
 # Tastes like bread, acid.
 
 - type: entity
