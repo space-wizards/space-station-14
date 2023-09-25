@@ -30,6 +30,12 @@ public sealed partial class EmbeddableProjectileComponent : Component
     public float? RemovalTime = 3f;
 
     /// <summary>
+    ///     Whether this entity will embed when thrown, or only when shot as a projectile.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField("embedOnThrow"), AutoNetworkedField]
+    public bool EmbedOnThrow = true;
+
+    /// <summary>
     /// How far into the entity should we offset (0 is wherever we collided).
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("offset"), AutoNetworkedField]
