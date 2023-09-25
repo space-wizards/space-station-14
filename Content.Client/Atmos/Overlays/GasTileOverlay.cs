@@ -47,7 +47,7 @@ namespace Content.Client.Atmos.Overlays
 
         public const int GasOverlayZIndex = (int) Shared.DrawDepth.DrawDepth.Effects; // Under ghosts, above mostly everything else
 
-        public GasTileOverlay(GasTileOverlaySystem system, IEntityManager entManager, IResourceCache resourceCache, IPrototypeManager protoMan, SpriteSystem spriteSys)
+        public GasTileOverlay(GasTileOverlaySystem system, IEntityManager entManager, IClientResourceCache resourceCache, IPrototypeManager protoMan, SpriteSystem spriteSys)
         {
             _entManager = entManager;
             _mapManager = IoCManager.Resolve<IMapManager>();

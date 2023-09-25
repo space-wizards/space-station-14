@@ -25,7 +25,7 @@ public sealed class ShowAccessReadersCommand : IConsoleCommand
         }
 
         var entManager = collection.Resolve<IEntityManager>();
-        var cache = collection.Resolve<IResourceCache>();
+        var cache = collection.Resolve<IClientResourceCache>();
         var lookup = entManager.System<EntityLookupSystem>();
         var xform = entManager.System<SharedTransformSystem>();
 

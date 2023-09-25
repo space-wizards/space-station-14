@@ -14,7 +14,6 @@ namespace Content.Client.Options.UI.Tabs
     public sealed partial class AudioTab : Control
     {
         [Dependency] private readonly IConfigurationManager _cfg = default!;
-        [Dependency] private readonly IClydeAudio _clydeAudio = default!;
 
         public AudioTab()
         {

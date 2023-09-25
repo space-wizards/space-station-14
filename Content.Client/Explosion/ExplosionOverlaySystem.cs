@@ -15,7 +15,7 @@ namespace Content.Client.Explosion;
 public sealed class ExplosionOverlaySystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _protoMan = default!;
-    [Dependency] private readonly IResourceCache _resCache = default!;
+    [Dependency] private readonly IClientResourceCache _resCache = default!;
     [Dependency] private readonly IOverlayManager _overlayMan = default!;
     [Dependency] private readonly SharedPointLightSystem _lights = default!;
 

@@ -12,7 +12,7 @@ namespace Content.Client.Atmos.EntitySystems
     [UsedImplicitly]
     public sealed class GasTileOverlaySystem : SharedGasTileOverlaySystem
     {
-        [Dependency] private readonly IResourceCache _resourceCache = default!;
+        [Dependency] private readonly IClientResourceCache _resourceCache = default!;
         [Dependency] private readonly IOverlayManager _overlayMan = default!;
         [Dependency] private readonly SpriteSystem _spriteSys = default!;
 

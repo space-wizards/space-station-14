@@ -9,7 +9,7 @@ namespace Content.Client.Replay.UI.Loading;
 [Virtual]
 public class LoadingScreen<TResult> : State
 {
-    [Dependency] private readonly IResourceCache _resourceCache = default!;
+    [Dependency] private readonly IClientResourceCache _resourceCache = default!;
     [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
 
     public event Action<TResult?, Exception?>? OnJobFinished;

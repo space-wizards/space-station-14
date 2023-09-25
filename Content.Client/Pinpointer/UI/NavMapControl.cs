@@ -57,7 +57,7 @@ public sealed class NavMapControl : MapGridControl
         IoCManager.InjectDependencies(this);
 
         _transform = _entManager.System<SharedTransformSystem>();
-        var cache = IoCManager.Resolve<IResourceCache>();
+        var cache = IoCManager.Resolve<IClientResourceCache>();
         _font = new VectorFont(cache.GetResource<FontResource>("/EngineFonts/NotoSans/NotoSans-Regular.ttf"), 16);
 
         RectClipContent = true;

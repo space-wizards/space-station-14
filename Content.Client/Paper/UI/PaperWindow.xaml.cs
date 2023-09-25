@@ -61,7 +61,7 @@ namespace Content.Client.Paper.UI
             // Randomize the placement of any stamps based on the entity UID
             // so that there's some variety in different papers.
             StampDisplay.PlacementSeed = (int)entity;
-            var resCache = IoCManager.Resolve<IResourceCache>();
+            var resCache = IoCManager.Resolve<IClientResourceCache>();
 
             // Initialize the background:
             PaperBackground.ModulateSelfOverride = visuals.BackgroundModulate;

@@ -14,7 +14,7 @@ namespace Content.MapRenderer.Painters;
 
 public sealed class EntityPainter
 {
-    private readonly IResourceCache _cResourceCache;
+    private readonly IClientResourceCache _cResourceCache;
 
     private readonly Dictionary<(string path, string state), Image> _images;
     private readonly Image _errorImage;
@@ -23,7 +23,7 @@ public sealed class EntityPainter
 
     public EntityPainter(ClientIntegrationInstance client, ServerIntegrationInstance server)
     {
-        _cResourceCache = client.ResolveDependency<IResourceCache>();
+        _cResourceCache = client.ResolveDependency<IClientResourceCache>();
 
         _sEntityManager = server.ResolveDependency<IEntityManager>();
 

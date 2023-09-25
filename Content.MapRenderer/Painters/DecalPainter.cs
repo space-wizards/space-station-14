@@ -16,7 +16,7 @@ namespace Content.MapRenderer.Painters;
 
 public sealed class DecalPainter
 {
-    private readonly IResourceCache _cResourceCache;
+    private readonly IClientResourceCache _cResourceCache;
 
     private readonly IPrototypeManager _sPrototypeManager;
 
@@ -24,7 +24,7 @@ public sealed class DecalPainter
 
     public DecalPainter(ClientIntegrationInstance client, ServerIntegrationInstance server)
     {
-        _cResourceCache = client.ResolveDependency<IResourceCache>();
+        _cResourceCache = client.ResolveDependency<IClientResourceCache>();
         _sPrototypeManager = server.ResolveDependency<IPrototypeManager>();
     }
 

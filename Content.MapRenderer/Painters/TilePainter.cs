@@ -19,12 +19,12 @@ namespace Content.MapRenderer.Painters
         public const int TileImageSize = EyeManager.PixelsPerMeter;
 
         private readonly ITileDefinitionManager _sTileDefinitionManager;
-        private readonly IResourceCache _cResourceCache;
+        private readonly IClientResourceCache _cResourceCache;
 
         public TilePainter(ClientIntegrationInstance client, ServerIntegrationInstance server)
         {
             _sTileDefinitionManager = server.ResolveDependency<ITileDefinitionManager>();
-            _cResourceCache = client.ResolveDependency<IResourceCache>();
+            _cResourceCache = client.ResolveDependency<IClientResourceCache>();
         }
 
         public void Run(Image gridCanvas, EntityUid gridUid, MapGridComponent grid)
@@ -61,7 +61,7 @@ namespace Content.MapRenderer.Painters
 
         private Dictionary<string, List<Image>> GetTileImages(
             ITileDefinitionManager tileDefinitionManager,
-            IResourceCache resourceCache,
+            IClientResourceCache resourceCache,
             int tileSize)
         {
             var stopwatch = new Stopwatch();

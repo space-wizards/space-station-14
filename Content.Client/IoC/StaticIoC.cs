@@ -5,6 +5,6 @@ namespace Content.Client.IoC
 {
     public static class StaticIoC
     {
-        public static IResourceCache ResC => IoCManager.Resolve<IResourceCache>();
+        public static IClientResourceCache ResC => IoCManager.Resolve<IClientResourceCache>();
     }
 }
