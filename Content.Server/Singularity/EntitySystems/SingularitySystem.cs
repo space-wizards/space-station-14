@@ -204,9 +204,9 @@ public sealed class SingularitySystem : SharedSingularitySystem
 
         MetaDataComponent? metaData = null;
         if (Resolve(uid, ref metaData) && metaData.EntityLifeStage <= EntityLifeStage.Initializing)
-            _audio.PlayEntity(comp.FormationSound, Filter.Pvs(comp.Owner), comp.Owner, true);
+            _audio.PlayPvs(comp.FormationSound, comp.Owner);
 
-        comp.AmbientSoundStream = _audio.PlayEntity(comp.AmbientSound, Filter.Pvs(comp.Owner), comp.Owner, true);
+        comp.AmbientSoundStream = _audio.PlayPvs(comp.AmbientSound, comp.Owner)?.Entity;
         UpdateSingularityLevel(uid, comp);
     }
 
@@ -219,7 +219,7 @@ public sealed class SingularitySystem : SharedSingularitySystem
     /// <param name="args">The event arguments.</param>
     public void OnDistortionStartup(EntityUid uid, SingularityDistortionComponent comp, ComponentStartup args)
     {
-        _pvs.AddGlobalOverride(uid);
+        _pvs.AddGlobalOverride(GetNetEntity(uid));
     }
 
     /// <summary>
@@ -232,11 +232,11 @@ public sealed class SingularitySystem : SharedSingularitySystem
     /// <param name="args">The event arguments.</param>
     public void OnSingularityShutdown(EntityUid uid, SingularityComponent comp, ComponentShutdown args)
     {
-        comp.AmbientSoundStream?.Stop();
+        comp.AmbientSoundStream = _audio.Stop(comp.AmbientSoundStream);
 
         MetaDataComponent? metaData = null;
         if (Resolve(uid, ref metaData) && metaData.EntityLifeStage >= EntityLifeStage.Terminating)
-            _audio.PlayEntity(comp.DissipationSound, Filter.Pvs(comp.Owner), comp.Owner, true);
+            _audio.PlayPvs(comp.DissipationSound, uid);
     }
 
     /// <summary>

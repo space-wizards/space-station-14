@@ -18,6 +18,7 @@ public sealed class FireExtinguisherSystem : EntitySystem
     [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
 
     public override void Initialize()
     {
@@ -86,7 +87,7 @@ public sealed class FireExtinguisherSystem : EntitySystem
             var drained = _solutionContainerSystem.Drain(target, targetSolution, transfer);
             _solutionContainerSystem.TryAddSolution(uid, container, drained);
 
-            SoundSystem.Play(component.RefillSound.GetSound(), Filter.Pvs(uid), uid);
+            _audio.PlayPvs(component.RefillSound, uid);
             _popupSystem.PopupEntity(Loc.GetString("fire-extinguisher-component-after-interact-refilled-message", ("owner", uid)),
                 uid, args.Target.Value);
         }
@@ -135,8 +136,7 @@ public sealed class FireExtinguisherSystem : EntitySystem
             return;
 
         extinguisher.Safety = !extinguisher.Safety;
-        SoundSystem.Play(extinguisher.SafetySound.GetSound(), Filter.Pvs(uid),
-            uid, AudioHelpers.WithVariation(0.125f).WithVolume(-4f));
+        _audio.PlayPvs(extinguisher.SafetySound, uid, AudioParams.Default.WithVariation(0.125f).WithVolume(-4f));
         UpdateAppearance(uid, extinguisher);
     }
 }

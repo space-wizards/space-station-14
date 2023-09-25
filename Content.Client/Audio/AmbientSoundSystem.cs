@@ -50,7 +50,7 @@ public sealed class AmbientSoundSystem : SharedAmbientSoundSystem
     /// </summary>
     private int MaxSingleSound => (int) (_maxAmbientCount / (16.0f / 6.0f));
 
-    private readonly Dictionary<AmbientSoundComponent, (IPlayingAudioStream? Stream, SoundSpecifier Sound, string Path)> _playingSounds = new();
+    private readonly Dictionary<AmbientSoundComponent, (EntityUid? Stream, SoundSpecifier Sound, string Path)> _playingSounds = new();
     private readonly Dictionary<string, int> _playingCount = new();
 
     public bool OverlayEnabled
@@ -103,7 +103,7 @@ public sealed class AmbientSoundSystem : SharedAmbientSoundSystem
         if (!_playingSounds.Remove(component, out var sound))
             return;
 
-        sound.Stream?.Stop();
+        _audio.Stop(sound.Stream);
         _playingCount[sound.Path] -= 1;
         if (_playingCount[sound.Path] == 0)
             _playingCount.Remove(sound.Path);
@@ -118,8 +118,8 @@ public sealed class AmbientSoundSystem : SharedAmbientSoundSystem
             if (values.Stream == null)
                 continue;
 
-            var stream = (PlayingStream) values.Stream;
-            stream.Volume = _params.Volume + comp.Volume + _ambienceVolume;
+            var stream = values.Stream;
+            _audio.SetVolume(stream, _params.Volume + comp.Volume + _ambienceVolume);
         }
     }
     private void SetCooldown(float value) => _cooldown = value;
@@ -179,7 +179,7 @@ public sealed class AmbientSoundSystem : SharedAmbientSoundSystem
     {
         foreach (var (stream, _, _) in _playingSounds.Values)
         {
-            stream?.Stop();
+            _audio.Stop(stream);
         }
 
         _playingSounds.Clear();
@@ -259,7 +259,7 @@ public sealed class AmbientSoundSystem : SharedAmbientSoundSystem
                     continue;
             }
 
-            sound.Stream?.Stop();
+            _audio.Stop(sound.Stream);
             _playingSounds.Remove(comp);
             _playingCount[sound.Path] -= 1;
             if (_playingCount[sound.Path] == 0)
@@ -300,10 +300,8 @@ public sealed class AmbientSoundSystem : SharedAmbientSoundSystem
                     .WithMaxDistance(comp.Range);
 
                 var stream = _audio.PlayPvs(comp.Sound, uid, audioParams);
-                if (stream == null)
-                    continue;
 
-                _playingSounds[comp] = (stream, comp.Sound, key);
+                _playingSounds[comp] = (stream.Value.Entity, comp.Sound, key);
                 playingCount++;
 
                 if (_playingSounds.Count >= _maxAmbientCount)

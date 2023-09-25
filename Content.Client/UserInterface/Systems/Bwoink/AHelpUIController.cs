@@ -29,6 +29,7 @@ public sealed class AHelpUIController: UIController, IOnSystemChanged<BwoinkSyst
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IClyde _clyde = default!;
     [Dependency] private readonly IUserInterfaceManager _uiManager = default!;
+    [UISystemDependency] private readonly SharedAudioSystem _audio = default!;
 
     private BwoinkSystem? _bwoinkSystem;
     private MenuButton? AhelpButton => UIManager.GetActiveUIWidgetOrNull<MenuBar.Widgets.GameTopMenuBar>()?.AHelpButton;
@@ -116,7 +117,7 @@ public sealed class AHelpUIController: UIController, IOnSystemChanged<BwoinkSyst
         }
         if (localPlayer.UserId != message.TrueSender)
         {
-            SoundSystem.Play("/Audio/Effects/adminhelp.ogg", Filter.Local());
+            _audio.PlayGlobal("/Audio/Effects/adminhelp.ogg", Filter.Local(), false);
             _clyde.RequestWindowAttention();
         }
 

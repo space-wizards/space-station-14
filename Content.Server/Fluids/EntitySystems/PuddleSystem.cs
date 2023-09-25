@@ -446,8 +446,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
             return true;
         }
 
-        SoundSystem.Play(puddleComponent.SpillSound.GetSound(),
-            Filter.Pvs(puddleUid), puddleUid);
+        _audio.PlayPvs(puddleComponent.SpillSound, puddleUid);
         return true;
     }
 

@@ -44,6 +44,7 @@ public sealed partial class ExplosionSystem : EntitySystem
     [Dependency] private readonly IChatManager _chat = default!;
     [Dependency] private readonly ThrowingSystem _throwingSystem = default!;
     [Dependency] private readonly PvsOverrideSystem _pvsSys = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
 
     /// <summary>
@@ -312,7 +313,7 @@ public sealed partial class ExplosionSystem : EntitySystem
         // play sound.
         var audioRange = iterationIntensity.Count * 5;
         var filter = Filter.Pvs(epicenter).AddInRange(epicenter, audioRange);
-        SoundSystem.Play(type.Sound.GetSound(), filter, mapEntityCoords, _audioParams);
+        _audio.PlayStatic(type.Sound.GetSound(), filter, mapEntityCoords, true, _audioParams);
 
         return new Explosion(this,
             type,

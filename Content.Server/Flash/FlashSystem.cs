@@ -156,7 +156,7 @@ namespace Content.Server.Flash
             }
             if (sound != null)
             {
-                SoundSystem.Play(sound.GetSound(), Filter.Pvs(transform), source);
+                _audio.PlayPvs(sound, source);
             }
         }
 

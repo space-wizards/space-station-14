@@ -125,7 +125,7 @@ public sealed partial class MaterialReclaimerComponent : Component
     [DataField("soundCooldown")]
     public TimeSpan SoundCooldown = TimeSpan.FromSeconds(0.8f);
 
-    public IPlayingAudioStream? Stream;
+    public EntityUid? Stream;
 
     /// <summary>
     /// A counter of how many items have been processed

@@ -25,5 +25,5 @@ public sealed partial class PartExchangerComponent : Component
     [DataField("exchangeSound")]
     public SoundSpecifier ExchangeSound = new SoundPathSpecifier("/Audio/Items/rped.ogg");
 
-    public IPlayingAudioStream? AudioStream;
+    public EntityUid? AudioStream;
 }

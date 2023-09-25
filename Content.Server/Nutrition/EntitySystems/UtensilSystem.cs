@@ -15,6 +15,7 @@ namespace Content.Server.Nutrition.EntitySystems
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
         [Dependency] private readonly FoodSystem _foodSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
+        [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
 
         public override void Initialize()
@@ -66,8 +67,8 @@ namespace Content.Server.Nutrition.EntitySystems
 
             if (_robustRandom.Prob(component.BreakChance))
             {
-                SoundSystem.Play(component.BreakSound.GetSound(), Filter.Pvs(userUid), userUid, AudioParams.Default.WithVolume(-2f));
-                EntityManager.DeleteEntity(component.Owner);
+                _audio.PlayPvs(component.BreakSound, userUid, AudioParams.Default.WithVolume(-2f));
+                EntityManager.DeleteEntity(uid);
             }
         }
     }

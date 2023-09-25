@@ -82,7 +82,8 @@ namespace Content.Server.Chemistry.ReactionEffects
             smokeComponent.SpreadAmount = spreadAmount;
             smoke.Start(ent, smokeComponent, splitSolution, _duration);
 
-            SoundSystem.Play(_sound.GetSound(), Filter.Pvs(args.SolutionEntity), args.SolutionEntity, AudioHelpers.WithVariation(0.125f));
+            var audio = args.EntityManager.System<SharedAudioSystem>();
+            audio.PlayPvs(_sound, args.SolutionEntity, AudioHelpers.WithVariation(0.125f));
         }
     }
 }

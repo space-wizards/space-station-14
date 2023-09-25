@@ -14,6 +14,7 @@ namespace Content.Server.Speech
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IPrototypeManager _protoManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
+        [Dependency] private readonly SharedAudioSystem _audio = default!;
 
         public override void Initialize()
         {
@@ -66,7 +67,7 @@ namespace Content.Server.Speech
             var pitchedAudioParams = component.AudioParams.WithPitchScale(scale);
 
             component.LastTimeSoundPlayed = currentTime;
-            SoundSystem.Play(contextSound, Filter.Pvs(uid, entityManager: EntityManager), uid, pitchedAudioParams);
+            _audio.PlayPvs(contextSound, uid, pitchedAudioParams);
         }
     }
 }

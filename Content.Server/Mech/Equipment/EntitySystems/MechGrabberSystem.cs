@@ -149,7 +149,7 @@ public sealed class MechGrabberSystem : EntitySystem
             return;
 
         args.Handled = true;
-        component.AudioStream = _audio.PlayPvs(component.GrabSound, uid);
+        component.AudioStream = _audio.PlayPvs(component.GrabSound, uid).Value.Entity;
         _doAfter.TryStartDoAfter(new DoAfterArgs(EntityManager, args.User, component.GrabDelay, new GrabberDoAfterEvent(), uid, target: target, used: uid)
         {
             BreakOnTargetMove = true,
@@ -161,7 +161,7 @@ public sealed class MechGrabberSystem : EntitySystem
     {
         if (args.Cancelled)
         {
-            component.AudioStream?.Stop();
+            component.AudioStream = _audio.Stop(component.AudioStream);
             return;
         }
 

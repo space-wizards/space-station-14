@@ -31,6 +31,7 @@ public sealed partial class AnomalySystem : SharedAnomalySystem
     [Dependency] private readonly SharedPointLightSystem _pointLight = default!;
     [Dependency] private readonly StationSystem _station = default!;
     [Dependency] private readonly RadioSystem _radio = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
 
     public const float MinParticleVariation = 0.8f;

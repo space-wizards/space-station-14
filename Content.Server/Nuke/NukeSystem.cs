@@ -496,7 +496,7 @@ public sealed class NukeSystem : EntitySystem
 
         // disable sound and reset it
         component.PlayedAlertSound = false;
-        component.AlertAudioStream?.Stop();
+        component.AlertAudioStream = _audio.Stop(component.AlertAudioStream);
 
         // turn off the spinny light
         _pointLight.SetEnabled(uid, false);

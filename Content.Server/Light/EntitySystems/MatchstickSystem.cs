@@ -15,6 +15,7 @@ namespace Content.Server.Light.EntitySystems
     {
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+        [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly SharedItemSystem _item = default!;
         [Dependency] private readonly SharedPointLightSystem _lights = default!;
         [Dependency] private readonly TransformSystem _transformSystem = default!;
@@ -76,13 +77,12 @@ namespace Content.Server.Light.EntitySystems
         public void Ignite(EntityUid uid, MatchstickComponent component, EntityUid user)
         {
             // Play Sound
-            SoundSystem.Play(component.IgniteSound.GetSound(), Filter.Pvs(component.Owner),
-                component.Owner, AudioHelpers.WithVariation(0.125f).WithVolume(-0.125f));
+            _audio.PlayPvs(component.IgniteSound, uid, AudioParams.Default.WithVariation(0.125f).WithVolume(-0.125f));
 
             // Change state
             SetState(uid, component, SmokableState.Lit);
             _litMatches.Add(component);
-            component.Owner.SpawnTimer(component.Duration * 1000, delegate
+            uid.SpawnTimer(component.Duration * 1000, delegate
             {
                 SetState(uid, component, SmokableState.Burnt);
                 _litMatches.Remove(component);

@@ -51,7 +51,7 @@ public sealed partial class BlockingSystem
 
             if (blocking.IsBlocking)
             {
-                _audio.PlayPvs(blocking.BlockSound, uid, AudioParams.Default.WithVariation(0.2f));
+                _audio.PlayPvs(blocking.BlockSound, uid);
             }
         }
     }

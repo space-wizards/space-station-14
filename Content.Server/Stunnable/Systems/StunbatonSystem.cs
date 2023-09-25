@@ -21,6 +21,7 @@ namespace Content.Server.Stunnable.Systems
         [Dependency] private readonly SharedItemSystem _item = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
         [Dependency] private readonly RiggableSystem _riggableSystem = default!;
+        [Dependency] private readonly SharedAudioSystem _audio = default!;
 
         public override void Initialize()
         {
@@ -43,7 +44,7 @@ namespace Content.Server.Stunnable.Systems
 
             if (battery.CurrentCharge < component.EnergyPerUse)
             {
-                SoundSystem.Play(component.SparksSound.GetSound(), Filter.Pvs(component.Owner, entityManager: EntityManager), uid, AudioHelpers.WithVariation(0.25f));
+                _audio.PlayPvs(component.SparksSound, uid, AudioParams.Default.WithVariation(0.25f));
                 TurnOff(uid, component);
             }
         }
@@ -76,30 +77,27 @@ namespace Content.Server.Stunnable.Systems
             if (!comp.Activated)
                 return;
 
-            if (TryComp<AppearanceComponent>(comp.Owner, out var appearance) &&
-                TryComp<ItemComponent>(comp.Owner, out var item))
+            if (TryComp<AppearanceComponent>(uid, out var appearance) &&
+                TryComp<ItemComponent>(uid, out var item))
             {
-                _item.SetHeldPrefix(comp.Owner, "off", item);
+                _item.SetHeldPrefix(uid, "off", item);
                 _appearance.SetData(uid, ToggleVisuals.Toggled, false, appearance);
             }
 
-            SoundSystem.Play(comp.SparksSound.GetSound(), Filter.Pvs(comp.Owner), comp.Owner, AudioHelpers.WithVariation(0.25f));
+            _audio.PlayPvs(comp.SparksSound, uid, AudioParams.Default.WithVariation(0.25f));
 
             comp.Activated = false;
-            Dirty(comp);
+            Dirty(uid, comp);
         }
 
         private void TurnOn(EntityUid uid, StunbatonComponent comp, EntityUid user)
         {
-
             if (comp.Activated)
                 return;
 
-            var playerFilter = Filter.Pvs(comp.Owner, entityManager: EntityManager);
-            if (!TryComp<BatteryComponent>(comp.Owner, out var battery) || battery.CurrentCharge < comp.EnergyPerUse)
+            if (!TryComp<BatteryComponent>(uid, out var battery) || battery.CurrentCharge < comp.EnergyPerUse)
             {
-
-                SoundSystem.Play(comp.TurnOnFailSound.GetSound(), playerFilter, comp.Owner, AudioHelpers.WithVariation(0.25f));
+                _audio.PlayPvs(comp.TurnOnFailSound, uid, AudioParams.Default.WithVariation(0.25f));
                 user.PopupMessage(Loc.GetString("stunbaton-component-low-charge"));
                 return;
             }
@@ -110,16 +108,16 @@ namespace Content.Server.Stunnable.Systems
             }
 
 
-            if (EntityManager.TryGetComponent<AppearanceComponent>(comp.Owner, out var appearance) &&
-                EntityManager.TryGetComponent<ItemComponent>(comp.Owner, out var item))
+            if (EntityManager.TryGetComponent<AppearanceComponent>(uid, out var appearance) &&
+                EntityManager.TryGetComponent<ItemComponent>(uid, out var item))
             {
-                _item.SetHeldPrefix(comp.Owner, "on", item);
+                _item.SetHeldPrefix(uid, "on", item);
                 _appearance.SetData(uid, ToggleVisuals.Toggled, true, appearance);
             }
 
-            SoundSystem.Play(comp.SparksSound.GetSound(), playerFilter, comp.Owner, AudioHelpers.WithVariation(0.25f));
+            _audio.PlayPvs(comp.SparksSound, uid, AudioParams.Default.WithVariation(0.25f));
             comp.Activated = true;
-            Dirty(comp);
+            Dirty(uid, comp);
         }
 
         // https://github.com/space-wizards/space-station-14/pull/17288#discussion_r1241213341

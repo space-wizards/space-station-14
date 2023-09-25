@@ -103,7 +103,7 @@ namespace Content.Shared.Standing
 
             if (playSound)
             {
-                _audio.PlayPredicted(standingState.DownSound, uid, uid, AudioParams.Default.WithVariation(0.25f));
+                _audio.PlayPredicted(standingState.DownSound, uid, uid);
             }
 
             return true;

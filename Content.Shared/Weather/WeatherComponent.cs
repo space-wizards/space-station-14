@@ -24,7 +24,7 @@ public sealed partial class WeatherData
 {
     // Client audio stream.
     [NonSerialized]
-    public IPlayingAudioStream? Stream;
+    public EntityUid? Stream;
 
     /// <summary>
     /// When the weather started if relevant.

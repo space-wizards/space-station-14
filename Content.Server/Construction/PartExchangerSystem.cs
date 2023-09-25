@@ -34,7 +34,7 @@ public sealed class PartExchangerSystem : EntitySystem
     {
         if (args.Cancelled)
         {
-            component.AudioStream?.Stop();
+            component.AudioStream = _audio.Stop(component.AudioStream);
             return;
         }
 
@@ -168,7 +168,7 @@ public sealed class PartExchangerSystem : EntitySystem
             return;
         }
 
-        component.AudioStream = _audio.PlayPvs(component.ExchangeSound, uid);
+        component.AudioStream = _audio.PlayPvs(component.ExchangeSound, uid).Value.Entity;
 
         _doAfter.TryStartDoAfter(new DoAfterArgs(EntityManager, args.User, component.ExchangeDuration, new ExchangerDoAfterEvent(), uid, target: args.Target, used: uid)
         {

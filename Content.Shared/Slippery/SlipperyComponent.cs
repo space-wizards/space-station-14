@@ -42,9 +42,9 @@ namespace Content.Shared.Slippery
     [Serializable, NetSerializable]
     public sealed class SlipperyComponentState : ComponentState
     {
-        public float ParalyzeTime { get; }
-        public float LaunchForwardsMultiplier { get; }
-        public string SlipSound { get; }
+        public float ParalyzeTime;
+        public float LaunchForwardsMultiplier;
+        public string SlipSound;
 
         public SlipperyComponentState(float paralyzeTime, float launchForwardsMultiplier, string slipSound)
         {

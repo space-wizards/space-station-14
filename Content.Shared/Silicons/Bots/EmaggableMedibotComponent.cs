@@ -33,6 +33,8 @@ public sealed partial class EmaggableMedibotComponent : Component
     /// <summary>
     /// Sound to play when the bot has been emagged
     /// </summary>
-    [DataField("sparkSound")]
-    public SoundSpecifier SparkSound = new SoundCollectionSpecifier("sparks");
+    [DataField("sparkSound")] public SoundSpecifier SparkSound = new SoundCollectionSpecifier("sparks")
+    {
+        Params = AudioParams.Default.WithVolume(8f),
+    };
 }

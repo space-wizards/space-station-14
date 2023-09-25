@@ -51,5 +51,5 @@ public sealed partial class FTLComponent : Component
         Params = AudioParams.Default.WithVolume(-3f).WithLoop(true)
     };
 
-    public IPlayingAudioStream? TravelStream;
+    public EntityUid? TravelStream;
 }
