@@ -1,11 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Anomaly generators now always generate anomalies on the station., type: Fix}
-  - {message: Anomalies should now generate further away from the edges of the station.,
-    type: Fix}
-  id: 4395
-  time: '2023-08-01T04:12:56.0000000+00:00'
 - author: Flareguy
   changes:
   - {message: Resprited steel floor tiles. Looks like the janitor hasn't been doing
@@ -2982,3 +2975,9 @@ Entries:
       by reaction to occur.', type: Add}
   id: 4894
   time: '2023-09-24T21:33:25.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Fire extinguishers now use less fluid per burst and launch the user
+      farther in low-gravity., type: Tweak}
+  id: 4895
+  time: '2023-09-25T01:33:29.0000000+00:00'
