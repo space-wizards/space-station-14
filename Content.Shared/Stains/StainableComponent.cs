@@ -3,6 +3,10 @@ using Robust.Shared.GameStates;
 
 namespace Content.Shared.Stains;
 
+/// <summary>
+/// Entities with this component can have stains that appear when solution is spilled on it
+/// Uses solution to store the stains
+/// </summary>
 [RegisterComponent, NetworkedComponent]
 [AutoGenerateComponentState(raiseAfterAutoHandleState: true)]
 public partial class StainableComponent : Component
@@ -10,6 +14,9 @@ public partial class StainableComponent : Component
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public string Solution = "stains";
 
+    /// <summary>
+    /// Updated when solution changes to tint sprites
+    /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     [AutoNetworkedField]
     public Color StainColor = Color.White;
