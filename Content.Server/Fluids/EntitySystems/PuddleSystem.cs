@@ -30,6 +30,7 @@ using Content.Shared.Movement.Systems;
 using Content.Shared.Maps;
 using Content.Shared.Effects;
 using Content.Server.Stains;
+using Content.Shared.Inventory;
 
 namespace Content.Server.Fluids.EntitySystems;
 
@@ -56,6 +57,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
     [Dependency] private readonly SlowContactsSystem _slowContacts = default!;
     [Dependency] private readonly TileFrictionController _tile = default!;
     [Dependency] private readonly StainsSystem _stains = default!;
+    [Dependency] private readonly InventorySystem _inventory = default!;
 
     [ValidatePrototypeId<ReagentPrototype>]
     private const string Blood = "Blood";
@@ -227,6 +229,17 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
             args.Slipped, args.Slipped, PopupType.SmallCaution);
 
         SpillSolutionOnTarget(solution, args.Slipped, 0.15f);
+        if (_inventory.TryGetContainerSlotEnumerator(args.Slipped, out var containerSlotEnumerator))
+        {
+            while (containerSlotEnumerator.MoveNext(out var container))
+            {
+                var equipped = container.ContainedEntity;
+                if (equipped != null && HasComp<ReactiveComponent>(equipped))
+                {
+                    SpillSolutionOnTarget(solution, equipped.Value, 0.05f); // Clothing and etc.
+                }
+            }
+        }
     }
 
     /// <inheritdoc/>
