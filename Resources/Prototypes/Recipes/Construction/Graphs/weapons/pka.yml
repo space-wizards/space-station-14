@@ -7,8 +7,8 @@
     - to: wiringMissing
       steps:
       - material: Steel
-        amount: 5
-        doAfter: 2
+        amount: 6
+        doAfter: 4
 
   - node: wiringMissing
     entity: ProtoKineticAcceleratorFrame
@@ -18,14 +18,14 @@
     - to: platingUnwelded
       steps:
       - material: Cable
-        amount: 2
+        amount: 3
         doAfter: 0.5
 
     - to: start
       completed:
       - !type:SpawnPrototype
         prototype: SheetSteel1
-        amount: 5
+        amount: 6
       - !type:DeleteEntity {}
       steps:
       - tool: Welding
@@ -44,7 +44,7 @@
       completed:
       - !type:SpawnPrototype
         prototype: CableApcStack1
-        amount: 2
+        amount: 3
       steps:
       - tool: Cutting
         doAfter: 1
@@ -56,7 +56,7 @@
     - to: lightUnscrewed
       steps:
       - material: Glass
-        amount: 2
+        amount: 1
         doAfter: 0.5
 
     - to: platingUnwelded
@@ -77,7 +77,7 @@
       completed:
       - !type:SpawnPrototype
         prototype: SheetGlass1
-        amount: 2
+        amount: 1
       steps:
       - tool: Cutting
 

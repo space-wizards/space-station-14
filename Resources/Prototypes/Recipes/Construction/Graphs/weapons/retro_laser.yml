@@ -8,7 +8,7 @@
       steps:
       - material: Steel
         amount: 3
-        doAfter: 2
+        doAfter: 5
 
   - node: wiresMissing
     entity: LaserGunFrame
@@ -18,7 +18,7 @@
     - to: casterMissing
       steps:
       - material: Cable
-        amount: 2
+        amount: 3
         doAfter: 1
 
     - to: start
@@ -45,7 +45,7 @@
       completed:
       - !type:SpawnPrototype
         prototype: CableApcStack1
-        amount: 2
+        amount: 3
       steps:
       - tool: Cutting
         doAfter: 1

@@ -8,7 +8,7 @@
       steps:
       - material: Steel
         amount: 4
-        doAfter: 2
+        doAfter: 5
 
   - node: wiresMissing
     entity: AdvancedLaserFrame
@@ -74,9 +74,9 @@
     edges:
     - to: advancedLaserPistol
       steps:
-      - material: Plasteel
-        amount: 3
-        doAfter: 1
+      - material: Plastic
+        amount: 4
+        doAfter: 2
     - to: casterUnsecured
       steps:
       - tool: Screwing
@@ -88,8 +88,8 @@
     - to: caseMissing
       completed:
       - !type:SpawnPrototype
-        prototype: SheetPlasteel
-        amount: 3
+        prototype: SheetPlastic
+        amount: 4
       steps:
       - tool: Screwing
         doAfter: 1

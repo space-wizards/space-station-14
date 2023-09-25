@@ -8,7 +8,7 @@
       steps:
       - material: Steel
         amount: 3
-        doAfter: 2
+        doAfter: 5
 
   - node: wiresMissing
     entity: AntiqueLaserFrame
@@ -18,7 +18,7 @@
     - to: casterMissing
       steps:
       - material: Cable
-        amount: 2
+        amount: 3
         doAfter: 1
 
     - to: start
@@ -45,7 +45,7 @@
       completed:
       - !type:SpawnPrototype
         prototype: CableApcStack1
-        amount: 2
+        amount: 3
       steps:
       - tool: Cutting
         doAfter: 1
@@ -74,9 +74,9 @@
     edges:
     - to: antiqueLaserPistol
       steps:
-      - material: Plasteel
-        amount: 2
-        doAfter: 1
+      - material: Plastic
+        amount: 3
+        doAfter: 2
     - to: casterUnsecured
       steps:
       - tool: Screwing
@@ -88,8 +88,8 @@
     - to: caseMissing
       completed:
       - !type:SpawnPrototype
-        prototype: SheetPlasteel
-        amount: 2
+        prototype: SheetPlastic
+        amount: 3
       steps:
       - tool: Screwing
         doAfter: 1

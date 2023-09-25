@@ -7,8 +7,8 @@
     - to: wiresMissing
       steps:
       - material: Steel
-        amount: 5
-        doAfter: 2
+        amount: 3
+        doAfter: 4
 
   - node: wiresMissing
     entity: PhysicsGunFrame
@@ -18,13 +18,13 @@
     - to: caseMissing
       steps:
       - material: Cable
-        amount: 4
+        amount: 3
         doAfter: 1
     - to: start
       completed:
       - !type:SpawnPrototype
         prototype: SheetSteel1
-        amount: 5
+        amount: 3
       - !type:DeleteEntity {}
       steps:
       - tool: Welding
@@ -36,14 +36,14 @@
     edges:
     - to: boxMissing
       steps:
-      - material: Plasteel
-        amount: 4
-        doAfter: 1
+      - material: Steel
+        amount: 2
+        doAfter: 2
     - to: wiresMissing
       completed:
       - !type:SpawnPrototype
         prototype: CableApcStack1
-        amount: 4
+        amount: 3
       steps:
       - tool: Cutting
         doAfter: 1
@@ -65,8 +65,8 @@
     - to: caseMissing
       completed:
       - !type:SpawnPrototype
-        prototype: SheetPlasteel
-        amount: 4
+        prototype: SheetSteel1
+        amount: 2
       steps:
       - tool: Screwing
         doAfter: 1

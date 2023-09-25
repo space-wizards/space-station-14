@@ -8,7 +8,7 @@
       steps:
       - material: Steel
         amount: 3
-        doAfter: 2
+        doAfter: 4
 
   - node: casterMissing
     entity: MakeshiftLaserFrame

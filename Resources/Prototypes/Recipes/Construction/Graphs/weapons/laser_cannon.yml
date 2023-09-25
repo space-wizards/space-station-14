@@ -8,7 +8,7 @@
       steps:
       - material: Steel
         amount: 6
-        doAfter: 2
+        doAfter: 5
 
   - node: wiresMissing
     entity: LaserCannonFrame
@@ -18,7 +18,7 @@
     - to: casterMissing
       steps:
       - material: Cable
-        amount: 4
+        amount: 3
         doAfter: 1
 
     - to: start
@@ -29,7 +29,7 @@
       - !type:DeleteEntity {}
       steps:
       - tool: Welding
-        doAfter: 2
+        doAfter: 3
 
   - node: casterMissing
     actions:
@@ -45,7 +45,7 @@
       completed:
       - !type:SpawnPrototype
         prototype: CableApcStack1
-        amount: 4
+        amount: 3
       steps:
       - tool: Cutting
         doAfter: 1
@@ -74,9 +74,9 @@
     edges:
     - to: laserCannon
       steps:
-      - material: Plasteel
-        amount: 5
-        doAfter: 1
+      - material: Plastic
+        amount: 6
+        doAfter: 2
     - to: casterUnsecured
       steps:
       - tool: Screwing
@@ -88,8 +88,8 @@
     - to: caseMissing
       completed:
       - !type:SpawnPrototype
-        prototype: SheetPlasteel
-        amount: 5
+        prototype: SheetPlastic
+        amount: 6
       steps:
       - tool: Screwing
         doAfter: 1
