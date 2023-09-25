@@ -20,7 +20,6 @@
       - id: RagItem
         amount: 2
       - id: RussianRevolver
-        prob: 0.985
 
 #- type: entity
 #  id: LockerFormalFilled
