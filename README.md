@@ -1,4 +1,4 @@
-<p align="center"> <img alt="Space Station 14" width="350" height="350" src="https://raw.githubusercontent.com/TheArturZh/space-station-14/newreadme/logo.png" /></p>
+<p align="center"> <img alt="Space Station 14" width="350" height="350" src="https://raw.githubusercontent.com/SerbiaStrong-220/space-station-14/master/logo.png" /></p>
 
 <p align="center">
 <img alt="forthebadge | It works. Why?" src="https://raw.githubusercontent.com/BraveUX/for-the-badge/master/src/images/badges/it-works-why.svg" />
