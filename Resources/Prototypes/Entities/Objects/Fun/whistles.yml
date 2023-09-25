@@ -16,7 +16,7 @@
     sound: 
       collection: BaseWhistle
   - type: Whistle
-    distance: 4
+    distance: 5
 
 - type: entity
   parent: BaseWhistle
