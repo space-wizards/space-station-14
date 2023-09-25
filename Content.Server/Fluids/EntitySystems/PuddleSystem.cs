@@ -226,7 +226,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
         _popups.PopupEntity(Loc.GetString("puddle-component-slipped-touch-reaction", ("puddle", uid)),
             args.Slipped, args.Slipped, PopupType.SmallCaution);
 
-        SpillSolutionToTarget(solution, args.Slipped, 0.15f);
+        SpillSolutionOnTarget(solution, args.Slipped, 0.15f);
     }
 
     /// <inheritdoc/>
@@ -520,7 +520,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
                     $"{ToPrettyString(user.Value):user} threw {ToPrettyString(uid):entity} which splashed a solution {SolutionContainerSystem.ToPrettyString(solution):solution} onto {ToPrettyString(owner):target}");
             }
 
-            SpillSolutionToTarget(solution, owner, _random.NextFloat(0.05f, 0.30f));
+            SpillSolutionOnTarget(solution, owner, _random.NextFloat(0.05f, 0.30f));
 
             targets.Add(owner);
         }
@@ -530,7 +530,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
         return TrySpillAt(coordinates, solution, out puddleUid, sound);
     }
 
-    private Solution SpillSolutionToTarget(Solution solution, EntityUid target, float fraction)
+    private Solution SpillSolutionOnTarget(Solution solution, EntityUid target, float fraction)
     {
         var splitAmount = solution.Volume * fraction;
         if (_stains.CanHaveStains(target, out var targetSolution))
