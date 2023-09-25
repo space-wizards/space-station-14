@@ -107,6 +107,7 @@ flavor-complex-berry = like berries
 flavor-complex-meatballs = like meatballs
 flavor-complex-nettles = like nettles
 flavor-complex-jungle = like jungle
+flavor-complex-pea = like sweet peas
 flavor-complex-vegetables = like vegetables
 # use it when there multiple types of veggies
 

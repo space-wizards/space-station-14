@@ -457,7 +457,7 @@
       seedId: watermelon
     - type: Sprite
       sprite: Objects/Specific/Hydroponics/watermelon.rsi
-      
+
 - type: entity
   parent: SeedBase
   name: packet of grape seeds
@@ -498,3 +498,14 @@
       seedId: bungo
     - type: Sprite
       sprite: Objects/Specific/Hydroponics/bungo.rsi
+
+- type: entity
+  parent: SeedBase
+  name: packet of pea pods
+  description: "These humble plants were once a vital part in the study of genetics."
+  id: PeaSeeds
+  components:
+    - type: Seed
+      seedId: pea
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/pea.rsi

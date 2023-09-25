@@ -184,7 +184,7 @@
   - type: Produce
     seedId: deathNettle
   - type: MeleeChemicalInjector
-    transferAmount: 6 
+    transferAmount: 6
     solution: food
     pierceArmor: true # We do a little trolling
   - type: Extractable
@@ -311,7 +311,7 @@
     state: peel
   - type: Item
     sprite: Objects/Specific/Hydroponics/mimana.rsi
-    heldPrefix: peel  
+    heldPrefix: peel
   - type: Slippery
     slipSound:
       path: /Audio/Effects/slip.ogg
@@ -1532,3 +1532,26 @@
     seedId: bungo
   - type: SpaceGarbage
   - type: BadFood
+
+- type: entity
+  name: pea pod
+  parent: FoodProduceBase
+  id: FoodPeaPod
+  description: A duck's favorite treat!
+  components:
+  - type: FlavorProfile
+    flavors:
+      - pea
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 11
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
+        - ReagentId: Vitamin
+          Quantity: 4
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/pea.rsi
+  - type: Produce
+    seedId: pea

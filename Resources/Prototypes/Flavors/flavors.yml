@@ -838,3 +838,8 @@
   id: spaceshroomcooked
   flavorType: Complex
   description: flavor-complex-spaceshroom-cooked
+
+- type: flavor
+  id: pea
+  flavorType: Complex
+  description: flavor-complex-pea
