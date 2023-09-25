@@ -4,7 +4,7 @@
     sprite: Objects/Materials/Sheets/glass.rsi
     state: glass_3
   product: CrateMaterialGlass
-  cost: 1000
+  cost: 6000
   category: Materials
   group: market
 
@@ -14,7 +14,7 @@
     sprite: Objects/Materials/Sheets/metal.rsi
     state: steel_3
   product: CrateMaterialSteel
-  cost: 1000
+  cost: 6000
   category: Materials
   group: market
 
@@ -29,32 +29,12 @@
   group: market
 
 - type: cargoProduct
-  id: MaterialPlasteel
-  icon:
-    sprite: Objects/Materials/Sheets/metal.rsi
-    state: plasteel_3
-  product: CrateMaterialPlasteel
-  cost: 3000
-  category: Materials
-  group: market
-
-- type: cargoProduct
   id: MaterialTextiles
   icon:
     sprite: Objects/Materials/materials.rsi
     state: cloth_3
   product: CrateMaterialTextiles
   cost: 1000
-  category: Materials
-  group: market
-
-- type: cargoProduct
-  id: MaterialPlasma
-  icon:
-    sprite: Objects/Materials/Sheets/other.rsi
-    state: plasma # Corvax-Resprite
-  product: CrateMaterialPlasma
-  cost: 2000
   category: Materials
   group: market
 
@@ -77,7 +57,7 @@
   cost: 1500
   category: Materials
   group: market
-  
+
 - type: cargoProduct
   id: MaterialWaterTank
   icon:

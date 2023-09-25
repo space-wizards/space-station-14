@@ -40,7 +40,7 @@
   name: materials-plasma
   icon: { sprite: Objects/Materials/Sheets/other.rsi, state: plasma }
   color: "#7e009e"
-  price: 0.2
+  price: 0.5
 
 - type: material
   id: Plastic
@@ -65,7 +65,7 @@
   name: materials-uranium
   icon: { sprite: Objects/Materials/Sheets/other.rsi, state: uranium }
   color: "#32a852"
-  price: 0.2
+  price: 0.4
 
 - type: material
   id: Bananium
@@ -74,7 +74,7 @@
   unit: materials-unit-bunch
   icon: { sprite: Objects/Materials/materials.rsi, state: bananium }
   color: "#32a852"
-  price: 0.2
+  price: 0.4
 
 - type: material
   id: Meaterial # you can't take this pun from me

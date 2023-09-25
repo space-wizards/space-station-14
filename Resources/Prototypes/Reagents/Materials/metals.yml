@@ -12,7 +12,7 @@
   unit: materials-unit-bar
   icon: { sprite: Objects/Materials/ingots.rsi, state: gold }
   color: "#FFD700"
-  price: 0.2
+  price: 0.4
 
 - type: material
   id: Silver
@@ -21,7 +21,7 @@
   unit: materials-unit-bar
   icon: { sprite: Objects/Materials/ingots.rsi, state: silver }
   color: "#C0C0C0"
-  price: 0.15
+  price: 0.3
 
 - type: material
   id: Plasteel

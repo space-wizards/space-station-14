@@ -758,7 +758,7 @@
     - type: MachineBoard
       prototype: OreProcessor
       requirements:
-        MatterBin: 1
+        MatterBin: 3
         Manipulator: 3
       materialRequirements:
         Glass: 1

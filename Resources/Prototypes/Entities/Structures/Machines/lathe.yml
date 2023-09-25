@@ -835,8 +835,10 @@
       idleState: icon
       runningState: building
       canEjectStoredMaterials: false
+      partRatingMaterialUseMultiplier: 0.5
       staticRecipes:
         - SheetSteel30
+        - SheetPlasteel10
         - SheetGlass30
         - SheetRGlass30
         - SheetPlasma30
