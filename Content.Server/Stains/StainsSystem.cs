@@ -1,8 +1,8 @@
+using System.Diagnostics.CodeAnalysis;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.DoAfter;
 using Content.Server.Fluids.EntitySystems;
-using Content.Shared.Chemistry.Reaction;
-using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Chemistry.Components;
 using Content.Shared.DoAfter;
 using Content.Shared.Stains;
 using Content.Shared.Verbs;
@@ -22,23 +22,28 @@ public sealed class StainsSystem : SharedStainsSystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<StainableComponent, TransferReagentEvent>(OnTransferReagent);
         SubscribeLocalEvent<StainableComponent, SolutionChangedEvent>(OnSolutionChanged);
         SubscribeLocalEvent<StainableComponent, GetVerbsEvent<AlternativeVerb>>(AddSqueezeVerb);
         SubscribeLocalEvent<StainableComponent, SqueezeDoAfterEvent>(OnSqueezeDoAfter);
     }
 
-    private void OnTransferReagent(EntityUid uid, StainableComponent component, ref TransferReagentEvent @event)
+    public bool TryAddSolution(EntityUid uid, Solution addedSolution, Solution? targetSolution = null, StainableComponent? component = null)
     {
-        if (@event.Method != ReactionMethod.Touch)
+        if (!Resolve(uid, ref component) || !CanHaveStains(uid, out targetSolution, component))
         {
-            return;
+            return false;
         }
-        if (!_solutionContainer.TryGetSolution(uid, component.Solution, out var solution))
+        return _solutionContainer.TryAddSolution(uid, addedSolution, targetSolution);
+    }
+
+    public bool CanHaveStains(EntityUid uid, [NotNullWhen(true)] out Solution? solution, StainableComponent? component = null)
+    {
+        if (!Resolve(uid, ref component))
         {
-            return;
+            solution = null;
+            return false;
         }
-        _solutionContainer.TryAddReagent(uid, solution, @event.ReagentQuantity, out _);
+        return _solutionContainer.TryGetSolution(uid, component.Solution, out solution);
     }
 
     private void OnSolutionChanged(EntityUid uid, StainableComponent component, SolutionChangedEvent @event)

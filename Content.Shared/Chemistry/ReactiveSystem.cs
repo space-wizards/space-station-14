@@ -38,9 +38,6 @@ namespace Content.Shared.Chemistry
             if (!TryComp(uid, out ReactiveComponent? reactive))
                 return;
 
-            var ev = new TransferReagentEvent(method, proto, reagentQuantity);
-            RaiseLocalEvent(uid, ref ev);
-
             // If we have a source solution, use the reagent quantity we have left. Otherwise, use the reaction volume specified.
             var args = new ReagentEffectArgs(uid, null, source, proto,
                 source?.GetReagentQuantity(reagentQuantity.Reagent) ?? reagentQuantity.Quantity, EntityManager, method, 1f);

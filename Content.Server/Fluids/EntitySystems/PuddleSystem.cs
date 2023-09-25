@@ -14,7 +14,6 @@ using Content.Shared.Popups;
 using Content.Shared.Slippery;
 using Content.Shared.Fluids.Components;
 using Content.Shared.Friction;
-using Content.Shared.IdentityManagement;
 using Content.Shared.StepTrigger.Components;
 using Content.Shared.StepTrigger.Systems;
 using Robust.Server.GameObjects;
@@ -30,6 +29,7 @@ using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Maps;
 using Content.Shared.Effects;
+using Content.Server.Stains;
 
 namespace Content.Server.Fluids.EntitySystems;
 
@@ -38,7 +38,7 @@ namespace Content.Server.Fluids.EntitySystems;
 /// </summary>
 public sealed partial class PuddleSystem : SharedPuddleSystem
 {
-    [Dependency] private readonly IAdminLogManager _adminLogger= default!;
+    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
@@ -55,6 +55,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
     [Dependency] private readonly StepTriggerSystem _stepTrigger = default!;
     [Dependency] private readonly SlowContactsSystem _slowContacts = default!;
     [Dependency] private readonly TileFrictionController _tile = default!;
+    [Dependency] private readonly StainsSystem _stains = default!;
 
     [ValidatePrototypeId<ReagentPrototype>]
     private const string Blood = "Blood";
@@ -225,9 +226,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
         _popups.PopupEntity(Loc.GetString("puddle-component-slipped-touch-reaction", ("puddle", uid)),
             args.Slipped, args.Slipped, PopupType.SmallCaution);
 
-        // Take 15% of the puddle solution
-        var splitSol = _solutionContainerSystem.SplitSolution(uid, solution, solution.Volume * 0.15f);
-        _reactive.DoEntityReaction(args.Slipped, splitSol, ReactionMethod.Touch);
+        SpillSolutionToTarget(solution, args.Slipped, 0.15f);
     }
 
     /// <inheritdoc/>
@@ -515,23 +514,34 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
             // sorry! no overload for returning uid, so .owner must be used
             var owner = ent.Owner;
 
-            // between 5 and 30%
-            var splitAmount = solution.Volume * _random.NextFloat(0.05f, 0.30f);
-            var splitSolution = solution.SplitSolution(splitAmount);
-
             if (user != null)
             {
                 _adminLogger.Add(LogType.Landed,
                     $"{ToPrettyString(user.Value):user} threw {ToPrettyString(uid):entity} which splashed a solution {SolutionContainerSystem.ToPrettyString(solution):solution} onto {ToPrettyString(owner):target}");
             }
 
+            SpillSolutionToTarget(solution, uid, _random.NextFloat(0.05f, 0.30f));
+
             targets.Add(owner);
-            _reactive.DoEntityReaction(owner, splitSolution, ReactionMethod.Touch);
         }
 
         _color.RaiseEffect(solution.GetColor(_prototypeManager), targets, Filter.Pvs(uid, entityManager: EntityManager));
 
         return TrySpillAt(coordinates, solution, out puddleUid, sound);
+    }
+
+    private Solution SpillSolutionToTarget(Solution solution, EntityUid target, float fraction)
+    {
+        var splitAmount = solution.Volume * fraction;
+        if (_stains.CanHaveStains(target, out var targetSolution))
+        {
+            splitAmount = FixedPoint2.Min(targetSolution.AvailableVolume, splitAmount);
+        }
+        var splitSolution = solution.SplitSolution(splitAmount);
+
+        _stains.TryAddSolution(target, splitSolution, targetSolution);
+        _reactive.DoEntityReaction(target, splitSolution, ReactionMethod.Touch);
+        return splitSolution;
     }
 
     /// <summary>
