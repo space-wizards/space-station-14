@@ -136,7 +136,7 @@
   id: WeaponAdvancedLaser
   graph: WeaponAdvancedLaser
   startNode: start
-  targetNode: advancedlaserpistol
+  targetNode: advancedLaserPistol
   category: construction-category-weapons
   icon: { sprite: Objects/Weapons/Guns/Battery/advancedlasergun.rsi , state: icon }
   objectType: Item
@@ -147,7 +147,7 @@
   id: WeaponAntiqueLaser
   graph: WeaponAntiqueLaser
   startNode: start
-  targetNode: antiquelaserpistol
+  targetNode: antiqueLaserPistol
   category: construction-category-weapons
   icon: { sprite: Objects/Weapons/Guns/Battery/antiquelasergun.rsi , state: icon }
   objectType: Item
@@ -158,7 +158,7 @@
   id: WeaponLaserCarbine
   graph: WeaponLaserCarbine
   startNode: start
-  targetNode: laserrifle
+  targetNode: laserRifle
   category: construction-category-weapons
   icon: { sprite: Objects/Weapons/Guns/Battery/laser_gun.rsi , state: icon }
   objectType: Item
@@ -169,7 +169,7 @@
   id: WeaponLaserCannon
   graph: WeaponLaserCannon
   startNode: start
-  targetNode: lasercannon
+  targetNode: laserCannon
   category: construction-category-weapons
   icon: { sprite: Objects/Weapons/Guns/Battery/laser_cannon.rsi , state: icon }
   objectType: Item
@@ -180,7 +180,7 @@
   id: WeaponMakeshiftLaser
   graph: WeaponMakeshiftLaser
   startNode: start
-  targetNode: makeshiftlaserpistol
+  targetNode: makeshiftLaserPistol
   category: construction-category-weapons
   icon: { sprite: Objects/Weapons/Guns/Battery/makeshift.rsi, state: icon }
   objectType: Item
@@ -191,7 +191,7 @@
   id: WeaponLaserGun
   graph: WeaponLaserGun
   startNode: start
-  targetNode: retrolaserblaster
+  targetNode: retroLaserBlaster
   category: construction-category-weapons
   icon: { sprite: Objects/Weapons/Guns/Battery/laser_retro.rsi, state: icon }
   objectType: Item
@@ -235,7 +235,7 @@
   id: WeaponTetherGun
   graph: WeaponPhysicsGun
   startNode: start
-  targetNode: tethergun
+  targetNode: tetherGun
   category: construction-category-weapons
   icon: { sprite: Objects/Weapons/Guns/Launchers/tether_gun.rsi, state: base }
   objectType: Item
@@ -246,7 +246,7 @@
   id: WeaponForceGun
   graph: WeaponPhysicsGun
   startNode: start
-  targetNode: forcegun
+  targetNode: forceGun
   category: construction-category-weapons
   icon: { sprite: Objects/Weapons/Guns/Launchers/force_gun.rsi, state: base }
   objectType: Item
