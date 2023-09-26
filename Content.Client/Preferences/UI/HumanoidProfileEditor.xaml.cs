@@ -109,6 +109,7 @@ namespace Content.Client.Preferences.UI
             IEntityManager entityManager, IConfigurationManager configurationManager)
         {
             RobustXamlLoader.Load(this);
+            HorizontalExpand = true;
             _prototypeManager = prototypeManager;
             _entMan = entityManager;
             _preferencesManager = preferencesManager;
@@ -116,10 +117,6 @@ namespace Content.Client.Preferences.UI
             _markingManager = IoCManager.Resolve<MarkingManager>();
 
             #region Left
-
-            #region Randomize
-
-            #endregion Randomize
 
             #region Name
 
@@ -395,7 +392,7 @@ namespace Content.Client.Preferences.UI
                 if (!antag.SetPreference)
                     continue;
 
-                var selector = new AntagPreferenceSelector(antag);
+                var selector = new AntagPreferenceSelector(antag, _requirements);
                 _antagList.AddChild(selector);
                 _antagPreferences.Add(selector);
                 if (selector.Disabled)
@@ -572,7 +569,7 @@ namespace Content.Client.Preferences.UI
 
                 foreach (var job in jobs)
                 {
-                    var selector = new JobPrioritySelector(job, _prototypeManager);
+                    var selector = new JobPrioritySelector(job, _requirements, _prototypeManager);
 
                     if (!_requirements.IsAllowed(job, out var reason))
                     {
@@ -604,6 +601,9 @@ namespace Content.Client.Preferences.UI
                     };
 
                 }
+
+                CJobScrollList.InvalidateMeasure();
+                CJobScrollList.InvalidateArrange();
             }
         }
 
@@ -1187,7 +1187,7 @@ namespace Content.Client.Preferences.UI
             /// <summary>
             /// Actually adds the controls, must be called in the inheriting class' constructor.
             /// </summary>
-            protected void Setup((string, int)[] items, string title, int titleSize, string? description, TextureRect? icon = null)
+            protected void Setup((string, int)[] items, string title, int titleSize, string? description, TimeSpan playTime, TextureRect? icon = null)
             {
                 foreach (var (text, value) in items)
                 {
@@ -1213,6 +1213,15 @@ namespace Content.Client.Preferences.UI
                 container.AddChild(titleLabel);
                 container.AddChild(Options);
                 container.AddChild(_lockStripe);
+                container.AddChild(new Control()
+                {
+                    HorizontalExpand = true,
+                });
+                container.AddChild(new Label()
+                {
+                    Text = playTime.ToString("hh':'mm"),
+                    HorizontalAlignment = HAlignment.Right
+                });
 
                 AddChild(container);
             }
@@ -1253,7 +1262,7 @@ namespace Content.Client.Preferences.UI
 
             public event Action<JobPriority>? PriorityChanged;
 
-            public JobPrioritySelector(JobPrototype proto, IPrototypeManager protoMan)
+            public JobPrioritySelector(JobPrototype proto, JobRequirementsManager manager, IPrototypeManager protoMan)
                 : base(proto)
             {
                 Options.OnItemSelected += args => PriorityChanged?.Invoke(Priority);
@@ -1273,8 +1282,9 @@ namespace Content.Client.Preferences.UI
                 };
                 var jobIcon = protoMan.Index<StatusIconPrototype>(proto.Icon);
                 icon.Texture = jobIcon.Icon.Frame0();
+                var playtime = manager.GetRoleTime(proto.PlayTimeTracker);
 
-                Setup(items, proto.LocalizedName, 200, proto.LocalizedDescription, icon);
+                Setup(items, proto.LocalizedName, 200, proto.LocalizedDescription, playtime, icon);
             }
         }
 
@@ -1310,7 +1320,7 @@ namespace Content.Client.Preferences.UI
 
             public event Action<bool>? PreferenceChanged;
 
-            public AntagPreferenceSelector(AntagPrototype proto)
+            public AntagPreferenceSelector(AntagPrototype proto, JobRequirementsManager manager)
                 : base(proto)
             {
                 Options.OnItemSelected += args => PreferenceChanged?.Invoke(Preference);
@@ -1322,12 +1332,12 @@ namespace Content.Client.Preferences.UI
                 };
                 var title = Loc.GetString(proto.Name);
                 var description = Loc.GetString(proto.Objective);
-                Setup(items, title, 250, description);
+                var playtime = TimeSpan.Zero;
+                Setup(items, title, 250,  description, playtime);
 
                 // immediately lock requirements if they arent met.
                 // another function checks Disabled after creating the selector so this has to be done now
-                var requirements = IoCManager.Resolve<JobRequirementsManager>();
-                if (proto.Requirements != null && !requirements.CheckRoleTime(proto.Requirements, out var reason))
+                if (proto.Requirements != null && !manager.CheckRoleTime(proto.Requirements, out var reason))
                 {
                     LockRequirements(reason);
                 }

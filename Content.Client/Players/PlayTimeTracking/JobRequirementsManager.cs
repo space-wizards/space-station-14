@@ -103,6 +103,17 @@ public sealed class JobRequirementsManager
         return CheckRoleTime(job.Requirements, out reason);
     }
 
+    /// <summary>
+    /// Returns the playtime for a particular role.
+    /// </summary>
+    public TimeSpan GetRoleTime(string role)
+    {
+        if (_roles.TryGetValue(role, out var time))
+            return time;
+
+        return TimeSpan.Zero;
+    }
+
     public bool CheckRoleTime(HashSet<JobRequirement>? requirements, [NotNullWhen(false)] out FormattedMessage? reason)
     {
         reason = null;

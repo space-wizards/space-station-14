@@ -119,7 +119,7 @@
                 <BoxContainer Orientation="Vertical">
                     <!-- Jobs -->
                     <OptionButton Name="CPreferenceUnavailableButton" />
-                    <ScrollContainer VerticalExpand="True">
+                    <ScrollContainer Name="CJobScrollList" VerticalExpand="True">
                         <BoxContainer Name="CJobList" Orientation="Vertical" />
                     </ScrollContainer>
                 </BoxContainer>
