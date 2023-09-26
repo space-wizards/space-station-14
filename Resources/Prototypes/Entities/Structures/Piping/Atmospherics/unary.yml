@@ -5,17 +5,19 @@
   placement:
     mode: SnapgridCenter
   components:
-    - type: AtmosDevice
-    - type: SubFloorHide
-      blockInteractions: false
-      blockAmbience: false
-    - type: NodeContainer
-      nodes:
-        pipe:
-          !type:PipeNode
-          nodeGroupID: Pipe
-          pipeDirection: South
-    - type: CollideOnAnchor
+  - type: Appearance
+  - type: AtmosDevice
+  - type: PipeColorVisuals
+  - type: SubFloorHide
+    blockInteractions: false
+    blockAmbience: false
+  - type: NodeContainer
+    nodes:
+      pipe:
+        !type:PipeNode
+        nodeGroupID: Pipe
+        pipeDirection: South
+  - type: CollideOnAnchor
 
 - type: entity
   parent: GasUnaryBase
@@ -36,7 +38,6 @@
       examinableAddress: true
     - type: WiredNetworkConnection
     - type: DeviceNetworkRequiresPower
-    - type: AtmosDevice
     - type: AtmosMonitor
       temperatureThresholdId: stationTemperature
       pressureThresholdId: stationPressure
@@ -62,8 +63,6 @@
           map: [ "enum.PipeVisualLayers.Pipe" ]
         - state: vent_off
           map: [ "enabled", "enum.SubfloorLayers.FirstLayer" ]
-    - type: Appearance
-    - type: PipeColorVisuals
     - type: GenericVisualizer
       visuals:
         enum.VentPumpVisuals.State:
@@ -103,8 +102,6 @@
           map: [ "enum.PipeVisualLayers.Pipe" ]
         - state: vent_off
           map: [ "enum.SubfloorLayers.FirstLayer" ]
-    - type: Appearance
-    - type: PipeColorVisuals
     - type: GasPassiveVent
     - type: Construction
       graph: GasUnary
@@ -152,8 +149,6 @@
           map: [ "enum.PipeVisualLayers.Pipe" ]
         - state: scrub_off
           map: [ "enabled", "enum.SubfloorLayers.FirstLayer" ]
-    - type: Appearance
-    - type: PipeColorVisuals
     - type: GenericVisualizer
       visuals:
         enum.ScrubberVisuals.State:
@@ -163,7 +158,6 @@
             Siphon: { state: scrub_purge }
             WideScrub: { state: scrub_wide }
             Welded: { state: scrub_welded }
-    - type: AtmosDevice
     - type: GasVentScrubber
     - type: Construction
       graph: GasUnary
@@ -204,8 +198,6 @@
          unshaded:
            True: { color: "#5eff5e" }
            False: { color: "#990000" }
-    - type: Appearance
-    - type: PipeColorVisuals
     - type: GasOutletInjector
     - type: Construction
       graph: GasUnary
@@ -228,7 +220,6 @@
       snapCardinals: true
     - type: Appearance
     - type: PipeColorVisuals
-    - type: Rotatable
     - type: GasThermoMachine
     - type: AtmosPipeColor
     - type: AtmosDevice
