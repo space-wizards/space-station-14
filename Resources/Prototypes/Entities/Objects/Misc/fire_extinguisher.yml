@@ -27,6 +27,7 @@
   - type: ItemCooldown
   - type: Spray
     transferAmount: 10
+    pushbackAmount: 60
     spraySound:
       path: /Audio/Effects/extinguish.ogg
     sprayedPrototype: ExtinguisherSpray

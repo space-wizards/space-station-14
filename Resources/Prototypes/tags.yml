@@ -17,6 +17,9 @@
   id: ArtifactFragment
 
 - type: Tag
+  id: Arrow
+
+- type: Tag
   id: ATVKeys
 
 - type: Tag
@@ -26,7 +29,7 @@
   id: Balloon
 
 - type: Tag
-  id: BaseballBat 
+  id: BaseballBat
 
 - type: Tag
   id: BBQsauce
@@ -306,7 +309,7 @@
   id: CluwneHorn
 
 - type: Tag #Ohioans die happy
-  id: Corn 
+  id: Corn
 
 - type: Tag
   id: Coldsauce
@@ -1014,7 +1017,7 @@
 
 - type: Tag
   id: WallmountSubstationElectronics
-  
+
 - type: Tag
   id: WeaponPistolCHIMPUpgradeKit
 

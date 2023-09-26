@@ -92,7 +92,7 @@ public abstract class SharedStorageSystem : EntitySystem
         if (component.Container == default)
             return;
 
-        RecalculateStorageUsed(component);
+        RecalculateStorageUsed(uid, component);
         UpdateStorageVisualization(uid, component);
         UpdateUI(uid, component);
         Dirty(uid, component);
@@ -394,7 +394,7 @@ public abstract class SharedStorageSystem : EntitySystem
             _appearance.SetData(uid, StackVisuals.Hide, !storageComp.IsUiOpen);
     }
 
-    public void RecalculateStorageUsed(StorageComponent storageComp)
+    public void RecalculateStorageUsed(EntityUid uid, StorageComponent storageComp)
     {
         storageComp.StorageUsed = 0;
 
@@ -406,6 +406,9 @@ public abstract class SharedStorageSystem : EntitySystem
             var size = itemComp.Size;
             storageComp.StorageUsed += size;
         }
+
+        _appearance.SetData(uid, StorageVisuals.StorageUsed, storageComp.StorageUsed);
+        _appearance.SetData(uid, StorageVisuals.Capacity, storageComp.StorageCapacityMax);
     }
 
     public int GetAvailableSpace(EntityUid uid, StorageComponent? component = null)
