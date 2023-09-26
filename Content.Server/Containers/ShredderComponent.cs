@@ -53,10 +53,10 @@ namespace Content.Server.Containers
         public bool OpenOnDone = true;
 
         /// <summary>
-        /// Whether or not the container should be locked while it is active.
+        /// Whether or not the container should lock itself when it starts shredding.
         /// </summary>
-        [DataField("lockWhileShredding")]
-        public bool LockWhileShredding = true;
+        [DataField("lockWhenShredding")]
+        public bool LockWhenShredding = false;
     }
 
     public sealed class StartBeingShreddedEvent : HandledEntityEventArgs
@@ -72,10 +72,12 @@ namespace Content.Server.Containers
     public sealed class DoneBeingShreddedEvent : HandledEntityEventArgs
     {
         public EntityUid Shredder;
+        public HashSet<EntityUid> Remains;
 
         public DoneBeingShreddedEvent(EntityUid shredder)
         {
             Shredder = shredder;
+            Remains = new HashSet<EntityUid>();
         }
     }
 }

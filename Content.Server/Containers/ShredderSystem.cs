@@ -28,6 +28,9 @@ namespace Content.Server.Containers
                     if (shredder.ShreddingTimeLeft > 0)
                         return;
 
+                    // We need to get shreddable entities before opening up the container since that might remove them and
+                    // we can't shred them before opening the container since that leads to buggy behavior when gibbing bodies.
+                    List<EntityUid> toShred = new List<EntityUid>();
                     var manager = EnsureComp<ContainerManagerComponent>(uid);
                     var container = _containerSystem.EnsureContainer<BaseContainer>(uid, shredder.Container, manager);
                     for (var i = container.ContainedEntities.Count - 1; i >= 0; i--)
@@ -35,8 +38,7 @@ namespace Content.Server.Containers
                         if (!shredder.Whitelist.IsValid(container.ContainedEntities[i], EntityManager))
                             continue;
 
-                        var ev = new DoneBeingShreddedEvent(uid);
-                        RaiseLocalEvent(container.ContainedEntities[i], ev);
+                        toShred.Add(container.ContainedEntities[i]);
                     }
 
                     if (shredder.OpenOnDone && TryComp(uid, out EntityStorageComponent? storage) && !storage.Open)
@@ -44,6 +46,12 @@ namespace Content.Server.Containers
                         if (TryComp<LockComponent>(uid, out var lockComp))
                             _lockSystem.Unlock(uid, null, lockComp);
                         _entityStorageSystem.OpenStorage(uid, storage);
+                    }
+
+                    foreach (var entity in toShred)
+                    {
+                        var ev = new DoneBeingShreddedEvent(uid);
+                        RaiseLocalEvent(entity, ev);
                     }
 
                     RemComp<JitteringComponent>(uid);
@@ -73,7 +81,7 @@ namespace Content.Server.Containers
                 if (comp.DoShake)
                     _jitteringSystem.AddJitter(uid, 10f, 100f);
 
-                if (comp.LockWhileShredding)
+                if (comp.LockWhenShredding)
                 {
                     var lockComp = EnsureComp<LockComponent>(uid);
                     _lockSystem.Lock(uid, null, lockComp);

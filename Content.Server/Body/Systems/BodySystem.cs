@@ -81,7 +81,7 @@ public sealed class BodySystem : SharedBodySystem
         if (args.Handled)
             return;
 
-        GibBody(uid, true, component);
+        args.Remains = GibBody(uid, true, component);
         args.Handled = true;
     }
 
