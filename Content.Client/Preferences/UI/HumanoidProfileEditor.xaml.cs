@@ -1155,7 +1155,8 @@ namespace Content.Client.Preferences.UI
                 {
                     FirstButtonStyle = StyleBase.ButtonOpenRight,
                     ButtonStyle = StyleBase.ButtonOpenBoth,
-                    LastButtonStyle = StyleBase.ButtonOpenLeft
+                    LastButtonStyle = StyleBase.ButtonOpenLeft,
+                    SetSize = new Vector2(360, 30),
                 };
                 //Override default radio option button width
                 Options.GenerateItem = GenerateButton;
@@ -1175,6 +1176,7 @@ namespace Content.Client.Preferences.UI
                     Visible = false,
                     HorizontalExpand = true,
                     MouseFilter = MouseFilterMode.Stop,
+                    SetSize = new Vector2(360, 30),
                     Children =
                     {
                         _requirementsLabel
@@ -1211,18 +1213,17 @@ namespace Content.Client.Preferences.UI
                 if (icon != null)
                     container.AddChild(icon);
                 container.AddChild(titleLabel);
-                container.AddChild(Options);
-                container.AddChild(_lockStripe);
                 container.AddChild(new Control()
                 {
                     HorizontalExpand = true,
                 });
                 container.AddChild(new Label()
                 {
-                    Text = playTime.ToString("hh':'mm"),
+                    Text = playTime.ToString("dd':'hh':'mm"),
                     HorizontalAlignment = HAlignment.Right
                 });
-
+                container.AddChild(Options);
+                container.AddChild(_lockStripe);
                 AddChild(container);
             }
 
