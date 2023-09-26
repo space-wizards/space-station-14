@@ -1,11 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: The chemistry guidebook now specifies specific types for damage and
-      only uses groups when damage is evenly distributed across each type of a group.,
-    type: Fix}
-  id: 4397
-  time: '2023-08-01T06:10:05.0000000+00:00'
 - author: VasilisThePikachu
   changes:
   - {message: HoP no longer receives QM access., type: Remove}
@@ -2981,3 +2974,8 @@ Entries:
       or kidneys. You probably didn''t need the extra pair anyways.', type: Fix}
   id: 4896
   time: '2023-09-25T06:53:04.0000000+00:00'
+- author: Nimfar11
+  changes:
+  - {message: Adds a new sprite for Syndicate implanters., type: Add}
+  id: 4897
+  time: '2023-09-26T00:04:03.0000000+00:00'
