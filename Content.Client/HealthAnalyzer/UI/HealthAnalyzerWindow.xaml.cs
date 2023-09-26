@@ -67,7 +67,7 @@ namespace Content.Client.HealthAnalyzer.UI
                     var group = protos.Index<DamageGroupPrototype>(damageGroupId);
                     foreach (var type in group.DamageTypes)
                     {
-                        if (damagePerType.TryGetValue(type, out var typeAmount) && damageAmount != 0)
+                        if (damagePerType.TryGetValue(type, out var typeAmount) )
                         {
                             // If damage types are allowed to belong to more than one damage group, they may appear twice here. Mark them as duplicate.
                             if (!shownTypes.Contains(type) && typeAmount > 0)
