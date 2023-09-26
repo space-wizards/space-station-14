@@ -111,6 +111,18 @@
     baseSprintSpeed: 3.0
   - type: Sprite
     sprite: Mobs/Species/Terminator/parts.rsi
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        # he heavy
+        density: 500
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
   - type: MobThresholds
     thresholds:
       0: Alive
