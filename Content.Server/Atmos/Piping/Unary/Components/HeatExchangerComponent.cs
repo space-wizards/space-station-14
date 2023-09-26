@@ -7,7 +7,7 @@ public sealed partial class HeatExchangerComponent : Component
     /// Name of the pipe node to exchange heat to.
     /// </summary>
     [DataField("inlet"), ViewVariables(VVAccess.ReadWrite)]
-    public string InletName = "inlet";
+    public string InletName = "pipe";
 
     /// <summary>
     /// Pipe conductivity (mols/kPa/sec).
