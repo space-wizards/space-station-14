@@ -1,0 +1,25 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from ParadiseSS13 at commit https://github.com/ParadiseSS13/Paradise/tree/45bf2ffc788310ed7a355cc436c73333a6fd8b14",
+    "size": {
+        "x": 8,
+        "y": 7
+    },
+    "states": [
+        {
+            "name": "execute",
+			"delays": [[1,1]]
+        },
+		{
+            "name": "search",
+			"delays": [[0.2,0.2,0.2]]
+        },
+		{
+            "name": "wanted"
+        },
+		{
+            "name": "monitor"
+        }
+    ]
+}

@@ -2,6 +2,7 @@ using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.Overlays;
 using Content.Shared.PDA;
+using Content.Shared.SS220.CriminalRecords;
 using Content.Shared.StatusIcon;
 using Content.Shared.StatusIcon.Components;
 using Robust.Shared.Prototypes;
@@ -39,6 +40,7 @@ public sealed class ShowSecurityIconsSystem : EquipmentHudSystem<ShowSecurityIco
         var result = new List<StatusIconPrototype>();
 
         var jobIconToGet = JobIconForNoId;
+        string? securityRecordType = null; //SS220 Criminal-Records
         if (_accessReader.FindAccessItemsInventory(uid, out var items))
         {
             foreach (var item in items)
@@ -47,6 +49,7 @@ public sealed class ShowSecurityIconsSystem : EquipmentHudSystem<ShowSecurityIco
                 if (TryComp(item, out IdCardComponent? id))
                 {
                     jobIconToGet = id.JobIcon;
+                    securityRecordType = id.CurrentSecurityRecord?.RecordType; //SS220 Criminal-Records
                     break;
                 }
 
@@ -56,6 +59,7 @@ public sealed class ShowSecurityIconsSystem : EquipmentHudSystem<ShowSecurityIco
                     && TryComp(pda.ContainedId, out id))
                 {
                     jobIconToGet = id.JobIcon;
+                    securityRecordType = id.CurrentSecurityRecord?.RecordType; //SS220 Criminal-Records
                     break;
                 }
             }
@@ -66,7 +70,25 @@ public sealed class ShowSecurityIconsSystem : EquipmentHudSystem<ShowSecurityIco
         else
             Log.Error($"Invalid job icon prototype: {jobIcon}");
 
-        // Add arrest icons here, WYCI.
+        //SS220 Criminal-Records begin
+        if (securityRecordType != null)
+        {
+            if (_prototypeMan.TryIndex<CriminalStatusPrototype>(securityRecordType, out var criminalStatus))
+            {
+                if (criminalStatus.StatusIcon.HasValue)
+                {
+                    if (_prototypeMan.TryIndex<StatusIconPrototype>(criminalStatus.StatusIcon, out var secIcon))
+                        result.Add(secIcon);
+                    else
+                        Log.Error($"Invalid security status icon prototype: {secIcon}");
+                }
+            }
+            else
+            {
+                Log.Error($"Invalid security status prototype: {criminalStatus}");
+            }
+        }
+        //SS220 Criminal-Records end
 
         return result;
     }

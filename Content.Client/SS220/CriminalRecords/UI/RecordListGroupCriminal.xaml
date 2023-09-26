@@ -1,0 +1,27 @@
+<!-- © SS220, An EULA/CLA with a hosting restriction, full text: https://raw.githubusercontent.com/SerbiaStrong-220/space-station-14/master/CLA.txt -->
+<ui:RecordListGroupCriminal
+    xmlns="https://spacestation14.io"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+    xmlns:cc="clr-namespace:Content.Client.Administration.UI.CustomControls"
+    xmlns:ui="clr-namespace:Content.Client.SS220.CriminalRecords.UI"
+    xmlns:graphics="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+
+    HorizontalExpand="True"
+    Orientation="Vertical">
+
+    <PanelContainer HorizontalExpand="True">
+        <PanelContainer.PanelOverride>
+            <graphics:StyleBoxFlat BackgroundColor="#0A0A0C"/>
+        </PanelContainer.PanelOverride>
+        <Label Text="Особое внимание" HorizontalAlignment="Center" Margin="3 3"/>
+    </PanelContainer>
+    <BoxContainer Name="RecordsBox" Orientation="Vertical"/>
+    <PanelContainer HorizontalExpand="True">
+        <PanelContainer.PanelOverride>
+            <graphics:StyleBoxFlat BackgroundColor="#0A0A0C"/>
+        </PanelContainer.PanelOverride>
+        <Label Text="Без статуса" HorizontalAlignment="Center" Margin="3 3"/>
+    </PanelContainer>
+
+</ui:RecordListGroupCriminal>

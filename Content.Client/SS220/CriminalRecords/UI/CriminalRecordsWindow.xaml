@@ -1,0 +1,108 @@
+<!-- © SS220, An EULA/CLA with a hosting restriction, full text: https://raw.githubusercontent.com/SerbiaStrong-220/space-station-14/master/CLA.txt -->
+
+<controls:FancyWindow
+    xmlns="https://spacestation14.io"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+    xmlns:cc="clr-namespace:Content.Client.Administration.UI.CustomControls"
+    xmlns:ui="clr-namespace:Content.Client.SS220.CriminalRecords.UI"
+    xmlns:graphics="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+    xmlns:phui="clr-namespace:Content.Client.SS220.Photocopier.UI"
+
+    Title="{Loc 'criminal-records-ui-window'}"
+    Resizable="False"
+    MinSize="850 600">
+
+    <BoxContainer Orientation="Vertical">
+        <!-- Main -->
+        <BoxContainer Orientation="Horizontal" Margin="10 10" VerticalExpand="true">
+            <!-- Left listing -->
+            <PanelContainer Margin="0 0 5 0" HorizontalExpand="true">
+                <PanelContainer.PanelOverride>
+                    <graphics:StyleBoxFlat BackgroundColor="#1C1C21FF"/>
+                </PanelContainer.PanelOverride>
+
+                <BoxContainer Orientation="Vertical">
+                    <LineEdit
+                        Name="RecordSearch"
+                        PlaceHolder="{Loc 'criminal-records-ui-window-search-placeholder'}"
+                        HorizontalExpand="True"
+                        Margin="0 0"/>
+                    <ScrollContainer VerticalExpand="True">
+                        <ui:RecordList Name="RecordListing" />
+                    </ScrollContainer>
+                </BoxContainer>
+            </PanelContainer>
+            <!-- Right panel -->
+            <BoxContainer Name="PanelRight" Orientation="Vertical" Margin="5 0 0 0" HorizontalExpand="true" Visible="False">
+                <!-- Character Name -->
+                <BoxContainer Orientation="Horizontal">
+                    <Label Name="CharacterName" Text="Имя Фамилия" StyleClasses="LabelBig" SetHeight="25" HorizontalExpand="True"/>
+                    <Label Name="RecordIdLabel" HorizontalAlignment="Right" SetHeight="25" StyleClasses="LabelBig"/>
+                </BoxContainer>
+                <!-- Details widget -->
+                <ui:RecordDetails Name="Details" HorizontalExpand="true"/>
+
+                <!-- Records history -->
+                <BoxContainer Name="RecordHistoryPanel" Orientation="Vertical" Margin="0 5 0 0" VerticalExpand="True">
+                    <BoxContainer Orientation="Horizontal">
+                        <phui:IconButton Name="ExpandButton"
+                            Margin="0 0 5 0"
+                            IconTexture="/Textures/SS220/Interface/Misc/up.png"
+                            SetWidth="40"
+                            StyleClasses="OpenLeft"/>
+                        <Label Text="Криминальные записи:"/>
+                        <BoxContainer Orientation="Vertical" HorizontalExpand="True">
+                            <Button Name="ChangeStatusButton" Text="Сменить статус" HorizontalAlignment="Right"/>
+                        </BoxContainer>
+                    </BoxContainer>
+
+                    <PanelContainer Name="StatusColorIndicator" Margin="0 5 0 0" HorizontalExpand="true" SetHeight="10"/>
+                    <PanelContainer Margin="0 0" VerticalExpand="true">
+                        <PanelContainer.PanelOverride>
+                            <graphics:StyleBoxFlat BackgroundColor="#1C1C21FF"/>
+                        </PanelContainer.PanelOverride>
+
+                        <ScrollContainer Name="RecordHistoryScroll" VerticalExpand="True" ReserveScrollbarSpace="False" HScrollEnabled="False">
+                            <BoxContainer Name="CriminalRecordContainer" Orientation="Vertical"/>
+                        </ScrollContainer>
+                    </PanelContainer>
+                </BoxContainer>
+
+                <BoxContainer Name="RecordCreationPanel" Orientation="Vertical" Margin="0 5 0 0" VerticalExpand="True" Visible="False">
+                    <BoxContainer Orientation="Horizontal">
+                        <phui:IconButton Name="CreationExpandButton"
+                            Margin="0 0 5 0"
+                            IconTexture="/Textures/SS220/Interface/Misc/up.png"
+                            SetWidth="40"
+                            StyleClasses="OpenLeft"/>
+                        <Label Text="Создание записи:"/>
+                        <BoxContainer Orientation="Vertical" HorizontalExpand="True">
+                            <BoxContainer Orientation="Horizontal" HorizontalExpand="True" HorizontalAlignment="Right">
+                                <Button Name="SaveRecordCreationButton" Text="Сохранить" Margin="0 0 1 0" StyleClasses="OpenRight"/>
+                                <Button Name="CancelRecordCreationButton" Text="Отмена"/>
+                            </BoxContainer>
+                        </BoxContainer>
+                    </BoxContainer>
+                    <OptionButton Name="StatusTypeSelector" StyleClasses="OpenRight"/>
+                    <TextEdit Name="MessageInput" HorizontalExpand="True" VerticalExpand="True" Margin="0 0" MinHeight="100"/>
+                </BoxContainer>
+
+            </BoxContainer>
+            <PanelContainer Name="PanelRightPlaceholder" HorizontalExpand="true" Visible="True">
+                <Label Text="Выберите запись слева" StyleClasses="LabelBig" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </PanelContainer>
+        </BoxContainer>
+
+        <!-- Footer -->
+        <BoxContainer Orientation="Vertical">
+            <PanelContainer StyleClasses="LowDivider" />
+            <BoxContainer Orientation="Horizontal" Margin="10 2 5 0" VerticalAlignment="Bottom">
+                <BoxContainer Orientation="Vertical">
+                    <Label Text="{Loc 'criminal-records-ui-flavor-right'}" Align="Right" StyleClasses="WindowFooterText" HorizontalAlignment="Right"/>
+                </BoxContainer>
+            </BoxContainer>
+        </BoxContainer>
+    </BoxContainer>
+
+</controls:FancyWindow>

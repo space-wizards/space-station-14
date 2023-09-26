@@ -40,7 +40,7 @@ public sealed class SSDStorageConsoleSystem : EntitySystem
     [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
     [Dependency] private readonly AccessReaderSystem _accessReaderSystem = default!;
     [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
-    [Dependency] private readonly ObjectivesSystem  _objectives = default!;
+    [Dependency] private readonly ObjectivesSystem _objectives = default!;
     [Dependency] private readonly StationJobsSystem _stationJobsSystem = default!;
     [Dependency] private readonly UserInterfaceSystem _userInterface = default!;
     [Dependency] private readonly EntityManager _entityManager = default!;
@@ -166,22 +166,26 @@ public sealed class SSDStorageConsoleSystem : EntitySystem
 
         var station = _stationSystem.GetOwningStation(uid);
 
-        if (station is not null)
+        if (station.HasValue)
         {
-            if (DeleteEntityRecord(entityToTransfer, station.Value, out var deletedRecord))
+            var recordPairTry = FindEntityStationRecordKey(station.Value, entityToTransfer);
+            if (recordPairTry is { } recordPair)
             {
                 _chatSystem.DispatchStationAnnouncement(station.Value,
                     Loc.GetString(
                         "cryopodSSD-entered-cryo",
                         ("character", MetaData(entityToTransfer).EntityName),
-                        ("job", CultureInfo.CurrentCulture.TextInfo.ToTitleCase(deletedRecord.JobTitle))),
+                        ("job", CultureInfo.CurrentCulture.TextInfo.ToTitleCase(recordPair.Item2.JobTitle))),
                     Loc.GetString("cryopodSSD-sender"),
                     playSound: false);
 
                 component.StoredEntities.Add(
-                    $"{MetaData(entityToTransfer).EntityName} - [{deletedRecord.JobTitle}] - {_gameTiming.RealTime}");
+                    $"{MetaData(entityToTransfer).EntityName} - [{recordPair.Item2.JobTitle}] - {_gameTiming.RealTime}");
 
-                _stationJobsSystem.TryAdjustJobSlot(station.Value, deletedRecord.JobPrototype, 1);
+                _stationJobsSystem.TryAdjustJobSlot(station.Value, recordPair.Item2.JobPrototype, 1);
+
+                recordPair.Item2.IsInCryo = true;
+                _stationRecordsSystem.Synchronize(station.Value);
             }
         }
 
@@ -321,7 +325,7 @@ public sealed class SSDStorageConsoleSystem : EntitySystem
     /// <param name="station"></param>
     /// <param name="deletedRecord"> returns copy of deleted generalRecord </param>
     /// <returns> True if we successfully deleted record of entity, otherwise returns false</returns>
-    private bool DeleteEntityRecord(EntityUid uid, EntityUid station,[NotNullWhen(true)] out GeneralStationRecord? deletedRecord)
+    private bool DeleteEntityRecord(EntityUid uid, EntityUid station, [NotNullWhen(true)] out GeneralStationRecord? deletedRecord)
     {
         var stationRecord = FindEntityStationRecordKey(station, uid);
 

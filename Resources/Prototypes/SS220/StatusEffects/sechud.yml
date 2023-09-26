@@ -1,0 +1,33 @@
+- type: statusIcon
+  id: SecHudIcon
+  abstract: true
+  priority: 2
+  locationPreference: Right
+
+- type: statusIcon
+  parent: SecHudIcon
+  id: SecWantedIcon
+  icon:
+    sprite: SS220/Interface/Misc/sechud.rsi
+    state: wanted
+
+- type: statusIcon
+  parent: SecHudIcon
+  id: SecMonitorIcon
+  icon:
+    sprite: SS220/Interface/Misc/sechud.rsi
+    state: monitor
+
+- type: statusIcon
+  parent: SecHudIcon
+  id: SecSearchIcon
+  icon:
+    sprite: SS220/Interface/Misc/sechud.rsi
+    state: search
+
+- type: statusIcon
+  parent: SecHudIcon
+  id: SecExecuteIcon
+  icon:
+    sprite: SS220/Interface/Misc/sechud.rsi
+    state: execute

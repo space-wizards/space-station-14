@@ -125,7 +125,8 @@ public sealed class StationRecordsSystem : SharedStationRecordsSystem
             DisplayPriority = jobPrototype.Weight,
             Fingerprint = mobFingerprint,
             DNA = dna,
-            Profile = profile
+            Profile = profile,
+            CriminalRecords = new() // SS220 Criminal-Records
         };
 
         var key = AddRecordEntry(station, record);

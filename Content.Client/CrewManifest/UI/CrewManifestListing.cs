@@ -26,9 +26,18 @@ public sealed class CrewManifestListing : BoxContainer
     public void AddCrewManifestEntries(CrewManifestEntries entries)
     {
         var entryDict = new Dictionary<string, List<CrewManifestEntry>>();
+        var cryoList = new List<CrewManifestEntry>(); // SS220 Cryo-Manifest
 
         foreach (var entry in entries.Entries)
         {
+            // SS220 Cryo-Manifest begin
+            if (entry.IsInCryo)
+            {
+                cryoList.Add(entry);
+                continue;
+            }
+            // SS220 Cryo-Manifest end
+
             foreach (var department in _prototypeManager.EnumeratePrototypes<DepartmentPrototype>())
             {
                 // this is a little expensive, and could be better
@@ -70,5 +79,9 @@ public sealed class CrewManifestListing : BoxContainer
         {
             AddChild(new CrewManifestSection(_prototypeManager, _spriteSystem, item.section, item.entries));
         }
+
+        // SS220 Cryo-Manifest
+        if (cryoList.Count > 0)
+            AddChild(new CrewManifestSection(_prototypeManager, _spriteSystem, "Cryo", cryoList));
     }
 }

@@ -1,5 +1,6 @@
 using Content.Shared.Access.Systems;
 using Content.Shared.PDA;
+using Content.Shared.SS220.CriminalRecords;
 using Content.Shared.StatusIcon;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
@@ -28,6 +29,10 @@ namespace Content.Shared.Access.Components
         [AutoNetworkedField]
         public string JobIcon = "JobIconUnknown";
 
+        // SS220 Criminal-Records begin
+        [DataField, AutoNetworkedField]
+        public CriminalRecord? CurrentSecurityRecord;
+        // SS220 Criminal-Records end
 
         [DataField("jobColor")]
         [AutoNetworkedField]

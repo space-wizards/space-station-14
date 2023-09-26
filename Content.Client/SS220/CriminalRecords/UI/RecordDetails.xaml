@@ -1,0 +1,54 @@
+<!-- © SS220, An EULA/CLA with a hosting restriction, full text: https://raw.githubusercontent.com/SerbiaStrong-220/space-station-14/master/CLA.txt -->
+<ui:RecordDetails
+    xmlns="https://spacestation14.io"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+    xmlns:cc="clr-namespace:Content.Client.Administration.UI.CustomControls"
+    xmlns:ui="clr-namespace:Content.Client.SS220.CriminalRecords.UI"
+    xmlns:graphics="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client">
+
+    <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True">
+         <!-- Panel is for dark photo background -->
+        <PanelContainer StyleClasses="BackgroundDark" Margin="10 10" SetHeight="200" HorizontalExpand="True" HorizontalAlignment="Center">
+            <PanelContainer.PanelOverride>
+                <graphics:StyleBoxFlat BackgroundColor="#1D1A28"/>
+            </PanelContainer.PanelOverride>
+
+            <!-- Character photo with сriminal status over it -->
+            <!-- Control is used so shit can be layered -->
+            <ui:CharacterVisualisation Margin="10 10" Name="CharVis" HorizontalExpand="True" VerticalExpand="True" HorizontalAlignment="Center"/>
+
+            <!-- Criminal status -->
+            <PanelContainer Name="CriminalStatusContainer" HorizontalExpand="True" VerticalAlignment="Bottom" HorizontalAlignment="Center">
+                <PanelContainer.PanelOverride>
+                    <graphics:StyleBoxFlat BackgroundColor="#00000055"/>
+                </PanelContainer.PanelOverride>
+
+                <BoxContainer HorizontalExpand="True" Orientation="Horizontal" Margin="5 5">
+                    <TextureRect Name="CriminalStatusIcon"
+                        HorizontalExpand="False"
+                        VerticalExpand="False"
+                        TextureScale="3 3"
+                        VerticalAlignment="Center"
+                        Margin="0 0 5 0"/>
+                    <RichTextLabel Name="StatusLabel" StyleClasses="LabelBig" HorizontalAlignment="Center" HorizontalExpand="True"/>
+                </BoxContainer>
+            </PanelContainer>
+        </PanelContainer>
+
+        <!-- Job bar -->
+        <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+            <TextureRect Name="JobIcon"
+                HorizontalExpand="False"
+                VerticalExpand="False"
+                TextureScale="3 3"
+                VerticalAlignment="Center"
+                Margin="0 0 5 0"/>
+            <RichTextLabel Name="JobName" StyleClasses="LabelBig"/>
+        </BoxContainer>
+        <RichTextLabel Name="DetailsLabel"/>
+        <Label Name="DnaLabel" Text="ДНК: ABDGGDCAGAAACD"/>
+        <Label Name="FingerprintsLabel" Text="Отпечатки: AGE7834QGHQVJ38Q74HGQ"/>
+    </BoxContainer>
+
+</ui:RecordDetails>

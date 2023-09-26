@@ -1,0 +1,25 @@
+- type: criminalStatus
+  id: wanted
+  name: criminal-status-wanted
+  color: "#FF0000FF"
+  statusIcon: SecWantedIcon
+  radioReportMessage: criminal-status-wanted-report
+
+- type: criminalStatus
+  id: search
+  name: criminal-status-search
+  color: "#D5AA00FF"
+  statusIcon: SecSearchIcon
+
+- type: criminalStatus
+  id: monitor
+  name: criminal-status-monitor
+  color: "#6699FFFF"
+  statusIcon: SecMonitorIcon
+
+- type: criminalStatus
+  id: execute
+  name: criminal-status-execute
+  color: "#CC0000FF"
+  statusIcon: SecExecuteIcon
+  radioReportMessage: criminal-status-execute-report
