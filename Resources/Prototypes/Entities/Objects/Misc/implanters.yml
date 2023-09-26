@@ -74,35 +74,6 @@
       currentMode: Inject
       implantOnly: true
 
-- type: entity
-  id: BaseImplantOnlyImplanterSyndi
-  parent: BaseImplantOnlyImplanter
-  description: A compact disposable syringe exclusively designed for the injection of subdermal implants.
-  abstract: true
-  components:
-    - type: Item
-      sprite: Objects/Specific/Medical/implanter.rsi
-      size: 3
-    - type: Sprite
-      sprite: Objects/Specific/Medical/implanter.rsi
-      state: implanter1
-      layers:
-        - state: implanter0
-          map: [ "implantFull" ]
-          visible: true
-        - state: implanter1
-          map: [ "implantOnly" ]
-    - type: GenericVisualizer
-      visuals:
-        enum.ImplanterVisuals.Full:
-          implantFull:
-            True: {visible: true}
-            False: {visible: false}
-        enum.ImplanterImplantOnlyVisuals.ImplantOnly:
-          implantOnly:
-            True: {state: broken}
-            False: {state: implanter1}
-
 #Fun implanters
 
 - type: entity
@@ -144,7 +115,7 @@
 - type: entity
   id: StorageImplanter
   name: storage implanter
-  parent: BaseImplantOnlyImplanterSyndi
+  parent: BaseImplantOnlyImplanter
   components:
     - type: Implanter
       implant: StorageImplant
@@ -152,7 +123,7 @@
 - type: entity
   id: FreedomImplanter
   name: freedom implanter
-  parent: BaseImplantOnlyImplanterSyndi
+  parent: BaseImplantOnlyImplanter
   components:
     - type: Implanter
       implant: FreedomImplant
@@ -160,7 +131,7 @@
 - type: entity
   id: UplinkImplanter
   name: uplink implanter
-  parent: BaseImplantOnlyImplanterSyndi
+  parent: BaseImplantOnlyImplanter
   components:
   - type: Implanter
     implant: UplinkImplant
@@ -168,7 +139,7 @@
 - type: entity
   id: EmpImplanter
   name: EMP implanter
-  parent: BaseImplantOnlyImplanterSyndi
+  parent: BaseImplantOnlyImplanter
   components:
     - type: Implanter
       implant: EmpImplant
@@ -176,17 +147,19 @@
 - type: entity
   id: DnaScramblerImplanter
   name: DNA scrambler implanter
-  parent: BaseImplantOnlyImplanterSyndi
+  parent: BaseImplantOnlyImplanter
   components:
     - type: Implanter
       implant: DnaScramblerImplant
+      currentMode: Inject
+      implantOnly: false
 
 #Nuclear Operative/Special implanters
 
 - type: entity
   id: MicroBombImplanter
   name: micro-bomb implanter
-  parent: BaseImplantOnlyImplanterSyndi
+  parent: BaseImplantOnlyImplanter
   components:
     - type: Implanter
       implant: MicroBombImplant
@@ -194,7 +167,7 @@
 - type: entity
   id: MacroBombImplanter
   name: macro-bomb implanter
-  parent: BaseImplantOnlyImplanterSyndi
+  parent: BaseImplantOnlyImplanter
   components:
     - type: Implanter
       implant: MacroBombImplant
@@ -202,7 +175,7 @@
 - type: entity
   id: DeathRattleImplanter
   name: death rattle implanter
-  parent: BaseImplantOnlyImplanterSyndi
+  parent: BaseImplantOnlyImplanter
   components:
     - type: Implanter
       implant: DeathRattleImplant
