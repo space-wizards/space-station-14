@@ -1,10 +1,8 @@
-using Content.Shared.CCVar;
-using Content.Shared.Damage;
 using Content.Shared.Interaction;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 
-namespace Content.Shared.Climbing
+namespace Content.Shared.Climbing.Components
 {
     [RegisterComponent, NetworkedComponent]
     public sealed partial class ClimbableComponent : Component
