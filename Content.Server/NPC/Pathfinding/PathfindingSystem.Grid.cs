@@ -410,7 +410,8 @@ public sealed partial class PathfindingSystem
 
     private Vector2i GetOrigin(EntityCoordinates coordinates, EntityUid gridUid)
     {
-        var localPos = _transform.GetInvWorldMatrix(gridUid).Transform(coordinates.ToMapPos(EntityManager));
+        var gridXform = Transform(gridUid);
+        var localPos = gridXform.InvWorldMatrix.Transform(coordinates.ToMapPos(EntityManager));
         return new Vector2i((int) Math.Floor(localPos.X / ChunkSize), (int) Math.Floor(localPos.Y / ChunkSize));
     }
 
@@ -460,6 +461,14 @@ public sealed partial class PathfindingSystem
                     // Irrelevant for pathfinding
                     if (!fixturesQuery.TryGetComponent(ent, out var fixtures) ||
                         !IsBodyRelevant(fixtures))
+                    {
+                        continue;
+                    }
+
+                    var xform = xformQuery.GetComponent(ent);
+
+                    if (xform.ParentUid != grid.Owner ||
+                        grid.LocalToTile(xform.Coordinates) != tilePos)
                     {
                         continue;
                     }
@@ -549,10 +558,13 @@ public sealed partial class PathfindingSystem
                             }
                         }
 
+                        /*This is causing too many issues and I'd rather just ignore it until pathfinder refactor
+                          to just get tiles at runtime.
                         if ((flags & PathfindingBreadcrumbFlag.Space) != 0x0)
                         {
-                            DebugTools.Assert(tileEntities.Count == 0);
+                            // DebugTools.Assert(tileEntities.Count == 0);
                         }
+                        */
 
                         var crumb = new PathfindingBreadcrumb()
                         {

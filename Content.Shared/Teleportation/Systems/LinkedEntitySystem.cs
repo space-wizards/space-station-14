@@ -1,6 +1,7 @@
-﻿using System.Linq;
 using Content.Shared.Teleportation.Components;
 using Robust.Shared.GameStates;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 
 namespace Content.Shared.Teleportation.Systems;
 
@@ -26,13 +27,15 @@ public sealed class LinkedEntitySystem : EntitySystem
 
     private void OnGetState(EntityUid uid, LinkedEntityComponent component, ref ComponentGetState args)
     {
-        args.State = new LinkedEntityComponentState(component.LinkedEntities);
+        args.State = new LinkedEntityComponentState(GetNetEntitySet(component.LinkedEntities));
     }
 
     private void OnHandleState(EntityUid uid, LinkedEntityComponent component, ref ComponentHandleState args)
     {
         if (args.Current is LinkedEntityComponentState state)
-            component.LinkedEntities = state.LinkedEntities;
+        {
+            component.LinkedEntities = EnsureEntitySet<LinkedEntityComponent>(state.LinkedEntities, uid);
+        }
     }
 
     private void OnLinkShutdown(EntityUid uid, LinkedEntityComponent component, ComponentShutdown args)
@@ -109,6 +112,26 @@ public sealed class LinkedEntitySystem : EntitySystem
             QueueDel(second);
 
         return success;
+    }
+
+    /// <summary>
+    /// Get the first entity this entity is linked to.
+    /// If multiple are linked only the first one is picked.
+    /// </summary>
+    public bool GetLink(EntityUid uid, [NotNullWhen(true)] out EntityUid? dest, LinkedEntityComponent? comp = null)
+    {
+        dest = null;
+        if (!Resolve(uid, ref comp, false))
+            return false;
+
+        var first = comp.LinkedEntities.FirstOrDefault();
+        if (first != default)
+        {
+            dest = first;
+            return true;
+        }
+
+        return false;
     }
 
     #endregion

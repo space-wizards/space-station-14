@@ -6,6 +6,7 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.Item;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
+using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Melee.Events;
 using Content.Shared.Weapons.Melee.Components;
 using Content.Shared.Weapons.Ranged.Components;
@@ -23,6 +24,7 @@ public sealed class WieldableSystem : EntitySystem
     [Dependency] private readonly SharedItemSystem _itemSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
     public override void Initialize()
     {
@@ -59,7 +61,11 @@ public sealed class WieldableSystem : EntitySystem
             !wieldable.Wielded)
         {
             args.Cancelled = true;
-            args.Message = Loc.GetString("wieldable-component-requires", ("item", uid));
+
+            if (!HasComp<MeleeWeaponComponent>(uid) && !HasComp<MeleeRequiresWieldComponent>(uid))
+            {
+                args.Message = Loc.GetString("wieldable-component-requires", ("item", uid));
+            }
         }
     }
 
@@ -165,7 +171,7 @@ public sealed class WieldableSystem : EntitySystem
         if (ev.Cancelled)
             return false;
 
-        var doargs = new DoAfterArgs(user, component.WieldTime, new WieldableDoAfterEvent(), used, used: used)
+        var doargs = new DoAfterArgs(EntityManager, user, component.WieldTime, new WieldableDoAfterEvent(), used, used: used)
         {
             BreakOnUserMove = false,
             BreakOnDamage = true
@@ -219,6 +225,7 @@ public sealed class WieldableSystem : EntitySystem
 
         var ev = new ItemWieldedEvent();
         RaiseLocalEvent(uid, ref ev);
+        _appearance.SetData(uid, WieldableVisuals.Wielded, true);
 
         Dirty(component);
         args.Handled = true;
@@ -248,6 +255,8 @@ public sealed class WieldableSystem : EntitySystem
             _popupSystem.PopupEntity(Loc.GetString("wieldable-component-failed-wield-other",
                 ("user", args.User.Value), ("item", uid)), args.User.Value, Filter.PvsExcept(args.User.Value), true);
         }
+
+        _appearance.SetData(uid, WieldableVisuals.Wielded, false);
 
         Dirty(component);
         _virtualItemSystem.DeleteInHandsMatching(args.User.Value, uid);

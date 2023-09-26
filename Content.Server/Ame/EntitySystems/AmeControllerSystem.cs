@@ -3,7 +3,6 @@ using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Ame.Components;
 using Content.Server.Chat.Managers;
-using Content.Server.Mind.Components;
 using Content.Server.NodeContainer;
 using Content.Server.Power.Components;
 using Content.Shared.Ame;
@@ -11,6 +10,7 @@ using Content.Shared.Database;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
+using Content.Shared.Mind.Components;
 using Content.Shared.Popups;
 using Robust.Server.Containers;
 using Robust.Server.GameObjects;
@@ -68,17 +68,28 @@ public sealed class AmeControllerSystem : EntitySystem
 
         if (TryComp<AmeFuelContainerComponent>(controller.JarSlot.ContainedEntity, out var fuelJar))
         {
-            var availableInject = Math.Min(controller.InjectionAmount, fuelJar.FuelAmount);
-            var powerOutput = group.InjectFuel(availableInject, out var overloading);
-            if (TryComp<PowerSupplierComponent>(uid, out var powerOutlet))
-                powerOutlet.MaxSupply = powerOutput;
-            fuelJar.FuelAmount -= availableInject;
-            _audioSystem.PlayPvs(controller.InjectSound, uid, AudioParams.Default.WithVolume(overloading ? 10f : 0f));
-            UpdateUi(uid, controller);
+            // if the jar is empty shut down the AME
+            if (fuelJar.FuelAmount <= 0)
+            {
+                SetInjecting(uid, false, null, controller);
+            }
+            else
+            {
+                var availableInject = Math.Min(controller.InjectionAmount, fuelJar.FuelAmount);
+                var powerOutput = group.InjectFuel(availableInject, out var overloading);
+                if (TryComp<PowerSupplierComponent>(uid, out var powerOutlet))
+                    powerOutlet.MaxSupply = powerOutput;
+                fuelJar.FuelAmount -= availableInject;
+                // only play audio if we actually had an injection
+                if (availableInject > 0)
+                    _audioSystem.PlayPvs(controller.InjectSound, uid, AudioParams.Default.WithVolume(overloading ? 10f : 0f));
+                UpdateUi(uid, controller);
+            }
         }
 
         controller.Stability = group.GetTotalStability();
 
+        group.UpdateCoreVisuals();
         UpdateDisplay(uid, controller.Stability, controller);
 
         if (controller.Stability <= 0)
@@ -94,7 +105,7 @@ public sealed class AmeControllerSystem : EntitySystem
             return;
 
         var state = GetUiState(uid, controller);
-        UserInterfaceSystem.SetUiState(bui, state);
+        _userInterfaceSystem.SetUiState(bui, state);
     }
 
     private AmeControllerBoundUserInterfaceState GetUiState(EntityUid uid, AmeControllerComponent controller)
@@ -155,7 +166,7 @@ public sealed class AmeControllerSystem : EntitySystem
             return;
 
         controller.Injecting = value;
-        _appearanceSystem.SetData(uid, AmeControllerVisuals.DisplayState, value ? AmeControllerState.On : AmeControllerState.Off);
+        UpdateDisplay(uid, controller.Stability, controller);
         if (!value && TryComp<PowerSupplierComponent>(uid, out var powerOut))
             powerOut.MaxSupply = 0;
 
@@ -215,15 +226,20 @@ public sealed class AmeControllerSystem : EntitySystem
         if (!Resolve(uid, ref controller, ref appearance))
             return;
 
+        var ameControllerState = stability switch
+        {
+            < 10 => AmeControllerState.Fuck,
+            < 50 => AmeControllerState.Critical,
+            _ => AmeControllerState.On,
+        };
+
+        if (!controller.Injecting)
+            ameControllerState = AmeControllerState.Off;
+
         _appearanceSystem.SetData(
             uid,
             AmeControllerVisuals.DisplayState,
-            stability switch
-            {
-                < 10 => AmeControllerState.Fuck,
-                < 50 => AmeControllerState.Critical,
-                _ => AmeControllerState.On,
-            },
+            ameControllerState,
             appearance
         );
     }

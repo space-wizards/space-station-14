@@ -14,6 +14,9 @@ namespace Content.Server.Administration.Commands
     [AdminCommand(AdminFlags.Admin)]
     public sealed class AddReagent : IConsoleCommand
     {
+        [Dependency] private readonly IEntityManager _entManager = default!;
+        [Dependency] private readonly IPrototypeManager _protomanager = default!;
+
         public string Command => "addreagent";
         public string Description => "Add (or remove) some amount of reagent from some solution.";
         public string Help => $"Usage: {Command} <target> <solution> <reagent> <quantity>";
@@ -26,13 +29,13 @@ namespace Content.Server.Administration.Commands
                 return;
             }
 
-            if (!EntityUid.TryParse(args[0], out var uid))
+            if (!NetEntity.TryParse(args[0], out var uidNet) || !_entManager.TryGetEntity(uidNet, out var uid))
             {
                 shell.WriteLine($"Invalid entity id.");
                 return;
             }
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(uid, out SolutionContainerManagerComponent? man))
+            if (!_entManager.TryGetComponent(uid, out SolutionContainerManagerComponent? man))
             {
                 shell.WriteLine($"Entity does not have any solutions.");
                 return;
@@ -46,7 +49,7 @@ namespace Content.Server.Administration.Commands
             }
             var solution = man.Solutions[args[1]];
 
-            if (!IoCManager.Resolve<IPrototypeManager>().HasIndex<ReagentPrototype>(args[2]))
+            if (!_protomanager.HasIndex<ReagentPrototype>(args[2]))
             {
                 shell.WriteLine($"Unknown reagent prototype");
                 return;
@@ -60,9 +63,9 @@ namespace Content.Server.Administration.Commands
             var quantity = FixedPoint2.New(MathF.Abs(quantityFloat));
 
             if (quantityFloat > 0)
-                EntitySystem.Get<SolutionContainerSystem>().TryAddReagent(uid, solution, args[2], quantity, out var _);
+                _entManager.System<SolutionContainerSystem>().TryAddReagent(uid.Value, solution, args[2], quantity, out _);
             else
-                EntitySystem.Get<SolutionContainerSystem>().TryRemoveReagent(uid, solution, args[2], quantity);
+                _entManager.System<SolutionContainerSystem>().RemoveReagent(uid.Value, solution, args[2], quantity);
         }
     }
 }

@@ -24,10 +24,11 @@
     solution: food
   - type: Drink
     solution: food
-    openSounds:
-      collection: packetOpenSounds
     useSound:
       path: /Audio/Items/eating_1.ogg
+  - type: Openable
+    sound:
+      collection: packetOpenSounds
   - type: Spillable
     solution: food
   - type: MeleeWeapon
@@ -73,11 +74,8 @@
       - !type:PlaySoundBehavior
         sound:
           collection: desecration
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          PuddleFlour:
-            min: 1
-            max: 1
+      - !type:SpillBehavior
+        solution: food
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: TrashOnEmpty
@@ -117,11 +115,8 @@
       - !type:PlaySoundBehavior
         sound:
           collection: desecration
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          PuddleFlour:
-            min: 1
-            max: 1
+      - !type:SpillBehavior
+        solution: food
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
 
@@ -470,6 +465,27 @@
   components:
   - type: Sprite
     state: butter
+    
+- type: entity
+  name: stick of cannabis butter
+  parent: FoodBakingBase
+  id: FoodCannabisButter
+  description: Add this to your favorite baked goods for an irie time.
+  components:
+  - type: Sprite
+    state: butter
+    color: "#82C36E"
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 100
+        reagents:
+        - ReagentId: Butter
+          Quantity: 10
+        - ReagentId: THC
+          Quantity: 82
+  - type: Extractable
+    grindableSolutionName: food
 
 - type: entity
   name: cheese wheel

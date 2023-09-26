@@ -21,7 +21,7 @@
     factions:
     - SimpleHostile
   - type: Sprite
-    drawdepth: Mobs
+    drawdepth: SmallMobs
     sprite: Mobs/Animals/regalrat.rsi
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
@@ -78,6 +78,8 @@
     states:
       Alive:
         Base: regalrat
+      Critical:
+        Base: critical
       Dead:
         Base: dead
   - type: GhostRole
@@ -89,27 +91,14 @@
   - type: Tag
     tags:
       - CannotSuicide
-      - DoorBumpOpener
       - FootstepSound
   - type: NoSlip
   - type: RatKing
-    actionRaiseArmy:
-      useDelay: 4
-      icon: Interface/Actions/ratKingArmy.png
-      name: rat-king-raise-army-name
-      description: rat-king-raise-army-description
-      itemIconStyle: NoItem
-      event: !type:RatKingRaiseArmyActionEvent
     hungerPerArmyUse: 25
-    actionDomain:
-      useDelay: 10
-      icon: Interface/Actions/ratKingDomain.png
-      name: rat-king-domain-name
-      description: rat-king-domain-description
-      itemIconStyle: NoItem
-      event: !type:RatKingDomainActionEvent
     hungerPerDomainUse: 50
   - type: MobsterAccent
+  - type: Speech
+    speechVerb: SmallMob
   - type: Butcherable
     spawned:
     - id: ClothingHeadHatFancyCrown #how did that get there?
@@ -130,7 +119,6 @@
   suffix: Buff
   components:
   - type: Sprite
-    drawdepth: Mobs
     sprite: Mobs/Animals/buffrat.rsi
     scale: 1.2, 1.2
     layers:
@@ -151,17 +139,6 @@
     damage:
       types:
         Blunt: 66 #oof ouch owie my bones
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape:
-          !type:PhysShapeCircle
-          radius: 0.35
-        density: 400
-        mask:
-        - MobMask
-        layer:
-        - MobLayer
   - type: SlowOnDamage
     speedModifierThresholds:
       200: 0.7
@@ -175,6 +152,7 @@
   id: MobRatServant
   parent: SimpleMobBase
   description: He's da mini rat. He don't make da roolz.
+  noSpawn: true #Must be configured to a King or the AI breaks.
   components:
   - type: CombatMode
   - type: MovementSpeedModifier
@@ -184,7 +162,14 @@
   - type: MobMover
   - type: HTN
     rootTask:
-      task: SimpleHostileCompound
+      task: RatServantCompound
+    blackboard:
+      IdleRange: !type:Single
+        3.5
+      FollowCloseRange: !type:Single
+        2.0
+      FollowRange: !type:Single
+        3.0
   - type: Reactive
     groups:
       Flammable: [Touch]
@@ -266,22 +251,126 @@
       Female: Mouse
       Unsexed: Mouse
     wilhelmProbability: 0.001
-  - type: GhostRole
-    makeSentient: true
-    name: ghost-role-information-rat-servant-name
-    description: ghost-role-information-rat-servant-description
-    rules: ghost-role-information-rat-servant-rules
-  - type: GhostTakeoverAvailable
   - type: Tag
     tags:
       - CannotSuicide
-      - DoorBumpOpener
       - FootstepSound
   - type: NoSlip
   - type: MobPrice
     price: 500 # rat wealth
   - type: MobsterAccent
     isBoss: false
+  - type: Speech
+    speechVerb: SmallMob
   - type: GuideHelp
     guides:
     - MinorAntagonists
+
+- type: weightedRandomEntity
+  id: RatKingLoot
+  weights:
+    RandomSpawner100: 66 #garbage
+    FoodCheese: 28 #food
+    IngotGold1: 5 #loot
+
+- type: entity
+  id: ActionRatKingRaiseArmy
+  name: Raise Army
+  description: Spend some hunger to summon an allied rat to help defend you.
+  noSpawn: true
+  components:
+  - type: InstantAction
+    useDelay: 4
+    icon:
+      sprite: Interface/Actions/actions_rat_king.rsi
+      state: ratKingArmy
+    event: !type:RatKingRaiseArmyActionEvent
+
+- type: entity
+  id: ActionRatKingDomain
+  name: Rat King's Domain
+  description: Spend some hunger to release a cloud of miasma into the air.
+  noSpawn: true
+  components:
+  - type: InstantAction
+    useDelay: 6
+    icon:
+      sprite: Interface/Actions/actions_rat_king.rsi
+      state: ratKingDomain
+    event: !type:RatKingDomainActionEvent
+
+- type: entity
+  id: ActionRatKingOrderStay
+  name: Stay
+  description: Command your army to stand in place.
+  noSpawn: true
+  components:
+  - type: InstantAction
+    useDelay: 1
+    icon:
+      sprite: Interface/Actions/actions_rat_king.rsi
+      state: stayOff
+    iconOn:
+      sprite: Interface/Actions/actions_rat_king.rsi
+      state: stay
+    event:
+      !type:RatKingOrderActionEvent
+        type: Stay
+    priority: 5
+
+- type: entity
+  id: ActionRatKingOrderFollow
+  name: Follow
+  description: Command your army to follow you around.
+  noSpawn: true
+  components:
+  - type: InstantAction
+    useDelay: 1
+    icon:
+      sprite: Interface/Actions/actions_rat_king.rsi
+      state: followOff
+    iconOn:
+      sprite: Interface/Actions/actions_rat_king.rsi
+      state: follow
+    event:
+      !type:RatKingOrderActionEvent
+      type: Follow
+    priority: 6
+
+- type: entity
+  id: ActionRatKingOrderCheeseEm
+  name: Cheese 'Em
+  description: Command your army to attack whoever you point at.
+  noSpawn: true
+  components:
+  - type: InstantAction
+    useDelay: 1
+    icon:
+      sprite: Interface/Actions/actions_rat_king.rsi
+      state: attackOff
+    iconOn:
+      sprite: Interface/Actions/actions_rat_king.rsi
+      state: attack
+    event:
+      !type:RatKingOrderActionEvent
+      type: CheeseEm
+    priority: 7
+
+- type: entity
+  id: ActionRatKingOrderLoose
+  name: Loose
+  description: Command your army to act at their own will.
+  noSpawn: true
+  components:
+  - type: InstantAction
+    useDelay: 1
+    icon:
+      sprite: Interface/Actions/actions_rat_king.rsi
+      state: looseOff
+    iconOn:
+      sprite: Interface/Actions/actions_rat_king.rsi
+      state: loose
+    event:
+      !type:RatKingOrderActionEvent
+      type: Loose
+    priority: 8

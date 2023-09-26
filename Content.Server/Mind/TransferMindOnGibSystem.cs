@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using Content.Server.Body.Components;
-using Content.Server.Mind.Components;
+using Content.Shared.Mind;
+using Content.Shared.Mind.Components;
 using Content.Shared.Tag;
 using Robust.Shared.Random;
 
@@ -15,7 +16,7 @@ public sealed class TransferMindOnGibSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly TagSystem _tag = default!;
-    [Dependency] private readonly MindSystem _mindSystem = default!;
+    [Dependency] private readonly SharedMindSystem _mindSystem = default!;
 
     /// <inheritdoc/>
     public override void Initialize()

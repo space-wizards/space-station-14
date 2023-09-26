@@ -6,23 +6,26 @@ namespace Content.Server.Ghost.Roles.UI
 {
     public sealed class MakeGhostRoleEui : BaseEui
     {
-        public MakeGhostRoleEui(EntityUid entityUid)
+        private IEntityManager _entManager;
+
+        public MakeGhostRoleEui(IEntityManager entManager, NetEntity entity)
         {
-            EntityUid = entityUid;
+            _entManager = entManager;
+            Entity = entity;
         }
 
-        public EntityUid EntityUid { get; }
+        public NetEntity Entity { get; }
 
         public override EuiStateBase GetNewState()
         {
-            return new MakeGhostRoleEuiState(EntityUid);
+            return new MakeGhostRoleEuiState(Entity);
         }
 
         public override void Closed()
         {
             base.Closed();
 
-            EntitySystem.Get<GhostRoleSystem>().CloseMakeGhostRoleEui(Player);
+            _entManager.System<GhostRoleSystem>().CloseMakeGhostRoleEui(Player);
         }
     }
 }

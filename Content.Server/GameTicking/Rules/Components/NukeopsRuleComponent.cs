@@ -1,15 +1,14 @@
 using Content.Server.NPC.Components;
+using Content.Server.RoundEnd;
 using Content.Server.StationEvents.Events;
 using Content.Shared.Dataset;
-using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.Roles;
-using Robust.Server.Player;
-using Robust.Shared.Audio;
 using Robust.Shared.Map;
+using Robust.Shared.Players;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Set;
 using Robust.Shared.Utility;
 
 namespace Content.Server.GameTicking.Rules.Components;
@@ -33,16 +32,82 @@ public sealed partial class NukeopsRuleComponent : Component
     public int MaxOperatives = 5;
 
     /// <summary>
-    /// Whether or not all of the nuclear operatives dying will end the round. Used by LoneOpsSpawn event.
+    /// What will happen if all of the nuclear operatives will die. Used by LoneOpsSpawn event.
     /// </summary>
-    [DataField("endsRound")]
-    public bool EndsRound = true;
+    [DataField("roundEndBehavior")]
+    public RoundEndBehavior RoundEndBehavior = RoundEndBehavior.ShuttleCall;
+
+    /// <summary>
+    /// Text for shuttle call if RoundEndBehavior is ShuttleCall.
+    /// </summary>
+    [DataField("roundEndTextSender")]
+    public string RoundEndTextSender = "comms-console-announcement-title-centcom";
+
+    /// <summary>
+    /// Text for shuttle call if RoundEndBehavior is ShuttleCall.
+    /// </summary>
+    [DataField("roundEndTextShuttleCall")]
+    public string RoundEndTextShuttleCall = "nuke-ops-no-more-threat-announcement-shuttle-call";
+
+    /// <summary>
+    /// Text for announcement if RoundEndBehavior is ShuttleCall. Used if shuttle is already called
+    /// </summary>
+    [DataField("roundEndTextAnnouncement")]
+    public string RoundEndTextAnnouncement = "nuke-ops-no-more-threat-announcement";
+
+    /// <summary>
+    /// Time to emergency shuttle to arrive if RoundEndBehavior is ShuttleCall.
+    /// </summary>
+    [DataField("evacShuttleTime")]
+    public TimeSpan EvacShuttleTime = TimeSpan.FromMinutes(10);
 
     /// <summary>
     /// Whether or not to spawn the nuclear operative outpost. Used by LoneOpsSpawn event.
     /// </summary>
     [DataField("spawnOutpost")]
     public bool SpawnOutpost = true;
+
+    /// <summary>
+    /// Whether or not nukie left their outpost
+    /// </summary>
+    [DataField("leftOutpost")]
+    public bool LeftOutpost = false;
+
+    /// <summary>
+    ///     Enables opportunity to get extra TC for war declaration
+    /// </summary>
+    [DataField("canEnableWarOps")]
+    public bool CanEnableWarOps = true;
+
+    /// <summary>
+    ///     Indicates time when war has been declared, null if not declared
+    /// </summary>
+    [DataField("warDeclaredTime", customTypeSerializer: typeof(TimeOffsetSerializer))]
+    public TimeSpan? WarDeclaredTime;
+
+    /// <summary>
+    ///     This amount of TC will be given to each nukie
+    /// </summary>
+    [DataField("warTCAmountPerNukie")]
+    public int WarTCAmountPerNukie = 40;
+
+    /// <summary>
+    ///     Time allowed for declaration of war
+    /// </summary>
+    [DataField("warDeclarationDelay")]
+    public TimeSpan WarDeclarationDelay = TimeSpan.FromMinutes(6);
+
+    /// <summary>
+    ///     Delay between war declaration and nuke ops arrival on station map. Gives crew time to prepare
+    /// </summary>
+    [DataField("warNukieArriveDelay")]
+    public TimeSpan? WarNukieArriveDelay = TimeSpan.FromMinutes(15);
+
+    /// <summary>
+    ///     Minimal operatives count for war declaration
+    /// </summary>
+    [DataField("warDeclarationMinOps")]
+    public int WarDeclarationMinOps = 4;
 
     [DataField("spawnPointProto", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string SpawnPointPrototype = "SpawnPointNukies";
@@ -114,11 +179,10 @@ public sealed partial class NukeopsRuleComponent : Component
 
     /// <summary>
     ///     Players who played as an operative at some point in the round.
-    ///     Stores the session as well as the entity name
+    ///     Stores the mind as well as the entity name
     /// </summary>
-    /// todo: don't store sessions, dingus
     [DataField("operativePlayers")]
-    public Dictionary<string, IPlayerSession> OperativePlayers = new();
+    public Dictionary<string, EntityUid> OperativePlayers = new();
 
     [DataField("faction", customTypeSerializer: typeof(PrototypeIdSerializer<NpcFactionPrototype>), required: true)]
     public string Faction = default!;

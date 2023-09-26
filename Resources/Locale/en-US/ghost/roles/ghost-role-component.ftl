@@ -76,6 +76,9 @@ ghost-role-information-mimebot-description = A Mimebot, act like a mime but dont
 ghost-role-information-taxibot-name = TaxiBot
 ghost-role-information-taxibot-description = Drive the station crew to their destination.
 
+ghost-role-information-supplybot-name = SupplyBot
+ghost-role-information-supplybot-description = Deliver goods around the station.
+
 ghost-role-information-space-bear-name = Space bear
 ghost-role-information-space-bear-description = You're a bear! Do bear things.
 
@@ -118,6 +121,9 @@ ghost-role-information-skeleton-pirate-description = Cause chaos and loot the st
 
 ghost-role-information-skeleton-biker-name = Skeleton Biker
 ghost-role-information-skeleton-biker-description = Ride around on your sweet ride.
+
+ghost-role-information-closet-skeleton-name = Closet Skeleton
+ghost-role-information-closet-skeleton-description = Wreak havoc! You are a primordial force with no allegiance. Live happily with the crew or wage sweet skeletal war.
 
 ghost-role-information-onestar-mecha-name = Onestar Mecha
 ghost-role-information-onestar-mecha-description = You are an experimental mecha created by who-knows-what, all you know is that you have weapons and you detect fleshy moving targets nearby...

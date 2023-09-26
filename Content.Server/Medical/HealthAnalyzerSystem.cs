@@ -32,7 +32,7 @@ namespace Content.Server.Medical
 
             _audio.PlayPvs(healthAnalyzer.ScanningBeginSound, uid);
 
-            _doAfterSystem.TryStartDoAfter(new DoAfterArgs(args.User, healthAnalyzer.ScanDelay, new HealthAnalyzerDoAfterEvent(), uid, target: args.Target, used: uid)
+            _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, args.User, healthAnalyzer.ScanDelay, new HealthAnalyzerDoAfterEvent(), uid, target: args.Target, used: uid)
             {
                 BreakOnTargetMove = true,
                 BreakOnUserMove = true,
@@ -75,7 +75,7 @@ namespace Content.Server.Medical
 
             OpenUserInterface(user, healthAnalyzer);
 
-            _uiSystem.SendUiMessage(healthAnalyzer.UserInterface, new HealthAnalyzerScannedUserMessage(target, temp != null ? temp.CurrentTemperature : float.NaN,
+            _uiSystem.SendUiMessage(healthAnalyzer.UserInterface, new HealthAnalyzerScannedUserMessage(GetNetEntity(target), temp != null ? temp.CurrentTemperature : float.NaN,
                 bloodstream != null ? bloodstream.BloodSolution.FillFraction : float.NaN));
         }
     }

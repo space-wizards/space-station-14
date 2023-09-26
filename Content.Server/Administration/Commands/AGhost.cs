@@ -1,7 +1,7 @@
 ﻿using Content.Server.GameTicking;
-using Content.Server.Mind;
 using Content.Shared.Administration;
 using Content.Shared.Ghost;
+using Content.Shared.Mind;
 using Robust.Server.Player;
 using Robust.Shared.Console;
 
@@ -25,7 +25,7 @@ namespace Content.Server.Administration.Commands
                 return;
             }
 
-            var mindSystem = _entities.System<MindSystem>();
+            var mindSystem = _entities.System<SharedMindSystem>();
             if (!mindSystem.TryGetMind(player, out var mindId, out var mind))
             {
                 shell.WriteLine("You can't ghost here!");
@@ -48,7 +48,7 @@ namespace Content.Server.Administration.Commands
                 ? _entities.GetComponent<TransformComponent>(player.AttachedEntity.Value).Coordinates
                 : EntitySystem.Get<GameTicker>().GetObserverSpawnPoint();
             var ghost = _entities.SpawnEntity("AdminObserver", coordinates);
-            _entities.System<SharedTransformSystem>().AttachToGridOrMap(ghost);
+            _entities.GetComponent<TransformComponent>(ghost).AttachToGridOrMap();
 
             if (canReturn)
             {

@@ -16,7 +16,6 @@ namespace Content.Client.Shuttles.UI;
 public class DockingControl : Control
 {
     private readonly IEntityManager _entManager;
-    private readonly SharedTransformSystem _transform;
     private readonly IMapManager _mapManager;
 
     private float _range = 8f;
@@ -33,7 +32,7 @@ public class DockingControl : Control
     private int ScaledMinimapRadius => (int) (MapGridControl.UIDisplayRadius * UIScale);
     private float MinimapScale => _range != 0 ? ScaledMinimapRadius / _range : 0f;
 
-    public EntityUid? ViewedDock;
+    public NetEntity? ViewedDock;
     public EntityUid? GridEntity;
 
     public EntityCoordinates? Coordinates;
@@ -42,12 +41,11 @@ public class DockingControl : Control
     /// <summary>
     /// Stored by GridID then by docks
     /// </summary>
-    public Dictionary<EntityUid, List<DockingInterfaceState>> Docks = new();
+    public Dictionary<NetEntity, List<DockingInterfaceState>> Docks = new();
 
     public DockingControl()
     {
         _entManager = IoCManager.Resolve<IEntityManager>();
-        _transform = _entManager.System<SharedTransformSystem>();
         _mapManager = IoCManager.Resolve<IMapManager>();
         _rangeSquared = _range * _range;
         MinSize = new Vector2(SizeFull, SizeFull);
@@ -80,10 +78,7 @@ public class DockingControl : Control
 
         if (Coordinates == null ||
             Angle == null ||
-            !_entManager.TryGetComponent<TransformComponent>(GridEntity, out var gridXform))
-        {
-            return;
-        }
+            !_entManager.TryGetComponent<TransformComponent>(GridEntity, out var gridXform)) return;
 
         var rotation = Matrix3.CreateRotation(-Angle.Value + Math.PI);
         var matrix = Matrix3.CreateTranslation(-Coordinates.Value.Position);
@@ -145,8 +140,8 @@ public class DockingControl : Control
             ScalePosition(rotation.Transform(new Vector2(0.5f, -0.5f)))), Color.Green);
 
         // Draw nearby grids
-        var worldPos = _transform.GetWorldMatrix(gridXform).Transform(Coordinates.Value.Position);
-        var gridInvMatrix = _transform.GetInvWorldMatrix(gridXform);
+        var worldPos = gridXform.WorldMatrix.Transform(Coordinates.Value.Position);
+        var gridInvMatrix = gridXform.InvWorldMatrix;
         Matrix3.Multiply(in gridInvMatrix, in matrix, out var invMatrix);
 
         // TODO: Getting some overdraw so need to fix that.
@@ -162,7 +157,7 @@ public class DockingControl : Control
             if (!_entManager.TryGetComponent<FixturesComponent>(grid.Owner, out var gridFixtures))
                 continue;
 
-            var gridMatrix = _transform.GetWorldMatrix(grid.Owner);
+            var gridMatrix = xformQuery.GetComponent(grid.Owner).WorldMatrix;
 
             Matrix3.Multiply(in gridMatrix, in invMatrix, out var matty);
 
@@ -209,7 +204,7 @@ public class DockingControl : Control
             }
 
             // Draw any docks on that grid
-            if (Docks.TryGetValue(grid.Owner, out var gridDocks))
+            if (Docks.TryGetValue(_entManager.GetNetEntity(grid.Owner), out var gridDocks))
             {
                 foreach (var dock in gridDocks)
                 {

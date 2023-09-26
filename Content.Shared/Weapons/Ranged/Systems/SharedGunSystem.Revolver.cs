@@ -56,7 +56,7 @@ public partial class SharedGunSystem
         args.State = new RevolverAmmoProviderComponentState
         {
             CurrentIndex = component.CurrentIndex,
-            AmmoSlots = component.AmmoSlots,
+            AmmoSlots = GetNetEntityList(component.AmmoSlots),
             Chambers = component.Chambers,
         };
     }
@@ -73,7 +73,7 @@ public partial class SharedGunSystem
         // Need to copy across the state rather than the ref.
         for (var i = 0; i < component.AmmoSlots.Count; i++)
         {
-            component.AmmoSlots[i] = state.AmmoSlots[i];
+            component.AmmoSlots[i] = EnsureEntity<RevolverAmmoProviderComponent>(state.AmmoSlots[i], uid);
             component.Chambers[i] = state.Chambers[i];
         }
 
@@ -447,7 +447,7 @@ public partial class SharedGunSystem
     protected sealed class RevolverAmmoProviderComponentState : ComponentState
     {
         public int CurrentIndex;
-        public List<EntityUid?> AmmoSlots = default!;
+        public List<NetEntity?> AmmoSlots = default!;
         public bool?[] Chambers = default!;
     }
 

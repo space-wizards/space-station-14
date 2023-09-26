@@ -61,10 +61,12 @@ public sealed class NPCSteeringSystem : SharedNPCSteeringSystem
 
         foreach (var data in ev.Data)
         {
-            if (!Exists(data.EntityUid))
+            var entity = GetEntity(data.EntityUid);
+
+            if (!Exists(entity))
                 continue;
 
-            var comp = EnsureComp<NPCSteeringComponent>(data.EntityUid);
+            var comp = EnsureComp<NPCSteeringComponent>(entity);
             comp.Direction = data.Direction;
             comp.DangerMap = data.Danger;
             comp.InterestMap = data.Interest;
@@ -78,12 +80,10 @@ public sealed class NPCSteeringOverlay : Overlay
     public override OverlaySpace Space => OverlaySpace.WorldSpace;
 
     private readonly IEntityManager _entManager;
-    private readonly SharedTransformSystem _transform;
 
     public NPCSteeringOverlay(IEntityManager entManager)
     {
         _entManager = entManager;
-        _transform = entManager.System<SharedTransformSystem>();
     }
 
     protected override void Draw(in OverlayDrawArgs args)
@@ -95,7 +95,7 @@ public sealed class NPCSteeringOverlay : Overlay
                 continue;
             }
 
-            var worldPos = _transform.GetWorldPosition(xform);
+            var (worldPos, worldRot) = xform.GetWorldPositionRotation();
 
             if (!args.WorldAABB.Contains(worldPos))
                 continue;

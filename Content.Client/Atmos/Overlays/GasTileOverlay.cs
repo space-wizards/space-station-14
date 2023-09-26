@@ -8,6 +8,8 @@ using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Shared.Enums;
+using Robust.Shared.Graphics;
+using Robust.Shared.Graphics.RSI;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Prototypes;
@@ -19,7 +21,6 @@ namespace Content.Client.Atmos.Overlays
     public sealed class GasTileOverlay : Overlay
     {
         private readonly IEntityManager _entManager;
-        private readonly SharedTransformSystem _transform;
         private readonly IMapManager _mapManager;
 
         public override OverlaySpace Space => OverlaySpace.WorldSpaceEntities;
@@ -49,7 +50,6 @@ namespace Content.Client.Atmos.Overlays
         public GasTileOverlay(GasTileOverlaySystem system, IEntityManager entManager, IResourceCache resourceCache, IPrototypeManager protoMan, SpriteSystem spriteSys)
         {
             _entManager = entManager;
-            _transform = entManager.System<SharedTransformSystem>();
             _mapManager = IoCManager.Resolve<IMapManager>();
             _shader = protoMan.Index<ShaderPrototype>("unshaded").Instance();
             ZIndex = GasOverlayZIndex;
@@ -81,7 +81,7 @@ namespace Content.Client.Atmos.Overlays
 
                         if (!rsi.TryGetState(stateId, out var state)) continue;
 
-                        _frames[i] = state.GetFrames(RSI.State.Direction.South);
+                        _frames[i] = state.GetFrames(RsiDirection.South);
                         _frameDelays[i] = state.GetDelays();
                         _frameCounter[i] = 0;
                         break;
@@ -99,7 +99,7 @@ namespace Content.Client.Atmos.Overlays
                 if (!fire.TryGetState((i + 1).ToString(), out var state))
                     throw new ArgumentOutOfRangeException($"Fire RSI doesn't have state \"{i}\"!");
 
-                _fireFrames[i] = state.GetFrames(RSI.State.Direction.South);
+                _fireFrames[i] = state.GetFrames(RsiDirection.South);
                 _fireFrameDelays[i] = state.GetDelays();
                 _fireFrameCounter[i] = 0;
             }
@@ -184,7 +184,7 @@ namespace Content.Client.Atmos.Overlays
 
             // TODO: WorldBounds callback.
             _mapManager.FindGridsIntersecting(args.MapId, args.WorldAABB, ref gridState,
-                (EntityUid uid, MapGridComponent grid,
+                static (EntityUid uid, MapGridComponent grid,
                     ref (Box2Rotated WorldBounds,
                         DrawingHandleWorld drawHandle,
                         int gasCount,
@@ -202,7 +202,7 @@ namespace Content.Client.Atmos.Overlays
                             return true;
                         }
 
-                    var (_, _, worldMatrix, invMatrix) = _transform.GetWorldPositionRotationMatrixWithInv(gridXform);
+                    var (_, _, worldMatrix, invMatrix) = gridXform.GetWorldPositionRotationMatrixWithInv();
                     state.drawHandle.SetTransform(worldMatrix);
                     var floatBounds = invMatrix.TransformBox(in state.WorldBounds).Enlarged(grid.TileSize);
                     var localBounds = new Box2i(

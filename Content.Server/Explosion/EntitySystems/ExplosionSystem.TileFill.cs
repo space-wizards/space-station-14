@@ -87,8 +87,8 @@ public sealed partial class ExplosionSystem : EntitySystem
         if (referenceGrid != null)
         {
             var xform = Transform(_mapManager.GetGrid(referenceGrid.Value).Owner);
-            spaceMatrix = _transformSystem.GetWorldMatrix(xform);
-            spaceAngle = _transformSystem.GetWorldRotation(xform);
+            spaceMatrix = xform.WorldMatrix;
+            spaceAngle = xform.WorldRotation;
         }
 
         // is the explosion starting on a grid?
@@ -331,12 +331,12 @@ public sealed partial class ExplosionSystem : EntitySystem
 
         var (area, iterationIntensity, spaceData, gridData, spaceMatrix) = results.Value;
 
-        Logger.Info($"Generated explosion preview with {area} tiles in {stopwatch.Elapsed.TotalMilliseconds}ms");
+        Log.Info($"Generated explosion preview with {area} tiles in {stopwatch.Elapsed.TotalMilliseconds}ms");
 
-        Dictionary<EntityUid, Dictionary<int, List<Vector2i>>> tileLists = new();
+        Dictionary<NetEntity, Dictionary<int, List<Vector2i>>> tileLists = new();
         foreach (var (grid, data) in gridData)
         {
-            tileLists.Add(grid, data.TileLists);
+            tileLists.Add(GetNetEntity(grid), data.TileLists);
         }
 
         return new ExplosionVisualsState(

@@ -1,17 +1,17 @@
 using Content.Server.EUI;
-using Content.Server.Mind;
 using Content.Shared.Eui;
 using Content.Shared.Ghost;
+using Content.Shared.Mind;
 
 namespace Content.Server.Ghost;
 
 public sealed class ReturnToBodyEui : BaseEui
 {
-    private readonly MindSystem _mindSystem;
+    private readonly SharedMindSystem _mindSystem;
 
     private readonly MindComponent _mind;
 
-    public ReturnToBodyEui(MindComponent mind, MindSystem mindSystem)
+    public ReturnToBodyEui(MindComponent mind, SharedMindSystem mindSystem)
     {
         _mind = mind;
         _mindSystem = mindSystem;

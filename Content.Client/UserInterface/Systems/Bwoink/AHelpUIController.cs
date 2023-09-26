@@ -4,7 +4,12 @@ using System.Numerics;
 using Content.Client.Administration.Managers;
 using Content.Client.Administration.Systems;
 using Content.Client.Administration.UI.Bwoink;
+using Content.Client.Gameplay;
+using Content.Client.Lobby;
+using Content.Client.Lobby.UI;
+using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Controls;
+using Content.Client.UserInterface.Systems.MenuBar.Widgets;
 using Content.Shared.Administration;
 using Content.Shared.Input;
 using JetBrains.Annotations;
@@ -23,7 +28,7 @@ using Robust.Shared.Utility;
 namespace Content.Client.UserInterface.Systems.Bwoink;
 
 [UsedImplicitly]
-public sealed class AHelpUIController: UIController, IOnSystemChanged<BwoinkSystem>
+public sealed class AHelpUIController: UIController, IOnSystemChanged<BwoinkSystem>, IOnStateChanged<GameplayState>, IOnStateChanged<LobbyState>
 {
     [Dependency] private readonly IClientAdminManager _adminManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
@@ -31,9 +36,11 @@ public sealed class AHelpUIController: UIController, IOnSystemChanged<BwoinkSyst
     [Dependency] private readonly IUserInterfaceManager _uiManager = default!;
 
     private BwoinkSystem? _bwoinkSystem;
-    private MenuButton? AhelpButton => UIManager.GetActiveUIWidgetOrNull<MenuBar.Widgets.GameTopMenuBar>()?.AHelpButton;
+    private MenuButton? GameAHelpButton => UIManager.GetActiveUIWidgetOrNull<GameTopMenuBar>()?.AHelpButton;
+    private Button? LobbyAHelpButton => (UIManager.ActiveScreen as LobbyGui)?.AHelpButton;
     public IAHelpUIHandler? UIHelper;
     private bool _discordRelayActive;
+    private bool _hasUnreadAHelp;
 
     public override void Initialize()
     {
@@ -47,22 +54,20 @@ public sealed class AHelpUIController: UIController, IOnSystemChanged<BwoinkSyst
 
     public void UnloadButton()
     {
-        if (AhelpButton == null)
-        {
-            return;
-        }
+        if (GameAHelpButton != null)
+            GameAHelpButton.OnPressed -= AHelpButtonPressed;
 
-        AhelpButton.OnPressed -= AHelpButtonPressed;
+        if (LobbyAHelpButton != null)
+            LobbyAHelpButton.OnPressed -= AHelpButtonPressed;
     }
 
     public void LoadButton()
     {
-        if (AhelpButton == null)
-        {
-            return;
-        }
+        if (GameAHelpButton != null)
+            GameAHelpButton.OnPressed += AHelpButtonPressed;
 
-        AhelpButton.OnPressed += AHelpButtonPressed;
+        if (LobbyAHelpButton != null)
+            LobbyAHelpButton.OnPressed += AHelpButtonPressed;
     }
 
     private void OnAdminStatusUpdated()
@@ -81,7 +86,7 @@ public sealed class AHelpUIController: UIController, IOnSystemChanged<BwoinkSyst
     public void OnSystemLoaded(BwoinkSystem system)
     {
         _bwoinkSystem = system;
-        _bwoinkSystem.OnBwoinkTextMessageRecieved += RecievedBwoink;
+        _bwoinkSystem.OnBwoinkTextMessageRecieved += ReceivedBwoink;
 
         CommandBinds.Builder
             .Bind(ContentKeyFunctions.OpenAHelp,
@@ -94,19 +99,26 @@ public sealed class AHelpUIController: UIController, IOnSystemChanged<BwoinkSyst
         CommandBinds.Unregister<AHelpUIController>();
 
         DebugTools.Assert(_bwoinkSystem != null);
-        _bwoinkSystem!.OnBwoinkTextMessageRecieved -= RecievedBwoink;
+        _bwoinkSystem!.OnBwoinkTextMessageRecieved -= ReceivedBwoink;
         _bwoinkSystem = null;
     }
 
     private void SetAHelpPressed(bool pressed)
     {
-        if (AhelpButton == null || AhelpButton.Pressed == pressed)
-            return;
-        AhelpButton.StyleClasses.Remove(MenuButton.StyleClassRedTopButton);
-        AhelpButton.Pressed = pressed;
+        if (GameAHelpButton != null)
+        {
+            GameAHelpButton.Pressed = pressed;
+        }
+
+        if (LobbyAHelpButton != null)
+        {
+            LobbyAHelpButton.Pressed = pressed;
+        }
+
+        UnreadAHelpRead();
     }
 
-    private void RecievedBwoink(object? sender, SharedBwoinkSystem.BwoinkTextMessage message)
+    private void ReceivedBwoink(object? sender, SharedBwoinkSystem.BwoinkTextMessage message)
     {
         Logger.InfoS("c.s.go.es.bwoink", $"@{message.UserId}: {message.Text}");
         var localPlayer = _playerManager.LocalPlayer;
@@ -121,10 +133,12 @@ public sealed class AHelpUIController: UIController, IOnSystemChanged<BwoinkSyst
         }
 
         EnsureUIHelper();
+
         if (!UIHelper!.IsOpen)
         {
-            AhelpButton?.StyleClasses.Add(MenuButton.StyleClassRedTopButton);
+            UnreadAHelpReceived();
         }
+
         UIHelper!.Receive(message);
     }
 
@@ -156,11 +170,6 @@ public sealed class AHelpUIController: UIController, IOnSystemChanged<BwoinkSyst
         UIHelper.OnClose += () => { SetAHelpPressed(false); };
         UIHelper.OnOpen +=  () => { SetAHelpPressed(true); };
         SetAHelpPressed(UIHelper.IsOpen);
-    }
-
-    public void Close()
-    {
-        UIHelper?.Close();
     }
 
     public void Open()
@@ -225,6 +234,70 @@ public sealed class AHelpUIController: UIController, IOnSystemChanged<BwoinkSyst
 
         helper.Control.PopOut.Disabled = true;
         helper.Control.PopOut.Visible = false;
+    }
+
+    private void UnreadAHelpReceived()
+    {
+        GameAHelpButton?.StyleClasses.Add(MenuButton.StyleClassRedTopButton);
+        LobbyAHelpButton?.StyleClasses.Add(StyleNano.StyleClassButtonColorRed);
+        _hasUnreadAHelp = true;
+    }
+
+    private void UnreadAHelpRead()
+    {
+        GameAHelpButton?.StyleClasses.Remove(MenuButton.StyleClassRedTopButton);
+        LobbyAHelpButton?.StyleClasses.Remove(StyleNano.StyleClassButtonColorRed);
+        _hasUnreadAHelp = false;
+    }
+
+    public void OnStateEntered(GameplayState state)
+    {
+        if (GameAHelpButton != null)
+        {
+            GameAHelpButton.OnPressed -= AHelpButtonPressed;
+            GameAHelpButton.OnPressed += AHelpButtonPressed;
+            GameAHelpButton.Pressed = UIHelper?.IsOpen ?? false;
+
+            if (_hasUnreadAHelp)
+            {
+                UnreadAHelpReceived();
+            }
+            else
+            {
+                UnreadAHelpRead();
+            }
+        }
+    }
+
+    public void OnStateExited(GameplayState state)
+    {
+        if (GameAHelpButton != null)
+            GameAHelpButton.OnPressed -= AHelpButtonPressed;
+    }
+
+    public void OnStateEntered(LobbyState state)
+    {
+        if (LobbyAHelpButton != null)
+        {
+            LobbyAHelpButton.OnPressed -= AHelpButtonPressed;
+            LobbyAHelpButton.OnPressed += AHelpButtonPressed;
+            LobbyAHelpButton.Pressed = UIHelper?.IsOpen ?? false;
+
+            if (_hasUnreadAHelp)
+            {
+                UnreadAHelpReceived();
+            }
+            else
+            {
+                UnreadAHelpRead();
+            }
+        }
+    }
+
+    public void OnStateExited(LobbyState state)
+    {
+        if (LobbyAHelpButton != null)
+            LobbyAHelpButton.OnPressed -= AHelpButtonPressed;
     }
 }
 
@@ -478,7 +551,7 @@ public sealed class UserAHelpUIHandler : IAHelpUIHandler
             TitleClass="windowTitleAlert",
             HeaderClass="windowHeaderAlert",
             Title=Loc.GetString("bwoink-user-title"),
-            MinSize = new Vector2(500, 200),
+            MinSize = new Vector2(500, 300),
         };
         _window.OnClose += () => { OnClose?.Invoke(); };
         _window.OnOpen += () => { OnOpen?.Invoke(); };

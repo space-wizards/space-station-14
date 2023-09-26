@@ -33,6 +33,7 @@
     tags:
       - DroneUsable #No bucket because it holds chems, they can drag the cart or use a drain
       - Mop
+      - MopBasic
   - type: GuideHelp
     guides:
     - Janitorial
@@ -52,6 +53,11 @@
           Blunt: 10
     - type: Spillable
       solution: absorbed
+    - type: Wieldable
+    - type: IncreaseDamageOnWield
+      damage:
+        types:
+          Blunt: 5
     - type: Item
       size: 15
       sprite: Objects/Specific/Janitorial/advmop.rsi
@@ -78,6 +84,7 @@
       tags:
         - DroneUsable #No bucket because it holds chems, they can drag the cart or use a drain
         - Mop
+        - MopAdv
 
 - type: entity
   name: mop bucket
@@ -111,10 +118,35 @@
   - type: Tag
     tags:
       - Wringer
+  - type: ItemMapper
+    mapLayers:
+      mopbucket_shark_blue:
+        whitelist:
+          tags:
+            - PlushieSharkBlue
+      mopbucket_shark_pink:
+        whitelist:
+          tags:
+            - PlushieSharkPink
+      mopbucket_shark_grey:
+        whitelist:
+          tags:
+            - PlushieSharkGrey
+    sprite: Objects/Fun/sharkplush.rsi
   - type: Physics
     bodyType: Dynamic
   - type: Transform
     noRot: true
+  - type: ItemSlots
+    slots:
+      shark_slot:
+        name: Shark
+        whitelist:
+          tags:
+            - PlushieSharkBlue
+            - PlushieSharkPink
+            - PlushieSharkGrey
+        priority: 3 # Higher than drinking priority
   - type: Fixtures
     fixtures:
       fix1:
@@ -128,12 +160,16 @@
         - MobLayer
   - type: Pullable
   - type: Drink
-    isOpen: true
     solution: bucket
   - type: Appearance
   - type: SolutionContainerVisuals
     maxFillLevels: 3
     fillBaseName: mopbucket_water-
+  - type: ContainerContainer
+    containers:
+      storagebase: !type:Container
+        ents: []
+      shark_slot: !type:ContainerSlot {}
   - type: GuideHelp
     guides:
     - Janitorial
@@ -326,7 +362,11 @@
         cart_mop:
           whitelist:
             tags:
-              - Mop
+              - MopBasic
+        cart_advmop:
+          whitelist:
+            tags:
+              - MopAdv
         cart_garbage:
           whitelist:
             tags:
@@ -373,7 +413,6 @@
       - key: enum.StorageUiKey.Key
         type: StorageBoundUserInterface
     - type: Drink
-      isOpen: true
       solution: bucket
     - type: ContainerContainer
       containers:
@@ -417,6 +456,8 @@
       sound:
         path: /Audio/Ambience/Objects/drain.ogg
     - type: Drain
+    - type: DumpableSolution
+      solution: drainBuffer
     - type: Appearance
     - type: SolutionContainerVisuals
       maxFillLevels: 1
