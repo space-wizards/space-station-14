@@ -4,6 +4,9 @@ using Robust.Shared.GameStates;
 
 namespace Content.Shared.Climbing.Components
 {
+    /// <summary>
+    /// Indicates this entity can be vaulted on top of.
+    /// </summary>
     [RegisterComponent, NetworkedComponent]
     public sealed partial class ClimbableComponent : Component
     {
@@ -16,7 +19,7 @@ namespace Content.Shared.Climbing.Components
         ///     The time it takes to climb onto the entity.
         /// </summary>
         [DataField("delay")]
-        public float ClimbDelay = 0.8f;
+        public float ClimbDelay = 1.5f;
 
         /// <summary>
         ///     Sound to be played when a climb is started.

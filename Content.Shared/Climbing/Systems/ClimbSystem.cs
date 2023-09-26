@@ -47,21 +47,37 @@ public sealed partial class ClimbSystem : VirtualController
     private const string ClimbingFixtureName = "climb";
     private const int ClimbingCollisionGroup = (int) (CollisionGroup.TableLayer | CollisionGroup.LowImpassable);
 
+    private EntityQuery<FixturesComponent> _fixturesQuery;
     private EntityQuery<TransformComponent> _xformQuery;
 
     public override void Initialize()
     {
         base.Initialize();
+
+        _fixturesQuery = GetEntityQuery<FixturesComponent>();
         _xformQuery = GetEntityQuery<TransformComponent>();
+
         SubscribeLocalEvent<ClimbingComponent, UpdateCanMoveEvent>(OnMoveAttempt);
         SubscribeLocalEvent<ClimbingComponent, EntParentChangedMessage>(OnParentChange);
-        SubscribeLocalEvent<ClimbableComponent, GetVerbsEvent<AlternativeVerb>>(AddClimbableVerb);
-        SubscribeLocalEvent<ClimbableComponent, DragDropTargetEvent>(OnClimbableDragDrop);
-
         SubscribeLocalEvent<ClimbingComponent, ClimbDoAfterEvent>(OnDoAfter);
         SubscribeLocalEvent<ClimbingComponent, EndCollideEvent>(OnClimbEndCollide);
         SubscribeLocalEvent<ClimbingComponent, BuckleChangeEvent>(OnBuckleChange);
+        SubscribeLocalEvent<ClimbingComponent, EntityUnpausedEvent>(OnClimbableUnpaused);
+
+        SubscribeLocalEvent<ClimbableComponent, CanDropTargetEvent>(OnCanDragDropOn);
+        SubscribeLocalEvent<ClimbableComponent, GetVerbsEvent<AlternativeVerb>>(AddClimbableVerb);
+        SubscribeLocalEvent<ClimbableComponent, DragDropTargetEvent>(OnClimbableDragDrop);
+
         SubscribeLocalEvent<GlassTableComponent, ClimbedOnEvent>(OnGlassClimbed);
+    }
+
+    private void OnClimbableUnpaused(EntityUid uid, ClimbingComponent component, ref EntityUnpausedEvent args)
+    {
+        if (component.NextTransition == null)
+            return;
+
+        component.NextTransition = component.NextTransition.Value + args.PausedTime;
+        Dirty(uid, component);
     }
 
     public override void UpdateBeforeSolve(bool prediction, float frameTime)
@@ -79,14 +95,50 @@ public sealed partial class ClimbSystem : VirtualController
 
             if (comp.NextTransition < curTime)
             {
-                // TODO: Validate climb here
-                comp.NextTransition = null;
-                Dirty(uid, comp);
+                FinishTransition(uid, comp);
                 continue;
             }
 
-            _xformSystem.SetLocalPosition(uid, comp.Direction);
+            var xform = _xformQuery.GetComponent(uid);
+            _xformSystem.SetLocalPosition(uid, xform.LocalPosition + comp.Direction * frameTime, xform);
         }
+    }
+
+    private void FinishTransition(EntityUid uid, ClimbingComponent comp)
+    {
+        // TODO: Validate climb here
+        comp.NextTransition = null;
+        _actionBlockerSystem.UpdateCanMove(uid);
+        Dirty(uid, comp);
+
+        // Stop if necessary.
+        if (!_fixturesQuery.TryGetComponent(uid, out var fixtures) ||
+            !IsClimbing(uid, fixtures))
+        {
+            StopClimb(uid, comp);
+            return;
+        }
+    }
+
+    /// <summary>
+    /// Returns true if entity currently has a valid vault.
+    /// </summary>
+    private bool IsClimbing(EntityUid uid, FixturesComponent? fixturesComp = null)
+    {
+        if (!_fixturesQuery.Resolve(uid, ref fixturesComp) || !fixturesComp.Fixtures.TryGetValue(ClimbingFixtureName, out var climbFixture))
+            return false;
+
+        foreach (var contact in climbFixture.Contacts.Values)
+        {
+            var other = uid == contact.EntityA ? contact.EntityB : contact.EntityA;
+
+            if (HasComp<ClimbableComponent>(other))
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     private void OnMoveAttempt(EntityUid uid, ClimbingComponent component, UpdateCanMoveEvent args)
@@ -198,16 +250,26 @@ public sealed partial class ClimbSystem : VirtualController
          if (!Resolve(climbable, ref comp))
              return;
 
-         if (!ReplaceFixtures(climbing, fixtures))
+         if (!ReplaceFixtures(uid, climbing, fixtures))
              return;
 
+         var xform = _xformQuery.GetComponent(uid);
+         var (worldPos, worldRot) = _xformSystem.GetWorldPositionRotation(xform);
+         var worldDirection = _xformSystem.GetWorldPosition(climbable) - worldPos;
+         var distance = worldDirection.Length();
+         var parentRot = (worldRot - xform.LocalRotation);
+         // Need direction relative to climber's parent.
+         var localDirection = (-parentRot).RotateVec(worldDirection);
+
          climbing.IsClimbing = true;
+         var climbDuration = TimeSpan.FromSeconds(distance / climbing.TransitionRate);
+         climbing.NextTransition = _timing.CurTime + climbDuration;
+
+         climbing.Direction = localDirection.Normalized() * climbing.TransitionRate;
          Dirty(uid, climbing);
 
          _audio.PlayPredicted(comp.FinishClimbSound, climbable, user);
-         MoveEntityToward(uid, climbable, physics, climbing);
-         // we may potentially need additional logic since we're forcing a player onto a climbable
-         // there's also the cases where the user might collide with the person they are forcing onto the climbable that i haven't accounted for
+         _actionBlockerSystem.UpdateCanMove(uid);
 
          var startEv = new StartClimbEvent(climbable);
          var climbedEv = new ClimbedOnEvent(uid, user);
@@ -217,25 +279,29 @@ public sealed partial class ClimbSystem : VirtualController
          if (silent)
              return;
 
+         string selfMessage;
+         string othersMessage;
+
          if (user == uid)
          {
-             var othersMessage = Loc.GetString("comp-climbable-user-climbs-other", ("user", Identity.Entity(uid, EntityManager)),
+             othersMessage = Loc.GetString("comp-climbable-user-climbs-other",
+                 ("user", Identity.Entity(uid, EntityManager)),
                  ("climbable", climbable));
-             uid.PopupMessageOtherClients(othersMessage);
 
-             var selfMessage = Loc.GetString("comp-climbable-user-climbs", ("climbable", climbable));
-             uid.PopupMessage(selfMessage);
+             selfMessage = Loc.GetString("comp-climbable-user-climbs", ("climbable", climbable));
          }
          else
          {
-             var othersMessage = Loc.GetString("comp-climbable-user-climbs-force-other", ("user", Identity.Entity(user, EntityManager)),
+             othersMessage = Loc.GetString("comp-climbable-user-climbs-force-other",
+                 ("user", Identity.Entity(user, EntityManager)),
                  ("moved-user", Identity.Entity(uid, EntityManager)), ("climbable", climbable));
-             user.PopupMessageOtherClients(othersMessage);
 
-             var selfMessage = Loc.GetString("comp-climbable-user-climbs-force", ("moved-user", Identity.Entity(uid, EntityManager)),
+             selfMessage = Loc.GetString("comp-climbable-user-climbs-force", ("moved-user", Identity.Entity(uid, EntityManager)),
                  ("climbable", climbable));
-             user.PopupMessage(selfMessage);
          }
+
+         _popupSystem.PopupEntity(othersMessage, uid, Filter.PvsExcept(user, entityManager: EntityManager), true);
+         _popupSystem.PopupClient(selfMessage, uid, user);
      }
 
      /// <summary>
@@ -311,10 +377,7 @@ public sealed partial class ClimbSystem : VirtualController
          }
 
          climbing.DisabledFixtureMasks.Clear();
-
-         if (fixtures.Fixtures.TryGetValue(ClimbingFixtureName, out var climbingFixture))
-             removeQueue.Add(ClimbingFixtureName, climbingFixture);
-
+         _fixtureSystem.DestroyFixture(uid, ClimbingFixtureName, manager: fixtures);
          climbing.IsClimbing = false;
          climbing.NextTransition = null;
          var ev = new EndClimbEvent();
@@ -420,50 +483,8 @@ public sealed partial class ClimbSystem : VirtualController
              Filter.PvsExcept(args.Climber), true);
      }
 
-     /// <summary>
-     /// Moves the entity toward the target climbed entity
-     /// </summary>
-     public void MoveEntityToward(EntityUid uid, EntityUid target, PhysicsComponent? physics = null, ClimbingComponent? climbing = null)
-     {
-         if (!Resolve(uid, ref physics, ref climbing, false))
-             return;
-
-         var from = Transform(uid).WorldPosition;
-         var to = Transform(target).WorldPosition;
-         var (x, y) = (to - from).Normalized();
-
-         if (MathF.Abs(x) < 0.6f) // user climbed mostly vertically so lets make it a clean straight line
-             to = new Vector2(from.X, to.Y);
-         else if (MathF.Abs(y) < 0.6f) // user climbed mostly horizontally so lets make it a clean straight line
-             to = new Vector2(to.X, from.Y);
-
-         var velocity = (to - from).Length();
-
-         if (velocity <= 0.0f)
-             return;
-
-         // Since there are bodies with different masses:
-         // mass * 10 seems enough to move entity
-         // instead of launching cats like rockets against the walls with constant impulse value.
-         _physics.ApplyLinearImpulse(uid, (to - from).Normalized() * velocity * physics.Mass * 10, body: physics);
-         _physics.SetBodyType(uid, BodyType.Dynamic, body: physics);
-         climbing.NextTransition = true;
-         _actionBlockerSystem.UpdateCanMove(uid);
-
-         // Transition back to KinematicController after BufferTime
-         climbing.Owner.SpawnTimer(ClimbingComponent.BufferTime * 1000, () =>
-         {
-             if (climbing.Deleted)
-                 return;
-
-             _physics.SetBodyType(uid, BodyType.KinematicController);
-             climbing.NextTransition = false;
-             _actionBlockerSystem.UpdateCanMove(uid);
-         });
-    }
-
     [Serializable, NetSerializable]
-    private sealed class ClimbDoAfterEvent : SimpleDoAfterEvent
+    private sealed partial class ClimbDoAfterEvent : SimpleDoAfterEvent
     {
     }
 }
