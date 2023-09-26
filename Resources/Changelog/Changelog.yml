@@ -1,10 +1,4 @@
 Entries:
-- author: Flareguy
-  changes:
-  - {message: Resprited steel floor tiles. Looks like the janitor hasn't been doing
-      their job..., type: Tweak}
-  id: 4396
-  time: '2023-08-01T06:09:46.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: The chemistry guidebook now specifies specific types for damage and
@@ -2981,3 +2975,9 @@ Entries:
       farther in low-gravity., type: Tweak}
   id: 4895
   time: '2023-09-25T01:33:29.0000000+00:00'
+- author: Psychpsyo
+  changes:
+  - {message: 'People and animals no longer have two hearts, livers, sets of lungs
+      or kidneys. You probably didn''t need the extra pair anyways.', type: Fix}
+  id: 4896
+  time: '2023-09-25T06:53:04.0000000+00:00'
