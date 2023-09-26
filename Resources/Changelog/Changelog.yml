@@ -1,9 +1,4 @@
 Entries:
-- author: VasilisThePikachu
-  changes:
-  - {message: HoP no longer receives QM access., type: Remove}
-  id: 4398
-  time: '2023-08-01T14:02:02.0000000+00:00'
 - author: Errant
   changes:
   - {message: 'Indistinct whispers heard through walls or from behind other objects/people
@@ -2979,3 +2974,8 @@ Entries:
   - {message: Adds a new sprite for Syndicate implanters., type: Add}
   id: 4897
   time: '2023-09-26T00:04:03.0000000+00:00'
+- author: Ubaser
+  changes:
+  - {message: Added four new lizard horn markings!, type: Add}
+  id: 4898
+  time: '2023-09-26T02:24:09.0000000+00:00'
