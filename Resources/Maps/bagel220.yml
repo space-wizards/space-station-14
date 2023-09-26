@@ -113042,21 +113042,6 @@ entities:
     - pos: 35.392986,-13.372368
       parent: 60
       type: Transform
-    - toggleActionEntity: 13734
-      type: HandheldLight
-    - containers:
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        ProvidedActionContainer: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 13734
-      type: ContainerContainer
-    - canCollide: True
-      type: Physics
   - uid: 5326
     components:
     - pos: -24.428305,-28.144638
