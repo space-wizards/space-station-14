@@ -62,7 +62,7 @@ public sealed partial class GunSystem
     {
         // Don't use resolves because the method is shared and there's no compref and I'm trying to
         // share as much code as possible
-        if ((prediction && !Timing.IsFirstTimePredicted) ||
+        if (prediction && !Timing.IsFirstTimePredicted ||
             !TryComp<AmmoCounterComponent>(uid, out var clientComp))
         {
             return;
