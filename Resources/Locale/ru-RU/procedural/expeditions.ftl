@@ -5,7 +5,7 @@ salvage-expedition-structure-remaining =
         [few] цели.
        *[other] целей.
     }
-salvage-expedition-megafauna-remaining = Осталось уничтожить { $count } ед. мегафауны.
+salvage-expedition-type = Миссии
 salvage-expedition-window-title = Утилизаторские экспедиции
 salvage-expedition-window-difficulty = Сложность:
 salvage-expedition-window-details = Подробности:
@@ -18,7 +18,7 @@ salvage-expedition-window-claimed = Принято
 salvage-expedition-window-claim = Принять
 salvage-expedition-window-next = Следующее предложение
 # Expedition descriptions
-salvage-expedition-desc-mining = Добывайте ресурсы внутри зоны экспедиции.
+salvage-expedition-difficulty-players = Рекомендовано утилизаторов:
 #  С вас удержат налог в размере { $tax }% от добытых ресурсов.
 salvage-expedition-desc-structure = Уничтожьте { $count } ед. { $structure } внутри зоны экспедиции.
 salvage-expedition-desc-elimination = Убейте большое и опасное существо внутри зоны экспедиции.

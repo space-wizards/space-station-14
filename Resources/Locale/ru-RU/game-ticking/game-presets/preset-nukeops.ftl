@@ -20,7 +20,8 @@ nukeops-cond-allnukiesdead = Все ядерные оперативники по
 nukeops-cond-somenukiesalive = Несколько ядерных оперативников погибли.
 nukeops-cond-allnukiesalive = Все ядерные оперативники выжили.
 nukeops-list-start = Ядерными оперативниками были:
-nukeops-list-name = - [color=White]{ $name }[/color] ([color=gray]{ $user }[/color])
+nukeops-list-name = - [color=White]{ $name }[/color]
+nukeops-list-name-user = - [color=White]{ $name }[/color] ([color=gray]{ $user }[/color])
 nukeops-not-enough-ready-players = Недостаточно игроков готовы к игре! { $readyPlayersCount } игроков из необходимых { $minimumPlayers } готовы. Нельзя начать Ядерные оперативники.
 nukeops-no-one-ready = Нет готовых игроков! Нельзя начать Ядерные оперативники.
 nukeops-role-commander = Командир

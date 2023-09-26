@@ -1,15 +1,15 @@
 # sheets of steel
 materials-unit-sheet = листы
 # bars of gold
-materials-unit-bar = слитоки
+materials-unit-bar = слитки
 # planks of wood
 materials-unit-plank = доски
 # rolls of cloth
 materials-unit-roll = рулоны
 # pieces of biomass
-materials-unit-piece = куски
+materials-unit-piece = единицы
 # bunches of bananium
-materials-unit-bunch = кучи
+materials-unit-bunch = единицы
 # slabs of meat
 materials-unit-slab = куски
 # webs of silk
