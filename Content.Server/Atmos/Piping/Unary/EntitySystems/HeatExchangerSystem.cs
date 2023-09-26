@@ -1,7 +1,6 @@
+using Content.Server.Atmos;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Piping.Components;
-using Content.Server.Atmos.Piping.Unary.Components;
-using Content.Server.Atmos;
 using Content.Server.Atmos.Components;
 using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NodeContainer.Nodes;
@@ -13,7 +12,7 @@ using Content.Shared.Interaction;
 using JetBrains.Annotations;
 using Robust.Shared.Configuration;
 
-namespace Content.Server.Atmos.EntitySystems;
+namespace Content.Server.Atmos.Piping.Unary.EntitySystems;
 
 public sealed class HeatExchangerSystem : EntitySystem
 {

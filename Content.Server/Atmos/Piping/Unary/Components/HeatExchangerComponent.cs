@@ -1,4 +1,4 @@
-namespace Content.Server.Atmos.Components;
+namespace Content.Server.Atmos.Piping.Unary.Components;
 
 [RegisterComponent]
 public sealed partial class HeatExchangerComponent : Component
