@@ -68,6 +68,8 @@
     factions:
     - Syndicate
   - type: SpaceNinja
+  - type: GenericAntag
+    rule: Ninja
   - type: AutoImplant
     implants:
     - MicroBombImplant

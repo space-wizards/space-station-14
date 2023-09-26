@@ -1,5 +1,4 @@
 using Content.Server.GameTicking.Rules;
-using Content.Server.Ninja.Systems;
 using Content.Server.Zombies;
 using Content.Shared.Administration;
 using Content.Shared.Database;
@@ -16,7 +15,6 @@ public sealed partial class AdminVerbSystem
 {
     [Dependency] private readonly ZombieSystem _zombie = default!;
     [Dependency] private readonly TraitorRuleSystem _traitorRule = default!;
-    [Dependency] private readonly SpaceNinjaSystem _ninja = default!;
     [Dependency] private readonly NukeopsRuleSystem _nukeopsRule = default!;
     [Dependency] private readonly PiratesRuleSystem _piratesRule = default!;
     [Dependency] private readonly SharedMindSystem _minds = default!;
@@ -102,22 +100,5 @@ public sealed partial class AdminVerbSystem
             Message = Loc.GetString("admin-verb-make-pirate"),
         };
         args.Verbs.Add(pirate);
-
-        Verb spaceNinja = new()
-        {
-            Text = Loc.GetString("admin-verb-text-make-space-ninja"),
-            Category = VerbCategory.Antag,
-            Icon = new SpriteSpecifier.Rsi(new ResPath("/Textures/Objects/Weapons/Melee/energykatana.rsi"), "icon"),
-            Act = () =>
-            {
-                if (!_minds.TryGetMind(args.Target, out var mindId, out var mind))
-                    return;
-
-                _ninja.MakeNinja(mindId, mind);
-            },
-            Impact = LogImpact.High,
-            Message = Loc.GetString("admin-verb-make-space-ninja"),
-        };
-        args.Verbs.Add(spaceNinja);
     }
 }

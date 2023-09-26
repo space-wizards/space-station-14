@@ -1,5 +1,6 @@
 ﻿defaultWindowTitle: Space Station 14 - SS220 Station [RU]
 windowIconSet: /Textures/Logo/icon-ru # Corvax-Theme
 splashLogo: /Textures/Logo/logo-ru.png # Corvax-Theme
+multiWindow: true
 
 # PJB PLEASE

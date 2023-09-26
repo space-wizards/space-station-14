@@ -957,7 +957,7 @@
   id: RecipePopcorn
   name: popcorn recipe
   result: FoodSnackPopcorn
-  time: 5
+  time: 20
   solids:
     FoodCorn: 1
 
@@ -1694,7 +1694,6 @@
   solids:
     FoodSpaceshroom: 1
 
-#cannabis    
 - type: microwaveMealRecipe
   id: RecipeCannabisButter
   name: cannabis butter recipe
@@ -1716,3 +1715,13 @@
     FoodCannabisButter: 2
     FoodSnackChocolateBar: 2
     FoodEgg: 3
+
+- type: microwaveMealRecipe
+  id: RecipeCornInButter
+  name: corn in butter recipe
+  result: FoodMealCornInButter
+  time: 10
+  solids:
+    FoodCorn: 1
+    FoodPlate: 1
+    FoodButter: 1

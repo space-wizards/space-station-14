@@ -16,6 +16,7 @@
   - type: Ghost
     canInteract: true
   - type: GhostRoleCast
+  - type: GhostHearing
   - type: Hands
   - type: Puller
   - type: CombatMode

@@ -50,4 +50,6 @@ public sealed partial class PendingZombieComponent : Component
         "zombie-infection-warning",
         "zombie-infection-underway"
     };
+
+    [DataField] public EntityUid? Action;
 }
