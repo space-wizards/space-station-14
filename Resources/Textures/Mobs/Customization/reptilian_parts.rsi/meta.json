@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "https://github.com/Skyrat-SS13/Skyrat-tg/tree/40e3cdbb15b8bc0d5ef2fb46133adf805bda5297",
+  "copyright": "https://github.com/Skyrat-SS13/Skyrat-tg/tree/40e3cdbb15b8bc0d5ef2fb46133adf805bda5297, while Argali, Ayrshire, Myrsore and Bighorn are drawn by Ubaser",
   "size": {
     "x": 32,
     "y": 32
@@ -145,6 +145,22 @@
 	},
 	{
 	  "name": "r_arm_tiger",
+	  "directions": 4
+	},
+        {
+	  "name": "horns_argali",
+	  "directions": 4
+	},
+        {
+	  "name": "horns_ayrshire",
+	  "directions": 4
+	},
+        {
+	  "name": "horns_myrsore",
+	  "directions": 4
+	},
+        {
+	  "name": "horns_bighorn",
 	  "directions": 4
 	},
 	{

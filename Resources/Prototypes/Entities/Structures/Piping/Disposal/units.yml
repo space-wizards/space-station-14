@@ -86,6 +86,7 @@
     interfaces:
     - key: enum.DisposalUnitUiKey.Key
       type: DisposalUnitBoundUserInterface
+  - type: RatKingRummageable
 
 # SS220 rnd-transport
 - type: entity

@@ -31,13 +31,9 @@ namespace Content.Client.SS220.GhostRoleCast
 
         private void OnGhostRoleCastInit(EntityUid uid, GhostRoleCastComponent component, ComponentStartup args)
         {
-            component.ToggleGhostRoleNameAction = Spawn(GhostRoleCastComponent.ToggleGhostRoleNameActionId);
-            component.ToggleGhostRoleCastAction = Spawn(GhostRoleCastComponent.ToggleGhostRoleCastActionId);
-            component.ToggleGhostRoleRemoveAction = Spawn(GhostRoleCastComponent.ToggleGhostRoleRemoveActionId);
-
-            _actions.AddAction(uid, ref component.ToggleGhostRoleNameAction, null);
-            _actions.AddAction(uid, ref component.ToggleGhostRoleCastAction, null);
-            _actions.AddAction(uid, ref component.ToggleGhostRoleRemoveAction, null);
+            _actions.AddAction(uid, ref component.ToggleGhostRoleNameAction, GhostRoleCastComponent.ToggleGhostRoleNameActionId);
+            _actions.AddAction(uid, ref component.ToggleGhostRoleCastAction, GhostRoleCastComponent.ToggleGhostRoleCastActionId);
+            _actions.AddAction(uid, ref component.ToggleGhostRoleRemoveAction, GhostRoleCastComponent.ToggleGhostRoleRemoveActionId);
         }
 
         private void OnToggleGhostRoleCast(EntityUid uid, GhostRoleCastComponent component, ToggleGhostRoleCastActionEvent args)

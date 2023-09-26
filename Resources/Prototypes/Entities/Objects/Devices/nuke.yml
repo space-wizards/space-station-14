@@ -31,6 +31,10 @@
     mask: /Textures/Effects/LightMasks/double_cone.png
   - type: RotatingLight
     speed: 120
+  - type: NavMapBeacon
+    color: "#ff0000"
+    text: nuclear fission explosive
+    enabled: false
   - type: NukeLabel
   - type: Nuke
     explosionType: Default

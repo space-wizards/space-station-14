@@ -9376,14 +9376,6 @@ entities:
     - pos: 31.477634,-79.4623
       parent: 60
       type: Transform
-- proto: ActionToggleLight
-  entities:
-  - uid: 13734
-    components:
-    - flags: InContainer
-      type: MetaData
-    - parent: 2145
-      type: Transform
 - proto: AdvancedCapacitorStockPart
   entities:
   - uid: 19183
@@ -113050,21 +113042,6 @@ entities:
     - pos: 35.392986,-13.372368
       parent: 60
       type: Transform
-    - toggleActionEntity: 13734
-      type: HandheldLight
-    - containers:
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        ProvidedActionContainer: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 13734
-      type: ContainerContainer
-    - canCollide: True
-      type: Physics
   - uid: 5326
     components:
     - pos: -24.428305,-28.144638

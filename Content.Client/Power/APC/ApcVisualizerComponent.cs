@@ -97,7 +97,7 @@ public sealed partial class ApcVisualsComponent : Component
     public string EmaggedScreenState = "emag-unlit";
 
     /// <summary>
-    /// The sprite state of the unlit overlay used for the APC screen when the APC has been emagged.
+    /// The color of the light emitted when the APC has been emagged.
     /// </summary>
     [DataField("emaggedScreenColor")]
     [ViewVariables(VVAccess.ReadWrite)]
