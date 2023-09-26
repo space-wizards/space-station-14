@@ -17,7 +17,7 @@
     slots:
       cell_slot:
         name: power-cell-slot-component-slot-name-default
-        startingItem: PowerCellMedium
+        startingItem: PowerCellSmall
   - type: Sprite
     sprite: Objects/Devices/Holoprojectors/custodial.rsi
     state: icon

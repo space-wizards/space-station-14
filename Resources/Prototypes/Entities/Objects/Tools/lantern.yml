@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   name: lantern
   parent: BaseItem
   id: Lantern
@@ -49,7 +49,7 @@
       slots:
         cell_slot:
           name: power-cell-slot-component-slot-name-default
-          startingItem: PowerCellMedium
+          startingItem: PowerCellSmall
     - type: ContainerContainer
       containers:
         cell_slot: !type:ContainerSlot {}
