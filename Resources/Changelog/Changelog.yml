@@ -1,15 +1,4 @@
 Entries:
-- author: Errant
-  changes:
-  - {message: 'Indistinct whispers heard through walls or from behind other objects/people
-      no longer reveal the whisperer''s identity, you need to be able to clearly see
-      them.', type: Tweak}
-  - {message: 'If you can see the distant whisperer clearly, their identity is determined
-      by appearance/ID-card rather than their voice.', type: Tweak}
-  - {message: The range at which indistinct whispers can still be heard has been reduced.,
-    type: Tweak}
-  id: 4399
-  time: '2023-08-01T14:43:03.0000000+00:00'
 - author: hord-brayden
   changes:
   - {message: 'CE and HoS jumpskirts no longer provide rad protection or brute protection,
@@ -2979,3 +2968,8 @@ Entries:
   - {message: Added four new lizard horn markings!, type: Add}
   id: 4898
   time: '2023-09-26T02:24:09.0000000+00:00'
+- author: Whisper
+  changes:
+  - {message: The health analyzer no longer shows zero-damage groups., type: Fix}
+  id: 4899
+  time: '2023-09-26T04:37:23.0000000+00:00'
