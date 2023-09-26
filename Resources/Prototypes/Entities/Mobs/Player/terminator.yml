@@ -64,7 +64,7 @@
     thresholds:
     # the burn trigger is first incase of a bombing or nuking, it might well do over 200 damage but 100 heat is more important
     - trigger:
-        !type:DamageTrigger
+        !type:DamageTypeTrigger
         damageType: Heat
         damage: 100
       behaviors:
