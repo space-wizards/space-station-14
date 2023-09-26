@@ -21,6 +21,7 @@
             - Passenger
           availableJobs:
             Passenger: [ -1, -1 ]
+            Boxer: [ 2, 2 ]
             #Command
             Captain: [ 1, 1 ]
             IAA: [ 1, 1 ]
@@ -28,6 +29,7 @@
             HeadOfPersonnel: [ 1, 1 ]
             #Security
             HeadOfSecurity: [ 1, 1 ]
+            SeniorOfficer: [ 1, 1 ]
             Warden: [ 1, 1 ]
             Detective: [ 1, 1 ]
             SecurityOfficer: [ 5, 5 ]
@@ -35,6 +37,7 @@
             Brigmedic: [ 1, 1 ]
             #Engineering
             ChiefEngineer: [ 1, 1 ]
+            SeniorEngineer: [ 1, 1 ]
             StationEngineer: [ 7, 7 ]
             AtmosphericTechnician: [ 2, 3 ]
             TechnicalAssistant: [ 3, 3 ]
@@ -44,20 +47,22 @@
             SalvageSpecialist: [ 3, 3 ]
             #Medical
             ChiefMedicalOfficer: [ 1, 1 ]
-            MedicalDoctor: [ 5, 5 ]
+            SeniorPhysician: [ 1, 1 ]
+            MedicalDoctor: [ 6, 6 ]
             Chemist: [ 2, 2 ]
             Psychologist: [ 1, 1 ]
-            MedicalIntern: [ 3, 3 ]
+            MedicalIntern: [ 5, 5 ]
             Paramedic: [ 1, 1 ]
             #Science
             ResearchDirector: [ 1, 1 ]
+            SeniorResearcher: [ 1, 1 ]
             Scientist: [ 7, 7 ]
             ResearchAssistant: [ 3, 3 ]
             Borg: [ 2, 2 ]
             #Service
             Bartender: [ 2, 2 ]
-            Botanist: [ 3, 4 ]
-            Chef: [ 1, 2 ]
+            Botanist: [ 3, 3 ]
+            Chef: [ 2, 2 ]
             Clown: [ 1, 1 ]
             Janitor: [ 1, 2 ]
             Mime: [ 1, 1 ]
@@ -66,5 +71,5 @@
             Musician: [ 2, 2 ]
             Reporter: [ 2, 2 ]
             ServiceWorker: [ 3, 3 ]
-            Zookeeper: [1, 1]
+            Zookeeper: [ 1, 1 ]
             Lawyer: [ 2, 2 ]
