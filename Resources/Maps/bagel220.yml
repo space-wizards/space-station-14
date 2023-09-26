@@ -9376,14 +9376,6 @@ entities:
     - pos: 31.477634,-79.4623
       parent: 60
       type: Transform
-- proto: ActionToggleLight
-  entities:
-  - uid: 13734
-    components:
-    - flags: InContainer
-      type: MetaData
-    - parent: 2145
-      type: Transform
 - proto: AdvancedCapacitorStockPart
   entities:
   - uid: 19183
