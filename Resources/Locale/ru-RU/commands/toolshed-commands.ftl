@@ -34,3 +34,6 @@ command-description-mind-get = Grabs the mind from the entity, if any.
 command-description-mind-control = Assumes control of an entity with the given player.
 command-description-laws-list = Returns a list of all law bound entities.
 command-description-laws-get = Returns all of the laws for a given entity.
+command-description-stationevent-lsprob = Lists the probability of different station events occuring out of the entire pool.
+command-description-stationevent-lsprobtime = Lists the probability of different station events occuring based on the specified length of a round.
+command-description-stationevent-prob = Returns the probability of a single station event occuring out of the entire pool.

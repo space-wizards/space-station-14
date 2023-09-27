@@ -118,3 +118,5 @@ ent-ClothingHeadHatCapcap = фуражка капитана
     .desc = Большая, стильная капитанская фуражка.
 ent-ClothingHeadHatBeretSecurity = берет службы безопасности
     .desc = Стильный выбор для офицеров безопасности.
+ent-ClothingHeadHatGladiator = шлем гладиатора
+    .desc = Защищает макушку от пепельных бурь и игрушечных копий.

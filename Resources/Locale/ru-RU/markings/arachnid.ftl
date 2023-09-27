@@ -36,6 +36,10 @@ marking-ArachnidAppendagesShort = Придатки (Короткие)
 marking-ArachnidAppendagesShort-short_primary = Придаток
 marking-ArachnidAppendagesShort-short_secondary = Полосы
 
+marking-ArachnidAppendagesFreaky = Придатки (Длиннющие)
+marking-ArachnidAppendagesFreaky-freaky_primary = Придаток
+marking-ArachnidAppendagesFreaky-freaky_secondary = Полосы
+
 marking-ArachnidTorsoStripes = Полосы
 marking-ArachnidTorsoStripes-stripes = Дизайн
 
