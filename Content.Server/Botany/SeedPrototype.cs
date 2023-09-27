@@ -310,8 +310,8 @@ public partial class SeedData
             MutationPrototypes = new List<string>(other.MutationPrototypes),
 
             Chemicals = new Dictionary<string, SeedChemQuantity>(Chemicals),
-            ConsumeGasses = new Dictionary<Gas, float>(other.ConsumeGasses),
-            ExudeGasses = new Dictionary<Gas, float>(other.ExudeGasses),
+            ConsumeGasses = new Dictionary<Gas, float>(ConsumeGasses),
+            ExudeGasses = new Dictionary<Gas, float>(ExudeGasses),
 
             NutrientConsumption = NutrientConsumption,
             WaterConsumption = WaterConsumption,
