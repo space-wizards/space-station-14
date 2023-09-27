@@ -1,0 +1,13 @@
+- type: entity
+  parent: ClothingHandsBase
+  id: ClothingHandsGlovesPaws
+  name: black paws gloves
+  description: A pair of soft paws for all your cosplaying needs, desu.
+  components:
+  - type: Sprite
+    sprite: Ganimed/Clothing/Hands/paws.rsi
+  - type: Clothing
+    sprite: Ganimed/Clothing/Hands/paws.rsi
+  - type: Fiber
+    fiberMaterial: fibers-synthetic
+    fiberColor: fibers-black

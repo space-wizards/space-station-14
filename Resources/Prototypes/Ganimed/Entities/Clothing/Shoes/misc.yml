@@ -1,0 +1,28 @@
+- type: entity
+  parent: ClothingShoesBase
+  id: ClothingShoesUnati
+  name: dressings
+  description: A handful of white patches roughly tied around your feet. Feels strange but actually has its benefits.
+  components:
+  - type: Sprite
+    sprite: Ganimed/Clothing/Shoes/unati.rsi
+  - type: Clothing
+    sprite: Ganimed/Clothing/Shoes/unati.rsi
+  - type: Butcherable
+    butcheringType: Knife
+    spawned:
+    - id: MaterialCloth1
+      amount: 2
+  - type: Food
+    requiresSpecialDigestion: true
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: Fiber
+          Quantity: 20
+  - type: Tag
+    tags:
+    - ClothMade
+    - WhitelistChameleon

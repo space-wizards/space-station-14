@@ -19,9 +19,3 @@
   cost: 5
   exclusive: true
   prototype: ClothingHeadHelmetBone
-- type: loadout
-  id: LoadoutHeadClothingHeadHelmetGladiator
-  category: loadout-category-head
-  cost: 3
-  exclusive: true
-  prototype: ClothingHeadHelmetGladiator

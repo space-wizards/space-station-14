@@ -1,0 +1,10 @@
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: ClothingOuterCoatRedCoat
+  name: red old-fashioned coat
+  description: An outdated and worn-out piece of fashion. It still maintains some of it's charm and you almost feel an urge to smile.
+  components:
+  - type: Sprite
+    sprite: Ganimed/Clothing/OuterClothing/Coats/red_coat.rsi
+  - type: Clothing
+    sprite: Ganimed/Clothing/OuterClothing/Coats/red_coat.rsi

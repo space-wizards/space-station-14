@@ -60,3 +60,17 @@
   cost: 2
   exclusive: true
   prototype: ClothingUniformJumpskirtHoSParadeMale
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpskirtNightDress
+  category: loadout-category-uniform
+  cost: 3
+  exclusive: true
+  prototype: ClothingUniformJumpskirtNightDress
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpsuitMilitary
+  category: loadout-category-uniform
+  cost: 3
+  exclusive: true
+  prototype: ClothingUniformJumpsuitMilitary

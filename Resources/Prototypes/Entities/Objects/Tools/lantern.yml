@@ -92,3 +92,39 @@
           enum.FlashVisuals.LightLayer:
             True: {visible: true}
             False: {visible: false}
+
+- type: entity
+  name: paper lantern
+  parent: Lantern
+  id: LanternPaper
+  description: Like a flame in the wind we face the world. Take a good omen with you.
+  components:
+    - type: Sprite
+      sprite: Ganimed/Objects/Tools/paperlantern.rsi
+      layers:
+        - state: lantern
+        - state: lantern-on
+          shader: unshaded
+          visible: false
+          map: [ "light" ]
+    - type: Item
+      sprite: Ganimed/Objects/Tools/paperlantern.rsi
+      heldPrefix: off
+
+- type: entity
+  name: paper lantern
+  parent: LanternPaper
+  id: LanternPaper2
+  description: Like a flame in the wind we face the world. Take a good omen with you.
+  components:
+    - type: Sprite
+      sprite: Ganimed/Objects/Tools/paperlantern2.rsi
+      layers:
+        - state: lantern
+        - state: lantern-on
+          shader: unshaded
+          visible: false
+          map: [ "light" ]
+    - type: Item
+      sprite: Ganimed/Objects/Tools/paperlantern2.rsi
+      heldPrefix: off

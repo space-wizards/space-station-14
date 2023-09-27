@@ -11,3 +11,10 @@
   cost: 1
   exclusive: true
   prototype: ClothingUnderSocksBee
+
+- type: loadout
+  id: LoadoutShoesClothingShoesUnati
+  category: loadout-category-shoes
+  cost: 1
+  exclusive: true
+  prototype: ClothingShoesUnati

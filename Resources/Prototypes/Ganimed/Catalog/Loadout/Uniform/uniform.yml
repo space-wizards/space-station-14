@@ -92,7 +92,7 @@
   whitelistJobs:
     - TechnicalAssistant
     - StationEngineer
-    - AtmosphericEngineer
+    - AtmosphericTechnician
     - SeniorEngineer
     - ChiefEngineer
   prototype: ClothingUniformJumpsuitEngineeringHazard
@@ -120,7 +120,7 @@
   whitelistJobs:
     - TechnicalAssistant
     - StationEngineer
-    - AtmosphericEngineer
+    - AtmosphericTechnician
     - SeniorEngineer
     - ChiefEngineer
   prototype: ClothingUniformJumpsuitEngineering
@@ -133,7 +133,7 @@
   whitelistJobs:
     - TechnicalAssistant
     - StationEngineer
-    - AtmosphericEngineer
+    - AtmosphericTechnician
     - SeniorEngineer
     - ChiefEngineer
   prototype: ClothingUniformJumpskirtEngineering
@@ -156,7 +156,7 @@
   cost: 1
   exclusive: true
   whitelistJobs:
-    - AtmosphericEngineer
+    - AtmosphericTechnician
     - ChiefEngineer
   prototype: ClothingUniformJumpsuitAtmos
 
@@ -166,7 +166,7 @@
   cost: 1
   exclusive: true
   whitelistJobs:
-    - AtmosphericEngineer
+    - AtmosphericTechnician
     - ChiefEngineer
   prototype: ClothingUniformJumpskirtAtmos
 
@@ -176,7 +176,7 @@
   cost: 1
   exclusive: true
   whitelistJobs:
-    - AtmosphericEngineer
+    - AtmosphericTechnician
     - ChiefEngineer
   prototype: ClothingUniformJumpsuitHydroponics
 
@@ -446,7 +446,7 @@
   whitelistJobs:
     - TechnicalAssistant
     - StationEngineer
-    - AtmosphericEngineer
+    - AtmosphericTechnician
     - SeniorEngineer
     - ChiefEngineer
   prototype: ClothingUniformJumpsuitRepairmanNT
@@ -724,3 +724,14 @@
   cost: 2
   exclusive: true
   prototype: ClothingUniformJumpsuitPirate
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpsuitBridgeOfficer
+  category: loadout-category-uniform
+  cost: 3
+  exclusive: true
+  whitelistJobs:
+    - Captain
+    - HeadOfSecurity
+    - HeadOfPersonnel
+  prototype: ClothingUniformJumpsuitBridgeOfficer

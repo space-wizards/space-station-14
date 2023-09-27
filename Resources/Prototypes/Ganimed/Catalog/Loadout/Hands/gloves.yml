@@ -78,7 +78,7 @@
   whitelistJobs:
     - TechnicalAssistant
     - StationEngineer
-    - AtmosphericEngineer
+    - AtmosphericTechnician
     - SeniorEngineer
     - ChiefEngineer
   prototype: ClothingHandsGlovesColorYellow
@@ -142,3 +142,10 @@
     - MedicalIntern
     - SeniorPhysician
   prototype: ClothingHandsGlovesNitrile
+
+- type: loadout
+  id: LoadoutHandsClothingHandsGlovesPaws
+  category: loadout-category-hands
+  cost: 3
+  exclusive: true
+  prototype: ClothingHandsGlovesPaws

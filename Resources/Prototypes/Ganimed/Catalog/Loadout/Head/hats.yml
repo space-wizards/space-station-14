@@ -85,9 +85,16 @@
   prototype: ClothingHeadHatPirateTricord
 
 - type: loadout
-  id: LoadoutHeadClothingHeadHatPirateHat
+  id: LoadoutHeadClothingHeadHatPirate
   category: loadout-category-head
   cost: 3
   exclusive: true
-  prototype: ClothingHeadHatPirateHat
+  prototype: ClothingHeadHatPirate
+
+- type: loadout
+  id: LoadoutHeadClothingHeadHatGladiator
+  category: loadout-category-head
+  cost: 3
+  exclusive: true
+  prototype: ClothingHeadHatGladiator
   

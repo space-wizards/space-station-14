@@ -207,3 +207,10 @@
   cost: 1
   exclusive: true
   prototype: ClothingOuterDameDane
+
+- type: loadout
+  id: LoadoutOuterClothingClothingOuterCoatRedCoat
+  category: loadout-category-outerClothing
+  cost: 4
+  exclusive: true
+  prototype: ClothingOuterCoatRedCoat

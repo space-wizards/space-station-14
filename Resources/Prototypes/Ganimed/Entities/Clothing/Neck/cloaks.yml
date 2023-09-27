@@ -1,0 +1,17 @@
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckCloakOrange
+  name: orange sunset cloak
+  description: Bright and comfy orange cloak with nice sun-colored accents. Stay warm while until your days set like a burning star.
+  components:
+  - type: Sprite
+    sprite: Ganimed/Clothing/Neck/Cloaks/orange.rsi
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckCloaHieroglyphics
+  name: hieroglyphics cloak
+  description: A particularly charming trendy cloak inspired by the progressive Japan of the old days. Sometimes less is more. Do not forget it.
+  components:
+  - type: Sprite
+    sprite: Ganimed/Clothing/Neck/Cloaks/hieroglyphics.rsi

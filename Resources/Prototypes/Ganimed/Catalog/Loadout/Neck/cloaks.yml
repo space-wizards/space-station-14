@@ -4,3 +4,17 @@
   cost: 1
   exclusive: true
   prototype: ClothingNeckCloakTrans
+
+- type: loadout
+  id: LoadoutNeckClothingNeckCloakOrange
+  category: loadout-category-neck
+  cost: 4
+  exclusive: true
+  prototype: ClothingNeckCloakOrange
+
+- type: loadout
+  id: LoadoutNeckClothingNeckCloaHieroglyphics
+  category: loadout-category-neck
+  cost: 4
+  exclusive: true
+  prototype: ClothingNeckCloaHieroglyphics

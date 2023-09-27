@@ -22,7 +22,7 @@
 - type: loadout
   id: LoadoutHeadClothingHeadHatCatEars
   category: loadout-category-head
-  cost: 7
+  cost: 8
   exclusive: true
   prototype: ClothingHeadHatCatEars
 

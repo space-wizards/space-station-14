@@ -52,7 +52,7 @@
   whitelistJobs:
     - TechnicalAssistant
     - StationEngineer
-    - AtmosphericEngineer
+    - AtmosphericTechnician
     - SeniorEngineer
     - ChiefEngineer
   prototype: ClothingHeadsetEngineering

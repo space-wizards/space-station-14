@@ -34,7 +34,7 @@
   whitelistJobs:
     - TechnicalAssistant
     - StationEngineer
-    - AtmosphericEngineer
+    - AtmosphericTechnician
     - SeniorEngineer
     - ChiefEngineer
     - ResearchDirector
@@ -48,7 +48,7 @@
   category: loadout-category-head
   cost: 5
   exclusive: true
-  prototype: ClothingHeadHatBioGeneral
+  prototype: ClothingHeadHatHoodBioGeneral
 
 - type: loadout
   id: LoadoutHeadClothingHeadHatHoodBioSecurity
@@ -62,7 +62,7 @@
     - SecurityCadet
     - SecurityOfficer
     - Warden
-  prototype: ClothingHeadHatBioSecurity
+  prototype: ClothingHeadHatHoodBioSecurity
 
 - type: loadout
   id: LoadoutHeadClothingHeadHatHoodBioCmo
@@ -71,7 +71,7 @@
   exclusive: true
   whitelistJobs:
     - ChiefMedicalOfficer
-  prototype: ClothingHeadHatBioCmo
+  prototype: ClothingHeadHatHoodBioCmo
 
 - type: loadout
   id: LoadoutHeadClothingHeadHatHoodBioJanitor
@@ -80,7 +80,7 @@
   exclusive: true
   whitelistJobs:
     - Janitor
-  prototype: ClothingHeadHatBioJanitor
+  prototype: ClothingHeadHatHoodBioJanitor
 
 - type: loadout
   id: LoadoutHeadClothingHeadHatHoodBioScientist
@@ -92,7 +92,7 @@
     - ResearchAssistant
     - Scientist
     - SeniorResearcher
-  prototype: ClothingHeadHatBioScientist
+  prototype: ClothingHeadHatHoodBioScientist
 
 - type: loadout
   id: LoadoutHeadClothingHeadHatHoodBioVirology
@@ -107,4 +107,4 @@
     - MedicalDoctor
     - MedicalIntern
     - SeniorPhysician
-  prototype: ClothingHeadHatBioVirology
+  prototype: ClothingHeadHatHoodBioVirology

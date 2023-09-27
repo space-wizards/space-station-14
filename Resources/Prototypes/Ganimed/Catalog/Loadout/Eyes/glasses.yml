@@ -13,11 +13,11 @@
   prototype: ClothingEyesGlassesGar
 
 - type: loadout
-  id: LoadoutEyesClothingEyesGlassesOrange
+  id: LoadoutEyesClothingEyesGlassesGarOrange
   category: loadout-category-eyes
   cost: 1
   exclusive: true
-  prototype: ClothingEyesGlassesOrange
+  prototype: ClothingEyesGlassesGarOrange
 
 - type: loadout
   id: LoadoutEyesClothingEyesGlassesMeson
@@ -26,7 +26,7 @@
   whitelistJobs:
     - TechnicalAssistant
     - StationEngineer
-    - AtmosphericEngineer
+    - AtmosphericTechnician
     - SeniorEngineer
     - ChiefEngineer
     - Quartermaster
@@ -41,7 +41,7 @@
   whitelistJobs:
     - TechnicalAssistant
     - StationEngineer
-    - AtmosphericEngineer
+    - AtmosphericTechnician
     - SeniorEngineer
     - ChiefEngineer
     - Quartermaster
@@ -83,9 +83,9 @@
   prototype: ClothingEyesGlassesOutlawGlasses
 
 - type: loadout
-  id: LoadoutEyesClothingEyesGlassesMercenary
+  id: LoadoutEyesClothingEyesGlassesChemical
   category: loadout-category-eyes
-  cost: 2
+  cost: 3
   exclusive: true
   whitelistJobs:
     - Detective
@@ -105,7 +105,7 @@
     - SeniorPhysician
     - Bartender
     - ServiceWorker
-  prototype: ClothingEyesGlassesMercenary
+  prototype: ClothingEyesGlassesChemical
 
 - type: loadout
   id: LoadoutEyesClothingEyesEyesHudBeer

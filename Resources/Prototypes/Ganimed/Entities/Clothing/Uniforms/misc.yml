@@ -1,0 +1,32 @@
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitBridgeOfficer
+  name: bridge officer uniform
+  description: More stylish than advanced, this formal suit serves as a great display of power.
+  components:
+  - type: Sprite
+    sprite: Ganimed/Clothing/Uniforms/bridgeofficer.rsi
+  - type: Clothing
+    sprite: Ganimed/Clothing/Uniforms/bridgeofficer.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitMilitary
+  name: military jumpsuit
+  description: An outdated tactical camouflage suit. They say designs like this are of common use with the socialists.
+  components:
+  - type: Sprite
+    sprite: Ganimed/Clothing/Uniforms/military.rsi
+  - type: Clothing
+    sprite: Ganimed/Clothing/Uniforms/military.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpskirtNightDress
+  name: deep blue aquilegia dress
+  description: A dress of futuristic dark neon tones and high royal court designs. Truly a dangerous mix of different times.
+  components:
+  - type: Sprite
+    sprite: Ganimed/Clothing/Uniforms/nightdress.rsi
+  - type: Clothing
+    sprite: Ganimed/Clothing/Uniforms/nightdress.rsi
