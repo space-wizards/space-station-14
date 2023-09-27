@@ -12,10 +12,10 @@ public sealed class AmeFuelSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<AmeFuelContainerComponent, ExaminedEvent>(OnFuelExamined);
+        SubscribeLocalEvent<AmeFuelContainerComponent, ExaminedEvent>(OnExamined);
     }
 
-    private void OnFuelExamined(EntityUid uid, AmeFuelContainerComponent comp, ExaminedEvent args)
+    private void OnExamined(EntityUid uid, AmeFuelContainerComponent comp, ExaminedEvent args)
     {
         if (!args.IsInDetailsRange)
             return;
