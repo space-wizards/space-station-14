@@ -73,7 +73,6 @@ namespace Content.Client.Entry
         [Dependency] private readonly ContentLocalizationManager _contentLoc = default!;
         [Dependency] private readonly SponsorsManager _sponsorsManager = default!; // Corvax-Sponsors
         [Dependency] private readonly JoinQueueManager _queueManager = default!; // Corvax-Queue
-        [Dependency] private readonly TTSManager _ttsManager = default!; // Corvax-TTS
         [Dependency] private readonly DiscordAuthManager _discordAuthManager = default!; // Corvax-DiscordAuth
         [Dependency] private readonly ContentReplayPlaybackManager _playbackMan = default!;
         [Dependency] private readonly IResourceManager _resourceManager = default!;
@@ -174,7 +173,6 @@ namespace Content.Client.Entry
             _userInterfaceManager.SetDefaultTheme("SS14DefaultTheme");
             _sponsorsManager.Initialize(); // Corvax-Sponsors
             _queueManager.Initialize(); // Corvax-Queue
-            _ttsManager.Initialize(); // Corvax-TTS
             _discordAuthManager.Initialize(); // Corvax-DiscordAuth
             _userInterfaceManager.SetActiveTheme(_configManager.GetCVar(CVars.InterfaceTheme));
             _documentParsingManager.Initialize();
