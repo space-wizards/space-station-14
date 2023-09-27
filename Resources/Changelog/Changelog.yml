@@ -1,10 +1,4 @@
 Entries:
-- author: MisterMecky
-  changes:
-  - {message: Adds chemical analysis goggles that can scan the chemical composition
-      of a solution, type: Add}
-  id: 4402
-  time: '2023-08-01T19:57:23.0000000+00:00'
 - author: Emisse
   changes:
   - {message: Hristov no longer insta stuns and does slightly less damage., type: Tweak}
@@ -2972,3 +2966,13 @@ Entries:
   - {message: Syndicate bomb no longer has anomalous properties., type: Tweak}
   id: 4901
   time: '2023-09-26T22:05:46.0000000+00:00'
+- author: Bhijn and Myr
+  changes:
+  - {message: 'Interaction outlines have been slightly reworked, and feature finer
+      artistic control. Edge cases no longer result in interaction outlines being
+      faintly visible in pitch black areas, out-of-range outlines are far less visible
+      in dim conditions, outlines now properly fade when over a fullbright backdrop
+      like parallax, and outlines now do a much better job at fading with penumbras.',
+    type: Tweak}
+  id: 4902
+  time: '2023-09-27T09:22:32.0000000+00:00'
