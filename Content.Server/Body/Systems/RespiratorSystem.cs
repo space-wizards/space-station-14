@@ -2,6 +2,7 @@ using Content.Server.Administration.Logs;
 using Content.Server.Atmos;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Body.Components;
+using Content.Server.Chat.Systems;
 using Content.Server.Popups;
 using Content.Shared.Alert;
 using Content.Shared.Atmos;
@@ -27,6 +28,7 @@ namespace Content.Server.Body.Systems
         [Dependency] private readonly LungSystem _lungSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly MobStateSystem _mobState = default!;
+        [Dependency] private readonly ChatSystem _chat = default!;
 
         public override void Initialize()
         {
@@ -77,7 +79,10 @@ namespace Content.Server.Body.Systems
                     if (_gameTiming.CurTime >= respirator.LastGaspPopupTime + respirator.GaspPopupCooldown)
                     {
                         respirator.LastGaspPopupTime = _gameTiming.CurTime;
-                        _popupSystem.PopupEntity(Loc.GetString("lung-behavior-gasp"), uid);
+                        // SS220 emotes begin
+                        //_popupSystem.PopupEntity(Loc.GetString("lung-behavior-gasp"), uid);
+                        _chat.TryEmoteWithChat(uid, "Gasp", hideLog: true, ignoreActionBlocker: true);
+                        // SS220 emotes end
                     }
 
                     TakeSuffocationDamage(uid, respirator);

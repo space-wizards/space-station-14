@@ -36,6 +36,11 @@
       collection: Fart
       params:
         volume: 2
+    #SS220 emote sounds
+    DefaultDeathgasp:
+      collection: Deathgasp
+    Gasp:
+      collection: Gasp
 
 - type: emoteSounds
   id: FemaleHuman
@@ -74,6 +79,11 @@
       collection: Fart
       params:
         volume: 2
+    #SS220 emote sounds
+    DefaultDeathgasp:
+      collection: Deathgasp
+    Gasp:
+      collection: Gasp
 
 - type: emoteSounds
   id: UnisexReptilian
@@ -94,6 +104,11 @@
       collection: Fart
       params:
         volume: 2
+    #SS220 emote sounds
+    DefaultDeathgasp:
+      collection: Deathgasp
+    Gasp:
+      collection: Gasp
 
 - type: emoteSounds
   id: MaleSlime
@@ -132,6 +147,11 @@
       collection: Fart
       params:
         volume: 2
+    #SS220 emote sounds
+    DefaultDeathgasp:
+      collection: Deathgasp
+    Gasp:
+      collection: Gasp
   params:
     variation: 0.125
 
@@ -172,11 +192,22 @@
       collection: Fart
       params:
         volume: 2
+    #SS220 emote sounds
+    DefaultDeathgasp:
+      collection: Deathgasp
+    Gasp:
+      collection: Gasp
   params:
     variation: 0.125
 
 - type: emoteSounds
   id: UnisexVox
+  sounds:
+    #SS220 emote sounds
+    DefaultDeathgasp:
+      collection: Deathgasp
+    Gasp:
+      collection: Gasp
   sound:
     path: /Audio/Voice/Vox/shriek1.ogg
     params:
@@ -204,6 +235,11 @@
       path: /Audio/Voice/Arachnid/arachnid_scream.ogg
     Laugh:
       path: /Audio/Voice/Arachnid/arachnid_laugh.ogg
+    #SS220 emote sounds
+    DefaultDeathgasp:
+      collection: Deathgasp
+    Gasp:
+      collection: Gasp
 
 - type: emoteSounds
   id: UnisexDwarf
@@ -240,6 +276,11 @@
       collection: Fart
       params:
         volume: 2
+    #SS220 emote sounds
+    DefaultDeathgasp:
+      collection: Deathgasp
+    Gasp:
+      collection: Gasp
   params:
     variation: 0.125
     pitchscale: 0.75
@@ -292,6 +333,11 @@
       path: /Audio/Voice/Moth/moth_chitter.ogg
     Squeak:
       path: /Audio/Voice/Moth/moth_squeak.ogg
+    #SS220 emote sounds
+    DefaultDeathgasp:
+      collection: Deathgasp
+    Gasp:
+      collection: Gasp
 
 # body emotes
 - type: emoteSounds
