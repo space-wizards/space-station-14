@@ -1,9 +1,4 @@
 Entries:
-- author: keronshb
-  changes:
-  - {message: Captains will now start with their gloves and carapace again, type: Tweak}
-  id: 4405
-  time: '2023-08-01T21:10:36.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: 'Fixed messages related to the round not being sent (round starting,
@@ -2976,3 +2971,9 @@ Entries:
   - {message: What moths consider as food is now more consistent., type: Tweak}
   id: 4904
   time: '2023-09-27T16:50:59.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Fixed getting moved briefly when closing a crematorium that you are
+      standing over., type: Fix}
+  id: 4905
+  time: '2023-09-27T23:41:07.0000000+00:00'
