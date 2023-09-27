@@ -1,16 +1,16 @@
 using System.Collections.Immutable;
 using System.Linq;
 using System.Net;
+using System.Text;
 using System.Threading.Tasks;
 using Content.Server.Chat.Managers;
 using Content.Server.Database;
 using Content.Server.GameTicking;
+using Content.Shared.CCVar;
 using Content.Shared.Database;
 using Content.Shared.Players;
 using Content.Shared.Players.PlayTimeTracking;
 using Content.Shared.Roles;
-using Microsoft.CodeAnalysis;
-using Content.Shared.CCVar;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
@@ -64,8 +64,8 @@ public sealed class BanManager : IBanManager, IPostInjectInit
                 roleBans = new HashSet<ServerRoleBanDef>();
                 _cachedRoleBans.Add(banDef.UserId.Value, roleBans);
             }
-            if (!roleBans.Contains(banDef))
-                roleBans.Add(banDef);
+
+            roleBans.Add(banDef);
         }
 
         await _db.AddServerRoleBanAsync(banDef);
@@ -229,6 +229,39 @@ public sealed class BanManager : IBanManager, IPostInjectInit
         {
             SendRoleBans(target.Value);
         }
+    }
+
+    public async Task<string> PardonRoleBan(int banId, NetUserId? unbanningAdmin, DateTimeOffset unbanTime)
+    {
+        var ban = await _db.GetServerRoleBanAsync(banId);
+
+        if (ban == null)
+        {
+            return $"No ban found with id {banId}";
+        }
+
+        if (ban.Unban != null)
+        {
+            var response = new StringBuilder("This ban has already been pardoned");
+
+            if (ban.Unban.UnbanningAdmin != null)
+            {
+                response.Append($" by {ban.Unban.UnbanningAdmin.Value}");
+            }
+
+            response.Append($" in {ban.Unban.UnbanTime}.");
+            return response.ToString();
+        }
+
+        await _db.AddServerRoleUnbanAsync(new ServerRoleUnbanDef(banId, unbanningAdmin, DateTimeOffset.Now));
+
+        if (ban.UserId is { } player && _cachedRoleBans.TryGetValue(player, out var roleBans))
+        {
+            roleBans.Clear();
+            SendRoleBans(player);
+        }
+
+        return $"Pardoned ban with id {banId}";
     }
 
     public HashSet<string>? GetJobBans(NetUserId playerUserId)
