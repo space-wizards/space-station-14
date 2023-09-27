@@ -39,7 +39,7 @@
       steps:
       - tag: HeavyLaserTechPart
         store: caster
-        name: a ray caster
+        name: a heavy ray caster
 
     - to: wiresMissing
       completed:

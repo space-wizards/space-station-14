@@ -39,7 +39,7 @@
       steps:
       - tag: AdvancedLaserTechPart
         store: caster
-        name: a ray caster
+        name: an advanced ray caster
 
     - to: wiresMissing
       completed:
