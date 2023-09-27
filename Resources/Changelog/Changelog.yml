@@ -1,9 +1,4 @@
 Entries:
-- author: crazybrain
-  changes:
-  - {message: Admin banning panel has IP bans enabled by default., type: Fix}
-  id: 4404
-  time: '2023-08-01T21:05:14.0000000+00:00'
 - author: keronshb
   changes:
   - {message: Captains will now start with their gloves and carapace again, type: Tweak}
@@ -2976,3 +2971,8 @@ Entries:
   - {message: Fixed there being no confirmation for role bans., type: Fix}
   id: 4903
   time: '2023-09-27T15:27:08.0000000+00:00'
+- author: c0rigin
+  changes:
+  - {message: What moths consider as food is now more consistent., type: Tweak}
+  id: 4904
+  time: '2023-09-27T16:50:59.0000000+00:00'
