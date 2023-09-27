@@ -1,0 +1,128 @@
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckChocoMedal
+  name: chocolate medal
+  description: For the best cleaner in his room!
+  components:
+  - type: Sprite
+    sprite: SS220/Clothing/Neck/Medals/Medalpack1/Chocolate.rsi
+  - type: Clothing
+    sprite: SS220/Clothing/Neck/Medals/Medalpack1/Chocolate.rsi
+  - type: Food
+    requiresSpecialDigestion: false
+  - type: Tag
+    tags:
+      - FoodSnack
+  - type: FlavorProfile
+    flavors:
+      - chocolate
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 30
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+        - ReagentId: Theobromine
+          Quantity: 3
+        - ReagentId: CocoaPowder
+          Quantity: 1
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckBrokenMedal
+  name: broken medal
+  description: No way to recognise it.
+  components:
+  - type: Sprite
+    sprite: SS220/Clothing/Neck/Medals/Medalpack1/Broken.rsi
+  - type: Clothing
+    sprite: SS220/Clothing/Neck/Medals/Medalpack1/Broken.rsi
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckHydraMedal
+  name: the black hydra medal
+  description: It has three heads.
+  components:
+  - type: Sprite
+    sprite: SS220/Clothing/Neck/Medals/Medalpack1/Hydra.rsi
+  - type: Clothing
+    sprite: SS220/Clothing/Neck/Medals/Medalpack1/Hydra.rsi
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckPlasticMedal
+  name: plastic medal
+  description: Made of plastic it's fantastic.
+  components:
+  - type: Sprite
+    sprite: SS220/Clothing/Neck/Medals/Medalpack1/Plastic.rsi
+  - type: Clothing
+    sprite: SS220/Clothing/Neck/Medals/Medalpack1/Plastic.rsi
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckPlasticSpecialMedal
+  name: suspicious plastic medal
+  description: It looks suspicious.
+  components:
+  - type: Sprite
+    sprite: SS220/Clothing/Neck/Medals/Medalpack1/PlasticSpecial.rsi
+  - type: Clothing
+    sprite: SS220/Clothing/Neck/Medals/Medalpack1/PlasticSpecial.rsi
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckPolarIMedal
+  name: Medal of the Polar Star of the I grade
+  description:
+  components:
+  - type: Sprite
+    sprite: SS220/Clothing/Neck/Medals/Medalpack1/PolarI.rsi
+  - type: Clothing
+    sprite: SS220/Clothing/Neck/Medals/Medalpack1/PolarI.rsi
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckPolarIIMedal
+  name: Medal of the Polar Star of the II grade
+  description:
+  components:
+  - type: Sprite
+    sprite: SS220/Clothing/Neck/Medals/Medalpack1/PolarII.rsi
+  - type: Clothing
+    sprite: SS220/Clothing/Neck/Medals/Medalpack1/PolarII.rsi
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckPolarIIIMedal
+  name: Medal of the Polar Star of the III grade
+  description:
+  components:
+  - type: Sprite
+    sprite: SS220/Clothing/Neck/Medals/Medalpack1/PolarIII.rsi
+  - type: Clothing
+    sprite: SS220/Clothing/Neck/Medals/Medalpack1/PolarIII.rsi
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckSSSPMedal
+  name: The red star medal
+  description:
+  components:
+  - type: Sprite
+    sprite: SS220/Clothing/Neck/Medals/Medalpack1/SSSP.rsi
+  - type: Clothing
+    sprite: SS220/Clothing/Neck/Medals/Medalpack1/SSSP.rsi
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckSyndieMedal
+  name: Syndicate medal
+  description:
+  components:
+  - type: Sprite
+    sprite: SS220/Clothing/Neck/Medals/Medalpack1/Syndie.rsi
+  - type: Clothing
+    sprite: SS220/Clothing/Neck/Medals/Medalpack1/Syndie.rsi
