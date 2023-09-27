@@ -4,7 +4,9 @@ using Content.Server.Explosion.EntitySystems;
 using Content.Shared.Emag.Components;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Examine;
+using Content.Shared.Throwing;
 using Robust.Shared.Timing;
+using Robust.Shared.Random;
 
 namespace Content.Server.Ame.EntitySystems;
 
@@ -14,7 +16,9 @@ namespace Content.Server.Ame.EntitySystems;
 public sealed class AmeFuelSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly ExplosionSystem _explosion = default!;
+    [Dependency] private readonly ThrowingSystem _throwing = default!;
 
     public override void Initialize()
     {
@@ -52,6 +56,10 @@ public sealed class AmeFuelSystem : EntitySystem
             // explode but make sure it can explode in the future
             _explosion.TriggerExplosive(uid, explosive);
             explosive.Exploded = false;
+
+            // make it fly in a random direction
+            var direction = _random.NextAngle().ToWorldVec();
+            _throwing.TryThrow(uid, direction, 5f);
         }
     }
 
