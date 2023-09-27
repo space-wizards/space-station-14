@@ -694,6 +694,7 @@
   - type: Grammar
     attributes:
       proper: true
+      gender: female
 
 - type: entity
   name: Pun Pun
