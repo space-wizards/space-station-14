@@ -4,8 +4,7 @@
   description: job-description-research-assistant
   playTimeTracker: JobResearchAssistant
   requirements:
-    - !type:DepartmentTimeRequirement
-      department: Science
+    - !type:OverallPlaytimeRequirement
       time: 7200 #2 hrs
   startingGear: ResearchAssistantGear
   icon: "JobIconResearchAssistant"
