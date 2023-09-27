@@ -9,6 +9,9 @@
     size: 10
   - type: Sprite
     sprite: Objects/Misc/schematics.rsi
+  - type: Tag
+    tags:
+    - Document
 
 - type: entity
   id: SchematicFoldable
