@@ -70,7 +70,8 @@ namespace Content.IntegrationTests.Tests
             "MeteorArena",
             "220Bagel",
             "220Fland",
-            "220Ishimura"
+            "220Ishimura",
+            "220Gate"
         };
 
         /// <summary>
