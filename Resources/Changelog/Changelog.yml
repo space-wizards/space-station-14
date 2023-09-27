@@ -1,9 +1,4 @@
 Entries:
-- author: Emisse
-  changes:
-  - {message: Hristov no longer insta stuns and does slightly less damage., type: Tweak}
-  id: 4403
-  time: '2023-08-01T21:04:44.0000000+00:00'
 - author: crazybrain
   changes:
   - {message: Admin banning panel has IP bans enabled by default., type: Fix}
@@ -2976,3 +2971,8 @@ Entries:
     type: Tweak}
   id: 4902
   time: '2023-09-27T09:22:32.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Fixed there being no confirmation for role bans., type: Fix}
+  id: 4903
+  time: '2023-09-27T15:27:08.0000000+00:00'
