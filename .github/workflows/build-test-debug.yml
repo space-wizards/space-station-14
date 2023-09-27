@@ -2,11 +2,11 @@ name: Build & Test Debug
 
 on:
   push:
-    branches: [ master, staging, trying, upstream-sync, ganimed-main ]
+    branches: [ master, staging, trying, upstream-sync ]
   merge_group:
   pull_request:
     types: [ opened, reopened, synchronize, ready_for_review ]
-    branches: [ master, ganimed-main ]
+    branches: [ master ]
 
 jobs:
   build:
