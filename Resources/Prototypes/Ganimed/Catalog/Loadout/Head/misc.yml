@@ -1,42 +1,4 @@
 - type: loadout
-  id: LoadoutHeadClothingHeadHatHoodCulthood
-  category: loadout-category-head
-  cost: 3
-  exclusive: true
-  prototype: ClothingHeadHatHoodCulthood
-
-- type: loadout
-  id: LoadoutHeadClothingHeadHatHoodNunHood
-  category: loadout-category-head
-  cost: 3
-  exclusive: true
-  prototype: ClothingHeadHatHoodNunHood
-
-- type: loadout
-  id: LoadoutHeadClothingHeadHatHoodGoliathCloak
-  category: loadout-category-head
-  cost: 3
-  exclusive: true
-  prototype: ClothingHeadHatHoodGoliathCloak
-
-- type: loadout
-  id: LoadoutHeadClothingHeadHatHoodRad
-  category: loadout-category-head
-  cost: 5
-  exclusive: true
-  whitelistJobs:
-    - TechnicalAssistant
-    - StationEngineer
-    - AtmosphericEngineer
-    - SeniorEngineer
-    - ChiefEngineer
-    - ResearchDirector
-    - ResearchAssistant
-    - Scientist
-    - SeniorResearcher
-  prototype: ClothingHeadHatHoodRad
-
-- type: loadout
   id: LoadoutHeadClothingHeadFishCap
   category: loadout-category-head
   cost: 1
@@ -65,13 +27,6 @@
   prototype: ClothingHeadHatCatEars
 
 - type: loadout
-  id: LoadoutHeadClothingHeadHatHoodMoth
-  category: loadout-category-head
-  cost: 2
-  exclusive: true
-  prototype: ClothingHeadHatHoodMoth
-
-- type: loadout
   id: LoadoutHeadMaterialHideBear
   category: loadout-category-head
   cost: 4
@@ -84,3 +39,17 @@
   cost: 1
   exclusive: true
   prototype: ClothingHeadHatAnimalMonkey
+
+- type: loadout
+  id: LoadoutHeadClothingHeadHatPwig
+  category: loadout-category-head
+  cost: 1
+  exclusive: true
+  prototype: ClothingHeadHatPwig
+
+- type: loadout
+  id: LoadoutHeadClothingHeadHatShrineMaidenWig
+  category: loadout-category-head
+  cost: 2
+  exclusive: true
+  prototype: ClothingHeadHatShrineMaidenWig

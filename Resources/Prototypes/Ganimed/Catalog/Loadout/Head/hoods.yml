@@ -1,0 +1,110 @@
+- type: loadout
+  id: LoadoutHeadClothingHeadHatHoodMoth
+  category: loadout-category-head
+  cost: 2
+  exclusive: true
+  prototype: ClothingHeadHatHoodMoth
+
+- type: loadout
+  id: LoadoutHeadClothingHeadHatHoodCulthood
+  category: loadout-category-head
+  cost: 3
+  exclusive: true
+  prototype: ClothingHeadHatHoodCulthood
+
+- type: loadout
+  id: LoadoutHeadClothingHeadHatHoodNunHood
+  category: loadout-category-head
+  cost: 3
+  exclusive: true
+  prototype: ClothingHeadHatHoodNunHood
+
+- type: loadout
+  id: LoadoutHeadClothingHeadHatHoodGoliathCloak
+  category: loadout-category-head
+  cost: 3
+  exclusive: true
+  prototype: ClothingHeadHatHoodGoliathCloak
+
+- type: loadout
+  id: LoadoutHeadClothingHeadHatHoodRad
+  category: loadout-category-head
+  cost: 5
+  exclusive: true
+  whitelistJobs:
+    - TechnicalAssistant
+    - StationEngineer
+    - AtmosphericEngineer
+    - SeniorEngineer
+    - ChiefEngineer
+    - ResearchDirector
+    - ResearchAssistant
+    - Scientist
+    - SeniorResearcher
+  prototype: ClothingHeadHatHoodRad
+
+- type: loadout
+  id: LoadoutHeadClothingHeadHatHoodBioGeneral
+  category: loadout-category-head
+  cost: 5
+  exclusive: true
+  prototype: ClothingHeadHatBioGeneral
+
+- type: loadout
+  id: LoadoutHeadClothingHeadHatHoodBioSecurity
+  category: loadout-category-head
+  cost: 3
+  exclusive: true
+  whitelistJobs:
+    - HeadOfSecurity
+    - Detective
+    - SeniorOfficer
+    - SecurityCadet
+    - SecurityOfficer
+    - Warden
+  prototype: ClothingHeadHatBioSecurity
+
+- type: loadout
+  id: LoadoutHeadClothingHeadHatHoodBioCmo
+  category: loadout-category-head
+  cost: 3
+  exclusive: true
+  whitelistJobs:
+    - ChiefMedicalOfficer
+  prototype: ClothingHeadHatBioCmo
+
+- type: loadout
+  id: LoadoutHeadClothingHeadHatHoodBioJanitor
+  category: loadout-category-head
+  cost: 4
+  exclusive: true
+  whitelistJobs:
+    - Janitor
+  prototype: ClothingHeadHatBioJanitor
+
+- type: loadout
+  id: LoadoutHeadClothingHeadHatHoodBioScientist
+  category: loadout-category-head
+  cost: 3
+  exclusive: true
+  whitelistJobs:
+    - ResearchDirector
+    - ResearchAssistant
+    - Scientist
+    - SeniorResearcher
+  prototype: ClothingHeadHatBioScientist
+
+- type: loadout
+  id: LoadoutHeadClothingHeadHatHoodBioVirology
+  category: loadout-category-head
+  cost: 3
+  exclusive: true
+  whitelistJobs:
+    - ChiefMedicalOfficer
+    - Chemist
+    - Paramedic
+    - Psychologist
+    - MedicalDoctor
+    - MedicalIntern
+    - SeniorPhysician
+  prototype: ClothingHeadHatBioVirology

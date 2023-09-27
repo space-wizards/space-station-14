@@ -81,3 +81,17 @@
   cost: 1
   exclusive: false
   prototype: ClothingUniformJumpskirtColorRed
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpsuitColorOrange
+  category: loadout-category-uniform
+  cost: 1
+  exclusive: false
+  prototype: ClothingUniformJumpsuitColorOrange
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpskirtColorOrange
+  category: loadout-category-uniform
+  cost: 1
+  exclusive: false
+  prototype: ClothingUniformJumpskirtColorOrange

@@ -1,7 +1,7 @@
 - type: loadout
   id: LoadoutOuterClothingClothingOuterBioJanitor
   category: loadout-category-outerClothing
-  cost: 5
+  cost: 6
   exclusive: true
   whitelistJobs:
     - Janitor
@@ -10,7 +10,7 @@
 - type: loadout
   id: LoadoutOuterClothingClothingOuterBioScientist
   category: loadout-category-outerClothing
-  cost: 5
+  cost: 6
   exclusive: true
   whitelistJobs:
     - ResearchDirector
@@ -22,14 +22,14 @@
 - type: loadout
   id: LoadoutOuterClothingClothingOuterBioGeneral
   category: loadout-category-outerClothing
-  cost: 8
+  cost: 9
   exclusive: true
   prototype: ClothingOuterBioGeneral
 
 - type: loadout
   id: LoadoutOuterClothingClothingOuterBioSecurity
   category: loadout-category-outerClothing
-  cost: 5
+  cost: 6
   exclusive: true
   whitelistJobs:
     - SecurityCadet
@@ -44,7 +44,7 @@
 - type: loadout
   id: LoadoutOuterClothingClothingOuterBioCmo
   category: loadout-category-outerClothing
-  cost: 4
+  cost: 5
   exclusive: true
   whitelistJobs:
     - ChiefMedicalOfficer
@@ -53,7 +53,7 @@
 - type: loadout
   id: LoadoutOuterClothingClothingOuterBioVirology
   category: loadout-category-outerClothing
-  cost: 5
+  cost: 6
   exclusive: true
   whitelistJobs:
     - ChiefMedicalOfficer

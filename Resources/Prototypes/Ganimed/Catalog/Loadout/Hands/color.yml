@@ -25,3 +25,10 @@
   cost: 1
   exclusive: true
   prototype: ClothingHandsGlovesColorRed
+
+- type: loadout
+  id: LoadoutHandsClothingHandsGlovesColorOrange
+  category: loadout-category-hands
+  cost: 1
+  exclusive: true
+  prototype: ClothingHandsGlovesColorOrange

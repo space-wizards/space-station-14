@@ -110,3 +110,33 @@
   exclusive: false
   prototype: SoapNT
   
+- type: loadout
+  id: LoadoutItemsSingularityToy
+  category: loadout-category-items
+  cost: 8
+  exclusive: false
+  prototype: SingularityToy
+  
+- type: loadout
+  id: LoadoutItemsPersonalAI
+  category: loadout-category-items
+  cost: 3
+  exclusive: false
+  prototype: PersonalAI
+  
+- type: loadout
+  id: LoadoutItemsGunpetInstrument
+  category: loadout-category-items
+  cost: 3
+  exclusive: false
+  prototype: GunpetInstrument
+  
+- type: loadout
+  id: LoadoutItemsLauncherCreamPie
+  category: loadout-category-items
+  cost: 3
+  exclusive: false
+  whitelistJobs:
+    - Clown
+  prototype: LauncherCreamPie
+  

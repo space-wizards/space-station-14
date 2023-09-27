@@ -199,3 +199,10 @@
   cost: 4
   exclusive: true
   prototype: BedsheetCult
+
+- type: loadout
+  id: LoadoutNeckBedsheetOrange
+  category: loadout-category-neck
+  cost: 2
+  exclusive: true
+  prototype: BedsheetOrange

@@ -31,10 +31,9 @@
 - type: loadout
   id: LoadoutOuterClothingClothingOuterArmorHeavyRed
   category: loadout-category-outerClothing
-  cost: 9
+  cost: 10
   exclusive: true
   whitelistJobs:
-    - Captain
     - HeadOfSecurity
   prototype: ClothingOuterArmorHeavyRed
 

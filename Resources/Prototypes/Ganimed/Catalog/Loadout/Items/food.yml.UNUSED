@@ -84,3 +84,10 @@
   exclusive: false
   prototype: FoodBoxNugget
   
+- type: loadout
+  id: LoadoutItemsDrinkBeerBottleFull
+  category: loadout-category-items
+  cost: 2
+  exclusive: false
+  prototype: DrinkBeerBottleFull
+  

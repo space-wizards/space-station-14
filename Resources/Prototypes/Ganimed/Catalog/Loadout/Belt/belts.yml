@@ -16,13 +16,10 @@
 - type: loadout
   id: LoadoutBeltClothingBeltMilitaryWebbingMed
   category: loadout-category-belt
-  cost: 3
+  cost: 6
   exclusive: true
   whitelistJobs:
-    - SecurityCadet
-    - SecurityOfficer
     - Warden
-    - Detective
     - HeadOfSecurity
     - Captain
     - SeniorOfficer
@@ -41,6 +38,8 @@
     - HeadOfSecurity
     - Captain
     - SeniorOfficer
+    - Bartender
+    - ServiceWorker
   prototype: ClothingBeltBandolier
 
 - type: loadout

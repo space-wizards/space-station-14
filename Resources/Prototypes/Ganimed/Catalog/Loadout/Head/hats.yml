@@ -76,4 +76,18 @@
   cost: 1
   exclusive: true
   prototype: ClothingHeadHatBunny
+
+- type: loadout
+  id: LoadoutHeadClothingHeadHatPirateTricord
+  category: loadout-category-head
+  cost: 3
+  exclusive: true
+  prototype: ClothingHeadHatPirateTricord
+
+- type: loadout
+  id: LoadoutHeadClothingHeadHatPirateHat
+  category: loadout-category-head
+  cost: 3
+  exclusive: true
+  prototype: ClothingHeadHatPirateHat
   

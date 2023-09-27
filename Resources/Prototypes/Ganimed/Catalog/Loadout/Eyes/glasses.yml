@@ -13,6 +13,13 @@
   prototype: ClothingEyesGlassesGar
 
 - type: loadout
+  id: LoadoutEyesClothingEyesGlassesOrange
+  category: loadout-category-eyes
+  cost: 1
+  exclusive: true
+  prototype: ClothingEyesGlassesOrange
+
+- type: loadout
   id: LoadoutEyesClothingEyesGlassesMeson
   category: loadout-category-eyes
   cost: 4
@@ -26,3 +33,86 @@
     - SalvageSpecialist
   exclusive: true
   prototype: ClothingEyesGlassesMeson
+
+- type: loadout
+  id: LoadoutEyesClothingEyesGlassesThermal
+  category: loadout-category-eyes
+  cost: 4
+  whitelistJobs:
+    - TechnicalAssistant
+    - StationEngineer
+    - AtmosphericEngineer
+    - SeniorEngineer
+    - ChiefEngineer
+    - Quartermaster
+    - SalvageSpecialist
+  exclusive: true
+  prototype: ClothingEyesGlassesThermal
+
+- type: loadout
+  id: LoadoutEyesClothingEyesGlasses
+  category: loadout-category-eyes
+  cost: 1
+  exclusive: true
+  prototype: ClothingEyesGlasses
+
+- type: loadout
+  id: LoadoutEyesClothingEyesGlassesMercenary
+  category: loadout-category-eyes
+  cost: 2
+  exclusive: true
+  whitelistJobs:
+    - SecurityCadet
+    - SecurityOfficer
+    - Warden
+    - Detective
+    - HeadOfSecurity
+    - Captain
+    - SeniorOfficer
+    - Captain
+    - Quartermaster
+    - SalvageSpecialist
+    - Bartender
+  prototype: ClothingEyesGlassesMercenary
+
+- type: loadout
+  id: LoadoutEyesClothingEyesGlassesOutlawGlasses
+  category: loadout-category-eyes
+  cost: 2
+  exclusive: true
+  prototype: ClothingEyesGlassesOutlawGlasses
+
+- type: loadout
+  id: LoadoutEyesClothingEyesGlassesMercenary
+  category: loadout-category-eyes
+  cost: 2
+  exclusive: true
+  whitelistJobs:
+    - Detective
+    - Captain
+    - HeadOfSecurity
+    - SeniorOfficer
+    - ResearchDirector
+    - ResearchAssistant
+    - Scientist
+    - SeniorResearcher
+    - ChiefMedicalOfficer
+    - Chemist
+    - Paramedic
+    - MedicalDoctor
+    - Psychologist
+    - MedicalIntern
+    - SeniorPhysician
+    - Bartender
+    - ServiceWorker
+  prototype: ClothingEyesGlassesMercenary
+
+- type: loadout
+  id: LoadoutEyesClothingEyesEyesHudBeer
+  category: loadout-category-eyes
+  cost: 2
+  exclusive: true
+  whitelistJobs:
+    - Bartender
+    - ServiceWorker
+  prototype: ClothingEyesHoodBeer

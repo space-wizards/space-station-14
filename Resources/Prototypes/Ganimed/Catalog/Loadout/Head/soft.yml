@@ -79,3 +79,120 @@
   cost: 2
   exclusive: true
   prototype: ClothingHeadHatMimesoft
+
+- type: loadout
+  id: LoadoutHeadClothingHeadHatOrangesoft
+  category: loadout-category-head
+  cost: 1
+  exclusive: true
+  prototype: ClothingHeadHatOrangesoft
+
+- type: loadout
+  id: LoadoutHeadClothingHeadHatYellowsoftFlipped
+  category: loadout-category-head
+  cost: 1
+  exclusive: true
+  prototype: ClothingHeadHatYellowsoftFlipped
+
+- type: loadout
+  id: LoadoutHeadClothingHeadHatGreensoftFlipped
+  category: loadout-category-head
+  cost: 1
+  exclusive: true
+  prototype: ClothingHeadHatGreensoftFlipped
+
+- type: loadout
+  id: LoadoutHeadClothingHeadHatSecsoftFlipped
+  category: loadout-category-head
+  cost: 1
+  exclusive: true
+  whitelistJobs:
+    - SecurityCadet
+    - SecurityOfficer
+    - Warden
+    - Detective
+    - HeadOfSecurity
+    - SeniorOfficer
+  prototype: ClothingHeadHatSecsoftFlipped
+
+- type: loadout
+  id: LoadoutHeadClothingHeadHatCargosoftFlipped
+  category: loadout-category-head
+  cost: 1
+  exclusive: true
+  whitelistJobs:
+    - Quartermaster
+    - CargoTechnician
+    - SalvageSpecialist
+  prototype: ClothingHeadHatCargosoftFlipped
+
+- type: loadout
+  id: LoadoutHeadClothingHeadHatParamedicsoftFlipped
+  category: loadout-category-head
+  cost: 2
+  exclusive: true
+  whitelistJobs:
+    - ChiefMedicalOfficer
+    - Chemist
+    - Paramedic
+    - MedicalDoctor
+    - MedicalIntern
+    - Psychologist
+    - SeniorPhysician
+  prototype: ClothingHeadHatParamedicsoftFlipped
+
+- type: loadout
+  id: LoadoutHeadClothingHeadHatBizarreSoftFlipped
+  category: loadout-category-head
+  cost: 2
+  exclusive: true
+  prototype: ClothingHeadHatBizarreSoftFlipped
+
+- type: loadout
+  id: LoadoutHeadClothingHeadHatCorpsoftFlipped
+  category: loadout-category-head
+  cost: 1
+  exclusive: true
+  prototype: ClothingHeadHatCorpsoftFlipped
+
+- type: loadout
+  id: LoadoutHeadClothingHeadHatRedsoftFlipped
+  category: loadout-category-head
+  cost: 1
+  exclusive: true
+  prototype: ClothingHeadHatRedsoftFlipped
+
+- type: loadout
+  id: LoadoutHeadClothingHeadHatMimesoftFlipped
+  category: loadout-category-head
+  cost: 2
+  exclusive: true
+  prototype: ClothingHeadHatMimesoftFlipped
+
+- type: loadout
+  id: LoadoutHeadClothingHeadHatOrangesoftFlipped
+  category: loadout-category-head
+  cost: 1
+  exclusive: true
+  prototype: ClothingHeadHatOrangesoftFlipped
+
+- type: loadout
+  id: LoadoutHeadClothingHeadHatGreysoftFlipped
+  category: loadout-category-head
+  cost: 1
+  exclusive: true
+  prototype: ClothingHeadHatGreysoftFlipped
+
+- type: loadout
+  id: LoadoutHeadClothingHeadHatBluesoftFlipped
+  category: loadout-category-head
+  cost: 1
+  exclusive: true
+  prototype: ClothingHeadHatBluesoftFlipped
+
+- type: loadout
+  id: LoadoutHeadClothingHeadHatPurplesoftFlipped
+  category: loadout-category-head
+  cost: 1
+  exclusive: true
+  prototype: ClothingHeadHatPurplesoftFlipped

@@ -148,3 +148,10 @@
   cost: 4
   exclusive: false
   prototype: FireExtinguisher
+
+- type: loadout
+  id: LoadoutItemsAppraisalTool
+  category: loadout-category-items
+  cost: 2
+  exclusive: false
+  prototype: AppraisalTool

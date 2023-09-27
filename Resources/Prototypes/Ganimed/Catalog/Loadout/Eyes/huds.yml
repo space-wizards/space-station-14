@@ -43,3 +43,17 @@
     - MedicalIntern
     - SeniorPhysician
   prototype: ClothingEyesHudMedical
+
+- type: loadout
+  id: LoadoutEyesClothingEyesHudSecurity
+  category: loadout-category-eyes
+  cost: 3
+  exclusive: true
+  whitelistJobs:
+    - SecurityCadet
+    - SecurityOfficer
+    - Warden
+    - Detective
+    - HeadOfSecurity
+    - Captain
+  prototype: ClothingEyesHudSecurity

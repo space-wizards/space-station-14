@@ -307,3 +307,10 @@
   cost: 2
   exclusive: true
   prototype: ClothingOuterCoatBomber
+
+- type: loadout
+  id: LoadoutOuterClothingClothingOuterWinterWeb
+  category: loadout-category-outerClothing
+  cost: 2
+  exclusive: true
+  prototype: ClothingOuterWinterWeb

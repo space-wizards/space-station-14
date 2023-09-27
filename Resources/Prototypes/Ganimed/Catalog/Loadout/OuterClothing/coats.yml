@@ -186,4 +186,24 @@
   cost: 4
   exclusive: true
   prototype: ClothingOuterCoatPirate
-  
+
+- type: loadout
+  id: LoadoutOuterClothingClothingOuterCoatJensen
+  category: loadout-category-outerClothing
+  cost: 3
+  exclusive: true
+  prototype: ClothingOuterCoatJensen
+
+- type: loadout
+  id: LoadoutOuterClothingClothingOuterCoatInspector
+  category: loadout-category-outerClothing
+  cost: 3
+  exclusive: true
+  prototype: ClothingOuterCoatInspector
+
+- type: loadout
+  id: LoadoutOuterClothingClothingOuterDameDane
+  category: loadout-category-outerClothing
+  cost: 1
+  exclusive: true
+  prototype: ClothingOuterDameDane

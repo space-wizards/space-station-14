@@ -696,3 +696,31 @@
   cost: 1
   exclusive: true
   prototype: ClothingUniformJumpsuitJacketMonkey
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpsuitGladiator
+  category: loadout-category-uniform
+  cost: 4
+  exclusive: true
+  prototype: ClothingUniformJumpsuitGladiator
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpsuitWeb
+  category: loadout-category-uniform
+  cost: 1
+  exclusive: true
+  prototype: ClothingUniformJumpsuitWeb
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpskirtWeb
+  category: loadout-category-uniform
+  cost: 1
+  exclusive: true
+  prototype: ClothingUniformJumpskirtWeb
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpsuitPirate
+  category: loadout-category-uniform
+  cost: 2
+  exclusive: true
+  prototype: ClothingUniformJumpsuitPirate

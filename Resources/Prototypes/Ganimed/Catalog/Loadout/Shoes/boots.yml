@@ -76,7 +76,7 @@
 - type: loadout
   id: LoadoutShoesClothingShoesBootsMag
   category: loadout-category-shoes
-  cost: 4
+  cost: 5
   exclusive: true
   whitelistJobs:
     - SalvageSpecialist
@@ -85,4 +85,6 @@
     - SeniorEngineer
     - StationEngineer
     - AtmosphericTechnician
+    - ResearchDirector
+    - SeniorResearcher
   prototype: ClothingShoesBootsMag
