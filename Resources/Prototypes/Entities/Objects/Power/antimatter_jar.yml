@@ -11,6 +11,12 @@
     sprite: Objects/Power/AME/ame_jar.rsi
     state: jar
   - type: AmeFuelContainer
+  - type: Explosive
+    explosionType: Antimatter
+    maxIntensity: 1
+    intensitySlope: 5
+    totalIntensity: 5
+    deleteAfterExplosion: false
   - type: StaticPrice
     price: 500
   - type: GuideHelp
