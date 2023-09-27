@@ -1,9 +1,9 @@
-using Content.Server.Morgue.Components;
 using Content.Shared.Body.Components;
+using Content.Shared.Morgue.Components;
 using Content.Shared.Standing;
 using Content.Shared.Storage.Components;
 
-namespace Content.Server.Morgue;
+namespace Content.Shared.Morgue;
 
 public sealed class EntityStorageLayingDownOverrideSystem : EntitySystem
 {
