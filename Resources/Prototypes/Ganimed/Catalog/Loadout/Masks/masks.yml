@@ -13,7 +13,7 @@
 - type: loadout
   id: LoadoutMasksClothingMaskBreathMedicalSecurity
   category: loadout-category-masks
-  cost: 3
+  cost: 5
   exclusive: true
   whitelistJobs:
     - SecurityCadet
