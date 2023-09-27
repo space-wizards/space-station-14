@@ -17,6 +17,20 @@
     intensitySlope: 5
     totalIntensity: 5
     deleteAfterExplosion: false
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  # start leaking fuel when broken
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:EmagBehavior
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/metalbreak.ogg
   - type: StaticPrice
     price: 500
   - type: GuideHelp
