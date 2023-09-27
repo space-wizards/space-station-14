@@ -625,7 +625,7 @@
   - type: ContainerFill
     containers:
       caster:
-      - RayCaster
+      - AdvancedRayCaster
   - type: Construction
     graph: WeaponAntiqueLaser
     node: antiqueLaserPistol
@@ -686,7 +686,7 @@
   - type: ContainerFill
     containers:
       caster:
-      - RayCaster
+      - AdvancedRayCaster
   - type: Construction
     graph: WeaponAdvancedLaser
     node: advancedLaserPistol
