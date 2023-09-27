@@ -288,7 +288,9 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
                     continue;
                 }
 
-                _entManager.SpawnAtPosition(entry.Proto, grid.GridTileToLocal(tile));
+                var uid = _entManager.SpawnAtPosition(entry.Proto, grid.GridTileToLocal(tile));
+                _entManager.RemoveComponent<GhostRoleComponent>(uid);
+                _entManager.RemoveComponent<GhostTakeoverAvailableComponent>(uid);
                 return;
             }
         }

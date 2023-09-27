@@ -53,7 +53,7 @@ namespace Content.Server.Toilet
             // Check that victim has a head
             // FIXME: since suiciding turns you into a ghost immediately, both messages are seen, not sure how this can be fixed
             if (TryComp<BodyComponent>(args.Victim, out var body) &&
-                _body.BodyHasChildOfType(args.Victim, BodyPartType.Head, body))
+                _body.BodyHasPartType(args.Victim, BodyPartType.Head, body))
             {
                 var othersMessage = Loc.GetString("toilet-component-suicide-head-message-others",
                     ("victim", Identity.Entity(args.Victim, EntityManager)), ("owner", uid));

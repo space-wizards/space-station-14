@@ -35,7 +35,7 @@ namespace Content.Server.Administration.Commands
 
             var bodySystem = _entManager.System<BodySystem>();
 
-            if (bodySystem.AddOrganToFirstValidSlot(organId, partId))
+            if (bodySystem.AddOrganToFirstValidSlot(partId.Value, organId.Value))
             {
                 shell.WriteLine($@"Added {organId} to {partId}.");
             }

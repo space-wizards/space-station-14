@@ -54,6 +54,7 @@
     sprite: Clothing/Eyes/Hud/beergoggles.rsi
   - type: Clothing
     sprite: Clothing/Eyes/Hud/beergoggles.rsi
+  - type: ShowThirstIcons
 
 - type: entity
   parent: ClothingEyesBase
@@ -65,6 +66,19 @@
     sprite: Clothing/Eyes/Hud/friedonion.rsi
   - type: Clothing
     sprite: Clothing/Eyes/Hud/friedonion.rsi
+  - type: ShowHungerIcons
+  - type: Food
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 3
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 3
+  - type: FlavorProfile
+    flavors:
+      - onion
+      - greasey
 
 - type: entity
   parent: ClothingEyesBase
@@ -76,6 +90,8 @@
     sprite: Clothing/Eyes/Hud/onionbeer.rsi
   - type: Clothing
     sprite: Clothing/Eyes/Hud/onionbeer.rsi
+  - type: ShowHungerIcons
+  - type: ShowThirstIcons
 
 - type: entity
   parent: ClothingEyesBase
@@ -93,6 +109,7 @@
   - type: ShowHealthIcons
     damageContainers: 
     - Biological
+  - type: ShowHungerIcons
 
 - type: entity
   parent: ClothingEyesBase
@@ -110,6 +127,8 @@
   - type: ShowHealthIcons
     damageContainers: 
     - Biological
+  - type: ShowHungerIcons
+  - type: ShowThirstIcons
 
 - type: entity
   parent: ClothingEyesBase
@@ -160,3 +179,5 @@
   - type: ShowHealthIcons
     damageContainers: 
     - Biological
+  - type: ShowHungerIcons
+  - type: ShowThirstIcons

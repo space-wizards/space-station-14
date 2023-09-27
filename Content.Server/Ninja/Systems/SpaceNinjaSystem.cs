@@ -12,6 +12,7 @@ using Content.Server.Power.EntitySystems;
 using Content.Server.PowerCell;
 using Content.Server.Research.Systems;
 using Content.Server.Roles;
+using Content.Server.GenericAntag;
 using Content.Server.Warps;
 using Content.Shared.Alert;
 using Content.Shared.Clothing.EntitySystems;
@@ -42,13 +43,14 @@ namespace Content.Server.Ninja.Systems;
 // TODO: when criminal records is merged, hack it to set everyone to arrest
 
 /// <summary>
-/// Main ninja system that handles ninja setup and greentext, provides helper methods for the rest of the code to use.
+/// Main ninja system that handles ninja setup, provides helper methods for the rest of the code to use.
 /// </summary>
 public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
 {
     [Dependency] private readonly AlertsSystem _alerts = default!;
     [Dependency] private readonly BatterySystem _battery = default!;
     [Dependency] private readonly GameTicker _gameTicker = default!;
+    [Dependency] private readonly GenericAntagSystem _genericAntag = default!;
     [Dependency] private readonly IChatManager _chatMan = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly PowerCellSystem _powerCell = default!;
@@ -63,7 +65,7 @@ public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<SpaceNinjaComponent, MindAddedMessage>(OnNinjaMindAdded);
+        SubscribeLocalEvent<SpaceNinjaComponent, GenericAntagCreatedEvent>(OnNinjaCreated);
         SubscribeLocalEvent<SpaceNinjaComponent, EmaggedSomethingEvent>(OnDoorjack);
         SubscribeLocalEvent<SpaceNinjaComponent, ResearchStolenEvent>(OnResearchStolen);
         SubscribeLocalEvent<SpaceNinjaComponent, ThreatCalledInEvent>(OnThreatCalledIn);
@@ -76,24 +78,6 @@ public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
         {
             UpdateNinja(uid, ninja, frameTime);
         }
-    }
-
-    /// <summary>
-    /// Turns the player into a space ninja
-    /// </summary>
-    public void MakeNinja(EntityUid mindId, MindComponent mind)
-    {
-        if (mind.OwnedEntity == null)
-            return;
-
-        // prevent double ninja'ing
-        var user = mind.OwnedEntity.Value;
-        if (HasComp<SpaceNinjaComponent>(user))
-            return;
-
-        AddComp<SpaceNinjaComponent>(user);
-        SetOutfitCommand.SetOutfit(user, "SpaceNinjaGear", EntityManager);
-        GreetNinja(mindId, mind);
     }
 
     /// <summary>
@@ -114,29 +98,16 @@ public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
     /// Returns a ninja's gamerule config data.
     /// If the gamerule was not started then it will be started automatically.
     /// </summary>
-    public NinjaRuleComponent? NinjaRule(EntityUid uid, SpaceNinjaComponent? comp = null)
+    public NinjaRuleComponent? NinjaRule(EntityUid uid, GenericAntagComponent? comp = null)
     {
         if (!Resolve(uid, ref comp))
             return null;
 
-        // already exists so just check it
-        if (comp.Rule != null)
-            return CompOrNull<NinjaRuleComponent>(comp.Rule);
-
-        // start it
-        _gameTicker.StartGameRule("Ninja", out var rule);
-        comp.Rule = rule;
-
-        if (!TryComp<NinjaRuleComponent>(rule, out var ninjaRule))
+        // mind not added yet so no rule
+        if (comp.RuleEntity == null)
             return null;
 
-        // add ninja mind to the rule's list for objective showing
-        if (TryComp<MindContainerComponent>(uid, out var mindContainer) && mindContainer.Mind != null)
-        {
-            ninjaRule.Minds.Add(mindContainer.Mind.Value);
-        }
-
-        return ninjaRule;
+        return CompOrNull<NinjaRuleComponent>(comp.RuleEntity);
     }
 
     // TODO: can probably copy paste borg code here
@@ -186,23 +157,17 @@ public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
     }
 
     /// <summary>
-    /// Greets the ninja when a ghost takes over a ninja, if that happens.
-    /// </summary>
-    private void OnNinjaMindAdded(EntityUid uid, SpaceNinjaComponent comp, MindAddedMessage args)
-    {
-        if (TryComp<MindContainerComponent>(uid, out var mind) && mind.Mind != null)
-            GreetNinja(mind.Mind.Value);
-    }
-
-    /// <summary>
     /// Set up everything for ninja to work and send the greeting message/sound.
+    /// Objectives are added by <see cref="GenericAntagSystem"/>.
     /// </summary>
-    private void GreetNinja(EntityUid mindId, MindComponent? mind = null)
+    private void OnNinjaCreated(EntityUid uid, SpaceNinjaComponent comp, ref GenericAntagCreatedEvent args)
     {
-        if (!Resolve(mindId, ref mind) || mind.OwnedEntity == null || mind.Session == null)
+        var mindId = args.MindId;
+        var mind = args.Mind;
+
+        if (mind.Session == null)
             return;
 
-        var uid = mind.OwnedEntity.Value;
         var config = NinjaRule(uid);
         if (config == null)
             return;
@@ -225,15 +190,6 @@ public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
 
         if (warps.Count > 0)
             role.SpiderChargeTarget = _random.Pick(warps);
-
-        // assign objectives - must happen after spider charge target so that the obj requirement works
-        foreach (var objective in config.Objectives)
-        {
-            if (!_mind.TryAddObjective(mindId, mind, objective))
-            {
-                Log.Error($"Failed to add {objective} to ninja {mind.OwnedEntity.Value}");
-            }
-        }
 
         var session = mind.Session;
         _audio.PlayGlobal(config.GreetingSound, Filter.Empty().AddPlayer(session), false, AudioParams.Default);
