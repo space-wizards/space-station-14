@@ -1,23 +1,23 @@
 using Content.Server.Access;
+using Content.Server.Administration.Logs;
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Construction;
+using Content.Server.Power.EntitySystems;
 using Content.Shared.Database;
+using Content.Shared.DoAfter;
 using Content.Shared.Doors;
 using Content.Shared.Doors.Components;
 using Content.Shared.Doors.Systems;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Interaction;
+using Content.Shared.Tools;
 using Content.Shared.Tools.Components;
+using Content.Shared.Tools.Systems;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio;
-using Content.Server.Administration.Logs;
-using Content.Server.Power.EntitySystems;
-using Content.Shared.Tools;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
-using Content.Shared.DoAfter;
-using Content.Shared.Tools.Systems;
 
 namespace Content.Server.Doors.Systems;
 
@@ -189,7 +189,7 @@ public sealed class DoorSystem : SharedDoorSystem
         RaiseLocalEvent(target, modEv, false);
 
         _adminLog.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(user)} is using {ToPrettyString(tool)} to pry {ToPrettyString(target)} while it is {door.State}"); // TODO move to generic tool use logging in a way that includes door state
-        _toolSystem.UseTool(tool, user, target, TimeSpan.FromSeconds(modEv.PryTimeModifier * door.PryTime), new[] {door.PryingQuality}, new DoorPryDoAfterEvent(), out id);
+        _toolSystem.UseTool(tool, user, target, TimeSpan.FromSeconds(modEv.PryTimeModifier * door.PryTime), new[] {door.PryingQuality.Id}, new DoorPryDoAfterEvent(), out id);
         return true; // we might not actually succeeded, but a do-after has started
     }
 
