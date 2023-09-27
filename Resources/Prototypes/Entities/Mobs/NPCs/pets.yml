@@ -163,7 +163,7 @@
     - VimPilot
 
 - type: entity
-  name: bingus
+  name: Bingus
   parent: SimpleMobBase
   id: MobBingus
   description: Bingus my beloved...
@@ -223,7 +223,7 @@
     - VimPilot
 
 - type: entity
-  name: mcgriff
+  name: McGriff
   parent: SimpleMobBase
   id: MobMcGriff
   description: This dog can tell something smells around here, and that something is CRIME!
