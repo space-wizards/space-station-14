@@ -111,6 +111,7 @@
           Quantity: 8
   - type: Tag
     tags:
+    - Soup
     - Fruit # I don't know what this is but its' a salad so sure
 
 - type: entity
@@ -139,6 +140,7 @@
   - type: Tag
     tags:
     - Fruit
+    - Soup
 
 - type: entity
   name: valid salad
@@ -171,6 +173,7 @@
     tags:
     - Meat
     - Fruit
+    - Soup
 
 - type: entity
   name: coleslaw
@@ -277,6 +280,7 @@
   - type: Tag
     tags:
     - Fruit
+    - Soup
 
 - type: entity
   name: jungle salad
@@ -304,6 +308,7 @@
   - type: Tag
     tags:
     - Fruit
+    - Soup
 
 - type: entity
   name: citrus salad
@@ -331,6 +336,7 @@
   - type: Tag
     tags:
     - Fruit
+    - Soup
 
 - type: entity
   name: salad of eden
@@ -400,6 +406,7 @@
   - type: Tag
     tags:
     - Meat
+    - Soup
 
 - type: entity
   name: rice and pork
@@ -431,6 +438,7 @@
   - type: Tag
     tags:
     - Meat
+    - Soup
 
 - type: entity
   name: rice pudding
@@ -490,6 +498,7 @@
   - type: Tag
     tags:
     - Meat
+    - Soup
 
 # Misc
 
@@ -586,6 +595,7 @@
   - type: Tag
     tags:
     - Meat
+    - Soup
 
 - type: entity
   name: slime soup
@@ -640,6 +650,7 @@
   - type: Tag
     tags:
     - Fruit
+    - Soup
 
 - type: entity
   name: wing fang chu
@@ -874,6 +885,7 @@
   - type: Tag
     tags:
     - Meat
+    - Soup
 
 - type: entity
   name: tomato soup
@@ -902,6 +914,7 @@
   - type: Tag
     tags:
     - Fruit
+    - Soup
 
 - type: entity
   name: eyeball soup
@@ -929,6 +942,7 @@
   - type: Tag
     tags:
     - Meat
+    - Soup
 
 - type: entity
   name: miso soup
@@ -960,6 +974,7 @@
   - type: Tag
     tags:
     - Meat
+    - Soup
 
 - type: entity
   name: mushroom soup
@@ -1062,6 +1077,7 @@
     tags:
     - Meat
     - Fruit
+    - Soup
 
 - type: entity
   name: sweet potato soup
@@ -1191,4 +1207,5 @@
   - type: Tag
     tags:
     - Fruit
+    - Soup
 # Tastes like bungo, hot curry.

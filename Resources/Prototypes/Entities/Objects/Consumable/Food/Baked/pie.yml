@@ -67,6 +67,7 @@
   - type: Tag
     tags:
     - Fruit 
+    - Pie 
   
 - type: entity
   name: slice of apple pie
@@ -84,7 +85,8 @@
       color: orange
   - type: Tag
     tags:
-    - Fruit
+    - Fruit 
+    - Pie
 # Tastes like pie, apple.
 
 - type: entity
@@ -151,7 +153,8 @@
           path: /Audio/Weapons/Guns/Empty/empty.ogg
   - type: Tag
     tags:
-    - Fruit
+    - Fruit 
+    - Pie
 # Tastes like pie, cream, banana.
 
 - type: entity
@@ -173,7 +176,8 @@
     slice: FoodPieClafoutisSlice
   - type: Tag
     tags:
-    - Fruit
+    - Fruit 
+    - Pie
 
 - type: entity
   name: slice of berry clafoutis
@@ -191,7 +195,8 @@
       color: pink
   - type: Tag
     tags:
-    - Fruit
+    - Fruit 
+    - Pie
 # Tastes like pie, blackberries.
 
 - type: entity
@@ -211,7 +216,8 @@
     slice: FoodPieCherrySlice
   - type: Tag
     tags:
-    - Fruit
+    - Fruit 
+    - Pie
 
 - type: entity
   name: slice of cherry pie
@@ -228,7 +234,8 @@
       color: red
   - type: Tag
     tags:
-    - Fruit
+    - Fruit 
+    - Pie
 # Tastes like pie, cherries.
 
 - type: entity
@@ -249,6 +256,7 @@
   - type: Tag
     tags:
     - Meat
+    - Pie
 
 - type: entity
   name: slice of meat pie
@@ -266,6 +274,7 @@
   - type: Tag
     tags:
     - Meat
+    - Pie
 # Tastes like pie, meat.
 
 - type: entity
@@ -286,6 +295,7 @@
   - type: Tag
     tags:
     - Meat
+    - Pie
 
 - type: entity
   name: slice of xeno pie
@@ -304,6 +314,7 @@
   - type: Tag
     tags:
     - Meat
+    - Pie
 # Tastes like pie, meat, acid.
 
 - type: entity
@@ -391,7 +402,8 @@
     state: grape
   - type: Tag
     tags:
-    - Fruit
+    - Fruit 
+    - Pie
 # Tastes like tart, grape.
 
 - type: entity
@@ -420,7 +432,8 @@
     state: gapple
   - type: Tag
     tags:
-    - Fruit
+    - Fruit 
+    - Pie
 # Tastes like tart, apple, expensive metal.
 
 - type: entity
