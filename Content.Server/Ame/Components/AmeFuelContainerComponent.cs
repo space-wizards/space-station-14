@@ -10,14 +10,12 @@ public sealed partial class AmeFuelContainerComponent : Component
     /// <summary>
     /// The amount of fuel in the jar.
     /// </summary>
-    [DataField("fuelAmount")]
-    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public int FuelAmount = 1000;
 
     /// <summary>
     /// The maximum fuel capacity of the jar.
     /// </summary>
-    [DataField("fuelCapacity")]
-    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public int FuelCapacity = 1000;
 }
