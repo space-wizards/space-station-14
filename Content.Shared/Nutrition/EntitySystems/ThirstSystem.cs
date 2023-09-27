@@ -46,6 +46,9 @@ public sealed class ThirstSystem : EntitySystem
         component.LastThirstThreshold = ThirstThreshold.Okay; // TODO: Potentially change this -> Used Okay because no effects.
         // TODO: Check all thresholds make sense and throw if they don't.
         UpdateEffects(uid, component);
+
+        TryComp(uid, out MovementSpeedModifierComponent? moveMod);
+            _movement.RefreshMovementSpeedModifiers(uid, moveMod);
     }
 
     private void OnRefreshMovespeed(EntityUid uid, ThirstComponent component, RefreshMovementSpeedModifiersEvent args)
@@ -179,7 +182,6 @@ public sealed class ThirstSystem : EntitySystem
 
             thirst.CurrentThirstThreshold = calculatedThirstThreshold;
             UpdateEffects(uid, thirst);
-            Dirty(uid, thirst);
         }
     }
 

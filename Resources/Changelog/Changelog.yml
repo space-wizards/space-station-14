@@ -1,67 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Anomaly generators now always generate anomalies on the station., type: Fix}
-  - {message: Anomalies should now generate further away from the edges of the station.,
-    type: Fix}
-  id: 4395
-  time: '2023-08-01T04:12:56.0000000+00:00'
-- author: Flareguy
-  changes:
-  - {message: Resprited steel floor tiles. Looks like the janitor hasn't been doing
-      their job..., type: Tweak}
-  id: 4396
-  time: '2023-08-01T06:09:46.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: The chemistry guidebook now specifies specific types for damage and
-      only uses groups when damage is evenly distributed across each type of a group.,
-    type: Fix}
-  id: 4397
-  time: '2023-08-01T06:10:05.0000000+00:00'
-- author: VasilisThePikachu
-  changes:
-  - {message: HoP no longer receives QM access., type: Remove}
-  id: 4398
-  time: '2023-08-01T14:02:02.0000000+00:00'
-- author: Errant
-  changes:
-  - {message: 'Indistinct whispers heard through walls or from behind other objects/people
-      no longer reveal the whisperer''s identity, you need to be able to clearly see
-      them.', type: Tweak}
-  - {message: 'If you can see the distant whisperer clearly, their identity is determined
-      by appearance/ID-card rather than their voice.', type: Tweak}
-  - {message: The range at which indistinct whispers can still be heard has been reduced.,
-    type: Tweak}
-  id: 4399
-  time: '2023-08-01T14:43:03.0000000+00:00'
-- author: hord-brayden
-  changes:
-  - {message: 'CE and HoS jumpskirts no longer provide rad protection or brute protection,
-      respectively', type: Remove}
-  id: 4400
-  time: '2023-08-01T17:27:22.0000000+00:00'
-- author: Dygon
-  changes:
-  - {message: Disposable turrets now explode once they run out of ammo, type: Tweak}
-  id: 4401
-  time: '2023-08-01T19:38:22.0000000+00:00'
-- author: MisterMecky
-  changes:
-  - {message: Adds chemical analysis goggles that can scan the chemical composition
-      of a solution, type: Add}
-  id: 4402
-  time: '2023-08-01T19:57:23.0000000+00:00'
-- author: Emisse
-  changes:
-  - {message: Hristov no longer insta stuns and does slightly less damage., type: Tweak}
-  id: 4403
-  time: '2023-08-01T21:04:44.0000000+00:00'
-- author: crazybrain
-  changes:
-  - {message: Admin banning panel has IP bans enabled by default., type: Fix}
-  id: 4404
-  time: '2023-08-01T21:05:14.0000000+00:00'
 - author: keronshb
   changes:
   - {message: Captains will now start with their gloves and carapace again, type: Tweak}
@@ -2982,3 +2919,60 @@ Entries:
       by reaction to occur.', type: Add}
   id: 4894
   time: '2023-09-24T21:33:25.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Fire extinguishers now use less fluid per burst and launch the user
+      farther in low-gravity., type: Tweak}
+  id: 4895
+  time: '2023-09-25T01:33:29.0000000+00:00'
+- author: Psychpsyo
+  changes:
+  - {message: 'People and animals no longer have two hearts, livers, sets of lungs
+      or kidneys. You probably didn''t need the extra pair anyways.', type: Fix}
+  id: 4896
+  time: '2023-09-25T06:53:04.0000000+00:00'
+- author: Nimfar11
+  changes:
+  - {message: Adds a new sprite for Syndicate implanters., type: Add}
+  id: 4897
+  time: '2023-09-26T00:04:03.0000000+00:00'
+- author: Ubaser
+  changes:
+  - {message: Added four new lizard horn markings!, type: Add}
+  id: 4898
+  time: '2023-09-26T02:24:09.0000000+00:00'
+- author: Whisper
+  changes:
+  - {message: The health analyzer no longer shows zero-damage groups., type: Fix}
+  id: 4899
+  time: '2023-09-26T04:37:23.0000000+00:00'
+- author: waylon531
+  changes:
+  - {message: Nocturine and welder blindness work again., type: Fix}
+  id: 4900
+  time: '2023-09-26T17:46:14.0000000+00:00'
+- author: gusxyz
+  changes:
+  - {message: Syndicate bomb no longer has anomalous properties., type: Tweak}
+  id: 4901
+  time: '2023-09-26T22:05:46.0000000+00:00'
+- author: Bhijn and Myr
+  changes:
+  - {message: 'Interaction outlines have been slightly reworked, and feature finer
+      artistic control. Edge cases no longer result in interaction outlines being
+      faintly visible in pitch black areas, out-of-range outlines are far less visible
+      in dim conditions, outlines now properly fade when over a fullbright backdrop
+      like parallax, and outlines now do a much better job at fading with penumbras.',
+    type: Tweak}
+  id: 4902
+  time: '2023-09-27T09:22:32.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Fixed there being no confirmation for role bans., type: Fix}
+  id: 4903
+  time: '2023-09-27T15:27:08.0000000+00:00'
+- author: c0rigin
+  changes:
+  - {message: What moths consider as food is now more consistent., type: Tweak}
+  id: 4904
+  time: '2023-09-27T16:50:59.0000000+00:00'
