@@ -25,7 +25,7 @@ public sealed partial class ChameleonClothingComponent : Component
     /// </summary>
     [ViewVariables(VVAccess.ReadOnly)]
     [DataField(required: true), AutoNetworkedField]
-    public ProtoId<EntityPrototype>? Default;
+    public EntProtoId? Default;
 
     /// <summary>
     ///     Current user that wears chameleon clothing.

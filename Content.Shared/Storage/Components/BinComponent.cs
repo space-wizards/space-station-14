@@ -36,7 +36,7 @@ public sealed partial class BinComponent : Component
     /// The items that start in the bin. Sorted in order.
     /// </summary>
     [DataField]
-    public List<ProtoId<EntityPrototype>> InitialContents = new();
+    public List<EntProtoId> InitialContents = new();
 
     /// <summary>
     /// A whitelist governing what items can be inserted into the bin.

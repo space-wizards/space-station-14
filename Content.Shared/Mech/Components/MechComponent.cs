@@ -135,15 +135,15 @@ public sealed partial class MechComponent : Component
     /// Good for things like nukie mechs that start with guns.
     /// </summary>
     [DataField]
-    public List<ProtoId<EntityPrototype>> StartingEquipment = new();
+    public List<EntProtoId> StartingEquipment = new();
 
     #region Action Prototypes
     [DataField]
-    public ProtoId<EntityPrototype> MechCycleAction = "ActionMechCycleEquipment";
+    public EntProtoId MechCycleAction = "ActionMechCycleEquipment";
     [DataField]
-    public ProtoId<EntityPrototype> MechUiAction = "ActionMechOpenUI";
+    public EntProtoId MechUiAction = "ActionMechOpenUI";
     [DataField]
-    public ProtoId<EntityPrototype> MechEjectAction = "ActionMechEject";
+    public EntProtoId MechEjectAction = "ActionMechEject";
     #endregion
 
     #region Visualizer States
