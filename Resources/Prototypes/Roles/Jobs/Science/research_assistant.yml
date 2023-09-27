@@ -5,7 +5,7 @@
   playTimeTracker: JobResearchAssistant
   requirements:
     - !type:OverallPlaytimeRequirement
-      time: 3600 # SS220-RoleTime
+      time: 18000 # SS220-RoleTime
   startingGear: ResearchAssistantGear
   icon: "JobIconResearchAssistant"
   supervisors: job-supervisors-science

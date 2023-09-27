@@ -4,8 +4,9 @@
   description: job-description-botanist
   playTimeTracker: JobBotanist
   requirements:
-    - !type:OverallPlaytimeRequirement
-      time: 10800 # SS220-RoleTime
+    - !type:DepartmentTimeRequirement
+      department: Civilian
+      time: 18000 # SS220-RoleTime
   startingGear: BotanistGear
   icon: "JobIconBotanist"
   supervisors: job-supervisors-hop

@@ -6,10 +6,10 @@
   requirements:
     - !type:DepartmentTimeRequirement
       department: Medical
-      time: 18000
+      time: 72000 # SS220-RoleTime
     - !type:DepartmentTimeRequirement
       department: Security
-      time: 7200
+      time: 18000 # SS220-RoleTime
   startingGear: BrigmedicGear
   icon: "JobIconBrigmedic"
   supervisors: job-supervisors-hos

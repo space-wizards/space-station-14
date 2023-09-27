@@ -5,7 +5,7 @@
   playTimeTracker: JobMedicalIntern
   requirements:
     - !type:OverallPlaytimeRequirement
-      time: 3600 # SS220-RoleTime
+      time: 18000 # SS220-RoleTime
   startingGear: MedicalInternGear
   icon: "JobIconMedicalIntern"
   supervisors: job-supervisors-medicine

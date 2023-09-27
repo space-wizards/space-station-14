@@ -4,8 +4,9 @@
   description: job-description-lawyer
   playTimeTracker: JobLawyer
   requirements:
-    - !type:OverallPlaytimeRequirement
-      time: 36000 # 10 hrs
+    - !type:DepartmentTimeRequirement
+      department: Civilian
+      time: 72000 # SS220-RoleTime
   startingGear: LawyerGear
   setPreference: true # SS220 return-of-the-lawyer
   icon: "JobIconLawyer"

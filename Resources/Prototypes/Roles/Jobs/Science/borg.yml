@@ -5,7 +5,7 @@
   playTimeTracker: JobBorg
   requirements:
     - !type:OverallPlaytimeRequirement
-      time: 216000 #60 hrs
+      time: 72000 # SS220-RoleTime
   canBeAntag: false
   icon: JobIconBorg
   supervisors: job-supervisors-rd

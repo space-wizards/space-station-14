@@ -3,6 +3,10 @@
   name: job-name-clown
   description: job-description-clown
   playTimeTracker: JobClown
+  requirements:
+    - !type:DepartmentTimeRequirement
+      department: Civilian
+      time: 18000 # SS220-RoleTime
   startingGear: ClownGear
   icon: "JobIconClown"
   supervisors: job-supervisors-hop

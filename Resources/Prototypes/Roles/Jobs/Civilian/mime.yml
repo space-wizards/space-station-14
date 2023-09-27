@@ -4,8 +4,9 @@
   description: job-description-mime
   playTimeTracker: JobMime
   requirements:
-    - !type:OverallPlaytimeRequirement
-      time: 14400 #4 hrs
+    - !type:DepartmentTimeRequirement
+      department: Civilian
+      time: 18000 # SS220-RoleTime
   startingGear: MimeGear
   icon: "JobIconMime"
   supervisors: job-supervisors-hop

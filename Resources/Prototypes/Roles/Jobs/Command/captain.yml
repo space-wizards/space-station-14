@@ -6,7 +6,7 @@
   requirements:
     - !type:DepartmentTimeRequirement
       department: Command
-      time: 54000 # SS220-RoleTime
+      time: 180000 # SS220-RoleTime
   weight: 20
   startingGear: CaptainGear
   icon: "JobIconCaptain"

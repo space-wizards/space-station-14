@@ -6,7 +6,7 @@
   requirements:
     - !type:DepartmentTimeRequirement
       department: Security
-      time: 36000 # Corvax-RoleTime
+      time: 108000 # SS220-RoleTime
   startingGear: WardenGear
   icon: "JobIconWarden"
   supervisors: job-supervisors-hos

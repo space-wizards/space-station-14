@@ -6,7 +6,10 @@
   requirements:
     - !type:DepartmentTimeRequirement
       department: Science
-      time: 216000 #60 hrs
+      time: 180000 # SS220-RoleTime
+    - !type:RoleTimeRequirement
+      role: JobBorg
+      time: 18000 # SS220-RoleTime
   startingGear: SeniorResearcherGear
   icon: "JobIconSeniorResearcher"
   supervisors: job-supervisors-rd

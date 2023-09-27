@@ -4,8 +4,9 @@
   description: job-description-bartender
   playTimeTracker: JobBartender
   requirements:
-    - !type:OverallPlaytimeRequirement
-      time: 3600 # SS220-RoleTime
+    - !type:DepartmentTimeRequirement
+      department: Civilian
+      time: 18000 # SS220-RoleTime
   startingGear: BartenderGear
   icon: "JobIconBartender"
   supervisors: job-supervisors-hop

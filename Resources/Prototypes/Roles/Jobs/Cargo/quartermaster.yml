@@ -6,7 +6,9 @@
   requirements:
     - !type:DepartmentTimeRequirement
       department: Cargo
-      time: 54000 # SS220-RoleTime
+      time: 108000 # SS220-RoleTime
+    - !type:OverallPlaytimeRequirement
+      time: 180000 # SS220-RoleTime      
   weight: 10
   startingGear: QuartermasterGear
   icon: "JobIconQuarterMaster"

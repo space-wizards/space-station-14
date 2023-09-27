@@ -4,8 +4,9 @@
   description: job-description-chef
   playTimeTracker: JobChef
   requirements:
-    - !type:OverallPlaytimeRequirement
-      time: 3600 # SS220-RoleTime
+    - !type:DepartmentTimeRequirement
+      department: Civilian
+      time: 18000 # SS220-RoleTime
   startingGear: ChefGear
   icon: "JobIconChef"
   supervisors: job-supervisors-hop
