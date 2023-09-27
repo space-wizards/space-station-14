@@ -23,9 +23,7 @@ namespace Content.Server.Bed.Sleep
     public sealed class SleepingSystem : SharedSleepingSystem
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
-        [Dependency] private readonly ActionsSystem _actionsSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly StatusEffectsSystem _statusEffectsSystem = default!;
@@ -182,9 +180,8 @@ namespace Content.Server.Bed.Sleep
 
             var tryingToSleepEvent = new TryingToSleepEvent(uid);
             RaiseLocalEvent(uid, ref tryingToSleepEvent);
-            if (tryingToSleepEvent.Cancelled) return false;
-
-            _actionsSystem.RemoveAction(uid, SleepActionId);
+            if (tryingToSleepEvent.Cancelled)
+                return false;
 
             EnsureComp<SleepingComponent>(uid);
             return true;

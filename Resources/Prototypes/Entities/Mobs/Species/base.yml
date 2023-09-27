@@ -245,13 +245,13 @@
     - Stutter
     - SeeingRainbows
     - Electrocution
+    - ForcedSleep
+    - TemporaryBlindness
     - Drunk
     - SlurredSpeech
     - RatvarianLanguage
     - PressureImmunity
     - Muted
-    - ForcedSleep
-    - TemporaryBlindness
     - Pacified
     - StaminaModifier
   - type: Blindable

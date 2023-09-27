@@ -120,7 +120,6 @@
   - type: Slippery
     paralyzeTime: 5
     launchForwardsMultiplier: 2.5
-  - type: StepTrigger
   - type: Item
     heldPrefix: syndie
   - type: FlavorProfile
@@ -165,7 +164,6 @@
   - type: Slippery
     paralyzeTime: 7
     launchForwardsMultiplier: 3
-  - type: StepTrigger
   - type: Item
     heldPrefix: omega
   - type: SolutionContainerManager

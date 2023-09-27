@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using System.Numerics;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Organ;
@@ -156,6 +156,7 @@ public partial class SharedBodySystem
 
         // Child -> Parent connection.
         var cameFrom = new Dictionary<string, string>();
+        cameFrom[rootSlot] = rootSlot;
         // Maps slot to its relevant entity.
         var cameFromEntities = new Dictionary<string, EntityUid>();
         cameFromEntities[rootSlot] = rootPartId;
