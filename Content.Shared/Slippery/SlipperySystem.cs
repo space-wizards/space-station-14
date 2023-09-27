@@ -103,14 +103,6 @@ public sealed class SlipperySystem : EntitySystem
         _adminLogger.Add(LogType.Slip, LogImpact.Low,
             $"{ToPrettyString(other):mob} slipped on collision with {ToPrettyString(uid):entity}");
     }
-
-    public void CopyConstruct(EntityUid destUid, SlipperyComponent srcSlip)
-    {
-        var destEvaporation = EntityManager.EnsureComponent<SlipperyComponent>(destUid);
-        destEvaporation.SlipSound = srcSlip.SlipSound;
-        destEvaporation.ParalyzeTime = srcSlip.ParalyzeTime;
-        destEvaporation.LaunchForwardsMultiplier = srcSlip.LaunchForwardsMultiplier;
-    }
 }
 
 /// <summary>
