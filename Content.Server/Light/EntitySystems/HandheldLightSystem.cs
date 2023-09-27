@@ -9,8 +9,6 @@ using Content.Shared.Light.Components;
 using Content.Shared.Rounding;
 using Content.Shared.Toggleable;
 using Content.Shared.Verbs;
-using JetBrains.Annotations;
-using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
@@ -20,7 +18,6 @@ namespace Content.Server.Light.EntitySystems
 {
     public sealed class HandheldLightSystem : SharedHandheldLightSystem
     {
-        [Dependency] private readonly IPrototypeManager _proto = default!;
         [Dependency] private readonly ActionsSystem _actions = default!;
         [Dependency] private readonly ActionContainerSystem _actionContainer = default!;
         [Dependency] private readonly PopupSystem _popup = default!;

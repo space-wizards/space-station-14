@@ -45,13 +45,6 @@ public sealed partial class ExplosionSystem : EntitySystem
     /// </summary>
     private Explosion? _activeExplosion;
 
-    /// <summary>
-    ///     While processing an explosion, the "progress" is sent to clients, so that the explosion fireball effect
-    ///     syncs up with the damage. When the tile iteration increments, an update needs to be sent to clients.
-    ///     This integer keeps track of the last value sent to clients.
-    /// </summary>
-    private int _previousTileIteration;
-
     private void OnMapChanged(MapChangedEvent ev)
     {
         // If a map was deleted, check the explosion currently being processed belongs to that map.
@@ -101,8 +94,6 @@ public sealed partial class ExplosionSystem : EntitySystem
                 // intensity).
                 if (_activeExplosion == null)
                     continue;
-
-                _previousTileIteration = 0;
 
                 // just a lil nap
                 if (SleepNodeSys)

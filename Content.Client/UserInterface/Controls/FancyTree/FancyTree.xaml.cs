@@ -96,7 +96,6 @@ public sealed partial class FancyTree : Control
     private void LoadIcons()
     {
         IconColor = TryGetStyleProperty(StylePropertyIconColor, out Color color) ? color : Color.White;
-        string? path;
 
         if (!TryGetStyleProperty(StylePropertyIconExpanded, out IconExpanded))
             IconExpanded = _resCache.GetTexture(DefaultIconExpanded);

@@ -9,6 +9,7 @@ namespace Content.Server.Instruments;
 public sealed partial class InstrumentComponent : SharedInstrumentComponent
 {
     [Dependency] private readonly IEntityManager _entMan = default!;
+    [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
 
     [ViewVariables] public float Timer = 0f;
     [ViewVariables] public int BatchesDropped = 0;
@@ -21,7 +22,7 @@ public sealed partial class InstrumentComponent : SharedInstrumentComponent
         _entMan.GetComponentOrNull<ActivatableUIComponent>(Owner)?.CurrentSingleUser
         ?? _entMan.GetComponentOrNull<ActorComponent>(Owner)?.PlayerSession;
 
-    [ViewVariables] public PlayerBoundUserInterface? UserInterface => Owner.GetUIOrNull(InstrumentUiKey.Key);
+    [ViewVariables] public PlayerBoundUserInterface? UserInterface => _userInterfaceSystem.GetUiOrNull(Owner, InstrumentUiKey.Key);
 }
 
 [RegisterComponent]

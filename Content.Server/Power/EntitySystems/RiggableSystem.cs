@@ -15,7 +15,6 @@ namespace Content.Server.Power.EntitySystems;
 /// </summary>
 public sealed class RiggableSystem : EntitySystem
 {
-    [Dependency] private readonly SolutionContainerSystem _solutionsSystem = default!;
     [Dependency] private readonly ExplosionSystem _explosionSystem = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
 

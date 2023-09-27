@@ -14,7 +14,6 @@ using Content.Shared.Research.Components;
 using Content.Shared.Timing;
 using Content.Shared.Toggleable;
 using Robust.Shared.Timing;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Content.Shared.Ninja.Systems;
 
@@ -28,7 +27,6 @@ public abstract class SharedNinjaGlovesSystem : EntitySystem
     [Dependency] private readonly SharedCombatModeSystem _combatMode = default!;
     [Dependency] protected readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] protected readonly SharedInteractionSystem Interaction = default!;
-    [Dependency] private readonly SharedSpaceNinjaSystem _ninja = default!;
     [Dependency] protected readonly SharedPopupSystem Popup = default!;
     [Dependency] private readonly UseDelaySystem _useDelay = default!;
 

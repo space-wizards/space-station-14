@@ -10,8 +10,6 @@ namespace Content.Server.Mech.Systems;
 // TODO: this could be reused for gasmask or something if MechAir wasnt a thing
 public sealed partial class MechSystem
 {
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
-
     private void InitializeFiltering()
     {
         SubscribeLocalEvent<MechAirIntakeComponent, AtmosDeviceUpdateEvent>(OnIntakeUpdate);

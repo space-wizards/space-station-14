@@ -1,9 +1,5 @@
-using Robust.Shared.Timing;
 using JetBrains.Annotations;
-using Robust.Client.GameObjects;
-using Content.Shared.MassMedia.Systems;
 using Content.Shared.MassMedia.Components;
-using Content.Client.GameTicking.Managers;
 using Robust.Shared.Utility;
 
 namespace Content.Client.MassMedia.Ui
@@ -13,10 +9,6 @@ namespace Content.Client.MassMedia.Ui
     {
         [ViewVariables]
         private NewsWriteMenu? _menu;
-
-        [Dependency] private readonly IEntitySystemManager _entitySystem = default!;
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
-        private ClientGameTicker? _gameTicker;
 
         [ViewVariables]
         private string _windowName = Loc.GetString("news-read-ui-default-title");
@@ -35,8 +27,6 @@ namespace Content.Client.MassMedia.Ui
 
             _menu.ShareButtonPressed += OnShareButtonPressed;
             _menu.DeleteButtonPressed += OnDeleteButtonPressed;
-
-            _gameTicker = _entitySystem.GetEntitySystem<ClientGameTicker>();
 
             SendMessage(new NewsWriteArticlesRequestMessage());
         }

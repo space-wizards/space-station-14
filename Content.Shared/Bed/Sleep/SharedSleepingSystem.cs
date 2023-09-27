@@ -11,7 +11,6 @@ namespace Content.Server.Bed.Sleep
     public abstract class SharedSleepingSystem : EntitySystem
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
-        [Dependency] private readonly INetManager _net = default!;
         [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
         [Dependency] private readonly BlindableSystem _blindableSystem = default!;
 

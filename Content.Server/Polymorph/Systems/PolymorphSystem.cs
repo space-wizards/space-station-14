@@ -30,7 +30,6 @@ namespace Content.Server.Polymorph.Systems
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IPrototypeManager _proto = default!;
         [Dependency] private readonly ActionsSystem _actions = default!;
-        [Dependency] private readonly ActionContainerSystem _actionContainer = default!;
         [Dependency] private readonly AudioSystem _audio = default!;
         [Dependency] private readonly SharedBuckleSystem _buckle = default!;
         [Dependency] private readonly ContainerSystem _container = default!;

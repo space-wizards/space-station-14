@@ -1,5 +1,4 @@
-﻿using Content.Server.Actions;
-using Content.Shared.Actions;
+using Content.Server.Actions;
 using Content.Shared.UserInterface;
 using Robust.Server.GameObjects;
 
@@ -61,7 +60,7 @@ public sealed class IntrinsicUISystem : EntitySystem
         if (!Resolve(uid, ref component))
             return null;
 
-        return key is null ? null : uid.GetUIOrNull(key);
+        return key is null ? null : _uiSystem.GetUiOrNull(uid, key);
     }
 }
 
