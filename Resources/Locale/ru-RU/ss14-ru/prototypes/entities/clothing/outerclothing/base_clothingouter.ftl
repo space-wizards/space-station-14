@@ -12,3 +12,5 @@ ent-ClothingOuterStorageToggleableBase = { ent-ClothingOuterStorageBase }
     .desc = { ent-ClothingOuterStorageBase.desc }
 ent-ClothingOuterBaseToggleable = худи с капюшоном
     .desc = { ent-ClothingOuterBase.desc }
+ent-ClothingOuterBaseMedium = { ent-ClothingOuterBase }
+    .desc = { ent-ClothingOuterBase.desc }

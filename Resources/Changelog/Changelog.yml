@@ -1,31 +1,4 @@
 Entries:
-- author: hord-brayden
-  changes:
-  - {message: 'CE and HoS jumpskirts no longer provide rad protection or brute protection,
-      respectively', type: Remove}
-  id: 4400
-  time: '2023-08-01T17:27:22.0000000+00:00'
-- author: Dygon
-  changes:
-  - {message: Disposable turrets now explode once they run out of ammo, type: Tweak}
-  id: 4401
-  time: '2023-08-01T19:38:22.0000000+00:00'
-- author: MisterMecky
-  changes:
-  - {message: Adds chemical analysis goggles that can scan the chemical composition
-      of a solution, type: Add}
-  id: 4402
-  time: '2023-08-01T19:57:23.0000000+00:00'
-- author: Emisse
-  changes:
-  - {message: Hristov no longer insta stuns and does slightly less damage., type: Tweak}
-  id: 4403
-  time: '2023-08-01T21:04:44.0000000+00:00'
-- author: crazybrain
-  changes:
-  - {message: Admin banning panel has IP bans enabled by default., type: Fix}
-  id: 4404
-  time: '2023-08-01T21:05:14.0000000+00:00'
 - author: keronshb
   changes:
   - {message: Captains will now start with their gloves and carapace again, type: Tweak}
@@ -2973,3 +2946,33 @@ Entries:
   - {message: The health analyzer no longer shows zero-damage groups., type: Fix}
   id: 4899
   time: '2023-09-26T04:37:23.0000000+00:00'
+- author: waylon531
+  changes:
+  - {message: Nocturine and welder blindness work again., type: Fix}
+  id: 4900
+  time: '2023-09-26T17:46:14.0000000+00:00'
+- author: gusxyz
+  changes:
+  - {message: Syndicate bomb no longer has anomalous properties., type: Tweak}
+  id: 4901
+  time: '2023-09-26T22:05:46.0000000+00:00'
+- author: Bhijn and Myr
+  changes:
+  - {message: 'Interaction outlines have been slightly reworked, and feature finer
+      artistic control. Edge cases no longer result in interaction outlines being
+      faintly visible in pitch black areas, out-of-range outlines are far less visible
+      in dim conditions, outlines now properly fade when over a fullbright backdrop
+      like parallax, and outlines now do a much better job at fading with penumbras.',
+    type: Tweak}
+  id: 4902
+  time: '2023-09-27T09:22:32.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Fixed there being no confirmation for role bans., type: Fix}
+  id: 4903
+  time: '2023-09-27T15:27:08.0000000+00:00'
+- author: c0rigin
+  changes:
+  - {message: What moths consider as food is now more consistent., type: Tweak}
+  id: 4904
+  time: '2023-09-27T16:50:59.0000000+00:00'

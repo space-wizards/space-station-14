@@ -71,7 +71,6 @@
   - type: Slippery
     paralyzeTime: 5
     launchForwardsMultiplier: 2.5
-  - type: StepTrigger
   - type: Item
     heldPrefix: syndie
 
@@ -83,9 +82,6 @@
   components:
   - type: Sprite
     state: gibs
-  - type: Slippery
-    paralyzeTime: 2
-  - type: StepTrigger
   - type: Item
     heldPrefix: gibs
 
@@ -98,7 +94,7 @@
   - type: Sprite
     state: omega
   - type: Slippery
-    paralyzeTime: 4
+    paralyzeTime: 7
     launchForwardsMultiplier: 10
   - type: StepTrigger
   - type: Item
