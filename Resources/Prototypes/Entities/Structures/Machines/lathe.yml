@@ -271,8 +271,8 @@
       - AdvancedRayCaster
       - ProtoKineticCharger
       - SchematicProtoKineticAccelerator
-      - SchematicTetherGun
       - SchematicForceGun
+      - SchematicTetherGun
   - type: EmagLatheRecipes
     emagDynamicRecipes:
       - ExplosivePayload
