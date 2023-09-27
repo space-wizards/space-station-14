@@ -2074,19 +2074,48 @@
 - type: entity
   name: space cat
   id: MobCatSpace
-  parent: MobCat
+  parent: SimpleSpaceMobBase
   description: Feline pet, prepared for the worst.
   components:
   - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Pets/cat.rsi
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: spacecat
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 15
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+  - type: Inventory
+    speciesId: cat
+    templateId: pet
+  - type: InventorySlots
+  - type: Strippable
+  - type: UserInterface
+    interfaces:
+    - key: enum.StrippingUiKey.Key
+      type: StrippableBoundUserInterface
   - type: DamageStateVisuals
     states:
       Alive:
         Base: spacecat
       Dead:
         Base: spacecat_dead
+  - type: Butcherable
+    spawned:
+    - id: FoodMeat
+      amount: 3
+  - type: ReplacementAccent
+    accent: cat
   - type: Temperature
     heatDamageThreshold: 423
     coldDamageThreshold: 0
@@ -2097,6 +2126,11 @@
     interactFailureString: petting-failure-generic
     interactSuccessSound:
       path: /Audio/Animals/cat_meow.ogg
+  - type: Grammar
+    attributes:
+      gender: epicene
+  - type: MobPrice
+    price: 200
 
 - type: entity
   name: caracal cat
