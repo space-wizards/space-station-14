@@ -5,7 +5,7 @@ using Robust.Server.Player;
 
 namespace Content.Server.Instruments;
 
-[RegisterComponent, ComponentReference(typeof(SharedInstrumentComponent))]
+[RegisterComponent]
 public sealed partial class InstrumentComponent : SharedInstrumentComponent
 {
     [Dependency] private readonly IEntityManager _entMan = default!;
