@@ -1,3 +1,7 @@
+using Content.Server.NodeContainer;
+using Content.Server.NodeContainer.EntitySystems;
+using Content.Server.NodeContainer.Nodes;
+using Content.Server.NodeContainer.NodeGroups;
 using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
 using Content.Server.Warps;
@@ -7,6 +11,7 @@ using Robust.Shared.GameStates;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
+using System.Linq;
 
 namespace Content.Server.Pinpointer;
 
@@ -16,6 +21,7 @@ namespace Content.Server.Pinpointer;
 public sealed class NavMapSystem : SharedNavMapSystem
 {
     [Dependency] private readonly TagSystem _tags = default!;
+    [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
 
     private EntityQuery<PhysicsComponent> _physicsQuery;
     private EntityQuery<TagComponent> _tagQuery;
@@ -125,6 +131,19 @@ public sealed class NavMapSystem : SharedNavMapSystem
             data.Add(index, chunk.TileData);
         }
 
+        var dataCables = new Dictionary<Vector2i, Dictionary<CableType, int>>(component.Chunks.Count);
+        foreach (var (index, chunk) in component.Chunks)
+        {
+            var cableData = new Dictionary<CableType, int>
+            {
+                [CableType.HV] = chunk.CableData[CableType.HV],
+                [CableType.MV] = chunk.CableData[CableType.MV],
+                [CableType.LV] = chunk.CableData[CableType.LV],
+            };
+
+            dataCables.Add(index, cableData);
+        }
+
         var beaconQuery = AllEntityQuery<NavMapBeaconComponent, TransformComponent>();
         var beacons = new List<NavMapBeacon>();
 
@@ -155,6 +174,7 @@ public sealed class NavMapSystem : SharedNavMapSystem
         args.State = new NavMapComponentState()
         {
             TileData = data,
+            CableData = dataCables,
             Beacons = beacons,
         };
     }
@@ -201,7 +221,6 @@ public sealed class NavMapSystem : SharedNavMapSystem
     private void RefreshTile(MapGridComponent grid, NavMapComponent component, NavMapChunk chunk, Vector2i tile)
     {
         var relative = SharedMapSystem.GetChunkRelative(tile, ChunkSize);
-
         var existing = chunk.TileData;
         var flag = GetFlag(relative);
 
@@ -226,12 +245,46 @@ public sealed class NavMapSystem : SharedNavMapSystem
             break;
         }
 
-        if (chunk.TileData == 0)
+        RefreshTileCables(grid, component, chunk, tile);
+
+        if (chunk.TileData == 0 &&
+            chunk.CableData.All(x => x.Value == 0))
         {
             component.Chunks.Remove(chunk.Origin);
         }
 
         if (existing == chunk.TileData)
+            return;
+
+        Dirty(component);
+    }
+
+    private void RefreshTileCables(MapGridComponent grid, NavMapComponent component, NavMapChunk chunk, Vector2i tile)
+    {
+        var relative = SharedMapSystem.GetChunkRelative(tile, ChunkSize);
+        var update = false;
+        var flag = GetFlag(relative);
+
+        chunk.CableData[CableType.HV] &= ~flag;
+        chunk.CableData[CableType.MV] &= ~flag;
+        chunk.CableData[CableType.LV] &= ~flag;
+
+        var enumerator = grid.GetAnchoredEntitiesEnumerator(tile);
+        while (enumerator.MoveNext(out var ent))
+        {
+            if (!TryComp<NodeContainerComponent>(ent, out var nodeContainer) ||
+                !_nodeContainer.TryGetNode<Node>(nodeContainer, "power", out var node))
+                continue;
+
+            switch (node.NodeGroupID)
+            {
+                case NodeGroupID.HVPower: chunk.CableData[CableType.HV] |= flag; update = true; break;
+                case NodeGroupID.MVPower: chunk.CableData[CableType.MV] |= flag; update = true; break;
+                case NodeGroupID.Apc: chunk.CableData[CableType.LV] |= flag; update = true; break;
+            }
+        }
+
+        if (!update)
             return;
 
         Dirty(component);

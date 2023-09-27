@@ -1,4 +1,5 @@
 using System.Numerics;
+using Content.Client.NPC;
 using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Pinpointer;
@@ -14,6 +15,7 @@ using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Physics.Components;
 using YamlDotNet.Core.Tokens;
+using static Content.Shared.Pinpointer.SharedNavMapSystem;
 
 namespace Content.Client.Pinpointer.UI;
 
@@ -29,9 +31,6 @@ public sealed class NavMapControl : MapGridControl
 
     public Dictionary<EntityCoordinates, (bool Visible, Color Color)> TrackedCoordinates = new();
     public Dictionary<EntityCoordinates, (bool Visible, Color Color, Texture? Texture)> TrackedEntities = new();
-    public EntityCoordinates[][]? hvCables;
-    public EntityCoordinates[][]? mvCables;
-    public EntityCoordinates[][]? lvCables;
 
     private Vector2 _offset;
     private bool _draggin;
@@ -41,6 +40,13 @@ public sealed class NavMapControl : MapGridControl
     //private static readonly Color TileColor = new(30, 67, 30);
     private static readonly Color TileColor = new(30, 57, 67);
     private static readonly Color BeaconColor = Color.FromSrgb(TileColor.WithAlpha(0.8f));
+
+    private List<CableData> _cableData = new List<CableData>()
+    {
+        new CableData(CableType.HV, Color.Orange),
+        new CableData(CableType.MV, Color.Yellow, new Vector2(-0.15f, -0.15f)),
+        new CableData(CableType.LV, Color.LimeGreen, new Vector2(0.15f, 0.15f)),
+    };
 
     // TODO: https://github.com/space-wizards/RobustToolbox/issues/3818
     private readonly Label _zoom = new()
@@ -329,7 +335,81 @@ public sealed class NavMapControl : MapGridControl
         }
 
         // Draw cables
-        if (hvCables != null)
+        for (var x = Math.Floor(area.Left); x <= Math.Ceiling(area.Right); x += SharedNavMapSystem.ChunkSize * grid.TileSize)
+        {
+            for (var y = Math.Floor(area.Bottom); y <= Math.Ceiling(area.Top); y += SharedNavMapSystem.ChunkSize * grid.TileSize)
+            {
+                var floored = new Vector2i((int) x, (int) y);
+
+                var chunkOrigin = SharedMapSystem.GetChunkIndices(floored, SharedNavMapSystem.ChunkSize);
+
+                if (!navMap.Chunks.TryGetValue(chunkOrigin, out var chunk))
+                    continue;
+
+                foreach (var datum in _cableData)
+                {
+                    for (var i = 0; i < SharedNavMapSystem.ChunkSize * SharedNavMapSystem.ChunkSize; i++)
+                    {
+                        var value = (int) Math.Pow(2, i);
+                        var mask = chunk.CableData[datum.CableType] & value;
+
+                        if (mask == 0x0)
+                            continue;
+
+                        var relativeTile = SharedNavMapSystem.GetTile(mask);
+                        var tile = (chunk.Origin * SharedNavMapSystem.ChunkSize + relativeTile) * grid.TileSize - offset;
+                        var position = new Vector2(tile.X, -tile.Y);
+                        NavMapChunk? neighborChunk;
+                        bool neighbor;
+
+                        // Only check the north and east neighbors
+
+                        // East
+                        if (relativeTile.X == SharedNavMapSystem.ChunkSize - 1)
+                        {
+                            neighbor = navMap.Chunks.TryGetValue(chunkOrigin + new Vector2i(1, 0), out neighborChunk) &&
+                                       (neighborChunk.CableData[datum.CableType] & SharedNavMapSystem.GetFlag(new Vector2i(0, relativeTile.Y))) != 0x0;
+                        }
+                        else
+                        {
+                            var flag = SharedNavMapSystem.GetFlag(relativeTile + new Vector2i(1, 0));
+                            neighbor = (chunk.CableData[datum.CableType] & flag) != 0x0;
+                        }
+
+                        if (neighbor)
+                        {
+                            handle.DrawLine
+                            (Scale(position + new Vector2(grid.TileSize * 0.5f, -grid.TileSize * 0.5f) + datum.Offset),
+                            Scale(position + new Vector2(1f, 0f) + new Vector2(grid.TileSize * 0.5f, -grid.TileSize * 0.5f) + datum.Offset),
+                            datum.Color);
+                        }
+
+                        // North
+                        if (relativeTile.Y == SharedNavMapSystem.ChunkSize - 1)
+                        {
+                            neighbor = navMap.Chunks.TryGetValue(chunkOrigin + new Vector2i(0, 1), out neighborChunk) &&
+                                          (neighborChunk.CableData[datum.CableType] & SharedNavMapSystem.GetFlag(new Vector2i(relativeTile.X, 0))) != 0x0;
+                        }
+                        else
+                        {
+                            var flag = SharedNavMapSystem.GetFlag(relativeTile + new Vector2i(0, 1));
+                            neighbor = (chunk.CableData[datum.CableType] & flag) != 0x0;
+                        }
+
+                        if (neighbor)
+                        {
+                            handle.DrawLine
+                            (Scale(position + new Vector2(grid.TileSize * 0.5f, -grid.TileSize * 0.5f) + datum.Offset),
+                            Scale(position + new Vector2(0f, -1f) + new Vector2(grid.TileSize * 0.5f, -grid.TileSize * 0.5f) + datum.Offset),
+                            datum.Color);
+                        }
+                    }
+                }
+            }
+        }
+
+        // Draw cables
+        /*if (hvCables != null)
         {
             for (int i = 0; i < hvCables.Length; i++)
             {
@@ -344,7 +424,7 @@ public sealed class NavMapControl : MapGridControl
                 if (mapPos.MapId != MapId.Nullspace)
                 {
                     var position = xform.InvWorldMatrix.Transform(mapPos.Position) - offset;
-                    positionA = Scale(new Vector2(position.X, -position.Y));
+                    positionA = (new Vector2(position.X, -position.Y));
                 }
 
                 mapPos = pointB.ToMap(_entManager);
@@ -352,72 +432,15 @@ public sealed class NavMapControl : MapGridControl
                 if (mapPos.MapId != MapId.Nullspace)
                 {
                     var position = xform.InvWorldMatrix.Transform(mapPos.Position) - offset;
-                    positionB = Scale(new Vector2(position.X, -position.Y));
+                    positionB = (new Vector2(position.X, -position.Y));
                 }
 
-                handle.DrawLine(positionA, positionB, Color.Orange);
+                var leftTop = new Vector2(Math.Min(positionA.X, positionB.X) - 0.1f, Math.Min(positionA.Y, positionB.Y) - 0.1f);
+                var rightBottom = new Vector2(Math.Max(positionA.X, positionB.X) + 0.1f, Math.Max(positionA.Y, positionB.Y) + 0.1f);
+                handle.DrawRect(new UIBox2(Scale(leftTop), Scale(rightBottom)), Color.Orange);
+                //handle.DrawLine(Scale(positionA), Scale(positionB), Color.Orange);
             }
-        }
-
-        if (mvCables != null)
-        {
-            for (int i = 0; i < mvCables.Length; i++)
-            {
-                var cable = mvCables[i];
-                var pointA = cable[0];
-                var pointB = cable[1];
-                var positionA = new Vector2();
-                var positionB = new Vector2();
-
-                var mapPos = pointA.ToMap(_entManager);
-
-                if (mapPos.MapId != MapId.Nullspace)
-                {
-                    var position = xform.InvWorldMatrix.Transform(mapPos.Position) - offset;
-                    positionA = Scale(new Vector2(position.X + 0.1f, -(position.Y + 0.1f)));
-                }
-
-                mapPos = pointB.ToMap(_entManager);
-
-                if (mapPos.MapId != MapId.Nullspace)
-                {
-                    var position = xform.InvWorldMatrix.Transform(mapPos.Position) - offset;
-                    positionB = Scale(new Vector2(position.X + 0.1f, -(position.Y + 0.1f)));
-                }
-
-                handle.DrawLine(positionA, positionB, Color.Yellow);
-            }
-        }
-
-        if (lvCables != null)
-        {
-            for (int i = 0; i < lvCables.Length; i++)
-            {
-                var cable = lvCables[i];
-                var pointA = cable[0];
-                var pointB = cable[1];
-                var positionA = new Vector2();
-                var positionB = new Vector2();
-
-                var mapPos = pointA.ToMap(_entManager);
-
-                if (mapPos.MapId != MapId.Nullspace)
-                {
-                    var position = xform.InvWorldMatrix.Transform(mapPos.Position) - offset;
-                    positionA = Scale(new Vector2(position.X - 0.1f, -(position.Y - 0.1f)));
-                }
-
-                mapPos = pointB.ToMap(_entManager);
-
-                if (mapPos.MapId != MapId.Nullspace)
-                {
-                    var position = xform.InvWorldMatrix.Transform(mapPos.Position) - offset;
-                    positionB = Scale(new Vector2(position.X - 0.1f, -(position.Y - 0.1f)));
-                }
-
-                handle.DrawLine(positionA, positionB, Color.ForestGreen);
-            }
-        }
+        }*/
 
         var curTime = Timing.RealTime;
         var blinkFrequency = 1f / 1f;
@@ -434,7 +457,7 @@ public sealed class NavMapControl : MapGridControl
                     var position = xform.InvWorldMatrix.Transform(mapPos.Position) - offset;
                     position = Scale(new Vector2(position.X, -position.Y));
 
-                    handle.DrawCircle(position, MinimapScale / 2f, value.Color);
+                    handle.DrawCircle(position, float.Sqrt(MinimapScale) * 2f, value.Color);
                 }
             }
         }
@@ -483,5 +506,20 @@ public sealed class NavMapControl : MapGridControl
     private Vector2 Scale(Vector2 position)
     {
         return position * MinimapScale + MidpointVector;
+    }
+}
+
+[DataDefinition]
+public sealed partial class CableData
+{
+    public CableType CableType;
+    public Color Color;
+    public Vector2 Offset;
+
+    public CableData(CableType cableType, Color color, Vector2 offset = new Vector2())
+    {
+        CableType = cableType;
+        Color = color;
+        Offset = offset;
     }
 }

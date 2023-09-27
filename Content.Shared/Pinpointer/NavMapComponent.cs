@@ -1,5 +1,6 @@
 using Robust.Shared.GameStates;
 using Robust.Shared.Timing;
+using static Content.Shared.Pinpointer.SharedNavMapSystem;
 
 namespace Content.Shared.Pinpointer;
 
@@ -27,6 +28,16 @@ public sealed class NavMapChunk
     /// Bitmask for tiles, 1 for occupied and 0 for empty.
     /// </summary>
     public int TileData;
+
+    /// <summary>
+    /// Bitmask for HV cables, 1 for occupied and 0 for empty.
+    /// </summary>
+    public Dictionary<CableType, int> CableData = new Dictionary<CableType, int>
+    {
+        [CableType.HV] = 0,
+        [CableType.MV] = 0,
+        [CableType.LV] = 0,
+    };
 
     public NavMapChunk(Vector2i origin)
     {

@@ -1,4 +1,5 @@
 using Content.Shared.Power;
+using static Content.Shared.Access.Components.AccessOverriderComponent;
 
 namespace Content.Client.Power;
 
@@ -37,7 +38,12 @@ public sealed class PowerMonitoringConsoleBoundUserInterface : BoundUserInterfac
             return;
 
         EntMan.TryGetComponent<TransformComponent>(Owner, out var xform);
-        _menu?.ShowEntites(castState.Loads, castState.HVCables, castState.MVCables, castState.LVCables, xform?.Coordinates, castState.Snap, castState.Precision);
+        _menu?.ShowEntites(castState.Loads, xform?.Coordinates, castState.Snap, castState.Precision);
+    }
+
+    public void RequestData()
+    {
+        SendMessage(new RequestPowerMonitoringDataMessage());
     }
 
     protected override void Dispose(bool disposing)

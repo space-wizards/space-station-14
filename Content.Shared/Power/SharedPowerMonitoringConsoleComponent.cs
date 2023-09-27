@@ -8,23 +8,12 @@ namespace Content.Shared.Power;
 public sealed class PowerMonitoringConsoleBoundInterfaceState : BoundUserInterfaceState
 {
     public PowerMonitoringConsoleEntry[] Loads;
-    public NetCoordinates[][] HVCables;
-    public NetCoordinates[][] MVCables;
-    public NetCoordinates[][] LVCables;
     public bool Snap;
     public float Precision;
 
-    public PowerMonitoringConsoleBoundInterfaceState(PowerMonitoringConsoleEntry[] loads,
-        NetCoordinates[][] hvCables,
-        NetCoordinates[][] mvCables,
-        NetCoordinates[][] lvCables,
-        bool snap,
-        float precision)
+    public PowerMonitoringConsoleBoundInterfaceState(PowerMonitoringConsoleEntry[] loads, bool snap, float precision)
     {
         Loads = loads;
-        HVCables = hvCables;
-        MVCables = mvCables;
-        LVCables = lvCables;
         Snap = snap;
         Precision = precision;
     }
@@ -48,6 +37,15 @@ public sealed class PowerMonitoringConsoleEntry
         IconEntityPrototypeId = ipi;
         Size = size;
         IsBattery = isBattery;
+    }
+}
+
+[Serializable, NetSerializable]
+public sealed class RequestPowerMonitoringDataMessage : BoundUserInterfaceMessage
+{
+    public RequestPowerMonitoringDataMessage()
+    {
+
     }
 }
 

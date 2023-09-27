@@ -48,7 +48,7 @@ namespace Content.Client.Power
             }
         }
 
-        public void ShowEntites(PowerMonitoringConsoleEntry[] loads, NetCoordinates[][] hvCables, NetCoordinates[][] mvCables, NetCoordinates[][] lvCables, EntityCoordinates? monitorCoords, bool snap, float precision)
+        public void ShowEntites(PowerMonitoringConsoleEntry[] loads, EntityCoordinates? monitorCoords, bool snap, float precision)
         {
             ClearAllSensors();
 
@@ -61,33 +61,6 @@ namespace Content.Client.Power
             }
 
             NoServerLabel.Visible = false;
-
-            var _cables = new List<EntityCoordinates[]>();
-            for (int i = 0; i < hvCables.Length; i++)
-            {
-                var cable = hvCables[i];
-                _cables.Add(new EntityCoordinates[] { _entManager.GetCoordinates(cable[0]), _entManager.GetCoordinates(cable[1]) });
-            }
-
-            NavMap.hvCables = _cables.ToArray();
-
-            _cables = new List<EntityCoordinates[]>();
-            for (int i = 0; i < mvCables.Length; i++)
-            {
-                var cable = mvCables[i];
-                _cables.Add(new EntityCoordinates[] { _entManager.GetCoordinates(cable[0]), _entManager.GetCoordinates(cable[1]) });
-            }
-
-            NavMap.mvCables = _cables.ToArray();
-
-            _cables = new List<EntityCoordinates[]>();
-            for (int i = 0; i < lvCables.Length; i++)
-            {
-                var cable = lvCables[i];
-                _cables.Add(new EntityCoordinates[] { _entManager.GetCoordinates(cable[0]), _entManager.GetCoordinates(cable[1]) });
-            }
-
-            NavMap.lvCables = _cables.ToArray();
 
             // add a row for each sensor
             foreach (var load in loads)
@@ -140,11 +113,11 @@ namespace Content.Client.Power
                     var color = Color.White;
 
                     if (load.IconEntityPrototypeId.Contains("APC"))
-                        color = Color.LawnGreen;
+                        color = Color.LimeGreen;
                     if (load.IconEntityPrototypeId.Contains("Substation"))
-                        color = new Color(230, 210, 0);
+                        color = Color.Yellow;
                     if (load.IconEntityPrototypeId.Contains("SMES"))
-                        color = Color.DarkOrange;
+                        color = Color.Orange;
 
                     NavMap.TrackedCoordinates.TryAdd(coordinates,
                         (true, entity == _trackedButton?.entityUid ? Color.White : color));
