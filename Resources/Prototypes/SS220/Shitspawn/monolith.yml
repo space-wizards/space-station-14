@@ -1,0 +1,12 @@
+- type: entity
+  id: monolith
+  parent: BaseStructure
+  name: Монолит
+  suffix: AdminV
+  description: Величественный монолит глубинного чёрного цвета. Его зов разносится эхом в черепной коробке
+  components:
+  - type: Sprite
+    sprite: Structures/Decoration/statues.rsi
+    state: monolith
+    drawdepth: Mobs
+    offset: "0.0,0.5"

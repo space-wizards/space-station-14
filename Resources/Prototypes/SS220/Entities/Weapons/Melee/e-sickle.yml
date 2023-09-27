@@ -1,0 +1,54 @@
+- type: entity
+  name: Энергетический серп
+  parent: BaseItem
+  id: EnergySickle
+  description: Новейшая разработка пытливых, совецкцих умов. Незаменимая вещь как в хозяйстве так и на войне.
+  suffix: Ebent
+  components:
+  - type: EnergySword
+    litDamageBonus:
+      types:
+        Slash: 30
+        Blunt: -4.5
+    litDisarmMalus: 0.6
+  - type: Sprite
+    sprite: SS220/Objects/Weapons/Melee/e_sickle.rsi
+    layers:
+    - state: e_sickle
+    - state: e_sickle_blade
+      color: "#FFFFFF"
+      visible: false
+      shader: unshaded
+      map: [ "blade" ]
+  - type: MeleeWeapon
+    attackRate: 1
+    soundHit:
+      path: /Audio/Weapons/eblade1.ogg
+    damage:
+      types:
+        Blunt: 4.5
+  - type: Item
+    size: 5
+    sprite: SS220/Objects/Weapons/Melee/e_sickle.rsi
+  - type: UseDelay
+    delay: 1.0
+  - type: PointLight
+    enabled: false
+    radius: 2
+    energy: 2
+    color: white
+    netsync: false
+  - type: Appearance
+  - type: ToggleableLightVisuals
+    spriteLayer: blade
+    inhandVisuals:
+      left:
+      - state: inhand-left-blade
+        shader: unshaded
+      right:
+      - state: inhand-right-blade
+        shader: unshaded
+  - type: DisarmMalus
+    malus: 0
+  - type: Reflect
+    enabled: false

@@ -1,0 +1,37 @@
+- type: entity
+  name: БС Пирогомёт
+  suffix: AdminV
+  parent: BaseItem
+  id: PieShooter
+  description: Страшннйшее орудие возмездия
+  components:
+  - type: Item
+    size: 30
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Cannons/pie_cannon.rsi
+    layers:
+      - state: piecannon
+        map: [ "enum.GunVisualLayers.Base" ]
+  - type: Clothing
+    sprite: Objects/Weapons/Guns/Cannons/pie_cannon.rsi
+    quickEquip: false
+    slots:
+    - Back
+    - suitStorage
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container
+        ents: []
+  - type: BallisticAmmoProvider
+    capacity: 1000
+    whitelist:
+       components:
+       - CreamPie
+    proto: FoodPieBananaCream
+  - type: Gun
+    fireRate: 1.5
+    selectedMode: SemiAuto
+    availableModes:
+     - SemiAuto
+    soundGunshot:
+      path: /Audio/Effects/thunk.ogg

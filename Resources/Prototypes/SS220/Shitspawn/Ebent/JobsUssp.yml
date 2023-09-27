@@ -27,8 +27,8 @@
       - id: FlashlightSecliteUssp
       - id: PowerCellHyper
       - id: WeaponRifleAk
-      - id: CombatHammer
-      - id: CombatSickle
+      - id: EnergyHammer
+      - id: EnergySickle
 
 #Leader
 - type: entity

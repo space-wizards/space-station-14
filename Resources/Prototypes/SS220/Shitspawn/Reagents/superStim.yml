@@ -20,17 +20,11 @@
       effects:
       - !type:HealthChange
         damage:
-          types:
-            Bloodloss: -20
+          groups:
             Burn: -20
             Brute: -20
             Toxin: -20
-            Poison: -20
             Airloss: -20
-            Asphyxiation: -20
-            Radiation: -20
-            Blood: 20
-            Caustic: -20
       - !type:GenericStatusEffect
         key: Stutter
         component: ScrambledAccent

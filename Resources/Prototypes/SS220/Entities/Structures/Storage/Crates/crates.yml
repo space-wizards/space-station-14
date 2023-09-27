@@ -1,0 +1,10 @@
+- type: entity
+  parent: CrateGenericSteel
+  id: CrateUssp
+  name: коммунистический ящик
+  description: Хранит самые красные секреты
+  components:
+  - type: Icon
+    sprite: SS220/Structures/Storage/Crates/ussp_crate.rsi
+  - type: Sprite
+    sprite: SS220/Structures/Storage/Crates/ussp_crate.rsi
