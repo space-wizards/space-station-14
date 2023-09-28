@@ -9,5 +9,5 @@ namespace Content.Shared.Damage.ForceSay;
 [Serializable, NetSerializable]
 public sealed class DamageForceSayEvent : EntityEventArgs
 {
-    public bool UseSuffix;
+    public string? Suffix;
 }
