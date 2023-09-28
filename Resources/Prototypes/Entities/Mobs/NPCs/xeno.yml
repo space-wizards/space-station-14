@@ -305,6 +305,11 @@
     drawdepth: Mobs
     sprite: Mobs/Aliens/Xenos/rouny.rsi
     offset: 0,0.6
+  - type: Butcherable
+    butcheringType: Spike
+    spawned:
+    - id: FoodMeatRouny
+      amount: 3
 
 - type: entity
   name: Spitter
