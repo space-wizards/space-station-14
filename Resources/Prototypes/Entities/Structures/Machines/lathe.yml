@@ -203,6 +203,7 @@
       - MiningDrill
       - AnomalyScanner
       - AnomalyLocator
+      - AnomalyLocatorWide
       - RCD
       - RCDAmmo
       - HandheldCrewMonitor
