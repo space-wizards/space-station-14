@@ -1,53 +1,4 @@
 Entries:
-- author: Slava0135
-  changes:
-  - {message: Hitting entities with thrown items that deal damage now provide more
-      feedback (sound and visual effect)., type: Add}
-  - {message: Thrown items that damage other entities now land after first hit., type: Tweak}
-  id: 4409
-  time: '2023-08-02T09:30:04.0000000+00:00'
-- author: Slava0135
-  changes:
-  - {message: added visual effect on collision for damage on high speed entities,
-    type: Add}
-  id: 4410
-  time: '2023-08-02T09:32:44.0000000+00:00'
-- author: deltanedas
-  changes:
-  - {message: 'Added the gateway, currently for admins to teleport you to funny places.',
-    type: Add}
-  id: 4411
-  time: '2023-08-02T09:47:18.0000000+00:00'
-- author: Nimfar11
-  changes:
-  - {message: Adds a magazine for the C20R to the uplink for 3 TC., type: Add}
-  id: 4412
-  time: '2023-08-02T10:03:39.0000000+00:00'
-- author: Nimfar
-  changes:
-  - {message: 'Adds a new theft target for the Syndicate, Emergency Security Orders
-      from the HoS.', type: Add}
-  id: 4413
-  time: '2023-08-02T10:05:12.0000000+00:00'
-- author: Bhijn and Myr
-  changes:
-  - {message: 'Interaction outlines now directly react to lighting. You can no longer
-      merely wave your mouse around in the dark to see objects in the distance in
-      maint. Interaction outlines that''re in-range are far brighter even in dim conditions,
-      though out-of-range interaction outlines are hard to see in poor light conditions.',
-    type: Add}
-  id: 4414
-  time: '2023-08-02T10:07:12.0000000+00:00'
-- author: eclips_e
-  changes:
-  - {message: The P-Block crate will now have oxygen and nitrogen jugs., type: Fix}
-  id: 4415
-  time: '2023-08-02T14:32:08.0000000+00:00'
-- author: chromiumboy
-  changes:
-  - {message: Containers used in recipes now drop their contents when crafted., type: Fix}
-  id: 4416
-  time: '2023-08-02T18:32:51.0000000+00:00'
 - author: PuceTint
   changes:
   - {message: Nitrous oxide now causes laughing, type: Add}
@@ -2971,3 +2922,49 @@ Entries:
     type: Add}
   id: 4908
   time: '2023-09-28T04:09:45.0000000+00:00'
+- author: LEVELcat
+  changes:
+  - {message: Eyeglass are now available from the ClothesMate., type: Add}
+  id: 4909
+  time: '2023-09-28T10:52:05.0000000+00:00'
+- author: Repo
+  changes:
+  - {message: Pun Pun now showing on crew monitoring., type: Fix}
+  id: 4910
+  time: '2023-09-28T10:53:54.0000000+00:00'
+- author: nikthechampiongr
+  changes:
+  - {message: Mappers can now place airlocks that can be pried open while unpowered
+      without tools., type: Add}
+  id: 4911
+  time: '2023-09-28T11:34:22.0000000+00:00'
+- author: Doru991
+  changes:
+  - {message: Arcade machine maintenance panels can be opened again., type: Fix}
+  id: 4912
+  time: '2023-09-28T14:00:19.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: The health alerts now have text to help discern how gravely injured
+      you are., type: Tweak}
+  id: 4913
+  time: '2023-09-28T14:05:42.0000000+00:00'
+- author: NULL882
+  changes:
+  - {message: Added Necropolis Wall., type: Add}
+  - {message: Added Mine Wall., type: Add}
+  - {message: Added Sings for Mine Wall., type: Add}
+  id: 4914
+  time: '2023-09-28T17:07:13.0000000+00:00'
+- author: lunarcomets
+  changes:
+  - {message: 'Tweaked archaic issues to fix capitalization issues, and removed the
+      replacement for ''request'' for consistency.', type: Tweak}
+  id: 4915
+  time: '2023-09-28T19:19:58.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Changed the player actions panel to ask for confirmation when kicking
+      and respawning players., type: Tweak}
+  id: 4916
+  time: '2023-09-28T22:46:07.0000000+00:00'

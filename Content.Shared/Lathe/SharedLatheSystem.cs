@@ -2,10 +2,7 @@ using Content.Shared.Emag.Systems;
 using Content.Shared.Materials;
 using Content.Shared.Research.Prototypes;
 using JetBrains.Annotations;
-using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
-using System.Net.Mail;
 
 namespace Content.Shared.Lathe;
 
@@ -21,21 +18,7 @@ public abstract class SharedLatheSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<LatheComponent, ComponentGetState>(OnGetState);
-        SubscribeLocalEvent<LatheComponent, ComponentHandleState>(OnHandleState);
         SubscribeLocalEvent<EmagLatheRecipesComponent, GotEmaggedEvent>(OnEmagged);
-    }
-
-    private void OnGetState(EntityUid uid, LatheComponent component, ref ComponentGetState args)
-    {
-        args.State = new LatheComponentState(component.MaterialUseMultiplier);
-    }
-
-    private void OnHandleState(EntityUid uid, LatheComponent component, ref ComponentHandleState args)
-    {
-        if (args.Current is not LatheComponentState state)
-            return;
-        component.MaterialUseMultiplier = state.MaterialUseMultiplier;
     }
 
     [PublicAPI]
@@ -70,15 +53,4 @@ public abstract class SharedLatheSystem : EntitySystem
         => reduce ? (int) MathF.Ceiling(original * multiplier) : original;
 
     protected abstract bool HasRecipe(EntityUid uid, LatheRecipePrototype recipe, LatheComponent component);
-}
-
-[Serializable, NetSerializable]
-public sealed class LatheComponentState : ComponentState
-{
-    public float MaterialUseMultiplier;
-
-    public LatheComponentState(float materialUseMultiplier)
-    {
-        MaterialUseMultiplier = materialUseMultiplier;
-    }
 }
