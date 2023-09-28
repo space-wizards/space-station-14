@@ -105,6 +105,8 @@ public sealed partial class GameTicker
 
         ruleData.Active = true;
         ruleData.ActivatedAt = _gameTiming.CurTime;
+        EnsureComp<ActiveGameRuleComponent>(ruleEntity);
+
         var ev = new GameRuleStartedEvent(ruleEntity, id);
         RaiseLocalEvent(ruleEntity, ref ev, true);
         return true;
@@ -128,6 +130,8 @@ public sealed partial class GameTicker
 
         ruleData.Active = false;
         ruleData.Ended = true;
+        RemComp<ActiveGameRuleComponent>(ruleEntity);
+
         _sawmill.Info($"Ended game rule {ToPrettyString(ruleEntity)}");
 
         var ev = new GameRuleEndedEvent(ruleEntity, id);
@@ -193,11 +197,10 @@ public sealed partial class GameTicker
     /// </summary>
     public IEnumerable<EntityUid> GetActiveGameRules()
     {
-        var query = EntityQueryEnumerator<GameRuleComponent>();
-        while (query.MoveNext(out var uid, out var ruleData))
+        var query = EntityQueryEnumerator<ActiveGameRuleComponent, GameRuleComponent>();
+        while (query.MoveNext(out var uid, out _, out _))
         {
-            if (ruleData.Active)
-                yield return uid;
+            yield return uid;
         }
     }
 

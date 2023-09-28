@@ -13,21 +13,28 @@ public sealed partial class GameRuleComponent : Component
     /// Whether or not the rule is active.
     /// Is enabled after <see cref="GameRuleStartedEvent"/> and disabled after <see cref="GameRuleEndedEvent"/>
     /// </summary>
-    [DataField("active")]
+    /// <seealso cref="ActiveGameRuleComponent"/>
+    [DataField]
     public bool Active;
 
     /// <summary>
     /// Game time when game rule was activated
     /// </summary>
-    [DataField("activatedAt", customTypeSerializer:typeof(TimeOffsetSerializer))]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
     public TimeSpan ActivatedAt;
 
     /// <summary>
     /// Whether or not the gamerule finished.
     /// Used for tracking whether a non-active gamerule has been started before.
     /// </summary>
-    [DataField("ended")]
+    [DataField]
     public bool Ended;
+
+    /// <summary>
+    /// The minimum amount of players needed for this game rule.
+    /// </summary>
+    [DataField]
+    public int MinPlayers;
 }
 
 /// <summary>
