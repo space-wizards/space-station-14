@@ -11,6 +11,9 @@ using PryUnpoweredComponent = Content.Shared.Prying.Components.PryUnpoweredCompo
 
 namespace Content.Shared.Prying.Systems;
 
+/// <summary>
+/// Handles prying of entities (e.g. doors)
+/// </summary>
 public sealed class PryingSystem : EntitySystem
 {
     [Dependency] private readonly ISharedAdminLogManager _adminLog = default!;
@@ -23,7 +26,6 @@ public sealed class PryingSystem : EntitySystem
 
         // Mob prying doors
         SubscribeLocalEvent<DoorComponent, GetVerbsEvent<AlternativeVerb>>(OnDoorAltVerb);
-
         SubscribeLocalEvent<DoorComponent, DoorPryDoAfterEvent>(OnDoAfter);
         SubscribeLocalEvent<DoorComponent, InteractUsingEvent>(TryPryDoor);
     }
@@ -58,7 +60,6 @@ public sealed class PryingSystem : EntitySystem
     public bool TryPry(EntityUid target, EntityUid user, out DoAfterId? id, EntityUid tool)
     {
         id = null;
-
 
         PryingComponent? comp = null;
         if (!Resolve(tool, ref comp, false))
@@ -144,7 +145,6 @@ public sealed class PryingSystem : EntitySystem
             return;
         if (args.Target is null)
             return;
-
 
         PryingComponent? comp = null;
 
