@@ -64,14 +64,16 @@ public abstract class SharedStealthSystem : EntitySystem
 
     private void OnMobStateChanged(EntityUid uid, StealthComponent component, MobStateChangedEvent args)
     {
-        if (args.NewMobState != MobState.Dead)
+        if (args.NewMobState == MobState.Dead)
         {
-            SetEnabled(uid, true, component);
+            component.Enabled = component.EnabledOnDeath;
         }
         else
         {
-            SetEnabled(uid, false, component);
+            component.Enabled = true;
         }
+
+        Dirty(uid, component);
     }
 
     private void OnPaused(EntityUid uid, StealthComponent component, ref EntityPausedEvent args)
