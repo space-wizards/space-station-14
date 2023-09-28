@@ -1,0 +1,41 @@
+- type: reagent
+  id: UnstableReanimator
+  name: reagent-name-unstable-reanimator
+  group: Narcotics
+  desc: reagent-desc-unstable-reanimator
+  physicalDesc: reagent-physical-desc-soothing
+  flavor: medicine
+  color: "#fcf7f9"
+  metabolisms:
+    Narcotic:
+      metabolismRate: 1.0
+      effects:
+      - !type:MovespeedModifier
+        walkSpeedModifier: 1.25
+        sprintSpeedModifier: 1.25
+      - !type:Jitter
+      - !type:GenericStatusEffect
+        key: Stun
+        time: 1
+        type: Remove
+      - !type:GenericStatusEffect
+        key: KnockedDown
+        time: 1
+        type: Remove
+    Medicine:
+      metabolismRate: 1.0
+      effects:
+      - !type:HealthChange
+        conditions:
+          - !type:TotalDamage
+            max: 5
+        damage:
+          types:
+            Asphyxiation: 1000
+      - !type:HealthChange
+        damage:
+          groups:
+            Burn: -60
+            Toxin: -60
+            Airloss: -60
+            Brute: -60

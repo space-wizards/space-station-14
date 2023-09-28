@@ -1,0 +1,73 @@
+# Base
+- type: entity
+  name: Reagents Capsule Implanter
+  id: BaseReagentsCapsuleImplanter
+  parent: BaseItem
+  abstract: true
+  noSpawn: true
+  components:
+    - type: ItemSlots
+    - type: ContainerContainer
+      containers:
+        implanter_slot: !type:ContainerSlot { }
+    - type: Implanter
+      currentMode: Inject
+      implantOnly: true
+      implanterSlot:
+        name: Implant
+        locked: False
+        priority: 0
+        whitelist:
+          tags:
+            - SubdermalImplant
+    - type: Sprite
+      sprite: SS220/Objects/ReagentInjector/injector.rsi
+      state: injector
+    - type: ItemMapper
+      sprite: SS220/Objects/ReagentInjector/injector.rsi
+      mapLayers:
+        injector_full:
+          whitelist:
+            tags:
+              - SubdermalImplant
+    - type: Item
+      sprite: SS220/Objects/ReagentInjector/injector.rsi
+      heldPrefix: 0
+    - type: Appearance
+
+- type: entity
+  id: ReagentsCapsuleInjector
+  name: reagent-injector-name
+  description: reagent-injector-desc
+  parent: BaseReagentsCapsuleImplanter
+  components:
+    - type: Implanter
+      implant: EmptyCapsule
+
+- type: entity
+  id: ActionOpenReagentsCapsule
+  name: reagent-injector-action-name
+  description: reagent-injector-action-desc
+  noSpawn: true
+  components:
+  - type: InstantAction
+    charges: 1
+    checkCanInteract: false
+    itemIconStyle: BigAction
+    priority: -20
+    icon:
+      sprite: SS220/Objects/ReagentInjector/injector.rsi
+      state: icon_empty
+    event: !type:UseReagentCapsuleImplantEvent
+
+# Other
+- type: listing
+  id: UplinkReagentsCapsuleInjector
+  name: reagent-injector-name
+  description: uplink-reagent-injector-desc
+  icon: { sprite: SS220/Objects/ReagentInjector/injector.rsi, state: injector }
+  productEntity: ReagentsCapsuleInjector
+  cost:
+    Telecrystal: 6
+  categories:
+    - UplinkInjectors

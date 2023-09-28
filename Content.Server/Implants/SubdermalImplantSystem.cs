@@ -1,4 +1,6 @@
-﻿using Content.Server.Cuffs;
+using Content.Server.Chemistry.Components.SolutionManager;
+using Content.Server.Chemistry.EntitySystems;
+using Content.Server.Cuffs;
 using Content.Server.Humanoid;
 using Content.Server.Store.Components;
 using Content.Server.Store.Systems;
@@ -9,6 +11,8 @@ using Content.Shared.Implants.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Preferences;
+using Content.Shared.SS220.ReagentImplanter;
+using Robust.Shared.Containers;
 
 namespace Content.Server.Implants;
 
@@ -19,15 +23,33 @@ public sealed class SubdermalImplantSystem : SharedSubdermalImplantSystem
     [Dependency] private readonly MetaDataSystem _metaData = default!;
     [Dependency] private readonly StoreSystem _store = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly EntityManager _entityManager = default!;
+    [Dependency] private readonly SolutionContainerSystem _solutionContainer = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
+        SubscribeLocalEvent<SubdermalImplantComponent, UseReagentCapsuleImplantEvent>(OnReagentCapsuleImplant);
         SubscribeLocalEvent<SubdermalImplantComponent, UseFreedomImplantEvent>(OnFreedomImplant);
         SubscribeLocalEvent<StoreComponent, ImplantRelayEvent<AfterInteractUsingEvent>>(OnStoreRelay);
         SubscribeLocalEvent<SubdermalImplantComponent, ActivateImplantEvent>(OnActivateImplantEvent);
         SubscribeLocalEvent<SubdermalImplantComponent, UseDnaScramblerImplantEvent>(OnDnaScramblerImplant);
+
+    }
+
+    private void OnReagentCapsuleImplant(EntityUid uid, SubdermalImplantComponent component, UseReagentCapsuleImplantEvent args)
+    {
+        if (!TryComp<SolutionContainerManagerComponent>(args.Performer, out var ownerSolutionContainerComp)
+            || !TryComp<ReagentCapsuleComponent>(uid, out var reagentCapsule)
+            || !TryComp<SolutionContainerManagerComponent>(uid, out var capsuleContainer))
+            return;
+        if (args.Handled || reagentCapsule.IsUsed)
+            return;
+  
+        _solutionContainer.TryTransferSolution(args.Performer, ownerSolutionContainerComp.Solutions["chemicals"], capsuleContainer.Solutions["beaker"], capsuleContainer.Solutions["beaker"].Volume);
+        reagentCapsule.IsUsed = true;
+        args.Handled = true;
 
     }
 

@@ -46,22 +46,27 @@
 - type: storeCategory
   id: UplinkImplants
   name: store-category-implants
-  priority: 6
+  priority: 7
+
+- type: storeCategory
+  id: UplinkInjectors
+  name: store-category-injectors
+  priority: 8
 
 - type: storeCategory
   id: UplinkJob
   name: store-category-job
-  priority: 7
+  priority: 9
 
 - type: storeCategory
   id: UplinkArmor
   name: store-category-armor
-  priority: 8
+  priority: 10
 
 - type: storeCategory
   id: UplinkPointless
   name: store-category-pointless
-  priority: 9
+  priority: 11
 
 #revenant
 - type: storeCategory

@@ -1,0 +1,205 @@
+# Base
+- type: entity
+  parent: BaseSubdermalImplant
+  id: BaseReagentsCapsule
+  name: reagents capsule
+  components:
+    - type: ReagentCapsule
+    - type: SubdermalImplant
+      permanent: true
+      implantAction: ActionOpenReagentsCapsule
+    - type: Sprite
+      sprite: SS220/Objects/ReagentInjector/capsules.rsi
+      state: capsule
+    - type: Item
+      sprite: SS220/Objects/ReagentInjector/capsules.rsi
+      size: 5
+    - type: SolutionContainerManager
+      solutions:
+        beaker:
+          maxVol: 30
+          canMix: false
+          canReact: false
+    - type: RefillableSolution
+      solution: beaker
+    - type: ExaminableSolution
+      solution: beaker
+    - type: Appearance
+    - type: SolutionContainerVisuals
+      maxFillLevels: 1
+      changeColor: false
+      emptySpriteName: capsule_used
+
+# capsules
+- type: entity
+  parent: BaseReagentsCapsule
+  id: EmptyCapsule
+  name: empty-reagent-capsule-name
+  description: empty-reagent-capsule-desk
+  components:
+    - type: SubdermalImplant
+      permanent: false
+    - type: Appearance
+    - type: SolutionContainerManager
+      solutions:
+        beaker:
+          maxVol: 30
+        
+- type: entity
+  parent: BaseReagentsCapsule
+  id: CombatCapsule
+  name: combat-reagent-capsule-name
+  description: combat-reagent-capsule-desk
+  components:
+    - type: Appearance
+    - type: Sprite
+      sprite: SS220/Objects/ReagentInjector/capsules.rsi
+      layers:
+      - state: combat
+        map: ["enum.SolutionContainerLayers.Fill"]
+    - type: SolutionContainerManager
+      solutions:
+        beaker:
+          maxVol: 30
+          reagents:
+          - ReagentId: Omnizine
+            Quantity: 25
+          - ReagentId: TranexamicAcid
+            Quantity: 5
+
+- type: entity
+  parent: BaseReagentsCapsule
+  id: DABCapsule
+  name: dab-reagent-capsule-name
+  description: dab-reagent-capsule-desc
+  components:
+    - type: Sprite
+      sprite: SS220/Objects/ReagentInjector/capsules.rsi
+      layers:
+        - state: dab
+          map: ["enum.SolutionContainerLayers.Fill"]
+    - type: SolutionContainerManager
+      solutions:
+        beaker:
+          maxVol: 30
+          reagents:
+          - ReagentId: Dylovene
+            Quantity: 10
+          - ReagentId: Arithrazine
+            Quantity: 10
+          - ReagentId: Bicaridine
+            Quantity: 10
+
+- type: entity
+  parent: BaseReagentsCapsule
+  id: ExperementalReanimatorCapsule
+  name: unstable-reanimator-reagent-capsule-name
+  description: unstable-reanimator-reagent-capsule-desc
+  components:
+    - type: Sprite
+      sprite: SS220/Objects/ReagentInjector/capsules.rsi
+      layers:
+        - state: reanim
+          map: ["enum.SolutionContainerLayers.Fill"]
+    - type: SolutionContainerManager
+      solutions:
+        beaker:
+          maxVol: 35
+          reagents:
+          - ReagentId: TranexamicAcid
+            Quantity: 5
+          - ReagentId: UnstableReanimator
+            Quantity: 20
+          - ReagentId: Epinephrine
+            Quantity: 10
+
+- type: entity
+  parent: BaseReagentsCapsule
+  id: SuicideCapsule
+  name: suicide-reagent-capsule-name
+  description: suicide-reagent-capsule-desc
+  components:
+    - type: SubdermalImplant
+      permanent: false
+    - type: Sprite
+      sprite: SS220/Objects/ReagentInjector/capsules.rsi
+      layers:
+        - state: dead
+          map: ["enum.SolutionContainerLayers.Fill"]
+    - type: SolutionContainerManager
+      solutions:
+        beaker:
+          maxVol: 10
+          reagents:
+          - ReagentId: Amatoxin
+            Quantity: 10
+# Uplink
+- type: listing
+  id: UplinkEmptyCapsule
+  name: uplink-empty-reagent-capsule-name
+  description: uplink-empty-reagent-capsule-desk
+  icon: { sprite: SS220/Objects/ReagentInjector/capsules.rsi, state: capsule }
+  productEntity: EmptyCapsule
+  cost:
+    Telecrystal: 1
+  categories:
+    - UplinkInjectors
+
+- type: listing
+  id: UplinkCombatCapsule
+  name: uplink-combat-reagent-capsule-name
+  description: uplink-combat-reagent-capsule-desk
+  icon: { sprite: SS220/Objects/ReagentInjector/capsules.rsi, state: combat }
+  productEntity: CombatCapsule
+  cost:
+    Telecrystal: 2
+  categories:
+    - UplinkInjectors
+  conditions:
+    - !type:StoreWhitelistCondition
+      whitelist:
+        tags:
+          - NukeOpsUplink
+
+- type: listing
+  id: UplinkDABCapsule
+  name: uplink-dab-reagent-capsule-name
+  description: uplink-dab-reagent-capsule-desc
+  icon: { sprite: SS220/Objects/ReagentInjector/capsules.rsi, state: dab }
+  productEntity: DABCapsule
+  cost:
+    Telecrystal: 2
+  categories:
+    - UplinkInjectors
+
+- type: listing
+  id: UplinkExperementalReanimatorCapsule
+  name: uplink-expadrenaline-reagent-capsule-name
+  description: uplink-expadrenaline-reagent-capsule-desc
+  icon: { sprite: SS220/Objects/ReagentInjector/capsules.rsi, state: reanim }
+  productEntity: ExperementalReanimatorCapsule
+  cost:
+    Telecrystal: 4
+  categories:
+    - UplinkInjectors
+  conditions:
+    - !type:StoreWhitelistCondition
+      whitelist:
+        tags:
+          - NukeOpsUplink
+
+- type: listing
+  id: UplinkSuicideCapsule
+  name: uplink-suicide-reagent-capsule-name
+  description: uplink-suicide-reagent-capsule-desc
+  icon: { sprite: SS220/Objects/ReagentInjector/capsules.rsi, state: dead }
+  productEntity: SuicideCapsule
+  cost:
+    Telecrystal: 2
+  categories:
+    - UplinkInjectors
+  conditions:
+    - !type:StoreWhitelistCondition
+      blacklist:
+        tags:
+          - NukeOpsUplink
