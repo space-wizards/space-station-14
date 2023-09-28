@@ -796,7 +796,7 @@ public sealed class ChatUIController : UIController
 
         var randomSuffix = Loc.GetString(forceSay.ForceSayStringPrefix + _random.Next(1, forceSay.ForceSayStringCount));
 
-        var msg = chatBox.ChatInput.Input.Text;
+        var msg = chatBox.ChatInput.Input.Text.TrimEnd();
         var modifiedText = ev.UseSuffix
             ? Loc.GetString(forceSay.ForceSayMessageWrap,
                 ("message", msg), ("suffix", randomSuffix))
