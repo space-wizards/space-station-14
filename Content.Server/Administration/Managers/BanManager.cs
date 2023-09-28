@@ -48,12 +48,15 @@ public sealed class BanManager : IBanManager, IPostInjectInit
 
     private async void OnPlayerStatusChanged(object? sender, SessionStatusEventArgs e)
     {
-        if (e.NewStatus != SessionStatus.Connected
-            || _cachedRoleBans.ContainsKey(e.Session.UserId))
-            return;
+        if (e.NewStatus == SessionStatus.Connected &&
+            !_cachedRoleBans.ContainsKey(e.Session.UserId))
+        {
+            var netChannel = e.Session.ConnectedClient;
+            ImmutableArray<byte>? hwId = netChannel.UserData.HWId.Length == 0 ? null : netChannel.UserData.HWId;
+            await CacheDbRoleBans(e.Session.UserId, netChannel.RemoteEndPoint.Address, hwId);
+        }
 
-        var netChannel = e.Session.ConnectedClient;
-        await CacheDbRoleBans(e.Session.UserId, netChannel.RemoteEndPoint.Address, netChannel.UserData.HWId.Length == 0 ? null : netChannel.UserData.HWId);
+        SendRoleBans(e.Session);
     }
 
     private async Task<bool> AddRoleBan(ServerRoleBanDef banDef)
