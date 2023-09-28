@@ -28,3 +28,32 @@
         Piercing: 0.8
         Heat: 0.2
         Radiation: 0.5
+
+- type: entity
+  parent: ClothingHeadHardsuitWithLightBase
+  id: ClothingHeadHelmetHardsuitUSSPHeavyTwo
+  noSpawn: true
+  name: Battle USSP hardsuit helmet
+  description: Heavy, small viewing angle, but really reliable and sturdy.
+  components:
+  - type: Sprite
+    sprite: SS220/Clothing/Head/Hardsuits/sssp_heavy_2.rsi
+  - type: Clothing
+    sprite: SS220/Clothing/Head/Hardsuits/sssp_heavy_2.rsi
+  - type: PointLight
+    radius: 5
+    energy: 3.5
+    color: orange
+  - type: PressureProtection
+    highPressureMultiplier: 0.08
+    lowPressureMultiplier: 1000
+  - type: TemperatureProtection
+    coefficient: 0.005
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.8
+        Slash: 0.8
+        Piercing: 0.8
+        Heat: 0.2
+        Radiation: 0.5
