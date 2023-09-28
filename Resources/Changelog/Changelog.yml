@@ -1,52 +1,4 @@
 Entries:
-- author: keronshb
-  changes:
-  - {message: Captains will now start with their gloves and carapace again, type: Tweak}
-  id: 4405
-  time: '2023-08-01T21:10:36.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: 'Fixed messages related to the round not being sent (round starting,
-      round restarting, etc.)', type: Fix}
-  id: 4406
-  time: '2023-08-01T21:11:50.0000000+00:00'
-- author: PrPleGoo
-  changes:
-  - {message: added an overlay for the security hud that displays job icons, type: Add}
-  - {message: Added some buttons to the Agent ID interface to set the icon on the
-      ID card., type: Add}
-  - {message: Changed the id card computer to also set the icon on the ID when picking
-      a job prototype from the presets., type: Tweak}
-  id: 4407
-  time: '2023-08-01T21:17:03.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Added xeno spitters to salvage., type: Add}
-  - {message: Fix dragon carps not looking like their dragon., type: Fix}
-  - {message: Fix dragon carp NPCs not following the dragon and not idling on spawn.,
-    type: Fix}
-  - {message: Fix NPCs not shutting down properly upon player takeover., type: Fix}
-  id: 4408
-  time: '2023-08-02T00:48:57.0000000+00:00'
-- author: Slava0135
-  changes:
-  - {message: Hitting entities with thrown items that deal damage now provide more
-      feedback (sound and visual effect)., type: Add}
-  - {message: Thrown items that damage other entities now land after first hit., type: Tweak}
-  id: 4409
-  time: '2023-08-02T09:30:04.0000000+00:00'
-- author: Slava0135
-  changes:
-  - {message: added visual effect on collision for damage on high speed entities,
-    type: Add}
-  id: 4410
-  time: '2023-08-02T09:32:44.0000000+00:00'
-- author: deltanedas
-  changes:
-  - {message: 'Added the gateway, currently for admins to teleport you to funny places.',
-    type: Add}
-  id: 4411
-  time: '2023-08-02T09:47:18.0000000+00:00'
 - author: Nimfar11
   changes:
   - {message: Adds a magazine for the C20R to the uplink for 3 TC., type: Add}
@@ -2976,3 +2928,43 @@ Entries:
   - {message: What moths consider as food is now more consistent., type: Tweak}
   id: 4904
   time: '2023-09-27T16:50:59.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Fixed getting moved briefly when closing a crematorium that you are
+      standing over., type: Fix}
+  id: 4905
+  time: '2023-09-27T23:41:07.0000000+00:00'
+- author: Psychpsyo
+  changes:
+  - {message: 'You can now pet Runtime instead of petting >the< Runtime. Also, Smile
+      is now a girl.', type: Fix}
+  id: 4906
+  time: '2023-09-28T04:05:50.0000000+00:00'
+- author: Psychpsyo
+  changes:
+  - {message: Bingus is no longer fuzzy., type: Fix}
+  id: 4907
+  time: '2023-09-28T04:06:13.0000000+00:00'
+- author: Psychpsyo
+  changes:
+  - {message: The wet floor sign can now be worn as an outer clothing. This now gives
+      syndicate janitors access to a suicide vest in form the wet floor sign mine.,
+    type: Add}
+  id: 4908
+  time: '2023-09-28T04:09:45.0000000+00:00'
+- author: LEVELcat
+  changes:
+  - {message: Eyeglass are now available from the ClothesMate., type: Add}
+  id: 4909
+  time: '2023-09-28T10:52:05.0000000+00:00'
+- author: Repo
+  changes:
+  - {message: Pun Pun now showing on crew monitoring., type: Fix}
+  id: 4910
+  time: '2023-09-28T10:53:54.0000000+00:00'
+- author: nikthechampiongr
+  changes:
+  - {message: Mappers can now place airlocks that can be pried open while unpowered
+      without tools., type: Add}
+  id: 4911
+  time: '2023-09-28T11:34:22.0000000+00:00'

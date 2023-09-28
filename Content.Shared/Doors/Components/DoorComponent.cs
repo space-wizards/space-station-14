@@ -249,7 +249,7 @@ public sealed partial class DoorComponent : Component
             }
 
             var curTime = IoCManager.Resolve<IGameTiming>().CurTime;
-            return (float) (NextStateChange.Value - curTime).TotalSeconds;
+            return (float)(NextStateChange.Value - curTime).TotalSeconds;
         }
         set
         {
@@ -299,10 +299,10 @@ public sealed partial class DoorComponent : Component
     public bool ClickOpen = true;
 
     [DataField("openDrawDepth", customTypeSerializer: typeof(ConstantSerializer<DrawDepthTag>))]
-    public int OpenDrawDepth = (int) DrawDepth.DrawDepth.Doors;
+    public int OpenDrawDepth = (int)DrawDepth.DrawDepth.Doors;
 
     [DataField("closedDrawDepth", customTypeSerializer: typeof(ConstantSerializer<DrawDepthTag>))]
-    public int ClosedDrawDepth = (int) DrawDepth.DrawDepth.Doors;
+    public int ClosedDrawDepth = (int)DrawDepth.DrawDepth.Doors;
 }
 
 [Serializable, NetSerializable]
