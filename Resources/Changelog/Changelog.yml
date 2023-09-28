@@ -1,10 +1,4 @@
 Entries:
-- author: Slava0135
-  changes:
-  - {message: added visual effect on collision for damage on high speed entities,
-    type: Add}
-  id: 4410
-  time: '2023-08-02T09:32:44.0000000+00:00'
 - author: deltanedas
   changes:
   - {message: 'Added the gateway, currently for admins to teleport you to funny places.',
@@ -2969,3 +2963,8 @@ Entries:
   - {message: Eyeglass are now available from the ClothesMate., type: Add}
   id: 4909
   time: '2023-09-28T10:52:05.0000000+00:00'
+- author: Repo
+  changes:
+  - {message: Pun Pun now showing on crew monitoring., type: Fix}
+  id: 4910
+  time: '2023-09-28T10:53:54.0000000+00:00'
