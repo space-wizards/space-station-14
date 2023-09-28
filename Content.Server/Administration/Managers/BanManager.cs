@@ -48,13 +48,12 @@ public sealed class BanManager : IBanManager, IPostInjectInit
 
     private async void OnPlayerStatusChanged(object? sender, SessionStatusEventArgs e)
     {
-        if (e.NewStatus == SessionStatus.Connected &&
-            !_cachedRoleBans.ContainsKey(e.Session.UserId))
-        {
-            var netChannel = e.Session.ConnectedClient;
-            ImmutableArray<byte>? hwId = netChannel.UserData.HWId.Length == 0 ? null : netChannel.UserData.HWId;
-            await CacheDbRoleBans(e.Session.UserId, netChannel.RemoteEndPoint.Address, hwId);
-        }
+        if (e.NewStatus != SessionStatus.Connected || _cachedRoleBans.ContainsKey(e.Session.UserId))
+            return;
+
+        var netChannel = e.Session.ConnectedClient;
+        ImmutableArray<byte>? hwId = netChannel.UserData.HWId.Length == 0 ? null : netChannel.UserData.HWId;
+        await CacheDbRoleBans(e.Session.UserId, netChannel.RemoteEndPoint.Address, hwId);
 
         SendRoleBans(e.Session);
     }
@@ -286,12 +285,7 @@ public sealed class BanManager : IBanManager, IPostInjectInit
 
     public void SendRoleBans(IPlayerSession pSession)
     {
-        if (!_cachedRoleBans.TryGetValue(pSession.UserId, out var roleBans))
-        {
-            _sawmill.Error($"Tried to send rolebans for {pSession.Name} but none cached?");
-            return;
-        }
-
+        var roleBans = _cachedRoleBans.GetValueOrDefault(pSession.UserId) ?? new HashSet<ServerRoleBanDef>();
         var bans = new MsgRoleBans()
         {
             Bans = roleBans.Select(o => o.Role).ToList()
