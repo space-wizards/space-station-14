@@ -2,7 +2,7 @@
   id: 220Gate
   mapName: 'Gate Station'
   mapPath: /Maps/ss220_gate.yml
-  minPlayers: 60 # если людей меньше то не играбельно.
+  minPlayers: 0 #Нужно для автоголосования
   stations:
     Gate:
       stationProto: StandardNanotrasenStation
