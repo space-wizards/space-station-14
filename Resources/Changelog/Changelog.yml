@@ -1,13 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Added xeno spitters to salvage., type: Add}
-  - {message: Fix dragon carps not looking like their dragon., type: Fix}
-  - {message: Fix dragon carp NPCs not following the dragon and not idling on spawn.,
-    type: Fix}
-  - {message: Fix NPCs not shutting down properly upon player takeover., type: Fix}
-  id: 4408
-  time: '2023-08-02T00:48:57.0000000+00:00'
 - author: Slava0135
   changes:
   - {message: Hitting entities with thrown items that deal damage now provide more
@@ -2973,3 +2964,10 @@ Entries:
   - {message: Bingus is no longer fuzzy., type: Fix}
   id: 4907
   time: '2023-09-28T04:06:13.0000000+00:00'
+- author: Psychpsyo
+  changes:
+  - {message: The wet floor sign can now be worn as an outer clothing. This now gives
+      syndicate janitors access to a suicide vest in form the wet floor sign mine.,
+    type: Add}
+  id: 4908
+  time: '2023-09-28T04:09:45.0000000+00:00'
