@@ -61,7 +61,8 @@ namespace Content.Shared.StatusEffect
             if (args.Current is not StatusEffectsComponentState state)
                 return;
 
-            component.AllowedEffects = new(state.AllowedEffects);
+            component.AllowedEffects.Clear();
+            component.AllowedEffects.AddRange(state.AllowedEffects);
 
             // Remove non-existent effects.
             foreach (var effect in component.ActiveEffects.Keys)

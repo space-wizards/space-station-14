@@ -1,6 +1,7 @@
 using System.Linq;
 using Content.Shared.Interaction;
 using Content.Shared.Tools.Components;
+using Content.Shared.Prying.Components;
 
 namespace Content.Shared.Tools;
 
@@ -21,7 +22,7 @@ public abstract partial class SharedToolSystem : EntitySystem
     private void OnMultipleToolStartup(EntityUid uid, MultipleToolComponent multiple, ComponentStartup args)
     {
         // Only set the multiple tool if we have a tool component.
-        if(EntityManager.TryGetComponent(uid, out ToolComponent? tool))
+        if (EntityManager.TryGetComponent(uid, out ToolComponent? tool))
             SetMultipleTool(uid, multiple, tool);
     }
 
@@ -41,7 +42,7 @@ public abstract partial class SharedToolSystem : EntitySystem
         if (multiple.Entries.Length == 0)
             return false;
 
-        multiple.CurrentEntry = (uint) ((multiple.CurrentEntry + 1) % multiple.Entries.Length);
+        multiple.CurrentEntry = (uint)((multiple.CurrentEntry + 1) % multiple.Entries.Length);
         SetMultipleTool(uid, multiple, playSound: true, user: user);
 
         return true;
@@ -67,6 +68,19 @@ public abstract partial class SharedToolSystem : EntitySystem
         var current = multiple.Entries[multiple.CurrentEntry];
         tool.UseSound = current.UseSound;
         tool.Qualities = current.Behavior;
+
+        // TODO: Replace this with a better solution later
+        if (TryComp<PryingComponent>(uid, out var pcomp))
+        {
+            if (current.Behavior.Contains("Prying"))
+            {
+                pcomp.Enabled = true;
+            }
+            else
+            {
+                pcomp.Enabled = false;
+            }
+        }
 
         if (playSound && current.ChangeSound != null)
             _audioSystem.PlayPredicted(current.ChangeSound, uid, user);

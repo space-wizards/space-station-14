@@ -248,7 +248,7 @@ public sealed partial class DoorComponent : Component
             }
 
             var curTime = IoCManager.Resolve<IGameTiming>().CurTime;
-            return (float) (NextStateChange.Value - curTime).TotalSeconds;
+            return (float)(NextStateChange.Value - curTime).TotalSeconds;
         }
         set
         {
