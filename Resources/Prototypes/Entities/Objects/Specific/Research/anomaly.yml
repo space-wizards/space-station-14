@@ -76,7 +76,7 @@
   id: AnomalyLocatorWideUnpowered
   parent: AnomalyLocatorUnpowered
   name: wide-spectrum anomaly locator
-  description: A device that looks for anomalies from a great distance, but does not have the ability to determine the distance to them.
+  description: A device that looks for anomalies from an extended distance, but has no way to determine the distance to them.
   suffix: Unpowered
   components:
   - type: Sprite
