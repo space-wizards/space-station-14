@@ -22,10 +22,7 @@ namespace Content.Client.Administration.UI.Bwoink
                 }
             };
 
-            OnOpen += () =>
-            {
-                Bwoink.PopulateList();
-            };
+            OnOpen += () => Bwoink.PopulateList();
         }
     }
 }
