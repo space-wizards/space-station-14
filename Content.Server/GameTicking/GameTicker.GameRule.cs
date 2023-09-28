@@ -94,7 +94,7 @@ public sealed partial class GameTicker
             ruleData ??= EnsureComp<GameRuleComponent>(ruleEntity);
 
         // can't start an already active rule
-        if (HasComp<ActiveGameRuleComponent>(ruleEntity) || ruleData.Ended)
+        if (HasComp<ActiveGameRuleComponent>(ruleEntity) || HasComp<EndedGameRuleComponent>(ruleEntity))
             return false;
 
         if (MetaData(ruleEntity).EntityPrototype?.ID is not { } id) // you really fucked up
@@ -121,14 +121,14 @@ public sealed partial class GameTicker
             return false;
 
         // don't end it multiple times
-        if (ruleData.Ended)
+        if (HasComp<EndedGameRuleComponent>(ruleEntity))
             return false;
 
         if (MetaData(ruleEntity).EntityPrototype?.ID is not { } id) // you really fucked up
             return false;
 
         RemComp<ActiveGameRuleComponent>(ruleEntity);
-        ruleData.Ended = true;
+        EnsureComp<EndedGameRuleComponent>(ruleEntity);
 
         _sawmill.Info($"Ended game rule {ToPrettyString(ruleEntity)}");
 
@@ -139,7 +139,7 @@ public sealed partial class GameTicker
 
     public bool IsGameRuleAdded(EntityUid ruleEntity, GameRuleComponent? component = null)
     {
-        return Resolve(ruleEntity, ref component) && !component.Ended;
+        return Resolve(ruleEntity, ref component) && !HasComp<EndedGameRuleComponent>(ruleEntity);
     }
 
     public bool IsGameRuleAdded(string rule)

@@ -16,13 +16,6 @@ public sealed partial class GameRuleComponent : Component
     public TimeSpan ActivatedAt;
 
     /// <summary>
-    /// Whether or not the gamerule finished.
-    /// Used for tracking whether a non-active gamerule has been started before.
-    /// </summary>
-    [DataField]
-    public bool Ended;
-
-    /// <summary>
     /// The minimum amount of players needed for this game rule.
     /// </summary>
     [DataField]
