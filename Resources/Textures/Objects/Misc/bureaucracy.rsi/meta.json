@@ -300,6 +300,9 @@
       "name": "stamp-warden"
     },
     {
+      "name": "vault_document"
+    },
+    {
       "name": "clipboard-equipped-BELT",
       "directions": 4
     }
