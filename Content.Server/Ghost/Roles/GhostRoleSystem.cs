@@ -9,6 +9,7 @@ using Content.Server.Players;
 using Content.Server.Players.PlayTimeTracking;
 using Content.Server.SS220.Ghost.Roles.Components;
 using Content.Shared.Administration;
+using Content.Shared.Chat;
 using Content.Shared.Database;
 using Content.Shared.Follower;
 using Content.Shared.GameTicking;
@@ -386,6 +387,7 @@ namespace Content.Server.Ghost.Roles
             {
                 if (!_playerManager.TryGetSessionById(args.Player.UserId, out var session))
                 {
+                    args.TookRole = false;
                     return;
                 }
 
@@ -393,10 +395,10 @@ namespace Content.Server.Ghost.Roles
 
                 if (overAll < TimeSpan.FromHours(10))
                 {
-                    if (args.Player.AttachedEntity.HasValue)
-                    {
-                        _chat.SendAdminAlert(args.Player.AttachedEntity.Value, "Для игры на данной роли вам необходимо отыграть 10 часов на сервере.");
-                    }
+                    var msg = Loc.GetString("ghost-role-time-restrict");
+                    var wrappedMsg = Loc.GetString("chat-manager-server-wrap-message", ("message", msg));
+
+                    _chat.ChatMessageToOne(ChatChannel.Server, msg, wrappedMsg, default, false, session.ConnectedClient, Color.Red);
 
                     args.TookRole = false;
                     return;
