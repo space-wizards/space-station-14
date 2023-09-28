@@ -1,6 +1,6 @@
 using Content.Server.Administration.Logs;
 using Content.Server.Chemistry.EntitySystems;
-using Content.Server.Nutrition.Components;
+using Content.Server.Nutrition.EntitySystems;
 using Content.Shared.Database;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
@@ -23,7 +23,7 @@ public sealed class LubeSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<LubeComponent, AfterInteractEvent>(OnInteract);
+        SubscribeLocalEvent<LubeComponent, AfterInteractEvent>(OnInteract, after: new[] { typeof(OpenableSystem) });
     }
 
     private void OnInteract(EntityUid uid, LubeComponent component, AfterInteractEvent args)
@@ -33,11 +33,6 @@ public sealed class LubeSystem : EntitySystem
 
         if (!args.CanReach || args.Target is not { Valid: true } target)
             return;
-
-        if (TryComp<DrinkComponent>(uid, out var drink) && !drink.Opened)
-        {
-            return;
-        }
 
         if (TryLube(uid, component, target, args.User))
         {

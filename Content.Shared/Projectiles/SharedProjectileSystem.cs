@@ -1,6 +1,7 @@
 using System.Numerics;
 using Content.Shared.Damage;
 using Content.Shared.DoAfter;
+using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Projectiles;
 using Content.Shared.Sound.Components;
@@ -24,6 +25,7 @@ public abstract partial class SharedProjectileSystem : EntitySystem
     [Dependency] private readonly INetManager _netManager = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
+    [Dependency] private readonly SharedHandsSystem _hands = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
 
@@ -73,14 +75,28 @@ public abstract partial class SharedProjectileSystem : EntitySystem
         _physics.SetBodyType(uid, BodyType.Dynamic, body: physics, xform: xform);
         _transform.AttachToGridOrMap(uid, xform);
 
+        // Reset whether the projectile has damaged anything if it successfully was removed
+        if (TryComp<ProjectileComponent>(uid, out var projectile))
+        {
+            projectile.Shooter = null;
+            projectile.Weapon = null;
+            projectile.DamagedEntity = false;
+        }
+
         // Land it just coz uhhh yeah
         var landEv = new LandEvent(args.User, true);
         RaiseLocalEvent(uid, ref landEv);
         _physics.WakeBody(uid, body: physics);
+
+        // try place it in the user's hand
+        _hands.TryPickupAnyHand(args.User, uid);
     }
 
     private void OnEmbedThrowDoHit(EntityUid uid, EmbeddableProjectileComponent component, ThrowDoHitEvent args)
     {
+        if (!component.EmbedOnThrow)
+            return;
+
         Embed(uid, args.Target, component);
     }
 
@@ -91,7 +107,7 @@ public abstract partial class SharedProjectileSystem : EntitySystem
         // Raise a specific event for projectiles.
         if (TryComp<ProjectileComponent>(uid, out var projectile))
         {
-            var ev = new ProjectileEmbedEvent(projectile.Shooter, projectile.Weapon, args.Target);
+            var ev = new ProjectileEmbedEvent(projectile.Shooter!.Value, projectile.Weapon!.Value, args.Target);
             RaiseLocalEvent(uid, ref ev);
         }
     }
@@ -117,7 +133,7 @@ public abstract partial class SharedProjectileSystem : EntitySystem
 
     private void PreventCollision(EntityUid uid, ProjectileComponent component, ref PreventCollideEvent args)
     {
-        if (component.IgnoreShooter && args.OtherEntity == component.Shooter)
+        if (component.IgnoreShooter && (args.OtherEntity == component.Shooter || args.OtherEntity == component.Weapon))
         {
             args.Cancelled = true;
         }

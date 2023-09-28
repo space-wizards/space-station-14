@@ -135,7 +135,7 @@ public sealed class DamageVisualsSystem : VisualizerSystem<DamageVisualsComponen
     private void InitializeVisualizer(EntityUid entity, DamageVisualsComponent damageVisComp)
     {
         if (!TryComp(entity, out SpriteComponent? spriteComponent)
-            || !TryComp<DamageableComponent?>(entity, out var damageComponent)
+            || !TryComp<DamageableComponent>(entity, out var damageComponent)
             || !HasComp<AppearanceComponent>(entity))
             return;
 

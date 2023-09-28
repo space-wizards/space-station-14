@@ -9,9 +9,9 @@ namespace Content.Server.Power.NodeGroups
 {
     public interface IApcNet : IBasePowerNet
     {
-        void AddApc(ApcComponent apc);
+        void AddApc(EntityUid uid, ApcComponent apc);
 
-        void RemoveApc(ApcComponent apc);
+        void RemoveApc(EntityUid uid, ApcComponent apc);
 
         void AddPowerProvider(ApcPowerProviderComponent provider);
 
@@ -24,8 +24,6 @@ namespace Content.Server.Power.NodeGroups
     [UsedImplicitly]
     public sealed partial class ApcNet : BasePowerNet<IApcNet>, IApcNet
     {
-        private PowerNetSystem? _powerNetSystem;
-
         [ViewVariables] public readonly List<ApcComponent> Apcs = new();
         [ViewVariables] public readonly List<ApcPowerProviderComponent> Providers = new();
 
@@ -39,30 +37,28 @@ namespace Content.Server.Power.NodeGroups
         public override void Initialize(Node sourceNode, IEntityManager entMan)
         {
             base.Initialize(sourceNode, entMan);
-
-            _powerNetSystem = entMan.EntitySysManager.GetEntitySystem<PowerNetSystem>();
-            _powerNetSystem.InitApcNet(this);
+            PowerNetSystem.InitApcNet(this);
         }
 
         public override void AfterRemake(IEnumerable<IGrouping<INodeGroup?, Node>> newGroups)
         {
             base.AfterRemake(newGroups);
 
-            _powerNetSystem?.DestroyApcNet(this);
+            PowerNetSystem?.DestroyApcNet(this);
         }
 
-        public void AddApc(ApcComponent apc)
+        public void AddApc(EntityUid uid, ApcComponent apc)
         {
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(apc.Owner, out PowerNetworkBatteryComponent? netBattery))
+            if (EntMan.TryGetComponent(uid, out PowerNetworkBatteryComponent? netBattery))
                 netBattery.NetworkBattery.LinkedNetworkDischarging = default;
 
             QueueNetworkReconnect();
             Apcs.Add(apc);
         }
 
-        public void RemoveApc(ApcComponent apc)
+        public void RemoveApc(EntityUid uid, ApcComponent apc)
         {
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(apc.Owner, out PowerNetworkBatteryComponent? netBattery))
+            if (EntMan.TryGetComponent(uid, out PowerNetworkBatteryComponent? netBattery))
                 netBattery.NetworkBattery.LinkedNetworkDischarging = default;
 
             QueueNetworkReconnect();
@@ -85,7 +81,7 @@ namespace Content.Server.Power.NodeGroups
 
         public override void QueueNetworkReconnect()
         {
-            _powerNetSystem?.QueueReconnectApcNet(this);
+            PowerNetSystem?.QueueReconnectApcNet(this);
         }
 
         protected override void SetNetConnectorNet(IBaseNetConnectorComponent<IApcNet> netConnectorComponent)
@@ -95,12 +91,9 @@ namespace Content.Server.Power.NodeGroups
 
         public override string? GetDebugData()
         {
-            if (_powerNetSystem == null)
-                return null;
-
             // This is just recycling the multi-tool examine.
 
-            var ps = _powerNetSystem.GetNetworkStatistics(NetworkNode);
+            var ps = PowerNetSystem.GetNetworkStatistics(NetworkNode);
 
             float storageRatio = ps.InStorageCurrent / Math.Max(ps.InStorageMax, 1.0f);
             float outStorageRatio = ps.OutStorageCurrent / Math.Max(ps.OutStorageMax, 1.0f);

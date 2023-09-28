@@ -1,7 +1,9 @@
 - type: entity
   save: false
   name: Urist McSkelly
-  parent: BaseMobSpeciesOrganic
+  parent:
+  - MobFlammable
+  - BaseMobSpecies
   id: BaseMobSkeletonPerson
   abstract: true
   components:
@@ -17,19 +19,13 @@
   - type: Damageable
     damageContainer: Biological
     damageModifierSet: Skeleton
-  - type: Barotrauma #no space damage.
-    damage:
-      types:
-        Blunt: 0
-  - type: Bloodstream
-    maxBleedAmount: 0
-    bloodReagent: Milk
-    bloodlossDamage: #no bloodloss damage. overriding base components
-      types:
-        Bloodloss: 0
-    bloodlossHealDamage:
-      types:
-        Bloodloss: 0
+  - type: DamageVisuals
+    damageOverlayGroups:
+      Brute:
+        sprite: Mobs/Effects/brute_damage.rsi
+        color: "#555555AA"
+      Burn:
+        sprite: Mobs/Effects/burn_damage.rsi
   - type: MobState
   - type: MobThresholds
     thresholds:
