@@ -13,7 +13,7 @@ public sealed partial class ArmorComponent : Component
     /// <summary>
     /// The damage reduction
     /// </summary>
-    [DataField("modifiers", required: true)]
+    [DataField(required: true)]
     public DamageModifierSet Modifiers = default!;
 }
 
