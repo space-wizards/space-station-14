@@ -41,7 +41,7 @@ namespace Content.Server.Pointing.EntitySystems
         [Dependency] private readonly SharedMindSystem _minds = default!;
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
 
-        private static readonly TimeSpan PointDelay = TimeSpan.FromSeconds(0.5f);
+        private static readonly TimeSpan PointDelay = TimeSpan.FromSeconds(0.15f);
 
         /// <summary>
         ///     A dictionary of players to the last time that they
