@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Fix xenos not spittin'., type: Fix}
-  id: 4418
-  time: '2023-08-02T21:34:54.0000000+00:00'
 - author: Bhijn and Myr
   changes:
   - {message: The game now boots in GLES2 again. oops., type: Fix}
@@ -2969,3 +2964,8 @@ Entries:
       the same round without reconnecting., type: Fix}
   id: 4917
   time: '2023-09-28T23:46:39.0000000+00:00'
+- author: Micr0byte
+  changes:
+  - {message: Pressing F11 now toggles between full-screen and windowed modes., type: Add}
+  id: 4918
+  time: '2023-09-28T23:55:10.0000000+00:00'
