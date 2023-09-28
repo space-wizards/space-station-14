@@ -1,9 +1,4 @@
 Entries:
-- author: PuceTint
-  changes:
-  - {message: Nitrous oxide now causes laughing, type: Add}
-  id: 4417
-  time: '2023-08-02T21:33:00.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Fix xenos not spittin'., type: Fix}
@@ -2968,3 +2963,9 @@ Entries:
       and respawning players., type: Tweak}
   id: 4916
   time: '2023-09-28T22:46:07.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Fixed not being able to choose a role that you were unbanned from in
+      the same round without reconnecting., type: Fix}
+  id: 4917
+  time: '2023-09-28T23:46:39.0000000+00:00'
