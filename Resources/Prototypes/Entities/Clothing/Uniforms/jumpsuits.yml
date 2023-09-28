@@ -150,6 +150,28 @@
 
 - type: entity
   parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitCentcomOfficialOriginal
+  name: CentCom official's formal jumpsuit
+  description: It's a formal and tasteless jumpsuit worn by CentCom's officials.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/original_centcom_official.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/original_centcom_official.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitCentcomOfficerOriginal
+  name: CentCom officer's mint jumpsuit
+  description: It's a mint-colored jumpsuit worn by CentCom Officers.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/original_centcom_officer.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/original_centcom_officer.rsi
+
+- type: entity
+  parent: ClothingUniformBase
   id: ClothingUniformJumpsuitChef
   name: chef uniform
   description: Can't cook without this.
@@ -303,6 +325,17 @@
 
 - type: entity
   parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitHoSOriginal
+  name: head of security's colorful jumpsuit
+  description: It's even redder and even crisper, perfect for a not-so-cheerful head.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/original_hos.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/original_hos.rsi
+
+- type: entity
+  parent: ClothingUniformBase
   id: ClothingUniformJumpsuitHoSAlt
   name: head of security's turtleneck
   description: It's a turtleneck worn by those strong and disciplined enough to achieve the position of Head of Security.
@@ -344,6 +377,17 @@
     sprite: Clothing/Uniforms/Jumpsuit/hos_parade.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/hos_parade.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitHoSParadeMaleOriginal
+  name: head of security's parade uniform
+  description: A male head of security's luxury-wear, for special occasions.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/original_hos_parade.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/original_hos_parade.rsi
 
 - type: entity
   parent: ClothingUniformBase
@@ -424,6 +468,17 @@
 
 - type: entity
   parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitBrigmedicOriginal
+  name: medical-security jumpsuit
+  description: This simple in design uniform is issued to personal with affinities to both medical and security. Strange choice of patterns nonetheless.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/original_brigmedic.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/original_brigmedic.rsi
+
+- type: entity
+  parent: ClothingUniformBase
   id: ClothingUniformJumpsuitPrisoner
   name: prisoner jumpsuit
   description: Busted.
@@ -485,6 +540,17 @@
     sprite: Clothing/Uniforms/Jumpsuit/scientist.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/scientist.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitScientistOriginal
+  name: scientist's plain jumpsuit
+  description: It's a less decorated scientist jumpsuit. It has minor markings that denote the wearer as a scientist.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/original_scientist.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/original_scientist.rsi
 
 - type: entity
   parent: ClothingUniformBase
@@ -754,14 +820,36 @@
 
 - type: entity
   parent: ClothingUniformBase
+  id: ClothingUniformOverallsOriginal
+  name: green and blue overalls
+  description: Still great for working outdoors.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/original_overalls.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/original_overalls.rsi
+
+- type: entity
+  parent: ClothingUniformBase
   id: ClothingUniformJumpsuitLibrarian
   name: librarian jumpsuit
-  description: A cosy green jumper fit for a curator of books.
+  description: A cosy red jumper fit for a curator of books.
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/Jumpsuit/librarian.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/librarian.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitLibrarianOriginal
+  name: green librarian jumpsuit
+  description: A cosy green jumper fit for a curator of books.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/original_librarian.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/original_librarian.rsi
 
 - type: entity
   parent: ClothingUniformBase
@@ -1101,6 +1189,77 @@
   id: ClothingUniformJumpsuitERTSecurity
   name: ERT security uniform
   description: A special suit made for the elite security under CentCom.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/ert_security.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/ert_security.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.8
+        Slash: 0.8
+        Piercing: 0.8
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitERTEngineerOriginal
+  name: ERT black engineering uniform
+  description: A black and tactical version of the special suit made for the elite engineers under CentCom.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/ert_engineer.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/ert_engineer.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Radiation: 0.8
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitERTJanitorOriginal
+  name: ERT black janitorial uniform
+  description: A black and tactical version of the special suit made for the elite janitors under CentCom.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/ert_janitor.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/ert_janitor.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitERTLeaderOriginal
+  name: ERT black leader uniform
+  description: A black and tactical version of the special suit made for the best of the elites under CentCom.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/ert_leader.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/ert_leader.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.8
+        Slash: 0.8
+        Piercing: 0.8
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitERTMedicOriginal
+  name: ERT black medical uniform
+  description: A black and tactical version of the special suit made for the elite medics under CentCom.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/ert_medic.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/ert_medic.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitERTSecurityOriginal
+  name: ERT black security uniform
+  description: A black and tactical version of the special suit made for the elite security under CentCom.
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/Jumpsuit/ert_security.rsi

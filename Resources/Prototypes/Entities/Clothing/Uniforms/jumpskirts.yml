@@ -175,6 +175,17 @@
     sprite: Clothing/Uniforms/Jumpskirt/hos.rsi
 
 - type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpskirtHoSOriginal
+  name: head of security's colorful jumpskirt
+  description: It's even redder and even crisper, perfect for a not-so-cheerful head.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpskirt/original_hos.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpskirt/original_hos.rsi
+
+- type: entity
   parent: ClothingUniformSkirtBase
   id: ClothingUniformJumpskirtHoSAlt
   name: head of security's turtleneck
@@ -195,6 +206,17 @@
     sprite: Clothing/Uniforms/Jumpskirt/hos_parade.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpskirt/hos_parade.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpskirtHoSParadeMaleOriginal
+  name: head of security's parade uniform
+  description: A male head of security's luxury-wear, for special occasions.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpskirt/original_hos_parade.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpskirt/original_hos_parade.rsi
 
 - type: entity
   parent: ClothingUniformSkirtBase
@@ -263,6 +285,17 @@
     sprite: Clothing/Uniforms/Jumpskirt/brigmedic.rsi
 
 - type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpskirtBrigmedicOriginal
+  name: medical-security jumpskirt
+  description: This simple in design uniform is issued to personal with affinities to both medical and security. Strange choice of patterns nonetheless.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpskirt/original_brigmedic.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpskirt/original_brigmedic.rsi
+
+- type: entity
   parent: ClothingUniformSkirtBase
   id: ClothingUniformJumpskirtPrisoner
   name: prisoner jumpskirt
@@ -325,6 +358,17 @@
     sprite: Clothing/Uniforms/Jumpskirt/scientist.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpskirt/scientist.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpskirtScientistOriginal
+  name: scientist's plain jumpskirt
+  description: It's a less decorated scientist jumpskirt. It has minor markings that denote the wearer as a scientist.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpskirt/original_scientist.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpskirt/original_scientist.rsi
 
 - type: entity
   parent: ClothingUniformSkirtBase

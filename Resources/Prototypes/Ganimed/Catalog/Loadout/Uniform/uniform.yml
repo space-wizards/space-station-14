@@ -193,7 +193,21 @@
 - type: loadout
   id: LoadoutUniformClothingUniformJumpsuitBrigmedic
   category: loadout-category-uniform
-  cost: 5
+  cost: 4
+  exclusive: true
+  whitelistJobs:
+    - SecurityCadet
+    - SecurityOfficer
+    - Warden
+    - Detective
+    - HeadOfSecurity
+    - SeniorOfficer
+  prototype: ClothingUniformJumpsuitBrigmedic
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpsuitBrigmedicOriginal
+  category: loadout-category-uniform
+  cost: 4
   exclusive: true
   whitelistJobs:
     - ChiefMedicalOfficer
@@ -203,13 +217,36 @@
     - MedicalDoctor
     - MedicalIntern
     - SeniorPhysician
+  prototype: ClothingUniformJumpsuitBrigmedicOriginal
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpskirtBrigmedic
+  category: loadout-category-uniform
+  cost: 4
+  exclusive: true
+  whitelistJobs:
     - SecurityCadet
     - SecurityOfficer
     - Warden
     - Detective
     - HeadOfSecurity
     - SeniorOfficer
-  prototype: ClothingUniformJumpsuitBrigmedic
+  prototype: ClothingUniformJumpskirtBrigmedic
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpskirtBrigmedicOriginal
+  category: loadout-category-uniform
+  cost: 4
+  exclusive: true
+  whitelistJobs:
+    - ChiefMedicalOfficer
+    - Chemist
+    - Paramedic
+    - Psychologist
+    - MedicalDoctor
+    - MedicalIntern
+    - SeniorPhysician
+  prototype: ClothingUniformJumpskirtBrigmedicOriginal
 
 - type: loadout
   id: LoadoutUniformClothingUniformJumpsuitSeniorEngineer
@@ -340,6 +377,33 @@
   prototype: ClothingUniformJumpsuitHoS
 
 - type: loadout
+  id: LoadoutUniformClothingUniformJumpskirtHoS
+  category: loadout-category-uniform
+  cost: 1
+  exclusive: true
+  whitelistJobs:
+    - HeadOfSecurity
+  prototype: ClothingUniformJumpskirtHoS
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpsuitHoSOriginal
+  category: loadout-category-uniform
+  cost: 2
+  exclusive: true
+  whitelistJobs:
+    - HeadOfSecurity
+  prototype: ClothingUniformJumpsuitHoSOriginal
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpskirtHoSOriginal
+  category: loadout-category-uniform
+  cost: 2
+  exclusive: true
+  whitelistJobs:
+    - HeadOfSecurity
+  prototype: ClothingUniformJumpskirtHoSOriginal
+
+- type: loadout
   id: LoadoutUniformClothingUniformJumpsuitCargo
   category: loadout-category-uniform
   cost: 1
@@ -403,6 +467,13 @@
   prototype: ClothingUniformOveralls
 
 - type: loadout
+  id: LoadoutUniformClothingUniformOverallsOriginal
+  category: loadout-category-uniform
+  cost: 2
+  exclusive: true
+  prototype: ClothingUniformOverallsOriginal
+
+- type: loadout
   id: LoadoutUniformClothingUniformJumpsuitScientist
   category: loadout-category-uniform
   cost: 1
@@ -413,6 +484,42 @@
     - Scientist
     - SeniorResearcher
   prototype: ClothingUniformJumpsuitScientist
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpskirtScientist
+  category: loadout-category-uniform
+  cost: 1
+  exclusive: true
+  whitelistJobs:
+    - ResearchDirector
+    - ResearchAssistant
+    - Scientist
+    - SeniorResearcher
+  prototype: ClothingUniformJumpskirtScientist
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpsuitScientistOriginal
+  category: loadout-category-uniform
+  cost: 1
+  exclusive: true
+  whitelistJobs:
+    - ResearchDirector
+    - ResearchAssistant
+    - Scientist
+    - SeniorResearcher
+  prototype: ClothingUniformJumpsuitScientistOriginal
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpskirtScientistOriginal
+  category: loadout-category-uniform
+  cost: 1
+  exclusive: true
+  whitelistJobs:
+    - ResearchDirector
+    - ResearchAssistant
+    - Scientist
+    - SeniorResearcher
+  prototype: ClothingUniformJumpskirtScientistOriginal
 
 - type: loadout
   id: LoadoutUniformClothingUniformJumpsuitMercenary

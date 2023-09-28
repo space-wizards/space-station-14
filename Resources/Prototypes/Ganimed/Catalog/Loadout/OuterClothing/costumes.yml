@@ -22,6 +22,13 @@
   prototype: ClothingOuterCardborg
 
 - type: loadout
+  id: LoadoutOuterClothingClothingOuterCardborgOriginal
+  category: loadout-category-outerClothing
+  cost: 6
+  exclusive: true
+  prototype: ClothingOuterCardborgOriginal
+
+- type: loadout
   id: LoadoutOuterClothingClothingOuterSuitMonkey
   category: loadout-category-outerClothing
   cost: 7

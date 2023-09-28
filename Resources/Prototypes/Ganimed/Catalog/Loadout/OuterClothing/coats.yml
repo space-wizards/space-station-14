@@ -149,6 +149,18 @@
   prototype: ClothingOuterCoatRobo
 
 - type: loadout
+  id: LoadoutOuterClothingClothingOuterCoatRoboOriginal
+  category: loadout-category-outerClothing
+  cost: 2
+  exclusive: true
+  whitelistJobs:
+    - ResearchDirector
+    - ResearchAssistant
+    - Scientist
+    - SeniorResearcher
+  prototype: ClothingOuterCoatRoboOriginal
+
+- type: loadout
   id: LoadoutOuterClothingClothingOuterCoatLabSeniorResearcher
   category: loadout-category-outerClothing
   cost: 2
@@ -179,6 +191,36 @@
     - Captain
     - SeniorOfficer
   prototype: ClothingOuterCoatAMG
+
+- type: loadout
+  id: LoadoutOuterClothingClothingOuterCoatDetective
+  category: loadout-category-outerClothing
+  cost: 3
+  exclusive: true
+  whitelistJobs:
+    - SecurityCadet
+    - SecurityOfficer
+    - Warden
+    - Detective
+    - HeadOfSecurity
+    - Captain
+    - SeniorOfficer
+  prototype: ClothingOuterCoatDetective
+
+- type: loadout
+  id: LoadoutOuterClothingClothingOuterCoatDetectiveOriginal
+  category: loadout-category-outerClothing
+  cost: 3
+  exclusive: true
+  whitelistJobs:
+    - SecurityCadet
+    - SecurityOfficer
+    - Warden
+    - Detective
+    - HeadOfSecurity
+    - Captain
+    - SeniorOfficer
+  prototype: ClothingOuterCoatDetectiveOriginal
 
 - type: loadout
   id: LoadoutOuterClothingClothingOuterCoatPirate

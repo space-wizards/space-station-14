@@ -44,6 +44,23 @@
   prototype: ClothingHeadHatHoodRad
 
 - type: loadout
+  id: LoadoutHeadClothingHeadHatHoodRadOriginal
+  category: loadout-category-head
+  cost: 5
+  exclusive: true
+  whitelistJobs:
+    - TechnicalAssistant
+    - StationEngineer
+    - AtmosphericTechnician
+    - SeniorEngineer
+    - ChiefEngineer
+    - ResearchDirector
+    - ResearchAssistant
+    - Scientist
+    - SeniorResearcher
+  prototype: ClothingHeadHatHoodRadOriginal
+
+- type: loadout
   id: LoadoutHeadClothingHeadHatHoodBioGeneral
   category: loadout-category-head
   cost: 5

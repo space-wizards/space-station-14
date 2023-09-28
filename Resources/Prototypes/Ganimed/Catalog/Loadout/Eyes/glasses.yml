@@ -115,4 +115,16 @@
   whitelistJobs:
     - Bartender
     - ServiceWorker
+    - Chef
   prototype: ClothingEyesHudBeer
+
+- type: loadout
+  id: LoadoutEyesClothingEyesEyesHudFriedOnion
+  category: loadout-category-eyes
+  cost: 2
+  exclusive: true
+  whitelistJobs:
+    - Bartender
+    - ServiceWorker
+    - Chef
+  prototype: ClothingEyesHudFriedOnion

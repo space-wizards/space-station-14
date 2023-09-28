@@ -52,6 +52,17 @@
   - type: Clothing
     sprite: Clothing/OuterClothing/Vests/detvest.rsi
 
+- type: entity
+  parent: ClothingOuterArmorBasic
+  id: ClothingOuterVestDetectiveOriginal
+  name: green armored vest
+  description: A hard-boiled armored green vest. Sits on you like a shell.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Vests/original_detvest.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Vests/original_detvest.rsi
+
 #Hazard vest
 - type: entity
   parent: ClothingOuterStorageBase

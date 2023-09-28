@@ -13,8 +13,119 @@
   prototype: ClothingNeckCloakOrange
 
 - type: loadout
-  id: LoadoutNeckClothingNeckCloaHieroglyphics
+  id: LoadoutNeckClothingNeckCloakHieroglyphics
   category: loadout-category-neck
   cost: 4
   exclusive: true
-  prototype: ClothingNeckCloaHieroglyphics
+  prototype: ClothingNeckCloakHieroglyphics
+
+- type: loadout
+  id: LoadoutNeckClothingNeckCloakCap
+  category: loadout-category-neck
+  cost: 2
+  exclusive: true
+  whitelistJobs:
+    - Captain
+  prototype: ClothingNeckCloakCap
+
+- type: loadout
+  id: LoadoutNeckClothingNeckCloakCapOriginal
+  category: loadout-category-neck
+  cost: 2
+  exclusive: true
+  whitelistJobs:
+    - Captain
+  prototype: ClothingNeckCloakCapOriginal
+
+- type: loadout
+  id: LoadoutNeckClothingNeckCloakHos
+  category: loadout-category-neck
+  cost: 2
+  exclusive: true
+  whitelistJobs:
+    - HeadOfSecurity
+  prototype: ClothingNeckCloakHos
+
+- type: loadout
+  id: LoadoutNeckClothingNeckCloakHosOriginal
+  category: loadout-category-neck
+  cost: 2
+  exclusive: true
+  whitelistJobs:
+    - HeadOfSecurity
+  prototype: ClothingNeckCloakHosOriginal
+
+- type: loadout
+  id: LoadoutNeckClothingNeckCloakCe
+  category: loadout-category-neck
+  cost: 2
+  exclusive: true
+  whitelistJobs:
+    - ChiefEngineer
+  prototype: ClothingNeckCloakCe
+
+- type: loadout
+  id: LoadoutNeckClothingNeckCloakCeOriginal
+  category: loadout-category-neck
+  cost: 5
+  exclusive: true
+  prototype: ClothingNeckCloakCeOriginal
+
+- type: loadout
+  id: LoadoutNeckClothingNeckCloakRd
+  category: loadout-category-neck
+  cost: 2
+  exclusive: true
+  whitelistJobs:
+    - ResearchDirector
+  prototype: ClothingNeckCloakRd
+
+- type: loadout
+  id: LoadoutNeckClothingNeckCloakRdOriginal
+  category: loadout-category-neck
+  cost: 4
+  exclusive: true
+  whitelistJobs:
+    - ResearchDirector
+    - SeniorResearcher
+    - Scientist
+    - ResearchAssistant
+  prototype: ClothingNeckCloakRdOriginal
+
+- type: loadout
+  id: LoadoutNeckClothingNeckCloakQm
+  category: loadout-category-neck
+  cost: 2
+  exclusive: true
+  whitelistJobs:
+    - Quartermaster
+  prototype: ClothingNeckCloakQm
+
+- type: loadout
+  id: LoadoutNeckClothingNeckCloakHop
+  category: loadout-category-neck
+  cost: 2
+  exclusive: true
+  whitelistJobs:
+    - HeadOfPersonnel
+    - Captain
+  prototype: ClothingNeckCloakHop
+
+- type: loadout
+  id: LoadoutNeckClothingNeckCloakHopOriginal
+  category: loadout-category-neck
+  cost: 2
+  exclusive: true
+  whitelistJobs:
+    - HeadOfPersonnel
+    - Captain
+  prototype: ClothingNeckCloakHopOriginal
+
+- type: loadout
+  id: LoadoutNeckClothingCloakCmo
+  category: loadout-category-neck
+  cost: 2
+  exclusive: true
+  whitelistJobs:
+    - ChiefMedicalOfficer
+  prototype: ClothingCloakCmo

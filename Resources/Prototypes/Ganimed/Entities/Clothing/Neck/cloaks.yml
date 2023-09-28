@@ -9,7 +9,7 @@
 
 - type: entity
   parent: ClothingNeckBase
-  id: ClothingNeckCloaHieroglyphics
+  id: ClothingNeckCloakHieroglyphics
   name: hieroglyphics cloak
   description: A particularly charming trendy cloak inspired by the progressive Japan of the old days. Sometimes less is more. Do not forget it.
   components:

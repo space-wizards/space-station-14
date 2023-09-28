@@ -451,12 +451,23 @@
   parent: ClothingHeadBase
   id: ClothingHeadHatWarden
   name: warden's cap
-  description: A police officer's Hat. This hat emphasizes that you are THE LAW
+  description: A red version of the police officer's Hat. This hat emphasizes that you are THE SECURITY
   components:
   - type: Sprite
     sprite: Clothing/Head/Hats/warden.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/warden.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatWardenOriginal
+  name: warden's cap
+  description: A police officer's Hat. This hat emphasizes that you are THE LAW
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/original_warden.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/original_warden.rsi
 
 - type: entity
   parent: ClothingHeadBase

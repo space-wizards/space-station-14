@@ -186,6 +186,19 @@
   - type: IngestionBlocker
   - type: IdentityBlocker
 
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHelmetTemplarOriginal
+  name: templar helmet
+  description: DEUS VULT!
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Helmets/original_templar.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Helmets/original_templar.rsi
+  - type: IngestionBlocker
+  - type: IdentityBlocker
+
 #Thunderdome Helmet
 - type: entity
   parent: ClothingHeadBase

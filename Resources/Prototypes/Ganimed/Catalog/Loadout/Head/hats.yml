@@ -97,4 +97,28 @@
   cost: 3
   exclusive: true
   prototype: ClothingHeadHatGladiator
+
+- type: loadout
+  id: LoadoutHeadClothingHeadHatWarden
+  category: loadout-category-head
+  cost: 2
+  exclusive: true
+  whitelistJobs:
+    - Warden
+    - HeadOfSecurity
+    - SeniorOfficer
+    - Captain
+  prototype: ClothingHeadHatWarden
+
+- type: loadout
+  id: LoadoutHeadClothingHeadHatWardenOriginal
+  category: loadout-category-head
+  cost: 2
+  exclusive: true
+  whitelistJobs:
+    - Warden
+    - HeadOfSecurity
+    - SeniorOfficer
+    - Captain
+  prototype: ClothingHeadHatWardenOriginal
   

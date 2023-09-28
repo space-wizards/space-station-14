@@ -49,6 +49,13 @@
   prototype: ClothingNeckMantleRD
 
 - type: loadout
+  id: LoadoutNeckClothingNeckMantleRDOriginal
+  category: loadout-category-neck
+  cost: 5
+  exclusive: true
+  prototype: ClothingNeckMantleRDOriginal
+
+- type: loadout
   id: LoadoutNeckClothingNeckMantleCE
   category: loadout-category-neck
   cost: 3

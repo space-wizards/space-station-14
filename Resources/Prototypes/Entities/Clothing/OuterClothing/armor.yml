@@ -22,6 +22,27 @@
   - type: ExplosionResistance
     damageCoefficient: 0.90
 
+#Basic armor vest
+- type: entity
+  parent: ClothingOuterBaseMedium
+  id: ClothingOuterArmorBasicOriginal
+  name: shell armor vest
+  description: A military-standard armored vest that provides good protection against most types of weapons.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Armor/original_security.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Armor/original_security.rsi
+  - type: Armor #Based on /tg/ but slightly compensated to fit the fact that armor stacks in SS14.
+    modifiers:
+      coefficients:
+        Blunt: 0.65
+        Slash: 0.65
+        Piercing: 0.65 #Can save you, but bullets will still hurt. Will take about 10 shots from a Viper before critting, as opposed to 7 while unarmored and 16~ with a bulletproof vest.
+        Heat: 0.80
+  - type: ExplosionResistance
+    damageCoefficient: 0.85
+
 #Alternate / slim basic armor vest
 - type: entity
   parent: ClothingOuterArmorBasic
@@ -34,6 +55,15 @@
     sprite: Clothing/OuterClothing/Armor/security_slim.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Armor/security_slim.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.75
+        Slash: 0.80
+        Piercing: 0.75
+        Heat: 0.80
+  - type: ExplosionResistance
+    damageCoefficient: 0.95
 
 - type: entity
   parent: ClothingOuterBaseLarge

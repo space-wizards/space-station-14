@@ -13,12 +13,33 @@
   parent: ClothingOuterStorageBase
   id: ClothingOuterCoatDetective
   name: detective trenchcoat
-  description: A rugged canvas trenchcoat, designed and created by TX Fabrication Corp. Wearing it makes you feel for the plight of the Tibetans.
+  description: A redesign of the standart-issue rugged canvas trenchcoat. Good for your looks and your defences.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Coats/detective.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Coats/detective.rsi
+  - type: StorageFill
+    contents:
+    - id: SmokingPipeFilledTobacco
+  - type: Armor #same as regular sec armor
+    modifiers:
+      coefficients:
+        Blunt: 0.70
+        Slash: 0.70
+        Piercing: 0.70
+        Heat: 0.80
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: ClothingOuterCoatDetectiveOriginal
+  name: original detective trenchcoat
+  description: A rugged canvas trenchcoat, designed and created by TX Fabrication Corp. Wearing it makes you feel for the plight of the Tibetans.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Coats/original_detective.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Coats/original_detective.rsi
   - type: StorageFill
     contents:
     - id: SmokingPipeFilledTobacco
@@ -181,13 +202,28 @@
 - type: entity
   parent: ClothingOuterStorageBase
   id: ClothingOuterCoatRobo
-  name: roboticist lab coat
-  description: More like an eccentric coat than a labcoat. Helps pass off bloodstains as part of the aesthetic. Comes with red shoulder pads.
+  name: stylish roboticist lab coat
+  description: More like an eccentric coat than a labcoat. Helps pass off bloodstains as part of the cybered-up aesthetic.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Coats/labcoat_robo.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Coats/labcoat_robo.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Caustic: 0.75
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: ClothingOuterCoatRoboOriginal
+  name: roboticist lab coat
+  description: A lab coat with black accents. Sure helps to further differentiate you from the masses. Comes with red shoulder pads.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Coats/original_labcoat_robo.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Coats/original_labcoat_robo.rsi
   - type: Armor
     modifiers:
       coefficients:

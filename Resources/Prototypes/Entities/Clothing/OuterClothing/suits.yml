@@ -50,6 +50,31 @@
 
 - type: entity
   parent: ClothingOuterBaseLarge
+  id: ClothingOuterSuitFireOriginal
+  name: old fire suit
+  description: An older version of a suit that helps protect against hazardous temperatures.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Suits/original_fire.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Suits/original_fire.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.04
+  - type: TemperatureProtection
+    coefficient: 0.005
+  - type: Armor
+    modifiers:
+      coefficients:
+        Slash: 0.9
+        Heat: 0.3
+        Cold: 0.2
+  - type: ClothingSpeedModifier
+    walkModifier: 0.8
+    sprintModifier: 0.7
+  - type: GroupExamine
+
+- type: entity
+  parent: ClothingOuterBaseLarge
   id: ClothingOuterSuitAtmosFire
   name: atmos fire suit
   description: An expensive firesuit that protects against even the most deadly of station fires. Designed to protect even if the wearer is set aflame.
@@ -89,6 +114,23 @@
         Radiation: 0.05
   - type: Clothing
     sprite: Clothing/OuterClothing/Suits/rad.rsi
+  - type: GroupExamine
+
+- type: entity
+  parent: [ClothingOuterBaseLarge, GeigerCounterClothing]
+  id: ClothingOuterSuitRadOriginal
+  name: old-fashioned radiation suit
+  description: "An older version of a suit that protects against radiation. From the times when NT cared about colors. Still contains lead though."
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Suits/rad.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Heat: 0.90
+        Radiation: 0.05
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Suits/original_rad.rsi
   - type: GroupExamine
 
 - type: entity

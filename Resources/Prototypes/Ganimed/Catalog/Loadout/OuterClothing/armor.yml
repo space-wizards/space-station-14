@@ -42,6 +42,27 @@
   prototype: ClothingOuterArmorBasic
 
 - type: loadout
+  id: LoadoutOuterClothingClothingOuterArmorBasicOriginal
+  category: loadout-category-outerClothing
+  cost: 4
+  exclusive: true
+  whitelistJobs:
+    - ChiefMedicalOfficer
+    - Quartermaster
+    - ChiefEngineer
+    - ResearchDirector
+    - HeadOfPersonnel
+    - SecurityCadet
+    - SecurityOfficer
+    - Warden
+    - Detective
+    - HeadOfSecurity
+    - Captain
+    - SeniorOfficer
+    - Bartender
+  prototype: ClothingOuterArmorBasicOriginal
+
+- type: loadout
   id: LoadoutOuterClothingClothingOuterDogi
   category: loadout-category-outerClothing
   cost: 7
@@ -78,6 +99,21 @@
     - Warden
     - Bartender
   prototype: ClothingOuterVestDetective
+
+- type: loadout
+  id: LoadoutOuterClothingClothingOuterVestDetectiveOriginal
+  category: loadout-category-outerClothing
+  cost: 3
+  exclusive: true
+  whitelistJobs:
+    - HeadOfSecurity
+    - Detective
+    - SeniorOfficer
+    - SecurityCadet
+    - SecurityOfficer
+    - Warden
+    - Bartender
+  prototype: ClothingOuterVestDetectiveOriginal
 
 - type: loadout
   id: LoadoutOuterClothingClothingOuterArmorReflective

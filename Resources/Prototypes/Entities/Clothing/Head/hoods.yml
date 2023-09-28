@@ -134,6 +134,22 @@
 
 - type: entity
   parent: ClothingHeadBase
+  id: ClothingHeadHatHoodRadOriginal
+  name: old-fashioned radiation hood
+  description: A hood of the old hazmat suit, designed for protection from high radioactivity.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hoods/original_rad.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hoods/original_rad.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Heat: 0.95
+        Radiation: 0.65
+
+- type: entity
+  parent: ClothingHeadBase
   id: ClothingHeadHatHoodGoliathCloak
   name: goliath cloak hood
   description: A hood of a goliath cloak, it is made from the hide of resilient fauna from a distant planet.
