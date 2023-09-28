@@ -1,10 +1,4 @@
 Entries:
-- author: deltanedas
-  changes:
-  - {message: 'Added the gateway, currently for admins to teleport you to funny places.',
-    type: Add}
-  id: 4411
-  time: '2023-08-02T09:47:18.0000000+00:00'
 - author: Nimfar11
   changes:
   - {message: Adds a magazine for the C20R to the uplink for 3 TC., type: Add}
@@ -2968,3 +2962,9 @@ Entries:
   - {message: Pun Pun now showing on crew monitoring., type: Fix}
   id: 4910
   time: '2023-09-28T10:53:54.0000000+00:00'
+- author: nikthechampiongr
+  changes:
+  - {message: Mappers can now place airlocks that can be pried open while unpowered
+      without tools., type: Add}
+  id: 4911
+  time: '2023-09-28T11:34:22.0000000+00:00'
