@@ -14,7 +14,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Npgsql;
 using Prometheus;
-using Robust.Shared.Asynchronous;
 using Robust.Shared.Configuration;
 using Robust.Shared.ContentPack;
 using Robust.Shared.Network;
@@ -140,7 +139,7 @@ namespace Content.Server.Database
             ImmutableArray<byte>? hwId,
             bool includeUnbanned = true);
 
-        Task AddServerRoleBanAsync(ServerRoleBanDef serverBan);
+        Task<ServerRoleBanDef> AddServerRoleBanAsync(ServerRoleBanDef serverBan);
         Task AddServerRoleUnbanAsync(ServerRoleUnbanDef serverBan);
 
         public Task EditServerRoleBan(
@@ -453,7 +452,7 @@ namespace Content.Server.Database
             return RunDbCommand(() => _db.GetServerRoleBansAsync(address, userId, hwId, includeUnbanned));
         }
 
-        public Task AddServerRoleBanAsync(ServerRoleBanDef serverRoleBan)
+        public Task<ServerRoleBanDef> AddServerRoleBanAsync(ServerRoleBanDef serverRoleBan)
         {
             DbWriteOpsMetric.Inc();
             return RunDbCommand(() => _db.AddServerRoleBanAsync(serverRoleBan));

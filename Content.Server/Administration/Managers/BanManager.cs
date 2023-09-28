@@ -16,6 +16,7 @@ using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Administration.Managers;
 
@@ -57,18 +58,13 @@ public sealed class BanManager : IBanManager, IPostInjectInit
 
     private async Task<bool> AddRoleBan(ServerRoleBanDef banDef)
     {
+        banDef = await _db.AddServerRoleBanAsync(banDef);
+
         if (banDef.UserId != null)
         {
-            if (!_cachedRoleBans.TryGetValue(banDef.UserId.Value, out var roleBans))
-            {
-                roleBans = new HashSet<ServerRoleBanDef>();
-                _cachedRoleBans.Add(banDef.UserId.Value, roleBans);
-            }
-
-            roleBans.Add(banDef);
+            _cachedRoleBans.GetOrNew(banDef.UserId.Value).Add(banDef);
         }
 
-        await _db.AddServerRoleBanAsync(banDef);
         return true;
     }
 
