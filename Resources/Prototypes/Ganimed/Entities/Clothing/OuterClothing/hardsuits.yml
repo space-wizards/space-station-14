@@ -1,13 +1,13 @@
 - type: entity
   parent: ClothingOuterHardsuitBase
-  id: ClothingOuterHardsuitAtmosCorvax
+  id: ClothingOuterHardsuitAtmosAlter
   name: atmos hardsuit
   description: A special suit that protects against hazardous, low pressure environments. Has thermal shielding.
   components:
   - type: Sprite
-    sprite: Clothing/OuterClothing/Hardsuits/corvax_atmospherics.rsi
+    sprite: Clothing/OuterClothing/Hardsuits/alter_atmospherics.rsi
   - type: Clothing
-    sprite: Clothing/OuterClothing/Hardsuits/corvax_atmospherics.rsi
+    sprite: Clothing/OuterClothing/Hardsuits/alter_atmospherics.rsi
   - type: PressureProtection
     highPressureMultiplier: 0.02
     lowPressureMultiplier: 1000
@@ -28,18 +28,18 @@
     walkModifier: 0.7
     sprintModifier: 0.7
   - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHelmetHardsuitAtmosCorvax
+    clothingPrototype: ClothingHeadHelmetHardsuitAtmosAlter
 
 - type: entity
   parent: ClothingOuterHardsuitBase
-  id: ClothingOuterHardsuitEngineeringCorvax
+  id: ClothingOuterHardsuitEngineeringAlter
   name: engineering hardsuit
   description: A special suit that protects against hazardous, low pressure environments. Has radiation shielding.
   components:
   - type: Sprite
-    sprite: Clothing/OuterClothing/Hardsuits/corvax_engineering.rsi
+    sprite: Clothing/OuterClothing/Hardsuits/alter_engineering.rsi
   - type: Clothing
-    sprite: Clothing/OuterClothing/Hardsuits/corvax_engineering.rsi
+    sprite: Clothing/OuterClothing/Hardsuits/alter_engineering.rsi
   - type: PressureProtection
     highPressureMultiplier: 0.04
     lowPressureMultiplier: 1000
@@ -60,19 +60,19 @@
     walkModifier: 0.7
     sprintModifier: 0.7
   - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHelmetHardsuitEngineeringCorvax
+    clothingPrototype: ClothingHeadHelmetHardsuitEngineeringAlter
 
 #Salvage Hardsuit
 - type: entity
   parent: ClothingOuterHardsuitBase
-  id: ClothingOuterHardsuitSalvageCorvax
+  id: ClothingOuterHardsuitSalvageAlter
   name: mining hardsuit
   description: A special suit that protects against hazardous, low pressure environments. Has reinforced plating for wildlife encounters.
   components:
   - type: Sprite
-    sprite: Clothing/OuterClothing/Hardsuits/corvax_salvage.rsi
+    sprite: Clothing/OuterClothing/Hardsuits/alter_salvage.rsi
   - type: Clothing
-    sprite: Clothing/OuterClothing/Hardsuits/corvax_salvage.rsi
+    sprite: Clothing/OuterClothing/Hardsuits/alter_salvage.rsi
   - type: PressureProtection
     highPressureMultiplier: 0.5
     lowPressureMultiplier: 1000
@@ -90,18 +90,18 @@
     walkModifier: 0.75
     sprintModifier: 0.75
   - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHelmetHardsuitSalvageCorvax
+    clothingPrototype: ClothingHeadHelmetHardsuitSalvageAlter
 
 - type: entity
   parent: ClothingOuterHardsuitBase
-  id: ClothingOuterHardsuitSecurityCorvax
+  id: ClothingOuterHardsuitSecurityAlter
   name: security hardsuit
   description: A special suit that protects against hazardous, low pressure environments. Has an additional layer of armor.
   components:
   - type: Sprite
-    sprite: Clothing/OuterClothing/Hardsuits/corvax_security.rsi
+    sprite: Clothing/OuterClothing/Hardsuits/alter_security.rsi
   - type: Clothing
-    sprite: Clothing/OuterClothing/Hardsuits/corvax_security.rsi
+    sprite: Clothing/OuterClothing/Hardsuits/alter_security.rsi
   - type: PressureProtection
     highPressureMultiplier: 0.5
     lowPressureMultiplier: 1000
@@ -118,19 +118,19 @@
     walkModifier: 0.75
     sprintModifier: 0.75
   - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHelmetHardsuitSecurityCorvax
+    clothingPrototype: ClothingHeadHelmetHardsuitSecurityAlter
 
 #Warden's Hardsuit
 - type: entity
   parent: ClothingOuterHardsuitBase
-  id: ClothingOuterHardsuitWardenCorvax
+  id: ClothingOuterHardsuitWardenAlter
   name: warden's hardsuit
   description: A specialized riot suit geared to combat low pressure environments.
   components:
   - type: Sprite
-    sprite: Clothing/OuterClothing/Hardsuits/corvax_security-warden.rsi
+    sprite: Clothing/OuterClothing/Hardsuits/alter_security-warden.rsi
   - type: Clothing
-    sprite: Clothing/OuterClothing/Hardsuits/corvax_security-warden.rsi
+    sprite: Clothing/OuterClothing/Hardsuits/alter_security-warden.rsi
   - type: PressureProtection
     highPressureMultiplier: 0.5
     lowPressureMultiplier: 1000
@@ -147,18 +147,18 @@
     walkModifier: 0.7
     sprintModifier: 0.7
   - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHelmetHardsuitWardenCorvax
+    clothingPrototype: ClothingHeadHelmetHardsuitWardenAlter
 
 - type: entity
   parent: ClothingOuterHardsuitBase
-  id: ClothingOuterHardsuitCapCorvax
+  id: ClothingOuterHardsuitCapAlter
   name: captain's armored spacesuit
   description: A formal armored spacesuit, made for the station's captain.
   components:
   - type: Sprite
-    sprite: Clothing/OuterClothing/Hardsuits/corvax_capspace.rsi
+    sprite: Clothing/OuterClothing/Hardsuits/alter_capspace.rsi
   - type: Clothing
-    sprite: Clothing/OuterClothing/Hardsuits/corvax_capspace.rsi
+    sprite: Clothing/OuterClothing/Hardsuits/alter_capspace.rsi
   - type: PressureProtection
     highPressureMultiplier: 0.02
     lowPressureMultiplier: 1000
@@ -177,18 +177,18 @@
     walkModifier: 0.8
     sprintModifier: 0.8
   - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHelmetHardsuitCapCorvax
+    clothingPrototype: ClothingHeadHelmetHardsuitCapAlter
 
 - type: entity
   parent: ClothingOuterHardsuitBase
-  id: ClothingOuterHardsuitEngineeringWhiteCorvax
+  id: ClothingOuterHardsuitEngineeringWhiteAlter
   name: chief engineer's hardsuit
   description: A special hardsuit that protects against hazardous, low pressure environments, made for the chief engineer of the station.
   components:
   - type: Sprite
-    sprite: Clothing/OuterClothing/Hardsuits/corvax_engineering-white.rsi
+    sprite: Clothing/OuterClothing/Hardsuits/alter_engineering-white.rsi
   - type: Clothing
-    sprite: Clothing/OuterClothing/Hardsuits/corvax_engineering-white.rsi
+    sprite: Clothing/OuterClothing/Hardsuits/alter_engineering-white.rsi
   - type: PressureProtection
     highPressureMultiplier: 0.02
     lowPressureMultiplier: 1000
@@ -207,18 +207,18 @@
     walkModifier: 0.75
     sprintModifier: 0.8
   - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHelmetHardsuitEngineeringWhiteCorvax
+    clothingPrototype: ClothingHeadHelmetHardsuitEngineeringWhiteAlter
 
 - type: entity
   parent: ClothingOuterHardsuitBase
-  id: ClothingOuterHardsuitMedicalCorvax
+  id: ClothingOuterHardsuitMedicalAlter
   name: chief medical officer's hardsuit
   description: A special suit that protects against hazardous, low pressure environments. Built with lightweight materials for easier movement.
   components:
   - type: Sprite
-    sprite: Clothing/OuterClothing/Hardsuits/corvax_medical.rsi
+    sprite: Clothing/OuterClothing/Hardsuits/alter_medical.rsi
   - type: Clothing
-    sprite: Clothing/OuterClothing/Hardsuits/corvax_medical.rsi
+    sprite: Clothing/OuterClothing/Hardsuits/alter_medical.rsi
   - type: PressureProtection
     highPressureMultiplier: 0.3
     lowPressureMultiplier: 1000
@@ -230,18 +230,18 @@
     walkModifier: 0.9
     sprintModifier: 0.95
   - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHelmetHardsuitMedicalCorvax
+    clothingPrototype: ClothingHeadHelmetHardsuitMedicalAlter
 
 - type: entity
   parent: ClothingOuterHardsuitBase
-  id: ClothingOuterHardsuitRdCorvax
+  id: ClothingOuterHardsuitRdAlter
   name: experimental research hardsuit
   description: A special suit that protects against hazardous, low pressure environments. Has an additional layer of armor. Able to be compressed to small sizes.
   components:
   - type: Sprite
-    sprite: Clothing/OuterClothing/Hardsuits/corvax_rd.rsi
+    sprite: Clothing/OuterClothing/Hardsuits/alter_rd.rsi
   - type: Clothing
-    sprite: Clothing/OuterClothing/Hardsuits/corvax_rd.rsi
+    sprite: Clothing/OuterClothing/Hardsuits/alter_rd.rsi
   - type: PressureProtection
     highPressureMultiplier: 0.02
     lowPressureMultiplier: 1000
@@ -266,20 +266,20 @@
     - WhitelistChameleon
     - HighRiskItem
   - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHelmetHardsuitRdCorvax
+    clothingPrototype: ClothingHeadHelmetHardsuitRdAlter
   - type: StaticPrice
     price: 750
 
 - type: entity
   parent: ClothingOuterHardsuitSecurity
-  id: ClothingOuterHardsuitSecurityRedCorvax
+  id: ClothingOuterHardsuitSecurityRedAlter
   name: head of security's hardsuit
   description: A special suit that protects against hazardous, low pressure environments. Has an additional layer of armor.
   components:
   - type: Sprite
-    sprite: Clothing/OuterClothing/Hardsuits/corvax_security-red.rsi
+    sprite: Clothing/OuterClothing/Hardsuits/alter_security-red.rsi
   - type: Clothing
-    sprite: Clothing/OuterClothing/Hardsuits/corvax_security-red.rsi
+    sprite: Clothing/OuterClothing/Hardsuits/alter_security-red.rsi
   - type: PressureProtection
     highPressureMultiplier: 0.45
     lowPressureMultiplier: 1000
@@ -297,18 +297,18 @@
     walkModifier: 0.8
     sprintModifier: 0.8
   - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHelmetHardsuitSecurityRedCorvax
+    clothingPrototype: ClothingHeadHelmetHardsuitSecurityRedAlter
 
 - type: entity
   parent: ClothingOuterHardsuitBase
-  id: ClothingOuterHardsuitSyndieCorvax
+  id: ClothingOuterHardsuitSyndieAlter
   name: blood-red hardsuit
   description: A heavily armored and agile advanced hardsuit designed for work in special operations.
   components:
   - type: Sprite
-    sprite: Clothing/OuterClothing/Hardsuits/corvax_syndicate.rsi
+    sprite: Clothing/OuterClothing/Hardsuits/alter_syndicate.rsi
   - type: Clothing
-    sprite: Clothing/OuterClothing/Hardsuits/corvax_syndicate.rsi
+    sprite: Clothing/OuterClothing/Hardsuits/alter_syndicate.rsi
   - type: PressureProtection
     highPressureMultiplier: 0.05
     lowPressureMultiplier: 1000
@@ -327,18 +327,18 @@
     walkModifier: 0.9
     sprintModifier: 0.9
   - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHelmetHardsuitSyndieCorvax
+    clothingPrototype: ClothingHeadHelmetHardsuitSyndieAlter
 
 - type: entity
   parent: ClothingOuterHardsuitBase
-  id: ClothingOuterHardsuitJuggernautCorvax
+  id: ClothingOuterHardsuitJuggernautAlter
   name: cybersun juggernaut suit
   description: A suit made by the cutting edge R&D department at cybersun to be hyper resilient.
   components:
   - type: Sprite
-    sprite: Clothing/OuterClothing/Hardsuits/corvax_cybersun.rsi
+    sprite: Clothing/OuterClothing/Hardsuits/alter_cybersun.rsi
   - type: Clothing
-    sprite: Clothing/OuterClothing/Hardsuits/corvax_cybersun.rsi
+    sprite: Clothing/OuterClothing/Hardsuits/alter_cybersun.rsi
   - type: PressureProtection
     highPressureMultiplier: 0.2
     lowPressureMultiplier: 1000
@@ -357,18 +357,18 @@
     walkModifier: 0.9
     sprintModifier: 0.65
   - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHelmetHardsuitCybersunCorvax
+    clothingPrototype: ClothingHeadHelmetHardsuitCybersunAlter
 
 - type: entity
   parent: ClothingOuterHardsuitBase
-  id: ClothingOuterHardsuitSyndieEliteCorvax
+  id: ClothingOuterHardsuitSyndieEliteAlter
   name: syndicate elite hardsuit
   description: An upgraded version of the blood red hardsuit that features enhanced fireproofing, pressure resist, and superior armor.
   components:
   - type: Sprite
-    sprite: Clothing/OuterClothing/Hardsuits/corvax_syndieelite.rsi
+    sprite: Clothing/OuterClothing/Hardsuits/alter_syndieelite.rsi
   - type: Clothing
-    sprite: Clothing/OuterClothing/Hardsuits/corvax_syndieelite.rsi
+    sprite: Clothing/OuterClothing/Hardsuits/alter_syndieelite.rsi
   - type: PressureProtection
     highPressureMultiplier: 0.02
     lowPressureMultiplier: 1000
@@ -389,18 +389,18 @@
     walkModifier: 1.0
     sprintModifier: 1.0
   - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHelmetHardsuitSyndieEliteCorvax
+    clothingPrototype: ClothingHeadHelmetHardsuitSyndieEliteAlter
 
 - type: entity
   parent: ClothingOuterHardsuitBase
-  id: ClothingOuterHardsuitSyndieCommanderCorvax
+  id: ClothingOuterHardsuitSyndieCommanderAlter
   name: syndicate commander hardsuit
   description: A blood red hardsuit heavily modified for use by the commander of operative squads.
   components:
   - type: Sprite
-    sprite: Clothing/OuterClothing/Hardsuits/corvax_syndiecommander.rsi
+    sprite: Clothing/OuterClothing/Hardsuits/alter_syndiecommander.rsi
   - type: Clothing
-    sprite: Clothing/OuterClothing/Hardsuits/corvax_syndiecommander.rsi
+    sprite: Clothing/OuterClothing/Hardsuits/alter_syndiecommander.rsi
   - type: PressureProtection
     highPressureMultiplier: 0.05
     lowPressureMultiplier: 1000
@@ -419,18 +419,18 @@
     walkModifier: 1.0
     sprintModifier: 1.0
   - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHelmetHardsuitSyndieCommanderCorvax
+    clothingPrototype: ClothingHeadHelmetHardsuitSyndieCommanderAlter
 
 - type: entity
   parent: ClothingOuterHardsuitBase
-  id: ClothingOuterHardsuitWizardCorvax
+  id: ClothingOuterHardsuitWizardAlter
   name: wizard hardsuit
   description: A bizarre gem-encrusted suit that radiates magical energies.
   components:
   - type: Sprite
-    sprite: Clothing/OuterClothing/Hardsuits/corvax_wizard.rsi
+    sprite: Clothing/OuterClothing/Hardsuits/alter_wizard.rsi
   - type: Clothing
-    sprite: Clothing/OuterClothing/Hardsuits/corvax_wizard.rsi
+    sprite: Clothing/OuterClothing/Hardsuits/alter_wizard.rsi
   - type: PressureProtection
     highPressureMultiplier: 0.05
     lowPressureMultiplier: 1000
@@ -449,18 +449,18 @@
     walkModifier: 0.8
     sprintModifier: 0.8
   - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHelmetHardsuitWizardCorvax
+    clothingPrototype: ClothingHeadHelmetHardsuitWizardAlter
 
 - type: entity
   parent: ClothingOuterHardsuitBase
-  id: ClothingOuterHardsuitPirateCapCorvax
+  id: ClothingOuterHardsuitPirateCapAlter
   name: pirate captain's hardsuit
   description: An ancient armored hardsuit, perfect for defending against space scurvy and toolbox-wielding scallywags.
   components:
   - type: Sprite
-    sprite: Clothing/OuterClothing/Hardsuits/corvax_piratecaptain.rsi
+    sprite: Clothing/OuterClothing/Hardsuits/alter_piratecaptain.rsi
   - type: Clothing
-    sprite: Clothing/OuterClothing/Hardsuits/corvax_piratecaptain.rsi
+    sprite: Clothing/OuterClothing/Hardsuits/alter_piratecaptain.rsi
   - type: PressureProtection
     highPressureMultiplier: 0.02
     lowPressureMultiplier: 1000
@@ -483,75 +483,75 @@
 
 - type: entity
   parent: ClothingOuterHardsuitSyndieCommander
-  id: ClothingOuterHardsuitERTLeaderCorvax
+  id: ClothingOuterHardsuitERTLeaderAlter
   name: ERT leader's hardsuit
   description: A protective hardsuit worn by members of an emergency response team.
   components:
   - type: Sprite
-    sprite: Clothing/OuterClothing/Hardsuits/Corvax_ERTSuits/ertleader.rsi
+    sprite: Clothing/OuterClothing/Hardsuits/Alter_ERTSuits/ertleader.rsi
   - type: Clothing
-    sprite: Clothing/OuterClothing/Hardsuits/Corvax_ERTSuits/ertleader.rsi
+    sprite: Clothing/OuterClothing/Hardsuits/Alter_ERTSuits/ertleader.rsi
   - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHelmetHardsuitERTLeaderCorvax
+    clothingPrototype: ClothingHeadHelmetHardsuitERTLeaderAlter
 
 - type: entity
   parent: ClothingOuterHardsuitSyndie
-  id: ClothingOuterHardsuitERTEngineerCorvax
+  id: ClothingOuterHardsuitERTEngineerAlter
   name: ERT engineer's hardsuit
   components:
   - type: Sprite
-    sprite: Clothing/OuterClothing/Hardsuits/Corvax_ERTSuits/ertengineer.rsi
+    sprite: Clothing/OuterClothing/Hardsuits/Alter_ERTSuits/ertengineer.rsi
   - type: Clothing
-    sprite: Clothing/OuterClothing/Hardsuits/Corvax_ERTSuits/ertengineer.rsi
+    sprite: Clothing/OuterClothing/Hardsuits/Alter_ERTSuits/ertengineer.rsi
   - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHelmetHardsuitERTEngineerCorvax
+    clothingPrototype: ClothingHeadHelmetHardsuitERTEngineerAlter
 
 - type: entity
   parent: ClothingOuterHardsuitSyndieElite
-  id: ClothingOuterHardsuitERTMedicalCorvax
+  id: ClothingOuterHardsuitERTMedicalAlter
   name: ERT medic's hardsuit
   components:
   - type: Sprite
-    sprite: Clothing/OuterClothing/Hardsuits/Corvax_ERTSuits/ertmedical.rsi
+    sprite: Clothing/OuterClothing/Hardsuits/Alter_ERTSuits/ertmedical.rsi
   - type: Clothing
-    sprite: Clothing/OuterClothing/Hardsuits/Corvax_ERTSuits/ertmedical.rsi
+    sprite: Clothing/OuterClothing/Hardsuits/Alter_ERTSuits/ertmedical.rsi
   - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHelmetHardsuitERTMedicalCorvax
+    clothingPrototype: ClothingHeadHelmetHardsuitERTMedicalAlter
 
 - type: entity
   parent: ClothingOuterHardsuitSyndie
-  id: ClothingOuterHardsuitERTSecurityCorvax
+  id: ClothingOuterHardsuitERTSecurityAlter
   name: ERT security's hardsuit
   components:
   - type: Sprite
-    sprite: Clothing/OuterClothing/Hardsuits/Corvax_ERTSuits/ertsecurity.rsi
+    sprite: Clothing/OuterClothing/Hardsuits/Alter_ERTSuits/ertsecurity.rsi
   - type: Clothing
-    sprite: Clothing/OuterClothing/Hardsuits/Corvax_ERTSuits/ertsecurity.rsi
+    sprite: Clothing/OuterClothing/Hardsuits/Alter_ERTSuits/ertsecurity.rsi
   - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHelmetHardsuitERTSecurityCorvax
+    clothingPrototype: ClothingHeadHelmetHardsuitERTSecurityAlter
 
 - type: entity
   parent: ClothingOuterHardsuitSyndie
-  id: ClothingOuterHardsuitERTJanitorCorvax
+  id: ClothingOuterHardsuitERTJanitorAlter
   name: ERT janitor's hardsuit
   components:
   - type: Sprite
-    sprite: Clothing/OuterClothing/Hardsuits/Corvax_ERTSuits/ertjanitor.rsi
+    sprite: Clothing/OuterClothing/Hardsuits/Alter_ERTSuits/ertjanitor.rsi
   - type: Clothing
-    sprite: Clothing/OuterClothing/Hardsuits/Corvax_ERTSuits/ertjanitor.rsi
+    sprite: Clothing/OuterClothing/Hardsuits/Alter_ERTSuits/ertjanitor.rsi
   - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHelmetHardsuitERTJanitorCorvax
+    clothingPrototype: ClothingHeadHelmetHardsuitERTJanitorAlter
 
 - type: entity
   parent: ClothingOuterHardsuitBase
-  id: ClothingOuterHardsuitDeathsquadCorvax
+  id: ClothingOuterHardsuitDeathsquadAlter
   name: deathsquad hardsuit
   description: An advanced hardsuit favored by commandos for use in special operations.
   components:
   - type: Sprite
-    sprite: Clothing/OuterClothing/Hardsuits/corvax_deathsquad.rsi
+    sprite: Clothing/OuterClothing/Hardsuits/alter_deathsquad.rsi
   - type: Clothing
-    sprite: Clothing/OuterClothing/Hardsuits/corvax_deathsquad.rsi
+    sprite: Clothing/OuterClothing/Hardsuits/alter_deathsquad.rsi
   - type: PressureProtection
     highPressureMultiplier: 0.02
     lowPressureMultiplier: 1000
@@ -572,18 +572,18 @@
     walkModifier: 1.0
     sprintModifier: 1.0
   - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHelmetHardsuitDeathsquadCorvax
+    clothingPrototype: ClothingHeadHelmetHardsuitDeathsquadAlter
 
 - type: entity
   parent: ClothingOuterHardsuitBase
-  id: ClothingOuterHardsuitCBURNCorvax
+  id: ClothingOuterHardsuitCBURNAlter
   name: CBURN exosuit
   description: A lightweight yet strong exosuit used for special cleanup operations.
   components:
   - type: Sprite
-    sprite: Clothing/OuterClothing/Hardsuits/corvax_cburn.rsi
+    sprite: Clothing/OuterClothing/Hardsuits/alter_cburn.rsi
   - type: Clothing
-    sprite: Clothing/OuterClothing/Hardsuits/corvax_cburn.rsi
+    sprite: Clothing/OuterClothing/Hardsuits/alter_cburn.rsi
   - type: PressureProtection
     highPressureMultiplier: 0.02
     lowPressureMultiplier: 1000
@@ -606,18 +606,18 @@
     walkModifier: 1.0
     sprintModifier: 1.0
   - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHelmetCBURNCorvax
+    clothingPrototype: ClothingHeadHelmetCBURNAlter
 
 - type: entity
   parent: ClothingOuterHardsuitBase
-  id: ClothingOuterHardsuitClownCorvax
+  id: ClothingOuterHardsuitClownAlter
   name: clown hardsuit
   description: A custom made clown hardsuit.
   components:
   - type: Sprite
-    sprite: Clothing/OuterClothing/Hardsuits/corvax_clown.rsi
+    sprite: Clothing/OuterClothing/Hardsuits/alter_clown.rsi
   - type: Clothing
-    sprite: Clothing/OuterClothing/Hardsuits/corvax_clown.rsi
+    sprite: Clothing/OuterClothing/Hardsuits/alter_clown.rsi
   - type: PressureProtection
     highPressureMultiplier: 0.5
     lowPressureMultiplier: 1000
@@ -637,18 +637,18 @@
     graph: ClownHardsuit
     node: clownHardsuit
   - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHelmetHardsuitClownCorvax
+    clothingPrototype: ClothingHeadHelmetHardsuitClownAlter
 
 - type: entity
   parent: ClothingOuterEVASuitBase
-  id: ClothingOuterHardsuitVoidParamedCorvax
+  id: ClothingOuterHardsuitVoidParamedAlter
   name: Paramedic Void Suit
   description: A void suit made for paramedics.
   components:
   - type: Sprite
-    sprite: Clothing/OuterClothing/Hardsuits/corvax_paramed.rsi
+    sprite: Clothing/OuterClothing/Hardsuits/alter_paramed.rsi
   - type: Clothing
-    sprite: Clothing/OuterClothing/Hardsuits/corvax_paramed.rsi
+    sprite: Clothing/OuterClothing/Hardsuits/alter_paramed.rsi
   - type: PressureProtection
     highPressureMultiplier: 0.5
     lowPressureMultiplier: 1000

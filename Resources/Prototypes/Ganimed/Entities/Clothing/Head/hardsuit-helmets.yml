@@ -1,12 +1,12 @@
 - type: entity
   parent: ClothingHeadHardsuitWithLightBase
-  id: ClothingHeadHelmetHardsuitAtmosCorvax
+  id: ClothingHeadHelmetHardsuitAtmosAlter
   noSpawn: true
   name: atmos hardsuit helmet
   description: A special hardsuit helmet designed for working in low-pressure, high thermal environments.
   components:
   - type: Sprite
-    sprite: Clothing/Head/Hardsuits/corvax_atmospherics.rsi
+    sprite: Clothing/Head/Hardsuits/alter_atmospherics.rsi
     layers:
     - state: icon
     - state: icon-unshaded
@@ -39,15 +39,15 @@
 
 - type: entity
   parent: ClothingHeadHardsuitWithLightBase
-  id: ClothingHeadHelmetHardsuitEngineeringCorvax
+  id: ClothingHeadHelmetHardsuitEngineeringAlter
   noSpawn: true
   name: engineering hardsuit helmet
   description: An engineering hardsuit helmet designed for working in low-pressure, high radioactive environments.
   components:
   - type: Sprite
-    sprite: Clothing/Head/Hardsuits/corvax_engineering.rsi
+    sprite: Clothing/Head/Hardsuits/alter_engineering.rsi
   - type: Clothing
-    sprite: Clothing/Head/Hardsuits/corvax_engineering.rsi
+    sprite: Clothing/Head/Hardsuits/alter_engineering.rsi
   - type: PointLight
     color: "#ffdbad"
   - type: PressureProtection
@@ -57,15 +57,15 @@
 
 - type: entity
   parent: ClothingHeadHardsuitWithLightBase
-  id: ClothingHeadHelmetHardsuitSalvageCorvax
+  id: ClothingHeadHelmetHardsuitSalvageAlter
   noSpawn: true
   name: salvage hardsuit helmet
   description: A special helmet designed for work in a hazardous, low pressure environment. Has reinforced plating for wildlife encounters and dual floodlights.
   components:
   - type: Sprite
-    sprite: Clothing/Head/Hardsuits/corvax_salvage.rsi
+    sprite: Clothing/Head/Hardsuits/alter_salvage.rsi
   - type: Clothing
-    sprite: Clothing/Head/Hardsuits/corvax_salvage.rsi
+    sprite: Clothing/Head/Hardsuits/alter_salvage.rsi
   - type: PressureProtection
     highPressureMultiplier: 0.525
     lowPressureMultiplier: 1000
@@ -75,15 +75,15 @@
 
 - type: entity
   parent: ClothingHeadHardsuitWithLightBase
-  id: ClothingHeadHelmetHardsuitSecurityCorvax
+  id: ClothingHeadHelmetHardsuitSecurityAlter
   noSpawn: true
   name: security hardsuit helmet
   description: Armored hardsuit helmet for security needs.
   components:
   - type: Sprite
-    sprite: Clothing/Head/Hardsuits/corvax_security.rsi
+    sprite: Clothing/Head/Hardsuits/alter_security.rsi
   - type: Clothing
-    sprite: Clothing/Head/Hardsuits/corvax_security.rsi
+    sprite: Clothing/Head/Hardsuits/alter_security.rsi
   - type: PointLight
     color: "#ffeead"
   - type: PressureProtection
@@ -99,15 +99,15 @@
 
 - type: entity
   parent: ClothingHeadHardsuitWithLightBase
-  id: ClothingHeadHelmetHardsuitWardenCorvax
+  id: ClothingHeadHelmetHardsuitWardenAlter
   noSpawn: true
   name: warden's hardsuit helmet
   description: A modified riot helmet. Oddly comfortable.
   components:
   - type: Sprite
-    sprite: Clothing/Head/Hardsuits/corvax_security-warden.rsi
+    sprite: Clothing/Head/Hardsuits/alter_security-warden.rsi
   - type: Clothing
-    sprite: Clothing/Head/Hardsuits/corvax_security-warden.rsi
+    sprite: Clothing/Head/Hardsuits/alter_security-warden.rsi
   - type: PointLight
     color: "#ffeead"
   - type: PressureProtection
@@ -123,30 +123,30 @@
 
 - type: entity
   parent: ClothingHeadHardsuitBase
-  id: ClothingHeadHelmetHardsuitCapCorvax
+  id: ClothingHeadHelmetHardsuitCapAlter
   noSpawn: true
   name: captain's hardsuit helmet
   description: Special hardsuit helmet, made for the captain of the station.
   components:
   - type: Sprite
-    sprite: Clothing/Head/Hardsuits/corvax_capspace.rsi
+    sprite: Clothing/Head/Hardsuits/alter_capspace.rsi
   - type: Clothing
-    sprite: Clothing/Head/Hardsuits/corvax_capspace.rsi
+    sprite: Clothing/Head/Hardsuits/alter_capspace.rsi
   - type: PressureProtection
     highPressureMultiplier: 0.3
     lowPressureMultiplier: 1000
 
 - type: entity
   parent: ClothingHeadHardsuitWithLightBase
-  id: ClothingHeadHelmetHardsuitEngineeringWhiteCorvax
+  id: ClothingHeadHelmetHardsuitEngineeringWhiteAlter
   noSpawn: true
   name: chief engineer's hardsuit helmet
   description: Special hardsuit helmet, made for the chief engineer of the station.
   components:
   - type: Sprite
-    sprite: Clothing/Head/Hardsuits/corvax_engineering-white.rsi
+    sprite: Clothing/Head/Hardsuits/alter_engineering-white.rsi
   - type: Clothing
-    sprite: Clothing/Head/Hardsuits/corvax_engineering-white.rsi
+    sprite: Clothing/Head/Hardsuits/alter_engineering-white.rsi
   - type: PointLight
     color: "#e6aa5c"
   - type: PressureProtection
@@ -155,15 +155,15 @@
 
 - type: entity
   parent: ClothingHeadHardsuitWithLightBase
-  id: ClothingHeadHelmetHardsuitMedicalCorvax
+  id: ClothingHeadHelmetHardsuitMedicalAlter
   noSpawn: true
   name: chief medical officer's hardsuit helmet
   description: Lightweight medical hardsuit helmet that doesn't restrict your head movements.
   components:
   - type: Sprite
-    sprite: Clothing/Head/Hardsuits/corvax_medical.rsi
+    sprite: Clothing/Head/Hardsuits/alter_medical.rsi
   - type: Clothing
-    sprite: Clothing/Head/Hardsuits/corvax_medical.rsi
+    sprite: Clothing/Head/Hardsuits/alter_medical.rsi
   - type: PointLight
     color: "#adf1ff"
   - type: PressureProtection
@@ -172,15 +172,15 @@
 
 - type: entity
   parent: ClothingHeadHardsuitWithLightBase
-  id: ClothingHeadHelmetHardsuitRdCorvax
+  id: ClothingHeadHelmetHardsuitRdAlter
   noSpawn: true
   name: experimental research hardsuit helmet
   description: Lightweight hardsuit helmet that doesn't restrict your head movements.
   components:
   - type: Sprite
-    sprite: Clothing/Head/Hardsuits/corvax_rd.rsi
+    sprite: Clothing/Head/Hardsuits/alter_rd.rsi
   - type: Clothing
-    sprite: Clothing/Head/Hardsuits/corvax_rd.rsi
+    sprite: Clothing/Head/Hardsuits/alter_rd.rsi
   - type: PointLight
     color: "#a4fef4"
   - type: PressureProtection
@@ -189,15 +189,15 @@
 
 - type: entity
   parent: ClothingHeadHardsuitWithLightBase
-  id: ClothingHeadHelmetHardsuitSecurityRedCorvax
+  id: ClothingHeadHelmetHardsuitSecurityRedAlter
   noSpawn: true
   name: head of security's hardsuit helmet
   description: Security hardsuit helmet with the latest top secret NT-HUD software. Belongs to the HoS.
   components:
   - type: Sprite
-    sprite: Clothing/Head/Hardsuits/corvax_security-red.rsi
+    sprite: Clothing/Head/Hardsuits/alter_security-red.rsi
   - type: Clothing
-    sprite: Clothing/Head/Hardsuits/corvax_security-red.rsi
+    sprite: Clothing/Head/Hardsuits/alter_security-red.rsi
   - type: PointLight
     color: "#ffeead"
   - type: PressureProtection
@@ -213,15 +213,15 @@
 
 - type: entity
   parent: ClothingHeadHardsuitWithLightBase
-  id: ClothingHeadHelmetHardsuitSyndieCorvax
+  id: ClothingHeadHelmetHardsuitSyndieAlter
   noSpawn: true
   name: blood-red hardsuit helmet
   description: An advanced red hardsuit helmet designed for work in special operations.
   components:
   - type: Sprite
-    sprite: Clothing/Head/Hardsuits/corvax_syndicate.rsi
+    sprite: Clothing/Head/Hardsuits/alter_syndicate.rsi
   - type: Clothing
-    sprite: Clothing/Head/Hardsuits/corvax_syndicate.rsi
+    sprite: Clothing/Head/Hardsuits/alter_syndicate.rsi
   - type: PointLight
     color: green
   - type: PressureProtection
@@ -237,16 +237,16 @@
 
 - type: entity
   parent: ClothingHeadHardsuitWithLightBase
-  id: ClothingHeadHelmetHardsuitCybersunCorvax
+  id: ClothingHeadHelmetHardsuitCybersunAlter
   noSpawn: true
   name: cybersun juggernaut helmet
   description: Made of compressed red matter, this helmet was designed in the Tau chromosphere facility.
   components:
   - type: Sprite
-    sprite: Clothing/Head/Hardsuits/corvax_cybersun.rsi
+    sprite: Clothing/Head/Hardsuits/alter_cybersun.rsi
   - type: Clothing
-    sprite: Clothing/Head/Hardsuits/corvax_cybersun.rsi
-  - type: PointLight # Corvax-Resprite
+    sprite: Clothing/Head/Hardsuits/alter_cybersun.rsi
+  - type: PointLight # Alter-Resprite
     color: red
   - type: PressureProtection
     highPressureMultiplier: 0.3
@@ -261,15 +261,15 @@
 
 - type: entity
   parent: ClothingHeadHardsuitWithLightBase
-  id: ClothingHeadHelmetHardsuitSyndieEliteCorvax
+  id: ClothingHeadHelmetHardsuitSyndieEliteAlter
   noSpawn: true
   name: syndicate elite helmet
   description: A variant of the blood red helmet designed by the Gorlex Marauders to be exceptionally fireproof and pressure proof.
   components:
   - type: Sprite
-    sprite: Clothing/Head/Hardsuits/corvax_syndieelite.rsi
+    sprite: Clothing/Head/Hardsuits/alter_syndieelite.rsi
   - type: Clothing
-    sprite: Clothing/Head/Hardsuits/corvax_syndieelite.rsi
+    sprite: Clothing/Head/Hardsuits/alter_syndieelite.rsi
   - type: PointLight
     color: red
   - type: PressureProtection
@@ -287,15 +287,15 @@
 
 - type: entity
   parent: ClothingHeadHardsuitWithLightBase
-  id: ClothingHeadHelmetHardsuitSyndieCommanderCorvax
+  id: ClothingHeadHelmetHardsuitSyndieCommanderAlter
   noSpawn: true
   name: syndicate commander helmet
   description: A syndicate hardsuit helmet custom designed for commanders of syndicate operative squads.
   components:
   - type: Sprite
-    sprite: Clothing/Head/Hardsuits/corvax_syndiecommander.rsi
+    sprite: Clothing/Head/Hardsuits/alter_syndiecommander.rsi
   - type: Clothing
-    sprite: Clothing/Head/Hardsuits/corvax_syndiecommander.rsi
+    sprite: Clothing/Head/Hardsuits/alter_syndiecommander.rsi
   - type: PointLight
     color: green
   - type: PressureProtection
@@ -311,15 +311,15 @@
 
 - type: entity
   parent: ClothingHeadHardsuitWithLightBase
-  id: ClothingHeadHelmetHardsuitWizardCorvax
+  id: ClothingHeadHelmetHardsuitWizardAlter
   noSpawn: true
   name: wizard hardsuit helmet
   description: A bizarre gem-encrusted helmet that radiates magical energies.
   components:
   - type: Sprite
-    sprite: Clothing/Head/Hardsuits/corvax_wizard.rsi
+    sprite: Clothing/Head/Hardsuits/alter_wizard.rsi
   - type: Clothing
-    sprite: Clothing/Head/Hardsuits/corvax_wizard.rsi
+    sprite: Clothing/Head/Hardsuits/alter_wizard.rsi
   - type: PointLight
     color: "#a4fef4"
   - type: PressureProtection
@@ -335,16 +335,16 @@
 
 - type: entity
   parent: ClothingHeadHelmetHardsuitSyndieCommander
-  id: ClothingHeadHelmetHardsuitERTLeaderCorvax
+  id: ClothingHeadHelmetHardsuitERTLeaderAlter
   noSpawn: true
   name: ERT leader hardsuit helmet
   description: A special hardsuit helmet worn by members of an emergency response team.
   components:
   - type: Sprite
-    sprite: Clothing/Head/Hardsuits/Corvax_ERThelmets/ertleader.rsi
+    sprite: Clothing/Head/Hardsuits/Alter_ERThelmets/ertleader.rsi
   - type: Clothing
-    sprite: Clothing/Head/Hardsuits/Corvax_ERThelmets/ertleader.rsi
-  - type: PointLight # Corvax-Resprite
+    sprite: Clothing/Head/Hardsuits/Alter_ERThelmets/ertleader.rsi
+  - type: PointLight # Alter-Resprite
     color: cyan
   - type: Armor
     modifiers:
@@ -356,14 +356,14 @@
 
 - type: entity
   parent: ClothingHeadHelmetHardsuitSyndie
-  id: ClothingHeadHelmetHardsuitERTEngineerCorvax
+  id: ClothingHeadHelmetHardsuitERTEngineerAlter
   noSpawn: true
   name: ERT engineer hardsuit helmet
   components:
   - type: Sprite
-    sprite: Clothing/Head/Hardsuits/Corvax_ERThelmets/ertengineer.rsi
+    sprite: Clothing/Head/Hardsuits/Alter_ERThelmets/ertengineer.rsi
   - type: Clothing
-    sprite: Clothing/Head/Hardsuits/Corvax_ERThelmets/ertengineer.rsi
+    sprite: Clothing/Head/Hardsuits/Alter_ERThelmets/ertengineer.rsi
   - type: PointLight
     color: "#f4ffad"
   - type: Armor
@@ -376,27 +376,27 @@
 
 - type: entity
   parent: ClothingHeadHelmetHardsuitSyndieElite
-  id: ClothingHeadHelmetHardsuitERTMedicalCorvax
+  id: ClothingHeadHelmetHardsuitERTMedicalAlter
   noSpawn: true
   name: ERT medic hardsuit helmet
   components:
   - type: Sprite
-    sprite: Clothing/Head/Hardsuits/Corvax_ERThelmets/ertmedical.rsi
+    sprite: Clothing/Head/Hardsuits/Alter_ERThelmets/ertmedical.rsi
   - type: Clothing
-    sprite: Clothing/Head/Hardsuits/Corvax_ERThelmets/ertmedical.rsi
+    sprite: Clothing/Head/Hardsuits/Alter_ERThelmets/ertmedical.rsi
   - type: PointLight
     color: "#adffec"
 
 - type: entity
   parent: ClothingHeadHelmetHardsuitSyndie
-  id: ClothingHeadHelmetHardsuitERTSecurityCorvax
+  id: ClothingHeadHelmetHardsuitERTSecurityAlter
   noSpawn: true
   name: ERT security hardsuit helmet
   components:
   - type: Sprite
-    sprite: Clothing/Head/Hardsuits/Corvax_ERThelmets/ertsecurity.rsi
+    sprite: Clothing/Head/Hardsuits/Alter_ERThelmets/ertsecurity.rsi
   - type: Clothing
-    sprite: Clothing/Head/Hardsuits/Corvax_ERThelmets/ertsecurity.rsi
+    sprite: Clothing/Head/Hardsuits/Alter_ERThelmets/ertsecurity.rsi
   - type: PointLight
     color: "#ffadc6"
   - type: Armor
@@ -409,26 +409,26 @@
 
 - type: entity
   parent: ClothingHeadHelmetHardsuitSyndie
-  id: ClothingHeadHelmetHardsuitERTJanitorCorvax
+  id: ClothingHeadHelmetHardsuitERTJanitorAlter
   noSpawn: true
   name: ERT janitor hardsuit helmet
   components:
   - type: Sprite
-    sprite: Clothing/Head/Hardsuits/Corvax_ERThelmets/ertjanitor.rsi
+    sprite: Clothing/Head/Hardsuits/Alter_ERThelmets/ertjanitor.rsi
   - type: Clothing
-    sprite: Clothing/Head/Hardsuits/Corvax_ERThelmets/ertjanitor.rsi
+    sprite: Clothing/Head/Hardsuits/Alter_ERThelmets/ertjanitor.rsi
   - type: PointLight
     color: "#cbadff"
 
 - type: entity
   parent: ClothingHeadHardsuitWithLightBase
-  id: ClothingHeadHelmetCBURNCorvax
+  id: ClothingHeadHelmetCBURNAlter
   noSpawn: true
   name: CBURN exosuit helmet
   description: A pressure resistant and fireproof hood worn by special cleanup units.
   components:
   - type: Sprite
-    sprite: Clothing/Head/Hardsuits/corvax_cburn.rsi
+    sprite: Clothing/Head/Hardsuits/alter_cburn.rsi
     layers:
     - state: icon
     - state: icon-unshaded
@@ -460,15 +460,15 @@
 
 - type: entity
   parent: ClothingHeadHardsuitWithLightBase
-  id: ClothingHeadHelmetHardsuitDeathsquadCorvax
+  id: ClothingHeadHelmetHardsuitDeathsquadAlter
   noSpawn: true
   name: deathsquad hardsuit helmet
   description: A robust helmet for special operations.
   components:
   - type: Sprite
-    sprite: Clothing/Head/Hardsuits/corvax_deathsquad.rsi
+    sprite: Clothing/Head/Hardsuits/alter_deathsquad.rsi
   - type: Clothing
-    sprite: Clothing/Head/Hardsuits/corvax_deathsquad.rsi
+    sprite: Clothing/Head/Hardsuits/alter_deathsquad.rsi
   - type: PointLight
     color: cyan
   - type: PressureProtection
@@ -486,15 +486,15 @@
 
 - type: entity
   parent: ClothingHeadHelmetHardsuitSecurity
-  id: ClothingHeadHelmetHardsuitClownCorvax
+  id: ClothingHeadHelmetHardsuitClownAlter
   noSpawn: true
   name: clown hardsuit helmet
   description: A clown hardsuit helmet.
   components:
   - type: Sprite
-    sprite: Clothing/Head/Hardsuits/corvax_clown.rsi
+    sprite: Clothing/Head/Hardsuits/alter_clown.rsi
   - type: Clothing
-    sprite: Clothing/Head/Hardsuits/corvax_clown.rsi
+    sprite: Clothing/Head/Hardsuits/alter_clown.rsi
     equipSound: /Audio/Mecha/mechmove03.ogg
     unequipSound: /Audio/Effects/Emotes/parp1.ogg
   - type: PointLight
