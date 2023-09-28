@@ -1278,7 +1278,7 @@
   parent: BaseSign
   id: SignSurvival
   name: survival sign
-  description: A sign, survivals is written on it.
+  description: A sign. "Survival" is written on it.
   components:
   - type: Sprite
     state: survival
@@ -1287,7 +1287,7 @@
   parent: BaseSign
   id: SignNTMine
   name: mine sign
-  description: A sign, mine is written on it.
+  description: A sign. "Mine" is written on it.
   components:
   - type: Sprite
     state: ntmining
