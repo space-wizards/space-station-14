@@ -94,7 +94,7 @@ public sealed partial class GameTicker
             ruleData ??= EnsureComp<GameRuleComponent>(ruleEntity);
 
         // can't start an already active rule
-        if (ruleData.Active || ruleData.Ended)
+        if (HasComp<ActiveGameRuleComponent>(ruleEntity) || ruleData.Ended)
             return false;
 
         if (MetaData(ruleEntity).EntityPrototype?.ID is not { } id) // you really fucked up
@@ -103,9 +103,8 @@ public sealed partial class GameTicker
         _allPreviousGameRules.Add((RoundDuration(), id));
         _sawmill.Info($"Started game rule {ToPrettyString(ruleEntity)}");
 
-        ruleData.Active = true;
-        ruleData.ActivatedAt = _gameTiming.CurTime;
         EnsureComp<ActiveGameRuleComponent>(ruleEntity);
+        ruleData.ActivatedAt = _gameTiming.CurTime;
 
         var ev = new GameRuleStartedEvent(ruleEntity, id);
         RaiseLocalEvent(ruleEntity, ref ev, true);
@@ -128,9 +127,8 @@ public sealed partial class GameTicker
         if (MetaData(ruleEntity).EntityPrototype?.ID is not { } id) // you really fucked up
             return false;
 
-        ruleData.Active = false;
-        ruleData.Ended = true;
         RemComp<ActiveGameRuleComponent>(ruleEntity);
+        ruleData.Ended = true;
 
         _sawmill.Info($"Ended game rule {ToPrettyString(ruleEntity)}");
 
@@ -157,7 +155,7 @@ public sealed partial class GameTicker
 
     public bool IsGameRuleActive(EntityUid ruleEntity, GameRuleComponent? component = null)
     {
-        return Resolve(ruleEntity, ref component) && component.Active;
+        return Resolve(ruleEntity, ref component) && HasComp<ActiveGameRuleComponent>(ruleEntity);
     }
 
     public bool IsGameRuleActive(string rule)

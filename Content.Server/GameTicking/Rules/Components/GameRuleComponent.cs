@@ -10,14 +10,6 @@ namespace Content.Server.GameTicking.Rules.Components;
 public sealed partial class GameRuleComponent : Component
 {
     /// <summary>
-    /// Whether or not the rule is active.
-    /// Is enabled after <see cref="GameRuleStartedEvent"/> and disabled after <see cref="GameRuleEndedEvent"/>
-    /// </summary>
-    /// <seealso cref="ActiveGameRuleComponent"/>
-    [DataField]
-    public bool Active;
-
-    /// <summary>
     /// Game time when game rule was activated
     /// </summary>
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
