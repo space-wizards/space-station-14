@@ -31,6 +31,12 @@ public sealed class NavMapControl : MapGridControl
 
     public Dictionary<EntityCoordinates, (bool Visible, Color Color)> TrackedCoordinates = new();
     public Dictionary<EntityCoordinates, (bool Visible, Color Color, Texture? Texture)> TrackedEntities = new();
+    public Dictionary<CableType, bool> ShowCables = new Dictionary<CableType, bool>
+    {
+        [CableType.HV] = false,
+        [CableType.MV] = false,
+        [CableType.LV] = false,
+    };
 
     private Vector2 _offset;
     private bool _draggin;
@@ -44,8 +50,8 @@ public sealed class NavMapControl : MapGridControl
     private List<CableData> _cableData = new List<CableData>()
     {
         new CableData(CableType.HV, Color.Orange),
-        new CableData(CableType.MV, Color.Yellow, new Vector2(-0.15f, -0.15f)),
-        new CableData(CableType.LV, Color.LimeGreen, new Vector2(0.15f, 0.15f)),
+        new CableData(CableType.MV, Color.Yellow, new Vector2(-0.2f, -0.2f)),
+        new CableData(CableType.LV, Color.LimeGreen, new Vector2(0.2f, 0.2f)),
     };
 
     // TODO: https://github.com/space-wizards/RobustToolbox/issues/3818
@@ -348,6 +354,9 @@ public sealed class NavMapControl : MapGridControl
 
                 foreach (var datum in _cableData)
                 {
+                    if (!ShowCables[datum.CableType])
+                        continue;
+
                     for (var i = 0; i < SharedNavMapSystem.ChunkSize * SharedNavMapSystem.ChunkSize; i++)
                     {
                         var value = (int) Math.Pow(2, i);
@@ -378,10 +387,28 @@ public sealed class NavMapControl : MapGridControl
 
                         if (neighbor)
                         {
-                            handle.DrawLine
-                            (Scale(position + new Vector2(grid.TileSize * 0.5f, -grid.TileSize * 0.5f) + datum.Offset),
-                            Scale(position + new Vector2(1f, 0f) + new Vector2(grid.TileSize * 0.5f, -grid.TileSize * 0.5f) + datum.Offset),
-                            datum.Color);
+                            if (WorldRange / WorldMaxRange < 0.5f)
+                            {
+                                var drawOffset = new Vector2(grid.TileSize * 0.5f, -grid.TileSize * 0.5f) + datum.Offset;
+
+                                var leftTop = new Vector2
+                                    (Math.Min(position.X, (position + new Vector2(1f, 0f)).X) - 0.1f,
+                                    Math.Min(position.Y, (position + new Vector2(1f, 0f)).Y) - 0.1f);
+
+                                var rightBottom = new Vector2
+                                    (Math.Max(position.X, (position + new Vector2(1f, 0f)).X) + 0.1f,
+                                    Math.Max(position.Y, (position + new Vector2(1f, 0f)).Y) + 0.1f);
+
+                                handle.DrawRect(new UIBox2(Scale(leftTop + drawOffset), Scale(rightBottom + drawOffset)), datum.Color);
+                            }
+
+                            else
+                            {
+                                handle.DrawLine
+                                (Scale(position + new Vector2(grid.TileSize * 0.5f, -grid.TileSize * 0.5f) + datum.Offset),
+                                Scale(position + new Vector2(1f, 0f) + new Vector2(grid.TileSize * 0.5f, -grid.TileSize * 0.5f) + datum.Offset),
+                                datum.Color);
+                            }
                         }
 
                         // North
@@ -398,49 +425,33 @@ public sealed class NavMapControl : MapGridControl
 
                         if (neighbor)
                         {
-                            handle.DrawLine
-                            (Scale(position + new Vector2(grid.TileSize * 0.5f, -grid.TileSize * 0.5f) + datum.Offset),
-                            Scale(position + new Vector2(0f, -1f) + new Vector2(grid.TileSize * 0.5f, -grid.TileSize * 0.5f) + datum.Offset),
-                            datum.Color);
+                            if (WorldRange / WorldMaxRange < 0.5f)
+                            {
+                                var drawOffset = new Vector2(grid.TileSize * 0.5f, -grid.TileSize * 0.5f) + datum.Offset;
+
+                                var leftTop = new Vector2
+                                    (Math.Min(position.X, (position + new Vector2(0f, -1f)).X) - 0.1f,
+                                    Math.Min(position.Y, (position + new Vector2(0f, -1f)).Y) - 0.1f);
+
+                                var rightBottom = new Vector2
+                                    (Math.Max(position.X, (position + new Vector2(0f, -1f)).X) + 0.1f,
+                                    Math.Max(position.Y, (position + new Vector2(0f, -1f)).Y) + 0.1f);
+
+                                handle.DrawRect(new UIBox2(Scale(leftTop + drawOffset), Scale(rightBottom + drawOffset)), datum.Color);
+                            }
+
+                            else
+                            {
+                                handle.DrawLine
+                                (Scale(position + new Vector2(grid.TileSize * 0.5f, -grid.TileSize * 0.5f) + datum.Offset),
+                                Scale(position + new Vector2(0f, -1f) + new Vector2(grid.TileSize * 0.5f, -grid.TileSize * 0.5f) + datum.Offset),
+                                datum.Color);
+                            }
                         }
                     }
                 }
             }
         }
-
-        // Draw cables
-        /*if (hvCables != null)
-        {
-            for (int i = 0; i < hvCables.Length; i++)
-            {
-                var cable = hvCables[i];
-                var pointA = cable[0];
-                var pointB = cable[1];
-                var positionA = new Vector2();
-                var positionB = new Vector2();
-
-                var mapPos = pointA.ToMap(_entManager);
-
-                if (mapPos.MapId != MapId.Nullspace)
-                {
-                    var position = xform.InvWorldMatrix.Transform(mapPos.Position) - offset;
-                    positionA = (new Vector2(position.X, -position.Y));
-                }
-
-                mapPos = pointB.ToMap(_entManager);
-
-                if (mapPos.MapId != MapId.Nullspace)
-                {
-                    var position = xform.InvWorldMatrix.Transform(mapPos.Position) - offset;
-                    positionB = (new Vector2(position.X, -position.Y));
-                }
-
-                var leftTop = new Vector2(Math.Min(positionA.X, positionB.X) - 0.1f, Math.Min(positionA.Y, positionB.Y) - 0.1f);
-                var rightBottom = new Vector2(Math.Max(positionA.X, positionB.X) + 0.1f, Math.Max(positionA.Y, positionB.Y) + 0.1f);
-                handle.DrawRect(new UIBox2(Scale(leftTop), Scale(rightBottom)), Color.Orange);
-                //handle.DrawLine(Scale(positionA), Scale(positionB), Color.Orange);
-            }
-        }*/
 
         var curTime = Timing.RealTime;
         var blinkFrequency = 1f / 1f;
@@ -473,13 +484,13 @@ public sealed class NavMapControl : MapGridControl
                     var position = xform.InvWorldMatrix.Transform(mapPos.Position) - offset;
                     position = Scale(new Vector2(position.X, -position.Y));
 
-                    float f = 0.75f;
-                    var rect = new UIBox2(position.X - MinimapScale * f, position.Y - MinimapScale * f, position.X + MinimapScale * f, position.Y + MinimapScale * f);
+                    float f = 2.5f;
+                    var rect = new UIBox2(position.X - float.Sqrt(MinimapScale) * f, position.Y - float.Sqrt(MinimapScale) * f, position.X + float.Sqrt(MinimapScale) * f, position.Y + float.Sqrt(MinimapScale) * f);
 
                     if (value.Texture != null)
                         handle.DrawTextureRect(value.Texture, rect, value.Color);
                     else
-                        handle.DrawCircle(position, MinimapScale / 2f, value.Color);
+                        handle.DrawCircle(position, float.Sqrt(MinimapScale) * 2f, value.Color);
                 }
             }
         }

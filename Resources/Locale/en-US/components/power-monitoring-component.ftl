@@ -6,3 +6,7 @@ power-monitoring-window-total-loads = Total Loads:
 power-monitoring-window-value = { POWERWATTS($value) }
 power-monitoring-window-show-inactive-consumers = Show Inactive Consumers
 
+power-monitoring-window-show-cable-networks = Toggle cable networks
+power-monitoring-window-show-hv-cable = HV
+power-monitoring-window-show-mv-cable = MV
+power-monitoring-window-show-lv-cable = LV
