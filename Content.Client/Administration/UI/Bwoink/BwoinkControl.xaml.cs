@@ -39,17 +39,13 @@ namespace Content.Client.Administration.UI.Bwoink
 
             AHelpHelper = helper;
 
-            _adminManager.AdminStatusUpdated += FixButtons;
-            FixButtons();
+            _adminManager.AdminStatusUpdated += UpdateButtons;
+            UpdateButtons();
 
             ChannelSelector.OnSelectionChanged += sel =>
             {
                 _currentPlayer = sel;
-                if (sel is not null)
-                {
-                    SwitchToChannel(sel.SessionId);
-                }
-
+                SwitchToChannel(sel?.SessionId);
                 ChannelSelector.PlayerListContainer.DirtyList();
             };
 
@@ -182,25 +178,27 @@ namespace Content.Client.Administration.UI.Bwoink
             ChannelSelector.PlayerListContainer.Select(data);
         }
 
-        private void FixButtons()
+        public void UpdateButtons()
         {
+            var disabled = _currentPlayer == null;
+
             Bans.Visible = _adminManager.HasFlag(AdminFlags.Ban);
-            Bans.Disabled = !Bans.Visible;
+            Bans.Disabled = !Bans.Visible || disabled;
 
             Notes.Visible = _adminManager.HasFlag(AdminFlags.ViewNotes);
-            Notes.Disabled = !Notes.Visible;
+            Notes.Disabled = !Notes.Visible || disabled;
 
             Ban.Visible = _adminManager.HasFlag(AdminFlags.Ban);
-            Ban.Disabled = !Ban.Visible;
+            Ban.Disabled = !Ban.Visible || disabled;
 
             Kick.Visible = _adminManager.CanCommand("kick");
-            Kick.Disabled = !Kick.Visible;
-
-            Teleport.Visible = _adminManager.CanCommand("tpto");
-            Teleport.Disabled = !Teleport.Visible;
+            Kick.Disabled = !Kick.Visible || disabled;
 
             Respawn.Visible = _adminManager.CanCommand("respawn");
-            Respawn.Disabled = !Respawn.Visible;
+            Respawn.Disabled = !Respawn.Visible || disabled;
+
+            Teleport.Visible = _adminManager.CanCommand("tpto");
+            Teleport.Disabled = !Teleport.Visible || disabled;
         }
 
         private string FormatTabTitle(ItemList.Item li, PlayerInfo? pl = default)
@@ -231,12 +229,21 @@ namespace Content.Client.Administration.UI.Bwoink
             return sb.ToString();
         }
 
-        private void SwitchToChannel(NetUserId ch)
+        private void SwitchToChannel(NetUserId? ch)
         {
-            foreach (var bw in BwoinkArea.Children)
-                bw.Visible = false;
-            var panel = AHelpHelper.EnsurePanel(ch);
-            panel.Visible = true;
+            UpdateButtons();
+
+            if (ch != null)
+            {
+                var panel = AHelpHelper.EnsurePanel(ch.Value);
+                panel.Visible = true;
+            }
+        }
+
+        public void PopulateList()
+        {
+            ChannelSelector.PopulateList();
+            UpdateButtons();
         }
     }
 }
