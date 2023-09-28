@@ -1,9 +1,4 @@
 Entries:
-- author: chromiumboy
-  changes:
-  - {message: Containers used in recipes now drop their contents when crafted., type: Fix}
-  id: 4416
-  time: '2023-08-02T18:32:51.0000000+00:00'
 - author: PuceTint
   changes:
   - {message: Nitrous oxide now causes laughing, type: Add}
@@ -2967,3 +2962,9 @@ Entries:
       replacement for ''request'' for consistency.', type: Tweak}
   id: 4915
   time: '2023-09-28T19:19:58.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Changed the player actions panel to ask for confirmation when kicking
+      and respawning players., type: Tweak}
+  id: 4916
+  time: '2023-09-28T22:46:07.0000000+00:00'
