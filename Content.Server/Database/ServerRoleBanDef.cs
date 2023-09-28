@@ -7,7 +7,7 @@ namespace Content.Server.Database;
 
 public sealed class ServerRoleBanDef
 {
-    public int? Id { get; set; }
+    public int? Id { get; }
     public NetUserId? UserId { get; }
     public (IPAddress address, int cidrMask)? Address { get; }
     public ImmutableArray<byte>? HWId { get; }
