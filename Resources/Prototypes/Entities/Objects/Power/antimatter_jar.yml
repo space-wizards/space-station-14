@@ -27,7 +27,7 @@
         !type:DamageTrigger
         damage: 100
       behaviors:
-      - !type:EmagBehavior
+      - !type:AmeFuelLeakBehavior
       - !type:PlaySoundBehavior
         sound:
           path: /Audio/Effects/metalbreak.ogg

@@ -1,8 +1,6 @@
 using Content.Server.Ame.Components;
 using Content.Server.Explosion.Components;
 using Content.Server.Explosion.EntitySystems;
-using Content.Shared.Emag.Components;
-using Content.Shared.Emag.Systems;
 using Content.Shared.Examine;
 using Content.Shared.Throwing;
 using Robust.Shared.Timing;
@@ -11,7 +9,7 @@ using Robust.Shared.Random;
 namespace Content.Server.Ame.EntitySystems;
 
 /// <summary>
-/// Adds fuel level info to examine on fuel jars and handles emagged fuel leaking.
+/// Adds fuel level info to examine on fuel jars and handles fuel leaking.
 /// </summary>
 public sealed class AmeFuelSystem : EntitySystem
 {
@@ -25,24 +23,17 @@ public sealed class AmeFuelSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<AmeFuelContainerComponent, ExaminedEvent>(OnExamined);
-
-        SubscribeLocalEvent<AmeFuelContainerComponent, GotEmaggedEvent>(OnEmagged);
     }
 
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
 
-        var query = EntityQueryEnumerator<AmeFuelContainerComponent, ExplosiveComponent, EmaggedComponent>();
-        while (query.MoveNext(out var uid, out var comp, out var explosive, out var _))
+        var query = EntityQueryEnumerator<AmeFuelContainerComponent, ExplosiveComponent>();
+        while (query.MoveNext(out var uid, out var comp, out var explosive))
         {
-            // stops updating this fuel jar once its empty
-            // in the future maybe ame could be refueled, then this would require emagging again once it empties out
-            if (comp.FuelAmount < 1)
-            {
-                RemComp<EmaggedComponent>(uid);
+            if (!comp.Leaking || comp.FuelAmount < 1)
                 continue;
-            }
 
             var now = _timing.CurTime;
             if (now < comp.NextLeak)
@@ -76,15 +67,19 @@ public sealed class AmeFuelSystem : EntitySystem
             ("capacity", comp.FuelCapacity)));
     }
 
-    private void OnEmagged(EntityUid uid, AmeFuelContainerComponent comp, ref GotEmaggedEvent args)
+    /// <summary>
+    /// Makes the fuel jar start leaking antimatter.
+    /// </summary>
+    public void StartLeaking(EntityUid uid, AmeFuelContainerComponent? comp = null)
     {
-        // don't waste a charge if there is no fuel to leak or it cant explode
+        if (!Resolve(uid, ref comp) || comp.Leaking)
+            return;
+
         if (comp.FuelAmount < 1 || !HasComp<ExplosiveComponent>(uid))
             return;
 
-        args.Handled = true;
-
-        // don't instantly explode, give the emagger a little time to react
+        // don't instantly explode, give the user a little time to react
+        comp.Leaking = true;
         comp.NextLeak = _timing.CurTime + comp.LeakDelay;
     }
 }
