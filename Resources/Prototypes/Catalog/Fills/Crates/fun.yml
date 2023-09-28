@@ -290,3 +290,18 @@
       - id: MysteryFigureBox
         amount: 15
         prob: 0.05
+
+- type: entity
+  id: CrateFunDartsSet
+  parent: CratePlastic
+  components:
+  - type: StorageFill
+    contents:
+      - id: TargetDarts
+        amount: 1
+      - id: BoxDarts
+        amount: 1
+      - id: BoxDarts
+        amount: 1
+        prob: 0.05
+  
