@@ -619,8 +619,6 @@
   description: This masterpiece has gone through thousands of experiments. But it is the sweetest creature in the world. Smile Slime!
   components:
   - type: Sprite
-    drawdepth: Mobs
-    sprite: Mobs/Aliens/slimes.rsi
     layers:
     - map: [ "enum.DamageStateVisualLayers.Base" ]
       state: rainbow_baby_slime
@@ -650,22 +648,14 @@
       Dead:
         Base: rainbow_baby_slime_dead
   - type: Butcherable
-    butcheringType: Knife
     spawned:
     - id: FoodMeatSlime
       amount: 1
     - id: MaterialSmileExtract
       amount: 1
   - type: Damageable
-    damageContainer: Biological
     damageModifierSet: SlimePet
   - type: Bloodstream
-    bloodMaxVolume: 150
-    bloodReagent: Slime
-    bloodlossDamage:
-      types:
-        Bloodloss:
-          1
     bloodlossHealDamage:
       types:
         Bloodloss:
@@ -674,11 +664,6 @@
     heatDamageThreshold: 800
     coldDamageThreshold: 0
   - type: MeleeWeapon
-    hidden: true
-    soundHit:
-        path: /Audio/Weapons/punch3.ogg
-    angle: 0
-    animation: WeaponArcPunch
     damage:
       types:
         Blunt: 1
@@ -688,7 +673,6 @@
   - type: MobPrice
     price: 3000 # it is a truly valuable creature
   - type: GhostRole
-    makeSentient: true
     name: ghost-role-information-smile-name
     description: ghost-role-information-smile-description
   - type: Grammar
