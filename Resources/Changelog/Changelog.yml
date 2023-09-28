@@ -1,13 +1,4 @@
 Entries:
-- author: Bhijn and Myr
-  changes:
-  - {message: 'Interaction outlines now directly react to lighting. You can no longer
-      merely wave your mouse around in the dark to see objects in the distance in
-      maint. Interaction outlines that''re in-range are far brighter even in dim conditions,
-      though out-of-range interaction outlines are hard to see in poor light conditions.',
-    type: Add}
-  id: 4414
-  time: '2023-08-02T10:07:12.0000000+00:00'
 - author: eclips_e
   changes:
   - {message: The P-Block crate will now have oxygen and nitrogen jugs., type: Fix}
@@ -2968,3 +2959,10 @@ Entries:
       you are., type: Tweak}
   id: 4913
   time: '2023-09-28T14:05:42.0000000+00:00'
+- author: NULL882
+  changes:
+  - {message: Added Necropolis Wall., type: Add}
+  - {message: Added Mine Wall., type: Add}
+  - {message: Added Sings for Mine Wall., type: Add}
+  id: 4914
+  time: '2023-09-28T17:07:13.0000000+00:00'
