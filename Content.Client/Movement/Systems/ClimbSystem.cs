@@ -1,7 +1,6 @@
 using Content.Client.Interactable;
 using Content.Shared.Climbing;
 using Content.Shared.DragDrop;
-using Robust.Shared.GameStates;
 
 namespace Content.Client.Movement.Systems;
 
@@ -12,17 +11,7 @@ public sealed class ClimbSystem : SharedClimbSystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<ClimbingComponent, ComponentHandleState>(OnClimbingState);
         SubscribeLocalEvent<ClimbableComponent, CanDropTargetEvent>(OnCanDragDropOn);
-    }
-
-    private static void OnClimbingState(EntityUid uid, ClimbingComponent component, ref ComponentHandleState args)
-    {
-        if (args.Current is not ClimbingComponent.ClimbModeComponentState climbModeState)
-            return;
-
-        component.IsClimbing = climbModeState.Climbing;
-        component.OwnerIsTransitioning = climbModeState.IsTransitioning;
     }
 
     protected override void OnCanDragDropOn(EntityUid uid, ClimbableComponent component, ref CanDropTargetEvent args)
