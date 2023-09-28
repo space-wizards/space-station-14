@@ -35,7 +35,7 @@
       bodyType: Static
     - type: Transform
       noRot: true
-      anchor: false
+      anchored: false
     - type: Fixtures
       fixtures:
         fix1:
