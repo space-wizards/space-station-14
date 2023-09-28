@@ -12,7 +12,7 @@ namespace Content.Tests.Shared.Alert
 {
     [TestFixture]
     [TestOf(typeof(AlertsComponent))]
-    public sealed class ServerAlertsComponentTests
+    public sealed class ServerAlertsComponentTests : ContentUnitTest
     {
         const string PROTOTYPES = @"
 - type: alert
@@ -27,6 +27,7 @@ namespace Content.Tests.Shared.Alert
 ";
 
         [Test]
+        [Ignore("There is no way to load extra Systems in a unit test, fixing RobustUnitTest is out of scope.")]
         public void ShowAlerts()
         {
             // this is kind of unnecessary because there's integration test coverage of Alert components
