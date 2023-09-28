@@ -257,7 +257,7 @@ public sealed class BanManager : IBanManager, IPostInjectInit
 
         if (ban.UserId is { } player && _cachedRoleBans.TryGetValue(player, out var roleBans))
         {
-            roleBans.Remove(ban);
+            roleBans.RemoveWhere(roleBan => roleBan.Id == ban.Id);
             SendRoleBans(player);
         }
 
