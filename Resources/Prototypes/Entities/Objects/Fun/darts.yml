@@ -8,7 +8,6 @@
     minimumSpeed: 3
     removalTime: 0.5
     offset: 0.0,0.0
-    soundSpecifier: /Audio/Weapons/Guns/Hits/bullet_meat1.ogg
   - type: ThrowingAngle
     angle: 315
   - type: Fixtures
