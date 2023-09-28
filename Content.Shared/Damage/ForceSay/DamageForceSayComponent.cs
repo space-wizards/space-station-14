@@ -54,4 +54,12 @@ public sealed partial class DamageForceSayComponent : Component
         "Brute",
         "Burn",
     };
+
+    /// <summary>
+    ///     The time enforced between force says to avoid spam.
+    /// </summary>
+    [DataField]
+    public TimeSpan Cooldown = TimeSpan.FromSeconds(5.0);
+
+    public TimeSpan? NextAllowedTime = null;
 }

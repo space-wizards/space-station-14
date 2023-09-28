@@ -17,33 +17,22 @@ public sealed class DamageForceSaySystem : EntitySystem
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
 
-    /// <summary>
-    ///     Used so we don't double-send in one tick
-    ///     for instance when a damageable event triggers a mobstate change.
-    ///
-    ///     The 'bool' here is the `UseSuffix` parameter.
-    /// </summary>
-    private readonly Dictionary<ICommonSession, bool> _toSend = new();
-
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<DamageForceSayComponent, StunnedEvent>(OnStunned);
         SubscribeLocalEvent<DamageForceSayComponent, MobStateChangedEvent>(OnMobStateChanged);
+
+        // need to raise after mobthreshold
+        // so that we don't accidentally raise one for damage before one for mobstate
+        // (this won't double raise, because of the cooldown)
         SubscribeLocalEvent<DamageForceSayComponent, DamageChangedEvent>(OnDamageChanged, after: new []{ typeof(MobThresholdSystem)} );
     }
 
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
-
-        foreach (var (session, suffix) in _toSend)
-        {
-            RaiseNetworkEvent(new DamageForceSayEvent { UseSuffix = suffix }, session);
-        }
-
-        _toSend.Clear();
 
         var query = AllEntityQuery<AllowNextCritSpeechComponent>();
         while (query.MoveNext(out var uid, out var comp))
@@ -55,17 +44,24 @@ public sealed class DamageForceSaySystem : EntitySystem
         }
     }
 
-    private void TryForceSay(EntityUid uid, bool suffix=true)
+    private void TryForceSay(EntityUid uid, DamageForceSayComponent component, bool suffix=true)
     {
         if (!TryComp<ActorComponent>(uid, out var actor))
             return;
 
-        _toSend.TryAdd(actor.PlayerSession, suffix);
+        // disallow if cooldown hasn't ended
+        if (component.NextAllowedTime != null &&
+            _timing.CurTime < component.NextAllowedTime)
+            return;
+
+        // set cooldown & raise event
+        component.NextAllowedTime = _timing.CurTime + component.Cooldown;
+        RaiseNetworkEvent(new DamageForceSayEvent { UseSuffix = suffix }, actor.PlayerSession);
     }
 
     private void OnStunned(EntityUid uid, DamageForceSayComponent component, ref StunnedEvent args)
     {
-        TryForceSay(uid);
+        TryForceSay(uid, component);
     }
 
     private void OnDamageChanged(EntityUid uid, DamageForceSayComponent component, DamageChangedEvent args)
@@ -88,7 +84,7 @@ public sealed class DamageForceSaySystem : EntitySystem
                 return;
         }
 
-        TryForceSay(uid);
+        TryForceSay(uid, component);
     }
 
     private void OnMobStateChanged(EntityUid uid, DamageForceSayComponent component, MobStateChangedEvent args)
@@ -101,7 +97,7 @@ public sealed class DamageForceSaySystem : EntitySystem
 
         // no suffix for the drama
         // LING IN MAI-
-        TryForceSay(uid, false);
+        TryForceSay(uid, component, false);
         var nextCrit = EnsureComp<AllowNextCritSpeechComponent>(uid);
 
         // timeout is *3 ping to compensate for roundtrip + leeway
