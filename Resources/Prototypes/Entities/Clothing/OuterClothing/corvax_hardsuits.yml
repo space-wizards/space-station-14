@@ -1,0 +1,667 @@
+- type: entity
+  parent: ClothingOuterHardsuitBase
+  id: ClothingOuterHardsuitAtmosCorvax
+  name: atmos hardsuit
+  description: A special suit that protects against hazardous, low pressure environments. Has thermal shielding.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Hardsuits/corvax_atmospherics.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Hardsuits/corvax_atmospherics.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.02
+    lowPressureMultiplier: 1000
+  - type: TemperatureProtection
+    coefficient: 0.001
+  - type: ExplosionResistance
+    damageCoefficient: 0.5
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+        Heat: 0.2
+        Radiation: 0.5
+        Caustic: 0.5
+  - type: ClothingSpeedModifier
+    walkModifier: 0.7
+    sprintModifier: 0.7
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitAtmosCorvax
+
+- type: entity
+  parent: ClothingOuterHardsuitBase
+  id: ClothingOuterHardsuitEngineeringCorvax
+  name: engineering hardsuit
+  description: A special suit that protects against hazardous, low pressure environments. Has radiation shielding.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Hardsuits/corvax_engineering.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Hardsuits/corvax_engineering.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.04
+    lowPressureMultiplier: 1000
+  - type: TemperatureProtection
+    coefficient: 0.01
+  - type: ExplosionResistance
+    damageCoefficient: 0.5
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+        Shock: 0.8
+        Caustic: 0.5
+        Radiation: 0.2
+  - type: ClothingSpeedModifier
+    walkModifier: 0.7
+    sprintModifier: 0.7
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitEngineeringCorvax
+
+#Salvage Hardsuit
+- type: entity
+  parent: ClothingOuterHardsuitBase
+  id: ClothingOuterHardsuitSalvageCorvax
+  name: mining hardsuit
+  description: A special suit that protects against hazardous, low pressure environments. Has reinforced plating for wildlife encounters.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Hardsuits/corvax_salvage.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Hardsuits/corvax_salvage.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.5
+    lowPressureMultiplier: 1000
+  - type: ExplosionResistance
+    damageCoefficient: 0.3
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.7
+        Slash: 0.7
+        Piercing: 0.5
+        Radiation: 0.3
+        Caustic: 0.7
+  - type: ClothingSpeedModifier
+    walkModifier: 0.75
+    sprintModifier: 0.75
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitSalvageCorvax
+
+- type: entity
+  parent: ClothingOuterHardsuitBase
+  id: ClothingOuterHardsuitSecurityCorvax
+  name: security hardsuit
+  description: A special suit that protects against hazardous, low pressure environments. Has an additional layer of armor.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Hardsuits/corvax_security.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Hardsuits/corvax_security.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.5
+    lowPressureMultiplier: 1000
+  - type: ExplosionResistance
+    damageCoefficient: 0.4
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.6
+        Slash: 0.6
+        Piercing: 0.6
+        Caustic: 0.7
+  - type: ClothingSpeedModifier
+    walkModifier: 0.75
+    sprintModifier: 0.75
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitSecurityCorvax
+
+#Warden's Hardsuit
+- type: entity
+  parent: ClothingOuterHardsuitBase
+  id: ClothingOuterHardsuitWardenCorvax
+  name: warden's hardsuit
+  description: A specialized riot suit geared to combat low pressure environments.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Hardsuits/corvax_security-warden.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Hardsuits/corvax_security-warden.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.5
+    lowPressureMultiplier: 1000
+  - type: ExplosionResistance
+    damageCoefficient: 0.4
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.5
+        Slash: 0.6
+        Piercing: 0.6
+        Caustic: 0.7
+  - type: ClothingSpeedModifier
+    walkModifier: 0.7
+    sprintModifier: 0.7
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitWardenCorvax
+
+- type: entity
+  parent: ClothingOuterHardsuitBase
+  id: ClothingOuterHardsuitCapCorvax
+  name: captain's armored spacesuit
+  description: A formal armored spacesuit, made for the station's captain.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Hardsuits/corvax_capspace.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Hardsuits/corvax_capspace.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.02
+    lowPressureMultiplier: 1000
+  - type: ExplosionResistance
+    damageCoefficient: 0.5
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.8
+        Slash: 0.8
+        Piercing: 0.8
+        Heat: 0.5
+        Radiation: 0.5
+        Caustic: 0.6
+  - type: ClothingSpeedModifier
+    walkModifier: 0.8
+    sprintModifier: 0.8
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitCapCorvax
+
+- type: entity
+  parent: ClothingOuterHardsuitBase
+  id: ClothingOuterHardsuitEngineeringWhiteCorvax
+  name: chief engineer's hardsuit
+  description: A special hardsuit that protects against hazardous, low pressure environments, made for the chief engineer of the station.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Hardsuits/corvax_engineering-white.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Hardsuits/corvax_engineering-white.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.02
+    lowPressureMultiplier: 1000
+  - type: ExplosionResistance
+    damageCoefficient: 0.2
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.8
+        Slash: 0.8
+        Piercing: 0.8
+        Heat: 0.4
+        Radiation: 0.0
+        Caustic: 0.7
+  - type: ClothingSpeedModifier
+    walkModifier: 0.75
+    sprintModifier: 0.8
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitEngineeringWhiteCorvax
+
+- type: entity
+  parent: ClothingOuterHardsuitBase
+  id: ClothingOuterHardsuitMedicalCorvax
+  name: chief medical officer's hardsuit
+  description: A special suit that protects against hazardous, low pressure environments. Built with lightweight materials for easier movement.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Hardsuits/corvax_medical.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Hardsuits/corvax_medical.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.3
+    lowPressureMultiplier: 1000
+  - type: Armor
+    modifiers:
+      coefficients:
+        Caustic: 0.1
+  - type: ClothingSpeedModifier
+    walkModifier: 0.9
+    sprintModifier: 0.95
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitMedicalCorvax
+
+- type: entity
+  parent: ClothingOuterHardsuitBase
+  id: ClothingOuterHardsuitRdCorvax
+  name: experimental research hardsuit
+  description: A special suit that protects against hazardous, low pressure environments. Has an additional layer of armor. Able to be compressed to small sizes.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Hardsuits/corvax_rd.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Hardsuits/corvax_rd.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.02
+    lowPressureMultiplier: 1000
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.6
+        Slash: 0.8
+        Piercing: 0.9
+        Heat: 0.3
+        Radiation: 0.1
+        Caustic: 0.2
+  - type: ExplosionResistance
+    damageCoefficient: 0.1
+  - type: ClothingSpeedModifier
+    walkModifier: 0.75
+    sprintModifier: 0.75
+  - type: Item
+    size: 50
+  - type: Tag
+    tags:
+    - WhitelistChameleon
+    - HighRiskItem
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitRdCorvax
+  - type: StaticPrice
+    price: 750
+
+- type: entity
+  parent: ClothingOuterHardsuitSecurity
+  id: ClothingOuterHardsuitSecurityRedCorvax
+  name: head of security's hardsuit
+  description: A special suit that protects against hazardous, low pressure environments. Has an additional layer of armor.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Hardsuits/corvax_security-red.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Hardsuits/corvax_security-red.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.45
+    lowPressureMultiplier: 1000
+  - type: ExplosionResistance
+    damageCoefficient: 0.6
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.6
+        Slash: 0.5
+        Piercing: 0.5
+        Radiation: 0.5
+        Caustic: 0.6
+  - type: ClothingSpeedModifier
+    walkModifier: 0.8
+    sprintModifier: 0.8
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitSecurityRedCorvax
+
+- type: entity
+  parent: ClothingOuterHardsuitBase
+  id: ClothingOuterHardsuitSyndieCorvax
+  name: blood-red hardsuit
+  description: A heavily armored and agile advanced hardsuit designed for work in special operations.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Hardsuits/corvax_syndicate.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Hardsuits/corvax_syndicate.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.05
+    lowPressureMultiplier: 1000
+  - type: ExplosionResistance
+    damageCoefficient: 0.5
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.5
+        Slash: 0.5
+        Piercing: 0.5
+        Heat: 0.5
+        Radiation: 0.5
+        Caustic: 0.5
+  - type: ClothingSpeedModifier
+    walkModifier: 0.9
+    sprintModifier: 0.9
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitSyndieCorvax
+
+- type: entity
+  parent: ClothingOuterHardsuitBase
+  id: ClothingOuterHardsuitJuggernautCorvax
+  name: cybersun juggernaut suit
+  description: A suit made by the cutting edge R&D department at cybersun to be hyper resilient.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Hardsuits/corvax_cybersun.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Hardsuits/corvax_cybersun.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.2
+    lowPressureMultiplier: 1000
+  - type: ExplosionResistance
+    damageCoefficient: 0.3
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.2
+        Slash: 0.2
+        Piercing: 0.2
+        Heat: 0.2
+        Radiation: 0.2
+        Caustic: 0.2
+  - type: ClothingSpeedModifier
+    walkModifier: 0.9
+    sprintModifier: 0.65
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitCybersunCorvax
+
+- type: entity
+  parent: ClothingOuterHardsuitBase
+  id: ClothingOuterHardsuitSyndieEliteCorvax
+  name: syndicate elite hardsuit
+  description: An upgraded version of the blood red hardsuit that features enhanced fireproofing, pressure resist, and superior armor.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Hardsuits/corvax_syndieelite.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Hardsuits/corvax_syndieelite.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.02
+    lowPressureMultiplier: 1000
+  - type: TemperatureProtection
+    coefficient: 0.001
+  - type: ExplosionResistance
+    damageCoefficient: 0.3
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.5
+        Slash: 0.5
+        Piercing: 0.4
+        Heat: 0.2
+        Radiation: 0.25
+        Caustic: 0.5
+  - type: ClothingSpeedModifier
+    walkModifier: 1.0
+    sprintModifier: 1.0
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitSyndieEliteCorvax
+
+- type: entity
+  parent: ClothingOuterHardsuitBase
+  id: ClothingOuterHardsuitSyndieCommanderCorvax
+  name: syndicate commander hardsuit
+  description: A blood red hardsuit heavily modified for use by the commander of operative squads.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Hardsuits/corvax_syndiecommander.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Hardsuits/corvax_syndiecommander.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.05
+    lowPressureMultiplier: 1000
+  - type: ExplosionResistance
+    damageCoefficient: 0.5
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.4
+        Slash: 0.4
+        Piercing: 0.3
+        Heat: 0.5
+        Radiation: 0.25
+        Caustic: 0.4
+  - type: ClothingSpeedModifier
+    walkModifier: 1.0
+    sprintModifier: 1.0
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitSyndieCommanderCorvax
+
+- type: entity
+  parent: ClothingOuterHardsuitBase
+  id: ClothingOuterHardsuitWizardCorvax
+  name: wizard hardsuit
+  description: A bizarre gem-encrusted suit that radiates magical energies.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Hardsuits/corvax_wizard.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Hardsuits/corvax_wizard.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.05
+    lowPressureMultiplier: 1000
+  - type: ExplosionResistance
+    damageCoefficient: 0.5
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.6
+        Slash: 0.6
+        Piercing: 0.4
+        Heat: 0.25
+        Radiation: 0.25
+        Caustic: 0.75
+  - type: ClothingSpeedModifier
+    walkModifier: 0.8
+    sprintModifier: 0.8
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitWizardCorvax
+
+- type: entity
+  parent: ClothingOuterHardsuitBase
+  id: ClothingOuterHardsuitPirateCapCorvax
+  name: pirate captain's hardsuit
+  description: An ancient armored hardsuit, perfect for defending against space scurvy and toolbox-wielding scallywags.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Hardsuits/corvax_piratecaptain.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Hardsuits/corvax_piratecaptain.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.02
+    lowPressureMultiplier: 1000
+  - type: ExplosionResistance
+    damageCoefficient: 0.6
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.7
+        Slash: 0.8
+        Piercing: 0.85
+        Heat: 0.4
+        Caustic: 0.75
+  - type: ClothingSpeedModifier
+    walkModifier: 0.8
+    sprintModifier: 0.8
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitPirateCap
+
+
+- type: entity
+  parent: ClothingOuterHardsuitSyndieCommander
+  id: ClothingOuterHardsuitERTLeaderCorvax
+  name: ERT leader's hardsuit
+  description: A protective hardsuit worn by members of an emergency response team.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Hardsuits/Corvax_ERTSuits/ertleader.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Hardsuits/Corvax_ERTSuits/ertleader.rsi
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitERTLeaderCorvax
+
+- type: entity
+  parent: ClothingOuterHardsuitSyndie
+  id: ClothingOuterHardsuitERTEngineerCorvax
+  name: ERT engineer's hardsuit
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Hardsuits/Corvax_ERTSuits/ertengineer.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Hardsuits/Corvax_ERTSuits/ertengineer.rsi
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitERTEngineerCorvax
+
+- type: entity
+  parent: ClothingOuterHardsuitSyndieElite
+  id: ClothingOuterHardsuitERTMedicalCorvax
+  name: ERT medic's hardsuit
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Hardsuits/Corvax_ERTSuits/ertmedical.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Hardsuits/Corvax_ERTSuits/ertmedical.rsi
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitERTMedicalCorvax
+
+- type: entity
+  parent: ClothingOuterHardsuitSyndie
+  id: ClothingOuterHardsuitERTSecurityCorvax
+  name: ERT security's hardsuit
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Hardsuits/Corvax_ERTSuits/ertsecurity.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Hardsuits/Corvax_ERTSuits/ertsecurity.rsi
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitERTSecurityCorvax
+
+- type: entity
+  parent: ClothingOuterHardsuitSyndie
+  id: ClothingOuterHardsuitERTJanitorCorvax
+  name: ERT janitor's hardsuit
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Hardsuits/Corvax_ERTSuits/ertjanitor.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Hardsuits/Corvax_ERTSuits/ertjanitor.rsi
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitERTJanitorCorvax
+
+- type: entity
+  parent: ClothingOuterHardsuitBase
+  id: ClothingOuterHardsuitDeathsquadCorvax
+  name: deathsquad hardsuit
+  description: An advanced hardsuit favored by commandos for use in special operations.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Hardsuits/corvax_deathsquad.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Hardsuits/corvax_deathsquad.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.02
+    lowPressureMultiplier: 1000
+  - type: TemperatureProtection
+    coefficient: 0.001
+  - type: ExplosionResistance
+    damageCoefficient: 0.2
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.2 #best armor in the game
+        Slash: 0.2
+        Piercing: 0.2
+        Heat: 0.1
+        Radiation: 0.1
+        Caustic: 0.2
+  - type: ClothingSpeedModifier
+    walkModifier: 1.0
+    sprintModifier: 1.0
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitDeathsquadCorvax
+
+- type: entity
+  parent: ClothingOuterHardsuitBase
+  id: ClothingOuterHardsuitCBURNCorvax
+  name: CBURN exosuit
+  description: A lightweight yet strong exosuit used for special cleanup operations.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Hardsuits/corvax_cburn.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Hardsuits/corvax_cburn.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.02
+    lowPressureMultiplier: 1000
+  - type: TemperatureProtection
+    coefficient: 0.001
+  - type: ExplosionResistance
+    damageCoefficient: 0.7
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.7
+        Slash: 0.7
+        Piercing: 0.6
+        Heat: 0.1
+        Cold: 0.1
+        Shock: 0.1
+        Radiation: 0.1
+        Caustic: 0.1
+  - type: ClothingSpeedModifier
+    walkModifier: 1.0
+    sprintModifier: 1.0
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetCBURNCorvax
+
+- type: entity
+  parent: ClothingOuterHardsuitBase
+  id: ClothingOuterHardsuitClownCorvax
+  name: clown hardsuit
+  description: A custom made clown hardsuit.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Hardsuits/corvax_clown.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Hardsuits/corvax_clown.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.5
+    lowPressureMultiplier: 1000
+  - type: ExplosionResistance
+    damageCoefficient: 0.9
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+        Caustic: 0.8
+  - type: ClothingSpeedModifier
+    walkModifier: 0.9
+    sprintModifier: 0.9
+  - type: Construction
+    graph: ClownHardsuit
+    node: clownHardsuit
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitClownCorvax
+
+- type: entity
+  parent: ClothingOuterEVASuitBase
+  id: ClothingOuterHardsuitVoidParamedCorvax
+  name: Paramedic Void Suit
+  description: A void suit made for paramedics.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Hardsuits/corvax_paramed.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Hardsuits/corvax_paramed.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.5
+    lowPressureMultiplier: 1000
+  - type: ClothingSpeedModifier
+    walkModifier: 0.9
+    sprintModifier: 0.9
+  - type: TemperatureProtection
+    coefficient: 0.1
+  - type: Armor
+    modifiers:
+      coefficients:
+        Slash: 0.95
+        Heat: 0.90
+        Radiation: 0.75
+        Caustic: 0.5
+  - type: GroupExamine
