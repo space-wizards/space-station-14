@@ -69,6 +69,14 @@
     Glass: 100
 
 - type: latheRecipe
+  id: AnomalyLocatorWide
+  result: AnomalyLocatorWideEmpty
+  completetime: 3
+  materials:
+    Steel: 400
+    Glass: 100
+
+- type: latheRecipe
   id: AnomalyScanner
   result: AnomalyScanner
   completetime: 2
