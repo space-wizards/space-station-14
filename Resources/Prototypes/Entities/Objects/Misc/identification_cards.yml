@@ -304,7 +304,7 @@
         - state: idbartender
     - type: PresetIdCard
       job: Bartender
-      name: Pun Pun
+      name: Пун Пун
 
 - type: entity
   parent: IDCardStandard
