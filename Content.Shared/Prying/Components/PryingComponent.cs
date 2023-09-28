@@ -15,6 +15,7 @@ public sealed partial class PryingComponent : Component
     /// <summary>
     /// Whether the tool can bypass certain restrictions when prying.
     /// For example door bolts.
+    /// </summary>
     [DataField("force")]
     public bool Force = false;
     /// <summary>
@@ -38,40 +39,36 @@ public sealed partial class PryingComponent : Component
 }
 
 /// <summary>
-/// Raised before prying open a door.
-/// Cancel to stop the door from being pried open
+/// Raised directed on an entity before prying it.
+/// Cancel to stop the entity from being pried open.
 /// </summary>
-public sealed class BeforePryEvent : CancellableEntityEventArgs
+[ByRefEvent]
+public record struct BeforePryEvent(EntityUid User, bool PryPowered, bool Force)
 {
-    public readonly EntityUid User;
+    public readonly EntityUid User = User;
 
-    public readonly bool PryPowered;
+    public readonly bool PryPowered = PryPowered;
 
-    public readonly bool Force;
+    public readonly bool Force = Force;
 
-    public BeforePryEvent(EntityUid user, bool pry_powered, bool force)
-    {
-        User = user;
-        PryPowered = pry_powered;
-        Force = force;
-    }
-
+    public bool Cancelled;
 }
 
-public sealed class AfterPryEvent : EntityEventArgs
+/// <summary>
+/// Raised directed on an entity that has been pried.
+/// </summary>
+[ByRefEvent]
+public readonly record struct PriedEvent(EntityUid User)
 {
-    public readonly EntityUid User;
-    public AfterPryEvent(EntityUid user)
-    {
-        User = user;
-    }
+    public readonly EntityUid User = User;
 }
 
 /// <summary>
 /// Raised to determine how long the door's pry time should be modified by.
 /// Multiply PryTimeModifier by the desired amount.
 /// </summary>
-public sealed partial class GetPryTimeModifierEvent : EntityEventArgs
+[ByRefEvent]
+public record struct GetPryTimeModifierEvent
 {
     public readonly EntityUid User;
     public float PryTimeModifier = 1.0f;

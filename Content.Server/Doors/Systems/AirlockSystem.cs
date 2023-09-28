@@ -169,18 +169,18 @@ public sealed class AirlockSystem : SharedAirlockSystem
         }
     }
 
-    private void OnGetPryMod(EntityUid uid, AirlockComponent component, GetPryTimeModifierEvent args)
+    private void OnGetPryMod(EntityUid uid, AirlockComponent component, ref GetPryTimeModifierEvent args)
     {
         if (_power.IsPowered(uid))
             args.PryTimeModifier *= component.PoweredPryModifier;
     }
 
-    private void OnBeforePry(EntityUid uid, AirlockComponent component, BeforePryEvent args)
+    private void OnBeforePry(EntityUid uid, AirlockComponent component, ref BeforePryEvent args)
     {
         if (this.IsPowered(uid, EntityManager) && !args.PryPowered)
         {
-            Popup.PopupEntity(Loc.GetString("airlock-component-cannot-pry-is-powered-message"), uid, args.User);
-            args.Cancel();
+            Popup.PopupClient(Loc.GetString("airlock-component-cannot-pry-is-powered-message"), uid, args.User);
+            args.Cancelled = true;
         }
     }
 

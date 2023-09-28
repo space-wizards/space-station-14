@@ -185,7 +185,7 @@ public abstract partial class SharedDoorSystem : EntitySystem
         args.Handled = true;
     }
 
-    private void OnPryTimeModifier(EntityUid uid, DoorComponent door, GetPryTimeModifierEvent args)
+    private void OnPryTimeModifier(EntityUid uid, DoorComponent door, ref GetPryTimeModifierEvent args)
     {
         args.BaseTime = door.PryTime;
     }

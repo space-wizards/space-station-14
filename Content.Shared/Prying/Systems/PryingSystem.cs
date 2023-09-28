@@ -7,6 +7,7 @@ using Content.Shared.Database;
 using Content.Shared.Doors.Components;
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Interaction;
+using PryUnpoweredComponent = Content.Shared.Prying.Components.PryUnpoweredComponent;
 
 namespace Content.Shared.Prying.Systems;
 
@@ -108,7 +109,7 @@ public sealed class PryingSystem : EntitySystem
             canev = new BeforePryEvent(user, false, false);
         }
 
-        RaiseLocalEvent(target, canev, false);
+        RaiseLocalEvent(target, ref canev);
 
         if (canev.Cancelled)
             return false;
@@ -119,8 +120,7 @@ public sealed class PryingSystem : EntitySystem
     {
         var modEv = new GetPryTimeModifierEvent(user);
 
-
-        RaiseLocalEvent(target, modEv, false);
+        RaiseLocalEvent(target, ref modEv);
         var doAfterArgs = new DoAfterArgs(EntityManager, user, TimeSpan.FromSeconds(modEv.BaseTime * modEv.PryTimeModifier / toolModifier), new DoorPryDoAfterEvent(), target, target, tool)
         {
             BreakOnDamage = true,
@@ -151,9 +151,8 @@ public sealed class PryingSystem : EntitySystem
         if (args.Used != null && Resolve(args.Used.Value, ref comp))
             _audioSystem.PlayPredicted(comp.UseSound, args.Used.Value, args.User);
 
-        var ev = new AfterPryEvent(args.User);
-        RaiseLocalEvent(uid, ev, false);
-
+        var ev = new PriedEvent(args.User);
+        RaiseLocalEvent(uid, ref ev);
     }
 }
 

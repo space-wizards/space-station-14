@@ -145,7 +145,7 @@ namespace Content.Server.Doors.Systems
                 args.Cancel();
         }
 
-        private void OnDoorGetPryTimeModifier(EntityUid uid, FirelockComponent component, GetPryTimeModifierEvent args)
+        private void OnDoorGetPryTimeModifier(EntityUid uid, FirelockComponent component, ref GetPryTimeModifierEvent args)
         {
             var state = CheckPressureAndFire(uid, component);
 

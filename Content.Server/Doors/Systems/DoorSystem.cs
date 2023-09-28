@@ -38,7 +38,7 @@ public sealed class DoorSystem : SharedDoorSystem
         SubscribeLocalEvent<DoorComponent, WeldableAttemptEvent>(OnWeldAttempt);
         SubscribeLocalEvent<DoorComponent, WeldableChangedEvent>(OnWeldChanged);
         SubscribeLocalEvent<DoorComponent, GotEmaggedEvent>(OnEmagged);
-        SubscribeLocalEvent<DoorComponent, AfterPryEvent>(OnAfterPry);
+        SubscribeLocalEvent<DoorComponent, PriedEvent>(OnAfterPry);
     }
 
     protected override void OnActivate(EntityUid uid, DoorComponent door, ActivateInWorldEvent args)
@@ -130,12 +130,10 @@ public sealed class DoorSystem : SharedDoorSystem
             SetState(uid, DoorState.Closed, component);
     }
 
-    private void OnBeforeDoorPry(EntityUid id, DoorComponent door, BeforePryEvent args)
+    private void OnBeforeDoorPry(EntityUid id, DoorComponent door, ref BeforePryEvent args)
     {
         if (door.State == DoorState.Welded || !door.CanPry)
-            args.Cancel();
-        return;
-
+            args.Cancelled = true;
     }
     #endregion
 
@@ -194,7 +192,7 @@ public sealed class DoorSystem : SharedDoorSystem
     /// <summary>
     ///     Open or close a door after it has been successfuly pried.
     /// </summary>
-    private void OnAfterPry(EntityUid uid, DoorComponent door, AfterPryEvent args)
+    private void OnAfterPry(EntityUid uid, DoorComponent door, ref PriedEvent args)
     {
         if (door.State == DoorState.Closed)
         {
