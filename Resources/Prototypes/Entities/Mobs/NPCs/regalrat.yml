@@ -112,6 +112,9 @@
   - type: GuideHelp
     guides:
     - MinorAntagonists
+  - type: Grammar
+    attributes:
+      gender: male
 
 - type: entity
   id: MobRatKingBuff

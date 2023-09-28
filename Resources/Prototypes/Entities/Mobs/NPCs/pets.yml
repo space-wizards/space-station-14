@@ -97,6 +97,7 @@
       task: SimpleHostileCompound
   - type: Grammar
     attributes:
+      proper: true
       gender: female
   - type: Tag
     tags:
@@ -114,6 +115,7 @@
       - PetsNT
   - type: Grammar
     attributes:
+      proper: true
       gender: male
   - type: Tag
     tags:
@@ -153,6 +155,7 @@
   components:
   - type: Grammar
     attributes:
+      proper: true
       gender: male
   - type: Tag
     tags:
@@ -160,7 +163,7 @@
     - VimPilot
 
 - type: entity
-  name: bingus
+  name: Bingus
   parent: SimpleMobBase
   id: MobBingus
   description: Bingus my beloved...
@@ -212,6 +215,7 @@
       path: /Audio/Animals/cat_meow.ogg
   - type: Grammar
     attributes:
+      proper: true
       gender: epicene
   - type: Tag
     tags:
@@ -219,7 +223,7 @@
     - VimPilot
 
 - type: entity
-  name: mcgriff
+  name: McGriff
   parent: SimpleMobBase
   id: MobMcGriff
   description: This dog can tell something smells around here, and that something is CRIME!
@@ -431,6 +435,7 @@
       path: /Audio/Animals/pig_oink.ogg
   - type: Grammar
     attributes:
+      proper: true
       gender: male
   - type: Tag
     tags:
@@ -686,6 +691,10 @@
     makeSentient: true
     name: ghost-role-information-smile-name
     description: ghost-role-information-smile-description
+  - type: Grammar
+    attributes:
+      proper: true
+      gender: female
 
 - type: entity
   name: Pun Pun
@@ -715,3 +724,7 @@
     - VimPilot
   - type: Loadout
     prototypes: [ MobMonkeyGear ]
+  - type: Grammar
+    attributes:
+      proper: true
+      gender: male
