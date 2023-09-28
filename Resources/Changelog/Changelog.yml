@@ -1,9 +1,4 @@
 Entries:
-- author: eclips_e
-  changes:
-  - {message: The P-Block crate will now have oxygen and nitrogen jugs., type: Fix}
-  id: 4415
-  time: '2023-08-02T14:32:08.0000000+00:00'
 - author: chromiumboy
   changes:
   - {message: Containers used in recipes now drop their contents when crafted., type: Fix}
@@ -2966,3 +2961,9 @@ Entries:
   - {message: Added Sings for Mine Wall., type: Add}
   id: 4914
   time: '2023-09-28T17:07:13.0000000+00:00'
+- author: lunarcomets
+  changes:
+  - {message: 'Tweaked archaic issues to fix capitalization issues, and removed the
+      replacement for ''request'' for consistency.', type: Tweak}
+  id: 4915
+  time: '2023-09-28T19:19:58.0000000+00:00'
