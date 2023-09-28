@@ -1,6 +1,7 @@
 ﻿using Content.Shared.Damage.Prototypes;
 using Content.Shared.FixedPoint;
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Set;
 
 namespace Content.Shared.Damage.ForceSay;
@@ -16,14 +17,14 @@ public sealed partial class DamageForceSayComponent : Component
     ///     The localization string that the message & suffix will be passed into
     /// </summary>
     [DataField]
-    public string ForceSayMessageWrap = "damage-force-say-message-wrap";
+    public LocId ForceSayMessageWrap = "damage-force-say-message-wrap";
 
     /// <summary>
     ///     Same as <see cref="ForceSayMessageWrap"/> but for cases where no suffix is used,
     ///     such as when going into crit.
     /// </summary>
     [DataField]
-    public string ForceSayMessageWrapNoSuffix = "damage-force-say-message-wrap-no-suffix";
+    public LocId ForceSayMessageWrapNoSuffix = "damage-force-say-message-wrap-no-suffix";
 
     /// <summary>
     ///     The fluent string prefix to use when picking a random suffix
@@ -48,8 +49,8 @@ public sealed partial class DamageForceSayComponent : Component
     /// <summary>
     ///     A list of damage group types that are considered when checking <see cref="DamageThreshold"/>.
     /// </summary>
-    [DataField(customTypeSerializer:typeof(PrototypeIdHashSetSerializer<DamageGroupPrototype>))]
-    public HashSet<string>? ValidDamageGroups = new()
+    [DataField]
+    public HashSet<ProtoId<DamageGroupPrototype>>? ValidDamageGroups = new()
     {
         "Brute",
         "Burn",
