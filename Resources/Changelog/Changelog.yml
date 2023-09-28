@@ -1,10 +1,4 @@
 Entries:
-- author: Nimfar
-  changes:
-  - {message: 'Adds a new theft target for the Syndicate, Emergency Security Orders
-      from the HoS.', type: Add}
-  id: 4413
-  time: '2023-08-02T10:05:12.0000000+00:00'
 - author: Bhijn and Myr
   changes:
   - {message: 'Interaction outlines now directly react to lighting. You can no longer
@@ -2968,3 +2962,9 @@ Entries:
   - {message: Arcade machine maintenance panels can be opened again., type: Fix}
   id: 4912
   time: '2023-09-28T14:00:19.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: The health alerts now have text to help discern how gravely injured
+      you are., type: Tweak}
+  id: 4913
+  time: '2023-09-28T14:05:42.0000000+00:00'
