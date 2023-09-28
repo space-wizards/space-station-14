@@ -52,5 +52,5 @@
           - ReagentId: Nutriment
             Quantity: 10
         Lung:
-          maxVol: 80.0
+          maxVol: 100.0
           canReact: false
