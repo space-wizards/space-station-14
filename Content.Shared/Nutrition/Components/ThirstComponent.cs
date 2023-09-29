@@ -45,7 +45,7 @@ public sealed partial class ThirstComponent : Component
     public TimeSpan UpdateRate = TimeSpan.FromSeconds(1);
 
     [DataField("thresholds")]
-    [AutoNetworkedField(cloneData: true)]
+    [AutoNetworkedField]
     public Dictionary<ThirstThreshold, float> ThirstThresholds = new()
     {
         {ThirstThreshold.OverHydrated, 600.0f},
