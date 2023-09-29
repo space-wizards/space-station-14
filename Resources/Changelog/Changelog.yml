@@ -1,10 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: NT has issued a unique anti-balloon weapon to security personnel. Use
-      it to destroy syndicate balloons and crush their morale!, type: Add}
-  id: 4422
-  time: '2023-08-04T01:53:06.0000000+00:00'
 - author: Interrobang01
   changes:
   - {message: 'A few changes to some chemical recipes, namely Dexalin, Lexorin, Ultravasculine,
@@ -2968,3 +2962,8 @@ Entries:
       You''ll sometimes find yours-AUGH', type: Add}
   id: 4921
   time: '2023-09-29T01:05:37.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Fixed AHelp progressively gaining more panels., type: Fix}
+  id: 4922
+  time: '2023-09-29T01:46:16.0000000+00:00'
