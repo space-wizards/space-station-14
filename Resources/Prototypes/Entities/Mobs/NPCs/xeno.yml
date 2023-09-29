@@ -25,6 +25,11 @@
     speed: 1.5
     qualities:
       - Prying
+  - type: Prying
+    pryPowered: !type:Bool
+        true
+    force: !type:Bool
+      true
     useSound:
       path: /Audio/Items/crowbar.ogg
   - type: Reactive
@@ -305,6 +310,11 @@
     drawdepth: Mobs
     sprite: Mobs/Aliens/Xenos/rouny.rsi
     offset: 0,0.6
+  - type: Butcherable
+    butcheringType: Spike
+    spawned:
+    - id: FoodMeatRouny
+      amount: 3
 
 - type: entity
   name: Spitter
