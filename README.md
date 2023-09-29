@@ -17,7 +17,7 @@ Space Station 14 это ремейк SS13, который работает на 
 
 ## Лицензия
 
-Код репозитория лицензирован как под [MIT](https://github.com/space-syndicate/space-station-14/blob/master/LICENSE.TXT) - это касается кода [Space Wizards Federation](https://github.com/space-wizards/space-station-14) и кода проекта [Corvax](https://github.com/space-syndicate/space-station-14), так и под [CLA](https://github.com/SerbiaStrong-220/space-station-14/blob/master/CLA.txt) - это касается наших изменений, определение которых дано в лицензии. Мы не стремимся к полному разграничению нашего кода и кода выше указанных проектов, поэтому во избежание инцидентов рекомендуется брать их код из их репозиториев.
+Код репозитория лицензирован как под [MIT](https://github.com/space-syndicate/space-station-14/blob/master/LICENSE.TXT) - это касается кода [Space Wizards Federation](https://github.com/space-wizards/space-station-14) и кода проекта [Corvax](https://github.com/space-syndicate/space-station-14), так и под [CLA](https://github.com/SerbiaStrong-220/space-station-14/blob/master/CLA.txt) - это касается наших изменений, определение которых дано в тексте CLA. Мы не стремимся к полному разграничению нашего кода и кода выше указанных проектов, поэтому во избежание инцидентов рекомендуется брать их код из их репозиториев.
 
 Мы в полной мере используем наше право на сублицензирование.
 
