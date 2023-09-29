@@ -19,6 +19,7 @@ namespace Content.Server.Labels
     {
         [Dependency] private readonly ItemSlotsSystem _itemSlotsSystem = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+        [Dependency] private readonly MetaDataSystem _metadata = default!;
 
         public const string ContainerName = "paper_label";
 
@@ -27,6 +28,7 @@ namespace Content.Server.Labels
             base.Initialize();
 
             SubscribeLocalEvent<LabelComponent, ExaminedEvent>(OnExamine);
+            SubscribeLocalEvent<LabelComponent, ComponentStartup>(OnStartup);
             SubscribeLocalEvent<PaperLabelComponent, ComponentInit>(OnComponentInit);
             SubscribeLocalEvent<PaperLabelComponent, ComponentRemove>(OnComponentRemove);
             SubscribeLocalEvent<PaperLabelComponent, EntInsertedIntoContainerMessage>(OnContainerModified);
@@ -65,6 +67,23 @@ namespace Content.Server.Labels
             label.OriginalName ??= metadata.EntityName;
             label.CurrentLabel = text;
             metadata.EntityName = $"{label.OriginalName} ({text})";
+        }
+
+        public void UpdateLabel(EntityUid uid, LabelComponent? label = null)
+        {
+            if (!Resolve(uid, ref label))
+                return;
+
+            _metadata.SetEntityName(uid, $"{label.OriginalName} ({label.CurrentLabel})");
+        }
+
+        private void OnStartup(EntityUid uid, LabelComponent component, ComponentStartup args)
+        {
+            if(string.IsNullOrEmpty(component.OriginalName))
+                component.OriginalName = Name(uid);
+
+            if (component.CurrentLabel != null)
+                UpdateLabel(uid, component);
         }
 
         private void OnComponentInit(EntityUid uid, PaperLabelComponent component, ComponentInit args)
