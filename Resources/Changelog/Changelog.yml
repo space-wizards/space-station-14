@@ -1,9 +1,4 @@
 Entries:
-- author: Bhijn and Myr
-  changes:
-  - {message: The game now boots in GLES2 again. oops., type: Fix}
-  id: 4419
-  time: '2023-08-02T23:13:07.0000000+00:00'
 - author: router
   changes:
   - {message: Ringtones now have 2 more notes you can play around with., type: Tweak}
@@ -2969,3 +2964,8 @@ Entries:
   - {message: Pressing F11 now toggles between full-screen and windowed modes., type: Add}
   id: 4918
   time: '2023-09-28T23:55:10.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Fixed everyone being bald., type: Fix}
+  id: 4919
+  time: '2023-09-29T00:44:47.0000000+00:00'
