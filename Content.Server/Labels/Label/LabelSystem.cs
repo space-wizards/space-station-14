@@ -3,7 +3,6 @@ using Content.Server.Paper;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Examine;
 using Content.Shared.Labels;
-using Content.Shared.Labels.Components;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
@@ -50,14 +49,21 @@ namespace Content.Server.Labels
 
             if (string.IsNullOrEmpty(text))
             {
+                if (label.OriginalName is null)
+                    return;
+
                 // Remove label
+                metadata.EntityName = label.OriginalName;
                 label.CurrentLabel = null;
+                label.OriginalName = null;
 
                 return;
             }
 
             // Update label
+            label.OriginalName ??= metadata.EntityName;
             label.CurrentLabel = text;
+            metadata.EntityName = $"{label.OriginalName} ({text})";
         }
 
         private void OnComponentInit(EntityUid uid, PaperLabelComponent component, ComponentInit args)
