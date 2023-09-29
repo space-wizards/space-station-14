@@ -8,9 +8,7 @@ using Content.Server.Mind;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Organ;
 using Content.Shared.Body.Part;
-using Content.Shared.Body.Prototypes;
 using Content.Shared.Body.Systems;
-using Content.Shared.Coordinates;
 using Content.Shared.Humanoid;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Movement.Events;
@@ -106,14 +104,10 @@ public sealed class BodySystem : SharedBodySystem
 
     private void OnRelayMoveInput(EntityUid uid, BodyComponent component, ref MoveInputEvent args)
     {
-        if (_mobState.IsDead(uid) && _mindSystem.TryGetMind(uid, out var mind))
+        if (_mobState.IsDead(uid) && _mindSystem.TryGetMind(uid, out var mindId, out var mind))
         {
-            if (!mind.TimeOfDeath.HasValue)
-            {
-                mind.TimeOfDeath = _gameTiming.RealTime;
-            }
-
-            _ticker.OnGhostAttempt(mind, true);
+            mind.TimeOfDeath ??= _gameTiming.RealTime;
+            _ticker.OnGhostAttempt(mindId, true, mind: mind);
         }
     }
 

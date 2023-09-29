@@ -29,7 +29,7 @@ namespace Content.Server.Players
         ///     DO NOT DIRECTLY SET THIS UNLESS YOU KNOW WHAT YOU'RE DOING.
         /// </summary>
         [ViewVariables, Access(typeof(MindSystem), typeof(GameTicker))]
-        public Mind.Mind? Mind { get; set; }
+        public EntityUid? Mind { get; set; }
 
         /// <summary>
         ///     If true, the player is an admin and they explicitly de-adminned mid-game,
@@ -65,7 +65,7 @@ namespace Content.Server.Players
         /// <summary>
         ///     Gets the mind that is associated with this player.
         /// </summary>
-        public static Mind.Mind? GetMind(this IPlayerSession session)
+        public static EntityUid? GetMind(this IPlayerSession session)
         {
             return session.Data.ContentData()?.Mind;
         }

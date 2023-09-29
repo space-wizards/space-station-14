@@ -1,7 +1,6 @@
 using Content.Server.Access.Systems;
 using Content.Server.Administration;
 using Content.Server.Administration.Systems;
-using Content.Server.Mind.Components;
 using Content.Server.PDA;
 using Content.Server.StationRecords.Systems;
 using Content.Shared.Access.Components;
@@ -44,18 +43,18 @@ public sealed class RenameCommand : IConsoleCommand
         // Metadata
         var metadata = entMan.GetComponent<MetaDataComponent>(entityUid);
         var oldName = metadata.EntityName;
-        metadata.EntityName = name;
+        entMan.System<MetaDataSystem>().SetEntityName(entityUid, name, metadata);
 
-        var entSysMan = IoCManager.Resolve<IEntitySystemManager>();
+        var minds = entMan.System<MindSystem>();
 
-        if (entMan.TryGetComponent(entityUid, out MindContainerComponent? mind) && mind.Mind != null)
+        if (minds.TryGetMind(entityUid, out var mindId, out var mind))
         {
             // Mind
-            mind.Mind.CharacterName = name;
+            mind.CharacterName = name;
         }
 
         // Id Cards
-        if (entSysMan.TryGetEntitySystem<IdCardSystem>(out var idCardSystem))
+        if (entMan.TrySystem<IdCardSystem>(out var idCardSystem))
         {
             if (idCardSystem.TryFindIdCard(entityUid, out var idCard))
             {
@@ -63,7 +62,7 @@ public sealed class RenameCommand : IConsoleCommand
 
                 // Records
                 // This is done here because ID cards are linked to station records
-                if (entSysMan.TryGetEntitySystem<StationRecordsSystem>(out var recordsSystem)
+                if (entMan.TrySystem<StationRecordsSystem>(out var recordsSystem)
                     && entMan.TryGetComponent(idCard.Owner, out StationRecordKeyStorageComponent? keyStorage)
                     && keyStorage.Key != null)
                 {
@@ -80,7 +79,7 @@ public sealed class RenameCommand : IConsoleCommand
         }
 
         // PDAs
-        if (entSysMan.TryGetEntitySystem<PdaSystem>(out var pdaSystem))
+        if (entMan.TrySystem<PdaSystem>(out var pdaSystem))
         {
             var query = entMan.EntityQueryEnumerator<PdaComponent>();
             while (query.MoveNext(out var uid, out var pda))
@@ -93,7 +92,7 @@ public sealed class RenameCommand : IConsoleCommand
         }
 
         // Admin Overlay
-        if (entSysMan.TryGetEntitySystem<AdminSystem>(out var adminSystem)
+        if (entMan.TrySystem<AdminSystem>(out var adminSystem)
             && entMan.TryGetComponent<ActorComponent>(entityUid, out var actorComp))
         {
             adminSystem.UpdatePlayerList(actorComp.PlayerSession);

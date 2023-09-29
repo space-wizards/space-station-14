@@ -1,15 +1,14 @@
-using System.Linq;
-using Content.Server.GameTicking;
+﻿using Content.Server.GameTicking;
 using Content.Server.Mind.Components;
 using Content.Server.Objectives;
-using Content.Server.Roles;
 using Robust.Server.Player;
 using Robust.Shared.Network;
 
 namespace Content.Server.Mind
 {
     /// <summary>
-    ///     A mind represents the IC "mind" of a player. Stores roles currently.
+    ///     A mind represents the IC "mind" of a player.
+    ///     Roles are attached as components to its owning entity.
     /// </summary>
     /// <remarks>
     ///     Think of it like this: if a player is supposed to have their memories,
@@ -18,22 +17,10 @@ namespace Content.Server.Mind
     ///     Things such as respawning do not follow, because you're a new character.
     ///     Getting borged, cloned, turned into a catbeast, etc... will keep it following you.
     /// </remarks>
-    public sealed class Mind
+    [RegisterComponent]
+    public sealed partial class MindComponent : Component
     {
-        internal readonly ISet<Role> Roles = new HashSet<Role>();
-
         internal readonly List<Objective> Objectives = new();
-
-        public string Briefing = String.Empty;
-
-        /// <summary>
-        ///     Creates the new mind.
-        ///     Note: the Mind is NOT initially attached!
-        ///     The provided UserId is solely for tracking of intended owner.
-        /// </summary>
-        public Mind()
-        {
-        }
 
         /// <summary>
         ///     The session ID of the player owning this mind.
@@ -87,12 +74,7 @@ namespace Content.Server.Mind
         [ViewVariables, Access(typeof(MindSystem))]
         public EntityUid? OwnedEntity { get; set; }
 
-        /// <summary>
-        ///     An enumerable over all the roles this mind has.
-        /// </summary>
-        [ViewVariables]
-        public IEnumerable<Role> AllRoles => Roles;
-
+        // TODO move objectives out of mind component
         /// <summary>
         ///     An enumerable over all the objectives this mind has.
         /// </summary>
@@ -119,10 +101,5 @@ namespace Content.Server.Mind
         /// </summary>
         [ViewVariables, Access(typeof(MindSystem), typeof(GameTicker))]
         public IPlayerSession? Session { get; internal set; }
-
-        /// <summary>
-        ///     Gets the current job
-        /// </summary>
-        public Job? CurrentJob => Roles.OfType<Job>().SingleOrDefault();
     }
 }

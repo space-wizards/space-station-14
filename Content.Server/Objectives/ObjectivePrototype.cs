@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using Content.Server.Mind;
 using Content.Server.Objectives.Interfaces;
 using Robust.Shared.Prototypes;
 
@@ -34,27 +35,29 @@ namespace Content.Server.Objectives
         [DataField("difficultyOverride")]
         private float? _difficultyOverride = null;
 
-        public bool CanBeAssigned(Mind.Mind mind)
+        public bool CanBeAssigned(EntityUid mindId, MindComponent mind)
         {
             foreach (var requirement in _requirements)
             {
-                if (!requirement.CanBeAssigned(mind)) return false;
+                if (!requirement.CanBeAssigned(mindId, mind))
+                    return false;
             }
 
             if (!CanBeDuplicateAssignment)
             {
                 foreach (var objective in mind.AllObjectives)
                 {
-                    if (objective.Prototype.ID == ID) return false;
+                    if (objective.Prototype.ID == ID)
+                        return false;
                 }
             }
 
             return true;
         }
 
-        public Objective GetObjective(Mind.Mind mind)
+        public Objective GetObjective(EntityUid mindId, MindComponent mind)
         {
-            return new(this, mind);
+            return new Objective(this, mindId, mind);
         }
     }
 }

@@ -1,9 +1,9 @@
-using Content.Server.Mind.Components;
-using Content.Server.Roles;
+using Content.Server.Mind;
+using Content.Server.Roles.Jobs;
 using Content.Shared.Roles;
 using Content.Shared.Store;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Set;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Set;
 
 namespace Content.Server.Store.Conditions;
 
@@ -30,45 +30,45 @@ public sealed partial class BuyerDepartmentCondition : ListingCondition
         var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
 
         var ent = args.EntityManager;
+        var minds = ent.System<MindSystem>();
 
-        if (!ent.TryGetComponent<MindContainerComponent>(args.Buyer, out var mind) || mind.Mind == null)
-            return true; //this is for things like surplus crate
+        // this is for things like surplus crate
+        if (!minds.TryGetMind(args.Buyer, out var mindId, out _))
+            return true;
 
-        if (Blacklist != null)
+        var jobs = ent.System<JobSystem>();
+        if (jobs.MindTryGetJob(mindId, out var job, out _))
         {
-            foreach (var role in mind.Mind.AllRoles)
+            if (Blacklist != null)
             {
-                if (role is not Job job)
-                    continue;
-
                 foreach (var department in prototypeManager.EnumeratePrototypes<DepartmentPrototype>())
-                    if (department.Roles.Contains(job.Prototype.ID))
-                        if (Blacklist.Contains(department.ID))
-                            return false;
+                {
+                    if (job.PrototypeId == null ||
+                        !department.Roles.Contains(job.PrototypeId) ||
+                        !Blacklist.Contains(department.ID))
+                        continue;
+
+                    return false;
+                }
             }
-        }
 
-        if (Whitelist != null)
-        {
-            var found = false;
-            foreach (var role in mind.Mind.AllRoles)
+            if (Whitelist != null)
             {
-                if (role is not Job job)
-                    continue;
-
+                var found = false;
                 foreach (var department in prototypeManager.EnumeratePrototypes<DepartmentPrototype>())
-                    if (department.Roles.Contains(job.Prototype.ID))
-                        if (Whitelist.Contains(department.ID))
-                        {
-                            found = true;
-                            break;
-                        }
+                {
+                    if (job.PrototypeId == null ||
+                        !department.Roles.Contains(job.PrototypeId) ||
+                        !Whitelist.Contains(department.ID))
+                        continue;
 
-                if (found)
+                    found = true;
                     break;
+                }
+
+                if (!found)
+                    return false;
             }
-            if (!found)
-                return false;
         }
 
         return true;

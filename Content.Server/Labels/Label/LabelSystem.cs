@@ -19,7 +19,11 @@ namespace Content.Server.Labels
     {
         [Dependency] private readonly ItemSlotsSystem _itemSlotsSystem = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+<<<<<<< HEAD
         [Dependency] private readonly MetaDataSystem _metadata = default!;
+=======
+        [Dependency] private readonly MetaDataSystem _metaData = default!;
+>>>>>>> a5773e70db935ff5d584d68055607e1de462f49d
 
         public const string ContainerName = "paper_label";
 
@@ -58,7 +62,6 @@ namespace Content.Server.Labels
                 // Remove label
                 _metadata.SetEntityName(uid, label.OriginalName, metadata);
                 label.CurrentLabel = null;
-                label.OriginalName = null;
 
                 return;
             }

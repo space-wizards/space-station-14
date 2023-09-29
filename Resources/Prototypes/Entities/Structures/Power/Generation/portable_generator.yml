@@ -42,7 +42,7 @@
     # Construction, interaction
     - type: WiresPanel
     - type: Wires
-      BoardName: "Generator"
+      BoardName: wires-board-name-generator
       LayoutId: Generator
     - type: UserInterface
       interfaces:

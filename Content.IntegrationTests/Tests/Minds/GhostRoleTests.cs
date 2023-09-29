@@ -44,19 +44,20 @@ public sealed class GhostRoleTests
         var conHost = client.ResolveDependency<IConsoleHost>();
         var mindSystem = entMan.System<MindSystem>();
         var session = sPlayerMan.ServerSessions.Single();
-        var originalMind = session.ContentData()!.Mind!;
+        var originalMindId = session.ContentData()!.Mind!.Value;
 
         // Spawn player entity & attach
         EntityUid originalMob = default;
         await server.WaitPost(() =>
         {
             originalMob = entMan.SpawnEntity(null, MapCoordinates.Nullspace);
-            mindSystem.TransferTo(originalMind, originalMob, true);
+            mindSystem.TransferTo(originalMindId, originalMob, true);
         });
 
         // Check player got attached.
         await pair.RunTicksSync(10);
         Assert.That(session.AttachedEntity, Is.EqualTo(originalMob));
+        var originalMind = entMan.GetComponent<MindComponent>(originalMindId);
         Assert.That(originalMind.OwnedEntity, Is.EqualTo(originalMob));
         Assert.Null(originalMind.VisitingEntity);
 
@@ -66,7 +67,7 @@ public sealed class GhostRoleTests
         var ghost = session.AttachedEntity;
         Assert.That(entMan.HasComponent<GhostComponent>(ghost));
         Assert.That(ghost, Is.Not.EqualTo(originalMob));
-        Assert.That(session.ContentData()?.Mind, Is.EqualTo(originalMind));
+        Assert.That(session.ContentData()?.Mind, Is.EqualTo(originalMindId));
         Assert.That(originalMind.OwnedEntity, Is.EqualTo(originalMob));
         Assert.That(originalMind.VisitingEntity, Is.EqualTo(ghost));
 
@@ -83,8 +84,9 @@ public sealed class GhostRoleTests
 
         // Check player got attached to ghost role.
         await pair.RunTicksSync(10);
-        var newMind = session.ContentData()!.Mind!;
-        Assert.That(newMind, Is.Not.EqualTo(originalMind));
+        var newMindId = session.ContentData()!.Mind!.Value;
+        var newMind = entMan.GetComponent<MindComponent>(newMindId);
+        Assert.That(newMindId, Is.Not.EqualTo(originalMindId));
         Assert.That(session.AttachedEntity, Is.EqualTo(ghostRole));
         Assert.That(newMind.OwnedEntity, Is.EqualTo(ghostRole));
         Assert.Null(newMind.VisitingEntity);
@@ -101,12 +103,12 @@ public sealed class GhostRoleTests
         Assert.That(entMan.HasComponent<GhostComponent>(otherGhost));
         Assert.That(otherGhost, Is.Not.EqualTo(originalMob));
         Assert.That(otherGhost, Is.Not.EqualTo(ghostRole));
-        Assert.That(session.ContentData()?.Mind, Is.EqualTo(newMind));
+        Assert.That(session.ContentData()?.Mind, Is.EqualTo(newMindId));
         Assert.That(newMind.OwnedEntity, Is.EqualTo(ghostRole));
         Assert.That(newMind.VisitingEntity, Is.EqualTo(session.AttachedEntity));
 
         // Next, control the original entity again:
-        await server.WaitPost(() => mindSystem.SetUserId(originalMind, session.UserId));
+        await server.WaitPost(() => mindSystem.SetUserId(originalMindId, session.UserId));
         await pair.RunTicksSync(10);
         Assert.That(session.AttachedEntity, Is.EqualTo(originalMob));
         Assert.That(originalMind.OwnedEntity, Is.EqualTo(originalMob));

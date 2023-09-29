@@ -59,7 +59,7 @@
       type: WiresBoundUserInterface
   - type: WiresPanel
   - type: Wires
-    BoardName: "Air Alarm"
+    BoardName: wires-board-name-airalarm
     LayoutId: AirAlarm
   - type: AccessReader
     access: [["Atmospherics"]]

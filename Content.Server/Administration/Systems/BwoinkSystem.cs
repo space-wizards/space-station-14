@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using Content.Server.Administration.Managers;
 using Content.Server.Discord;
 using Content.Server.GameTicking;
-using Content.Server.Players;
+using Content.Server.Mind;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
 using JetBrains.Annotations;
@@ -31,6 +31,7 @@ namespace Content.Server.Administration.Systems
         [Dependency] private readonly IGameTiming _timing = default!;
         [Dependency] private readonly IPlayerLocator _playerLocator = default!;
         [Dependency] private readonly GameTicker _gameTicker = default!;
+        [Dependency] private readonly MindSystem _minds = default!;
 
         private ISawmill _sawmill = default!;
         private readonly HttpClient _httpClient = new();
@@ -221,8 +222,6 @@ namespace Content.Server.Administration.Systems
                     return;
                 }
 
-                var characterName = _playerManager.GetPlayerData(userId).ContentData()?.Mind?.CharacterName;
-
                 var linkToPrevious = string.Empty;
 
                 // If we have all the data required, we can link to the embed of the previous round or embed that was too long
@@ -238,6 +237,7 @@ namespace Content.Server.Administration.Systems
                     }
                 }
 
+                var characterName = _minds.GetCharacterName(userId);
                 existingEmbed = (null, lookup.Username, linkToPrevious, characterName, _gameTicker.RunLevel);
             }
 

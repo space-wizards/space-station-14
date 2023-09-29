@@ -50,7 +50,7 @@
     anchored: true
   - type: WiresPanel
   - type: Wires
-    BoardName: "Intercom"
+    BoardName: wires-board-name-intercom
     LayoutId: Intercom
   - type: ActivatableUIRequiresPower
   - type: ActivatableUI

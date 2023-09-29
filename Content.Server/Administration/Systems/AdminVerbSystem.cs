@@ -11,7 +11,6 @@ using Content.Server.Ghost.Roles;
 using Content.Server.Mind;
 using Content.Server.Mind.Commands;
 using Content.Server.Mind.Components;
-using Content.Server.Players;
 using Content.Server.Prayer;
 using Content.Server.Xenoarchaeology.XenoArtifacts;
 using Content.Server.Xenoarchaeology.XenoArtifacts.Triggers.Components;
@@ -262,11 +261,10 @@ namespace Content.Server.Administration.Systems
                     {
                         MakeSentientCommand.MakeSentient(args.Target, EntityManager);
 
-                        var mind = player.ContentData()?.Mind;
-                        if (mind == null)
+                        if (!_minds.TryGetMind(player, out var mindId, out var mind))
                             return;
 
-                        _mindSystem.TransferTo(mind, args.Target, ghostCheckOverride: true);
+                        _mindSystem.TransferTo(mindId, args.Target, ghostCheckOverride: true, mind: mind);
                     },
                     Impact = LogImpact.High,
                     ConfirmationPopup = true

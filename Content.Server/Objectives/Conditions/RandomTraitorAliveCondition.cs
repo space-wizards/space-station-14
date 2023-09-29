@@ -1,25 +1,27 @@
 using System.Linq;
-using Content.Server.Objectives.Interfaces;
-using Robust.Shared.Random;
-using Robust.Shared.Utility;
 using Content.Server.GameTicking.Rules;
 using Content.Server.Mind;
+using Content.Server.Objectives.Interfaces;
+using Content.Server.Roles.Jobs;
+using Robust.Shared.Random;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Objectives.Conditions
 {
     [DataDefinition]
     public sealed partial class RandomTraitorAliveCondition : IObjectiveCondition
     {
-        private Mind.Mind? _target;
+        private EntityUid? _target;
 
-        public IObjectiveCondition GetAssigned(Mind.Mind mind)
+        public IObjectiveCondition GetAssigned(EntityUid mindId, MindComponent mind)
         {
             var entityMgr = IoCManager.Resolve<IEntityManager>();
 
-            var traitors = entityMgr.EntitySysManager.GetEntitySystem<TraitorRuleSystem>().GetOtherTraitorsAliveAndConnected(mind).ToList();
+            var traitors = entityMgr.System<TraitorRuleSystem>().GetOtherTraitorMindsAliveAndConnected(mind).ToList();
+
             if (traitors.Count == 0)
                 return new EscapeShuttleCondition(); //You were made a traitor by admins, and are the first/only.
-            return new RandomTraitorAliveCondition { _target = IoCManager.Resolve<IRobustRandom>().Pick(traitors).Mind };
+            return new RandomTraitorAliveCondition { _target = IoCManager.Resolve<IRobustRandom>().Pick(traitors).Id };
         }
 
         public string Title
@@ -27,13 +29,19 @@ namespace Content.Server.Objectives.Conditions
             get
             {
                 var targetName = string.Empty;
-                var jobName = _target?.CurrentJob?.Name ?? "Unknown";
+                var ents = IoCManager.Resolve<IEntityManager>();
+                var jobs = ents.System<JobSystem>();
+                var jobName = jobs.MindTryGetJobName(_target);
 
                 if (_target == null)
                     return Loc.GetString("objective-condition-other-traitor-alive-title", ("targetName", targetName), ("job", jobName));
 
-                if (_target.OwnedEntity is {Valid: true} owned)
-                    targetName = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(owned).EntityName;
+                var minds = ents.System<MindSystem>();
+                if (minds.TryGetMind(_target.Value, out _, out var mind) &&
+                    mind.OwnedEntity is { Valid: true } owned)
+                {
+                    targetName = ents.GetComponent<MetaDataComponent>(owned).EntityName;
+                }
 
                 return Loc.GetString("objective-condition-other-traitor-alive-title", ("targetName", targetName), ("job", jobName));
             }
@@ -49,7 +57,11 @@ namespace Content.Server.Objectives.Conditions
             {
                 var entityManager = IoCManager.Resolve<EntityManager>();
                 var mindSystem = entityManager.System<MindSystem>();
-                return _target == null || !mindSystem.IsCharacterDeadIc(_target) ? 1f : 0f;
+                return _target == null ||
+                       !mindSystem.TryGetMind(_target.Value, out _, out var mind) ||
+                       !mindSystem.IsCharacterDeadIc(mind)
+                    ? 1f
+                    : 0f;
             }
         }
 

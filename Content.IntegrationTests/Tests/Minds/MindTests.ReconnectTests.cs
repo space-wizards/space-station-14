@@ -29,8 +29,8 @@ public sealed partial class MindTests
         {
             Assert.That(GetMind(pair), Is.EqualTo(mind));
             Assert.That(entMan.Deleted(ghost));
-            Assert.That(entMan.HasComponent<GhostComponent>(mind.OwnedEntity));
-            Assert.That(mind.VisitingEntity, Is.Null);
+            Assert.That(entMan.HasComponent<GhostComponent>(mind.Comp.OwnedEntity));
+            Assert.That(mind.Comp.VisitingEntity, Is.Null);
         });
 
         await pair.CleanReturnAsync();
@@ -52,11 +52,11 @@ public sealed partial class MindTests
         var player = playerMan.ServerSessions.Single();
         var name = player.Name;
         var user = player.UserId;
-        Assert.That(mind.OwnedEntity, Is.Not.Null);
-        var entity = mind.OwnedEntity.Value;
+        Assert.That(mind.Comp.OwnedEntity, Is.Not.Null);
+        var entity = mind.Comp.OwnedEntity.Value;
 
         // Player is not a ghost
-        Assert.That(!entMan.HasComponent<GhostComponent>(mind.CurrentEntity));
+        Assert.That(!entMan.HasComponent<GhostComponent>(mind.Comp.CurrentEntity));
 
         // Disconnect
         await Disconnect(pair);
@@ -67,7 +67,7 @@ public sealed partial class MindTests
         Assert.Multiple(() =>
         {
             Assert.That(entMan.Deleted(entity));
-            Assert.That(mind.OwnedEntity, Is.Null);
+            Assert.That(mind.Comp.OwnedEntity, Is.Null);
         });
 
         // Reconnect
@@ -79,8 +79,8 @@ public sealed partial class MindTests
 
             // Player is now a new ghost entity
             Assert.That(GetMind(pair), Is.EqualTo(mind));
-            Assert.That(mind.OwnedEntity, Is.Not.EqualTo(entity));
-            Assert.That(entMan.HasComponent<GhostComponent>(mind.OwnedEntity));
+            Assert.That(mind.Comp.OwnedEntity, Is.Not.EqualTo(entity));
+            Assert.That(entMan.HasComponent<GhostComponent>(mind.Comp.OwnedEntity));
         });
 
         await pair.CleanReturnAsync();
@@ -98,7 +98,7 @@ public sealed partial class MindTests
         var entMan = pair.Server.ResolveDependency<IEntityManager>();
         var mind = GetMind(pair);
 
-        var original = mind.CurrentEntity;
+        var original = mind.Comp.CurrentEntity;
         var ghost = await VisitGhost(pair);
         await DisconnectReconnect(pair);
 
@@ -106,7 +106,7 @@ public sealed partial class MindTests
         Assert.Multiple(() =>
         {
             Assert.That(mind, Is.EqualTo(GetMind(pair)));
-            Assert.That(mind.CurrentEntity, Is.EqualTo(original));
+            Assert.That(mind.Comp.CurrentEntity, Is.EqualTo(original));
             Assert.That(entMan.Deleted(original), Is.False);
             Assert.That(entMan.Deleted(ghost));
         });
@@ -128,12 +128,12 @@ public sealed partial class MindTests
         var mind = GetMind(pair);
 
         // Make player visit a new mob
-        var original = mind.CurrentEntity;
+        var original = mind.Comp.CurrentEntity;
         EntityUid visiting = default;
         await pair.Server.WaitAssertion(() =>
         {
             visiting = entMan.SpawnEntity(null, MapCoordinates.Nullspace);
-            mindSys.Visit(mind, visiting);
+            mindSys.Visit(mind.Id, visiting);
         });
         await pair.RunTicksSync(5);
 
@@ -145,7 +145,7 @@ public sealed partial class MindTests
             Assert.That(GetMind(pair), Is.EqualTo(mind));
             Assert.That(entMan.Deleted(original), Is.False);
             Assert.That(entMan.Deleted(visiting), Is.False);
-            Assert.That(mind.CurrentEntity, Is.EqualTo(visiting));
+            Assert.That(mind.Comp.CurrentEntity, Is.EqualTo(visiting));
         });
 
         await pair.CleanReturnAsync();
