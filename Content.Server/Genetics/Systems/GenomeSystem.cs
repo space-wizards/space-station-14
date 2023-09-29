@@ -1,6 +1,6 @@
-using Content.Server.Genetics;
 using Content.Server.Genetics.Components;
 using Content.Shared.GameTicking;
+using Content.Shared.Genetics;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using System.Diagnostics.CodeAnalysis;
@@ -16,7 +16,7 @@ public sealed class GenomeSystem : EntitySystem
     [Dependency] private readonly IRobustRandom _random = default!;
 
     // This is where all the genome layouts are stored.
-    // TODO: how would this be serialized for persistence???
+    // TODO: store on round entity when thats done, so persistence reloading doesnt scramble genes
     [ViewVariables]
     private readonly Dictionary<string, GenomeLayout> _layouts = new();
 

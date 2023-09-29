@@ -1,5 +1,5 @@
-using Content.Server.Genetics;
 using Content.Server.Genetics.Systems;
+using Content.Shared.Genetics;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Genetics.Components;

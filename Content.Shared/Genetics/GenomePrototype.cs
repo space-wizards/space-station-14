@@ -1,6 +1,6 @@
 using Robust.Shared.Prototypes;
 
-namespace Content.Server.Genetics;
+namespace Content.Shared.Genetics;
 
 /// <summary>
 /// Stores names of every bool and int field on an organism's <see cref="Genome"/>.
@@ -17,5 +17,5 @@ public sealed class GenomePrototype : IPrototype
     /// If length is 1 then it will be a bool.
     /// </summary>
     [DataField(required: true)]
-    public Dictionary<string, int> ValueBits = new();
+    public Dictionary<string, ushort> ValueBits = new();
 }

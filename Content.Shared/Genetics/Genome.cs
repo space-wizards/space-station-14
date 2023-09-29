@@ -2,7 +2,7 @@ using Robust.Shared.Serialization;
 using System.Collections;
 using System.Text;
 
-namespace Content.Server.Genetics;
+namespace Content.Shared.Genetics;
 
 /// <summary>
 /// Genome for an organism.

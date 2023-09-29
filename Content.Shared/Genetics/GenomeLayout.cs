@@ -1,6 +1,6 @@
 using Robust.Shared.Utility;
 
-namespace Content.Server.Genetics;
+namespace Content.Shared.Genetics;
 
 /// <summary>
 /// Maps a <see cref="Genome"/>'s bits to bools and ints.
