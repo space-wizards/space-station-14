@@ -701,7 +701,7 @@
       entityType: RailingRound
   assignments:
   - 5: 9
-- action: !type:InstantAction
+- action: !type:InstantActionComponent
     icon:
       entity: AirlockMaintLocked
     keywords: []
