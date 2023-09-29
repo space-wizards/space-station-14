@@ -35,15 +35,7 @@ public abstract class SharedNavMapSystem : EntitySystem
     protected sealed class NavMapComponentState : ComponentState
     {
         public Dictionary<Vector2i, int> TileData = new();
-        public Dictionary<Vector2i, Dictionary<CableType, int>> CableData = new();
         public List<NavMapBeacon> Beacons = new();
-    }
-
-    public enum CableType : byte
-    {
-        HV,
-        MV,
-        LV
     }
 
     [Serializable, NetSerializable]

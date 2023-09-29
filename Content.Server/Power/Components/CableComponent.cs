@@ -1,4 +1,5 @@
 using Content.Server.Power.EntitySystems;
+using Content.Shared.Power;
 using Content.Shared.Tools;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
@@ -27,12 +28,5 @@ namespace Content.Server.Power.Components
 
         [DataField("cuttingDelay")]
         public float CuttingDelay = 1f;
-    }
-
-    public enum CableType
-    {
-        HighVoltage,
-        MediumVoltage,
-        Apc,
     }
 }

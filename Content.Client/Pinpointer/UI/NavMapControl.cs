@@ -14,8 +14,7 @@ using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Physics.Components;
-using YamlDotNet.Core.Tokens;
-using static Content.Shared.Pinpointer.SharedNavMapSystem;
+using Content.Shared.Power;
 
 namespace Content.Client.Pinpointer.UI;
 
@@ -33,9 +32,9 @@ public sealed class NavMapControl : MapGridControl
     public Dictionary<EntityCoordinates, (bool Visible, Color Color, Texture? Texture)> TrackedEntities = new();
     public Dictionary<CableType, bool> ShowCables = new Dictionary<CableType, bool>
     {
-        [CableType.HV] = false,
-        [CableType.MV] = false,
-        [CableType.LV] = false,
+        [CableType.HighVoltage] = false,
+        [CableType.MediumVoltage] = false,
+        [CableType.Apc] = false,
     };
 
     private Vector2 _offset;
@@ -49,10 +48,12 @@ public sealed class NavMapControl : MapGridControl
 
     private List<CableData> _cableData = new List<CableData>()
     {
-        new CableData(CableType.HV, Color.Orange),
-        new CableData(CableType.MV, Color.Yellow, new Vector2(-0.2f, -0.2f)),
-        new CableData(CableType.LV, Color.LimeGreen, new Vector2(0.2f, 0.2f)),
+        new CableData(CableType.HighVoltage, Color.Orange),
+        new CableData(CableType.MediumVoltage, Color.Yellow, new Vector2(-0.2f, -0.2f)),
+        new CableData(CableType.Apc, Color.LimeGreen, new Vector2(0.2f, 0.2f)),
     };
+
+    public Dictionary<Vector2i, NavMapChunkPowerCables> PowerCableChunks = new();
 
     // TODO: https://github.com/space-wizards/RobustToolbox/issues/3818
     private readonly Label _zoom = new()
@@ -349,7 +350,7 @@ public sealed class NavMapControl : MapGridControl
 
                 var chunkOrigin = SharedMapSystem.GetChunkIndices(floored, SharedNavMapSystem.ChunkSize);
 
-                if (!navMap.Chunks.TryGetValue(chunkOrigin, out var chunk))
+                if (!PowerCableChunks.TryGetValue(chunkOrigin, out var chunk))
                     continue;
 
                 foreach (var datum in _cableData)
@@ -368,7 +369,7 @@ public sealed class NavMapControl : MapGridControl
                         var relativeTile = SharedNavMapSystem.GetTile(mask);
                         var tile = (chunk.Origin * SharedNavMapSystem.ChunkSize + relativeTile) * grid.TileSize - offset;
                         var position = new Vector2(tile.X, -tile.Y);
-                        NavMapChunk? neighborChunk;
+                        NavMapChunkPowerCables? neighborChunk;
                         bool neighbor;
 
                         // Only check the north and east neighbors
@@ -376,7 +377,7 @@ public sealed class NavMapControl : MapGridControl
                         // East
                         if (relativeTile.X == SharedNavMapSystem.ChunkSize - 1)
                         {
-                            neighbor = navMap.Chunks.TryGetValue(chunkOrigin + new Vector2i(1, 0), out neighborChunk) &&
+                            neighbor = PowerCableChunks.TryGetValue(chunkOrigin + new Vector2i(1, 0), out neighborChunk) &&
                                        (neighborChunk.CableData[datum.CableType] & SharedNavMapSystem.GetFlag(new Vector2i(0, relativeTile.Y))) != 0x0;
                         }
                         else
@@ -414,7 +415,7 @@ public sealed class NavMapControl : MapGridControl
                         // North
                         if (relativeTile.Y == SharedNavMapSystem.ChunkSize - 1)
                         {
-                            neighbor = navMap.Chunks.TryGetValue(chunkOrigin + new Vector2i(0, 1), out neighborChunk) &&
+                            neighbor = PowerCableChunks.TryGetValue(chunkOrigin + new Vector2i(0, 1), out neighborChunk) &&
                                           (neighborChunk.CableData[datum.CableType] & SharedNavMapSystem.GetFlag(new Vector2i(relativeTile.X, 0))) != 0x0;
                         }
                         else

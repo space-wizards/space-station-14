@@ -1,4 +1,5 @@
 using Content.Shared.Coordinates.Helpers;
+using Content.Shared.Pinpointer;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 
@@ -8,12 +9,14 @@ namespace Content.Shared.Power;
 public sealed class PowerMonitoringConsoleBoundInterfaceState : BoundUserInterfaceState
 {
     public PowerMonitoringConsoleEntry[] Loads;
+    public Dictionary<Vector2i, NavMapChunkPowerCables> PowerCableChunks;
     public bool Snap;
     public float Precision;
 
-    public PowerMonitoringConsoleBoundInterfaceState(PowerMonitoringConsoleEntry[] loads, bool snap, float precision)
+    public PowerMonitoringConsoleBoundInterfaceState(PowerMonitoringConsoleEntry[] loads, Dictionary<Vector2i, NavMapChunkPowerCables> powerCableChunks, bool snap, float precision)
     {
         Loads = loads;
+        PowerCableChunks = powerCableChunks;
         Snap = snap;
         Precision = precision;
     }
@@ -50,8 +53,16 @@ public sealed class RequestPowerMonitoringDataMessage : BoundUserInterfaceMessag
 }
 
 [Serializable, NetSerializable]
+public sealed class RequestPowerCableDataEvent : BoundUserInterfaceMessage
+{
+    public RequestPowerCableDataEvent()
+    {
+
+    }
+}
+
+[Serializable, NetSerializable]
 public enum PowerMonitoringConsoleUiKey
 {
     Key
 }
-

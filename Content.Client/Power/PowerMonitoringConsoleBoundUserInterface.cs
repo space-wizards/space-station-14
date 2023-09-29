@@ -1,5 +1,4 @@
 using Content.Shared.Power;
-using static Content.Shared.Access.Components.AccessOverriderComponent;
 
 namespace Content.Client.Power;
 
@@ -22,7 +21,7 @@ public sealed class PowerMonitoringConsoleBoundUserInterface : BoundUserInterfac
             gridUid = xform.GridUid;
         }
 
-        _menu = new PowerMonitoringWindow(gridUid);
+        _menu = new PowerMonitoringWindow(this, gridUid);
 
         _menu.OpenCentered();
         _menu.OnClose += Close;
@@ -38,10 +37,10 @@ public sealed class PowerMonitoringConsoleBoundUserInterface : BoundUserInterfac
             return;
 
         EntMan.TryGetComponent<TransformComponent>(Owner, out var xform);
-        _menu?.ShowEntites(castState.Loads, xform?.Coordinates, castState.Snap, castState.Precision);
+        _menu?.ShowEntites(castState.Loads, castState.PowerCableChunks, xform?.Coordinates, castState.Snap, castState.Precision);
     }
 
-    public void RequestData()
+    public void RequestPowerMonitoringData()
     {
         SendMessage(new RequestPowerMonitoringDataMessage());
     }

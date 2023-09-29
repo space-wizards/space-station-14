@@ -8,7 +8,8 @@
         <BoxContainer Orientation="Vertical">
             <ScrollContainer HorizontalExpand="True"
                              VerticalExpand="True"
-                             Margin="8, 8, 8, 8">
+                             Margin="8, 8, 8, 8"
+                             MinWidth="300">
                 <GridContainer Name="SensorsTable"
                                HorizontalExpand="True"
                                VerticalExpand="True"
