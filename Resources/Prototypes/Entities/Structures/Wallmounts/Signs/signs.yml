@@ -1273,3 +1273,21 @@
   components:
   - type: Sprite
     state: zero
+
+- type: entity
+  parent: BaseSign
+  id: SignSurvival
+  name: survival sign
+  description: A sign. "Survival" is written on it.
+  components:
+  - type: Sprite
+    state: survival
+
+- type: entity
+  parent: BaseSign
+  id: SignNTMine
+  name: mine sign
+  description: A sign. "Mine" is written on it.
+  components:
+  - type: Sprite
+    state: ntmining
