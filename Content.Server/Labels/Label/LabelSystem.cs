@@ -56,7 +56,7 @@ namespace Content.Server.Labels
                     return;
 
                 // Remove label
-                metadata.EntityName = label.OriginalName;
+                _metadata.SetEntityName(uid, label.OriginalName, metadata);
                 label.CurrentLabel = null;
                 label.OriginalName = null;
 
@@ -66,7 +66,7 @@ namespace Content.Server.Labels
             // Update label
             label.OriginalName ??= metadata.EntityName;
             label.CurrentLabel = text;
-            metadata.EntityName = $"{label.OriginalName} ({text})";
+            _metadata.SetEntityName(uid, $"{label.OriginalName} ({text})", metadata);
         }
 
         public void UpdateLabel(EntityUid uid, LabelComponent? label = null)
