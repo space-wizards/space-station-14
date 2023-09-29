@@ -13,7 +13,7 @@ public sealed class GenomeLayout
     /// For <see cref="GetBool"/> bit length must be 1.
     /// </summary>
     [DataField]
-    public Dictionary<string, (int, int)> Values = new();
+    public Dictionary<string, (int, ushort)> Values = new();
 
     /// <summary>
     /// How many bits this genome has total
@@ -70,7 +70,7 @@ public sealed class GenomeLayout
     /// </summary>
     /// <param name="name">Name of the value to add</param>
     /// <param name="bits">Number of bits the value has</param>
-    public void Add(string name, int bits)
+    public void Add(string name, ushort bits)
     {
         DebugTools.Assert(bits > 0, "Genome value bit count must be positive");
 

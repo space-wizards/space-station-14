@@ -15,6 +15,9 @@ namespace Content.Server.Genetics;
 [DataDefinition]
 public sealed partial class Genome
 {
+    /// <summary>
+    /// Bits that represent the genes bools and ints.
+    /// </summary>
     [ViewVariables]
     public BitArray Bits = new BitArray(0);
 
