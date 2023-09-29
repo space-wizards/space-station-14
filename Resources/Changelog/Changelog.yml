@@ -1,11 +1,4 @@
 Entries:
-- author: router
-  changes:
-  - {message: Ringtones now have 2 more notes you can play around with., type: Tweak}
-  - {message: 'The Syndicate has taken advantage of this hardware expansion, making
-      brute-force attacks on their uplinks unfeasible.', type: Fix}
-  id: 4420
-  time: '2023-08-03T11:13:17.0000000+00:00'
 - author: fedKotikeD & crazybrain
   changes:
   - {message: Added Syndicate pAI., type: Add}
@@ -2969,3 +2962,8 @@ Entries:
   - {message: Fixed everyone being bald., type: Fix}
   id: 4919
   time: '2023-09-29T00:44:47.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Fixed the HoP's id card computer not opening., type: Fix}
+  id: 4920
+  time: '2023-09-29T00:59:14.0000000+00:00'
