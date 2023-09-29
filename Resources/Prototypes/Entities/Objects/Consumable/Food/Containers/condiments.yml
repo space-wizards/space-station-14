@@ -31,7 +31,8 @@
   - type: Drink
     solution: food
     refillable: false
-    openSounds:
+  - type: Openable
+    sound:
       collection: packetOpenSounds
   # Since this one is closed, the only way to insert liquid is with a syringe.
   - type: InjectableSolution
@@ -372,7 +373,8 @@
   components:
   - type: Drink
     solution: food
-    openSounds:
+  - type: Openable
+    sound:
       collection: pop
   - type: SolutionContainerManager
     solutions:
@@ -552,7 +554,6 @@
   components:
   - type: Drink
     solution: food
-    isOpen: true
   - type: SolutionContainerManager
     solutions:
       food:
