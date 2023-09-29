@@ -32,6 +32,7 @@
     sprite: Clothing/Head/Soft/cargosoft.rsi
   - type: Tag
     tags:
+    - ClothMade
     - HamsterWearable
     - WhitelistChameleon
 
@@ -190,6 +191,7 @@
     sprite: Clothing/Head/Soft/purplesoft.rsi
   - type: Tag
     tags:
+    - ClothMade
     - HamsterWearable
     - WhitelistChameleon
 
@@ -304,6 +306,7 @@
     sprite: Clothing/Head/Soft/paramedicsoft.rsi
   - type: Tag
     tags:
+    - ClothMade
     - HamsterWearable
     - WhitelistChameleon
 
