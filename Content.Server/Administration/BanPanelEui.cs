@@ -1,20 +1,12 @@
-using System;
-using System.Collections.Generic;
 using System.Collections.Immutable;
-using System.Linq;
 using System.Net;
 using System.Net.Sockets;
-using System.Text;
-using System.Threading.Tasks;
 using Content.Server.Administration.Managers;
 using Content.Server.Chat.Managers;
-using Content.Server.Construction.Conditions;
 using Content.Server.EUI;
 using Content.Shared.Administration;
 using Content.Shared.Database;
 using Content.Shared.Eui;
-using Microsoft.CodeAnalysis;
-using Robust.Server.Player;
 using Robust.Shared.Network;
 
 namespace Content.Server.Administration;
@@ -123,6 +115,8 @@ public sealed class BanPanelEui : BaseEui
             {
                 _banManager.CreateRoleBan(targetUid, target, Player.UserId, addressRange, targetHWid, role, minutes, severity, reason, now);
             }
+
+            Close();
             return;
         }
 
