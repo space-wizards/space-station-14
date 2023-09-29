@@ -5,7 +5,7 @@ using Robust.Shared.Console;
 
 namespace Content.Server.Verbs.Commands
 {
-    [AdminCommand(AdminFlags.Admin)]
+    [AdminCommand(AdminFlags.Debug)]
     public sealed class ListVerbsCommand : IConsoleCommand
     {
         public string Command => "listverbs";
