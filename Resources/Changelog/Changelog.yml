@@ -1,12 +1,4 @@
 Entries:
-- author: Lank
-  changes:
-  - {message: 'Added Moth People as a playable race. These friends can move around
-      in zero gravity easily and love the cold, but are significantly weaker against
-      high temperatures and won''t be caught eating anything not made of cloth.',
-    type: Add}
-  id: 4425
-  time: '2023-08-04T05:21:28.0000000+00:00'
 - author: FillerVK
   changes:
   - {message: Added insulated gloves to emaged youtool, type: Add}
@@ -2964,3 +2956,8 @@ Entries:
     type: Fix}
   id: 4924
   time: '2023-09-29T15:01:19.0000000+00:00'
+- author: TsjipTsjip
+  changes:
+  - {message: Kettle's medical ward was reworked., type: Tweak}
+  id: 4925
+  time: '2023-09-29T19:14:53.0000000+00:00'
