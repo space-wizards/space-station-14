@@ -39,7 +39,7 @@ public sealed partial class GunSystem
         else if (component.UnspawnedCount > 0)
         {
             component.UnspawnedCount--;
-            ent = Spawn(component.FillProto, coordinates);
+            ent = Spawn(component.Proto, coordinates);
             EnsureShootable(ent.Value);
         }
 

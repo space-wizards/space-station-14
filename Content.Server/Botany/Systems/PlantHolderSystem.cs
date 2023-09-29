@@ -278,7 +278,7 @@ public sealed class PlantHolderSystem : EntitySystem
         if (HasComp<SharpComponent>(args.Used))
             DoHarvest(uid, args.User, component);
 
-        if (TryComp<ProduceComponent?>(args.Used, out var produce))
+        if (TryComp<ProduceComponent>(args.Used, out var produce))
         {
             _popup.PopupCursor(Loc.GetString("plant-holder-component-compost-message",
                 ("owner", uid),

@@ -107,8 +107,8 @@
   - type: Armor
     modifiers:
       coefficients:
-        Blunt: 0.90
-        Slash: 0.90
+        Blunt: 0.95
+        Slash: 0.95
         Piercing: 0.95
 
 #Cult Helmet
@@ -336,3 +336,18 @@
     sprite: Clothing/Head/Helmets/ert_janitor.rsi
   - type: Clothing
     sprite: Clothing/Head/Helmets/ert_janitor.rsi
+
+#Bone Helmet
+- type: entity
+  parent: ClothingHeadHelmetBasic
+  id: ClothingHeadHelmetBone
+  name: bone helmet
+  description: Cool-looking helmet made of skull of your enemies.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Helmets/bone_helmet.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Helmets/bone_helmet.rsi
+  - type: Construction
+    graph: BoneHelmet
+    node: helmet
