@@ -1,12 +1,4 @@
 Entries:
-- author: Interrobang01
-  changes:
-  - {message: 'A few changes to some chemical recipes, namely Dexalin, Lexorin, Ultravasculine,
-      Ammonia, Acetone, Sodium Carbonate, and Sigynate, have been reverted. They are
-      now like what they used to be.', type: Tweak}
-  - {message: Sigynate heals 3 Caustic per unit again., type: Tweak}
-  id: 4423
-  time: '2023-08-04T02:30:37.0000000+00:00'
 - author: liltenhead
   changes:
   - {message: Fixed the incorrect ammo count in the China Lake bundle's description.,
@@ -2967,3 +2959,8 @@ Entries:
   - {message: Fixed AHelp progressively gaining more panels., type: Fix}
   id: 4922
   time: '2023-09-29T01:46:16.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Fixed skeletons spawning in folded containers., type: Fix}
+  id: 4923
+  time: '2023-09-29T03:55:29.0000000+00:00'
