@@ -12,6 +12,7 @@ using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.Database;
 using Content.Shared.Electrocution;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory;
 using Content.Shared.Jittering;
@@ -432,6 +433,7 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
 
         var filter = Filter.PvsExcept(uid, entityManager: EntityManager);
 
+        var identifiedUid = Identity.Entity(uid, ent: EntityManager);
         // TODO: Allow being able to pass EntityUid to Loc...
         if (sourceUid != null)
         {
