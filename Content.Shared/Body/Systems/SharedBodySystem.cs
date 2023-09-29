@@ -1,4 +1,4 @@
-﻿using Content.Shared.Damage;
+using Content.Shared.Damage;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Standing;
 using Robust.Shared.Containers;
@@ -50,7 +50,7 @@ public abstract partial class SharedBodySystem : EntitySystem
         // This is blursed
         var slotIndex = containerSlotId.IndexOf(PartSlotContainerIdPrefix, StringComparison.Ordinal);
 
-        if (slotIndex < -1)
+        if (slotIndex < 0)
             return null;
 
         var slotId = containerSlotId.Remove(slotIndex, PartSlotContainerIdPrefix.Length);
