@@ -41,11 +41,12 @@ public sealed partial class Genome
 
     /// <summary>
     /// Get the value of a single bool at an index.
+    /// If it is out of bounds false is returned.
     /// </summary>
     /// <param name="index">Bit index to get from</param>
     public bool GetBool(int index)
     {
-        return Bits[index];
+        return index < Bits.Length && Bits[index];
     }
 
     /// <summary>
@@ -99,6 +100,7 @@ public sealed partial class Genome
     /// <summary>
     /// Sets the bits of an integer to a value.
     /// This will truncate the integer to fit inside the possible values.
+    /// Also handles writing past the end correctly.
     /// </summary>
     /// <param name="index">Starting bit index to set</param>
     /// <param name="bits">Number of bits to set</param>
@@ -119,5 +121,32 @@ public sealed partial class Genome
     public void FlipBit(int index)
     {
         Bits[index] = !Bits[index];
+    }
+
+    /// <summary>
+    /// Sets the 2 bits at an index to the value of a base.
+    /// </summary>
+    /// <param name="index">Bit index to set at</param>
+    /// <param name="c">Base character to set</param>
+    public void SetBase(int index, char c)
+    {
+        int value = 0;
+        switch (c)
+        {
+            case 'A':
+                value = 0;
+                break;
+            case 'C':
+                value = 1;
+                break;
+            case 'G':
+                value = 2;
+                break;
+            case 'T':
+                value = 3;
+                break;
+        }
+
+        SetInt(index, bits: 2, value: value);
     }
 }
