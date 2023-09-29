@@ -31,7 +31,9 @@ public sealed class GenomeSystem : EntitySystem
 
     private void OnInit(EntityUid uid, GenomeComponent comp, MapInitEvent args)
     {
-        comp.Layout = GetOrCreateLayout(comp.GenomeId);
+        // only empty in test and when vving
+        if (comp.GenomeId != string.Empty)
+            comp.Layout = GetOrCreateLayout(comp.GenomeId);
     }
 
     private void Reset(RoundRestartCleanupEvent args)
