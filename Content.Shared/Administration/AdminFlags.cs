@@ -90,6 +90,11 @@
         EditNotes = 1 << 14,
 
         /// <summary>
+        ///     TODO Lets you .
+        /// </summary>
+        Moderator = 1 << 15,
+
+        /// <summary>
         ///     Dangerous host permissions like scsi.
         /// </summary>
         Host = 1u << 31,
