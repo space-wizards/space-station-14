@@ -1,10 +1,4 @@
 Entries:
-- author: liltenhead
-  changes:
-  - {message: Fixed the incorrect ammo count in the China Lake bundle's description.,
-    type: Fix}
-  id: 4424
-  time: '2023-08-04T02:57:02.0000000+00:00'
 - author: Lank
   changes:
   - {message: 'Added Moth People as a playable race. These friends can move around
@@ -2964,3 +2958,9 @@ Entries:
   - {message: Fixed skeletons spawning in folded containers., type: Fix}
   id: 4923
   time: '2023-09-29T03:55:29.0000000+00:00'
+- author: casperr04
+  changes:
+  - {message: Fixed the true name of disguised players being shown when electrocuted.,
+    type: Fix}
+  id: 4924
+  time: '2023-09-29T15:01:19.0000000+00:00'
