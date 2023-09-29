@@ -14,8 +14,8 @@ public sealed partial class GenomeComponent : Component
     /// <summary>
     /// Name of the <see cref="GenomePrototype"/> to create on init.
     /// </summary>
-    [DataField]
-    public ProtoId<GenomePrototype> GenomeId = "Test";
+    [DataField(required: true)]
+    public ProtoId<GenomePrototype> GenomeId = string.Empty;
 
     /// <summary>
     /// Genome layout to use for this round and genome type.
