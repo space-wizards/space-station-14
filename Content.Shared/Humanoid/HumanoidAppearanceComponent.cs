@@ -13,7 +13,7 @@ public sealed partial class HumanoidAppearanceComponent : Component
 {
     public MarkingSet ClientOldMarkings = new();
 
-    [DataField]
+    [DataField, AutoNetworkedField]
     public MarkingSet MarkingSet = new();
 
     [DataField]
