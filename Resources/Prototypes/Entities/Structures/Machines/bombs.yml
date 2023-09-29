@@ -32,9 +32,8 @@
     - type: Anchorable
       delay: 5
     - type: Physics
-      bodyType: Static
+      bodyType: Dynamic
     - type: Transform
-      noRot: true
       anchored: false
     - type: Fixtures
       fixtures:
