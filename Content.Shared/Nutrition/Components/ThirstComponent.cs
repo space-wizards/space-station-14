@@ -35,7 +35,7 @@ public sealed partial class ThirstComponent : Component
     /// </summary>
     [DataField("nextUpdateTime", customTypeSerializer: typeof(TimeOffsetSerializer)), ViewVariables(VVAccess.ReadWrite)]
     [AutoNetworkedField]
-    public TimeSpan NextUpdateTime = TimeSpan.MaxValue;
+    public TimeSpan NextUpdateTime;
 
     /// <summary>
     /// The time between each update.

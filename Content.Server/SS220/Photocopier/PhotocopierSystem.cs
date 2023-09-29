@@ -450,6 +450,7 @@ public sealed partial class PhotocopierSystem : EntitySystem
             {
                 // If there is no butt or someones else butt is in the way - stop copying.
                 if (component.HumanoidAppearanceOnTop is not { } humanoid
+                    || component.ButtSpecies is null
                     || component.ButtSpecies != humanoid.Species)
                 {
                     StopPrinting(uid, component);

@@ -33,6 +33,7 @@
       delay: 5
     - type: Physics
       bodyType: Static
+      canCollide: false
     - type: Transform
       noRot: true
     - type: Fixtures
@@ -51,6 +52,7 @@
       openOnActivation: true
       guides:
         - Defusal
+    - type: CollideOnAnchor
 
 - type: entity
   parent: BaseHardBomb

@@ -210,7 +210,7 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
             return;
 
         var siemens = TryComp<InsulatedComponent>(args.Used, out var insulation)
-            ? insulation.SiemensCoefficient
+            ? insulation.Coefficient
             : 1;
 
         TryDoElectrifiedAct(uid, args.User, siemens, electrified);

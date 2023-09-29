@@ -97,7 +97,6 @@ namespace Content.Shared.Interaction
                     new PointerInputCmdHandler(HandleTryPullObject))
                 .Register<SharedInteractionSystem>();
 
-            InitializeRelay();
             InitializeBlocking();
         }
 

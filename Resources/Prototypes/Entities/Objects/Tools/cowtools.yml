@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   name: haycutters
   parent: BaseItem
   id: Haycutters
@@ -97,6 +97,7 @@
       path: /Audio/Items/crowbar.ogg
     speed: 0.05
   - type: TilePrying
+  - type: Prying
 
 - type: entity
   name: mooltitool

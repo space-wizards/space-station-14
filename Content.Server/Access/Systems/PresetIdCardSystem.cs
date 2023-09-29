@@ -38,6 +38,7 @@ namespace Content.Server.Access.Systems
                     return;
 
                 SetupIdAccess(uid, card, true);
+                SetupIdName(uid, card);
             }
         }
 
@@ -54,6 +55,14 @@ namespace Content.Server.Access.Systems
                 extended = Comp<StationJobsComponent>(station.Value).ExtendedAccess;
 
             SetupIdAccess(uid, id, extended);
+            SetupIdName(uid, id);
+        }
+
+        private void SetupIdName(EntityUid uid, PresetIdCardComponent id)
+        {
+            if (id.IdName == null)
+                return;
+            _cardSystem.TryChangeFullName(uid, id.IdName);
         }
 
         private void SetupIdAccess(EntityUid uid, PresetIdCardComponent id, bool extended)

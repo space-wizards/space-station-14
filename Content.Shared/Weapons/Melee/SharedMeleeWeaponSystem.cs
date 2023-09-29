@@ -20,7 +20,6 @@ using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
 using Content.Shared.Weapons.Ranged.Systems;
 using Robust.Shared.Audio;
-using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Systems;
@@ -65,8 +64,6 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<MeleeWeaponComponent, EntityUnpausedEvent>(OnMeleeUnpaused);
-        SubscribeLocalEvent<MeleeWeaponComponent, ComponentGetState>(OnGetState);
-        SubscribeLocalEvent<MeleeWeaponComponent, ComponentHandleState>(OnHandleState);
         SubscribeLocalEvent<MeleeWeaponComponent, HandSelectedEvent>(OnMeleeSelected);
         SubscribeLocalEvent<MeleeWeaponComponent, ShotAttemptedEvent>(OnMeleeShotAttempted);
         SubscribeLocalEvent<MeleeWeaponComponent, GunShotEvent>(OnMeleeShot);
@@ -221,25 +218,6 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         }
 
         AttemptAttack(args.SenderSession.AttachedEntity.Value, weaponUid, weapon, msg, args.SenderSession);
-    }
-
-    private void OnGetState(EntityUid uid, MeleeWeaponComponent component, ref ComponentGetState args)
-    {
-        args.State = new MeleeWeaponComponentState(component.AttackRate, component.Attacking, component.NextAttack, component.ClickAnimation, component.WideAnimation, component.Range);
-    }
-
-    private void OnHandleState(EntityUid uid, MeleeWeaponComponent component, ref ComponentHandleState args)
-    {
-        if (args.Current is not MeleeWeaponComponentState state)
-            return;
-
-        component.Attacking = state.Attacking;
-        component.AttackRate = state.AttackRate;
-        component.NextAttack = state.NextAttack;
-
-        component.ClickAnimation = state.ClickAnimation;
-        component.WideAnimation = state.WideAnimation;
-        component.Range = state.Range;
     }
 
     /// <summary>
@@ -427,13 +405,13 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
             {
                 case LightAttackEvent light:
                     DoLightAttack(user, light, weaponUid, weapon, session);
-                    animation = weapon.ClickAnimation;
+                    animation = weapon.Animation;
                     break;
                 case DisarmAttackEvent disarm:
                     if (!DoDisarm(user, disarm, weaponUid, weapon, session))
                         return false;
 
-                    animation = weapon.ClickAnimation;
+                    animation = weapon.Animation;
                     break;
                 case HeavyAttackEvent heavy:
                     if (!DoHeavyAttack(user, heavy, weaponUid, weapon, session))
