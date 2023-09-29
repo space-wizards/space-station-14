@@ -22,5 +22,5 @@ public sealed class GenesPrototype : IPrototype
     /// Any unused bits are dropped silently.
     /// </summary>
     [DataField]
-    public Dictionary<string, int> Ints = new();
+    public Dictionary<string, ushort> Ints = new();
 }
