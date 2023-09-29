@@ -235,6 +235,7 @@ namespace Content.Client.Administration.UI.Bwoink
 
             if (ch != null)
             {
+                AHelpHelper.HideAllPanels();
                 var panel = AHelpHelper.EnsurePanel(ch.Value);
                 panel.Visible = true;
             }
