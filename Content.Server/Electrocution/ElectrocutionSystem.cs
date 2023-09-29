@@ -438,13 +438,13 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
         if (sourceUid != null)
         {
             _popup.PopupEntity(Loc.GetString("electrocuted-component-mob-shocked-by-source-popup-others",
-                ("mob", uid), ("source", (sourceUid.Value))), uid, filter, true);
+                ("mob", identifiedUid), ("source", (sourceUid.Value))), uid, filter, true);
             PlayElectrocutionSound(uid, sourceUid.Value);
         }
         else
         {
             _popup.PopupEntity(Loc.GetString("electrocuted-component-mob-shocked-popup-others",
-                ("mob", uid)), uid, filter, true);
+                ("mob", identifiedUid)), uid, filter, true);
         }
 
         return true;
