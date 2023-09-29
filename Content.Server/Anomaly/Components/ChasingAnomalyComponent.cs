@@ -1,34 +1,35 @@
 using Content.Server.Anomaly.Effects;
-using Robust.Shared.Audio;
-using Content.Shared.Chemistry.Components;
-using System.Numerics;
 
 namespace Content.Server.Anomaly.Components;
 
+
+/// <summary>
+/// This component allows the anomaly to chase a random instance of the selected type component within a radius.
+/// </summary>
 [RegisterComponent, Access(typeof(ChasingAnomalySystem))]
 public sealed partial class ChasingAnomalyComponent : Component
 {
     /// <summary>
-    /// the maximum radius in which the anomaly chooses the creature to move to
-    /// scales with stability
+    /// The maximum radius in which the anomaly chooses the target component to follow
+    /// scales with severity
     /// </summary>
     [DataField("maxChaseRadius"), ViewVariables(VVAccess.ReadWrite)]
-    public float MaxChaseRadius = 15;
+    public float MaxChaseRadius = 10;
 
     /// <summary>
-    /// the speed at which the anomaly is moving towards the target.
+    /// The speed at which the anomaly is moving towards the target.
     /// </summary>
-    [DataField("chasingSpeed"), ViewVariables(VVAccess.ReadWrite)]
-    public float ChasingSpeed = 0.5f;
+    [DataField("maxChasingSpeed"), ViewVariables(VVAccess.ReadWrite)]
+    public float MaxChasingSpeed = 1f;
 
     /// <summary>
-    /// modification of the pursuit speed during the transition to a supercritical state
+    /// Modification of the chasing speed during the transition to a supercritical state
     /// </summary>
     [DataField("superCriticalSpeedModifier"), ViewVariables(VVAccess.ReadWrite)]
-    public float SuperCriticalSpeedModifier = 5;
+    public float SuperCriticalSpeedModifier = 3;
 
     /// <summary>
-    /// the component that the anomaly is chasing
+    /// The component that the anomaly is chasing
     /// </summary>
     [DataField("chasingComponent", required: true), ViewVariables(VVAccess.ReadWrite)]
     public string ChasingComponent = default!;
@@ -36,8 +37,15 @@ public sealed partial class ChasingAnomalyComponent : Component
     //In Game Storage Variables
 
     /// <summary>
-    /// the point where the anomaly seeks to reach
+    /// The entity uid, chasing by the anomaly
     /// </summary>
     [DataField("chasingEntity"), ViewVariables(VVAccess.ReadWrite)]
     public EntityUid ChasingEntity = default!;
+
+    /// <summary>
+    /// Current movement speed. changes after each pulse depending on severity
+    /// scales with severity
+    /// </summary>
+    [DataField("currentSpeed"), ViewVariables(VVAccess.ReadWrite)]
+    public float CurrentSpeed = 0;
 }

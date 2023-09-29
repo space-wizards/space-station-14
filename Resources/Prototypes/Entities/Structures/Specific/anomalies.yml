@@ -248,10 +248,57 @@
   - type: PointLight
     radius: 2.0
     energy: 2.5
-    color: "#befaff"
+    color: "#bbbbbb"
+  - type: Fixtures
+    fixtures:
+      fix1:
+        density: 20
+        mask:
+          - FlyingMobMask
+        layer:
+          - FlyingMobLayer
   - type: ChasingAnomaly
     chasingComponent: InjectableSolution
+  - type: LiquidAnomaly
+    possibleChemicals:
+    - Aluminium
+    - Carbon
+    - Chlorine
+    - Copper
+    - Ethanol
+    - Fluorine
+    - Sugar
+    - Hydrogen
+    - Iodine
+    - Iron
+    - Lithium
+    - Mercury
+    - Nitrogen
+    - Oxygen
+    - Phosphorus
+    - Potassium
+    - Radium
+    - Silicon
+    - Sodium
+    - Sulfur
+    - Bicaridine
+    - Water
+    - Dermaline
+    - Arithrazine
+    - Bicaridine
+    - Inaprovaline
+    - Kelotane
+    - Dexalin
+    - Omnizine
+    - Napalm
+    - Toxin
+    - Epinephrine
+    - Cognizine
+    - Ultravasculine
+    - Desoxyephedrine
+    - Pax
+    - Siderlac
   - type: Physics
-    bodyType: Dynamic
+    bodyType: KinematicController
     linearDamping: 0
   - type: MovementIgnoreGravity
