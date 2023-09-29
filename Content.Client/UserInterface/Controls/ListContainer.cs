@@ -22,7 +22,7 @@ public sealed class ListContainer : Control
     }
     public bool Toggle { get; set; }
     public Action<ListData, ListContainerButton>? GenerateItem;
-    public Action<BaseButton.ButtonEventArgs, ListData>? ItemPressed;
+    public Action<BaseButton.ButtonEventArgs?, ListData?>? ItemPressed;
     public IReadOnlyList<ListData> Data => _data;
 
     private const int DefaultSeparation = 3;
@@ -92,6 +92,12 @@ public sealed class ListContainer : Control
         _data = data.ToList();
         _updateChildren = true;
         InvalidateArrange();
+
+        if (_selected != null && !data.Contains(_selected))
+        {
+            _selected = null;
+            ItemPressed?.Invoke(null, null);
+        }
     }
 
     public void DirtyList()

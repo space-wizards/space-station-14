@@ -22,7 +22,7 @@ namespace Content.Client.Administration.UI.CustomControls
         private List<PlayerInfo> _playerList = new();
         private readonly List<PlayerInfo> _sortedPlayerList = new();
 
-        public event Action<PlayerInfo?>? OnSelectionChanged;
+        public event Action<PlayerInfo>? OnSelectionChanged;
         public IReadOnlyList<PlayerInfo> PlayerInfo => _playerList;
 
         public Func<PlayerInfo, string, string>? OverrideText;
@@ -46,9 +46,9 @@ namespace Content.Client.Administration.UI.CustomControls
             BackgroundPanel.PanelOverride = new StyleBoxFlat {BackgroundColor = new Color(32, 32, 40)};
         }
 
-        private void PlayerListItemPressed(BaseButton.ButtonEventArgs args, ListData data)
+        private void PlayerListItemPressed(BaseButton.ButtonEventArgs? args, ListData? data)
         {
-            if (data is not PlayerListData {Info: var selectedPlayer})
+            if (args == null || data is not PlayerListData {Info: var selectedPlayer})
                 return;
             if (args.Event.Function == EngineKeyFunctions.UIClick)
             {
