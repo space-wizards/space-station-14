@@ -53,19 +53,55 @@
         prob: 0.1
         orGroup: Surgcaps
       - id: ClothingHeadHatSurgcapPurple
-        prob: 0.05
+        prob: 0.11
         orGroup: Surgcaps
       - id: ClothingHeadHatSurgcapBlue
-        prob: 0.90
+        prob: 0.12
+        orGroup: Surgcaps
+      - id: ClothingHeadHatSurgcapCyan
+        prob: 0.13
+        orGroup: Surgcaps
+      - id: ClothingHeadHatSurgcapBlack
+        prob: 0.15
+        orGroup: Surgcaps
+      - id: ClothingHeadHatSurgcapPink
+        prob: 0.16
+        orGroup: Surgcaps
+      - id: ClothingHeadHatSurgcapRainbow
+        prob: 0.18
+        orGroup: Surgcaps
+      - id: ClothingHeadHatSurgcapWhite
+        prob: 0.19
+        orGroup: Surgcaps
+      - id: ClothingHeadHatSurgcapCybersun
+        prob: 0.02
         orGroup: Surgcaps
       - id: UniformScrubsColorBlue
-        prob: 0.5
-        orGroup: Surgshrubs
-      - id: UniformScrubsColorGreen
         prob: 0.1
         orGroup: Surgshrubs
+      - id: UniformScrubsColorGreen
+        prob: 0.11
+        orGroup: Surgshrubs
       - id: UniformScrubsColorPurple
-        prob: 0.05
+        prob: 0.12
+        orGroup: Surgshrubs
+      - id: UniformScrubsColorCyan
+        prob: 0.13
+        orGroup: Surgshrubs
+      - id: UniformScrubsColorBlack
+        prob: 0.15
+        orGroup: Surgshrubs
+      - id: UniformScrubsColorPink
+        prob: 0.16
+        orGroup: Surgshrubs
+      - id: UniformScrubsColorRainbow
+        prob: 0.18
+        orGroup: Surgshrubs
+      - id: UniformScrubsColorWhite
+        prob: 0.19
+        orGroup: Surgshrubs
+      - id: UniformScrubsColorCybersun
+        prob: 0.02
         orGroup: Surgshrubs
       - id: ClothingMaskSterile
 
@@ -87,19 +123,55 @@
         prob: 0.1
         orGroup: Surgcaps
       - id: ClothingHeadHatSurgcapPurple
-        prob: 0.05
+        prob: 0.11
         orGroup: Surgcaps
       - id: ClothingHeadHatSurgcapBlue
-        prob: 0.90
+        prob: 0.12
+        orGroup: Surgcaps
+      - id: ClothingHeadHatSurgcapCyan
+        prob: 0.13
+        orGroup: Surgcaps
+      - id: ClothingHeadHatSurgcapBlack
+        prob: 0.15
+        orGroup: Surgcaps
+      - id: ClothingHeadHatSurgcapPink
+        prob: 0.16
+        orGroup: Surgcaps
+      - id: ClothingHeadHatSurgcapRainbow
+        prob: 0.18
+        orGroup: Surgcaps
+      - id: ClothingHeadHatSurgcapWhite
+        prob: 0.19
+        orGroup: Surgcaps
+      - id: ClothingHeadHatSurgcapCybersun
+        prob: 0.02
         orGroup: Surgcaps
       - id: UniformScrubsColorBlue
-        prob: 0.5
-        orGroup: Surgshrubs
-      - id: UniformScrubsColorGreen
         prob: 0.1
         orGroup: Surgshrubs
+      - id: UniformScrubsColorGreen
+        prob: 0.11
+        orGroup: Surgshrubs
       - id: UniformScrubsColorPurple
-        prob: 0.05
+        prob: 0.12
+        orGroup: Surgshrubs
+      - id: UniformScrubsColorCyan
+        prob: 0.13
+        orGroup: Surgshrubs
+      - id: UniformScrubsColorBlack
+        prob: 0.15
+        orGroup: Surgshrubs
+      - id: UniformScrubsColorPink
+        prob: 0.16
+        orGroup: Surgshrubs
+      - id: UniformScrubsColorRainbow
+        prob: 0.18
+        orGroup: Surgshrubs
+      - id: UniformScrubsColorWhite
+        prob: 0.19
+        orGroup: Surgshrubs
+      - id: UniformScrubsColorCybersun
+        prob: 0.02
         orGroup: Surgshrubs
       - id: ClothingMaskSterile
 

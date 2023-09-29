@@ -30,3 +30,69 @@
     sprite: Clothing/Uniforms/Scrubs/blue.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Scrubs/blue.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: UniformScrubsColorBlack
+  name: black scrubs
+  description: A combination of comfort and utility intended to make removing every last organ someone has and selling them to a space robot much more official looking.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Scrubs/black.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Scrubs/black.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: UniformScrubsColorCyan
+  name: cyan scrubs
+  description: A combination of comfort and utility intended to make removing every last organ someone has and selling them to a space robot much more official looking.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Scrubs/cyan.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Scrubs/cyan.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: UniformScrubsColorPink
+  name: pink scrubs
+  description: A combination of comfort and utility intended to make removing every last organ someone has and selling them to a space robot much more official looking.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Scrubs/pink.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Scrubs/pink.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: UniformScrubsColorRainbow
+  name: rainbow scrubs
+  description: A combination of comfort and utility intended to make removing every last organ someone has and selling them to a space robot much more official looking.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Scrubs/rainbow.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Scrubs/rainbow.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: UniformScrubsColorWhite
+  name: white scrubs
+  description: A combination of comfort and utility intended to make removing every last organ someone has and selling them to a space robot much more official looking.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Scrubs/white.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Scrubs/white.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: UniformScrubsColorCybersun
+  name: cybersun scrubs
+  description: The official uniform of Cybersun's biotechnology division
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Scrubs/cybersun.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Scrubs/cybersun.rsi

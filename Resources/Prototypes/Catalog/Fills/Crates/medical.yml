@@ -49,13 +49,23 @@
   - type: StorageFill
     contents:
       - id: UniformScrubsColorGreen
-      - id: UniformScrubsColorPurple
       - id: UniformScrubsColorBlue
-      - id: ClothingHeadHatSurgcapBlue
-      - id: ClothingHeadHatSurgcapPurple
+      - id: UniformScrubsColorCyan
+      - id: UniformScrubsColorPurple
+      - id: UniformScrubsColorBlack
+      - id: UniformScrubsColorPink
+      - id: UniformScrubsColorRainbow
+      - id: UniformScrubsColorWhite
       - id: ClothingHeadHatSurgcapGreen
+      - id: ClothingHeadHatSurgcapBlue
+      - id: ClothingHeadHatSurgcapCyan
+      - id: ClothingHeadHatSurgcapPurple
+      - id: ClothingHeadHatSurgcapBlack
+      - id: ClothingHeadHatSurgcapPink
+      - id: ClothingHeadHatSurgcapRainbow
+      - id: ClothingHeadHatSurgcapWhite
       - id: ClothingMaskSterile
-        amount: 3
+        amount: 1
 
 - type: entity
   id: CrateEmergencyBurnKit

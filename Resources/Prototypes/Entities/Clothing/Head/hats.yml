@@ -409,6 +409,72 @@
 
 - type: entity
   parent: ClothingHeadBase
+  id: ClothingHeadHatSurgcapBlack
+  name: surgical cap
+  description: A black cap surgeons wear during operations. Keeps their hair from tickling your internal organs.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/surgcap_black.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/surgcap_black.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatSurgcapCyan
+  name: surgical cap
+  description: A cyan cap surgeons wear during operations. Keeps their hair from tickling your internal organs.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/surgcap_cyan.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/surgcap_cyan.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatSurgcapCybersun
+  name: surgical cap
+  description: A surgical cap worn by members of Cybersun's Biotechnology division.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/surgcap_cybersun.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/surgcap_cybersun.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatSurgcapPink
+  name: surgical cap
+  description: A pink cap surgeons wear during operations. Keeps their hair from tickling your internal organs.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/surgcap_pink.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/surgcap_pink.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatSurgcapRainbow
+  name: surgical cap
+  description: A rainbow cap surgeons wear during operations. Keeps their hair from tickling your internal organs.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/surgcap_rainbow.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/surgcap_rainbow.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatSurgcapWhite
+  name: surgical cap
+  description: A black cap surgeons wear during operations. Keeps their hair from tickling your internal organs.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/surgcap_white.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/surgcap_white.rsi
+
+- type: entity
+  parent: ClothingHeadBase
   id: ClothingHeadHatTophat
   name: tophat
   description: A stylish black tophat.

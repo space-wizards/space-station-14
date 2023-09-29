@@ -1,0 +1,23 @@
+- type: entity
+  name: Medical Scrubs Spawner
+  id: MedicalScrubsSpawner
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - state: red
+        - sprite: Clothing/Uniforms/Scrubs/cyan.rsi
+          state: icon
+    - type: RandomSpawner
+      prototypes:
+        - UniformScrubsColorGreen
+        - UniformScrubsColorBlue
+        - UniformScrubsColorCyan
+        - UniformScrubsColorPurple
+        - UniformScrubsColorBlack
+        - UniformScrubsColorPink
+        - UniformScrubsColorRainbow
+        - UniformScrubsColorWhite
+      rarePrototypes:
+        - UniformScrubsColorCybersun
+      rareChance: 0.01
