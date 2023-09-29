@@ -1024,9 +1024,8 @@
   name: crazy glue
   description:  A bottle of crazy glue manufactured by Honk! Co.
   components:
-  - type: Drink
-    isOpen: false
-    openSounds:
+  - type: Openable
+    sound:
       collection: packetOpenSounds
   - type: Sprite
     sprite: Objects/Fun/glue.rsi

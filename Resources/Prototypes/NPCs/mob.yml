@@ -10,6 +10,16 @@
           task: IdleCompound
 
 - type: htnCompound
+  id: RatServantTargetAttackCompound
+  branches:
+    - tasks:
+        - !type:HTNCompoundTask
+          task: RatServantCombatCompound
+    - tasks:
+        - !type:HTNCompoundTask
+          task: IdleCompound
+
+- type: htnCompound
   id: MouseCompound
   branches:
     - tasks:
