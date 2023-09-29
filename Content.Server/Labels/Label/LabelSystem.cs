@@ -3,6 +3,7 @@ using Content.Server.Paper;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Examine;
 using Content.Shared.Labels;
+using Content.Shared.Labels.Components;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
