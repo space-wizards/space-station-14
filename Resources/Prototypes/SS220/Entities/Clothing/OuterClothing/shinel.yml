@@ -1,11 +1,17 @@
 - type: entity
   parent: ClothingOuterStorageBase
   id: ClothingOuterCoatUssp
-  name: шинель
-  description: ""
+  name: пальто НКВД
+  description: Качественное и дорогое пальто. Защитит от самых суровых морозов в самых дальних уголках Сибири.
   suffix: Ebent
   components:
   - type: Sprite
     sprite: SS220/Clothing/OuterClothing/Coats/shinel.rsi
   - type: Clothing
     sprite: SS220/Clothing/OuterClothing/Coats/shinel.rsi
+  - type: TemperatureProtection
+    coefficient: 0.1
+  - type: Armor
+    modifiers:
+      coefficients:
+        Heat: 0.90

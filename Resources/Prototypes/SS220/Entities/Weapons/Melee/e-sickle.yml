@@ -2,7 +2,7 @@
   name: Энергетический серп
   parent: BaseItem
   id: EnergySickle
-  description: Новейшая разработка пытливых, совецкцих умов. Незаменимая вещь как в хозяйстве так и на войне.
+  description: Новейшая разработка пытливых советских умов. Незаменимая вещь как в хозяйстве, так и на войне.
   suffix: Ebent
   components:
   - type: EnergySword

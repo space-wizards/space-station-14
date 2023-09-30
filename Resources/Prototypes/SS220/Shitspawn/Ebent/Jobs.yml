@@ -318,6 +318,10 @@
   components:
     - type: Loadout
       prototypes: [ EbentIronSquadCorpsmanGear ]
+    - type: GhostRole
+      makeSentient: true
+      name: Полевой медик Железного Отряда
+    - type: GhostTakeoverAvailable
 
 - type: job
   id: IronSquadCorpsman
@@ -554,6 +558,10 @@
   components:
     - type: Loadout
       prototypes: [ EbentIronSquadTrooperGear ]
+    - type: GhostRole
+      makeSentient: true
+      name: Боец Железного Отряда
+    - type: GhostTakeoverAvailable
 
 - type: job
   id: IronSquadFighter

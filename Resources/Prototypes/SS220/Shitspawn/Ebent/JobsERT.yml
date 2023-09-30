@@ -230,6 +230,10 @@
   components:
     - type: Loadout
       prototypes: [ EbentSpecOpsCorpsmanGear ]
+    - type: GhostRole
+      makeSentient: true
+      name: Парамедик Специальных Операций
+    - type: GhostTakeoverAvailable
 
 - type: job
   id: SpecOpsCorpsman
@@ -370,6 +374,10 @@
   components:
     - type: Loadout
       prototypes: [ EbentSpecOpsTrooperGear ]
+    - type: GhostRole
+      makeSentient: true
+      name: Рядовой Специальных Операций
+    - type: GhostTakeoverAvailable
 
 - type: job
   id: SpecOpsFighter

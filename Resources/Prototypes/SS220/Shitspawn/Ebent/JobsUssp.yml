@@ -254,6 +254,10 @@
   components:
     - type: Loadout
       prototypes: [ EbentUSSPCorpsmanGear ]
+    - type: GhostRole
+      makeSentient: true
+      name: Полевой медик СССП
+    - type: GhostTakeoverAvailable
 
 - type: job
   id: USSPCorpsman
@@ -424,6 +428,10 @@
   components:
     - type: Loadout
       prototypes: [ EbentUSSPTrooperGear ]
+    - type: GhostRole
+      makeSentient: true
+      name: Красноармеец
+    - type: GhostTakeoverAvailable
 
 - type: job
   id: USSPFighter
