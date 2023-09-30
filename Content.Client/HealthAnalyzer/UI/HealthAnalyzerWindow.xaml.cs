@@ -125,19 +125,19 @@ namespace Content.Client.HealthAnalyzer.UI
                     {
                         // If damage types are allowed to belong to more than one damage group,
                         // they may appear twice here. Mark them as duplicate.
-                        if (!shownTypes.Contains(type))
-                        {
-                            shownTypes.Add(type);
+                        if (shownTypes.Contains(type))
+                            return;
 
-                            var damageString = Loc.GetString(
-                                "health-analyzer-window-damage-type-text",
-                                ("damageType", Loc.GetString("health-analyzer-window-damage-type-" + type)),
-                                ("amount", typeAmount)
-                            );
+                        shownTypes.Add(type);
 
-                            if (typeAmount > 0)
-                                groupContainer.AddChild(CreateDiagnosticItemLabel(damageString));
-                        }
+                        var damageString = Loc.GetString(
+                            "health-analyzer-window-damage-type-text",
+                            ("damageType", Loc.GetString("health-analyzer-window-damage-type-" + type)),
+                            ("amount", typeAmount)
+                        );
+
+                        if (typeAmount > 0)
+                            groupContainer.AddChild(CreateDiagnosticItemLabel(damageString));
                     }
                 }
             }
