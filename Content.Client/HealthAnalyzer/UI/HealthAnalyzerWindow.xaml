@@ -23,8 +23,7 @@
                     Margin="0 5 0 0"/>
                 <Label
                     Name="patientDamageAmount"
-                    Margin="0 5 0 0"
-                    StyleClasses="LabelBig"/>
+                    Margin="0 10 0 0"/>
             </BoxContainer>
             <BoxContainer
                 Name="GroupsContainer"
