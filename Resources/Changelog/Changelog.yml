@@ -1,9 +1,4 @@
 Entries:
-- author: Flareguy
-  changes:
-  - {message: The smartfridge now uses its old sprites., type: Tweak}
-  id: 4429
-  time: '2023-08-04T18:29:43.0000000+00:00'
 - author: MilenVolf
   changes:
   - {message: Moths now have proper creampied texture! Honk!, type: Tweak}
@@ -2961,3 +2956,9 @@ Entries:
   - {message: Holofans can now be destroyed by explosions., type: Fix}
   id: 4928
   time: '2023-09-30T19:08:09.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: 'Space dragons get a proper greentext in the round end summary, along
+      with objectives in the character menu.', type: Tweak}
+  id: 4929
+  time: '2023-09-30T20:18:02.0000000+00:00'
