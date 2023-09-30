@@ -113,6 +113,14 @@ public abstract partial class SharedFultonSystem : EntitySystem
         if (args.Target == null || args.Handled || !args.CanReach)
             return;
 
+        if (TryComp<ContainerManagerComponent>(uid: args.User, out var manager))
+        {
+            if (manager.ContainsEntity(args.Target.Value))
+            {
+                return;
+            }
+        }
+
         if (TryComp<FultonBeaconComponent>(args.Target, out var beacon))
         {
             if (!_foldable.IsFolded(args.Target.Value))
