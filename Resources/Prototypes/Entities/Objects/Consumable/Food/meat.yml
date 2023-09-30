@@ -495,6 +495,34 @@
     slice: FoodMeatXenoCutlet
 
 - type: entity
+  name: raw rouny meat
+  # not raw since rouny best
+  parent: FoodMeatBase
+  id: FoodMeatRouny
+  description: A slab of meat from an innocent red friend.
+  components:
+  - type: FlavorProfile
+    flavors:
+    - meaty
+    - acid
+    - lostfriendship
+  - type: Tag
+    tags:
+    - Raw
+  - type: Sprite
+    state: rouny
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: SulfuricAcid
+          Quantity: 20
+  - type: Construction
+    graph: RounySteak
+    node: start
+    defaultTarget: rouny steak
+
+- type: entity
   name: killer tomato meat
   parent: FoodMeatBase
   id: FoodMeatTomato
@@ -847,6 +875,34 @@
   - type: Construction
     graph: GoliathSteak
     node: goliath steak
+
+- type: entity
+  name: rouny steak
+  parent: FoodMeatBase
+  id: FoodMeatRounyCooked
+  description: Some kill to survive. You on the other hand, kill for fun.
+  components:
+  - type: FlavorProfile
+    flavors:
+    - meaty
+    - lostfriendship
+  - type: Tag
+    tags:
+    - Cooked
+  - type: Sprite
+    layers:
+    - state: rouny-cooked
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+        - ReagentId: Protein
+          Quantity: 10
+  - type: Construction
+    graph: RounySteak
+    node: rouny steak
 
 - type: entity
   name: lizard steak

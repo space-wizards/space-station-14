@@ -26,7 +26,6 @@
     - key: enum.TransferAmountUiKey.Key
       type: TransferAmountBoundUserInterface
   - type: Drink
-    isOpen: true
   - type: Sprite
     state: icon
   - type: Spillable
