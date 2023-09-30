@@ -148,19 +148,3 @@
           path: /Audio/Effects/tree_fell.ogg
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
-
-- type: entity
-  parent: BaseItem
-  id: HypoDartBox
-  name: hypodart box
-  suffix: HypoDart
-  description: A small box containing an hypodart. Packaging disintegrates when opened, leaving no evidence behind.
-  components:
-  - type: Sprite
-    sprite: Objects/Storage/dartbox.rsi
-    state: icon
-  - type: SpawnItemsOnUse
-    items:
-    - id: HypoDart
-    sound:
-      path: /Audio/Effects/unwrap.ogg
