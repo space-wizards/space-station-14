@@ -258,9 +258,9 @@
       fix1:
         density: 20
         mask:
-          - BulletImpassable
+          - None
         layer:
-          - BulletImpassable
+          - Opaque
   - type: ExplosionAnomaly
     supercriticalExplosion: Default
     explosionTotalIntensity: 50
@@ -367,6 +367,20 @@
     - SpiderBlood
     - Vomit
     - Fat
+    - JuiceBanana
+    - JuiceBerry
+    - JuiceTomato
+    - JuicePotato
+    - JuicePineapple
+    - Beer
+    - Ethanol
+    - Vodka
+    - Whiskey
+    - Antifreeze
+    - Bleach
+    - SpaceCleaner
+    - SpaceLube
+    - SpaceGlue
   - type: Physics
     bodyType: KinematicController
     linearDamping: 0

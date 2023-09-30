@@ -20,7 +20,6 @@ public sealed class ChasingAnomalySystem : EntitySystem
     {
         SubscribeLocalEvent<ChasingAnomalyComponent, AnomalyPulseEvent>(OnPulse);
     }
-
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
