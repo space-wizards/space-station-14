@@ -292,6 +292,8 @@
         prob: 0.05
 
 - type: entity
+  name: Dartboard Box Set
+  description: A box with everything you need for a fun game of darts.
   id: CrateFunDartsSet
   parent: CratePlastic
   components:
