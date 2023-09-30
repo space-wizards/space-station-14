@@ -29,7 +29,7 @@ public abstract partial class SharedToolSystem : EntitySystem
         ev.DoAfter = args.DoAfter;
 
         if (args.OriginalTarget != null)
-            RaiseLocalEvent(args.OriginalTarget.Value, (object) ev);
+            RaiseLocalEvent(GetEntity(args.OriginalTarget.Value), (object) ev);
         else
             RaiseLocalEvent((object) ev);
     }
@@ -54,7 +54,6 @@ public abstract partial class SharedToolSystem : EntitySystem
     /// <param name="toolQualitiesNeeded">The qualities needed for this tool to work.</param>
     /// <param name="doAfterEv">The event that will be raised when the tool has finished (including cancellation). Event
     /// will be directed at the tool target.</param>
-    /// <param name="fuel">Amount of fuel that should be taken from the tool.</param>
     /// <param name="toolComponent">The tool component.</param>
     /// <returns>Returns true if any interaction takes place.</returns>
     public bool UseTool(
@@ -64,7 +63,6 @@ public abstract partial class SharedToolSystem : EntitySystem
         float doAfterDelay,
         IEnumerable<string> toolQualitiesNeeded,
         DoAfterEvent doAfterEv,
-        float fuel = 0f,
         ToolComponent? toolComponent = null)
     {
         return UseTool(tool,
@@ -74,7 +72,6 @@ public abstract partial class SharedToolSystem : EntitySystem
             toolQualitiesNeeded,
             doAfterEv,
             out _,
-            fuel,
             toolComponent);
     }
 
@@ -92,7 +89,6 @@ public abstract partial class SharedToolSystem : EntitySystem
     /// will be directed at the tool target.</param>
     /// <param name="id">The id of the DoAfter that was created. This may be null even if the function returns true in
     /// the event that this tool-use cancelled an existing DoAfter</param>
-    /// <param name="fuel">Amount of fuel that should be taken from the tool.</param>
     /// <param name="toolComponent">The tool component.</param>
     /// <returns>Returns true if any interaction takes place.</returns>
     public bool UseTool(
@@ -103,29 +99,30 @@ public abstract partial class SharedToolSystem : EntitySystem
         IEnumerable<string> toolQualitiesNeeded,
         DoAfterEvent doAfterEv,
         out DoAfterId? id,
-        float fuel = 0f,
         ToolComponent? toolComponent = null)
     {
         id = null;
         if (!Resolve(tool, ref toolComponent, false))
             return false;
 
-        if (!CanStartToolUse(tool, user, target, fuel, toolQualitiesNeeded, toolComponent))
+        if (!CanStartToolUse(tool, user, target, toolQualitiesNeeded, toolComponent))
             return false;
 
-        var toolEvent = new ToolDoAfterEvent(fuel, doAfterEv, target);
-        var doAfterArgs = new DoAfterArgs(user, delay / toolComponent.SpeedModifier, toolEvent, tool, target: target, used: tool)
+        var toolEvent = new ToolDoAfterEvent(doAfterEv, GetNetEntity(target));
+        var doAfterArgs = new DoAfterArgs(EntityManager, user, delay / toolComponent.SpeedModifier, toolEvent, tool, target: target, used: tool)
         {
             BreakOnDamage = true,
             BreakOnTargetMove = true,
             BreakOnUserMove = true,
             NeedHand = tool != user,
-            AttemptFrequency = fuel <= 0 ? AttemptFrequency.Never : AttemptFrequency.EveryTick
+            AttemptFrequency = IsWelder(tool) ? AttemptFrequency.EveryTick : AttemptFrequency.Never
         };
 
         _doAfterSystem.TryStartDoAfter(doAfterArgs, out id);
         return true;
     }
+
+    protected abstract bool IsWelder(EntityUid uid);
 
     /// <summary>
     ///     Attempts to use a tool on some entity, which will start a DoAfter. Returns true if an interaction occurred.
@@ -141,7 +138,6 @@ public abstract partial class SharedToolSystem : EntitySystem
     /// will be directed at the tool target.</param>
     /// <param name="id">The id of the DoAfter that was created. This may be null even if the function returns true in
     /// the event that this tool-use cancelled an existing DoAfter</param>
-    /// <param name="fuel">Amount of fuel that should be taken from the tool.</param>
     /// <param name="toolComponent">The tool component.</param>
     /// <returns>Returns true if any interaction takes place.</returns>
     public bool UseTool(
@@ -151,7 +147,6 @@ public abstract partial class SharedToolSystem : EntitySystem
         float doAfterDelay,
         string toolQualityNeeded,
         DoAfterEvent doAfterEv,
-        float fuel = 0,
         ToolComponent? toolComponent = null)
     {
         return UseTool(tool,
@@ -161,7 +156,6 @@ public abstract partial class SharedToolSystem : EntitySystem
             new[] { toolQualityNeeded },
             doAfterEv,
             out _,
-            fuel,
             toolComponent);
     }
 
@@ -181,21 +175,32 @@ public abstract partial class SharedToolSystem : EntitySystem
         return Resolve(uid, ref tool, false) && tool.Qualities.ContainsAll(qualities);
     }
 
-    private bool CanStartToolUse(EntityUid tool, EntityUid user, EntityUid? target, float fuel, IEnumerable<string> toolQualitiesNeeded, ToolComponent? toolComponent = null)
+    private bool CanStartToolUse(EntityUid tool, EntityUid user, EntityUid? target, IEnumerable<string> toolQualitiesNeeded, ToolComponent? toolComponent = null)
     {
         if (!Resolve(tool, ref toolComponent))
             return false;
 
+        // check if the tool can do what's required
+        if (!toolComponent.Qualities.ContainsAll(toolQualitiesNeeded))
+            return false;
+
+        // check if the user allows using the tool
         var ev = new ToolUserAttemptUseEvent(target);
         RaiseLocalEvent(user, ref ev);
         if (ev.Cancelled)
             return false;
 
-        if (!toolComponent.Qualities.ContainsAll(toolQualitiesNeeded))
+        // check if the tool allows being used
+        var beforeAttempt = new ToolUseAttemptEvent(user);
+        RaiseLocalEvent(tool, beforeAttempt);
+        if (beforeAttempt.Cancelled)
             return false;
 
-        var beforeAttempt = new ToolUseAttemptEvent(fuel, user);
-        RaiseLocalEvent(tool, beforeAttempt, false);
+        // check if the target allows using the tool
+        if (target != null && target != tool)
+        {
+            RaiseLocalEvent(target.Value, beforeAttempt);
+        }
 
         return !beforeAttempt.Cancelled;
     }
@@ -203,29 +208,25 @@ public abstract partial class SharedToolSystem : EntitySystem
     #region DoAfterEvents
 
     [Serializable, NetSerializable]
-    protected sealed class ToolDoAfterEvent : DoAfterEvent
+    protected sealed partial class ToolDoAfterEvent : DoAfterEvent
     {
-        [DataField("fuel")]
-        public readonly float Fuel;
-
         /// <summary>
         ///     Entity that the wrapped do after event will get directed at. If null, event will be broadcast.
         /// </summary>
         [DataField("target")]
-        public readonly EntityUid? OriginalTarget;
+        public NetEntity? OriginalTarget;
 
         [DataField("wrappedEvent")]
-        public readonly DoAfterEvent WrappedEvent = default!;
+        public DoAfterEvent WrappedEvent = default!;
 
         private ToolDoAfterEvent()
         {
         }
 
-        public ToolDoAfterEvent(float fuel, DoAfterEvent wrappedEvent, EntityUid? originalTarget)
+        public ToolDoAfterEvent(DoAfterEvent wrappedEvent, NetEntity? originalTarget)
         {
             DebugTools.Assert(wrappedEvent.GetType().HasCustomAttribute<NetSerializableAttribute>(), "Tool event is not serializable");
 
-            Fuel = fuel;
             WrappedEvent = wrappedEvent;
             OriginalTarget = originalTarget;
         }
@@ -238,21 +239,21 @@ public abstract partial class SharedToolSystem : EntitySystem
             if (evClone == WrappedEvent)
                 return this;
 
-            return new ToolDoAfterEvent(Fuel, evClone, OriginalTarget);
+            return new ToolDoAfterEvent(evClone, OriginalTarget);
         }
     }
 
     [Serializable, NetSerializable]
-    protected sealed class LatticeCuttingCompleteEvent : DoAfterEvent
+    protected sealed partial class LatticeCuttingCompleteEvent : DoAfterEvent
     {
         [DataField("coordinates", required:true)]
-        public readonly EntityCoordinates Coordinates;
+        public NetCoordinates Coordinates;
 
         private LatticeCuttingCompleteEvent()
         {
         }
 
-        public LatticeCuttingCompleteEvent(EntityCoordinates coordinates)
+        public LatticeCuttingCompleteEvent(NetCoordinates coordinates)
         {
             Coordinates = coordinates;
         }
@@ -261,16 +262,16 @@ public abstract partial class SharedToolSystem : EntitySystem
     }
 
     [Serializable, NetSerializable]
-    protected sealed class TilePryingDoAfterEvent : DoAfterEvent
+    protected sealed partial class TilePryingDoAfterEvent : DoAfterEvent
     {
-        [DataField("coordinates", required:true)]
-        public readonly EntityCoordinates Coordinates;
+        [DataField("coordinates", required: true)]
+        public NetCoordinates Coordinates;
 
         private TilePryingDoAfterEvent()
         {
         }
 
-        public TilePryingDoAfterEvent(EntityCoordinates coordinates)
+        public TilePryingDoAfterEvent(NetCoordinates coordinates)
         {
             Coordinates = coordinates;
         }
@@ -280,7 +281,7 @@ public abstract partial class SharedToolSystem : EntitySystem
 }
 
 [Serializable, NetSerializable]
-public sealed class CableCuttingFinishedEvent : SimpleDoAfterEvent
+public sealed partial class CableCuttingFinishedEvent : SimpleDoAfterEvent
 {
 }
 

@@ -42,12 +42,12 @@ namespace Content.Client.HealthAnalyzer.UI
 
         public void Populate(HealthAnalyzerScannedUserMessage msg)
         {
-            NoPatientDataText.Visible = true;
             GroupsContainer.RemoveAllChildren();
 
             if (msg.TargetEntity == null
                 || !_entityManager.TryGetComponent<DamageableComponent>(msg.TargetEntity, out var damageable))
             {
+                NoPatientDataText.Visible = true;
                 return;
             }
 
@@ -69,6 +69,11 @@ namespace Content.Client.HealthAnalyzer.UI
                 "health-analyzer-window-entity-health-text",
                 ("entityName", entityName)
             );
+
+
+            // text.Append($"{Loc.GetString("health-analyzer-window-entity-temperature-text", ("temperature", float.IsNaN(msg.Temperature) ? "N/A" : $"{msg.Temperature - 273f:F1} °C"))}\n");
+            // text.Append($"{Loc.GetString("health-analyzer-window-entity-blood-level-text", ("bloodLevel", float.IsNaN(msg.BloodLevel) ? "N/A" : $"{msg.BloodLevel * 100:F1} %"))}\n\n");
+
 
             var damageSortedGroups =
                 damageable.DamagePerGroup.OrderBy(damage => damage.Value)
@@ -107,7 +112,7 @@ namespace Content.Client.HealthAnalyzer.UI
                 if (diagnosticGroupRow is not BoxContainer groupRow)
                     continue;
 
-                var groupTitleText = $"\n{Loc.GetString(
+                var groupTitleText = $"{Loc.GetString(
                     "health-analyzer-window-damage-group-text",
                     ("damageGroup", Loc.GetString("health-analyzer-window-damage-group-" + damageGroupId)),
                     ("amount", damageAmount)
@@ -142,7 +147,7 @@ namespace Content.Client.HealthAnalyzer.UI
                                 ("amount", typeAmount)
                             );
 
-                            groupContainer.AddChild(CreateDiagnosticItemLabel(damageString, (int) typeAmount == 0));
+                            groupContainer.AddChild(CreateDiagnosticItemLabel(damageString, typeAmount == 0));
                         }
                     }
                 }

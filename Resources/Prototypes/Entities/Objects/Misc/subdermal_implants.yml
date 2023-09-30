@@ -2,7 +2,7 @@
   parent: BaseItem
   id: BaseSubdermalImplant
   name: implant
-  description: a microscopic chip that's injected under the skin
+  description: A microscopic chip that's injected under the skin.
   abstract: true
   components:
     - type: SubdermalImplant
@@ -17,12 +17,13 @@
   parent: BaseSubdermalImplant
   id: SadTromboneImplant
   name: sad trombone implant
-  description: plays a sad tune when the user dies
+  description: This implant plays a sad tune when the user dies.
   noSpawn: true
   components:
     - type: SubdermalImplant
     - type: TriggerOnMobstateChange
-      mobState: Dead
+      mobState:
+      - Dead
     - type: EmitSoundOnTrigger
       sound:
         collection: SadTrombone
@@ -33,11 +34,11 @@
   parent: BaseSubdermalImplant
   id: LightImplant
   name: light implant
-  description: makes your skin emit a faint light
+  description: This implant emits light from the user's skin on activation.
   noSpawn: true
   components:
     - type: SubdermalImplant
-      implantAction: ToggleLight
+      implantAction: ActionToggleLight
     - type: PointLight
       enabled: false
       radius: 2.5
@@ -50,12 +51,25 @@
         - HideContextMenu
         - Flashlight
     - type: UnpoweredFlashlight
-      toggleAction:
-        name: action-name-toggle-light
-        description: action-description-toggle-light
-        icon: { sprite: Objects/Tools/flashlight.rsi, state: flashlight }
-        iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
-        event: !type:ToggleActionEvent
+
+- type: entity
+  parent: BaseSubdermalImplant
+  id: BikeHornImplant
+  name: bike horn implant
+  description: This implant lets the user honk anywhere at any time.
+  noSpawn: true
+  components:
+    - type: SubdermalImplant
+      implantAction: ActionActivateHonkImplant
+    - type: TriggerImplantAction
+    - type: EmitSoundOnTrigger
+      sound:
+        collection: BikeHorn
+        params:
+          variation: 0.125
+    - type: Tag
+      tags:
+      - BikeHorn
 
 #Security implants
 
@@ -63,7 +77,7 @@
   parent: BaseSubdermalImplant
   id: TrackingImplant
   name: tracking implant
-  description: tracks whoever was implanted via the suit sensor network
+  description: This implant has a tracking device attached to the suit sensor network, as well as a condition monitor for the Security radio channel.
   noSpawn: true
   components:
     - type: SubdermalImplant
@@ -78,6 +92,11 @@
     - type: StationLimitedNetwork
     - type: WirelessNetworkConnection
       range: 500
+    - type: TriggerOnMobstateChange
+      mobState:
+      - Critical
+    - type: Rattle
+      radioChannel: "Security"
 
 #Traitor implants
 
@@ -85,11 +104,11 @@
   parent: BaseSubdermalImplant
   id: StorageImplant
   name: storage implant
-  description: made with bluespace technology, allows the user to fit a few items in hidden storage
+  description: This implant grants hidden storage within a person's body using bluespace technology.
   noSpawn: true
   components:
     - type: SubdermalImplant
-      implantAction: OpenStorageImplant
+      implantAction: ActionOpenStorageImplant
     - type: Item
       size: 9999
     - type: Storage
@@ -107,21 +126,21 @@
   parent: BaseSubdermalImplant
   id: FreedomImplant
   name: freedom implant
-  description: you can break these cuffs
+  description: This implant lets the user break out of hand restraints up to three times before ceasing to function anymore.
   noSpawn: true
   components:
     - type: SubdermalImplant
-      implantAction: ActivateFreedomImplant
+      implantAction: ActionActivateFreedomImplant
 
 - type: entity
   parent: BaseSubdermalImplant
   id: UplinkImplant
   name: uplink implant
-  description: allows the user to open a hidden uplink at will
+  description: This implant lets the user access a hidden Syndicate uplink at will.
   noSpawn: true
   components:
   - type: SubdermalImplant
-    implantAction: OpenUplinkImplant
+    implantAction: ActionOpenUplinkImplant
   - type: Store
     preset: StorePresetUplink
     balance:
@@ -131,20 +150,46 @@
     - key: enum.StoreUiKey.Key
       type: StoreBoundUserInterface
 
+- type: entity
+  parent: BaseSubdermalImplant
+  id: EmpImplant
+  name: EMP implant
+  description: This implant creates an electromagnetic pulse when activated.
+  noSpawn: true
+  components:
+    - type: SubdermalImplant
+      implantAction: ActionActivateEmpImplant
+    - type: TriggerImplantAction
+    - type: EmpOnTrigger
+      range: 1.75
+      energyConsumption: 50000
+      disableDuration: 10
+
+- type: entity
+  parent: BaseSubdermalImplant
+  id: DnaScramblerImplant
+  name: DNA scrambler implant
+  description: This implant lets the user randomly change their appearance and name once.
+  noSpawn: true
+  components:
+    - type: SubdermalImplant
+      implantAction: ActionActivateDnaScramblerImplant
+
 #Nuclear Operative/Special Exclusive implants
 
 - type: entity
   parent: BaseSubdermalImplant
   id: MicroBombImplant
-  name: micro bomb implant
-  description: mission failed, user blows up on death to prevent company equipment from being stolen
+  name: micro-bomb implant
+  description: This implant detonates the user upon death.
   noSpawn: true
   components:
     - type: SubdermalImplant
       permanent: true
-      implantAction: ActivateMicroBomb
+      implantAction: ActionActivateMicroBomb
     - type: TriggerOnMobstateChange
-      mobState: Dead
+      mobState:
+      - Dead
     - type: TriggerImplantAction
     - type: ExplodeOnTrigger
     - type: GibOnTrigger
@@ -165,14 +210,15 @@
 - type: entity
   parent: BaseSubdermalImplant
   id: MacroBombImplant
-  name: macro bomb implant
-  description: a large explosion packed into a small implant, be warned as this could be dangerous for your teammates
+  name: macro-bomb implant
+  description: This implant creates a large explosion on death after a preprogrammed countdown.
   noSpawn: true
   components:
     - type: SubdermalImplant
       permanent: true
     - type: TriggerOnMobstateChange #Chains with OnUseTimerTrigger
-      mobState: Dead
+      mobState:
+      - Dead
       preventSuicide: true
     - type: OnUseTimerTrigger
       delay: 7
@@ -194,3 +240,19 @@
         - SubdermalImplant
         - HideContextMenu
         - MacroBomb
+
+- type: entity
+  parent: BaseSubdermalImplant
+  id: DeathRattleImplant
+  name: death rattle implant
+  description: This implant will inform the Syndicate radio channel should the user fall into critical condition or die.
+  noSpawn: true
+  components:
+    - type: SubdermalImplant
+      permanent: true
+    - type: TriggerOnMobstateChange
+      mobState:
+      - Critical
+      - Dead
+    - type: Rattle
+

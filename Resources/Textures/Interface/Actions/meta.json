@@ -26,16 +26,7 @@
             "name": "manifest"
         },
         {
-            "name": "devour"
-        },
-        {
             "name": "carp_summon"
-        },
-        {
-            "name": "ratKingArmy"
-        },
-        {
-            "name": "ratKingDomain"
         },
         {
             "name": "zombie-turn"
@@ -57,6 +48,9 @@
         },
         {
             "name": "web"
+        },
+        {
+            "name": "ghostHearingToggled"
         }
     ]
 }

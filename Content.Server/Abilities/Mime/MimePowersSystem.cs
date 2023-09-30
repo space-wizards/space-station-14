@@ -1,14 +1,15 @@
 using Content.Server.Popups;
-using Content.Server.Coordinates.Helpers;
+using Content.Server.Speech.Muting;
 using Content.Shared.Actions;
+using Content.Shared.Actions.Events;
 using Content.Shared.Alert;
-using Content.Shared.Physics;
-using Content.Shared.Doors.Components;
+using Content.Shared.Coordinates.Helpers;
 using Content.Shared.Maps;
 using Content.Shared.Mobs.Components;
-using Robust.Shared.Physics.Components;
+using Content.Shared.Physics;
+using Robust.Shared.Containers;
+using Robust.Shared.Map;
 using Robust.Shared.Timing;
-using Content.Server.Speech.Muting;
 
 namespace Content.Server.Abilities.Mime
 {
@@ -19,7 +20,8 @@ namespace Content.Server.Abilities.Mime
         [Dependency] private readonly AlertsSystem _alertsSystem = default!;
         [Dependency] private readonly EntityLookupSystem _lookupSystem = default!;
         [Dependency] private readonly TurfSystem _turf = default!;
-
+        [Dependency] private readonly IMapManager _mapMan = default!;
+        [Dependency] private readonly SharedContainerSystem _container = default!;
         [Dependency] private readonly IGameTiming _timing = default!;
 
         public override void Initialize()
@@ -28,6 +30,7 @@ namespace Content.Server.Abilities.Mime
             SubscribeLocalEvent<MimePowersComponent, ComponentInit>(OnComponentInit);
             SubscribeLocalEvent<MimePowersComponent, InvisibleWallActionEvent>(OnInvisibleWall);
         }
+
         public override void Update(float frameTime)
         {
             base.Update(frameTime);
@@ -50,8 +53,8 @@ namespace Content.Server.Abilities.Mime
         private void OnComponentInit(EntityUid uid, MimePowersComponent component, ComponentInit args)
         {
             EnsureComp<MutedComponent>(uid);
-            _actionsSystem.AddAction(uid, component.InvisibleWallAction, uid);
             _alertsSystem.ShowAlert(uid, AlertType.VowOfSilence);
+            _actionsSystem.AddAction(uid, ref component.InvisibleWallActionEntity, component.InvisibleWallAction, uid);
         }
 
         /// <summary>
@@ -62,11 +65,14 @@ namespace Content.Server.Abilities.Mime
             if (!component.Enabled)
                 return;
 
+            if (_container.IsEntityOrParentInContainer(uid))
+                return;
+
             var xform = Transform(uid);
             // Get the tile in front of the mime
-            var offsetValue = xform.LocalRotation.ToWorldVec().Normalized;
-            var coords = xform.Coordinates.Offset(offsetValue).SnapToGrid(EntityManager);
-            var tile = coords.GetTileRef();
+            var offsetValue = xform.LocalRotation.ToWorldVec();
+            var coords = xform.Coordinates.Offset(offsetValue).SnapToGrid(EntityManager, _mapMan);
+            var tile = coords.GetTileRef(EntityManager, _mapMan);
             if (tile == null)
                 return;
 
@@ -78,7 +84,7 @@ namespace Content.Server.Abilities.Mime
             }
 
             // Check there are no mobs there
-            foreach (var entity in _lookupSystem.GetEntitiesIntersecting(tile.Value))
+            foreach (var entity in _lookupSystem.GetEntitiesIntersecting(tile.Value, 0f))
             {
                 if (HasComp<MobStateComponent>(entity) && entity != uid)
                 {
@@ -88,7 +94,7 @@ namespace Content.Server.Abilities.Mime
             }
             _popupSystem.PopupEntity(Loc.GetString("mime-invisible-wall-popup", ("mime", uid)), uid);
             // Make sure we set the invisible wall to despawn properly
-            Spawn(component.WallPrototype, coords);
+            Spawn(component.WallPrototype, _turf.GetTileCenter(tile.Value));
             // Handle args so cooldown works
             args.Handled = true;
         }
@@ -110,7 +116,7 @@ namespace Content.Server.Abilities.Mime
             RemComp<MutedComponent>(uid);
             _alertsSystem.ClearAlert(uid, AlertType.VowOfSilence);
             _alertsSystem.ShowAlert(uid, AlertType.VowBroken);
-            _actionsSystem.RemoveAction(uid, mimePowers.InvisibleWallAction);
+            _actionsSystem.RemoveAction(uid, mimePowers.InvisibleWallActionEntity);
         }
 
         /// <summary>
@@ -133,11 +139,7 @@ namespace Content.Server.Abilities.Mime
             AddComp<MutedComponent>(uid);
             _alertsSystem.ClearAlert(uid, AlertType.VowBroken);
             _alertsSystem.ShowAlert(uid, AlertType.VowOfSilence);
-            _actionsSystem.AddAction(uid, mimePowers.InvisibleWallAction, uid);
+            _actionsSystem.AddAction(uid, ref mimePowers.InvisibleWallActionEntity, mimePowers.InvisibleWallAction, uid);
         }
-    }
-
-    public sealed class InvisibleWallActionEvent : InstantActionEvent
-    {
     }
 }

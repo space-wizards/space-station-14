@@ -1,13 +1,16 @@
 - type: entity
   save: false
   name: Urisst' Mzhand
-  parent: BaseMobOrganic
+  parent: BaseMobSpeciesOrganic
   id: BaseMobReptilian
   abstract: true
   components:
   - type: HumanoidAppearance
     species: Reptilian
   - type: Hunger
+    starvationDamage:
+      types:
+        Cold: 1
   - type: Thirst
   - type: Icon
     sprite: Mobs/Species/Reptilian/parts.rsi
@@ -23,6 +26,7 @@
   - type: LizardAccent
   - type: Speech
     speechSounds: Lizard
+    speechVerb: Reptilian
   - type: Vocal
     sounds:
       Male: UnisexReptilian
@@ -57,9 +61,7 @@
   - type: Perishable
 
 - type: entity
-  save: false
-  name: Urist McHands
-  parent: MobHumanDummy
+  parent: BaseSpeciesDummy
   id: MobReptilianDummy
   noSpawn: true
   description: A dummy reptilian meant to be used in character setup.

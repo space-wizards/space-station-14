@@ -6,8 +6,10 @@ namespace Content.Shared.Singularity.EntitySystems;
 /// <summary>
 /// An event queued when an event horizon is contained (put into a container).
 /// Exists to delay the event horizon eating its way out of the container until events relating to the insertion have been processed.
+/// Needs to be a class because ref structs can't be put into the queue.
 /// </summary>
-public sealed class EventHorizonContainedEvent : EntityEventArgs {
+public sealed class EventHorizonContainedEvent : EntityEventArgs
+{
     /// <summary>
     /// The uid of the event horizon that has been contained.
     /// </summary>
@@ -23,7 +25,8 @@ public sealed class EventHorizonContainedEvent : EntityEventArgs {
     /// </summary>
     public readonly EntGotInsertedIntoContainerMessage Args;
 
-    public EventHorizonContainedEvent(EntityUid entity, EventHorizonComponent eventHorizon, EntGotInsertedIntoContainerMessage args) {
+    public EventHorizonContainedEvent(EntityUid entity, EventHorizonComponent eventHorizon, EntGotInsertedIntoContainerMessage args)
+    {
         Entity = entity;
         EventHorizon = eventHorizon;
         Args = args;

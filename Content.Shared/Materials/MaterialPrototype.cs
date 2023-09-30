@@ -22,7 +22,7 @@ namespace Content.Shared.Materials
 
         [ViewVariables]
         [IdDataField]
-        public string ID { get; } = default!;
+        public string ID { get; private set; } = default!;
 
         /// <summary>
         ///     For material storage to be able to convert back and forth
@@ -33,16 +33,24 @@ namespace Content.Shared.Materials
         public string? StackEntity;
 
         [DataField("name")]
-        public string Name = "";
+        public string Name = string.Empty;
+
+        /// <summary>
+        /// Locale id for the unit of this material.
+        /// Lathe recipe tooltips and material storage display use this to let you change a material to sound nicer.
+        /// For example, 5 bars of gold is better than 5 sheets of gold.
+        /// </summary>
+        [DataField("unit")]
+        public string Unit = "materials-unit-sheet";
 
         [DataField("color")]
-        public Color Color { get; } = Color.Gray;
+        public Color Color { get; private set; } = Color.Gray;
 
         /// <summary>
         ///     An icon used to represent the material in graphic interfaces.
         /// </summary>
         [DataField("icon")]
-        public SpriteSpecifier Icon { get; } = SpriteSpecifier.Invalid;
+        public SpriteSpecifier Icon { get; private set; } = SpriteSpecifier.Invalid;
 
         /// <summary>
         /// The price per cm3.

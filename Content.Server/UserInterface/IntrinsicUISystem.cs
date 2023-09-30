@@ -1,6 +1,6 @@
 ﻿using Content.Server.Actions;
 using Content.Shared.Actions;
-using JetBrains.Annotations;
+using Content.Shared.UserInterface;
 using Robust.Server.GameObjects;
 
 namespace Content.Server.UserInterface;
@@ -8,10 +8,11 @@ namespace Content.Server.UserInterface;
 public sealed class IntrinsicUISystem : EntitySystem
 {
     [Dependency] private readonly ActionsSystem _actionsSystem = default!;
+    [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
 
     public override void Initialize()
     {
-        SubscribeLocalEvent<IntrinsicUIComponent, ComponentStartup>(OnGetActions);
+        SubscribeLocalEvent<IntrinsicUIComponent, MapInitEvent>(InitActions);
         SubscribeLocalEvent<IntrinsicUIComponent, ToggleIntrinsicUIEvent>(OnActionToggle);
     }
 
@@ -20,14 +21,11 @@ public sealed class IntrinsicUISystem : EntitySystem
         args.Handled = InteractUI(uid, args.Key, component);
     }
 
-    private void OnGetActions(EntityUid uid, IntrinsicUIComponent component, ComponentStartup args)
+    private void InitActions(EntityUid uid, IntrinsicUIComponent component, MapInitEvent args)
     {
-        if (!TryComp<ActionsComponent>(uid, out var actions))
-            return;
-
         foreach (var entry in component.UIs)
         {
-            _actionsSystem.AddAction(uid, entry.ToggleAction, null, actions);
+            _actionsSystem.AddAction(uid, ref entry.ToggleActionEntity, entry.ToggleAction);
         }
     }
 
@@ -54,24 +52,17 @@ public sealed class IntrinsicUISystem : EntitySystem
         if (attempt.Cancelled)
             return false;
 
-        ui.Toggle(actor.PlayerSession);
+        _uiSystem.ToggleUi(ui, actor.PlayerSession);
         return true;
     }
 
-    private BoundUserInterface? GetUIOrNull(EntityUid uid, Enum? key, IntrinsicUIComponent? component = null)
+    private PlayerBoundUserInterface? GetUIOrNull(EntityUid uid, Enum? key, IntrinsicUIComponent? component = null)
     {
         if (!Resolve(uid, ref component))
             return null;
 
         return key is null ? null : uid.GetUIOrNull(key);
     }
-}
-
-[UsedImplicitly]
-public sealed class ToggleIntrinsicUIEvent : InstantActionEvent
-{
-    [ViewVariables]
-    public Enum? Key { get; set; }
 }
 
 // Competing with ActivatableUI for horrible event names.

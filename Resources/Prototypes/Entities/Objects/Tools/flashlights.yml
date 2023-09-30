@@ -16,13 +16,10 @@
     behaviours:
       - !type:FadeBehaviour
         id: radiating
-        interpolate: Linear
         maxDuration: 2.0
         startValue: 3.0
         endValue: 2.0
         isLooped: true
-        property: Radius
-        enabled: false
         reverseWhenFinished: true
       - !type:PulseBehaviour
         id: blinking
@@ -31,8 +28,6 @@
         minValue: 0.1
         maxValue: 2.0
         isLooped: true
-        property: Radius
-        enabled: false
   - type: ToggleableLightVisuals
     spriteLayer: light
     inhandVisuals:
@@ -63,11 +58,11 @@
   - type: Item
     sprite: Objects/Tools/flashlight.rsi
   - type: PointLight
-    netsync: false
     enabled: false
     mask: /Textures/Effects/LightMasks/cone.png
     autoRot: true
     radius: 6
+    netsync: false
   - type: Appearance
   - type: StaticPrice
     price: 40

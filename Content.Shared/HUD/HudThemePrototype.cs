@@ -6,12 +6,12 @@ namespace Content.Shared.HUD
     public sealed class HudThemePrototype : IPrototype
     {
         [DataField("name", required: true)]
-        public string Name { get; } = string.Empty;
+        public string Name { get; private set; } = string.Empty;
 
         [IdDataField]
-        public string ID { get; } = string.Empty;
+        public string ID { get; private set; } = string.Empty;
 
         [DataField("path", required: true)]
-        public string Path { get; } = string.Empty;
+        public string Path { get; private set; } = string.Empty;
     }
 }

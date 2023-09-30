@@ -7,8 +7,9 @@
   - type: InputMover
   - type: MobMover
   - type: HTN
-    rootTask: SimpleHostileCompound
-  - type: Faction
+    rootTask:
+      task: SimpleHostileCompound
+  - type: NpcFactionMember
     factions:
     - SimpleHostile
   - type: Sprite
@@ -42,9 +43,8 @@
       0: Alive
       15: Dead
   - type: Stamina
-    excess: 15
+    critThreshold: 15
   - type: MovementAlwaysTouching
-  - type: Appearance
   - type: DamageStateVisuals
     states:
       Alive:
@@ -83,6 +83,8 @@
   - type: GhostTakeoverAvailable
   - type: ReplacementAccent
     accent: genericAggressive
+  - type: Speech
+    speechVerb: SmallMob
 
 - type: entity
   id: MobTickSalvage

@@ -20,3 +20,6 @@
     - type: Tag
       tags:
       - AppraisalTool
+    - type: GuideHelp
+      guides:
+      - Cargo

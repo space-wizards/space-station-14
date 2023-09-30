@@ -50,11 +50,12 @@ public sealed partial class ReplaySpectatorSystem
         if (Direction == DirectionFlag.None)
         {
             if (TryComp(player, out InputMoverComponent? cmp))
-                _mover.LerpRotation(cmp, frameTime);
+                _mover.LerpRotation(player, cmp, frameTime);
+
             return;
         }
 
-        if (!player.IsClientSide() || !HasComp<ReplaySpectatorComponent>(player))
+        if (!IsClientSide(player) || !HasComp<ReplaySpectatorComponent>(player))
         {
             // Player is trying to move -> behave like the ghost-on-move component.
             SpawnSpectatorGhost(new EntityCoordinates(player, default), true);
@@ -64,7 +65,7 @@ public sealed partial class ReplaySpectatorSystem
         if (!TryComp(player, out InputMoverComponent? mover))
             return;
 
-        _mover.LerpRotation(mover, frameTime);
+        _mover.LerpRotation(player, mover, frameTime);
 
         var effectiveDir = Direction;
         if ((Direction & DirectionFlag.North) != 0)
@@ -75,7 +76,7 @@ public sealed partial class ReplaySpectatorSystem
 
         var query = GetEntityQuery<TransformComponent>();
         var xform = query.GetComponent(player);
-        var pos = _transform.GetWorldPosition(xform, query);
+        var pos = _transform.GetWorldPosition(xform);
 
         if (!xform.ParentUid.IsValid())
         {
@@ -85,15 +86,20 @@ public sealed partial class ReplaySpectatorSystem
         }
 
         // A poor mans grid-traversal system. Should also interrupt ghost-following.
+        // This is very hacky and has already caused bugs.
+        // This is done the way it is because grid traversal gets processed in physics' SimulateWorld() update.
+        // TODO do this properly somehow.
         _transform.SetGridId(player, xform, null);
         _transform.AttachToGridOrMap(player);
+        if (xform.ParentUid.IsValid())
+            _transform.SetGridId(player, xform, Transform(xform.ParentUid).GridUid);
 
-        var parentRotation = _mover.GetParentGridAngle(mover, query);
+        var parentRotation = _mover.GetParentGridAngle(mover);
         var localVec = effectiveDir.AsDir().ToAngle().ToWorldVec();
         var worldVec = parentRotation.RotateVec(localVec);
         var speed = CompOrNull<MovementSpeedModifierComponent>(player)?.BaseSprintSpeed ?? DefaultSpeed;
         var delta = worldVec * frameTime * speed;
-        _transform.SetWorldPositionRotation(xform, pos + delta, delta.ToWorldAngle(), query);
+        _transform.SetWorldPositionRotation(xform, pos + delta, delta.ToWorldAngle());
     }
 
     private sealed class MoverHandler : InputCmdHandler
@@ -107,12 +113,9 @@ public sealed partial class ReplaySpectatorSystem
             _dir = dir;
         }
 
-        public override bool HandleCmdMessage(ICommonSession? session, InputCmdMessage message)
+        public override bool HandleCmdMessage(IEntityManager entManager, ICommonSession? session, IFullInputCmdMessage message)
         {
-            if (message is not FullInputCmdMessage full)
-                return false;
-
-            if (full.State == BoundKeyState.Down)
+            if (message.State == BoundKeyState.Down)
                 _sys.Direction |= _dir;
             else
                 _sys.Direction &= ~_dir;

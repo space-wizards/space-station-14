@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Server.Decals;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry.Reagent;
@@ -12,7 +13,7 @@ namespace Content.Server.Chemistry.TileReactions;
 /// Purges all cleanable decals on a tile.
 /// </summary>
 [DataDefinition]
-public sealed class CleanDecalsReaction : ITileReaction
+public sealed partial class CleanDecalsReaction : ITileReaction
 {
     /// <summary>
     /// For every cleaned decal we lose this much reagent.

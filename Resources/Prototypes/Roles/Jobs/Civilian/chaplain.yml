@@ -4,7 +4,7 @@
   description: job-description-chaplain
   playTimeTracker: JobChaplain
   startingGear: ChaplainGear
-  icon: "Chaplain"
+  icon: "JobIconChaplain"
   supervisors: job-supervisors-hop
   access:
   - Chapel

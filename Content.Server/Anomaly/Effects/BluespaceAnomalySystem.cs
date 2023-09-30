@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Numerics;
 using Content.Server.Anomaly.Components;
 using Content.Shared.Anomaly.Components;
 using Content.Shared.Mobs.Components;
@@ -49,7 +50,7 @@ public sealed class BluespaceAnomalySystem : EntitySystem
         var xform = Transform(uid);
         var mapPos = _xform.GetWorldPosition(xform);
         var radius = component.SupercriticalTeleportRadius;
-        var gridBounds = new Box2(mapPos - (radius, radius), mapPos + (radius, radius));
+        var gridBounds = new Box2(mapPos - new Vector2(radius, radius), mapPos + new Vector2(radius, radius));
         foreach (var comp in _lookup.GetComponentsInRange<MobStateComponent>(xform.Coordinates, component.MaxShuffleRadius))
         {
             var ent = comp.Owner;

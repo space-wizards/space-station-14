@@ -78,6 +78,16 @@
     state: banner_revolution
 
 - type: entity
+  id: BannerSyndicate
+  parent: BannerBase
+  name: syndicate banner
+  description: A banner from which, according to the syndicate, you should feel hatred for NT.
+  components:
+  - type: Sprite
+    sprite: Structures/Decoration/banner.rsi
+    state: banner_syndicate
+
+- type: entity
   id: BannerScience
   parent: BannerBase
   name: science banner

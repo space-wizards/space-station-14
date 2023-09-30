@@ -41,7 +41,7 @@ public sealed class TetherGunOverlay : Overlay
             var gunWorldPos = xformSystem.GetWorldPosition(gunXform, xformQuery);
             var diff = worldPos - gunWorldPos;
             var angle = diff.ToWorldAngle();
-            var length = diff.Length / 2f;
+            var length = diff.Length() / 2f;
             var midPoint = gunWorldPos + diff / 2;
             const float Width = 0.05f;
 

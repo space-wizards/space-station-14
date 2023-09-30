@@ -21,6 +21,61 @@
     Plastic: 300
 
 - type: latheRecipe
+  id: Truncheon
+  result: Truncheon
+  completetime: 2
+  materials:
+    Steel: 300
+    Plastic: 300
+
+- type: latheRecipe
+  id: WeaponLaserCarbine
+  result: WeaponLaserCarbine
+  completetime: 8
+  materials:
+    Steel: 2000
+    Glass: 800
+    Plastic: 500
+
+- type: latheRecipe
+  id: WeaponAdvancedLaser
+  result: WeaponAdvancedLaser
+  completetime: 5
+  materials:
+    Steel: 1500
+    Glass: 1000
+    Gold: 850
+
+- type: latheRecipe
+  id: WeaponLaserCannon
+  result: WeaponLaserCannon
+  completetime: 5
+  materials:
+    Steel: 1250
+    Plastic: 750
+    Gold: 500
+
+- type: latheRecipe
+  id: WeaponXrayCannon
+  result: WeaponXrayCannon
+  completetime: 5
+  materials:
+    Steel: 1500
+    Glass: 500
+    Plastic: 250
+    Gold: 100
+
+- type: latheRecipe
+  id: WeaponTaser
+  result: WeaponTaser
+  completetime: 5
+  materials:
+    Steel: 700
+    Plastic: 300
+    Gold: 250
+    Silver: 500
+
+- type: latheRecipe
   id: ForensicPad
   result: ForensicPad
   completetime: 4
@@ -34,6 +89,23 @@
   materials:
     Steel: 300
     Glass: 200
+    
+- type: latheRecipe
+  id: ClothingEyesHudSecurity
+  result: ClothingEyesHudSecurity
+  completetime: 2
+  materials:
+    Steel: 300
+    Glass: 200
+
+- type: latheRecipe
+  id: HoloprojectorSecurity
+  result: HoloprojectorSecurityEmpty
+  completetime: 2
+  materials:
+    Steel: 300
+    Glass: 50
+    Plastic: 50
 
 - type: latheRecipe
   id: RiotShield
@@ -42,6 +114,14 @@
   materials:
     Steel: 400
     Glass: 400
+
+- type: latheRecipe
+  id: TelescopicShield
+  result: TelescopicShield
+  completetime: 4
+  materials:
+    Steel: 300
+    Glass: 800
 
 - type: latheRecipe
   id: Flash
@@ -145,27 +225,6 @@
     Glass: 5
 
 - type: latheRecipe
-  id: CartridgeAnomalousParticleDelta
-  result: CartridgeAnomalousParticleDelta
-  completetime: 2
-  materials:
-    Plastic: 25
-
-- type: latheRecipe
-  id: CartridgeAnomalousParticleEpsilon
-  result: CartridgeAnomalousParticleEpsilon
-  completetime: 2
-  materials:
-    Plastic: 25
-
-- type: latheRecipe
-  id: CartridgeAnomalousParticleZeta
-  result: CartridgeAnomalousParticleZeta
-  completetime: 2
-  materials:
-    Plastic: 25
-
-- type: latheRecipe
   id: TargetHuman
   result: TargetHuman
   completetime: 5
@@ -188,6 +247,27 @@
   applyMaterialDiscount: false # ingredients dropped when destroyed
   materials:
     Steel: 500
+
+- type: latheRecipe
+  id: MagazinePistol
+  result: MagazinePistol
+  completetime: 5
+  materials:
+    Steel: 100
+
+- type: latheRecipe
+  id: MagazinePistolSubMachineGun
+  result: MagazinePistolSubMachineGun
+  completetime: 5
+  materials:
+    Steel: 300
+
+- type: latheRecipe
+  id: MagazinePistolSubMachineGunTopMounted
+  result: MagazinePistolSubMachineGunTopMounted
+  completetime: 5
+  materials:
+    Steel: 300
 
 - type: latheRecipe
   id: MagazineBoxPistol
@@ -220,10 +300,24 @@
     Plastic: 300
 
 - type: latheRecipe
+  id: MagazineRifle
+  result: MagazineRifle
+  completetime: 5
+  materials:
+    Steel: 375
+
+- type: latheRecipe
+  id: MagazineLightRifle
+  result: MagazineLightRifle
+  completetime: 5
+  materials:
+    Steel: 375
+
+- type: latheRecipe
   id: MagazineBoxRifle
   result: MagazineBoxRifle
   completetime: 5
-  materials: 
+  materials:
     Steel: 950
 
 - type: latheRecipe
@@ -248,3 +342,73 @@
   materials:
     Steel: 350
     Plastic: 600
+
+- type: latheRecipe
+  id: SpeedLoaderMagnum
+  result: SpeedLoaderMagnum
+  completetime: 5
+  materials:
+    Steel: 200
+
+- type: latheRecipe
+  id: ShellShotgunIncendiary
+  result: ShellShotgunIncendiary
+  completetime: 2
+  materials:
+    Plastic: 20
+
+- type: latheRecipe
+  id: CartridgePistolIncendiary
+  result: CartridgePistolIncendiary
+  completetime: 2
+  materials:
+    Plastic: 10
+
+- type: latheRecipe
+  id: CartridgeMagnumIncendiary
+  result: CartridgeMagnumIncendiary
+  completetime: 2
+  materials:
+    Plastic: 20
+
+- type: latheRecipe
+  id: CartridgeLightRifleIncendiary
+  result: CartridgeLightRifleIncendiary
+  completetime: 2
+  materials:
+    Plastic: 20
+
+- type: latheRecipe
+  id: CartridgeRifleIncendiary
+  result: CartridgeRifleIncendiary
+  completetime: 2
+  materials:
+    Plastic: 15
+
+- type: latheRecipe
+  id: MagazineBoxPistolIncendiary
+  result: MagazineBoxPistolIncendiary
+  completetime: 5
+  materials:
+    Plastic: 650
+
+- type: latheRecipe
+  id: MagazineBoxMagnumIncendiary
+  result: MagazineBoxMagnumIncendiary
+  completetime: 5
+  materials:
+    Plastic: 1250
+
+- type: latheRecipe
+  id: MagazineBoxLightRifleIncendiary
+  result: MagazineBoxLightRifleIncendiary
+  completetime: 5
+  materials:
+    Plastic: 1800
+
+- type: latheRecipe
+  id: MagazineBoxRifleIncendiary
+  result: MagazineBoxRifleIncendiary
+  completetime: 5
+  materials:
+    Plastic: 950

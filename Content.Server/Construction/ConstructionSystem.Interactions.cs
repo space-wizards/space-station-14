@@ -4,6 +4,8 @@ using Content.Server.Construction.Components;
 using Content.Server.Temperature.Components;
 using Content.Server.Temperature.Systems;
 using Content.Shared.Construction;
+using Content.Shared.Construction.Components;
+using Content.Shared.Construction.EntitySystems;
 using Content.Shared.Construction.Steps;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
@@ -34,8 +36,11 @@ namespace Content.Server.Construction
             SubscribeLocalEvent<ConstructionComponent, ConstructionInteractDoAfterEvent>(EnqueueEvent);
 
             // Event handling. Add your subscriptions here! Just make sure they're all handled by EnqueueEvent.
-            SubscribeLocalEvent<ConstructionComponent, InteractUsingEvent>(EnqueueEvent, new []{typeof(AnchorableSystem)},  new []{typeof(EncryptionKeySystem)});
+            SubscribeLocalEvent<ConstructionComponent, InteractUsingEvent>(EnqueueEvent,
+                new []{typeof(AnchorableSystem)},
+                new []{typeof(EncryptionKeySystem)});
             SubscribeLocalEvent<ConstructionComponent, OnTemperatureChangeEvent>(EnqueueEvent);
+            SubscribeLocalEvent<ConstructionComponent, PartAssemblyPartInsertedEvent>(EnqueueEvent);
         }
 
         /// <summary>
@@ -235,7 +240,7 @@ namespace Content.Server.Construction
                     interactDoAfter.User,
                     interactDoAfter.Used!.Value,
                     uid,
-                    interactDoAfter.ClickLocation);
+                    GetCoordinates(interactDoAfter.ClickLocation));
 
                 doAfterState = DoAfterState.Completed;
             }
@@ -276,9 +281,9 @@ namespace Content.Server.Construction
                     // If we still haven't completed this step's DoAfter...
                     if (doAfterState == DoAfterState.None && insertStep.DoAfter > 0)
                     {
-                        var doAfterEv = new ConstructionInteractDoAfterEvent(interactUsing);
+                        var doAfterEv = new ConstructionInteractDoAfterEvent(EntityManager, interactUsing);
 
-                        var doAfterEventArgs = new DoAfterArgs(interactUsing.User, step.DoAfter, doAfterEv, uid, uid, interactUsing.Used)
+                        var doAfterEventArgs = new DoAfterArgs(EntityManager, interactUsing.User, step.DoAfter, doAfterEv, uid, uid, interactUsing.Used)
                         {
                             BreakOnDamage = false,
                             BreakOnTargetMove = true,
@@ -347,7 +352,6 @@ namespace Content.Server.Construction
                     if (validation)
                     {
                         // Then we only really need to check whether the tool entity has that quality or not.
-                        // TODO fuel consumption?
                         return _toolSystem.HasQuality(interactUsing.Used, toolInsertStep.Tool)
                             ? HandleResult.Validated
                             : HandleResult.False;
@@ -363,9 +367,8 @@ namespace Content.Server.Construction
                         uid,
                         TimeSpan.FromSeconds(toolInsertStep.DoAfter),
                         new [] { toolInsertStep.Tool },
-                        new ConstructionInteractDoAfterEvent(interactUsing),
-                        out var doAfter,
-                        fuel: toolInsertStep.Fuel);
+                        new ConstructionInteractDoAfterEvent(EntityManager, interactUsing),
+                        out var doAfter);
 
                     return result && doAfter != null ? HandleResult.DoAfter : HandleResult.False;
                 }
@@ -385,6 +388,16 @@ namespace Content.Server.Construction
                     }
                     return HandleResult.False;
 
+                }
+
+                case PartAssemblyConstructionGraphStep partAssemblyStep:
+                {
+                    if (ev is not PartAssemblyPartInsertedEvent)
+                        break;
+
+                    if (partAssemblyStep.Condition(uid, EntityManager))
+                        return HandleResult.True;
+                    return HandleResult.False;
                 }
 
                 #endregion

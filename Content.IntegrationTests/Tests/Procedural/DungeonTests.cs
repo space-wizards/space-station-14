@@ -1,8 +1,6 @@
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using Content.Server.Procedural;
 using Content.Shared.Procedural;
-using NUnit.Framework;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 
@@ -14,10 +12,10 @@ public sealed class DungeonTests
     [Test]
     public async Task TestDungeonRoomPackBounds()
     {
-        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true});
-        var protoManager = pairTracker.Pair.Server.ResolveDependency<IPrototypeManager>();
+        await using var pair = await PoolManager.GetServerClient();
+        var protoManager = pair.Server.ResolveDependency<IPrototypeManager>();
 
-        await pairTracker.Pair.Server.WaitAssertion(() =>
+        await pair.Server.WaitAssertion(() =>
         {
             var sizes = new HashSet<Vector2i>();
 
@@ -58,16 +56,16 @@ public sealed class DungeonTests
             }
         });
 
-        await pairTracker.CleanReturnAsync();
+        await pair.CleanReturnAsync();
     }
 
     [Test]
     public async Task TestDungeonPresets()
     {
-        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true});
-        var protoManager = pairTracker.Pair.Server.ResolveDependency<IPrototypeManager>();
+        await using var pair = await PoolManager.GetServerClient();
+        var protoManager = pair.Server.ResolveDependency<IPrototypeManager>();
 
-        await pairTracker.Pair.Server.WaitAssertion(() =>
+        await pair.Server.WaitAssertion(() =>
         {
             var sizes = new HashSet<Vector2i>();
 
@@ -86,13 +84,15 @@ public sealed class DungeonTests
                     // Assert that anything exists at this size
                     var rotated = new Vector2i(pack.Size.Y, pack.Size.X);
 
-                    Assert.That(sizes.Contains(pack.Size) || sizes.Contains(rotated), $"Didn't find any dungeon room prototypes for {pack.Size} for {preset.ID} index {i}");
-
-                    Assert.That(pack.Bottom, Is.GreaterThanOrEqualTo(0), "All dungeon room packs need their y-axis to be above 0!");
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(sizes.Contains(pack.Size) || sizes.Contains(rotated), $"Didn't find any dungeon room prototypes for {pack.Size} for {preset.ID} index {i}");
+                        Assert.That(pack.Bottom, Is.GreaterThanOrEqualTo(0), "All dungeon room packs need their y-axis to be above 0!");
+                    });
                 }
             }
         });
 
-        await pairTracker.CleanReturnAsync();
+        await pair.CleanReturnAsync();
     }
 }

@@ -1,10 +1,11 @@
 using Content.Server.Administration.Managers;
-using Content.Server.Ghost.Components;
 using Content.Shared.ActionBlocker;
+using Content.Shared.Ghost;
 using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
+using Content.Shared.UserInterface;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
@@ -32,7 +33,7 @@ public sealed partial class ActivatableUISystem : EntitySystem
 
         SubscribeLocalEvent<ActivatableUIComponent, GetVerbsEvent<ActivationVerb>>(AddOpenUiVerb);
 
-        SubscribeLocalEvent<ServerUserInterfaceComponent, OpenUiActionEvent>(OnActionPerform);
+        SubscribeLocalEvent<UserInterfaceComponent, OpenUiActionEvent>(OnActionPerform);
 
         InitializePower();
     }
@@ -49,7 +50,7 @@ public sealed partial class ActivatableUISystem : EntitySystem
             ev.Cancel();
     }
 
-    private void OnActionPerform(EntityUid uid, ServerUserInterfaceComponent component, OpenUiActionEvent args)
+    private void OnActionPerform(EntityUid uid, UserInterfaceComponent component, OpenUiActionEvent args)
     {
         if (args.Handled || args.Key == null)
             return;
@@ -144,7 +145,7 @@ public sealed partial class ActivatableUISystem : EntitySystem
         RaiseLocalEvent((aui).Owner, bae, false);
 
         SetCurrentSingleUser((aui).Owner, actor.PlayerSession, aui);
-        ui.Toggle(actor.PlayerSession);
+        _uiSystem.ToggleUi(ui, actor.PlayerSession);
 
         //Let the component know a user opened it so it can do whatever it needs to do
         var aae = new AfterActivatableUIOpenEvent(user, actor.PlayerSession);
@@ -167,8 +168,12 @@ public sealed partial class ActivatableUISystem : EntitySystem
 
     public void CloseAll(EntityUid uid, ActivatableUIComponent? aui = null)
     {
-        if (!Resolve(uid, ref aui, false)) return;
-        aui.UserInterface?.CloseAll();
+        if (!Resolve(uid, ref aui, false))
+            return;
+        if (aui.UserInterface is null)
+            return;
+
+        _uiSystem.CloseAll(aui.UserInterface);
     }
 
     private void OnHandDeselected(EntityUid uid, ActivatableUIComponent? aui, HandDeselectedEvent args)

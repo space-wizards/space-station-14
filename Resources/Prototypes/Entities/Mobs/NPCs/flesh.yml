@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   parent: SimpleMobBase
   id: BaseMobFlesh
   name: aberrant flesh
@@ -6,8 +6,14 @@
   abstract: true
   components:
   - type: HTN
-    rootTask: SimpleHostileCompound
-  - type: Faction
+    rootTask:
+      task: SimpleHostileCompound
+    blackboard:
+      NavClimb: !type:Bool
+        true
+      NavSmash: !type:Bool
+        true
+  - type: NpcFactionMember
     factions:
     - SimpleHostile
   - type: Tag
@@ -30,8 +36,7 @@
       0: Alive
       75: Dead
   - type: Stamina
-    excess: 50
-  - type: Appearance
+    critThreshold: 50
   - type: Butcherable
     spawned:
     - id: FoodMeat
@@ -42,12 +47,12 @@
   - type: MeleeWeapon
     hidden: true
     soundHit:
-        path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
+      path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
     angle: 0
     animation: WeaponArcClaw
     damage:
       types:
-        Slash: 3
+        Slash: 6
   - type: ReplacementAccent
     accent: genericAggressive
 
@@ -75,7 +80,7 @@
     animation: WeaponArcClaw
     damage:
       types:
-        Slash: 5
+        Slash: 8
 
 - type: entity
   parent: BaseMobFlesh
@@ -105,7 +110,7 @@
     animation: WeaponArcClaw
     damage:
       types:
-        Slash: 5
+        Slash: 8
 
 - type: entity
   parent: BaseMobFlesh

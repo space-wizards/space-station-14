@@ -19,6 +19,9 @@
   - type: CollisionWake
     enabled: false
   - type: InteractionOutline
+  - type: Reactive
+    groups:
+      Acidic: [Touch]
   - type: Fixtures
     fixtures:
       fix1:
@@ -48,6 +51,8 @@
       type: TransferAmountBoundUserInterface
     - key: enum.InstrumentUiKey.Key
       type: InstrumentBoundUserInterface
+    - key: enum.IntercomUiKey.Key
+      type: IntercomBoundUserInterface
   - type: Appearance
   - type: Item
     size: 40
@@ -175,6 +180,11 @@
   - type: Tag
     tags:
     - ArtifactFragment
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: Artifexium
+        Quantity: 10
   - type: StaticPrice
     price: 250
   - type: GuideHelp

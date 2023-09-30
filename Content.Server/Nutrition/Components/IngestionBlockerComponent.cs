@@ -10,7 +10,7 @@ namespace Content.Server.Nutrition.EntitySystems;
 ///     masks), then this component might become redundant.
 /// </remarks>
 [RegisterComponent, Access(typeof(FoodSystem), typeof(DrinkSystem), typeof(MaskSystem))]
-public sealed class IngestionBlockerComponent : Component
+public sealed partial class IngestionBlockerComponent : Component
 {
     /// <summary>
     ///     Is this component currently blocking consumption.

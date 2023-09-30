@@ -1,3 +1,4 @@
+using System.Numerics;
 using Robust.Shared.Audio;
 using Robust.Shared.ComponentTrees;
 using Robust.Shared.GameStates;
@@ -9,9 +10,9 @@ namespace Content.Shared.Audio;
 [RegisterComponent]
 [NetworkedComponent]
 [Access(typeof(SharedAmbientSoundSystem))]
-public sealed class AmbientSoundComponent : Component, IComponentTreeEntry<AmbientSoundComponent>
+public sealed partial class AmbientSoundComponent : Component, IComponentTreeEntry<AmbientSoundComponent>
 {
-    [DataField("enabled")]
+    [DataField("enabled", readOnly: true)]
     [ViewVariables(VVAccess.ReadWrite)] // only for map editing
     public bool Enabled { get; set; } = true;
 
@@ -24,6 +25,8 @@ public sealed class AmbientSoundComponent : Component, IComponentTreeEntry<Ambie
     [ViewVariables(VVAccess.ReadWrite)] // only for map editing
     [DataField("range")]
     public float Range = 2f;
+
+    public Vector2 RangeVector => new Vector2(Range, Range);
 
     /// <summary>
     /// Applies this volume to the sound being played.
@@ -47,4 +50,5 @@ public sealed class AmbientSoundComponentState : ComponentState
     public bool Enabled { get; init; }
     public float Range { get; init; }
     public float Volume { get; init; }
+    public SoundSpecifier Sound { get; init; } = default!;
 }

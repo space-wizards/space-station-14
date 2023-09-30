@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   parent: BaseHandheldInstrument
   id: ElectricGuitarInstrument
   name: electric guitar
@@ -16,6 +16,11 @@
     state: icon
   - type: Item
     size: 24
+    sprite: Objects/Fun/Instruments/eguitar.rsi
+  - type: Clothing
+    quickEquip: false
+    slots:
+    - back
     sprite: Objects/Fun/Instruments/eguitar.rsi
   - type: Tag
     tags:
@@ -41,6 +46,11 @@
   - type: Item
     size: 24
     sprite: Objects/Fun/Instruments/bassguitar.rsi
+  - type: Clothing
+    quickEquip: false
+    slots:
+    - back
+    sprite: Objects/Fun/Instruments/bassguitar.rsi
   - type: Tag
     tags:
     - StringInstrument
@@ -64,20 +74,25 @@
   - type: Item
     size: 24
     sprite: Objects/Fun/Instruments/rockguitar.rsi
+  - type: Clothing
+    quickEquip: false
+    slots:
+    - back
+    sprite: Objects/Fun/Instruments/rockguitar.rsi
   - type: Tag
     tags:
     - StringInstrument
   - type: MeleeWeapon
     damage:
       types:
-        Blunt: 4
-        Slash: 8
+        Blunt: 6
+        Slash: 2
   - type: Wieldable
   - type: IncreaseDamageOnWield #they don't call it an axe for nothing
     damage:
       types:
-        Blunt: 2
-        Slash: 6
+        Blunt: 4
+        Slash: 2
 
 - type: entity
   parent: BaseHandheldInstrument
@@ -105,6 +120,37 @@
     slots:
     - back
     sprite: Objects/Fun/Instruments/guitar.rsi
+  - type: Wieldable
+  - type: Damageable # Smash it! Does 20 damage a hit, but breaks after 1 hit. 
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 20
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Weapons/guitarsmash.ogg
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MaterialWoodPlank:
+            min: 2
+            max: 4
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: DamageOnHit # This makes it destroy after one hit.
+    damage:
+      types:
+        Blunt: 20
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 5
+  - type: IncreaseDamageOnWield
+    damage:
+      types:
+        Blunt: 15
 
 - type: entity
   parent: BaseHandheldInstrument

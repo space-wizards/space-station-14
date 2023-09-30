@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Shared.Pinpointer;
 using Robust.Client.Graphics;
 using Robust.Shared.Enums;
@@ -28,6 +29,9 @@ public sealed class NavMapSystem : SharedNavMapSystem
                 TileData = data,
             });
         }
+
+        component.Beacons.Clear();
+        component.Beacons.AddRange(state.Beacons);
     }
 }
 

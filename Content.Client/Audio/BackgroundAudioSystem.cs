@@ -34,7 +34,7 @@ public sealed class BackgroundAudioSystem : EntitySystem
 
         _client.PlayerLeaveServer += OnLeave;
 
-        _gameTicker.LobbyStatusUpdated += LobbySongReceived;
+        _gameTicker.LobbySongUpdated += LobbySongUpdated;
     }
 
     public override void Shutdown()
@@ -48,7 +48,7 @@ public sealed class BackgroundAudioSystem : EntitySystem
 
         _client.PlayerLeaveServer -= OnLeave;
 
-        _gameTicker.LobbyStatusUpdated -= LobbySongReceived;
+        _gameTicker.LobbySongUpdated -= LobbySongUpdated;
 
         EndLobbyMusic();
     }
@@ -95,17 +95,9 @@ public sealed class BackgroundAudioSystem : EntitySystem
         }
     }
 
-    private void LobbySongReceived()
+    private void LobbySongUpdated()
     {
-        if (_lobbyStream != null) //Toggling Ready status fires this method. This check ensures we only start the lobby music if it's not playing.
-        {
-            return;
-        }
-
-        if (_stateManager.CurrentState is LobbyState)
-        {
-            StartLobbyMusic();
-        }
+        RestartLobbyMusic();
     }
 
     public void RestartLobbyMusic()

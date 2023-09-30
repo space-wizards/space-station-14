@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Numerics;
 using Content.Client.CombatMode;
 using Content.Client.ContextMenu.UI;
 using Content.Client.Gameplay;
@@ -81,7 +82,7 @@ namespace Content.Client.Verbs.UI
 
             // Add indicator that some verbs may be missing.
             // I long for the day when verbs will all be predicted and this becomes unnecessary.
-            if (!target.IsClientSide())
+            if (!EntityManager.IsClientSide(target))
             {
                 _context.AddElement(menu, new ContextMenuElement(Loc.GetString("verb-system-waiting-on-server-text")));
             }
@@ -93,7 +94,7 @@ namespace Content.Client.Verbs.UI
 
             // Show the menu at mouse pos
             menu.SetPositionLast();
-            var box = UIBox2.FromDimensions(_userInterfaceManager.MousePositionScaled.Position, (1, 1));
+            var box = UIBox2.FromDimensions(_userInterfaceManager.MousePositionScaled.Position, new Vector2(1, 1));
             menu.Open(box);
         }
 
@@ -215,21 +216,25 @@ namespace Content.Client.Verbs.UI
                     return;
             }
 
-            if (verb.ConfirmationPopup)
-            {
-                if (verbElement.SubMenu == null)
-                {
-                    var popupElement = new ConfirmationMenuElement(verb, "Confirm");
-                    verbElement.SubMenu = new ContextMenuPopup(_context, verbElement);
-                    _context.AddElement(verbElement.SubMenu, popupElement);
-                }
-
-                _context.OpenSubMenu(verbElement);
-            }
-            else
+#if DEBUG
+            // No confirmation pop-ups in debug mode.
+            ExecuteVerb(verb);
+#else
+            if (!verb.ConfirmationPopup)
             {
                 ExecuteVerb(verb);
+                return;
             }
+
+            if (verbElement.SubMenu == null)
+            {
+                var popupElement = new ConfirmationMenuElement(verb, "Confirm");
+                verbElement.SubMenu = new ContextMenuPopup(_context, verbElement);
+                _context.AddElement(verbElement.SubMenu, popupElement);
+            }
+
+            _context.OpenSubMenu(verbElement);
+#endif
         }
 
         private void Close()
@@ -243,7 +248,7 @@ namespace Content.Client.Verbs.UI
 
         private void HandleVerbsResponse(VerbsResponseEvent msg)
         {
-            if (OpenMenu == null || !OpenMenu.Visible || CurrentTarget != msg.Entity)
+            if (OpenMenu == null || !OpenMenu.Visible || CurrentTarget != EntityManager.GetEntity(msg.Entity))
                 return;
 
             AddServerVerbs(msg.Verbs, OpenMenu);

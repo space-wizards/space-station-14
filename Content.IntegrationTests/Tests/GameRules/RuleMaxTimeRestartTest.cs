@@ -1,11 +1,8 @@
-﻿using System;
-using System.Threading.Tasks;
-using Content.Server.GameTicking;
+﻿using Content.Server.GameTicking;
 using Content.Server.GameTicking.Commands;
 using Content.Server.GameTicking.Rules;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Shared.CCVar;
-using NUnit.Framework;
 using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Timing;
@@ -19,21 +16,12 @@ namespace Content.IntegrationTests.Tests.GameRules
         [Test]
         public async Task RestartTest()
         {
-            await using var pairTracker = await PoolManager.GetServerClient();
-            var server = pairTracker.Pair.Server;
+            await using var pair = await PoolManager.GetServerClient(new PoolSettings { InLobby = true });
+            var server = pair.Server;
 
             var entityManager = server.ResolveDependency<IEntityManager>();
-            var configManager = server.ResolveDependency<IConfigurationManager>();
-            await server.WaitPost(() =>
-            {
-                configManager.SetCVar(CCVars.GameLobbyEnabled, true);
-                var command = new RestartRoundNowCommand();
-                command.Execute(null, string.Empty, Array.Empty<string>());
-            });
-
             var sGameTicker = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<GameTicker>();
             var sGameTiming = server.ResolveDependency<IGameTiming>();
-
 
             sGameTicker.StartGameRule("MaxTimeRestart", out var ruleEntity);
             Assert.That(entityManager.TryGetComponent<MaxTimeRestartRuleComponent>(ruleEntity, out var maxTime));
@@ -51,7 +39,7 @@ namespace Content.IntegrationTests.Tests.GameRules
             });
 
             var ticks = sGameTiming.TickRate * (int) Math.Ceiling(maxTime.RoundMaxTime.TotalSeconds * 1.1f);
-            await PoolManager.RunTicksSync(pairTracker.Pair, ticks);
+            await pair.RunTicksSync(ticks);
 
             await server.WaitAssertion(() =>
             {
@@ -59,22 +47,14 @@ namespace Content.IntegrationTests.Tests.GameRules
             });
 
             ticks = sGameTiming.TickRate * (int) Math.Ceiling(maxTime.RoundEndDelay.TotalSeconds * 1.1f);
-            await PoolManager.RunTicksSync(pairTracker.Pair, ticks);
+            await pair.RunTicksSync(ticks);
 
             await server.WaitAssertion(() =>
             {
                 Assert.That(sGameTicker.RunLevel, Is.EqualTo(GameRunLevel.PreRoundLobby));
             });
-            await PoolManager.RunTicksSync(pairTracker.Pair, 5);
-            await server.WaitPost(() =>
-            {
-                configManager.SetCVar(CCVars.GameLobbyEnabled, false);
-                var command = new RestartRoundNowCommand();
-                command.Execute(null, string.Empty, Array.Empty<string>());
-            });
-            await PoolManager.RunTicksSync(pairTracker.Pair, 30);
 
-            await pairTracker.CleanReturnAsync();
+            await pair.CleanReturnAsync();
         }
     }
 }

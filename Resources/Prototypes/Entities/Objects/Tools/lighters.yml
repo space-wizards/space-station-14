@@ -44,7 +44,6 @@
     sprite: Objects/Tools/lighters.rsi
     heldPrefix: off
   - type: ItemCooldown
-  - type: ItemStatus
   - type: RefillableSolution
     solution: Welder
   - type: SolutionContainerManager
@@ -60,7 +59,7 @@
         Blunt: 0 #this feels hacky, but is needed for burn damage while active (i think)
   - type: Welder
     fuelConsumption: 0.01
-    welderOnConsume: 0.1
+    fuelLitCost: 0.1
     litMeleeDamageBonus:
       types:
         Heat: 1

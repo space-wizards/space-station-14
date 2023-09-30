@@ -40,10 +40,10 @@ public sealed class DamageStateVisualizerSystem : VisualizerSystem<DamageStateVi
         // So they don't draw over mobs anymore
         if (data == MobState.Dead)
         {
-            if (sprite.DrawDepth > (int) DrawDepth.FloorObjects)
+            if (sprite.DrawDepth > (int) DrawDepth.DeadMobs)
             {
                 component.OriginalDrawDepth = sprite.DrawDepth;
-                sprite.DrawDepth = (int) DrawDepth.FloorObjects;
+                sprite.DrawDepth = (int) DrawDepth.DeadMobs;
             }
         }
         else if (component.OriginalDrawDepth != null)

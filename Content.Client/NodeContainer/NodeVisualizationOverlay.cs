@@ -1,3 +1,4 @@
+using System.Numerics;
 using System.Text;
 using Content.Client.Resources;
 using Robust.Client.Graphics;
@@ -64,7 +65,7 @@ namespace Content.Client.NodeContainer
             var mousePos = _inputManager.MouseScreenPosition.Position;
             _mouseWorldPos = args
                 .ViewportControl!
-                .ScreenToMap(new Vector2(mousePos.X, mousePos.Y))
+                .PixelToMap(mousePos)
                 .Position;
 
             if (_hovered == null)
@@ -76,7 +77,7 @@ namespace Content.Client.NodeContainer
             var node = _system.NodeLookup[(groupId, nodeId)];
 
 
-            var xform = _entityManager.GetComponent<TransformComponent>(node.Entity);
+            var xform = _entityManager.GetComponent<TransformComponent>(_entityManager.GetEntity(node.Entity));
             if (!_mapManager.TryGetGrid(xform.GridUid, out var grid))
                 return;
             var gridTile = grid.TileIndicesFor(xform.Coordinates);
@@ -89,7 +90,7 @@ namespace Content.Client.NodeContainer
             sb.Append($"grid pos: {gridTile}\n");
             sb.Append(group.DebugData);
 
-            args.ScreenHandle.DrawString(_font, mousePos + (20, -20), sb.ToString());
+            args.ScreenHandle.DrawString(_font, mousePos + new Vector2(20, -20), sb.ToString());
         }
 
         private void DrawWorld(in OverlayDrawArgs overlayDrawArgs)
@@ -105,7 +106,7 @@ namespace Content.Client.NodeContainer
 
             _hovered = default;
 
-            var cursorBox = Box2.CenteredAround(_mouseWorldPos, (nodeSize, nodeSize));
+            var cursorBox = Box2.CenteredAround(_mouseWorldPos, new Vector2(nodeSize, nodeSize));
 
             // Group visible nodes by grid tiles.
             var worldAABB = overlayDrawArgs.WorldAABB;
@@ -145,14 +146,14 @@ namespace Content.Client.NodeContainer
                 var lCursorBox = invMatrix.TransformBox(cursorBox);
                 foreach (var (pos, list) in gridDict)
                 {
-                    var centerPos = (Vector2) pos + grid.TileSize / 2f;
+                    var centerPos = (Vector2) pos + grid.TileSizeHalfVector;
                     list.Sort(NodeDisplayComparer.Instance);
 
                     var offset = -(list.Count - 1) * nodeOffset / 2;
 
                     foreach (var (group, node) in list)
                     {
-                        var nodePos = centerPos + (offset, offset);
+                        var nodePos = centerPos + new Vector2(offset, offset);
                         if (lCursorBox.Contains(nodePos))
                             _hovered = (group.NetId, node.NetId);
 
@@ -166,7 +167,7 @@ namespace Content.Client.NodeContainer
                 foreach (var nodeRenderData in _nodeIndex.Values)
                 {
                     var pos = nodeRenderData.NodePos;
-                    var bounds = Box2.CenteredAround(pos, (nodeSize, nodeSize));
+                    var bounds = Box2.CenteredAround(pos, new Vector2(nodeSize, nodeSize));
 
                     var groupData = nodeRenderData.GroupData;
                     var color = groupData.Color;

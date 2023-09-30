@@ -138,6 +138,7 @@
     tags:
     - CombatKnife
     - Knife
+    - Shiv
   - type: Construction
     graph: Shiv
     node: icon

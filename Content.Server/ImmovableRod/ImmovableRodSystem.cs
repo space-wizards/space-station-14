@@ -3,12 +3,10 @@ using Content.Server.Popups;
 using Content.Shared.Body.Components;
 using Content.Shared.Examine;
 using Content.Shared.Popups;
-using Robust.Shared.Audio;
 using Robust.Shared.Map;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
-using Robust.Shared.Player;
 using Robust.Shared.Random;
 
 namespace Content.Server.ImmovableRod;
@@ -21,6 +19,7 @@ public sealed class ImmovableRodSystem : EntitySystem
     [Dependency] private readonly BodySystem _bodySystem = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
 
     public override void Update(float frameTime)
     {
@@ -44,11 +43,11 @@ public sealed class ImmovableRodSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<ImmovableRodComponent, StartCollideEvent>(OnCollide);
-        SubscribeLocalEvent<ImmovableRodComponent, ComponentInit>(OnComponentInit);
+        SubscribeLocalEvent<ImmovableRodComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<ImmovableRodComponent, ExaminedEvent>(OnExamined);
     }
 
-    private void OnComponentInit(EntityUid uid, ImmovableRodComponent component, ComponentInit args)
+    private void OnMapInit(EntityUid uid, ImmovableRodComponent component, MapInitEvent args)
     {
         if (EntityManager.TryGetComponent(uid, out PhysicsComponent? phys))
         {
@@ -77,7 +76,7 @@ public sealed class ImmovableRodSystem : EntitySystem
 
         if (_random.Prob(component.HitSoundProbability))
         {
-            SoundSystem.Play(component.Sound.GetSound(), Filter.Pvs(uid), uid, component.Sound.Params);
+            _audio.PlayPvs(component.Sound, uid);
         }
 
         if (HasComp<ImmovableRodComponent>(ent))

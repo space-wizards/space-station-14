@@ -1,4 +1,5 @@
-﻿using Robust.Shared.Prototypes;
+﻿using System.Numerics;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Array;
 
@@ -22,7 +23,7 @@ public sealed class BiomePrototype : IPrototype, IInheritingPrototype
 
     /// <inheritdoc />
     [IdDataField]
-    public string ID { get; } = default!;
+    public string ID { get; private set; } = default!;
 
     /// <summary>
     ///     The valid ranges of noise values under which this biome can be picked.
@@ -34,7 +35,7 @@ public sealed class BiomePrototype : IPrototype, IInheritingPrototype
     ///     Higher priority biomes get picked before lower priority ones.
     /// </summary>
     [DataField("priority", required: true)]
-    public int Priority { get; }
+    public int Priority { get; private set; }
 
     /// <summary>
     ///     The components that get added to the target map.

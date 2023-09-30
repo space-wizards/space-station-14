@@ -1,3 +1,4 @@
+using Content.Shared.Lathe;
 using Content.Shared.Research.Prototypes;
 using Content.Shared.Research.Systems;
 using Robust.Shared.GameStates;
@@ -6,7 +7,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 
 namespace Content.Shared.Research.Components;
 
-[RegisterComponent, NetworkedComponent, Access(typeof(SharedResearchSystem)), AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent, Access(typeof(SharedResearchSystem), typeof(SharedLatheSystem)), AutoGenerateComponentState]
 public sealed partial class TechnologyDatabaseComponent : Component
 {
     /// <summary>
@@ -16,21 +17,21 @@ public sealed partial class TechnologyDatabaseComponent : Component
     [DataField("mainDiscipline", customTypeSerializer: typeof(PrototypeIdSerializer<TechDisciplinePrototype>))]
     public string? MainDiscipline;
 
-    [AutoNetworkedField(true)]
+    [AutoNetworkedField]
     [DataField("currentTechnologyCards")]
     public List<string> CurrentTechnologyCards = new();
 
     /// <summary>
     /// Which research disciplines are able to be unlocked
     /// </summary>
-    [AutoNetworkedField(true)]
+    [AutoNetworkedField]
     [DataField("supportedDisciplines", customTypeSerializer: typeof(PrototypeIdListSerializer<TechDisciplinePrototype>))]
     public List<string> SupportedDisciplines = new();
 
     /// <summary>
     /// The ids of all the technologies which have been unlocked.
     /// </summary>
-    [AutoNetworkedField(true)]
+    [AutoNetworkedField]
     [DataField("unlockedTechnologies", customTypeSerializer: typeof(PrototypeIdListSerializer<TechnologyPrototype>))]
     public List<string> UnlockedTechnologies = new();
 
@@ -39,7 +40,7 @@ public sealed partial class TechnologyDatabaseComponent : Component
     /// This is maintained alongside the TechnologyIds
     /// </summary>
     /// todo: if you unlock all the recipes in a tech, it doesn't count as unlocking the tech. sadge
-    [AutoNetworkedField(true)]
+    [AutoNetworkedField]
     [DataField("unlockedRecipes", customTypeSerializer: typeof(PrototypeIdListSerializer<LatheRecipePrototype>))]
     public List<string> UnlockedRecipes = new();
 }

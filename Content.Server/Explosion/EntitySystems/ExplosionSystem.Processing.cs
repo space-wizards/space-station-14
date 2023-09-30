@@ -1,15 +1,15 @@
 using System.Linq;
+using System.Numerics;
 using Content.Server.Explosion.Components;
-using Content.Server.Mind.Components;
 using Content.Shared.CCVar;
 using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.Explosion;
-using Content.Shared.FixedPoint;
 using Content.Shared.Maps;
+using Content.Shared.Mind.Components;
 using Content.Shared.Physics;
 using Content.Shared.Projectiles;
-using Content.Shared.Spawners.Components;
+using Robust.Shared.Spawners;
 using Content.Shared.Tag;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
@@ -18,6 +18,7 @@ using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
+using TimedDespawnComponent = Robust.Shared.Spawners.TimedDespawnComponent;
 
 namespace Content.Server.Explosion.EntitySystems;
 
@@ -305,7 +306,7 @@ public sealed partial class ExplosionSystem : EntitySystem
         EntityQuery<TagComponent> tagQuery,
         EntityQuery<ProjectileComponent> projectileQuery)
     {
-        var gridBox = Box2.FromDimensions(tile * DefaultTileSize, (DefaultTileSize, DefaultTileSize));
+        var gridBox = Box2.FromDimensions(tile * DefaultTileSize, new Vector2(DefaultTileSize, DefaultTileSize));
         var worldBox = spaceMatrix.TransformBox(gridBox);
         var list = new List<TransformComponent>();
         var state = (list, processed, invSpaceMatrix, lookup.Owner, xformQuery, gridBox);
@@ -390,7 +391,7 @@ public sealed partial class ExplosionSystem : EntitySystem
         if (damage != null && damageQuery.TryGetComponent(uid, out var damageable))
         {
             var ev = new GetExplosionResistanceEvent(id);
-            RaiseLocalEvent(uid, ev, false);
+            RaiseLocalEvent(uid, ref ev, false);
 
             ev.DamageCoefficient = Math.Max(0, ev.DamageCoefficient);
 
@@ -434,7 +435,6 @@ public sealed partial class ExplosionSystem : EntitySystem
                 physics,
                 xform,
                 projectileQuery,
-                tagQuery,
                 throwForce);
         }
 

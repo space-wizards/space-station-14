@@ -5,10 +5,12 @@ namespace Content.Client.StationRecords;
 
 public sealed class GeneralStationRecordConsoleBoundUserInterface : BoundUserInterface
 {
+    [ViewVariables]
     private GeneralStationRecordConsoleWindow? _window = default!;
 
-    public GeneralStationRecordConsoleBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
-    {}
+    public GeneralStationRecordConsoleBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
+    {
+    }
 
     protected override void Open()
     {
@@ -22,7 +24,7 @@ public sealed class GeneralStationRecordConsoleBoundUserInterface : BoundUserInt
         _window.OpenCentered();
     }
 
-    private void OnKeySelected(StationRecordKey? key)
+    private void OnKeySelected((NetEntity, uint)? key)
     {
         SendMessage(new SelectGeneralStationRecord(key));
     }

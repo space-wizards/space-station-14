@@ -18,13 +18,14 @@
       proper: true
   - type: Tag
     tags:
-      - DoorBumpOpener
+    - DoorBumpOpener
+    - VimPilot
   - type: Access
     tags:
     - Chapel
   - type: MindContainer
     showExamineInfo: true
-  - type: Faction
+  - type: NpcFactionMember
     factions:
     - PetsNT
   - type: Alerts
@@ -54,7 +55,7 @@
         Slash: 7
   - type: InputMover
   - type: MobMover
-  - type: Faction
+  - type: NpcFactionMember
     factions:
     - SimpleNeutral
   - type: InteractionPopup
@@ -65,15 +66,15 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      80: Critical
-      160: Dead
+      120: Dead
   - type: Grammar
     attributes:
       gender: male
       proper: true
   - type: Tag
     tags:
-      - DoorBumpOpener
+    - DoorBumpOpener
+    - VimPilot
   - type: Access
     tags:
     - Chapel

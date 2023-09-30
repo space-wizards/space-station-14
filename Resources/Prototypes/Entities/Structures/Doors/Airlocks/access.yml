@@ -96,9 +96,25 @@
     access: [["Atmospherics"]]
 
 - type: entity
+  parent: AirlockExternal
+  id: AirlockExternalSyndicateLocked
+  suffix: External, Syndicate, Locked
+  components:
+  - type: AccessReader
+    access: [["SyndicateAgent"]]
+
+- type: entity
+  parent: AirlockExternal
+  id: AirlockExternalNukeopLocked
+  suffix: External, Nukeop, Locked
+  components:
+  - type: AccessReader
+    access: [["NuclearOperative"]]
+
+- type: entity
   parent: AirlockFreezer
   id: AirlockFreezerLocked
-  suffix: Service, Locked
+  suffix: Kitchen, Locked
   components:
   - type: AccessReader
     access: [["Kitchen"]]
@@ -142,14 +158,6 @@
   components:
   - type: AccessReader
     access: [["Salvage"]]
-
-- type: entity
-  parent: AirlockCargo
-  id: AirlockQuartermasterLocked
-  suffix: Quartermaster, Locked
-  components:
-  - type: AccessReader
-    access: [["Quartermaster"]]
 
 - type: entity
   parent: AirlockMedical
@@ -250,6 +258,14 @@
     access: [["HeadOfPersonnel"]]
 
 - type: entity
+  parent: AirlockCommand
+  id: AirlockQuartermasterLocked
+  suffix: Quartermaster, Locked
+  components:
+  - type: AccessReader
+    access: [["Quartermaster"]]
+
+- type: entity
   parent: AirlockSecurity
   id: AirlockSecurityLocked
   suffix: Security, Locked
@@ -340,6 +356,22 @@
 
 - type: entity
   parent: AirlockExternalGlass
+  id: AirlockExternalGlassSyndicateLocked
+  suffix: External, Glass, Syndicate, Locked
+  components:
+  - type: AccessReader
+    access: [["SyndicateAgent"]]
+
+- type: entity
+  parent: AirlockExternalGlass
+  id: AirlockExternalGlassNukeopLocked
+  suffix: External, Glass, Nukeop, Locked
+  components:
+  - type: AccessReader
+    access: [["NuclearOperative"]]
+
+- type: entity
+  parent: AirlockExternalGlass
   id: AirlockExternalGlassEngineeringLocked
   suffix: External, Glass, Engineering, Locked
   components:
@@ -409,14 +441,6 @@
   components:
   - type: AccessReader
     access: [["Salvage"]]
-
-- type: entity
-  parent: AirlockCargoGlass
-  id: AirlockQuartermasterGlassLocked
-  suffix: Quartermaster, Locked
-  components:
-  - type: AccessReader
-    access: [["Quartermaster"]]
 
 - type: entity
   parent: AirlockMedicalGlass
@@ -507,6 +531,14 @@
     access: [["HeadOfPersonnel"]]
 
 - type: entity
+  parent: AirlockCommandGlass
+  id: AirlockQuartermasterGlassLocked
+  suffix: Quartermaster, Locked
+  components:
+  - type: AccessReader
+    access: [["Quartermaster"]]
+
+- type: entity
   parent: AirlockSecurityGlass
   id: AirlockSecurityGlassLocked
   suffix: Security, Locked
@@ -545,6 +577,22 @@
   components:
   - type: AccessReader
     access: [["External"]]
+
+- type: entity
+  parent: AirlockSyndicateGlass
+  id: AirlockSyndicateGlassLocked
+  suffix: Syndicate, Locked
+  components:
+  - type: AccessReader
+    access: [["SyndicateAgent"]]
+
+- type: entity
+  parent: AirlockSyndicateGlass
+  id: AirlockSyndicateNukeopGlassLocked
+  suffix: Nukeop, Locked
+  components:
+  - type: AccessReader
+    access: [["NuclearOperative"]]
 
 # Maintenance Hatches
 - type: entity
@@ -731,6 +779,22 @@
   - type: AccessReader
     access: [["Captain"]]
 
+- type: entity
+  parent: AirlockSyndicate
+  id: AirlockSyndicateLocked
+  suffix: Syndicate, Locked
+  components:
+  - type: AccessReader
+    access: [["SyndicateAgent"]]
+
+- type: entity
+  parent: AirlockSyndicate
+  id: AirlockSyndicateNukeopLocked
+  suffix: Nukeop, Locked
+  components:
+  - type: AccessReader
+    access: [["NuclearOperative"]]
+
 # Shuttle airlocks
 - type: entity
   parent: AirlockShuttle
@@ -739,6 +803,22 @@
   components:
   - type: AccessReader
     access: [["External"]]
+
+- type: entity
+  parent: AirlockShuttle
+  id: AirlockExternalShuttleSyndicateLocked
+  suffix: External, Docking, Syndicate, Locked
+  components:
+  - type: AccessReader
+    access: [["SyndicateAgent"]]
+
+- type: entity
+  parent: AirlockShuttle
+  id: AirlockExternalShuttleNukeopLocked
+  suffix: External, Docking, Nukeop, Locked
+  components:
+  - type: AccessReader
+    access: [["NuclearOperative"]]
 
 - type: entity
   parent: AirlockGlassShuttle

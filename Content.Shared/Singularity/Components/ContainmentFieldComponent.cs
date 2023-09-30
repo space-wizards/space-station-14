@@ -3,7 +3,7 @@ using Robust.Shared.GameStates;
 namespace Content.Shared.Singularity.Components;
 
 [RegisterComponent, NetworkedComponent]
-public sealed class ContainmentFieldComponent : Component
+public sealed partial class ContainmentFieldComponent : Component
 {
     /// <summary>
     /// The throw force for the field if an entity collides with it

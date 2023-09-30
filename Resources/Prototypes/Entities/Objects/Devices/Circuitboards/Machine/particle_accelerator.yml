@@ -23,9 +23,9 @@
     - type: MachineBoard
       prototype: ParticleAcceleratorFuelChamberUnfinished
       componentRequirements:
-        AMEFuelContainer:
+        AmeFuelContainer:
           Amount: 1
-          DefaultPrototype: AMEJar
+          DefaultPrototype: AmeJar
           ExamineName: AME Fuel Jar
       materialRequirements:
         Glass: 10

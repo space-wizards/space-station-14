@@ -71,7 +71,7 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
         }
 
         if (dirty)
-            Dirty(comp);
+            Dirty(uid, comp);
 
         if (comp.DoAfters.Count == 0)
             RemCompDeferred(uid, active);
@@ -89,7 +89,7 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
             // I feel like this is somewhat cursed, but its the only way I can think of without having to just send
             // redundant data over the network and increasing DoAfter boilerplate.
             var evType = typeof(DoAfterAttemptEvent<>).MakeGenericType(args.Event.GetType());
-            doAfter.AttemptEvent = _factory.CreateInstance(evType, new object[] { doAfter, args.Event }, inject: false);
+            doAfter.AttemptEvent = _factory.CreateInstance(evType, new object[] { doAfter, args.Event });
         }
 
         if (args.EventTarget != null)

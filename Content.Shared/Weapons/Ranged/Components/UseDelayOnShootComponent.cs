@@ -8,7 +8,7 @@ namespace Content.Shared.Weapons.Ranged.Components;
 /// Applies UseDelay whenever the entity shoots.
 /// </summary>
 [RegisterComponent, NetworkedComponent, Access(typeof(UseDelayOnShootSystem))]
-public sealed class UseDelayOnShootComponent : Component
+public sealed partial class UseDelayOnShootComponent : Component
 {
 
 }

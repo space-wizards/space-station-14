@@ -22,13 +22,13 @@
   - type: StorageFill
     contents:
     - id: SmokingPipeFilledTobacco
-  - type: Armor
+  - type: Armor #same as regular sec armor
     modifiers:
       coefficients:
-        Blunt: 0.8
-        Slash: 0.8
-        Piercing: 0.6
-        Heat: 0.9
+        Blunt: 0.70
+        Slash: 0.70
+        Piercing: 0.70
+        Heat: 0.80
 
 - type: entity
   parent: ClothingOuterStorageBase
@@ -44,8 +44,8 @@
 - type: entity
   parent: ClothingOuterStorageBase
   id: ClothingOuterCoatHoSTrench
-  name: head of security's trenchcoat
-  description: This trenchcoat was specifically designed for asserting superior authority.
+  name: head of security's armored trenchcoat
+  description: A greatcoat enhanced with a special alloy for some extra protection and style for those with a commanding presence.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Coats/hos_trenchcoat.rsi
@@ -54,16 +54,19 @@
   - type: Armor
     modifiers:
       coefficients:
-        Blunt: 0.7
-        Slash: 0.7
-        Piercing: 0.4
-        Heat: 0.7
+        Blunt: 0.70
+        Slash: 0.70
+        Piercing: 0.70
+        Heat: 0.70
+        Caustic: 0.75 #not the full 90% from ss13 because of the head
+  - type: ExplosionResistance
+    damageCoefficient: 0.90
 
 - type: entity
   parent: ClothingOuterStorageBase
   id: ClothingOuterCoatInspector
-  name: inspectors coat
-  description: A strict inspector coat for being intimidating during inspections.
+  name: inspector's coat
+  description: A strict inspector's coat for being intimidating during inspections.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Coats/insp_coat.rsi
@@ -71,7 +74,7 @@
     sprite: Clothing/OuterClothing/Coats/insp_coat.rsi
 
 - type: entity
-  parent: ClothingOuterStorageBase
+  parent: ClothingOuterStorageToggleableBase
   id: ClothingOuterCoatJensen
   name: jensen coat
   description: A jensen coat.
@@ -80,6 +83,8 @@
     sprite: Clothing/OuterClothing/Coats/jensencoat.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Coats/jensencoat.rsi
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHatHoodChaplainHood
 
 - type: entity
   parent: ClothingOuterStorageBase
@@ -212,10 +217,12 @@
   - type: Armor
     modifiers:
       coefficients:
-        Blunt: 0.8
-        Slash: 0.8
-        Piercing: 0.4
-        Heat: 0.8
+        Blunt: 0.70
+        Slash: 0.70
+        Piercing: 0.70
+        Heat: 0.70
+  - type: ExplosionResistance
+    damageCoefficient: 0.90
 
 - type: entity
   parent: ClothingOuterStorageBase
@@ -269,6 +276,28 @@
 
 - type: entity
   parent: ClothingOuterStorageBase
+  id: ClothingOuterCoatSyndieCap
+  name: syndicate's coat
+  description: The syndicate's coat is made of durable fabric, with gilded patterns.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Coats/syndicate/coatsyndiecap.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Coats/syndicate/coatsyndiecap.rsi
+
+- type: entity
+  parent: ClothingOuterCoatHoSTrench
+  id: ClothingOuterCoatSyndieCapArmored
+  name: syndicate's armored coat
+  description: The syndicate's armored coat is made of durable fabric, with gilded patterns.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Coats/syndicate/coatsyndiecaparmored.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Coats/syndicate/coatsyndiecaparmored.rsi
+
+- type: entity
+  parent: ClothingOuterStorageBase
   id: ClothingOuterCoatAMG
   name: armored medical gown
   description: The version of the medical gown, with elements of a bulletproof vest, looks strange, but your heart is protected.
@@ -284,4 +313,34 @@
         Slash: 0.85
         Piercing: 0.65
         Heat: 0.85
+        Caustic: 0.75
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: ClothingOuterCoatLabSeniorResearcher
+  name: senior researcher lab coat
+  description: A suit that protects against minor chemical spills. Has a purple collar and wrist trims.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Coats/labcoat_senior_researcher.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Coats/labcoat_senior_researcher.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Caustic: 0.75
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: ClothingOuterCoatLabSeniorPhysician
+  name: senior physician lab coat
+  description: A suit that protects against minor chemical spills. Has light blue sleeves and an orange waist trim.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Coats/labcoat_senior_physician.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Coats/labcoat_senior_physician.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
         Caustic: 0.75

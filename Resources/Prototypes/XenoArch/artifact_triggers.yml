@@ -94,11 +94,24 @@
   triggerHint: artifact-trigger-hint-water
   components:
   - type: Reactive
+    groups:
+      Acidic: [ Touch ]
     reactions:
     - reagents: [ Water ]
       methods: [ Touch ]
       effects:
       - !type:ActivateArtifact
+
+- type: artifactTrigger
+  id: TriggerGas
+  targetDepth: 2
+  triggerHint: artifact-trigger-hint-regular-gases
+  components:
+  - type: ArtifactGasTrigger
+    possibleGas:
+    - Oxygen
+    - Nitrogen
+    - CarbonDioxide
 
 - type: artifactTrigger
   id: TriggerDeath
@@ -151,11 +164,13 @@
     maxPressureThreshold: 385
 
 - type: artifactTrigger
-  id: TriggerGas
+  id: TriggerPlasma
   targetDepth: 3
-  triggerHint: artifact-trigger-hint-gas
+  triggerHint: artifact-trigger-hint-plasma
   components:
   - type: ArtifactGasTrigger
+    possibleGas:
+    - Plasma
 
 #don't add in new targetdepth values until you have a few
 #or else it will skew heavily towards a few options.

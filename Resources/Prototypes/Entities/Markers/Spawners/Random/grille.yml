@@ -1,0 +1,16 @@
+- type: entity
+  name: Random Grille Spawner
+  id: GrilleSpawner
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - sprite: Structures/Walls/random.rsi
+          state: randomgrille
+    - type: RandomSpawner
+      prototypes:
+        - Grille
+        - GrilleBroken
+      chance: 1.0
+  placement:
+    mode: AlignTileAny

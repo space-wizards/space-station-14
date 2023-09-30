@@ -45,3 +45,9 @@ ent-CrateFunSyndicateSegway = Syndicate segway crate
 
 ent-CrateFunBoxing = Boxing Crate
     .desc = Want to set up an underground fight club or host a tournament amongst station crew? This crate is for you!
+
+ent-CrateFunBikeHornImplants = Bike Horn Implants
+    .desc = A thousand honks a day keeps security officers away!
+
+ent-CrateFunMysteryFigurines = Mystery Figure Crate
+    .desc = A collection of 10 Mystery Figurine boxes. Duplicates non refundable.

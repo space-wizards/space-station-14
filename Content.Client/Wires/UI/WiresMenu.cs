@@ -1,4 +1,5 @@
 using System;
+using System.Numerics;
 using Content.Client.Examine;
 using Content.Client.Resources;
 using Content.Client.Stylesheets;
@@ -74,7 +75,7 @@ namespace Content.Client.Wires.UI
                 {
                     new PanelContainer
                     {
-                        MinSize = (2, 0),
+                        MinSize = new Vector2(2, 0),
                         PanelOverride = new StyleBoxFlat {BackgroundColor = Color.FromHex("#525252ff")}
                     },
                     new PanelContainer
@@ -86,7 +87,7 @@ namespace Content.Client.Wires.UI
                     },
                     new PanelContainer
                     {
-                        MinSize = (2, 0),
+                        MinSize = new Vector2(2, 0),
                         PanelOverride = new StyleBoxFlat {BackgroundColor = Color.FromHex("#525252ff")}
                     },
                 }
@@ -103,9 +104,9 @@ namespace Content.Client.Wires.UI
                 VerticalAlignment = VAlignment.Bottom
             };
 
-            wrappingHBox.AddChild(new Control {MinSize = (20, 0)});
+            wrappingHBox.AddChild(new Control {MinSize = new Vector2(20, 0)});
             wrappingHBox.AddChild(_wiresHBox);
-            wrappingHBox.AddChild(new Control {MinSize = (20, 0)});
+            wrappingHBox.AddChild(new Control {MinSize = new Vector2(20, 0)});
 
             bottomWrap.AddChild(bottomPanel);
 
@@ -142,7 +143,7 @@ namespace Content.Client.Wires.UI
                     {
                         Orientation = LayoutOrientation.Vertical
                     }),
-                    new Control {MinSize = (0, 110)}
+                    new Control {MinSize = new Vector2(0, 110)}
                 }
             };
 
@@ -195,7 +196,7 @@ namespace Content.Client.Wires.UI
                 var popup = new HelpPopup();
                 UserInterfaceManager.ModalRoot.AddChild(popup);
 
-                popup.Open(UIBox2.FromDimensions(a.Event.PointerLocation.Position, (400, 200)));
+                popup.Open(UIBox2.FromDimensions(a.Event.PointerLocation.Position, new Vector2(400, 200)));
             };
 
             var middle = new PanelContainer
@@ -222,17 +223,17 @@ namespace Content.Client.Wires.UI
             _topContainer.AddChild(topRow);
             _topContainer.AddChild(new PanelContainer
             {
-                MinSize = (0, 2),
+                MinSize = new Vector2(0, 2),
                 PanelOverride = new StyleBoxFlat {BackgroundColor = Color.FromHex("#525252ff")}
             });
             _topContainer.AddChild(middle);
             _topContainer.AddChild(new PanelContainer
             {
-                MinSize = (0, 2),
+                MinSize = new Vector2(0, 2),
                 PanelOverride = new StyleBoxFlat {BackgroundColor = Color.FromHex("#525252ff")}
             });
             CloseButton.OnPressed += _ => Close();
-            SetSize = (320, 200);
+            SetSize = new Vector2(320, 200);
         }
 
 
@@ -264,7 +265,6 @@ namespace Content.Client.Wires.UI
                     Owner.PerformAction(wire.Id, WiresAction.Pulse);
                 };
             }
-
 
             _statusContainer.RemoveAllChildren();
 
@@ -342,7 +342,7 @@ namespace Content.Client.Wires.UI
                 };
 
                 layout.AddChild(contact1);
-                LayoutContainer.SetPosition(contact1, (0, 0));
+                LayoutContainer.SetPosition(contact1, new Vector2(0, 0));
 
                 var contact2 = new TextureRect
                 {
@@ -351,15 +351,15 @@ namespace Content.Client.Wires.UI
                 };
 
                 layout.AddChild(contact2);
-                LayoutContainer.SetPosition(contact2, (0, 60));
+                LayoutContainer.SetPosition(contact2, new Vector2(0, 60));
 
                 var wire = new WireRender(color, isCut, flip, mirror, type, _resourceCache);
 
                 layout.AddChild(wire);
-                LayoutContainer.SetPosition(wire, (2, 16));
+                LayoutContainer.SetPosition(wire, new Vector2(2, 16));
 
                 ToolTip = color.Name();
-                MinSize = (20, 102);
+                MinSize = new Vector2(20, 102);
             }
 
             protected override void KeyBindDown(GUIBoundKeyEventArgs args)
@@ -424,7 +424,7 @@ namespace Content.Client.Wires.UI
                     _mirror = mirror;
                     _type = type;
 
-                    SetSize = (16, 50);
+                    SetSize = new Vector2(16, 50);
                 }
 
                 protected override void Draw(DrawingHandleScreen handle)
@@ -516,7 +516,7 @@ namespace Content.Client.Wires.UI
 
                 var lightContainer = new Control
                 {
-                    SetSize = (20, 20),
+                    SetSize = new Vector2(20, 20),
                     Children =
                     {
                         new TextureRect
@@ -583,7 +583,7 @@ namespace Content.Client.Wires.UI
                     VerticalAlignment = VAlignment.Center,
                 });
                 hBox.AddChild(lightContainer);
-                hBox.AddChild(new Control {MinSize = (6, 0)});
+                hBox.AddChild(new Control {MinSize = new Vector2(6, 0)});
                 AddChild(hBox);
             }
         }

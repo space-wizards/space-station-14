@@ -21,6 +21,9 @@
     damage:
       types:
         Blunt: 0
+  - type: GuideHelp
+    guides:
+    - Security
 
 - type: entity
   name: makeshift handcuffs
@@ -117,3 +120,24 @@
     sprite: Objects/Misc/cablecuffs.rsi
     state: cuff-broken
     color: forestgreen
+
+- type: entity
+  parent: Handcuffs
+  id: ClothingOuterStraightjacket
+  name: straitjacket
+  description: Used to restrain those who may cause harm to themselves or others.
+  components:
+  - type: Item
+    size: 20
+  - type: Handcuff
+    cuffedRSI: Clothing/OuterClothing/Misc/straight_jacket.rsi
+    breakoutTime: 100
+    damageOnResist:
+      types:
+        Blunt: 0
+    cuffTime: 10
+    uncuffTime: 10
+    stunBonus: 4
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Misc/straight_jacket.rsi
+    state: icon

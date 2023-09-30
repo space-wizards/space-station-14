@@ -13,7 +13,6 @@
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: ian
-  - type: Appearance
   - type: DamageStateVisuals
     states:
       Alive:
@@ -30,23 +29,22 @@
     spawned:
     - id: FoodMeatCorgi
       amount: 2
+    - id: MaterialHideCorgi
   - type: Tag
     tags:
     - CannotSuicide
+    - VimPilot
 
 - type: entity
   name: Old Ian
-  parent: MobCorgi
+  parent: MobCorgiIan
   id: MobCorgiIanOld
   description: Still the favorite pet corgi. Love his wheels.
   components:
   - type: Sprite
-    drawdepth: Mobs
-    sprite: Mobs/Pets/corgi.rsi
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: old_ian
-  - type: Appearance
   - type: DamageStateVisuals
     states:
       Alive:
@@ -55,32 +53,23 @@
         Base: old_ian_dead
       Dead:
         Base: old_ian_dead
-  - type: Grammar
-    attributes:
-      proper: true
-      gender: male
   - type: Butcherable
     spawned:
     - id: FoodMeatCorgi
       amount: 2
     - id: SheetSteel1
-  - type: Tag
-    tags:
-    - CannotSuicide
+    - id: MaterialHideCorgi
 
 - type: entity
   name: Lisa
-  parent: MobCorgi
+  parent: MobCorgiIan
   id: MobCorgiLisa
   description: Ian's favorite corgi.
   components:
   - type: Sprite
-    drawdepth: Mobs
-    sprite: Mobs/Pets/corgi.rsi
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: lisa
-  - type: Appearance
   - type: DamageStateVisuals
     states:
       Alive:
@@ -93,13 +82,6 @@
     attributes:
       proper: true
       gender: female
-  - type: Butcherable
-    spawned:
-    - id: FoodMeatCorgi
-      amount: 2
-  - type: Tag
-    tags:
-    - CannotSuicide
 
 - type: entity
   name: Runtime
@@ -107,17 +89,20 @@
   id: MobCatRuntime
   description: Professional mouse hunter. Escape artist.
   components:
-  - type: Faction
+  - type: NpcFactionMember
     factions:
       - PetsNT
   - type: HTN
-    rootTask: SimpleHostileCompound
+    rootTask:
+      task: SimpleHostileCompound
   - type: Grammar
     attributes:
+      proper: true
       gender: female
   - type: Tag
     tags:
     - CannotSuicide
+    - VimPilot
 
 - type: entity
   name: Exception
@@ -125,15 +110,17 @@
   parent: MobCatCalico
   description: Ask nicely, and maybe they'll give you one of their spare lives.
   components:
-  - type: Faction
+  - type: NpcFactionMember
     factions:
       - PetsNT
   - type: Grammar
     attributes:
+      proper: true
       gender: male
   - type: Tag
     tags:
     - CannotSuicide
+    - VimPilot
 
 - type: entity
   name: Floppa
@@ -158,6 +145,7 @@
   - type: Tag
     tags:
     - CannotSuicide
+    - VimPilot
 
 - type: entity
   name: Bandito
@@ -167,13 +155,15 @@
   components:
   - type: Grammar
     attributes:
+      proper: true
       gender: male
   - type: Tag
     tags:
     - CannotSuicide
+    - VimPilot
 
 - type: entity
-  name: bingus
+  name: Bingus
   parent: SimpleMobBase
   id: MobBingus
   description: Bingus my beloved...
@@ -196,7 +186,6 @@
         - MobMask
         layer:
         - MobLayer
-  - type: Appearance
   - type: Inventory
     speciesId: cat
     templateId: pet
@@ -220,19 +209,21 @@
       amount: 2
   - type: InteractionPopup
     successChance: 0.9
-    interactSuccessString: petting-success-cat
+    interactSuccessString: petting-success-bingus
     interactFailureString: petting-failure-generic
     interactSuccessSound:
       path: /Audio/Animals/cat_meow.ogg
   - type: Grammar
     attributes:
+      proper: true
       gender: epicene
   - type: Tag
     tags:
     - CannotSuicide
+    - VimPilot
 
 - type: entity
-  name: mcgriff
+  name: McGriff
   parent: SimpleMobBase
   id: MobMcGriff
   description: This dog can tell something smells around here, and that something is CRIME!
@@ -255,7 +246,6 @@
         - MobMask
         layer:
         - MobLayer
-  - type: Appearance
   - type: Inventory
     speciesId: puppy
     templateId: pet
@@ -292,6 +282,7 @@
   - type: Tag
     tags:
     - CannotSuicide
+    - VimPilot
 
 - type: entity
   name: Paperwork
@@ -305,7 +296,6 @@
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: paperwork
-  - type: Appearance
   - type: DamageStateVisuals
     states:
       Alive:
@@ -326,9 +316,6 @@
     attributes:
       proper: true
       gender: male
-  - type: Tag
-    tags:
-    - CannotSuicide
 
 - type: entity
   name: Walter
@@ -354,7 +341,6 @@
         - MobMask
         layer:
         - MobLayer
-  - type: Appearance
   - type: Inventory
     speciesId: dog
     templateId: pet
@@ -391,6 +377,7 @@
   - type: Tag
     tags:
     - CannotSuicide
+    - VimPilot
 
 - type: entity
   name: Morty
@@ -400,6 +387,10 @@
   components:
   - type: InteractionPopup
     successChance: 1.0 # Hey, c'mon, this is Morty we're talking about here.
+    interactSuccessString: petting-success-possum
+    interactFailureString: petting-failure-possum
+    interactSuccessSound:
+      path: /Audio/Animals/snake_hiss.ogg
   - type: Grammar
     attributes:
       proper: true
@@ -407,6 +398,7 @@
   - type: Tag
     tags:
     - CannotSuicide
+    - VimPilot
 
 - type: entity
   name: Morticia
@@ -416,6 +408,10 @@
   components:
   - type: InteractionPopup
     successChance: 0.7
+    interactSuccessString: petting-success-raccoon
+    interactFailureString: petting-failure-raccoon
+    interactSuccessSound:
+      path: /Audio/Animals/raccoon_chatter.ogg
   - type: Grammar
     attributes:
       proper: true
@@ -423,6 +419,7 @@
   - type: Tag
     tags:
     - CannotSuicide
+    - VimPilot
 
 - type: entity
   name: Alexander
@@ -430,12 +427,20 @@
   id: MobAlexander
   description: Chef's finest colleague.
   components:
+  - type: InteractionPopup
+    successChance: 1
+    interactSuccessString: petting-success-pig
+    interactFailureString: petting-failure-pig
+    interactSuccessSound:
+      path: /Audio/Animals/pig_oink.ogg
   - type: Grammar
     attributes:
+      proper: true
       gender: male
   - type: Tag
     tags:
     - CannotSuicide
+    - VimPilot
 
 - type: entity
   name: Renault
@@ -445,6 +450,10 @@
   components:
   - type: InteractionPopup
     successChance: 1
+    interactSuccessString: petting-success-soft-floofy
+    interactFailureString: petting-failure-generic
+    interactSuccessSound:
+      path: /Audio/Animals/fox_squeak.ogg
   - type: Butcherable
     spawned:
     - id: FoodMeat
@@ -458,6 +467,7 @@
   - type: Tag
     tags:
     - CannotSuicide
+    - VimPilot
 
 - type: entity
   name: Hamlet
@@ -465,6 +475,12 @@
   id: MobHamsterHamlet
   description: A grumpy, cute and fluffy hamster.
   components:
+  - type: Sprite
+    drawdepth: SmallMobs
+    sprite: Mobs/Pets/hamlet.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: hamster-0
   - type: GhostRole
     makeSentient: true
     allowSpeech: true
@@ -474,6 +490,10 @@
   - type: GhostTakeoverAvailable
   - type: InteractionPopup
     successChance: 1
+    interactSuccessString: petting-success-hamster
+    interactFailureString: petting-failure-hamster
+    interactSuccessSound:
+      path: /Audio/Animals/fox_squeak.ogg
   - type: Butcherable
     spawned:
     - id: FoodMeat
@@ -485,8 +505,8 @@
   - type: Tag
     tags:
     - CannotSuicide
-    - Trash
     - Hamster
+    - VimPilot
 
 - type: entity
   name: Shiva
@@ -494,7 +514,13 @@
   id: MobSpiderShiva
   description: The first defender of the station.
   components:
-  - type: Faction
+  - type: InteractionPopup
+    successChance: 0.5 # spider is mean
+    interactSuccessString: petting-success-tarantula
+    interactFailureString: petting-failure-hamster
+    interactSuccessSound:
+      path: /Audio/Animals/snake_hiss.ogg
+  - type: NpcFactionMember
     factions:
       - PetsNT
   - type: Sprite
@@ -504,7 +530,8 @@
       state: shiva
       sprite: Mobs/Pets/shiva.rsi
   - type: HTN
-    rootTask: SimpleHostileCompound
+    rootTask:
+      task: SimpleHostileCompound
   - type: Physics
   - type: Fixtures
     fixtures:
@@ -517,13 +544,10 @@
         - MobMask
         layer:
         - MobLayer
-  - type: Appearance
   - type: DamageStateVisuals
     states:
       Alive:
         Base: shiva
-      Critical:
-        Base: shiva_dead
       Dead:
         Base: shiva_dead
   - type: Butcherable
@@ -534,7 +558,6 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      90: Critical
       150: Dead
   - type: MeleeWeapon
     hidden: true
@@ -558,6 +581,7 @@
   - type: Tag
     tags:
     - CannotSuicide
+    - VimPilot
 
 - type: entity
   name: Willow
@@ -566,7 +590,11 @@
   description: Willow the boxing kangaroo.
   components:
   - type: InteractionPopup
-    successChance: 1
+    successChance: 0.8
+    interactSuccessString: petting-success-kangaroo
+    interactFailureString: petting-failure-kangaroo
+    interactSuccessSound:
+      path: /Audio/Animals/kangaroo_grunt.ogg
   - type: Grammar
     attributes:
       proper: true
@@ -591,8 +619,6 @@
   description: This masterpiece has gone through thousands of experiments. But it is the sweetest creature in the world. Smile Slime!
   components:
   - type: Sprite
-    drawdepth: Mobs
-    sprite: Mobs/Aliens/slimes.rsi
     layers:
     - map: [ "enum.DamageStateVisualLayers.Base" ]
       state: rainbow_baby_slime
@@ -613,6 +639,7 @@
     - FootstepSound
     - DoorBumpOpener
     - CannotSuicide
+    - VimPilot
   - type: DamageStateVisuals
     states:
       Alive:
@@ -621,22 +648,14 @@
       Dead:
         Base: rainbow_baby_slime_dead
   - type: Butcherable
-    butcheringType: Knife
     spawned:
     - id: FoodMeatSlime
       amount: 1
     - id: MaterialSmileExtract
       amount: 1
   - type: Damageable
-    damageContainer: Biological
     damageModifierSet: SlimePet
   - type: Bloodstream
-    bloodMaxVolume: 150
-    bloodReagent: Slime
-    bloodlossDamage:
-      types:
-        Bloodloss:
-          1
     bloodlossHealDamage:
       types:
         Bloodloss:
@@ -645,11 +664,6 @@
     heatDamageThreshold: 800
     coldDamageThreshold: 0
   - type: MeleeWeapon
-    hidden: true
-    soundHit:
-        path: /Audio/Weapons/punch3.ogg
-    angle: 0
-    animation: WeaponArcPunch
     damage:
       types:
         Blunt: 1
@@ -658,6 +672,13 @@
     flavorKind: station-event-random-sentience-flavor-slime
   - type: MobPrice
     price: 3000 # it is a truly valuable creature
+  - type: GhostRole
+    name: ghost-role-information-smile-name
+    description: ghost-role-information-smile-description
+  - type: Grammar
+    attributes:
+      proper: true
+      gender: female
 
 - type: entity
   name: Pun Pun
@@ -666,6 +687,7 @@
   description: A prominent representative of monkeys with unlimited access to alcohol.
   components:
   - type: GhostRole
+    prob: 1
     makeSentient: true
     allowSpeech: true
     allowMovement: true
@@ -683,5 +705,10 @@
     tags:
     - CannotSuicide
     - DoorBumpOpener
+    - VimPilot
   - type: Loadout
     prototypes: [ MobMonkeyGear ]
+  - type: Grammar
+    attributes:
+      proper: true
+      gender: male

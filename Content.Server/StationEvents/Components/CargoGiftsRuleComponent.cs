@@ -1,6 +1,8 @@
 ﻿using Content.Server.StationEvents.Events;
+using Content.Shared.Cargo.Prototypes;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
 
 namespace Content.Server.StationEvents.Components;
 
@@ -8,7 +10,7 @@ namespace Content.Server.StationEvents.Components;
 /// Used an event that gifts the station with certian cargo
 /// </summary>
 [RegisterComponent, Access(typeof(CargoGiftsRule))]
-public sealed class CargoGiftsRuleComponent : Component
+public sealed partial class CargoGiftsRuleComponent : Component
 {
     /// <summary>
     /// The base announcement string (which then incorporates the strings below)
@@ -38,8 +40,8 @@ public sealed class CargoGiftsRuleComponent : Component
     /// Cargo that you would like gifted to the station, with the quantity for each
     /// Use Ids from cargoProduct Prototypes
     /// </summary>
-    [DataField("gifts"), ViewVariables(VVAccess.ReadWrite)]
-    public Dictionary<string, int> Gifts = new Dictionary<string, int>();
+    [DataField("gifts", required: true, customTypeSerializer:typeof(PrototypeIdDictionarySerializer<int, CargoProductPrototype>)), ViewVariables(VVAccess.ReadWrite)]
+    public Dictionary<string, int> Gifts = new();
 
     /// <summary>
     /// How much space (minimum) you want to leave in the order database for supply to actually do their work

@@ -1,5 +1,5 @@
 reagent-name-carpetium = carpetium
-reagent-desc-carpetium = A mystical chemical, usually outsourced from the Clown Planet, that covers everything it touches in carpet.
+reagent-desc-carpetium = A mystical chemical, usually outsourced from the Clown Planet, that covers everything it touches in carpet. Somehow filters out carpotoxin from the blood stream.
 
 reagent-name-fiber = fiber
 reagent-desc-fiber = A raw material, usually extracted from wool or other fabric products.
@@ -14,4 +14,4 @@ reagent-name-saxoite = Saxoite
 reagent-desc-saxoite = Smells like jazz.
 
 reagent-name-licoxide = Licoxide
-reagent-desc-licoxide = It looks... electrifying.
+reagent-desc-licoxide = A synthetic battery acid. It looks... electrifying.

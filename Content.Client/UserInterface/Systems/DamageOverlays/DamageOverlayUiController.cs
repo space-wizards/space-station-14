@@ -1,5 +1,4 @@
-﻿using Content.Client.Alerts;
-using Content.Client.Gameplay;
+using Content.Client.Alerts;
 using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
 using Content.Shared.Mobs;
@@ -15,12 +14,11 @@ using Robust.Client.UserInterface.Controllers;
 namespace Content.Client.UserInterface.Systems.DamageOverlays;
 
 [UsedImplicitly]
-public sealed class DamageOverlayUiController : UIController, IOnStateChanged<GameplayState>
+public sealed class DamageOverlayUiController : UIController
 {
     [Dependency] private readonly IOverlayManager _overlayManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
 
-    [UISystemDependency] private readonly ClientAlertsSystem _alertsSystem = default!;
     [UISystemDependency] private readonly MobThresholdSystem _mobThresholdSystem = default!;
     private Overlays.DamageOverlay _overlay = default!;
 
@@ -31,16 +29,6 @@ public sealed class DamageOverlayUiController : UIController, IOnStateChanged<Ga
         SubscribeLocalEvent<PlayerDetachedEvent>(OnPlayerDetached);
         SubscribeLocalEvent<MobStateChangedEvent>(OnMobStateChanged);
         SubscribeLocalEvent<MobThresholdChecked>(OnThresholdCheck);
-    }
-
-    public void OnStateEntered(GameplayState state)
-    {
-        _overlayManager.AddOverlay(_overlay);
-    }
-
-    public void OnStateExited(GameplayState state)
-    {
-        _overlayManager.RemoveOverlay(_overlay);
     }
 
     private void OnPlayerAttach(PlayerAttachedEvent args)
@@ -91,9 +79,15 @@ public sealed class DamageOverlayUiController : UIController, IOnStateChanged<Ga
             damageable == null && !EntityManager.TryGetComponent(entity, out  damageable))
             return;
 
-
         if (!_mobThresholdSystem.TryGetIncapThreshold(entity, out var foundThreshold, thresholds))
             return; //this entity cannot die or crit!!
+
+        if (!thresholds.ShowOverlays)
+        {
+            ClearOverlay();
+            return; //this entity intentionally has no overlays
+        }
+
         var critThreshold = foundThreshold.Value;
         _overlay.State = mobState.CurrentState;
 

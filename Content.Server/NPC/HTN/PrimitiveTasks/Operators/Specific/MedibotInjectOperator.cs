@@ -11,7 +11,7 @@ using Robust.Shared.Player;
 
 namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators.Specific;
 
-public sealed class MedibotInjectOperator : HTNOperator
+public sealed partial class MedibotInjectOperator : HTNOperator
 {
     [Dependency] private readonly IEntityManager _entMan = default!;
     private SharedAudioSystem _audio = default!;
@@ -36,9 +36,9 @@ public sealed class MedibotInjectOperator : HTNOperator
         _solution = sysManager.GetEntitySystem<SolutionContainerSystem>();
     }
 
-    public override void Shutdown(NPCBlackboard blackboard, HTNOperatorStatus status)
+    public override void TaskShutdown(NPCBlackboard blackboard, HTNOperatorStatus status)
     {
-        base.Shutdown(blackboard, status);
+        base.TaskShutdown(blackboard, status);
         blackboard.Remove<EntityUid>(TargetKey);
     }
 
@@ -53,8 +53,6 @@ public sealed class MedibotInjectOperator : HTNOperator
         if (!_entMan.TryGetComponent<MedibotComponent>(owner, out var botComp))
             return HTNOperatorStatus.Failed;
 
-        // To avoid spam, the rest of this needs fixing.
-        _entMan.EnsureComponent<NPCRecentlyInjectedComponent>(target);
 
         if (!_entMan.TryGetComponent<DamageableComponent>(target, out var damage))
             return HTNOperatorStatus.Failed;
@@ -65,18 +63,14 @@ public sealed class MedibotInjectOperator : HTNOperator
         if (!_interaction.InRangeUnobstructed(owner, target))
             return HTNOperatorStatus.Failed;
 
-        // if emagged, always treat below-crit as injured (give funny juice to healthy people)
         var total = damage.TotalDamage;
-        if (_entMan.HasComponent<EmaggedComponent>(owner) && total < MedibotComponent.EmergencyMedDamageThreshold)
-        {
-            total = MedibotComponent.EmergencyMedDamageThreshold;
-        }
 
         if (total == 0)
             return HTNOperatorStatus.Failed;
 
         if (total >= MedibotComponent.EmergencyMedDamageThreshold)
         {
+            _entMan.EnsureComponent<NPCRecentlyInjectedComponent>(target);
             _solution.TryAddReagent(target, injectable, botComp.EmergencyMed, botComp.EmergencyMedAmount, out var accepted);
             _popup.PopupEntity(Loc.GetString("hypospray-component-feel-prick-message"), target, target);
             _audio.PlayPvs(botComp.InjectSound, target);
@@ -84,8 +78,9 @@ public sealed class MedibotInjectOperator : HTNOperator
             return HTNOperatorStatus.Finished;
         }
 
-        if (total >= MedibotComponent.StandardMedDamageThreshold)
+        if (total >= MedibotComponent.StandardMedDamageThreshold && total <= MedibotComponent.StandardMedDamageThresholdStop)
         {
+            _entMan.EnsureComponent<NPCRecentlyInjectedComponent>(target);
             _solution.TryAddReagent(target, injectable, botComp.StandardMed, botComp.StandardMedAmount, out var accepted);
             _popup.PopupEntity(Loc.GetString("hypospray-component-feel-prick-message"), target, target);
             _audio.PlayPvs(botComp.InjectSound, target);

@@ -1,60 +1,59 @@
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.Paper
+namespace Content.Shared.Paper;
+
+public abstract partial class SharedPaperComponent : Component
 {
-    public abstract class SharedPaperComponent : Component
+    [Serializable, NetSerializable]
+    public sealed class PaperBoundUserInterfaceState : BoundUserInterfaceState
     {
-        [Serializable, NetSerializable]
-        public sealed class PaperBoundUserInterfaceState : BoundUserInterfaceState
+        public readonly string Text;
+        public readonly List<StampDisplayInfo> StampedBy;
+        public readonly PaperAction Mode;
+
+        public PaperBoundUserInterfaceState(string text, List<StampDisplayInfo> stampedBy, PaperAction mode = PaperAction.Read)
         {
-            public readonly string Text;
-            public readonly List<string> StampedBy;
-            public readonly PaperAction Mode;
-
-            public PaperBoundUserInterfaceState(string text, List<string> stampedBy, PaperAction mode = PaperAction.Read)
-            {
-                Text = text;
-                StampedBy = stampedBy;
-                Mode = mode;
-            }
+            Text = text;
+            StampedBy = stampedBy;
+            Mode = mode;
         }
+    }
 
-        [Serializable, NetSerializable]
-        public sealed class PaperInputTextMessage : BoundUserInterfaceMessage
+    [Serializable, NetSerializable]
+    public sealed class PaperInputTextMessage : BoundUserInterfaceMessage
+    {
+        public readonly string Text;
+
+        public PaperInputTextMessage(string text)
         {
-            public readonly string Text;
-
-            public PaperInputTextMessage(string text)
-            {
-                Text = text;
-            }
+            Text = text;
         }
+    }
 
-        [Serializable, NetSerializable]
-        public enum PaperUiKey
-        {
-            Key
-        }
+    [Serializable, NetSerializable]
+    public enum PaperUiKey
+    {
+        Key
+    }
 
-        [Serializable, NetSerializable]
-        public enum PaperAction
-        {
-            Read,
-            Write,
-        }
+    [Serializable, NetSerializable]
+    public enum PaperAction
+    {
+        Read,
+        Write,
+    }
 
-        [Serializable, NetSerializable]
-        public enum PaperVisuals : byte
-        {
-            Status,
-            Stamp
-        }
+    [Serializable, NetSerializable]
+    public enum PaperVisuals : byte
+    {
+        Status,
+        Stamp
+    }
 
-        [Serializable, NetSerializable]
-        public enum PaperStatus : byte
-        {
-            Blank,
-            Written
-        }
+    [Serializable, NetSerializable]
+    public enum PaperStatus : byte
+    {
+        Blank,
+        Written
     }
 }

@@ -48,7 +48,7 @@ namespace Content.Shared.Examine
 
         public bool IsInDetailsRange(EntityUid examiner, EntityUid entity)
         {
-            if (entity.IsClientSide())
+            if (IsClientSide(entity))
                 return true;
 
             // check if the mob is in critical or dead
@@ -72,7 +72,7 @@ namespace Content.Shared.Examine
         public bool CanExamine(EntityUid examiner, EntityUid examined)
         {
             // special check for client-side entities stored in null-space for some UI guff.
-            if (examined.IsClientSide())
+            if (IsClientSide(examined))
                 return true;
 
             return !Deleted(examined) && CanExamine(examiner, EntityManager.GetComponent<TransformComponent>(examined).MapPosition,
@@ -138,7 +138,7 @@ namespace Content.Shared.Examine
         /// </summary>
         public bool IsOccluded(EntityUid uid)
         {
-            return TryComp<SharedEyeComponent>(uid, out var eye) && eye.DrawFov;
+            return TryComp<EyeComponent>(uid, out var eye) && eye.DrawFov;
         }
 
         public static bool InRangeUnOccluded(MapCoordinates origin, MapCoordinates other, float range, Ignored? predicate, bool ignoreInsideBlocker = true, IEntityManager? entMan = null)
@@ -158,7 +158,7 @@ namespace Content.Shared.Examine
                 other.MapId == MapId.Nullspace) return false;
 
             var dir = other.Position - origin.Position;
-            var length = dir.Length;
+            var length = dir.Length();
 
             // If range specified also check it
             // TODO: This rounding check is here because the API is kinda eh
@@ -175,7 +175,7 @@ namespace Content.Shared.Examine
             var occluderSystem = Get<OccluderSystem>();
             IoCManager.Resolve(ref entMan);
 
-            var ray = new Ray(origin.Position, dir.Normalized);
+            var ray = new Ray(origin.Position, dir.Normalized());
             var rayResults = occluderSystem
                 .IntersectRayWithPredicate(origin.MapId, ray, length, state, predicate, false).ToList();
 

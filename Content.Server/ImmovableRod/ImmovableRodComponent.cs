@@ -3,7 +3,7 @@ using Robust.Shared.Audio;
 namespace Content.Server.ImmovableRod;
 
 [RegisterComponent]
-public sealed class ImmovableRodComponent : Component
+public sealed partial class ImmovableRodComponent : Component
 {
     public int MobCount = 0;
 

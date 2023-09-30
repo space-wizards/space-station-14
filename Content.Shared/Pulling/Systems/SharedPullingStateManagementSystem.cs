@@ -33,7 +33,7 @@ namespace Content.Shared.Pulling
 
         private void OnGetState(EntityUid uid, SharedPullableComponent component, ref ComponentGetState args)
         {
-            args.State = new PullableComponentState(component.Puller);
+            args.State = new PullableComponentState(GetNetEntity(component.Puller));
         }
 
         private void OnHandleState(EntityUid uid, SharedPullableComponent component, ref ComponentHandleState args)
@@ -41,21 +41,23 @@ namespace Content.Shared.Pulling
             if (args.Current is not PullableComponentState state)
                 return;
 
-            if (!state.Puller.HasValue)
+            var puller = EnsureEntity<SharedPullableComponent>(state.Puller, uid);
+
+            if (!puller.HasValue)
             {
                 ForceDisconnectPullable(component);
                 return;
             }
 
-            if (component.Puller == state.Puller)
+            if (component.Puller == puller)
             {
                 // don't disconnect and reconnect a puller for no reason
                 return;
             }
 
-            if (!TryComp<SharedPullerComponent?>(state.Puller.Value, out var comp))
+            if (!TryComp<SharedPullerComponent>(puller, out var comp))
             {
-                Logger.Error($"Pullable state for entity {ToPrettyString(uid)} had invalid puller entity {ToPrettyString(state.Puller.Value)}");
+                Log.Error($"Pullable state for entity {ToPrettyString(uid)} had invalid puller entity {ToPrettyString(puller.Value)}");
                 // ensure it disconnects from any different puller, still
                 ForceDisconnectPullable(component);
                 return;
@@ -193,7 +195,7 @@ namespace Content.Shared.Pulling
 
             // Don't allow setting a MovingTo if there's no puller.
             // The other half of this guarantee (shutting down a MovingTo if the puller goes away) is enforced in ForceRelationship.
-            if ((pullable.Puller == null) && (movingTo != null))
+            if (pullable.Puller == null && movingTo != null)
             {
                 return;
             }

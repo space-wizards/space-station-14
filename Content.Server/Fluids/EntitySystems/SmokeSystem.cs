@@ -5,21 +5,22 @@ using Content.Server.Body.Systems;
 using Content.Server.Chemistry.Components;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Chemistry.ReactionEffects;
-using Content.Server.Coordinates.Helpers;
 using Content.Server.Spreader;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Coordinates.Helpers;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using Content.Shared.Smoking;
-using Content.Shared.Spawners;
-using Content.Shared.Spawners.Components;
+using Robust.Shared.Spawners;
 using Robust.Server.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Spawners;
 using Robust.Shared.Timing;
+using TimedDespawnComponent = Robust.Shared.Spawners.TimedDespawnComponent;
 
 namespace Content.Server.Fluids.EntitySystems;
 
@@ -29,15 +30,11 @@ namespace Content.Server.Fluids.EntitySystems;
 public sealed class SmokeSystem : EntitySystem
 {
     // If I could do it all again this could probably use a lot more of puddles.
-    [Dependency] private readonly IAdminLogManager _logger = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly AppearanceSystem _appearance = default!;
-    [Dependency] private readonly BloodstreamSystem _blood = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
-    [Dependency] private readonly InternalsSystem _internals = default!;
-    [Dependency] private readonly ReactiveSystem _reactive = default!;
     [Dependency] private readonly SolutionContainerSystem _solutionSystem = default!;
 
     /// <inheritdoc/>
@@ -208,32 +205,14 @@ public sealed class SmokeSystem : EntitySystem
         var tile = mapGrid.GetTileRef(xform.Coordinates.ToVector2i(EntityManager, _mapManager));
 
         var solutionFraction = 1 / Math.Floor(frameTime);
-        var ents = _lookup.GetEntitiesIntersecting(tile, LookupFlags.Uncontained).ToArray();
+        var ents = _lookup.GetEntitiesIntersecting(tile, 0f, flags: LookupFlags.Uncontained).ToArray();
 
         foreach (var reagentQuantity in solution.Contents.ToArray())
         {
             if (reagentQuantity.Quantity == FixedPoint2.Zero)
                 continue;
 
-            var reagent = _prototype.Index<ReagentPrototype>(reagentQuantity.ReagentId);
-
-            // React with the tile the effect is on
-            // We don't multiply by solutionFraction here since the tile is only ever reacted once
-            if (!component.ReactedTile)
-            {
-                reagent.ReactionTile(tile, reagentQuantity.Quantity);
-                component.ReactedTile = true;
-            }
-
-            // Touch every entity on tile.
-            foreach (var entity in ents)
-            {
-                if (entity == uid)
-                    continue;
-
-                _reactive.ReactionEntity(entity, ReactionMethod.Touch, reagent,
-                    reagentQuantity.Quantity * solutionFraction, solution);
-            }
+            // NOOP, react with entities on the tile or whatever.
         }
 
         foreach (var entity in ents)
@@ -259,32 +238,8 @@ public sealed class SmokeSystem : EntitySystem
 
     private void ReactWithEntity(EntityUid entity, Solution solution, double solutionFraction)
     {
-        if (!TryComp<BloodstreamComponent>(entity, out var bloodstream))
-            return;
-
-        if (TryComp<InternalsComponent>(entity, out var internals) &&
-            _internals.AreInternalsWorking(internals))
-        {
-            return;
-        }
-
-        var cloneSolution = solution.Clone();
-        var transferAmount = FixedPoint2.Min(cloneSolution.Volume * solutionFraction, bloodstream.ChemicalSolution.AvailableVolume);
-        var transferSolution = cloneSolution.SplitSolution(transferAmount);
-
-        foreach (var reagentQuantity in transferSolution.Contents.ToArray())
-        {
-            if (reagentQuantity.Quantity == FixedPoint2.Zero)
-                continue;
-
-            _reactive.ReactionEntity(entity, ReactionMethod.Ingestion, reagentQuantity.ReagentId, reagentQuantity.Quantity, transferSolution);
-        }
-
-        if (_blood.TryAddToChemicals(entity, transferSolution, bloodstream))
-        {
-            // Log solution addition by smoke
-            _logger.Add(LogType.ForceFeed, LogImpact.Medium, $"{ToPrettyString(entity):target} was affected by smoke {SolutionContainerSystem.ToPrettyString(transferSolution)}");
-        }
+        // NOOP due to people complaining constantly.
+        return;
     }
 
     /// <summary>

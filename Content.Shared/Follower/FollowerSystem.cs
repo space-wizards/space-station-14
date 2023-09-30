@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Shared.Database;
 using Content.Shared.Follower.Components;
 using Content.Shared.Ghost;
@@ -9,9 +10,10 @@ using Content.Shared.Verbs;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Events;
-using Robust.Shared.Utility;
+using Robust.Shared.Network;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Systems;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Follower;
 
@@ -22,6 +24,7 @@ public sealed class FollowerSystem : EntitySystem
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
     [Dependency] private readonly SharedJointSystem _jointSystem = default!;
     [Dependency] private readonly SharedPhysicsSystem _physicsSystem = default!;
+    [Dependency] private readonly INetManager _netMan = default!;
 
     public override void Initialize()
     {
@@ -55,10 +58,10 @@ public sealed class FollowerSystem : EntitySystem
 
     private void OnGetAlternativeVerbs(GetVerbsEvent<AlternativeVerb> ev)
     {
-        if (ev.User == ev.Target || ev.Target.IsClientSide())
+        if (ev.User == ev.Target || IsClientSide(ev.Target))
             return;
 
-        if (HasComp<SharedGhostComponent>(ev.User))
+        if (HasComp<GhostComponent>(ev.User))
         {
             var verb = new AlternativeVerb()
             {
@@ -187,15 +190,21 @@ public sealed class FollowerSystem : EntitySystem
         RaiseLocalEvent(uid, uidEv);
         RaiseLocalEvent(target, targetEv);
 
-        if (!Deleted(uid) && deparent)
+        if (!deparent || !TryComp(uid, out TransformComponent? xform))
+            return;
+
+        _transform.AttachToGridOrMap(uid, xform);
+        if (xform.MapUid != null)
+            return;
+
+        if (_netMan.IsClient)
         {
-            var xform = Transform(uid);
-            _transform.AttachToGridOrMap(uid, xform);
-            if (xform.MapUid == null)
-            {
-                QueueDel(uid);
-            }
+            _transform.DetachParentToNull(uid, xform);
+            return;
         }
+
+        Log.Warning($"A follower has been detached to null-space and will be deleted. Follower: {ToPrettyString(uid)}. Followed: {ToPrettyString(target)}");
+        QueueDel(uid);
     }
 
     /// <summary>

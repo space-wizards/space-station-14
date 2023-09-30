@@ -1,3 +1,5 @@
+using System.Numerics;
+using Content.Client.Atmos.Components;
 using Content.Client.Atmos.EntitySystems;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
@@ -6,7 +8,10 @@ using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Shared.Enums;
+using Robust.Shared.Graphics;
+using Robust.Shared.Graphics.RSI;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
@@ -76,7 +81,7 @@ namespace Content.Client.Atmos.Overlays
 
                         if (!rsi.TryGetState(stateId, out var state)) continue;
 
-                        _frames[i] = state.GetFrames(RSI.State.Direction.South);
+                        _frames[i] = state.GetFrames(RsiDirection.South);
                         _frameDelays[i] = state.GetDelays();
                         _frameCounter[i] = 0;
                         break;
@@ -94,7 +99,7 @@ namespace Content.Client.Atmos.Overlays
                 if (!fire.TryGetState((i + 1).ToString(), out var state))
                     throw new ArgumentOutOfRangeException($"Fire RSI doesn't have state \"{i}\"!");
 
-                _fireFrames[i] = state.GetFrames(RSI.State.Direction.South);
+                _fireFrames[i] = state.GetFrames(RsiDirection.South);
                 _fireFrameDelays[i] = state.GetDelays();
                 _fireFrameCounter[i] = 0;
             }
@@ -136,75 +141,126 @@ namespace Content.Client.Atmos.Overlays
 
         protected override void Draw(in OverlayDrawArgs args)
         {
+            if (args.MapId == MapId.Nullspace)
+                return;
+
             var drawHandle = args.WorldHandle;
             var xformQuery = _entManager.GetEntityQuery<TransformComponent>();
             var overlayQuery = _entManager.GetEntityQuery<GasTileOverlayComponent>();
+            var gridState = (args.WorldBounds,
+                args.WorldHandle,
+                _gasCount,
+                _frames,
+                _frameCounter,
+                _fireFrames,
+                _fireFrameCounter,
+                _shader,
+                overlayQuery,
+                xformQuery);
 
-            foreach (var mapGrid in _mapManager.FindGridsIntersecting(args.MapId, args.WorldBounds))
+            var mapUid = _mapManager.GetMapEntityId(args.MapId);
+
+            if (_entManager.TryGetComponent<MapAtmosphereComponent>(mapUid, out var atmos))
             {
-                if (!overlayQuery.TryGetComponent(mapGrid.Owner, out var comp) ||
-                    !xformQuery.TryGetComponent(mapGrid.Owner, out var gridXform))
+                var bottomLeft = args.WorldAABB.BottomLeft.Floored();
+                var topRight = args.WorldAABB.TopRight.Ceiled();
+
+                for (var x = bottomLeft.X; x <= topRight.X; x++)
                 {
-                    continue;
-                }
-
-                var (_, _, worldMatrix, invMatrix) = gridXform.GetWorldPositionRotationMatrixWithInv();
-                drawHandle.SetTransform(worldMatrix);
-                var floatBounds = invMatrix.TransformBox(in args.WorldBounds).Enlarged(mapGrid.TileSize);
-                var localBounds = new Box2i(
-                    (int) MathF.Floor(floatBounds.Left),
-                    (int) MathF.Floor(floatBounds.Bottom),
-                    (int) MathF.Ceiling(floatBounds.Right),
-                    (int) MathF.Ceiling(floatBounds.Top));
-
-                // Currently it would be faster to group drawing by gas rather than by chunk, but if the textures are
-                // ever moved to a single atlas, that should no longer be the case. So this is just grouping draw calls
-                // by chunk, even though its currently slower.
-
-                drawHandle.UseShader(null);
-                foreach (var chunk in comp.Chunks.Values)
-                {
-                    var enumerator = new GasChunkEnumerator(chunk);
-
-                    while (enumerator.MoveNext(out var gas))
+                    for (var y = bottomLeft.Y; y <= topRight.Y; y++)
                     {
-                        if (gas.Opacity == null!)
-                            continue;
+                        var tilePosition = new Vector2(x, y);
 
-                        var tilePosition = chunk.Origin + (enumerator.X, enumerator.Y);
-                        if (!localBounds.Contains(tilePosition))
-                            continue;
-
-                        for (var i = 0; i < _gasCount; i++)
+                        for (var i = 0; i < atmos.OverlayData.Opacity.Length; i++)
                         {
-                            var opacity = gas.Opacity[i];
+                            var opacity = atmos.OverlayData.Opacity[i];
+
                             if (opacity > 0)
-                                drawHandle.DrawTexture(_frames[i][_frameCounter[i]], tilePosition, Color.White.WithAlpha(opacity));
+                                args.WorldHandle.DrawTexture(_frames[i][_frameCounter[i]], tilePosition, Color.White.WithAlpha(opacity));
                         }
                     }
                 }
-
-                // And again for fire, with the unshaded shader
-                drawHandle.UseShader(_shader);
-                foreach (var chunk in comp.Chunks.Values)
-                {
-                    var enumerator = new GasChunkEnumerator(chunk);
-
-                    while (enumerator.MoveNext(out var gas))
-                    {
-                        if (gas.FireState == 0)
-                            continue;
-
-                        var index = chunk.Origin + (enumerator.X, enumerator.Y);
-                        if (!localBounds.Contains(index))
-                            continue;
-
-                        var state = gas.FireState - 1;
-                        var texture = _fireFrames[state][_fireFrameCounter[state]];
-                        drawHandle.DrawTexture(texture, index);
-                    }
-                }
             }
+
+            // TODO: WorldBounds callback.
+            _mapManager.FindGridsIntersecting(args.MapId, args.WorldAABB, ref gridState,
+                static (EntityUid uid, MapGridComponent grid,
+                    ref (Box2Rotated WorldBounds,
+                        DrawingHandleWorld drawHandle,
+                        int gasCount,
+                        Texture[][] frames,
+                        int[] frameCounter,
+                        Texture[][] fireFrames,
+                        int[] fireFrameCounter,
+                        ShaderInstance shader,
+                        EntityQuery<GasTileOverlayComponent> overlayQuery,
+                        EntityQuery<TransformComponent> xformQuery) state) =>
+                {
+                    if (!state.overlayQuery.TryGetComponent(uid, out var comp) ||
+                        !state.xformQuery.TryGetComponent(uid, out var gridXform))
+                        {
+                            return true;
+                        }
+
+                    var (_, _, worldMatrix, invMatrix) = gridXform.GetWorldPositionRotationMatrixWithInv();
+                    state.drawHandle.SetTransform(worldMatrix);
+                    var floatBounds = invMatrix.TransformBox(in state.WorldBounds).Enlarged(grid.TileSize);
+                    var localBounds = new Box2i(
+                        (int) MathF.Floor(floatBounds.Left),
+                        (int) MathF.Floor(floatBounds.Bottom),
+                        (int) MathF.Ceiling(floatBounds.Right),
+                        (int) MathF.Ceiling(floatBounds.Top));
+
+                    // Currently it would be faster to group drawing by gas rather than by chunk, but if the textures are
+                    // ever moved to a single atlas, that should no longer be the case. So this is just grouping draw calls
+                    // by chunk, even though its currently slower.
+
+                    state.drawHandle.UseShader(null);
+                    foreach (var chunk in comp.Chunks.Values)
+                    {
+                        var enumerator = new GasChunkEnumerator(chunk);
+
+                        while (enumerator.MoveNext(out var gas))
+                        {
+                            if (gas.Opacity == null!)
+                                continue;
+
+                            var tilePosition = chunk.Origin + (enumerator.X, enumerator.Y);
+                            if (!localBounds.Contains(tilePosition))
+                                continue;
+
+                            for (var i = 0; i < state.gasCount; i++)
+                            {
+                                var opacity = gas.Opacity[i];
+                                if (opacity > 0)
+                                    state.drawHandle.DrawTexture(state.frames[i][state.frameCounter[i]], tilePosition, Color.White.WithAlpha(opacity));
+                            }
+                        }
+                    }
+
+                    // And again for fire, with the unshaded shader
+                    state.drawHandle.UseShader(state.shader);
+                    foreach (var chunk in comp.Chunks.Values)
+                    {
+                        var enumerator = new GasChunkEnumerator(chunk);
+
+                        while (enumerator.MoveNext(out var gas))
+                        {
+                            if (gas.FireState == 0)
+                                continue;
+
+                            var index = chunk.Origin + (enumerator.X, enumerator.Y);
+                            if (!localBounds.Contains(index))
+                                continue;
+
+                            var fireState = gas.FireState - 1;
+                            var texture = state.fireFrames[fireState][state.fireFrameCounter[fireState]];
+                            state.drawHandle.DrawTexture(texture, index);
+                        }
+                    }
+
+                    return true;
+                });
 
             drawHandle.UseShader(null);
             drawHandle.SetTransform(Matrix3.Identity);

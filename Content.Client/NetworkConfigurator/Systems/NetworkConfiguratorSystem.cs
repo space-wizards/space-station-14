@@ -3,7 +3,7 @@ using Content.Client.Actions;
 using Content.Client.Items;
 using Content.Client.Message;
 using Content.Client.Stylesheets;
-using Content.Shared.Actions.ActionTypes;
+using Content.Shared.Actions;
 using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.DeviceNetwork.Systems;
 using Content.Shared.Input;
@@ -22,11 +22,11 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
 {
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IOverlayManager _overlay = default!;
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly ActionsSystem _actions = default!;
     [Dependency] private readonly IInputManager _inputManager = default!;
 
-    private const string Action = "ClearNetworkLinkOverlays";
+    [ValidatePrototypeId<EntityPrototype>]
+    private const string Action = "ActionClearNetworkLinkOverlays";
 
     public override void Initialize()
     {
@@ -62,26 +62,26 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
 
         if (!toggle)
         {
-            if (_overlay.HasOverlay<NetworkConfiguratorLinkOverlay>())
-            {
-                _overlay.GetOverlay<NetworkConfiguratorLinkOverlay>().ClearEntity(component.ActiveDeviceList.Value);
-            }
-
             RemComp<NetworkConfiguratorActiveLinkOverlayComponent>(component.ActiveDeviceList.Value);
-            if (!EntityQuery<NetworkConfiguratorActiveLinkOverlayComponent>().Any())
-            {
-                _overlay.RemoveOverlay<NetworkConfiguratorLinkOverlay>();
-                _actions.RemoveAction(_playerManager.LocalPlayer.ControlledEntity.Value, _prototypeManager.Index<InstantActionPrototype>(Action));
-            }
+            if (!_overlay.TryGetOverlay(out NetworkConfiguratorLinkOverlay? overlay))
+                return;
 
+            overlay.Colors.Remove(component.ActiveDeviceList.Value);
+            if (overlay.Colors.Count > 0)
+                return;
 
+            _actions.RemoveAction(overlay.Action);
+            _overlay.RemoveOverlay<NetworkConfiguratorLinkOverlay>();
             return;
         }
 
         if (!_overlay.HasOverlay<NetworkConfiguratorLinkOverlay>())
         {
-            _overlay.AddOverlay(new NetworkConfiguratorLinkOverlay());
-            _actions.AddAction(_playerManager.LocalPlayer.ControlledEntity.Value, new InstantAction(_prototypeManager.Index<InstantActionPrototype>(Action)), null);
+            var overlay = new NetworkConfiguratorLinkOverlay();
+            _overlay.AddOverlay(overlay);
+            var player = _playerManager.LocalPlayer.ControlledEntity.Value;
+            overlay.Action = Spawn(Action);
+            _actions.AddActionDirect(player, overlay.Action.Value);
         }
 
         EnsureComp<NetworkConfiguratorActiveLinkOverlayComponent>(component.ActiveDeviceList.Value);
@@ -89,7 +89,7 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
 
     public void ClearAllOverlays()
     {
-        if (!_overlay.HasOverlay<NetworkConfiguratorLinkOverlay>())
+        if (!_overlay.TryGetOverlay(out NetworkConfiguratorLinkOverlay? overlay))
         {
             return;
         }
@@ -99,12 +99,8 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
             RemCompDeferred<NetworkConfiguratorActiveLinkOverlayComponent>(tracker.Owner);
         }
 
-        _overlay.RemoveOverlay<NetworkConfiguratorLinkOverlay>();
-
-        if (_playerManager.LocalPlayer?.ControlledEntity != null)
-        {
-            _actions.RemoveAction(_playerManager.LocalPlayer.ControlledEntity.Value, _prototypeManager.Index<InstantActionPrototype>(Action));
-        }
+        _actions.RemoveAction(overlay.Action);
+        _overlay.RemoveOverlay(overlay);
     }
 
     // hacky solution related to mapping

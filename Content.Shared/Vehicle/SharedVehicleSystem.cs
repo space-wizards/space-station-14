@@ -1,21 +1,22 @@
+using System.Numerics;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
-using Content.Shared.Vehicle.Components;
 using Content.Shared.Actions;
-using Content.Shared.Buckle.Components;
-using Content.Shared.Item;
-using Content.Shared.Movement.Components;
-using Content.Shared.Movement.Systems;
-using Robust.Shared.Serialization;
-using Robust.Shared.Containers;
-using Content.Shared.Tag;
 using Content.Shared.Audio;
 using Content.Shared.Buckle;
+using Content.Shared.Buckle.Components;
 using Content.Shared.Hands;
-using Content.Shared.Light.Component;
+using Content.Shared.Item;
+using Content.Shared.Light.Components;
+using Content.Shared.Movement.Components;
+using Content.Shared.Movement.Systems;
 using Content.Shared.Popups;
+using Content.Shared.Tag;
+using Content.Shared.Vehicle.Components;
+using Robust.Shared.Containers;
 using Robust.Shared.Network;
 using Robust.Shared.Physics.Systems;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Vehicle;
 
@@ -90,8 +91,8 @@ public abstract partial class SharedVehicleSystem : EntitySystem
         // This code should be purged anyway but with that being said this doesn't handle components being changed.
         if (TryComp<StrapComponent>(uid, out var strap))
         {
-            component.BaseBuckleOffset = strap.BuckleOffset;
-            strap.BuckleOffsetUnclamped = Vector2.Zero;
+            component.BaseBuckleOffset = strap.BuckleOffsetClamped;
+            strap.BuckleOffset = Vector2.Zero;
         }
 
         _modifier.RefreshMovementSpeedModifiers(uid);
@@ -133,12 +134,12 @@ public abstract partial class SharedVehicleSystem : EntitySystem
 
             if (TryComp<ActionsComponent>(args.BuckledEntity, out var actions) && TryComp<UnpoweredFlashlightComponent>(uid, out var flashlight))
             {
-                _actionsSystem.AddAction(args.BuckledEntity, flashlight.ToggleAction, uid, actions);
+                _actionsSystem.AddAction(args.BuckledEntity, ref flashlight.ToggleActionEntity, flashlight.ToggleAction, uid, actions);
             }
 
             if (component.HornSound != null)
             {
-                _actionsSystem.AddAction(args.BuckledEntity, component.HornAction, uid, actions);
+                _actionsSystem.AddAction(args.BuckledEntity, ref component.HornActionEntity, component.HornAction, uid, actions);
             }
 
             _joints.ClearJoints(args.BuckledEntity);
@@ -300,24 +301,24 @@ public abstract partial class SharedVehicleSystem : EntitySystem
             return;
 
         // TODO: Strap should handle this but buckle E/C moment.
-        var oldOffset = strap.BuckleOffsetUnclamped;
+        var oldOffset = strap.BuckleOffset;
 
-        strap.BuckleOffsetUnclamped = xform.LocalRotation.Degrees switch
+        strap.BuckleOffset = xform.LocalRotation.Degrees switch
         {
-            < 45f => (0, component.SouthOverride),
+            < 45f => new(0, component.SouthOverride),
             <= 135f => component.BaseBuckleOffset,
-            < 225f  => (0, component.NorthOverride),
-            <= 315f => (component.BaseBuckleOffset.X * -1, component.BaseBuckleOffset.Y),
-            _ => (0, component.SouthOverride)
+            < 225f  => new(0, component.NorthOverride),
+            <= 315f => new(component.BaseBuckleOffset.X * -1, component.BaseBuckleOffset.Y),
+            _ => new(0, component.SouthOverride)
         };
 
-        if (!oldOffset.Equals(strap.BuckleOffsetUnclamped))
+        if (!oldOffset.Equals(strap.BuckleOffset))
             Dirty(strap);
 
         foreach (var buckledEntity in strap.BuckledEntities)
         {
             var buckleXform = Transform(buckledEntity);
-            _transform.SetLocalPositionNoLerp(buckleXform, strap.BuckleOffset);
+            _transform.SetLocalPositionNoLerp(buckleXform, strap.BuckleOffsetClamped);
         }
     }
 
@@ -369,6 +370,6 @@ public enum VehicleVisuals : byte
 /// <summary>
 /// Raised when someone honks a vehicle horn
 /// </summary>
-public sealed class HonkActionEvent : InstantActionEvent
+public sealed partial class HonkActionEvent : InstantActionEvent
 {
 }

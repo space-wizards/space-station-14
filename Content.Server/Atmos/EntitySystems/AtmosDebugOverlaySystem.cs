@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Server.Atmos.Components;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.EntitySystems;
@@ -160,7 +161,7 @@ namespace Content.Server.Atmos.EntitySystems
                         }
                     }
 
-                    RaiseNetworkEvent(new AtmosDebugOverlayMessage(grid.Owner, baseTile, debugOverlayContent), session.ConnectedClient);
+                    RaiseNetworkEvent(new AtmosDebugOverlayMessage(GetNetEntity(grid.Owner), baseTile, debugOverlayContent), session.ConnectedClient);
                 }
             }
         }

@@ -1,88 +1,120 @@
 - type: entity
   save: false
-  name: Urist McWeb
-  parent: BaseMobOrganic
+  name: Urist McWebs
+  parent: BaseMobSpeciesOrganic
   id: BaseMobArachnid
   abstract: true
   components:
-  # The important nessessities
-  - type: MovementSpeedModifier
-    baseWalkSpeed: 3.0
-    baseSprintSpeed: 5.0
   - type: Body
     prototype: Arachnid
-    requiredLegs: 2
+    requiredLegs: 2 # It would be funny if arachnids could use their little back limbs to move around once they lose their legs, but just something to consider post-woundmed
   - type: Perishable
   - type: HumanoidAppearance
     species: Arachnid
-  - type: Damageable
-    damageContainer: Biological
-    damageModifierSet: Arachnid # spooder
-  - type: Icon
-    sprite: Mobs/Species/Arachnid/parts.rsi
-    state: full
   - type: Hunger
-    baseDecayRate: 0.05 # Probably faster than humans?
+    baseDecayRate: 0.0125 # Spiders have slow metabolisms all things considered, so I decided to just make their hunger drain slower.
+    starvationDamage:
+      types:
+        Cold: 0.5
+        Bloodloss: 0.5
   - type: Thirst
-  # Damage and speed
+    baseDecayRate: 0.0125 # Read comment in hunger
+  # Damage (Self)
   - type: Bloodstream
-    bloodReagent: SpiderBlood
-  - type: Temperature
-    heatDamageThreshold: 400
-    coldDamageThreshold: 285
-    currentTemperature: 310.15
-    specificHeat: 46
-    coldDamage:
-      types:
-        Cold : 0.2 #per second, scales with temperature & other constants
-    heatDamage:
-      types:
-        Heat : 0.1 #per second, scales with temperature & other constants
-  - type: Barotrauma
+    bloodReagent: SpiderBlood # would be cool if they had to drink copper instead of iron but that might just be more bloat to deal with.
+  # Damage (Others)
+  - type: MeleeWeapon
+    animation: WeaponArcClaw
+    soundHit:
+      collection: AlienClaw
     damage:
-      types:
-        Blunt: 0.20 #per second, scales with pressure and other constants.
-  - type: SlowOnDamage
-    speedModifierThresholds: # This is an ouch, but it does make up for their extra speed
-      65: 0.7
-      80: 0.4
-  # Misc
+      types: # Realisically this is more like 5 slash
+        Slash: 4
+  # Fun
+  - type: Sericulture
+    action: ActionSericulture
+    productionLength: 3
+    entityProduced: MaterialWebSilk1
+    hungerCost: 9 # Should total to 12 total silk on full hunger
+  - type: Butcherable
+    butcheringType: Spike
+    spawned:
+      - id: FoodMeatSpider
+        amount: 5
+  # Visual & Audio
+  - type: DamageVisuals
+    damageOverlayGroups:
+      Brute:
+        sprite: Mobs/Effects/brute_damage.rsi
+        color: "#162581"
   - type: Speech
+    speechVerb: Arachnid
     speechSounds: Arachnid
   - type: Vocal
     sounds:
       Male: UnisexArachnid
       Female: UnisexArachnid
       Unsexed: UnisexArachnid
-  - type: Inventory
-    templateId: arachnid
-  - type: MeleeWeapon
-    hidden: true
-    soundHit:
-      path: /Audio/Weapons/pierce.ogg
-    angle: 30
-    animation: WeaponArcClaw
-    attackRate: 1.5
-    damage:
-      types:
-        Slash: 3
-        Poison: 1
-  - type: Butcherable
-    butcheringType: Spike
-    spawned:
-      - id: FoodMeatSpider
-        amount: 5
+  - type: TypingIndicator
+    proto: spider
+  - type: Sprite # I'd prefer if these maps were better. Insert map pun here.
+    layers:
+      - map: [ "enum.HumanoidVisualLayers.Chest" ]
+      - map: [ "enum.HumanoidVisualLayers.Head" ]
+      - map: [ "enum.HumanoidVisualLayers.Snout" ]
+      - map: [ "enum.HumanoidVisualLayers.Eyes" ]
+      - map: [ "enum.HumanoidVisualLayers.RArm" ]
+      - map: [ "enum.HumanoidVisualLayers.LArm" ]
+      - map: [ "enum.HumanoidVisualLayers.RLeg" ]
+      - map: [ "enum.HumanoidVisualLayers.LLeg" ]
+      - shader: StencilClear
+        sprite: Mobs/Species/Human/parts.rsi #PJB on stencil clear being on the left leg: "...this is 'fine'" -https://github.com/space-wizards/space-station-14/pull/12217#issuecomment-1291677115
+        # its fine, but its still very stupid that it has to be done like this instead of allowing sprites to just directly insert a stencil clear.
+        # sprite refactor when
+        state: l_leg
+      - shader: StencilMask
+        map: ["enum.HumanoidVisualLayers.StencilMask"]
+        sprite: Mobs/Customization/masking_helpers.rsi
+        state: unisex_full
+        visible: false
+      - map: ["jumpsuit"]
+      - map: ["enum.HumanoidVisualLayers.LFoot"]
+      - map: ["enum.HumanoidVisualLayers.RFoot"]
+      - map: ["enum.HumanoidVisualLayers.LHand"]
+      - map: ["enum.HumanoidVisualLayers.RHand"]
+      - map: [ "id" ]
+      - map: [ "gloves" ]
+      - map: [ "shoes" ]
+      - map: [ "ears" ]
+      - map: [ "outerClothing" ]
+      - map: [ "eyes" ]
+      - map: [ "belt" ]
+      - map: [ "enum.HumanoidVisualLayers.Tail" ] # Mentioned in moth code: This needs renaming lol.
+      - map: [ "neck" ]
+      - map: [ "back" ]
+      - map: [ "enum.HumanoidVisualLayers.FacialHair" ]
+      - map: [ "enum.HumanoidVisualLayers.Hair" ]
+      - map: [ "enum.HumanoidVisualLayers.HeadSide" ]
+      - map: [ "enum.HumanoidVisualLayers.HeadTop" ]
+      - map: [ "mask" ]
+      - map: [ "head" ]
+      - map: [ "pocket1" ]
+      - map: [ "pocket2" ]
+      - map: ["enum.HumanoidVisualLayers.Handcuffs"]
+        color: "#ffffff"
+        sprite: Objects/Misc/handcuffs.rsi
+        state: body-overlay-2
+        visible: false
+      - map: [ "clownedon" ] # Dynamically generated
+        sprite: "Effects/creampie.rsi"
+        state: "creampie_arachnid"
+        visible: false
 
 - type: entity
-  save: false
-  name: Urist McFluff
-  parent: MobHumanDummy
+  parent: BaseSpeciesDummy
   id: MobArachnidDummy
   noSpawn: true
-  description: A dummy arachnid meant to be used in character setup. # Hey! It's not dumb :(
   components:
-  - type: Inventory
-    templateId: arachnid
   - type: HumanoidAppearance
     species: Arachnid
 

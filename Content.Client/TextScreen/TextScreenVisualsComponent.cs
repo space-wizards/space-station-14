@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Shared.TextScreen;
 using Robust.Client.Graphics;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
@@ -5,7 +6,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 namespace Content.Client.TextScreen;
 
 [RegisterComponent]
-public sealed class TextScreenVisualsComponent : Component
+public sealed partial class TextScreenVisualsComponent : Component
 {
     /// <summary>
     ///     1/32 - the size of a pixel

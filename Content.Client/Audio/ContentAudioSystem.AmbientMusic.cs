@@ -245,6 +245,12 @@ public sealed partial class ContentAudioSystem
         if (player == null)
             return null;
 
+        var ev = new PlayAmbientMusicEvent();
+        RaiseLocalEvent(ref ev);
+
+        if (ev.Cancelled)
+            return null;
+
         var ambiences = _proto.EnumeratePrototypes<AmbientMusicPrototype>().ToList();
         ambiences.Sort((x, y) => y.Priority.CompareTo(x.Priority));
 
@@ -258,5 +264,14 @@ public sealed partial class ContentAudioSystem
 
         _sawmill.Warning($"Unable to find fallback ambience track");
         return null;
+    }
+
+    /// <summary>
+    /// Fades out the current ambient music temporarily.
+    /// </summary>
+    public void DisableAmbientMusic()
+    {
+        FadeOut(_ambientMusicStream);
+        _ambientMusicStream = null;
     }
 }

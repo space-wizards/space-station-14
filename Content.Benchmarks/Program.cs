@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
-using BenchmarkDotNet.Configs;
 using BenchmarkDotNet.Running;
 using Content.IntegrationTests;
 using Content.Server.Maps;
+#if DEBUG
+using BenchmarkDotNet.Configs;
+#else
 using Robust.Benchmarks.Configs;
+#endif
 using Robust.Shared.Prototypes;
 
 namespace Content.Benchmarks
@@ -20,9 +23,12 @@ namespace Content.Benchmarks
 
         public static async Task MainAsync(string[] args)
         {
+            PoolManager.Startup(typeof(Program).Assembly);
             var pair = await PoolManager.GetServerClient();
-            var gameMaps = pair.Pair.Server.ResolveDependency<IPrototypeManager>().EnumeratePrototypes<GameMapPrototype>().ToList();
+            var gameMaps = pair.Server.ResolveDependency<IPrototypeManager>().EnumeratePrototypes<GameMapPrototype>().ToList();
             MapLoadBenchmark.MapsSource = gameMaps.Select(x => x.ID);
+            await pair.CleanReturnAsync();
+            PoolManager.Shutdown();
 
 #if DEBUG
             Console.ForegroundColor = ConsoleColor.Red;

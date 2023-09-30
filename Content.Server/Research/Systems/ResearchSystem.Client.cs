@@ -13,7 +13,6 @@ public sealed partial class ResearchSystem
         SubscribeLocalEvent<ResearchClientComponent, MapInitEvent>(OnClientMapInit);
         SubscribeLocalEvent<ResearchClientComponent, ComponentShutdown>(OnClientShutdown);
         SubscribeLocalEvent<ResearchClientComponent, BoundUIOpenedEvent>(OnClientUIOpen);
-        SubscribeLocalEvent<ResearchClientComponent, ConsoleServerSyncMessage>(OnConsoleSync);
         SubscribeLocalEvent<ResearchClientComponent, ConsoleServerSelectionMessage>(OnConsoleSelect);
 
         SubscribeLocalEvent<ResearchClientComponent, ResearchClientSyncMessage>(OnClientSyncMessage);
@@ -49,14 +48,6 @@ public sealed partial class ResearchSystem
             return;
 
         _uiSystem.TryToggleUi(uid, ResearchClientUiKey.Key, (IPlayerSession) args.Session);
-    }
-
-    private void OnConsoleSync(EntityUid uid, ResearchClientComponent component, ConsoleServerSyncMessage args)
-    {
-        if (!this.IsPowered(uid, EntityManager))
-            return;
-
-        SyncClientWithServer(uid);
     }
     #endregion
 

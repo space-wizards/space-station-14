@@ -35,7 +35,9 @@ namespace Content.Client.Popups
         private readonly List<WorldPopupLabel> _aliveWorldLabels = new();
         private readonly List<CursorPopupLabel> _aliveCursorLabels = new();
 
-        public const float PopupLifetime = 3f;
+        public const float MinimumPopupLifetime = 0.7f;
+        public const float MaximumPopupLifetime = 5f;
+        public const float PopupLifetimePerCharacter = 0.04f;
 
         public override void Initialize()
         {
@@ -59,9 +61,9 @@ namespace Content.Client.Popups
             if (recordReplay && _replayRecording.IsRecording)
             {
                 if (entity != null)
-                    _replayRecording.RecordClientMessage(new PopupEntityEvent(message, type, entity.Value));
+                    _replayRecording.RecordClientMessage(new PopupEntityEvent(message, type, GetNetEntity(entity.Value)));
                 else
-                    _replayRecording.RecordClientMessage(new PopupCoordinatesEvent(message, type, coordinates));
+                    _replayRecording.RecordClientMessage(new PopupCoordinatesEvent(message, type, GetNetCoordinates(coordinates)));
             }
 
             var label = new WorldPopupLabel(coordinates)
@@ -168,13 +170,15 @@ namespace Content.Client.Popups
 
         private void OnPopupCoordinatesEvent(PopupCoordinatesEvent ev)
         {
-            PopupMessage(ev.Message, ev.Type, ev.Coordinates, null, false);
+            PopupMessage(ev.Message, ev.Type, GetCoordinates(ev.Coordinates), null, false);
         }
 
         private void OnPopupEntityEvent(PopupEntityEvent ev)
         {
-            if (TryComp(ev.Uid, out TransformComponent? transform))
-                PopupMessage(ev.Message, ev.Type, transform.Coordinates, ev.Uid, false);
+            var entity = GetEntity(ev.Uid);
+
+            if (TryComp(entity, out TransformComponent? transform))
+                PopupMessage(ev.Message, ev.Type, transform.Coordinates, entity, false);
         }
 
         private void OnRoundRestart(RoundRestartCleanupEvent ev)
@@ -184,6 +188,13 @@ namespace Content.Client.Popups
         }
 
         #endregion
+
+        public static float GetPopupLifetime(PopupLabel label)
+        {
+            return Math.Clamp(PopupLifetimePerCharacter * label.Text.Length,
+                MinimumPopupLifetime,
+                MaximumPopupLifetime);
+        }
 
         public override void FrameUpdate(float frameTime)
         {
@@ -195,7 +206,7 @@ namespace Content.Client.Popups
                 var label = _aliveWorldLabels[i];
                 label.TotalTime += frameTime;
 
-                if (label.TotalTime > PopupLifetime || Deleted(label.InitialPos.EntityId))
+                if (label.TotalTime > GetPopupLifetime(label) || Deleted(label.InitialPos.EntityId))
                 {
                     _aliveWorldLabels.RemoveSwap(i);
                     i--;
@@ -207,7 +218,7 @@ namespace Content.Client.Popups
                 var label = _aliveCursorLabels[i];
                 label.TotalTime += frameTime;
 
-                if (label.TotalTime > PopupLifetime)
+                if (label.TotalTime > GetPopupLifetime(label))
                 {
                     _aliveCursorLabels.RemoveSwap(i);
                     i--;

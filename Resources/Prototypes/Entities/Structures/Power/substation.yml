@@ -67,11 +67,19 @@
         sound:
           path: /Audio/Effects/metalbreak.ogg
       - !type:ExplodeBehavior
-      - !type:SpawnEntitiesBehavior # in future should also emit a cloud of hot gas
+      - !type:SpawnEntitiesBehavior
         spawn:
           MachineFrameDestroyed:
             min: 1
             max: 1
+      - !type:SpawnGasBehavior
+        gasMixture:
+          volume: 1000
+          moles:
+            - 0 # oxygen
+            - 0 # nitrogen
+            - 340.5701689 # carbon dioxide
+          temperature: 373.15
   - type: Explosive
     explosionType: Default
     maxIntensity: 100
@@ -79,7 +87,7 @@
     totalIntensity: 200
   - type: WiresPanel
   - type: Wires
-    BoardName: "Substation"
+    BoardName: wires-board-name-substation
     LayoutId: Substation
   - type: Machine
     board: SubstationMachineCircuitboard
@@ -114,14 +122,20 @@
     sound:
       path: /Audio/Ambience/Objects/buzzing.ogg
   - type: PointLight
-    netsync: false
     radius: 1.5
     energy: 1.6
     color: "#3db83b"
+    netsync: false
     castShadows: false
   - type: Clickable
   - type: AccessReader
     access: [["Engineering"]]
+  - type: ContainerFill
+    containers:
+      board: [ WallmountSubstationElectronics ]
+  - type: ContainerContainer
+    containers:
+      board: !type:Container
   - type: InteractionOutline
   - type: Physics
     bodyType: Static

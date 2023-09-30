@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Numerics;
 using JetBrains.Annotations;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -76,7 +77,7 @@ public sealed class ListContainer : Control
         {
             ListContainerButton control = new(data[0]);
             GenerateItem?.Invoke(data[0], control);
-            control.Measure(Vector2.Infinity);
+            control.Measure(Vector2Helpers.Infinity);
             _itemHeight = control.DesiredSize.Y;
             control.Dispose();
         }
@@ -312,7 +313,7 @@ public sealed class ListContainer : Control
             child.Measure(constraint);
             if (child == _vScrollBar)
                 continue;
-            childSize = Vector2.ComponentMax(childSize, child.DesiredSize);
+            childSize = Vector2.Max(childSize, child.DesiredSize);
         }
 
         if (_itemHeight == 0 && childSize.Y != 0)
@@ -343,7 +344,7 @@ public sealed class ListContainer : Control
     }
 }
 
-public sealed class ListContainerButton : ContainerButton
+public sealed class ListContainerButton : ContainerButton, IEntityControl
 {
     public readonly ListData Data;
     // public PanelContainer Background;
@@ -358,6 +359,8 @@ public sealed class ListContainerButton : ContainerButton
         //     PanelOverride = new StyleBoxFlat {BackgroundColor = new Color(55, 55, 68)}
         // });
     }
+
+    public EntityUid? UiEntity => (Data as EntityListData)?.Uid;
 }
 
 #region Data

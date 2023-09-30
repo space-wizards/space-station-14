@@ -8,9 +8,10 @@
     sprite: Clothing/Shoes/Boots/workboots.rsi
   - type: Clothing
     sprite: Clothing/Shoes/Boots/workboots.rsi
+  - type: Matchbox
 
 - type: entity
-  parent: ClothingShoesBaseButcherable
+  parent: ClothingShoesStorageBase
   id: ClothingShoesBootsJack
   name: jackboots
   description: Nanotrasen-issue Security combat boots for combat scenarios or combat situations. All combat, all the time.
@@ -19,7 +20,12 @@
     sprite: Clothing/Shoes/Boots/jackboots.rsi
   - type: Clothing
     sprite: Clothing/Shoes/Boots/jackboots.rsi
-
+  - type: Matchbox
+  - type: Storage
+    whitelist:
+      tags:
+        - Knife
+  
 - type: entity
   parent: ClothingShoesBaseButcherable
   id: ClothingShoesBootsSalvage
@@ -30,6 +36,7 @@
     sprite: Clothing/Shoes/Boots/explorer.rsi
   - type: Clothing
     sprite: Clothing/Shoes/Boots/explorer.rsi
+  - type: Matchbox
 
 - type: entity
   parent: ClothingShoesBaseButcherable
@@ -52,6 +59,7 @@
     sprite: Clothing/Shoes/Boots/combatboots.rsi
   - type: Clothing
     sprite: Clothing/Shoes/Boots/combatboots.rsi
+  - type: Matchbox
   - type: Storage
     whitelist:
       tags:
@@ -67,6 +75,7 @@
     sprite: Clothing/Shoes/Boots/mercboots.rsi
   - type: Clothing
     sprite: Clothing/Shoes/Boots/mercboots.rsi
+  - type: Matchbox
   - type: Storage
     whitelist:
       tags:

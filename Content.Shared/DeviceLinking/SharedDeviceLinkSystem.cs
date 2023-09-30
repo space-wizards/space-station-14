@@ -1,3 +1,5 @@
+using Content.Shared.Administration.Logs;
+using Content.Shared.Database;
 using Content.Shared.DeviceLinking.Events;
 using Content.Shared.Popups;
 using Robust.Shared.Prototypes;
@@ -9,6 +11,7 @@ public abstract class SharedDeviceLinkSystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
+    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     private ISawmill _sawmill = default!;
 
     public const string InvokedPort = "link_port";
@@ -16,6 +19,7 @@ public abstract class SharedDeviceLinkSystem : EntitySystem
     /// <inheritdoc/>
     public override void Initialize()
     {
+        SubscribeLocalEvent<DeviceLinkSourceComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<DeviceLinkSourceComponent, ComponentStartup>(OnSourceStartup);
         SubscribeLocalEvent<DeviceLinkSinkComponent, ComponentStartup>(OnSinkStartup);
         SubscribeLocalEvent<DeviceLinkSourceComponent, ComponentRemove>(OnSourceRemoved);
@@ -24,6 +28,19 @@ public abstract class SharedDeviceLinkSystem : EntitySystem
     }
 
     #region Link Validation
+
+    private void OnInit(EntityUid uid, DeviceLinkSourceComponent component, ComponentInit args)
+    {
+        // Populate the output dictionary.
+        foreach (var (sinkUid, links) in component.LinkedPorts)
+        {
+            foreach (var link in links)
+            {
+                component.Outputs.GetOrNew(link.source).Add(sinkUid);
+            }
+        }
+    }
+
     /// <summary>
     /// Removes invalid links where the saved sink doesn't exist/have a sink component for example
     /// </summary>
@@ -32,7 +49,7 @@ public abstract class SharedDeviceLinkSystem : EntitySystem
         List<EntityUid> invalidSinks = new();
         foreach (var sinkUid  in sourceComponent.LinkedPorts.Keys)
         {
-            if (!TryComp<DeviceLinkSinkComponent?>(sinkUid, out var sinkComponent))
+            if (!TryComp<DeviceLinkSinkComponent>(sinkUid, out var sinkComponent))
             {
                 invalidSinks.Add(sinkUid);
                 foreach (var savedSinks in sourceComponent.Outputs.Values)
@@ -81,7 +98,7 @@ public abstract class SharedDeviceLinkSystem : EntitySystem
             List<(string, string)> invalidLinks = new();
             foreach (var link in linkedPorts)
             {
-                if (!sinkComponent.Ports.Contains(link.sink) || !(sourceComponent.Outputs.GetValueOrDefault(link.source)?.Contains(sinkUid) ?? false))
+                if (!sinkComponent.Ports.Contains(link.sink))
                     invalidLinks.Add(link);
             }
 
@@ -136,6 +153,7 @@ public abstract class SharedDeviceLinkSystem : EntitySystem
 
         foreach (var port in ports)
         {
+            DebugTools.Assert(_prototypeManager.HasIndex<SourcePortPrototype>(port));
             comp.Ports?.Add(port);
         }
     }
@@ -150,6 +168,7 @@ public abstract class SharedDeviceLinkSystem : EntitySystem
 
         foreach (var port in ports)
         {
+            DebugTools.Assert(_prototypeManager.HasIndex<SinkPortPrototype>(port));
             comp.Ports?.Add(port);
         }
     }
@@ -255,6 +274,11 @@ public abstract class SharedDeviceLinkSystem : EntitySystem
         if (!Resolve(sourceUid, ref sourceComponent) || !Resolve(sinkUid, ref sinkComponent))
             return;
 
+        if (userId != null)
+            _adminLogger.Add(LogType.DeviceLinking, LogImpact.Low, $"{ToPrettyString(userId.Value):actor} is linking defaults between {ToPrettyString(sourceUid):source} and {ToPrettyString(sinkUid):sink}");
+        else
+            _adminLogger.Add(LogType.DeviceLinking, LogImpact.Low, $"linking defaults between {ToPrettyString(sourceUid):source} and {ToPrettyString(sinkUid):sink}");
+
         var sourcePorts = GetSourcePorts(sourceUid, sourceComponent);
         var defaults = GetDefaults(sourcePorts);
         SaveLinks(userId, sourceUid, sinkUid, defaults, sourceComponent, sinkComponent);
@@ -299,6 +323,9 @@ public abstract class SharedDeviceLinkSystem : EntitySystem
         RemoveSinkFromSource(sourceUid, sinkUid, sourceComponent);
         foreach (var (source, sink) in links)
         {
+            DebugTools.Assert(_prototypeManager.HasIndex<SourcePortPrototype>(source));
+            DebugTools.Assert(_prototypeManager.HasIndex<SinkPortPrototype>(sink));
+
             if (!sourceComponent.Ports.Contains(source) || !sinkComponent.Ports.Contains(sink))
                 continue;
 
@@ -413,6 +440,11 @@ public abstract class SharedDeviceLinkSystem : EntitySystem
 
         if (linkedPorts.Contains((source, sink)))
         {
+            if (userId != null)
+                _adminLogger.Add(LogType.DeviceLinking, LogImpact.Low, $"{ToPrettyString(userId.Value):actor} unlinked {ToPrettyString(sourceUid):source} {source} and {ToPrettyString(sinkUid):sink} {sink}");
+            else
+                _adminLogger.Add(LogType.DeviceLinking, LogImpact.Low, $"unlinked {ToPrettyString(sourceUid):source} {source} and {ToPrettyString(sinkUid):sink} {sink}");
+
             RaiseLocalEvent(sourceUid, new PortDisconnectedEvent(source));
             RaiseLocalEvent(sinkUid, new PortDisconnectedEvent(sink));
 
@@ -497,6 +529,11 @@ public abstract class SharedDeviceLinkSystem : EntitySystem
 
     private void SendNewLinkEvent(EntityUid? user, EntityUid sourceUid, string source, EntityUid sinkUid, string sink)
     {
+        if (user != null)
+            _adminLogger.Add(LogType.DeviceLinking, LogImpact.Low, $"{ToPrettyString(user.Value):actor} linked {ToPrettyString(sourceUid):source} {source} and {ToPrettyString(sinkUid):sink} {sink}");
+        else
+            _adminLogger.Add(LogType.DeviceLinking, LogImpact.Low, $"linked {ToPrettyString(sourceUid):source} {source} and {ToPrettyString(sinkUid):sink} {sink}");
+
         var newLinkEvent = new NewLinkEvent(user, sourceUid, source, sinkUid, sink);
         RaiseLocalEvent(sourceUid, newLinkEvent);
         RaiseLocalEvent(sinkUid, newLinkEvent);

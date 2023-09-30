@@ -1,6 +1,7 @@
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.NodeContainer;
+using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NodeContainer.NodeGroups;
 using Content.Server.Shuttles.Components;
 using Content.Shared.Atmos;
@@ -24,11 +25,13 @@ public sealed class SpreaderSystem : EntitySystem
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly IRobustRandom _robustRandom = default!;
+    [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
 
     private static readonly TimeSpan SpreadCooldown = TimeSpan.FromSeconds(1);
 
     private readonly List<string> _spreaderGroups = new();
 
+    [ValidatePrototypeId<TagPrototype>]
     private const string IgnoredTag = "SpreaderIgnore";
 
     /// <inheritdoc/>
@@ -85,7 +88,6 @@ public sealed class SpreaderSystem : EntitySystem
     private void OnGridInit(GridInitializeEvent ev)
     {
         var comp = EnsureComp<SpreaderGridComponent>(ev.EntityUid);
-
     }
 
     /// <inheritdoc/>
@@ -93,7 +95,7 @@ public sealed class SpreaderSystem : EntitySystem
     {
         var curTime = _timing.CurTime;
 
-        // Check which grids are valid for spreading.
+        // Check which grids are valid for spreading
         var spreadable = new ValueList<EntityUid>();
         var spreadGrids = EntityQueryEnumerator<SpreaderGridComponent>();
 
@@ -114,10 +116,13 @@ public sealed class SpreaderSystem : EntitySystem
         var xformQuery = GetEntityQuery<TransformComponent>();
         var gridQuery = GetEntityQuery<SpreaderGridComponent>();
 
-        // Events and stuff
+        // Each INode group has a certain number of updates
+        // allowed per SpreadCooldown
         var groupUpdates = new Dictionary<INodeGroup, int>();
+
         var spreaders = new List<(EntityUid Uid, EdgeSpreaderComponent Comp)>(Count<EdgeSpreaderComponent>());
 
+        // Build a list of all existing Edgespreaders, shuffle them
         while (query.MoveNext(out var uid, out var comp))
         {
             spreaders.Add((uid, comp));
@@ -125,6 +130,8 @@ public sealed class SpreaderSystem : EntitySystem
 
         _robustRandom.Shuffle(spreaders);
 
+        // Remove the EdgeSpreaderComponent from any entity
+        // that doesn't meet a few trivial prerequisites
         foreach (var (uid, comp) in spreaders)
         {
             if (!xformQuery.TryGetComponent(uid, out var xform) ||
@@ -137,15 +144,17 @@ public sealed class SpreaderSystem : EntitySystem
 
             foreach (var sGroup in _spreaderGroups)
             {
-                // Cleanup
-                if (!nodeQuery.TryGetComponent(uid, out var nodeComponent))
+                // Get the NodeContainer and Node from every EdgeSpreader entity found
+                if (!nodeQuery.TryGetComponent(uid, out var nodeContainer))
                 {
                     RemCompDeferred<EdgeSpreaderComponent>(uid);
                     continue;
                 }
 
-                if (!nodeComponent.TryGetNode<SpreaderNode>(sGroup, out var node))
+                if (!_nodeContainer.TryGetNode<SpreaderNode>(nodeContainer, sGroup, out var node))
+                {
                     continue;
+                }
 
                 // Not allowed this tick?
                 if (node.NodeGroup == null ||
@@ -154,8 +163,8 @@ public sealed class SpreaderSystem : EntitySystem
                     continue;
                 }
 
-                // While we could check if it's an edge here the subscribing system may have its own definition
-                // of an edge so we'll let them handle it.
+                // Try get an integer update rate associated with a node group,
+                // getting it instead from the spreader itself on failure
                 if (!groupUpdates.TryGetValue(node.NodeGroup, out var updates))
                 {
                     var spreadEv = new SpreadGroupUpdateRate(node.Name);
@@ -163,10 +172,16 @@ public sealed class SpreaderSystem : EntitySystem
                     updates = (int) (spreadEv.UpdatesPerSecond * SpreadCooldown / TimeSpan.FromSeconds(1));
                 }
 
+                // "updates" integer dictates the amount of nodes that
+                // are to be spawned around a NodeGroup
                 if (updates <= 0)
                 {
                     continue;
                 }
+
+                // Edge detection logic is to be handled
+                // by the subscribing system, see KudzuSystem
+                // for a simple example
 
                 Spread(uid, node, node.NodeGroup, ref updates);
                 groupUpdates[node.NodeGroup] = updates;

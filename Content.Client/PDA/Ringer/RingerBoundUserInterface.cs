@@ -2,14 +2,16 @@ using Content.Shared.PDA;
 using Content.Shared.PDA.Ringer;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
+
 namespace Content.Client.PDA.Ringer
 {
     [UsedImplicitly]
     public sealed class RingerBoundUserInterface : BoundUserInterface
     {
+        [ViewVariables]
         private RingtoneMenu? _menu;
 
-        public RingerBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
+        public RingerBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
         {
         }
 
@@ -41,7 +43,7 @@ namespace Content.Client.PDA.Ringer
                 return false;
             }
 
-            ringtone = new Note[4];
+            ringtone = new Note[_menu.RingerNoteInputs.Length];
 
             for (int i = 0; i < _menu.RingerNoteInputs.Length; i++)
             {

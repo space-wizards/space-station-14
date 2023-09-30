@@ -16,7 +16,6 @@ namespace Content.Shared.StatusEffect
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IComponentFactory _componentFactory = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
-        [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
         [Dependency] private readonly AlertsSystem _alertsSystem = default!;
 
         public override void Initialize()
@@ -62,7 +61,8 @@ namespace Content.Shared.StatusEffect
             if (args.Current is not StatusEffectsComponentState state)
                 return;
 
-            component.AllowedEffects = new(state.AllowedEffects);
+            component.AllowedEffects.Clear();
+            component.AllowedEffects.AddRange(state.AllowedEffects);
 
             // Remove non-existent effects.
             foreach (var effect in component.ActiveEffects.Keys)

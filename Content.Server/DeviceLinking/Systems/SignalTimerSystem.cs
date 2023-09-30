@@ -1,5 +1,4 @@
 using Content.Server.DeviceLinking.Components;
-using Content.Server.Interaction;
 using Content.Server.UserInterface;
 using Content.Shared.Access.Systems;
 using Content.Shared.MachineLinking;
@@ -17,7 +16,6 @@ public sealed class SignalTimerSystem : EntitySystem
     [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
     [Dependency] private readonly AccessReaderSystem _accessReader = default!;
-    [Dependency] private readonly InteractionSystem _interaction = default!;
 
     public override void Initialize()
     {
@@ -115,7 +113,7 @@ public sealed class SignalTimerSystem : EntitySystem
         if (!IsMessageValid(uid, args))
             return;
 
-        component.Label = args.Text[..Math.Min(5,args.Text.Length)];
+        component.Label = args.Text[..Math.Min(5, args.Text.Length)];
         _appearanceSystem.SetData(uid, TextScreenVisuals.ScreenText, component.Label);
     }
 

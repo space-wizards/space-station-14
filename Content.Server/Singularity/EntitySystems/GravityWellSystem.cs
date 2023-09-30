@@ -6,9 +6,8 @@ using Robust.Shared.Physics.Systems;
 using Robust.Shared.Timing;
 
 using Content.Shared.Singularity.EntitySystems;
-
-using Content.Server.Ghost.Components;
 using Content.Server.Singularity.Components;
+using Content.Shared.Ghost;
 
 namespace Content.Server.Singularity.EntitySystems;
 
@@ -197,7 +196,7 @@ public sealed class GravityWellSystem : SharedGravityWellSystem
                 continue;
 
             var displacement = epicenter - _transform.GetWorldPosition(entity, xformQuery);
-            var distance2 = displacement.LengthSquared;
+            var distance2 = displacement.LengthSquared();
             if (distance2 < minRange2)
                 continue;
 

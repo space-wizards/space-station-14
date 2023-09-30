@@ -3,21 +3,68 @@ using Content.Server.Atmos.EntitySystems;
 using Content.Server.Disposal.Tube;
 using Content.Server.Disposal.Tube.Components;
 using Content.Server.Disposal.Unit.Components;
+using Content.Shared.Body.Components;
+using Content.Shared.Disposal.Components;
+using Content.Shared.Item;
 using JetBrains.Annotations;
+using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
 
 namespace Content.Server.Disposal.Unit.EntitySystems
 {
-    [UsedImplicitly]
-    internal sealed class DisposableSystem : EntitySystem
+    public sealed class DisposableSystem : EntitySystem
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly DisposalUnitSystem _disposalUnitSystem = default!;
         [Dependency] private readonly DisposalTubeSystem _disposalTubeSystem = default!;
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
         [Dependency] private readonly SharedPhysicsSystem _physicsSystem = default!;
+        [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
+        [Dependency] private readonly SharedTransformSystem _xformSystem = default!;
+
+        public override void Initialize()
+        {
+            base.Initialize();
+
+            SubscribeLocalEvent<DisposalHolderComponent, ComponentStartup>(OnComponentStartup);
+        }
+
+        private void OnComponentStartup(EntityUid uid, DisposalHolderComponent holder, ComponentStartup args)
+        {
+            holder.Container = _containerSystem.EnsureContainer<Container>(uid, nameof(DisposalHolderComponent));
+        }
+
+        public bool TryInsert(EntityUid uid, EntityUid toInsert, DisposalHolderComponent? holder = null)
+        {
+            if (!Resolve(uid, ref holder))
+                return false;
+            if (!CanInsert(uid, toInsert, holder))
+                return false;
+
+            if (!holder.Container.Insert(toInsert, EntityManager))
+                return false;
+
+            if (TryComp<PhysicsComponent>(toInsert, out var physBody))
+                _physicsSystem.SetCanCollide(toInsert, false, body: physBody);
+
+            return true;
+        }
+
+        private bool CanInsert(EntityUid uid, EntityUid toInsert, DisposalHolderComponent? holder = null)
+        {
+            if (!Resolve(uid, ref holder))
+                return false;
+
+            if (!_containerSystem.CanInsert(toInsert, holder.Container))
+            {
+                return false;
+            }
+
+            return HasComp<ItemComponent>(toInsert) ||
+                   HasComp<BodyComponent>(toInsert);
+        }
 
         public void ExitDisposals(EntityUid uid, DisposalHolderComponent? holder = null, TransformComponent? holderTransform = null)
         {
@@ -28,7 +75,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 return;
             if (holder.IsExitingDisposals)
             {
-                Logger.ErrorS("c.s.disposal.holder", "Tried exiting disposals twice. This should never happen.");
+                Log.Error("Tried exiting disposals twice. This should never happen.");
                 return;
             }
             holder.IsExitingDisposals = true;
@@ -65,7 +112,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 if (duc != null)
                     duc.Container.Insert(entity, EntityManager, xform, meta: meta);
                 else
-                    xform.AttachToGridOrMap();
+                    _xformSystem.AttachToGridOrMap(entity, xform);
 
                 if (EntityManager.TryGetComponent(entity, out PhysicsComponent? physics))
                 {
@@ -78,7 +125,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 _disposalUnitSystem.TryEjectContents(disposalId.Value, duc);
             }
 
-            if (_atmosphereSystem.GetContainingMixture(uid, false, true) is {} environment)
+            if (_atmosphereSystem.GetContainingMixture(uid, false, true) is { } environment)
             {
                 _atmosphereSystem.Merge(environment, holder.Air);
                 holder.Air.Clear();
@@ -94,7 +141,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 return false;
             if (holder.IsExitingDisposals)
             {
-                Logger.ErrorS("c.s.disposal.holder", "Tried entering tube after exiting disposals. This should never happen.");
+                Log.Error("Tried entering tube after exiting disposals. This should never happen.");
                 return false;
             }
             if (!Resolve(toUid, ref to, ref toTransform))
@@ -106,11 +153,11 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             foreach (var ent in holder.Container.ContainedEntities)
             {
                 var comp = EnsureComp<BeingDisposedComponent>(ent);
-                comp.Holder = holder.Owner;
+                comp.Holder = holderUid;
             }
 
             // Insert into next tube
-            if (!to.Contents.Insert(holder.Owner))
+            if (!to.Contents.Insert(holderUid))
             {
                 ExitDisposals(holderUid, holder, holderTransform);
                 return false;
@@ -121,7 +168,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 holder.PreviousTube = holder.CurrentTube;
                 holder.PreviousDirection = holder.CurrentDirection;
             }
-            holder.CurrentTube = to;
+            holder.CurrentTube = toUid;
             var ev = new GetDisposalsNextDirectionEvent(holder);
             RaiseLocalEvent(toUid, ref ev);
             holder.CurrentDirection = ev.Next;
@@ -140,13 +187,14 @@ namespace Content.Server.Disposal.Unit.EntitySystems
 
         public override void Update(float frameTime)
         {
-            foreach (var comp in EntityManager.EntityQuery<DisposalHolderComponent>())
+            var query = EntityQueryEnumerator<DisposalHolderComponent>();
+            while (query.MoveNext(out var uid, out var holder))
             {
-                UpdateComp(comp, frameTime);
+                UpdateComp(uid, holder, frameTime);
             }
         }
 
-        private void UpdateComp(DisposalHolderComponent holder, float frameTime)
+        private void UpdateComp(EntityUid uid, DisposalHolderComponent holder, float frameTime)
         {
             while (frameTime > 0)
             {
@@ -159,40 +207,39 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 holder.TimeLeft -= time;
                 frameTime -= time;
 
-                var currentTube = holder.CurrentTube;
-                if (currentTube == null || currentTube.Deleted)
+                if (!EntityManager.EntityExists(holder.CurrentTube))
                 {
-                    ExitDisposals((holder).Owner);
+                    ExitDisposals(uid, holder);
                     break;
                 }
 
+                var currentTube = holder.CurrentTube!.Value;
                 if (holder.TimeLeft > 0)
                 {
                     var progress = 1 - holder.TimeLeft / holder.StartingTime;
-                    var origin = EntityManager.GetComponent<TransformComponent>(currentTube.Owner).Coordinates;
+                    var origin = Transform(currentTube).Coordinates;
                     var destination = holder.CurrentDirection.ToVec();
                     var newPosition = destination * progress;
 
                     // This is some supreme shit code.
-                    EntityManager.GetComponent<TransformComponent>(holder.Owner).Coordinates = origin.Offset(newPosition).WithEntityId(currentTube.Owner);
-
+                    _xformSystem.SetCoordinates(uid, origin.Offset(newPosition).WithEntityId(currentTube));
                     continue;
                 }
 
                 // Past this point, we are performing inter-tube transfer!
                 // Remove current tube content
-                currentTube.Contents.Remove(holder.Owner, reparent: false, force: true);
+                Comp<DisposalTubeComponent>(currentTube).Contents.Remove(uid, reparent: false, force: true);
 
                 // Find next tube
-                var nextTube = _disposalTubeSystem.NextTubeFor(currentTube.Owner, holder.CurrentDirection);
-                if (nextTube == null || nextTube.Deleted)
+                var nextTube = _disposalTubeSystem.NextTubeFor(currentTube, holder.CurrentDirection);
+                if (!EntityManager.EntityExists(nextTube))
                 {
-                    ExitDisposals((holder).Owner);
+                    ExitDisposals(uid, holder);
                     break;
                 }
 
                 // Perform remainder of entry process
-                if (!EnterTube((holder).Owner, nextTube.Owner, holder))
+                if (!EnterTube(uid, nextTube!.Value, holder))
                 {
                     break;
                 }

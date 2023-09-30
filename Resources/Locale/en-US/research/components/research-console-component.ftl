@@ -14,3 +14,5 @@ research-console-cost = Cost: [color=orchid]{$amount}[/color]
 research-console-unlocks-list-start = Unlocks:
 research-console-unlocks-list-entry = - [color=yellow]{$name}[/color]
 research-console-unlocks-list-entry-generic = - [color=green]{$text}[/color]
+
+research-console-no-access-popup = No access!

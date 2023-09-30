@@ -62,7 +62,6 @@
     containers:
       board: !type:Container
   - type: Weldable
-    fuel: 3
     time: 3
   - type: Airlock
   - type: DoorBolt
@@ -76,7 +75,7 @@
     usesApcPower: true
   - type: WiresPanel
   - type: Wires
-    BoardName: "Airlock Control"
+    BoardName: wires-board-name-airlock
     LayoutId: Airlock
   - type: DoorSignalControl
   - type: DeviceNetwork
@@ -129,6 +128,7 @@
     mode: NoSprite
   - type: PaintableAirlock
     group: Standard
+  - type: AccessReader
   - type: StaticPrice
     price: 150
   placement:

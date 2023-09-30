@@ -10,7 +10,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.Body.Components
 {
     [RegisterComponent, Access(typeof(BloodstreamSystem), (typeof(ChemistrySystem)))]
-    public sealed class BloodstreamComponent : Component
+    public sealed partial class BloodstreamComponent : Component
     {
         public static string DefaultChemicalsSolutionName = "chemicals";
         public static string DefaultBloodSolutionName = "bloodstream";
@@ -35,13 +35,13 @@ namespace Content.Server.Body.Components
         ///     How much should bleeding should be reduced every update interval?
         /// </summary>
         [DataField("bleedReductionAmount")]
-        public float BleedReductionAmount = 0.5f;
+        public float BleedReductionAmount = 1.0f;
 
         /// <summary>
         ///     How high can <see cref="BleedAmount"/> go?
         /// </summary>
         [DataField("maxBleedAmount")]
-        public float MaxBleedAmount = 20.0f;
+        public float MaxBleedAmount = 10.0f;
 
         /// <summary>
         ///     What percentage of current blood is necessary to avoid dealing blood loss damage?
@@ -67,7 +67,7 @@ namespace Content.Server.Body.Components
         ///     How frequently should this bloodstream update, in seconds?
         /// </summary>
         [DataField("updateInterval")]
-        public float UpdateInterval = 5.0f;
+        public float UpdateInterval = 3.0f;
 
         // TODO shouldn't be hardcoded, should just use some organ simulation like bone marrow or smth.
         /// <summary>
@@ -80,7 +80,7 @@ namespace Content.Server.Body.Components
         ///     How much blood needs to be in the temporary solution in order to create a puddle?
         /// </summary>
         [DataField("bleedPuddleThreshold")]
-        public FixedPoint2 BleedPuddleThreshold = 5.0f;
+        public FixedPoint2 BleedPuddleThreshold = 1.0f;
 
         /// <summary>
         ///     A modifier set prototype ID corresponding to how damage should be modified

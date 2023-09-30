@@ -1,16 +1,12 @@
 using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
 using Content.Server.Chemistry.EntitySystems;
-using Content.Server.Fluids.Components;
 using Content.Server.Fluids.EntitySystems;
 using Content.Server.Forensics;
-using Content.Server.Nutrition.Components;
 using Content.Server.Nutrition.EntitySystems;
 using Content.Server.Popups;
 using Content.Server.Stunnable;
-using Content.Shared.Audio;
 using Content.Shared.Chemistry.Components;
-using Content.Shared.Fluids.Components;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
@@ -48,7 +44,7 @@ namespace Content.Server.Medical
                 _hunger.ModifyHunger(uid, hungerAdded, hunger);
 
             if (TryComp<ThirstComponent>(uid, out var thirst))
-                _thirst.UpdateThirst(thirst, thirstAdded);
+                _thirst.ModifyThirst(uid, thirst, thirstAdded);
 
             // It fully empties the stomach, this amount from the chem stream is relatively small
             var solutionSize = (MathF.Abs(thirstAdded) + MathF.Abs(hungerAdded)) / 6;
@@ -70,11 +66,21 @@ namespace Content.Server.Medical
                     _solutionContainer.UpdateChemicals(stomach.Comp.Owner, sol);
                 }
             }
-            // And the small bit of the chem stream from earlier
+            // Adds a tiny amount of the chem stream from earlier along with vomit
             if (TryComp<BloodstreamComponent>(uid, out var bloodStream))
             {
-                var temp = _solutionContainer.SplitSolution(uid, bloodStream.ChemicalSolution, solutionSize);
-                solution.AddSolution(temp, _proto);
+                var chemMultiplier = 0.1;
+                var vomitMultiplier = 0.9;
+
+                // Makes a vomit solution the size of 90% of the chemicals removed from the chemstream
+                var vomitAmount = new Solution("Vomit", solutionSize * vomitMultiplier);
+
+                // Takes 10% of the chemicals removed from the chem stream
+                var vomitChemstreamAmount = _solutionContainer.SplitSolution(uid, bloodStream.ChemicalSolution, solutionSize * chemMultiplier);
+
+                _solutionContainer.SplitSolution(uid, bloodStream.ChemicalSolution, solutionSize * vomitMultiplier);
+                solution.AddSolution(vomitAmount, _proto);
+                solution.AddSolution(vomitChemstreamAmount, _proto);
             }
 
             if (_puddle.TrySpillAt(uid, solution, out var puddle, false))

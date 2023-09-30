@@ -25,6 +25,9 @@ You keep things clean, it's a rough job sometimes, but someone's gotta do it. Th
 <GuideEntityEmbed Entity="Holoprojector" Caption="holosign projector"/>
 <GuideEntityEmbed Entity="LightReplacer"/>
 </Box>
+<Box>
+<GuideEntityEmbed Entity="AdvMopItem" Caption="Advanced mop, ask in R&D"/>
+</Box>
 
 ## Fluid Acquisition and Disposal
 <Box>
@@ -47,4 +50,9 @@ Space Cleaner: This miracle spray can do two things, clean graffiti, and in a pi
 
 ## Extra Duties
 A good janitor is always on the lookout for a bit more to do, and there are plenty of tools at your disposal. Keep an eye out for broken lights, help the chef take care of mice in the kitchen, and if you're feeling -really- generous, try to restock the vending machines and emergency closets around the station!
+
+##Additional Information:
+<GuideReagentEmbed Reagent="SpaceCleaner"/>
+<GuideReagentEmbed Reagent="Ammonia"/>
+
 </Document>

@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "https://github.com/tgstation/tgstation/commit/fa9e44d937026d5a2ba72615afccf2f18a87c485",
+  "copyright": "https://github.com/tgstation/tgstation/commit/fa9e44d937026d5a2ba72615afccf2f18a87c485 | banner_syndicate sprited by mureixlol (Discord)",
   "size": {
     "x": 32,
     "y": 32
@@ -39,6 +39,9 @@
     },
     {
       "name": "banner_revolution"
+    },
+    {
+      "name": "banner_syndicate"
     }
   ]
 }

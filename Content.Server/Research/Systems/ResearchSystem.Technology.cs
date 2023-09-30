@@ -1,3 +1,4 @@
+using Content.Shared.Database;
 using Content.Shared.Research.Components;
 using Content.Shared.Research.Prototypes;
 using JetBrains.Annotations;
@@ -47,13 +48,16 @@ public sealed partial class ResearchSystem
     /// Tries to add a technology to a database, checking if it is able to
     /// </summary>
     /// <returns>If the technology was successfully added</returns>
-    public bool UnlockTechnology(EntityUid client, string prototypeid, ResearchClientComponent? component = null,
+    public bool UnlockTechnology(EntityUid client,
+        string prototypeid,
+        EntityUid user,
+        ResearchClientComponent? component = null,
         TechnologyDatabaseComponent? clientDatabase = null)
     {
         if (!PrototypeManager.TryIndex<TechnologyPrototype>(prototypeid, out var prototype))
             return false;
 
-        return UnlockTechnology(client, prototype, component, clientDatabase);
+        return UnlockTechnology(client, prototype, user, component, clientDatabase);
     }
 
     /// <summary>
@@ -62,6 +66,7 @@ public sealed partial class ResearchSystem
     /// <returns>If the technology was successfully added</returns>
     public bool UnlockTechnology(EntityUid client,
         TechnologyPrototype prototype,
+        EntityUid user,
         ResearchClientComponent? component = null,
         TechnologyDatabaseComponent? clientDatabase = null)
     {
@@ -78,6 +83,9 @@ public sealed partial class ResearchSystem
         TrySetMainDiscipline(prototype, serverEnt.Value);
         ModifyServerPoints(serverEnt.Value, -prototype.Cost);
         UpdateTechnologyCards(serverEnt.Value);
+
+        _adminLog.Add(LogType.Action, LogImpact.Medium,
+            $"{ToPrettyString(user):player} unlocked {prototype.ID} (discipline: {prototype.Discipline}, tier: {prototype.Tier}) at {ToPrettyString(client)}, for server {ToPrettyString(serverEnt.Value)}.");
         return true;
     }
 

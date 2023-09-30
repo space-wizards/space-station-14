@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Server.Body.Systems;
 using Content.Server.Climbing.Components;
 using Content.Server.Interaction;
@@ -19,7 +20,7 @@ using Content.Shared.Physics;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
-using Robust.Shared.GameStates;
+using Robust.Server.GameObjects;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Physics.Components;
@@ -34,6 +35,7 @@ namespace Content.Server.Climbing;
 public sealed class ClimbSystem : SharedClimbSystem
 {
     [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
+    [Dependency] private readonly AudioSystem _audio = default!;
     [Dependency] private readonly BodySystem _bodySystem = default!;
     [Dependency] private readonly DamageableSystem _damageableSystem = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
@@ -46,7 +48,7 @@ public sealed class ClimbSystem : SharedClimbSystem
     private const string ClimbingFixtureName = "climb";
     private const int ClimbingCollisionGroup = (int) (CollisionGroup.TableLayer | CollisionGroup.LowImpassable);
 
-    private readonly Dictionary<EntityUid, List<Fixture>> _fixtureRemoveQueue = new();
+    private readonly Dictionary<EntityUid, Dictionary<string, Fixture>> _fixtureRemoveQueue = new();
 
     public override void Initialize()
     {
@@ -59,7 +61,6 @@ public sealed class ClimbSystem : SharedClimbSystem
         SubscribeLocalEvent<ClimbingComponent, ClimbDoAfterEvent>(OnDoAfter);
         SubscribeLocalEvent<ClimbingComponent, EndCollideEvent>(OnClimbEndCollide);
         SubscribeLocalEvent<ClimbingComponent, BuckleChangeEvent>(OnBuckleChange);
-        SubscribeLocalEvent<ClimbingComponent, ComponentGetState>(OnClimbingGetState);
 
         SubscribeLocalEvent<GlassTableComponent, ClimbedOnEvent>(OnGlassClimbed);
     }
@@ -94,7 +95,7 @@ public sealed class ClimbSystem : SharedClimbSystem
         // TODO VERBS ICON add a climbing icon?
         args.Verbs.Add(new AlternativeVerb
         {
-            Act = () => TryClimb(args.User, args.User, args.Target, component),
+            Act = () => TryClimb(args.User, args.User, args.Target, out _, component),
             Text = Loc.GetString("comp-climbable-verb-climb")
         });
     }
@@ -105,31 +106,36 @@ public sealed class ClimbSystem : SharedClimbSystem
         // but don't have computer access and i have to do this without syntax
         if (args.Handled || args.User != args.Dragged && !HasComp<HandsComponent>(args.User))
             return;
-        TryClimb(args.User, args.Dragged, uid, component);
+        TryClimb(args.User, args.Dragged, uid, out _, component);
     }
 
-    public void TryClimb(EntityUid user,
+    public bool TryClimb(EntityUid user,
         EntityUid entityToMove,
         EntityUid climbable,
+        out DoAfterId? id,
         ClimbableComponent? comp = null,
         ClimbingComponent? climbing = null)
     {
+        id = null;
+
         if (!Resolve(climbable, ref comp) || !Resolve(entityToMove, ref climbing))
-            return;
+            return false;
 
         // Note, IsClimbing does not mean a DoAfter is active, it means the target has already finished a DoAfter and
         // is currently on top of something..
         if (climbing.IsClimbing)
-            return;
+            return true;
 
-        var args = new DoAfterArgs(user, comp.ClimbDelay, new ClimbDoAfterEvent(), entityToMove, target: climbable, used: entityToMove)
+        var args = new DoAfterArgs(EntityManager, user, comp.ClimbDelay, new ClimbDoAfterEvent(), entityToMove, target: climbable, used: entityToMove)
         {
             BreakOnTargetMove = true,
             BreakOnUserMove = true,
             BreakOnDamage = true
         };
 
-        _doAfterSystem.TryStartDoAfter(args);
+        _audio.PlayPvs(comp.StartClimbSound, climbable);
+        _doAfterSystem.TryStartDoAfter(args, out id);
+        return true;
     }
 
     private void OnDoAfter(EntityUid uid, ClimbingComponent component, ClimbDoAfterEvent args)
@@ -143,9 +149,12 @@ public sealed class ClimbSystem : SharedClimbSystem
     }
 
     private void Climb(EntityUid uid, EntityUid user, EntityUid instigator, EntityUid climbable, bool silent = false, ClimbingComponent? climbing = null,
-        PhysicsComponent? physics = null, FixturesComponent? fixtures = null)
+        PhysicsComponent? physics = null, FixturesComponent? fixtures = null, ClimbableComponent? comp = null)
     {
         if (!Resolve(uid, ref climbing, ref physics, ref fixtures, false))
+            return;
+
+        if (!Resolve(climbable, ref comp))
             return;
 
         if (!ReplaceFixtures(climbing, fixtures))
@@ -154,6 +163,7 @@ public sealed class ClimbSystem : SharedClimbSystem
         climbing.IsClimbing = true;
         Dirty(climbing);
 
+        _audio.PlayPvs(comp.FinishClimbSound, climbable);
         MoveEntityToward(uid, climbable, physics, climbing);
         // we may potentially need additional logic since we're forcing a player onto a climbable
         // there's also the cases where the user might collide with the person they are forcing onto the climbable that i haven't accounted for
@@ -200,8 +210,8 @@ public sealed class ClimbSystem : SharedClimbSystem
                 || (fixture.CollisionMask & ClimbingCollisionGroup) == 0)
                 continue;
 
-            climbingComp.DisabledFixtureMasks.Add(fixture.ID, fixture.CollisionMask & ClimbingCollisionGroup);
-            _physics.SetCollisionMask(uid, fixture, fixture.CollisionMask & ~ClimbingCollisionGroup, fixturesComp);
+            climbingComp.DisabledFixtureMasks.Add(name, fixture.CollisionMask & ClimbingCollisionGroup);
+            _physics.SetCollisionMask(uid, name, fixture, fixture.CollisionMask & ~ClimbingCollisionGroup, fixturesComp);
         }
 
         if (!_fixtureSystem.TryCreateFixture(
@@ -221,7 +231,7 @@ public sealed class ClimbSystem : SharedClimbSystem
 
     private void OnClimbEndCollide(EntityUid uid, ClimbingComponent component, ref EndCollideEvent args)
     {
-        if (args.OurFixture.ID != ClimbingFixtureName
+        if (args.OurFixtureId != ClimbingFixtureName
             || !component.IsClimbing
             || component.OwnerIsTransitioning)
             return;
@@ -250,18 +260,18 @@ public sealed class ClimbSystem : SharedClimbSystem
                 continue;
             }
 
-            _physics.SetCollisionMask(uid, fixture, fixture.CollisionMask | fixtureMask, fixtures);
+            _physics.SetCollisionMask(uid, name, fixture, fixture.CollisionMask | fixtureMask, fixtures);
         }
         climbing.DisabledFixtureMasks.Clear();
 
         if (!_fixtureRemoveQueue.TryGetValue(uid, out var removeQueue))
         {
-            removeQueue = new List<Fixture>();
+            removeQueue = new Dictionary<string, Fixture>();
             _fixtureRemoveQueue.Add(uid, removeQueue);
         }
 
         if (fixtures.Fixtures.TryGetValue(ClimbingFixtureName, out var climbingFixture))
-            removeQueue.Add(climbingFixture);
+            removeQueue.Add(ClimbingFixtureName, climbingFixture);
 
         climbing.IsClimbing = false;
         climbing.OwnerIsTransitioning = false;
@@ -278,7 +288,7 @@ public sealed class ClimbSystem : SharedClimbSystem
     /// <param name="target">The object that is being vaulted</param>
     /// <param name="reason">The reason why it cant be dropped</param>
     /// <returns></returns>
-    private bool CanVault(ClimbableComponent component, EntityUid user, EntityUid target, out string reason)
+    public bool CanVault(ClimbableComponent component, EntityUid user, EntityUid target, out string reason)
     {
         if (!_actionBlockerSystem.CanInteract(user, target))
         {
@@ -288,8 +298,8 @@ public sealed class ClimbSystem : SharedClimbSystem
 
         if (!HasComp<ClimbingComponent>(user)
             || !TryComp(user, out BodyComponent? body)
-            || !_bodySystem.BodyHasChildOfType(user, BodyPartType.Leg, body)
-            || !_bodySystem.BodyHasChildOfType(user, BodyPartType.Foot, body))
+            || !_bodySystem.BodyHasPartType(user, BodyPartType.Leg, body)
+            || !_bodySystem.BodyHasPartType(user, BodyPartType.Foot, body))
         {
             reason = Loc.GetString("comp-climbable-cant-climb");
             return false;
@@ -314,7 +324,7 @@ public sealed class ClimbSystem : SharedClimbSystem
     /// <param name="target">The object that is being vaulted onto</param>
     /// <param name="reason">The reason why it cant be dropped</param>
     /// <returns></returns>
-    private bool CanVault(ClimbableComponent component, EntityUid user, EntityUid dragged, EntityUid target,
+    public bool CanVault(ClimbableComponent component, EntityUid user, EntityUid dragged, EntityUid target,
         out string reason)
     {
         if (!_actionBlockerSystem.CanInteract(user, dragged) || !_actionBlockerSystem.CanInteract(user, target))
@@ -354,11 +364,6 @@ public sealed class ClimbSystem : SharedClimbSystem
         StopClimb(uid, component);
     }
 
-    private static void OnClimbingGetState(EntityUid uid, ClimbingComponent component, ref ComponentGetState args)
-    {
-        args.State = new ClimbingComponent.ClimbModeComponentState(component.IsClimbing, component.OwnerIsTransitioning);
-    }
-
     private void OnGlassClimbed(EntityUid uid, GlassTableComponent component, ClimbedOnEvent args)
     {
         if (TryComp<PhysicsComponent>(args.Climber, out var physics) && physics.Mass <= component.MassLimit)
@@ -384,21 +389,22 @@ public sealed class ClimbSystem : SharedClimbSystem
 
         var from = Transform(uid).WorldPosition;
         var to = Transform(target).WorldPosition;
-        var (x, y) = (to - from).Normalized;
+        var (x, y) = (to - from).Normalized();
 
         if (MathF.Abs(x) < 0.6f) // user climbed mostly vertically so lets make it a clean straight line
             to = new Vector2(from.X, to.Y);
         else if (MathF.Abs(y) < 0.6f) // user climbed mostly horizontally so lets make it a clean straight line
             to = new Vector2(to.X, from.Y);
 
-        var velocity = (to - from).Length;
+        var velocity = (to - from).Length();
 
-        if (velocity <= 0.0f) return;
+        if (velocity <= 0.0f)
+            return;
 
         // Since there are bodies with different masses:
         // mass * 10 seems enough to move entity
         // instead of launching cats like rockets against the walls with constant impulse value.
-        _physics.ApplyLinearImpulse(uid, (to - from).Normalized * velocity * physics.Mass * 10, body: physics);
+        _physics.ApplyLinearImpulse(uid, (to - from).Normalized() * velocity * physics.Mass * 10, body: physics);
         _physics.SetBodyType(uid, BodyType.Dynamic, body: physics);
         climbing.OwnerIsTransitioning = true;
         _actionBlockerSystem.UpdateCanMove(uid);
@@ -427,7 +433,7 @@ public sealed class ClimbSystem : SharedClimbSystem
 
             foreach (var fixture in fixtures)
             {
-                _fixtureSystem.DestroyFixture(uid, fixture, body: physicsComp, manager: fixturesComp);
+                _fixtureSystem.DestroyFixture(uid, fixture.Key, fixture.Value, body: physicsComp, manager: fixturesComp);
             }
         }
 

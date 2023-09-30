@@ -4,6 +4,8 @@
   name: bluespace portal
   description: Transports you to a linked destination!
   components:
+  - type: Transform
+    anchored: True
   - type: InteractionOutline
   - type: Clickable
   - type: Physics
@@ -32,10 +34,10 @@
     layers:
     - state: portal-red
   - type: PointLight
-    netsync: false
     color: OrangeRed
     radius: 3
-    energy: 3
+    energy: 1
+    netsync: false
 
 - type: entity
   id: PortalBlue
@@ -45,7 +47,7 @@
     layers:
     - state: portal-blue
   - type: PointLight
-    netsync: false
     color: SkyBlue
     radius: 3
-    energy: 3
+    energy: 1
+    netsync: false
