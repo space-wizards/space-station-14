@@ -51,6 +51,8 @@ public sealed class ChasingAnomalySystem : EntitySystem
 
     private void OnPulse(EntityUid uid, ChasingAnomalyComponent component, ref AnomalyPulseEvent args)
     {
+        if (!Initialized(uid)) return;
+
         //Speed updating.
         component.CurrentSpeed = args.Severity * component.MaxChasingSpeed;
 
