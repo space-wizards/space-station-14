@@ -94,7 +94,7 @@
 
 - type: entity
   parent: ClothingShoesBaseButcherable
-  id: ClothingShoesBootsBootsWinter
+  id: ClothingShoesBootsWinter
   name: winter boots
   description: Fluffy boots to help survive even the coldest of winters.
   components:
