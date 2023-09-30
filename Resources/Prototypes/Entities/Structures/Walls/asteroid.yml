@@ -66,8 +66,18 @@
   components:
   - type: OreVein
     oreChance: 0.33
-    oreRarityPrototypeId: RandomOreDistributionStandard
+    oreRarityPrototypeId: RandomOreDistributionHigh
 
+- type: entity
+  id: AsteroidRockCrab
+  parent: AsteroidRock
+  name: asteroid rock
+  suffix: quartzcrab
+  description: An asteroid.
+  components:
+  - type: OreVein
+    oreChance: 0.33
+    oreRarityPrototypeId: QuartzCrab
 
 - type: entity
   id: IronRock
