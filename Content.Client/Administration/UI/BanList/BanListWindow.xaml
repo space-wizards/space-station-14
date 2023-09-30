@@ -1,6 +1,11 @@
 ﻿<controls:BanListWindow
     xmlns="https://spacestation14.io"
     xmlns:controls="clr-namespace:Content.Client.Administration.UI.BanList"
+    xmlns:bans="clr-namespace:Content.Client.Administration.UI.BanList.Bans"
+    xmlns:roleBans="clr-namespace:Content.Client.Administration.UI.BanList.RoleBans"
     SetSize="1400 400">
-    <controls:BanListControl Name="BanList" Access="Public"/>
+    <TabContainer Name="TabContainer">
+        <bans:BanListControl Name="BanList" Access="Public"/>
+        <roleBans:RoleBanListControl Name="RoleBanList" Access="Public"/>
+    </TabContainer>
 </controls:BanListWindow>

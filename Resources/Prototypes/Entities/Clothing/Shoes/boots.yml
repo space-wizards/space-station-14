@@ -8,6 +8,7 @@
     sprite: Clothing/Shoes/Boots/workboots.rsi
   - type: Clothing
     sprite: Clothing/Shoes/Boots/workboots.rsi
+  - type: Matchbox
 
 - type: entity
   parent: ClothingShoesStorageBase
@@ -19,6 +20,7 @@
     sprite: Clothing/Shoes/Boots/jackboots.rsi
   - type: Clothing
     sprite: Clothing/Shoes/Boots/jackboots.rsi
+  - type: Matchbox
   - type: Storage
     whitelist:
       tags:
@@ -34,6 +36,7 @@
     sprite: Clothing/Shoes/Boots/explorer.rsi
   - type: Clothing
     sprite: Clothing/Shoes/Boots/explorer.rsi
+  - type: Matchbox
 
 - type: entity
   parent: ClothingShoesBaseButcherable
@@ -56,6 +59,7 @@
     sprite: Clothing/Shoes/Boots/combatboots.rsi
   - type: Clothing
     sprite: Clothing/Shoes/Boots/combatboots.rsi
+  - type: Matchbox
   - type: Storage
     whitelist:
       tags:
@@ -71,6 +75,7 @@
     sprite: Clothing/Shoes/Boots/mercboots.rsi
   - type: Clothing
     sprite: Clothing/Shoes/Boots/mercboots.rsi
+  - type: Matchbox
   - type: Storage
     whitelist:
       tags:

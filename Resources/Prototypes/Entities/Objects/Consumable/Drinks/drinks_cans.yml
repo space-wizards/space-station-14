@@ -4,9 +4,8 @@
   abstract: true
   components:
   - type: Drink
-    openSounds:
-      collection: canOpenSounds
-    pressurized: true
+  - type: Openable
+  - type: PressurizedDrink
   - type: SolutionContainerManager
     solutions:
       drink:
@@ -25,7 +24,7 @@
     state: icon
     layers:
       - state: icon
-        map: ["drinkCanIcon"]
+        map: ["enum.OpenableVisuals.Layer"]
   - type: FitsInDispenser
     solution: drink
   - type: DrawableSolution
@@ -37,8 +36,8 @@
   - type: Appearance
   - type: GenericVisualizer
     visuals:
-      enum.DrinkCanStateVisual.Opened:
-        drinkCanIcon:
+      enum.OpenableVisuals.Opened:
+        enum.OpenableVisuals.Layer:
           True: {state: "icon_open"}
           False: {state: "icon"}
   - type: Spillable

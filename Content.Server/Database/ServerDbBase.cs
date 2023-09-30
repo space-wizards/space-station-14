@@ -432,7 +432,7 @@ namespace Content.Server.Database
             ImmutableArray<byte>? hwId,
             bool includeUnbanned);
 
-        public abstract Task AddServerRoleBanAsync(ServerRoleBanDef serverRoleBan);
+        public abstract Task<ServerRoleBanDef> AddServerRoleBanAsync(ServerRoleBanDef serverRoleBan);
         public abstract Task AddServerRoleUnbanAsync(ServerRoleUnbanDef serverRoleUnban);
 
         public async Task EditServerRoleBan(int id, string reason, NoteSeverity severity, DateTime? expiration, Guid editedBy, DateTime editedAt)

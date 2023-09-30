@@ -9,7 +9,6 @@
       drink:
         maxVol: 100
   - type: Drink
-    isOpen: true
   - type: FitsInDispenser
     solution: drink
   - type: DrawableSolution

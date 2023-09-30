@@ -89,9 +89,10 @@ namespace Content.Client.GameTicking.Managers
 
         private void UpdateJobsAvailable(TickerJobsAvailableEvent message)
         {
+            _jobsAvailable.Clear();
+
             foreach (var (job, data) in message.JobsAvailableByStation)
             {
-                _jobsAvailable.Clear();
                 _jobsAvailable[job] = data;
             }
 

@@ -18,6 +18,7 @@
   - type: SmoothEdge
   - type: Sprite
     sprite: Structures/Walls/rock.rsi
+    noRot: true
     layers:
       - state: rock_asteroid
       - map: [ "enum.EdgeLayer.South" ]

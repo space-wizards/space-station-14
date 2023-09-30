@@ -241,13 +241,14 @@
 
 - type: listing
   id: UplinkSyndicateBomb
-  name: uplink-syndicate-bomb-name
-  description: uplink-syndicate-bomb-desc
+  name: uplink-exploding-syndicate-bomb-name
+  description: uplink-exploding-syndicate-bomb-desc
   productEntity: SyndicateBomb
   cost:
     Telecrystal: 11
   categories:
     - UplinkExplosives
+  restockTime: 30
 
 # Ammo
 
@@ -443,7 +444,7 @@
   description: uplink-headset-desc
   productEntity: ClothingHeadsetAltSyndicate
   cost:
-    Telecrystal: 4
+    Telecrystal: 1
   categories:
   - UplinkUtility
 
@@ -455,6 +456,17 @@
   productEntity: BoxEncryptionKeySyndie # Two for the price of one
   cost:
     Telecrystal: 2
+  categories:
+  - UplinkUtility
+
+- type: listing
+  id: UplinkBinaryTranslatorKey
+  name: uplink-binary-translator-key-name
+  description: uplink-binary-translator-key-desc
+  icon: { sprite: /Textures/Objects/Devices/encryption_keys.rsi, state: rd_label }
+  productEntity: EncryptionKeyBinary
+  cost:
+    Telecrystal: 4
   categories:
   - UplinkUtility
 
@@ -475,7 +487,7 @@
   description: uplink-voice-mask-desc
   productEntity: ClothingMaskGasVoiceChameleon
   cost:
-    Telecrystal: 6
+    Telecrystal: 2
   categories:
   - UplinkUtility
 
@@ -485,7 +497,7 @@
   description: uplink-radio-jammer-desc
   productEntity: RadioJammer
   cost:
-    Telecrystal: 5
+    Telecrystal: 4
   categories:
   - UplinkUtility
 
@@ -498,7 +510,7 @@
   icon: { sprite: /Textures/Clothing/Back/Backpacks/backpack.rsi, state: icon }
   productEntity: StorageImplanter
   cost:
-    Telecrystal: 12
+    Telecrystal: 8
   categories:
     - UplinkImplants
   conditions:
@@ -1005,7 +1017,7 @@
   productEntity: ClothingBackpackChameleonFill
   icon: { sprite: /Textures/Clothing/Uniforms/Jumpsuit/rainbow.rsi, state: icon }
   cost:
-    Telecrystal: 6
+    Telecrystal: 4
   categories:
     - UplinkArmor
 
@@ -1298,7 +1310,7 @@
   description: uplink-costume-clown-desc
   productEntity: ClothingBackpackDuffelSyndicateCostumeClown
   cost:
-    Telecrystal: 4
+    Telecrystal: 2
   categories:
   - UplinkPointless
 
