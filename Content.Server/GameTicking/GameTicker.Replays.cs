@@ -23,36 +23,45 @@ public sealed partial class GameTicker
     /// </summary>
     private void ReplayStartRound()
     {
-        if (!_cfg.GetCVar(CCVars.ReplayAutoRecord))
-            return;
-
-        if (_replays.IsRecording)
+        try
         {
-            _sawmillReplays.Warning("Already an active replay recording before the start of the round, not starting automatic recording.");
-            return;
+            if (!_cfg.GetCVar(CCVars.ReplayAutoRecord))
+                return;
+
+            if (_replays.IsRecording)
+            {
+                _sawmillReplays.Warning("Already an active replay recording before the start of the round, not starting automatic recording.");
+                return;
+            }
+
+            _sawmillReplays.Debug($"Starting replay recording for round {RoundId}");
+
+            var finalPath = GetAutoReplayPath();
+            var recordPath = finalPath;
+            var tempDir = _cfg.GetCVar(CCVars.ReplayAutoRecordTempDir);
+            ResPath? moveToPath = null;
+
+            if (!string.IsNullOrEmpty(tempDir))
+            {
+                var baseReplayPath = new ResPath(_cfg.GetCVar(CVars.ReplayDirectory)).ToRootedPath();
+                moveToPath = baseReplayPath / finalPath;
+
+                var fileName = finalPath.Filename;
+                recordPath = new ResPath(tempDir) / fileName;
+
+                _sawmillReplays.Debug($"Replay will record in temporary position: {recordPath}");
+            }
+
+            var recordState = new ReplayRecordState(moveToPath);
+
+            if (!_replays.TryStartRecording(_resourceManager.UserData, recordPath.ToString(), state: recordState))
+            {
+                _sawmillReplays.Error("Can't start automatic replay recording!");
+            }
         }
-
-        _sawmillReplays.Debug($"Starting replay recording for round {RoundId}");
-
-        var finalPath = GetAutoReplayPath();
-        var recordPath = finalPath;
-        var tempDir = _cfg.GetCVar(CCVars.ReplayAutoRecordTempDir);
-        ResPath? moveToPath = null;
-
-        if (!string.IsNullOrEmpty(tempDir))
+        catch (Exception e)
         {
-            var baseReplayPath = new ResPath(_cfg.GetCVar(CVars.ReplayDirectory)).ToRootedPath();
-            moveToPath = baseReplayPath / finalPath;
-            recordPath = new ResPath(tempDir) / finalPath;
-
-            _sawmillReplays.Debug($"Replay will record in temporary position: {recordPath}");
-        }
-
-        var recordState = new ReplayRecordState(moveToPath);
-
-        if (!_replays.TryStartRecording(_resourceManager.UserData, recordPath.ToString(), state: recordState))
-        {
-            _sawmillReplays.Error("Can't start automatic replay recording!");
+            Log.Error($"Error while starting an automatic replay recording:\n{e}");
         }
     }
 
@@ -61,9 +70,16 @@ public sealed partial class GameTicker
     /// </summary>
     private void ReplayEndRound()
     {
-        if (_replays.ActiveRecordingState is ReplayRecordState)
+        try
         {
-            _replays.StopRecording();
+            if (_replays.ActiveRecordingState is ReplayRecordState)
+            {
+                _replays.StopRecording();
+            }
+        }
+        catch (Exception e)
+        {
+            Log.Error($"Error while stopping replay recording:\n{e}");
         }
     }
 
