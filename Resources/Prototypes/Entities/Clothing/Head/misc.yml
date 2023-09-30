@@ -184,3 +184,15 @@
     sprite: Clothing/Head/Misc/squiddy.rsi
   - type: IngestionBlocker
   - type: IdentityBlocker
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatBee
+  name: oversized bee hat
+  description: Bees go "Bzzt!"
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Misc/beehat.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Misc/beehat.rsi
+  - type: IngestionBlocker
