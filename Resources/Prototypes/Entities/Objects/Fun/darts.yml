@@ -114,22 +114,7 @@
     sprite: Objects/Fun/Darts/dart_yellow.rsi
   - type: Item
     sprite: Objects/Fun/Darts/dart_yellow.rsi
-    
-- type: entity
-  parent: Dart
-  id: HypoDart
-  suffix: HypoDart
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      melee:
-        maxVol: 7
-  - type: SolutionInjectOnCollide
-    transferAmount: 7
-    blockSlots: NONE
-  - type: SolutionTransfer
-    maxTransferAmount: 7
-        
+
 - type: entity
   name: dartboard
   id: TargetDarts
