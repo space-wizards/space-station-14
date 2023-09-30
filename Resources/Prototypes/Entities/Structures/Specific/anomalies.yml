@@ -242,32 +242,104 @@
     layers:
     - state: anom
       map: ["enum.AnomalyVisualLayers.Base"]
-    - state: anom
+    - state: pulse
       map: ["enum.AnomalyVisualLayers.Animated"]
       visible: false
+  - type: Anomaly
+    anomalyContactDamage:
+      types:
+        Slash: 10
   - type: PointLight
-    radius: 2.0
-    energy: 2.5
+    radius: 4.0
+    energy: 8.5
     color: "#bbbbbb"
   - type: Fixtures
     fixtures:
       fix1:
         density: 20
         mask:
-          - FlyingMobMask
+          - BulletImpassable
         layer:
-          - FlyingMobLayer
+          - BulletImpassable
+  - type: ExplosionAnomaly
+    supercriticalExplosion: Default
+    explosionTotalIntensity: 50
+    explosionDropoff: 2
+    explosionMaxTileIntensity: 10
   - type: ChasingAnomaly
     chasingComponent: InjectableSolution
   - type: LiquidAnomaly
     possibleChemicals:
-    - Aluminium
+    - Mold
+    - PolytrinicAcid
+    - FerrochromicAcid
+    - FluorosulfuricAcid
+    - SulfuricAcid
+    - HeartbreakerToxin
+    - Histamine
+    - Theobromine
+    - VentCrud
+    - UncookedAnimalProteins
+    - Pax
+    - Honk
+    - UnstableMutagen
+    - Thermite
+    - Napalm
+    - Phlogiston
+    - ChlorineTrifluoride
+    - FoamingAgent
+    - Fluorosurfactant
+    - Desoxyephedrine
+    - Ephedrine
+    - Stimulants
+    - THC
+    - THCOil 
+    - Nicotine
+    - Impedrezene
+    - SpaceDrugs
+    - Nocturine
+    - MuteToxin
+    - NorepinephricAcid
+    - Cryptobiolin
+    - Dylovene
+    - Diphenhydramine
+    - Ethylredoxrazine
+    - Arithrazine
+    - Bicaridine
+    - Cryoxadone
+    - Doxarubixadone
+    - Dermaline
+    - Dexalin
+    - DexalinPlus
+    - Epinephrine
+    - Hyronalin
+    - Ipecac
+    - Inaprovaline
+    - Kelotane
+    - Leporazine
+    - Barozine
+    - Phalanximine
+    - PulpedBananaPeel
+    - Saline
+    - Siderlac
+    - Stellibinin
+    - Synaptizine
+    - TranexamicAcid
+    - Tricordrazine
+    - Lipozine
+    - Omnizine
+    - Ultravasculine
+    - Oculine
+    - Cognizine
+    - Ethyloxyephedrine
+    - Diphenylmethylamine
+    - Sigynate
+    - Licoxide
     - Carbon
     - Chlorine
     - Copper
     - Ethanol
     - Fluorine
-    - Sugar
     - Hydrogen
     - Iodine
     - Iron
@@ -281,23 +353,20 @@
     - Silicon
     - Sodium
     - Sulfur
-    - Bicaridine
-    - Water
-    - Dermaline
-    - Arithrazine
-    - Bicaridine
-    - Inaprovaline
-    - Kelotane
-    - Dexalin
-    - Omnizine
-    - Napalm
-    - Toxin
-    - Epinephrine
-    - Cognizine
-    - Ultravasculine
-    - Desoxyephedrine
-    - Pax
-    - Siderlac
+    - Artifexium
+    - EZNutrient
+    - Left4Zed
+    - PestKiller
+    - PlantBGone
+    - RobustHarvest
+    - WeedKiller
+    - Diethylamine
+    - Ammonia
+    - Blood
+    - Slime
+    - SpiderBlood
+    - Vomit
+    - Fat
   - type: Physics
     bodyType: KinematicController
     linearDamping: 0

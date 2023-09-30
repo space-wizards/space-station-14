@@ -59,8 +59,6 @@ public sealed class ChasingAnomalySystem : EntitySystem
         if (args.Severity >= 1)
             component.CurrentSpeed *= component.SuperCriticalSpeedModifier;
 
-        Log.Debug("Скорость преследования: " + component.CurrentSpeed);
-
         //We find our coordinates and calculate the radius of the target search.
         var xformQuery = GetEntityQuery<TransformComponent>();
         var xform = xformQuery.GetComponent(uid);
@@ -69,7 +67,6 @@ public sealed class ChasingAnomalySystem : EntitySystem
         var allEnts = _lookup.GetComponentsInRange(compType, xform.MapPosition, range)
             .Select(x => x.Owner).ToList();
 
-        Log.Debug("Потенциальных точек преследования в радиусе " + range + " нашлось штук " + allEnts.Count);
         //If there are no required components in the radius, the pulsation does not work.
         if (allEnts.Count <= 0) return;
 
@@ -77,7 +74,7 @@ public sealed class ChasingAnomalySystem : EntitySystem
         int randomIndex = _random.Next(0, allEnts.Count);
         var randomTarget = allEnts[randomIndex];
 
-        if (xformQuery.TryGetComponent(randomTarget, out var xf)) {component.ChasingEntity = xf.Owner; Log.Debug("Преследуем " + xf.Owner.ToString()); }
+        if (xformQuery.TryGetComponent(randomTarget, out var xf)) component.ChasingEntity = xf.Owner;
         else return;
     }
 }

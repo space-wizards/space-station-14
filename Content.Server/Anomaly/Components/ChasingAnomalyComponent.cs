@@ -31,7 +31,7 @@ public sealed partial class ChasingAnomalyComponent : Component
     /// <summary>
     /// The component that the anomaly is chasing
     /// </summary>
-    [DataField("chasingComponent", required: true), ViewVariables(VVAccess.ReadWrite)]
+    [DataField("chasingComponent", required: true), ViewVariables(VVAccess.ReadOnly)]
     public string ChasingComponent = default!;
 
     //In Game Storage Variables
