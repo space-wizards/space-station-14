@@ -65,8 +65,7 @@ public sealed class ChasingAnomalySystem : EntitySystem
             component.CurrentSpeed *= component.SuperCriticalSpeedModifier;
 
         //We find our coordinates and calculate the radius of the target search.
-        var xformQuery = GetEntityQuery<TransformComponent>();
-        var xform = xformQuery.GetComponent(uid);
+        var xform = _xformQuery.GetComponent(uid);
         var range = component.MaxChaseRadius * args.Severity;
         var compType = EntityManager.ComponentFactory.GetRegistration(component.ChasingComponent).Type;
         var allEnts = _lookup.GetComponentsInRange(compType, xform.MapPosition, range)
@@ -76,10 +75,7 @@ public sealed class ChasingAnomalySystem : EntitySystem
         if (allEnts.Count <= 0) return;
 
         //In the case of finding required components, we choose a random one of them and remember its uid.
-        int randomIndex = _random.Next(0, allEnts.Count);
-        var randomTarget = allEnts[randomIndex];
-
-        if (xformQuery.TryGetComponent(randomTarget, out var xf)) component.ChasingEntity = xf.Owner;
-        else return;
+        var randomTarget = _random.Pick(allEnts);
+        if (_xformQuery.HasComponent(randomTarget)) component.ChasingEntity = randomTarget;
     }
 }

@@ -74,8 +74,7 @@ public sealed class LiquidAnomalySystem : EntitySystem
     {
         if (component.PossibleChemicals.Count == 0) return;
 
-        var rndIndex = _random.Next(0, component.PossibleChemicals.Count - 1);
-        var reagent = component.PossibleChemicals[rndIndex];
+        var reagent = _random.Pick(component.PossibleChemicals);
 
         component.Reagent = reagent;
         var color = _proto.Index<ReagentPrototype>(reagent).SubstanceColor;
