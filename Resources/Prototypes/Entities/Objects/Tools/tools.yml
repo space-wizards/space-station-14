@@ -509,7 +509,7 @@
     state: icon
   - type: Item
     sprite: Objects/Tools/rolling_pin.rsi
-    size: 15
+    size: 10
   - type: ItemCooldown
   - type: MeleeWeapon
     damage:
