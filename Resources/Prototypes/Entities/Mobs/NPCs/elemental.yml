@@ -82,8 +82,8 @@
   description: 
   components:
   - type: Sprite
-    sprite: Mobs/Animals/quartzcrab.rsi
-    state: alive
+    sprite: Mobs/Elemental/orecrab.rsi
+    state: quartzcrab
   - type: HTN
     rootTask:
       task: SimpleHostileCompound
@@ -114,3 +114,95 @@
             max: 2
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+
+- type: entity
+  parent: MobElementalBase
+  id: MobIronCrab
+  name: ore crab
+  description: 
+  components:
+  - type: Sprite
+    sprite: Mobs/Elemental/orecrab.rsi
+    state: ironcrab
+  - type: HTN
+    rootTask:
+      task: SimpleHostileCompound
+  - type: MeleeWeapon
+    hidden: true
+    soundHit:
+      path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
+    damage:
+      types:
+        Blunt: 4
+  - type: CombatMode
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 2
+    baseSprintSpeed : 2.5
+  - type: NpcFactionMember
+    factions:
+      - SimpleHostile
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 80
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SteelOre1:
+            min: 1
+            max: 2
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
+- type: entity
+  parent: MobElementalBase
+  id: MobUraniumCrab
+  name: ore crab
+  description: 
+  components:
+  - type: Sprite
+    sprite: Mobs/Elemental/orecrab.rsi
+    state: uraniumcrab
+  - type: HTN
+    rootTask:
+      task: IdleCompound
+  - type: MeleeWeapon
+    hidden: true
+    soundHit:
+      path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
+    damage:
+      types:
+        Blunt: 4
+  - type: CombatMode
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 2
+    baseSprintSpeed : 2.5
+  - type: NpcFactionMember
+    factions:
+    - Passive
+  - type: RadiationSource
+    intensity: 0.3
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 80
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          UraniumOre1:
+            min: 1
+            max: 2
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - type: PointLight
+      radius: 2
+      energy: 3
+      color: "#06DF24"

@@ -94,7 +94,7 @@
         state: rock_asteroid_west
   - type: OreVein
     oreChance: 0.33
-    oreRarityPrototypeId: QuartzCrab
+    oreRarityPrototypeId: OreCrab
 
 - type: entity
   id: AsteroidRockCrab1
