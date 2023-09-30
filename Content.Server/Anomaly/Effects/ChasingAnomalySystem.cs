@@ -2,6 +2,7 @@ using System.Linq;
 using System.Numerics;
 using Content.Server.Anomaly.Components;
 using Content.Shared.Anomaly.Components;
+using Robust.Shared.Physics;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Random;
 
@@ -28,9 +29,10 @@ public sealed class ChasingAnomalySystem : EntitySystem
     {
         base.Update(frameTime);
 
-        foreach (var (anom, trans) in EntityManager.EntityQuery<ChasingAnomalyComponent, TransformComponent>(true))
+        var query = EntityQueryEnumerator<ChasingAnomalyComponent, TransformComponent>();
+        while (query.MoveNext(out var uid, out var anom, out var trans))
         {
-            if (!Initialized(anom.Owner) || anom.ChasingEntity == null)
+            if (!Initialized(uid) || anom.ChasingEntity == null)
                 continue;
 
             if (Deleted(anom.ChasingEntity))
@@ -41,19 +43,15 @@ public sealed class ChasingAnomalySystem : EntitySystem
 
             //Calculating direction to the target.
             var xform = _xformQuery.GetComponent(anom.ChasingEntity.Value);
-
-            var currPos = new Vector2(trans.MapPosition.X, trans.MapPosition.Y);
-            var targetPos = new Vector2(xform.MapPosition.X, xform.MapPosition.Y);
-            var delta = targetPos - currPos;
+            var delta = xform.MapPosition.Position - trans.MapPosition.Position;
 
             //Avoiding "shaking" when the anomaly approaches close to the target.
             if (delta.Length() < 1f) continue;
 
             //Changing the direction of the anomaly.
             var speed = delta.Normalized() * anom.CurrentSpeed;
-            _physics.SetLinearVelocity(anom.Owner, speed);
+            _physics.SetLinearVelocity(uid, speed);
         }
-
     }
 
     private void OnPulse(EntityUid uid, ChasingAnomalyComponent component, ref AnomalyPulseEvent args)
