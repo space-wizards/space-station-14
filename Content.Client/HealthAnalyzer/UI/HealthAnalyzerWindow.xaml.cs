@@ -1,5 +1,5 @@
 using System.Linq;
-using System.Text;
+using System.Numerics;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.FixedPoint;
@@ -44,25 +44,22 @@ namespace Content.Client.HealthAnalyzer.UI
         {
             GroupsContainer.RemoveAllChildren();
 
+            NoPatientDataText.Visible = false;
+
+            var entities = IoCManager.Resolve<IEntityManager>();
+            var target = entities.GetEntity(msg.TargetEntity);
+
             if (msg.TargetEntity == null
-                || !_entityManager.TryGetComponent<DamageableComponent>(msg.TargetEntity, out var damageable))
+                || !_entityManager.TryGetComponent<DamageableComponent>(target, out var damageable))
             {
                 NoPatientDataText.Visible = true;
                 return;
             }
 
-            NoPatientDataText.Visible = false;
-
-            patientDamageAmount.Text = Loc.GetString(
-                "health-analyzer-window-entity-damage-total-text",
-                ("amount", damageable.TotalDamage)
-            );
-
             var entityName = "Unknown";
-            if (msg.TargetEntity != null &&
-                _entityManager.TryGetComponent<MetaDataComponent>(msg.TargetEntity.Value, out var metaData))
+            if (msg.TargetEntity != null && entities.HasComponent<MetaDataComponent>(target.Value))
             {
-                entityName = Identity.Name(msg.TargetEntity.Value, _entityManager);
+                entityName = Identity.Name(target.Value, _entityManager);
             }
 
             PatientName.Text = Loc.GetString(
@@ -70,10 +67,21 @@ namespace Content.Client.HealthAnalyzer.UI
                 ("entityName", entityName)
             );
 
+            Temperature.Text = Loc.GetString("health-analyzer-window-entity-temperature-text",
+                ("temperature", float.IsNaN(msg.Temperature) ? "N/A" : $"{msg.Temperature - 273f:F1} °C")
+            );
 
-            // text.Append($"{Loc.GetString("health-analyzer-window-entity-temperature-text", ("temperature", float.IsNaN(msg.Temperature) ? "N/A" : $"{msg.Temperature - 273f:F1} °C"))}\n");
-            // text.Append($"{Loc.GetString("health-analyzer-window-entity-blood-level-text", ("bloodLevel", float.IsNaN(msg.BloodLevel) ? "N/A" : $"{msg.BloodLevel * 100:F1} %"))}\n\n");
+            BloodLevel.Text = Loc.GetString("health-analyzer-window-entity-blood-level-text",
+                ("bloodLevel", float.IsNaN(msg.BloodLevel) ? "N/A" : $"{msg.BloodLevel * 100:F1} %")
+            );
 
+            patientDamageAmount.Text = Loc.GetString(
+                "health-analyzer-window-entity-damage-total-text",
+                ("amount", damageable.TotalDamage)
+            );
+
+            // text.Append($"{}\n");
+            // text.Append($"{}\n\n");
 
             var damageSortedGroups =
                 damageable.DamagePerGroup.OrderBy(damage => damage.Value)
