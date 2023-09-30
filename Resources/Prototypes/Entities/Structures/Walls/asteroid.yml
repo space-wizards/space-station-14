@@ -17,6 +17,10 @@
     mode: NoSprite
   - type: SmoothEdge
   - type: Sprite
+    variants: 2
+    placementVariants:
+    - 1.0
+    - 1.0
     sprite: Structures/Walls/rock.rsi
     noRot: true
     layers:
@@ -66,18 +70,49 @@
   components:
   - type: OreVein
     oreChance: 0.33
-    oreRarityPrototypeId: RandomOreDistributionHigh
+    oreRarityPrototypeId: RandomOreDistributionStandard
 
 - type: entity
   id: AsteroidRockCrab
   parent: AsteroidRock
   name: asteroid rock
-  suffix: quartzcrab
+  suffix: orecrab
   description: An asteroid.
   components:
+  - type: Sprite
+    sprite: Structures/Walls/rock.rsi
+    noRot: true
+    layers:
+      - state: rock_asteroid_ore
+      - map: [ "enum.EdgeLayer.South" ]
+        state: rock_asteroid_south
+      - map: [ "enum.EdgeLayer.East" ]
+        state: rock_asteroid_east
+      - map: [ "enum.EdgeLayer.North" ]
+        state: rock_asteroid_north
+      - map: [ "enum.EdgeLayer.West" ]
+        state: rock_asteroid_west
   - type: OreVein
     oreChance: 0.33
     oreRarityPrototypeId: QuartzCrab
+
+- type: entity
+  id: AsteroidRockCrab1
+  parent: AsteroidRockCrab
+  components:
+  - type: Sprite
+    sprite: Structures/Walls/rock.rsi
+    noRot: true
+    layers:
+      - state: rock_asteroid_ore1
+      - map: [ "enum.EdgeLayer.South" ]
+        state: rock_asteroid_south
+      - map: [ "enum.EdgeLayer.East" ]
+        state: rock_asteroid_east
+      - map: [ "enum.EdgeLayer.North" ]
+        state: rock_asteroid_north
+      - map: [ "enum.EdgeLayer.West" ]
+        state: rock_asteroid_west
 
 - type: entity
   id: IronRock

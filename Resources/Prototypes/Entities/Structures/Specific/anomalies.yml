@@ -257,5 +257,5 @@
     superCriticalSpawn: AsteroidRock
     spawns:
     - AsteroidRock
-    - AsteroidRockCrab
+    - AsteroidCrabSpawner
     - CrystalSpawner

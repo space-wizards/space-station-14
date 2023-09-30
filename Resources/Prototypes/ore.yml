@@ -59,20 +59,6 @@
     OreArtifactFragment: 0.5
 
 - type: weightedRandomOre
-  id: RandomOreDistributionHigh
-  weights:
-    OreSteel: 10
-    OreSpaceQuartz: 8
-    OreGold: 2
-    OrePlasma: 4
-    OreSilver: 1
-    OreUranium: 1
-    OreBananium: 0.5
-    OreArtifactFragment: 0.5
-    OreQuartzCrab: 0.3
-
-
-- type: weightedRandomOre
   id: QuartzCrab
   weights:
     OreQuartzCrab: 10
