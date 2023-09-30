@@ -18,12 +18,13 @@ public sealed class LiquidAnomalySystem : EntitySystem
 {
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
-    [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
+    [Dependency] private readonly SolutionContainerSystem _solutionContainer = default!;
     [Dependency] private readonly PointLightSystem _light = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly PuddleSystem _puddleSystem = default!;
+    [Dependency] private readonly PuddleSystem _puddle = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
 
+    private EntityQuery<InjectableSolutionComponent> _injectableQuery;
     /// <inheritdoc/>
     public override void Initialize()
     {
@@ -31,6 +32,8 @@ public sealed class LiquidAnomalySystem : EntitySystem
         SubscribeLocalEvent<LiquidAnomalyComponent, AnomalySupercriticalEvent>(OnSupercritical);
         SubscribeLocalEvent<LiquidAnomalyComponent, AnomalySeverityChangedEvent>(OnSeverityChanged);
         SubscribeLocalEvent<LiquidAnomalyComponent, MapInitEvent>(OnMapInit);
+
+        _injectableQuery = GetEntityQuery<InjectableSolutionComponent>();
     }
     private void OnMapInit(EntityUid uid, LiquidAnomalyComponent component, MapInitEvent args)
     {
@@ -72,17 +75,24 @@ public sealed class LiquidAnomalySystem : EntitySystem
 
     private void ChangeReagentType(EntityUid uid, LiquidAnomalyComponent component)
     {
-        if (component.PossibleChemicals.Count == 0) return;
+        //Calculate possible chemicals
+        var chemicals = _proto.EnumeratePrototypes<ReagentPrototype>().Select(proto => proto.ID).ToHashSet();
+        foreach (var chem in component.BlacklistChemicals)
+        {
+            chemicals.Remove(chem);
+        }
 
-        var reagent = _random.Pick(component.PossibleChemicals);
+        if (chemicals.Count == 0) return;
+
+        var reagent = _random.Pick(chemicals);
 
         component.Reagent = reagent;
         var color = _proto.Index<ReagentPrototype>(reagent).SubstanceColor;
         _light.SetColor(uid, color);
 
         //Spawn Effect
-        var uidXform = Transform(uid);
-        Spawn("PuddleSparkle", uidXform.Coordinates);
+        var xform = Transform(uid);
+        Spawn("PuddleSparkle", xform.Coordinates);
         _audio.PlayPvs(component.ChangeSound, uid);
     }
 
@@ -94,7 +104,7 @@ public sealed class LiquidAnomalySystem : EntitySystem
         string reagent)
     {
         //We get all the entity in the radius into which the reagent will be injected.
-        var injectableQuery = GetEntityQuery<InjectableSolutionComponent>();
+        
         var xformQuery = GetEntityQuery<TransformComponent>();
         var xform = xformQuery.GetComponent(uid);
         var allEnts = _lookup.GetComponentsInRange<InjectableSolutionComponent>(xform.MapPosition, injectRadius)
@@ -103,15 +113,12 @@ public sealed class LiquidAnomalySystem : EntitySystem
         //for each matching entity found
         foreach (var ent in allEnts)
         {
-            if (Deleted(ent)) continue;
-            if (!ent.IsValid()) continue;
-
-            if (!_solutionContainerSystem.TryGetInjectableSolution(ent, out var injectable))
+            if (!_solutionContainer.TryGetInjectableSolution(ent, out var injectable))
                 continue;
 
-            if (injectableQuery.TryGetComponent(ent, out var injEnt))
+            if (_injectableQuery.TryGetComponent(ent, out var injEnt))
             {
-                _solutionContainerSystem.TryAddReagent(ent, injectable, reagent, maxInject, out var accepted);
+                _solutionContainer.TryAddReagent(ent, injectable, reagent, maxInject, out var accepted);
 
                 //Spawn Effect
                 var uidXform = Transform(ent);
@@ -122,6 +129,6 @@ public sealed class LiquidAnomalySystem : EntitySystem
         //Create Puddle
         Solution solution = new();
         solution.AddReagent(reagent, solutionAmount);
-        _puddleSystem.TrySpillAt(uid, solution, out _);
+        _puddle.TrySpillAt(uid, solution, out _);
     }
 }

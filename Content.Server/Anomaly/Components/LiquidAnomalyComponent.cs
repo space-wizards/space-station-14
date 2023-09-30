@@ -47,11 +47,13 @@ public sealed partial class LiquidAnomalyComponent : Component
     public float SuperCriticalInjectRadius = 15;
 
 
+
+
     /// <summary>
-    /// Possible reagents for the anomaly.
+    /// Blocked reagents for the anomaly.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public List<ProtoId<ReagentPrototype>> PossibleChemicals = new();
+    public List<ProtoId<ReagentPrototype>> BlacklistChemicals = new();
 
     /// <summary>
     /// Increasing severity by the specified amount will cause a change of reagent.
