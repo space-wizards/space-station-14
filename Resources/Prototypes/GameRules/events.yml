@@ -407,7 +407,7 @@
     startAnnouncement: station-event-immovable-rod-start-announcement
     startAudio:
       path: /Audio/Announcements/attention.ogg
-    weight: 5
+    weight: 1
     duration: 1
     earliestStart: 45
     minimumPlayers: 20

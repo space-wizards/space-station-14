@@ -8,5 +8,5 @@ namespace Content.Server.StationEvents.Components;
 public sealed partial class ImmovableRodRuleComponent : Component
 {
     [DataField("rodPrototype", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string RodPrototype = "ImmovableRodKeepTilesStill";
+    public string RodPrototype = "ImmovableRod";
 }
