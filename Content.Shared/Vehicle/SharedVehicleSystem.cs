@@ -91,8 +91,8 @@ public abstract partial class SharedVehicleSystem : EntitySystem
         // This code should be purged anyway but with that being said this doesn't handle components being changed.
         if (TryComp<StrapComponent>(uid, out var strap))
         {
-            component.BaseBuckleOffset = strap.BuckleOffset;
-            strap.BuckleOffsetUnclamped = Vector2.Zero;
+            component.BaseBuckleOffset = strap.BuckleOffsetClamped;
+            strap.BuckleOffset = Vector2.Zero;
         }
 
         _modifier.RefreshMovementSpeedModifiers(uid);
@@ -301,9 +301,9 @@ public abstract partial class SharedVehicleSystem : EntitySystem
             return;
 
         // TODO: Strap should handle this but buckle E/C moment.
-        var oldOffset = strap.BuckleOffsetUnclamped;
+        var oldOffset = strap.BuckleOffset;
 
-        strap.BuckleOffsetUnclamped = xform.LocalRotation.Degrees switch
+        strap.BuckleOffset = xform.LocalRotation.Degrees switch
         {
             < 45f => new(0, component.SouthOverride),
             <= 135f => component.BaseBuckleOffset,
@@ -312,13 +312,13 @@ public abstract partial class SharedVehicleSystem : EntitySystem
             _ => new(0, component.SouthOverride)
         };
 
-        if (!oldOffset.Equals(strap.BuckleOffsetUnclamped))
+        if (!oldOffset.Equals(strap.BuckleOffset))
             Dirty(strap);
 
         foreach (var buckledEntity in strap.BuckledEntities)
         {
             var buckleXform = Transform(buckledEntity);
-            _transform.SetLocalPositionNoLerp(buckleXform, strap.BuckleOffset);
+            _transform.SetLocalPositionNoLerp(buckleXform, strap.BuckleOffsetClamped);
         }
     }
 

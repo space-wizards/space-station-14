@@ -6,14 +6,15 @@
             <cc:PlayerListControl Access="Public" Name="ChannelSelector" HorizontalExpand="True" SizeFlagsStretchRatio="1" />
             <BoxContainer Orientation="Vertical" HorizontalExpand="True" SizeFlagsStretchRatio="2">
                 <BoxContainer Access="Public" Name="BwoinkArea" VerticalExpand="True" />
-                <BoxContainer Orientation="Horizontal" HorizontalAlignment="Right">
-                    <Button Margin="0 0 10 0" Visible="True" Name="PopOut" Access="Public" Text="{Loc 'admin-logs-pop-out'}"/>
-                    <Button Visible="False" Name="Bans" Text="{Loc 'admin-player-actions-bans'}" />
-                    <Button Visible="False" Name="Notes" Text="{Loc 'admin-player-actions-notes'}" />
-                    <Button Visible="False" Name="Kick" Text="{Loc 'admin-player-actions-kick'}" />
-                    <Button Visible="False" Name="Ban" Text="{Loc 'admin-player-actions-ban'}" />
-                    <Button Visible="False" Name="Respawn" Text="{Loc 'admin-player-actions-respawn'}" />
-                    <Button Visible="False" Name="Teleport" Text="{Loc 'admin-player-actions-teleport'}" />
+                <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+                    <Button Visible="True" Name="PopOut" Access="Public" Text="{Loc 'admin-logs-pop-out'}" StyleClasses="OpenBoth" HorizontalAlignment="Left" />
+                    <Control HorizontalExpand="True" />
+                    <Button Visible="False" Name="Bans" Text="{Loc 'admin-player-actions-bans'}" StyleClasses="OpenRight" />
+                    <Button Visible="False" Name="Notes" Text="{Loc 'admin-player-actions-notes'}" StyleClasses="OpenBoth" />
+                    <Button Visible="False" Name="Kick" Text="{Loc 'admin-player-actions-kick'}" StyleClasses="OpenBoth" />
+                    <Button Visible="False" Name="Ban" Text="{Loc 'admin-player-actions-ban'}" StyleClasses="OpenBoth" />
+                    <Button Visible="False" Name="Respawn" Text="{Loc 'admin-player-actions-respawn'}" StyleClasses="OpenBoth" />
+                    <Button Visible="False" Name="Teleport" Text="{Loc 'admin-player-actions-teleport'}" StyleClasses="OpenLeft" />
                 </BoxContainer>
             </BoxContainer>
         </SplitContainer>

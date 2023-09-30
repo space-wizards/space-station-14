@@ -1,5 +1,5 @@
-using Content.Server.Nutrition.EntitySystems;
 using Content.Shared.Alert;
+using Content.Shared.Nutrition.EntitySystems;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
@@ -19,13 +19,10 @@ public sealed partial class ThirstComponent : Component
     [AutoNetworkedField]
     public float ActualDecayRate;
 
-    // Thirst
-    [ViewVariables(VVAccess.ReadOnly)]
-    [AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public ThirstThreshold CurrentThirstThreshold;
 
-    [ViewVariables(VVAccess.ReadOnly)]
-    [AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public ThirstThreshold LastThirstThreshold;
 
     [ViewVariables(VVAccess.ReadWrite)]
@@ -44,7 +41,7 @@ public sealed partial class ThirstComponent : Component
     /// The time between each update.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
-    [AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public TimeSpan UpdateRate = TimeSpan.FromSeconds(1);
 
     [DataField("thresholds")]
