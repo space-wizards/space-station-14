@@ -53,9 +53,9 @@ public sealed class PowerSwitchableSystem : SharedPowerSwitchableSystem
 
         var ev = new SwitchPowerCheckEvent();
         RaiseLocalEvent(uid, ref ev);
-        if (ev.Message != null)
+        if (ev.DisableMessage != null)
         {
-            verb.Message = ev.Message;
+            verb.Message = ev.DisableMessage;
             verb.Disabled = true;
         }
 
@@ -117,7 +117,7 @@ public sealed class PowerSwitchableSystem : SharedPowerSwitchableSystem
 
 /// <summary>
 /// Raised on a <see cref="PowerSwitchableComponent"/> to see if its verb should work.
-/// If <see cref="Message"/> is non-null, the verb is disabled with that as the message.
+/// If <see cref="DisableMessage"/> is non-null, the verb is disabled with that as the message.
 /// </summary>
 [ByRefEvent]
-public record struct SwitchPowerCheckEvent(string? Message = null);
+public record struct SwitchPowerCheckEvent(string? DisableMessage = null);
