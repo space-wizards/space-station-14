@@ -49,7 +49,7 @@ public sealed partial class LiquidAnomalyComponent : Component
     /// The maximum radius in which the anomaly injects reagents into the surrounding containers.
     /// </summary>
     [DataField("superCriticalinjectRadius"), ViewVariables(VVAccess.ReadWrite)]
-    public float SuperCriticalInjectRadius = 25;
+    public float SuperCriticalInjectRadius = 15;
 
 
     /// <summary>
