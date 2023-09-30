@@ -22,3 +22,10 @@
     - type: LizardAccent
     - type: ReplacementAccent
       accent: dwarf
+
+- type: trait
+  id: SlavicAccent
+  name: trait-slavic-accent-name
+  description: trait-slavic-accent-desc
+  components:
+    - type: SlavicAccent
