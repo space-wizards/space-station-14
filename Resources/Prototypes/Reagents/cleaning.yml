@@ -76,6 +76,8 @@
         type: Add
         time: 5
         refresh: false
+    Drink:
+      effects:
       - !type:GenericStatusEffect
         key: Muted
         component: Muted
