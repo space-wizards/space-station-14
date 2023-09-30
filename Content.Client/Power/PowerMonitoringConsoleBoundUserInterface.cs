@@ -37,7 +37,15 @@ public sealed class PowerMonitoringConsoleBoundUserInterface : BoundUserInterfac
             return;
 
         EntMan.TryGetComponent<TransformComponent>(Owner, out var xform);
-        _menu?.ShowEntites(castState.Loads, castState.PowerCableChunks, xform?.Coordinates, castState.Snap, castState.Precision);
+        _menu?.ShowEntites
+            (castState.TotalSources,
+            castState.TotalLoads,
+            castState.Sources,
+            castState.Loads,
+            castState.PowerCableChunks,
+            xform?.Coordinates,
+            castState.Snap,
+            castState.Precision);
     }
 
     public void RequestPowerMonitoringData()

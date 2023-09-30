@@ -12,6 +12,7 @@ using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Client.Utility;
+using Robust.Shared.Graphics.RSI;
 using Robust.Shared.Map;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
@@ -23,14 +24,13 @@ namespace Content.Client.Power
     public sealed partial class PowerMonitoringWindow : FancyWindow
     {
         private List<Control> _rowsContent = new();
-        private List<(DirectionIcon Icon, Vector2 Position)> _directionIcons = new();
         private readonly IEntityManager _entManager;
-        private readonly IEyeManager _eye;
         private EntityUid? _stationUid;
         private PowerMonitoringButton? _trackedButton;
         private readonly SpriteSystem _spriteSystem = default!;
+        private readonly MetaDataSystem _metaDataSystem = default!;
 
-        private float _updateTimer = 0.0f;
+        private float _updateTimer = 1.0f;
         private const float UpdateTime = 1.0f;
 
         public static int IconSize = 16; // XAML has a `VSeparationOverride` of 20 for each row.
@@ -39,10 +39,10 @@ namespace Content.Client.Power
         public PowerMonitoringWindow(PowerMonitoringConsoleBoundUserInterface userInterface, EntityUid? mapUid)
         {
             RobustXamlLoader.Load(this);
-            _eye = IoCManager.Resolve<IEyeManager>();
             _entManager = IoCManager.Resolve<IEntityManager>();
             _stationUid = mapUid;
             _spriteSystem = IoCManager.Resolve<IEntityManager>().System<SpriteSystem>();
+            _metaDataSystem = IoCManager.Resolve<IEntityManager>().System<MetaDataSystem>();
 
             if (_entManager.TryGetComponent<TransformComponent>(mapUid, out var xform))
             {
@@ -63,11 +63,20 @@ namespace Content.Client.Power
                 [CableType.Apc] = true,
             };
 
+            MasterTabContainer.SetTabTitle(0, Loc.GetString("power-monitoring-window-label-sources"));
+            MasterTabContainer.SetTabTitle(1, Loc.GetString("power-monitoring-window-label-smes"));
+            MasterTabContainer.SetTabTitle(2, Loc.GetString("power-monitoring-window-label-substation"));
+            MasterTabContainer.SetTabTitle(3, Loc.GetString("power-monitoring-window-label-apc"));
+            MasterTabContainer.SetTabTitle(4, Loc.GetString("power-monitoring-window-label-misc"));
+
             ShowHVCable.OnToggled += _ => OnShowCableToggled(ShowHVCable, CableType.HighVoltage);
             ShowMVCable.OnToggled += _ => OnShowCableToggled(ShowMVCable, CableType.MediumVoltage);
             ShowLVCable.OnToggled += _ => OnShowCableToggled(ShowLVCable, CableType.Apc);
 
             RequestPowerMonitoringDataAction += userInterface.RequestPowerMonitoringData;
+
+            //var t = new TextureRect();
+            //t.Modulate(Color.Yellow);
         }
 
         private void OnShowCableToggled(CheckBox checkBox, CableType cableType)
@@ -75,7 +84,15 @@ namespace Content.Client.Power
             NavMap.ShowCables[cableType] = !NavMap.ShowCables[cableType];
         }
 
-        public void ShowEntites(PowerMonitoringConsoleEntry[] loads, Dictionary<Vector2i, NavMapChunkPowerCables> powerCableChunks, EntityCoordinates? monitorCoords, bool snap, float precision)
+        public void ShowEntites
+            (float totalSources,
+            float totalLoads,
+            PowerMonitoringConsoleEntry[] sources,
+            PowerMonitoringConsoleEntry[] loads,
+            Dictionary<Vector2i, NavMapChunkPowerCables> powerCableChunks,
+            EntityCoordinates? monitorCoords,
+            bool snap,
+            float precision)
         {
             ClearAllSensors();
 
@@ -83,16 +100,50 @@ namespace Content.Client.Power
 
             NavMap.PowerCableChunks = powerCableChunks;
 
-            if (loads.Length == 0)
+            TotalSources.Text = Loc.GetString("power-monitoring-window-value", ("value", totalSources));
+            TotalLoads.Text = Loc.GetString("power-monitoring-window-value", ("value", totalLoads));
+
+            SourcesList.RemoveAllChildren();
+            ApcList.RemoveAllChildren();
+            SubstationList.RemoveAllChildren();
+            SMESList.RemoveAllChildren();
+
+            foreach (var source in sources)
             {
-                NoServerLabel.Visible = true;
-                return;
+                AddTrackedEntity(_entManager.GetEntity(source.NetEntity), _entManager.GetCoordinates(source.Coordinates), source);
+
+                var child = SpawnEntry(source);
+                SourcesList.AddChild(child);
+            }
+ 
+            foreach (var load in loads)
+            {
+                AddTrackedEntity(_entManager.GetEntity(load.NetEntity), _entManager.GetCoordinates(load.Coordinates), load);
+
+                if (load.IconEntityPrototypeId == null)
+                    continue;
+
+                if (load.IconEntityPrototypeId.Contains("APC"))
+                {
+                    var child = SpawnEntry(load);
+                    ApcList.AddChild(child);
+                }
+
+                else if (load.IconEntityPrototypeId.Contains("Substation"))
+                {
+                    var child = SpawnEntry(load);
+                    SubstationList.AddChild(child);
+                }
+
+                else if (load.IconEntityPrototypeId.Contains("SMES"))
+                {
+                    var child = SpawnEntry(load);
+                    SMESList.AddChild(child);
+                }
             }
 
-            NoServerLabel.Visible = false;
-
             // add a row for each sensor
-            foreach (var load in loads)
+            /*foreach (var load in loads)
             {
                 var entity = _entManager.GetEntity(load.NetEntity);
                 var coordinates = _entManager.GetCoordinates(load.Coordinates);
@@ -109,14 +160,14 @@ namespace Content.Client.Power
                 if (entity == _trackedButton?.entityUid)
                     nameButton.AddStyleClass(StyleNano.StyleClassButtonColorGreen);
 
-                SensorsTable.AddChild(nameButton);
-                _rowsContent.Add(nameButton);
+                //SensorsTable.AddChild(nameButton);
+                //_rowsContent.Add(nameButton);
 
                 var powerLabel = new Label();
                 powerLabel.Text = load.Size.ToString();
 
-                SensorsTable.AddChild(powerLabel);
-                _rowsContent.Add(powerLabel);
+                //SensorsTable.AddChild(powerLabel);
+                //_rowsContent.Add(powerLabel);
 
                 IRsiStateLike? iconState = null;
                 if (load.IconEntityPrototypeId != null)
@@ -129,34 +180,13 @@ namespace Content.Client.Power
                     //NavMap.TrackedEntities.TryAdd(coordinates,
                     //    (true, entity == _trackedButton?.entityUid ? StyleNano.PointGreen : Color.White, iconState?.TextureFor(Direction.South)));
 
-                    var color = Color.White;
-                    var icon = new SpriteSpecifier.Texture(new("/Textures/Interface/PowerMonitoring/beveled_circle.png")).Frame0(); ;
-
-                    if (load.IconEntityPrototypeId.Contains("APC"))
-                    {
-                        color = Color.LimeGreen;
-                        icon = new SpriteSpecifier.Texture(new("/Textures/Interface/PowerMonitoring/beveled_triangle.png")).Frame0();
-                    }
-
-                    if (load.IconEntityPrototypeId.Contains("Substation"))
-                    {
-                        color = Color.Yellow;
-                        icon = new SpriteSpecifier.Texture(new("/Textures/Interface/PowerMonitoring/beveled_square.png")).Frame0();
-                    }
-
-                    if (load.IconEntityPrototypeId.Contains("SMES"))
-                    {
-                        color = Color.Orange;
-                        icon = new SpriteSpecifier.Texture(new("/Textures/Interface/PowerMonitoring/beveled_hexagon.png")).Frame0();
-                    }
-
                     //NavMap.TrackedCoordinates.TryAdd(coordinates,
                     //    (true, entity == _trackedButton?.entityUid ? Color.White : color));
 
-                    NavMap.TrackedEntities.TryAdd(coordinates,
-                        (true, entity == _trackedButton?.entityUid ? Color.White : color, icon));
+                    //NavMap.TrackedEntities.TryAdd(coordinates,
+                    //    (true, entity == _trackedButton?.entityUid ? Color.White : color, icon));
 
-                    /*nameButton.OnButtonUp += args =>
+                    nameButton.OnButtonUp += args =>
                     {
                         if (_trackedButton != null && _trackedButton?.Coordinates != null)
                             NavMap.TrackedCoordinates[_trackedButton.Coordinates.Value] = (true, color);
@@ -175,13 +205,44 @@ namespace Content.Client.Power
 
                         _trackedButton = nameButton;
                         _trackedButton.IndexInTable = nameButton.GetPositionInParent();
-                    };*/
+                    };
                 }
-            }
+            }*/
 
             // Show monitor point
+            var icon1 = new SpriteSpecifier.Texture(new("/Textures/Interface/PowerMonitoring/beveled_circle.png")).Frame0();
+
             if (monitorCoords != null)
-                NavMap.TrackedCoordinates.Add(monitorCoords.Value, (true, StyleNano.PointMagenta));
+                NavMap.TrackedEntities.Add(monitorCoords.Value, (true, StyleNano.PointMagenta, icon1));
+        }
+
+        private void AddTrackedEntity(EntityUid uid, EntityCoordinates coords, PowerMonitoringConsoleEntry entry)
+        {
+            if (coords == null || !NavMap.Visible)
+                return;
+
+            var color = Color.White;
+            var icon = new SpriteSpecifier.Texture(new("/Textures/Interface/PowerMonitoring/beveled_circle.png")).Frame0();
+
+            if (entry.IconEntityPrototypeId.Contains("APC"))
+            {
+                color = Color.LimeGreen;
+                icon = new SpriteSpecifier.Texture(new("/Textures/Interface/PowerMonitoring/beveled_triangle.png")).Frame0();
+            }
+
+            else if (entry.IconEntityPrototypeId.Contains("Substation"))
+            {
+                color = Color.Yellow;
+                icon = new SpriteSpecifier.Texture(new("/Textures/Interface/PowerMonitoring/beveled_square.png")).Frame0();
+            }
+
+            else if (entry.IconEntityPrototypeId.Contains("SMES"))
+            {
+                color = Color.Orange;
+                icon = new SpriteSpecifier.Texture(new("/Textures/Interface/PowerMonitoring/beveled_hexagon.png")).Frame0();
+            }
+
+            NavMap.TrackedEntities.TryAdd(coords, (true, color, icon));
         }
 
         protected override void FrameUpdate(FrameEventArgs args)
@@ -199,12 +260,62 @@ namespace Content.Client.Power
         {
             foreach (var child in _rowsContent)
             {
-                SensorsTable.RemoveChild(child);
+                //SensorsTable.RemoveChild(child);
             }
 
             _rowsContent.Clear();
             NavMap.TrackedCoordinates.Clear();
             NavMap.TrackedEntities.Clear();
+        }
+
+        public Button SpawnEntry(PowerMonitoringConsoleEntry entry)
+        {
+            var uid = _entManager.GetEntity(entry.NetEntity);
+
+            var child = new Button();
+            child.StyleClasses.Add("OpenLeft");
+            child.ToolTip = Loc.GetString(entry.NameLocalized);
+
+            IRsiStateLike? iconState = null;
+            if (entry.IconEntityPrototypeId != null)
+                iconState = _spriteSystem.GetPrototypeIcon(entry.IconEntityPrototypeId);
+
+            var grid = new GridContainer
+            {
+                Columns = 3,
+            };
+
+            var icon = new TextureRect();
+            icon.SetSize = new Vector2(32f, 32f);
+
+            if (iconState != null)
+                icon.Texture = iconState.GetFrame(RsiDirection.South, 0);
+
+            /*var sprite = new SpriteView();
+            sprite.SetEntity(uid);
+            sprite.OverrideDirection = Direction.South;
+            sprite.MinSize = new Vector2(32f, 32f);*/
+
+            var label = new Label();
+            label.MinWidth = 120f;
+            label.MaxWidth = 120f;
+            label.ClipText = true;
+            label.Text = Loc.GetString(entry.NameLocalized);
+            label.HorizontalAlignment = HAlignment.Left;
+            label.HorizontalExpand = true;
+
+            var value = new Label();
+            value.Text = Loc.GetString("power-monitoring-window-value", ("value", entry.Size));
+            value.MinWidth = 120f;
+            value.HorizontalAlignment = HAlignment.Right;
+            value.HorizontalExpand = true;
+
+            grid.AddChild(icon);
+            grid.AddChild(label);
+            grid.AddChild(value);
+            child.AddChild(grid);
+
+            return child;
         }
     }
 
@@ -214,4 +325,6 @@ namespace Content.Client.Power
         public EntityUid? entityUid;
         public EntityCoordinates? Coordinates;
     }
+
+
 }

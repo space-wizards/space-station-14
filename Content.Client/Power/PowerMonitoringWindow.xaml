@@ -1,43 +1,97 @@
 <controls:FancyWindow xmlns="https://spacestation14.io"
                xmlns:ui="clr-namespace:Content.Client.Pinpointer.UI"
                xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
-               Title="{Loc 'crew-monitoring-user-interface-title'}"
+               Title="{Loc 'power-monitoring-window-title'}"
                SetSize="1130 700"
                MinSize="1130 700">
-    <BoxContainer Orientation="Horizontal">
-        <BoxContainer Orientation="Vertical">
-            <ScrollContainer HorizontalExpand="True"
-                             VerticalExpand="True"
-                             Margin="8, 8, 8, 8"
-                             MinWidth="300">
-                <GridContainer Name="SensorsTable"
-                               HorizontalExpand="True"
-                               VerticalExpand="True"
-                               HSeparationOverride="5"
-                               VSeparationOverride="20"
-                               Columns="2">
-                    <!-- Table header -->
-                    <Label Text="{Loc 'crew-monitoring-user-interface-name'}"
-                           StyleClasses="LabelHeading"/>
-                    <Label Text="{Loc 'crew-monitoring-user-interface-job'}"
-                           StyleClasses="LabelHeading"/>
+    <BoxContainer Orientation="Vertical">
+        <!-- Main display -->
+        <BoxContainer Orientation="Horizontal">
+            <!-- Nav map -->
+            <BoxContainer Orientation="Vertical" VerticalExpand="True">
+                <ui:NavMapControl Name="NavMap" Margin="5 5"/>
 
-                    <!-- Table rows are filled by code -->
+                <!-- Nav map legend -->
+                <BoxContainer Orientation="Horizontal">
+                    <TextureRect Stretch="KeepAspectCentered" TexturePath="/Textures/Interface/PowerMonitoring/beveled_circle.png"/>
+                    <Label Text="{Loc 'power-monitoring-window-label-sources'}"/>
+                    <TextureRect Stretch="KeepAspectCentered"
+                                 TexturePath="/Textures/Interface/PowerMonitoring/beveled_hexagon.png"
+                                 Modulate="#ffa500"/>
+                    <Label Text="{Loc 'power-monitoring-window-label-smes'}"/>
+                    <TextureRect Stretch="KeepAspectCentered"
+                                 TexturePath="/Textures/Interface/PowerMonitoring/beveled_square.png"
+                                 Modulate="#ffff00"/>
+                    <Label Text="{Loc 'power-monitoring-window-label-substation'}"/>
+                    <TextureRect Stretch="KeepAspectCentered"
+                                 TexturePath="/Textures/Interface/PowerMonitoring/beveled_triangle.png"
+                                 Modulate="#32cd32"/>
+                    <Label Text="{Loc 'power-monitoring-window-label-apc'}"/>
+                </BoxContainer>
+            </BoxContainer>
+            
+            <!-- Power status -->
+            <BoxContainer Orientation="Vertical" VerticalExpand="True">
+
+                <!-- Power overview -->
+                <GridContainer Columns="2">
+                    <Label StyleClasses="StatusFieldTitle" Text="{Loc 'power-monitoring-window-total-sources'}"/>
+                    <Label Name="TotalSources" Text="?"/>
+                    <Label StyleClasses="StatusFieldTitle" Text="{Loc 'power-monitoring-window-total-loads'}"/>
+                    <Label Name="TotalLoads" Text="?"/>
                 </GridContainer>
-                <Label  Name="NoServerLabel"
-                        Text="{Loc 'crew-monitoring-user-interface-no-server'}"
-                        StyleClasses="LabelHeading"
-                        FontColorOverride="Red"
-                        HorizontalAlignment="Center"
-                        Visible="false"/>
-            </ScrollContainer>
-            <Label Text="{Loc 'power-monitoring-window-show-cable-networks'}"/>
-            <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
-                <CheckBox Name="ShowHVCable" Text="{Loc 'power-monitoring-window-show-hv-cable'}" Pressed="True"/>
-                <CheckBox Name="ShowMVCable" Text="{Loc 'power-monitoring-window-show-mv-cable'}" Pressed="True"/>
-                <CheckBox Name="ShowLVCable" Text="{Loc 'power-monitoring-window-show-lv-cable'}" Pressed="True"/>
-            </BoxContainer>          
+
+                <!-- Loads / Sources -->
+                <TabContainer Name="MasterTabContainer" VerticalExpand="True">
+                    <ScrollContainer HorizontalExpand="True"                                     
+                                     Margin="8, 8, 8, 8"
+                                     MinWidth="300">
+                        <GridContainer Name="SourcesList" VerticalExpand="True" HorizontalExpand="True" Columns="1"/>
+                    </ScrollContainer>
+                    <ScrollContainer HorizontalExpand="True"                                    
+                                     Margin="8, 8, 8, 8"
+                                     MinWidth="300">
+                        <GridContainer Name="SMESList" VerticalExpand="True" HorizontalExpand="True" Columns="1"/>
+                    </ScrollContainer>
+                    <ScrollContainer HorizontalExpand="True"                                  
+                                     Margin="8, 8, 8, 8"
+                                     MinWidth="300">
+                        <GridContainer Name="SubstationList" VerticalExpand="True" HorizontalExpand="True" Columns="1"/>
+                    </ScrollContainer>
+                    <ScrollContainer HorizontalExpand="True"                                   
+                                     Margin="8, 8, 8, 8"
+                                     MinWidth="300">
+                        <GridContainer Name="ApcList" VerticalExpand="True" HorizontalExpand="True" Columns="1"/>
+                    </ScrollContainer>
+                    <ScrollContainer HorizontalExpand="True"                                     
+                                     Margin="8, 8, 8, 8"
+                                     MinWidth="300">
+                        <GridContainer Name="MiscList" VerticalExpand="True" HorizontalExpand="True" Columns="1"/>
+                    </ScrollContainer>
+                </TabContainer>
+
+                <!-- Cable network toggles -->
+                <BoxContainer Orientation="Vertical">
+                    <Label Text="{Loc 'power-monitoring-window-show-cable-networks'}"/>
+                    <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+                        <CheckBox Name="ShowHVCable" Text="{Loc 'power-monitoring-window-show-hv-cable'}" Pressed="True"/>
+                        <CheckBox Name="ShowMVCable" Text="{Loc 'power-monitoring-window-show-mv-cable'}" Pressed="True"/>
+                        <CheckBox Name="ShowLVCable" Text="{Loc 'power-monitoring-window-show-lv-cable'}" Pressed="True"/>
+                    </BoxContainer>
+                </BoxContainer>
+            </BoxContainer>
         </BoxContainer>
-        <ui:NavMapControl Name="NavMap" Margin="5 5"/>
+    
+        <!-- Footer -->
+        <BoxContainer Orientation="Vertical">
+            <PanelContainer StyleClasses="LowDivider" />
+            <BoxContainer Orientation="Horizontal" Margin="10 2 5 0" VerticalAlignment="Bottom">
+                <Label Text="{Loc 'power-monitoring-window-flavor-left'}" StyleClasses="WindowFooterText" />
+                <Label Text="{Loc 'power-monitoring-window-right'}" StyleClasses="WindowFooterText"
+                        HorizontalAlignment="Right" HorizontalExpand="True"  Margin="0 0 5 0" />
+                <TextureRect StyleClasses="NTLogoDark" Stretch="KeepAspectCentered"
+                        VerticalAlignment="Center" HorizontalAlignment="Right" SetSize="19 19"/>
+            </BoxContainer>
+        </BoxContainer>
     </BoxContainer>
 </controls:FancyWindow>

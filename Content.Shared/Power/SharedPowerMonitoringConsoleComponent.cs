@@ -8,13 +8,26 @@ namespace Content.Shared.Power;
 [Serializable, NetSerializable]
 public sealed class PowerMonitoringConsoleBoundInterfaceState : BoundUserInterfaceState
 {
+    public float TotalSources;
+    public float TotalLoads;
+    public PowerMonitoringConsoleEntry[] Sources;
     public PowerMonitoringConsoleEntry[] Loads;
     public Dictionary<Vector2i, NavMapChunkPowerCables> PowerCableChunks;
     public bool Snap;
     public float Precision;
 
-    public PowerMonitoringConsoleBoundInterfaceState(PowerMonitoringConsoleEntry[] loads, Dictionary<Vector2i, NavMapChunkPowerCables> powerCableChunks, bool snap, float precision)
+    public PowerMonitoringConsoleBoundInterfaceState
+        (float totalSources,
+        float totalLoads,
+        PowerMonitoringConsoleEntry[] sources,
+        PowerMonitoringConsoleEntry[] loads,
+        Dictionary<Vector2i, NavMapChunkPowerCables> powerCableChunks,
+        bool snap,
+        float precision)
     {
+        TotalSources = totalSources;
+        TotalLoads = totalLoads;
+        Sources = sources;
         Loads = loads;
         PowerCableChunks = powerCableChunks;
         Snap = snap;

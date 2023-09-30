@@ -66,11 +66,11 @@ internal sealed class PowerMonitoringConsoleSystem : EntitySystem
                     GetNetCoordinates(xform.Coordinates),
                     metaData.EntityName,
                     prototype,
-                    powerSupplier.CurrentSupply,
+                    powerSupplier.MaxSupply,
                     true);
 
                 sources.Add(entry);
-                totalSources += powerSupplier.CurrentSupply;
+                totalSources += powerSupplier.MaxSupply;
             }
         }
 
@@ -78,6 +78,9 @@ internal sealed class PowerMonitoringConsoleSystem : EntitySystem
         var networkBatteryQuery = AllEntityQuery<PowerNetworkBatteryComponent, MetaDataComponent, TransformComponent>();
         while (networkBatteryQuery.MoveNext(out var uid, out var networkBattery, out var metaData, out var xform))
         {
+            if (_entityManager.HasComponent<PowerSupplierComponent>(uid))
+                continue;
+
             if (xform.Anchored)
             {
                 var prototype = metaData.EntityPrototype?.ID ?? "";
@@ -103,7 +106,15 @@ internal sealed class PowerMonitoringConsoleSystem : EntitySystem
         var powerCableChunks = GetPowerCableChunks(mapGrid);
 
         // Actually set state
-        _userInterfaceSystem.SetUiState(bui, new PowerMonitoringConsoleBoundInterfaceState(loads.ToArray(), powerCableChunks, true, 10f));
+        _userInterfaceSystem.SetUiState(bui,
+            new PowerMonitoringConsoleBoundInterfaceState
+                (totalSources,
+                totalLoads,
+                sources.ToArray(),
+                loads.ToArray(),
+                powerCableChunks,
+                true,
+                10f));
     }
 
     private Dictionary<Vector2i, NavMapChunkPowerCables> GetPowerCableChunks(MapGridComponent grid)
