@@ -3,9 +3,9 @@
             Title="{Loc 'ui-options-title'}"
             MinSize="800 450">
     <TabContainer Name="Tabs" Access="Public">
-        <tabs:GraphicsTab />
-        <tabs:KeyRebindTab />
-        <tabs:AudioTab />
-        <tabs:NetworkTab/>
+        <tabs:GraphicsTab Name="GraphicsTab" />
+        <tabs:KeyRebindTab Name="KeyRebindTab" />
+        <tabs:AudioTab Name="AudioTab" />
+        <tabs:NetworkTab Name="NetworkTab" />
     </TabContainer>
 </DefaultWindow>

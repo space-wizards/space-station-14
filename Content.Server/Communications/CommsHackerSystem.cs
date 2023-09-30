@@ -4,6 +4,9 @@ using Content.Server.Ninja.Systems;
 using Content.Shared.Communications;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
+using Content.Shared.Random;
+using Content.Shared.Random.Helpers;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 
@@ -13,6 +16,7 @@ public sealed class CommsHackerSystem : SharedCommsHackerSystem
 {
     [Dependency] private readonly ChatSystem _chat = default!;
     [Dependency] private readonly GameTicker _gameTicker = default!;
+    [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     // TODO: remove when generic check event is used
     [Dependency] private readonly NinjaGlovesSystem _gloves = default!;
@@ -55,11 +59,12 @@ public sealed class CommsHackerSystem : SharedCommsHackerSystem
     /// </summary>
     private void OnDoAfter(EntityUid uid, CommsHackerComponent comp, TerrorDoAfterEvent args)
     {
-        if (args.Cancelled || args.Handled || comp.Threats.Count == 0 || args.Target == null)
+        if (args.Cancelled || args.Handled || args.Target == null)
             return;
 
-        var threat = _random.Pick(comp.Threats);
-        CallInThreat(threat);
+        var threats = _proto.Index<WeightedRandomPrototype>(comp.Threats);
+        var threat = threats.Pick(_random);
+        CallInThreat(_proto.Index<ThreatPrototype>(threat));
 
         // prevent calling in multiple threats
         RemComp<CommsHackerComponent>(uid);
@@ -71,7 +76,7 @@ public sealed class CommsHackerSystem : SharedCommsHackerSystem
     /// <summary>
     /// Makes announcement and adds game rule of the threat.
     /// </summary>
-    public void CallInThreat(Threat threat)
+    public void CallInThreat(ThreatPrototype threat)
     {
         _gameTicker.StartGameRule(threat.Rule, out _);
         _chat.DispatchGlobalAnnouncement(Loc.GetString(threat.Announcement), playSound: true, colorOverride: Color.Red);
