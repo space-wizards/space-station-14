@@ -14,8 +14,4 @@
     - TerrorObjective
     - NinjaSurviveObjective
   - type: NinjaRule
-    threats:
-    - announcement: terror-dragon
-      rule: Dragon
-    - announcement: terror-revenant
-      rule: RevenantSpawn
+    threats: NinjaThreats

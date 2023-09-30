@@ -44,7 +44,7 @@ namespace Content.Server.Medical
                 _hunger.ModifyHunger(uid, hungerAdded, hunger);
 
             if (TryComp<ThirstComponent>(uid, out var thirst))
-                _thirst.UpdateThirst(thirst, thirstAdded);
+                _thirst.ModifyThirst(uid, thirst, thirstAdded);
 
             // It fully empties the stomach, this amount from the chem stream is relatively small
             var solutionSize = (MathF.Abs(thirstAdded) + MathF.Abs(hungerAdded)) / 6;
