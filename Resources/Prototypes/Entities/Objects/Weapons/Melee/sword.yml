@@ -18,7 +18,7 @@
   - type: Reflect
     enabled: true
     reflectProb: .5
-    spread: 90        
+    spread: 90
   - type: Item
     size: 15
     sprite: Objects/Weapons/Melee/captain_sabre.rsi
@@ -40,6 +40,11 @@
   - type: Sprite
     sprite: Objects/Weapons/Melee/katana.rsi
     state: icon
+  - type: Clothing
+    sprite: Objects/Weapons/Melee/katana.rsi
+    slots:
+    - Back
+    - Belt
   - type: MeleeWeapon
     damage:
       types:
