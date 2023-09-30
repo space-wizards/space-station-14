@@ -34,13 +34,13 @@ public sealed partial class BodyPartComponent : Component
     /// <summary>
     /// Child body parts attached to this body part.
     /// </summary>
-    [DataField, AutoNetworkedField(CloneData = true)]
+    [DataField, AutoNetworkedField]
     public Dictionary<string, BodyPartSlot> Children = new();
 
     /// <summary>
     /// Organs attached to this body part.
     /// </summary>
-    [DataField, AutoNetworkedField(CloneData = true)]
+    [DataField, AutoNetworkedField]
     public Dictionary<string, OrganSlot> Organs = new();
 
     /// <summary>

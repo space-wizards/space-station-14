@@ -1,6 +1,5 @@
 using Content.Shared.Humanoid.Markings;
 using Robust.Shared.Serialization;
-using static Content.Shared.Humanoid.HumanoidAppearanceState;
 
 namespace Content.Shared.Humanoid;
 

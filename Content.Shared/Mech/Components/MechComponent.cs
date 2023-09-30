@@ -3,9 +3,6 @@ using Content.Shared.Whitelist;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
 namespace Content.Shared.Mech.Components;
 
@@ -13,33 +10,33 @@ namespace Content.Shared.Mech.Components;
 /// A large, pilotable machine that has equipment that is
 /// powered via an internal battery.
 /// </summary>
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class MechComponent : Component
 {
     /// <summary>
     /// How much "health" the mech has left.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
+    [ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public FixedPoint2 Integrity;
 
     /// <summary>
     /// The maximum amount of damage the mech can take.
     /// </summary>
-    [DataField("maxIntegrity")]
+    [DataField, AutoNetworkedField]
     public FixedPoint2 MaxIntegrity = 250;
 
     /// <summary>
     /// How much energy the mech has.
     /// Derived from the currently inserted battery.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
+    [ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public FixedPoint2 Energy = 0;
 
     /// <summary>
     /// The maximum amount of energy the mech can have.
     /// Derived from the currently inserted battery.
     /// </summary>
-    [DataField("maxEnergy")]
+    [DataField, AutoNetworkedField]
     public FixedPoint2 MaxEnergy = 0;
 
     /// <summary>
@@ -55,13 +52,13 @@ public sealed partial class MechComponent : Component
     /// A multiplier used to calculate how much of the damage done to a mech
     /// is transfered to the pilot
     /// </summary>
-    [DataField("mechToPilotDamageMultiplier")]
+    [DataField]
     public float MechToPilotDamageMultiplier;
 
     /// <summary>
     /// Whether the mech has been destroyed and is no longer pilotable.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
+    [ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public bool Broken = false;
 
     /// <summary>
@@ -77,7 +74,7 @@ public sealed partial class MechComponent : Component
     /// The current selected equipment of the mech.
     /// If null, the mech is using just its fists.
     /// </summary>
-    [ViewVariables]
+    [ViewVariables, AutoNetworkedField]
     public EntityUid? CurrentSelectedEquipment;
 
     /// <summary>
@@ -89,10 +86,10 @@ public sealed partial class MechComponent : Component
     /// <summary>
     /// A whitelist for inserting equipment items.
     /// </summary>
-    [DataField("equipmentWhitelist")]
+    [DataField]
     public EntityWhitelist? EquipmentWhitelist;
 
-    [DataField("pilotWhitelist")]
+    [DataField]
     public EntityWhitelist? PilotWhitelist;
 
     /// <summary>
@@ -107,20 +104,20 @@ public sealed partial class MechComponent : Component
     /// <summary>
     /// How long it takes to enter the mech.
     /// </summary>
-    [DataField("entryDelay")]
+    [DataField]
     public float EntryDelay = 3;
 
     /// <summary>
     /// How long it takes to pull *another person*
     /// outside of the mech. You can exit instantly yourself.
     /// </summary>
-    [DataField("exitDelay")]
+    [DataField]
     public float ExitDelay = 3;
 
     /// <summary>
     /// How long it takes to pull out the battery.
     /// </summary>
-    [DataField("batteryRemovalDelay")]
+    [DataField]
     public float BatteryRemovalDelay = 2;
 
     /// <summary>
@@ -130,49 +127,35 @@ public sealed partial class MechComponent : Component
     /// This needs to be redone
     /// when mech internals are added
     /// </remarks>
-    [DataField("airtight"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public bool Airtight;
 
     /// <summary>
     /// The equipment that the mech initially has when it spawns.
     /// Good for things like nukie mechs that start with guns.
     /// </summary>
-    [DataField("startingEquipment", customTypeSerializer: typeof(PrototypeIdListSerializer<EntityPrototype>))]
-    public List<string> StartingEquipment = new();
+    [DataField]
+    public List<EntProtoId> StartingEquipment = new();
 
     #region Action Prototypes
-    [DataField("mechCycleAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string MechCycleAction = "ActionMechCycleEquipment";
-    [DataField("mechUiAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string MechUiAction = "ActionMechOpenUI";
-    [DataField("mechEjectAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string MechEjectAction = "ActionMechEject";
+    [DataField]
+    public EntProtoId MechCycleAction = "ActionMechCycleEquipment";
+    [DataField]
+    public EntProtoId MechUiAction = "ActionMechOpenUI";
+    [DataField]
+    public EntProtoId MechEjectAction = "ActionMechEject";
     #endregion
 
     #region Visualizer States
-    [DataField("baseState")]
+    [DataField]
     public string? BaseState;
-    [DataField("openState")]
+    [DataField]
     public string? OpenState;
-    [DataField("brokenState")]
+    [DataField]
     public string? BrokenState;
     #endregion
 
     [DataField] public EntityUid? MechCycleActionEntity;
     [DataField] public EntityUid? MechUiActionEntity;
     [DataField] public EntityUid? MechEjectActionEntity;
-}
-
-/// <summary>
-/// Contains network state for <see cref="MechComponent"/>.
-/// </summary>
-[Serializable, NetSerializable]
-public sealed class MechComponentState : ComponentState
-{
-    public FixedPoint2 Integrity;
-    public FixedPoint2 MaxIntegrity;
-    public FixedPoint2 Energy;
-    public FixedPoint2 MaxEnergy;
-    public NetEntity? CurrentSelectedEquipment;
-    public bool Broken;
 }
