@@ -345,6 +345,9 @@
   - type: SliceableFood
     count: 3
     slice: FoodDoughSlice
+  - type: Construction
+    graph: Pizza
+    node: start
 
 - type: entity
   name: dough slice
@@ -435,6 +438,9 @@
   components:
   - type: Sprite
     state: dough-flat
+  - type: Construction
+    graph: Pizza
+    node: flat
 
 - type: entity
   name: pizza bread
