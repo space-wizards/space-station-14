@@ -497,3 +497,27 @@
       Wood: 50
   - type: StaticPrice
     price: 25
+
+- type: entity
+  parent: BaseItem
+  id: RollingPin
+  name: rolling pin
+  description: Used to knock out the Bartender.
+  components:
+  - type: Sprite
+    sprite: Objects/Tools/rolling_pin.rsi
+    state: icon
+  - type: Item
+    sprite: Objects/Tools/rolling_pin.rsi
+    size: 15
+  - type: ItemCooldown
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 8
+  - type: Tool
+    qualities:
+    - Rolling
+  - type: PhysicalComposition
+    materialComposition:
+      Wood: 100
