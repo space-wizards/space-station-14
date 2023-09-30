@@ -82,10 +82,11 @@
     - type: Appearance
     - type: GenericVisualizer
       visuals:
-        enum.PumpVisuals.Enabled:
+        enum.GasVolumePumpVisuals.State:
           enabled:
-            True: { state: pumpVolumeOn }
-            False: { state: pumpVolume }
+            On: { state: pumpVolumeOn }
+            Off: { state: pumpVolume }
+            Blocked: { state: pumpVolumeBlocked }
     - type: PipeColorVisuals
     - type: GasVolumePump
       enabled: false

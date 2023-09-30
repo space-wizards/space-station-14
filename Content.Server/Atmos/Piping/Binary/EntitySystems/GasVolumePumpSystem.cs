@@ -12,6 +12,7 @@ using Content.Server.NodeContainer.Nodes;
 using Content.Shared.Atmos.Piping;
 using Content.Shared.Atmos.Piping.Binary.Components;
 using Content.Shared.Atmos.Piping.Unary.Components;
+using Content.Shared.Atmos.Visuals;
 using Content.Shared.Audio;
 using Content.Shared.Database;
 using Content.Shared.Examine;
@@ -83,12 +84,24 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
             var inputStartingPressure = inlet.Air.Pressure;
             var outputStartingPressure = outlet.Air.Pressure;
 
+            var previouslyBlocked = pump.Blocked;
+            pump.Blocked = false;
+
             // Pump mechanism won't do anything if the pressure is too high/too low unless you overclock it.
             if ((inputStartingPressure < pump.LowerThreshold) || (outputStartingPressure > pump.HigherThreshold) && !pump.Overclocked)
-                return;
+            {
+                pump.Blocked = true;
+            }
 
             // Overclocked pumps can only force gas a certain amount.
             if ((outputStartingPressure - inputStartingPressure > pump.OverclockThreshold) && pump.Overclocked)
+            {
+                pump.Blocked = true;
+            }
+            
+            if (previouslyBlocked != pump.Blocked)
+                UpdateAppearance(uid, pump);
+            if (pump.Blocked)
                 return;
 
             // We multiply the transfer rate in L/s by the seconds passed since the last process to get the liters.
@@ -172,7 +185,12 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
             if (!Resolve(uid, ref pump, ref appearance, false))
                 return;
 
-            _appearance.SetData(uid, PumpVisuals.Enabled, pump.Enabled, appearance);
+            if (!pump.Enabled)
+                _appearance.SetData(uid, GasVolumePumpVisuals.State, GasVolumePumpState.Off, appearance);
+            else if (pump.Blocked)
+                _appearance.SetData(uid, GasVolumePumpVisuals.State, GasVolumePumpState.Blocked, appearance);
+            else
+                _appearance.SetData(uid, GasVolumePumpVisuals.State, GasVolumePumpState.On, appearance);
         }
 
         private void OnPacketRecv(EntityUid uid, GasVolumePumpComponent component, DeviceNetworkPacketEvent args)
