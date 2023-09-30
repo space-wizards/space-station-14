@@ -5,6 +5,7 @@
   id: ClothingOuterHardsuitUSSP
   name: Battle USSP hardsuit
   description: This hardsuit is famous for its simplicity, lightness, reliability and decent life support system.
+  suffix: Ebent
   components:
   - type: Sprite
     sprite: SS220/Clothing/OuterClothing/Hardsuits/sssp.rsi
@@ -16,8 +17,8 @@
     highPressureMultiplier: 0.02
     lowPressureMultiplier: 1000
   - type: ClothingSpeedModifier
-    walkModifier: 1
-    sprintModifier: 1
+    walkModifier: 0.9
+    sprintModifier: 0.9
   - type: Armor
     modifiers:
       coefficients:
@@ -25,10 +26,112 @@
         Slash: 0.5
         Piercing: 0.4
         Heat: 0.2
-        Radiation: 0.25
+        Radiation: 0.5
         Caustic: 0.5
-        Stamina: 0.2
+        Stamina: 0.3
   - type: ExplosionResistance
     damageCoefficient: 0.3
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitUSSP
+
+- type: entity
+  parent: ClothingOuterHardsuitBase
+  id: ClothingOuterHardsuitUSSPEng
+  name: тяжёлый боевой скафандр Заслуженного Инженера СССП
+  description: Отечественный инженерный скафандр - это настоящий металлургический чудо-труд. Классический советский дизайн, в котором каждая ручка, каждый шов и каждая кнопочка задуманы для максимального удобства и эффективности. 
+  suffix: Ebent
+  components:
+  - type: Sprite
+    sprite: SS220/Clothing/OuterClothing/Hardsuits/ussp_eng.rsi
+  - type: Clothing
+    sprite: SS220/Clothing/OuterClothing/Hardsuits/ussp_eng.rsi
+  - type: TemperatureProtection
+    coefficient: 0.001
+  - type: PressureProtection
+    highPressureMultiplier: 0.02
+    lowPressureMultiplier: 1000
+  - type: ClothingSpeedModifier
+    walkModifier: 1
+    sprintModifier: 1
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.2
+        Slash: 0.25
+        Piercing: 0.3
+        Heat: 0.2
+        Radiation: 0
+        Caustic: 0.5
+        Stamina: 0.2
+  - type: ExplosionResistance
+    damageCoefficient: 0.1
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitUSSPEng
+
+- type: entity
+  parent: ClothingOuterHardsuitBase
+  id: ClothingOuterHardsuitUSSPMed
+  name: тяжёлый боевой скафандр Народного Врача СССП
+  description: В нём врач будет выглядеть так элегантно, что пациенты будут лечиться сами от одного его вида. Защищает от экстремального давления, температур, а так же капиталистических идей.
+  suffix: Ebent
+  components:
+  - type: Sprite
+    sprite: SS220/Clothing/OuterClothing/Hardsuits/ussp_med.rsi
+  - type: Clothing
+    sprite: SS220/Clothing/OuterClothing/Hardsuits/ussp_med.rsi
+  - type: TemperatureProtection
+    coefficient: 0.001
+  - type: PressureProtection
+    highPressureMultiplier: 0.02
+    lowPressureMultiplier: 1000
+  - type: ClothingSpeedModifier
+    walkModifier: 1
+    sprintModifier: 1
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.4
+        Slash: 0.35
+        Piercing: 0.3
+        Heat: 0.1
+        Radiation: 0.3
+        Caustic: 0.2
+        Stamina: 0.2
+  - type: ExplosionResistance
+    damageCoefficient: 0.25
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitUSSPMed
+
+- type: entity
+  parent: ClothingOuterHardsuitBase
+  id: ClothingOuterHardsuitUSSPCmd
+  name: тяжёлый боевой скафандр Маршала СССП
+  description: Прекрасный космический скафандр - идеальная защита от всякого рода космических крыс, инопланетных пауков и недоброжелательных идеологий.
+  suffix: Ebent
+  components:
+  - type: Sprite
+    sprite: SS220/Clothing/OuterClothing/Hardsuits/ussp_admiral.rsi
+  - type: Clothing
+    sprite: SS220/Clothing/OuterClothing/Hardsuits/ussp_admiral.rsi
+  - type: TemperatureProtection
+    coefficient: 0.001
+  - type: PressureProtection
+    highPressureMultiplier: 0.02
+    lowPressureMultiplier: 1000
+  - type: ClothingSpeedModifier
+    walkModifier: 1
+    sprintModifier: 1
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.1
+        Slash: 0.15
+        Piercing: 0.2
+        Heat: 0.1
+        Radiation: 0
+        Caustic: 0.5
+        Stamina: 0.1
+  - type: ExplosionResistance
+    damageCoefficient: 0.1
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitUSSPCmd
