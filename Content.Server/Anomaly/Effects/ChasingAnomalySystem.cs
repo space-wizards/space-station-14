@@ -26,7 +26,7 @@ public sealed class ChasingAnomalySystem : EntitySystem
 
         foreach (var (anom, trans) in EntityManager.EntityQuery<ChasingAnomalyComponent, TransformComponent>(true))
         {
-
+            if (!Initialized(anom.Owner)) return;
             if (Deleted(anom.ChasingEntity)) continue;
             if (!anom.ChasingEntity.IsValid()) continue;
             if (anom.ChasingEntity == default!) continue;

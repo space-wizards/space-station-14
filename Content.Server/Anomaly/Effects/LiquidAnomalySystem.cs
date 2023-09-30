@@ -72,6 +72,8 @@ public sealed class LiquidAnomalySystem : EntitySystem
 
     private void ChangeReagentType(EntityUid uid, LiquidAnomalyComponent component)
     {
+        if (component.PossibleChemicals.Count == 0) return;
+
         var rndIndex = _random.Next(0, component.PossibleChemicals.Count - 1);
         var reagent = component.PossibleChemicals[rndIndex];
 
