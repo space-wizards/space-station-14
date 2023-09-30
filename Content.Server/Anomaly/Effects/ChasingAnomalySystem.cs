@@ -15,10 +15,14 @@ public sealed class ChasingAnomalySystem : EntitySystem
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
 
+    private EntityQuery<TransformComponent> _xformQuery;
+
     /// <inheritdoc/>
     public override void Initialize()
     {
         SubscribeLocalEvent<ChasingAnomalyComponent, AnomalyPulseEvent>(OnPulse);
+
+        _xformQuery = GetEntityQuery<TransformComponent>();
     }
     public override void Update(float frameTime)
     {
@@ -26,14 +30,14 @@ public sealed class ChasingAnomalySystem : EntitySystem
 
         foreach (var (anom, trans) in EntityManager.EntityQuery<ChasingAnomalyComponent, TransformComponent>(true))
         {
-            if (!Initialized(anom.Owner)) return;
-            if (Deleted(anom.ChasingEntity)) continue;
-            if (!anom.ChasingEntity.IsValid()) continue;
-            if (anom.ChasingEntity == default!) continue;
+            if (!Initialized(anom.Owner)        ||
+                Deleted(anom.ChasingEntity)     ||
+                !anom.ChasingEntity.IsValid()   ||
+                anom.ChasingEntity == default!)
+                continue;
 
             //Calculating direction to the target.
-            var xformQuery = GetEntityQuery<TransformComponent>();
-            var xform = xformQuery.GetComponent(anom.ChasingEntity);
+            var xform = _xformQuery.GetComponent(anom.ChasingEntity);
 
             var currPos = new Vector2(trans.MapPosition.X, trans.MapPosition.Y);
             var targetPos = new Vector2(xform.MapPosition.X, xform.MapPosition.Y);
