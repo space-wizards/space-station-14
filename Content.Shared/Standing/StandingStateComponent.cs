@@ -18,7 +18,7 @@ namespace Content.Shared.Standing
         ///     List of fixtures that had their collision mask changed when the entity was downed.
         ///     Required for re-adding the collision mask.
         /// </summary>
-        [DataField, AutoNetworkedField(true)]
+        [DataField, AutoNetworkedField]
         public List<string> ChangedFixtures = new();
     }
 }
