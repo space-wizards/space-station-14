@@ -52,7 +52,8 @@ public sealed class FultonSystem : SharedFultonSystem
     {
         if (!Deleted(component.Beacon) &&
             TryComp<TransformComponent>(component.Beacon, out var beaconXform) &&
-            !_container.IsEntityOrParentInContainer(component.Beacon.Value, xform: beaconXform))
+            !_container.IsEntityOrParentInContainer(component.Beacon.Value, xform: beaconXform) &&
+            !Transform(uid).Anchored)
         {
             var xform = Transform(uid);
             var metadata = MetaData(uid);
