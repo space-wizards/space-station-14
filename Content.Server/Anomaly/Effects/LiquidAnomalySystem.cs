@@ -34,13 +34,13 @@ public sealed class LiquidAnomalySystem : EntitySystem
     }
     private void OnMapInit(EntityUid uid, LiquidAnomalyComponent component, MapInitEvent args)
     {
-        
         ChangeReagentType(uid, component);
     }
 
     private void OnPulse(EntityUid uid, LiquidAnomalyComponent component, ref AnomalyPulseEvent args)
     {
-        PulseScalableEffect(uid,
+        PulseScalableEffect(
+            uid,
             component.MaxSolutionGeneration * args.Severity,
             component.MaxSolutionInjection * args.Severity,
             component.InjectRadius,
@@ -49,7 +49,8 @@ public sealed class LiquidAnomalySystem : EntitySystem
 
     private void OnSupercritical(EntityUid uid, LiquidAnomalyComponent component, ref AnomalySupercriticalEvent args)
     {
-        PulseScalableEffect(uid,
+        PulseScalableEffect(
+            uid,
             component.SuperCriticalSolutionGeneration,
             component.SuperCriticalSolutionInjection,
             component.SuperCriticalInjectRadius,
@@ -66,13 +67,12 @@ public sealed class LiquidAnomalySystem : EntitySystem
 
             ChangeReagentType(uid, component);
             return;
-
         }
     }
 
     private void ChangeReagentType(EntityUid uid, LiquidAnomalyComponent component)
     {
-        var rndIndex = _random.Next(0, component.PossibleChemicals.Count);
+        var rndIndex = _random.Next(0, component.PossibleChemicals.Count - 1);
         var reagent = component.PossibleChemicals[rndIndex];
 
         component.Reagent = reagent;
@@ -85,7 +85,8 @@ public sealed class LiquidAnomalySystem : EntitySystem
         _audio.PlayPvs(component.ChangeSound, uid);
     }
 
-    private void PulseScalableEffect(EntityUid uid,
+    private void PulseScalableEffect(
+        EntityUid uid,
         float solutionAmount,
         float maxInject,
         float injectRadius,
@@ -101,6 +102,7 @@ public sealed class LiquidAnomalySystem : EntitySystem
         //for each matching entity found
         foreach (var ent in allEnts)
         {
+            if (Deleted(ent)) continue;
             if (!ent.IsValid()) continue;
 
             if (!_solutionContainerSystem.TryGetInjectableSolution(ent, out var injectable))
