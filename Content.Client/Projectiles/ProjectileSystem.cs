@@ -1,9 +1,10 @@
 using Content.Shared.Projectiles;
-using Content.Shared.Spawners.Components;
+using Robust.Shared.Spawners;
 using Content.Shared.Weapons.Ranged.Systems;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameStates;
+using TimedDespawnComponent = Robust.Shared.Spawners.TimedDespawnComponent;
 
 namespace Content.Client.Projectiles;
 

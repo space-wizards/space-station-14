@@ -118,6 +118,9 @@ uplink-headset-desc = A headset that allows you to communicate with other syndic
 uplink-encryption-key-name = Syndicate Encryption Keys
 uplink-encryption-key-desc = Two encryption keys for access to the secret frequency of our special agents. Give the spare to a friend, but make sure it doesn't fall into enemy hands.
 
+uplink-binary-translator-key-name = Binary Translator Key
+uplink-binary-translator-key-desc = Lets you tap into the silicons' binary channel. Don't talk on it though, at least not without a voice mask.
+
 uplink-hypopen-name = Hypopen
 uplink-hypopen-desc = A chemical hypospray disguised as a pen, capable of instantly injecting up to 10u of reagents. Starts empty.
 

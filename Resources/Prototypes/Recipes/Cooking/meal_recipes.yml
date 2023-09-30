@@ -868,6 +868,18 @@
     FoodBanana: 1
     MonkeyCube: 1
 
+- type: microwaveMealRecipe
+  id: RecipeBungoSoup
+  name: bungo soup recipe
+  result: FoodSoupBungo
+  time: 10
+  reagents:
+    Water: 5
+  solids:
+    FoodBowlBig: 1
+    FoodBungo: 2
+    FoodChili: 1
+
 #Other
 
 - type: microwaveMealRecipe
@@ -945,7 +957,7 @@
   id: RecipePopcorn
   name: popcorn recipe
   result: FoodSnackPopcorn
-  time: 5
+  time: 20
   solids:
     FoodCorn: 1
 
@@ -958,6 +970,18 @@
     Flour: 5
     Milk: 5
     Egg: 6
+
+- type: microwaveMealRecipe
+  id: RecipeBlueberryPancake
+  name: blueberry pancake recipe
+  result: FoodBakedPancakeBb
+  time: 5
+  reagents:
+    Flour: 5
+    Milk: 5
+    Egg: 6
+  solids:
+    FoodBerries: 2
 
 - type: microwaveMealRecipe
   id: RecipeWaffles
@@ -1049,6 +1073,16 @@
     FoodPlateTin: 1
 
 - type: microwaveMealRecipe
+  id: RecipeBerryClafoutis
+  name: berry clafoutis
+  result: FoodPieClafoutis
+  time: 15
+  solids:
+    FoodDoughPie: 1
+    FoodBerries: 3
+    FoodPlateTin: 1
+
+- type: microwaveMealRecipe
   id: RecipeMeatPie
   name: meat pie recipe
   result: FoodPieMeat
@@ -1103,6 +1137,15 @@
   solids:
     FoodCakePlain: 1
     FoodOrange: 3
+
+- type: microwaveMealRecipe
+  id: RecipeBlueberryCake
+  name: blueberry cake recipe
+  result: FoodCakeBlueberry
+  time: 5
+  solids:
+    FoodCakePlain: 1
+    FoodBerries: 3
 
 - type: microwaveMealRecipe
   id: RecipeLimeCake
@@ -1651,7 +1694,6 @@
   solids:
     FoodSpaceshroom: 1
 
-#cannabis    
 - type: microwaveMealRecipe
   id: RecipeCannabisButter
   name: cannabis butter recipe
@@ -1673,3 +1715,13 @@
     FoodCannabisButter: 2
     FoodSnackChocolateBar: 2
     FoodEgg: 3
+
+- type: microwaveMealRecipe
+  id: RecipeCornInButter
+  name: corn in butter recipe
+  result: FoodMealCornInButter
+  time: 10
+  solids:
+    FoodCorn: 1
+    FoodPlate: 1
+    FoodButter: 1

@@ -47,7 +47,7 @@ public sealed partial class DragonSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<DragonComponent, ComponentStartup>(OnStartup);
+        SubscribeLocalEvent<DragonComponent, MapInitEvent>(OnInit);
         SubscribeLocalEvent<DragonComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<DragonComponent, DragonSpawnRiftActionEvent>(OnDragonRift);
         SubscribeLocalEvent<DragonComponent, RefreshMovementSpeedModifiersEvent>(OnDragonMove);
@@ -292,7 +292,7 @@ public sealed partial class DragonSystem : EntitySystem
             _audioSystem.Play(component.SoundRoar, Filter.Pvs(component.Owner, 4f, EntityManager), component.Owner, true, component.SoundRoar.Params);
     }
 
-    private void OnStartup(EntityUid uid, DragonComponent component, ComponentStartup args)
+    private void OnInit(EntityUid uid, DragonComponent component, MapInitEvent args)
     {
         Roar(component);
         _actionsSystem.AddAction(uid, ref component.SpawnRiftActionEntity, component.SpawnRiftAction);

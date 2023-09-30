@@ -1,5 +1,5 @@
 using Content.Server.Spawners.Components;
-using Content.Shared.Spawners;
+using Robust.Shared.Spawners;
 
 namespace Content.Server.Spawners.EntitySystems;
 
