@@ -1,0 +1,24 @@
+- type: entity
+  name: гипоспрей СССП
+  parent: BaseItem
+  description: С помощью реверс-инжиниринга технологии NT, СССП выпускает их в ограниченном количестве для нужд армии.
+  id: UsspHypo
+  suffix: Ebent
+  components:
+  - type: Sprite
+    sprite: SS220/Objects/Medical/USSRhypo.rsi
+    state: hypo
+  - type: Item
+    sprite: SS220/Objects/Medical/USSRhypo.rsi
+  - type: SolutionContainerManager
+    solutions:
+      hypospray:
+        maxVol: 20
+  - type: RefillableSolution
+    solution: hypospray
+  - type: ExaminableSolution
+    solution: hypospray
+  - type: Hypospray
+    onlyMobs: false
+  - type: UseDelay
+    delay: 0.5
