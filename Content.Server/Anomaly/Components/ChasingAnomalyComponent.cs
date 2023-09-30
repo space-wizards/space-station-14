@@ -13,25 +13,25 @@ public sealed partial class ChasingAnomalyComponent : Component
     /// The maximum radius in which the anomaly chooses the target component to follow
     /// scales with severity
     /// </summary>
-    [DataField("maxChaseRadius")]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public float MaxChaseRadius = 10;
 
     /// <summary>
     /// The speed at which the anomaly is moving towards the target.
     /// </summary>
-    [DataField("maxChasingSpeed")]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public float MaxChasingSpeed = 1f;
 
     /// <summary>
     /// Modification of the chasing speed during the transition to a supercritical state
     /// </summary>
-    [DataField("superCriticalSpeedModifier")]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public float SuperCriticalSpeedModifier = 3;
 
     /// <summary>
     /// The component that the anomaly is chasing
     /// </summary>
-    [DataField("chasingComponent", required: true), ViewVariables(VVAccess.ReadOnly)]
+    [DataField(required: true), ViewVariables(VVAccess.ReadOnly)]
     public string ChasingComponent = default!;
 
     //In Game Storage Variables
@@ -39,13 +39,13 @@ public sealed partial class ChasingAnomalyComponent : Component
     /// <summary>
     /// The entity uid, chasing by the anomaly
     /// </summary>
-    [DataField("chasingEntity")]
-    public EntityUid ChasingEntity = default!;
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public EntityUid? ChasingEntity;
 
     /// <summary>
     /// Current movement speed. changes after each pulse depending on severity
     /// scales with severity
     /// </summary>
-    [DataField("currentSpeed")]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public float CurrentSpeed;
 }

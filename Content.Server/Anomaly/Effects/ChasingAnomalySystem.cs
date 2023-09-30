@@ -30,14 +30,17 @@ public sealed class ChasingAnomalySystem : EntitySystem
 
         foreach (var (anom, trans) in EntityManager.EntityQuery<ChasingAnomalyComponent, TransformComponent>(true))
         {
-            if (!Initialized(anom.Owner)        ||
-                Deleted(anom.ChasingEntity)     ||
-                !anom.ChasingEntity.IsValid()   ||
-                anom.ChasingEntity == default!)
+            if (!Initialized(anom.Owner) || anom.ChasingEntity == null)
                 continue;
 
+            if (Deleted(anom.ChasingEntity))
+            {
+                anom.ChasingEntity = null;
+                continue;
+            }
+
             //Calculating direction to the target.
-            var xform = _xformQuery.GetComponent(anom.ChasingEntity);
+            var xform = _xformQuery.GetComponent(anom.ChasingEntity.Value);
 
             var currPos = new Vector2(trans.MapPosition.X, trans.MapPosition.Y);
             var targetPos = new Vector2(xform.MapPosition.X, xform.MapPosition.Y);
