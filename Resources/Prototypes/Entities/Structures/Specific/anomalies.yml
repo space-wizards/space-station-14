@@ -266,6 +266,10 @@
     explosionTotalIntensity: 50
     explosionDropoff: 2
     explosionMaxTileIntensity: 10
+  - type: EntitySpawnAnomaly
+    superCriticalSpawn: RandomLiquidElementalSpawner
+    spawns:
+      - PuddleSparkle
   - type: ChasingAnomaly
     chasingComponent: InjectableSolution
   - type: LiquidAnomaly
@@ -280,7 +284,7 @@
     - AmbuzolPlus
     - Siderlac
     - Stimulants
-    #Food
+    #Food - Group Blacklist (and move all food into groud)
     - Flour             
     - Cornmeal 
     - Oats
@@ -305,7 +309,7 @@
     - Vinaigrette
     - Soysauce
     - TableSalt
-    # Drinks
+    # Drinks To Do - Group Blacklist (and move all drinks into groud)
     - Absinthe
     - Ale
     - Beer
@@ -469,7 +473,7 @@
     - Ash
     - ZombieBlood   # AmbusolPlus again
     - Ichor
-    # Gases TODO - Make for all gases Group, and add GroupBlacklist for Food, Gases etc
+    # Gases - Group Blacklist (and move all gases into groud)
     - Oxygen
     - Plasma
     - Tritium
@@ -482,3 +486,203 @@
     bodyType: KinematicController
     linearDamping: 0
   - type: MovementIgnoreGravity
+    
+- type: entity
+  name: liquid elemental
+  id: LiquidElementalWater
+  suffix: Water
+  parent: SimpleSpaceMobBase
+  description: The revived deadly wave of liquid.
+  components:
+  - type: Insulated
+  - type: CombatMode
+  - type: InputMover
+  - type: MobMover
+  - type: Hands
+  - type: NpcFactionMember
+    factions:
+    - SimpleHostile
+  - type: HTN
+    rootTask:
+      task: SimpleHostileCompound
+    blackboard:
+      NavSmash: !type:Bool
+        true
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Aliens/elemental.rsi
+    layers:
+      - map: [ "enum.DamageStateVisualLayers.Base" ]
+        state: alive
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.40
+        density: 80
+        mask:
+          - MobMask
+        layer:
+          - Opaque
+  - type: MobState
+    allowedStates:
+    - Alive
+    - Dead
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      100: Dead
+  - type: SlowOnDamage
+    speedModifierThresholds:
+      50: 0.5
+  - type: Stamina
+    critThreshold: 300
+  - type: Bloodstream
+    bloodReagent: Water #To Do - replace with random
+    bloodMaxVolume: 500
+    bleedReductionAmount: 0.1
+    bloodlossThreshold: 0.5
+    bloodRefreshAmount: 0
+  - type: MeleeWeapon
+    altDisarm: false
+    hidden: true
+    angle: 0
+    soundHit:
+      collection: AlienClaw
+    animation: WeaponArcBite
+    damage:
+      types:
+        Slash: 10
+        Poison: 5
+  - type: DamageStateVisuals
+    rotate: true
+    states:
+      Alive:
+        Base: alive
+      Dead:
+        Base: dead
+  - type: Tag
+    tags:
+      - CannotSuicide
+  - type: PointLight
+    radius: 2.0
+    energy: 4.5
+    color: "#75b1f0"
+  - type: NoSlip
+  - type: ZombieImmune
+  
+- type: entity
+  id: LiquidElementalPolytrinicAcid
+  suffix: PolytrinicAcid
+  parent: LiquidElementalWater
+  components:
+  - type: PointLight
+    color: "#a1000b"
+  - type: Bloodstream
+    bloodReagent: PolytrinicAcid
+
+- type: entity
+  id: LiquidElementalUnstableMutagen
+  suffix: UnstableMutagen
+  parent: LiquidElementalWater
+  components:
+  - type: PointLight
+    color: "#00ff5f"
+  - type: Bloodstream
+    bloodReagent: UnstableMutagen
+
+- type: entity
+  id: LiquidElementalPax
+  suffix: Pax
+  parent: LiquidElementalWater
+  components:
+  - type: PointLight
+    color: "#AAAAAA"
+  - type: Bloodstream
+    bloodReagent: Pax
+
+- type: entity
+  id: LiquidElementalTHCOil
+  suffix: THCOil
+  parent: LiquidElementalWater
+  components:
+  - type: PointLight
+    color: "#DAA520"
+  - type: Bloodstream
+    bloodReagent: THCOil
+    
+- type: entity
+  id: LiquidElementalNocturine
+  suffix: Nocturine
+  parent: LiquidElementalWater
+  components:
+  - type: PointLight
+    color: "#128e80"
+  - type: Bloodstream
+    bloodReagent: Nocturine
+    
+- type: entity
+  id: LiquidElementalMuteToxin
+  suffix: MuteToxin
+  parent: LiquidElementalWater
+  components:
+  - type: PointLight
+    color: "#000000"
+  - type: Bloodstream
+    bloodReagent: MuteToxin    
+    
+- type: entity
+  id: LiquidElementalBicaridine
+  suffix: Bicaridine
+  parent: LiquidElementalWater
+  components:
+  - type: PointLight
+    color: "#000000"
+  - type: Bloodstream
+    bloodReagent: Bicaridine
+    
+- type: entity
+  id: LiquidElementalPotassium
+  suffix: Potassium
+  parent: LiquidElementalWater
+  components:
+  - type: PointLight
+    color: "#c6c8cc"
+  - type: Bloodstream
+    bloodReagent: Potassium
+    
+- type: entity
+  id: LiquidElementalBlood
+  suffix: Blood
+  parent: LiquidElementalWater
+  components:
+  - type: PointLight
+    color: "#800000"
+  - type: Bloodstream
+    bloodReagent: Blood
+
+
+- type: entity
+  id: RandomLiquidElementalSpawner
+  name: random liquid elemental spawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: red
+    - sprite: Mobs/Aliens/elemental.rsi
+      state: alive
+  - type: RandomSpawner
+    prototypes:
+    - LiquidElementalWater
+    - LiquidElementalPolytrinicAcid
+    - LiquidElementalUnstableMutagen
+    - LiquidElementalPax
+    - LiquidElementalTHCOil
+    - LiquidElementalNocturine
+    - LiquidElementalMuteToxin
+    - LiquidElementalBicaridine
+    - LiquidElementalPotassium
+    - LiquidElementalBlood
+    chance: 1

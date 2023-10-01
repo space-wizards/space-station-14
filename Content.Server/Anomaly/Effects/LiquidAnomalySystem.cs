@@ -104,7 +104,6 @@ public sealed class LiquidAnomalySystem : EntitySystem
         string reagent)
     {
         //We get all the entity in the radius into which the reagent will be injected.
-        
         var xformQuery = GetEntityQuery<TransformComponent>();
         var xform = xformQuery.GetComponent(uid);
         var allEnts = _lookup.GetComponentsInRange<InjectableSolutionComponent>(xform.MapPosition, injectRadius)

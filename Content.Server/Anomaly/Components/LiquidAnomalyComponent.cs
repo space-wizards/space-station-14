@@ -65,7 +65,7 @@ public sealed partial class LiquidAnomalyComponent : Component
     /// Noise made when glue applied.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public SoundSpecifier ChangeSound = new SoundPathSpecifier("/Audio/Effects/Chemistry/bubbles.ogg");
+    public SoundSpecifier ChangeSound = new SoundPathSpecifier("/Audio/Effects/waterswirl.ogg");
 
     /// <summary>
     /// The name of the reagent that the anomaly produces.
