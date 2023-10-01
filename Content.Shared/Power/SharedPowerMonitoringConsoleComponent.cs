@@ -1,4 +1,3 @@
-using Content.Shared.Coordinates.Helpers;
 using Content.Shared.Pinpointer;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization;

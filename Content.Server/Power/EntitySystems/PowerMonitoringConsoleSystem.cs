@@ -9,7 +9,8 @@ using Robust.Shared.Map.Components;
 using Content.Server.NodeContainer.Nodes;
 using Content.Server.NodeContainer.NodeGroups;
 using Content.Server.NodeContainer.EntitySystems;
-using Content.Shared.Power;
+using Robust.Server.GameStates;
+using Robust.Shared.Players;
 
 namespace Content.Server.Power.EntitySystems;
 
@@ -20,6 +21,7 @@ internal sealed class PowerMonitoringConsoleSystem : EntitySystem
     [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
     [Dependency] private readonly NavMapSystem _navMap = default!;
     [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
+    [Dependency] private readonly PvsOverrideSystem _pvsOverrideSystem = default!;
 
     public override void Initialize()
     {
@@ -30,15 +32,12 @@ internal sealed class PowerMonitoringConsoleSystem : EntitySystem
 
     private void OnDataRequestReceived(EntityUid uid, PowerMonitoringConsoleComponent component, RequestPowerMonitoringDataMessage args)
     {
-        UpdateUIState(uid, component);
+        UpdateUIState(uid, component, args.Session);
     }
 
-    public void UpdateUIState(EntityUid target, PowerMonitoringConsoleComponent? powerMonitoring = null)
+    public void UpdateUIState(EntityUid target, PowerMonitoringConsoleComponent powerMonitoring, ICommonSession session)
     {
         if (!_userInterfaceSystem.TryGetUi(target, PowerMonitoringConsoleUiKey.Key, out var bui))
-            return;
-
-        if (!Resolve(target, ref powerMonitoring))
             return;
 
         var consoleXform = _entityManager.GetComponent<TransformComponent>(target);
@@ -70,6 +69,8 @@ internal sealed class PowerMonitoringConsoleSystem : EntitySystem
                     true);
 
                 sources.Add(entry);
+                _pvsOverrideSystem.AddSessionOverride(uid, session, true);
+
                 totalSources += powerSupplier.MaxSupply;
             }
         }
@@ -94,6 +95,8 @@ internal sealed class PowerMonitoringConsoleSystem : EntitySystem
                     true);
 
                 loads.Add(entry);
+                _pvsOverrideSystem.AddSessionOverride(uid, session, true);
+
                 totalLoads += networkBattery.NetworkBattery.CurrentReceiving;
             }
         }
