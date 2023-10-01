@@ -8,7 +8,6 @@ namespace Content.Shared.Movement.Components
     /// If this is not present on the entity then they will use defaults for movement.
     /// </summary>
     [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
-    [Access(typeof(MovementSpeedModifierSystem))]
     public sealed partial class MovementSpeedModifierComponent : Component
     {
         // Weightless
