@@ -424,7 +424,6 @@
         - state: teleriot-icon
         - state: teleriot-on
           visible: false
-          shader: shaded
           map: [ "shield" ]
     - type: Item
       size: 10
@@ -437,10 +436,8 @@
       inhandVisuals:
         left:
           - state: inhand-left-shield
-            shader: shaded
         right:
           - state: inhand-right-shield
-            shader: shaded
     - type: Appearance
     - type: Destructible
       thresholds:
