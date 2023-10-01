@@ -72,7 +72,7 @@ public sealed class SmokeSystem : EntitySystem
         _appearance.TryGetData(uid, SmokeVisuals.Color, out var color);
 
         // wtf is the logic behind any of this.
-        var smokePerSpread = 1 + component.SpreadAmount / args.NeighborFreeTiles.Count;
+        var smokePerSpread = 1 + component.SpreadAmount / Math.Max(1, args.NeighborFreeTiles.Count);
         foreach (var neighbor in args.NeighborFreeTiles)
         {
             var coords = neighbor.Grid.GridTileToLocal(neighbor.Tile);
