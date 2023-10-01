@@ -174,7 +174,8 @@ public sealed class GameMapManager : IGameMapManager
         return map.MaxPlayers >= _playerManager.PlayerCount &&
                map.MinPlayers <= _playerManager.PlayerCount &&
                map.Conditions.All(x => x.Check(map)) &&
-               _entityManager.System<GameTicker>().IsMapEligible(map);
+               _entityManager.System<GameTicker>().IsMapEligible(map) &&
+               !_previousMaps.Contains(map.ID);
     }
 
     private bool TryLookupMap(string gameMap, [NotNullWhen(true)] out GameMapPrototype? map)
@@ -214,7 +215,7 @@ public sealed class GameMapManager : IGameMapManager
             .proto;
     }
 
-    private void EnqueueMap(string mapProtoName)
+    public void EnqueueMap(string mapProtoName)
     {
         _previousMaps.Enqueue(mapProtoName);
         while (_previousMaps.Count > _mapQueueDepth)

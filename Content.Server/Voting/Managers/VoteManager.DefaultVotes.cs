@@ -203,6 +203,7 @@ namespace Content.Server.Voting.Managers
                 {
                     if (_gameMapManager.TrySelectMapIfEligible(picked.ID))
                     {
+                        _gameMapManager.EnqueueMap(picked.ID);
                         ticker.UpdateInfoText();
                     }
                 }
