@@ -57,6 +57,9 @@ public sealed class EntityHeaterSystem : EntitySystem
 
     private void OnGetVerbs(EntityUid uid, EntityHeaterComponent comp, GetVerbsEvent<AlternativeVerb> args)
     {
+        if (!args.CanAccess || !args.CanInteract)
+            return;
+
         var setting = (int) comp.Setting;
         setting++;
         setting %= SettingCount;
