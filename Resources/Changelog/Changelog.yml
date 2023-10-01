@@ -1,10 +1,4 @@
 Entries:
-- author: Jesse
-  changes:
-  - {message: New chainsaw sprites, type: Add}
-  - {message: New chainsaw sounds. It goes vroom., type: Add}
-  id: 4442
-  time: '2023-08-05T04:49:56.0000000+00:00'
 - author: deltanedas
   changes:
   - {message: Dragons on expeditions do less damage now., type: Tweak}
@@ -2960,3 +2954,8 @@ Entries:
       Get them at your nearest cargo depot., type: Add}
   id: 4941
   time: '2023-10-01T20:49:10.0000000+00:00'
+- author: chromiumboy
+  changes:
+  - {message: Fix praying door hacking protections., type: Fix}
+  id: 4942
+  time: '2023-10-01T21:08:03.0000000+00:00'
