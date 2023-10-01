@@ -1,9 +1,4 @@
 Entries:
-- author: deltanedas
-  changes:
-  - {message: Dragons on expeditions do less damage now., type: Tweak}
-  id: 4443
-  time: '2023-08-05T07:02:07.0000000+00:00'
 - author: Phill101
   changes:
   - {message: The crew manifest is now a PDA cartridge program., type: Tweak}
@@ -2959,3 +2954,8 @@ Entries:
   - {message: Fix praying door hacking protections., type: Fix}
   id: 4942
   time: '2023-10-01T21:08:03.0000000+00:00'
+- author: Nairodian
+  changes:
+  - {message: Small firearms now fit in boots., type: Tweak}
+  id: 4943
+  time: '2023-10-01T21:23:41.0000000+00:00'
