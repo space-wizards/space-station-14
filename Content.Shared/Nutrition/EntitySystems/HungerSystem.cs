@@ -1,10 +1,9 @@
-﻿using Content.Shared.Alert;
+using Content.Shared.Alert;
 using Content.Shared.Damage;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Rejuvenate;
-using Robust.Shared.GameStates;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
@@ -24,37 +23,11 @@ public sealed class HungerSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<HungerComponent, ComponentGetState>(OnGetState);
-        SubscribeLocalEvent<HungerComponent, ComponentHandleState>(OnHandleState);
         SubscribeLocalEvent<HungerComponent, EntityUnpausedEvent>(OnUnpaused);
         SubscribeLocalEvent<HungerComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<HungerComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<HungerComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshMovespeed);
         SubscribeLocalEvent<HungerComponent, RejuvenateEvent>(OnRejuvenate);
-    }
-
-    private void OnGetState(EntityUid uid, HungerComponent component, ref ComponentGetState args)
-    {
-        args.State = new HungerComponentState(component.CurrentHunger,
-            component.BaseDecayRate,
-            component.ActualDecayRate,
-            component.LastThreshold,
-            component.CurrentThreshold,
-            component.StarvingSlowdownModifier,
-            component.NextUpdateTime);
-    }
-
-    private void OnHandleState(EntityUid uid, HungerComponent component, ref ComponentHandleState args)
-    {
-        if (args.Current is not HungerComponentState state)
-            return;
-        component.CurrentHunger = state.CurrentHunger;
-        component.BaseDecayRate = state.BaseDecayRate;
-        component.ActualDecayRate = state.ActualDecayRate;
-        component.LastThreshold = state.LastHungerThreshold;
-        component.CurrentThreshold = state.CurrentThreshold;
-        component.StarvingSlowdownModifier = state.StarvingSlowdownModifier;
-        component.NextUpdateTime = state.NextUpdateTime;
     }
 
     private void OnUnpaused(EntityUid uid, HungerComponent component, ref EntityUnpausedEvent args)

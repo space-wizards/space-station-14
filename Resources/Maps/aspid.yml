@@ -14112,7 +14112,7 @@ entities:
     - pos: -11.5,-26.5
       parent: 1
       type: Transform
-    - SecondsUntilStateChange: -66569.97
+    - SecondsUntilStateChange: -66676.36
       state: Closing
       type: Door
     - links:
@@ -14123,7 +14123,7 @@ entities:
     - pos: -11.5,-27.5
       parent: 1
       type: Transform
-    - SecondsUntilStateChange: -66569.97
+    - SecondsUntilStateChange: -66676.36
       state: Closing
       type: Door
     - links:
@@ -14134,7 +14134,7 @@ entities:
     - pos: -11.5,-28.5
       parent: 1
       type: Transform
-    - SecondsUntilStateChange: -66569.97
+    - SecondsUntilStateChange: -66676.36
       state: Closing
       type: Door
     - links:
@@ -14145,7 +14145,7 @@ entities:
     - pos: -11.5,-29.5
       parent: 1
       type: Transform
-    - SecondsUntilStateChange: -66569.97
+    - SecondsUntilStateChange: -66676.36
       state: Closing
       type: Door
     - links:
@@ -14188,7 +14188,7 @@ entities:
     - pos: 19.5,-38.5
       parent: 1
       type: Transform
-    - SecondsUntilStateChange: -65563.22
+    - SecondsUntilStateChange: -65669.61
       state: Closing
       type: Door
     - links:
@@ -14199,7 +14199,7 @@ entities:
     - pos: 14.5,-23.5
       parent: 1
       type: Transform
-    - SecondsUntilStateChange: -65585.89
+    - SecondsUntilStateChange: -65692.28
       state: Closing
       type: Door
     - links:
@@ -50595,6 +50595,13 @@ entities:
         - 0
         - 0
       type: EntityStorage
+- proto: ClosetChefFilled
+  entities:
+  - uid: 2695
+    components:
+    - pos: 8.5,0.5
+      parent: 1
+      type: Transform
 - proto: ClosetEmergencyFilledRandom
   entities:
   - uid: 4272
@@ -60334,7 +60341,7 @@ entities:
   entities:
   - uid: 9302
     components:
-    - pos: 8.325398,0.6884294
+    - pos: 8.309154,2.9839857
       parent: 1
       type: Transform
 - proto: DrinkMilkCarton
@@ -64561,7 +64568,7 @@ entities:
   entities:
   - uid: 9301
     components:
-    - pos: 8.655134,0.48492008
+    - pos: 8.65722,2.8053331
       parent: 1
       type: Transform
 - proto: FoodBoxPizzaFilled
@@ -90850,7 +90857,7 @@ entities:
       pos: 11.5,46.5
       parent: 1
       type: Transform
-    - SecondsUntilStateChange: -483947.1
+    - SecondsUntilStateChange: -484053.5
       state: Closing
       type: Door
   - uid: 8393
@@ -110272,12 +110279,6 @@ entities:
     components:
     - rot: 3.141592653589793 rad
       pos: -18.5,40.5
-      parent: 1
-      type: Transform
-  - uid: 8598
-    components:
-    - rot: 1.5707963267948966 rad
-      pos: 8.5,0.5
       parent: 1
       type: Transform
   - uid: 8890

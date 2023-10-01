@@ -192,11 +192,6 @@ namespace Content.Server.Kitchen.EntitySystems
 
                 foreach (var part in headSlots)
                 {
-                    if (!_bodySystem.OrphanPart(part.Id, part.Component))
-                    {
-                        continue;
-                    }
-
                     component.Storage.Insert(part.Id);
                     headCount++;
                 }
