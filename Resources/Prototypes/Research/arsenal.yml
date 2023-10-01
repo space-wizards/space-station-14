@@ -95,7 +95,6 @@
   cost: 2000
   recipeUnlocks:
   - ShellShotgunPractice
-  - CartridgeRifleRubber
   - MagazineBoxPistolPractice
   - MagazineBoxMagnumPractice
   - MagazineBoxLightRiflePractice
