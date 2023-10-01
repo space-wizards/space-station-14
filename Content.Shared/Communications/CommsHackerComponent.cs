@@ -29,8 +29,8 @@ public sealed partial class CommsHackerComponent : Component
 /// Generally some kind of mid-round minor antag, though you could make it call in scrubber backflow if you wanted to.
 /// You wouldn't do that, right?
 /// </summary>
-[Prototype("threat")]
-public sealed class ThreatPrototype : IPrototype
+[Prototype("ninjaHackingThreat")]
+public sealed class NinjaHackingThreatPrototype : IPrototype
 {
     [IdDataField]
     public string ID { get; private set; } = default!;
@@ -38,12 +38,12 @@ public sealed class ThreatPrototype : IPrototype
     /// <summary>
     /// Locale id for the announcement to be made from CentCom.
     /// </summary>
-    [DataField]
-    public string Announcement = default!;
+    [DataField(required: true)]
+    public LocId Announcement;
 
     /// <summary>
     /// The game rule for the threat to be added, it should be able to work when added mid-round otherwise this will do nothing.
     /// </summary>
-    [DataField]
-    public EntProtoId Rule = default!;
+    [DataField(required: true)]
+    public EntProtoId Rule;
 }
