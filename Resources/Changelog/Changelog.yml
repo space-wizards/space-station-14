@@ -1,9 +1,4 @@
 Entries:
-- author: astriloqua
-  changes:
-  - {message: People wont hear buckling and unbuckling sounds twice anymore., type: Fix}
-  id: 4435
-  time: '2023-08-04T22:24:21.0000000+00:00'
 - author: Errant
   changes:
   - {message: Gas tanks and jetpacks have reduced capacity and now need to be refilled
@@ -2963,3 +2958,8 @@ Entries:
   - {message: Made Space Cats lungs ROBUST (They now don't suffocate in space), type: Fix}
   id: 4934
   time: '2023-10-01T14:55:59.0000000+00:00'
+- author: TheShuEd
+  changes:
+  - {message: Added wide-spectrum anomaly locator., type: Add}
+  id: 4935
+  time: '2023-10-01T16:41:32.0000000+00:00'
