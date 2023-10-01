@@ -4,8 +4,7 @@
   description: job-description-hop
   playTimeTracker: JobHeadOfPersonnel
   requirements:
-    - !type:DepartmentTimeRequirement
-      department: Command
+    - !type:OverallPlaytimeRequirement
       time: 180000 # SS220-RoleTime
   weight: 20
   startingGear: HoPGear
