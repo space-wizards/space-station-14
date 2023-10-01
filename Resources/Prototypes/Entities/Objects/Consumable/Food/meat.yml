@@ -176,6 +176,10 @@
     conductivity: 0.44
     thickness: 0.004 # bacon is thin so faster to cook than a steak
     area: 0.0075 # ~5x15cm
+  - type: Construction
+    graph: Bacon
+    node: start
+    defaultTarget: bacon
 
 - type: entity
   name: raw bear meat
@@ -708,6 +712,9 @@
           Quantity: 5
         - ReagentId: Protein
           Quantity: 5
+  - type: Construction
+    graph: Bacon
+    node: bacon
 
 - type: entity
   name: cooked bear
