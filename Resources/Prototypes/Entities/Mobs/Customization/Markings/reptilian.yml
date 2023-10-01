@@ -255,7 +255,7 @@
     state: horns_myrsore
 
 - type: marking
-  id: LizardBighorn
+  id: LizardHornsBighorn
   bodyPart: HeadTop
   markingCategory: HeadTop
   speciesRestriction: [Reptilian]
