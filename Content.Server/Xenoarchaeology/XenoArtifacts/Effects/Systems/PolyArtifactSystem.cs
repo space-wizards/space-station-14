@@ -9,6 +9,7 @@ public sealed class PolyArtifactSystem : EntitySystem
 {
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly PolymorphSystem _poly = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -22,6 +23,7 @@ public sealed class PolyArtifactSystem : EntitySystem
         {
             if (HasComp<HumanoidAppearanceComponent>(target))
                 _poly.PolymorphEntity(target, "ArtifactMonkey");
+                _audio.PlayPvs(component.PolySound, uid);
         }
     }
 }

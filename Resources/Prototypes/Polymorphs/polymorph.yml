@@ -108,6 +108,7 @@
   id: ArtifactMonkey
   entity: MobMonkey
   forced: true
+  transferName: true
   allowRepeatedMorphs: true
   inventory: Transfer
   revertOnCrit: true
