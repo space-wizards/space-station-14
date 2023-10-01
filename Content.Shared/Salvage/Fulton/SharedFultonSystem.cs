@@ -113,14 +113,6 @@ public abstract partial class SharedFultonSystem : EntitySystem
         if (args.Target == null || args.Handled || !args.CanReach)
             return;
 
-        if (TryComp<ContainerManagerComponent>(uid: args.User, out var manager))
-        {
-            if (manager.ContainsEntity(args.Target.Value))
-            {
-                return;
-            }
-        }
-
         if (TryComp<FultonBeaconComponent>(args.Target, out var beacon))
         {
             if (!_foldable.IsFolded(args.Target.Value))
@@ -144,7 +136,7 @@ public abstract partial class SharedFultonSystem : EntitySystem
             return;
         }
 
-        if (!CanFulton(args.Target.Value, uid, component))
+        if (!CanFulton(args.Target.Value, uid,args.User, component))
         {
             _popup.PopupClient(Loc.GetString("fulton-invalid"), uid, uid);
             return;
@@ -183,10 +175,18 @@ public abstract partial class SharedFultonSystem : EntitySystem
         return;
     }
 
-    private bool CanFulton(EntityUid targetUid, EntityUid uid, FultonComponent component)
+    private bool CanFulton(EntityUid targetUid, EntityUid uid, EntityUid userUid, FultonComponent component)
     {
         if (Transform(targetUid).Anchored)
             return false;
+
+        if (TryComp<ContainerManagerComponent>(userUid, out var manager))
+        {
+            if (manager.ContainsEntity(targetUid))
+            {
+                return false;
+            }
+        }
 
         if (component.Whitelist?.IsValid(targetUid, EntityManager) != true)
         {
