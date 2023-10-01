@@ -1,11 +1,4 @@
 Entries:
-- author: Interrobang01
-  changes:
-  - {message: 'The Syndicate Disposable Turret is now approved for use by all syndicate
-      agents (with the exception of nuclear operatives), instead of those from a select
-      few jobs.', type: Tweak}
-  id: 4441
-  time: '2023-08-05T04:32:25.0000000+00:00'
 - author: Jesse
   changes:
   - {message: New chainsaw sprites, type: Add}
@@ -2961,3 +2954,9 @@ Entries:
     type: Add}
   id: 4940
   time: '2023-10-01T20:45:17.0000000+00:00'
+- author: Velcroboy
+  changes:
+  - {message: Nanotrasen suppliers now carry restocks for ChefVends and popular condiments.
+      Get them at your nearest cargo depot., type: Add}
+  id: 4941
+  time: '2023-10-01T20:49:10.0000000+00:00'
