@@ -206,7 +206,7 @@
         0: Alive
         180: Dead
     - type: Stamina
-      excess: 150
+      critThreshold: 150
     - type: DamageStateVisuals
       states:
         Alive:
