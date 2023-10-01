@@ -1,8 +1,6 @@
 using Content.Shared.Atmos;
 using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
-using Robust.Shared.Physics;
-using Robust.Shared.Physics.Components;
 
 namespace Content.Server.Temperature.Components;
 
@@ -18,7 +16,7 @@ public sealed partial class TemperatureComponent : Component
     /// Surface temperature which is modified by the environment.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public float CurrentTemperature { get; set; } = Atmospherics.T20C;
+    public float CurrentTemperature = Atmospherics.T20C;
 
     /// <summary>
     /// Internal temperature which is modified by surface temperature.
@@ -58,19 +56,6 @@ public sealed partial class TemperatureComponent : Component
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public float AtmosTemperatureTransferEfficiency = 0.1f;
-
-    [ViewVariables] public float HeatCapacity
-    {
-        get
-        {
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<PhysicsComponent>(Owner, out var physics) && physics.FixturesMass != 0)
-            {
-                return SpecificHeat * physics.FixturesMass;
-            }
-
-            return Atmospherics.MinimumHeatCapacity;
-        }
-    }
 
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public DamageSpecifier ColdDamage = new();
