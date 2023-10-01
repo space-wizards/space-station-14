@@ -7,11 +7,15 @@ using Robust.Shared.Timing;
 
 namespace Content.Server.NPC.Systems;
 
+/// <summary>
+/// Handles NPC which become aggressive after being attacked.
+/// </summary>
 public sealed class NPCRetaliationSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly NpcFactionSystem _factionException = default!;
     [Dependency] private readonly NpcFactionSystem _npcFaction = default!;
+
+    private readonly HashSet<EntityUid> _deAggroQueue = new();
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -48,7 +52,7 @@ public sealed class NPCRetaliationSystem : EntitySystem
         if (_npcFaction.IsEntityFriendly(uid, target))
             return false;
 
-        _factionException.AggroEntity(uid, target);
+        _npcFaction.AggroEntity(uid, target);
         if (component.AttackMemoryLength is { } memoryLength)
         {
             component.AttackMemories[target] = _timing.CurTime + memoryLength;
@@ -61,19 +65,25 @@ public sealed class NPCRetaliationSystem : EntitySystem
     {
         base.Update(frameTime);
 
-        var query = EntityQueryEnumerator<NPCRetaliationComponent, FactionExceptionComponent>();
-        while (query.MoveNext(out var uid, out var comp, out var factionException))
+        var query = EntityQueryEnumerator<NPCRetaliationComponent, FactionExceptionComponent, MetaDataComponent>();
+        while (query.MoveNext(out var uid, out var comp, out var factionException, out var metaData))
         {
+            _deAggroQueue.Clear();
+
             foreach (var ent in new ValueList<EntityUid>(comp.AttackMemories.Keys))
             {
                 if (_timing.CurTime < comp.AttackMemories[ent])
                     continue;
 
-                if (TerminatingOrDeleted(ent))
-                    comp.AttackMemories.Remove(ent);
+                if (TerminatingOrDeleted(ent, metaData))
+                    _deAggroQueue.Add(ent);
 
-                _factionException.DeAggroEntity(uid, ent, factionException);
-                comp.AttackMemories.Remove(ent);
+                _deAggroQueue.Add(ent);
+            }
+
+            foreach (var ent in _deAggroQueue)
+            {
+                _npcFaction.DeAggroEntity(uid, ent, factionException);
             }
         }
     }

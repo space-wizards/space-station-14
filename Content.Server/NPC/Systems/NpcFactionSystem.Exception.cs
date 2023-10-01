@@ -22,7 +22,14 @@ public sealed partial class NpcFactionSystem
 
     private void OnShutdown(EntityUid uid, FactionExceptionComponent component, ComponentShutdown args)
     {
-        foreach (var ent in component.Hostiles.Union(component.Ignored))
+        foreach (var ent in component.Hostiles)
+        {
+            if (!_trackerQuery.TryGetComponent(ent, out var trackerComponent))
+                continue;
+            trackerComponent.Entities.Remove(uid);
+        }
+
+        foreach (var ent in component.Ignored)
         {
             if (!_trackerQuery.TryGetComponent(ent, out var trackerComponent))
                 continue;
@@ -58,7 +65,7 @@ public sealed partial class NpcFactionSystem
     public IEnumerable<EntityUid> GetHostiles(EntityUid uid, FactionExceptionComponent? comp = null)
     {
         if (!Resolve(uid, ref comp, false))
-            return new HashSet<EntityUid>();
+            return Array.Empty<EntityUid>();
 
         return comp.Hostiles;
     }
@@ -96,7 +103,8 @@ public sealed partial class NpcFactionSystem
     }
 
     /// <summary>
-    /// Makes an entity always be considered hostile.
+    /// Makes an entity no longer be considered hostile, if it was.
+    /// Doesn't apply to regular faction hostilities.
     /// </summary>
     public void DeAggroEntity(EntityUid uid, EntityUid target, FactionExceptionComponent? comp = null)
     {
@@ -108,7 +116,8 @@ public sealed partial class NpcFactionSystem
     }
 
     /// <summary>
-    /// Makes a list of entities always be considered hostile.
+    /// Makes a list of entities no longer be considered hostile, if it was.
+    /// Doesn't apply to regular faction hostilities.
     /// </summary>
     public void AggroEntities(EntityUid uid, IEnumerable<EntityUid> entities, FactionExceptionComponent? comp = null)
     {
