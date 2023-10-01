@@ -30,7 +30,7 @@ public sealed class ShowHealthBarsSystem : EquipmentHudSystem<ShowHealthBarsComp
             _overlay.DamageContainers.Add(damageContainerId);
         }
 
-        if (!_overlayMan.HasOverlay(_overlay.GetType()))
+        if (!_overlayMan.HasOverlay<EntityHealthBarOverlay>())
         {
             _overlayMan.AddOverlay(_overlay);
         }
