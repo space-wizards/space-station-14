@@ -121,7 +121,7 @@ namespace Content.Client.HealthAnalyzer.UI
 
                 foreach (var type in group.DamageTypes)
                 {
-                    if (damageDict.TryGetValue(type, out var typeAmount))
+                    if (damageDict.TryGetValue(type, out var typeAmount) && typeAmount > 0)
                     {
                         // If damage types are allowed to belong to more than one damage group,
                         // they may appear twice here. Mark them as duplicate.
@@ -136,8 +136,7 @@ namespace Content.Client.HealthAnalyzer.UI
                             ("amount", typeAmount)
                         );
 
-                        if (typeAmount > 0)
-                            groupContainer.AddChild(CreateDiagnosticItemLabel(damageString));
+                        groupContainer.AddChild(CreateDiagnosticItemLabel(damageString.Insert(0, "- ")));
                     }
                 }
             }
