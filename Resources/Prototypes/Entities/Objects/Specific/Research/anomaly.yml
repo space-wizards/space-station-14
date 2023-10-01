@@ -85,7 +85,7 @@
     maximumDistance: 40
     minBeepInterval: 0.5
     maxBeepInterval: 0.5
-    
+
 - type: entity
   id: AnomalyLocatorWide
   parent: [ AnomalyLocatorWideUnpowered, PowerCellSlotSmallItem ]
@@ -94,7 +94,7 @@
   - type: PowerCellDraw
     drawRate: 1
     useRate: 0
-    
+
 - type: entity
   id: AnomalyLocatorWideEmpty
   parent: AnomalyLocatorWide
