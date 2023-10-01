@@ -1,0 +1,9 @@
+- type: damageModifierSet
+  id: Felinid # Ну вроде так мяу.
+  coefficients:
+    Blunt: 1.0
+    Piercing: 1.15
+    Slash: 1.30
+    Cold: 1.5
+    Heat: 2.0
+    Poison: 1.1

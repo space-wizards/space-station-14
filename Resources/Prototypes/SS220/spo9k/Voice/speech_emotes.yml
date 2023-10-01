@@ -1,0 +1,66 @@
+## vocal emotes
+- type: emote
+  id: Hiss
+  category: Vocal
+  chatMessages: [шипит.]
+  chatTriggers:
+    - шипит
+    - шипит.
+    - шипит!
+
+- type: emote
+  id: Meow
+  category: Vocal
+  chatMessages: [мяукает.]
+  chatTriggers:
+    - мяу
+    - мяукнул
+    - мяукнул.
+    - мяукнул!
+    - мяукнула
+    - мяукнула.
+    - мяукнула!
+    - мяукает
+    - мяукает.
+    - мяукает!
+
+- type: emote
+  id: Mew
+  category: Vocal
+  chatMessages: [мякает.] # spo9k: может, есть слово получше?
+  chatTriggers:
+    - мя
+    - мякает
+    - мякает.
+    - мякает!
+    - ня
+    - мякает?
+    - mews.
+    - mews!
+    - mewing
+    - mewed
+
+- type: emote
+  id: Growl
+  category: Vocal
+  chatMessages: [growls.]
+  chatTriggers:
+    - рычит
+    - ррр
+    - growl
+    - growls
+    - growls.
+    - growls!
+    - growling
+    - growled
+
+- type: emote
+  id: Purr
+  category: Vocal
+  chatMessages: [мурчит.]
+  chatTriggers:
+    - мур
+    - мурчит
+    - мурчит.
+    - мурчит!
+
