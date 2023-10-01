@@ -82,6 +82,12 @@ public sealed partial class LiquidAnomalyComponent : Component
     /// The name of the reagent that the anomaly produces.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadOnly)]
+    public string VisualEffectPrototype = "PuddleSparkle";
+
+    /// <summary>
+    /// The name of the reagent that the anomaly produces.
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadOnly)]
     public ProtoId<ReagentPrototype> Reagent = "Water";
     /// <summary>
     /// The next threshold beyond which the anomaly will change its reagent.

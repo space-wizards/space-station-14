@@ -45,13 +45,14 @@ public sealed class LiquidAnomalySystem : EntitySystem
 
     private void OnMapInit(EntityUid uid, LiquidAnomalyComponent component, MapInitEvent args)
     {
-        ChangeReagentType(uid, component);
+        RandomSelectReagentType(uid, component);
     }
 
     private void OnPulse(EntityUid uid, LiquidAnomalyComponent component, ref AnomalyPulseEvent args)
     {
         PulseScalableEffect(
             uid,
+            component,
             component.MaxSolutionGeneration * args.Severity,
             component.MaxSolutionInjection * args.Severity,
             component.InjectRadius,
@@ -62,6 +63,7 @@ public sealed class LiquidAnomalySystem : EntitySystem
     {
         PulseScalableEffect(
             uid,
+            component,
             component.SuperCriticalSolutionGeneration,
             component.SuperCriticalSolutionInjection,
             component.SuperCriticalInjectRadius,
@@ -76,31 +78,21 @@ public sealed class LiquidAnomalySystem : EntitySystem
         {
             component.NextChangeThreshold += component.ReagentChangeStep;
 
-            ChangeReagentType(uid, component);
+            RandomSelectReagentType(uid, component);
             return;
         }
     }
 
-    private void ChangeReagentType(EntityUid uid, LiquidAnomalyComponent component)
+    private void SetReagentType(EntityUid uid, LiquidAnomalyComponent component, string reagent)
     {
-        //Calculate possible chemicals
-        var chemicals = _proto.EnumeratePrototypes<ReagentPrototype>().Select(proto => proto.ID).ToHashSet();
-        foreach (var chem in component.BlacklistChemicals)
-        {
-            chemicals.Remove(chem);
-        }
-
-        if (chemicals.Count == 0) return;
-
-        var reagent = _random.Pick(chemicals);
-
         component.Reagent = reagent;
+
         var color = _proto.Index<ReagentPrototype>(reagent).SubstanceColor;
         _light.SetColor(uid, color);
 
         //Spawn Effect
         var xform = Transform(uid);
-        Spawn("PuddleSparkle", xform.Coordinates);
+        Spawn(component.VisualEffectPrototype, xform.Coordinates);
         _audio.PlayPvs(component.ChangeSound, uid);
 
         //Recolor entity
@@ -118,8 +110,25 @@ public sealed class LiquidAnomalySystem : EntitySystem
         _bloodstream.ChangeBloodReagent(uid, reagent);
     }
 
+    private void RandomSelectReagentType(EntityUid uid, LiquidAnomalyComponent component)
+    {
+        //Calculate possible chemicals
+        var chemicals = _proto.EnumeratePrototypes<ReagentPrototype>().Select(proto => proto.ID).ToHashSet();
+        foreach (var chem in component.BlacklistChemicals)
+        {
+            chemicals.Remove(chem);
+        }
+
+        if (chemicals.Count == 0) return;
+
+        var reagent = _random.Pick(chemicals);
+
+        SetReagentType(uid, component, reagent);
+    }
+
     private void PulseScalableEffect(
         EntityUid uid,
+        LiquidAnomalyComponent component,
         float solutionAmount,
         float maxInject,
         float injectRadius,
@@ -143,7 +152,7 @@ public sealed class LiquidAnomalySystem : EntitySystem
 
                 //Spawn Effect
                 var uidXform = Transform(ent);
-                Spawn("PuddleSparkle", uidXform.Coordinates);
+                Spawn(component.VisualEffectPrototype, uidXform.Coordinates);
             }
         }
 
@@ -158,8 +167,8 @@ public sealed class LiquidAnomalySystem : EntitySystem
     {
         if (args.NewMobState == MobState.Dead)
         {
+            Spawn(component.VisualEffectPrototype, Transform(uid).Coordinates);
             _anomaly.DoAnomalySupercriticalEvent(uid);
         }
     }
-
 }
