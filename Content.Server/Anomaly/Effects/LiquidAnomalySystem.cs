@@ -11,6 +11,8 @@ using Content.Server.Fluids.EntitySystems;
 using Robust.Shared.Prototypes;
 using Content.Shared.Sprite;
 using Content.Server.Body.Systems;
+using Content.Shared.Mobs;
+using Content.Shared.Mobs.Systems;
 
 namespace Content.Server.Anomaly.Effects;
 /// <summary>
@@ -26,6 +28,7 @@ public sealed class LiquidAnomalySystem : EntitySystem
     [Dependency] private readonly PuddleSystem _puddle = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly BloodstreamSystem _bloodstream = default!;
+    [Dependency] private readonly AnomalySystem _anomaly = default!;
 
     private EntityQuery<InjectableSolutionComponent> _injectableQuery;
     /// <inheritdoc/>
@@ -35,9 +38,11 @@ public sealed class LiquidAnomalySystem : EntitySystem
         SubscribeLocalEvent<LiquidAnomalyComponent, AnomalySupercriticalEvent>(OnSupercritical);
         SubscribeLocalEvent<LiquidAnomalyComponent, AnomalySeverityChangedEvent>(OnSeverityChanged);
         SubscribeLocalEvent<LiquidAnomalyComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<LiquidAnomalyComponent, MobStateChangedEvent>(OnMobStateChanged);
 
         _injectableQuery = GetEntityQuery<InjectableSolutionComponent>();
     }
+
     private void OnMapInit(EntityUid uid, LiquidAnomalyComponent component, MapInitEvent args)
     {
         ChangeReagentType(uid, component);
@@ -101,15 +106,11 @@ public sealed class LiquidAnomalySystem : EntitySystem
         //Recolor entity
         if (component.NeedRecolorEntity && TryComp<RandomSpriteComponent>(uid, out var randomSprite))
         {
-            var spawnedSprite = EnsureComp<RandomSpriteComponent>(uid);
             foreach (var ent in randomSprite.Selected)
             {
-                Log.Debug("Стейт: " + ent.Key + " : " + ent.Value);
                 var state = randomSprite.Selected[ent.Key];
                 state.Color = color;
                 randomSprite.Selected[ent.Key] = state;
-                Log.Debug("Установлен цвет аномалии: " + color);
-                Log.Debug("Новый стейт: " + ent.Key + " : " + ent.Value);
             }
             Dirty(uid, randomSprite);
         }
@@ -151,4 +152,14 @@ public sealed class LiquidAnomalySystem : EntitySystem
         solution.AddReagent(reagent, solutionAmount);
         _puddle.TrySpillAt(uid, solution, out _);
     }
+
+    //If the component is connected to a mob, When this mob dies, a supercritical effect is activated
+    private void OnMobStateChanged(EntityUid uid, LiquidAnomalyComponent component, MobStateChangedEvent args)
+    {
+        if (args.NewMobState == MobState.Dead)
+        {
+            _anomaly.DoAnomalySupercriticalEvent(uid);
+        }
+    }
+
 }
