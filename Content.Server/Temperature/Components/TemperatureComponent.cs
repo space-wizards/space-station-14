@@ -14,16 +14,13 @@ namespace Content.Server.Temperature.Components
     [RegisterComponent]
     public sealed partial class TemperatureComponent : Component
     {
-        [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("currentTemperature")]
+        [DataField, ViewVariables(VVAccess.ReadWrite)]
         public float CurrentTemperature { get; set; } = Atmospherics.T20C;
 
-        [DataField("heatDamageThreshold")]
-        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField, ViewVariables(VVAccess.ReadWrite)]
         public float HeatDamageThreshold = 360f;
 
-        [DataField("coldDamageThreshold")]
-        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField, ViewVariables(VVAccess.ReadWrite)]
         public float ColdDamageThreshold = 260f;
 
         /// <summary>
@@ -38,15 +35,13 @@ namespace Content.Server.Temperature.Components
         [ViewVariables(VVAccess.ReadWrite)]
         public float? ParentColdDamageThreshold;
 
-        [DataField("specificHeat")]
-        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField, ViewVariables(VVAccess.ReadWrite)]
         public float SpecificHeat = 50f;
 
         /// <summary>
-        ///     How well does the air surrounding you merge into your body temperature?
+        /// How well does the air surrounding you merge into your body temperature?
         /// </summary>
-        [DataField("atmosTemperatureTransferEfficiency")]
-        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField, ViewVariables(VVAccess.ReadWrite)]
         public float AtmosTemperatureTransferEfficiency = 0.1f;
 
         [ViewVariables] public float HeatCapacity
@@ -62,12 +57,10 @@ namespace Content.Server.Temperature.Components
             }
         }
 
-        [DataField("coldDamage")]
-        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField, ViewVariables(VVAccess.ReadWrite)]
         public DamageSpecifier ColdDamage = new();
 
-        [DataField("heatDamage")]
-        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField, ViewVariables(VVAccess.ReadWrite)]
         public DamageSpecifier HeatDamage = new();
 
         /// <summary>
@@ -75,13 +68,13 @@ namespace Content.Server.Temperature.Components
         ///
         ///     Okay it genuinely reaches this basically immediately for a plasma fire.
         /// </summary>
-        [DataField("damageCap")]
-        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField, ViewVariables(VVAccess.ReadWrite)]
         public FixedPoint2 DamageCap = FixedPoint2.New(8);
 
         /// <summary>
         ///     Used to keep track of when damage starts/stops. Useful for logs.
         /// </summary>
+        [DataField]
         public bool TakingDamage = false;
     }
 }
