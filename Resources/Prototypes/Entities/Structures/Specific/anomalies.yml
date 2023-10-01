@@ -257,7 +257,7 @@
         Slash: 10
   - type: PointLight
     radius: 4.0
-    energy: 1.5
+    energy: 3.5
     color: "#bbbbbb"
   - type: Fixtures
     fixtures:
@@ -289,196 +289,13 @@
     # OP Medical        
     - AmbuzolPlus
     - Siderlac
-    - Stimulants
-    #Food - Group Blacklist (and move all food into groud)
-    - Flour             
-    - Cornmeal 
-    - Oats
-    - Enzyme
-    - Blackpepper
-    - Vinegar
-    - Rice
-    - CocoaPowder 
-    - Butter
-    - Nutriment 
-    - Sugar 
-    - Astrotame
-    - BbqSauce
-    - Cornoil
-    - Frostoil
-    - HorseradishSauce
-    - Hotsauce
-    - Ketchup
-    - Ketchunaise
-    - Mayo
-    - Mustard
-    - Vinaigrette
-    - Soysauce
-    - TableSalt
-    # Drinks To Do - Group Blacklist (and move all drinks into groud)
-    - Absinthe
-    - Ale
-    - Beer
-    - BlueCuracao
-    - Cognac
-    - DeadRum
-    - Ethanol
-    - Gin
-    - CoffeeLiqueur
-    - MelonLiquor
-    - NTCahors
-    - PoisonWine
-    - Rum
-    - Sake
-    - Tequila
-    - Vermouth
-    - Vodka
-    - Whiskey
-    - Champagne
-    - AcidSpit
-    - AlliesCocktail
-    - Aloe
-    - Amasec
-    - Andalusia
-    - Antifreeze
-    - AtomicBomb
-    - B52
-    - BahamaMama
-    - BananaHonk
-    - Barefoot
-    - BeepskySmash
-    - BlackRussian
-    - BloodyMary
-    - Booger
-    - BraveBull
-    - CubaLibre
-    - DemonsBlood
-    - DevilsKiss
-    - DoctorsDelight
-    - DriestMartini
-    - ErikaSurprise
-    - GargleBlaster
-    - GinFizz
-    - GinTonic
-    - Goldschlager
-    - Grog
-    - HippiesDelight
-    - Hooch
-    - IcedBeer
-    - IrishCarBomb
-    - IrishCream
-    - IrishCoffee
-    - LongIslandIcedTea
-    - Manhattan
-    - ManhattanProject
-    - ManlyDorf
-    - Margarita
-    - Martini
-    - Mead
-    - Mojito
-    - Moonshine
-    - Patron
-    - RedMead
-    - Sbiten
-    - ScrewdriverCocktail
-    - CogChamp
-    - Silencer
-    - Singulo
-    - SnowWhite
-    - SuiDream
-    - SyndicateBomb
-    - TequilaSunrise
-    - ThreeMileIsland
-    - ToxinsSpecial
-    - VodkaMartini
-    - VodkaTonic
-    - WhiskeyCola
-    - WhiskeySoda
-    - WhiteRussian
-    - Coffee
-    - Cream
-    - CafeLatte
-    - GreenTea
-    - Grenadine
-    - IcedCoffee
-    - IcedGreenTea
-    - IcedTea
-    - JuiceBerryPoison
-    - Lemonade
-    - Milk
-    - MilkGoat
-    - MilkSoy
-    - MilkSpoiled
-    - Nothing
-    - NuclearCola
-    - SodaWater
-    - SoyLatte
-    - Tea
-    - TonicWater
-    - Water
-    - Ice
-    - DryRamen
-    - HotRamen
-    - Pilk
-    - Posca
-    - KiraSpecial
-    - Rewriter
-    - TheMartinez
-    - WhiteGilgamesh
-    - Cola
-    - ChangelingSting
-    - DrGibb
-    - EnergyDrink
-    - GrapeSoda
-    - IceCream
-    - LemonLime
-    - PwrGame
-    - RootBeer
-    - RootBeerFloat
-    - SpaceMountainWind
-    - SpaceUp
-    - Starkist
-    - FourteenLoko
-    - ShamblersJuice
-    - BaseDrink
-    - BaseAlcohol
+    - Omnizine
     # Fun Category
     - Fiber             
     - GroundBee
-    # Boring Botania
-    - EZNutrient
-    - Left4Zed
-    - Ammonia
-    - PlantBGone
-    - WeedKiller
-    - Diethylamine
-    # Boring elemets
-    - Aluminium         
-    - Carbon
-    - Chlorine
-    - Copper
-    - Fluorine
-    - Gold
-    - Hydrogen
-    - Iodine
-    - Iron
-    - Lithium
-    - Mercury
-    - Phosphorus
-    - Radium
-    - Silicon
-    - Silver
-    - Sulfur
-    - Sodium
-    - Uranium
-    - Zinc
-    # Boring Chemicals
-    - Acetone           
-    - Phenol
-    - Charcoal
-    - Ash
     - ZombieBlood   # AmbusolPlus again
     - Ichor
+    - Stimulants
     # Gases - Group Blacklist (and move all gases into groud)
     - Oxygen
     - Plasma
@@ -488,6 +305,56 @@
     - Miasma
     - NitrousOxide
     - Frezon
+    # base
+    - BasePyrotechnic
+    dangerousChemicals:
+    - Toxin
+    - CarpoToxin
+    - ChloralHydrate
+    - Mold
+    - PolytrinicAcid
+    - FerrochromicAcid
+    - FluorosulfuricAcid
+    - SulfuricAcid
+    - UnstableMutagen
+    - HeartbreakerToxin
+    - MindbreakerToxin
+    - Histamine
+    - Theobromine
+    - Amatoxin
+    - Allicin
+    - Thermite
+    - Napalm
+    - Phlogiston
+    - ChlorineTrifluoride
+    - FoamingAgent
+    - Fluorosurfactant
+    usefulChemicals:
+    - Cryptobiolin
+    - Dylovene
+    - Arithrazine
+    - Bicaridine
+    - Cryoxadone
+    - Dermaline
+    - Dexalin
+    - DexalinPlus
+    - Epinephrine
+    - Leporazine
+    - Ambuzol
+    - Tricordrazine
+    
+    funChemicals:
+    - Desoxyephedrine
+    - Ephedrine
+    - THC
+    - THCOil
+    - SpaceDrugs
+    - Nocturine
+    - MuteToxin
+    - NorepinephricAcid
+    - Pax
+    - Ipecac
+    - Cognizine
   - type: Physics
     bodyType: KinematicController
     linearDamping: 0

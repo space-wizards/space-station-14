@@ -1,7 +1,7 @@
 - type: entity
   name: liquid elemental
   id: LiquidElemental
-  suffix: Water
+  suffix: RandomLiquid
   parent: SimpleSpaceMobBase
   description: A living formless liquid.
   components:
@@ -31,8 +31,8 @@
       enum.DamageStateVisualLayers.Base:
         alive: "#ffffff"
   - type: PointLight
-    radius: 1.0
-    energy: 1.5
+    radius: 2.0
+    energy: 3.5
     color: "#75b1f0" # Edited through the LiquidAnomalySystem
   - type: Fixtures
     fixtures:
@@ -109,3 +109,34 @@
     superCriticalSolutionGeneration: 100
     injectRadius: 2
     superCriticalInjectRadius: 6
+    weightSpreadDangerous: "6.0, 8.0"
+    weightSpreadFun: "0.0, 0.0"
+    weightSpreadUseful: "0.0, 0.0"
+    weightSpreadOther: "4.0, 2.0"
+    blacklistChemicals: 
+    # With a limit of 15u injections are too strong
+    - Romerol           
+    - Bungotoxin
+    - VentCrud
+    - Lexorin
+    # OP Medical        
+    - AmbuzolPlus
+    - Siderlac
+    - Omnizine
+    # Fun Category
+    - Fiber             
+    - GroundBee
+    - ZombieBlood   # AmbusolPlus again
+    - Ichor
+    - Stimulants
+    # Gases
+    - Oxygen
+    - Plasma
+    - Tritium
+    - CarbonDioxide
+    - Nitrogen
+    - Miasma
+    - NitrousOxide
+    - Frezon
+    # base
+    - BasePyrotechnic
