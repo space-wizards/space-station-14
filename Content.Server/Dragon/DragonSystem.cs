@@ -203,7 +203,7 @@ public sealed partial class DragonSystem : EntitySystem
     private void Roar(EntityUid uid, DragonComponent comp)
     {
         if (comp.SoundRoar != null)
-            _audio.Play(comp.SoundRoar, Filter.Pvs(uid, 4f, EntityManager), uid, true);
+            _audio.PlayPvs(comp.SoundRoar, uid);
     }
 
     /// <summary>
