@@ -56,11 +56,26 @@ public enum HarvestType : byte
 [DataDefinition]
 public partial struct SeedChemQuantity
 {
+    /// <summary>
+    /// Minimum amount of chemical that is added to produce, regardless of the potency
+    /// </summary>
     [DataField("Min")] public int Min;
-    [DataField("Max")] public int Max;
-    [DataField("PotencyDivisor")] public int PotencyDivisor;
-    [DataField("Inherent")] public bool Inherent = true;
 
+    /// <summary>
+    /// Maximum amount of chemical that can be produced after taking plant potency into account.
+    /// </summary>
+    [DataField("Max")] public int Max;
+
+    /// <summary>
+    /// When chemicals are added to produce, the potency of the seed is divided with this value. Final chemical amount is the result plus the `Min` value.
+    /// Example: PotencyDivisor of 20 with seed potency of 55 results in 2.75, 55/20 = 2.75. If minimum is 1 then final result will be 3.75 of that chemical, 55/20+1 = 3.75.
+    /// </summary>
+    [DataField("PotencyDivisor")] public int PotencyDivisor;
+
+    /// <summary>
+    /// Inherent chemical is one that is NOT result of mutation or crossbreeding. These chemicals are removed if species mutation is executed.
+    /// </summary>
+    [DataField("Inherent")] public bool Inherent = true;
 }
 
 // TODO reduce the number of friends to a reasonable level. Requires ECS-ing things like plant holder component.
@@ -296,6 +311,10 @@ public partial class SeedData
         return newSeed;
     }
 
+
+    /// <summary>
+    /// Handles copying most species defining data from 'other' to this seed while keeping the accumulated mutations intact.
+    /// </summary>
     public SeedData SpeciesChange(SeedData other)
     {
         var newSeed = new SeedData
@@ -352,11 +371,13 @@ public partial class SeedData
             Unique = true,
         };
 
+        // Adding the new chemicals from the new species.
         foreach (var otherChem in other.Chemicals)
         {
             Chemicals.TryAdd(otherChem.Key, otherChem.Value);
         }
 
+        // Removing the inherent chemicals from the old species. Leaving mutated/crossbread ones intact.
         foreach (var originalChem in Chemicals)
         {
             if (!other.Chemicals.ContainsKey(originalChem.Key) && originalChem.Value.Inherent)

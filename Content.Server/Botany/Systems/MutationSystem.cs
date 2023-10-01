@@ -298,7 +298,6 @@ public sealed class MutationSystem : EntitySystem
         }
 
         seed = seed.SpeciesChange(protoSeed);
-
     }
 
     private Color RandomColor(Color color, int bits, int totalbits, float mult)
