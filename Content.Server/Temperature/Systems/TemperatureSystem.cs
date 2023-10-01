@@ -10,8 +10,8 @@ using Content.Shared.Inventory;
 using Content.Shared.Rejuvenate;
 using Content.Shared.Temperature;
 using Robust.Server.GameObjects;
-using Robust.Server.Physics;
-using Robust.Server.Physics.Components;
+using Robust.Shared.Physics;
+using Robust.Shared.Physics.Components;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,11 +41,12 @@ public sealed class TemperatureSystem : EntitySystem
     {
         SubscribeLocalEvent<TemperatureComponent, OnTemperatureChangeEvent>(EnqueueDamage);
         SubscribeLocalEvent<TemperatureComponent, AtmosExposedUpdateEvent>(OnAtmosExposedUpdate);
-        SubscribeLocalEvent<TemperatureComponent, MapInitEvent>(OnInit);
         SubscribeLocalEvent<TemperatureComponent, RejuvenateEvent>(OnRejuvenate);
         SubscribeLocalEvent<AlertsComponent, OnTemperatureChangeEvent>(ServerAlert);
         SubscribeLocalEvent<TemperatureProtectionComponent, InventoryRelayedEvent<ModifyChangedTemperatureEvent>>(
             OnTemperatureChangeAttempt);
+
+        SubscribeLocalEvent<InternalTemperatureComponent, MapInitEvent>(OnInit);
 
         // Allows overriding thresholds based on the parent's thresholds.
         SubscribeLocalEvent<TemperatureComponent, EntParentChangedMessage>(OnParentChange);
@@ -59,6 +60,34 @@ public sealed class TemperatureSystem : EntitySystem
     {
         base.Update(frameTime);
 
+        // conduct heat from the surface to the inside of entities with internal temperatures
+        var query = EntityQueryEnumerator<InternalTemperatureComponent, TemperatureComponent>();
+        while (query.MoveNext(out var uid, out var comp, out var temp))
+        {
+            // don't do anything if they equalised
+            var diff = Math.Abs(temp.CurrentTemperature - comp.Temperature);
+            if (diff < 0.1f)
+                continue;
+
+            // heat flow in W/m^2 as per fourier's law in 1D.
+            var q = comp.Conductivity * diff / comp.Thickness;
+
+            // convert to J then K
+            var joules = q * comp.Area * frameTime;
+            var degrees = joules / GetHeatCapacity(uid, temp);
+            if (temp.CurrentTemperature < comp.Temperature)
+                degrees *= -1;
+
+            // exchange heat between inside and surface
+            comp.Temperature += degrees;
+            ForceChangeTemperature(uid, temp.CurrentTemperature - degrees, temp);
+        }
+
+        UpdateDamage(frameTime);
+    }
+
+    private void UpdateDamage(float frameTime)
+    {
         _accumulatedFrametime += frameTime;
 
         if (_accumulatedFrametime < UpdateInterval)
@@ -143,9 +172,12 @@ public sealed class TemperatureSystem : EntitySystem
         return comp.SpecificHeat * physics.FixturesMass;
     }
 
-    private void OnMapInit(EntityUid uid, TemperatureComponent comp, MapInitEvent args)
+    private void OnInit(EntityUid uid, InternalTemperatureComponent comp, MapInitEvent args)
     {
-        comp.InternalTemperature = comp.CurrentTemperature;
+        if (!TryComp<TemperatureComponent>(uid, out var temp))
+            return;
+
+        comp.Temperature = temp.CurrentTemperature;
     }
 
     private void OnRejuvenate(EntityUid uid, TemperatureComponent comp, RejuvenateEvent args)

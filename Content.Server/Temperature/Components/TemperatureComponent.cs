@@ -18,18 +18,6 @@ public sealed partial class TemperatureComponent : Component
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public float CurrentTemperature = Atmospherics.T20C;
 
-    /// <summary>
-    /// Internal temperature which is modified by surface temperature.
-    /// This gets set to <see cref="CurrentTemperature"/> on mapinit.
-    /// </summary>
-    /// <remarks>
-    /// Currently this is only used for cooking but metabolic functions could use it too.
-    /// Too high? Suffering heatstroke, start sweating to cool off and increase thirst.
-    /// Too cold? Suffering hypothermia, shiver emote every so often to warm up and increase hunger.
-    /// </remarks>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public float InternalTemperature;
-
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public float HeatDamageThreshold = 360f;
 
@@ -48,6 +36,9 @@ public sealed partial class TemperatureComponent : Component
     [ViewVariables(VVAccess.ReadWrite)]
     public float? ParentColdDamageThreshold;
 
+    /// <summary>
+    /// How many joules a degree of temperature is worth.
+    /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public float SpecificHeat = 50f;
 
