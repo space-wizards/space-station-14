@@ -175,7 +175,7 @@ public sealed class GameMapManager : IGameMapManager
                map.MinPlayers <= _playerManager.PlayerCount &&
                map.Conditions.All(x => x.Check(map)) &&
                _entityManager.System<GameTicker>().IsMapEligible(map) &&
-               !_previousMaps.Contains(map.ID);
+               (!_previousMaps.Contains(map.ID) || !_mapRotationEnabled);
     }
 
     private bool TryLookupMap(string gameMap, [NotNullWhen(true)] out GameMapPrototype? map)
