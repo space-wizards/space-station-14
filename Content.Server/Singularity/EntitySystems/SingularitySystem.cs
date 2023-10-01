@@ -236,7 +236,14 @@ public sealed class SingularitySystem : SharedSingularitySystem
 
         MetaDataComponent? metaData = null;
         if (Resolve(uid, ref metaData) && metaData.EntityLifeStage >= EntityLifeStage.Terminating)
-            _audio.PlayPvs(comp.DissipationSound, uid);
+        {
+            var xform = Transform(uid);
+            var coordinates = xform.Coordinates;
+
+            // I feel like IsValid should be checking this or something idk.
+            if (!TerminatingOrDeleted(coordinates.EntityId))
+                _audio.PlayPvs(comp.DissipationSound, coordinates);
+        }
     }
 
     /// <summary>

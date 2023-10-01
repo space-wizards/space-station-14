@@ -13,6 +13,7 @@ using Robust.Shared.Utility;
 using System.Linq;
 using System.Numerics;
 using Robust.Client.GameObjects;
+using Robust.Shared.Player;
 
 namespace Content.Client.Audio;
 //TODO: This is using a incomplete version of the whole "only play nearest sounds" algo, that breaks down a bit should the ambient sound cap get hit.
@@ -43,7 +44,11 @@ public sealed class AmbientSoundSystem : SharedAmbientSoundSystem
     private TimeSpan _targetTime = TimeSpan.Zero;
     private float _ambienceVolume = 0.0f;
 
-    private static AudioParams _params = AudioParams.Default.WithVariation(0.01f).WithLoop(true).WithAttenuation(Attenuation.LinearDistance);
+    private static AudioParams _params = AudioParams.Default
+        .WithVariation(0.01f)
+        .WithLoop(true)
+        .WithAttenuation(Attenuation.LinearDistance)
+        .WithMaxDistance(7f);
 
     /// <summary>
     /// How many times we can be playing 1 particular sound at once.
@@ -299,7 +304,7 @@ public sealed class AmbientSoundSystem : SharedAmbientSoundSystem
                     .WithPlayOffset(_random.NextFloat(0.0f, 100.0f))
                     .WithMaxDistance(comp.Range);
 
-                var stream = _audio.PlayPvs(comp.Sound, uid, audioParams);
+                var stream = _audio.PlayEntity(comp.Sound, Filter.Local(), uid, false, audioParams);
 
                 _playingSounds[comp] = (stream.Value.Entity, comp.Sound, key);
                 playingCount++;
