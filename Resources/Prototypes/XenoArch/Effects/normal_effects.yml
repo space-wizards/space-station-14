@@ -406,6 +406,13 @@
   - type: EmpArtifact
 
 - type: artifactEffect
+  id: EffectPolyMonkey
+  targetDepth: 2
+  effectHint: artifact-effect-hint-polymorph
+  components:
+  - type: PolyArtifact
+
+- type: artifactEffect
   id: EffectHealAll
   targetDepth: 3
   effectHint: artifact-effect-hint-environment
@@ -547,10 +554,3 @@
     maxSpawns: 1
     spawns:
     - id: Singularity
-
-- type: artifactEffect
-  id: EffectPolyMonkey
-  targetDepth: 2
-  effectHint: artifact-effect-hint-polymorph
-  components:
-  - type: PolyArtifact
