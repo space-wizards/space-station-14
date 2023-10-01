@@ -2413,7 +2413,7 @@
         Base: dead
   - type: Butcherable
     spawned:
-    - id: FoodMeat
+    - id: FoodMeatBacon
       amount: 6
   - type: Grammar
     attributes:
