@@ -1,0 +1,93 @@
+- type: entity
+  noSpawn: true
+  parent: BaseMail
+  id: MailMedicalBasicSupplies
+  suffix: basicmedical
+  components:
+  - type: Mail
+    contents:
+    - id: Brutepack
+      maxAmount: 2
+    - id: Ointment
+      maxAmount: 2
+    - id: Gauze
+      maxAmount: 2
+
+- type: entity
+  noSpawn: true
+  parent: BaseMail
+  id: MailMedicalChemistrySupplement
+  suffix: chemsupp
+  components:
+  - type: Mail
+    contents:
+    - id: LargeBeaker
+      orGroup: Beaker
+    - id: Beaker
+      maxAmount: 3
+      orGroup: Beaker
+    - id: Syringe
+      maxAmount: 3
+
+- type: entity
+  noSpawn: true
+  parent: BaseMail
+  id: MailMedicalEmergencyPens
+  suffix: medipens
+  components:
+  - type: Mail
+    contents:
+    - id: EmergencyMedipen
+      maxAmount: 3
+
+- type: entity
+  noSpawn: true
+  parent: BaseMail
+  id: MailMedicalMedicinePills
+  suffix: medicinepills
+  components:
+  - type: Mail
+    contents:
+    - id: PillTricordrazine
+      maxAmount: 2
+    - id: PillDylovene
+      maxAmount: 2
+    - id: PillKelotane
+      maxAmount: 2
+
+- type: entity
+  noSpawn: true
+  parent: BaseMail
+  id: MailMedicalSheetPlasma
+  suffix: sheetplasma
+  components:
+  - type: Mail
+    contents:
+    - id: SheetPlasma1
+
+#- type: entity
+#  noSpawn: true
+#  parent: BaseMail
+#  id: MailMedicalSpaceacillin
+#  suffix: spaceacillin
+#  components:
+#  - type: Mail
+#    contents:
+#    - id: SyringeSpaceacillin
+#      maxAmount: 3
+# Awaiting diseases
+
+- type: entity
+  noSpawn: true
+  parent: BaseMail
+  id: MailMedicalStabilizers
+  suffix: stabilizers
+  components:
+  - type: Mail
+    contents:
+    - id: PillDexalin
+      maxAmount: 2
+    - id: SyringeInaprovaline
+      maxAmount: 2
+    - id: SyringeTranexamicAcid
+      maxAmount: 2

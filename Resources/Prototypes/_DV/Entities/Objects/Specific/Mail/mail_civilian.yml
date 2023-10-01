@@ -1,0 +1,195 @@
+- type: entity
+  noSpawn: true
+  parent: BaseMail
+  id: MailBotanistChemicalBottles
+  suffix: botanistchemicals
+  components:
+  - type: Mail
+    contents:
+    - id: RobustHarvestChemistryBottle
+      orGroup: Chemical
+      prob: 0.6
+    - id: WeedSpray
+      orGroup: Chemical
+      prob: 0.4
+
+- type: entity
+  noSpawn: true
+  parent: BaseMail
+  id: MailBotanistMutagen
+  suffix: mutagen
+  components:
+  - type: Mail
+    isFragile: true
+    isPriority: true
+    contents:
+    - id: UnstableMutagenChemistryBottle
+
+- type: entity
+  noSpawn: true
+  parent: BaseMail
+  id: MailBotanistSeeds
+  suffix: seeds
+  components:
+  - type: Mail
+    contents:
+    - id: AloeSeeds
+      orGroup: Seeds
+    - id: AmbrosiaVulgarisSeeds
+      orGroup: Seeds
+    - id: AppleSeeds
+      orGroup: Seeds
+    - id: BananaSeeds
+      orGroup: Seeds
+    - id: CarrotSeeds
+      orGroup: Seeds
+    - id: ChanterelleSeeds
+      orGroup: Seeds
+    - id: ChiliSeeds
+      orGroup: Seeds
+    - id: CornSeeds
+      orGroup: Seeds
+    - id: EggplantSeeds
+      orGroup: Seeds
+    - id: GalaxythistleSeeds
+      orGroup: Seeds
+    - id: LemonSeeds
+      orGroup: Seeds
+    - id: LingzhiSeeds
+      orGroup: Seeds
+    - id: OatSeeds
+      orGroup: Seeds
+    - id: OnionSeeds
+      orGroup: Seeds
+    - id: PoppySeeds
+      orGroup: Seeds
+    - id: PotatoSeeds
+      orGroup: Seeds
+    - id: SugarcaneSeeds
+      orGroup: Seeds
+    - id: TomatoSeeds
+      orGroup: Seeds
+    - id: TowercapSeeds
+      orGroup: Seeds
+    - id: WheatSeeds
+      orGroup: Seeds
+
+- type: entity
+  noSpawn: true
+  parent: BaseMail
+  id: MailClownGildedBikeHorn
+  suffix: honk
+  components:
+  - type: Mail
+    isFragile: true
+    contents:
+    - id: BikeHornInstrument
+
+- type: entity
+  noSpawn: true
+  parent: BaseMail
+  id: MailClownHonkSupplement
+  suffix: honk
+  components:
+  - type: Mail
+    isFragile: true
+    contents:
+    - id: BikeHorn
+    - id: FoodPieBananaCream
+    - id: FoodBanana
+
+- type: entity
+  noSpawn: true
+  parent: BaseMail
+  id: MailHoPBureaucracy
+  suffix: hoppaper
+  components:
+  - type: Mail
+    contents:
+    - id: Paper
+      maxAmount: 3
+
+- type: entity
+  noSpawn: true
+  parent: BaseMail
+  id: MailHoPSupplement
+  suffix: hopsupplement
+  components:
+  - type: Mail
+    contents:
+    - id: ClearPDA
+    - id: ClothingHeadsetGrey
+    - id: Paper
+
+- type: entity
+  noSpawn: true
+  parent: BaseMail
+  id: MailMimeArtsCrafts
+  suffix: artscrafts
+  components:
+  - type: Mail
+    contents:
+    - id: CrayonBox
+    - id: Paper
+      maxAmount: 3
+
+- type: entity
+  noSpawn: true
+  parent: BaseMail
+  id: MailMimeBlankBook
+  suffix: blankbook
+  components:
+  - type: Mail
+    contents:
+      - id: BookRandom
+
+- type: entity
+  noSpawn: true
+  parent: BaseMail
+  id: MailMimeBottleOfNothing
+  suffix: bottleofnothing
+  components:
+  - type: Mail
+    contents:
+      - id: DrinkBottleOfNothingFull
+
+- type: entity
+  noSpawn: true
+  parent: BaseMail
+  id: MailMusicianInstrumentSmall
+  suffix: instrument-small
+  components:
+  - type: Mail
+    isFragile: true
+    contents:
+    - id: FluteInstrument
+      orGroup: Instrument
+    - id: HarmonicaInstrument
+      orGroup: Instrument
+    - id: OcarinaInstrument
+      orGroup: Instrument
+    - id: PanFluteInstrument
+      orGroup: Instrument
+    - id: RecorderInstrument
+      orGroup: Instrument
+
+- type: entity
+  noSpawn: true
+  parent: BaseMail
+  id: MailPassengerMoney
+  suffix: passengermoney
+  components:
+  - type: Mail
+    contents:
+    - id: SpaceCash100
+      orGroup: Cash
+      prob: 0.1
+      maxAmount: 10
+    - id: SpaceCash500
+      orGroup: Cash
+      prob: 0.3
+      maxAmount: 5
+    - id: SpaceCash1000
+      orGroup: Cash
+      prob: 0.6
+      maxAmount: 3

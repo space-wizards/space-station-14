@@ -1,0 +1,107 @@
+- type: entity
+  parent: BaseItem
+  abstract: true
+  id: BaseMail
+  name: mail-item-name-unaddressed
+  components:
+  - type: Item
+    size: 20
+  - type: Mail
+  - type: AccessReader
+  - type: Sprite
+    sprite: Nyanotrasen/Objects/Specific/Mail/mail.rsi
+    layers:
+    - state: icon
+      map: ["enum.MailVisualLayers.Icon"]
+    - state: postmark
+    - state: fragile
+      map: ["enum.MailVisualLayers.FragileStamp"]
+      visible: false
+    - map: ["enum.MailVisualLayers.JobStamp"]
+      sprite: Interface/Misc/job_icons.rsi
+      scale: 0.5, 0.5
+      offset: 0.275, 0.2
+    - state: locked
+      map: ["enum.MailVisualLayers.Lock"]
+    - state: priority
+      map: ["enum.MailVisualLayers.PriorityTape"]
+      visible: false
+      shader: unshaded
+    - state: broken
+      map: ["enum.MailVisualLayers.Breakage"]
+      visible: false
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.MailVisuals.IsTrash:
+        enum.MailVisualLayers.Icon:
+          True:
+            state: trash
+          False:
+            state: icon
+      enum.MailVisuals.IsLocked:
+        enum.MailVisualLayers.Lock:
+          True:
+            visible: true
+          False:
+            visible: false
+      enum.MailVisuals.IsFragile:
+        enum.MailVisualLayers.FragileStamp:
+          True:
+            visible: true
+          False:
+            visible: false
+      enum.MailVisuals.IsPriority:
+        enum.MailVisualLayers.PriorityTape:
+          True:
+            visible: true
+          False:
+            visible: false
+      enum.MailVisuals.IsPriorityInactive:
+        enum.MailVisualLayers.PriorityTape:
+          True:
+            shader: shaded
+            state: priority_inactive
+          False:
+            shader: unshaded
+            state: priority
+      enum.MailVisuals.IsBroken:
+        enum.MailVisualLayers.Breakage:
+          True:
+            visible: true
+          False:
+            visible: false
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 5
+        triggersOnce: true
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Breakage" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 40
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Speech
+  - type: DamageOnLand
+    damage:
+      types:
+        Blunt: 10
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Blunt: 5
+
+# This empty parcel is allowed to exist and evade the tests for the admin
+# mailto command.
+- type: entity
+  noSpawn: true
+  parent: BaseMail
+  id: MailAdminFun
+  suffix: adminfun

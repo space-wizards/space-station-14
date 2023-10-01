@@ -1,0 +1,9 @@
+- type: entity
+  noSpawn: true
+  parent: BaseMail
+  id: MailCommandPinpointerNuclear
+  suffix: pinpointernuclear
+  components:
+  - type: Mail
+    contents:
+    - id: PinpointerNuclear

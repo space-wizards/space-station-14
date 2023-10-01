@@ -1,0 +1,5 @@
+- type: entity
+  id: BaseStationMail
+  abstract: true
+  components:
+    - type: StationMailRouter
