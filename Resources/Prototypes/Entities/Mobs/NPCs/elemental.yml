@@ -94,7 +94,6 @@
       0.1: 0.3
     minPointsPerSecond: 0
     maxPointsPerSecond: 30
-    floatingOffset: "0, 0"
     supercriticalSound:
       collection: RadiationPulse
     pulseSound:
