@@ -12,7 +12,7 @@ public sealed partial class MindTests
     {
         var settings = new PoolSettings
         {
-            Destructive = true,
+            Dirty = true,
             DummyTicker = false,
             Connected = true
         };
