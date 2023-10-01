@@ -77,6 +77,9 @@ namespace Content.Client.Verbs.UI
             CurrentVerbs = _verbSystem.GetVerbs(target, user, Verb.VerbTypes, force);
             OpenMenu = menu;
 
+            if (CurrentVerbs.Count == 0)
+                return;
+
             // Fill in client-side verbs.
             FillVerbPopup(menu);
 
