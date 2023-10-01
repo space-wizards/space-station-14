@@ -279,6 +279,26 @@
     price: 40
 
 - type: entity
+  name: borgdropper
+  parent: Dropper
+  description: Used to transfer small amounts of chemical solution between containers. Extended for use by medical borgs.
+  id: BorgDropper
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Chemistry/dropper.rsi
+    layers:
+      - state: borgdropper
+      - state: dropper1
+        map: ["enum.SolutionContainerLayers.Fill"]
+        visible: false
+  - type: SolutionContainerManager
+    solutions:
+      injector:
+        maxVol: 10
+  - type: Item
+    sprite: Objects/Specific/Chemistry/dropper.rsi
+
+- type: entity
   name: syringe
   parent: BaseItem
   description: Used to draw blood samples from mobs, or to inject them with reagents.
