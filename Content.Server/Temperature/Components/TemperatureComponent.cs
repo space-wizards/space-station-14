@@ -15,7 +15,7 @@ namespace Content.Server.Temperature.Components
     public sealed partial class TemperatureComponent : Component
     {
         [DataField, ViewVariables(VVAccess.ReadWrite)]
-        public float CurrentTemperature { get; set; } = Atmospherics.T20C;
+        public float CurrentTemperature = Atmospherics.T20C;
 
         [DataField, ViewVariables(VVAccess.ReadWrite)]
         public float HeatDamageThreshold = 360f;
