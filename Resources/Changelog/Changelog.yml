@@ -1,110 +1,4 @@
 Entries:
-- author: chromiumboy
-  changes:
-  - {message: Containers used in recipes now drop their contents when crafted., type: Fix}
-  id: 4416
-  time: '2023-08-02T18:32:51.0000000+00:00'
-- author: PuceTint
-  changes:
-  - {message: Nitrous oxide now causes laughing, type: Add}
-  id: 4417
-  time: '2023-08-02T21:33:00.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Fix xenos not spittin'., type: Fix}
-  id: 4418
-  time: '2023-08-02T21:34:54.0000000+00:00'
-- author: Bhijn and Myr
-  changes:
-  - {message: The game now boots in GLES2 again. oops., type: Fix}
-  id: 4419
-  time: '2023-08-02T23:13:07.0000000+00:00'
-- author: router
-  changes:
-  - {message: Ringtones now have 2 more notes you can play around with., type: Tweak}
-  - {message: 'The Syndicate has taken advantage of this hardware expansion, making
-      brute-force attacks on their uplinks unfeasible.', type: Fix}
-  id: 4420
-  time: '2023-08-03T11:13:17.0000000+00:00'
-- author: fedKotikeD & crazybrain
-  changes:
-  - {message: Added Syndicate pAI., type: Add}
-  - {message: Syndicate pAI's can be found on the Nukie planet., type: Tweak}
-  id: 4421
-  time: '2023-08-03T20:48:40.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: NT has issued a unique anti-balloon weapon to security personnel. Use
-      it to destroy syndicate balloons and crush their morale!, type: Add}
-  id: 4422
-  time: '2023-08-04T01:53:06.0000000+00:00'
-- author: Interrobang01
-  changes:
-  - {message: 'A few changes to some chemical recipes, namely Dexalin, Lexorin, Ultravasculine,
-      Ammonia, Acetone, Sodium Carbonate, and Sigynate, have been reverted. They are
-      now like what they used to be.', type: Tweak}
-  - {message: Sigynate heals 3 Caustic per unit again., type: Tweak}
-  id: 4423
-  time: '2023-08-04T02:30:37.0000000+00:00'
-- author: liltenhead
-  changes:
-  - {message: Fixed the incorrect ammo count in the China Lake bundle's description.,
-    type: Fix}
-  id: 4424
-  time: '2023-08-04T02:57:02.0000000+00:00'
-- author: Lank
-  changes:
-  - {message: 'Added Moth People as a playable race. These friends can move around
-      in zero gravity easily and love the cold, but are significantly weaker against
-      high temperatures and won''t be caught eating anything not made of cloth.',
-    type: Add}
-  id: 4425
-  time: '2023-08-04T05:21:28.0000000+00:00'
-- author: FillerVK
-  changes:
-  - {message: Added insulated gloves to emaged youtool, type: Add}
-  id: 4426
-  time: '2023-08-04T08:39:34.0000000+00:00'
-- author: Flareguy
-  changes:
-  - {message: Updated dirty steel & plastic floor tiles to match the new style., type: Tweak}
-  id: 4427
-  time: '2023-08-04T08:55:08.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Spears can now embed into things and require removing., type: Add}
-  id: 4428
-  time: '2023-08-04T08:56:39.0000000+00:00'
-- author: Flareguy
-  changes:
-  - {message: The smartfridge now uses its old sprites., type: Tweak}
-  id: 4429
-  time: '2023-08-04T18:29:43.0000000+00:00'
-- author: MilenVolf
-  changes:
-  - {message: Moths now have proper creampied texture! Honk!, type: Tweak}
-  id: 4430
-  time: '2023-08-04T18:31:39.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Fix spear wielding., type: Fix}
-  id: 4431
-  time: '2023-08-04T18:37:17.0000000+00:00'
-- author: Aleksh
-  changes:
-  - {message: Added laser raptors., type: Add}
-  id: 4432
-  time: '2023-08-04T18:38:11.0000000+00:00'
-- author: Unbelievable-Salmon
-  changes:
-  - {message: The Syndicate gas mask now protects your eyes from welders., type: Tweak}
-  id: 4433
-  time: '2023-08-04T18:43:25.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Allow pulling while buckled, type: Add}
-  id: 4434
-  time: '2023-08-04T18:47:52.0000000+00:00'
 - author: astriloqua
   changes:
   - {message: People wont hear buckling and unbuckling sounds twice anymore., type: Fix}
@@ -2967,3 +2861,105 @@ Entries:
       replacement for ''request'' for consistency.', type: Tweak}
   id: 4915
   time: '2023-09-28T19:19:58.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Changed the player actions panel to ask for confirmation when kicking
+      and respawning players., type: Tweak}
+  id: 4916
+  time: '2023-09-28T22:46:07.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Fixed not being able to choose a role that you were unbanned from in
+      the same round without reconnecting., type: Fix}
+  id: 4917
+  time: '2023-09-28T23:46:39.0000000+00:00'
+- author: Micr0byte
+  changes:
+  - {message: Pressing F11 now toggles between full-screen and windowed modes., type: Add}
+  id: 4918
+  time: '2023-09-28T23:55:10.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Fixed everyone being bald., type: Fix}
+  id: 4919
+  time: '2023-09-29T00:44:47.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Fixed the HoP's id card computer not opening., type: Fix}
+  id: 4920
+  time: '2023-09-29T00:59:14.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'Being damaged, being stunned, or going into crit will now force you
+      to send whatever message you were typing, if it was in local/whisper/radio.
+      You''ll sometimes find yours-AUGH', type: Add}
+  id: 4921
+  time: '2023-09-29T01:05:37.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Fixed AHelp progressively gaining more panels., type: Fix}
+  id: 4922
+  time: '2023-09-29T01:46:16.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Fixed skeletons spawning in folded containers., type: Fix}
+  id: 4923
+  time: '2023-09-29T03:55:29.0000000+00:00'
+- author: casperr04
+  changes:
+  - {message: Fixed the true name of disguised players being shown when electrocuted.,
+    type: Fix}
+  id: 4924
+  time: '2023-09-29T15:01:19.0000000+00:00'
+- author: TsjipTsjip
+  changes:
+  - {message: Kettle's medical ward was reworked., type: Tweak}
+  id: 4925
+  time: '2023-09-29T19:14:53.0000000+00:00'
+- author: daerSeebaer
+  changes:
+  - {message: Volumetric pumps now indicate if they can't pump., type: Add}
+  id: 4926
+  time: '2023-09-30T03:35:23.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Fixed cognizine not creating ghost roles., type: Fix}
+  id: 4927
+  time: '2023-09-30T17:53:22.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Holofans can now be destroyed by explosions., type: Fix}
+  id: 4928
+  time: '2023-09-30T19:08:09.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: 'Space dragons get a proper greentext in the round end summary, along
+      with objectives in the character menu.', type: Tweak}
+  id: 4929
+  time: '2023-09-30T20:18:02.0000000+00:00'
+- author: Ubaser
+  changes:
+  - {message: Winter Boots are now available in the Winterdrobe., type: Add}
+  id: 4930
+  time: '2023-10-01T14:28:14.0000000+00:00'
+- author: Ubaser
+  changes:
+  - {message: 'QM now has a mantle, available at HoP''s uniform printer.', type: Add}
+  id: 4931
+  time: '2023-10-01T14:28:47.0000000+00:00'
+- author: Nimfar11
+  changes:
+  - {message: Added new sprites for slime organs, type: Add}
+  - {message: Slimes now breathe nitrogen too., type: Tweak}
+  id: 4932
+  time: '2023-10-01T14:34:29.0000000+00:00'
+- author: casperr04
+  changes:
+  - {message: Space ninjas now have random appearance., type: Tweak}
+  id: 4933
+  time: '2023-10-01T14:51:35.0000000+00:00'
+- author: TomCruize
+  changes:
+  - {message: Made Space Cats lungs ROBUST (They now don't suffocate in space), type: Fix}
+  id: 4934
+  time: '2023-10-01T14:55:59.0000000+00:00'
