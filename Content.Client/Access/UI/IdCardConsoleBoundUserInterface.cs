@@ -1,4 +1,5 @@
 using Content.Shared.Access.Components;
+using Content.Shared.Access;
 using Content.Shared.Access.Systems;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.CrewManifest;
@@ -23,16 +24,15 @@ namespace Content.Client.Access.UI
         protected override void Open()
         {
             base.Open();
-            List<string> accessLevels;
+            List<ProtoId<AccessLevelPrototype>> accessLevels;
 
             if (EntMan.TryGetComponent<IdCardConsoleComponent>(Owner, out var idCard))
             {
                 accessLevels = idCard.AccessLevels;
-                accessLevels.Sort();
             }
             else
             {
-                accessLevels = new List<string>();
+                accessLevels = new List<ProtoId<AccessLevelPrototype>>();
                 _idCardConsoleSystem.Log.Error($"No IdCardConsole component found for {EntMan.ToPrettyString(Owner)}!");
             }
 

@@ -86,7 +86,6 @@ public sealed partial class ActivatableUISystem : EntitySystem
     private void OnActivate(EntityUid uid, ActivatableUIComponent component, ActivateInWorldEvent args)
     {
         if (args.Handled) return;
-        if (component.AllowedItems != null) return;
         if (component.InHandsOnly) return;
         args.Handled = InteractUI(args.User, component);
     }
@@ -94,23 +93,16 @@ public sealed partial class ActivatableUISystem : EntitySystem
     private void OnUseInHand(EntityUid uid, ActivatableUIComponent component, UseInHandEvent args)
     {
         if (args.Handled) return;
-        if (component.AllowedItems != null) return;
         if (component.rightClickOnly) return;
         args.Handled = InteractUI(args.User, component);
     }
 
     private void OnInteractUsing(EntityUid uid, ActivatableUIComponent component, InteractUsingEvent args)
     {
-        if (args.Handled)
-            return;
-
-        if (component.AllowedItems == null)
-            return;
-
-        if (component.AllowedItems.IsValid(args.Used, EntityManager))
-        {
-            args.Handled = InteractUI(args.User, component);
-        }
+        if (args.Handled) return;
+        if (component.AllowedItems == null) return;
+        if (!component.AllowedItems.IsValid(args.Used, EntityManager)) return;
+        args.Handled = InteractUI(args.User, component);
     }
 
     private void OnParentChanged(EntityUid uid, ActivatableUIComponent aui, ref EntParentChangedMessage args)

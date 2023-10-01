@@ -14,7 +14,7 @@ public sealed partial class AccessLevelControl : GridContainer
 {
     public readonly Dictionary<string, Button> ButtonsList = new();
 
-    public AccessLevelControl(List<string> accessLevels, IPrototypeManager prototypeManager)
+    public AccessLevelControl(List<ProtoId<AccessLevelPrototype>> accessLevels, IPrototypeManager prototypeManager)
     {
         RobustXamlLoader.Load(this);
         foreach (var access in accessLevels)
@@ -42,7 +42,9 @@ public sealed partial class AccessLevelControl : GridContainer
 
         return prototype.ID;
     }
-    public void UpdateState(List<String> pressedList, List<String>? enabledList = null)
+    public void UpdateState(
+        List<ProtoId<AccessLevelPrototype>> pressedList,
+        List<ProtoId<AccessLevelPrototype>>? enabledList = null)
     {
         foreach (var (accessName, button) in ButtonsList)
         {

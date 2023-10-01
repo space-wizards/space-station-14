@@ -3,6 +3,7 @@ using Content.Shared.Containers.ItemSlots;
 using JetBrains.Annotations;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Access.Systems
 {
@@ -52,9 +53,9 @@ namespace Content.Shared.Access.Systems
         [Serializable, NetSerializable]
         private sealed class IdCardConsoleComponentState : ComponentState
         {
-            public List<string> AccessLevels;
+            public List<ProtoId<AccessLevelPrototype>> AccessLevels;
 
-            public IdCardConsoleComponentState(List<string> accessLevels)
+            public IdCardConsoleComponentState(List<ProtoId<AccessLevelPrototype>> accessLevels)
             {
                 AccessLevels = accessLevels;
             }

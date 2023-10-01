@@ -18,13 +18,13 @@ public sealed class DoorElectronicsBoundUserInterface : BoundUserInterface
     protected override void Open()
     {
         base.Open();
-        List<string> accessLevels = new();
+        List<ProtoId<AccessLevelPrototype>> accessLevels = new();
 
         foreach (var accessLevel in _prototypeManager.EnumeratePrototypes<AccessLevelPrototype>())
         {
             if (accessLevel.Name != null)
             {
-                accessLevels.Add(accessLevel.ID);
+                accessLevels.Add(new ProtoId<AccessLevelPrototype>(accessLevel.ID));
             }
         }
 
