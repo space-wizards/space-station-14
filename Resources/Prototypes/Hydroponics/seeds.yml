@@ -1326,8 +1326,8 @@
     Nutriment:
       Min: 1
       Max: 3
-      PotencyDivisor: 30
+      PotencyDivisor: 33
     Vitamin:
       Min: 1
       Max: 2
-      PotencyDivisor: 40
+      PotencyDivisor: 50
