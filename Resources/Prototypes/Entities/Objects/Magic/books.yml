@@ -23,6 +23,19 @@
         ActionSpawnMagicarpSpell: -1
 
 - type: entity
+  id: SmileScroll
+  name: scroll of smiles
+  parent: BaseSpellbook
+  components:
+    - type: Sprite
+      sprite: Objects/Magic/magicactions.rsi
+      layers:
+        - state: spell_smile
+    - type: Spellbook
+      spells:
+        ActionSpawnSmileSpell: -1
+
+- type: entity
   id: ForceWallSpellbook
   name: force wall spellbook
   parent: BaseSpellbook

@@ -17,3 +17,23 @@
         amount: 3
       offset: 0, 1
       speech: action-speech-spell-summon-magicarp
+
+- type: entity
+  id: ActionSpawnSmileSpell
+  name: Summon Smile
+  description: This spell summons a cute Rainbow Slime! May or may not bring a smile to their face.
+  noSpawn: true
+  components:
+  - type: WorldTargetAction
+    useDelay: 30
+    range: 4
+    itemIconStyle: BigAction
+    icon:
+      sprite: Objects/Magic/magicactions.rsi
+      state: magicmissile
+    event: !type:WorldSpawnSpellEvent
+      prototypes:
+      - id: MobSlimeRainbow
+        amount: 1
+      offset: 0, 1
+      speech: action-speech-spell-summon-smile
