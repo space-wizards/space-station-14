@@ -62,7 +62,18 @@ public sealed partial class LiquidAnomalyComponent : Component
     public float ReagentChangeStep = 0.1f;
 
     /// <summary>
-    /// Noise made when glue applied.
+    /// If true, the sprite of the object will be colored in the color of the current reagent.
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public bool NeedRecolorEntity = true;
+    /// <summary>
+    /// If true and if the entity has bloodstream, replaces the blood type with the anomaly reagent.
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public bool NeedBloodstreamChange = true;
+
+    /// <summary>
+    /// Noise made when anomaly pulse.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public SoundSpecifier ChangeSound = new SoundPathSpecifier("/Audio/Effects/waterswirl.ogg");

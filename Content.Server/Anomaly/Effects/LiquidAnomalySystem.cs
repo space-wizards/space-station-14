@@ -9,6 +9,8 @@ using Robust.Server.GameObjects;
 using Content.Shared.Chemistry.Components;
 using Content.Server.Fluids.EntitySystems;
 using Robust.Shared.Prototypes;
+using Content.Shared.Sprite;
+using Content.Server.Body.Systems;
 
 namespace Content.Server.Anomaly.Effects;
 /// <summary>
@@ -23,6 +25,7 @@ public sealed class LiquidAnomalySystem : EntitySystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly PuddleSystem _puddle = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
+    [Dependency] private readonly BloodstreamSystem _bloodstream = default!;
 
     private EntityQuery<InjectableSolutionComponent> _injectableQuery;
     /// <inheritdoc/>
@@ -94,6 +97,24 @@ public sealed class LiquidAnomalySystem : EntitySystem
         var xform = Transform(uid);
         Spawn("PuddleSparkle", xform.Coordinates);
         _audio.PlayPvs(component.ChangeSound, uid);
+
+        //Recolor entity
+        if (component.NeedRecolorEntity && TryComp<RandomSpriteComponent>(uid, out var randomSprite))
+        {
+            var spawnedSprite = EnsureComp<RandomSpriteComponent>(uid);
+            foreach (var ent in randomSprite.Selected)
+            {
+                Log.Debug("Стейт: " + ent.Key + " : " + ent.Value);
+                var state = randomSprite.Selected[ent.Key];
+                state.Color = color;
+                randomSprite.Selected[ent.Key] = state;
+                Log.Debug("Установлен цвет аномалии: " + color);
+                Log.Debug("Новый стейт: " + ent.Key + " : " + ent.Value);
+            }
+            Dirty(uid, randomSprite);
+        }
+        //Change Bloodstream
+        _bloodstream.ChangeBloodReagent(uid, reagent);
     }
 
     private void PulseScalableEffect(

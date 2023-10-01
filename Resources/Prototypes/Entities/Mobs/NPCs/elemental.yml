@@ -1,0 +1,111 @@
+- type: entity
+  name: liquid elemental
+  id: LiquidElemental
+  suffix: Water
+  parent: SimpleSpaceMobBase
+  description: A living formless liquid.
+  components:
+  - type: Insulated
+  - type: CombatMode
+  - type: InputMover
+  - type: MobMover
+  - type: Hands
+  - type: NpcFactionMember
+    factions:
+    - SimpleHostile 
+  - type: HTN
+    rootTask:
+      task: SimpleHostileCompound
+    blackboard:
+      NavSmash: !type:Bool
+        true
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Aliens/elemental.rsi
+    layers:
+      - map: [ "enum.DamageStateVisualLayers.Base" ]
+        state: alive
+        color: "#75b1f0"
+  - type: RandomSprite
+    selected: # Initialized layer values. Edited through the LiquidAnomalySystem
+      enum.DamageStateVisualLayers.Base:
+        alive: "#ffffff"
+  - type: PointLight
+    radius: 1.0
+    energy: 1.5
+    color: "#75b1f0" # Edited through the LiquidAnomalySystem
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.40
+        density: 80
+        mask:
+          - MobMask
+        layer:
+          - Opaque
+  - type: MobState
+    allowedStates:
+    - Alive
+    - Dead
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      100: Dead
+  - type: SlowOnDamage
+    speedModifierThresholds:
+      50: 0.5
+  - type: Stamina
+    critThreshold: 300
+  - type: Bloodstream
+    bloodReagent: Water # Edited through the LiquidAnomalySystem
+    bleedReductionAmount: 0.1
+    bloodlossThreshold: 0.5
+    bloodRefreshAmount: 0
+  - type: MeleeWeapon
+    altDisarm: false
+    hidden: true
+    angle: 0
+    soundHit:
+      collection: AlienClaw
+    animation: WeaponArcBite
+    damage:
+      types:
+        Slash: 10
+        Poison: 5
+  - type: DamageStateVisuals
+    rotate: true
+    states:
+      Alive:
+        Base: alive
+      Dead:
+        Base: dead
+  - type: Tag
+    tags:
+      - CannotSuicide
+  - type: NoSlip
+  - type: ZombieImmune
+  - type: Anomaly
+    severityGrowthCoefficient: 0.04
+    minPulseLength: 10
+    maxPulseLength: 60
+    initialSeverityRange: 
+      0.1: 0.3
+    minPointsPerSecond: 0
+    maxPointsPerSecond: 30
+    floatingOffset: "0, 0"
+    supercriticalSound:
+      collection: RadiationPulse
+    pulseSound:
+      path: /Audio/Effects/waterswirl.ogg
+      params:
+        volume: 5
+    anomalyContactDamage:
+      types:
+        Poison: 2
+  - type: LiquidAnomaly
+    maxSolutionGeneration: 20
+    superCriticalSolutionGeneration: 100
+    injectRadius: 2
+    superCriticalInjectRadius: 6
