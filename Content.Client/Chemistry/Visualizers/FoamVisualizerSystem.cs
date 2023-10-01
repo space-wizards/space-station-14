@@ -1,5 +1,5 @@
 ﻿using Content.Shared.Smoking;
-using Content.Shared.Spawners.Components;
+using Robust.Shared.Spawners;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
 using Robust.Shared.Network;
