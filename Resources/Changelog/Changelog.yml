@@ -1,9 +1,4 @@
 Entries:
-- author: Unbelievable-Salmon
-  changes:
-  - {message: The Syndicate gas mask now protects your eyes from welders., type: Tweak}
-  id: 4433
-  time: '2023-08-04T18:43:25.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Allow pulling while buckled, type: Add}
@@ -2963,3 +2958,8 @@ Entries:
   - {message: Slimes now breathe nitrogen too., type: Tweak}
   id: 4932
   time: '2023-10-01T14:34:29.0000000+00:00'
+- author: casperr04
+  changes:
+  - {message: Space ninjas now have random appearance., type: Tweak}
+  id: 4933
+  time: '2023-10-01T14:51:35.0000000+00:00'
