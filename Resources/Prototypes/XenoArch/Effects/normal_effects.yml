@@ -554,11 +554,3 @@
   effectHint: artifact-effect-hint-polymorph
   components:
   - type: PolyArtifact
-
-- type: artifactEffect
-  id: EffectPolyCluwne
-  targetDepth: 10
-  effectHint: artifact-effect-hint-polymorph
-  components:
-  - type: PolyArtifact
-    polyEntity: WizardForcedCluwne

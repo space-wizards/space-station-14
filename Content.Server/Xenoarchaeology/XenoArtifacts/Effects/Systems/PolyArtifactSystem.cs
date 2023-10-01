@@ -1,8 +1,6 @@
-using System.Linq;
 using Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Components;
 using Content.Server.Xenoarchaeology.XenoArtifacts.Events;
 using Content.Shared.Humanoid;
-using Robust.Shared.Random;
 using Content.Server.Polymorph.Systems;
 
 namespace Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Systems;
@@ -23,7 +21,7 @@ public sealed class PolyArtifactSystem : EntitySystem
         foreach (var target in _lookup.GetEntitiesInRange(uid, component.Range))
         {
             if (HasComp<HumanoidAppearanceComponent>(target))
-                _poly.PolymorphEntity(target, component.PolyEntity);
+                _poly.PolymorphEntity(target, "ArtifactMonkey");
         }
     }
 }
