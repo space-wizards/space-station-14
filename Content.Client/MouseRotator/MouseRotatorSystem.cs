@@ -41,6 +41,22 @@ public sealed class MouseRotatorSystem : SharedMouseRotatorSystem
 
         var curRot = _transform.GetWorldRotation(xform);
 
+        // 4-dir handling is separate --
+        // only raise event if the cardinal direction has changed
+        if (rotator.Simple4DirMode)
+        {
+            var angleDir = angle.GetCardinalDir();
+            if (angleDir == curRot.GetCardinalDir())
+                return;
+
+            RaisePredictiveEvent(new  RequestMouseRotatorRotationSimpleEvent()
+            {
+                Direction = angleDir,
+            });
+
+            return;
+        }
+
         // Don't raise event if mouse ~hasn't moved (or if too close to goal rotation already)
         var diff = Angle.ShortestDistance(angle, curRot);
         if (Math.Abs(diff.Theta) < rotator.AngleTolerance.Theta)

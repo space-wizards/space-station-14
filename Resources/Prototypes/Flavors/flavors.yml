@@ -838,3 +838,8 @@
   id: spaceshroomcooked
   flavorType: Complex
   description: flavor-complex-spaceshroom-cooked
+
+- type: flavor
+  id: lostfriendship
+  flavorType: Complex
+  description: flavor-complex-lost-friendship

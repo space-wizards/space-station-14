@@ -282,7 +282,7 @@
     head: ClothingHeadHatTophat
     ears: ClothingHeadsetService
     jumpsuit: ClothingUniformJumpsuitJacketMonkey
-    id: BartenderIDCard
+    id: PunPunIDCard
 
 # Passenger but without the ID, bag, or headset
 

@@ -90,7 +90,12 @@ namespace Content.Server.RoundEnd
             return _cooldownTokenSource == null;
         }
 
-        public void RequestRoundEnd(EntityUid? requester = null, bool checkCooldown = true, bool autoCall = false)
+        public bool IsRoundEndRequested()
+        {
+            return _countdownTokenSource != null;
+        }
+
+        public void RequestRoundEnd(EntityUid? requester = null, bool checkCooldown = true, string text = "round-end-system-shuttle-called-announcement", string name = "Station")
         {
             var duration = DefaultCountdownDuration;
 
@@ -105,10 +110,10 @@ namespace Content.Server.RoundEnd
                 }
             }
 
-            RequestRoundEnd(duration, requester, checkCooldown, autoCall);
+            RequestRoundEnd(duration, requester, checkCooldown, text, name);
         }
 
-        public void RequestRoundEnd(TimeSpan countdownTime, EntityUid? requester = null, bool checkCooldown = true, bool autoCall = false)
+        public void RequestRoundEnd(TimeSpan countdownTime, EntityUid? requester = null, bool checkCooldown = true, string text = "round-end-system-shuttle-called-announcement", string name = "Station")
         {
             if (_gameTicker.RunLevel != GameRunLevel.InRound) return;
 
@@ -141,26 +146,13 @@ namespace Content.Server.RoundEnd
                units = "eta-units-minutes";
             }
 
-            if (autoCall)
-            {
-                _chatSystem.DispatchGlobalAnnouncement(Loc.GetString("round-end-system-shuttle-auto-called-announcement",
-                    ("time", time),
-                    ("units", Loc.GetString(units))),
-                    Loc.GetString("Station"),
-                    false,
-                    null,
-                    Color.Gold);
-            }
-            else
-            {
-                _chatSystem.DispatchGlobalAnnouncement(Loc.GetString("round-end-system-shuttle-called-announcement",
-                    ("time", time),
-                    ("units", Loc.GetString(units))),
-                    Loc.GetString("Station"),
-                    false,
-                    null,
-                    Color.Gold);
-            }
+            _chatSystem.DispatchGlobalAnnouncement(Loc.GetString(text,
+                ("time", time),
+                ("units", Loc.GetString(units))),
+                name,
+                false,
+                null,
+                Color.Gold);
 
             SoundSystem.Play("/Audio/Announcements/shuttlecalled.ogg", Filter.Broadcast());
 
@@ -232,6 +224,30 @@ namespace Content.Server.RoundEnd
             Timer.Spawn(countdownTime.Value, AfterEndRoundRestart, _countdownTokenSource.Token);
         }
 
+        public void DoRoundEndBehavior(RoundEndBehavior behavior, TimeSpan time, string sender, string textCall, string textAnnounce)
+        {
+            switch (behavior)
+            {
+                case RoundEndBehavior.InstantEnd:
+                    EndRound();
+                    break;
+                case RoundEndBehavior.ShuttleCall:
+                    // Check is shuttle called or not. We should only dispatch announcement if it's already called
+                    if (IsRoundEndRequested())
+                    {
+                        _chatSystem.DispatchGlobalAnnouncement(Loc.GetString(textAnnounce),
+                            Loc.GetString(sender),
+                            colorOverride: Color.Gold);
+                    }
+                    else
+                    {
+                        RequestRoundEnd(time, null, false, textCall,
+                            Loc.GetString(sender));
+                    }
+                    break;
+            }
+        }
+
         private void AfterEndRoundRestart()
         {
             if (_gameTicker.RunLevel != GameRunLevel.PostRound) return;
@@ -260,7 +276,7 @@ namespace Content.Server.RoundEnd
             {
                 if (!_shuttle.EmergencyShuttleArrived && ExpectedCountdownEnd is null)
                 {
-                    RequestRoundEnd(null, false, true);
+                    RequestRoundEnd(null, false, "round-end-system-shuttle-auto-called-announcement");
                     AutoCalledBefore = true;
                 }
 
@@ -274,4 +290,22 @@ namespace Content.Server.RoundEnd
     {
         public static RoundEndSystemChangedEvent Default { get; } = new();
     }
+
+    public enum RoundEndBehavior : byte
+{
+        /// <summary>
+        /// Instantly end round
+        /// </summary>
+        InstantEnd,
+
+        /// <summary>
+        /// Call shuttle with custom announcement
+        /// </summary>
+        ShuttleCall,
+
+        /// <summary>
+        /// Do nothing
+        /// </summary>
+        Nothing
+}
 }

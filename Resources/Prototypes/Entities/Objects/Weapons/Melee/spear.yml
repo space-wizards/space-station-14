@@ -28,7 +28,11 @@
   - type: Sharp
   - type: Sprite
     sprite: Objects/Weapons/Melee/spear.rsi
-    state: spear
+    layers:
+    - state: spear
+    - state: spear1
+      map: ["enum.SolutionContainerLayers.Fill"]
+      visible: false
   - type: MeleeWeapon
     damage:
       types:
@@ -61,6 +65,9 @@
     solution: melee
   - type: InjectableSolution
     solution: melee
+  - type: SolutionInjectOnCollide
+    transferAmount: 5
+    blockSlots: NONE
   - type: SolutionTransfer
     maxTransferAmount: 5
   - type: Wieldable
@@ -96,6 +103,10 @@
     damage:
       types:
         Blunt: 5
+  - type: Appearance
+  - type: SolutionContainerVisuals
+    maxFillLevels: 1
+    fillBaseName: spear
 
 - type: entity
   name: reinforced spear
@@ -155,3 +166,14 @@
         Radiation: 9
   - type: Construction
     graph: SpearUranium
+
+- type: entity
+  name: bone spear
+  parent: Spear
+  id: SpearBone
+  description: A spear made of bones.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/bone_spear.rsi
+  - type: Construction
+    graph: SpearBone

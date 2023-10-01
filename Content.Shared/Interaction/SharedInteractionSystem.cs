@@ -1,4 +1,3 @@
-using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.ActionBlocker;
@@ -7,7 +6,6 @@ using Content.Shared.Administration.Logs;
 using Content.Shared.Administration.Managers;
 using Content.Shared.CombatMode;
 using Content.Shared.Database;
-using Content.Shared.Ghost;
 using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
 using Content.Shared.Input;
@@ -28,7 +26,6 @@ using Content.Shared.Verbs;
 using Content.Shared.Wall;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Map;
@@ -99,7 +96,6 @@ namespace Content.Shared.Interaction
                     new PointerInputCmdHandler(HandleTryPullObject))
                 .Register<SharedInteractionSystem>();
 
-            InitializeRelay();
             InitializeBlocking();
         }
 
@@ -263,6 +259,35 @@ namespace Content.Shared.Interaction
         }
 
         /// <summary>
+        ///     Returns true if the specified entity should hand interact with the target instead of attacking
+        /// </summary>
+        /// <param name="user">The user interacting in combat mode</param>
+        /// <param name="target">The target of the interaction</param>
+        /// <returns></returns>
+        public bool CombatModeCanHandInteract(EntityUid user, EntityUid? target)
+        {
+            // Always allow attack in these cases
+            if (target == null || !TryComp<HandsComponent>(user, out var hands) || hands.ActiveHand?.HeldEntity is not null)
+                return false;
+
+            // Only eat input if:
+            // - Target isn't an item
+            // - Target doesn't cancel should-interact event
+            // This is intended to allow items to be picked up in combat mode,
+            // but to also allow items to force attacks anyway (like mobs which are items, e.g. mice)
+            if (!HasComp<ItemComponent>(target))
+                return false;
+
+            var combatEv = new CombatModeShouldHandInteractEvent();
+            RaiseLocalEvent(target.Value, ref combatEv);
+
+            if (combatEv.Cancelled)
+                return false;
+
+            return true;
+        }
+
+        /// <summary>
         ///     Resolves user interactions with objects.
         /// </summary>
         /// <remarks>
@@ -285,7 +310,8 @@ namespace Content.Shared.Interaction
                 // TODO this needs to be handled better. This probably bypasses many complex can-interact checks in weird roundabout ways.
                 if (_actionBlockerSystem.CanInteract(user, target))
                 {
-                    UserInteraction(relay.RelayEntity.Value, coordinates, target, altInteract, checkCanInteract, checkAccess, checkCanUse);
+                    UserInteraction(relay.RelayEntity.Value, coordinates, target, altInteract, checkCanInteract,
+                        checkAccess, checkCanUse);
                     return;
                 }
             }
@@ -293,10 +319,10 @@ namespace Content.Shared.Interaction
             if (target != null && Deleted(target.Value))
                 return;
 
-            if (!altInteract && TryComp(user, out CombatModeComponent? combatMode) && combatMode.IsInCombatMode)
+            if (!altInteract && TryComp<CombatModeComponent>(user, out var combatMode) && combatMode.IsInCombatMode)
             {
-                // Eat the input
-                return;
+                if (!CombatModeCanHandInteract(user, target))
+                    return;
             }
 
             if (!ValidateInteractAndFace(user, coordinates))
@@ -326,7 +352,7 @@ namespace Content.Shared.Interaction
                 : !checkAccess || InRangeUnobstructed(user, target.Value); // permits interactions with wall mounted entities
 
             // Does the user have hands?
-            if (!TryComp(user, out HandsComponent? hands) || hands.ActiveHand == null)
+            if (!TryComp<HandsComponent>(user, out var hands) || hands.ActiveHand == null)
             {
                 var ev = new InteractNoHandEvent(user, target, coordinates);
                 RaiseLocalEvent(user, ev);
@@ -341,6 +367,8 @@ namespace Content.Shared.Interaction
             }
 
             // empty-hand interactions
+            // combat mode hand interactions will always be true here -- since
+            // they check this earlier before returning in
             if (hands.ActiveHandEntity is not { } held)
             {
                 if (inRangeUnobstructed && target != null)
@@ -1164,4 +1192,12 @@ namespace Content.Shared.Interaction
             AltInteract = altInteract;
         }
     }
+
+    /// <summary>
+    ///     Raised directed by-ref on an item to determine if hand interactions should go through.
+    ///     Defaults to allowing hand interactions to go through. Cancel to force the item to be attacked instead.
+    /// </summary>
+    /// <param name="Cancelled">Whether the hand interaction should be cancelled.</param>
+    [ByRefEvent]
+    public record struct CombatModeShouldHandInteractEvent(bool Cancelled = false);
 }
