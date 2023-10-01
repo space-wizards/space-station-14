@@ -14,8 +14,23 @@ namespace Content.Server.Temperature.Components;
 [RegisterComponent]
 public sealed partial class TemperatureComponent : Component
 {
+    /// <summary>
+    /// Surface temperature which is modified by the environment.
+    /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public float CurrentTemperature { get; set; } = Atmospherics.T20C;
+
+    /// <summary>
+    /// Internal temperature which is modified by surface temperature.
+    /// This gets set to <see cref="CurrentTemperature"/> on mapinit.
+    /// </summary>
+    /// <remarks>
+    /// Currently this is only used for cooking but metabolic functions could use it too.
+    /// Too high? Suffering heatstroke, start sweating to cool off and increase thirst.
+    /// Too cold? Suffering hypothermia, shiver emote every so often to warm up and increase hunger.
+    /// </remarks>
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public float InternalTemperature;
 
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public float HeatDamageThreshold = 360f;
