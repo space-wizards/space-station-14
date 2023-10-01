@@ -72,3 +72,15 @@ marking-LizardFrillsAxolotl = Lizard Frills (Axolotl)
 
 marking-LizardFrillsHood-frills_hood = Lizard Frills (Hood)
 marking-LizardFrillsHood = Lizard Frills (Hood)
+
+marking-LizardHornsArgali-horns_argali = Lizard Horns (Argali)
+marking-LizardHornsArgali = Lizard Horns (Argali)
+
+marking-LizardHornsAyrshire-horns_ayrshire = Lizard Horns (Ayrshire)
+marking-LizardHornsAyrshire = Lizard Horns (Ayrshire)
+
+marking-LizardHornsMyrsore-horns_myrsore = Lizard Horns (Myrsore)
+marking-LizardHornsMyrsore = Lizard Horns (Myrsore)
+
+marking-LizardHornsBighorn-horns_bighorn = Lizard Horns (Bighorn)
+marking-LizardHornsBighorn = Lizard Horns (Bighorn)

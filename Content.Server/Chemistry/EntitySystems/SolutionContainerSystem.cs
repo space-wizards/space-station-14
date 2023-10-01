@@ -219,7 +219,7 @@ public sealed partial class SolutionContainerSystem : EntitySystem
 
         if (solution.GetPrimaryReagentId() is { } reagent)
         {
-            _appearance.SetData(uid, SolutionContainerVisuals.BaseOverride, reagent, appearanceComponent);
+            _appearance.SetData(uid, SolutionContainerVisuals.BaseOverride, reagent.ToString(), appearanceComponent);
         }
         else
         {
