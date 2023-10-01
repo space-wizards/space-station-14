@@ -564,12 +564,12 @@
   id: Barricade
   graph: Barricade
   startNode: start
-  targetNode: barricadewooden
+  targetNode: barricadefull
   category: construction-category-structures
   description: An improvised barricade made out of wooden planks.
   icon:
-    sprite: Structures/Walls/barricades.rsi
-    state: barricadewooden
+    sprite: Structures/barricades.rsi
+    state: barricade_full
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -621,6 +621,23 @@
   icon:
     sprite: Structures/Walls/railing.rsi
     state: corner_small
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+  - !type:TileNotBlocked
+
+- type: construction
+  name: railing round
+  id: RailingRound
+  graph: Railing
+  startNode: start
+  targetNode: railingRound
+  category: construction-category-structures
+  description: Basic railing meant to protect idiots like you from falling.
+  icon:
+    sprite: Structures/Walls/railing.rsi
+    state: round
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false

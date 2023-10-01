@@ -15,7 +15,6 @@ namespace Content.Client.Ghost
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly SharedActionsSystem _actions = default!;
         [Dependency] private readonly ILightManager _lightManager = default!;
-        [Dependency] private readonly SharedPopupSystem _popup = default!;
         [Dependency] private readonly ContentEyeSystem _contentEye = default!;
 
         public int AvailableGhostRoleCount { get; private set; }
@@ -55,7 +54,7 @@ namespace Content.Client.Ghost
         {
             base.Initialize();
 
-            SubscribeLocalEvent<GhostComponent, ComponentInit>(OnGhostInit);
+            SubscribeLocalEvent<GhostComponent, ComponentStartup>(OnStartup);
             SubscribeLocalEvent<GhostComponent, ComponentRemove>(OnGhostRemove);
             SubscribeLocalEvent<GhostComponent, AfterAutoHandleStateEvent>(OnGhostState);
 
@@ -72,16 +71,10 @@ namespace Content.Client.Ghost
             SubscribeLocalEvent<GhostComponent, ToggleGhostsActionEvent>(OnToggleGhosts);
         }
 
-        private void OnGhostInit(EntityUid uid, GhostComponent component, ComponentInit args)
+        private void OnStartup(EntityUid uid, GhostComponent component, ComponentStartup args)
         {
             if (TryComp(uid, out SpriteComponent? sprite))
-            {
                 sprite.Visible = GhostVisibility;
-            }
-
-            _actions.AddAction(uid, ref component.ToggleLightingActionEntity, component.ToggleGhostsAction);
-            _actions.AddAction(uid, ref component.ToggleFoVActionEntity, component.ToggleFoVAction);
-            _actions.AddAction(uid, ref component.ToggleGhostsActionEntity, component.ToggleGhostsAction);
         }
 
         private void OnToggleLighting(EntityUid uid, GhostComponent component, ToggleLightingActionEvent args)
@@ -89,7 +82,7 @@ namespace Content.Client.Ghost
             if (args.Handled)
                 return;
 
-            _popup.PopupEntity(Loc.GetString("ghost-gui-toggle-lighting-manager-popup"), args.Performer);
+            Popup.PopupEntity(Loc.GetString("ghost-gui-toggle-lighting-manager-popup"), args.Performer);
             _lightManager.Enabled = !_lightManager.Enabled;
             args.Handled = true;
         }
@@ -99,7 +92,7 @@ namespace Content.Client.Ghost
             if (args.Handled)
                 return;
 
-            _popup.PopupEntity(Loc.GetString("ghost-gui-toggle-fov-popup"), args.Performer);
+            Popup.PopupEntity(Loc.GetString("ghost-gui-toggle-fov-popup"), args.Performer);
             _contentEye.RequestToggleFov(uid);
             args.Handled = true;
         }
@@ -109,7 +102,7 @@ namespace Content.Client.Ghost
             if (args.Handled)
                 return;
 
-            _popup.PopupEntity(Loc.GetString("ghost-gui-toggle-ghost-visibility-popup"), args.Performer);
+            Popup.PopupEntity(Loc.GetString("ghost-gui-toggle-ghost-visibility-popup"), args.Performer);
             ToggleGhostVisibility();
             args.Handled = true;
         }
@@ -119,6 +112,7 @@ namespace Content.Client.Ghost
             _actions.RemoveAction(uid, component.ToggleLightingActionEntity);
             _actions.RemoveAction(uid, component.ToggleFoVActionEntity);
             _actions.RemoveAction(uid, component.ToggleGhostsActionEntity);
+            _actions.RemoveAction(uid, component.ToggleGhostHearingActionEntity);
 
             if (uid != _playerManager.LocalPlayer?.ControlledEntity)
                 return;

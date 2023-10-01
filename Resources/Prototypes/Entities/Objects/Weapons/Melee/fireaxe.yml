@@ -38,6 +38,7 @@
       - Prying
   - type: TilePrying
     advanced: true
+  - type: Prying
 
 - type: entity
   id: FireAxeFlaming

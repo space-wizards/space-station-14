@@ -8,7 +8,7 @@ using Robust.Shared.Input;
 namespace Content.Client.UserInterface.Controls
 {
     [Virtual]
-    public abstract class SlotControl : Control
+    public abstract class SlotControl : Control, IEntityControl
     {
         public static int DefaultButtonSize = 64;
 
@@ -20,7 +20,7 @@ namespace Content.Client.UserInterface.Controls
         public TextureButton StorageButton { get; }
         public CooldownGraphic CooldownDisplay { get; }
 
-        public EntityUid? Entity => SpriteView.Sprite?.Owner;
+        public EntityUid? Entity => SpriteView.Entity;
 
         private bool _slotNameSet;
 
@@ -232,5 +232,7 @@ namespace Content.Client.UserInterface.Controls
             ButtonRect.Texture = Theme.ResolveTextureOrNull(_buttonTexturePath)?.Texture;
             HighlightRect.Texture = Theme.ResolveTextureOrNull(_highlightTexturePath)?.Texture;
         }
+
+        EntityUid? IEntityControl.UiEntity => Entity;
     }
 }

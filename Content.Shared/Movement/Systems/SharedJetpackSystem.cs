@@ -5,7 +5,6 @@ using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Events;
 using Content.Shared.Popups;
 using Robust.Shared.Containers;
-using Robust.Shared.GameStates;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Serialization;
@@ -31,8 +30,6 @@ public abstract class SharedJetpackSystem : EntitySystem
 
         SubscribeLocalEvent<JetpackUserComponent, CanWeightlessMoveEvent>(OnJetpackUserCanWeightless);
         SubscribeLocalEvent<JetpackUserComponent, EntParentChangedMessage>(OnJetpackUserEntParentChanged);
-        SubscribeLocalEvent<JetpackUserComponent, ComponentGetState>(OnJetpackUserGetState);
-        SubscribeLocalEvent<JetpackUserComponent, ComponentHandleState>(OnJetpackUserHandleState);
 
         SubscribeLocalEvent<GravityChangedEvent>(OnJetpackUserGravityChanged);
     }
@@ -58,22 +55,6 @@ public abstract class SharedJetpackSystem : EntitySystem
                 SetEnabled(user.Jetpack, jetpack, false, uid);
             }
         }
-    }
-
-    private void OnJetpackUserHandleState(EntityUid uid, JetpackUserComponent component, ref ComponentHandleState args)
-    {
-        if (args.Current is not JetpackUserComponentState state)
-            return;
-
-        component.Jetpack = EnsureEntity<JetpackUserComponent>(state.Jetpack, uid);
-    }
-
-    private void OnJetpackUserGetState(EntityUid uid, JetpackUserComponent component, ref ComponentGetState args)
-    {
-        args.State = new JetpackUserComponentState()
-        {
-            Jetpack = GetNetEntity(component.Jetpack),
-        };
     }
 
     private void OnJetpackDropped(EntityUid uid, JetpackComponent component, DroppedEvent args)
@@ -203,12 +184,6 @@ public abstract class SharedJetpackSystem : EntitySystem
     protected virtual bool CanEnable(EntityUid uid, JetpackComponent component)
     {
         return true;
-    }
-
-    [Serializable, NetSerializable]
-    protected sealed class JetpackUserComponentState : ComponentState
-    {
-        public NetEntity Jetpack;
     }
 }
 

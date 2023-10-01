@@ -21,7 +21,6 @@ using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
-using Robust.Shared.GameStates;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Physics.Components;
@@ -62,7 +61,6 @@ public sealed class ClimbSystem : SharedClimbSystem
         SubscribeLocalEvent<ClimbingComponent, ClimbDoAfterEvent>(OnDoAfter);
         SubscribeLocalEvent<ClimbingComponent, EndCollideEvent>(OnClimbEndCollide);
         SubscribeLocalEvent<ClimbingComponent, BuckleChangeEvent>(OnBuckleChange);
-        SubscribeLocalEvent<ClimbingComponent, ComponentGetState>(OnClimbingGetState);
 
         SubscribeLocalEvent<GlassTableComponent, ClimbedOnEvent>(OnGlassClimbed);
     }
@@ -300,8 +298,8 @@ public sealed class ClimbSystem : SharedClimbSystem
 
         if (!HasComp<ClimbingComponent>(user)
             || !TryComp(user, out BodyComponent? body)
-            || !_bodySystem.BodyHasChildOfType(user, BodyPartType.Leg, body)
-            || !_bodySystem.BodyHasChildOfType(user, BodyPartType.Foot, body))
+            || !_bodySystem.BodyHasPartType(user, BodyPartType.Leg, body)
+            || !_bodySystem.BodyHasPartType(user, BodyPartType.Foot, body))
         {
             reason = Loc.GetString("comp-climbable-cant-climb");
             return false;
@@ -364,11 +362,6 @@ public sealed class ClimbSystem : SharedClimbSystem
         if (!args.Buckling)
             return;
         StopClimb(uid, component);
-    }
-
-    private static void OnClimbingGetState(EntityUid uid, ClimbingComponent component, ref ComponentGetState args)
-    {
-        args.State = new ClimbingComponent.ClimbModeComponentState(component.IsClimbing, component.OwnerIsTransitioning);
     }
 
     private void OnGlassClimbed(EntityUid uid, GlassTableComponent component, ClimbedOnEvent args)

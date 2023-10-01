@@ -149,7 +149,6 @@
     id: Puddle
   - type: StepTrigger
   - type: Drink
-    isOpen: true
     delay: 3
     transferAmount: 1
     solution: puddle

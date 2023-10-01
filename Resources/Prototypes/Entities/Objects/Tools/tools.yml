@@ -155,6 +155,7 @@
       Steel: 100
   - type: StaticPrice
     price: 22
+  - type: Prying
 
 - type: entity
   parent: Crowbar
