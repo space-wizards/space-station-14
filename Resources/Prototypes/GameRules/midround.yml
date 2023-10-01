@@ -15,3 +15,15 @@
     - NinjaSurviveObjective
   - type: NinjaRule
     threats: NinjaThreats
+
+# stores configuration for dragon
+- type: entity
+  noSpawn: true
+  parent: BaseGameRule
+  id: Dragon
+  components:
+  - type: GenericAntagRule
+    agentName: dragon-round-end-agent-name
+    objectives:
+    - CarpRiftsObjective
+    - DragonSurviveObjective

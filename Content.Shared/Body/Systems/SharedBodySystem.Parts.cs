@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.Body.Components;
+using Content.Shared.Body.Events;
 using Content.Shared.Body.Organ;
 using Content.Shared.Body.Part;
 using Content.Shared.Damage;
@@ -61,7 +62,7 @@ public partial class SharedBodySystem
 
         if (TryComp(entity, out OrganComponent? organ))
         {
-            RemoveOrgan(entity, organ);
+            RemoveOrgan(entity, uid, organ);
         }
     }
 
@@ -85,7 +86,20 @@ public partial class SharedBodySystem
                     {
                         if (TryComp(organ, out OrganComponent? organComp))
                         {
+                            var oldBody = organComp.Body;
                             organComp.Body = bodyUid;
+
+                            if (bodyUid != null)
+                            {
+                                var ev = new AddedToPartInBodyEvent(bodyUid.Value, children.Id);
+                                RaiseLocalEvent(organ, ev);
+                            }
+                            else if (oldBody != null)
+                            {
+                                var ev = new RemovedFromPartInBodyEvent(oldBody.Value, children.Id);
+                                RaiseLocalEvent(organ, ev);
+                            }
+
                             Dirty(organ, organComp);
                         }
                     }
