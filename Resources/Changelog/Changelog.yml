@@ -1,9 +1,4 @@
 Entries:
-- author: Aleksh
-  changes:
-  - {message: Added laser raptors., type: Add}
-  id: 4432
-  time: '2023-08-04T18:38:11.0000000+00:00'
 - author: Unbelievable-Salmon
   changes:
   - {message: The Syndicate gas mask now protects your eyes from welders., type: Tweak}
@@ -2962,3 +2957,9 @@ Entries:
   - {message: 'QM now has a mantle, available at HoP''s uniform printer.', type: Add}
   id: 4931
   time: '2023-10-01T14:28:47.0000000+00:00'
+- author: Nimfar11
+  changes:
+  - {message: Added new sprites for slime organs, type: Add}
+  - {message: Slimes now breathe nitrogen too., type: Tweak}
+  id: 4932
+  time: '2023-10-01T14:34:29.0000000+00:00'
