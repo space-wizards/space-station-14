@@ -102,3 +102,15 @@
   transferName: true
   revertOnDeath: true
 
+
+# this is the monkey polymorph for artifact.
+- type: polymorph
+  id: ArtifactMonkey
+  entity: MobMonkey
+  forced: true
+  inventory: Transfer
+  revertOnCrit: true
+  revertOnDeath: true
+  transferName: true
+  transferDamage: true
+  duration: 20
