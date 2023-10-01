@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
@@ -13,16 +10,17 @@ using Content.Shared.Inventory;
 using Content.Shared.Rejuvenate;
 using Content.Shared.Temperature;
 using Robust.Server.GameObjects;
+using System.Linq;
 
 namespace Content.Server.Temperature.Systems
 {
     public sealed class TemperatureSystem : EntitySystem
     {
-        [Dependency] private readonly TransformSystem _transformSystem = default!;
-        [Dependency] private readonly DamageableSystem _damageableSystem = default!;
-        [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
-        [Dependency] private readonly AlertsSystem _alertsSystem = default!;
+        [Dependency] private readonly AlertsSystem _alerts = default!;
+        [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+        [Dependency] private readonly DamageableSystem _damageable = default!;
+        [Dependency] private readonly TransformSystem _transform = default!;
 
         /// <summary>
         ///     All the components that will have their damage updated at the end of the tick.
@@ -120,11 +118,11 @@ namespace Content.Server.Temperature.Systems
             if (transform.MapUid == null)
                 return;
 
-            var position = _transformSystem.GetGridOrMapTilePosition(uid, transform);
+            var position = _transform.GetGridOrMapTilePosition(uid, transform);
 
             var temperatureDelta = args.GasMixture.Temperature - temperature.CurrentTemperature;
             var tileHeatCapacity =
-                _atmosphereSystem.GetTileHeatCapacity(transform.GridUid, transform.MapUid.Value, position);
+                _atmosphere.GetTileHeatCapacity(transform.GridUid, transform.MapUid.Value, position);
             var heat = temperatureDelta * (tileHeatCapacity * temperature.HeatCapacity /
                                            (tileHeatCapacity + temperature.HeatCapacity));
             ChangeHeat(uid, heat * temperature.AtmosTemperatureTransferEfficiency, temperature: temperature);
@@ -141,37 +139,37 @@ namespace Content.Server.Temperature.Systems
             {
                 // Cold strong.
                 case <= 260:
-                    _alertsSystem.ShowAlert(uid, AlertType.Cold, 3);
+                    _alerts.ShowAlert(uid, AlertType.Cold, 3);
                     break;
 
                 // Cold mild.
                 case <= 280 and > 260:
-                    _alertsSystem.ShowAlert(uid, AlertType.Cold, 2);
+                    _alerts.ShowAlert(uid, AlertType.Cold, 2);
                     break;
 
                 // Cold weak.
                 case <= 292 and > 280:
-                    _alertsSystem.ShowAlert(uid, AlertType.Cold, 1);
+                    _alerts.ShowAlert(uid, AlertType.Cold, 1);
                     break;
 
                 // Safe.
                 case <= 327 and > 292:
-                    _alertsSystem.ClearAlertCategory(uid, AlertCategory.Temperature);
+                    _alerts.ClearAlertCategory(uid, AlertCategory.Temperature);
                     break;
 
                 // Heat weak.
                 case <= 335 and > 327:
-                    _alertsSystem.ShowAlert(uid, AlertType.Hot, 1);
+                    _alerts.ShowAlert(uid, AlertType.Hot, 1);
                     break;
 
                 // Heat mild.
                 case <= 360 and > 335:
-                    _alertsSystem.ShowAlert(uid, AlertType.Hot, 2);
+                    _alerts.ShowAlert(uid, AlertType.Hot, 2);
                     break;
 
                 // Heat strong.
                 case > 360:
-                    _alertsSystem.ShowAlert(uid, AlertType.Hot, 3);
+                    _alerts.ShowAlert(uid, AlertType.Hot, 3);
                     break;
             }
         }
@@ -207,7 +205,7 @@ namespace Content.Server.Temperature.Systems
 
                 var diff = Math.Abs(temperature.CurrentTemperature - heatDamageThreshold);
                 var tempDamage = c / (1 + a * Math.Pow(Math.E, -heatK * diff)) - y;
-                _damageableSystem.TryChangeDamage(uid, temperature.HeatDamage * tempDamage, ignoreResistances: true, interruptsDoAfters: false);
+                _damageable.TryChangeDamage(uid, temperature.HeatDamage * tempDamage, ignoreResistances: true, interruptsDoAfters: false);
             }
             else if (temperature.CurrentTemperature <= coldDamageThreshold)
             {
@@ -220,7 +218,7 @@ namespace Content.Server.Temperature.Systems
                 var diff = Math.Abs(temperature.CurrentTemperature - coldDamageThreshold);
                 var tempDamage =
                     Math.Sqrt(diff * (Math.Pow(temperature.DamageCap.Double(), 2) / coldDamageThreshold));
-                _damageableSystem.TryChangeDamage(uid, temperature.ColdDamage * tempDamage, ignoreResistances: true, interruptsDoAfters: false);
+                _damageable.TryChangeDamage(uid, temperature.ColdDamage * tempDamage, ignoreResistances: true, interruptsDoAfters: false);
             }
             else if (temperature.TakingDamage)
             {
