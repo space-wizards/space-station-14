@@ -108,9 +108,8 @@
   id: ArtifactMonkey
   entity: MobMonkey
   forced: true
+  allowRepeatedMorphs: true
   inventory: Transfer
   revertOnCrit: true
   revertOnDeath: true
-  transferName: true
-  transferDamage: true
   duration: 20
