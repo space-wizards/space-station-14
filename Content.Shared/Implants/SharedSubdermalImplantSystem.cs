@@ -37,8 +37,7 @@ public abstract class SharedSubdermalImplantSystem : EntitySystem
 
         if (!string.IsNullOrWhiteSpace(component.ImplantAction))
         {
-            var action = Spawn(component.ImplantAction);
-            _actionsSystem.AddAction(component.ImplantedEntity.Value, action, uid);
+            _actionsSystem.AddAction(component.ImplantedEntity.Value, ref component.Action, component.ImplantAction, uid);
         }
 
         //replace micro bomb with macro bomb
