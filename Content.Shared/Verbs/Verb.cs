@@ -1,7 +1,7 @@
-using Robust.Shared.Serialization;
-using Robust.Shared.Utility;
 using Content.Shared.Database;
 using Content.Shared.Interaction.Events;
+using Robust.Shared.Serialization;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Verbs
 {
@@ -215,6 +215,7 @@ namespace Content.Shared.Verbs
         public static List<Type> VerbTypes = new()
         {
             typeof(Verb),
+            typeof(VvVerb),
             typeof(InteractionVerb),
             typeof(UtilityVerb),
             typeof(InnateVerb),
@@ -223,6 +224,16 @@ namespace Content.Shared.Verbs
             typeof(ExamineVerb),
             typeof(EquipmentVerb)
         };
+    }
+
+    /// <summary>
+    ///     View variables verbs.
+    /// </summary>
+    /// <remarks>Currently only used for the verb that opens the view variables panel.</remarks>
+    [Serializable, NetSerializable]
+    public sealed class VvVerb : Verb
+    {
+        public override int TypePriority => int.MaxValue;
     }
 
     /// <summary>
