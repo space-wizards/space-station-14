@@ -27,7 +27,11 @@ public sealed class TargetObjectiveSystem : EntitySystem
         if (!GetTarget(uid, out var target, comp))
             return;
 
-        _metaData.SetEntityName(uid, GetTitle(target.Value, comp.Title), args.Meta);
+        if (comp.Title != null)
+            _metaData.SetEntityName(uid, Format(target.Value, comp.Title.Value), args.Meta);
+
+        if (comp.Description != null)
+        _metaData.SetEntityDescription(uid, Format(target.Value, comp.Description.Value), args.Meta);
     }
 
     /// <summary>
@@ -53,7 +57,10 @@ public sealed class TargetObjectiveSystem : EntitySystem
         return target != null;
     }
 
-    private string GetTitle(EntityUid target, string title)
+    /// <summary>
+    /// Format either a title or description.
+    /// </summary>
+    private string Format(EntityUid target, LocId fmt)
     {
         var targetName = "Unknown";
         if (TryComp<MindComponent>(target, out var mind) && mind.CharacterName != null)
@@ -62,7 +69,7 @@ public sealed class TargetObjectiveSystem : EntitySystem
         }
 
         var jobName = _job.MindTryGetJobName(target);
-        return Loc.GetString(title, ("targetName", targetName), ("job", jobName));
+        return Loc.GetString(fmt, ("targetName", targetName), ("job", jobName));
     }
 
 }
