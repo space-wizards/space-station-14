@@ -151,7 +151,7 @@
     eyes: ClothingEyesHudMedical
     ears: ClothingHeadsetAltSyndicate
     gloves: ClothingHandsGlovesCombat
-    outerClothing: ClothingOuterHardsuitSyndieElite
+    outerClothing: ClothingOuterHardsuitMedic
     shoes: ClothingShoesBootsMagSyndie
     id: SyndiPDA
     pocket1: DoubleEmergencyOxygenTankFilled
@@ -282,7 +282,7 @@
     head: ClothingHeadHatTophat
     ears: ClothingHeadsetService
     jumpsuit: ClothingUniformJumpsuitJacketMonkey
-    id: BartenderIDCard
+    id: PunPunIDCard
 
 # Passenger but without the ID, bag, or headset
 

@@ -61,12 +61,16 @@
   parent: MobHuman
   id: MobHumanSpaceNinja
   components:
+  - type: RandomHumanoidAppearance
+    randomizeName: false
   - type: Loadout
     prototypes: [SpaceNinjaGear]
   - type: NpcFactionMember
     factions:
     - Syndicate
   - type: SpaceNinja
+  - type: GenericAntag
+    rule: Ninja
   - type: AutoImplant
     implants:
     - MicroBombImplant

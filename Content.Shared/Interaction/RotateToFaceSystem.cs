@@ -44,7 +44,7 @@ namespace Content.Shared.Interaction
                 if (Math.Abs(rotationDiff) > maxRotate)
                 {
                     var goalTheta = worldRot + Math.Sign(rotationDiff) * maxRotate;
-                    _transform.SetWorldRotation(xform, goalTheta);
+                    TryFaceAngle(uid, goalTheta, xform);
                     rotationDiff = (goalRotation - goalTheta);
 
                     if (Math.Abs(rotationDiff) > tolerance)
@@ -55,11 +55,11 @@ namespace Content.Shared.Interaction
                     return true;
                 }
 
-                _transform.SetWorldRotation(xform, goalRotation);
+                TryFaceAngle(uid, goalRotation, xform);
             }
             else
             {
-                _transform.SetWorldRotation(xform, goalRotation);
+                TryFaceAngle(uid, goalRotation, xform);
             }
 
             return true;
@@ -85,7 +85,7 @@ namespace Content.Shared.Interaction
                 if (!Resolve(user, ref xform))
                     return false;
 
-                xform.WorldRotation = diffAngle;
+                _transform.SetWorldRotation(xform, diffAngle);
                 return true;
             }
 
@@ -101,7 +101,7 @@ namespace Content.Shared.Interaction
                         // (Since the user being buckled to it holds it down with their weight.)
                         // This is logically equivalent to RotateWhileAnchored.
                         // Barstools and office chairs have independent wheels, while regular chairs don't.
-                        Transform(rotatable.Owner).WorldRotation = diffAngle;
+                        _transform.SetWorldRotation(Transform(suid.Value), diffAngle);
                         return true;
                     }
                 }
