@@ -35,11 +35,22 @@
   components:
   - type: TargetObjective
 
-# requires that the player kill someone
 # disables social objectives and is disabled by social objectives
 - type: entity
   abstract: true
   parent: BaseTargetObjective
+  id: BaseAntiSocialObjective
+  components:
+  - type: ObjectiveBlacklistRequirement
+    blacklist:
+      components:
+      - SocialObjective
+  - type: AntiSocialObjective
+
+# requires that the player kill someone
+- type: entity
+  abstract: true
+  parent: BaseAntiSocialObjective
   id: BaseKillObjective
   components:
   - type: Objective
@@ -47,14 +58,10 @@
     icon:
       sprite: Objects/Weapons/Guns/Pistols/viper.rsi
       state: icon
-  - type: ObjectiveBlacklistRequirement
-    blacklist:
-      components:
-      - SocialObjective
   - type: KillPersonCondition
 
 # requires that the player interact socially with someone
-# disables kill objectives and is disabled by kill objectives
+# disables antisocial objectives and is disabled by antisocial objectives
 - type: entity
   abstract: true
   parent: BaseTargetObjective
@@ -65,7 +72,7 @@
   - type: ObjectiveBlacklistRequirement
     blacklist:
       components:
-      - KillPersonCondition
+      - AntiSocialObjective
   - type: SocialObjective
 
 # requires that the target survives the round
