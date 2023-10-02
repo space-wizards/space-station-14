@@ -530,10 +530,13 @@ public sealed class WiresSystem : SharedWiresSystem
         if (component.WireSeed == 0)
             component.WireSeed = _random.Next(1, int.MaxValue);
 
+        // Update the construction graph to make sure that it starts on the node specified by WiresPanelSecurityComponent
         if (TryComp<WiresPanelSecurityComponent>(uid, out var wiresPanelSecurity) &&
             !string.IsNullOrEmpty(wiresPanelSecurity.SecurityLevel) &&
             TryComp<ConstructionComponent>(uid, out var construction))
+        {
             _construction.ChangeNode(uid, null, wiresPanelSecurity.SecurityLevel, true, construction);
+        }
 
         UpdateUserInterface(uid);
     }
@@ -669,7 +672,6 @@ public sealed class WiresSystem : SharedWiresSystem
     {
         component.Examine = args.Examine;
         component.WiresAccessible = args.WiresAccessible;
-        component.WeldingAllowed = args.WeldingAllowed;
 
         Dirty(uid, component);
 

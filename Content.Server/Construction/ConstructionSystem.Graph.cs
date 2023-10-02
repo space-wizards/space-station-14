@@ -299,11 +299,14 @@ namespace Content.Server.Construction
                 throw new Exception("Missing construction components");
             }
 
-            // Skip if the new entity's prototype is the same as the original, or the prototype is invalid
+            // Exit if the new entity's prototype is the same as the original, or the prototype is invalid
             if (newEntity == metaData.EntityPrototype?.ID || !_prototypeManager.HasIndex<EntityPrototype>(newEntity))
                 return null;
 
-            // Optional skip if the new entity's prototype is a parent of the original
+            // [Optional] Exit if the new entity's prototype is a parent of the original
+            // E.g., if an entity with the 'AirlockCommand' prototype was to be replaced with a new entity that 
+            // had the 'Airlock' prototype, and DoNotReplaceInheritingEntities was true, the code block would 
+            // exit here because 'AirlockCommand' is derived from 'Airlock'
             if (GetCurrentNode(uid, construction)?.DoNotReplaceInheritingEntities == true &&
                 metaData.EntityPrototype?.ID != null)
             {

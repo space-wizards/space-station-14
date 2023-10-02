@@ -24,17 +24,11 @@ public sealed partial class SetWiresPanelSecurity : IGraphAction
     [DataField("wiresAccessible")]
     public bool WiresAccessible = true;
 
-    /// <summary>
-    ///     Sets the WeldingAllowed field on the entity's <see cref="WiresPanelSecurityComponent"/>
-    /// </summary>
-    [DataField("weldingAllowed")]
-    public bool WeldingAllowed = true;
-
     public void PerformAction(EntityUid uid, EntityUid? userUid, IEntityManager entityManager)
     {
         if (entityManager.TryGetComponent(uid, out WiresPanelSecurityComponent? _))
         {
-            var ev = new WiresPanelSecurityEvent(Examine, WiresAccessible, WeldingAllowed);
+            var ev = new WiresPanelSecurityEvent(Examine, WiresAccessible);
             entityManager.EventBus.RaiseLocalEvent(uid, ev);
         }
     }

@@ -134,7 +134,8 @@
     price: 150
   - type: Tag
     tags:
-      - Airlock
+      - Airlock 
+      # This tag is used to nagivate the Airlock construction graph. It's needed because the construction graph is shared between Airlock, AirlockGlass, and HighSecDoor
   placement:
     mode: SnapgridCenter
 

@@ -11,7 +11,6 @@ public abstract class SharedWiresSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<WiresPanelComponent, ExaminedEvent>(OnExamine);
-        SubscribeLocalEvent<WiresPanelComponent, WeldableAttemptEvent>(OnWeldableAttempt);
     }
 
     private void OnExamine(EntityUid uid, WiresPanelComponent component, ExaminedEvent args)
@@ -29,16 +28,6 @@ public abstract class SharedWiresSystem : EntitySystem
             {
                 args.PushMarkup(Loc.GetString(wiresPanelSecurity.Examine));
             }
-        }
-    }
-
-    private void OnWeldableAttempt(EntityUid uid, WiresPanelComponent component, WeldableAttemptEvent args)
-    {
-        if (component.Open &&
-            TryComp<WiresPanelSecurityComponent>(uid, out var wiresPanelSecurity) &&
-            !wiresPanelSecurity.WeldingAllowed)
-        {
-            args.Cancel();
         }
     }
 }

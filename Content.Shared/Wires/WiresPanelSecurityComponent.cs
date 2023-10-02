@@ -27,16 +27,6 @@ public sealed partial class WiresPanelSecurityComponent : Component
     public bool WiresAccessible = true;
 
     /// <summary>
-    ///     Determines whether the device can be welded shut or not
-    /// </summary>
-    /// <remarks>
-    ///     Should be set false when you need to weld/unweld something to/from the wire panel
-    /// </remarks>
-    [DataField("weldingAllowed")]
-    [AutoNetworkedField]
-    public bool WeldingAllowed = true;
-
-    /// <summary>
     ///     Name of the construction graph node that the entity will start on
     /// </summary>
     [DataField("securityLevel")]
@@ -51,12 +41,10 @@ public sealed class WiresPanelSecurityEvent : EntityEventArgs
 {
     public readonly string? Examine;
     public readonly bool WiresAccessible;
-    public readonly bool WeldingAllowed;
 
-    public WiresPanelSecurityEvent(string? examine, bool wiresAccessible, bool weldingAllowed)
+    public WiresPanelSecurityEvent(string? examine, bool wiresAccessible)
     {
         Examine = examine;
         WiresAccessible = wiresAccessible;
-        WeldingAllowed = weldingAllowed;
     }
 }
