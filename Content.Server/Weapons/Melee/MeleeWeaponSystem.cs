@@ -51,6 +51,7 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
     {
         base.Initialize();
         SubscribeLocalEvent<MeleeChemicalInjectorComponent, MeleeHitEvent>(OnChemicalInjectorHit);
+        SubscribeLocalEvent<MeleeChemicalPickerComponent, MeleeHitEvent>(OnChemicalPickerHit);
         SubscribeLocalEvent<MeleeSpeechComponent, MeleeHitEvent>(OnSpeechHit);
         SubscribeLocalEvent<MeleeWeaponComponent, DamageExamineEvent>(OnMeleeExamineDamage);
     }
@@ -286,6 +287,36 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
         {
             var individualInjection = solutionToInject.SplitSolution(volPerBloodstream);
             _bloodstream.TryAddToChemicals(ent, individualInjection, bloodstream);
+        }
+    }
+    private void OnChemicalPickerHit(EntityUid owner, MeleeChemicalPickerComponent comp, MeleeHitEvent args)
+    {
+        if (!args.IsHit ||
+            !args.HitEntities.Any() ||
+            !_solutions.TryGetSolution(owner, comp.Solution, out var solutionContainer))
+        {
+            return;
+        }
+
+        var hitBloodstreams = new List<(EntityUid Entity, BloodstreamComponent Component)>();
+        var bloodQuery = GetEntityQuery<BloodstreamComponent>();
+
+        foreach (var entity in args.HitEntities)
+        {
+            if (Deleted(entity))
+                continue;
+
+            if (bloodQuery.TryGetComponent(entity, out var bloodstream))
+                hitBloodstreams.Add((entity, bloodstream));
+        }
+
+        if (!hitBloodstreams.Any())
+            return;
+
+        var transferAmount = (comp.TransferAmount * comp.TransferEfficiency) / hitBloodstreams.Count;
+        foreach (var (ent, bloodstream) in hitBloodstreams)
+        {
+            var result = _solutions.TryTransferSolution(owner, solutionContainer, bloodstream.BloodSolution, transferAmount);
         }
     }
 }
