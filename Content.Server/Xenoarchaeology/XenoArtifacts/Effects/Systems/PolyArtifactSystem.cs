@@ -25,15 +25,15 @@ public sealed class PolyArtifactSystem : EntitySystem
     {
         foreach (var target in _lookup.GetEntitiesInRange(uid, component.Range))
         {
-            if (_mob.IsDead(target) || _mob.IsCritical(target))
-                return;
 
-
-            else if (HasComp<HumanoidAppearanceComponent>(target) && !HasComp<ZombieComponent>(target))
+            if (_mob.IsAlive(target) && HasComp<HumanoidAppearanceComponent>(target) && !HasComp<ZombieComponent>(target))
             {
                 _poly.PolymorphEntity(target, "ArtifactMonkey");
                 _audio.PlayPvs(component.PolySound, uid);
             }
+
+            else
+                return;
         }
     }
 }
