@@ -20,6 +20,33 @@ public sealed class ImpersonateConditionSystem : EntitySystem
         SubscribeLocalEvent<ImpersonateConditionComponent, ObjectiveGetProgressEvent>(OnGetProgress);
     }
 
+    public override void Update(float deltaTime)
+    {
+        var query = EntityQueryEnumerator<ImpersonateConditionComponent>();
+        var time = TimeSpan.FromSeconds(deltaTime);
+        while (query.MoveNext(out var uid, out var comp))
+        {
+            if (comp.Name == null || comp.MindId == null)
+                continue;
+
+            if (!TryComp<MindComponent>(comp.MindId, out var mind) || mind.OwnedEntity == null)
+                continue;
+
+            // increase impersonated time until its complete
+            if (Identity.Name(mind.OwnedEntity.Value, EntityManager) == comp.Name)
+                comp.TimeImpersonated += time;
+            // decrease it until its gone
+            else
+                comp.TimeImpersonated -= time;
+
+            // clamp it
+            if (comp.TimeImpersonated < TimeSpan.Zero)
+                comp.TimeImpersonated = TimeSpan.Zero;
+            if (comp.TimeImpersonated > comp.Duration)
+                comp.TimeImpersonated = comp.Duration;
+        }
+    }
+
     private void OnAfterAssign(EntityUid uid, ImpersonateConditionComponent comp, ref ObjectiveAfterAssignEvent args)
     {
         if (!_target.GetTarget(uid, out var target))
@@ -29,19 +56,11 @@ public sealed class ImpersonateConditionSystem : EntitySystem
             return;
 
         comp.Name = targetMind.CharacterName;
+        comp.MindId = args.MindId;
     }
 
     private void OnGetProgress(EntityUid uid, ImpersonateConditionComponent comp, ref ObjectiveGetProgressEvent args)
     {
-        args.Progress = GetProgress(args.Mind, comp.Name);
-    }
-
-    private float GetProgress(MindComponent mind, string? name)
-    {
-        if (mind.OwnedEntity == null || name == null)
-            return 0;
-
-        var uid = mind.OwnedEntity.Value;
-        return Identity.Name(uid, EntityManager).Equals(name) ? 1 : 0;
+        args.Progress = (float) (comp.TimeImpersonated / comp.Duration);
     }
 }
