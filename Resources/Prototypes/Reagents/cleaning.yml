@@ -67,6 +67,19 @@
   viscosity: 0.5
   tileReactions:
     - !type:SpillTileReaction
+  reactiveEffects:
+    Acidic:
+      methods: [ Touch ]
+      effects:
+      - !type:GenericStatusEffect
+        key: Muted
+        component: Muted
+        type: Add
+        time: 5
+        refresh: false
+      # pva glue? no, antibiotic glue for sealing wounds
+      - !type:ModifyBleedAmount
+        amount: -1.5
   metabolisms:
     Narcotic:
       effects:
