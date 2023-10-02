@@ -103,7 +103,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
 
         if (overflow.Volume == FixedPoint2.Zero)
         {
-            RemCompDeferred<EdgeSpreaderComponent>(uid);
+            RemCompDeferred<ActiveEdgeSpreaderComponent>(uid);
             return;
         }
 
@@ -137,7 +137,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
                     continue;
 
                 args.Updates--;
-                EnsureComp<EdgeSpreaderComponent>(neighbor);
+                EnsureComp<ActiveEdgeSpreaderComponent>(neighbor);
 
                 if (args.Updates <= 0)
                     break;
@@ -145,7 +145,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
 
             if (overflow.Volume == FixedPoint2.Zero)
             {
-                RemCompDeferred<EdgeSpreaderComponent>(uid);
+                RemCompDeferred<ActiveEdgeSpreaderComponent>(uid);
                 return;
             }
         }
@@ -168,7 +168,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
                     break;
             }
 
-            RemCompDeferred<EdgeSpreaderComponent>(uid);
+            RemCompDeferred<ActiveEdgeSpreaderComponent>(uid);
             return;
         }
 
@@ -192,7 +192,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
                 if (!_solutionContainerSystem.TryAddSolution(neighbor, neighborSolution, split))
                     continue;
 
-                EnsureComp<EdgeSpreaderComponent>(neighbor);
+                EnsureComp<ActiveEdgeSpreaderComponent>(neighbor);
                 args.Updates--;
 
                 if (args.Updates <= 0)
@@ -438,7 +438,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
 
         if (checkForOverflow && IsOverflowing(puddleUid, puddleComponent))
         {
-            EnsureComp<EdgeSpreaderComponent>(puddleUid);
+            EnsureComp<ActiveEdgeSpreaderComponent>(puddleUid);
         }
 
         if (!sound)
@@ -638,7 +638,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
 
             if (TryAddSolution(ent.Value, solution, sound, puddleComponent: puddle))
             {
-                EnsureComp<EdgeSpreaderComponent>(ent.Value);
+                EnsureComp<ActiveEdgeSpreaderComponent>(ent.Value);
             }
 
             puddleUid = ent.Value;
@@ -650,7 +650,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
         EnsureComp<PuddleComponent>(puddleUid);
         if (TryAddSolution(puddleUid, solution, sound))
         {
-            EnsureComp<EdgeSpreaderComponent>(puddleUid);
+            EnsureComp<ActiveEdgeSpreaderComponent>(puddleUid);
         }
         return true;
     }

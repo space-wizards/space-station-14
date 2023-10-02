@@ -5,12 +5,12 @@
     Dragon: 1
     Revenant: 1
 
-- type: threat
+- type: ninjaHackingThreat
   id: Dragon
   announcement: terror-dragon
   rule: Dragon
 
-- type: threat
+- type: ninjaHackingThreat
   id: Revenant
   announcement: terror-revenant
   rule: RevenantSpawn
