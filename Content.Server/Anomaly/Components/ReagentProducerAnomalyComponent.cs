@@ -14,8 +14,10 @@ namespace Content.Server.Anomaly.Components;
 [RegisterComponent, Access(typeof(ReagentProducerAnomalySystem))]
 public sealed partial class ReagentProducerAnomalyComponent : Component
 {
-    public float AccumulatedFrametime = 0.0f;
-
+    //the addition of the reagent will occur instantly when an anomaly appears,
+    //and there will not be the first three seconds of a white empty anomaly.
+    public float AccumulatedFrametime = 3.0f;
+    
     /// <summary>
     ///     How frequently should this reagent generation update, in seconds?
     /// </summary>
@@ -92,10 +94,26 @@ public sealed partial class ReagentProducerAnomalyComponent : Component
     public bool NeedRecolor = false;
 
     /// <summary>
-    /// the amount of reagent produced per second
+    /// the maximum amount of reagent produced per second
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadOnly)]
-    public float MaxReagentProducing = 2f;
+    public float MaxReagentProducing = 1.5f;
+
+    /// <summary>
+    /// how much does the reagent production increase before entering the supercritical state
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadOnly)]
+    public float SupecriticalReagentProducingModifier = 100f;
+
+    /// <summary>
+    ///how much anomaly produces reagent per second, with rigor and supercritical state.
+    ///
+    /// I suspect that it would be possible to do without this variable,
+    /// but I do not know how to access information about the anomaly in the Update cycle
+    /// of the component in order to calculate this value there.
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadOnly)]
+    public float RealReagentProducing = 1f;
     /// <summary>
     /// The name of the reagent that the anomaly produces.
     /// </summary>

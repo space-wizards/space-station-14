@@ -66,9 +66,8 @@ public sealed class ReagentProducerAnomalySystem : EntitySystem
             if (!_solutionContainer.TryGetSolution(uid, component.Solution, out var producerSol))
                 continue;
 
-            var producedValue = component.MaxReagentProducing * component.AccumulatedFrametime;
             Solution newSol = new();
-            newSol.AddReagent(component.ProducingReagent, producedValue);
+            newSol.AddReagent(component.ProducingReagent, component.RealReagentProducing * component.AccumulatedFrametime);
             _solutionContainer.TryAddSolution(uid, producerSol, newSol); //TO DO - the container is not fully filled. 
 
             component.AccumulatedFrametime = 0;
@@ -104,6 +103,9 @@ public sealed class ReagentProducerAnomalySystem : EntitySystem
 
     private void OnSeverityChanged(EntityUid uid, ReagentProducerAnomalyComponent component, ref AnomalySeverityChangedEvent args)
     {
+        component.RealReagentProducing = component.MaxReagentProducing * args.Severity;
+        if (args.Severity >= 0.95)
+            component.RealReagentProducing *= component.SupecriticalReagentProducingModifier;
         //If after the severity change, its level has exceeded the threshold, the type of reagent changes, and the threshold increases.
         if (args.Severity >= component.NextChangeThreshold)
         {

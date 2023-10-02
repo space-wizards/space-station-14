@@ -38,7 +38,6 @@ public sealed class InjectionAnomalySystem : EntitySystem
     {
         if (!_solutionContainer.TryGetSolution(uid, component.Solution, out var sol))
             return;
-
         //We get all the entity in the radius into which the reagent will be injected.
         var xformQuery = GetEntityQuery<TransformComponent>();
         var xform = xformQuery.GetComponent(uid);
@@ -53,7 +52,8 @@ public sealed class InjectionAnomalySystem : EntitySystem
 
             if (_injectableQuery.TryGetComponent(ent, out var injEnt))
             {
-                _solutionContainer.TryTransferSolution(ent, injectable, sol, maxInject);
+                var buffer = sol;
+                _solutionContainer.TryTransferSolution(ent, injectable, buffer, maxInject);
                 //Spawn Effect
                 var uidXform = Transform(ent);
                 Spawn(component.VisualEffectPrototype, uidXform.Coordinates);

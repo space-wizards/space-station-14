@@ -26,20 +26,18 @@ public sealed class PuddleCreateAnomalySystem : EntitySystem
 
     private void OnPulse(EntityUid uid, PuddleCreateAnomalyComponent component, ref AnomalyPulseEvent args)
     {
-        PulseScalableEffect(uid, component, component.MaxPuddleSize * args.Severity);
-    }
-    private void OnSupercritical(EntityUid uid, PuddleCreateAnomalyComponent component, ref AnomalySupercriticalEvent args)
-    {
-        PulseScalableEffect(uid, component, component.SuperCriticalPuddleSize);
-    }
-
-    private void PulseScalableEffect(EntityUid uid, PuddleCreateAnomalyComponent component, float reagentCount)
-    {
         if (!_solutionContainer.TryGetSolution(uid, component.Solution, out var sol))
             return;
 
         var xform = _xformQuery.GetComponent(uid);
-        var puddleSol = _solutionContainer.SplitSolution(uid, sol, reagentCount);
+        var puddleSol = _solutionContainer.SplitSolution(uid, sol, component.MaxPuddleSize * args.Severity);
         _puddle.TrySplashSpillAt(uid, xform.Coordinates, puddleSol, out _);
+    }
+    private void OnSupercritical(EntityUid uid, PuddleCreateAnomalyComponent component, ref AnomalySupercriticalEvent args)
+    {
+        if (!_solutionContainer.TryGetSolution(uid, component.Solution, out var sol))
+            return;
+        var xform = _xformQuery.GetComponent(uid);
+        _puddle.TrySpillAt(xform.Coordinates, sol, out _);
     }
 }

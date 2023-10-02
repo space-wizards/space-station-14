@@ -266,16 +266,17 @@
   - type: Physics
     bodyType: KinematicController
     linearDamping: 0
+  - type: BadFood
   - type: MovementIgnoreGravity
   - type: Anomaly
     anomalyContactDamage:
       types:
         Slash: 0
-  - type: ExplosionAnomaly
-    supercriticalExplosion: Default
-    explosionTotalIntensity: 50
-    explosionDropoff: 2
-    explosionMaxTileIntensity: 10
+  #- type: ExplosionAnomaly
+  #  supercriticalExplosion: Default
+  #  explosionTotalIntensity: 50
+  #  explosionDropoff: 2
+  #  explosionMaxTileIntensity: 10
   - type: EntitySpawnAnomaly
     superCriticalSpawn: PuddleSparkle #LiquidElemental
     spawns:
@@ -283,7 +284,7 @@
   - type: SolutionContainerManager
     solutions:
       anomaly:
-        maxVol: 100
+        maxVol: 1500
   - type: PuddleCreateAnomaly
     solution: anomaly
   - type: InjectionAnomaly
