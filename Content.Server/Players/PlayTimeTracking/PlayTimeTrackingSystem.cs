@@ -33,11 +33,14 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
     [Dependency] private readonly MindSystem _minds = default!;
     [Dependency] private readonly PlayTimeTrackingManager _tracking = default!;
 
+    private string AdminTrackerTime => "AdminTime";
+
     public override void Initialize()
     {
         base.Initialize();
 
         _tracking.CalcTrackers += CalcTrackers;
+        _adminManager.OnPermsChanged += AdminManager_OnPermsChanged;
 
         SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundEnd);
         SubscribeLocalEvent<PlayerAttachedEvent>(OnPlayerAttached);
@@ -48,6 +51,12 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
         SubscribeLocalEvent<UnAFKEvent>(OnUnAFK);
         SubscribeLocalEvent<MobStateChangedEvent>(OnMobStateChanged);
         SubscribeLocalEvent<PlayerJoinedLobbyEvent>(OnPlayerJoinedLobby);
+    }
+
+    private void AdminManager_OnPermsChanged(Administration.AdminPermsChangedEventArgs obj)
+    {
+        if (_minds.TryGetSession(obj.Player.GetMind(), out var session))
+            _tracking.QueueRefreshTrackers(session);
     }
 
     public override void Shutdown()
@@ -65,6 +74,11 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
     {
         if (_afk.IsAfk(player))
             return;
+
+        if (_adminManager.IsAdmin(player, includeDeAdmin: false))
+        {
+            trackers.Add(AdminTrackerTime);
+        }
 
         if (!IsPlayerAlive(player))
             return;
