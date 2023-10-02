@@ -84,6 +84,24 @@
   - MagazineBoxLightRifleRubber
   - MagazineBoxRifleRubber
 
+- type: technology
+  id: PracticeAmmunition
+  name: research-technology-practice-ammunition
+  icon:
+    sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell.rsi
+    state: practice
+  discipline: Arsenal
+  tier: 1
+  cost: 2000
+  recipeUnlocks:
+  - ShellShotgunPractice
+  - MagazineBoxPistolPractice
+  - MagazineBoxMagnumPractice
+  - MagazineBoxLightRiflePractice
+  - MagazineBoxRiflePractice
+  - WeaponLaserCarbinePractice
+  - WeaponDisablerPractice
+
 # Tier 2
 
 - type: technology

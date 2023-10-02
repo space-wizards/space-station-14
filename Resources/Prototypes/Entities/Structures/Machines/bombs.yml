@@ -41,7 +41,7 @@
         fix1:
           shape:
             !type:PhysShapeAabb
-            bounds: "-0.45,-0.45,0.45,0.45"
+            bounds: "-0.3,-0.3,0.3,0.3"
           density: 190
           mask:
             - MachineMask
