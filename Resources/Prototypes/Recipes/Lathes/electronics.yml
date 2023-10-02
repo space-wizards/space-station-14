@@ -518,6 +518,14 @@
      Glass: 900
 
 - type: latheRecipe
+  id: ElectricGrillMachineCircuitboard
+  result: ElectricGrillMachineCircuitboard
+  completetime: 4
+  materials:
+     Steel: 100
+     Glass: 900
+
+- type: latheRecipe
   id: FatExtractorMachineCircuitboard
   result: FatExtractorMachineCircuitboard
   completetime: 4
