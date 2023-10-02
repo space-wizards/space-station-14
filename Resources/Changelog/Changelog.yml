@@ -1,9 +1,4 @@
 Entries:
-- author: Phill101
-  changes:
-  - {message: The crew manifest is now a PDA cartridge program., type: Tweak}
-  id: 4444
-  time: '2023-08-05T08:37:08.0000000+00:00'
 - author: Slava0135
   changes:
   - {message: Splash spill now has a visual effect., type: Add}
@@ -2959,3 +2954,9 @@ Entries:
   - {message: Small firearms now fit in boots., type: Tweak}
   id: 4943
   time: '2023-10-01T21:23:41.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: 'Added the Electric Grill for cooking steaks quickly, research food
+      service to make it.', type: Add}
+  id: 4944
+  time: '2023-10-02T00:17:50.0000000+00:00'
