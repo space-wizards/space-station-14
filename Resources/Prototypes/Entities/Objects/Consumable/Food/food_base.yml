@@ -42,7 +42,7 @@
       map: ["icon"]
   - type: GenericVisualizer
     visuals:
-      enum.DrinkCanStateVisual.Opened:
+      enum.OpenableVisuals.Opened:
         icon:
           True: {state: "icon-open"}
           False: {state: "icon"}
