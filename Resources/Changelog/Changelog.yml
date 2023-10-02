@@ -1,9 +1,4 @@
 Entries:
-- author: Slava0135
-  changes:
-  - {message: Splash spill now has a visual effect., type: Add}
-  id: 4445
-  time: '2023-08-05T11:44:19.0000000+00:00'
 - author: FillerVK
   changes:
   - {message: 'Added craftable TaxiBot. Robotics can now construct autonomous, ghost-powered
@@ -2960,3 +2955,8 @@ Entries:
       service to make it.', type: Add}
   id: 4944
   time: '2023-10-02T00:17:50.0000000+00:00'
+- author: Pigeonpeas
+  changes:
+  - {message: 'Added a new lizard horn marking for the head, kobold ears!', type: Add}
+  id: 4945
+  time: '2023-10-02T07:08:20.0000000+00:00'
