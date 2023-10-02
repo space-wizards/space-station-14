@@ -154,8 +154,7 @@
   - type: FlavorProfile
     flavors:
       - sweet
-      - banana
-      - creamy
+      - berry
   - type: Sprite
     layers:
     - state: tin
@@ -172,6 +171,7 @@
   - type: FlavorProfile
     flavors:
       - sweet
+      - berry
   - type: Sprite
     layers:
     - state: plain-slice

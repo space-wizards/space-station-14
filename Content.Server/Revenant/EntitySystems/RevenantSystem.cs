@@ -1,56 +1,59 @@
 using System.Numerics;
 using Content.Server.Actions;
-using Content.Shared.Popups;
-using Content.Shared.Alert;
-using Content.Shared.Damage;
-using Content.Shared.Interaction;
 using Content.Server.GameTicking;
-using Content.Shared.Stunnable;
-using Content.Shared.Revenant;
-using Robust.Server.GameObjects;
-using Robust.Shared.Random;
-using Content.Shared.StatusEffect;
-using Content.Server.Visible;
-using Content.Shared.Examine;
-using Robust.Shared.Prototypes;
-using Content.Shared.Actions.ActionTypes;
-using Content.Shared.Tag;
 using Content.Server.Store.Components;
 using Content.Server.Store.Systems;
+using Content.Shared.Alert;
+using Content.Shared.Damage;
 using Content.Shared.DoAfter;
+using Content.Shared.Examine;
+using Content.Shared.Eye;
 using Content.Shared.FixedPoint;
+using Content.Shared.Interaction;
 using Content.Shared.Maps;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Physics;
+using Content.Shared.Popups;
+using Content.Shared.Revenant;
 using Content.Shared.Revenant.Components;
+using Content.Shared.StatusEffect;
+using Content.Shared.Stunnable;
+using Content.Shared.Tag;
+using Robust.Server.GameObjects;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 
 namespace Content.Server.Revenant.EntitySystems;
 
 public sealed partial class RevenantSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly ActionsSystem _action = default!;
     [Dependency] private readonly AlertsSystem _alerts = default!;
     [Dependency] private readonly DamageableSystem _damage = default!;
-    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
+    [Dependency] private readonly GameTicker _ticker = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly PhysicsSystem _physics = default!;
+    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
+    [Dependency] private readonly SharedEyeSystem _eye = default!;
     [Dependency] private readonly StatusEffectsSystem _statusEffects = default!;
     [Dependency] private readonly SharedInteractionSystem _interact = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedStunSystem _stun = default!;
-    [Dependency] private readonly TagSystem _tag = default!;
     [Dependency] private readonly StoreSystem _store = default!;
+    [Dependency] private readonly TagSystem _tag = default!;
     [Dependency] private readonly VisibilitySystem _visibility = default!;
-    [Dependency] private readonly GameTicker _ticker = default!;
+
+    [ValidatePrototypeId<EntityPrototype>]
+    private const string RevenantShopId = "ActionRevenantShop";
 
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<RevenantComponent, ComponentStartup>(OnStartup);
+        SubscribeLocalEvent<RevenantComponent, MapInitEvent>(OnMapInit);
 
         SubscribeLocalEvent<RevenantComponent, RevenantShopActionEvent>(OnShop);
         SubscribeLocalEvent<RevenantComponent, DamageChangedEvent>(OnDamage);
@@ -81,10 +84,14 @@ public sealed partial class RevenantSystem : EntitySystem
 
         //ghost vision
         if (TryComp(uid, out EyeComponent? eye))
-            eye.VisibilityMask |= (uint) (VisibilityFlags.Ghost);
+        {
+            _eye.SetVisibilityMask(uid, eye.VisibilityMask | (int) (VisibilityFlags.Ghost), eye);
+        }
+    }
 
-        var shopaction = new InstantAction(_proto.Index<InstantActionPrototype>("RevenantShop"));
-        _action.AddAction(uid, shopaction, null);
+    private void OnMapInit(EntityUid uid, RevenantComponent component, MapInitEvent args)
+    {
+        _action.AddAction(uid, ref component.Action, RevenantShopId);
     }
 
     private void OnStatusAdded(EntityUid uid, RevenantComponent component, StatusEffectAddedEvent args)

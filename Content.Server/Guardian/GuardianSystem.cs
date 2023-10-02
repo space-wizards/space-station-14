@@ -1,12 +1,12 @@
-using Content.Server.Inventory;
-using Content.Server.Popups;
 using Content.Server.Body.Systems;
+using Content.Server.Popups;
 using Content.Shared.Actions;
 using Content.Shared.Audio;
 using Content.Shared.Damage;
 using Content.Shared.DoAfter;
 using Content.Shared.Examine;
 using Content.Shared.Guardian;
+using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
@@ -16,7 +16,6 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
-using Content.Shared.Hands.Components;
 
 namespace Content.Server.Guardian
 {
@@ -90,7 +89,7 @@ namespace Content.Server.Guardian
         private void OnHostInit(EntityUid uid, GuardianHostComponent component, ComponentInit args)
         {
             component.GuardianContainer = uid.EnsureContainer<ContainerSlot>("GuardianContainer");
-            _actionSystem.AddAction(uid, component.Action, null);
+            _actionSystem.AddAction(uid, ref component.ActionEntity, component.Action);
         }
 
         private void OnHostShutdown(EntityUid uid, GuardianHostComponent component, ComponentShutdown args)
@@ -102,7 +101,7 @@ namespace Content.Server.Guardian
                 _bodySystem.GibBody(component.HostedGuardian.Value);
 
             EntityManager.QueueDeleteEntity(component.HostedGuardian.Value);
-            _actionSystem.RemoveAction(uid, component.Action);
+            _actionSystem.RemoveAction(uid, component.ActionEntity);
         }
 
         private void OnGuardianAttackAttempt(EntityUid uid, GuardianComponent component, AttackAttemptEvent args)
@@ -168,7 +167,7 @@ namespace Content.Server.Guardian
                 return;
             }
 
-            _doAfterSystem.TryStartDoAfter(new DoAfterArgs(user, component.InjectionDelay, new GuardianCreatorDoAfterEvent(), injector, target: target, used: injector)
+            _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, user, component.InjectionDelay, new GuardianCreatorDoAfterEvent(), injector, target: target, used: injector)
             {
                 BreakOnTargetMove = true,
                 BreakOnUserMove = true
@@ -301,22 +300,11 @@ namespace Content.Server.Guardian
                 RetractGuardian(hostUid, hostComponent, guardianUid, guardianComponent);
         }
 
-        private bool CanRelease(EntityUid guardian)
-        {
-            return HasComp<ActorComponent>(guardian);
-        }
-
         private void ReleaseGuardian(EntityUid host, GuardianHostComponent hostComponent, EntityUid guardian, GuardianComponent guardianComponent)
         {
             if (guardianComponent.GuardianLoose)
             {
                 DebugTools.Assert(!hostComponent.GuardianContainer.Contains(guardian));
-                return;
-            }
-
-            if (!CanRelease(guardian))
-            {
-                _popupSystem.PopupEntity(Loc.GetString("guardian-no-soul"), host, host);
                 return;
             }
 

@@ -1,11 +1,7 @@
 <Control xmlns="https://spacestation14.io"
          xmlns:customControls="clr-namespace:Content.Client.Administration.UI.CustomControls"
-         xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
          Margin="0 0 0 10">
-    <PanelContainer VerticalExpand="True">
-        <PanelContainer.PanelOverride>
-            <gfx:StyleBoxFlat BackgroundColor="#25252a"/>
-        </PanelContainer.PanelOverride>
+    <PanelContainer VerticalExpand="True" StyleClasses="BackgroundDark">
         <BoxContainer Orientation="Vertical"
                       HorizontalExpand="True"
                       VerticalExpand="True"

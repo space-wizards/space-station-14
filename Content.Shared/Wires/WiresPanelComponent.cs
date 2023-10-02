@@ -28,11 +28,13 @@ public sealed partial class WiresPanelComponent : Component
     [DataField("screwdriverCloseSound")]
     public SoundSpecifier ScrewdriverCloseSound = new SoundPathSpecifier("/Audio/Machines/screwdriverclose.ogg");
 
+    /// <summary>
+    ///     This prototype describes the current security features of the wire panel
+    /// </summary>
+    [DataField("securityLevel")]
+    [ValidatePrototypeId<WiresPanelSecurityLevelPrototype>]
     [AutoNetworkedField]
-    public string? WiresPanelSecurityExamination = default!;
-
-    [AutoNetworkedField]
-    public bool WiresAccessible = true;
+    public string CurrentSecurityLevelID = "Level0";
 }
 
 /// <summary>

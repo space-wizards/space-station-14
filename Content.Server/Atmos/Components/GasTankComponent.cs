@@ -1,13 +1,14 @@
-using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Atmos;
 using Robust.Shared.Audio;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Atmos.Components
 {
     [RegisterComponent]
     public sealed partial class GasTankComponent : Component, IGasMixtureHolder
     {
-        public const float MaxExplosionRange = 80f;
+        public const float MaxExplosionRange = 26f;
         private const float DefaultLowPressure = 0f;
         private const float DefaultOutputPressure = Atmospherics.OneAtmosphere;
 
@@ -46,6 +47,12 @@ namespace Content.Server.Atmos.Components
         /// </summary>
         [DataField("outputPressure"), ViewVariables(VVAccess.ReadWrite)]
         public float OutputPressure = DefaultOutputPressure;
+
+        /// <summary>
+        ///     The maximum allowed output pressure.
+        /// </summary>
+        [DataField("maxOutputPressure"), ViewVariables(VVAccess.ReadWrite)]
+        public float MaxOutputPressure = 3 * DefaultOutputPressure;
 
         /// <summary>
         ///     Tank is connected to internals.
@@ -87,8 +94,10 @@ namespace Content.Server.Atmos.Components
         [DataField("tankFragmentScale"), ViewVariables(VVAccess.ReadWrite)]
         public float TankFragmentScale = 2 * Atmospherics.OneAtmosphere;
 
-        [DataField("toggleAction", required: true)]
-        public InstantAction ToggleAction = new();
+        [DataField("toggleAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+        public string ToggleAction = "ActionToggleInternals";
+
+        [DataField("toggleActionEntity")] public EntityUid? ToggleActionEntity;
 
         /// <summary>
         ///     Valve to release gas from tank

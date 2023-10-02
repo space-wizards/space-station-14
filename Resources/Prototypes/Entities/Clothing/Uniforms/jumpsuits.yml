@@ -48,6 +48,10 @@
     sprite: Clothing/Uniforms/Jumpsuit/punpun.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/punpun.rsi
+  - type: SuitSensor
+    controlsLocked: false
+    randomMode: false
+    mode: SensorCords
 
 - type: entity
   parent: ClothingUniformBase
@@ -933,6 +937,17 @@
     sprite: Clothing/Uniforms/Jumpsuit/mercenary.rsi
 
 - type: entity
+  parent: UnsensoredClothingUniformBase
+  id: ClothingUniformJumpsuitNinja
+  name: ninja jumpsuit
+  description: A nano-enhanced jumpsuit designed for maximum comfort and tacticality.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/ninja.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/ninja.rsi
+
+- type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitAtmos
   name: atmospheric technician jumpsuit
@@ -1290,3 +1305,25 @@
   - type: Construction
     graph: WebObjects
     node: jumpsuit
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitLoungewear
+  name: loungewear
+  description: A long stretch of fabric that wraps around your body for comfort.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/loungewear.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/loungewear.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitGladiator
+  name: gladiator uniform
+  description: Made for true gladiators (or Ash Walkers).
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/gladiator.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/gladiator.rsi

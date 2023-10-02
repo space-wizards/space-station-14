@@ -1,7 +1,7 @@
-using Robust.Shared.Serialization;
-using Robust.Shared.Utility;
 using Content.Shared.Database;
 using Content.Shared.Interaction.Events;
+using Robust.Shared.Serialization;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Verbs
 {
@@ -112,7 +112,7 @@ namespace Content.Shared.Verbs
         ///     If this is not null, and no icon or icon texture were specified, a sprite view of this entity will be
         ///     used as the icon for this verb.
         /// </summary>
-        public EntityUid? IconEntity;
+        public NetEntity? IconEntity;
 
         /// <summary>
         ///     Whether or not to close the context menu after using it to run this verb.
@@ -215,14 +215,25 @@ namespace Content.Shared.Verbs
         public static List<Type> VerbTypes = new()
         {
             typeof(Verb),
+            typeof(VvVerb),
             typeof(InteractionVerb),
             typeof(UtilityVerb),
             typeof(InnateVerb),
             typeof(AlternativeVerb),
             typeof(ActivationVerb),
             typeof(ExamineVerb),
-            typeof(EquipmentVerb) 
+            typeof(EquipmentVerb)
         };
+    }
+
+    /// <summary>
+    ///     View variables verbs.
+    /// </summary>
+    /// <remarks>Currently only used for the verb that opens the view variables panel.</remarks>
+    [Serializable, NetSerializable]
+    public sealed class VvVerb : Verb
+    {
+        public override int TypePriority => int.MaxValue;
     }
 
     /// <summary>

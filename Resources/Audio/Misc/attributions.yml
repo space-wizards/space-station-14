@@ -2,3 +2,8 @@
   license: "CC-BY-3.0"
   copyright: "Created by qwertyquerty"
   source: "https://www.youtube.com/@qwertyquerty"
+
+- files: ["ninja_greeting.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from TG station."
+  source: "https://github.com/tgstation/tgstation/blob/b02b93ce2ab891164511a973493cdf951b4120f7/sound/effects/ninja_greeting.ogg"
