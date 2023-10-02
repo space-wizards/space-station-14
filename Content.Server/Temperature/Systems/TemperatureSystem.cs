@@ -12,8 +12,6 @@ using Content.Shared.Temperature;
 using Robust.Server.GameObjects;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace Content.Server.Temperature.Systems;
