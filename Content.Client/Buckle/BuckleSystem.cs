@@ -3,7 +3,6 @@ using Content.Shared.Buckle;
 using Content.Shared.Buckle.Components;
 using Content.Shared.Vehicle.Components;
 using Robust.Client.GameObjects;
-using Robust.Shared.GameStates;
 
 namespace Content.Client.Buckle;
 
@@ -15,20 +14,12 @@ internal sealed class BuckleSystem : SharedBuckleSystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<BuckleComponent, ComponentHandleState>(OnBuckleHandleState);
+        SubscribeLocalEvent<BuckleComponent, AfterAutoHandleStateEvent>(OnBuckleAfterAutoHandleState);
         SubscribeLocalEvent<BuckleComponent, AppearanceChangeEvent>(OnAppearanceChange);
     }
 
-    private void OnBuckleHandleState(EntityUid uid, BuckleComponent component, ref ComponentHandleState args)
+    private void OnBuckleAfterAutoHandleState(EntityUid uid, BuckleComponent component, ref AfterAutoHandleStateEvent args)
     {
-        if (args.Current is not BuckleComponentState state)
-            return;
-
-        component.Buckled = state.Buckled;
-        component.BuckledTo = EnsureEntity<BuckleComponent>(state.BuckledTo, uid);
-        component.LastEntityBuckledTo = EnsureEntity<BuckleComponent>(state.LastEntityBuckledTo, uid);
-        component.DontCollide = state.DontCollide;
-
         ActionBlocker.UpdateCanMove(uid);
 
         if (!TryComp<SpriteComponent>(uid, out var ownerSprite))
@@ -38,11 +29,11 @@ internal sealed class BuckleSystem : SharedBuckleSystem
             return;
 
         // Adjust draw depth when the chair faces north so that the seat back is drawn over the player.
-    // Reset the draw depth when rotated in any other direction.
-    // TODO when ECSing, make this a visualizer
-    // This code was written before rotatable viewports were introduced, so hard-coding Direction.North
-    // and comparing it against LocalRotation now breaks this in other rotations. This is a FIXME, but
-    // better to get it working for most people before we look at a more permanent solution.
+        // Reset the draw depth when rotated in any other direction.
+        // TODO when ECSing, make this a visualizer
+        // This code was written before rotatable viewports were introduced, so hard-coding Direction.North
+        // and comparing it against LocalRotation now breaks this in other rotations. This is a FIXME, but
+        // better to get it working for most people before we look at a more permanent solution.
         if (component is { Buckled: true, LastEntityBuckledTo: { } } &&
             Transform(component.LastEntityBuckledTo.Value).LocalRotation.GetCardinalDir() == Direction.North &&
             TryComp<SpriteComponent>(component.LastEntityBuckledTo, out var buckledSprite))

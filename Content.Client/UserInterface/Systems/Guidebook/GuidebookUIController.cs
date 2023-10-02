@@ -5,7 +5,6 @@ using Content.Client.Guidebook.Controls;
 using Content.Client.Lobby;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Input;
-using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controllers;
 using static Robust.Client.UserInterface.Controls.BaseButton;
@@ -18,11 +17,7 @@ namespace Content.Client.UserInterface.Systems.Guidebook;
 public sealed class GuidebookUIController : UIController, IOnStateEntered<LobbyState>, IOnStateEntered<GameplayState>, IOnStateExited<LobbyState>, IOnStateExited<GameplayState>, IOnSystemChanged<GuidebookSystem>
 {
     [UISystemDependency] private readonly GuidebookSystem _guidebookSystem = default!;
-    [Dependency] private readonly IClyde _clyde = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly IUserInterfaceManager _uiManager = default!;
-
-    private IClydeWindow? ClydeWindow { get; set; }
 
     private GuidebookWindow? _guideWindow;
     private MenuButton? GuidebookButton => UIManager.GetActiveUIWidgetOrNull<MenuBar.Widgets.GameTopMenuBar>()?.GuidebookButton;
@@ -45,7 +40,6 @@ public sealed class GuidebookUIController : UIController, IOnStateEntered<LobbyS
         _guideWindow = UIManager.CreateWindow<GuidebookWindow>();
         _guideWindow.OnClose += OnWindowClosed;
         _guideWindow.OnOpen += OnWindowOpen;
-        _guideWindow.Guidebook.PopOutButton.OnPressed += _ => PopOut();
 
         // setup keybinding
         CommandBinds.Builder
@@ -141,12 +135,7 @@ public sealed class GuidebookUIController : UIController, IOnStateEntered<LobbyS
         string? selected = null)
     {
         if (_guideWindow == null)
-        {
-            _guideWindow = UIManager.CreateWindow<GuidebookWindow>();
-            _guideWindow.OnClose += OnWindowClosed;
-            _guideWindow.OnOpen += OnWindowOpen;
-            _guideWindow.Guidebook.PopOutButton.OnPressed += _ => PopOut();
-        }
+            return;
 
         if (_guideWindow.IsOpen)
         {
@@ -172,11 +161,11 @@ public sealed class GuidebookUIController : UIController, IOnStateEntered<LobbyS
             }
         }
 
-        _guideWindow.Guidebook.UpdateGuides(guides, rootEntries, forceRoot, selected);
+        _guideWindow.UpdateGuides(guides, rootEntries, forceRoot, selected);
 
         // Expand up to depth-2.
-        _guideWindow.Guidebook.Tree.SetAllExpanded(false);
-        _guideWindow.Guidebook.Tree.SetAllExpanded(true, 1);
+        _guideWindow.Tree.SetAllExpanded(false);
+        _guideWindow.Tree.SetAllExpanded(true, 1);
 
         _guideWindow.OpenCenteredRight();
     }
@@ -218,44 +207,5 @@ public sealed class GuidebookUIController : UIController, IOnStateEntered<LobbyS
             guides.Add(childId, child);
             RecursivelyAddChildren(child, guides);
         }
-    }
-    private void PopOut()
-    {
-        if (_guideWindow == null)
-        {
-            return;
-        }
-
-        var monitor = _clyde.EnumerateMonitors().First();
-
-        ClydeWindow = _clyde.CreateWindow(new WindowCreateParameters
-        {
-            Maximized = false,
-            Title = "Guidebook",
-            Monitor = monitor,
-            Width = 750,
-            Height = 700
-        });
-        var control = _guideWindow.Guidebook;
-        control.Orphan();
-        _guideWindow.Dispose();
-        _guideWindow = null;
-
-        ClydeWindow.RequestClosed += OnRequestClosed;
-
-        ClydeWindow.DisposeOnClose = true;
-        var Root = _uiManager.CreateWindowRoot(ClydeWindow);
-        Root.AddChild(control);
-
-        control.PopOutButton.Disabled = true;
-        control.PopOutButton.Visible = false;
-    }
-
-    private void OnRequestClosed(WindowRequestClosedEventArgs obj)
-    {
-        ClydeWindow = null;
-        _guideWindow = null;
-        if (GuidebookButton != null)
-            GuidebookButton.Pressed = false;
     }
 }
