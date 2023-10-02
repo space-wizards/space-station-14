@@ -19,7 +19,7 @@ public sealed class PuddleCreateAnomalySystem : EntitySystem
     public override void Initialize()
     {
         SubscribeLocalEvent<PuddleCreateAnomalyComponent, AnomalyPulseEvent>(OnPulse);
-        SubscribeLocalEvent<PuddleCreateAnomalyComponent, AnomalySupercriticalEvent>(OnSupercritical);
+        SubscribeLocalEvent<PuddleCreateAnomalyComponent, AnomalySupercriticalEvent>(OnSupercritical, before: new[] { typeof(SolutionContainerSystem), typeof(InjectionAnomalySystem)});
 
         _xformQuery = GetEntityQuery<TransformComponent>();
     }
@@ -37,7 +37,8 @@ public sealed class PuddleCreateAnomalySystem : EntitySystem
     {
         if (!_solutionContainer.TryGetSolution(uid, component.Solution, out var sol))
             return;
+        var buffer = sol;
         var xform = _xformQuery.GetComponent(uid);
-        _puddle.TrySpillAt(xform.Coordinates, sol, out _);
+        _puddle.TrySpillAt(xform.Coordinates, buffer, out _);
     }
 }

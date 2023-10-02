@@ -19,7 +19,7 @@ public sealed class InjectionAnomalySystem : EntitySystem
     public override void Initialize()
     {
         SubscribeLocalEvent<InjectionAnomalyComponent, AnomalyPulseEvent>(OnPulse);
-        SubscribeLocalEvent<InjectionAnomalyComponent, AnomalySupercriticalEvent>(OnSupercritical);
+        SubscribeLocalEvent<InjectionAnomalyComponent, AnomalySupercriticalEvent>(OnSupercritical, before: new[] { typeof(SolutionContainerSystem) });
 
         _injectableQuery = GetEntityQuery<InjectableSolutionComponent>();
     }
