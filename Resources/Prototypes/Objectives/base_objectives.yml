@@ -60,6 +60,23 @@
       state: icon
   - type: KillPersonCondition
 
+# requires that the player impersonate someone
+- type: entity
+  abstract: true
+  parent: BaseAntiSocialObjective
+  id: BaseImpersonateObjective
+  components:
+  - type: Objective
+    icon:
+      sprite: Clothing/Mask/gas.rsi
+      state: icon
+  - type: ObjectiveBlacklistRequirement
+    blacklist:
+      components:
+      - SocialObjective
+      - DieCondition
+  - type: ImpersonateCondition
+
 # requires that the player interact socially with someone
 # disables antisocial objectives and is disabled by antisocial objectives
 - type: entity

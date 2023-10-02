@@ -3,7 +3,7 @@
   id: TraitorObjectiveGroups
   weights:
     TraitorObjectiveGroupSteal: 1
-    TraitorObjectiveGroupKill: 1
+    TraitorObjectiveGroupAntisocial: 1 # kill someone, or get to work after theyve been killed
     TraitorObjectiveGroupState: 1 #As in, something about your character. Alive, dead, arrested, gained an ability...
     TraitorObjectiveGroupSocial: 1 #Involves helping/harming others without killing them or stealing their stuff
 
@@ -22,10 +22,11 @@
     SecretDocumentsStealObjective: 0.5
 
 - type: weightedRandom
-  id: TraitorObjectiveGroupKill
+  id: TraitorObjectiveGroupAntisocial
   weights:
     KillRandomPersonObjective: 1
     KillRandomHeadObjective: 0.25
+    ImpersonateRandomPersonObjective: 0.5
 
 - type: weightedRandom
   id: TraitorObjectiveGroupState
