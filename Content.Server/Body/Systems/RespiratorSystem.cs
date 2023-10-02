@@ -80,8 +80,9 @@ namespace Content.Server.Body.Systems
                     {
                         respirator.LastGaspPopupTime = _gameTiming.CurTime;
                         // SS220 emotes begin
-                        //_popupSystem.PopupEntity(Loc.GetString("lung-behavior-gasp"), uid);
-                        _chat.TryEmoteWithChat(uid, "Gasp", hideLog: true, ignoreActionBlocker: true);
+                        _popupSystem.PopupEntity(Loc.GetString("lung-behavior-gasp"), uid, Shared.Popups.PopupType.Medium);
+                        var emoteType = _mobState.IsIncapacitated(uid) ? "CritGasp" : "Gasp";
+                        _chat.TryEmoteWithoutChat(uid, emoteType, ignoreActionBlocker: true);
                         // SS220 emotes end
                     }
 

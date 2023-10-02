@@ -13,3 +13,17 @@
   id: Gasp
   files:
     - /Audio/SS220/Emotes/gasp.ogg
+
+- type: soundCollection
+  id: FemaleCritGasp
+  files:
+    - /Audio/SS220/Emotes/critgasp/choke_female_1.ogg
+    - /Audio/SS220/Emotes/critgasp/choke_female_2.ogg
+    - /Audio/SS220/Emotes/critgasp/choke_female_3.ogg
+
+- type: soundCollection
+  id: MaleCritGasp
+  files:
+    - /Audio/SS220/Emotes/critgasp/choke_male_1.ogg
+    - /Audio/SS220/Emotes/critgasp/choke_male_2.ogg
+    - /Audio/SS220/Emotes/critgasp/choke_male_3.ogg

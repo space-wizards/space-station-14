@@ -36,11 +36,14 @@
       collection: Fart
       params:
         volume: 2
-    #SS220 emote sounds
+    #SS220 emote sounds begin
     DefaultDeathgasp:
       collection: Deathgasp
     Gasp:
       collection: Gasp
+    CritGasp:
+      collection: MaleCritGasp
+    #SS220 emote sounds end
 
 - type: emoteSounds
   id: FemaleHuman
@@ -84,6 +87,9 @@
       collection: Deathgasp
     Gasp:
       collection: Gasp
+    CritGasp:
+      collection: FemaleCritGasp
+    #SS220 emote sounds end
 
 - type: emoteSounds
   id: UnisexReptilian
@@ -109,6 +115,9 @@
       collection: Deathgasp
     Gasp:
       collection: Gasp
+    CritGasp:
+      collection: MaleCritGasp
+    #SS220 emote sounds end
 
 - type: emoteSounds
   id: MaleSlime
@@ -152,6 +161,9 @@
       collection: Deathgasp
     Gasp:
       collection: Gasp
+    CritGasp:
+      collection: MaleCritGasp
+    #SS220 emote sounds end
   params:
     variation: 0.125
 
@@ -197,6 +209,9 @@
       collection: Deathgasp
     Gasp:
       collection: Gasp
+    CritGasp:
+      collection: FemaleCritGasp
+    #SS220 emote sounds end
   params:
     variation: 0.125
 
@@ -208,6 +223,9 @@
       collection: Deathgasp
     Gasp:
       collection: Gasp
+    CritGasp:
+      collection: MaleCritGasp
+    #SS220 emote sounds end
   sound:
     path: /Audio/Voice/Vox/shriek1.ogg
     params:
@@ -240,6 +258,9 @@
       collection: Deathgasp
     Gasp:
       collection: Gasp
+    CritGasp:
+      collection: MaleCritGasp
+    #SS220 emote sounds end
 
 - type: emoteSounds
   id: UnisexDwarf
@@ -276,11 +297,14 @@
       collection: Fart
       params:
         volume: 2
-    #SS220 emote sounds
+    #SS220 emote sounds begin
     DefaultDeathgasp:
       collection: Deathgasp
     Gasp:
       collection: Gasp
+    CritGasp:
+      collection: MaleCritGasp
+    #SS220 emote sounds end
   params:
     variation: 0.125
     pitchscale: 0.75
@@ -316,6 +340,9 @@
       collection: FemaleCry
     Whistle:
       collection: Whistles
+    CritGasp:
+      collection: FemaleCritGasp
+    #SS220 emote sounds end
   params:
     variation: 0.125
     pitchscale: 0.75
@@ -338,6 +365,9 @@
       collection: Deathgasp
     Gasp:
       collection: Gasp
+    CritGasp:
+      collection: MaleCritGasp
+    #SS220 emote sounds end
 
 # body emotes
 - type: emoteSounds

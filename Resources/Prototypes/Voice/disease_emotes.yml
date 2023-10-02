@@ -66,4 +66,9 @@
     - задыхается
     - задыхается.
     - задыхается!
+
+- type: emote
+  id: CritGasp
+  category: Vocal
+  chatMessages: [задыхается]
 # SS220 emotes end
