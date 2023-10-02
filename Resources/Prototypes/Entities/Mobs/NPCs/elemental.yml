@@ -74,7 +74,6 @@
       types:
         Slash: 0
         Poison: 0
-  - type: AttackInjector
     receiveInjectionValue: 5
   - type: DamageStateVisuals
     rotate: true
