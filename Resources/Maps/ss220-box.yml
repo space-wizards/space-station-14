@@ -14050,10 +14050,11 @@ entities:
     - dockJointId: docking46345
       dockedWith: 21828
       type: Docking
-    - SecondsUntilStateChange: -434250.6
-      changeAirtight: False
-      state: Opening
+    - changeAirtight: False
+      state: Open
       type: Door
+    - canCollide: False
+      type: Physics
   - uid: 12644
     components:
     - rot: 1.5707963267948966 rad
@@ -14068,10 +14069,11 @@ entities:
     - dockJointId: docking46345
       dockedWith: 562
       type: Docking
-    - SecondsUntilStateChange: -434250.6
-      changeAirtight: False
-      state: Opening
+    - changeAirtight: False
+      state: Open
       type: Door
+    - canCollide: False
+      type: Physics
 - proto: AirlockHeadOfPersonnelGlassLocked
   entities:
   - uid: 114
@@ -76480,6 +76482,11 @@ entities:
       pos: -19.5,-30.5
       parent: 8364
       type: Transform
+  - uid: 28936
+    components:
+    - pos: 16.5,34.5
+      parent: 8364
+      type: Transform
 - proto: ComputerFrame
   entities:
   - uid: 9632
@@ -78507,9 +78514,9 @@ entities:
     - pos: 39.636105,-10.364136
       parent: 8364
       type: Transform
-  - uid: 28936
+  - uid: 28934
     components:
-    - pos: 30.424559,-8.960047
+    - pos: 30.374582,-8.780186
       parent: 8364
       type: Transform
 - proto: DeskWood
@@ -134802,6 +134809,13 @@ entities:
     - pos: -7.540036,-64.30588
       parent: 8364
       type: Transform
+- proto: KitchenElectricGrill
+  entities:
+  - uid: 29789
+    components:
+    - pos: 39.5,-4.5
+      parent: 8364
+      type: Transform
 - proto: KitchenKnife
   entities:
   - uid: 15583
@@ -138929,11 +138943,6 @@ entities:
     - pos: 14.5,52.5
       parent: 8364
       type: Transform
-  - uid: 7491
-    components:
-    - pos: 30.5,-9.5
-      parent: 8364
-      type: Transform
   - uid: 7876
     components:
     - pos: 18.5,48.5
@@ -139009,6 +139018,11 @@ entities:
     components:
     - rot: 3.141592653589793 rad
       pos: 5.5,15.5
+      parent: 8364
+      type: Transform
+  - uid: 29790
+    components:
+    - pos: 30.5,-5.5
       parent: 8364
       type: Transform
 - proto: PaperNtForm
@@ -139433,11 +139447,6 @@ entities:
     - pos: -16.707241,51.450653
       parent: 8364
       type: Transform
-  - uid: 28934
-    components:
-    - pos: 30.362059,-9.600672
-      parent: 8364
-      type: Transform
   - uid: 29752
     components:
     - pos: 14.331657,52.57878
@@ -139451,6 +139460,11 @@ entities:
   - uid: 29891
     components:
     - pos: -57.251766,-7.4073706
+      parent: 8364
+      type: Transform
+  - uid: 30011
+    components:
+    - pos: 30.383553,-5.514561
       parent: 8364
       type: Transform
 - proto: PenCap
@@ -166750,6 +166764,13 @@ entities:
     - flags: SessionSpecific
       type: MetaData
     - pos: -18.5,-14.5
+      parent: 8364
+      type: Transform
+- proto: VendingMachineCondiments
+  entities:
+  - uid: 7491
+    components:
+    - pos: 30.5,-9.5
       parent: 8364
       type: Transform
 - proto: VendingMachineDetDrobe
