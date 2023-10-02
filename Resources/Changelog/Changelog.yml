@@ -1,10 +1,4 @@
 Entries:
-- author: FillerVK
-  changes:
-  - {message: 'Added craftable TaxiBot. Robotics can now construct autonomous, ghost-powered
-      taxis to drive people around the station at high speed.', type: Add}
-  id: 4446
-  time: '2023-08-05T18:36:32.0000000+00:00'
 - author: lapatison
   changes:
   - {message: 'Syndicate lobbying bundle: briefcase containing 5,000 spacebucks has
@@ -2960,3 +2954,9 @@ Entries:
   - {message: 'Added a new lizard horn marking for the head, kobold ears!', type: Add}
   id: 4945
   time: '2023-10-02T07:08:20.0000000+00:00'
+- author: JoeHammad
+  changes:
+  - {message: 'the north star gloves have had their damage changed back to 8, as was
+      originally intended', type: Tweak}
+  id: 4946
+  time: '2023-10-02T15:34:22.0000000+00:00'
