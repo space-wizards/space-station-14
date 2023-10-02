@@ -494,7 +494,7 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
 
         var delay = insertingSelf ? unit.EntryDelay : unit.DraggedEntryDelay;
 
-        if (userId != null && userId != toInsertId)
+        if (userId != null && !insertingSelf)
             _popupSystem.PopupEntity(Loc.GetString("disposal-unit-being-inserted", ("user", Identity.Entity((EntityUid) userId, EntityManager))), toInsertId, toInsertId, PopupType.Large);
 
         if (delay <= 0 || userId == null)
