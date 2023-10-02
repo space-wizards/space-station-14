@@ -251,10 +251,6 @@
         anom: "#ffffff"
       enum.AnomalyVisualLayers.Animated:
         pulse: "#ffffff"
-  - type: Anomaly
-    anomalyContactDamage:
-      types:
-        Slash: 10
   - type: PointLight
     radius: 4.0
     energy: 3.5
@@ -267,18 +263,34 @@
           - None
         layer:
           - Opaque
+  - type: Physics
+    bodyType: KinematicController
+    linearDamping: 0
+  - type: MovementIgnoreGravity
+  - type: Anomaly
+    anomalyContactDamage:
+      types:
+        Slash: 0
   - type: ExplosionAnomaly
     supercriticalExplosion: Default
     explosionTotalIntensity: 50
     explosionDropoff: 2
     explosionMaxTileIntensity: 10
   - type: EntitySpawnAnomaly
-    superCriticalSpawn: LiquidElemental
+    superCriticalSpawn: PuddleSparkle #LiquidElemental
     spawns:
       - PuddleSparkle
-  - type: ChasingAnomaly
-    chasingComponent: InjectableSolution
-  - type: LiquidAnomaly
+  - type: SolutionContainerManager
+    solutions:
+      anomaly:
+        maxVol: 100
+  - type: PuddleCreateAnomaly
+    solution: anomaly
+  - type: InjectionAnomaly
+    solution: anomaly
+  - type: ReagentProducerAnomaly
+    solution: anomaly
+    needRecolor: true
     blacklistChemicals: 
     # With a limit of 15u injections are too strong
     - Romerol           
@@ -342,7 +354,6 @@
     - Leporazine
     - Ambuzol
     - Tricordrazine
-    
     funChemicals:
     - Desoxyephedrine
     - Ephedrine
@@ -355,7 +366,16 @@
     - Pax
     - Ipecac
     - Cognizine
-  - type: Physics
-    bodyType: KinematicController
-    linearDamping: 0
-  - type: MovementIgnoreGravity
+    - Beer
+  - type: Drink
+    solution: anomaly
+  - type: DrainableSolution
+    solution: anomaly
+  - type: DrawableSolution
+    solution: anomaly
+  - type: ExaminableSolution
+    solution: anomaly
+  - type: RefillableSolution
+    solution: anomaly
+  - type: InjectableSolution
+    solution: beaker
