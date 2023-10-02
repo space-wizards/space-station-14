@@ -1,10 +1,4 @@
 Entries:
-- author: Vordenburg
-  changes:
-  - {message: Nuclear fission devices need enough floor around them to anchor now.,
-    type: Tweak}
-  id: 4448
-  time: '2023-08-05T21:28:07.0000000+00:00'
 - author: Flareguy
   changes:
   - {message: Changed the plating sprite to be a little less blue., type: Tweak}
@@ -2960,3 +2954,9 @@ Entries:
     type: Fix}
   id: 4947
   time: '2023-10-02T18:30:51.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Pizza recipes now require flat dough. Get a rolling pin from the dinnerware
+      vendor., type: Add}
+  id: 4948
+  time: '2023-10-02T19:21:15.0000000+00:00'
