@@ -480,6 +480,16 @@
     Gold: 50
 
 - type: latheRecipe
+  id: BorgModuleAdvancedTreatment
+  result: BorgModuleAdvancedTreatment
+  completetime: 3
+  materials:
+    Steel: 500
+    Glass: 750
+    Plastic: 250
+    Gold: 50
+
+- type: latheRecipe
   id: BorgModuleDefibrillator
   result: BorgModuleDefibrillator
   completetime: 3

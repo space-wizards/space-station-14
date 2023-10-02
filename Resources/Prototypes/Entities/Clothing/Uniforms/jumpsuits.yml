@@ -48,6 +48,10 @@
     sprite: Clothing/Uniforms/Jumpsuit/punpun.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/punpun.rsi
+  - type: SuitSensor
+    controlsLocked: false
+    randomMode: false
+    mode: SensorCords
 
 - type: entity
   parent: ClothingUniformBase
@@ -1312,3 +1316,14 @@
     sprite: Clothing/Uniforms/Jumpsuit/loungewear.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/loungewear.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitGladiator
+  name: gladiator uniform
+  description: Made for true gladiators (or Ash Walkers).
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/gladiator.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/gladiator.rsi
