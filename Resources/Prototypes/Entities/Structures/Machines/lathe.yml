@@ -685,6 +685,7 @@
       - Hemostat
       - BluespaceBeaker
       - SyringeBluespace
+      - Jug
   - type: Machine
     board: MedicalTechFabCircuitboard
 
