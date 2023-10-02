@@ -505,3 +505,14 @@
   - type: EyeProtection
   - type: BreathMask
   - type: IdentityBlocker
+
+- type: entity
+  parent: ClothingMaskBase
+  id: ClothingMaskProto
+  name: proto mask
+  components:
+  - type: Sprite
+    sprite: Clothing/Mask/proto.rsi
+  - type: Clothing
+    sprite: Clothing/Mask/proto.rsi
+  - type: BreathMask
