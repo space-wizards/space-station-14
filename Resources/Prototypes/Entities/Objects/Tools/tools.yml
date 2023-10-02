@@ -502,7 +502,7 @@
   parent: BaseItem
   id: RollingPin
   name: rolling pin
-  description: Used to knock out the Bartender.
+  description: A tool used to shape and flatten dough.
   components:
   - type: Sprite
     sprite: Objects/Tools/rolling_pin.rsi
@@ -514,7 +514,7 @@
   - type: MeleeWeapon
     damage:
       types:
-        Blunt: 8
+        Blunt: 7
   - type: Tool
     qualities:
     - Rolling
