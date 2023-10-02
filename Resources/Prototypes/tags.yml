@@ -766,6 +766,9 @@
   id: PetWearable
 
 - type: Tag
+  id: MonkeyWearable
+
+- type: Tag
   id: Pickaxe
 
 - type: Tag
