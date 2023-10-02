@@ -1,9 +1,4 @@
 Entries:
-- author: Flareguy
-  changes:
-  - {message: Changed the plating sprite to be a little less blue., type: Tweak}
-  id: 4449
-  time: '2023-08-06T00:04:12.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: 'Tweak PKA, crusher, pickaxe, and drill. Overall adjusted the mining
@@ -2960,3 +2955,9 @@ Entries:
       vendor., type: Add}
   id: 4948
   time: '2023-10-02T19:21:15.0000000+00:00'
+- author: VigersRay
+  changes:
+  - {message: The syndicate has begun to recruit more experienced people into the
+      ranks of nuclear operatives., type: Tweak}
+  id: 4949
+  time: '2023-10-02T21:20:09.0000000+00:00'
