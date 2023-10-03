@@ -28,6 +28,3 @@ limit = 10.0
 [admin]
 see_own_notes = true
 deadmin_on_join = true
-
-[ic]
-show_ssd_indicator = false
