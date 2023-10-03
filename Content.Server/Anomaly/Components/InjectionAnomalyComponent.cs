@@ -3,8 +3,10 @@ using Content.Server.Anomaly.Effects;
 namespace Content.Server.Anomaly.Components;
 
 /// <summary>
-/// This component allows the anomaly to create puddles from the solutionContainer
+/// This component allows the anomaly to inject liquid from the SolutionContainer
+/// into the surrounding entities with the InjectionSolution component
 /// </summary>
+
 [RegisterComponent, Access(typeof(InjectionAnomalySystem))]
 public sealed partial class InjectionAnomalyComponent : Component
 {

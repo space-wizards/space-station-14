@@ -1,24 +1,13 @@
 - type: entity
-  name: liquid elemental
-  id: LiquidElemental
-  suffix: RandomLiquid
-  parent: SimpleSpaceMobBase
-  description: A living formless liquid.
+  name: Reagent slime
+  id: ReagentSlime
+  suffix: Water
+  parent: MobAdultSlimes
+  description: It consists of a liquid, and it wants to dissolve you in itself.
   components:
-  - type: Insulated
-  - type: CombatMode
-  - type: InputMover
-  - type: MobMover
-  - type: Hands
   - type: NpcFactionMember
     factions:
     - SimpleHostile 
-  - type: HTN
-    rootTask:
-      task: SimpleHostileCompound
-    blackboard:
-      NavSmash: !type:Bool
-        true
   - type: Sprite
     drawdepth: Mobs
     sprite: Mobs/Aliens/elemental.rsi
@@ -26,10 +15,6 @@
       - map: [ "enum.DamageStateVisualLayers.Base" ]
         state: alive
         color: "#75b1f0"
-  - type: RandomSprite
-    selected: # Initialized layer values. Edited through the LiquidAnomalySystem
-      enum.DamageStateVisualLayers.Base:
-        alive: "#ffffff"
   - type: PointLight
     radius: 2.0
     energy: 3.5
@@ -52,29 +37,29 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      100: Dead
+      140: Dead
   - type: SlowOnDamage
     speedModifierThresholds:
       50: 0.5
   - type: Stamina
     critThreshold: 300
   - type: Bloodstream
-    bloodReagent: Water # Edited through the LiquidAnomalySystem
-    bleedReductionAmount: 0.1
-    bloodlossThreshold: 0.5
-    bloodRefreshAmount: 0
+    bloodReagent: Water 
+    chemicalMaxVolume: 100
+  - type: StatusEffects
+    allowed:
+    - SlowedDown
+    - Electrocution
   - type: MeleeWeapon
-    altDisarm: false
-    hidden: true
-    angle: 0
     soundHit:
       collection: AlienClaw
     animation: WeaponArcBite
     damage:
       types:
-        Slash: 0
-        Poison: 0
-    receiveInjectionValue: 5
+        Slash: 15
+  - type: MeleeChemicalInjector
+    solution: bloodstream
+    transferAmount: 5
   - type: DamageStateVisuals
     rotate: true
     states:
@@ -84,59 +69,167 @@
         Base: dead
   - type: Tag
     tags:
+      - FootstepSound
       - CannotSuicide
+      - DoorBumpOpener
   - type: NoSlip
   - type: ZombieImmune
-  #- type: Anomaly
-  #  severityGrowthCoefficient: 0.04
-  #  minPulseLength: 10
-  #  maxPulseLength: 60
-  #  initialSeverityRange: 
-  #    0.1: 0.3
-  #  minPointsPerSecond: 0
-  #  maxPointsPerSecond: 30
-  #  supercriticalSound:
-  #    collection: RadiationPulse
-  #  pulseSound:
-  #    path: /Audio/Effects/waterswirl.ogg
-  #    params:
-  #      volume: 5
-  #  anomalyContactDamage:
-  #    types:
-  #      Poison: 2
-  #- type: LiquidAnomaly
-  #  maxSolutionGeneration: 20
-  #  superCriticalSolutionGeneration: 100
-  #  injectRadius: 2
-  #  superCriticalInjectRadius: 6
-  #  weightSpreadDangerous: "6.0, 8.0"
-  #  weightSpreadFun: "0.0, 0.0"
-  #  weightSpreadUseful: "0.0, 0.0"
-  #  weightSpreadOther: "4.0, 2.0"
-  #  blacklistChemicals: 
-  #  # With a limit of 15u injections are too strong
-  #  - Romerol           
-  #  - Bungotoxin
-  #  - VentCrud
-  #  - Lexorin
-  #  # OP Medical        
-  #  - AmbuzolPlus
-  #  - Siderlac
-  #  - Omnizine
-  #  # Fun Category
-  #  - Fiber             
-  #  - GroundBee
-  #  - ZombieBlood   # AmbusolPlus again
-  #  - Ichor
-  #  - Stimulants
-  #  # Gases
-  #  - Oxygen
-  #  - Plasma
-  #  - Tritium
-  #  - CarbonDioxide
-  #  - Nitrogen
-  #  - Miasma
-  #  - NitrousOxide
-  #  - Frezon
-  #  # base
-  #  - BasePyrotechnic
+
+- type: entity
+  name: Reagent Slime Spawner
+  id: ReagentSlimeSpawner
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - state: red
+        - sprite: Mobs/Aliens/elemental.rsi
+          state: alive
+    - type: RandomSpawner
+      prototypes:
+        - ReagentSlime
+        - ReagentSlimeBeer
+        - ReagentSlimePax
+        - ReagentSlimeNocturine
+        - ReagentSlimeTHC
+        - ReagentSlimeBicaridine
+        - ReagentSlimeToxin
+        - ReagentSlimeNapalm
+        - ReagentSlimeOmnizine
+      chance: 1
+
+- type: entity
+  id: ReagentSlimeBeer
+  parent: ReagentSlime
+  suffix: Beer
+  components:
+  - type: Bloodstream
+    bloodReagent: Beer
+  - type: PointLight
+    color: "#cfa85f"
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Aliens/elemental.rsi
+    layers:
+      - map: [ "enum.DamageStateVisualLayers.Base" ]
+        state: alive
+        color: "#cfa85f"
+
+- type: entity
+  id: ReagentSlimePax
+  parent: ReagentSlime
+  suffix: Pax
+  components:
+  - type: Bloodstream
+    bloodReagent: Pax
+  - type: PointLight
+    color: "#AAAAAA"
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Aliens/elemental.rsi
+    layers:
+      - map: [ "enum.DamageStateVisualLayers.Base" ]
+        state: alive
+        color: "#AAAAAA"
+
+- type: entity
+  id: ReagentSlimeNocturine
+  parent: ReagentSlime
+  suffix: Nocturine
+  components:
+  - type: Bloodstream
+    bloodReagent: Nocturine
+  - type: PointLight
+    color: "#128e80"
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Aliens/elemental.rsi
+    layers:
+      - map: [ "enum.DamageStateVisualLayers.Base" ]
+        state: alive
+        color: "#128e80"
+        
+- type: entity
+  id: ReagentSlimeTHC
+  parent: ReagentSlime
+  suffix: THC
+  components:
+  - type: Bloodstream
+    bloodReagent: THC
+  - type: PointLight
+    color: "#808080"
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Aliens/elemental.rsi
+    layers:
+      - map: [ "enum.DamageStateVisualLayers.Base" ]
+        state: alive
+        color: "#808080"
+        
+- type: entity
+  id: ReagentSlimeBicaridine
+  parent: ReagentSlime
+  suffix: Bicaridine
+  components:
+  - type: Bloodstream
+    bloodReagent: Bicaridine
+  - type: PointLight
+    color: "#ffaa00"
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Aliens/elemental.rsi
+    layers:
+      - map: [ "enum.DamageStateVisualLayers.Base" ]
+        state: alive
+        color: "#ffaa00"
+
+- type: entity
+  id: ReagentSlimeToxin
+  parent: ReagentSlime
+  suffix: Toxin
+  components:
+  - type: Bloodstream
+    bloodReagent: Toxin
+  - type: PointLight
+    color: "#cf3600"
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Aliens/elemental.rsi
+    layers:
+      - map: [ "enum.DamageStateVisualLayers.Base" ]
+        state: alive
+        color: "#cf3600"
+
+- type: entity
+  id: ReagentSlimeNapalm
+  parent: ReagentSlime
+  suffix: Napalm
+  components:
+  - type: Bloodstream
+    bloodReagent: Napalm
+  - type: PointLight
+    color: "#FA00AF"
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Aliens/elemental.rsi
+    layers:
+      - map: [ "enum.DamageStateVisualLayers.Base" ]
+        state: alive
+        color: "#FA00AF"
+     
+- type: entity
+  id: ReagentSlimeOmnizine
+  parent: ReagentSlime
+  suffix: Omnizine
+  components:
+  - type: Bloodstream
+    bloodReagent: Omnizine
+  - type: PointLight
+    color: "#fcf7f9"
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Aliens/elemental.rsi
+    layers:
+      - map: [ "enum.DamageStateVisualLayers.Base" ]
+        state: alive
+        color: "#fcf7f9"

@@ -10,11 +10,8 @@ using Content.Shared.Sprite;
 using Robust.Server.GameObjects;
 
 namespace Content.Server.Anomaly.Effects;
-/// <summary>
-/// This component allows the anomaly to generate a random type of reagent in the specified SolutionContainer.
-/// With the increasing severity of the anomaly, the type of reagent produced may change.
-/// The higher the severity of the anomaly, the higher the chance of dangerous or useful reagents.
-/// </summary>
+
+/// <see cref="ReagentProducerAnomalyComponent"/>
 
 public sealed class ReagentProducerAnomalySystem : EntitySystem
 {

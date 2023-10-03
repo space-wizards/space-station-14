@@ -266,7 +266,7 @@
   #  explosionDropoff: 2
   #  explosionMaxTileIntensity: 10
   - type: EntitySpawnAnomaly
-    superCriticalSpawn: LiquidElemental
+    superCriticalSpawn: ReagentSlimeSpawner
     spawns:
       - PuddleSparkle
   - type: SolutionContainerManager

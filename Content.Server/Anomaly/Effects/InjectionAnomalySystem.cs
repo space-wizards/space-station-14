@@ -9,6 +9,9 @@ namespace Content.Server.Anomaly.Effects;
 /// This component allows the anomaly to inject liquid from the SolutionContainer
 /// into the surrounding entities with the InjectionSolution component
 /// </summary>
+///
+
+/// <see cref="InjectionAnomalyComponent"/>
 public sealed class InjectionAnomalySystem : EntitySystem
 {
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
