@@ -79,7 +79,7 @@
   parent: MobElementalBase
   id: MobQuartzCrab
   name: quartz crab
-  description: 
+  description: An ore crab made from quartz.
   components:
   - type: Sprite
     sprite: Mobs/Elemental/orecrab.rsi
@@ -93,7 +93,7 @@
       path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
     damage:
       types:
-        Piercing: 6
+        Piercing: 12
   - type: CombatMode
   - type: NpcFactionMember
     factions:
@@ -119,7 +119,7 @@
   parent: MobElementalBase
   id: MobIronCrab
   name: ore crab
-  description: 
+  description: An ore crab made from iron.
   components:
   - type: Sprite
     sprite: Mobs/Elemental/orecrab.rsi
@@ -133,11 +133,11 @@
       path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
     damage:
       types:
-        Blunt: 4
+        Blunt: 8
   - type: CombatMode
   - type: MovementSpeedModifier
-    baseWalkSpeed : 2
-    baseSprintSpeed : 2.5
+    baseWalkSpeed : 1.5
+    baseSprintSpeed : 2
   - type: NpcFactionMember
     factions:
       - SimpleHostile
@@ -162,7 +162,7 @@
   parent: MobElementalBase
   id: MobUraniumCrab
   name: ore crab
-  description: 
+  description: An ore crab made from uranium.
   components:
   - type: Sprite
     sprite: Mobs/Elemental/orecrab.rsi
@@ -176,14 +176,14 @@
       path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
     damage:
       types:
-        Blunt: 4
+        Blunt: 8
   - type: CombatMode
   - type: MovementSpeedModifier
     baseWalkSpeed : 2
     baseSprintSpeed : 2.5
   - type: NpcFactionMember
     factions:
-    - Passive
+      - SimpleHostile
   - type: RadiationSource
     intensity: 0.3
   - type: Destructible
@@ -202,7 +202,7 @@
             max: 2
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
-    - type: PointLight
-      radius: 2
-      energy: 3
-      color: "#06DF24"
+  - type: PointLight
+    radius: 2
+    energy: 3
+    color: "#06DF24"

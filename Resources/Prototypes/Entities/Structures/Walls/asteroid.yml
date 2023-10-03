@@ -17,10 +17,6 @@
     mode: NoSprite
   - type: SmoothEdge
   - type: Sprite
-    variants: 2
-    placementVariants:
-    - 1.0
-    - 1.0
     sprite: Structures/Walls/rock.rsi
     noRot: true
     layers:

@@ -138,6 +138,8 @@
     floorTileId: FloorFlesh
   - type: EntitySpawnAnomaly
     superCriticalSpawn: FleshKudzu
+    superCriticalSpawns:
+    - MobFleshLover
     spawns:
     - MobFleshJared
     - MobFleshGolem
@@ -251,7 +253,9 @@
     castShadows: false
   - type: TileSpawnAnomaly
     floorTileId: FloorAsteroidTile
+    spawnChance: 0.8
   - type: EntitySpawnAnomaly
+    wallEntity: true
     maxSpawnAmount: 50
     spawnRange: 10
     superCriticalSpawn: AsteroidRock
@@ -259,3 +263,6 @@
     - AsteroidRock
     - AsteroidCrabSpawner
     - CrystalSpawner
+    superCriticalSpawns:
+    - AsteroidRock
+    - SpawnMobOreCrab

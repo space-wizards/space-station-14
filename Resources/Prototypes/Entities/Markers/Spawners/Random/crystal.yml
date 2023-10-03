@@ -1,5 +1,6 @@
 - type: entity
   name: Crystal Spawner
+  suffix: 70%
   id: CrystalSpawner
   parent: MarkerBase
   components:
@@ -16,4 +17,3 @@
         - CrystalBlue
         - CrystalCyan
       chance: 0.7
-      offset: 0.4

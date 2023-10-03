@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using System.Numerics;
 using Content.Server.Maps;
 using Content.Shared.Anomaly.Components;
@@ -9,6 +9,8 @@ using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Random;
+using Content.Shared.Mobs.Components;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Content.Server.Anomaly.Effects;
 
@@ -16,6 +18,7 @@ public sealed class EntityAnomalySystem : EntitySystem
 {
     [Dependency] private readonly IMapManager _map = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly EntityLookupSystem _lookup = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -38,6 +41,7 @@ public sealed class EntityAnomalySystem : EntitySystem
         var xform = Transform(uid);
         // A cluster of monsters
         SpawnMonstersOnOpenTiles(component, xform, component.MaxSpawnAmount, component.SpawnRange, component.Spawns);
+        SpawnMonstersOnOpenTiles(component, xform, component.MaxSpawnAmount, component.SpawnRange, component.SuperCriticalSpawns);
         // And so much meat (for the meat anomaly at least)
         Spawn(component.SupercriticalSpawn, xform.Coordinates);
         SpawnMonstersOnOpenTiles(component, xform, component.MaxSpawnAmount, component.SpawnRange, new List<string>(){component.SupercriticalSpawn});
@@ -68,15 +72,22 @@ public sealed class EntityAnomalySystem : EntitySystem
             {
                 if (!physQuery.TryGetComponent(ent, out var body))
                     continue;
-                if (body.BodyType != BodyType.Static ||
-                    !body.Hard ||
-                    (body.CollisionLayer & (int) CollisionGroup.Impassable) == 0)
+
+                if (component.WallEntity == true && body.BodyType != BodyType.Static)
                     continue;
+
+                if (component.WallEntity == false)
+                {
+                    if (body.BodyType != BodyType.Static ||
+                        !body.Hard ||
+                        (body.CollisionLayer & (int) CollisionGroup.Impassable) == 0)
+                        continue;
+                }
                 valid = false;
                 break;
             }
             if (!valid)
-                continue;
+            continue;
             amountCounter++;
             Spawn(_random.Pick(spawns), tileref.GridIndices.ToEntityCoordinates(xform.GridUid.Value, _map));
             if (amountCounter >= amount)

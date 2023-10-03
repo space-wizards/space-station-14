@@ -1,4 +1,4 @@
-﻿using Content.Shared.Maps;
+using Content.Shared.Maps;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
@@ -14,12 +14,18 @@ public sealed partial class EntitySpawnAnomalyComponent : Component
     [DataField("spawns", required: true, customTypeSerializer: typeof(PrototypeIdListSerializer<EntityPrototype>)), ViewVariables(VVAccess.ReadWrite)]
     public List<string> Spawns = new();
 
+    [DataField("superCriticalSpawns", required: true, customTypeSerializer: typeof(PrototypeIdListSerializer<EntityPrototype>)), ViewVariables(VVAccess.ReadWrite)]
+    public List<string> SuperCriticalSpawns = new();
+
     /// <summary>
     /// The maximum number of entities that spawn per pulse
     /// scales with severity.
     /// </summary>
     [DataField("maxSpawnAmount"), ViewVariables(VVAccess.ReadWrite)]
     public int MaxSpawnAmount = 7;
+
+    [DataField("wallEntity")]
+    public bool WallEntity = false;
 
     /// <summary>
     /// The maximum radius the entities will spawn in.
