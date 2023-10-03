@@ -36,10 +36,8 @@ namespace Content.Server.DeviceLinking.Systems
         {
 
             var otherUid = args.OtherEntity;
-            Log.Debug(otherUid + " Start Collide");
             if (!args.OtherFixture.Hard)
                 return;
-            Log.Debug(otherUid + "Check Success");
             if (component.Colliding.Add(otherUid))
             {
                 UpdateState(uid, component);
@@ -52,12 +50,10 @@ namespace Content.Server.DeviceLinking.Systems
         {
             var otherUid = args.OtherEntity;
 
-            Log.Debug(otherUid + "End Collide");
             if (!component.Colliding.Remove(otherUid))
             {
                 return;
             }
-            Log.Debug(otherUid + "Check Success");
             UpdateState(uid, component);
             Dirty(uid, component);
         }
@@ -74,12 +70,9 @@ namespace Content.Server.DeviceLinking.Systems
                 }
                 totalMass += GetEntWeightRecursive(ent);
             }
-            Log.Debug("Total Mass: " + totalMass);
-            Log.Debug("Current State: " + component.State);
             if (component.State == PressurePlateState.Pressed && totalMass < component.WeightRequired) //Release
             {
                 component.State = PressurePlateState.Released;
-                Log.Debug("---Released!---");
                 _signalSystem.InvokePort(uid, component.ReleasedSignal);
 
                 _audio.PlayPvs(component.ReleasedSound, uid);
@@ -87,7 +80,6 @@ namespace Content.Server.DeviceLinking.Systems
             if (component.State == PressurePlateState.Released && totalMass > component.WeightRequired) //Press
             {
                 component.State = PressurePlateState.Pressed;
-                Log.Debug("---Pressed!---");
                 _signalSystem.InvokePort(uid, component.PressedSignal);
                 _audio.PlayPvs(component.PressedSound, uid);
             }
