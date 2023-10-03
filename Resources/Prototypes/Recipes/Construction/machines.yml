@@ -150,3 +150,19 @@
   canBuildInImpassable: true
   conditions:
     - !type:WallmountCondition
+
+- type: construction
+  name: pressure plate
+  id: PressurePlateRecipe
+  graph: PressurePlateGraph
+  startNode: start
+  targetNode: PressurePlateNode
+  category: conditions-category-machine
+  description: A pressure plate that activates when something heavy enough is placed on it.
+  objectType: Structure
+  canBuildInImpassable: false
+  icon:
+    sprite: Objects/Devices/pressure_plates.rsi
+    state: grey_base
+  conditions:
+    - !type:TileNotBlocked

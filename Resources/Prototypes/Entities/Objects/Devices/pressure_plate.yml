@@ -1,5 +1,5 @@
 - type: entity 
-  id: PressurePlateBase
+  id: PressurePlate
   parent: BaseStructure
   name: pressure plate
   description: it activates something if you step on it. Of course, if you're heavy enough.
@@ -64,3 +64,6 @@
     ports:
       - Pressed
       - Released
+  - type: Construction
+    graph: PressurePlateGraph
+    node: PressurePlateNode

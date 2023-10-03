@@ -1,0 +1,67 @@
+#- type: constructionGraph
+#  id: PressurePlateGraph
+#  start: start
+#  graph:
+#    - node: start
+#      actions:
+#        - !type:DestroyEntity {}
+#      edges:
+#        - to: PressurePlateNode
+#          steps:
+#            - material: Steel
+#              amount: 5
+#              doAfter: 3
+#            - material: Cable
+#              amount: 2
+#              doAfter: 0.5
+#            - tool: Anchoring
+#              doAfter: 2
+#          completed:
+#            - !type:SnapToGrid {}
+#    - node: PressurePlateNode
+#      entity: PressurePlate
+#      edges:
+#        - to: start
+#          steps:
+#            - tool: Screwing
+#              doAfter: 4
+#          completed:
+#            - !type:SpawnPrototype
+#              prototype: SheetSteel1
+#              amount: 2
+#            - !type:SpawnPrototype
+#              prototype: CableApcStack1
+#              amount: 1
+
+- type: constructionGraph
+  id: PressurePlateGraph
+  start: start
+  graph:
+    - node: start
+      actions:
+        - !type:DestroyEntity {}
+      edges:
+        - to: PressurePlateNode
+          completed:
+            - !type:SnapToGrid { }
+          steps:
+            - material: Steel
+              amount: 5
+              doAfter: 4
+            - material: Cable
+              amount: 2
+              doAfter: 1
+    - node: PressurePlateNode
+      entity: PressurePlate
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
+              amount: 4
+            - !type:SpawnPrototype
+              prototype: CableApcStack1
+              amount: 2
+          steps:
+            - tool: Screwing
+              doAfter: 4
