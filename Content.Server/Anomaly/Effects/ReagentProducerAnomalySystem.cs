@@ -40,20 +40,26 @@ public sealed class ReagentProducerAnomalySystem : EntitySystem
     [Dependency] private readonly AnomalySystem _anomaly = default!;
     [Dependency] private readonly PointLightSystem _light = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
     public override void Initialize()
     {
         SubscribeLocalEvent<ReagentProducerAnomalyComponent, AnomalySeverityChangedEvent>(OnSeverityChanged);
         SubscribeLocalEvent<ReagentProducerAnomalyComponent, AnomalyPulseEvent>(OnPulse);
         SubscribeLocalEvent<ReagentProducerAnomalyComponent, MapInitEvent>(OnMapInit);
-
     }
 
     private void OnPulse(EntityUid uid, ReagentProducerAnomalyComponent component, ref AnomalyPulseEvent args)
     {
-        if (_random.NextFloat(0.0f,1.0f) > args.Stability)
+        ChangeReagent(uid, component, args.Severity, args.Stability);
+    }
+
+    private void ChangeReagent(EntityUid uid, ReagentProducerAnomalyComponent component, float severity, float stability )
+    {
+        if (_random.NextFloat(0.0f, 1.0f) > stability)
         {
-            var reagent = GetRandomReagentType(uid, component, args.Severity);
+            var reagent = GetRandomReagentType(uid, component, severity);
             component.ProducingReagent = reagent;
+            _audio.PlayPvs(component.ChangeSound, uid);
         }
     }
 
@@ -105,7 +111,7 @@ public sealed class ReagentProducerAnomalySystem : EntitySystem
 
     private void OnMapInit(EntityUid uid, ReagentProducerAnomalyComponent component, MapInitEvent args)
     {
-        _anomaly.ChangeAnomalyStability(uid, 0.01f); //Very bad code: I do not know how to get severity to call a "GetRandomReagentType" function here
+        ChangeReagent(uid, component, 0.1f, 0.0f); //MapInit Reagent 100% change
     }
 
     private void OnSeverityChanged(EntityUid uid, ReagentProducerAnomalyComponent component, ref AnomalySeverityChangedEvent args)

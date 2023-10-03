@@ -24,12 +24,12 @@
       fix1:
         shape:
           !type:PhysShapeCircle
-          radius: 0.40
+          radius: 0.30
         density: 80
         mask:
-          - MobMask
+        - MobMask
         layer:
-          - Opaque
+        - MobLayer
   - type: MobState
     allowedStates:
     - Alive
@@ -37,12 +37,10 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      140: Dead
+      150: Dead
   - type: SlowOnDamage
     speedModifierThresholds:
-      50: 0.5
-  - type: Stamina
-    critThreshold: 300
+      50: 0.4
   - type: Bloodstream
     bloodReagent: Water 
     chemicalMaxVolume: 100
