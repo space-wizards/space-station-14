@@ -147,6 +147,9 @@
         - sprite: Mobs/Aliens/Carps/space.rsi
           state: icon
     - type: RandomSpawner
+      rarePrototypes:
+      - MobSharkSalvage
+      rareChance: 0.2
       prototypes:
         - MobCarpSalvage
         - MobCarpSalvage
@@ -196,6 +199,9 @@
   suffix: 75
   components:
   - type: RandomSpawner
+    rarePrototypes:
+    - MobSharkSalvage
+    rareChance: 0.2
     prototypes:
     - MobCarpSalvage
     - MobCarpSalvage
