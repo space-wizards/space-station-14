@@ -1,5 +1,6 @@
 using Content.Shared.DeviceLinking;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.Audio;
 
 namespace Content.Server.DeviceLinking.Components
 {
@@ -10,8 +11,8 @@ namespace Content.Server.DeviceLinking.Components
     
     public sealed partial class PressurePlateComponent : Component
     {
-        [DataField, ViewVariables(VVAccess.ReadOnly)]
-        public bool IsPressed = false;
+        [DataField("state")]
+        public PressurePlateState State = PressurePlateState.Released;
 
         /// <summary>
         /// All uids currently located on the platform.
@@ -30,5 +31,11 @@ namespace Content.Server.DeviceLinking.Components
 
         [DataField("releasedSignal", customTypeSerializer: typeof(PrototypeIdSerializer<SourcePortPrototype>))]
         public string ReleasedSignal = "Released";
+
+        [DataField, ViewVariables(VVAccess.ReadWrite)]
+        public SoundSpecifier PressedSound = new SoundPathSpecifier("/Audio/Machines/button.ogg");
+
+        [DataField, ViewVariables(VVAccess.ReadWrite)]
+        public SoundSpecifier ReleasedSound = new SoundPathSpecifier("/Audio/Machines/button.ogg");
     }
 }

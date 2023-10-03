@@ -21,16 +21,30 @@
   - type: Physics
     bodyType: Static
   - type: Sprite
-    layers:
-    - sprite: Objects/Devices/pressure_plates.rsi
-      state: grey_base
     drawdepth: FloorObjects
+    sprite: Objects/Devices/pressure_plates.rsi
+    layers:
+      - state: grey_base
+        map: ["enabled", "enum.PressurePlateState.Released"]
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.PressurePlateVisuals.State:
+        enabled:
+          Pressed: { state: grey_pressed }
+          Released: { state: grey_base }
   - type: StepTrigger
     intersectRatio: 0.2
     requiredTriggeredSpeed: 0
   - type: CollisionWake
     enabled: false
   - type: PressurePlate
+    pressedSound:
+      path: /Audio/Machines/button.ogg
+      params:
+        pitchscale: 0.75
+    releasedSound:
+      path: /Audio/Machines/button.ogg
   - type: DeviceNetwork
     deviceNetId: Wireless
   - type: Damageable

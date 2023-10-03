@@ -1,11 +1,6 @@
 using Content.Server.DeviceLinking.Components;
 using Content.Shared.DeviceLinking;
-using Content.Shared.Interaction;
-using Robust.Shared.Utility;
 using Robust.Shared.Physics.Components;
-using Content.Shared.Inventory;
-using Content.Server.Storage.EntitySystems;
-using Content.Shared.Storage.Components;
 using Content.Server.Storage.Components;
 
 using Robust.Shared.Physics.Events;
@@ -16,12 +11,13 @@ namespace Content.Server.DeviceLinking.Systems
     public sealed class PressurePlateSystem : EntitySystem
     {
         [Dependency] private readonly DeviceLinkSystem _signalSystem = default!;
+        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+        [Dependency] private readonly SharedAudioSystem _audio = default!;
 
         public override void Initialize()
         {
             base.Initialize();
             SubscribeLocalEvent<PressurePlateComponent, ComponentInit>(OnInit);
-            //SubscribeLocalEvent<PressurePlateComponent, StepTriggeredEvent>(HandleTriggered, after: new[] { typeof(EntityStorageSystem)});
             SubscribeLocalEvent<PressurePlateComponent, StepTriggerAttemptEvent>(HandleTriggerAttempt);
             SubscribeLocalEvent<PressurePlateComponent, EndCollideEvent>(OnEndCollide);
             SubscribeLocalEvent<PressurePlateComponent, StartCollideEvent>(OnStartCollide);
@@ -38,11 +34,12 @@ namespace Content.Server.DeviceLinking.Systems
         }
         private void OnStartCollide(EntityUid uid, PressurePlateComponent component, ref StartCollideEvent args)
         {
-            var otherUid = args.OtherEntity;
 
+            var otherUid = args.OtherEntity;
+            Log.Debug(otherUid + " Start Collide");
             if (!args.OtherFixture.Hard)
                 return;
-
+            Log.Debug(otherUid + "Check Success");
             if (component.Colliding.Add(otherUid))
             {
                 UpdateState(uid, component);
@@ -54,10 +51,13 @@ namespace Content.Server.DeviceLinking.Systems
         private void OnEndCollide(EntityUid uid, PressurePlateComponent component, ref EndCollideEvent args)
         {
             var otherUid = args.OtherEntity;
+
+            Log.Debug(otherUid + "End Collide");
             if (!component.Colliding.Remove(otherUid))
             {
                 return;
             }
+            Log.Debug(otherUid + "Check Success");
             UpdateState(uid, component);
             Dirty(uid, component);
         }
@@ -75,17 +75,26 @@ namespace Content.Server.DeviceLinking.Systems
                 totalMass += GetEntWeightRecursive(ent);
             }
             Log.Debug("Total Mass: " + totalMass);
-
-            if (component.IsPressed && totalMass < component.WeightRequired) //Release
+            Log.Debug("Current State: " + component.State);
+            if (component.State == PressurePlateState.Pressed && totalMass < component.WeightRequired) //Release
             {
-                component.IsPressed = false;
+                component.State = PressurePlateState.Released;
+                Log.Debug("---Released!---");
                 _signalSystem.InvokePort(uid, component.ReleasedSignal);
+
+                _audio.PlayPvs(component.ReleasedSound, uid);
             }
-            if (!component.IsPressed && totalMass > component.WeightRequired) //Press
+            if (component.State == PressurePlateState.Released && totalMass > component.WeightRequired) //Press
             {
-                component.IsPressed = true;
+                component.State = PressurePlateState.Pressed;
+                Log.Debug("---Pressed!---");
                 _signalSystem.InvokePort(uid, component.PressedSignal);
+                _audio.PlayPvs(component.PressedSound, uid);
             }
+
+            if (TryComp(uid, out AppearanceComponent? appearance))
+                _appearance.SetData(uid, PressurePlateVisuals.State, component.State, appearance);
+
         }
 
         /// <summary>
