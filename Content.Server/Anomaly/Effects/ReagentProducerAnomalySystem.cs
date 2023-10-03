@@ -43,8 +43,18 @@ public sealed class ReagentProducerAnomalySystem : EntitySystem
     public override void Initialize()
     {
         SubscribeLocalEvent<ReagentProducerAnomalyComponent, AnomalySeverityChangedEvent>(OnSeverityChanged);
+        SubscribeLocalEvent<ReagentProducerAnomalyComponent, AnomalyPulseEvent>(OnPulse);
         SubscribeLocalEvent<ReagentProducerAnomalyComponent, MapInitEvent>(OnMapInit);
 
+    }
+
+    private void OnPulse(EntityUid uid, ReagentProducerAnomalyComponent component, ref AnomalyPulseEvent args)
+    {
+        if (_random.NextFloat(0.0f,1.0f) > args.Stability)
+        {
+            var reagent = GetRandomReagentType(uid, component, args.Severity);
+            component.ProducingReagent = reagent;
+        }
     }
 
     //reagent realtime generation
@@ -101,17 +111,8 @@ public sealed class ReagentProducerAnomalySystem : EntitySystem
     private void OnSeverityChanged(EntityUid uid, ReagentProducerAnomalyComponent component, ref AnomalySeverityChangedEvent args)
     {
         component.RealReagentProducing = component.MaxReagentProducing * args.Severity;
-        if (args.Severity >= 0.95)
+        if (args.Severity >= 0.97) // 3% stability for EXTRA generation
             component.RealReagentProducing *= component.SupecriticalReagentProducingModifier;
-        //If after the severity change, its level has exceeded the threshold, the type of reagent changes, and the threshold increases.
-        if (args.Severity >= component.NextChangeThreshold)
-        {
-            component.NextChangeThreshold = args.Severity + component.ReagentChangeStep;
-
-            var reagent = GetRandomReagentType(uid, component, ref args);
-            component.ProducingReagent = reagent;
-            return;
-        }
     }
 
     /// <summary>
@@ -127,13 +128,13 @@ public sealed class ReagentProducerAnomalySystem : EntitySystem
     ///
     /// ATTENTION! All new reagents appearing in the game will automatically appear in the "Other" category
     /// </summary>
-    private string GetRandomReagentType(EntityUid uid, ReagentProducerAnomalyComponent component, ref AnomalySeverityChangedEvent args)
+    private string GetRandomReagentType(EntityUid uid, ReagentProducerAnomalyComponent component, float severity)
     {
         //Category Weight Randomization
-        var currentWeightDangerous = Lerp(component.WeightSpreadDangerous.X, component.WeightSpreadDangerous.Y, args.Severity);
-        var currentWeightFun = Lerp(component.WeightSpreadFun.X, component.WeightSpreadFun.Y, args.Severity);
-        var currentWeightUseful = Lerp(component.WeightSpreadUseful.X, component.WeightSpreadUseful.Y, args.Severity);
-        var currentWeightOther = Lerp(component.WeightSpreadOther.X, component.WeightSpreadOther.Y, args.Severity);
+        var currentWeightDangerous = Lerp(component.WeightSpreadDangerous.X, component.WeightSpreadDangerous.Y, severity);
+        var currentWeightFun = Lerp(component.WeightSpreadFun.X, component.WeightSpreadFun.Y, severity);
+        var currentWeightUseful = Lerp(component.WeightSpreadUseful.X, component.WeightSpreadUseful.Y, severity);
+        var currentWeightOther = Lerp(component.WeightSpreadOther.X, component.WeightSpreadOther.Y, severity);
 
         var sumWeight = currentWeightDangerous + currentWeightFun + currentWeightUseful + currentWeightOther;
         var rnd = _random.NextFloat(0f, sumWeight);
