@@ -1,5 +1,6 @@
 using System.Collections.Immutable;
 using System.Data;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Net;
 using System.Threading;
@@ -350,6 +351,7 @@ namespace Content.Server.Database
             return query;
         }
 
+        [return: NotNullIfNotNull(nameof(ban))]
         private static ServerRoleBanDef? ConvertRoleBan(ServerRoleBan? ban)
         {
             if (ban == null)
@@ -406,11 +408,11 @@ namespace Content.Server.Database
                 unban.UnbanTime);
         }
 
-        public override async Task AddServerRoleBanAsync(ServerRoleBanDef serverRoleBan)
+        public override async Task<ServerRoleBanDef> AddServerRoleBanAsync(ServerRoleBanDef serverRoleBan)
         {
             await using var db = await GetDbImpl();
 
-            db.PgDbContext.RoleBan.Add(new ServerRoleBan
+            var ban = new ServerRoleBan
             {
                 Address = serverRoleBan.Address,
                 HWId = serverRoleBan.HWId?.ToArray(),
@@ -423,9 +425,11 @@ namespace Content.Server.Database
                 PlaytimeAtNote = serverRoleBan.PlaytimeAtNote,
                 PlayerUserId = serverRoleBan.UserId?.UserId,
                 RoleId = serverRoleBan.Role,
-            });
+            };
+            db.PgDbContext.RoleBan.Add(ban);
 
             await db.PgDbContext.SaveChangesAsync();
+            return ConvertRoleBan(ban);
         }
 
         public override async Task AddServerRoleUnbanAsync(ServerRoleUnbanDef serverRoleUnban)

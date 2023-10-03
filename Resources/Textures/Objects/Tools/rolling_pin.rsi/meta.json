@@ -1,0 +1,22 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "icon.png taken from https://github.com/DesertRose2/desertrose/blob/0348c98f8343b5cb82d87df12411ba647b2b1b4f/icons/obj/kitchen.dmi. Inhand sprites created by deltanedas (github) for SS14.",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "icon"
+    },
+    {
+      "name": "inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right",
+      "directions": 4
+    }
+  ]
+}

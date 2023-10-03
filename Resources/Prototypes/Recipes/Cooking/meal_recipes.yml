@@ -482,14 +482,14 @@
   solids:
     FoodBreadPlainSlice: 2
 
-#Pizzas
+#Pizzas TODO: contruction graph based pizza
 - type: microwaveMealRecipe
   id: RecipeMargheritaPizza
   name: margherita pizza recipe
   result: FoodPizzaMargherita
   time: 30
   solids:
-    FoodDough: 1
+    FoodDoughFlat: 1
     FoodCheeseSlice: 1
     FoodTomato: 4
 
@@ -499,7 +499,7 @@
   result: FoodPizzaMushroom
   time: 25
   solids:
-    FoodDough: 1
+    FoodDoughFlat: 1
     FoodMushroom: 5
 
 - type: microwaveMealRecipe
@@ -508,7 +508,7 @@
   result: FoodPizzaMeat
   time: 30
   solids:
-    FoodDough: 1
+    FoodDoughFlat: 1
     FoodMeat: 3
     FoodCheeseSlice: 1
     FoodTomato: 1
@@ -519,7 +519,7 @@
   result: FoodPizzaVegetable
   time: 30
   solids:
-    FoodDough: 1
+    FoodDoughFlat: 1
     FoodEggplant: 1
     FoodCarrot: 1
     FoodCorn: 1
@@ -531,7 +531,7 @@
   result: FoodPizzaPineapple
   time: 30
   solids:
-    FoodDough: 1
+    FoodDoughFlat: 1
     FoodMeatChickenCutlet: 3
     FoodPineappleSlice: 5
 
@@ -541,7 +541,7 @@
   result: FoodPizzaDank
   time: 30
   solids:
-    FoodDough: 1
+    FoodDoughFlat: 1
     FoodAmbrosiaVulgaris: 3
     FoodCheeseSlice: 1
     FoodTomato: 1
@@ -552,7 +552,7 @@
   result: FoodPizzaDonkpocket
   time: 30
   solids:
-    FoodDough: 1
+    FoodDoughFlat: 1
     FoodDonkpocketWarm: 3
     FoodCheeseSlice: 1
     FoodTomato: 1
