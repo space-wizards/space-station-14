@@ -453,9 +453,8 @@
     clothingPrototype: ClothingHeadHelmetHardsuitSyndie
 
 # Syndicate Medic Hardsuit
-- type: entity
-  parent: ClothingOuterHardsuitSyndie
-  id: ClothingOuterHardsuitMedic
+  parent: ClothingOuterHardsuitBase
+  id: ClothingOuterHardsuitSyndieElite
   name: blood-red medic hardsuit
   description: A heavily armored and agile advanced hardsuit specifically designed for field medic operations.
   components:
@@ -463,9 +462,28 @@
     sprite: Clothing/OuterClothing/Hardsuits/syndiemedic.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/syndiemedic.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.02
+    lowPressureMultiplier: 1000
+  - type: TemperatureProtection
+    coefficient: 0.001
+  - type: ExplosionResistance
+    damageCoefficient: 0.3
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.5
+        Slash: 0.5
+        Piercing: 0.4
+        Heat: 0.2
+        Radiation: 0.25
+        Caustic: 0.5
+  - type: ClothingSpeedModifier
+    walkModifier: 1.0
+    sprintModifier: 1.0
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitSyndieMedic
-
+    
 #Syndicate Elite Hardsuit
 - type: entity
   parent: ClothingOuterHardsuitBase
