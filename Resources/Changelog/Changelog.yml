@@ -1,114 +1,4 @@
 Entries:
-- author: MilenVolf
-  changes:
-  - {message: Moths now have proper creampied texture! Honk!, type: Tweak}
-  id: 4430
-  time: '2023-08-04T18:31:39.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Fix spear wielding., type: Fix}
-  id: 4431
-  time: '2023-08-04T18:37:17.0000000+00:00'
-- author: Aleksh
-  changes:
-  - {message: Added laser raptors., type: Add}
-  id: 4432
-  time: '2023-08-04T18:38:11.0000000+00:00'
-- author: Unbelievable-Salmon
-  changes:
-  - {message: The Syndicate gas mask now protects your eyes from welders., type: Tweak}
-  id: 4433
-  time: '2023-08-04T18:43:25.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Allow pulling while buckled, type: Add}
-  id: 4434
-  time: '2023-08-04T18:47:52.0000000+00:00'
-- author: astriloqua
-  changes:
-  - {message: People wont hear buckling and unbuckling sounds twice anymore., type: Fix}
-  id: 4435
-  time: '2023-08-04T22:24:21.0000000+00:00'
-- author: Errant
-  changes:
-  - {message: Gas tanks and jetpacks have reduced capacity and now need to be refilled
-      more regularly., type: Tweak}
-  - {message: Jetpacks now start fully filled., type: Tweak}
-  id: 4436
-  time: '2023-08-04T22:40:42.0000000+00:00'
-- author: Potato1234_x
-  changes:
-  - {message: Added the Dr. Gibb Vendor, type: Add}
-  id: 4437
-  time: '2023-08-05T02:07:41.0000000+00:00'
-- author: liltenhead
-  changes:
-  - {message: Changed the swat crate to only contain non-lethal shells; now it comes
-      with shields., type: Tweak}
-  id: 4438
-  time: '2023-08-05T03:47:32.0000000+00:00'
-- author: crazybrain
-  changes:
-  - {message: Uplinks can now purchase a Syndicate pAI., type: Add}
-  id: 4439
-  time: '2023-08-05T04:26:26.0000000+00:00'
-- author: mhamster
-  changes:
-  - {message: 'Added new chemical reaction between iron, aluminium and uranium that
-      will cause electromagnetic pulse.', type: Add}
-  id: 4440
-  time: '2023-08-05T04:31:14.0000000+00:00'
-- author: Interrobang01
-  changes:
-  - {message: 'The Syndicate Disposable Turret is now approved for use by all syndicate
-      agents (with the exception of nuclear operatives), instead of those from a select
-      few jobs.', type: Tweak}
-  id: 4441
-  time: '2023-08-05T04:32:25.0000000+00:00'
-- author: Jesse
-  changes:
-  - {message: New chainsaw sprites, type: Add}
-  - {message: New chainsaw sounds. It goes vroom., type: Add}
-  id: 4442
-  time: '2023-08-05T04:49:56.0000000+00:00'
-- author: deltanedas
-  changes:
-  - {message: Dragons on expeditions do less damage now., type: Tweak}
-  id: 4443
-  time: '2023-08-05T07:02:07.0000000+00:00'
-- author: Phill101
-  changes:
-  - {message: The crew manifest is now a PDA cartridge program., type: Tweak}
-  id: 4444
-  time: '2023-08-05T08:37:08.0000000+00:00'
-- author: Slava0135
-  changes:
-  - {message: Splash spill now has a visual effect., type: Add}
-  id: 4445
-  time: '2023-08-05T11:44:19.0000000+00:00'
-- author: FillerVK
-  changes:
-  - {message: 'Added craftable TaxiBot. Robotics can now construct autonomous, ghost-powered
-      taxis to drive people around the station at high speed.', type: Add}
-  id: 4446
-  time: '2023-08-05T18:36:32.0000000+00:00'
-- author: lapatison
-  changes:
-  - {message: 'Syndicate lobbying bundle: briefcase containing 5,000 spacebucks has
-      been added to the uplink!', type: Add}
-  id: 4447
-  time: '2023-08-05T21:10:21.0000000+00:00'
-- author: Vordenburg
-  changes:
-  - {message: Nuclear fission devices need enough floor around them to anchor now.,
-    type: Tweak}
-  id: 4448
-  time: '2023-08-05T21:28:07.0000000+00:00'
-- author: Flareguy
-  changes:
-  - {message: Changed the plating sprite to be a little less blue., type: Tweak}
-  id: 4449
-  time: '2023-08-06T00:04:12.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: 'Tweak PKA, crusher, pickaxe, and drill. Overall adjusted the mining
@@ -2962,3 +2852,112 @@ Entries:
       with objectives in the character menu.', type: Tweak}
   id: 4929
   time: '2023-09-30T20:18:02.0000000+00:00'
+- author: Ubaser
+  changes:
+  - {message: Winter Boots are now available in the Winterdrobe., type: Add}
+  id: 4930
+  time: '2023-10-01T14:28:14.0000000+00:00'
+- author: Ubaser
+  changes:
+  - {message: 'QM now has a mantle, available at HoP''s uniform printer.', type: Add}
+  id: 4931
+  time: '2023-10-01T14:28:47.0000000+00:00'
+- author: Nimfar11
+  changes:
+  - {message: Added new sprites for slime organs, type: Add}
+  - {message: Slimes now breathe nitrogen too., type: Tweak}
+  id: 4932
+  time: '2023-10-01T14:34:29.0000000+00:00'
+- author: casperr04
+  changes:
+  - {message: Space ninjas now have random appearance., type: Tweak}
+  id: 4933
+  time: '2023-10-01T14:51:35.0000000+00:00'
+- author: TomCruize
+  changes:
+  - {message: Made Space Cats lungs ROBUST (They now don't suffocate in space), type: Fix}
+  id: 4934
+  time: '2023-10-01T14:55:59.0000000+00:00'
+- author: TheShuEd
+  changes:
+  - {message: Added wide-spectrum anomaly locator., type: Add}
+  id: 4935
+  time: '2023-10-01T16:41:32.0000000+00:00'
+- author: michaelcu
+  changes:
+  - {message: Telescopic Shield no longer glows in the dark when deployed., type: Fix}
+  id: 4936
+  time: '2023-10-01T17:16:54.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Nuclear Operative medics now come with a custom hardsuit., type: Add}
+  id: 4937
+  time: '2023-10-01T17:36:20.0000000+00:00'
+- author: DrTeaSpoon
+  changes:
+  - {message: Plant species mutation no longer resets other mutations., type: Fix}
+  id: 4938
+  time: '2023-10-01T17:52:45.0000000+00:00'
+- author: Nairodian
+  changes:
+  - {message: Science can now research practice ammunition for security., type: Add}
+  id: 4939
+  time: '2023-10-01T20:18:05.0000000+00:00'
+- author: Nimfar11
+  changes:
+  - {message: Adds Advanced treatment cyborg module to the medical borg., type: Add}
+  - {message: Adds two new medical tools for the borg. Borghypo and Borgdropper.,
+    type: Add}
+  id: 4940
+  time: '2023-10-01T20:45:17.0000000+00:00'
+- author: Velcroboy
+  changes:
+  - {message: Nanotrasen suppliers now carry restocks for ChefVends and popular condiments.
+      Get them at your nearest cargo depot., type: Add}
+  id: 4941
+  time: '2023-10-01T20:49:10.0000000+00:00'
+- author: chromiumboy
+  changes:
+  - {message: Fix praying door hacking protections., type: Fix}
+  id: 4942
+  time: '2023-10-01T21:08:03.0000000+00:00'
+- author: Nairodian
+  changes:
+  - {message: Small firearms now fit in boots., type: Tweak}
+  id: 4943
+  time: '2023-10-01T21:23:41.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: 'Added the Electric Grill for cooking steaks quickly, research food
+      service to make it.', type: Add}
+  id: 4944
+  time: '2023-10-02T00:17:50.0000000+00:00'
+- author: Pigeonpeas
+  changes:
+  - {message: 'Added a new lizard horn marking for the head, kobold ears!', type: Add}
+  id: 4945
+  time: '2023-10-02T07:08:20.0000000+00:00'
+- author: JoeHammad
+  changes:
+  - {message: 'the north star gloves have had their damage changed back to 8, as was
+      originally intended', type: Tweak}
+  id: 4946
+  time: '2023-10-02T15:34:22.0000000+00:00'
+- author: Vasilis
+  changes:
+  - {message: The immovable rod gibs you instead of deleting your character again.,
+    type: Fix}
+  id: 4947
+  time: '2023-10-02T18:30:51.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Pizza recipes now require flat dough. Get a rolling pin from the dinnerware
+      vendor., type: Add}
+  id: 4948
+  time: '2023-10-02T19:21:15.0000000+00:00'
+- author: VigersRay
+  changes:
+  - {message: The syndicate has begun to recruit more experienced people into the
+      ranks of nuclear operatives., type: Tweak}
+  id: 4949
+  time: '2023-10-02T21:20:09.0000000+00:00'

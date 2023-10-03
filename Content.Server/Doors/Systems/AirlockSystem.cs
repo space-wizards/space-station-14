@@ -179,7 +179,7 @@ public sealed class AirlockSystem : SharedAirlockSystem
     {
         if (this.IsPowered(uid, EntityManager) && !args.PryPowered)
         {
-            Popup.PopupClient(Loc.GetString("airlock-component-cannot-pry-is-powered-message"), uid, args.User);
+            Popup.PopupEntity(Loc.GetString("airlock-component-cannot-pry-is-powered-message"), uid, args.User);
             args.Cancelled = true;
         }
     }
