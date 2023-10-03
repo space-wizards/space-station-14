@@ -423,6 +423,7 @@
     - Multitool
   - type: TilePrying
   - type: Prying
+    enabled: false
   - type: Tool
     qualities:
       - Screwing
