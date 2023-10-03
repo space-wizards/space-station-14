@@ -1,11 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: 'Tweak PKA, crusher, pickaxe, and drill. Overall adjusted the mining
-      speed from lowest to fastest in that order. Additionally buffed crusher attackrate
-      and pickaxe structural damage.', type: Tweak}
-  id: 4450
-  time: '2023-08-06T01:23:38.0000000+00:00'
 - author: Derby
   changes:
   - {message: The guidebook now comes with more antagonists info., type: Add}
@@ -2961,3 +2954,8 @@ Entries:
       ranks of nuclear operatives., type: Tweak}
   id: 4949
   time: '2023-10-02T21:20:09.0000000+00:00'
+- author: Doru991
+  changes:
+  - {message: Plant species mutations correctly mutate reagents., type: Fix}
+  id: 4950
+  time: '2023-10-03T23:07:29.0000000+00:00'
