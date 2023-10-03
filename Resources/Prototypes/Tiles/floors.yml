@@ -625,18 +625,6 @@
   heatCapacity: 10000
 
 - type: tile
-  id: FloorSteelDirty
-  name: tiles-dirty-steel-floor
-  sprite: /Textures/Tiles/steel_dirty.png
-  baseTurf: Plating
-  isSubfloor: false
-  canCrowbar: true
-  footstepSounds:
-    collection: FootstepPlating
-  itemDrop: FloorTileItemDirty
-  heatCapacity: 10000
-
-- type: tile
   id: FloorElevatorShaft
   name: tiles-elevator-shaft
   sprite: /Textures/Tiles/elevator_shaft.png

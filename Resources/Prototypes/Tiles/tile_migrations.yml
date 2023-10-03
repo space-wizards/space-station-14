@@ -49,6 +49,7 @@
   id: FloorAsteroidCoarseSandDug
   target: FloorAsteroidSandDug
 
+#
 - type: tileAlias
   id: FloorGlassAlt
   target: FloorGlass
@@ -56,3 +57,8 @@
 - type: tileAlias
   id: FloorRGlassAlt
   target: FloorRGlass
+
+#2023-10-3
+- type: tileAlias
+  id: FloorSteelDirty
+  target: FloorSteel

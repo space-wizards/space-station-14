@@ -226,22 +226,6 @@
     stackType: FloorTileLino
 
 - type: entity
-  name: dirty tile
-  parent: FloorTileItemBase
-  id: FloorTileItemDirty
-  components:
-  - type: Sprite
-    state: dirty
-  - type: Item
-    heldPrefix: dirty
-  - type: FloorTile
-    outputs:
-      - Plating
-      - FloorSteelDirty
-  - type: Stack
-    stackType: FloorTileDirty
-
-- type: entity
   name: elevator shaft tile
   parent: FloorTileItemBase
   id: FloorTileItemElevatorShaft
