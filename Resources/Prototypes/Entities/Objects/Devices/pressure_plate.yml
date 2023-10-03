@@ -1,0 +1,52 @@
+- type: entity 
+  id: PressurePlateBase
+  parent: BaseStructure
+  name: pressure plate
+  description: it activates something if you step on it. Of course, if you're heavy enough.
+  placement:
+    mode: SnapgridCenter
+  #abstract: true
+  components:
+  - type: Fixtures
+    fixtures:
+      slipFixture:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.4,-0.4,0.4,0.4"
+        mask:
+        - ItemMask
+        layer:
+        - LowImpassable
+        hard: false
+  - type: Physics
+    bodyType: Static
+  - type: Sprite
+    layers:
+    - sprite: Objects/Devices/pressure_plates.rsi
+      state: grey_base
+    drawdepth: FloorObjects
+  - type: StepTrigger
+    intersectRatio: 0.2
+    requiredTriggeredSpeed: 0
+  - type: CollisionWake
+    enabled: false
+  - type: PressurePlate
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+  - type: WirelessNetworkConnection
+    range: 200
+  - type: DeviceLinkSource
+    ports:
+      - Pressed
+      - Released

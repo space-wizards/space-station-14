@@ -5,6 +5,11 @@
   defaultLinks: [ Toggle, Trigger ]
 
 - type: sourcePort
+  id: Released
+  name: signal-port-name-released
+  description: signal-port-description-released
+
+- type: sourcePort
   id: On
   name: signal-port-name-on-transmitter
   description: signal-port-description-on-transmitter

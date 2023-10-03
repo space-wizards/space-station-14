@@ -1,6 +1,9 @@
 signal-port-name-pressed = Pressed
 signal-port-description-pressed = This port is invoked whenever the transmitter is activated.
 
+signal-port-name-released = Released
+signal-port-description-released = This port is invoked whenever the transmitter is deactivated.
+
 signal-port-name-on-transmitter = On
 signal-port-description-on-transmitter = This port is invoked whenever the transmitter is turned on.
 
