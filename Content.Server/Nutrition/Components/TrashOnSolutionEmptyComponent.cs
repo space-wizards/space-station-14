@@ -5,7 +5,7 @@ namespace Content.Server.Nutrition.Components
     /// Used for things like used ketchup packets or used syringes.
     /// </summary>
     [RegisterComponent]
-    public sealed partial class TrashOnEmptyComponent : Component
+    public sealed partial class TrashOnSolutionEmptyComponent : Component
     {
         /// <summary>
         /// The name of the solution of which to check emptiness

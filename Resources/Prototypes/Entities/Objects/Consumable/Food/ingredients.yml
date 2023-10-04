@@ -37,7 +37,7 @@
     damage:
       types:
         Blunt: 0
-  - type: TrashOnEmpty
+  - type: TrashOnSolutionEmpty
     solution: food
 
 - type: entity
@@ -78,7 +78,7 @@
         solution: food
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
-  - type: TrashOnEmpty
+  - type: TrashOnSolutionEmpty
     solution: food
 
 - type: entity

@@ -50,7 +50,7 @@
         Blunt: 0
   - type: ItemCooldown
   - type: SpaceGarbage
-  - type: TrashOnEmpty
+  - type: TrashOnSolutionEmpty
     solution: drink
   - type: PhysicalComposition
     materialComposition:
