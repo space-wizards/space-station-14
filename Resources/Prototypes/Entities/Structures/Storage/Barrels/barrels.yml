@@ -1,0 +1,63 @@
+﻿- type: entity
+  id: WoodenOpenBarrel
+  parent: StorageBarrel
+  suffix: Empty
+  components:
+    - type: StaticPrice
+      price: 10
+    - type: Sprite
+      sprite: Structures/Storage/barrels.rsi
+      layers:
+        - state: wooden_barrel
+        - state: wooden_barrel-1
+          map: ["enum.SolutionContainerLayers.Fill"]
+          visible: false
+    - type: Appearance
+    - type: SolutionContainerVisuals
+      maxFillLevels: 3
+      fillBaseName: wooden_barrel-
+    - type: Damageable
+      damageModifierSet: Wood
+    - type: Destructible
+      thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 10
+        behaviors:
+        - !type:SpillBehavior
+          solution: drainBuffer
+        - !type:DoActsBehavior
+          acts: ["Destruction"]
+        - !type:PlaySoundBehavior
+          sound:
+            path: /Audio/Effects/woodhit.ogg
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            MaterialWoodPlank:
+              min: 2
+              max: 5
+    - type: ExaminableSolution
+      solution: drainBuffer
+    - type: Drink
+      solution: drainBuffer
+    - type: DrawableSolution
+      solution: drainBuffer
+
+
+- type: entity
+  parent: WoodenOpenBarrel
+  id: RainWaterWoodenBarrel
+  suffix: Full
+  components:
+    - type: SolutionRegeneration
+      solution: tank
+      generated:
+        reagents:
+        - ReagentId: Water
+          Quantity: 1
+    - type: SolutionContainerManager
+      solutions:
+        drainBuffer:
+          reagents:
+            - ReagentId: Water
+              Quantity: 1000
