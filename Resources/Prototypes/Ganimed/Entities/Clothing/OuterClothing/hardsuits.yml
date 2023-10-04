@@ -665,3 +665,63 @@
         Radiation: 0.75
         Caustic: 0.5
   - type: GroupExamine
+
+
+- type: entity
+  parent: ClothingOuterHardsuitBase
+  id: ClothingOuterHardsuitEngineeringWhiteAlter2
+  name: chief engineer's hardsuit
+  description: A special hardsuit that protects against hazardous, low pressure environments, made for the chief engineer of the station.
+  components:
+  - type: Sprite
+    sprite: Ganimed/Clothing/OuterClothing/Hardsuits/ce.rsi
+  - type: Clothing
+    sprite: Ganimed/Clothing/OuterClothing/Hardsuits/ce.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.02
+    lowPressureMultiplier: 1000
+  - type: ExplosionResistance
+    damageCoefficient: 0.2
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.8
+        Slash: 0.8
+        Piercing: 0.8
+        Heat: 0.4
+        Radiation: 0.0
+        Caustic: 0.7
+  - type: ClothingSpeedModifier
+    walkModifier: 0.75
+    sprintModifier: 0.8
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitEngineeringWhiteAlter2
+
+- type: entity
+  parent: ClothingOuterHardsuitBase
+  id: ClothingOuterHardsuitLuxuryAlter
+  name: luxury mining hardsuit
+  description: A refurbished mining hardsuit, fashioned after the Quartermaster's colors. Graphene lining provides less protection, but is much easier to move.
+  components:
+  - type: Sprite
+    sprite: Ganimed/Clothing/OuterClothing/Hardsuits/qm.rsi
+  - type: Clothing
+    sprite: Ganimed/Clothing/OuterClothing/Hardsuits/qm.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.5
+    lowPressureMultiplier: 1000
+  - type: ExplosionResistance
+    damageCoefficient: 0.5
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.8
+        Radiation: 0.5
+        Caustic: 0.8
+  - type: ClothingSpeedModifier
+    walkModifier: 0.85
+    sprintModifier: 0.9
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitLuxuryAlter

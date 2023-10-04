@@ -499,3 +499,38 @@
     unequipSound: /Audio/Effects/Emotes/parp1.ogg
   - type: PointLight
     color: "#ff3399"
+
+- type: entity
+  parent: ClothingHeadHardsuitWithLightBase
+  id: ClothingHeadHelmetHardsuitEngineeringWhiteAlter2
+  noSpawn: true
+  name: chief engineer's hardsuit helmet
+  description: Special hardsuit helmet, made for the chief engineer of the station.
+  components:
+  - type: Sprite
+    sprite: Ganimed/Clothing/Head/Hardsuits/ce.rsi
+  - type: Clothing
+    sprite: Ganimed/Clothing/Head/Hardsuits/ce.rsi
+  - type: PointLight
+    color: "#daffad"
+  - type: PressureProtection
+    highPressureMultiplier: 0.08
+    lowPressureMultiplier: 1000
+
+- type: entity
+  parent: ClothingHeadHardsuitWithLightBase
+  id: ClothingHeadHelmetHardsuitLuxuryAlter
+  noSpawn: true
+  name: luxury mining hardsuit helmet
+  description: A refurbished mining hardsuit helmet, fitted with satin cushioning and an extra (non-functioning) antenna, because you're that extra.
+  components:
+  - type: Sprite
+    sprite: Ganimed/Clothing/Head/Hardsuits/qm.rsi
+  - type: Clothing
+    sprite: Ganimed/Clothing/Head/Hardsuits/qm.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.525
+    lowPressureMultiplier: 1000
+  - type: PointLight
+    radius: 7
+    energy: 3
