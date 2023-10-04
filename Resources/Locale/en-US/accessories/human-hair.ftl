@@ -167,6 +167,7 @@ marking-HumanHairTressshoulder = Tress Shoulder
 marking-HumanHairTrimmed = Trimmed
 marking-HumanHairTrimflat = Trim Flat
 marking-HumanHairTwintail = Twintails
+marking-HumanHairTwoStrands = Two Strands
 marking-HumanHairUndercut = Undercut
 marking-HumanHairUndercutleft = Undercut Left
 marking-HumanHairUndercutright = Undercut Right
