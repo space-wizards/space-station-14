@@ -14,12 +14,13 @@ using Content.Shared.Coordinates.Helpers;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using Content.Shared.Smoking;
-using Content.Shared.Spawners;
-using Content.Shared.Spawners.Components;
+using Robust.Shared.Spawners;
 using Robust.Server.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Spawners;
 using Robust.Shared.Timing;
+using TimedDespawnComponent = Robust.Shared.Spawners.TimedDespawnComponent;
 
 namespace Content.Server.Fluids.EntitySystems;
 

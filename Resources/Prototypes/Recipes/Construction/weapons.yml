@@ -140,3 +140,14 @@
   description: A shoddily constructed bow made out of wood and cloth. It's not much, but it's gotten the job done for millennia.
   icon: { sprite: Objects/Weapons/Guns/Bow/bow.rsi, state: unwielded }
   objectType: Item
+
+- type: construction
+  name: bone spear
+  id: SpearBone
+  graph: SpearBone
+  startNode: start
+  targetNode: spear
+  category: construction-category-weapons
+  description: Bones and silk combined together.
+  icon: { sprite: Objects/Weapons/Melee/bone_spear.rsi, state: spear }
+  objectType: Item
