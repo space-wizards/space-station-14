@@ -1,6 +1,9 @@
 reagent-name-cryptobiolin = cryptobiolin
 reagent-desc-cryptobiolin = Causes confusion and dizziness. This is essential to make Spaceacillin.
 
+reagent-name-cryptobiolin = valoderm
+reagent-desc-cryptobiolin = Has an adverse reaction within the body causing major jittering. While not useful on it's own, it can be used to produce a small variety of chemicals.
+
 reagent-name-dylovene = dylovene
 reagent-desc-dylovene = A broad-spectrum anti-toxin, which treats toxin damage in the blood stream. Overdosing will cause vomiting, dizzyness and pain.
 
