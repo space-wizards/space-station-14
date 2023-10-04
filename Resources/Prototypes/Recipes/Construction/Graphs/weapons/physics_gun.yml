@@ -106,17 +106,23 @@
         doAfter: 0.5
 
   - node: tetherGun
-    entity: WeaponTetherGun
+    entity: WeaponTetherGunEmpty
     edges:
     - to: panelUnscrewedTether
+      completed:
+      - !type:EmptyContainer
+        container: cell_slot
       steps:
       - tool: Screwing
         doAfter: 1
 
   - node: forceGun
-    entity: WeaponForceGun
+    entity: WeaponForceGunEmpty
     edges:
     - to: panelUnscrewedForce
+      completed:
+      - !type:EmptyContainer
+        container: cell_slot
       steps:
       - tool: Screwing
         doAfter: 1
