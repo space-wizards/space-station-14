@@ -19,6 +19,25 @@
         boozePower: 20
 
 - type: reagent
+  id: Valoderm
+  name: reagent-name-valoderm
+  group: Medicine
+  desc: reagent-desc-valoderm
+  physicalDesc: reagent-physical-desc-shiny
+  flavor: medicine
+  color: "#435166"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:Jitter
+        conditions:
+        - !type:ReagentThreshold
+          min: 5
+      - !type:MovespeedModifier
+        walkSpeedModifier: 0.8
+        sprintSpeedModifier: 0.8
+
+- type: reagent
   id: Dylovene
   name: reagent-name-dylovene
   group: Medicine

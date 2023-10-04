@@ -186,15 +186,15 @@
 - type: reaction
   id: Leporazine
   reactants:
+    Valoderm:
+      amount: 2
     Silicon:
-      amount: 1
-    Copper:
       amount: 1
     Plasma:
       amount: 1
       catalyst: true
   products:
-    Leporazine: 2
+    Leporazine: 3
 
 - type: reaction
   id: Phalanximine
@@ -236,7 +236,7 @@
   reactants:
     Lithium:
       amount: 1
-    Sugar:
+    Valoderm:
       amount: 1
     Water:
       amount: 1
@@ -269,9 +269,9 @@
   reactants:
     Mercury:
       amount: 1
-    Oxygen:
-      amount: 1
     Water:
+      amount: 1
+    Valoderm:
       amount: 1
   products:
     Impedrezene: 1
@@ -396,3 +396,15 @@
       amount: 1
   products:
     Saline: 5
+
+- type: reaction
+  id: Valoderm
+  reactants:
+    Mercury:
+      amount: 1
+    Hydrogen:
+      amount: 1
+    Water:
+      amount: 1
+  products:
+    Valoderm: 3
