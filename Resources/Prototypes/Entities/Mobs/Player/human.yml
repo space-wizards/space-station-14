@@ -61,6 +61,8 @@
   parent: MobHuman
   id: MobHumanSpaceNinja
   components:
+  - type: RandomHumanoidAppearance
+    randomizeName: false
   - type: Loadout
     prototypes: [SpaceNinjaGear]
   - type: NpcFactionMember

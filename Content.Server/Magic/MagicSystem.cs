@@ -16,7 +16,7 @@ using Content.Shared.Magic;
 using Content.Shared.Magic.Events;
 using Content.Shared.Maps;
 using Content.Shared.Physics;
-using Content.Shared.Spawners.Components;
+using Robust.Shared.Spawners;
 using Content.Shared.Storage;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;

@@ -132,11 +132,12 @@ public abstract partial class SharedGunSystem
                     uid,
                     args.User);
 
-                // play sound to be cool
                 SimulateInsertAmmo(ent.Value, uid, Transform(uid).Coordinates);
             }
             else
             {
+                // play sound to be cool
+                Audio.PlayPredicted(component.SoundInsert, uid, args.User);
                 SimulateInsertAmmo(ent.Value, args.Target.Value, Transform(args.Target.Value).Coordinates);
             }
 

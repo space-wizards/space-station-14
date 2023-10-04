@@ -19,6 +19,7 @@ using Content.Shared.DragDrop;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Item;
 using Content.Shared.Movement.Events;
@@ -489,7 +490,12 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
         if (!CanInsert(unitId, unit, toInsertId))
             return false;
 
-        var delay = userId == toInsertId ? unit.EntryDelay : unit.DraggedEntryDelay;
+        bool insertingSelf = userId == toInsertId;
+
+        var delay = insertingSelf ? unit.EntryDelay : unit.DraggedEntryDelay;
+
+        if (userId != null && !insertingSelf)
+            _popupSystem.PopupEntity(Loc.GetString("disposal-unit-being-inserted", ("user", Identity.Entity((EntityUid) userId, EntityManager))), toInsertId, toInsertId, PopupType.Large);
 
         if (delay <= 0 || userId == null)
         {
