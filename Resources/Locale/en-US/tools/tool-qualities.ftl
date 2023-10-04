@@ -27,3 +27,6 @@ tool-quality-honking-tool-name = Bike Horn
 
 tool-quality-woodcutting-name = Woodcutting
 tool-quality-woodcutting-tool-name = Hatchet
+
+tool-quality-rolling-name = Rolling
+tool-quality-rolling-tool-name = Rolling Pin
