@@ -1,5 +1,5 @@
 objective-condition-steal-research-title =
-    Украдите { $count } { $count ->
+    Украсть { $count } { $count ->
         [one] технологию
         [few] технологии
        *[other] технологий

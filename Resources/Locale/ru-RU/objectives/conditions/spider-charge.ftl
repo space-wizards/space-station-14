@@ -1,1 +1,1 @@
-objective-condition-spider-charge-title = Взорвите бомбу клана Паука в { $location }.
+objective-condition-spider-charge-title = Взорвать бомбу клана Паука в { $location }.
