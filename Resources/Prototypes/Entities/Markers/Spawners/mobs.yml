@@ -149,6 +149,19 @@
   - type: ConditionalSpawner
     prototypes:
       - MobCatSpace
+    
+- type: entity
+  name: Kitten Spawner
+  id: SpawnMobCatKitten
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+      - MobCatKitten
 
 - type: entity
   name: Cat Spawner
@@ -180,6 +193,7 @@
       - MobCat
       - MobCatCalico
       - MobCatCaracal
+      - MobCatKitten
     rarePrototypes:
       - MobCatSpace
     rareChance: 0.05
