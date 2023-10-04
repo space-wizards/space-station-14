@@ -233,13 +233,7 @@
           prob: 0.15
         - id: LightBulbBroken
           prob: 0.15
-        - id: CableApcStack10
-          prob: 0.15
         - id: MobMouseDead
-          prob: 0.1
-        - id: RagItem
-          prob: 0.1
-        - id: FoodKebabSkewer
           prob: 0.1
         - id: Syringe
           prob: 0.1
