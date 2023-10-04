@@ -5,6 +5,11 @@
   defaultLinks: [ Toggle, Trigger ]
 
 - type: sourcePort
+  id: Toggle
+  name: signal-port-name-toggle
+  description: signal-port-description-toggle
+
+- type: sourcePort
   id: Released
   name: signal-port-name-released
   description: signal-port-description-released

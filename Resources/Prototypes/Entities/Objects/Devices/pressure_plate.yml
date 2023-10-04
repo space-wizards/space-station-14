@@ -5,7 +5,6 @@
   description: it activates something if you step on it. Of course, if you're heavy enough.
   placement:
     mode: SnapgridCenter
-  #abstract: true
   components:
   - type: Fixtures
     fixtures:
@@ -25,14 +24,14 @@
     sprite: Objects/Devices/pressure_plates.rsi
     layers:
       - state: grey_base
-        map: ["enabled", "enum.PressurePlateState.Released"]
+        map: ["enabled"]
   - type: Appearance
   - type: GenericVisualizer
     visuals:
-      enum.PressurePlateVisuals.State:
+      enum.PressurePlateVisuals.Pressed:
         enabled:
-          Pressed: { state: grey_pressed }
-          Released: { state: grey_base }
+          True: { state: grey_pressed }
+          False: { state: grey_base }
   - type: StepTrigger
     intersectRatio: 0.2
     requiredTriggeredSpeed: 0
@@ -45,6 +44,8 @@
         pitchscale: 0.75
     releasedSound:
       path: /Audio/Machines/button.ogg
+  - type: ItemPlacer
+    maxEntities: 0
   - type: DeviceNetwork
     deviceNetId: Wireless
   - type: Damageable
@@ -63,6 +64,7 @@
   - type: DeviceLinkSource
     ports:
       - Pressed
+      - Toggle
       - Released
   - type: Construction
     graph: PressurePlateGraph

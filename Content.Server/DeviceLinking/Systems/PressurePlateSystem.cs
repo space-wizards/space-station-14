@@ -1,114 +1,94 @@
 using Content.Server.DeviceLinking.Components;
 using Content.Shared.DeviceLinking;
-using Robust.Shared.Physics.Components;
 using Content.Server.Storage.Components;
-
+using Content.Shared.Placeable;
+using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
-using Content.Shared.StepTrigger.Systems;
 
-namespace Content.Server.DeviceLinking.Systems
+namespace Content.Server.DeviceLinking.Systems;
+
+/// <see cref="PressurePlateComponent"/>
+public sealed class PressurePlateSystem : EntitySystem
 {
-    public sealed class PressurePlateSystem : EntitySystem
+    [Dependency] private readonly DeviceLinkSystem _signalSystem = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
+
+    public override void Initialize()
     {
-        [Dependency] private readonly DeviceLinkSystem _signalSystem = default!;
-        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-        [Dependency] private readonly SharedAudioSystem _audio = default!;
+        base.Initialize();
+        SubscribeLocalEvent<PressurePlateComponent, ComponentInit>(OnInit);
+        SubscribeLocalEvent<PressurePlateComponent, EndCollideEvent>(OnEndCollide);
+        SubscribeLocalEvent<PressurePlateComponent, StartCollideEvent>(OnStartCollide);
+    }
 
-        public override void Initialize()
+    private void OnInit(EntityUid uid, PressurePlateComponent component, ComponentInit args)
+    {
+        _signalSystem.EnsureSourcePorts(uid, component.PressedPort, component.ReleasedPort);
+        _appearance.SetData(uid, PressurePlateVisuals.Pressed, false);
+    }
+    private void OnStartCollide(EntityUid uid, PressurePlateComponent component, ref StartCollideEvent args)
+    {
+        UpdateState(uid, component);
+    }
+
+    private void OnEndCollide(EntityUid uid, PressurePlateComponent component, ref EndCollideEvent args)
+    {
+        UpdateState(uid, component);
+    }
+
+    private void UpdateState(EntityUid uid, PressurePlateComponent component)
+    {
+        if (!TryComp(uid, out ItemPlacerComponent? itemPlacer))
+            return;
+
+
+        var totalMass = 0f;
+        foreach (var ent in itemPlacer.PlacedEntities)
         {
-            base.Initialize();
-            SubscribeLocalEvent<PressurePlateComponent, ComponentInit>(OnInit);
-            SubscribeLocalEvent<PressurePlateComponent, StepTriggerAttemptEvent>(HandleTriggerAttempt);
-            SubscribeLocalEvent<PressurePlateComponent, EndCollideEvent>(OnEndCollide);
-            SubscribeLocalEvent<PressurePlateComponent, StartCollideEvent>(OnStartCollide);
+            totalMass += GetEntWeightRecursive(ent);
         }
 
-        private void OnInit(EntityUid uid, PressurePlateComponent component, ComponentInit args)
+        if (component.isPressed == true && totalMass < component.WeightRequired) //Release
         {
-            _signalSystem.EnsureSourcePorts(uid, component.PressedSignal, component.ReleasedSignal);
+            component.isPressed = false;
+            _signalSystem.InvokePort(uid, component.TogglePort);
+            _signalSystem.InvokePort(uid, component.ReleasedPort);
+            _appearance.SetData(uid, PressurePlateVisuals.Pressed, false);
+            _audio.PlayPvs(component.ReleasedSound, uid);
         }
 
-        private void HandleTriggerAttempt(EntityUid uid, PressurePlateComponent component, ref StepTriggerAttemptEvent args)
+        if (component.isPressed == false && totalMass > component.WeightRequired) //Press
         {
-            args.Continue = true;
+            component.isPressed = true;
+            _signalSystem.InvokePort(uid, component.TogglePort);
+            _signalSystem.InvokePort(uid, component.PressedPort);
+            _appearance.SetData(uid, PressurePlateVisuals.Pressed, true);
+            _audio.PlayPvs(component.PressedSound, uid);
         }
-        private void OnStartCollide(EntityUid uid, PressurePlateComponent component, ref StartCollideEvent args)
-        {
+        Dirty(uid, component);
+    }
 
-            var otherUid = args.OtherEntity;
-            if (!args.OtherFixture.Hard)
-                return;
-            if (component.Colliding.Add(otherUid))
+    /// <summary>
+    /// Recursively calculates the weight of the object, and all its contents, and the contents and its contents...
+    /// </summary>
+    private float GetEntWeightRecursive(EntityUid uid)
+    {
+        var totalMass = 0f;
+        if (Deleted(uid)) return 0f;
+        if (TryComp(uid, out PhysicsComponent? physics))
+        {
+            totalMass += physics.Mass;
+        }
+        if (TryComp(uid, out EntityStorageComponent? entityStorage))
+        {
+            var storage = entityStorage.Contents;
+            foreach (var ent in storage.ContainedEntities)
             {
-                UpdateState(uid, component);
-                Dirty(uid, component);
-            }
-
-        }
-
-        private void OnEndCollide(EntityUid uid, PressurePlateComponent component, ref EndCollideEvent args)
-        {
-            var otherUid = args.OtherEntity;
-
-            if (!component.Colliding.Remove(otherUid))
-            {
-                return;
-            }
-            UpdateState(uid, component);
-            Dirty(uid, component);
-        }
-
-        private void UpdateState(EntityUid uid, PressurePlateComponent component)
-        {
-            var totalMass = 0f;
-            foreach (var ent in component.Colliding)
-            {
-                if (Deleted(ent))
-                {
-                    component.Colliding.Remove(ent);
-                    continue;
-                }
                 totalMass += GetEntWeightRecursive(ent);
             }
-            if (component.State == PressurePlateState.Pressed && totalMass < component.WeightRequired) //Release
-            {
-                component.State = PressurePlateState.Released;
-                _signalSystem.InvokePort(uid, component.ReleasedSignal);
-
-                _audio.PlayPvs(component.ReleasedSound, uid);
-            }
-            if (component.State == PressurePlateState.Released && totalMass > component.WeightRequired) //Press
-            {
-                component.State = PressurePlateState.Pressed;
-                _signalSystem.InvokePort(uid, component.PressedSignal);
-                _audio.PlayPvs(component.PressedSound, uid);
-            }
-
-            if (TryComp(uid, out AppearanceComponent? appearance))
-                _appearance.SetData(uid, PressurePlateVisuals.State, component.State, appearance);
-
         }
-
-        /// <summary>
-        /// Recursively calculates the weight of the object, and all its contents, and the contents and its contents...
-        /// </summary>
-        private float GetEntWeightRecursive(EntityUid uid)
-        {
-            var totalMass = 0f;
-            if (Deleted(uid)) return 0f;
-            if (TryComp(uid, out PhysicsComponent? physics))
-            {
-                totalMass += physics.Mass;
-            }
-            if (TryComp(uid, out EntityStorageComponent? entityStorage))
-            {
-                var storage = entityStorage.Contents;
-                foreach (var ent in storage.ContainedEntities)
-                {
-                    totalMass += GetEntWeightRecursive(ent);
-                }
-            }
-            return totalMass;
-        }
+        return totalMass;
     }
 }
+
