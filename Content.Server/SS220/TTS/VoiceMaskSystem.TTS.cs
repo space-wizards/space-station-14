@@ -1,4 +1,4 @@
-﻿using Content.Server.Corvax.TTS;
+﻿using Content.Server.SS220.TTS;
 using Content.Shared.VoiceMask;
 
 namespace Content.Server.VoiceMask;
@@ -10,13 +10,13 @@ public partial class VoiceMaskSystem
         SubscribeLocalEvent<VoiceMaskComponent, TransformSpeakerVoiceEvent>(OnSpeakerVoiceTransform);
         SubscribeLocalEvent<VoiceMaskComponent, VoiceMaskChangeVoiceMessage>(OnChangeVoice);
     }
-    
+
     private void OnSpeakerVoiceTransform(EntityUid uid, VoiceMaskComponent component, TransformSpeakerVoiceEvent args)
     {
         if (component.Enabled)
             args.VoiceId = component.VoiceId;
     }
-    
+
     private void OnChangeVoice(EntityUid uid, VoiceMaskComponent component, VoiceMaskChangeVoiceMessage message)
     {
         component.VoiceId = message.Voice;
@@ -27,7 +27,7 @@ public partial class VoiceMaskSystem
 
         UpdateUI(uid, component);
     }
-    
+
     private void TrySetLastKnownVoice(EntityUid maskWearer, string? voiceId)
     {
         if (!HasComp<VoiceMaskComponent>(maskWearer)

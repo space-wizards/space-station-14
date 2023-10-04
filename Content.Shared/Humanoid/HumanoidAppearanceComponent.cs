@@ -1,4 +1,4 @@
-using Content.Shared.Corvax.TTS;
+using Content.Shared.SS220.TTS;
 using Content.Shared.Humanoid.Markings;
 using Content.Shared.Humanoid.Prototypes;
 using Robust.Shared.Enums;

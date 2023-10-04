@@ -5,7 +5,7 @@ using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.Preferences;
 using Robust.Shared.GameObjects.Components.Localization;
 using Robust.Shared.Network;
-using Content.Shared.Corvax.TTS;
+using Content.Shared.SS220.TTS;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Humanoid;

@@ -17,7 +17,7 @@ using Prometheus;
 using Robust.Shared.Configuration;
 using System.ComponentModel;
 
-namespace Content.Server.Corvax.TTS;
+namespace Content.Server.SS220.TTS;
 
 // ReSharper disable once InconsistentNaming
 public sealed class TTSManager

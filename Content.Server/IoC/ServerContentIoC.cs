@@ -8,7 +8,7 @@ using Content.Server.Connection;
 using Content.Server.Corvax.DiscordAuth;
 using Content.Server.Corvax.JoinQueue;
 using Content.Server.Corvax.Sponsors;
-using Content.Server.Corvax.TTS;
+using Content.Server.SS220.TTS;
 using Content.Server.Database;
 using Content.Server.Discord;
 using Content.Server.EUI;

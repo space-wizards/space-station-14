@@ -1,14 +1,14 @@
 ﻿using System.Threading.Tasks;
 using Content.Server.Chat.Systems;
 using Content.Shared.Corvax.CCCVars;
-using Content.Shared.Corvax.TTS;
+using Content.Shared.SS220.TTS;
 using Content.Shared.GameTicking;
 using Content.Shared.SS220.AnnounceTTS;
 using Robust.Shared.Configuration;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 
-namespace Content.Server.Corvax.TTS;
+namespace Content.Server.SS220.TTS;
 
 // ReSharper disable once InconsistentNaming
 public sealed partial class TTSSystem : EntitySystem

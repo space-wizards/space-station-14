@@ -5,7 +5,7 @@ using Content.Server.Chat.Managers;
 using Content.Shared.Administration;
 using Robust.Shared.Console;
 
-namespace Content.Server.Corvax.TTS.Commands;
+namespace Content.Server.SS220.TTS.Commands;
 
 [AdminCommand(AdminFlags.Admin)]
 public sealed class TtsQueueResetCommand : IConsoleCommand

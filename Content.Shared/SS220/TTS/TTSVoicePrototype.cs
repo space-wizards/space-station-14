@@ -1,7 +1,7 @@
 ﻿using Content.Shared.Humanoid;
 using Robust.Shared.Prototypes;
 
-namespace Content.Shared.Corvax.TTS;
+namespace Content.Shared.SS220.TTS;
 
 /// <summary>
 /// Prototype represent available TTS voices

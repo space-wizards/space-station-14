@@ -1,4 +1,4 @@
-﻿namespace Content.Server.Corvax.TTS;
+﻿namespace Content.Server.SS220.TTS;
 
 // ReSharper disable once InconsistentNaming
 public sealed partial class TTSSystem
@@ -12,7 +12,7 @@ public sealed partial class TTSSystem
             result = $"<prosody pitch=\"x-low\">{result}</prosody>";
         return $"<speak>{result}</speak>";
     }
-    
+
     [Flags]
     private enum SoundTraits : ushort
     {
