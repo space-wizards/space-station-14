@@ -2045,6 +2045,10 @@
     interactFailureString: petting-failure-generic
     interactSuccessSound:
       path: /Audio/Animals/cat_meow.ogg
+  - type: MeleeWeapon
+    damage:
+      types:
+        Piercing: 3
   - type: Grammar
     attributes:
       gender: epicene
@@ -2125,8 +2129,6 @@
   description: Small and fluffy.
   components:
   - type: Sprite
-    drawdepth: Mobs
-    sprite: Mobs/Pets/cat.rsi
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: kitten
@@ -2143,11 +2145,6 @@
     - id: FoodMeat
       amount: 1
   - type: MeleeWeapon
-    hidden: true
-    soundHit:
-        path: /Audio/Effects/bite.ogg
-    angle: 0
-    animation: WeaponArcBite
     damage:
       types:
         Piercing: 3
