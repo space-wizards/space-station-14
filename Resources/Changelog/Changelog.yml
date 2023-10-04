@@ -1,10 +1,4 @@
 Entries:
-- author: JoeHammad
-  changes:
-  - {message: 'NT RND has cooked up brute and burn auto-injectors, which are now available
-      in combat medkits.', type: Add}
-  id: 4452
-  time: '2023-08-06T02:38:25.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: 'Re-balanced melee combat. Windup is removed, heavy attacks cost 15
@@ -2960,3 +2954,8 @@ Entries:
       again., type: Fix}
   id: 4951
   time: '2023-10-04T05:22:48.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Cyborgs can toggle their flashlights again., type: Fix}
+  id: 4952
+  time: '2023-10-04T14:30:11.0000000+00:00'
