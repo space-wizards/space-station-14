@@ -1,4 +1,4 @@
-humanoid-profile-editor-randomize-everything-button = Сгенерировать случайного
+humanoid-profile-editor-randomize-everything-button = Случайный персонаж
 humanoid-profile-editor-name-label = Имя:
 humanoid-profile-editor-name-random-button = Сгенерировать
 humanoid-profile-editor-appearance-tab = Внешность
