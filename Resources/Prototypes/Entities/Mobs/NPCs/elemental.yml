@@ -72,6 +72,12 @@
       - DoorBumpOpener
   - type: NoSlip
   - type: ZombieImmune
+  - type: ExaminableSolution
+    solution: bloodstream
+  - type: InjectableSolution
+    solution: bloodstream
+  - type: DrainableSolution
+    solution: bloodstream
 
 - type: entity
   name: Reagent Slime Spawner
