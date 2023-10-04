@@ -893,6 +893,9 @@
   id: Shovel
 
 - type: Tag
+  id: Sidearm
+
+- type: Tag
   id: SkeletonMotorcycleKeys
 
 - type: Tag
