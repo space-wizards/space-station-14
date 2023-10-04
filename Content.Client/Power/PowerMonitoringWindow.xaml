@@ -2,47 +2,57 @@
                xmlns:ui="clr-namespace:Content.Client.Pinpointer.UI"
                xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
                Title="{Loc 'power-monitoring-window-title'}"
-               SetSize="1130 700"
-               MinSize="1130 700">
+               SetSize="1130 740"
+               MinSize="1130 740">
     <BoxContainer Orientation="Vertical">
         <!-- Main display -->
-        <BoxContainer Orientation="Horizontal">
+        <BoxContainer Orientation="Horizontal" VerticalExpand="True" HorizontalExpand="True">
             <!-- Nav map -->
-            <BoxContainer Orientation="Vertical" VerticalExpand="True">
-                <ui:NavMapControl Name="NavMap" Margin="5 5"/>
+            <BoxContainer Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True">
+                <ui:NavMapControl Name="NavMap" Margin="5 5" VerticalExpand="True" HorizontalExpand="True"/>
 
                 <!-- Nav map legend -->
-                <BoxContainer Orientation="Horizontal">
-                    <TextureRect Stretch="KeepAspectCentered" TexturePath="/Textures/Interface/PowerMonitoring/beveled_circle.png"/>
+                <BoxContainer Orientation="Horizontal" Margin="0 10 0 10">
+                    <TextureRect Stretch="KeepAspectCentered"
+                                 TexturePath="/Textures/Interface/PowerMonitoring/beveled_circle.png"
+                                 Modulate="#800080"
+                                 SetSize="16 16"
+                                 Margin="20 0 5 0"/>
                     <Label Text="{Loc 'power-monitoring-window-label-sources'}"/>
                     <TextureRect Stretch="KeepAspectCentered"
                                  TexturePath="/Textures/Interface/PowerMonitoring/beveled_hexagon.png"
-                                 Modulate="#ffa500"/>
+                                 SetSize="16 16"
+                                 Modulate="#ffa500"                               
+                                 Margin="20 0 5 0"/>
                     <Label Text="{Loc 'power-monitoring-window-label-smes'}"/>
                     <TextureRect Stretch="KeepAspectCentered"
                                  TexturePath="/Textures/Interface/PowerMonitoring/beveled_square.png"
-                                 Modulate="#ffff00"/>
+                                 SetSize="16 16"
+                                 Modulate="#ffff00"
+                                 Margin="20 0 5 0"/>
                     <Label Text="{Loc 'power-monitoring-window-label-substation'}"/>
                     <TextureRect Stretch="KeepAspectCentered"
                                  TexturePath="/Textures/Interface/PowerMonitoring/beveled_triangle.png"
-                                 Modulate="#32cd32"/>
+                                 SetSize="16 16"
+                                 Modulate="#32cd32"
+                                 Margin="20 0 5 0"/>
                     <Label Text="{Loc 'power-monitoring-window-label-apc'}"/>
                 </BoxContainer>
             </BoxContainer>
             
             <!-- Power status -->
-            <BoxContainer Orientation="Vertical" VerticalExpand="True">
+            <BoxContainer Orientation="Vertical" VerticalExpand="True" Margin="10 10 10 10">
 
                 <!-- Power overview -->
                 <GridContainer Columns="2">
                     <Label StyleClasses="StatusFieldTitle" Text="{Loc 'power-monitoring-window-total-sources'}"/>
-                    <Label Name="TotalSources" Text="?"/>
+                    <Label Name="TotalSources" Text="?" Margin="10 0 0 0"/>
                     <Label StyleClasses="StatusFieldTitle" Text="{Loc 'power-monitoring-window-total-loads'}"/>
-                    <Label Name="TotalLoads" Text="?"/>
+                    <Label Name="TotalLoads" Text="?" Margin="10 0 0 0"/>
                 </GridContainer>
 
                 <!-- Loads / Sources -->
-                <TabContainer Name="MasterTabContainer" VerticalExpand="True">
+                <TabContainer Name="MasterTabContainer" VerticalExpand="True" Margin="0 10 0 0">
                     <ScrollContainer HorizontalExpand="True"                                     
                                      Margin="8, 8, 8, 8"
                                      MinWidth="300">
@@ -71,12 +81,12 @@
                 </TabContainer>
 
                 <!-- Cable network toggles -->
-                <BoxContainer Orientation="Vertical">
-                    <Label Text="{Loc 'power-monitoring-window-show-cable-networks'}"/>
+                <BoxContainer Orientation="Vertical" Margin="0 10 0 0">
+                    <Label Text="{Loc 'power-monitoring-window-show-cable-networks'}" Margin="0 0 0 5"/>
                     <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
-                        <CheckBox Name="ShowHVCable" Text="{Loc 'power-monitoring-window-show-hv-cable'}" Pressed="True"/>
-                        <CheckBox Name="ShowMVCable" Text="{Loc 'power-monitoring-window-show-mv-cable'}" Pressed="True"/>
-                        <CheckBox Name="ShowLVCable" Text="{Loc 'power-monitoring-window-show-lv-cable'}" Pressed="True"/>
+                        <CheckBox Name="ShowHVCable" Text="{Loc 'power-monitoring-window-show-hv-cable'}" Pressed="True" Margin="0 0 0 0"/>
+                        <CheckBox Name="ShowMVCable" Text="{Loc 'power-monitoring-window-show-mv-cable'}" Pressed="True" Margin="10 0 0 0"/>
+                        <CheckBox Name="ShowLVCable" Text="{Loc 'power-monitoring-window-show-lv-cable'}" Pressed="True" Margin="10 0 0 0"/>
                     </BoxContainer>
                 </BoxContainer>
             </BoxContainer>
@@ -87,7 +97,7 @@
             <PanelContainer StyleClasses="LowDivider" />
             <BoxContainer Orientation="Horizontal" Margin="10 2 5 0" VerticalAlignment="Bottom">
                 <Label Text="{Loc 'power-monitoring-window-flavor-left'}" StyleClasses="WindowFooterText" />
-                <Label Text="{Loc 'power-monitoring-window-right'}" StyleClasses="WindowFooterText"
+                <Label Text="{Loc 'power-monitoring-window-flavor-right'}" StyleClasses="WindowFooterText"
                         HorizontalAlignment="Right" HorizontalExpand="True"  Margin="0 0 5 0" />
                 <TextureRect StyleClasses="NTLogoDark" Stretch="KeepAspectCentered"
                         VerticalAlignment="Center" HorizontalAlignment="Right" SetSize="19 19"/>

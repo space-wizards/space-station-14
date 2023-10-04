@@ -40,17 +40,18 @@ public sealed class PowerMonitoringConsoleBoundUserInterface : BoundUserInterfac
         _menu?.ShowEntites
             (castState.TotalSources,
             castState.TotalLoads,
-            castState.Sources,
-            castState.Loads,
+            castState.AllSources,
+            castState.AllLoads,
+            castState.SubSources,
+            castState.SubLoads,
             castState.PowerCableChunks,
-            xform?.Coordinates,
-            castState.Snap,
-            castState.Precision);
+            castState.FocusChunks,
+            xform?.Coordinates);
     }
 
-    public void RequestPowerMonitoringData()
+    public void RequestPowerMonitoringData(NetEntity? netEntity)
     {
-        SendMessage(new RequestPowerMonitoringDataMessage());
+        SendMessage(new RequestPowerMonitoringDataMessage(netEntity));
     }
 
     protected override void Dispose(bool disposing)

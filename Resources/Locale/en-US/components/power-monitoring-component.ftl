@@ -16,5 +16,5 @@ power-monitoring-window-show-hv-cable = High voltage
 power-monitoring-window-show-mv-cable = Medium voltage
 power-monitoring-window-show-lv-cable = Low voltage
 
-power-monitoring-window-flavor-left = Testing
-power-monitoring-window-flavor-right = v1.0
+power-monitoring-window-flavor-left = user@nanotrasen:~$ query:stationpowernet  
+power-monitoring-window-flavor-right = v1.3

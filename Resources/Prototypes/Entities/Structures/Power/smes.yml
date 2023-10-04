@@ -40,11 +40,14 @@
       examinable: true
       nodes:
         input:
-          !type:CableDeviceNode
-          nodeGroupID: HVPower
-        output:
           !type:CableTerminalPortNode
           nodeGroupID: HVPower
+        output:
+          !type:CableDeviceNode
+          nodeGroupID: HVPower
+    - type: PowerMonitoringDevice
+      sourceNode: input
+      loadNode: output
     - type: BatteryCharger
       voltage: High
       node: output

@@ -74,7 +74,7 @@ public partial class SharedBodySystem
 
         if (TryComp(entity, out OrganComponent? organ))
         {
-            RemoveOrgan(entity, uid, uid, organ);
+            RemoveOrgan(entity, uid, organ);
         }
     }
 

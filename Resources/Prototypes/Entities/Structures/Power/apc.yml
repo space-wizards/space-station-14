@@ -65,6 +65,9 @@
       output:
         !type:CableDeviceNode
         nodeGroupID: Apc
+  - type: PowerMonitoringDevice
+    sourceNode: input
+    loadNode: output
   - type: BatteryCharger
     voltage: Medium
   - type: PowerProvider

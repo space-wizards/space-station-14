@@ -15,7 +15,7 @@ public sealed partial class PointManagerComponent : Component
     /// <summary>
     /// A dictionary of a player's netuserID to the amount of points they have.
     /// </summary>
-    [DataField, AutoNetworkedField(true)]
+    [DataField, AutoNetworkedField]
     public Dictionary<NetUserId, FixedPoint2> Points = new();
 
     /// <summary>

@@ -15,6 +15,7 @@ using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Physics.Components;
 using Content.Shared.Power;
+using System.Linq;
 
 namespace Content.Client.Pinpointer.UI;
 
@@ -53,7 +54,18 @@ public sealed class NavMapControl : MapGridControl
         new CableData(CableType.Apc, Color.LimeGreen, new Vector2(0.2f, 0.2f)),
     };
 
+    private List<CableData> _unfocusCableData = new List<CableData>()
+    {
+        //new CableData(CableType.HighVoltage, new Color(190,122,0)),
+        //new CableData(CableType.MediumVoltage, new Color(135,135,0), new Vector2(-0.2f, -0.2f)),
+        //new CableData(CableType.Apc, new Color(30,115,30), new Vector2(0.2f, 0.2f)),
+        new CableData(CableType.HighVoltage, new Color(82,52,0)),
+        new CableData(CableType.MediumVoltage, new Color(80,80,0), new Vector2(-0.2f, -0.2f)),
+        new CableData(CableType.Apc, new Color(20,76,20), new Vector2(0.2f, 0.2f)),
+    };
+
     public Dictionary<Vector2i, NavMapChunkPowerCables> PowerCableChunks = new();
+    public Dictionary<Vector2i, NavMapChunkPowerCables>? FocusPowerCableChunks = new();
 
     // TODO: https://github.com/space-wizards/RobustToolbox/issues/3818
     private readonly Label _zoom = new()
@@ -342,116 +354,15 @@ public sealed class NavMapControl : MapGridControl
         }
 
         // Draw cables
-        for (var x = Math.Floor(area.Left); x <= Math.Ceiling(area.Right); x += SharedNavMapSystem.ChunkSize * grid.TileSize)
+        if (FocusPowerCableChunks != null && FocusPowerCableChunks.Any())
         {
-            for (var y = Math.Floor(area.Bottom); y <= Math.Ceiling(area.Top); y += SharedNavMapSystem.ChunkSize * grid.TileSize)
-            {
-                var floored = new Vector2i((int) x, (int) y);
+            DrawCables(handle, PowerCableChunks, _unfocusCableData, area, grid, offset);
+            DrawCables(handle, FocusPowerCableChunks, _cableData, area, grid, offset);
+        }
 
-                var chunkOrigin = SharedMapSystem.GetChunkIndices(floored, SharedNavMapSystem.ChunkSize);
-
-                if (!PowerCableChunks.TryGetValue(chunkOrigin, out var chunk))
-                    continue;
-
-                foreach (var datum in _cableData)
-                {
-                    if (!ShowCables[datum.CableType])
-                        continue;
-
-                    for (var i = 0; i < SharedNavMapSystem.ChunkSize * SharedNavMapSystem.ChunkSize; i++)
-                    {
-                        var value = (int) Math.Pow(2, i);
-                        var mask = chunk.CableData[datum.CableType] & value;
-
-                        if (mask == 0x0)
-                            continue;
-
-                        var relativeTile = SharedNavMapSystem.GetTile(mask);
-                        var tile = (chunk.Origin * SharedNavMapSystem.ChunkSize + relativeTile) * grid.TileSize - offset;
-                        var position = new Vector2(tile.X, -tile.Y);
-                        NavMapChunkPowerCables? neighborChunk;
-                        bool neighbor;
-
-                        // Only check the north and east neighbors
-
-                        // East
-                        if (relativeTile.X == SharedNavMapSystem.ChunkSize - 1)
-                        {
-                            neighbor = PowerCableChunks.TryGetValue(chunkOrigin + new Vector2i(1, 0), out neighborChunk) &&
-                                       (neighborChunk.CableData[datum.CableType] & SharedNavMapSystem.GetFlag(new Vector2i(0, relativeTile.Y))) != 0x0;
-                        }
-                        else
-                        {
-                            var flag = SharedNavMapSystem.GetFlag(relativeTile + new Vector2i(1, 0));
-                            neighbor = (chunk.CableData[datum.CableType] & flag) != 0x0;
-                        }
-
-                        if (neighbor)
-                        {
-                            if (WorldRange / WorldMaxRange < 0.5f)
-                            {
-                                var drawOffset = new Vector2(grid.TileSize * 0.5f, -grid.TileSize * 0.5f) + datum.Offset;
-
-                                var leftTop = new Vector2
-                                    (Math.Min(position.X, (position + new Vector2(1f, 0f)).X) - 0.1f,
-                                    Math.Min(position.Y, (position + new Vector2(1f, 0f)).Y) - 0.1f);
-
-                                var rightBottom = new Vector2
-                                    (Math.Max(position.X, (position + new Vector2(1f, 0f)).X) + 0.1f,
-                                    Math.Max(position.Y, (position + new Vector2(1f, 0f)).Y) + 0.1f);
-
-                                handle.DrawRect(new UIBox2(Scale(leftTop + drawOffset), Scale(rightBottom + drawOffset)), datum.Color);
-                            }
-
-                            else
-                            {
-                                handle.DrawLine
-                                (Scale(position + new Vector2(grid.TileSize * 0.5f, -grid.TileSize * 0.5f) + datum.Offset),
-                                Scale(position + new Vector2(1f, 0f) + new Vector2(grid.TileSize * 0.5f, -grid.TileSize * 0.5f) + datum.Offset),
-                                datum.Color);
-                            }
-                        }
-
-                        // North
-                        if (relativeTile.Y == SharedNavMapSystem.ChunkSize - 1)
-                        {
-                            neighbor = PowerCableChunks.TryGetValue(chunkOrigin + new Vector2i(0, 1), out neighborChunk) &&
-                                          (neighborChunk.CableData[datum.CableType] & SharedNavMapSystem.GetFlag(new Vector2i(relativeTile.X, 0))) != 0x0;
-                        }
-                        else
-                        {
-                            var flag = SharedNavMapSystem.GetFlag(relativeTile + new Vector2i(0, 1));
-                            neighbor = (chunk.CableData[datum.CableType] & flag) != 0x0;
-                        }
-
-                        if (neighbor)
-                        {
-                            if (WorldRange / WorldMaxRange < 0.5f)
-                            {
-                                var drawOffset = new Vector2(grid.TileSize * 0.5f, -grid.TileSize * 0.5f) + datum.Offset;
-
-                                var leftTop = new Vector2
-                                    (Math.Min(position.X, (position + new Vector2(0f, -1f)).X) - 0.1f,
-                                    Math.Min(position.Y, (position + new Vector2(0f, -1f)).Y) - 0.1f);
-
-                                var rightBottom = new Vector2
-                                    (Math.Max(position.X, (position + new Vector2(0f, -1f)).X) + 0.1f,
-                                    Math.Max(position.Y, (position + new Vector2(0f, -1f)).Y) + 0.1f);
-
-                                handle.DrawRect(new UIBox2(Scale(leftTop + drawOffset), Scale(rightBottom + drawOffset)), datum.Color);
-                            }
-
-                            else
-                            {
-                                handle.DrawLine
-                                (Scale(position + new Vector2(grid.TileSize * 0.5f, -grid.TileSize * 0.5f) + datum.Offset),
-                                Scale(position + new Vector2(0f, -1f) + new Vector2(grid.TileSize * 0.5f, -grid.TileSize * 0.5f) + datum.Offset),
-                                datum.Color);
-                            }
-                        }
-                    }
-                }
-            }
+        else
+        {
+            DrawCables(handle, PowerCableChunks, _cableData, area, grid, offset);
         }
 
         var curTime = Timing.RealTime;
@@ -512,6 +423,126 @@ public sealed class NavMapControl : MapGridControl
             var labelPosition = position + labelOffset;
             handle.DrawRect(new UIBox2(labelPosition, labelPosition + textDimensions + rectBuffer * 2), BeaconColor);
             handle.DrawString(_font, labelPosition + rectBuffer, beacon.Text, beacon.Color);
+        }
+    }
+
+    private void DrawCables(DrawingHandleScreen handle,
+        Dictionary<Vector2i, NavMapChunkPowerCables> chunks,
+        List<CableData> cableData,
+        Box2 area,
+        MapGridComponent grid,
+        Vector2 offset)
+    {
+        for (var x = Math.Floor(area.Left); x <= Math.Ceiling(area.Right); x += SharedNavMapSystem.ChunkSize * grid.TileSize)
+        {
+            for (var y = Math.Floor(area.Bottom); y <= Math.Ceiling(area.Top); y += SharedNavMapSystem.ChunkSize * grid.TileSize)
+            {
+                var floored = new Vector2i((int) x, (int) y);
+
+                var chunkOrigin = SharedMapSystem.GetChunkIndices(floored, SharedNavMapSystem.ChunkSize);
+
+                if (!chunks.TryGetValue(chunkOrigin, out var chunk))
+                    continue;
+
+                foreach (var datum in cableData)
+                {
+                    if (!ShowCables[datum.CableType])
+                        continue;
+
+                    for (var i = 0; i < SharedNavMapSystem.ChunkSize * SharedNavMapSystem.ChunkSize; i++)
+                    {
+                        var value = (int) Math.Pow(2, i);
+                        var mask = chunk.CableData[datum.CableType] & value;
+
+                        if (mask == 0x0)
+                            continue;
+
+                        var relativeTile = SharedNavMapSystem.GetTile(mask);
+                        var tile = (chunk.Origin * SharedNavMapSystem.ChunkSize + relativeTile) * grid.TileSize - offset;
+                        var position = new Vector2(tile.X, -tile.Y);
+                        NavMapChunkPowerCables? neighborChunk;
+                        bool neighbor;
+
+                        // Only check the north and east neighbors
+
+                        // East
+                        if (relativeTile.X == SharedNavMapSystem.ChunkSize - 1)
+                        {
+                            neighbor = chunks.TryGetValue(chunkOrigin + new Vector2i(1, 0), out neighborChunk) &&
+                                       (neighborChunk.CableData[datum.CableType] & SharedNavMapSystem.GetFlag(new Vector2i(0, relativeTile.Y))) != 0x0;
+                        }
+                        else
+                        {
+                            var flag = SharedNavMapSystem.GetFlag(relativeTile + new Vector2i(1, 0));
+                            neighbor = (chunk.CableData[datum.CableType] & flag) != 0x0;
+                        }
+
+                        if (neighbor)
+                        {
+                            if (WorldRange / WorldMaxRange < 0.5f)
+                            {
+                                var drawOffset = new Vector2(grid.TileSize * 0.5f, -grid.TileSize * 0.5f) + datum.Offset;
+
+                                var leftTop = new Vector2
+                                    (Math.Min(position.X, (position + new Vector2(1f, 0f)).X) - 0.1f,
+                                    Math.Min(position.Y, (position + new Vector2(1f, 0f)).Y) - 0.1f);
+
+                                var rightBottom = new Vector2
+                                    (Math.Max(position.X, (position + new Vector2(1f, 0f)).X) + 0.1f,
+                                    Math.Max(position.Y, (position + new Vector2(1f, 0f)).Y) + 0.1f);
+
+                                handle.DrawRect(new UIBox2(Scale(leftTop + drawOffset), Scale(rightBottom + drawOffset)), datum.Color);
+                            }
+
+                            else
+                            {
+                                handle.DrawLine
+                                (Scale(position + new Vector2(grid.TileSize * 0.5f, -grid.TileSize * 0.5f) + datum.Offset),
+                                Scale(position + new Vector2(1f, 0f) + new Vector2(grid.TileSize * 0.5f, -grid.TileSize * 0.5f) + datum.Offset),
+                                datum.Color);
+                            }
+                        }
+
+                        // North
+                        if (relativeTile.Y == SharedNavMapSystem.ChunkSize - 1)
+                        {
+                            neighbor = chunks.TryGetValue(chunkOrigin + new Vector2i(0, 1), out neighborChunk) &&
+                                          (neighborChunk.CableData[datum.CableType] & SharedNavMapSystem.GetFlag(new Vector2i(relativeTile.X, 0))) != 0x0;
+                        }
+                        else
+                        {
+                            var flag = SharedNavMapSystem.GetFlag(relativeTile + new Vector2i(0, 1));
+                            neighbor = (chunk.CableData[datum.CableType] & flag) != 0x0;
+                        }
+
+                        if (neighbor)
+                        {
+                            if (WorldRange / WorldMaxRange < 0.5f)
+                            {
+                                var drawOffset = new Vector2(grid.TileSize * 0.5f, -grid.TileSize * 0.5f) + datum.Offset;
+
+                                var leftTop = new Vector2
+                                    (Math.Min(position.X, (position + new Vector2(0f, -1f)).X) - 0.1f,
+                                    Math.Min(position.Y, (position + new Vector2(0f, -1f)).Y) - 0.1f);
+
+                                var rightBottom = new Vector2
+                                    (Math.Max(position.X, (position + new Vector2(0f, -1f)).X) + 0.1f,
+                                    Math.Max(position.Y, (position + new Vector2(0f, -1f)).Y) + 0.1f);
+
+                                handle.DrawRect(new UIBox2(Scale(leftTop + drawOffset), Scale(rightBottom + drawOffset)), datum.Color);
+                            }
+
+                            else
+                            {
+                                handle.DrawLine
+                                (Scale(position + new Vector2(grid.TileSize * 0.5f, -grid.TileSize * 0.5f) + datum.Offset),
+                                Scale(position + new Vector2(0f, -1f) + new Vector2(grid.TileSize * 0.5f, -grid.TileSize * 0.5f) + datum.Offset),
+                                datum.Color);
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 

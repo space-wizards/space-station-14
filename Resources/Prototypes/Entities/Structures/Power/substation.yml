@@ -37,6 +37,9 @@
       output:
         !type:CableDeviceNode
         nodeGroupID: MVPower
+  - type: PowerMonitoringDevice
+    sourceNode: input
+    loadNode: output
   - type: BatteryCharger
     voltage: High
   - type: BatteryDischarger
@@ -163,6 +166,9 @@
       output:
         !type:CableDeviceNode
         nodeGroupID: MVPower
+  - type: PowerMonitoringDevice
+    sourceNode: input
+    loadNode: output
   - type: BatteryCharger
     voltage: High
   - type: BatteryDischarger

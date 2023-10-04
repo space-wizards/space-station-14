@@ -9,28 +9,31 @@ public sealed class PowerMonitoringConsoleBoundInterfaceState : BoundUserInterfa
 {
     public float TotalSources;
     public float TotalLoads;
-    public PowerMonitoringConsoleEntry[] Sources;
-    public PowerMonitoringConsoleEntry[] Loads;
+    public PowerMonitoringConsoleEntry[] AllSources;
+    public PowerMonitoringConsoleEntry[] AllLoads;
+    public PowerMonitoringConsoleEntry[] SubSources;
+    public PowerMonitoringConsoleEntry[] SubLoads;
     public Dictionary<Vector2i, NavMapChunkPowerCables> PowerCableChunks;
-    public bool Snap;
-    public float Precision;
+    public Dictionary<Vector2i, NavMapChunkPowerCables>? FocusChunks;
 
     public PowerMonitoringConsoleBoundInterfaceState
         (float totalSources,
         float totalLoads,
-        PowerMonitoringConsoleEntry[] sources,
-        PowerMonitoringConsoleEntry[] loads,
+        PowerMonitoringConsoleEntry[] allSources,
+        PowerMonitoringConsoleEntry[] allLoads,
+        PowerMonitoringConsoleEntry[] subSources,
+        PowerMonitoringConsoleEntry[] subLoads,
         Dictionary<Vector2i, NavMapChunkPowerCables> powerCableChunks,
-        bool snap,
-        float precision)
+        Dictionary<Vector2i, NavMapChunkPowerCables>? focusChunks)
     {
         TotalSources = totalSources;
         TotalLoads = totalLoads;
-        Sources = sources;
-        Loads = loads;
+        AllSources = allSources;
+        AllLoads = allLoads;
+        SubSources = subSources;
+        SubLoads = subLoads;
         PowerCableChunks = powerCableChunks;
-        Snap = snap;
-        Precision = precision;
+        FocusChunks = focusChunks;
     }
 }
 
@@ -58,9 +61,10 @@ public sealed class PowerMonitoringConsoleEntry
 [Serializable, NetSerializable]
 public sealed class RequestPowerMonitoringDataMessage : BoundUserInterfaceMessage
 {
-    public RequestPowerMonitoringDataMessage()
+    public NetEntity? NetEntity;
+    public RequestPowerMonitoringDataMessage(NetEntity? netEntity)
     {
-
+        NetEntity = netEntity;
     }
 }
 
