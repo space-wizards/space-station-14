@@ -152,16 +152,14 @@
 
 - type: entity
   name: tether gun
-  parent:
-  - BaseItem
-  - PowerCellSlotMediumItem
-  id: WeaponTetherGun
+  suffix: Unpowered
+  parent: BaseItem
+  id: WeaponTetherGunUnpowered
   description: Manipulates gravity around objects to fling them at high velocities.
   components:
     - type: TetherGun
       frequency: 5
       dampingRatio: 4
-    - type: PowerCellDraw
     - type: Sprite
       sprite: Objects/Weapons/Guns/Launchers/tether_gun.rsi
       layers:
@@ -186,27 +184,44 @@
           unshaded:
             True: { visible: true }
             False: { visible: false }
-    - type: ContainerContainer
-      containers:
-        box: !type:Container
-        cell_slot: !type:ContainerSlot { }
-    - type: ContainerFill
-      containers:
-        box:
-        - TetherPhysicsBox
-    - type: Construction
-      graph: WeaponPhysicsGun
-      node: tetherGun
-      containers:
-      - box
-      
+
+- type: entity
+  id: WeaponTetherGun
+  parent:
+  - WeaponTetherGunUnpowered
+  - PowerCellSlotMediumItem
+  suffix: Powered
+  components:
+  - type: PowerCellDraw
+  - type: ContainerContainer
+    containers:
+      box: !type:Container
+      cell_slot: !type:ContainerSlot { }
+  - type: ContainerFill
+    containers:
+      box:
+      - TetherPhysicsBox
+  - type: Construction
+    graph: WeaponPhysicsGun
+    node: tetherGun
+    containers:
+    - box  
+
+- type: entity
+  id: WeaponTetherGunEmpty
+  parent: WeaponTetherGun
+  suffix: Empty
+  components:
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
 
 - type: entity
   name: force gun
-  parent:
-    - BaseItem
-    - PowerCellSlotMediumItem
-  id: WeaponForceGun
+  suffix: Unpowered
+  parent: BaseItem
+  id: WeaponForceGunUnpowered
   description: Manipulates gravity around objects to fling them at high velocities.
   components:
     - type: ForceGun
@@ -218,7 +233,6 @@
         path: /Audio/Weapons/soup.ogg
         params:
           volume: 2
-    - type: PowerCellDraw
     - type: Sprite
       sprite: Objects/Weapons/Guns/Launchers/force_gun.rsi
       layers:
@@ -243,19 +257,38 @@
               unshaded:
                 True: { visible: true }
                 False: { visible: false }
-    - type: ContainerContainer
-      containers:
-        box: !type:Container
-        cell_slot: !type:ContainerSlot { }
-    - type: ContainerFill
-      containers:
-        box:
-        - ForcePhysicsBox
-    - type: Construction
-      graph: WeaponPhysicsGun
-      node: forceGun
-      containers:
-      - box
+
+- type: entity
+  id: WeaponForceGun
+  parent:
+  - WeaponForceGunUnpowered
+  - PowerCellSlotMediumItem
+  suffix: Powered
+  components:
+  - type: PowerCellDraw
+  - type: ContainerContainer
+    containers:
+      box: !type:Container
+      cell_slot: !type:ContainerSlot { }
+  - type: ContainerFill
+    containers:
+      box:
+      - ForcePhysicsBox
+  - type: Construction
+    graph: WeaponPhysicsGun
+    node: forceGun
+    containers:
+    - box
+
+- type: entity
+  id: WeaponForceGunEmpty
+  parent: WeaponForceGun
+  suffix: Empty
+  components:
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
 
 - type: entity
   name: grappling gun
