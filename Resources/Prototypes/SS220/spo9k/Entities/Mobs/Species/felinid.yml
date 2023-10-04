@@ -55,7 +55,7 @@
         sprite: Objects/Misc/handcuffs.rsi
         state: body-overlay-2
         visible: false
-      - map: [ "clownedon" ] 
+      - map: [ "clownedon" ]
         sprite: "Effects/creampie.rsi"
         state: "creampie_human"
         visible: false
@@ -101,7 +101,10 @@
     spawned:
       - id: FoodMeat
         amount: 5
-        
+  #MEOW LESS OK THX
+  - type: Emoting
+    chatEmoteCooldown: 5.0
+
 - type: entity
   save: false
   name: Felinid Dummy

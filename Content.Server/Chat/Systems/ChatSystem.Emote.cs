@@ -1,4 +1,5 @@
 using Content.Shared.Chat.Prototypes;
+using Content.Shared.Emoting;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
@@ -154,11 +155,26 @@ public partial class ChatSystem
         return true;
     }
 
-    private void TryEmoteChatInput(EntityUid uid, string textInput)
+    private void TryEmoteChatInput(EntityUid uid, string textInput, out bool consumed)
     {
+        consumed = false;
         var actionLower = textInput.ToLower();
         if (!_wordEmoteDict.TryGetValue(actionLower, out var emote))
             return;
+
+        // SS220 Chat-Emote-Cooldown begin
+        if (TryComp<EmotingComponent>(uid, out var comp))
+        {
+            var currentTime = _gameTiming.CurTime;
+            if (currentTime - comp.LastChatEmoteTime < comp.ChatEmoteCooldown)
+            {
+                consumed = true;
+                return;
+            }
+
+            comp.LastChatEmoteTime = currentTime;
+        }
+        // SS220 Chat-Emote-Cooldown end
 
         InvokeEmoteEvent(uid, emote);
     }

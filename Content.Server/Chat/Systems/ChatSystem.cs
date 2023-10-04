@@ -31,6 +31,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Replays;
 using Robust.Shared.Utility;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Chat.Systems;
 
@@ -54,6 +55,7 @@ public sealed partial class ChatSystem : SharedChatSystem
     [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
+    [Dependency] private readonly IGameTiming _gameTiming = default!;
 
     public const int VoiceRange = 10; // how far voice goes in world units
     public const int WhisperClearRange = 2; // how far whisper goes while still being understandable, in world units
@@ -548,7 +550,14 @@ public sealed partial class ChatSystem : SharedChatSystem
             ("message", FormattedMessage.EscapeText(action)));
 
         if (checkEmote)
-            TryEmoteChatInput(source, action);
+        {
+            // SS220 Chat-Emote-Cooldown begin
+            TryEmoteChatInput(source, action, out var consumed);
+            if (consumed)
+                return;
+            // SS220 Chat-Emote-Cooldown end
+        }
+
         SendInVoiceRange(ChatChannel.Emotes, action, wrappedMessage, source, range);
         if (!hideLog)
             if (name != Name(source))
