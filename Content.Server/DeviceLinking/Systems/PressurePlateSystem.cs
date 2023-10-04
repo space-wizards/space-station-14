@@ -49,19 +49,19 @@ public sealed class PressurePlateSystem : EntitySystem
             totalMass += GetEntWeightRecursive(ent);
         }
 
-        if (component.isPressed == true && totalMass < component.WeightRequired) //Release
+        if (component.IsPressed == true && totalMass < component.WeightRequired) //Release
         {
-            component.isPressed = false;
-            _signalSystem.InvokePort(uid, component.TogglePort);
+            component.IsPressed = false;
+            _signalSystem.InvokePort(uid, component.StatusPort);
             _signalSystem.InvokePort(uid, component.ReleasedPort);
             _appearance.SetData(uid, PressurePlateVisuals.Pressed, false);
             _audio.PlayPvs(component.ReleasedSound, uid);
         }
 
-        if (component.isPressed == false && totalMass > component.WeightRequired) //Press
+        if (component.IsPressed == false && totalMass > component.WeightRequired) //Press
         {
-            component.isPressed = true;
-            _signalSystem.InvokePort(uid, component.TogglePort);
+            component.IsPressed = true;
+            _signalSystem.InvokePort(uid, component.StatusPort);
             _signalSystem.InvokePort(uid, component.PressedPort);
             _appearance.SetData(uid, PressurePlateVisuals.Pressed, true);
             _audio.PlayPvs(component.PressedSound, uid);

@@ -64,7 +64,7 @@
   - type: DeviceLinkSource
     ports:
       - Pressed
-      - Toggle
+      - Status
       - Released
   - type: Construction
     graph: PressurePlateGraph

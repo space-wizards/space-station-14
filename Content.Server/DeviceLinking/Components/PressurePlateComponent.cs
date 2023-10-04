@@ -13,7 +13,7 @@ namespace Content.Server.DeviceLinking.Components;
 public sealed partial class PressurePlateComponent : Component
 {
     [DataField]
-    public bool isPressed = false;
+    public bool IsPressed;
 
     /// <summary>
     /// The required weight of an object that happens to be above the slab to activate.
@@ -25,7 +25,7 @@ public sealed partial class PressurePlateComponent : Component
     public ProtoId<SourcePortPrototype> PressedPort = "Pressed";
 
     [DataField, ViewVariables(VVAccess.ReadOnly)]
-    public ProtoId<SourcePortPrototype> TogglePort = "Toggle";
+    public ProtoId<SourcePortPrototype> StatusPort = "Status";
 
     [DataField, ViewVariables(VVAccess.ReadOnly)]
     public ProtoId<SourcePortPrototype> ReleasedPort = "Released";
