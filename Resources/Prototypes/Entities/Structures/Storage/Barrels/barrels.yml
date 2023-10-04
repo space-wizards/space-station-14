@@ -14,7 +14,7 @@
           visible: false
     - type: Appearance
     - type: SolutionContainerVisuals
-      maxFillLevels: 3
+      maxFillLevels: 4
       fillBaseName: wooden_barrel-
     - type: Damageable
       damageModifierSet: Wood
