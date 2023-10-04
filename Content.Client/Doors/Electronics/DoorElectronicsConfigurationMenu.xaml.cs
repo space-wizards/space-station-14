@@ -33,9 +33,4 @@ public sealed partial class DoorElectronicsConfigurationMenu : FancyWindow
                 _buttonsList.ButtonsList.Where(x => x.Value.Pressed).Select(x => x.Key).ToList());
         }
     }
-
-    public void UpdateState(DoorElectronicsConfigurationState state)
-    {
-        _buttonsList.UpdateState(state.accessList);
-    }
 }
