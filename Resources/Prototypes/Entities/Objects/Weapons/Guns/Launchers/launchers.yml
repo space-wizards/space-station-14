@@ -189,6 +189,7 @@
     - type: ContainerContainer
       containers:
         box: !type:Container
+        cell_slot: !type:ContainerSlot { }
     - type: ContainerFill
       containers:
         box:
@@ -245,6 +246,7 @@
     - type: ContainerContainer
       containers:
         box: !type:Container
+        cell_slot: !type:ContainerSlot { }
     - type: ContainerFill
       containers:
         box:
