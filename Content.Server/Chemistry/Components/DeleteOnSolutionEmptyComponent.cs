@@ -4,7 +4,7 @@ namespace Content.Server.Chemistry.Components
     /// Component that removes an item when a specific solution in it becomes empty.
     /// </summary>
     [RegisterComponent]
-    public sealed partial class DeleteOnEmptyComponent : Component
+    public sealed partial class DeleteOnSolutionEmptyComponent : Component
     {
         /// <summary>
         /// The name of the solution of which to check emptiness

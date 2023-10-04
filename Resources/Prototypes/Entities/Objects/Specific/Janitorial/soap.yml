@@ -47,10 +47,10 @@
   - type: SolutionContainerManager
     solutions:
       soap:
-        maxVol: 100
+        maxVol: 50
         reagents:
         - ReagentId: SoapReagent
-          Quantity: 100
+          Quantity: 50
   - type: SolutionTransfer
     transferAmount: 10
     minTransferAmount: 1
@@ -59,7 +59,7 @@
     canChangeTransferAmount: true
   - type: DrainableSolution
     solution: soap
-  - type: DeleteOnEmpty
+  - type: DeleteOnSolutionEmpty
     solution: soap
   - type: FlavorProfile
     flavors:
@@ -85,10 +85,10 @@
   - type: SolutionContainerManager
     solutions:
       soap:
-        maxVol: 300
+        maxVol: 100
         reagents:
         - ReagentId: SoapReagent
-          Quantity: 300
+          Quantity: 100
 
 - type: entity
   name: soap
@@ -169,7 +169,7 @@
   - type: SolutionContainerManager
     solutions:
       soap:
-        maxVol: 800
+        maxVol: 240 #In the Greek alphabet, Omega is the 24th letter
         reagents:
         - ReagentId: SoapReagent
-          Quantity: 800
+          Quantity: 240

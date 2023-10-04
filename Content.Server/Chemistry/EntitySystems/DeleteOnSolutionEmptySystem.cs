@@ -3,28 +3,28 @@ using Content.Server.Chemistry.Components;
 
 namespace Content.Server.Chemistry.EntitySystems
 {
-    public sealed class DeleteOnEmptySystem : EntitySystem
+    public sealed class DeleteOnSolutionEmptySystem : EntitySystem
     {
         [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
 
         public override void Initialize()
         {
             base.Initialize();
-            SubscribeLocalEvent<DeleteOnEmptyComponent, ComponentStartup>(OnStartup);
-            SubscribeLocalEvent<DeleteOnEmptyComponent, SolutionChangedEvent>(OnSolutionChange);
+            SubscribeLocalEvent<DeleteOnSolutionEmptyComponent, ComponentStartup>(OnStartup);
+            SubscribeLocalEvent<DeleteOnSolutionEmptyComponent, SolutionChangedEvent>(OnSolutionChange);
         }
 
-        public void OnStartup(EntityUid uid, DeleteOnEmptyComponent component, ComponentStartup args)
+        public void OnStartup(EntityUid uid, DeleteOnSolutionEmptyComponent component, ComponentStartup args)
         {
             CheckSolutions(uid, component);
         }
 
-        public void OnSolutionChange(EntityUid uid, DeleteOnEmptyComponent component, SolutionChangedEvent args)
+        public void OnSolutionChange(EntityUid uid, DeleteOnSolutionEmptyComponent component, SolutionChangedEvent args)
         {
             CheckSolutions(uid, component);
         }
 
-        public void CheckSolutions(EntityUid uid, DeleteOnEmptyComponent component)
+        public void CheckSolutions(EntityUid uid, DeleteOnSolutionEmptyComponent component)
         {
             if (!EntityManager.HasComponent<SolutionContainerManagerComponent>((component).Owner))
                 return;
