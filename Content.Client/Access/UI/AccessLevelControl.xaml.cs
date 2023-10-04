@@ -42,6 +42,7 @@ public sealed partial class AccessLevelControl : GridContainer
 
         return prototype.ID;
     }
+
     public void UpdateState(
         List<ProtoId<AccessLevelPrototype>> pressedList,
         List<ProtoId<AccessLevelPrototype>>? enabledList = null)
