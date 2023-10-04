@@ -20,6 +20,9 @@
   id: ArtifactFragment
 
 - type: Tag
+  id: Arrow
+
+- type: Tag
   id: ATVKeys
 
 - type: Tag
@@ -29,7 +32,7 @@
   id: Balloon
 
 - type: Tag
-  id: BaseballBat 
+  id: BaseballBat
 
 - type: Tag
   id: BBQsauce
@@ -309,7 +312,7 @@
   id: CluwneHorn
 
 - type: Tag #Ohioans die happy
-  id: Corn 
+  id: Corn
 
 - type: Tag
   id: Coldsauce
@@ -547,6 +550,9 @@
   id: HideContextMenu
 
 - type: Tag
+  id: HideCorgi # corgi hide for crafting, not for making corgis invisible
+
+- type: Tag
   id: HidesHair # for headwear.
 
 - type: Tag
@@ -720,6 +726,12 @@
   id: Mop
 
 - type: Tag
+  id: MopAdv
+
+- type: Tag
+  id: MopBasic
+
+- type: Tag
   id: Mouse
 
 - type: Tag
@@ -795,6 +807,14 @@
 - type: Tag
   id: PlushieGhost
 
+- type: Tag
+  id: PlushieSharkBlue
+
+- type: Tag
+  id: PlushieSharkPink
+
+- type: Tag
+  id: PlushieSharkGrey
 
 - type: Tag
   id: PowerCellSmall
@@ -874,6 +894,9 @@
 
 - type: Tag
   id: Shovel
+
+- type: Tag
+  id: Sidearm
 
 - type: Tag
   id: SkeletonMotorcycleKeys
@@ -1000,7 +1023,7 @@
 
 - type: Tag
   id: WallmountSubstationElectronics
-  
+
 - type: Tag
   id: WeaponPistolCHIMPUpgradeKit
 

@@ -54,7 +54,7 @@ public sealed class HandTeleporterSystem : EntitySystem
             if (xform.ParentUid != xform.GridUid)
                 return;
 
-            var doafterArgs = new DoAfterArgs(args.User, component.PortalCreationDelay, new TeleporterDoAfterEvent(), uid, used: uid)
+            var doafterArgs = new DoAfterArgs(EntityManager, args.User, component.PortalCreationDelay, new TeleporterDoAfterEvent(), uid, used: uid)
             {
                 BreakOnDamage = true,
                 BreakOnUserMove = true,

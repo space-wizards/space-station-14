@@ -1,6 +1,6 @@
 - type: entity
   save: false
-  parent: [BaseMobSlimePerson, BaseMob]
+  parent: BaseMobSlimePerson
   id: MobSlimePerson
   components:
     #Imperial foot prints

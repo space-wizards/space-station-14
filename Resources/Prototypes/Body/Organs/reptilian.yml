@@ -3,8 +3,13 @@
   parent: OrganAnimalStomach
   noSpawn: true
   components:
-    - type: Stomach
-    - type: SolutionContainerManager
-      solutions:
-        stomach:
-          maxVol: 50
+  - type: Stomach
+  - type: SolutionContainerManager
+    solutions:
+      stomach:
+        maxVol: 50
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5

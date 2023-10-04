@@ -1,12 +1,10 @@
+using System.Linq;
 using Content.Shared.Humanoid.Markings;
 using Content.Shared.Humanoid.Prototypes;
-using Robust.Shared.GameStates;
-using Robust.Shared.Prototypes;
-using System.Linq;
 using Content.Shared.Preferences;
 using Robust.Shared.GameObjects.Components.Localization;
 using Robust.Shared.Network;
-using Content.Shared.Decals;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Humanoid;
 
@@ -41,12 +39,11 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
     {
         base.Initialize();
         SubscribeLocalEvent<HumanoidAppearanceComponent, ComponentInit>(OnInit);
-        SubscribeLocalEvent<HumanoidAppearanceComponent, ComponentGetState>(OnGetState);
     }
 
     private void OnInit(EntityUid uid, HumanoidAppearanceComponent humanoid, ComponentInit args)
     {
-        if (string.IsNullOrEmpty(humanoid.Species) || _netManager.IsClient && !uid.IsClientSide())
+        if (string.IsNullOrEmpty(humanoid.Species) || _netManager.IsClient && !IsClientSide(uid))
         {
             return;
         }
@@ -65,21 +62,6 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
         }
 
         LoadProfile(uid, startingSet.Profile, humanoid);
-    }
-
-    private void OnGetState(EntityUid uid, HumanoidAppearanceComponent component, ref ComponentGetState args)
-    {
-        args.State = new HumanoidAppearanceState(component.MarkingSet,
-            component.PermanentlyHidden,
-            component.HiddenLayers,
-            component.CustomBaseLayers,
-            component.Sex,
-            component.Gender,
-            component.Age,
-            component.Species,
-            component.SkinColor,
-            component.EyeColor,
-            component.SpeakerColor); // Corvax-SpeakerColor
     }
 
     /// <summary>
@@ -222,7 +204,7 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
             return;
 
         if (humanoid.CustomBaseLayers.TryGetValue(layer, out var info))
-            humanoid.CustomBaseLayers[layer] = info with { ID = id };
+            humanoid.CustomBaseLayers[layer] = info with { Id = id };
         else
             humanoid.CustomBaseLayers[layer] = new(id);
 
@@ -265,6 +247,7 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
 
         var oldSex = humanoid.Sex;
         humanoid.Sex = sex;
+        humanoid.MarkingSet.EnsureSexes(sex, _markingManager);
         RaiseLocalEvent(uid, new SexChangedEvent(oldSex, sex));
 
         if (sync)
@@ -319,13 +302,13 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
             ? profile.Appearance.SkinColor.WithAlpha(facialHairAlpha) : profile.Appearance.FacialHairColor;
 
         if (_markingManager.Markings.TryGetValue(profile.Appearance.HairStyleId, out var hairPrototype) &&
-            _markingManager.CanBeApplied(profile.Species, hairPrototype, _prototypeManager))
+            _markingManager.CanBeApplied(profile.Species, profile.Sex, hairPrototype, _prototypeManager))
         {
             AddMarking(uid, profile.Appearance.HairStyleId, hairColor, false);
         }
 
         if (_markingManager.Markings.TryGetValue(profile.Appearance.FacialHairStyleId, out var facialHairPrototype) &&
-            _markingManager.CanBeApplied(profile.Species, facialHairPrototype, _prototypeManager))
+            _markingManager.CanBeApplied(profile.Species, profile.Sex, facialHairPrototype, _prototypeManager))
         {
             AddMarking(uid, profile.Appearance.FacialHairStyleId, facialHairColor, false);
         }
@@ -356,10 +339,10 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
         humanoid.Age = profile.Age;
 
         // Corvax-SpeakerColor-Start
-        const string paletteId = "Material";
-        var colors = _prototypeManager.Index<ColorPalettePrototype>(paletteId).Colors.Values.ToArray();
-        var colorIdx = Math.Abs(profile.Name.GetHashCode() % colors.Length);
-        humanoid.SpeakerColor = colors[colorIdx];
+        // const string paletteId = "Material";
+        // var colors = _prototypeManager.Index<ColorPalettePrototype>(paletteId).Colors.Values.ToArray();
+        // var colorIdx = Math.Abs(profile.Name.GetHashCode() % colors.Length);
+        // humanoid.SpeakerColor = colors[colorIdx];
         // Corvax-SpeakerColor-End
 
         Dirty(humanoid);

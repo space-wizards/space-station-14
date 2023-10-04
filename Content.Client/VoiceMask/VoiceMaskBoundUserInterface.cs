@@ -36,7 +36,7 @@ public sealed class VoiceMaskBoundUserInterface : BoundUserInterface
             return;
         }
 
-        _window.UpdateState(cast.Name, cast.Voice); // Corvax-TTS
+        _window.UpdateState(cast.Name);//, cast.Voice); // Corvax-TTS
     }
 
     protected override void Dispose(bool disposing)

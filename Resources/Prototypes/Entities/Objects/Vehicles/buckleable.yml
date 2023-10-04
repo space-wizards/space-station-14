@@ -39,7 +39,7 @@
         sound:
           path: /Audio/Effects/metalbreak.ogg
       - !type:ExplodeBehavior
-  
+
 - type: entity
   parent: BaseVehicle
   id: BaseVehicleRideable
@@ -103,12 +103,6 @@
       map: ["enum.VehicleVisualLayers.AutoAnimate"]
     noRot: true
   - type: UnpoweredFlashlight
-    toggleAction:
-      name: action-name-toggle-light
-      description: action-description-toggle-light
-      icon: { sprite: Objects/Tools/flashlight.rsi, state: flashlight }
-      iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
-      event: !type:ToggleActionEvent
   - type: PointLight
     enabled: false
     radius: 3.5
@@ -204,7 +198,7 @@
     baseSprintSpeed: 6
   - type: Armor
     modifiers:
-      coeffecients:
+      coefficients:
         Blunt: 0.8
         Slash: 0.6
         Piercing: 0.85
@@ -250,12 +244,6 @@
     buckleOffset: "0.1, -0.05"
     maxBuckleDistance: 1
   - type: UnpoweredFlashlight
-    toggleAction:
-      name: action-name-toggle-light
-      description: action-description-toggle-light
-      icon: { sprite: Objects/Tools/flashlight.rsi, state: flashlight }
-      iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
-      event: !type:ToggleActionEvent
   - type: PointLight
     enabled: false
     radius: 3.5
@@ -301,7 +289,7 @@
       maxBuckleDistance: 1
     - type: Armor
       modifiers:
-        coeffecients:
+        coefficients:
           Blunt: 0.8
           Slash: 0.6
           Piercing: 0.85
@@ -345,12 +333,6 @@
       baseWalkSpeed: 4.5
       baseSprintSpeed: 7
     - type: UnpoweredFlashlight
-      toggleAction:
-        name: action-name-toggle-light
-        description: action-description-toggle-light
-        icon: { sprite: Objects/Tools/flashlight.rsi, state: flashlight }
-        iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
-        event: !type:ToggleActionEvent
     - type: PointLight
       enabled: false
       radius: 3.5

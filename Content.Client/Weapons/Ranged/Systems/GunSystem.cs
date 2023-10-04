@@ -3,7 +3,7 @@ using Content.Client.Items;
 using Content.Client.Weapons.Ranged.Components;
 using Content.Shared.Camera;
 using Content.Shared.CombatMode;
-using Content.Shared.Spawners.Components;
+using Robust.Shared.Spawners;
 using Content.Shared.Weapons.Ranged;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
@@ -16,8 +16,10 @@ using Robust.Client.Player;
 using Robust.Shared.Animations;
 using Robust.Shared.Input;
 using Robust.Shared.Map;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 using SharedGunSystem = Content.Shared.Weapons.Ranged.Systems.SharedGunSystem;
+using TimedDespawnComponent = Robust.Shared.Spawners.TimedDespawnComponent;
 
 namespace Content.Client.Weapons.Ranged.Systems;
 
@@ -29,6 +31,9 @@ public sealed partial class GunSystem : SharedGunSystem
     [Dependency] private readonly AnimationPlayerSystem _animPlayer = default!;
     [Dependency] private readonly InputSystem _inputSystem = default!;
     [Dependency] private readonly SharedCameraRecoilSystem _recoil = default!;
+
+    [ValidatePrototypeId<EntityPrototype>]
+    public const string HitscanProto = "HitscanEffect";
 
     public bool SpreadOverlay
     {
@@ -76,7 +81,7 @@ public sealed partial class GunSystem : SharedGunSystem
 
     private void OnMuzzleFlash(MuzzleFlashEvent args)
     {
-        CreateEffect(args.Uid, args);
+        CreateEffect(GetEntity(args.Uid), args);
     }
 
     private void OnHitscan(HitscanEvent ev)
@@ -84,13 +89,15 @@ public sealed partial class GunSystem : SharedGunSystem
         // ALL I WANT IS AN ANIMATED EFFECT
         foreach (var a in ev.Sprites)
         {
-            if (a.Sprite is not SpriteSpecifier.Rsi rsi ||
-                Deleted(a.coordinates.EntityId))
-            {
+            if (a.Sprite is not SpriteSpecifier.Rsi rsi)
                 continue;
-            }
 
-            var ent = Spawn("HitscanEffect", a.coordinates);
+            var coords = GetCoordinates(a.coordinates);
+
+            if (Deleted(coords.EntityId))
+                continue;
+
+            var ent = Spawn(HitscanProto, coords);
             var sprite = Comp<SpriteComponent>(ent);
             var xform = Transform(ent);
             xform.LocalRotation = a.angle;
@@ -144,7 +151,7 @@ public sealed partial class GunSystem : SharedGunSystem
         if (_inputSystem.CmdStates.GetState(useKey) != BoundKeyState.Down)
         {
             if (gun.ShotCounter != 0)
-                EntityManager.RaisePredictiveEvent(new RequestStopShootEvent { Gun = gunUid });
+                EntityManager.RaisePredictiveEvent(new RequestStopShootEvent { Gun = GetNetEntity(gunUid) });
             return;
         }
 
@@ -156,7 +163,7 @@ public sealed partial class GunSystem : SharedGunSystem
         if (mousePos.MapId == MapId.Nullspace)
         {
             if (gun.ShotCounter != 0)
-                EntityManager.RaisePredictiveEvent(new RequestStopShootEvent { Gun = gunUid });
+                EntityManager.RaisePredictiveEvent(new RequestStopShootEvent { Gun = GetNetEntity(gunUid) });
 
             return;
         }
@@ -168,8 +175,8 @@ public sealed partial class GunSystem : SharedGunSystem
 
         EntityManager.RaisePredictiveEvent(new RequestShootEvent
         {
-            Coordinates = coordinates,
-            Gun = gunUid,
+            Coordinates = GetNetCoordinates(coordinates),
+            Gun = GetNetEntity(gunUid),
         });
     }
 
@@ -188,7 +195,7 @@ public sealed partial class GunSystem : SharedGunSystem
             if (throwItems)
             {
                 Recoil(user, direction, gun.CameraRecoilScalar);
-                if (ent!.Value.IsClientSide())
+                if (IsClientSide(ent!.Value))
                     Del(ent.Value);
                 else
                     RemoveShootable(ent.Value);
@@ -214,7 +221,7 @@ public sealed partial class GunSystem : SharedGunSystem
                         Audio.PlayPredicted(gun.SoundEmpty, gunUid, user);
                     }
 
-                    if (ent!.Value.IsClientSide())
+                    if (IsClientSide(ent!.Value))
                         Del(ent.Value);
 
                     break;
@@ -222,7 +229,7 @@ public sealed partial class GunSystem : SharedGunSystem
                     MuzzleFlash(gunUid, newAmmo, user);
                     Audio.PlayPredicted(gun.SoundGunshot, gunUid, user);
                     Recoil(user, direction, gun.CameraRecoilScalar);
-                    if (ent!.Value.IsClientSide())
+                    if (IsClientSide(ent!.Value))
                         Del(ent.Value);
                     else
                         RemoveShootable(ent.Value);
@@ -306,8 +313,8 @@ public sealed partial class GunSystem : SharedGunSystem
         light.NetSyncEnabled = false;
         Lights.SetEnabled(uid, true, light);
         Lights.SetRadius(uid, 2f, light);
-        light.Color = Color.FromHex("#cc8e2b");
-        light.Energy = 5f;
+        Lights.SetColor(uid, Color.FromHex("#cc8e2b"), light);
+        Lights.SetEnergy(uid, 5f, light);
 
         var animTwo = new Animation()
         {
@@ -328,7 +335,7 @@ public sealed partial class GunSystem : SharedGunSystem
                 new AnimationTrackComponentProperty
                 {
                     ComponentType = typeof(PointLightComponent),
-                    Property = nameof(PointLightComponent.Enabled),
+                    Property = nameof(PointLightComponent.AnimatedEnable),
                     InterpolationMode = AnimationInterpolationMode.Linear,
                     KeyFrames =
                     {

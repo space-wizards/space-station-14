@@ -9,6 +9,9 @@ public sealed class RoleSystem : SharedRoleSystem
         // TODO make roles entities
         base.Initialize();
 
+        SubscribeAntagEvents<DragonRoleComponent>();
+        SubscribeAntagEvents<InitialInfectedRoleComponent>();
+        SubscribeAntagEvents<NinjaRoleComponent>();
         SubscribeAntagEvents<NukeopsRoleComponent>();
         SubscribeAntagEvents<SubvertedSiliconRoleComponent>();
         SubscribeAntagEvents<TraitorRoleComponent>();

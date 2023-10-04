@@ -1,25 +1,19 @@
 using System.Linq;
-using Content.Server.Administration.Logs;
-using Content.Server.Body.Components;
-using Content.Server.Body.Systems;
 using Content.Server.Chemistry.Components;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Chemistry.ReactionEffects;
 using Content.Server.Spreader;
-using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reaction;
-using Content.Shared.Chemistry.Reagent;
-using Content.Shared.Coordinates.Helpers;
-using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using Content.Shared.Smoking;
-using Content.Shared.Spawners;
-using Content.Shared.Spawners.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
+using Robust.Shared.Spawners;
 using Robust.Shared.Timing;
+using TimedDespawnComponent = Robust.Shared.Spawners.TimedDespawnComponent;
 
 namespace Content.Server.Fluids.EntitySystems;
 
@@ -35,6 +29,7 @@ public sealed class SmokeSystem : EntitySystem
     [Dependency] private readonly AppearanceSystem _appearance = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly SolutionContainerSystem _solutionSystem = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -44,15 +39,6 @@ public sealed class SmokeSystem : EntitySystem
         SubscribeLocalEvent<SmokeComponent, ReactionAttemptEvent>(OnReactionAttempt);
         SubscribeLocalEvent<SmokeComponent, SpreadNeighborsEvent>(OnSmokeSpread);
         SubscribeLocalEvent<SmokeDissipateSpawnComponent, TimedDespawnEvent>(OnSmokeDissipate);
-        SubscribeLocalEvent<SpreadGroupUpdateRate>(OnSpreadUpdateRate);
-    }
-
-    private void OnSpreadUpdateRate(ref SpreadGroupUpdateRate ev)
-    {
-        if (ev.Name != "smoke")
-            return;
-
-        ev.UpdatesPerSecond = 8;
     }
 
     private void OnSmokeDissipate(EntityUid uid, SmokeDissipateSpawnComponent component, ref TimedDespawnEvent args)
@@ -67,11 +53,10 @@ public sealed class SmokeSystem : EntitySystem
 
     private void OnSmokeSpread(EntityUid uid, SmokeComponent component, ref SpreadNeighborsEvent args)
     {
-        if (component.SpreadAmount == 0 ||
-            !_solutionSystem.TryGetSolution(uid, SmokeComponent.SolutionName, out var solution) ||
-            args.NeighborFreeTiles.Count == 0)
+        if (component.SpreadAmount == 0
+            || !_solutionSystem.TryGetSolution(uid, SmokeComponent.SolutionName, out var solution))
         {
-            RemCompDeferred<EdgeSpreaderComponent>(uid);
+            RemCompDeferred<ActiveEdgeSpreaderComponent>(uid);
             return;
         }
 
@@ -79,68 +64,62 @@ public sealed class SmokeSystem : EntitySystem
 
         if (prototype == null)
         {
-            RemCompDeferred<EdgeSpreaderComponent>(uid);
+            RemCompDeferred<ActiveEdgeSpreaderComponent>(uid);
             return;
         }
 
         TryComp<TimedDespawnComponent>(uid, out var timer);
+        _appearance.TryGetData(uid, SmokeVisuals.Color, out var color);
 
-        var smokePerSpread = component.SpreadAmount / args.NeighborFreeTiles.Count;
-        component.SpreadAmount -= smokePerSpread;
-
+        // wtf is the logic behind any of this.
+        var smokePerSpread = 1 + component.SpreadAmount / Math.Max(1, args.NeighborFreeTiles.Count);
         foreach (var neighbor in args.NeighborFreeTiles)
         {
             var coords = neighbor.Grid.GridTileToLocal(neighbor.Tile);
-            var ent = Spawn(prototype.ID, coords.SnapToGrid());
+            var ent = Spawn(prototype.ID, coords);
             var neighborSmoke = EnsureComp<SmokeComponent>(ent);
-            neighborSmoke.SpreadAmount = Math.Max(0, smokePerSpread - 1);
+            neighborSmoke.SpreadAmount = Math.Max(0, smokePerSpread - 2); // why - 2? who the fuck knows.
+            component.SpreadAmount--;
             args.Updates--;
 
             // Listen this is the old behaviour iunno
             Start(ent, neighborSmoke, solution.Clone(), timer?.Lifetime ?? 10f);
 
-            if (_appearance.TryGetData(uid, SmokeVisuals.Color, out var color))
-            {
+            if (color != null)
                 _appearance.SetData(ent, SmokeVisuals.Color, color);
-            }
 
-            // Only 1 spread then ig?
-            if (smokePerSpread == 0)
+            if (component.SpreadAmount == 0)
             {
-                component.SpreadAmount--;
-
-                if (component.SpreadAmount == 0)
-                {
-                    RemCompDeferred<EdgeSpreaderComponent>(uid);
-                    break;
-                }
+                RemCompDeferred<ActiveEdgeSpreaderComponent>(uid);
+                break;
             }
 
             if (args.Updates <= 0)
                 break;
         }
 
-        // Give our spread to neighbor tiles.
-        if (args.NeighborFreeTiles.Count == 0 && args.Neighbors.Count > 0 && component.SpreadAmount > 0)
+        if (args.NeighborFreeTiles.Count > 0 || args.Neighbors.Count == 0 || component.SpreadAmount < 1)
+            return;
+
+        // We have no more neighbours to spread to. So instead we will randomly distribute our volume to neighbouring smoke tiles.
+
+        var smokeQuery = GetEntityQuery<SmokeComponent>();
+
+        _random.Shuffle(args.Neighbors);
+        foreach (var neighbor in args.Neighbors)
         {
-            var smokeQuery = GetEntityQuery<SmokeComponent>();
+            if (!smokeQuery.TryGetComponent(neighbor, out var smoke))
+                continue;
 
-            foreach (var neighbor in args.Neighbors)
+            smoke.SpreadAmount++;
+            args.Updates--;
+            component.SpreadAmount--;
+            EnsureComp<ActiveEdgeSpreaderComponent>(neighbor);
+
+            if (component.SpreadAmount == 0)
             {
-                if (!smokeQuery.TryGetComponent(neighbor, out var smoke))
-                    continue;
-
-                smoke.SpreadAmount++;
-                args.Updates--;
-
-                if (component.SpreadAmount == 0)
-                {
-                    RemCompDeferred<EdgeSpreaderComponent>(uid);
-                    break;
-                }
-
-                if (args.Updates <= 0)
-                    break;
+                RemCompDeferred<ActiveEdgeSpreaderComponent>(uid);
+                break;
             }
         }
     }
@@ -247,7 +226,7 @@ public sealed class SmokeSystem : EntitySystem
     public void Start(EntityUid uid, SmokeComponent component, Solution solution, float duration)
     {
         TryAddSolution(uid, component, solution);
-        EnsureComp<EdgeSpreaderComponent>(uid);
+        EnsureComp<ActiveEdgeSpreaderComponent>(uid);
         var timer = EnsureComp<TimedDespawnComponent>(uid);
         timer.Lifetime = duration;
     }
