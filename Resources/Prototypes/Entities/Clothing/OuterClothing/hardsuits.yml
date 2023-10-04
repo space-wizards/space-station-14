@@ -454,7 +454,7 @@
 
 # Syndicate Medic Hardsuit
   parent: ClothingOuterHardsuitBase
-  id: ClothingOuterHardsuitSyndieElite
+  id: ClothingOuterHardsuitMedic
   name: blood-red medic hardsuit
   description: A heavily armored and agile advanced hardsuit specifically designed for field medic operations.
   components:
