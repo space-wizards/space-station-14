@@ -245,21 +245,21 @@
     lightBreakChancePerSecond: 0.0003
     doorToggleChancePerSecond: 0.001
 
-- type: entity
-  id: VentClog
-  parent: BaseGameRule
-  noSpawn: true
-  components:
-  - type: StationEvent
-    startAnnouncement: station-event-vent-clog-start-announcement
-    startAudio:
-      path: /Audio/Announcements/attention.ogg
-    earliestStart: 15
-    minimumPlayers: 15
-    weight: 5
-    startDelay: 50
-    duration: 60
-  - type: VentClogRule
+#- type: entity
+#  id: VentClog
+#  parent: BaseGameRule
+#  noSpawn: true
+#  components:
+#  - type: StationEvent
+#    startAnnouncement: station-event-vent-clog-start-announcement
+#    startAudio:
+#      path: /Audio/Announcements/attention.ogg
+#    earliestStart: 15
+#    minimumPlayers: 15
+#    weight: 5
+#    startDelay: 50
+#    duration: 60
+#  - type: VentClogRule
 
 - type: entity
   id: VentCritters
