@@ -36,8 +36,6 @@
       - !type:MovespeedModifier
         walkSpeedModifier: 0.8
         sprintSpeedModifier: 0.8
-        - !type:ReagentThreshold
-          min: 5
 
 - type: reagent
   id: Dylovene
