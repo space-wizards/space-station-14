@@ -26,6 +26,10 @@
     tags:
     - CaptainSabre
   - type: DisarmMalus
+  - type: ImmersiveWeaponVisuals
+    weaponSprite:
+      sprite: Objects/Weapons/Melee/captain_sabre.rsi
+      state: icon
 
 - type: entity
   name: katana

@@ -26,6 +26,7 @@ using Robust.Shared.Physics.Systems;
 using Robust.Shared.Players;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Weapons.Melee;
 
@@ -845,4 +846,5 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
     }
 
     public abstract void DoLunge(EntityUid user, Angle angle, Vector2 localPos, string? animation, bool predicted = true);
+
 }
