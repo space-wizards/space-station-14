@@ -293,7 +293,8 @@
       types:
         Slash: 1
   - type: EntitySpawnAnomaly
-    superCriticalSpawns: ReagentSlimeSpawner
+    superCriticalSpawns: 
+    - ReagentSlimeSpawner
     spawns:
       - PuddleSparkle
   - type: SolutionContainerManager
