@@ -20,21 +20,19 @@
   - type: Physics
     bodyType: Static
   - type: Sprite
+    snapCardinals: true
     drawdepth: FloorObjects
     sprite: Objects/Devices/pressure_plates.rsi
     layers:
-      - state: grey_base
+      - state: base
         map: ["enabled"]
   - type: Appearance
   - type: GenericVisualizer
     visuals:
       enum.PressurePlateVisuals.Pressed:
         enabled:
-          True: { state: grey_pressed }
-          False: { state: grey_base }
-  - type: StepTrigger
-    intersectRatio: 0.2
-    requiredTriggeredSpeed: 0
+          True: { state: pressed }
+          False: { state: base }
   - type: CollisionWake
     enabled: false
   - type: PressurePlate

@@ -8,10 +8,10 @@
     },
     "states": [
         {
-            "name": "grey_base"
+            "name": "base"
         },
 		{
-            "name": "grey_pressed"
+            "name": "pressed"
         }
     ]
 }

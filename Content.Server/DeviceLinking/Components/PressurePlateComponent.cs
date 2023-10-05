@@ -22,6 +22,9 @@ public sealed partial class PressurePlateComponent : Component
     public float WeightRequired = 50f;
 
     [DataField, ViewVariables(VVAccess.ReadOnly)]
+    public float CurrentWeight;
+
+    [DataField, ViewVariables(VVAccess.ReadOnly)]
     public ProtoId<SourcePortPrototype> PressedPort = "Pressed";
 
     [DataField, ViewVariables(VVAccess.ReadOnly)]

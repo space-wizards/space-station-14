@@ -18,8 +18,20 @@ public sealed class PressurePlateSystem : EntitySystem
     {
         base.Initialize();
         SubscribeLocalEvent<PressurePlateComponent, ComponentInit>(OnInit);
-        SubscribeLocalEvent<PressurePlateComponent, EndCollideEvent>(OnEndCollide);
-        SubscribeLocalEvent<PressurePlateComponent, StartCollideEvent>(OnStartCollide);
+        //SubscribeLocalEvent<PressurePlateComponent, EndCollideEvent>(OnEndCollide);
+        //SubscribeLocalEvent<PressurePlateComponent, StartCollideEvent>(OnStartCollide);
+        SubscribeLocalEvent<PressurePlateComponent, ItemPlacedEvent>(OnItemPlaced);
+        SubscribeLocalEvent<PressurePlateComponent, ItemRemovedEvent>(OnItemRemoved);
+    }
+
+    private void OnItemRemoved(EntityUid uid, PressurePlateComponent component, ref ItemRemovedEvent args)
+    {
+        UpdateState(uid, component);
+    }
+
+    private void OnItemPlaced(EntityUid uid, PressurePlateComponent component, ref ItemPlacedEvent args)
+    {
+        UpdateState(uid, component);
     }
 
     private void OnInit(EntityUid uid, PressurePlateComponent component, ComponentInit args)
@@ -27,19 +39,19 @@ public sealed class PressurePlateSystem : EntitySystem
         _signalSystem.EnsureSourcePorts(uid, component.PressedPort, component.ReleasedPort);
         _appearance.SetData(uid, PressurePlateVisuals.Pressed, false);
     }
-    private void OnStartCollide(EntityUid uid, PressurePlateComponent component, ref StartCollideEvent args)
-    {
-        UpdateState(uid, component);
-    }
-
-    private void OnEndCollide(EntityUid uid, PressurePlateComponent component, ref EndCollideEvent args)
-    {
-        UpdateState(uid, component);
-    }
+    //private void OnStartCollide(EntityUid uid, PressurePlateComponent component, ref StartCollideEvent args)
+    //{
+    //    UpdateState(uid, component);
+    //}
+    //
+    //private void OnEndCollide(EntityUid uid, PressurePlateComponent component, ref EndCollideEvent args)
+    //{
+    //    UpdateState(uid, component);
+    //}
 
     private void UpdateState(EntityUid uid, PressurePlateComponent component)
     {
-        if (!TryComp(uid, out ItemPlacerComponent? itemPlacer))
+        if (!TryComp<ItemPlacerComponent>(uid, out var itemPlacer))
             return;
 
 
@@ -49,24 +61,16 @@ public sealed class PressurePlateSystem : EntitySystem
             totalMass += GetEntWeightRecursive(ent);
         }
 
-        if (component.IsPressed == true && totalMass < component.WeightRequired) //Release
-        {
-            component.IsPressed = false;
-            _signalSystem.InvokePort(uid, component.StatusPort);
-            _signalSystem.InvokePort(uid, component.ReleasedPort);
-            _appearance.SetData(uid, PressurePlateVisuals.Pressed, false);
-            _audio.PlayPvs(component.ReleasedSound, uid);
-        }
+        var pressed = totalMass >= component.WeightRequired;
+        if (pressed == component.IsPressed)
+            return;
 
-        if (component.IsPressed == false && totalMass > component.WeightRequired) //Press
-        {
-            component.IsPressed = true;
-            _signalSystem.InvokePort(uid, component.StatusPort);
-            _signalSystem.InvokePort(uid, component.PressedPort);
-            _appearance.SetData(uid, PressurePlateVisuals.Pressed, true);
-            _audio.PlayPvs(component.PressedSound, uid);
-        }
-        Dirty(uid, component);
+        component.IsPressed = pressed;
+        _signalSystem.SendSignal(uid, component.StatusPort, pressed);
+        _signalSystem.InvokePort(uid, pressed ? component.PressedPort : component.ReleasedPort);
+
+        _appearance.SetData(uid, PressurePlateVisuals.Pressed, pressed);
+        _audio.PlayPvs(pressed ? component.PressedSound : component.ReleasedSound, uid);
     }
 
     /// <summary>
@@ -76,11 +80,11 @@ public sealed class PressurePlateSystem : EntitySystem
     {
         var totalMass = 0f;
         if (Deleted(uid)) return 0f;
-        if (TryComp(uid, out PhysicsComponent? physics))
+        if (TryComp<PhysicsComponent>(uid, out var physics))
         {
             totalMass += physics.Mass;
         }
-        if (TryComp(uid, out EntityStorageComponent? entityStorage))
+        if (TryComp<EntityStorageComponent>(uid, out var entityStorage))
         {
             var storage = entityStorage.Contents;
             foreach (var ent in storage.ContainedEntities)

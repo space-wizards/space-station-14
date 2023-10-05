@@ -163,6 +163,6 @@
   canBuildInImpassable: false
   icon:
     sprite: Objects/Devices/pressure_plates.rsi
-    state: grey_base
+    state: base
   conditions:
     - !type:TileNotBlocked
