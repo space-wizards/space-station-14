@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Server.Anomaly.Components;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Shared.Anomaly.Components;
@@ -33,9 +32,9 @@ public sealed class ReagentProducerAnomalySystem : EntitySystem
     [Dependency] private readonly PointLightSystem _light = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
+
     public override void Initialize()
     {
-        SubscribeLocalEvent<ReagentProducerAnomalyComponent, AnomalySeverityChangedEvent>(OnSeverityChanged);
         SubscribeLocalEvent<ReagentProducerAnomalyComponent, AnomalyPulseEvent>(OnPulse);
         SubscribeLocalEvent<ReagentProducerAnomalyComponent, MapInitEvent>(OnMapInit);
     }
@@ -58,8 +57,10 @@ public sealed class ReagentProducerAnomalySystem : EntitySystem
     {
         base.Update(frameTime);
 
-        var query = EntityQueryEnumerator<ReagentProducerAnomalyComponent>();
-        while (query.MoveNext(out var uid, out var component))
+        //while (query.MoveNext(..., out var anomaly))
+
+        var query = EntityQueryEnumerator<ReagentProducerAnomalyComponent, AnomalyComponent>();
+        while (query.MoveNext(out var uid, out var component, out var anomaly))
         {
             component.AccumulatedFrametime += frameTime;
 
@@ -70,7 +71,10 @@ public sealed class ReagentProducerAnomalySystem : EntitySystem
                 continue;
 
             Solution newSol = new();
-            newSol.AddReagent(component.ProducingReagent, component.RealReagentProducing * component.AccumulatedFrametime);
+            var reagentProducingAmount = anomaly.Stability * component.MaxReagentProducing * component.AccumulatedFrametime;
+            if (anomaly.Severity >= 0.97) reagentProducingAmount *= component.SupercriticalReagentProducingModifier;
+
+            newSol.AddReagent(component.ProducingReagent, reagentProducingAmount);
             _solutionContainer.TryAddSolution(uid, producerSol, newSol); //TO DO - the container is not fully filled. 
 
             component.AccumulatedFrametime = 0;
@@ -103,13 +107,6 @@ public sealed class ReagentProducerAnomalySystem : EntitySystem
         ChangeReagent(uid, component, 0.1f); //MapInit Reagent 100% change
     }
 
-    private void OnSeverityChanged(EntityUid uid, ReagentProducerAnomalyComponent component, ref AnomalySeverityChangedEvent args)
-    {
-        component.RealReagentProducing = component.MaxReagentProducing * args.Severity;
-        if (args.Severity >= 0.97) // 3% stability for EXTRA generation
-            component.RealReagentProducing *= component.SupercriticalReagentProducingModifier;
-    }
-
     // returns a random reagent based on a system of random weights.
     // First, the category is selected: The category has a minimum and maximum weight,
     // the current value depends on severity.
@@ -128,21 +125,21 @@ public sealed class ReagentProducerAnomalySystem : EntitySystem
 
         var sumWeight = currentWeightDangerous + currentWeightFun + currentWeightUseful;
         var rnd = _random.NextFloat(0f, sumWeight);
-
+        //Dangerous
         if (rnd <= currentWeightDangerous && component.DangerousChemicals.Count > 0)
         {
             var reagent = _random.Pick(component.DangerousChemicals);
             return reagent;
         }
         else rnd -= currentWeightDangerous;
-
+        //Fun
         if (rnd <= currentWeightFun && component.FunChemicals.Count > 0)
         {
             var reagent = _random.Pick(component.FunChemicals);
             return reagent;
         }
         else rnd -= currentWeightFun;
-
+        //Useful
         if (rnd <= currentWeightUseful && component.UsefulChemicals.Count > 0)
         {
             var reagent = _random.Pick(component.UsefulChemicals);

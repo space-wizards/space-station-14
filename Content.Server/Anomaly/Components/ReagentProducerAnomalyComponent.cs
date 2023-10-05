@@ -81,27 +81,15 @@ public sealed partial class ReagentProducerAnomalyComponent : Component
     public float SupercriticalReagentProducingModifier = 100f;
 
     /// <summary>
-    /// How much anomaly produces reagent per second, with rigor and supercritical state.
-    ///
-    /// I suspect that it would be possible to do without this variable,
-    /// but I do not know how to access information about the anomaly in the Update cycle
-    /// of the component in order to calculate this value there.
-    /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadOnly)]
-    public float RealReagentProducing = 1f;
-
-    /// <summary>
     /// The name of the reagent that the anomaly produces.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadOnly)]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public ProtoId<ReagentPrototype> ProducingReagent = "Water";
-
     /// <summary>
     /// Standart reagent for errors cases
     /// </summary>
     [ValidatePrototypeId<ReagentPrototype>]
     public const string FallbackReagent = "Water";
-
     /// <summary>
     /// Solution name where the substance is generated
     /// </summary>
