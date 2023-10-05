@@ -4,7 +4,6 @@ using Robust.Client.Animations;
 using Robust.Client.GameObjects;
 using Robust.Shared.Animations;
 using Robust.Shared.Map;
-using Robust.Shared.Utility;
 
 namespace Content.Client.Weapons.Melee;
 
@@ -36,40 +35,12 @@ public sealed partial class MeleeWeaponSystem
 
         var animationUid = Spawn(animation, userXform.Coordinates);
 
-
         if (!TryComp<SpriteComponent>(animationUid, out var sprite)
             || !TryComp<WeaponArcVisualsComponent>(animationUid, out var arcComponent))
         {
             return;
         }
 
-
-
-        /// ED ZONE
-        
-        foreach (var l in sprite.AllLayers)
-        {
-            Log.Debug(l.ToString() + "");
-            Log.Debug(l.PixelSize.ToString() + "");
-        }
-
-        //if (weaponSprite != null)
-        //{
-        //    sprite.LayerSetSprite(0, weaponSprite);
-        //}
-        //Log.Debug("user: " + user.Id);
-        //
-        //if (TryComp<ImmersiveWeaponVisualsComponent>(user, out var immersive))
-        //{
-        //    Log.Debug("immersive founded ");
-        //    sprite.LayerSetSprite(1, immersive.WeaponSprite);
-        //    foreach (var l in sprite.AllLayers)
-        //    {
-        //        Log.Debug(l.ToString() + "");
-        //        Log.Debug(l.PixelSize.ToString()+ "");
-        //    }
-        //}
-        ///
         sprite.NoRotation = true;
         sprite.Rotation = localPos.ToWorldAngle();
         var distance = Math.Clamp(localPos.Length() / 2f, 0.2f, 1f);
@@ -101,8 +72,6 @@ public sealed partial class MeleeWeaponSystem
                 break;
         }
     }
-
-    
 
     private Animation GetSlashAnimation(SpriteComponent sprite, Angle arc)
     {
