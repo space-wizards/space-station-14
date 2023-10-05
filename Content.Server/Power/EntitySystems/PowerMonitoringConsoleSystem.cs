@@ -22,16 +22,55 @@ internal sealed class PowerMonitoringConsoleSystem : EntitySystem
 {
     [Dependency] private readonly EntityManager _entityManager = default!;
     [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
-    [Dependency] private readonly NavMapSystem _navMap = default!;
     [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
-    [Dependency] private readonly PvsOverrideSystem _pvsOverrideSystem = default!;
     [Dependency] private readonly SharedMapSystem _sharedMapSystem = default!;
+
+    private float _updateTimer = 1.0f;
+    private const float UpdateTime = 1.0f;
+    private List<EntityUid> trackedEntities = new();
 
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<PowerMonitoringConsoleComponent, RequestPowerMonitoringDataMessage>(OnDataRequestReceived);
+        SubscribeLocalEvent<ExpandPvsEvent>(OnExpandPvsEvent);
+    }
+
+    public override void Update(float frameTime)
+    {
+        _updateTimer += frameTime;
+
+        if (_updateTimer >= UpdateTime)
+        {
+            _updateTimer -= UpdateTime;
+
+            trackedEntities.Clear();
+
+            var query = AllEntityQuery<PowerMonitoringDeviceComponent, TransformComponent>();
+            while (query.MoveNext(out var uid, out var component, out var xform))
+            {
+                if (xform.Anchored)
+                {
+                    trackedEntities.Add(uid);
+                }
+            }
+        }
+    }
+
+    private void OnExpandPvsEvent(ref ExpandPvsEvent ev)
+    {
+        var powerMonitoringConsoleQuery = AllEntityQuery<PowerMonitoringConsoleComponent>();
+        while (powerMonitoringConsoleQuery.MoveNext(out var uid, out var component))
+        {
+            if (_userInterfaceSystem.SessionHasOpenUi(uid, PowerMonitoringConsoleUiKey.Key, ev.Session))
+            {
+                foreach (var ent in trackedEntities)
+                    ev.Entities.Add(ent);
+
+                break;
+            }
+        }
     }
 
     private void OnDataRequestReceived(EntityUid uid, PowerMonitoringConsoleComponent component, RequestPowerMonitoringDataMessage args)
@@ -57,15 +96,16 @@ internal sealed class PowerMonitoringConsoleSystem : EntitySystem
         var sources = new List<PowerMonitoringConsoleEntry>();
         var loads = new List<PowerMonitoringConsoleEntry>();
 
-        //Power suppliers
-        var powerSupplierQuery = AllEntityQuery<PowerSupplierComponent, MetaDataComponent, TransformComponent>();
-        while (powerSupplierQuery.MoveNext(out var uid, out var powerSupplier, out var metaData, out var xform))
+        foreach (var ent in trackedEntities)
         {
-            if (xform.Anchored)
+            var metaData = MetaData(ent);
+            var prototype = metaData.EntityPrototype?.ID ?? "";
+            var xform = Transform(ent);
+
+            if (TryComp<PowerSupplierComponent>(ent, out var powerSupplier))
             {
-                var prototype = metaData.EntityPrototype?.ID ?? "";
                 var entry = new PowerMonitoringConsoleEntry
-                    (_entityManager.GetNetEntity(uid),
+                    (_entityManager.GetNetEntity(ent),
                     GetNetCoordinates(xform.Coordinates),
                     metaData.EntityName,
                     prototype,
@@ -73,25 +113,13 @@ internal sealed class PowerMonitoringConsoleSystem : EntitySystem
                     true);
 
                 sources.Add(entry);
-                _pvsOverrideSystem.AddSessionOverride(uid, session, true);
-
                 totalSources += powerSupplier.MaxSupply;
             }
-        }
 
-        // Network batteries
-        var networkBatteryQuery = AllEntityQuery<PowerNetworkBatteryComponent, MetaDataComponent, TransformComponent>();
-        while (networkBatteryQuery.MoveNext(out var uid, out var networkBattery, out var metaData, out var xform))
-        {
-            if (_entityManager.HasComponent<PowerSupplierComponent>(uid))
-                continue;
-
-            if (xform.Anchored)
+            else if (TryComp<PowerNetworkBatteryComponent>(ent, out var networkBattery))
             {
-                var prototype = metaData.EntityPrototype?.ID ?? "";
-
                 var entry = new PowerMonitoringConsoleEntry
-                    (_entityManager.GetNetEntity(uid),
+                    (_entityManager.GetNetEntity(ent),
                     GetNetCoordinates(xform.Coordinates),
                     metaData.EntityName,
                     prototype,
@@ -99,8 +127,6 @@ internal sealed class PowerMonitoringConsoleSystem : EntitySystem
                     true);
 
                 loads.Add(entry);
-                _pvsOverrideSystem.AddSessionOverride(uid, session, true);
-
                 totalLoads += networkBattery.NetworkBattery.CurrentReceiving;
             }
         }
@@ -135,26 +161,7 @@ internal sealed class PowerMonitoringConsoleSystem : EntitySystem
                 }
 
                 var reachableNodes = reachableSources.Concat(reachableLoads).ToList();
-
-                /*var gridIndices = mapGrid.TileIndicesFor(xform.Coordinates);
-                var enumerator = mapGrid.GetAnchoredEntitiesEnumerator(gridIndices);
-
-                while (enumerator.MoveNext(out var ent))
-                {
-                    if (!TryComp<NodeContainerComponent>(ent, out var nodeContainerNew) ||
-                        !_nodeContainer.TryGetNode<Node>(nodeContainerNew, "power", out var node))
-                        continue;
-
-                    if (node.NodeGroupID != sourceNode?.NodeGroupID && node.NodeGroupID != loadNode?.NodeGroupID)
-                        continue;
-
-                    //reachableNodes = node.ReachableNodes.ToList();
-                    
-                    Logger.Debug("reachables: " + reachableNodes.Count());
-
-                    
-                }*/
-
+     
                 _output = GetSpecificPowerCables(mapGrid, reachableNodes);
                 Logger.Debug("reachables: " + reachableNodes.Count);
                 Logger.Debug("no. sources: " + _sources.Count);

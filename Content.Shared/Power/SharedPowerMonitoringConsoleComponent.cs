@@ -69,9 +69,9 @@ public sealed class RequestPowerMonitoringDataMessage : BoundUserInterfaceMessag
 }
 
 [Serializable, NetSerializable]
-public sealed class RequestPowerCableDataEvent : BoundUserInterfaceMessage
+public sealed class PowerMonitoringConsoleWindowClosedEvent : BoundUserInterfaceMessage
 {
-    public RequestPowerCableDataEvent()
+    public PowerMonitoringConsoleWindowClosedEvent()
     {
 
     }
