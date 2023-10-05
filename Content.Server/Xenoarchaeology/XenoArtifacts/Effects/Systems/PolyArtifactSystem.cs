@@ -4,6 +4,7 @@ using Content.Shared.Humanoid;
 using Content.Server.Polymorph.Systems;
 using Content.Shared.Zombies;
 using Content.Shared.Mobs.Systems;
+using Content.Shared.Polymorph;
 
 namespace Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Systems;
 
@@ -13,6 +14,13 @@ public sealed class PolyArtifactSystem : EntitySystem
     [Dependency] private readonly MobStateSystem _mob = default!;
     [Dependency] private readonly PolymorphSystem _poly = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
+
+    [ValidatePrototypeId<PolymorphPrototype>]
+    private const string PolymorphPrototypeName = "ArtifactMonkey";
+
+    /// <summary>
+    /// On effect trigger polymorphs targets in range.
+    /// </summary>
     public override void Initialize()
     {
         SubscribeLocalEvent<PolyArtifactComponent, ArtifactActivatedEvent>(OnActivate);
@@ -23,17 +31,18 @@ public sealed class PolyArtifactSystem : EntitySystem
     /// </summary>
     private void OnActivate(EntityUid uid, PolyArtifactComponent component, ArtifactActivatedEvent args)
     {
-        foreach (var target in _lookup.GetEntitiesInRange(uid, component.Range))
+        var xform = Transform(uid);
+        foreach (var comp in _lookup.GetComponentsInRange<HumanoidAppearanceComponent>(xform.Coordinates, component.Range))
         {
-
-            if (_mob.IsAlive(target) && HasComp<HumanoidAppearanceComponent>(target) && !HasComp<ZombieComponent>(target))
+            var target = comp.Owner;
+            if (_mob.IsAlive(target) && !HasComp<ZombieComponent>(target))
             {
-                _poly.PolymorphEntity(target, "ArtifactMonkey");
+                _poly.PolymorphEntity(target, PolymorphPrototypeName);
                 _audio.PlayPvs(component.PolySound, uid);
             }
 
             else
-                return;
+                continue;
         }
     }
 }
