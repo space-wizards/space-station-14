@@ -19,7 +19,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.Fluids.EntitySystems;
 
-public sealed class PouringSystem : EntitySystem
+public sealed class PourableSystem : EntitySystem
 {
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly SolutionContainerSystem _solutionSystem = default!;
