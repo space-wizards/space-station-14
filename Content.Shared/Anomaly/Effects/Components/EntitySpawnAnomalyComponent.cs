@@ -11,14 +11,14 @@ public sealed partial class EntitySpawnAnomalyComponent : Component
     /// <summary>
     /// A list of entities that are random picked to be spawned on each pulse
     /// </summary>
-    [DataField("spawns", required: true, customTypeSerializer: typeof(PrototypeIdListSerializer<EntityPrototype>)), ViewVariables(VVAccess.ReadWrite)]
-    public List<string> Spawns = new();
+    [DataField]
+    public List<EntProtoId> Spawns = new();
 
     /// <summary>
     /// A list of entities that are random picked to be spawned when supercritical;
     /// </summary>
-    [DataField("superCriticalSpawns", required: true, customTypeSerializer: typeof(PrototypeIdListSerializer<EntityPrototype>)), ViewVariables(VVAccess.ReadWrite)]
-    public List<string> SuperCriticalSpawns = new();
+    [DataField]
+    public List<EntProtoId> SuperCriticalSpawns = new();
 
     /// <summary>
     /// The maximum number of entities that spawn per pulse
@@ -40,10 +40,4 @@ public sealed partial class EntitySpawnAnomalyComponent : Component
     /// </summary>
     [DataField("floorTileId", customTypeSerializer: typeof(PrototypeIdSerializer<ContentTileDefinition>)), ViewVariables(VVAccess.ReadWrite)]
     public string FloorTileId = "FloorFlesh";
-
-    /// <summary>
-    /// The entity spawned when the anomaly goes supercritical
-    /// </summary>
-    [DataField("superCriticalSpawn", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>)), ViewVariables(VVAccess.ReadWrite)]
-    public string SupercriticalSpawn = "FleshKudzu";
 }
