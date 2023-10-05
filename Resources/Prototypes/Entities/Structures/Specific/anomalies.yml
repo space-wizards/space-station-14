@@ -330,6 +330,8 @@
     - ChlorineTrifluoride
     - FoamingAgent
     - Fluorosurfactant
+    - RobustHarvest
+    - BuzzochloricBees
     usefulChemicals:
     - Cryptobiolin
     - Dylovene
@@ -343,6 +345,7 @@
     - Leporazine
     - Ambuzol
     - Tricordrazine
+    - Artifexium
     funChemicals:
     - Desoxyephedrine
     - Ephedrine
@@ -356,6 +359,8 @@
     - Ipecac
     - Cognizine
     - Beer
+    - SpaceGlue
+    - Cogchamp
   - type: Drink
     solution: anomaly
   - type: DrainableSolution
