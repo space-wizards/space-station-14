@@ -1,10 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Adjusted pickaxe inhand sprites and added sprites for wielded pickaxes.,
-    type: Tweak}
-  id: 4458
-  time: '2023-08-06T06:50:00.0000000+00:00'
 - author: Errant
   changes:
   - {message: Active energy swords no longer heal small amounts of blunt damage on
@@ -2955,3 +2949,8 @@ Entries:
   - {message: Slimes no longer rot again, type: Fix}
   id: 4957
   time: '2023-10-05T19:56:40.0000000+00:00'
+- author: dahnte
+  changes:
+  - {message: Onion rings!, type: Add}
+  id: 4958
+  time: '2023-10-05T21:31:40.0000000+00:00'
