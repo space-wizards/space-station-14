@@ -33,9 +33,9 @@ namespace Content.Shared.Eye
         Ghost  = 1 << 1,
 
         /// <summary>
-        /// A PVS visibility flag that should render any entity with it invisible by default to _all clients_.
+        /// A PVS visibility flag that renders any entity with it invisible by default to _all clients_.
         /// </summary>
-        /// <remarks><see cref="EyeComponent"/>s should _never_ have this PVS flag set.</remarks>
-        PvsIgnore = 1 << 31,
+        /// <remarks><see cref="EyeComponent.VisibilityMask"/> should never include this flag.</remarks>
+        PvsIgnore = EyeComponent.PvsIgnoreVisibilityFlag,
     }
 }
