@@ -151,6 +151,7 @@ marking-HumanHairShorthairg = Short Hair 7
 marking-HumanHair80s = Short Hair 80s
 marking-HumanHairRosa = Short Hair Rosa
 marking-HumanHairB = Shoulder-length Hair
+marking-HumanHairShoulderLengthOverEye = Shoulder-length Over Eye
 marking-HumanHairSidecut = Sidecut
 marking-HumanHairSkinhead = Skinhead
 marking-HumanHairProtagonist = Slightly Long Hair
