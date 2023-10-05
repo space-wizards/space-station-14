@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/e1142f20f5e4661cb6845cfcf2dd69f864d67432. Inhand sprites by nmajask (Github) for SS14. clipboard_paper is a modified version of paper from bureaucracy.rsi.",
+  "copyright": "Clipboard sprites are by WJohn (Github) for tgstation, taken from https://github.com/tgstation/tgstation/commit/3cc10b1785bff95e861d722b5164189951761921. Inhand sprites by nmajask (Github) for SS14. clipboard_paper is a modified version of paper from bureaucracy.rsi.",
   "size": {
     "x": 32,
     "y": 32
