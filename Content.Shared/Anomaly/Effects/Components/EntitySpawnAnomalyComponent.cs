@@ -14,6 +14,9 @@ public sealed partial class EntitySpawnAnomalyComponent : Component
     [DataField("spawns", required: true, customTypeSerializer: typeof(PrototypeIdListSerializer<EntityPrototype>)), ViewVariables(VVAccess.ReadWrite)]
     public List<string> Spawns = new();
 
+    /// <summary>
+    /// A list of entities that are random picked to be spawned when supercritical;
+    /// </summary>
     [DataField("superCriticalSpawns", required: true, customTypeSerializer: typeof(PrototypeIdListSerializer<EntityPrototype>)), ViewVariables(VVAccess.ReadWrite)]
     public List<string> SuperCriticalSpawns = new();
 
@@ -23,9 +26,6 @@ public sealed partial class EntitySpawnAnomalyComponent : Component
     /// </summary>
     [DataField("maxSpawnAmount"), ViewVariables(VVAccess.ReadWrite)]
     public int MaxSpawnAmount = 7;
-
-    [DataField("wallEntity")]
-    public bool WallEntity = false;
 
     /// <summary>
     /// The maximum radius the entities will spawn in.

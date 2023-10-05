@@ -14,7 +14,10 @@ public sealed partial class TileSpawnAnomalyComponent : Component
     [DataField("spawnRange"), ViewVariables(VVAccess.ReadWrite)]
     public float SpawnRange = 5f;
 
-    [DataField("spawnChance"), ViewVariables(VVAccess.ReadWrite)]
+    /// <summary>
+    /// The probability a tile will spawn.
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public float SpawnChance = 0.33f;
 
     /// <summary>

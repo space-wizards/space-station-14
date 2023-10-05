@@ -255,7 +255,6 @@
     floorTileId: FloorAsteroidTile
     spawnChance: 0.8
   - type: EntitySpawnAnomaly
-    wallEntity: true
     maxSpawnAmount: 50
     spawnRange: 10
     superCriticalSpawn: AsteroidRock
