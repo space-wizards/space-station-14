@@ -9,7 +9,9 @@
     sprite: Objects/Weapons/Melee/cult_dagger.rsi
     state: icon
   - type: MeleeWeapon
+    wideAnimation: WeaponArcRitualDagger
     attackRate: 1.5
+    range: 1.0
     damage:
       types:
         Slash: 12

@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-NC-SA-3.0",
-  "copyright": "Taken from goonstation and modified by Swept at commit https://github.com/goonstation/goonstation/pull/3555/commits/b24eb6260647c0fcfe858268a26b6160bc50017a, wielded version by Easypoll",
+  "copyright": "Taken from goonstation and modified by Swept at commit https://github.com/goonstation/goonstation/pull/3555/commits/b24eb6260647c0fcfe858268a26b6160bc50017a, wielded version by Easypoll, weapon arc created by TheShuEd (github) for ss14",
   "size": {
       "x": 32,
       "y": 32
@@ -29,6 +29,9 @@
     {
       "name": "equipped-BACKPACK",
       "directions": 4
+    },
+    {
+      "name": "weapon-arc"
     }
   ]
 }

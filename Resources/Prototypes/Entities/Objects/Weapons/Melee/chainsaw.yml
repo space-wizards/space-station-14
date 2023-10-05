@@ -15,6 +15,7 @@
     sprite: Objects/Weapons/Melee/chainsaw.rsi
     state: icon
   - type: MeleeWeapon
+    wideAnimation: WeaponArcChainsaw
     damage:
       types:
         Slash: 5

@@ -1,7 +1,7 @@
 {
     "version": 1,
     "license": "CC-BY-NC-SA-3.0",
-    "copyright": "Made by Jesse for ss14",
+    "copyright": "Made by Jesse for ss14, weapon arc created by TheShuEd (github) for ss14",
     "size": {
         "x": 32,
         "y": 32
@@ -105,6 +105,9 @@
                     0.03
                 ]
             ]
+        },
+        {
+          "name": "weapon-arc"
         }
     ]
 

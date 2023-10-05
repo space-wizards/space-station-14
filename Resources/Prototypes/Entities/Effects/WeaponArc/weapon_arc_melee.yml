@@ -1,7 +1,37 @@
-# armblade
+# armblade - used standart claw_wide
 # baseball_bat
+
+- type: entity
+  id: WeaponArcBaseBallBat
+  parent: WeaponArcSlash
+  noSpawn: true
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/baseball_bat.rsi
+    state: weapon-arc
+
 # chainsaw
+
+- type: entity
+  id: WeaponArcChainsaw
+  parent: WeaponArcSlash
+  noSpawn: true
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/chainsaw.rsi
+    state: weapon-arc
+
 # cult
+
+- type: entity
+  id: WeaponArcRitualDagger
+  parent: WeaponArcSlash
+  noSpawn: true
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/cult_dagger.rsi
+    state: weapon-arc
+
 # e_sword
 # fireaxe
 
