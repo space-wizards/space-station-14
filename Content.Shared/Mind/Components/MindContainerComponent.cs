@@ -11,9 +11,9 @@ namespace Content.Shared.Mind.Components
         /// <summary>
         ///     The mind controlling this mob. Can be null.
         /// </summary>
-        [ViewVariables]
+        [DataField]
         [Access(typeof(SharedMindSystem), Other = AccessPermissions.ReadWriteExecute)] // FIXME Friends
-        public EntityUid? Mind { get; set; }
+        public EntityUid? Mind;
 
         /// <summary>
         ///     True if we have a mind, false otherwise.
@@ -25,17 +25,15 @@ namespace Content.Shared.Mind.Components
         /// <summary>
         ///     Whether examining should show information about the mind or not.
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("showExamineInfo")]
-        public bool ShowExamineInfo { get; set; }
+        [DataField, ViewVariables(VVAccess.ReadWrite)]
+        public bool ShowExamineInfo;
 
         /// <summary>
         ///     Whether the mind will be put on a ghost after this component is shutdown.
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("ghostOnShutdown")]
+        [DataField, ViewVariables(VVAccess.ReadWrite)]
         [Access(typeof(SharedMindSystem), Other = AccessPermissions.ReadWriteExecute)] // FIXME Friends
-        public bool GhostOnShutdown { get; set; } = true;
+        public bool GhostOnShutdown = true;
     }
 
     public sealed class MindRemovedMessage : EntityEventArgs

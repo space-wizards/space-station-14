@@ -21,48 +21,50 @@ namespace Content.Shared.Mind
     [RegisterComponent]
     public sealed partial class MindComponent : Component
     {
-        internal readonly List<EntityUid> Objectives = new();
+        [DataField]
+        public List<EntityUid> Objectives = new();
 
         /// <summary>
         ///     The session ID of the player owning this mind.
         /// </summary>
-        [ViewVariables, Access(typeof(SharedMindSystem))]
-        public NetUserId? UserId { get; set; }
+        [DataField, Access(typeof(SharedMindSystem))]
+        public NetUserId? UserId;
 
         /// <summary>
         ///     The session ID of the original owner, if any.
         ///     May end up used for round-end information (as the owner may have abandoned Mind since)
         /// </summary>
-        [ViewVariables, Access(typeof(SharedMindSystem))]
-        public NetUserId? OriginalOwnerUserId { get; set; }
+        [DataField, Access(typeof(SharedMindSystem))]
+        public NetUserId? OriginalOwnerUserId;
 
         /// <summary>
         ///     Entity UID for the first entity that this mind controlled. Used for round end.
         ///     Might be relevant if the player has ghosted since.
         /// </summary>
-        [ViewVariables] public EntityUid? OriginalOwnedEntity;
+        [DataField]
+        public EntityUid? OriginalOwnedEntity;
 
         [ViewVariables]
         public bool IsVisitingEntity => VisitingEntity != null;
 
-        [ViewVariables, Access(typeof(SharedMindSystem))]
-        public EntityUid? VisitingEntity { get; set; }
+        [DataField, Access(typeof(SharedMindSystem))]
+        public EntityUid? VisitingEntity;
 
         [ViewVariables]
         public EntityUid? CurrentEntity => VisitingEntity ?? OwnedEntity;
 
-        [ViewVariables(VVAccess.ReadWrite)]
-        public string? CharacterName { get; set; }
+        [DataField, ViewVariables(VVAccess.ReadWrite)]
+        public string? CharacterName;
 
         /// <summary>
         ///     The time of death for this Mind.
         ///     Can be null - will be null if the Mind is not considered "dead".
         /// </summary>
-        [ViewVariables]
+        [DataField]
         public TimeSpan? TimeOfDeath { get; set; }
 
         /// <summary>
-        ///     The component currently owned by this mind.
+        ///     The container component currently owned by this mind.
         ///     Can be null.
         /// </summary>
         [ViewVariables]
@@ -73,28 +75,25 @@ namespace Content.Shared.Mind
         ///     Can be null.
         /// </summary>
         [ViewVariables, Access(typeof(SharedMindSystem))]
-        public EntityUid? OwnedEntity { get; set; }
+        public EntityUid? OwnedEntity;
 
         // TODO move objectives out of mind component
         /// <summary>
         ///     An enumerable over all the objective entities this mind has.
         /// </summary>
-        [ViewVariables]
         public IEnumerable<EntityUid> AllObjectives => Objectives;
 
         /// <summary>
         ///     Prevents user from ghosting out
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("preventGhosting")]
-        public bool PreventGhosting { get; set; }
+        [DataField, ViewVariables(VVAccess.ReadWrite)]
+        public bool PreventGhosting;
 
         /// <summary>
         ///     Prevents user from suiciding
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("preventSuicide")]
-        public bool PreventSuicide { get; set; }
+        [DataField, ViewVariables(VVAccess.ReadWrite)]
+        public bool PreventSuicide;
 
         /// <summary>
         ///     The session of the player owning this mind.
