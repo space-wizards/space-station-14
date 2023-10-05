@@ -196,33 +196,30 @@
 - type: entity
   name: wet floor sign
   id: WetFloorSign
-  parent: BaseItem
+  parent: ClothingOuterBase
   description: Caution! Wet Floor!
   components:
   - type: Sprite
     sprite: Objects/Specific/Janitorial/wet_floor_sign.rsi
-    state: caution
   - type: Item
     sprite: Objects/Specific/Janitorial/wet_floor_sign.rsi
     size: 15
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.95
+        Slash: 0.95
   - type: Tag
     tags:
       - WetFloorSign
+      - WhitelistChameleon
 
 
 - type: entity
-  name: wet floor sign
   suffix: Explosive
-  description: Caution! Wet Floor!
-  parent: BaseItem
+  parent: WetFloorSign
   id: WetFloorSignMineExplosive
   components:
-  - type: Sprite
-    sprite: Objects/Specific/Janitorial/wet_floor_sign.rsi
-    state: caution
-  - type: Item
-    sprite: Objects/Specific/Janitorial/wet_floor_sign.rsi
-    size: 15
   - type: StepTrigger
     intersectRatio: 0.2
     requiredTriggeredSpeed: 0
@@ -254,6 +251,16 @@
     totalIntensity: 60 # about a ~3 tile radius
     canCreateVacuum: false
   - type: DeleteOnTrigger
+  - type: OnUseTimerTrigger
+    useVerbInstead: true
+    beepInterval: .25
+    beepSound: /Audio/Items/Janitor/floor_sign_beep.ogg
+    params:
+      volume: 1
+    examinable: false
+  - type: Tag
+    tags: # ignore "WhitelistChameleon" tag
+      - WetFloorSign
 
 - type: entity
   name: janitorial trolley

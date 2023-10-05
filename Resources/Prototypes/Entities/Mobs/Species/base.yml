@@ -200,6 +200,7 @@
   - type: Puller
   - type: Speech
     speechSounds: Alto
+  - type: DamageForceSay
   - type: Vocal
     sounds:
       Male: MaleHuman
@@ -245,6 +246,8 @@
     - Stutter
     - SeeingRainbows
     - Electrocution
+    - ForcedSleep
+    - TemporaryBlindness
     - Drunk
     - SlurredSpeech
     - RatvarianLanguage

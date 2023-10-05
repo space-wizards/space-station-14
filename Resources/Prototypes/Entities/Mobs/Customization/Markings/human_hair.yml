@@ -1182,6 +1182,13 @@
     - sprite: Mobs/Customization/human_hair.rsi
       state: twintail
 - type: marking
+  id: HumanHairTwoStrands
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+    - sprite: Mobs/Customization/human_hair.rsi
+      state: twostrands
+- type: marking
   id: HumanHairUndercut
   bodyPart: Hair
   markingCategory: Hair
