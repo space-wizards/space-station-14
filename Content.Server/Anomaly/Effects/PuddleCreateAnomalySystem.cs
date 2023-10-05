@@ -10,7 +10,6 @@ namespace Content.Server.Anomaly.Effects;
 /// </summary>
 public sealed class PuddleCreateAnomalySystem : EntitySystem
 {
-
     [Dependency] private readonly PuddleSystem _puddle = default!;
     [Dependency] private readonly SolutionContainerSystem _solutionContainer = default!;
 
@@ -20,8 +19,6 @@ public sealed class PuddleCreateAnomalySystem : EntitySystem
     {
         SubscribeLocalEvent<PuddleCreateAnomalyComponent, AnomalyPulseEvent>(OnPulse);
         SubscribeLocalEvent<PuddleCreateAnomalyComponent, AnomalySupercriticalEvent>(OnSupercritical, before: new[] { typeof(SolutionContainerSystem), typeof(InjectionAnomalySystem)});
-
-        _xformQuery = GetEntityQuery<TransformComponent>();
     }
 
     private void OnPulse(EntityUid uid, PuddleCreateAnomalyComponent component, ref AnomalyPulseEvent args)
@@ -29,7 +26,7 @@ public sealed class PuddleCreateAnomalySystem : EntitySystem
         if (!_solutionContainer.TryGetSolution(uid, component.Solution, out var sol))
             return;
 
-        var xform = _xformQuery.GetComponent(uid);
+        var xform = Transform(uid);
         var puddleSol = _solutionContainer.SplitSolution(uid, sol, component.MaxPuddleSize * args.Severity);
         _puddle.TrySplashSpillAt(uid, xform.Coordinates, puddleSol, out _);
     }
@@ -38,7 +35,7 @@ public sealed class PuddleCreateAnomalySystem : EntitySystem
         if (!_solutionContainer.TryGetSolution(uid, component.Solution, out var sol))
             return;
         var buffer = sol;
-        var xform = _xformQuery.GetComponent(uid);
+        var xform = Transform(uid);
         _puddle.TrySpillAt(xform.Coordinates, buffer, out _);
     }
 }

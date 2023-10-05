@@ -50,17 +50,15 @@ public sealed class ReagentProducerAnomalySystem : EntitySystem
 
     private void OnPulse(EntityUid uid, ReagentProducerAnomalyComponent component, ref AnomalyPulseEvent args)
     {
-        ChangeReagent(uid, component, args.Severity, args.Stability);
+        if (_random.NextFloat(0.0f, 1.0f) > args.Stability)
+            ChangeReagent(uid, component, args.Severity);
     }
 
-    private void ChangeReagent(EntityUid uid, ReagentProducerAnomalyComponent component, float severity, float stability )
+    private void ChangeReagent(EntityUid uid, ReagentProducerAnomalyComponent component, float severity)
     {
-        if (_random.NextFloat(0.0f, 1.0f) > stability)
-        {
-            var reagent = GetRandomReagentType(uid, component, severity);
-            component.ProducingReagent = reagent;
-            _audio.PlayPvs(component.ChangeSound, uid);
-        }
+        var reagent = GetRandomReagentType(uid, component, severity);
+        component.ProducingReagent = reagent;
+        _audio.PlayPvs(component.ChangeSound, uid);
     }
 
     //reagent realtime generation
@@ -85,12 +83,11 @@ public sealed class ReagentProducerAnomalySystem : EntitySystem
 
             component.AccumulatedFrametime = 0;
 
-            /// <summary>
-            /// The component will repaint the sprites of the object to match the current color of the solution,
-            /// if the RandomSprite component is hung correctly.
-            /// Ideally, this should be put into a separate component, but I suffered for 4 hours,
-            /// and nothing worked out for me. So for now it will be like this.
-            /// </summary>
+            // The component will repaint the sprites of the object to match the current color of the solution,
+            // if the RandomSprite component is hung correctly.
+
+            // Ideally, this should be put into a separate component, but I suffered for 4 hours,
+            // and nothing worked out for me. So for now it will be like this.
             if (component.NeedRecolor)
             {
                 var color = producerSol.GetColor(_prototypeManager);
@@ -111,14 +108,14 @@ public sealed class ReagentProducerAnomalySystem : EntitySystem
 
     private void OnMapInit(EntityUid uid, ReagentProducerAnomalyComponent component, MapInitEvent args)
     {
-        ChangeReagent(uid, component, 0.1f, 0.0f); //MapInit Reagent 100% change
+        ChangeReagent(uid, component, 0.1f); //MapInit Reagent 100% change
     }
 
     private void OnSeverityChanged(EntityUid uid, ReagentProducerAnomalyComponent component, ref AnomalySeverityChangedEvent args)
     {
         component.RealReagentProducing = component.MaxReagentProducing * args.Severity;
         if (args.Severity >= 0.97) // 3% stability for EXTRA generation
-            component.RealReagentProducing *= component.SupecriticalReagentProducingModifier;
+            component.RealReagentProducing *= component.SupercriticalReagentProducingModifier;
     }
 
     /// <summary>
@@ -185,7 +182,7 @@ public sealed class ReagentProducerAnomalySystem : EntitySystem
             {
                 allReagents.Remove(chem);
             }
-            if (allReagents.Count == 0) return "Water"; // Error catcher
+            if (allReagents.Count == 0) return ReagentProducerAnomalyComponent.FallbackReagent;
 
             var reagent = _random.Pick(allReagents);
             return reagent;

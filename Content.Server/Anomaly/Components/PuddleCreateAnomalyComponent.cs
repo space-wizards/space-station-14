@@ -9,11 +9,12 @@ namespace Content.Server.Anomaly.Components;
 public sealed partial class PuddleCreateAnomalyComponent : Component
 {
     /// <summary>
-    /// The maximum amount of solution that an anomaly can splash out of the storage on the floor during pulsation
-    /// scales with Severity
+    /// The maximum amount of solution that an anomaly can splash out of the storage on the floor during pulsation.
+    /// Scales with Severity.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public float MaxPuddleSize = 100;
+
     /// <summary>
     /// The maximum amount of solution that an anomaly can splash out of the storage on the floor during supercritical event
     /// </summary>
@@ -23,7 +24,6 @@ public sealed partial class PuddleCreateAnomalyComponent : Component
     /// <summary>
     /// Solution name that can be drained.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("solution")]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public string Solution { get; set; } = "default";
 }

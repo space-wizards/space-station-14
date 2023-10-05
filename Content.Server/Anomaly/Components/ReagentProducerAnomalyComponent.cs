@@ -10,7 +10,6 @@ namespace Content.Server.Anomaly.Components;
 /// With the increasing severity of the anomaly, the type of reagent produced may change.
 /// The higher the severity of the anomaly, the higher the chance of dangerous or useful reagents.
 /// </summary>
-
 [RegisterComponent, Access(typeof(ReagentProducerAnomalySystem))]
 public sealed partial class ReagentProducerAnomalyComponent : Component
 {
@@ -66,24 +65,11 @@ public sealed partial class ReagentProducerAnomalyComponent : Component
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public List<ProtoId<ReagentPrototype>> FunChemicals = new();
 
-
-    /// <summary>
-    /// Increasing severity by the specified amount will cause a change of reagent.
-    /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadOnly)]
-    public float ReagentChangeStep = 0.1f;
-    /// <summary>
-    /// The next threshold beyond which the anomaly will change its reagent.
-    /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadOnly)]
-    public float NextChangeThreshold = 0.1f;
-
     /// <summary>
     /// Noise made when anomaly pulse.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public SoundSpecifier ChangeSound = new SoundPathSpecifier("/Audio/Effects/waterswirl.ogg");
-
     /// <summary>
     /// The component will repaint the sprites of the object to match the current color of the solution,
     /// if the RandomSprite component is hung correctly.
@@ -96,14 +82,14 @@ public sealed partial class ReagentProducerAnomalyComponent : Component
     /// <summary>
     /// the maximum amount of reagent produced per second
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadOnly)]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public float MaxReagentProducing = 1.5f;
 
     /// <summary>
     /// how much does the reagent production increase before entering the supercritical state
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadOnly)]
-    public float SupecriticalReagentProducingModifier = 100f;
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public float SupercriticalReagentProducingModifier = 100f;
 
     /// <summary>
     /// How much anomaly produces reagent per second, with rigor and supercritical state.
@@ -120,6 +106,12 @@ public sealed partial class ReagentProducerAnomalyComponent : Component
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadOnly)]
     public ProtoId<ReagentPrototype> ProducingReagent = "Water";
+
+    /// <summary>
+    /// Standart reagent for errors cases
+    /// </summary>
+    [ValidatePrototypeId<ReagentPrototype>]
+    public const string FallbackReagent = "Water";
 
     /// <summary>
     /// Solution name where the substance is generated
