@@ -1,10 +1,11 @@
+using Content.Server.Fluids.EntitySystems;
 using Robust.Shared.Audio;
 
 namespace Content.Shared.Fluids.Components;
 
 /// <summary>
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, Access(typeof(PourableSystem))]
 public sealed partial class PourableComponent : Component
 {
     [DataField("solution")]
