@@ -2,7 +2,6 @@ using Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Components;
 using Content.Server.Xenoarchaeology.XenoArtifacts.Events;
 using Content.Shared.Humanoid;
 using Content.Server.Polymorph.Systems;
-using Content.Shared.Zombies;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Polymorph;
 
@@ -35,7 +34,7 @@ public sealed class PolyArtifactSystem : EntitySystem
         foreach (var comp in _lookup.GetComponentsInRange<HumanoidAppearanceComponent>(xform.Coordinates, component.Range))
         {
             var target = comp.Owner;
-            if (_mob.IsAlive(target) && !HasComp<ZombieComponent>(target))
+            if (_mob.IsAlive(target))
             {
                 _poly.PolymorphEntity(target, PolymorphPrototypeName);
                 _audio.PlayPvs(component.PolySound, uid);
