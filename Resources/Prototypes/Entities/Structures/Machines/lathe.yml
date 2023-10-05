@@ -685,6 +685,7 @@
       - Hemostat
       - BluespaceBeaker
       - SyringeBluespace
+      - Jug
   - type: Machine
     board: MedicalTechFabCircuitboard
 
@@ -784,6 +785,7 @@
       - ClothingNeckMantleHOP
       - ClothingNeckMantleHOS
       - ClothingNeckMantleRD
+      - ClothingNeckMantleQM
       - ClothingOuterWinterMusician
       - ClothingOuterWinterClown
       - ClothingOuterWinterMime

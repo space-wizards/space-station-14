@@ -234,7 +234,7 @@
   - type: SolutionContainerManager
     solutions:
       beaker:
-        maxVol: 300
+        maxVol: 1000
         canMix: true
 
 - type: entity

@@ -1,65 +1,4 @@
 Entries:
-- author: FillerVK
-  changes:
-  - {message: 'Added craftable TaxiBot. Robotics can now construct autonomous, ghost-powered
-      taxis to drive people around the station at high speed.', type: Add}
-  id: 4446
-  time: '2023-08-05T18:36:32.0000000+00:00'
-- author: lapatison
-  changes:
-  - {message: 'Syndicate lobbying bundle: briefcase containing 5,000 spacebucks has
-      been added to the uplink!', type: Add}
-  id: 4447
-  time: '2023-08-05T21:10:21.0000000+00:00'
-- author: Vordenburg
-  changes:
-  - {message: Nuclear fission devices need enough floor around them to anchor now.,
-    type: Tweak}
-  id: 4448
-  time: '2023-08-05T21:28:07.0000000+00:00'
-- author: Flareguy
-  changes:
-  - {message: Changed the plating sprite to be a little less blue., type: Tweak}
-  id: 4449
-  time: '2023-08-06T00:04:12.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: 'Tweak PKA, crusher, pickaxe, and drill. Overall adjusted the mining
-      speed from lowest to fastest in that order. Additionally buffed crusher attackrate
-      and pickaxe structural damage.', type: Tweak}
-  id: 4450
-  time: '2023-08-06T01:23:38.0000000+00:00'
-- author: Derby
-  changes:
-  - {message: The guidebook now comes with more antagonists info., type: Add}
-  id: 4451
-  time: '2023-08-06T02:35:08.0000000+00:00'
-- author: JoeHammad
-  changes:
-  - {message: 'NT RND has cooked up brute and burn auto-injectors, which are now available
-      in combat medkits.', type: Add}
-  id: 4452
-  time: '2023-08-06T02:38:25.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: 'Re-balanced melee combat. Windup is removed, heavy attacks cost 15
-      stamina, stamina damage cooldown reduced from 5s to 3/s, wide attacks provide
-      a 25% damage bonus, and wielding no longer grants immunity to disarms.', type: Tweak}
-  - {message: Reduce desword values to standard fast weapons (left wide-attack angle
-      at 100 degrees instead of the standard 60)., type: Tweak}
-  id: 4453
-  time: '2023-08-06T02:55:38.0000000+00:00'
-- author: deltanedas
-  changes:
-  - {message: Most raw meat will now rot outside of a freezer. Please don't eat rotten
-      meat., type: Tweak}
-  id: 4454
-  time: '2023-08-06T03:05:44.0000000+00:00'
-- author: Bixkitts
-  changes:
-  - {message: Add candy bowls for waiting lines., type: Add}
-  id: 4455
-  time: '2023-08-06T03:10:47.0000000+00:00'
 - author: Bixkitts
   changes:
   - {message: Kudzu spread falling asleep when blocked by walls, type: Fix}
@@ -2960,3 +2899,62 @@ Entries:
   - {message: 'Added a new lizard horn marking for the head, kobold ears!', type: Add}
   id: 4945
   time: '2023-10-02T07:08:20.0000000+00:00'
+- author: JoeHammad
+  changes:
+  - {message: 'the north star gloves have had their damage changed back to 8, as was
+      originally intended', type: Tweak}
+  id: 4946
+  time: '2023-10-02T15:34:22.0000000+00:00'
+- author: Vasilis
+  changes:
+  - {message: The immovable rod gibs you instead of deleting your character again.,
+    type: Fix}
+  id: 4947
+  time: '2023-10-02T18:30:51.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Pizza recipes now require flat dough. Get a rolling pin from the dinnerware
+      vendor., type: Add}
+  id: 4948
+  time: '2023-10-02T19:21:15.0000000+00:00'
+- author: VigersRay
+  changes:
+  - {message: The syndicate has begun to recruit more experienced people into the
+      ranks of nuclear operatives., type: Tweak}
+  id: 4949
+  time: '2023-10-02T21:20:09.0000000+00:00'
+- author: Doru991
+  changes:
+  - {message: Plant species mutations correctly mutate reagents., type: Fix}
+  id: 4950
+  time: '2023-10-03T23:07:29.0000000+00:00'
+- author: crazybrain
+  changes:
+  - {message: The omnitool (advanced tool cyborg module) can pry airlocks and firelocks
+      again., type: Fix}
+  id: 4951
+  time: '2023-10-04T05:22:48.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Cyborgs can toggle their flashlights again., type: Fix}
+  id: 4952
+  time: '2023-10-04T14:30:11.0000000+00:00'
+- author: nmajask
+  changes:
+  - {message: Clipboards are now available to the Head of Personnel and Quartermaster.,
+    type: Add}
+  id: 4953
+  time: '2023-10-04T22:28:29.0000000+00:00'
+- author: coolmankid12345
+  changes:
+  - {message: Added the Revolutionaries gamemode., type: Add}
+  - {message: Added Head Revolutionaries and conversion for the flash, type: Add}
+  - {message: Added Rev status icons., type: Add}
+  - {message: Added Mindshields, type: Add}
+  id: 4954
+  time: '2023-10-05T01:47:33.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Fixed access while riding vehicles and mechs., type: Fix}
+  id: 4955
+  time: '2023-10-05T09:12:41.0000000+00:00'
