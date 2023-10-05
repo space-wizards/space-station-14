@@ -78,7 +78,10 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
             component.CommandCheck = _timing.CurTime + component.TimerWait;
 
             if (CheckCommandLose())
-                _roundEnd.EndRound();
+            {
+                _roundEnd.DoRoundEndBehavior(RoundEndBehavior.ShuttleCall, component.ShuttleCallTime);
+                GameTicker.EndGameRule(uid, gameRule);
+            }
         }
     }
 
