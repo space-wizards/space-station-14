@@ -1,24 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: 'Re-balanced melee combat. Windup is removed, heavy attacks cost 15
-      stamina, stamina damage cooldown reduced from 5s to 3/s, wide attacks provide
-      a 25% damage bonus, and wielding no longer grants immunity to disarms.', type: Tweak}
-  - {message: Reduce desword values to standard fast weapons (left wide-attack angle
-      at 100 degrees instead of the standard 60)., type: Tweak}
-  id: 4453
-  time: '2023-08-06T02:55:38.0000000+00:00'
-- author: deltanedas
-  changes:
-  - {message: Most raw meat will now rot outside of a freezer. Please don't eat rotten
-      meat., type: Tweak}
-  id: 4454
-  time: '2023-08-06T03:05:44.0000000+00:00'
-- author: Bixkitts
-  changes:
-  - {message: Add candy bowls for waiting lines., type: Add}
-  id: 4455
-  time: '2023-08-06T03:10:47.0000000+00:00'
 - author: Bixkitts
   changes:
   - {message: Kudzu spread falling asleep when blocked by walls, type: Fix}
@@ -2959,3 +2939,22 @@ Entries:
   - {message: Cyborgs can toggle their flashlights again., type: Fix}
   id: 4952
   time: '2023-10-04T14:30:11.0000000+00:00'
+- author: nmajask
+  changes:
+  - {message: Clipboards are now available to the Head of Personnel and Quartermaster.,
+    type: Add}
+  id: 4953
+  time: '2023-10-04T22:28:29.0000000+00:00'
+- author: coolmankid12345
+  changes:
+  - {message: Added the Revolutionaries gamemode., type: Add}
+  - {message: Added Head Revolutionaries and conversion for the flash, type: Add}
+  - {message: Added Rev status icons., type: Add}
+  - {message: Added Mindshields, type: Add}
+  id: 4954
+  time: '2023-10-05T01:47:33.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Fixed access while riding vehicles and mechs., type: Fix}
+  id: 4955
+  time: '2023-10-05T09:12:41.0000000+00:00'
