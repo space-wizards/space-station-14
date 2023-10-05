@@ -876,6 +876,7 @@
     clumsySound:
       path: /Audio/Animals/monkey_scream.ogg
   - type: IdExaminable
+  - type: AlwaysRevolutionaryConvertible
 
 - type: entity
   name: guidebook monkey

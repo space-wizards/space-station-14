@@ -23,18 +23,18 @@ public sealed partial class SericultureComponent : Component
     /// <summary>
     /// What will be produced at the end of the action.
     /// </summary>
-    [DataField("entityProduced", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    [DataField(required: true)]
     [ViewVariables(VVAccess.ReadWrite)]
     [AutoNetworkedField]
-    public string EntityProduced = string.Empty;
+    public EntProtoId EntityProduced;
 
     /// <summary>
     /// The entity needed to actually preform sericulture. This will be granted (and removed) upon the entity's creation.
     /// </summary>
-    [DataField("action", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    [DataField(required: true)]
     [ViewVariables(VVAccess.ReadWrite)]
     [AutoNetworkedField]
-    public string Action = string.Empty;
+    public EntProtoId Action;
 
     [AutoNetworkedField]
     [DataField("actionEntity")]
