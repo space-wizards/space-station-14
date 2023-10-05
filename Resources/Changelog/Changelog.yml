@@ -1,10 +1,4 @@
 Entries:
-- author: deltanedas
-  changes:
-  - {message: Most raw meat will now rot outside of a freezer. Please don't eat rotten
-      meat., type: Tweak}
-  id: 4454
-  time: '2023-08-06T03:05:44.0000000+00:00'
 - author: Bixkitts
   changes:
   - {message: Add candy bowls for waiting lines., type: Add}
@@ -2956,3 +2950,11 @@ Entries:
     type: Add}
   id: 4953
   time: '2023-10-04T22:28:29.0000000+00:00'
+- author: coolmankid12345
+  changes:
+  - {message: Added the Revolutionaries gamemode., type: Add}
+  - {message: Added Head Revolutionaries and conversion for the flash, type: Add}
+  - {message: Added Rev status icons., type: Add}
+  - {message: Added Mindshields, type: Add}
+  id: 4954
+  time: '2023-10-05T01:47:33.0000000+00:00'
