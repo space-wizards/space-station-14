@@ -32,6 +32,8 @@ public sealed class ReagentProducerAnomalySystem : EntitySystem
     [Dependency] private readonly PointLightSystem _light = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
+    
+    public const string FallbackReagent = "Water";
 
     public override void Initialize()
     {
@@ -145,7 +147,7 @@ public sealed class ReagentProducerAnomalySystem : EntitySystem
         }
         //We should never end up here.
         //Maybe Log Error?
-        return ReagentProducerAnomalyComponent.FallbackReagent;
+        return FallbackReagent;
     }
     private float Lerp(float a, float b, float t) //maybe this function is in the engine, but I didn't find it
     {

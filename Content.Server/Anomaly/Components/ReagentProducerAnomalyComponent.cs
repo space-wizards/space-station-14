@@ -86,11 +86,6 @@ public sealed partial class ReagentProducerAnomalyComponent : Component
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public ProtoId<ReagentPrototype> ProducingReagent = "Water";
     /// <summary>
-    /// Standart reagent for errors cases
-    /// </summary>
-    [ValidatePrototypeId<ReagentPrototype>]
-    public const string FallbackReagent = "Water";
-    /// <summary>
     /// Solution name where the substance is generated
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
