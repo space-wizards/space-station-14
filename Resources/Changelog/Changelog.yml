@@ -1,9 +1,4 @@
 Entries:
-- author: Bixkitts
-  changes:
-  - {message: Kudzu spread falling asleep when blocked by walls, type: Fix}
-  id: 4456
-  time: '2023-08-06T06:08:07.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Fix taxibots incorrectly pushing entities., type: Fix}
@@ -2958,3 +2953,8 @@ Entries:
   - {message: Fixed access while riding vehicles and mechs., type: Fix}
   id: 4955
   time: '2023-10-05T09:12:41.0000000+00:00'
+- author: brainfood1183
+  changes:
+  - {message: Rock anomalies have been detected by nanotrasen scientists., type: Add}
+  id: 4956
+  time: '2023-10-05T19:53:54.0000000+00:00'
