@@ -19,6 +19,9 @@
     - Maintenance
     - Command
     - External
+  special:
+  - !type:AddImplantSpecial
+    implants: [ MindShieldImplant ]
 
 - type: startingGear
   id: IAAGear
