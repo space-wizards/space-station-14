@@ -118,14 +118,41 @@
 - type: entity
   name: dartboard
   id: TargetDarts
-  parent: BaseTarget
+  parent: BaseStructureDynamic
   description: A target for playing darts.
   components:
   - type: Sprite
     sprite: Objects/Fun/Darts/target.rsi
     state: target_dart
-  - type: DamagePopup
-    damagePopupType: Delta
+    noRot: true
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 50
+        mask:
+        - FullTileMask
+        layer:
+        - WallLayer
+  - type: InteractionOutline
+  - type: Physics
+  - type: Damageable
+  - type: DamageRandomPopup
+    popups:
+      - "1 point"
+      - "1 point"
+      - "1 point"
+      - "5 points"
+      - "5 points"
+      - "10 points"
+      - "10 points"
+      - "25 points"
+      - "Bullseye! 50 points!"
+  - type: RangedDamageSound
+    soundGroups:
+      brute: /Audio/Weapons/pierce.ogg
   - type: Destructible
     thresholds:
     - trigger:
