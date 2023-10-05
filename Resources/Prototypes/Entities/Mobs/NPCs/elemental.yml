@@ -228,8 +228,6 @@
     radius: 2.0
     energy: 3.5
     color: "#75b1f0" # Edited through the LiquidAnomalySystem
-          radius: 0.30
-        density: 80
   - type: MobState
     allowedStates:
     - Alive
