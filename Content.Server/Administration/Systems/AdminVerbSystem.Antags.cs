@@ -24,7 +24,6 @@ public sealed partial class AdminVerbSystem
     [Dependency] private readonly SharedMindSystem _minds = default!;
     [Dependency] private readonly GameTicker _gameTicker = default!;
 
-
     // All antag verbs have names so invokeverb works.
     private void AddAntagVerbs(GetVerbsEvent<Verb> args)
     {
@@ -107,6 +106,7 @@ public sealed partial class AdminVerbSystem
         };
         args.Verbs.Add(pirate);
 
+        //todo come here at some point dear lort.
         Verb headRev = new()
         {
             Text = Loc.GetString("admin-verb-text-make-head-rev"),
@@ -116,17 +116,11 @@ public sealed partial class AdminVerbSystem
             {
                 if (!_minds.TryGetMind(args.Target, out var mindId, out var mind))
                     return;
-                var revRule = EntityQuery<RevolutionaryRuleComponent>().FirstOrDefault();
-                if (revRule == null)
-                {
-                    _gameTicker.StartGameRule("Revolutionary");
-                }
                 _revolutionaryRule.OnHeadRevAdmin(mindId, mind);
             },
             Impact = LogImpact.High,
             Message = Loc.GetString("admin-verb-make-head-rev"),
         };
         args.Verbs.Add(headRev);
-
     }
 }

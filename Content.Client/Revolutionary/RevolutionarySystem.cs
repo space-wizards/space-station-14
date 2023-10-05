@@ -12,6 +12,7 @@ public sealed class RevolutionarySystem : AntagStatusIconSystem<RevolutionaryCom
     public override void Initialize()
     {
         base.Initialize();
+
         SubscribeLocalEvent<RevolutionaryComponent, GetStatusIconsEvent>(GetRevIcon);
         SubscribeLocalEvent<HeadRevolutionaryComponent, GetStatusIconsEvent>(GetHeadRevIcon);
     }
@@ -26,6 +27,7 @@ public sealed class RevolutionarySystem : AntagStatusIconSystem<RevolutionaryCom
             GetStatusIcon(comp.RevStatusIcon, ref args);
         }
     }
+
     private void GetHeadRevIcon(EntityUid uid, HeadRevolutionaryComponent comp, ref GetStatusIconsEvent args)
     {
         GetStatusIcon(comp.HeadRevStatusIcon, ref args);

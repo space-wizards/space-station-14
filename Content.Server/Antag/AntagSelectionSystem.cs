@@ -7,7 +7,6 @@ using Content.Shared.Preferences;
 using Robust.Server.Player;
 using System.Linq;
 using Content.Server.Mind;
-using Content.Server.Players;
 using Robust.Shared.Random;
 using Robust.Shared.Map;
 using System.Numerics;
@@ -23,6 +22,7 @@ using Content.Server.Station.Systems;
 using Content.Server.Shuttles.Systems;
 using Content.Shared.Mobs;
 using Robust.Server.Containers;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Antag;
 
@@ -79,8 +79,14 @@ public sealed class AntagSelectionSystem : GameRuleSystem<GameRuleComponent>
     /// <param name="greetingColor">The color of the message for the antag greeting in hex.</param>
     /// <param name="chosen">A list of all the antags chosen in case you need to add stuff after.</param>
     /// <param name="includeHeads">Whether or not heads can be chosen as antags for this gamemode.</param>
-    public void EligiblePlayers(string antagPrototype, int maxAntags, int antagsPerPlayer, SoundSpecifier antagSound, string antagGreeting, string greetingColor,
-        out List<EntityUid> chosen, bool includeHeads = false)
+    public void EligiblePlayers(string antagPrototype,
+        int maxAntags,
+        int antagsPerPlayer,
+        SoundSpecifier? antagSound,
+        string antagGreeting,
+        string greetingColor,
+        out List<EntityUid> chosen,
+        bool includeHeads = false)
     {
         var allPlayers = _playerSystem.ServerSessions.ToList();
         var playerList = new List<IPlayerSession>();
@@ -88,7 +94,6 @@ public sealed class AntagSelectionSystem : GameRuleSystem<GameRuleComponent>
         chosen = new List<EntityUid>();
         foreach (var player in allPlayers)
         {
-            var mind = player.GetMind();
             if (includeHeads == false)
             {
                 if (!_jobs.CanBeAntag(player))
@@ -104,6 +109,7 @@ public sealed class AntagSelectionSystem : GameRuleSystem<GameRuleComponent>
             if (pref.AntagPreferences.Contains(antagPrototype))
                 prefList.Add(player);
         }
+
         if (playerList.Count == 0)
             return;
 
@@ -124,21 +130,20 @@ public sealed class AntagSelectionSystem : GameRuleSystem<GameRuleComponent>
                 chosenPlayer = _random.PickAndTake(prefList);
                 playerList.Remove(chosenPlayer);
             }
-            if (!_mindSystem.TryGetMind(chosenPlayer, out var mindId, out var mind) ||
+
+            if (!_mindSystem.TryGetMind(chosenPlayer, out _, out var mind) ||
                mind.OwnedEntity is not { } ownedEntity)
             {
                 continue;
             }
-            if (mind != null && mind.OwnedEntity != null)
+
+            chosen.Add(ownedEntity);
+            _audioSystem.PlayGlobal(antagSound, ownedEntity);
+            if (mind.Session != null)
             {
-                chosen.Add(mind.OwnedEntity.Value);
-                _audioSystem.PlayGlobal(antagSound, mind.OwnedEntity.Value);
-                if (mind.Session != null)
-                {
-                    var message = Loc.GetString(antagGreeting);
-                    var wrappedMessage = Loc.GetString("chat-manager-server-wrap-message", ("message", message));
-                    _chatManager.ChatMessageToOne(Shared.Chat.ChatChannel.Server, message, wrappedMessage, default, false, mind.Session.ConnectedClient, Color.FromHex(greetingColor));
-                }
+                var message = Loc.GetString(antagGreeting);
+                var wrappedMessage = Loc.GetString("chat-manager-server-wrap-message", ("message", message));
+                _chatManager.ChatMessageToOne(Shared.Chat.ChatChannel.Server, message, wrappedMessage, default, false, mind.Session.ConnectedClient, Color.FromHex(greetingColor));
             }
         }
     }
@@ -160,7 +165,7 @@ public sealed class AntagSelectionSystem : GameRuleSystem<GameRuleComponent>
                 {
                     dead++;
                 }
-                else if (checkOffStation = true && _stationSystem.GetOwningStation(entity) == null && !_emergencyShuttle.EmergencyShuttleArrived)
+                else if (checkOffStation && _stationSystem.GetOwningStation(entity) == null && !_emergencyShuttle.EmergencyShuttleArrived)
                 {
                     dead++;
                 }
@@ -171,49 +176,57 @@ public sealed class AntagSelectionSystem : GameRuleSystem<GameRuleComponent>
                 dead++;
             }
         }
-        if (dead == list.Count)
-            return true;
 
-        else return false;
+        return dead == list.Count;
     }
 
     /// <summary>
-    /// Will attempt to spawn an item inside of a persons bag and then pockets. 
+    /// Will attempt to spawn an item inside of a persons bag and then pockets.
+    /// </summary>
+    /// <param name="antag">The entity that you want to spawn an item on</param>
+    /// <param name="items">A list of prototype IDs that you want to spawn in the bag.</param>
+    public void GiveAntagBagGear(EntityUid antag, List<EntProtoId> items)
+    {
+        foreach (var item in items)
+        {
+            GiveAntagBagGear(antag, item);
+        }
+    }
+
+    /// <summary>
+    /// Will attempt to spawn an item inside of a persons bag and then pockets.
     /// </summary>
     /// <param name="antag">The entity that you want to spawn an item on</param>
     /// <param name="item">The prototype ID that you want to spawn in the bag.</param>
     public void GiveAntagBagGear(EntityUid antag, string item)
     {
         var itemToSpawn = Spawn(item, new EntityCoordinates(antag, Vector2.Zero));
-        if (_inventory.TryGetSlotContainer(antag, "back", out var backSlot, out var _))
+        if (!_inventory.TryGetSlotContainer(antag, "back", out var backSlot, out _))
+            return;
+
+        var bag = backSlot.ContainedEntity;
+        if (bag != null && HasComp<ContainerManagerComponent>(bag) && _storageSystem.CanInsert(bag.Value, itemToSpawn, out _))
         {
-            var bag = backSlot.ContainedEntity;
-            if (bag != null && HasComp<ContainerManagerComponent>(bag) && _storageSystem.CanInsert(bag.Value, itemToSpawn, out var reason))
+            _storageSystem.Insert(bag.Value, itemToSpawn, out _);
+        }
+        else if (_inventory.TryGetSlotContainer(antag, "jumpsuit", out var jumpsuit, out _) && jumpsuit.ContainedEntity != null)
+        {
+            if (_inventory.TryGetSlotContainer(antag, "pocket1", out var pocket1Slot, out _))
             {
-                _storageSystem.Insert(bag.Value, itemToSpawn, out var stackedEntity);
-            }
-            else if (_inventory.TryGetSlotContainer(antag, "jumpsuit", out var jumpsuit, out var _))
-            {
-                if (jumpsuit.ContainedEntity != null)
+                if (pocket1Slot.ContainedEntity == null)
                 {
-                    if (_inventory.TryGetSlotContainer(antag, "pocket1", out var pocket1slot, out var _))
+                    if (_containerSystem.CanInsert(itemToSpawn, pocket1Slot))
                     {
-                        if (pocket1slot.ContainedEntity == null)
+                        pocket1Slot.Insert(itemToSpawn);
+                    }
+                }
+                else if (_inventory.TryGetSlotContainer(antag, "pocket2", out var pocket2Slot, out _))
+                {
+                    if (pocket2Slot.ContainedEntity == null)
+                    {
+                        if (_containerSystem.CanInsert(itemToSpawn, pocket2Slot))
                         {
-                            if (_containerSystem.CanInsert(itemToSpawn, pocket1slot))
-                            {
-                                pocket1slot.Insert(itemToSpawn);
-                            }
-                        }
-                        else if (_inventory.TryGetSlotContainer(antag, "pocket2", out var pocket2slot, out var _))
-                        {
-                            if (pocket2slot.ContainedEntity == null)
-                            {
-                                if (_containerSystem.CanInsert(itemToSpawn, pocket2slot))
-                                {
-                                    pocket2slot.Insert(itemToSpawn);
-                                }
-                            }
+                            pocket2Slot.Insert(itemToSpawn);
                         }
                     }
                 }

@@ -1,6 +1,6 @@
 using Robust.Shared.GameStates;
 using Content.Shared.StatusIcon;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Revolutionary.Components;
 
@@ -10,13 +10,15 @@ namespace Content.Shared.Revolutionary.Components;
 [RegisterComponent, NetworkedComponent, Access(typeof(SharedRevolutionarySystem))]
 public sealed partial class HeadRevolutionaryComponent : Component
 {
-    [DataField("headRevStatusIcon", customTypeSerializer: typeof(PrototypeIdSerializer<StatusIconPrototype>))]
-    public string HeadRevStatusIcon = "HeadRevolutionaryFaction";
+    /// <summary>
+    /// The status icon corresponding to the head revolutionary.
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public ProtoId<StatusIconPrototype> HeadRevStatusIcon = "HeadRevolutionaryFaction";
 
     /// <summary>
     /// How long the stun will last after the user is converted.
     /// </summary>
-    [DataField("stunTime")]
-    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan StunTime = TimeSpan.FromSeconds(3);
 }

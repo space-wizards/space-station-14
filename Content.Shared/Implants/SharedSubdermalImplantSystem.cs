@@ -3,9 +3,9 @@ using Content.Shared.Actions;
 using Content.Shared.Implants.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
-using Content.Shared.Mindshield.Components;
 using Content.Shared.Mobs;
 using Content.Shared.Tag;
+using JetBrains.Annotations;
 using Robust.Shared.Containers;
 using Robust.Shared.Network;
 
@@ -53,8 +53,9 @@ public abstract class SharedSubdermalImplantSystem : EntitySystem
                 }
             }
         }
-        var check = new ImplantCheckEvent(uid, component.ImplantedEntity.Value);
-        RaiseLocalEvent(uid, ref check);
+
+        var ev = new ImplantImplantedEvent(uid, component.ImplantedEntity.Value);
+        RaiseLocalEvent(uid, ref ev);
     }
 
     private void OnRemoveAttempt(EntityUid uid, SubdermalImplantComponent component, ContainerGettingRemovedAttemptEvent args)
@@ -131,7 +132,7 @@ public abstract class SharedSubdermalImplantSystem : EntitySystem
     /// </summary>
     /// <param name="target">the implanted entity</param>
     /// <param name="implant">the implant</param>
-    /// <param name="component">the implant component</param>
+    [PublicAPI]
     public void ForceRemove(EntityUid target, EntityUid implant)
     {
         if (!TryComp<ImplantedComponent>(target, out var implanted))
@@ -147,6 +148,7 @@ public abstract class SharedSubdermalImplantSystem : EntitySystem
     /// Removes and deletes implants by force
     /// </summary>
     /// <param name="target">The entity to have implants removed</param>
+    [PublicAPI]
     public void WipeImplants(EntityUid target)
     {
         if (!TryComp<ImplantedComponent>(target, out var implanted))
@@ -185,15 +187,19 @@ public sealed class ImplantRelayEvent<T> where T : notnull
 }
 
 /// <summary>
-/// Event that is raised whenever someone is implanted. Raised on the Implanted person and the Implant.
+/// Event that is raised whenever someone is implanted with any given implant.
+/// Raised on the the implant entity.
 /// </summary>
+/// <remarks>
+/// implant implant implant implant
+/// </remarks>
 [ByRefEvent]
-public readonly struct ImplantCheckEvent
+public readonly struct ImplantImplantedEvent
 {
     public readonly EntityUid Implant;
     public readonly EntityUid? Implanted;
 
-    public ImplantCheckEvent(EntityUid implant, EntityUid? implanted)
+    public ImplantImplantedEvent(EntityUid implant, EntityUid? implanted)
     {
         Implant = implant;
         Implanted = implanted;

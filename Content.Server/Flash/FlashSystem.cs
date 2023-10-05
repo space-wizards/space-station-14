@@ -1,13 +1,10 @@
 using System.Linq;
 using Content.Server.Flash.Components;
-using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Light.EntitySystems;
 using Content.Server.Popups;
 using Content.Server.Stunnable;
-using Content.Server.Mind;
 using Content.Shared.Charges.Components;
 using Content.Shared.Charges.Systems;
-using Content.Shared.Damage;
 using Content.Shared.Eye.Blinding.Components;
 using Content.Shared.Flash;
 using Content.Shared.IdentityManagement;
@@ -15,7 +12,6 @@ using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory;
 using Content.Shared.Physics;
-using Content.Shared.Popups;
 using Content.Shared.Tag;
 using Content.Shared.Traits.Assorted;
 using Content.Shared.Weapons.Melee.Events;
@@ -108,9 +104,17 @@ namespace Content.Server.Flash
             return true;
         }
 
-        public void Flash(EntityUid target, EntityUid? user, EntityUid? used, float flashDuration, float slowTo, bool displayPopup = true, FlashableComponent? flashable = null, bool melee = false)
+        public void Flash(EntityUid target,
+            EntityUid? user,
+            EntityUid? used,
+            float flashDuration,
+            float slowTo,
+            bool displayPopup = true,
+            FlashableComponent? flashable = null,
+            bool melee = false)
         {
-            if (!Resolve(target, ref flashable, false)) return;
+            if (!Resolve(target, ref flashable, false))
+                return;
 
             var attempt = new FlashAttemptEvent(target, user, used);
             RaiseLocalEvent(target, attempt, true);
@@ -129,15 +133,15 @@ namespace Content.Server.Flash
 
             flashable.LastFlash = _timing.CurTime;
             flashable.Duration = flashDuration / 1000f; // TODO: Make this sane...
-            Dirty(flashable);
+            Dirty(target, flashable);
 
             _stun.TrySlowdown(target, TimeSpan.FromSeconds(flashDuration/1000f), true,
                 slowTo, slowTo);
 
-            if (displayPopup && user != null && target != user && EntityManager.EntityExists(user.Value))
+            if (displayPopup && user != null && target != user && Exists(user.Value))
             {
-                user.Value.PopupMessage(target, Loc.GetString("flash-component-user-blinds-you",
-                    ("user", Identity.Entity(user.Value, EntityManager))));
+                _popup.PopupEntity(Loc.GetString("flash-component-user-blinds-you",
+                    ("user", Identity.Entity(user.Value, EntityManager))), target, user.Value);
             }
 
         }

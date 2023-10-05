@@ -7,17 +7,13 @@ using Robust.Client.Player;
 namespace Content.Client.Antag;
 
 /// <summary>
-/// Used for assigning specificied icons for antags.
+/// Used for assigning specified icons for antags.
 /// </summary>
 public abstract class AntagStatusIconSystem<T> : SharedStatusIconSystem
     where T : Component
 {
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly IPlayerManager _player = default!;
-    public override void Initialize()
-    {
-        base.Initialize();
-    }
 
     /// <summary>
     /// Will check if the local player has the same component as the one who called it and give the status icon.
@@ -27,6 +23,7 @@ public abstract class AntagStatusIconSystem<T> : SharedStatusIconSystem
     protected virtual void GetStatusIcon(string antagStatusIcon, ref GetStatusIconsEvent args)
     {
         var ent = _player.LocalPlayer?.ControlledEntity;
+
         if (!HasComp<T>(ent) && !HasComp<GhostComponent>(ent))
             return;
 

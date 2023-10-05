@@ -8,4 +8,5 @@ namespace Content.Shared.Revolutionary.Components;
 [RegisterComponent, NetworkedComponent, Access(typeof(SharedRevolutionarySystem))]
 public sealed partial class AlwaysRevolutionaryConvertibleComponent : Component
 {
+
 }

@@ -21,20 +21,22 @@ public sealed class MindShieldSystem : EntitySystem
     [Dependency] private readonly MindSystem _mindSystem = default!;
     [Dependency] private readonly TagSystem _tag = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
-    [Dependency] private readonly EntityManager _entityManager = default!;
+
+    [ValidatePrototypeId<TagPrototype>]
+    public const string MindShieldTag = "MindShield";
 
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<SubdermalImplantComponent, ImplantCheckEvent>(ImplantCheck);
+        SubscribeLocalEvent<SubdermalImplantComponent, ImplantImplantedEvent>(ImplantCheck);
     }
 
     /// <summary>
     /// Checks if the implant was a mindshield or not
     /// </summary>
-    public void ImplantCheck(EntityUid uid, SubdermalImplantComponent comp, ref ImplantCheckEvent ev)
+    public void ImplantCheck(EntityUid uid, SubdermalImplantComponent comp, ref ImplantImplantedEvent ev)
     {
-        if (_tag.HasTag(ev.Implant, "MindShield") && ev.Implanted != null)
+        if (_tag.HasTag(ev.Implant, MindShieldTag) && ev.Implanted != null)
         {
             EnsureComp<MindShieldComponent>(ev.Implanted.Value);
             MindShieldRemovalCheck(ev.Implanted, ev.Implant);
@@ -48,14 +50,14 @@ public sealed class MindShieldSystem : EntitySystem
     {
         if (HasComp<RevolutionaryComponent>(implanted) && !HasComp<HeadRevolutionaryComponent>(implanted))
         {
-            _mindSystem.TryGetMind(implanted.Value, out var mindId, out var mind);
+            _mindSystem.TryGetMind(implanted.Value, out var mindId, out _);
             _adminLogManager.Add(LogType.Mind, LogImpact.Medium, $"{ToPrettyString(implanted.Value)} was deconverted due to being implanted with a Mindshield.");
             _roleSystem.MindTryRemoveRole<RevolutionaryRoleComponent>(mindId);
         }
         else if (HasComp<RevolutionaryComponent>(implanted))
         {
             _popupSystem.PopupEntity(Loc.GetString("head-rev-break-mindshield"), implanted.Value);
-            _entityManager.QueueDeleteEntity(implant);
+            QueueDel(implant);
         }
     }
 }
