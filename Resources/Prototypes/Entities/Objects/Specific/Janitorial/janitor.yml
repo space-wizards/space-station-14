@@ -174,7 +174,6 @@
     guides:
     - Janitorial
 
-
 - type: entity
   name: mop bucket
   id: MopBucketFull
