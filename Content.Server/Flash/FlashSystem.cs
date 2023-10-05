@@ -141,7 +141,7 @@ namespace Content.Server.Flash
             if (displayPopup && user != null && target != user && Exists(user.Value))
             {
                 _popup.PopupEntity(Loc.GetString("flash-component-user-blinds-you",
-                    ("user", Identity.Entity(user.Value, EntityManager))), target, user.Value);
+                    ("user", Identity.Entity(user.Value, EntityManager))), target, target);
             }
 
         }

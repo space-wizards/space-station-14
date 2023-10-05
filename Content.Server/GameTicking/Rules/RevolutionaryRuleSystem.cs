@@ -9,9 +9,7 @@ using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Revolutionary.Components;
 using Content.Shared.Roles;
-using Robust.Shared.Prototypes;
 using Content.Shared.Stunnable;
-using Content.Server.Shuttles.Components;
 using Robust.Shared.Timing;
 using Content.Server.Popups;
 using Content.Server.Revolutionary.Components;
@@ -22,10 +20,9 @@ using Content.Server.Administration.Logs;
 using Content.Shared.Database;
 using Content.Server.Antag;
 using Content.Server.NPC.Components;
-using Content.Server.Roles.Jobs;
+using Content.Server.RoundEnd;
 using Content.Shared.Chat;
 using Content.Shared.Mind;
-using Content.Shared.Mind.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Zombies;
 
@@ -37,20 +34,17 @@ namespace Content.Server.GameTicking.Rules;
 public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleComponent>
 {
     [Dependency] private readonly IAdminLogManager _adminLogManager = default!;
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IChatManager _chatManager = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly AntagSelectionSystem _antagSelection = default!;
-    [Dependency] private readonly JobSystem _job = default!;
     [Dependency] private readonly MindSystem _mind = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly NpcFactionSystem _npcFaction = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly RoleSystem _role = default!;
     [Dependency] private readonly SharedStunSystem _stun = default!;
+    [Dependency] private readonly RoundEndSystem _roundEnd = default!;
 
-    [ValidatePrototypeId<DepartmentPrototype>]
-    public const string CommandDepartmentId = "Command";
     [ValidatePrototypeId<NpcFactionPrototype>]
     public const string RevolutionaryNpcFaction = "Revolutionary";
     [ValidatePrototypeId<AntagPrototype>]
@@ -61,7 +55,6 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
         base.Initialize();
         SubscribeLocalEvent<RoundStartAttemptEvent>(OnStartAttempt);
         SubscribeLocalEvent<RulePlayerJobsAssignedEvent>(OnPlayerJobAssigned);
-        SubscribeLocalEvent<PlayerSpawnCompleteEvent>(OnPlayerSpawned);
         SubscribeLocalEvent<CommandStaffComponent, MobStateChangedEvent>(OnCommandMobStateChanged);
         SubscribeLocalEvent<HeadRevolutionaryComponent, MobStateChangedEvent>(OnHeadRevMobStateChanged);
         SubscribeLocalEvent<RoundEndTextAppendEvent>(OnRoundEndText);
@@ -80,10 +73,12 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
     protected override void ActiveTick(EntityUid uid, RevolutionaryRuleComponent component, GameRuleComponent gameRule, float frameTime)
     {
         base.ActiveTick(uid, component, gameRule, frameTime);
-        if (GameTicker.IsGameRuleAdded(uid, gameRule) && component.CommandCheck <= _timing.CurTime)
+        if (component.CommandCheck <= _timing.CurTime)
         {
             component.CommandCheck = _timing.CurTime + component.TimerWait;
-            CheckCommandLose();
+
+            if (CheckCommandLose())
+                _roundEnd.EndRound();
         }
     }
 
@@ -125,23 +120,15 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
         var query = AllEntityQuery<RevolutionaryRuleComponent, GameRuleComponent>();
         while (query.MoveNext(out var uid, out var comp, out var gameRule))
         {
-            _antagSelection.AttemptStartGameRule(ev, uid, comp.MinPlayers, gameRule);
+            //_antagSelection.AttemptStartGameRule(ev, uid, comp.MinPlayers, gameRule);
         }
     }
 
     private void OnPlayerJobAssigned(RulePlayerJobsAssignedEvent ev)
     {
-        var query = AllEntityQuery<RevolutionaryRuleComponent, GameRuleComponent>();
-        while (query.MoveNext(out var uid, out var comp, out var gameRule))
+        var query = QueryActiveRules();
+        while (query.MoveNext(out _, out var comp, out _))
         {
-            if (!GameTicker.IsGameRuleAdded(uid, gameRule))
-                continue;
-
-            InitialAssignCommandStaff();
-
-            if (!GameTicker.IsGameRuleAdded(uid, gameRule))
-                continue;
-
             _antagSelection.EligiblePlayers(comp.RevPrototypeId, comp.MaxHeadRevs, comp.PlayersPerHeadRev, comp.HeadRevStartSound,
                 "head-rev-role-greeting", "#5e9cff", out var chosen);
             GiveHeadRev(chosen, comp.RevPrototypeId, comp);
@@ -174,68 +161,20 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
     }
 
     /// <summary>
-    /// At start gets all the initial players to check for heads
-    /// </summary>
-    private void InitialAssignCommandStaff()
-    {
-        var playerList = new List<EntityUid>();
-        var query = AllEntityQuery<MindContainerComponent>();
-        while (query.MoveNext(out var uid, out var comp))
-        {
-            if (!HasComp<HumanoidAppearanceComponent>(uid) || !comp.HasMind)
-                return;
-            playerList.Add(uid);
-        }
-        AssignCommandStaff(playerList);
-    }
-
-    /// <summary>
-    /// Gives heads the command component so they are tracked for Revs.
-    /// </summary>
-    /// <param name="playerList"></param>
-    /// <param name="latejoin"></param>
-    private void AssignCommandStaff(List<EntityUid> playerList, bool latejoin = false)
-    {
-        var currentCommandStaff = 0;
-        var commandDepartment = _prototypeManager.Index<DepartmentPrototype>(CommandDepartmentId);
-        foreach (var player in playerList)
-        {
-            if (!_mind.TryGetMind(player, out var mindId, out var mind))
-                continue;
-            if (!_job.MindTryGetJob(mindId, out _, out var jobProto) ||
-                !commandDepartment.Roles.Contains(jobProto.ID) ||
-                mind.OwnedEntity == null)
-                continue;
-            if (HasComp<HeadRevolutionaryComponent>(mind.OwnedEntity))
-                continue;
-
-            EnsureComp<CommandStaffComponent>(mind.OwnedEntity.Value);
-            currentCommandStaff++;
-        }
-
-        if (latejoin)
-            return;
-
-        if (currentCommandStaff == 0)
-        {
-            var query = QueryActiveRules();
-            while (query.MoveNext(out var uid, out _, out _, out var gameRule))
-            {
-                GameTicker.EndGameRule(uid, gameRule);
-            }
-        }
-    }
-
-    /// <summary>
     /// Called when a Head Rev uses a flash in melee to convert somebody else.
     /// </summary>
     public void OnPostFlash(EntityUid uid, HeadRevolutionaryComponent comp, ref AfterFlashedEvent ev)
     {
-        var stunTime = comp.StunTime;
+        TryComp<AlwaysRevolutionaryConvertibleComponent>(ev.Target, out var alwaysConvertibleComp);
+        var alwaysConvertible = alwaysConvertibleComp != null;
+
+        if (!_mind.TryGetMind(ev.Target, out var mindId, out var mind) && !alwaysConvertible)
+            return;
+
         if (HasComp<RevolutionaryComponent>(ev.Target) ||
             HasComp<MindShieldComponent>(ev.Target) ||
-            (!HasComp<HumanoidAppearanceComponent>(ev.Target) &&
-             !HasComp<AlwaysRevolutionaryConvertibleComponent>(ev.Target)) ||
+            !HasComp<HumanoidAppearanceComponent>(ev.Target) &&
+            !alwaysConvertible ||
             !_mobState.IsAlive(ev.Target) ||
             HasComp<ZombieComponent>(ev.Target))
         {
@@ -244,23 +183,21 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
 
         _npcFaction.AddFaction(ev.Target, RevolutionaryNpcFaction);
         EnsureComp<RevolutionaryComponent>(ev.Target);
-        _stun.TryParalyze(ev.Target, stunTime, true);
+        _stun.TryParalyze(ev.Target, comp.StunTime, true);
         if (ev.User != null)
         {
             _adminLogManager.Add(LogType.Mind, LogImpact.Medium, $"{ToPrettyString(ev.User.Value)} converted {ToPrettyString(ev.Target)} into a Revolutionary");
         }
-        if (_mind.TryGetMind(ev.Target, out var mindId, out var mind))
+
+        if (mindId == default || !_role.MindHasRole<RevolutionaryRoleComponent>(mindId))
         {
-            if (!_role.MindHasRole<RevolutionaryRoleComponent>(mindId))
-            {
-                _role.MindAddRole(mindId, new RevolutionaryRoleComponent { PrototypeId = RevolutionaryAntagRole });
-            }
-            if (mind.Session != null)
-            {
-                var message = Loc.GetString("rev-role-greeting");
-                var wrappedMessage = Loc.GetString("chat-manager-server-wrap-message", ("message", message));
-                _chatManager.ChatMessageToOne(ChatChannel.Server, message, wrappedMessage, default, false, mind.Session.ConnectedClient, Color.Red);
-            }
+            _role.MindAddRole(mindId, new RevolutionaryRoleComponent { PrototypeId = RevolutionaryAntagRole });
+        }
+        if (mind?.Session != null)
+        {
+            var message = Loc.GetString("rev-role-greeting");
+            var wrappedMessage = Loc.GetString("chat-manager-server-wrap-message", ("message", message));
+            _chatManager.ChatMessageToOne(ChatChannel.Server, message, wrappedMessage, default, false, mind.Session.ConnectedClient, Color.Red);
         }
     }
 
@@ -284,7 +221,6 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
                 {
                     mind.OwnedEntity.Value
                 };
-                InitialAssignCommandStaff();
                 GiveHeadRev(player, RevolutionaryAntagRole, revRule);
             }
             if (mind.Session != null)
@@ -356,23 +292,6 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
         }
 
         return false;
-    }
-
-    /// <summary>
-    /// Gives late join heads the head component so they also need to be killed.
-    /// </summary>
-    private void OnPlayerSpawned(PlayerSpawnCompleteEvent ev)
-    {
-        if (_mind.TryGetMind(ev.Player, out _, out var mind) &&
-            HasComp<PendingClockInComponent>(mind.OwnedEntity) &&
-            ev.Player.AttachedEntity != null)
-        {
-            var list = new List<EntityUid>
-            {
-                ev.Player.AttachedEntity.Value
-            };
-            AssignCommandStaff(list, true);
-        }
     }
 
     private static readonly string[] Outcomes =

@@ -14,7 +14,7 @@
       department: Security
       time: 108000 # 30 hrs
     - !type:OverallPlaytimeRequirement
-      time: 144000 #40 hrs            
+      time: 144000 #40 hrs
   weight: 10
   startingGear: HoSGear
   icon: "JobIconHeadOfSecurity"
@@ -34,6 +34,9 @@
   special:
   - !type:AddImplantSpecial
     implants: [ MindShieldImplant ]
+  - !type:AddComponentSpecial
+    components:
+      - type: CommandStaff
 
 - type: startingGear
   id: HoSGear

@@ -177,7 +177,7 @@ public sealed class AntagSelectionSystem : GameRuleSystem<GameRuleComponent>
             }
         }
 
-        return dead == list.Count;
+        return dead == list.Count || list.Count == 0;
     }
 
     /// <summary>
