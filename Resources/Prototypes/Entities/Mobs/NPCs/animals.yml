@@ -2048,7 +2048,7 @@
   - type: MeleeWeapon
     damage:
       types:
-        Piercing: 3
+        Piercing: 5
   - type: Grammar
     attributes:
       gender: epicene
