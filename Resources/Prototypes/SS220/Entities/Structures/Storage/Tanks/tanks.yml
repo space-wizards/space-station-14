@@ -1,0 +1,23 @@
+- type: entity
+  id: BarrelBeer
+  parent: StorageTank
+  name: Бочка
+  description: Бочка для хранения реагентов и напитков.
+  suffix: Пустая
+  components:
+    - type: Sprite
+      sprite: SS220/Structures/Storage/Tanks/barrel.rsi
+      state: barrel
+
+- type: entity
+  parent: BarrelBeer
+  id: BarrelBeerFull
+  description: Эта бочка полна пива! Только не говорите дворфам...
+  suffix: Полная, Пиво
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        tank:
+          reagents:
+            - ReagentId: Beer
+              Quantity: 1500
