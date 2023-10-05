@@ -309,28 +309,22 @@
     solution: anomaly
     needRecolor: true
     dangerousChemicals:
-    - Toxin
-    - CarpoToxin
-    - ChloralHydrate
+    - UnstableMutagen
     - Mold
     - PolytrinicAcid
     - FerrochromicAcid
     - FluorosulfuricAcid
     - SulfuricAcid
-    - UnstableMutagen
     - HeartbreakerToxin
-    - MindbreakerToxin
-    - Histamine
-    - Theobromine
-    - Allicin
+    - VentCrud
+    - UncookedAnimalProteins
     - Thermite
     - Napalm
     - Phlogiston
     - ChlorineTrifluoride
     - FoamingAgent
-    - Fluorosurfactant
-    - RobustHarvest
     - BuzzochloricBees
+    - RobustHarvest
     usefulChemicals:
     - Cryptobiolin
     - Dylovene
@@ -360,6 +354,7 @@
     - Beer
     - SpaceGlue
     - CogChamp
+    - Honk
   - type: Drink
     solution: anomaly
   - type: DrainableSolution
