@@ -1,30 +1,30 @@
 using System.Linq;
+using Content.Server.Administration.Logs;
+using Content.Server.Antag;
 using Content.Server.Chat.Managers;
+using Content.Server.Flash;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Mind;
+using Content.Server.NPC.Components;
 using Content.Server.NPC.Systems;
+using Content.Server.Popups;
+using Content.Server.Revolutionary.Components;
 using Content.Server.Roles;
+using Content.Server.RoundEnd;
+using Content.Shared.Chat;
+using Content.Shared.Database;
 using Content.Shared.Humanoid;
+using Content.Shared.IdentityManagement;
+using Content.Shared.Mind;
+using Content.Shared.Mindshield.Components;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
+using Content.Shared.Mobs.Systems;
 using Content.Shared.Revolutionary.Components;
 using Content.Shared.Roles;
 using Content.Shared.Stunnable;
-using Robust.Shared.Timing;
-using Content.Server.Popups;
-using Content.Server.Revolutionary.Components;
-using Content.Shared.IdentityManagement;
-using Content.Server.Flash;
-using Content.Shared.Mindshield.Components;
-using Content.Server.Administration.Logs;
-using Content.Shared.Database;
-using Content.Server.Antag;
-using Content.Server.NPC.Components;
-using Content.Server.RoundEnd;
-using Content.Shared.Chat;
-using Content.Shared.Mind;
-using Content.Shared.Mobs.Systems;
 using Content.Shared.Zombies;
+using Robust.Shared.Timing;
 
 namespace Content.Server.GameTicking.Rules;
 
@@ -104,13 +104,13 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
                 var username = session?.Name;
                 if (username != null)
                 {
-                    ev.AddLine(Loc.GetString("head-rev-initial",
+                    ev.AddLine(Loc.GetString("head-rev-initial-name-user",
                     ("name", player.Key),
                     ("username", username)));
                 }
                 else
                 {
-                    ev.AddLine(Loc.GetString("head-rev-initial",
+                    ev.AddLine(Loc.GetString("head-rev-initial-name",
                     ("name", player.Key)));
                 }
             }
