@@ -120,7 +120,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
         var query = AllEntityQuery<RevolutionaryRuleComponent, GameRuleComponent>();
         while (query.MoveNext(out var uid, out var comp, out var gameRule))
         {
-            //_antagSelection.AttemptStartGameRule(ev, uid, comp.MinPlayers, gameRule);
+            _antagSelection.AttemptStartGameRule(ev, uid, comp.MinPlayers, gameRule);
         }
     }
 
