@@ -893,6 +893,9 @@
   id: Shovel
 
 - type: Tag
+  id: Sidearm
+
+- type: Tag
   id: SkeletonMotorcycleKeys
 
 - type: Tag
@@ -1054,3 +1057,5 @@
 - type: Tag
   id: ModularReceiver
 
+- type: Tag
+  id: MindShield
