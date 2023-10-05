@@ -164,7 +164,7 @@ namespace Content.Server.PDA.Ringer
         private void UpdateRingerUserInterface(EntityUid uid, RingerComponent ringer)
         {
             if (_ui.TryGetUi(uid, RingerUiKey.Key, out var bui))
-                UserInterfaceSystem.SetUiState(bui, new RingerUpdateState(HasComp<ActiveRingerComponent>(uid), ringer.Ringtone));
+                _ui.SetUiState(bui, new RingerUpdateState(HasComp<ActiveRingerComponent>(uid), ringer.Ringtone));
         }
 
         public bool ToggleRingerUI(EntityUid uid, IPlayerSession session)

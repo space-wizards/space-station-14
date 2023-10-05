@@ -1,0 +1,208 @@
+- type: entity
+  save: false
+  abstract: true
+  id: MobElementalBase
+  components:
+  - type: LagCompensation
+  - type: Reactive
+    groups:
+      Acidic: [Touch]
+  - type: Clickable
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: InteractionOutline
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 50
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 2
+    baseSprintSpeed : 3
+  - type: Sprite
+    noRot: true
+    drawdepth: Mobs
+  - type: NpcFactionMember
+    factions:
+    - SimpleNeutral
+  - type: MovedByPressure
+  - type: Physics
+    bodyType: KinematicController # Same for all inheritors
+  - type: StatusEffects
+    allowed:
+    - Stun
+    - KnockedDown
+    - SlowedDown
+    - Stutter
+    - Electrocution
+  - type: Pullable
+  - type: Tag
+    tags:
+    - DoorBumpOpener
+    - ShoesRequiredStepTriggerImmune
+  - type: MobState
+    allowedStates:
+      - Alive
+      - Dead
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      120: Dead
+  - type: Stamina
+    critThreshold: 120
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:TriggerBehavior
+    - trigger:
+        !type:DamageTrigger
+        damage: 120
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Input
+    context: "human"
+  - type: InputMover
+  - type: MobMover
+  - type: ZombieImmune
+
+- type: entity
+  parent: MobElementalBase
+  id: MobQuartzCrab
+  name: quartz crab
+  description: An ore crab made from quartz.
+  components:
+  - type: Sprite
+    sprite: Mobs/Elemental/orecrab.rsi
+    state: quartzcrab
+  - type: HTN
+    rootTask:
+      task: SimpleHostileCompound
+  - type: MeleeWeapon
+    hidden: true
+    soundHit:
+      path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
+    damage:
+      types:
+        Piercing: 12
+  - type: CombatMode
+  - type: NpcFactionMember
+    factions:
+      - SimpleHostile
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 40
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SpaceQuartz:
+            min: 4
+            max: 6
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
+- type: entity
+  parent: MobElementalBase
+  id: MobIronCrab
+  name: ore crab
+  description: An ore crab made from iron.
+  components:
+  - type: Sprite
+    sprite: Mobs/Elemental/orecrab.rsi
+    state: ironcrab
+  - type: HTN
+    rootTask:
+      task: SimpleHostileCompound
+  - type: MeleeWeapon
+    hidden: true
+    soundHit:
+      path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
+    damage:
+      types:
+        Blunt: 8
+  - type: CombatMode
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 1.5
+    baseSprintSpeed : 2
+  - type: NpcFactionMember
+    factions:
+      - SimpleHostile
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 80
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SteelOre1:
+            min: 4
+            max: 6
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
+- type: entity
+  parent: MobElementalBase
+  id: MobUraniumCrab
+  name: ore crab
+  description: An ore crab made from uranium.
+  components:
+  - type: Sprite
+    sprite: Mobs/Elemental/orecrab.rsi
+    state: uraniumcrab
+  - type: HTN
+    rootTask:
+      task: IdleCompound
+  - type: MeleeWeapon
+    hidden: true
+    soundHit:
+      path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
+    damage:
+      types:
+        Blunt: 8
+  - type: CombatMode
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 2
+    baseSprintSpeed : 2.5
+  - type: NpcFactionMember
+    factions:
+      - SimpleHostile
+  - type: RadiationSource
+    intensity: 0.3
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 80
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          UraniumOre1:
+            min: 4
+            max: 6
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: PointLight
+    radius: 2
+    energy: 3
+    color: "#06DF24"

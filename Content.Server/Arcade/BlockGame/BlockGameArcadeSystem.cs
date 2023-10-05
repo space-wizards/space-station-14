@@ -30,7 +30,7 @@ public sealed class BlockGameArcadeSystem : EntitySystem
         }
     }
 
-    private void UpdatePlayerStatus(EntityUid uid, IPlayerSession session, BoundUserInterface? bui = null, BlockGameArcadeComponent? blockGame = null)
+    private void UpdatePlayerStatus(EntityUid uid, IPlayerSession session, PlayerBoundUserInterface? bui = null, BlockGameArcadeComponent? blockGame = null)
     {
         if (!Resolve(uid, ref blockGame))
             return;

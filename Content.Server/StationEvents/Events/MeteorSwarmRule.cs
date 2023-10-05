@@ -1,10 +1,11 @@
 using System.Numerics;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.StationEvents.Components;
-using Content.Shared.Spawners.Components;
+using Robust.Shared.Spawners;
 using Robust.Shared.Map;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
+using TimedDespawnComponent = Robust.Shared.Spawners.TimedDespawnComponent;
 
 namespace Content.Server.StationEvents.Events
 {

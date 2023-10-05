@@ -1,13 +1,13 @@
 - type: entity
   save: false
   name: Urist McWeb
-  parent: [BaseMobArachnid, BaseMob]
+  parent: BaseMobArachnid
   id: MobArachnid
   components:
   - type: Respirator
     damage:
       types:
-        Asphyxiation: 1.5 # Make sure you have O2 on you at all times
+        Asphyxiation: 1.5 # This makes space and crit more lethal to arachnids.
     damageRecovery:
       types:
-        Asphyxiation: -0.5 # Recovery will suck without chems
+        Asphyxiation: -0.5

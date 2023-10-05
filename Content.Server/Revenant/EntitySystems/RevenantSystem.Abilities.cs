@@ -82,7 +82,7 @@ public sealed partial class RevenantSystem
 
     private void BeginSoulSearchDoAfter(EntityUid uid, EntityUid target, RevenantComponent revenant)
     {
-        var searchDoAfter = new DoAfterArgs(uid, revenant.SoulSearchDuration, new SoulEvent(), uid, target: target)
+        var searchDoAfter = new DoAfterArgs(EntityManager, uid, revenant.SoulSearchDuration, new SoulEvent(), uid, target: target)
         {
             BreakOnUserMove = true,
             BreakOnDamage = true,
@@ -136,7 +136,7 @@ public sealed partial class RevenantSystem
             return;
         }
 
-        var doAfter = new DoAfterArgs(uid, revenant.HarvestDebuffs.X, new HarvestEvent(), uid, target: target)
+        var doAfter = new DoAfterArgs(EntityManager, uid, revenant.HarvestDebuffs.X, new HarvestEvent(), uid, target: target)
         {
             DistanceThreshold = 2,
             BreakOnUserMove = true,
@@ -193,7 +193,7 @@ public sealed partial class RevenantSystem
         if (!_mobThresholdSystem.TryGetThresholdForState(args.Args.Target.Value, MobState.Dead, out var damage))
             return;
         DamageSpecifier dspec = new();
-        dspec.DamageDict.Add("Poison", damage.Value);
+        dspec.DamageDict.Add("Cold", damage.Value);
         _damage.TryChangeDamage(args.Args.Target, dspec, true, origin: uid);
 
         args.Handled = true;

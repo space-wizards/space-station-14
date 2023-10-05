@@ -8,10 +8,7 @@ using Content.Server.Disposal.Tube;
 using Content.Server.Disposal.Tube.Components;
 using Content.Server.EUI;
 using Content.Server.Ghost.Roles;
-using Content.Server.Mind;
 using Content.Server.Mind.Commands;
-using Content.Server.Mind.Components;
-using Content.Server.Players;
 using Content.Server.Prayer;
 using Content.Server.Xenoarchaeology.XenoArtifacts;
 using Content.Server.Xenoarchaeology.XenoArtifacts.Triggers.Components;
@@ -21,6 +18,8 @@ using Content.Shared.Database;
 using Content.Shared.GameTicking;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Inventory;
+using Content.Shared.Mind;
+using Content.Shared.Mind.Components;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using Robust.Server.Console;
@@ -29,6 +28,7 @@ using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
+using Robust.Shared.Players;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.Toolshed;
@@ -55,11 +55,11 @@ namespace Content.Server.Administration.Systems
         [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
         [Dependency] private readonly PrayerSystem _prayerSystem = default!;
         [Dependency] private readonly EuiManager _eui = default!;
-        [Dependency] private readonly MindSystem _mindSystem = default!;
+        [Dependency] private readonly SharedMindSystem _mindSystem = default!;
         [Dependency] private readonly ToolshedManager _toolshed = default!;
         [Dependency] private readonly RejuvenateSystem _rejuvenate = default!;
 
-        private readonly Dictionary<IPlayerSession, EditSolutionsEui> _openSolutionUis = new();
+        private readonly Dictionary<ICommonSession, EditSolutionsEui> _openSolutionUis = new();
 
         public override void Initialize()
         {
@@ -262,11 +262,10 @@ namespace Content.Server.Administration.Systems
                     {
                         MakeSentientCommand.MakeSentient(args.Target, EntityManager);
 
-                        var mind = player.ContentData()?.Mind;
-                        if (mind == null)
+                        if (!_minds.TryGetMind(player, out var mindId, out var mind))
                             return;
 
-                        _mindSystem.TransferTo(mind, args.Target, ghostCheckOverride: true);
+                        _mindSystem.TransferTo(mindId, args.Target, ghostCheckOverride: true, mind: mind);
                     },
                     Impact = LogImpact.High,
                     ConfirmationPopup = true
@@ -427,7 +426,7 @@ namespace Content.Server.Administration.Systems
             eui.StateDirty();
         }
 
-        public void OnEditSolutionsEuiClosed(IPlayerSession session)
+        public void OnEditSolutionsEuiClosed(ICommonSession session)
         {
             _openSolutionUis.Remove(session, out var eui);
         }

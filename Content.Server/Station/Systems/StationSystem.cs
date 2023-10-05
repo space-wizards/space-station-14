@@ -34,6 +34,7 @@ public sealed class StationSystem : EntitySystem
     [Dependency] private readonly ChatSystem _chatSystem = default!;
     [Dependency] private readonly GameTicker _gameTicker = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private readonly MetaDataSystem _metaData = default!;
 
     private ISawmill _sawmill = default!;
 
@@ -84,7 +85,7 @@ public sealed class StationSystem : EntitySystem
     {
         if (e.NewStatus == SessionStatus.Connected)
         {
-            RaiseNetworkEvent(new StationsUpdatedEvent(GetStationsSet()), e.Session);
+            RaiseNetworkEvent(new StationsUpdatedEvent(GetNetEntitySet(GetStationsSet())), e.Session);
         }
     }
 
@@ -92,7 +93,7 @@ public sealed class StationSystem : EntitySystem
 
     private void OnStationAdd(EntityUid uid, StationDataComponent component, ComponentStartup args)
     {
-        RaiseNetworkEvent(new StationsUpdatedEvent(GetStationsSet()), Filter.Broadcast());
+        RaiseNetworkEvent(new StationsUpdatedEvent(GetNetEntitySet(GetStationsSet())), Filter.Broadcast());
 
         var metaData = MetaData(uid);
         RaiseLocalEvent(new StationInitializedEvent(uid));
@@ -107,7 +108,7 @@ public sealed class StationSystem : EntitySystem
             RemComp<StationMemberComponent>(grid);
         }
 
-        RaiseNetworkEvent(new StationsUpdatedEvent(GetStationsSet()), Filter.Broadcast());
+        RaiseNetworkEvent(new StationsUpdatedEvent(GetNetEntitySet(GetStationsSet())), Filter.Broadcast());
     }
 
     private void OnPreGameMapLoad(PreGameMapLoad ev)
@@ -328,7 +329,7 @@ public sealed class StationSystem : EntitySystem
             throw new ArgumentException("Tried to use a non-station entity as a station!", nameof(station));
 
         if (!string.IsNullOrEmpty(name))
-            MetaData(mapGrid).EntityName = name;
+            _metaData.SetEntityName(mapGrid, name);
 
         var stationMember = AddComp<StationMemberComponent>(mapGrid);
         stationMember.Station = station;
@@ -376,7 +377,7 @@ public sealed class StationSystem : EntitySystem
             throw new ArgumentException("Tried to use a non-station entity as a station!", nameof(station));
 
         var oldName = metaData.EntityName;
-        metaData.EntityName = name;
+        _metaData.SetEntityName(station, name, metaData);
 
         if (loud)
         {
