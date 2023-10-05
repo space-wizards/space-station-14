@@ -286,7 +286,7 @@
             True: { state: freezerOn }
             False: { state: freezerOff }
     - type: GasThermoMachine
-      coefficientOfPerformance: -1024
+      coefficientOfPerformance: -140
     - type: ApcPowerReceiver
       powerDisabled: true #starts off
     - type: Machine
@@ -329,7 +329,7 @@
             True: { state: heaterOn }
             False: { state: heaterOff }
     - type: GasThermoMachine
-      coefficientOfPerformance: 512
+      coefficientOfPerformance: 70
     - type: ApcPowerReceiver
       powerDisabled: true #starts off
     - type: Machine
