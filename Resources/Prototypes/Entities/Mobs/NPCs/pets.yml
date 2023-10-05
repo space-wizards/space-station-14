@@ -97,6 +97,7 @@
       task: SimpleHostileCompound
   - type: Grammar
     attributes:
+      proper: true
       gender: female
   - type: Tag
     tags:
@@ -114,6 +115,7 @@
       - PetsNT
   - type: Grammar
     attributes:
+      proper: true
       gender: male
   - type: Tag
     tags:
@@ -153,6 +155,7 @@
   components:
   - type: Grammar
     attributes:
+      proper: true
       gender: male
   - type: Tag
     tags:
@@ -160,7 +163,7 @@
     - VimPilot
 
 - type: entity
-  name: bingus
+  name: Bingus
   parent: SimpleMobBase
   id: MobBingus
   description: Bingus my beloved...
@@ -206,12 +209,13 @@
       amount: 2
   - type: InteractionPopup
     successChance: 0.9
-    interactSuccessString: petting-success-cat
+    interactSuccessString: petting-success-bingus
     interactFailureString: petting-failure-generic
     interactSuccessSound:
       path: /Audio/Animals/cat_meow.ogg
   - type: Grammar
     attributes:
+      proper: true
       gender: epicene
   - type: Tag
     tags:
@@ -219,7 +223,7 @@
     - VimPilot
 
 - type: entity
-  name: mcgriff
+  name: McGriff
   parent: SimpleMobBase
   id: MobMcGriff
   description: This dog can tell something smells around here, and that something is CRIME!
@@ -431,6 +435,7 @@
       path: /Audio/Animals/pig_oink.ogg
   - type: Grammar
     attributes:
+      proper: true
       gender: male
   - type: Tag
     tags:
@@ -614,8 +619,6 @@
   description: This masterpiece has gone through thousands of experiments. But it is the sweetest creature in the world. Smile Slime!
   components:
   - type: Sprite
-    drawdepth: Mobs
-    sprite: Mobs/Aliens/slimes.rsi
     layers:
     - map: [ "enum.DamageStateVisualLayers.Base" ]
       state: rainbow_baby_slime
@@ -645,22 +648,14 @@
       Dead:
         Base: rainbow_baby_slime_dead
   - type: Butcherable
-    butcheringType: Knife
     spawned:
     - id: FoodMeatSlime
       amount: 1
     - id: MaterialSmileExtract
       amount: 1
   - type: Damageable
-    damageContainer: Biological
     damageModifierSet: SlimePet
   - type: Bloodstream
-    bloodMaxVolume: 150
-    bloodReagent: Slime
-    bloodlossDamage:
-      types:
-        Bloodloss:
-          1
     bloodlossHealDamage:
       types:
         Bloodloss:
@@ -669,11 +664,6 @@
     heatDamageThreshold: 800
     coldDamageThreshold: 0
   - type: MeleeWeapon
-    hidden: true
-    soundHit:
-        path: /Audio/Weapons/punch3.ogg
-    angle: 0
-    animation: WeaponArcPunch
     damage:
       types:
         Blunt: 1
@@ -683,9 +673,12 @@
   - type: MobPrice
     price: 3000 # it is a truly valuable creature
   - type: GhostRole
-    makeSentient: true
     name: ghost-role-information-smile-name
     description: ghost-role-information-smile-description
+  - type: Grammar
+    attributes:
+      proper: true
+      gender: female
 
 - type: entity
   name: Pun Pun
@@ -715,3 +708,7 @@
     - VimPilot
   - type: Loadout
     prototypes: [ MobMonkeyGear ]
+  - type: Grammar
+    attributes:
+      proper: true
+      gender: male

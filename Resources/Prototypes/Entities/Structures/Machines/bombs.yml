@@ -25,14 +25,15 @@
     # If you nerf the syndicate bomb in any major way, this should probably drop down to at least 100s (not 90s to compensate for slower movement speed & less lag in SS14)
     # Unless, of course, you want the 90 seconds regardless. I can't stop you.
     - type: OnUseTimerTrigger
-      delay: 120
-      delayOptions: [120, 150, 180, 210, 240, 270, 300]
+      delay: 180
+      delayOptions: [180, 240, 300, 600, 900]
       initialBeepDelay: 0
       beepSound: /Audio/Machines/timer.ogg
     - type: Anchorable
       delay: 5
     - type: Physics
       bodyType: Static
+      canCollide: false
     - type: Transform
       noRot: true
     - type: Fixtures
@@ -40,7 +41,7 @@
         fix1:
           shape:
             !type:PhysShapeAabb
-            bounds: "-0.45,-0.45,0.45,0.45"
+            bounds: "-0.3,-0.3,0.3,0.3"
           density: 190
           mask:
             - MachineMask
@@ -51,6 +52,7 @@
       openOnActivation: true
       guides:
         - Defusal
+    - type: CollideOnAnchor
 
 - type: entity
   parent: BaseHardBomb

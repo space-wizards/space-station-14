@@ -1,61 +1,41 @@
 - type: salvageFaction
   id: Xenos
-  groups:
-  - entries:
-    - id: MobXeno
-      amount: 2
-      maxAmount: 3
-    - id: MobXenoDrone
-      amount: 1
-  - entries:
-    - id: MobXenoPraetorian
-      amount: 1
-      maxAmount: 2
-    prob: 0.5
-  - entries:
-    - id: MobXenoDrone
-      amount: 0
-      maxAmount: 2
-    prob: 0.25
-  - entries:
-    - id: WeaponTurretXeno
-      amount: 3
-    prob: 0.25
-  - entries:
-      - id: MobXenoSpitter
-        amount: 2
-    prob: 0.25
-  - entries:
-    - id: MobXenoRavager
-      amount: 1
-    prob: 0.1
-  - entries:
-    - id: MobXenoRouny
-      amount: 1
-    prob: 0.001
+  entries:
+    - proto: MobXeno
+    - proto: MobXenoDrone
+      cost: 2
+    - proto: MobXenoPraetorian
+      cost: 5
+      prob: 0.1
+    - proto: MobXenoQueen
+      cost: 10
+      prob: 0.02
+    - proto: MobXenoRavager
+      cost: 5
+    - proto: MobXenoRouny
+      cost: 3
+      prob: 0.02
+    - proto: MobXenoSpitter
+    - proto: WeaponTurretXeno
+      prob: 0.1
   configs:
     DefenseStructure: XenoWardingTower
-    Mining: Xenos
     Megafauna: MobXenoQueen
 
 - type: salvageFaction
   id: Carps
-  groups:
-  - entries:
-    - id: MobCarpDungeon
-      amount: 1
-      maxAmount: 4
-  - entries:
-    - id: MobCarpMagic
-      amount: 1
-      maxAmount: 3
-    prob: 0.5
-  - entries:
-    - id: MobCarpHolo
-      amount: 1
-      maxAmount: 2
-    prob: 0.25
+  entries:
+    - proto: MobCarpDungeon
+    # These do too much damage for salvage, need nerfs
+    #- proto: MobCarpHolo
+    #  cost: 5
+    #  prob: 0.1
+    #- proto: MobCarpMagic
+    #  cost: 5
+    #  prob: 0.1
+    - proto: MobDragonDungeon
+      cost: 10
+      prob: 0.02
   configs:
     DefenseStructure: CarpStatue
-    Mining: Carps
     Megafauna: MobDragonDungeon

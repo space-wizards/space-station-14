@@ -8,6 +8,7 @@
   - Zombie
   - HonkHostile
   - HonkNeutral
+  - Revolutionary
 
 - type: npcFaction
   id: NanoTrasen
@@ -17,6 +18,7 @@
   - Xeno
   - Zombie
   - HonkHostile
+  - Revolutionary
 
 - type: npcFaction
   id: Mouse
@@ -45,6 +47,7 @@
   - Zombie
   - HonkHostile
   - HonkNeutral
+  - Revolutionary
 
 - type: npcFaction
   id: SimpleNeutral
@@ -70,6 +73,7 @@
   - Zombie
   - HonkHostile
   - HonkNeutral
+  - Revolutionary
 
 - type: npcFaction
   id: Zombie
@@ -82,6 +86,7 @@
   - PetsNT
   - HonkHostile
   - HonkNeutral
+  - Revolutionary
 
 - type: npcFaction
   id: HonkHostile
@@ -91,6 +96,7 @@
   - Passive
   - PetsNT
   - Zombie
+  - Revolutionary
 
 - type: npcFaction
   id: HonkNeutral
@@ -99,3 +105,12 @@
   - Syndicate
   - Xeno
   - Zombie
+
+- type: npcFaction
+  id: Revolutionary
+  hostile:
+  - NanoTrasen
+  - Zombie
+  - SimpleHostile
+  - Dragon
+  - HonkHostile

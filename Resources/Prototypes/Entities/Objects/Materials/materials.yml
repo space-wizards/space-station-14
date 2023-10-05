@@ -534,3 +534,44 @@
     count: 1
   - type: Item
     size: 1
+
+- type: entity
+  parent: MaterialBase
+  id: MaterialBones
+  name: bones
+  suffix: Full
+  components:
+  - type: Stack
+    stackType: Bones
+    baseLayer: base
+    layerStates:
+    - bones
+    - bones_2
+    - bones_3
+  - type: Sprite
+    state: cotton_3
+    layers:
+    - state: cotton_3
+      map: ["base"]
+  - type: Appearance
+  - type: Item
+    size: 30
+  - type: Food
+  - type: BadFood
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: Vitamin
+          Quantity: 3
+
+- type: entity
+  parent: MaterialBones
+  id: MaterialBones1
+  suffix: 1
+  components:
+  - type: Stack
+    count: 1
+  - type: Item
+    size: 1
