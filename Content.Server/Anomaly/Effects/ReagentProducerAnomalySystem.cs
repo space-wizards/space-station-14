@@ -57,8 +57,6 @@ public sealed class ReagentProducerAnomalySystem : EntitySystem
     {
         base.Update(frameTime);
 
-        //while (query.MoveNext(..., out var anomaly))
-
         var query = EntityQueryEnumerator<ReagentProducerAnomalyComponent, AnomalyComponent>();
         while (query.MoveNext(out var uid, out var component, out var anomaly))
         {
