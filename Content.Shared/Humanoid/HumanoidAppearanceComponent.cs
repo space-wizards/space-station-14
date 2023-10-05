@@ -4,31 +4,31 @@ using Robust.Shared.Enums;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Utility;
-using static Content.Shared.Humanoid.HumanoidAppearanceState;
 
 namespace Content.Shared.Humanoid;
 
-[NetworkedComponent, RegisterComponent]
+[NetworkedComponent, RegisterComponent, AutoGenerateComponentState(true)]
 public sealed partial class HumanoidAppearanceComponent : Component
 {
-    [DataField("markingSet")]
+    public MarkingSet ClientOldMarkings = new();
+
+    [DataField, AutoNetworkedField]
     public MarkingSet MarkingSet = new();
 
-    [DataField("baseLayers")]
+    [DataField]
     public Dictionary<HumanoidVisualLayers, HumanoidSpeciesSpriteLayer> BaseLayers = new();
 
-    [DataField("permanentlyHidden")]
+    [DataField, AutoNetworkedField]
     public HashSet<HumanoidVisualLayers> PermanentlyHidden = new();
 
     // Couldn't these be somewhere else?
-
-    [DataField("gender")]
-    [ViewVariables] public Gender Gender = default!;
-	
 	[ViewVariables(VVAccess.ReadWrite)]
-    [DataField("age")]
+    [DataField, AutoNetworkedField]
+    public Gender Gender;
+
+	[ViewVariables(VVAccess.ReadWrite)]
+    [DataField, AutoNetworkedField]
     public int Age = 18;
 
     /// <summary>
@@ -37,41 +37,41 @@ public sealed partial class HumanoidAppearanceComponent : Component
     ///     Stored on the server, this is merged in the client into
     ///     all layer settings.
     /// </summary>
-    [DataField("customBaseLayers")]
+    [DataField, AutoNetworkedField]
     public Dictionary<HumanoidVisualLayers, CustomBaseLayerInfo> CustomBaseLayers = new();
 
     /// <summary>
     ///     Current species. Dictates things like base body sprites,
     ///     base humanoid to spawn, etc.
     /// </summary>
-    [DataField("species", customTypeSerializer: typeof(PrototypeIdSerializer<SpeciesPrototype>), required: true)]
-    public string Species { get; set; } = default!;
+    [DataField(required: true), AutoNetworkedField]
+    public ProtoId<SpeciesPrototype> Species { get; set; }
 
     /// <summary>
     ///     The initial profile and base layers to apply to this humanoid.
     /// </summary>
-    [DataField("initial", customTypeSerializer: typeof(PrototypeIdSerializer<HumanoidProfilePrototype>))]
-    public string? Initial { get; private set; }
+    [DataField]
+    public ProtoId<HumanoidProfilePrototype>? Initial { get; private set; }
 
     /// <summary>
     ///     Skin color of this humanoid.
     /// </summary>
 	[ViewVariables(VVAccess.ReadWrite)]
-    [DataField("skinColor")]
+    [DataField, AutoNetworkedField]
     public Color SkinColor { get; set; } = Color.FromHex("#C0967F");
 
     /// <summary>
     ///     Visual layers currently hidden. This will affect the base sprite
     ///     on this humanoid layer, and any markings that sit above it.
     /// </summary>
-    [DataField("hiddenLayers")]
+    [DataField, AutoNetworkedField]
     public HashSet<HumanoidVisualLayers> HiddenLayers = new();
 
-    [DataField("sex")]
+    [DataField, AutoNetworkedField]
     public Sex Sex = Sex.Male;
 
 	[ViewVariables(VVAccess.ReadWrite)]
-    [DataField("eyeColor")]
+    [DataField, AutoNetworkedField]
     public Color EyeColor = Color.Brown;
 	
 	[ViewVariables(VVAccess.ReadWrite)]
@@ -91,68 +91,26 @@ public sealed partial class HumanoidAppearanceComponent : Component
     public Color? CachedFacialHairColor;
 }
 
+[DataDefinition]
 [Serializable, NetSerializable]
-public sealed partial class HumanoidAppearanceState : ComponentState
+public readonly partial struct CustomBaseLayerInfo
 {
-    public readonly MarkingSet Markings;
-    public readonly HashSet<HumanoidVisualLayers> PermanentlyHidden;
-    public readonly HashSet<HumanoidVisualLayers> HiddenLayers;
-    public readonly Dictionary<HumanoidVisualLayers, CustomBaseLayerInfo> CustomBaseLayers;
-    public readonly Sex Sex;
-    public readonly Gender Gender;
-    public readonly int Age = 18;
-    public readonly string Species;
-    public readonly Color SkinColor;
-    public readonly Color EyeColor;
-    public readonly Color SpeakerColor;
-
-    public HumanoidAppearanceState(
-        MarkingSet currentMarkings,
-        HashSet<HumanoidVisualLayers> permanentlyHidden,
-        HashSet<HumanoidVisualLayers> hiddenLayers,
-        Dictionary<HumanoidVisualLayers, CustomBaseLayerInfo> customBaseLayers,
-        Sex sex,
-        Gender gender,
-        int age,
-        string species,
-        Color skinColor,
-        Color eyeColor,
-        Color speakerColor)
+    public CustomBaseLayerInfo(string? id, Color? color = null)
     {
-        Markings = currentMarkings;
-        PermanentlyHidden = permanentlyHidden;
-        HiddenLayers = hiddenLayers;
-        CustomBaseLayers = customBaseLayers;
-        Sex = sex;
-        Gender = gender;
-        Age = age;
-        Species = species;
-        SkinColor = skinColor;
-        EyeColor = eyeColor;
-        SpeakerColor = speakerColor;
+        DebugTools.Assert(id == null || IoCManager.Resolve<IPrototypeManager>().HasIndex<HumanoidSpeciesSpriteLayer>(id));
+        Id = id;
+        Color = color;
     }
 
-    [DataDefinition]
-    [Serializable, NetSerializable]
-    public readonly partial struct CustomBaseLayerInfo
-    {
-        public CustomBaseLayerInfo(string? id, Color? color = null)
-        {
-            DebugTools.Assert(id == null || IoCManager.Resolve<IPrototypeManager>().HasIndex<HumanoidSpeciesSpriteLayer>(id));
-            ID = id;
-            Color = color;
-        }
+    /// <summary>
+    ///     ID of this custom base layer. Must be a <see cref="HumanoidSpeciesSpriteLayer"/>.
+    /// </summary>
+    [DataField]
+    public ProtoId<HumanoidSpeciesSpriteLayer>? Id { get; init; }
 
-        /// <summary>
-        ///     ID of this custom base layer. Must be a <see cref="HumanoidSpeciesSpriteLayer"/>.
-        /// </summary>
-        [DataField("id", customTypeSerializer: typeof(PrototypeIdSerializer<HumanoidSpeciesSpriteLayer>))]
-        public string? ID { init; get; }
-
-        /// <summary>
-        ///     Color of this custom base layer. Null implies skin colour if the corresponding <see cref="HumanoidSpeciesSpriteLayer"/> is set to match skin.
-        /// </summary>
-        [DataField("color")]
-        public Color? Color { init; get; }
-    }
+    /// <summary>
+    ///     Color of this custom base layer. Null implies skin colour if the corresponding <see cref="HumanoidSpeciesSpriteLayer"/> is set to match skin.
+    /// </summary>
+    [DataField]
+    public Color? Color { get; init; }
 }

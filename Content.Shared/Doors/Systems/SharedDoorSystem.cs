@@ -10,7 +10,6 @@ using Content.Shared.Physics;
 using Content.Shared.Stunnable;
 using Content.Shared.Tag;
 using Robust.Shared.Audio;
-using Robust.Shared.GameStates;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
@@ -55,8 +54,7 @@ public abstract partial class SharedDoorSystem : EntitySystem
         SubscribeLocalEvent<DoorComponent, ComponentInit>(OnComponentInit);
         SubscribeLocalEvent<DoorComponent, ComponentRemove>(OnRemove);
 
-        SubscribeLocalEvent<DoorComponent, ComponentGetState>(OnGetState);
-        SubscribeLocalEvent<DoorComponent, ComponentHandleState>(OnHandleState);
+        SubscribeLocalEvent<DoorComponent, AfterAutoHandleStateEvent>(OnHandleState);
 
         SubscribeLocalEvent<DoorComponent, ActivateInWorldEvent>(OnActivate);
 
@@ -102,29 +100,14 @@ public abstract partial class SharedDoorSystem : EntitySystem
     }
 
     #region StateManagement
-    private void OnGetState(EntityUid uid, DoorComponent door, ref ComponentGetState args)
+    private void OnHandleState(EntityUid uid, DoorComponent door, ref AfterAutoHandleStateEvent args)
     {
-        args.State = new DoorComponentState(door, GetNetEntitySet(door.CurrentlyCrushing));
-    }
-
-    private void OnHandleState(EntityUid uid, DoorComponent door, ref ComponentHandleState args)
-    {
-        if (args.Current is not DoorComponentState state)
-            return;
-
-        door.CurrentlyCrushing.Clear();
-        door.CurrentlyCrushing.UnionWith(EnsureEntitySet<DoorComponent>(state.CurrentlyCrushing, uid));
-
-        door.State = state.DoorState;
-        door.NextStateChange = state.NextStateChange;
-        door.Partial = state.Partial;
-
-        if (state.NextStateChange == null)
+        if (door.NextStateChange == null)
             _activeDoors.Remove(door);
         else
             _activeDoors.Add(door);
 
-        RaiseLocalEvent(uid, new DoorStateChangedEvent(door.State), false);
+        RaiseLocalEvent(uid, new DoorStateChangedEvent(door.State));
         AppearanceSystem.SetData(uid, DoorVisuals.State, door.State);
     }
 

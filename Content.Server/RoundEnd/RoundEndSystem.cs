@@ -224,7 +224,19 @@ namespace Content.Server.RoundEnd
             Timer.Spawn(countdownTime.Value, AfterEndRoundRestart, _countdownTokenSource.Token);
         }
 
-        public void DoRoundEndBehavior(RoundEndBehavior behavior, TimeSpan time, string sender, string textCall, string textAnnounce)
+        /// <summary>
+        /// Starts a behavior to end the round
+        /// </summary>
+        /// <param name="behavior">The way in which the round will end</param>
+        /// <param name="time"></param>
+        /// <param name="sender"></param>
+        /// <param name="textCall"></param>
+        /// <param name="textAnnounce"></param>
+        public void DoRoundEndBehavior(RoundEndBehavior behavior,
+            TimeSpan time,
+            string sender = "comms-console-announcement-title-centcom",
+            string textCall = "round-end-system-shuttle-called-announcement",
+            string textAnnounce = "round-end-system-shuttle-already-called-announcement")
         {
             switch (behavior)
             {
