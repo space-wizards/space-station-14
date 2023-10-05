@@ -173,6 +173,9 @@
   - type: GuideHelp
     guides:
     - Janitorial
+  - type: Pourable
+    solution: bucket
+
 
 - type: entity
   name: mop bucket

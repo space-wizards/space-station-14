@@ -1,4 +1,3 @@
-using Content.Server.Fluids.Components;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Popups;
 using Content.Shared.FixedPoint;
@@ -7,6 +6,7 @@ using Content.Shared.Database;
 using Content.Shared.Verbs;
 using Content.Shared.Fluids.Components;
 using Robust.Shared.Utility;
+using Content.Shared.Chemistry.Components;
 
 namespace Content.Server.Fluids.EntitySystems;
 
@@ -29,59 +29,64 @@ public sealed class PourableSystem : EntitySystem
         if (!args.CanAccess || !args.CanInteract || args.Using == null)
             return;
 
-        if (!TryComp(args.Using, out SpillableComponent? spillable) ||
+        if (!TryComp(args.Using, out SolutionTransferComponent? transferAmountForUsing) ||
             !TryComp(args.Target, out PourableComponent? tank))
+        {
             return;
+        }
 
         Verb verb = new()
         {
-            Text = Loc.GetString("drain-component-empty-verb-inhand", ("object", Name(args.Using.Value))),
+            Text = Loc.GetString("pourable-component-transfer-menu-verb", ("target", args.Target)),
             Act = () =>
             {
-                Pouring(args.Using.Value, args.Target, tank);
+                Pouring(args.Using.Value, transferAmountForUsing, args.Target, tank);
             },
             Impact = LogImpact.Low,
             Icon = new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/VerbIcons/eject.svg.192dpi.png"))
-
         };
         args.Verbs.Add(verb);
     }
 
-    private void Pouring(EntityUid container, EntityUid target, PourableComponent tank)
+    private void Pouring(EntityUid container, SolutionTransferComponent containerTransferAmount,
+        EntityUid target, PourableComponent tank)
     {
         // Find the solution in the container that is emptied
         if (!_solutionSystem.TryGetDrainableSolution(container, out var containerSolution) ||
             containerSolution.Volume == FixedPoint2.Zero)
         {
             _popupSystem.PopupEntity(
-                Loc.GetString("drain-component-empty-verb-using-is-empty-message", ("object", container)),
+                Loc.GetString("pourable-component-empty-verb-using-is-empty-message", ("object", container)),
                 container);
             return;
         }
 
-        // try to find the drain's solution
         if (!_solutionSystem.TryGetSolution(target, tank.SolutionName, out var tankSolution))
         {
             return;
         }
 
-        // Try to transfer as much solution as possible to the drain
+        // Try to transfer solutions for transferAmount container value
+        var transferAmount = containerTransferAmount.TransferAmount;
 
         var transferSolution = _solutionSystem.SplitSolution(container, containerSolution,
-            FixedPoint2.Min(containerSolution.Volume, tankSolution.AvailableVolume));
+            FixedPoint2.Min(containerSolution.Volume, tankSolution.AvailableVolume, transferAmount));
 
-        _solutionSystem.TryAddSolution(target, tankSolution, transferSolution);
+        if (!_solutionSystem.TryAddSolution(target, tankSolution, transferSolution))
+        {
+            return;
+        }
+
+        _popupSystem.PopupEntity(
+            Loc.GetString("pourable-component-transfer-solution-in-target-message",
+            ("target", target),
+            ("amount", transferSolution.Volume)),
+            container);
 
         _audioSystem.PlayPvs(tank.ManualPouringSound, target);
-        _ambientSoundSystem.SetAmbience(target, true);
 
         // If drain is full, spill
         if (tankSolution.MaxVolume == tankSolution.Volume)
-        {
             _puddleSystem.TrySpillAt(Transform(target).Coordinates, containerSolution, out var puddle);
-            _popupSystem.PopupEntity(
-                Loc.GetString("drain-component-empty-verb-target-is-full-message", ("object", target)),
-                container);
-        }
     }
 }
