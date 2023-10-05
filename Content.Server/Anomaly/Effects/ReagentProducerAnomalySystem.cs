@@ -119,9 +119,9 @@ public sealed class ReagentProducerAnomalySystem : EntitySystem
     private string GetRandomReagentType(EntityUid uid, ReagentProducerAnomalyComponent component, float severity)
     {
         //Category Weight Randomization
-        var currentWeightDangerous = Lerp(component.WeightSpreadDangerous.X, component.WeightSpreadDangerous.Y, severity);
-        var currentWeightFun = Lerp(component.WeightSpreadFun.X, component.WeightSpreadFun.Y, severity);
-        var currentWeightUseful = Lerp(component.WeightSpreadUseful.X, component.WeightSpreadUseful.Y, severity);
+        var currentWeightDangerous = MathHelper.Lerp(component.WeightSpreadDangerous.X, component.WeightSpreadDangerous.Y, severity);
+        var currentWeightFun = MathHelper.Lerp(component.WeightSpreadFun.X, component.WeightSpreadFun.Y, severity);
+        var currentWeightUseful = MathHelper.Lerp(component.WeightSpreadUseful.X, component.WeightSpreadUseful.Y, severity);
 
         var sumWeight = currentWeightDangerous + currentWeightFun + currentWeightUseful;
         var rnd = _random.NextFloat(0f, sumWeight);
@@ -148,10 +148,5 @@ public sealed class ReagentProducerAnomalySystem : EntitySystem
         //We should never end up here.
         //Maybe Log Error?
         return FallbackReagent;
-    }
-    private float Lerp(float a, float b, float t) //maybe this function is in the engine, but I didn't find it
-    {
-        t = (t < 0) ? 0 : (t > 1) ? 1 : t;
-        return a + (b - a) * t;
     }
 }
