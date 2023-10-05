@@ -110,8 +110,8 @@
       - !type:SpawnEntitiesBehavior
         spawn:
           SpaceQuartz:
-            min: 1
-            max: 2
+            min: 4
+            max: 6
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
 
@@ -153,8 +153,8 @@
       - !type:SpawnEntitiesBehavior
         spawn:
           SteelOre1:
-            min: 1
-            max: 2
+            min: 4
+            max: 6
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
 
@@ -198,8 +198,8 @@
       - !type:SpawnEntitiesBehavior
         spawn:
           UraniumOre1:
-            min: 1
-            max: 2
+            min: 4
+            max: 6
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: PointLight
