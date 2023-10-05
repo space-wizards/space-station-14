@@ -453,6 +453,7 @@
     clothingPrototype: ClothingHeadHelmetHardsuitSyndie
 
 # Syndicate Medic Hardsuit
+- type: entity
   parent: ClothingOuterHardsuitBase
   id: ClothingOuterHardsuitMedic
   name: blood-red medic hardsuit
