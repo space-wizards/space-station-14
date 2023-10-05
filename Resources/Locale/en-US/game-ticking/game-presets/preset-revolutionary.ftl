@@ -10,6 +10,10 @@ head-rev-role-greeting =
     Beware, this won't work on Security, Command, or those wearing sunglasses.
     Viva la revolución!
 
+head-rev-briefing =
+    Use flashes to convert people to your cause.
+    Kill all heads to take over the station.
+
 head-rev-initial-name = [color=#5e9cff]{$name}[/color] was one of the Head Revolutionaries.
 head-rev-initial-name-user = [color=#5e9cff]{$name}[/color] ([color=gray]{$username}[/color]) was one of the Head Revolutionaries.
 
@@ -32,6 +36,8 @@ rev-role-greeting =
     You are tasked with taking over the station and protecting the Head Revolutionaries.
     Eliminate all of the command staff.
     Viva la revolución!
+
+rev-briefing = Help your head revolutionaries kill every head to take over the station.
 
 ## General
 
