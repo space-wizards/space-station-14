@@ -167,6 +167,7 @@ marking-HumanHairTressshoulder = Коса на плече
 marking-HumanHairTrimmed = Под машинку
 marking-HumanHairTrimflat = Под машинку (Плоская)
 marking-HumanHairTwintail = Два хвостика
+marking-HumanHairTwoStrands = Две пряди
 marking-HumanHairUndercut = Андеркат
 marking-HumanHairUndercutleft = Андеркат (Слева)
 marking-HumanHairUndercutright = Андеркат (Справа)
