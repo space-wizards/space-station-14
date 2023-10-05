@@ -260,7 +260,7 @@
   parent: ClothingOuterBase
   id: ClothingOuterFlannelRed
   name: red flannel jacket
-  description: Trees beware!
+  description: An old fashioned red flannel jacket for space autumn.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Misc/flannel_jacket.rsi
@@ -294,7 +294,7 @@
   parent: ClothingOuterBase
   id: ClothingOuterFlannelBlue
   name: blue flannel jacket
-  description: Trees beware!
+  description: An old fashioned blue flannel jacket for space autumn.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Misc/flannel_jacket.rsi
@@ -328,7 +328,7 @@
   parent: ClothingOuterBase
   id: ClothingOuterFlannelGreen
   name: green flannel jacket
-  description: Trees beware!
+  description: An old fashioned green flannel jacket for space autumn.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Misc/flannel_jacket.rsi
