@@ -3,7 +3,6 @@ using Content.Server.Anomaly.Components;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Shared.Anomaly.Components;
 using Robust.Shared.Random;
-using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Chemistry.Components;
 using Robust.Shared.Prototypes;
 using Content.Shared.Sprite;
@@ -29,15 +28,8 @@ public sealed class ReagentProducerAnomalySystem : EntitySystem
     //Useful:
     //Those reagents that the players are hunting for. Very low percentage of loss.
 
-    //Other:
-    //All reagents that exist in the game, with the exception of those prescribed in other lists and the blacklist.
-    //They have low chances of appearing due to the fact that most things are boring and do not bring a
-    //significant effect on the game.
-
     [Dependency] private readonly SolutionContainerSystem _solutionContainer = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly IPrototypeManager _proto = default!;
-    [Dependency] private readonly AnomalySystem _anomaly = default!;
     [Dependency] private readonly PointLightSystem _light = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
@@ -118,30 +110,24 @@ public sealed class ReagentProducerAnomalySystem : EntitySystem
             component.RealReagentProducing *= component.SupercriticalReagentProducingModifier;
     }
 
-    /// <summary>
-    /// returns a random reagent based on a system of random weights.
-    /// First, the category is selected: The category has a minimum and maximum weight,
-    /// the current value depends on severity.
-    /// Accordingly, with the strengthening of the anomaly,
-    /// the chances of falling out of some categories grow, and some fall.
-    ///
-    /// After that, a random reagent in the selected category is selected.
-    ///
-    /// Such a system is made to control the danger and interest of the anomaly more.
-    ///
-    /// ATTENTION! All new reagents appearing in the game will automatically appear in the "Other" category
-    /// </summary>
+    // returns a random reagent based on a system of random weights.
+    // First, the category is selected: The category has a minimum and maximum weight,
+    // the current value depends on severity.
+    // Accordingly, with the strengthening of the anomaly,
+    // the chances of falling out of some categories grow, and some fall.
+    //
+    // After that, a random reagent in the selected category is selected.
+    //
+    // Such a system is made to control the danger and interest of the anomaly more.
     private string GetRandomReagentType(EntityUid uid, ReagentProducerAnomalyComponent component, float severity)
     {
         //Category Weight Randomization
         var currentWeightDangerous = Lerp(component.WeightSpreadDangerous.X, component.WeightSpreadDangerous.Y, severity);
         var currentWeightFun = Lerp(component.WeightSpreadFun.X, component.WeightSpreadFun.Y, severity);
         var currentWeightUseful = Lerp(component.WeightSpreadUseful.X, component.WeightSpreadUseful.Y, severity);
-        var currentWeightOther = Lerp(component.WeightSpreadOther.X, component.WeightSpreadOther.Y, severity);
 
-        var sumWeight = currentWeightDangerous + currentWeightFun + currentWeightUseful + currentWeightOther;
+        var sumWeight = currentWeightDangerous + currentWeightFun + currentWeightUseful;
         var rnd = _random.NextFloat(0f, sumWeight);
-
 
         if (rnd <= currentWeightDangerous && component.DangerousChemicals.Count > 0)
         {
@@ -162,31 +148,9 @@ public sealed class ReagentProducerAnomalySystem : EntitySystem
             var reagent = _random.Pick(component.UsefulChemicals);
             return reagent;
         }
-        else //Pickup other
-        {
-            var allReagents = _proto.EnumeratePrototypes<ReagentPrototype>().Select(proto => proto.ID).ToHashSet();
-
-            foreach (var chem in component.BlacklistChemicals)
-            {
-                allReagents.Remove(chem);
-            }
-            foreach (var chem in component.DangerousChemicals)
-            {
-                allReagents.Remove(chem);
-            }
-            foreach (var chem in component.FunChemicals)
-            {
-                allReagents.Remove(chem);
-            }
-            foreach (var chem in component.UsefulChemicals)
-            {
-                allReagents.Remove(chem);
-            }
-            if (allReagents.Count == 0) return ReagentProducerAnomalyComponent.FallbackReagent;
-
-            var reagent = _random.Pick(allReagents);
-            return reagent;
-        }
+        //We should never end up here.
+        //Maybe Log Error?
+        return ReagentProducerAnomalyComponent.FallbackReagent;
     }
     private float Lerp(float a, float b, float t) //maybe this function is in the engine, but I didn't find it
     {

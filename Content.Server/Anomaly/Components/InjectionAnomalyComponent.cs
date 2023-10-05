@@ -1,4 +1,5 @@
 using Content.Server.Anomaly.Effects;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Anomaly.Components;
 
@@ -37,11 +38,10 @@ public sealed partial class InjectionAnomalyComponent : Component
     /// The name of the prototype of the special effect that appears above the entities into which the injection was carried out
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadOnly)]
-    public string VisualEffectPrototype = "PuddleSparkle";
+    public EntProtoId VisualEffectPrototype = "PuddleSparkle";
     /// <summary>
     /// Solution name that can be drained.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("solution")]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public string Solution { get; set; } = "default";
 }

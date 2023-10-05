@@ -280,34 +280,6 @@
   - type: ReagentProducerAnomaly
     solution: anomaly
     needRecolor: true
-    blacklistChemicals: 
-    # With a limit of 15u injections are too strong
-    - Romerol           
-    - Bungotoxin
-    - Lead
-    - VentCrud
-    - Lexorin
-    # OP Medical        
-    - AmbuzolPlus
-    - Siderlac
-    - Omnizine
-    # Fun Category
-    - Fiber             
-    - GroundBee
-    - ZombieBlood   # AmbusolPlus again
-    - Ichor
-    - Stimulants
-    # Gases - Group Blacklist (and move all gases into groud)
-    - Oxygen
-    - Plasma
-    - Tritium
-    - CarbonDioxide
-    - Nitrogen
-    - Miasma
-    - NitrousOxide
-    - Frezon
-    # base
-    - BasePyrotechnic
     dangerousChemicals:
     - Toxin
     - CarpoToxin

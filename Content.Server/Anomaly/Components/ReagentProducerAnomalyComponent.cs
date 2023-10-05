@@ -16,7 +16,6 @@ public sealed partial class ReagentProducerAnomalyComponent : Component
     //the addition of the reagent will occur instantly when an anomaly appears,
     //and there will not be the first three seconds of a white empty anomaly.
     public float AccumulatedFrametime = 3.0f;
-    
     /// <summary>
     ///     How frequently should this reagent generation update, in seconds?
     /// </summary>
@@ -38,17 +37,7 @@ public sealed partial class ReagentProducerAnomalyComponent : Component
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public Vector2 WeightSpreadUseful = new(1.0f, 1.0f);
-    /// <summary>
-    /// The spread of the random weight of the choice of this category, depending on the severity.
-    /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public Vector2 WeightSpreadOther = new(1.0f, 0.0f);
 
-    /// <summary>
-    /// Blocked reagents for the anomaly.
-    /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public List<ProtoId<ReagentPrototype>> BlacklistChemicals = new();
     /// <summary>
     /// Category of dangerous reagents for injection. Various toxins and poisons
     /// </summary>
