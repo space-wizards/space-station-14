@@ -27,7 +27,7 @@
         maxVol: 250
   - type: SolutionTransfer
     transferAmount: 100
-    maxTransferAmount: 100
+    maxTransferAmount: 250
     minTransferAmount: 10
     canChangeTransferAmount: true
   - type: UserInterface
