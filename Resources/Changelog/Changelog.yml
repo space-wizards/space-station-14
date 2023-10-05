@@ -1,11 +1,4 @@
 Entries:
-- author: Errant
-  changes:
-  - {message: Active energy swords no longer heal small amounts of blunt damage on
-      every hit. Cybersun CEO reportedly thrown out an airlock over "Bluntgate" scandal.,
-    type: Fix}
-  id: 4459
-  time: '2023-08-06T08:19:32.0000000+00:00'
 - author: notafet
   changes:
   - {message: 'Add radiators, which transfer heat from a pipe to its surroundings.',
@@ -2954,3 +2947,8 @@ Entries:
   - {message: Onion rings!, type: Add}
   id: 4958
   time: '2023-10-05T21:31:40.0000000+00:00'
+- author: gusxyz
+  changes:
+  - {message: Monkey's now are able to equip gas masks., type: Add}
+  id: 4959
+  time: '2023-10-05T21:34:37.0000000+00:00'
