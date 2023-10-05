@@ -1,7 +1,5 @@
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Markings;
-using Robust.Client.GameObjects;
-using static Content.Shared.Humanoid.HumanoidAppearanceState;
 
 namespace Content.Client.Humanoid;
 
@@ -42,7 +40,7 @@ public sealed class HumanoidMarkingModifierBoundUserInterface : BoundUserInterfa
             return;
         }
 
-        _window.SetState(cast.MarkingSet, cast.Species, cast.SkinColor, cast.CustomBaseLayers);
+        _window.SetState(cast.MarkingSet, cast.Species, cast.Sex, cast.SkinColor, cast.CustomBaseLayers);
     }
 
     private void SendMarkingSet(MarkingSet set)

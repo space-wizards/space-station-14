@@ -6,7 +6,9 @@
   components:
   - type: Sprite
     sprite: Structures/Decoration/bonfire.rsi
-    state: burning
+    layers:
+      - state: bonfire
+      - state: burning
   - type: PointLight
     radius: 5
     energy: 3
@@ -22,6 +24,11 @@
         behaviors:
           - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: AmbientSound
+    volume: -5
+    range: 5
+    sound:
+      path: /Audio/Ambience/Objects/fireplace.ogg
 
 - type: entity
   id: LegionnaireBonfire
@@ -30,6 +37,7 @@
   description: There, in the land of lava and ash, place to to cook marshmallow and potato.
   components:
   - type: Sprite
-    state: legionnaire_bonfire
+    layers:
+      - state: legionnaire_bonfire
   - type: PointLight
     color: "#FF5601"

@@ -705,7 +705,8 @@
   - type: ConditionalSpawner
     prototypes:
     - MobPenguin
-
+    
+    
 - type: entity
   name: Hellspawn Spawner
   id: SpawnMobHellspawn
@@ -719,3 +720,19 @@
   - type: ConditionalSpawner
     prototypes:
       - MobHellspawn
+      
+- type: entity
+  name: ore crab spawner
+  id: SpawnMobOreCrab
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: quartzcrab
+      sprite: Mobs/Elemental/orecrab.rsi
+  - type: RandomSpawner
+    prototypes:
+      - MobUraniumCrab
+      - MobIronCrab
+      - MobQuartzCrab

@@ -627,6 +627,23 @@
   conditions:
   - !type:TileNotBlocked
 
+- type: construction
+  name: railing round
+  id: RailingRound
+  graph: Railing
+  startNode: start
+  targetNode: railingRound
+  category: construction-category-structures
+  description: Basic railing meant to protect idiots like you from falling.
+  icon:
+    sprite: Structures/Walls/railing.rsi
+    state: round
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+  - !type:TileNotBlocked
+
 # Chain link fencing
 - type: construction
   name: chain link fence

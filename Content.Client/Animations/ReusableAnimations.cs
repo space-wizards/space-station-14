@@ -1,9 +1,10 @@
 using System.Numerics;
-using Content.Shared.Spawners.Components;
+using Robust.Shared.Spawners;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
 using Robust.Shared.Animations;
 using Robust.Shared.Map;
+using TimedDespawnComponent = Robust.Shared.Spawners.TimedDespawnComponent;
 
 namespace Content.Client.Animations
 {
