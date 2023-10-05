@@ -34,6 +34,7 @@
       map: ["enum.SolutionContainerLayers.Fill"]
       visible: false
   - type: MeleeWeapon
+    range: 1.7
     damage:
       types:
         Piercing: 12
@@ -136,6 +137,8 @@
   - type: Sprite
     sprite: Objects/Weapons/Melee/plasma_spear.rsi
   - type: MeleeWeapon
+    animation: WeaponArcSpearPlasma
+    wideAnimation: WeaponArcSpearPlasma
     damage:
       types:
         Piercing: 18

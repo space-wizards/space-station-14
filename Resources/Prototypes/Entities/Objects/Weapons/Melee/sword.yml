@@ -9,6 +9,7 @@
     sprite: Objects/Weapons/Melee/captain_sabre.rsi
     state: icon
   - type: MeleeWeapon
+    wideAnimation: WeaponArcCaptainSabre
     attackRate: 1.5
     damage:
       types:
@@ -41,6 +42,7 @@
     sprite: Objects/Weapons/Melee/katana.rsi
     state: icon
   - type: MeleeWeapon
+    wideAnimation: WeaponArcKatana
     damage:
       types:
         Slash: 25
@@ -61,6 +63,7 @@
     sprite: Objects/Weapons/Melee/energykatana.rsi
     state: icon
   - type: MeleeWeapon
+    wideAnimation: WeaponArcEnergyKatana
     damage:
       types:
         Slash: 30

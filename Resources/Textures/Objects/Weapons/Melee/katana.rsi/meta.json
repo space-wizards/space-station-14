@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken and modified by Taral from tgstation at https://github.com/tgstation/tgstation/pull/20520/commits/47d235721d658027a9effd37177cc8104844e0bf",
+  "copyright": "Taken and modified by Taral from tgstation at https://github.com/tgstation/tgstation/pull/20520/commits/47d235721d658027a9effd37177cc8104844e0bf, weapon arc created by TheShuEd (github) for ss14",
   "size": {
     "x": 32,
     "y": 32
@@ -17,6 +17,9 @@
     {
       "name": "inhand-right",
       "directions": 4
+    },
+    {
+      "name": "weapon-arc"
     }
   ]
 }

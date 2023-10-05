@@ -12,6 +12,7 @@
       - Knife
   - type: ItemCooldown
   - type: MeleeWeapon
+    range: 1.0
     damage:
       types:
         Slash: 12
@@ -31,6 +32,8 @@
   id: KitchenKnife
   description: A general purpose Chef's Knife made by Asters Merchant Guild. Guaranteed to stay sharp for years to come..
   components:
+  - type: MeleeWeapon
+    wideAnimation: WeaponArcKitchenKnife
   - type: Tag
     tags:
     - Knife

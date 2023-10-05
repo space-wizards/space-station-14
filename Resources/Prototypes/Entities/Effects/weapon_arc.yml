@@ -73,6 +73,14 @@
       lifetime: 0.399
 
 - type: entity
+  id: WeaponArcClawWide
+  parent: WeaponArcSlash
+  noSpawn: true
+  components:
+    - type: Sprite
+      state: claw-arc
+
+- type: entity
   id: WeaponArcDisarm
   parent: WeaponArcAnimated
   noSpawn: true
@@ -127,3 +135,4 @@
       state: smash
     - type: TimedDespawn
       lifetime: 0.299
+

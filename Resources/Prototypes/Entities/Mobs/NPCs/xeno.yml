@@ -175,6 +175,8 @@
     speedModifierThresholds:
       40: 0.7
   - type: MeleeWeapon
+    wideAnimation: WeaponArcClawWide
+    angle: 60
     damage:
       groups:
         Brute: 6

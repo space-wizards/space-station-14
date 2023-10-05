@@ -1,0 +1,74 @@
+# armblade
+# baseball_bat
+# chainsaw
+# cult
+# e_sword
+# fireaxe
+
+- type: entity
+  id: WeaponArcFireAxe
+  parent: WeaponArcSlash
+  noSpawn: true
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/fireaxe.rsi
+    state: weapon-arc
+    
+# gohei
+# knife
+
+- type: entity
+  id: WeaponArcKitchenKnife
+  parent: WeaponArcSlash
+  noSpawn: true
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/kitchen_knife.rsi
+    state: weapon-arc
+    
+# mining
+# needle
+# pickaxe
+# spear
+
+- type: entity
+  id: WeaponArcSpearPlasma
+  parent: WeaponArcThrust
+  noSpawn: true
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/plasma_spear.rsi
+    state: weapon-arc
+    
+# stunprod
+# Sword
+
+- type: entity
+  id: WeaponArcCaptainSabre
+  parent: WeaponArcSlash
+  noSpawn: true
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/captain_sabre.rsi
+    state: weapon-arc
+    
+- type: entity
+  id: WeaponArcKatana
+  parent: WeaponArcSlash
+  noSpawn: true
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/katana.rsi
+    state: weapon-arc
+
+- type: entity
+  id: WeaponArcEnergyKatana
+  parent: WeaponArcSlash
+  noSpawn: true
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/energykatana.rsi
+    state: weapon-arc
+    
+# weapon_toolbox
+# white_cane
