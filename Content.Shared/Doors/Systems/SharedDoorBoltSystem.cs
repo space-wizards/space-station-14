@@ -25,7 +25,7 @@ public abstract class SharedDoorBoltSystem : EntitySystem
     {
         if (component.BoltsDown && !args.Force)
         {
-            Popup.PopupClient(Loc.GetString("airlock-component-cannot-pry-is-bolted-message"), uid, args.User);
+            Popup.PopupEntity(Loc.GetString("airlock-component-cannot-pry-is-bolted-message"), uid, args.User);
             args.Cancelled = true;
         }
     }

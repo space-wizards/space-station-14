@@ -26,6 +26,7 @@
     speechVerb: Moth
   - type: TypingIndicator
     proto: moth
+  - type: Perishable
   - type: Butcherable
     butcheringType: Spike
     spawned:
