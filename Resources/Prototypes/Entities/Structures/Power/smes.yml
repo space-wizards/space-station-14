@@ -48,10 +48,10 @@
     - type: PowerMonitoringDevice
       sourceNode: input
       loadNode: output
-    - type: BatteryCharger
+    - type: BatteryDischarger
       voltage: High
       node: output
-    - type: BatteryDischarger
+    - type: BatteryCharger
       voltage: High
       node: input
     - type: PowerNetworkBattery

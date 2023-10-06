@@ -37,7 +37,7 @@ public sealed class NavMapControl : MapGridControl
         [CableType.MediumVoltage] = false,
         [CableType.Apc] = false,
     };
-
+    public bool ShowBeacons = true;
     private Vector2 _offset;
     private bool _draggin;
     private bool _recentering = false;
@@ -408,21 +408,24 @@ public sealed class NavMapControl : MapGridControl
         }
 
         // Beacons
-        var labelOffset = new Vector2(0.5f, 0.5f) * MinimapScale;
-        var rectBuffer = new Vector2(5f, 3f);
-
-        foreach (var beacon in navMap.Beacons)
+        if (ShowBeacons)
         {
-            var position = beacon.Position - offset;
+            var labelOffset = new Vector2(0.5f, 0.5f) * MinimapScale;
+            var rectBuffer = new Vector2(5f, 3f);
 
-            position = Scale(position with { Y = -position.Y });
+            foreach (var beacon in navMap.Beacons)
+            {
+                var position = beacon.Position - offset;
 
-            handle.DrawCircle(position, MinimapScale / 2f, beacon.Color);
-            var textDimensions = handle.GetDimensions(_font, beacon.Text, 1f);
+                position = Scale(position with { Y = -position.Y });
 
-            var labelPosition = position + labelOffset;
-            handle.DrawRect(new UIBox2(labelPosition, labelPosition + textDimensions + rectBuffer * 2), BeaconColor);
-            handle.DrawString(_font, labelPosition + rectBuffer, beacon.Text, beacon.Color);
+                handle.DrawCircle(position, MinimapScale / 2f, beacon.Color);
+                var textDimensions = handle.GetDimensions(_font, beacon.Text, 1f);
+
+                var labelPosition = position + labelOffset;
+                handle.DrawRect(new UIBox2(labelPosition, labelPosition + textDimensions + rectBuffer * 2), BeaconColor);
+                handle.DrawString(_font, labelPosition + rectBuffer, beacon.Text, beacon.Color);
+            }
         }
     }
 

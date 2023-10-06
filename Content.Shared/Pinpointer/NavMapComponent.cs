@@ -50,6 +50,8 @@ public sealed class NavMapChunkPowerCables
         [CableType.Apc] = 0,
     };
 
+    public int Terminals = 0;
+
     public NavMapChunkPowerCables(Vector2i origin)
     {
         Origin = origin;

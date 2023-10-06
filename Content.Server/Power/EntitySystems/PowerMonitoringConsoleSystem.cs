@@ -14,6 +14,7 @@ using Robust.Shared.Players;
 using Content.Server.Power.NodeGroups;
 using System.Linq;
 using Robust.Shared.Map;
+using Content.Server.Power.Nodes;
 
 namespace Content.Server.Power.EntitySystems;
 
@@ -143,7 +144,7 @@ internal sealed class PowerMonitoringConsoleSystem : EntitySystem
                 _entityManager.TryGetComponent<NodeContainerComponent>(uid, out var nodeContainer) &&
                 _entityManager.TryGetComponent<PowerMonitoringDeviceComponent>(uid, out var powerMonitoringDevice))
             {
-                Logger.Debug("Get data for: " + uid);
+                //Logger.Debug("Get data for: " + uid);
                 List<Node> reachableSources = new List<Node>();
                 List<Node> reachableLoads = new List<Node>();
 
@@ -161,11 +162,11 @@ internal sealed class PowerMonitoringConsoleSystem : EntitySystem
                 }
 
                 var reachableNodes = reachableSources.Concat(reachableLoads).ToList();
-     
+
                 _output = GetSpecificPowerCables(mapGrid, reachableNodes);
-                Logger.Debug("reachables: " + reachableNodes.Count);
-                Logger.Debug("no. sources: " + _sources.Count);
-                Logger.Debug("no. loads: " + _loads.Count);
+                //Logger.Debug("reachables: " + reachableNodes.Count);
+                //Logger.Debug("no. sources: " + _sources.Count);
+                //Logger.Debug("no. loads: " + _loads.Count);
             }
         }
 
@@ -297,8 +298,16 @@ internal sealed class PowerMonitoringConsoleSystem : EntitySystem
             var enumerator = grid.GetAnchoredEntitiesEnumerator(gridIndices);
             while (enumerator.MoveNext(out var ent))
             {
-                if (!TryComp<NodeContainerComponent>(ent, out var nodeContainer) ||
-                    !_nodeContainer.TryGetNode<Node>(nodeContainer, "power", out var node))
+                if (!TryComp<NodeContainerComponent>(ent, out var nodeContainer))
+                    continue;
+
+                if (nodeContainer.Nodes.Any(x => x.Value is CableTerminalNode))
+                {
+                    chunk.Terminals |= flag;
+                    continue;
+                }
+
+                if (!_nodeContainer.TryGetNode<Node>(nodeContainer, "power", out var node))
                     continue;
 
                 switch (node.NodeGroupID)

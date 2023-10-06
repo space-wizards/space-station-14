@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
 using Content.Client.Stylesheets;
@@ -33,6 +34,7 @@ public sealed partial class PowerMonitoringWindow : FancyWindow
     private const float UpdateTime = 1.0f;
 
     private int nameCharLimit = 25;
+    private float? _nextScrollStart;
 
     public static int IconSize = 16; // XAML has a `VSeparationOverride` of 20 for each row.
     public event Action<NetEntity?>? RequestPowerMonitoringDataAction;
@@ -76,6 +78,8 @@ public sealed partial class PowerMonitoringWindow : FancyWindow
         ShowMVCable.OnToggled += _ => OnShowCableToggled(ShowMVCable, CableType.MediumVoltage);
         ShowLVCable.OnToggled += _ => OnShowCableToggled(ShowLVCable, CableType.Apc);
 
+        NavMap.ShowBeacons = false;
+
         // Set power monitoring data request action
         RequestPowerMonitoringDataAction += userInterface.RequestPowerMonitoringData;
     }
@@ -106,16 +110,16 @@ public sealed partial class PowerMonitoringWindow : FancyWindow
 
         TotalLoads.FontColorOverride = totalSources < totalLoads && !MathHelper.CloseToPercent(totalSources, totalLoads, 0.1f) ? new Color(180,0,0) : Color.White;
 
-        UpdateChildren(SourcesList, sources);
+        UpdateChildren(SourcesList, sources, null, _loads);
 
         var apcList = loads.Where(x => x.IconEntityPrototypeId.Contains("APC"));
-        UpdateChildren(ApcList, apcList.ToArray());
+        UpdateChildren(ApcList, apcList.ToArray(), _sources, null);
 
         var substationList = loads.Where(x => x.IconEntityPrototypeId.Contains("Substation"));
-        UpdateChildren(SubstationList, substationList.ToArray());
+        UpdateChildren(SubstationList, substationList.ToArray(), _sources, _loads);
 
         var smesList = loads.Where(x => x.IconEntityPrototypeId.Contains("SMES"));
-        UpdateChildren(SMESList, smesList.ToArray());
+        UpdateChildren(SMESList, smesList.ToArray(), _sources, _loads);
 
 
         foreach (var source in sources)
@@ -222,6 +226,8 @@ public sealed partial class PowerMonitoringWindow : FancyWindow
 
         if (monitorCoords != null)
             NavMap.TrackedEntities.Add(monitorCoords.Value, (true, Color.Cyan, icon1));
+
+    
     }
 
     private void AddTrackedEntity(EntityUid uid, EntityCoordinates coords, PowerMonitoringConsoleEntry entry)
@@ -283,17 +289,20 @@ public sealed partial class PowerMonitoringWindow : FancyWindow
         }
     }
 
-    private void AddTrackedLoad(EntityUid uid, EntityCoordinates coords, PowerMonitoringConsoleEntry entry)
-    {
-        if (NavMap.TrackedEntities.TryGetValue(coords, out var tracked))
-        {
-            tracked.Color = Color.Blue;
-            NavMap.TrackedEntities[coords] = tracked;
-        }
-    }
-
     protected override void FrameUpdate(FrameEventArgs args)
     {
+        if (_nextScrollStart != null)
+        {
+            var scroll = MasterTabContainer.Children.ElementAt(MasterTabContainer.CurrentTab) as ScrollContainer;
+            if (scroll == null)
+                return;
+
+            scroll.SetScrollValue(new Vector2(0, _nextScrollStart.Value));
+
+            Logger.Debug("applied scroll: " + _nextScrollStart);
+            _nextScrollStart = null;
+        }
+
         _updateTimer += args.DeltaSeconds;
 
         if (_updateTimer >= UpdateTime)
@@ -325,16 +334,13 @@ public sealed partial class PowerMonitoringWindow : FancyWindow
         if (uid == _trackedEntity)
         {
             child.AddStyleClass(StyleNano.StyleClassButtonColorGreen);
-            //child.UpdateDraw();
         }
 
         else
         {
             child.RemoveStyleClass(StyleNano.StyleClassButtonColorGreen);
-            //child.UpdateDraw();
         }
 
-        child.StyleClasses.Add("OpenLeft");
         child.ToolTip = Loc.GetString(entry.NameLocalized);
 
         if (child.Grid == null)
@@ -400,11 +406,9 @@ public sealed partial class PowerMonitoringWindow : FancyWindow
 
         if (_trackedEntity != null)
         {
-            foreach (var sibling in list.Children)
+            foreach (PowerMonitoringEntry sibling in list.Children)
             {
-                var castSibling = (PowerMonitoringButton) sibling;
-
-                if (castSibling != null && castSibling.EntityUid == _trackedEntity)
+                if (sibling.Button != null && sibling.Button.EntityUid == _trackedEntity)
                 {
                     sibling.RemoveStyleClass(StyleNano.StyleClassButtonColorGreen);
                     break;
@@ -413,9 +417,44 @@ public sealed partial class PowerMonitoringWindow : FancyWindow
         }
 
         _trackedEntity = child.EntityUid;
+
+        if (entry.IconEntityPrototypeId.Contains("APC"))
+        {
+            MasterTabContainer.CurrentTab = 3;
+        }
+        else if (entry.IconEntityPrototypeId.Contains("Substation"))
+        {
+            MasterTabContainer.CurrentTab = 2;
+        }
+        else if (entry.IconEntityPrototypeId.Contains("SMES"))
+        {
+            MasterTabContainer.CurrentTab = 1;
+        }
+        else
+        {
+            MasterTabContainer.CurrentTab = 0;
+        }
+
+        var scroll = MasterTabContainer.Children.ElementAt(MasterTabContainer.CurrentTab) as ScrollContainer;
+        if (scroll == null)
+            return;
+        Logger.Debug("Passed A");
+
+        var grid = scroll.Children.ElementAt(0) as GridContainer;
+        if (grid == null)
+            return;
+        Logger.Debug("Passed B");
+
+        var pos = grid.Children.FirstOrDefault(x => (x is PowerMonitoringEntry) && ((PowerMonitoringEntry)x).EntityUid == _trackedEntity);
+        if (pos == null)
+            return;
+        
+        _nextScrollStart = 40f * pos.GetPositionInParent();
+
+        Logger.Debug("next scroll: " + _nextScrollStart);
     }
 
-    private void UpdateChildren(GridContainer list, PowerMonitoringConsoleEntry[] listVal)
+    private void UpdateChildren(GridContainer list, PowerMonitoringConsoleEntry[] listVal, PowerMonitoringConsoleEntry[]? sources, PowerMonitoringConsoleEntry[]? loads)
     {
         // Remove excess children
         while (list.ChildCount > listVal.Length)
@@ -426,26 +465,150 @@ public sealed partial class PowerMonitoringWindow : FancyWindow
         // Add missing children
         while (list.ChildCount < listVal.Length)
         {
-            var child = new PowerMonitoringButton();
+            var child = new PowerMonitoringEntry();
+            child.Orientation = BoxContainer.LayoutOrientation.Vertical;
+            child.HorizontalExpand = true;
+            list.AddChild(child);
 
-            child.OnButtonUp += args =>
+            var ent = _entManager.GetEntity(listVal.ElementAt(child.GetPositionInParent()).NetEntity);
+            child.EntityUid = ent;
+
+            var button = new PowerMonitoringButton();
+            button.StyleClasses.Add("OpenLeft");
+            child.Button = button;
+            child.AddChild(button);
+
+            button.OnButtonUp += args =>
             {
-                ButtonAction(child, listVal.ElementAt(child.GetPositionInParent()), list);
+                ButtonAction(button, listVal.ElementAt(child.GetPositionInParent()), list);
             };
 
-            list.AddChild(child);
+            var grid = new GridContainer();
+            grid.Columns = 1;
+            grid.HorizontalExpand = true;
+            grid.Margin = new Thickness(20, 5, 0, 0);
+            grid.Visible = false;
+            child.MainGrid = grid;
+            child.AddChild(grid);
+
+            //var sourcesLabel = new Label();
+            //sourcesLabel.Text = "Sources";
+            //sourcesLabel.StyleClasses.Add("StatusFieldTitle");
+            //grid.AddChild(sourcesLabel);
+
+            var subgridSources = new GridContainer();
+            subgridSources.Columns = 1;
+            subgridSources.HorizontalExpand = true;
+            subgridSources.Margin = new Thickness(0, 0, 0, 0);
+            child.Sources = subgridSources;
+            grid.AddChild(subgridSources);
+
+            //var loadsLabel = new Label();
+            //loadsLabel.Text = "Loads";
+            //loadsLabel.StyleClasses.Add("StatusFieldTitle");
+            //grid.AddChild(loadsLabel);
+
+            var subgridLoads = new GridContainer();
+            subgridLoads.Columns = 1;
+            subgridLoads.HorizontalExpand = true;
+            subgridLoads.Margin = new Thickness(0, 0, 0, 0);
+            child.Loads = subgridLoads;
+            grid.AddChild(subgridLoads);
+
+            var spacer = new Control();
+            spacer.Margin = new Thickness(0, 0, 0, 5);
         }
 
         foreach (var child in list.Children)
         {
-            var castChild = (PowerMonitoringButton) child;
+            var castChild = (PowerMonitoringEntry) child;
             if (castChild == null)
                 continue;
+            if (castChild.Button == null)
+                continue;
 
-            UpdateEntry(castChild, listVal.ElementAt(child.GetPositionInParent()));
+            var entry = listVal.ElementAt(child.GetPositionInParent());
+            var ent = _entManager.GetEntity(entry.NetEntity);
+
+            UpdateEntry(castChild.Button, listVal.ElementAt(child.GetPositionInParent()));
+
+            if (castChild.MainGrid == null)
+                continue;
+
+            if (_trackedEntity == ent)
+            {
+                UpdateEntrySourcesLoads(castChild.Sources, sources);
+                UpdateEntrySourcesLoads(castChild.Loads, loads);
+                castChild.MainGrid.Visible = true;
+            }
+
+            else
+                castChild.MainGrid.Visible = false;
+        }
+    }
+
+    private void UpdateEntrySourcesLoads(GridContainer? list, PowerMonitoringConsoleEntry[]? listVal)
+    {
+        if (list == null)
+            return;
+
+        if (listVal == null)
+        {
+            list.Visible = false;
+            return;
+        }
+
+        list.Visible = true;
+
+        // Remove excess children
+        while (list.ChildCount > listVal.Length)
+        {
+            list.RemoveChild(list.GetChild(list.ChildCount - 1));
+        }
+
+        // Add missing children
+        while (list.ChildCount < listVal.Length)
+        {
+            var child = new PowerMonitoringEntry();
+            child.Orientation = BoxContainer.LayoutOrientation.Vertical;
+            child.HorizontalExpand = true;
+            list.AddChild(child);
+
+            var button = new PowerMonitoringButton();
+            button.StyleClasses.Add("OpenBoth");
+            child.Button = button;
+            child.AddChild(button);
+
+            button.OnButtonUp += args =>
+            {
+                ButtonAction(button, listVal.ElementAt(child.GetPositionInParent()), list);
+            };
+        }
+
+        foreach (var child in list.Children)
+        {
+            var castChild = (PowerMonitoringEntry) child;
+            if (castChild == null)
+                continue;
+            if (castChild.Button == null)
+                continue;
+
+            UpdateEntry(castChild.Button, listVal.ElementAt(child.GetPositionInParent()));
         }
     }
 }
+
+
+
+public sealed class PowerMonitoringEntry : BoxContainer
+{
+    public EntityUid EntityUid;
+    public PowerMonitoringButton? Button;
+    public GridContainer? MainGrid;
+    public GridContainer? Sources;
+    public GridContainer? Loads;
+}
+
 
 public sealed class PowerMonitoringButton : Button
 {
