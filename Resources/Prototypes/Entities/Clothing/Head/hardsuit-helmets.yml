@@ -1,5 +1,4 @@
 #When adding new hardsuits, please try to keep the organization consistent with hardsuit.yml (if possible.)
-
 #For now, since locational damage is not a thing, all "combat" hardsuits (with the exception of the deathsquad hardsuit) have the equvilent of a helmet in terms of armor. This is so people don't need to wear both regular, on-station helmets and hardsuits to get full protection.
 #Generally, unless you're adding something like caustic damage, you should probably avoid messing with armor outside of the above scenario.
 
@@ -51,6 +50,7 @@
         shader: unshaded
   - type: PointLight
     color: "#adffe6"
+  - type: EyeProtection
   - type: PressureProtection
     highPressureMultiplier: 0.08
     lowPressureMultiplier: 1000
@@ -71,6 +71,7 @@
     sprite: Clothing/Head/Hardsuits/engineering.rsi
   - type: PointLight
     color: "#ffdbad"
+  - type: EyeProtection #so that they can wear other eyewear like diagnostic HUD when that works
   - type: PressureProtection
     highPressureMultiplier: 0.1
     lowPressureMultiplier: 1000
@@ -143,6 +144,7 @@
     sprite: Clothing/Head/Hardsuits/security.rsi
   - type: PointLight
     color: "#ffeead"
+  - type: FlashImmunity
   - type: PressureProtection
     highPressureMultiplier: 0.525
     lowPressureMultiplier: 1000
@@ -177,6 +179,7 @@
         Heat: 0.95
         Radiation: 0.90
         Caustic: 0.90
+  - type: FlashImmunity
   - type: PressureProtection
     highPressureMultiplier: 0.6
     lowPressureMultiplier: 1000
@@ -195,6 +198,7 @@
     sprite: Clothing/Head/Hardsuits/security-warden.rsi
   - type: PointLight
     color: "#ffeead"
+  - type: FlashImmunity
   - type: PressureProtection
     highPressureMultiplier: 0.525
     lowPressureMultiplier: 1000
@@ -218,6 +222,8 @@
     sprite: Clothing/Head/Hardsuits/capspace.rsi
   - type: Clothing
     sprite: Clothing/Head/Hardsuits/capspace.rsi
+  - type: FlashImmunity
+  - type: EyeProtection
   - type: PressureProtection
     highPressureMultiplier: 0.3
     lowPressureMultiplier: 1000
@@ -236,6 +242,7 @@
     sprite: Clothing/Head/Hardsuits/engineering-white.rsi
   - type: PointLight
     color: "#daffad"
+  - type: EyeProtection
   - type: PressureProtection
     highPressureMultiplier: 0.08
     lowPressureMultiplier: 1000
@@ -290,6 +297,7 @@
     sprite: Clothing/Head/Hardsuits/security-red.rsi
   - type: PointLight
     color: "#ffeead"
+  - type: FlashImmunity
   - type: PressureProtection
     highPressureMultiplier: 0.45
     lowPressureMultiplier: 1000
@@ -327,7 +335,7 @@
   id: ClothingHeadHelmetHardsuitSyndie
   noSpawn: true
   name: blood-red hardsuit helmet
-  description: A heavily armored helmet designed for work in special operations. Property of Gorlex Marauders.
+  description: An advanced red hardsuit helmet designed for work in special operations.
   components:
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/syndicate.rsi
@@ -335,83 +343,8 @@
     sprite: Clothing/Head/Hardsuits/syndicate.rsi
   - type: PointLight
     color: green
-  - type: PressureProtection
-    highPressureMultiplier: 0.08
-    lowPressureMultiplier: 1000
-  - type: Armor
-    modifiers:
-      coefficients:
-        Blunt: 0.9
-        Slash: 0.9
-        Piercing: 0.9
-        Heat: 0.9
-
-#Blood-red Medic Hardsuit
-- type: entity
-  parent: ClothingHeadHardsuitWithLightBase
-  id: ClothingHeadHelmetHardsuitSyndieMedic
-  noSpawn: true
-  name: blood-red medic hardsuit helmet
-  description: An advanced red hardsuit helmet specifically designed for field medic operations.
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/Hardsuits/syndiemedic.rsi
-  - type: Clothing
-    sprite: Clothing/Head/Hardsuits/syndiemedic.rsi
-  - type: PointLight
-    color: green
-  - type: PressureProtection
-    highPressureMultiplier: 0.08
-    lowPressureMultiplier: 1000
-  - type: Armor
-    modifiers:
-      coefficients:
-        Blunt: 0.9
-        Slash: 0.9
-        Piercing: 0.9
-        Heat: 0.9
-
-#Syndicate Elite Hardsuit
-- type: entity
-  parent: ClothingHeadHardsuitWithLightBase
-  id: ClothingHeadHelmetHardsuitSyndieElite
-  noSpawn: true
-  name: syndicate elite helmet
-  description: An elite version of the blood-red hardsuit's helmet, with improved armor and fireproofing. Property of Gorlex Marauders.
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/Hardsuits/syndieelite.rsi
-  - type: Clothing
-    sprite: Clothing/Head/Hardsuits/syndieelite.rsi
-  - type: PointLight
-    color: red
-  - type: PressureProtection
-    highPressureMultiplier: 0.08
-    lowPressureMultiplier: 1000
-  - type: TemperatureProtection
-    coefficient: 0.005
-  - type: Armor
-    modifiers:
-      coefficients:
-        Blunt: 0.9
-        Slash: 0.9
-        Piercing: 0.9
-        Heat: 0.9
-
-#Syndicate Commander Hardsuit
-- type: entity
-  parent: ClothingHeadHardsuitWithLightBase
-  id: ClothingHeadHelmetHardsuitSyndieCommander
-  noSpawn: true
-  name: syndicate commander helmet
-  description: A bulked up version of the blood-red hardsuit's helmet, purpose-built for the commander of a syndicate operative squad. Has significantly improved armor for those deadly front-lines firefights.
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/Hardsuits/syndiecommander.rsi
-  - type: Clothing
-    sprite: Clothing/Head/Hardsuits/syndiecommander.rsi
-  - type: PointLight
-    color: green
+  - type: FlashImmunity
+  - type: EyeProtection
   - type: PressureProtection
     highPressureMultiplier: 0.08
     lowPressureMultiplier: 1000
@@ -435,8 +368,93 @@
     sprite: Clothing/Head/Hardsuits/cybersun.rsi
   - type: Clothing
     sprite: Clothing/Head/Hardsuits/cybersun.rsi
+  - type: FlashImmunity
+  - type: EyeProtection
   - type: PressureProtection
     highPressureMultiplier: 0.3
+    lowPressureMultiplier: 1000
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+        Heat: 0.9
+
+#Blood-red Medic Hardsuit
+- type: entity
+  parent: ClothingHeadHardsuitWithLightBase
+  id: ClothingHeadHelmetHardsuitSyndieMedic
+  noSpawn: true
+  name: blood-red medic hardsuit helmet
+  description: An advanced red hardsuit helmet specifically designed for field medic operations.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hardsuits/syndiemedic.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hardsuits/syndiemedic.rsi
+  - type: PointLight
+    color: green
+  - type: FlashImmunity
+  - type: EyeProtection
+  - type: PressureProtection
+    highPressureMultiplier: 0.08
+    lowPressureMultiplier: 1000
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+        Heat: 0.9
+
+#Syndicate Elite Hardsuit
+- type: entity
+  parent: ClothingHeadHardsuitWithLightBase
+  id: ClothingHeadHelmetHardsuitSyndieElite
+  noSpawn: true
+  name: syndicate elite helmet
+  description: A variant of the blood red helmet designed by the Gorlex Marauders to be exceptionally fireproof and pressure proof.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hardsuits/syndieelite.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hardsuits/syndieelite.rsi
+  - type: PointLight
+    color: red
+  - type: FlashImmunity
+  - type: EyeProtection
+  - type: PressureProtection
+    highPressureMultiplier: 0.08
+    lowPressureMultiplier: 1000
+  - type: TemperatureProtection
+    coefficient: 0.005
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+        Heat: 0.9
+
+#Syndicate Commander Hardsuit
+- type: entity
+  parent: ClothingHeadHardsuitWithLightBase
+  id: ClothingHeadHelmetHardsuitSyndieCommander
+  noSpawn: true
+  name: syndicate commander helmet
+  description: A syndicate hardsuit helmet custom designed for commanders of syndicate operative squads.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hardsuits/syndiecommander.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hardsuits/syndiecommander.rsi
+  - type: PointLight
+    color: green
+  - type: FlashImmunity
+  - type: EyeProtection
+  - type: PressureProtection
+    highPressureMultiplier: 0.08
     lowPressureMultiplier: 1000
   - type: Armor
     modifiers:
@@ -460,6 +478,7 @@
     sprite: Clothing/Head/Hardsuits/wizard.rsi
   - type: PointLight
     color: "#ffadfb"
+  - type: FlashImmunity
   - type: PressureProtection
     highPressureMultiplier: 0.27
     lowPressureMultiplier: 1000
@@ -536,6 +555,7 @@
     sprite: Clothing/Head/Hardsuits/ERThelmets/ertleader.rsi
   - type: PointLight
     color: "#addbff"
+  - type: FlashImmunity
   - type: Armor
     modifiers:
       coefficients:
@@ -557,6 +577,7 @@
     sprite: Clothing/Head/Hardsuits/ERThelmets/ertengineer.rsi
   - type: PointLight
     color: "#f4ffad"
+  - type: FlashImmunity
   - type: Armor
     modifiers:
       coefficients:
@@ -640,6 +661,7 @@
         shader: unshaded
   - type: PointLight
     color: orange
+  - type: FlashImmunity
   - type: PressureProtection
     highPressureMultiplier: 0.08
     lowPressureMultiplier: 1000
@@ -665,6 +687,8 @@
     sprite: Clothing/Head/Hardsuits/deathsquad.rsi
   - type: Clothing
     sprite: Clothing/Head/Hardsuits/deathsquad.rsi
+  - type: FlashImmunity
+  - type: EyeProtection
   - type: PressureProtection
     highPressureMultiplier: 0.08
     lowPressureMultiplier: 1000
