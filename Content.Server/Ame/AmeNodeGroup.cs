@@ -130,7 +130,7 @@ public sealed class AmeNodeGroup : BaseNodeGroup
         // Oh, and don't ever stuff the result of this in an int. Seriously.
         var floatFuel = (float) fuel;
         var floatCores = (float) CoreCount;
-        var powerOutput = 20000f * floatFuel * floatFuel / floatCores;
+        var powerOutput = CalculatePower(floatFuel, floatCores);
         if (fuel <= safeFuelLimit)
             return powerOutput;
 
@@ -175,6 +175,18 @@ public sealed class AmeNodeGroup : BaseNodeGroup
             _chat.SendAdminAlert($"AME overloading: {_entMan.ToPrettyString(_masterController.Value)}");
 
         return powerOutput;
+    }
+
+    /// <summary>
+    /// Calculates the amount of power the AME can produce with the given settings
+    /// </summary>
+    /// <remarks>
+    /// We use float because the math will fail if we use integers
+    /// </remarks>
+
+    public float CalculatePower(float fuel, float cores)
+    {
+        return 20000f * fuel * fuel / cores;
     }
 
     public int GetTotalStability()
