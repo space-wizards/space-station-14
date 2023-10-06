@@ -1,10 +1,4 @@
 Entries:
-- author: notafet
-  changes:
-  - {message: 'Add radiators, which transfer heat from a pipe to its surroundings.',
-    type: Add}
-  id: 4460
-  time: '2023-08-06T08:21:05.0000000+00:00'
 - author: Flareguy
   changes:
   - {message: Added external hull plating tiles & hardened reinforced tiles. They
@@ -2952,3 +2946,8 @@ Entries:
   - {message: Monkey's now are able to equip gas masks., type: Add}
   id: 4959
   time: '2023-10-05T21:34:37.0000000+00:00'
+- author: TheShuEd
+  changes:
+  - {message: The trees and rocks are now rotating to follow the camera., type: Tweak}
+  id: 4960
+  time: '2023-10-06T01:50:25.0000000+00:00'
