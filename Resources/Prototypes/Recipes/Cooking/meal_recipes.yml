@@ -1676,7 +1676,7 @@
 - type: microwaveMealRecipe
   id: RecipeFoodMealSoftTaco
   name: soft taco recipe
-  result: FoodMealTaco
+  result: FoodMealSoftTaco
   time: 10
   solids:
     FoodDoughSlice: 1
