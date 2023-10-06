@@ -19,7 +19,7 @@ using Direction = Robust.Shared.Maths.Direction;
 
 namespace Content.Client.UserInterface.Systems.Actions.Controls;
 
-public sealed class ActionButton : Control
+public sealed class ActionButton : Control, IEntityControl
 {
     private IEntityManager? _entities;
 
@@ -197,7 +197,7 @@ public sealed class ActionButton : Control
     private void UpdateItemIcon()
     {
         if (!Actions.TryGetActionData(ActionId, out var action) ||
-            action is not { EntityIcon: { } entity } ||
+            action is not {EntityIcon: { } entity} ||
             !Entities.HasComponent<SpriteComponent>(entity))
         {
             _bigItemSpriteView.Visible = false;
@@ -344,7 +344,7 @@ public sealed class ActionButton : Control
     public void Depress(GUIBoundKeyEventArgs args, bool depress)
     {
         // action can still be toggled if it's allowed to stay selected
-        if (!Actions.TryGetActionData(ActionId, out var action) || action is not { Enabled: true })
+        if (!Actions.TryGetActionData(ActionId, out var action) || action is not {Enabled: true})
             return;
 
         if (_depressed && !depress)
@@ -401,4 +401,6 @@ public sealed class ActionButton : Control
 
         SetOnlyStylePseudoClass(ContainerButton.StylePseudoClassNormal);
     }
+
+    EntityUid? IEntityControl.UiEntity => ActionId;
 }

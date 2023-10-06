@@ -18,6 +18,7 @@ public sealed class ToggleableClothingSystem : EntitySystem
 {
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
     [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
+    [Dependency] private readonly ActionContainerSystem _actionContainer = default!;
     [Dependency] private readonly InventorySystem _inventorySystem = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
@@ -258,10 +259,12 @@ public sealed class ToggleableClothingSystem : EntitySystem
 
     private void OnGetActions(EntityUid uid, ToggleableClothingComponent component, GetItemActionsEvent args)
     {
-        if (component.ClothingUid == null || (args.SlotFlags & component.RequiredFlags) != component.RequiredFlags)
-            return;
-
-        args.AddAction(ref component.ActionEntity, component.Action);
+        if (component.ClothingUid != null
+            && component.ActionEntity != null
+            && (args.SlotFlags & component.RequiredFlags) == component.RequiredFlags)
+        {
+            args.AddAction(component.ActionEntity.Value);
+        }
     }
 
     private void OnInit(EntityUid uid, ToggleableClothingComponent component, ComponentInit args)
@@ -275,7 +278,7 @@ public sealed class ToggleableClothingSystem : EntitySystem
     /// </summary>
     private void OnMapInit(EntityUid uid, ToggleableClothingComponent component, MapInitEvent args)
     {
-        if (component.Container!.ContainedEntity is EntityUid ent)
+        if (component.Container!.ContainedEntity is {} ent)
         {
             DebugTools.Assert(component.ClothingUid == ent, "Unexpected entity present inside of a toggleable clothing container.");
             return;
@@ -295,11 +298,8 @@ public sealed class ToggleableClothingSystem : EntitySystem
             component.Container.Insert(component.ClothingUid.Value, EntityManager, ownerTransform: xform);
         }
 
-        if (_actionsSystem.TryGetActionData(component.ActionEntity, out var action))
-        {
-            action.EntityIcon = component.ClothingUid;
-            _actionsSystem.Dirty(component.ActionEntity);
-        }
+        if (_actionContainer.EnsureAction(uid, ref component.ActionEntity, out var action, component.Action))
+            _actionsSystem.SetEntityIcon(component.ActionEntity.Value, component.ClothingUid, action);
     }
 }
 

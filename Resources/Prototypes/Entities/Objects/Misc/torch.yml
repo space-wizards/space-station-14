@@ -57,11 +57,9 @@
           isLooped: true
         - !type:FadeBehaviour # have the radius start small and get larger as it starts to burn
           id: turn_on
-          interpolate: Linear
           maxDuration: 8.0
           startValue: 1.0
           endValue: 6.0
-          property: Radius
         - !type:RandomizeBehaviour # weaker flicker as it fades out
           id: fade_out
           interpolate: Nearest
@@ -73,8 +71,6 @@
           isLooped: true
         - !type:FadeBehaviour # fade out radius as it burns out
           id: fade_out
-          interpolate: Linear
           maxDuration: 4.0
           startValue: 6.0
           endValue: 1.0
-          property: Radius

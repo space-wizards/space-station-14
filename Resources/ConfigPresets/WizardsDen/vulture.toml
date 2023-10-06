@@ -1,0 +1,11 @@
+﻿# Configuration preset used on Wizard's Den Leviathan
+
+[game]
+hostname = "[EN] Wizard's Den Vulture [US East 2]"
+soft_max_players = 80
+
+[hub]
+tags = "lang:en,region:am_n_e,rp:low"
+
+[worldgen]
+enabled = true

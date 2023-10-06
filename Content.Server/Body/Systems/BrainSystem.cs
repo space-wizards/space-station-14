@@ -19,28 +19,14 @@ namespace Content.Server.Body.Systems
         {
             base.Initialize();
 
-            SubscribeLocalEvent<BrainComponent, AddedToBodyEvent>((uid, _, args) => HandleMind(args.Body, uid));
-            SubscribeLocalEvent<BrainComponent, AddedToPartEvent>((uid, _, args) => HandleMind(args.Part, uid));
             SubscribeLocalEvent<BrainComponent, AddedToPartInBodyEvent>((uid, _, args) => HandleMind(args.Body, uid));
-            SubscribeLocalEvent<BrainComponent, RemovedFromBodyEvent>(OnRemovedFromBody);
-            SubscribeLocalEvent<BrainComponent, RemovedFromPartEvent>((uid, _, args) => HandleMind(uid, args.Old));
             SubscribeLocalEvent<BrainComponent, RemovedFromPartInBodyEvent>((uid, _, args) => HandleMind(args.OldBody, uid));
-        }
-
-        private void OnRemovedFromBody(EntityUid uid, BrainComponent component, RemovedFromBodyEvent args)
-        {
-            // This one needs to be special, okay?
-            if (!EntityManager.TryGetComponent(uid, out OrganComponent? organ) ||
-                organ.ParentSlot is not {Parent: var parent})
-                return;
-
-            HandleMind(parent, args.Old);
         }
 
         private void HandleMind(EntityUid newEntity, EntityUid oldEntity)
         {
             EnsureComp<MindContainerComponent>(newEntity);
-            var oldMind = EnsureComp<MindContainerComponent>(oldEntity);
+            EnsureComp<MindContainerComponent>(oldEntity);
 
             var ghostOnMove = EnsureComp<GhostOnMoveComponent>(newEntity);
             if (HasComp<BodyComponent>(newEntity))

@@ -43,14 +43,11 @@ namespace Content.Server.Bed
             {
                 AddComp<HealOnBuckleHealingComponent>(uid);
                 component.NextHealTime = _timing.CurTime + TimeSpan.FromSeconds(component.HealTime);
-                component.SleepAction = Spawn(SleepingSystem.SleepActionId);
-                _actionsSystem.AddAction(args.BuckledEntity, component.SleepAction.Value, null);
+                _actionsSystem.AddAction(args.BuckledEntity, ref component.SleepAction, SleepingSystem.SleepActionId, uid);
                 return;
             }
 
-            if (component.SleepAction != null)
-                _actionsSystem.RemoveAction(args.BuckledEntity, component.SleepAction.Value);
-
+            _actionsSystem.RemoveAction(args.BuckledEntity, component.SleepAction);
             _sleepingSystem.TryWaking(args.BuckledEntity);
             RemComp<HealOnBuckleHealingComponent>(uid);
         }

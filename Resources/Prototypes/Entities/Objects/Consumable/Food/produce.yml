@@ -548,7 +548,7 @@
 
 - type: entity
   name: tomato
-  parent: FoodProduceBase
+  parent: [FoodProduceBase, ItemHeftyBase]
   id: FoodTomato
   description: I say to-mah-to, you say tom-mae-to.
   components:
@@ -576,15 +576,6 @@
       reagents:
       - ReagentId: JuiceTomato
         Quantity: 10
-  - type: DamageOnLand
-    damage:
-      types:
-        Blunt: 1
-  - type: DamageOtherOnHit
-    damage:
-      types:
-        Blunt: 1
-       #Dignity: 25
   - type: Damageable
     damageContainer: Biological
   - type: DamageOnHighSpeedImpact
@@ -1329,7 +1320,7 @@
 
 - type: entity
   name: watermelon
-  parent: FoodProduceBase
+  parent: [FoodProduceBase, ItemHeftyBase]
   id: FoodWatermelon
   description: Round green object that you can slice and eat.
   components:
@@ -1358,14 +1349,6 @@
       reagents:
       - ReagentId: JuiceWatermelon
         Quantity: 20
-  - type: DamageOnLand
-    damage:
-      types:
-        Blunt: 1
-  - type: DamageOtherOnHit
-    damage:
-      types:
-        Blunt: 1
   - type: Damageable
     damageContainer: Biological
   - type: DamageOnHighSpeedImpact
@@ -1451,3 +1434,84 @@
       reagents:
       - ReagentId: JuiceGrape
         Quantity: 10
+
+- type: entity
+  name: berries
+  parent: FoodProduceBase
+  id: FoodBerries
+  description: A handful of various types of berries.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - berry
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 11
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
+        - ReagentId: Vitamin
+          Quantity: 4
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/berries.rsi
+  - type: Produce
+    seedId: berries
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: JuiceBerry
+        Quantity: 10
+
+- type: entity
+  name: bungo fruit
+  parent: FoodProduceBase
+  id: FoodBungo
+  description: The humble bungo fruit.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - bungo
+  - type: Food
+    trash: FoodBungoPit
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+        - ReagentId: Enzyme
+          Quantity: 10
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/bungo.rsi
+  - type: Produce
+    seedId: bungo
+
+- type: entity
+  name: bungo pit
+  parent: FoodInjectableBase
+  id: FoodBungoPit
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/bungo.rsi
+    state: pit
+  - type: Tag
+    tags:
+    - Recyclable
+    - Trash
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 7
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 2
+        - ReagentId: Bungotoxin
+          Quantity: 5
+  - type: Extractable
+    grindableSolutionName: food
+  - type: Seed
+    seedId: bungo
+  - type: SpaceGarbage
+  - type: BadFood

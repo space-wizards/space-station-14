@@ -876,6 +876,7 @@
     clumsySound:
       path: /Audio/Animals/monkey_scream.ogg
   - type: IdExaminable
+  - type: AlwaysRevolutionaryConvertible
 
 - type: entity
   name: guidebook monkey
@@ -980,7 +981,6 @@
     - Trash
     - VimPilot
     - Mouse
-    - DoorBumpOpener
   - type: Respirator
     damage:
       types:
@@ -2098,6 +2098,8 @@
     interactFailureString: petting-failure-generic
     interactSuccessSound:
       path: /Audio/Animals/cat_meow.ogg
+  - type: Respirator #It just works?
+    minSaturation: 5.0
 
 - type: entity
   name: caracal cat
@@ -2414,7 +2416,7 @@
         Base: dead
   - type: Butcherable
     spawned:
-    - id: FoodMeat
+    - id: FoodMeatBacon
       amount: 6
   - type: Grammar
     attributes:
