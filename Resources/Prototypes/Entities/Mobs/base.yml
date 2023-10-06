@@ -1,7 +1,6 @@
 ﻿# The progenitor. This should only container the most basic components possible.
 # Only put things on here if every mob *must* have it. This includes ghosts.
 - type: entity
-  save: false
   id: BaseMob
   abstract: true
   components:
@@ -46,7 +45,6 @@
 
 # Used for mobs that have health and can take damage.
 - type: entity
-  save: false
   id: MobDamageable
   abstract: true
   components:
@@ -92,7 +90,6 @@
 
 # Used for mobs that can enter combat mode and can attack.
 - type: entity
-  save: false
   id: MobCombat
   abstract: true
   components:
@@ -105,7 +102,6 @@
 
 # Used for mobs that are affected by atmospherics, pressure, and heat
 - type: entity
-  save: false
   id: MobAtmosExposed
   abstract: true
   components:
@@ -163,7 +159,6 @@
 
 # Used for mobs that can be set on fire
 - type: entity
-  save: false
   id: MobFlammable
   abstract: true
   components:
@@ -179,7 +174,6 @@
 
 # Used for mobs that need to breathe
 - type: entity
-  save: false
   id: MobRespirator
   abstract: true
   components:
@@ -194,7 +188,6 @@
 
 # Used for mobs that have a bloodstream
 - type: entity
-  save: false
   id: MobBloodstream
   abstract: true
   components:

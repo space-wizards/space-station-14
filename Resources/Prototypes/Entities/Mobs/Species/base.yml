@@ -1,5 +1,4 @@
 - type: entity
-  save: false
   parent:
   - BaseMob
   - MobDamageable
@@ -222,7 +221,6 @@
     - DoorBumpOpener
 
 - type: entity
-  save: false
   parent:
   - MobBloodstream
   - MobRespirator
@@ -290,7 +288,6 @@
         Asphyxiation: -1.0
 
 - type: entity
-  save: false
   id: BaseSpeciesDummy
   abstract: true
   components:
