@@ -16,3 +16,112 @@
         reagents:
         - ReagentId: Nutriment
           Quantity: 6.66 # Just using the same values as the bun values, since the recipe for taco shells is roughly the same as buns.
+# Base
+
+- type: entity
+  parent: FoodInjectableBase
+  id: FoodTacoBase
+  abstract: true
+  components:
+  - type: FlavorProfile
+    flavors:
+      - crunchy
+      - meaty
+      - cheesy
+  - type: Food
+    transferAmount: 3
+  - type: Sprite
+    sprite: Objects/Consumable/Food/taco.rsi
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 15
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 7
+        - ReagentId: Vitamin
+          Quantity: 3
+  - type: Item
+    sprite: Objects/Consumable/Food/taco.rsi
+
+- type: entity
+  name: beef taco
+  parent: FoodTacoBase
+  id: FoodTacoBeef
+  description: A very basic and run of the mill beef taco, now with cheese!
+  components:
+  - type: Food
+  - type: Sprite
+    state: beeftaco
+
+- type: entity
+  name: chicken taco
+  parent: FoodTacoBase
+  id: FoodTacoChicken
+  description: A very basic and run of the mill chicken taco, now with cheese!
+  components:
+  - type: Food
+  - type: Sprite
+    state: chickentaco
+
+- type: entity
+  name: fish taco
+  parent: FoodTacoBase
+  id: FoodTacoFish
+  description: Sounds kinda gross, but it's actually not that bad.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - crunchy
+      - fishy
+  - type: Food
+  - type: Sprite
+    state: fishtaco
+
+- type: entity
+  name: rat taco
+  parent: FoodTacoBase
+  id: FoodTacoRat
+  description: Yeah, that looks about right...
+  components:
+  - type: Food
+  - type: Sprite
+    state: rattaco
+
+- type: entity
+  name: beef taco supreme
+  parent: FoodTacoBase
+  id: FoodTacoSupremeBeef
+  description: It's like a regular beef taco, but surpeme!
+  components:
+  - type: Food
+  - type: Sprite
+    state: beeftacosupreme
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+        - ReagentId: Vitamin
+          Quantity: 5
+
+- type: entity
+  name: chicken taco supreme
+  parent: FoodTacoBase
+  id: FoodTacoSupremeChicken
+  description: It's like a regular chicken taco, but surpeme!
+  components:
+  - type: Food
+  - type: Sprite
+    state: chickentacosupreme
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+        - ReagentId: Vitamin
+          Quantity: 5
