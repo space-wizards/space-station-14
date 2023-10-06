@@ -18,7 +18,6 @@ public sealed class AirlockSystem : SharedAirlockSystem
     [Dependency] private readonly WiresSystem _wiresSystem = default!;
     [Dependency] private readonly PowerReceiverSystem _power = default!;
     [Dependency] private readonly DoorBoltSystem _bolts = default!;
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
     public override void Initialize()
     {
@@ -153,8 +152,8 @@ public sealed class AirlockSystem : SharedAirlockSystem
     {
         if (TryComp<WiresPanelComponent>(uid, out var panel) &&
             panel.Open &&
-            _prototypeManager.TryIndex<WiresPanelSecurityLevelPrototype>(panel.CurrentSecurityLevelID, out var securityLevelPrototype) &&
-            securityLevelPrototype.WiresAccessible &&
+            TryComp<WiresPanelSecurityComponent>(uid, out var wiresPanelSecurity) &&
+            wiresPanelSecurity.WiresAccessible &&
             TryComp<ActorComponent>(args.User, out var actor))
         {
             _wiresSystem.OpenUserInterface(uid, actor.PlayerSession);
