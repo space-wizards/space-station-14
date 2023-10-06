@@ -203,6 +203,9 @@ public abstract class SharedStunSystem : EntitySystem
         float walkSpeedMultiplier = 1f, float runSpeedMultiplier = 1f,
         StatusEffectsComponent? status = null)
     {
+        if (walkSpeedMultiplier == 1f && runSpeedMultiplier == 1f)
+            return false;
+
         if (!Resolve(uid, ref status, false))
             return false;
 
