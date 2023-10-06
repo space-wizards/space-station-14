@@ -10,7 +10,14 @@ namespace Content.Shared.Hands.Components;
 public sealed partial class HandsComponent : Component
 {
     /// <summary>
+    ///     The name of the currently active hand.
+    /// </summary>
+    [DataField]
+    public string? ActiveHandName;
+
+    /// <summary>
     ///     The currently active hand.
+    ///     Updated whenever ActiveHandName is.
     /// </summary>
     [ViewVariables]
     public Hand? ActiveHand;
@@ -21,7 +28,7 @@ public sealed partial class HandsComponent : Component
     [ViewVariables]
     public EntityUid? ActiveHandEntity => ActiveHand?.HeldEntity;
 
-    [ViewVariables]
+    [DataField]
     public Dictionary<string, Hand> Hands = new();
 
     public int Count => Hands.Count;
@@ -59,20 +66,20 @@ public sealed partial class HandsComponent : Component
     public readonly Dictionary<HandLocation, HashSet<string>> RevealedLayers = new();
 }
 
-[Serializable, NetSerializable]
-public sealed class Hand //TODO: This should definitely be a struct - Jezi
+[DataDefinition, Serializable, NetSerializable]
+public sealed partial class Hand //TODO: This should definitely be a struct - Jezi
 {
-    [ViewVariables]
-    public string Name { get; }
+    [DataField(required: true)]
+    public string Name;
 
-    [ViewVariables]
-    public HandLocation Location { get; }
+    [DataField(required: true)]
+    public HandLocation Location;
 
     /// <summary>
     ///     The container used to hold the contents of this hand. Nullable because the client must get the containers via <see cref="ContainerManagerComponent"/>,
     ///     which may not be synced with the server when the client hands are created.
     /// </summary>
-    [ViewVariables, NonSerialized]
+    [DataField, NonSerialized]
     public ContainerSlot? Container;
 
     [ViewVariables]
