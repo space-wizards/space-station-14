@@ -415,7 +415,7 @@
   name: flattened tortilla dough
   parent: FoodBakingBase
   id: FoodDoughTortillaFlat
-  decription: A flattened slice of tortilla dough, cook this to get a taco shell.
+  description: A flattened slice of tortilla dough, cook this to get a taco shell.
   components:
   - type: FlavorProfile
     flavors:
