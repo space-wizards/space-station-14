@@ -1,0 +1,263 @@
+- type: entity
+  abstract: true
+  parent: BaseObjective
+  id: BaseTraitorObjective
+  components:
+  - type: Objective
+    issuer: syndicate
+  - type: RoleRequirement
+    roles:
+      components:
+      - TraitorRole
+
+- type: entity
+  abstract: true
+  parent: [BaseTraitorObjective, BaseSocialObjective]
+  id: BaseTraitorSocialObjective
+  components:
+  - type: Objective
+    icon:
+      sprite: Objects/Misc/bureaucracy.rsi
+      state: folder-white
+  - type: MultipleTraitorsRequirement
+
+- type: entity
+  abstract: true
+  parent: [BaseTraitorObjective, BaseStealObjective]
+  id: BaseTraitorStealObjective
+  components:
+  - type: Objective
+    difficulty: 2.75
+
+# state
+
+- type: entity
+  noSpawn: true
+  parent: [BaseTraitorObjective, BaseLivingObjective]
+  id: EscapeShuttleObjective
+  name: Escape to centcom alive and unrestrained.
+  description: One of our undercover agents will debrief you when you arrive. Don't show up in cuffs.
+  components:
+  - type: Objective
+    difficulty: 1.3
+    icon:
+      sprite: Structures/Furniture/chairs.rsi
+      state: shuttle
+  - type: EscapeShuttleCondition
+
+- type: entity
+  noSpawn: true
+  parent: BaseTraitorObjective
+  id: DieObjective
+  name: Die a glorious death
+  description: Die.
+  components:
+  - type: Objective
+    difficulty: 0.5
+    icon:
+      sprite: Mobs/Ghosts/ghost_human.rsi
+      state: icon
+  - type: ObjectiveBlacklistRequirement
+    blacklist:
+      components:
+      - EscapeShuttleCondition
+      - StealCondition
+  - type: DieCondition
+
+# kill
+
+- type: entity
+  noSpawn: true
+  parent: [BaseTraitorObjective, BaseKillObjective]
+  id: KillRandomPersonObjective
+  description: Do it however you like, just make sure they don't make it to centcom.
+  components:
+  - type: Objective
+    difficulty: 1.75
+    unique: false
+  - type: TargetObjective
+    title: objective-condition-kill-person-title
+  - type: PickRandomPerson
+
+- type: entity
+  noSpawn: true
+  parent: [BaseTraitorObjective, BaseKillObjective]
+  id: KillRandomHeadObjective
+  description: We need this head gone and you probably know why. Good luck, agent.
+  components:
+  - type: Objective
+    # technically its still possible for KillRandomPersonObjective to roll a head but this is guaranteed, so higher difficulty
+    difficulty: 3.0
+    # killing 1 head is enough
+    unique: true
+  - type: TargetObjective
+    title: objective-condition-kill-head-title
+  - type: PickRandomHead
+  - type: KillPersonCondition
+    # don't count missing evac as killing as heads are higher profile, so you really need to do the dirty work
+    # if ce flies a shittle to centcom you better find a way onto it
+    requireDead: true
+
+# social
+
+- type: entity
+  noSpawn: true
+  parent: [BaseTraitorSocialObjective, BaseKeepAliveObjective]
+  id: RandomTraitorAliveObjective
+  description: Identify yourself at your own risk. We just need them alive.
+  components:
+  - type: Objective
+    difficulty: 1.75
+  - type: TargetObjective
+    title: objective-condition-other-traitor-alive-title
+  - type: RandomTraitorAlive
+
+- type: entity
+  noSpawn: true
+  parent: [BaseTraitorSocialObjective, BaseHelpProgressObjective]
+  id: RandomTraitorProgressObjective
+  description: Identify yourself at your own risk. We just need them to succeed.
+  components:
+  - type: Objective
+    difficulty: 2.5
+  - type: TargetObjective
+    title: objective-condition-other-traitor-progress-title
+  - type: RandomTraitorProgress
+
+# steal
+
+## cmo
+
+- type: entity
+  noSpawn: true
+  parent: BaseTraitorStealObjective
+  id: CMOHyposprayStealObjective
+  components:
+  - type: NotJobRequirement
+    job: ChiefMedicalOfficer
+  - type: StealCondition
+    prototype: Hypospray
+    owner: job-name-cmo
+
+## rd
+
+- type: entity
+  abstract: true
+  parent: BaseTraitorStealObjective
+  id: BaseRDObjective
+  components:
+  - type: NotJobRequirement
+    job: ResearchDirector
+  - type: StealCondition
+    owner: job-name-rd
+
+- type: entity
+  noSpawn: true
+  parent: BaseRDObjective
+  id: RDHardsuitStealObjective
+  components:
+  - type: StealCondition
+    prototype: ClothingOuterHardsuitRd
+
+- type: entity
+  noSpawn: true
+  parent: BaseRDObjective
+  id: HandTeleporterStealObjective
+  components:
+  - type: StealCondition
+    prototype: HandTeleporter
+
+## hos
+
+- type: entity
+  noSpawn: true
+  parent: BaseTraitorStealObjective
+  id: SecretDocumentsStealObjective
+  components:
+  - type: Objective
+    # hos has a gun ce does not, higher difficulty than most
+    difficulty: 3
+  - type: NotJobRequirement
+    job: HeadOfSecurity
+  - type: StealCondition
+    prototype: BookSecretDocuments
+    owner: job-name-hos
+
+## ce
+
+- type: entity
+  noSpawn: true
+  parent: BaseTraitorStealObjective
+  id: MagbootsStealObjective
+  components:
+  - type: NotJobRequirement
+    job: ChiefEngineer
+  - type: StealCondition
+    prototype: ClothingShoesBootsMagAdv
+    owner: job-name-ce
+
+## hop
+
+- type: entity
+  noSpawn: true
+  parent: BaseTraitorStealObjective
+  id: CorgiMeatStealObjective
+  components:
+  - type: NotJobRequirement
+    job: HeadOfPersonnel
+  - type: StealCondition
+    prototype: FoodMeatCorgi
+    owner: objective-condition-steal-Ian
+
+## cap
+
+- type: entity
+  abstract: true
+  parent: BaseTraitorStealObjective
+  id: BaseCaptainObjective
+  components:
+  - type: Objective
+    # sorry ce but your jordans are not as high security as the caps gear
+    difficulty: 3.5
+  - type: NotJobRequirement
+    job: Captain
+
+- type: entity
+  noSpawn: true
+  parent: BaseCaptainObjective
+  id: CaptainIDStealObjective
+  components:
+  - type: StealCondition
+    prototype: CaptainIDCard
+
+- type: entity
+  noSpawn: true
+  parent: BaseCaptainObjective
+  id: CaptainJetpackStealObjective
+  components:
+  - type: StealCondition
+    prototype: JetpackCaptainFilled
+
+- type: entity
+  noSpawn: true
+  parent: BaseCaptainObjective
+  id: CaptainGunStealObjective
+  components:
+  - type: StealCondition
+    prototype: WeaponAntiqueLaser
+    owner: job-name-captain
+
+- type: entity
+  noSpawn: true
+  parent: BaseCaptainObjective
+  id: NukeDiskStealObjective
+  components:
+  - type: Objective
+    # high difficulty since the hardest item both to steal, and to not get caught down the road,
+    # since anyone with a pinpointer can track you down and kill you
+    # it's close to being a stealth loneop
+    difficulty: 4
+  - type: NotCommandRequirement
+  - type: StealCondition
+    prototype: NukeDisk
+    owner: objective-condition-steal-station

@@ -152,7 +152,7 @@ namespace Content.Server.Medical.BiomassReclaimer
             if (!HasComp<MobStateComponent>(args.Used) || !CanGib(uid, args.Used, component))
                 return;
 
-            _doAfterSystem.TryStartDoAfter(new DoAfterArgs(args.User, 7f, new ReclaimerDoAfterEvent(), uid, target: args.Target, used: args.Used)
+            _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, args.User, 7f, new ReclaimerDoAfterEvent(), uid, target: args.Target, used: args.Used)
             {
                 BreakOnTargetMove = true,
                 BreakOnUserMove = true,

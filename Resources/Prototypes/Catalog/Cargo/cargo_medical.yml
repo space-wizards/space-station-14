@@ -24,7 +24,7 @@
     sprite: Objects/Specific/Medical/firstaidkits.rsi
     state: burnkit
   product: CrateEmergencyBurnKit
-  cost: 600
+  cost: 700
   category: Medical
   group: market
 
@@ -95,6 +95,16 @@
     state: icon
   product: CrateVirologyBiosuit
   cost: 800
+  category: Medical
+  group: market
+
+- type: cargoProduct
+  id: MedicalMindShieldImplants
+  icon:
+    sprite: Objects/Specific/Chemistry/syringe.rsi
+    state: syringe_base0
+  product: CrateMindShieldImplants
+  cost: 5000
   category: Medical
   group: market
 

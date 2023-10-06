@@ -258,6 +258,7 @@ namespace Content.IntegrationTests.Tests.Buckle
             var entityManager = server.ResolveDependency<IEntityManager>();
             var handsSys = entityManager.EntitySysManager.GetEntitySystem<SharedHandsSystem>();
             var buckleSystem = entityManager.EntitySysManager.GetEntitySystem<SharedBuckleSystem>();
+            var xformSystem = entityManager.System<SharedTransformSystem>();
 
             await server.WaitAssertion(() =>
             {
@@ -309,7 +310,7 @@ namespace Content.IntegrationTests.Tests.Buckle
                 // Break our guy's kneecaps
                 foreach (var leg in legs)
                 {
-                    bodySystem.DropPart(leg.Id, leg.Component);
+                    xformSystem.DetachParentToNull(leg.Id, entityManager.GetComponent<TransformComponent>(leg.Id));
                 }
             });
 

@@ -1,7 +1,8 @@
 - type: entity
   id: RadiationCollector
   name: radiation collector
-  description: A machine that collects radiation and turns it into power.
+  suffix: Empty tank
+  description: A machine that collects radiation and turns it into power. Requires plasma gas to function.
   placement:
     mode: SnapgridCenter
   components:
@@ -38,6 +39,12 @@
         !type:CableDeviceNode
         nodeGroupID: HVPower
   - type: RadiationCollector
+    chargeModifier: 7500
+    radiationReactiveGases:
+      - reactantPrototype: Plasma
+        powerGenerationEfficiency: 1
+        reactantBreakdownRate: 0.0002
+        byproductPrototype: Tritium
     # Note that this doesn't matter too much (see next comment)
     # However it does act as a cap on power receivable via the collector.
   - type: Battery
@@ -55,3 +62,38 @@
     supplyRampTolerance: 1000000000
   - type: GuideHelp
     guides: [ Singularity, Power ]
+  - type: ContainerContainer
+    containers:
+      GasTank: !type:ContainerSlot {}
+  - type: ItemSlots
+    slots:
+      GasTank:
+        startingItem: PlasmaTank
+        whitelist:
+          components:
+          - GasTank
+
+- type: entity
+  id: RadiationCollectorNoTank
+  suffix: No tank
+  parent: RadiationCollector
+  components:
+  - type: ItemSlots
+    slots:
+      GasTank:
+        whitelist:
+          components:
+          - GasTank
+        
+- type: entity
+  id: RadiationCollectorFullTank
+  suffix: Filled tank
+  parent: RadiationCollector
+  components:
+  - type: ItemSlots
+    slots:
+      GasTank:
+        startingItem: PlasmaTankFilled
+        whitelist:
+          components:
+          - GasTank

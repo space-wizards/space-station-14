@@ -4,7 +4,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Item;
 using Content.Shared.Light;
-using Content.Shared.Light.Component;
+using Content.Shared.Light.Components;
 using Content.Shared.Temperature;
 using Content.Shared.Toggleable;
 using Content.Shared.Tools.Components;
@@ -110,7 +110,7 @@ public sealed class EnergySwordSystem : EntitySystem
         {
             weaponComp.HitSound = comp.OnHitOff;
             if (comp.Secret)
-                weaponComp.HideFromExamine = true;
+                weaponComp.Hidden = true;
         }
 
         if (comp.IsSharp)
@@ -135,7 +135,7 @@ public sealed class EnergySwordSystem : EntitySystem
         {
             weaponComp.HitSound = comp.OnHitOn;
             if (comp.Secret)
-                weaponComp.HideFromExamine = false;
+                weaponComp.Hidden = false;
         }
 
         if (TryComp<DisarmMalusComponent>(uid, out var malus))
