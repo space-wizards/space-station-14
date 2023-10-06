@@ -6,6 +6,7 @@ using Content.Shared.Clothing.Components;
 using Content.Shared.Loadout;
 using Content.Shared.Inventory;
 using Robust.Shared.Prototypes;
+using Content.Shared.Ganimed.SponsorManager;
 
 namespace Content.Server.Loadout;
 
@@ -18,6 +19,7 @@ public sealed class LoadoutSystem : EntitySystem
     [Dependency] private readonly InventorySystem _inventorySystem = default!;
     [Dependency] private readonly HandsSystem _handsSystem = default!;
     [Dependency] private readonly StorageSystem _storageSystem = default!;
+	[Dependency] private readonly SponsorManager _sponsorManager = default!;
 
     public override void Initialize()
     {
@@ -26,8 +28,23 @@ public sealed class LoadoutSystem : EntitySystem
 
     private void OnPlayerSpawned(PlayerSpawnCompleteEvent ev)
     {
-
-        foreach (var loadoutId in ev.Profile.LoadoutPreferences)
+		int loadoutTotal = 0;
+		int loadoutMax = !(ev.Player is null) && !(ev.Player.ConnectedClient is null) 
+			&& _sponsorManager.IsSponsor(ev.Player.ConnectedClient.UserName)
+				? 20 : 14;
+		
+		foreach (var loadoutId in ev.Profile.LoadoutPreferences)
+        {
+			if (!_prototypeManager.TryIndex<LoadoutPrototype>(loadoutId, out var loadout))
+                continue;
+			loadoutTotal += loadout.Cost;
+			if (loadoutMax - loadoutTotal < 0) 
+			{
+				return;
+			}
+		}
+		
+		foreach (var loadoutId in ev.Profile.LoadoutPreferences)
         {
             if (!_prototypeManager.TryIndex<LoadoutPrototype>(loadoutId, out var loadout))
                 continue;

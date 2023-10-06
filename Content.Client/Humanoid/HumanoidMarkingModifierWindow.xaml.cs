@@ -83,8 +83,14 @@ public sealed partial class HumanoidMarkingModifierWindow : DefaultWindow
         {
             eyesColor = eyes.Color.Value;
         }
+		
+		var speakerColor = Color.White;
+        if (info.TryGetValue(HumanoidVisualLayers.Speaker, out var speaker) && speaker.Color != null)
+        {
+            speakerColor = speaker.Color.Value;
+        }
 
-        MarkingPickerWidget.SetData(markings, species, sex, skinColor, eyesColor);
+        MarkingPickerWidget.SetData(markings, species, sex, skinColor, eyesColor, speakerColor);
     }
 
     private sealed class HumanoidBaseLayerModifier : BoxContainer

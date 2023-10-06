@@ -217,7 +217,7 @@ namespace Content.Client.Lobby.UI
                     if (loadout.Exclusive && invSystem.TryUnequip(dummy, firstSlotName, out var removedItem, true, true))
                         entMan.DeleteEntity(removedItem.Value);
 
-                    if (!invSystem.TryEquip(dummy, entity, slot.Name, true))
+                    if (!invSystem.TryEquip(dummy, entity, slot.Name, true, true))
                         continue;
 
                     isEquipped = true;

@@ -113,6 +113,11 @@
                                 <Label Text="{Loc 'humanoid-profile-editor-eyes-label'}" />
                                 <humanoid:EyeColorPicker Name="CEyeColorPicker" />
                             </BoxContainer>
+                            <!-- Speaker -->
+                            <BoxContainer Margin="10" Orientation="Vertical">
+                                <Label Text="{Loc 'humanoid-profile-editor-speaker-label'}" />
+                                <humanoid:SpeakerColorPicker Name="CSpeakerColorPicker" />
+                            </BoxContainer>
                         </BoxContainer>
                     </ScrollContainer>
                 </BoxContainer>

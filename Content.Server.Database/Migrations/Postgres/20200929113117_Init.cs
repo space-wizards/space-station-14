@@ -107,6 +107,7 @@ namespace Content.Server.Database.Migrations.Postgres
                     facial_hair_name = table.Column<string>(nullable: false),
                     facial_hair_color = table.Column<string>(nullable: false),
                     eye_color = table.Column<string>(nullable: false),
+                    speaker_color = table.Column<string>(nullable: false),
                     skin_color = table.Column<string>(nullable: false),
                     pref_unavailable = table.Column<int>(nullable: false),
                     preference_id = table.Column<int>(nullable: false)

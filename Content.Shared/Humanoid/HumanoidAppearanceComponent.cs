@@ -11,7 +11,8 @@ namespace Content.Shared.Humanoid;
 [NetworkedComponent, RegisterComponent, AutoGenerateComponentState(true)]
 public sealed partial class HumanoidAppearanceComponent : Component
 {
-    public MarkingSet ClientOldMarkings = new();
+	
+	public MarkingSet ClientOldMarkings = new();
 
     [DataField, AutoNetworkedField]
     public MarkingSet MarkingSet = new();
@@ -45,7 +46,7 @@ public sealed partial class HumanoidAppearanceComponent : Component
     ///     base humanoid to spawn, etc.
     /// </summary>
     [DataField(required: true), AutoNetworkedField]
-    public ProtoId<SpeciesPrototype> Species { get; set; }
+    public ProtoId<SpeciesPrototype> Species { get; set; } = "Human";
 
     /// <summary>
     ///     The initial profile and base layers to apply to this humanoid.
@@ -76,7 +77,7 @@ public sealed partial class HumanoidAppearanceComponent : Component
 	
 	[ViewVariables(VVAccess.ReadWrite)]
     [DataField("speakerColor")]
-    public Color SpeakerColor = Color.White;
+    public Color SpeakerColor = Color.Brown;
 
     /// <summary>
     ///     Hair color of this humanoid. Used to avoid looping through all markings

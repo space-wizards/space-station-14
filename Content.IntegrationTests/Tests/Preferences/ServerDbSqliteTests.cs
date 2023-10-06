@@ -50,6 +50,7 @@ namespace Content.IntegrationTests.Tests.Preferences
                     Color.Aquamarine,
                     Color.Azure,
                     Color.Beige,
+                    Color.Beige,
                     new ()
                 ),
                 ClothingPreference.Jumpskirt,

@@ -1,3 +1,4 @@
+generic-not-yet-implemented = Ещё не реализовано =(
 humanoid-profile-editor-randomize-everything-button = Сгенерировать случайного
 humanoid-profile-editor-name-label = Имя:
 humanoid-profile-editor-name-random-button = Сгенерировать
@@ -22,6 +23,7 @@ humanoid-profile-editor-save-button = Сохранить
 humanoid-profile-editor-clothing-label = Одежда:
 humanoid-profile-editor-backpack-label = Сумка:
 humanoid-profile-editor-eyes-label = Цвет глаз:
+humanoid-profile-editor-speaker-label = Цвет имени:
 humanoid-profile-editor-jobs-tab = Должности
 humanoid-profile-editor-preference-unavailable-stay-in-lobby-button = Остаться в лобби, если должность недоступна.
 humanoid-profile-editor-preference-unavailable-spawn-as-overflow-button = Получить должность "{ $overflowJob }", если должность недоступна.

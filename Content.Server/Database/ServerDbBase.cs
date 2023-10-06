@@ -214,6 +214,7 @@ namespace Content.Server.Database
                     profile.FacialHairName,
                     Color.FromHex(profile.FacialHairColor),
                     Color.FromHex(profile.EyeColor),
+                    Color.FromHex(profile.SpeakerColor),
                     Color.FromHex(profile.SkinColor),
                     markings
                 ),
@@ -249,6 +250,7 @@ namespace Content.Server.Database
             profile.FacialHairName = appearance.FacialHairStyleId;
             profile.FacialHairColor = appearance.FacialHairColor.ToHex();
             profile.EyeColor = appearance.EyeColor.ToHex();
+            profile.SpeakerColor = appearance.SpeakerColor.ToHex();
             profile.SkinColor = appearance.SkinColor.ToHex();
             profile.Clothing = humanoid.Clothing.ToString();
             profile.Backpack = humanoid.Backpack.ToString();

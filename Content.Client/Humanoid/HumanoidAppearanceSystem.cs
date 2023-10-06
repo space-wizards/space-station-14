@@ -170,6 +170,7 @@ public sealed class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
                 prototype,
                 profile.Appearance.SkinColor,
                 profile.Appearance.EyeColor,
+				profile.Appearance.SpeakerColor,
                 markings
             );
             markings.AddBack(prototype.MarkingCategory, new Marking(marking.MarkingId, markingColors));
@@ -180,6 +181,7 @@ public sealed class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
         markings.EnsureDefault(
             profile.Appearance.SkinColor,
             profile.Appearance.EyeColor,
+			profile.Appearance.SpeakerColor,
             _markingManager);
 
         DebugTools.Assert(IsClientSide(uid));
