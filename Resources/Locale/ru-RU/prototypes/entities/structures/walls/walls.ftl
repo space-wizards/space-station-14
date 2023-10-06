@@ -90,3 +90,5 @@ ent-WallPlastitaniumDiagonal = пластитановая стена
     .suffix = диагональная
 ent-WallMeat = мясная стена
     .desc = Липко.
+ent-WallWeb = стена из паутины
+    .desc = Удерживает пауков внутри и снаружи.

@@ -41,10 +41,9 @@ ent-ClothingBackpackSatchelClown = клоунская сумка
     .desc = Для быстрого бега от СБ.
 ent-ClothingBackpackSatchelBrigmedic = сумка бригмедика
     .desc = Стерильная сумка для медицинских нужд.
-ent-ClothingBackpackSatchelAtmospherics = atmospherics satchel
+ent-ClothingBackpackSatchelAtmospherics = сумка атмоса
     .desc = Прочная сумка, изготовленная из огнеупорных волокон. Пахнет плазмой.
-ent-ClothingBackpackSatchelCargo = cargo satchel
+ent-ClothingBackpackSatchelCargo = сумка карго
     .desc = Прочная сумка для кражи награбленного груза.
-ent-ClothingBackpackSatchelMime = mime satchel
+ent-ClothingBackpackSatchelMime = мимская сумка
     .desc = Сумка, предназначенная для безмолвного и выразительного искусства мима.
-

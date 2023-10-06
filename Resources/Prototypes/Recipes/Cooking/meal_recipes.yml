@@ -568,7 +568,6 @@
     Flour: 15
     Egg: 6
   solids:
-    FoodPlate: 1
     FoodButter: 1
 
 - type: microwaveMealRecipe
@@ -1224,6 +1223,19 @@
     UncookedAnimalProteins: 6
   solids:
     FoodDoughSlice: 3
+
+- type: microwaveMealRecipe
+  id: RecipeBrownies
+  name: brownie recipe
+  result: FoodBakedBrownieBatch
+  time: 25
+  reagents:
+    Flour: 15
+    Sugar: 30
+  solids:
+    FoodButter: 2
+    FoodSnackChocolateBar: 2
+    FoodEgg: 3
     
 #Donks i guess
 - type: microwaveMealRecipe
@@ -1515,7 +1527,7 @@
     MaterialCloth1: 1
   reagents:
     TranexamicAcid: 50
-    Spaceacillin: 50
+    Cryptobiolin: 50
 
 - type: microwaveMealRecipe
   id: RecipeRegenerativeMesh
@@ -1632,3 +1644,34 @@
   solids:
     FoodChevreSlice: 1
     FoodBreadBaguetteSlice: 1
+
+- type: microwaveMealRecipe
+  id: RecipeCookedSpaceshroom
+  name: cooked spaceshroom recipe
+  result: FoodSpaceshroomCooked
+  time: 5
+  solids:
+    FoodSpaceshroom: 1
+
+#cannabis    
+- type: microwaveMealRecipe
+  id: RecipeCannabisButter
+  name: cannabis butter recipe
+  result: FoodCannabisButter
+  time: 15
+  solids:
+    FoodButter: 1
+    LeavesCannabis: 6
+
+- type: microwaveMealRecipe
+  id: RecipeCannabisBrownies
+  name: cannabis brownie recipe
+  result: FoodBakedCannabisBrownieBatch
+  time: 25
+  reagents:
+    Flour: 15
+    Sugar: 30
+  solids:
+    FoodCannabisButter: 2
+    FoodSnackChocolateBar: 2
+    FoodEgg: 3

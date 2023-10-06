@@ -6,8 +6,6 @@
   abstract: true
   description: Now that's a nice pasta!
   components:
-  - type: Food
-    trash: FoodPlate
   - type: Sprite
     sprite: Objects/Consumable/Food/noodles.rsi
   - type: SolutionContainerManager
@@ -32,9 +30,7 @@
     flavors:
       - pasta
   - type: Sprite
-    layers:
-    - state: plate
-    - state: boiled
+    state: boiled
 # Tastes like pasta.
 
 - type: entity
@@ -48,9 +44,7 @@
       - pasta
       - tomato
   - type: Sprite
-    layers:
-    - state: plate
-    - state: tomato
+    state: tomato
 # Tastes like pasta, tomato.
 
 - type: entity
@@ -86,9 +80,7 @@
       - pasta
       - meaty
   - type: Sprite
-    layers:
-    - state: plate
-    - state: meatball
+    state: meatball
   - type: SolutionContainerManager
     solutions:
       food:
@@ -111,9 +103,7 @@
       - pasta
       - meaty
   - type: Sprite
-    layers:
-    - state: plate
-    - state: spesslaw
+    state: spesslaw
   - type: SolutionContainerManager
     solutions:
       food:
@@ -138,9 +128,7 @@
       - eggplant
       - carrot
   - type: Sprite
-    layers:
-    - state: plate
-    - state: chowmein
+    state: chowmein
   - type: SolutionContainerManager
     solutions:
       food:
@@ -163,9 +151,7 @@
       - pasta
       - butter
   - type: Sprite
-    layers:
-    - state: plate
-    - state: butter
+    state: butter
   - type: SolutionContainerManager
     solutions:
       food:

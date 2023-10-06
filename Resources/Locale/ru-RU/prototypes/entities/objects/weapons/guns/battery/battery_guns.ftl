@@ -48,3 +48,5 @@ ent-WeaponAdvancedLaser = продвинутый лазерный пистоле
     .suffix = Пистолет
 ent-WeaponBehonkerLaser = око бехонкера
     .desc = Глаз бехонкера, при сжатии выстреливает лазером.
+ent-WeaponPistolCHIMPUpgraded = экспериментальный Р.И.Ч.
+    .desc = Похоже, этот Р.И.Ч. бьёт сильнее обычного.

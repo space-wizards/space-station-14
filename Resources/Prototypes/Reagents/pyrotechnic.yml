@@ -34,6 +34,7 @@
         damage:
           types:
             Heat: 2
+            Poison: 1
 
 - type: reagent
   id: Napalm
@@ -59,7 +60,9 @@
       - !type:HealthChange
         damage:
           types:
-            Heat: 1
+            Heat: 2
+            Poison: 1
+            Caustic: 0.5 # based off napalm being an irritant
       - !type:FlammableReaction
         multiplier: 0.4
 
@@ -79,6 +82,7 @@
         damage:
           types:
             Heat: 3
+            Poison: 1
       - !type:FlammableReaction
         multiplier: 0.1
       - !type:AdjustTemperature
@@ -108,7 +112,9 @@
       - !type:HealthChange
         damage:
           types:
-            Heat: 1
+            Heat: 2
+            Poison: 1
+            Caustic: 0.5 # CLF3 is corrosive
       - !type:FlammableReaction
         multiplier: 0.2
       - !type:AdjustTemperature

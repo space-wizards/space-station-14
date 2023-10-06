@@ -61,7 +61,7 @@ namespace Content.Shared.Pulling
                 return false;
             }
 
-            if (EntityManager.TryGetComponent<BuckleComponent?>(puller, out var buckle))
+            if (EntityManager.TryGetComponent(puller, out BuckleComponent? buckle))
             {
                 // Prevent people pulling the chair they're on, etc.
                 if (buckle is { PullStrap: false, Buckled: true } && (buckle.LastEntityBuckledTo == pulled))
@@ -113,11 +113,11 @@ namespace Content.Shared.Pulling
 
         public bool TryStartPull(EntityUid puller, EntityUid pullable)
         {
-            if (!EntityManager.TryGetComponent<SharedPullerComponent?>(puller, out var pullerComp))
+            if (!EntityManager.TryGetComponent(puller, out SharedPullerComponent? pullerComp))
             {
                 return false;
             }
-            if (!EntityManager.TryGetComponent<SharedPullableComponent?>(pullable, out var pullableComp))
+            if (!EntityManager.TryGetComponent(pullable, out SharedPullableComponent? pullableComp))
             {
                 return false;
             }
@@ -154,7 +154,7 @@ namespace Content.Shared.Pulling
             var oldPullable = puller.Pulling;
             if (oldPullable != null)
             {
-                if (EntityManager.TryGetComponent<SharedPullableComponent?>(oldPullable.Value, out var oldPullableComp))
+                if (EntityManager.TryGetComponent(oldPullable.Value, out SharedPullableComponent? oldPullableComp))
                 {
                     if (!TryStopPull(oldPullableComp))
                     {

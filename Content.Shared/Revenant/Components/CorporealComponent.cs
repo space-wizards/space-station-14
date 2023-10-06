@@ -5,7 +5,7 @@ namespace Content.Shared.Revenant.Components;
 /// Meant to be used in conjunction with statusEffectSystem
 /// </summary>
 [RegisterComponent]
-public sealed class CorporealComponent : Component
+public sealed partial class CorporealComponent : Component
 {
     /// <summary>
     /// The debuff applied when the component is present.

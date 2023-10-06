@@ -166,17 +166,17 @@
   id: WardrobeCargoFilled
   suffix: Filled
   parent: WardrobeCargo
-  description: "This locker? Maybe 500 spacebucks. Brotherhood? Priceless."
+  description: "This locker? Maybe 500 spesos. Brotherhood? Priceless."
   components:
-    - type: StorageFill
-      contents:
-        - id: ClothingHeadHatCargosoft
-        - id: ClothingUniformJumpsuitCargo
-        - id: ClothingBackpack
-        - id: ClothingShoesColorBlack
-        - id: ClothingUniformJumpskirtCargo
-        - id: ClothingHandsGlovesFingerless
-        - id: AppraisalTool
+  - type: StorageFill
+    contents:
+      - id: ClothingHeadHatCargosoft
+      - id: ClothingUniformJumpsuitCargo
+      - id: ClothingBackpack
+      - id: ClothingShoesColorBlack
+      - id: ClothingUniformJumpskirtCargo
+      - id: ClothingHandsGlovesFingerless
+      - id: AppraisalTool
 
 - type: entity
   id: WardrobeSalvageFilled

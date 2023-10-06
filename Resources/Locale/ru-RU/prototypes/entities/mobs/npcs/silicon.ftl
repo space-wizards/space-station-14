@@ -15,3 +15,7 @@ ent-MobJonkBot = джонкбот
     .suffix = { "" }
 ent-MobMimeBot = мимбот
     .desc = Почему бы не помахать мимботу?
+ent-MobSupplyBot = КаргоБот
+    .desc = Деливери Карго!
+ent-MobTaxiBot = ТаксиБот
+    .desc = Куда вам надо?

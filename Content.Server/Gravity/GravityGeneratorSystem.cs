@@ -7,6 +7,7 @@ using Content.Shared.Interaction;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Players;
+using Content.Server.Construction;
 
 namespace Content.Server.Gravity
 {
@@ -26,6 +27,7 @@ namespace Content.Server.Gravity
             SubscribeLocalEvent<GravityGeneratorComponent, ComponentShutdown>(OnComponentShutdown);
             SubscribeLocalEvent<GravityGeneratorComponent, EntParentChangedMessage>(OnParentChanged); // Or just anchor changed?
             SubscribeLocalEvent<GravityGeneratorComponent, InteractHandEvent>(OnInteractHand);
+            SubscribeLocalEvent<GravityGeneratorComponent, RefreshPartsEvent>(OnRefreshParts);
             SubscribeLocalEvent<GravityGeneratorComponent, SharedGravityGeneratorComponent.SwitchGeneratorMessage>(
                 OnSwitchGenerator);
         }
@@ -84,11 +86,11 @@ namespace Content.Server.Gravity
 
                 var active = gravGen.GravityActive;
                 var lastCharge = gravGen.Charge;
-                gravGen.Charge = Math.Clamp(gravGen.Charge + frameTime * chargeRate, 0, 1);
+                gravGen.Charge = Math.Clamp(gravGen.Charge + frameTime * chargeRate, 0, gravGen.MaxCharge);
                 if (chargeRate > 0)
                 {
                     // Charging.
-                    if (MathHelper.CloseTo(gravGen.Charge, 1) && !gravGen.GravityActive)
+                    if (MathHelper.CloseTo(gravGen.Charge, gravGen.MaxCharge) && !gravGen.GravityActive)
                     {
                         gravGen.GravityActive = true;
                     }
@@ -158,7 +160,7 @@ namespace Content.Server.Gravity
             if (!_uiSystem.IsUiOpen(component.Owner, SharedGravityGeneratorComponent.GravityGeneratorUiKey.Key))
                 return;
 
-            var chargeTarget = chargeRate < 0 ? 0 : 1;
+            var chargeTarget = chargeRate < 0 ? 0 : component.MaxCharge;
             short chargeEta;
             var atTarget = false;
             if (MathHelper.CloseTo(component.Charge, chargeTarget))
@@ -253,6 +255,12 @@ namespace Content.Server.Gravity
             {
                 MakeOn(uid, grav, appearance);
             }
+        }
+
+        private void OnRefreshParts(EntityUid uid, GravityGeneratorComponent component, RefreshPartsEvent args)
+        {
+            var maxChargeMultipler = args.PartRatings[component.MachinePartMaxChargeMultiplier];
+            component.MaxCharge = maxChargeMultipler * 1;
         }
 
         private void MakeBroken(EntityUid uid, GravityGeneratorComponent component, AppearanceComponent? appearance)

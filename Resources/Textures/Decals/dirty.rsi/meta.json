@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "tgstation at 606005645d3a14c4439e5ce14785650121b22678",
+  "copyright": "tgstation at 606005645d3a14c4439e5ce14785650121b22678, dirtheavy-mono made by github user @Flareguy",
   "size": {
     "x": 32,
     "y": 32
@@ -18,6 +18,9 @@
     },
     {
       "name": "dirtheavy"
+    },
+    {
+      "name": "dirtheavy-mono"
     },
     {
       "name": "damaged"

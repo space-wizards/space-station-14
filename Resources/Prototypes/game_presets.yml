@@ -52,15 +52,18 @@
     - Traitor
     - BasicStationEventScheduler
 
-- type: gamePreset
-  id: Deathmatch
-  alias:
-    - deathmatch
-    - dm
-  name: death-match-title
-  description: death-match-description
-  rules:
-    - DeathMatch
+# - type: gamePreset
+#   id: Deathmatch
+#   alias:
+#     - deathmatch
+#     - dm
+#   name: death-match-title
+#   description: death-match-description
+#   maxPlayers: 15
+#   showInVote: false
+#   supportedMaps: DeathMatchMapPool
+#   rules:
+#     - DeathMatch31
 
 - type: gamePreset
   id: Nukeops
@@ -98,3 +101,19 @@
   rules:
     - Pirates
     - BasicStationEventScheduler
+
+- type: gamePreset
+  id: PeaceAndTranquility
+  alias:
+    - Peace
+  name: peace-and-tranquility-title
+  description: peace-and-tranquility-desc
+  showInVote: true
+
+- type: gamePreset
+  id: EventsMode
+  alias:
+    - Events
+  name: event-mode-title
+  description: event-mode-desc
+  showInVote: false

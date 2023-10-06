@@ -30,3 +30,5 @@ ent-CartridgeAnomalousParticleOmega = картридж (Омега-частиц�
     .suffix = { "" }
 ent-CartridgeMagnumIncendiary = патрон (.45 магнум зажигательный)
     .desc = { ent-BaseCartridgeMagnum.desc }
+ent-CartridgeMagnumAP = патрон (.45 магнум бронебойный )
+    .desc = { ent-BaseCartridgeMagnum.desc }

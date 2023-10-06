@@ -3,3 +3,6 @@ ent-WeaponWaterPistol = водяной пистолет
 
 ent-WeaponWaterBlaster = водяной бластер
     .desc = С этим плохишом ты будешь самым крутым парнем на летнем барбекю.
+
+ent-WeaponWaterBlasterSuper = супер водяной бластер
+    .desc = Нет! Нет! Нет, только не глаза!

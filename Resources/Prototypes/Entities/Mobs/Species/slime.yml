@@ -18,6 +18,7 @@
   - type: HumanoidAppearance
     species: SlimePerson
   - type: Speech
+    speechVerb: Slime
     speechSounds: Slime
   - type: Vocal
     sounds:

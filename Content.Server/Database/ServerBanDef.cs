@@ -80,12 +80,13 @@ namespace Content.Server.Database
                     ? loc.GetString("ban-banned-permanent-appeal", ("link", appeal))
                     : loc.GetString("ban-banned-permanent");
             }
-
+            //Imperial we need additional msg for appela in Discord
             return $"""
                    {loc.GetString("ban-banned-1")}
                    {loc.GetString("ban-banned-2", ("reason", Reason))}
                    {expires}
                    {loc.GetString("ban-banned-3")}
+                   {loc.GetString("ban-you-can-appeal")}
                    """;
         }
     }

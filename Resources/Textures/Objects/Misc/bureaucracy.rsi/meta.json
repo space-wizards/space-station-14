@@ -44,6 +44,9 @@
       "name": "folder-overlay-paper"
     },
     {
+      "name": "folder-sec-doc"
+    },
+    {
       "name": "label_cart"
     },
     {
@@ -311,6 +314,9 @@
     {
       "name": "clipboard-equipped-BELT",
       "directions": 4
+    },
+    {
+        "name": "paper_stamp-iaa"
     }
   ]
 }

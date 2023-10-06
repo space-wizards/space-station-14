@@ -1,5 +1,5 @@
-using Content.Server.Mind;
-using Content.Server.Objectives.Interfaces;
+using Content.Shared.Mind;
+using Content.Shared.Objectives.Interfaces;
 using JetBrains.Annotations;
 using Robust.Shared.Utility;
 
@@ -7,13 +7,13 @@ namespace Content.Server.Objectives.Conditions
 {
     [UsedImplicitly]
     [DataDefinition]
-    public sealed class DieCondition : IObjectiveCondition
+    public sealed partial class DieCondition : IObjectiveCondition
     {
-        private Mind.Mind? _mind;
+        private MindComponent? _mind;
 
-        public IObjectiveCondition GetAssigned(Mind.Mind mind)
+        public IObjectiveCondition GetAssigned(EntityUid mindId, MindComponent mind)
         {
-            return new DieCondition {_mind = mind};
+            return new DieCondition { _mind = mind };
         }
 
         public string Title => Loc.GetString("objective-condition-die-title");
@@ -27,7 +27,7 @@ namespace Content.Server.Objectives.Conditions
             get
             {
                 var entityManager = IoCManager.Resolve<EntityManager>();
-                var mindSystem = entityManager.System<MindSystem>();
+                var mindSystem = entityManager.System<SharedMindSystem>();
                 return _mind == null || mindSystem.IsCharacterDeadIc(_mind) ? 1f : 0f;
             }
         }

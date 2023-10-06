@@ -39,3 +39,5 @@ ent-ChairFoldingSpawnFolded = { ent-ChairFolding }
     .desc = { ent-ChairFolding.desc }
 ent-ChairMeat = мясной стул
     .desc = Неприятно потный.
+ent-ChairWeb = кресло из паутины
+    .desc = Для настоящих веб-разработчиков.

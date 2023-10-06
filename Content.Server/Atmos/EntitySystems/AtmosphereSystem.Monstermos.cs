@@ -470,7 +470,8 @@ namespace Content.Server.Atmos.EntitySystems
 
                 // Pressure as a multiple of normal air pressure (takes temperature into account)
                 float pressureMultiple = (otherTile.Air.Pressure / 110.0f);
-                var sum = otherTile.Air.TotalMoles * Atmospherics.SpacingEscapeRatio * pressureMultiple;
+                //var sum = otherTile.Air.TotalMoles * Atmospherics.SpacingEscapeRatio * pressureMultiple; //Imperial Old line
+                var sum = otherTile.Air.TotalMoles * SpacingEscapeRatio * pressureMultiple;//Imperial Move SpacingEscapeRatio to CVars
                 if (sum < Atmospherics.SpacingMinGas)
                 {
                     // Boost the last bit of air draining from the tile.

@@ -6,7 +6,7 @@
     Nitrogen:
       amount: 1
   products:
-    Ammonia: 3
+    Ammonia: 4
 
 - type: reaction
   id: Diethylamine
@@ -40,7 +40,7 @@
     Oxygen:
       amount: 1
   products:
-    Acetone: 3
+    Acetone: 2
 
 - type: reaction
   id: FoamingAgent
@@ -57,7 +57,7 @@
   reactants:
     SulfuricAcid:
       amount: 1
-    Chlorine:
+    Plasma:
       amount: 1
     Potassium:
       amount: 1
@@ -176,6 +176,24 @@
       prototypeId: AluminiumMetalFoam
       sound:
         path: /Audio/Effects/extinguish.ogg
+
+- type: reaction
+  id: UraniumEmpExplosion
+  impact: High
+  priority: 20
+  reactants:
+    Iron:
+      amount: 1
+    Uranium:
+      amount: 1
+    Aluminium:
+      amount: 1
+  effects:
+    - !type:EmpReactionEffect
+      rangePerUnit: 0.2
+      maxRange: 6
+      energyConsumption: 12500
+      duration: 15
 
 - type: reaction
   id: TableSalt
@@ -358,6 +376,8 @@
   id: SodiumCarbonate
   impact: Medium
   reactants:
+    Ammonia:
+      amount: 1
     TableSalt:
       amount: 1
     Carbon:
@@ -365,4 +385,4 @@
     Oxygen:
       amount: 1
   products:
-    SodiumCarbonate: 3
+    SodiumCarbonate: 4

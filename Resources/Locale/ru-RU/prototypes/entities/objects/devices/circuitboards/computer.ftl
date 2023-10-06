@@ -95,3 +95,5 @@ ent-CargoBountyComputerCircuitboard = консоль задач карго (ко
     .desc = Консольная плата для консоли задач карго.
 ent-ComputerMassMediaCircuitboard = консоль новостей (консольная плата)
     .desc = Напишите свое послание всему миру!
+ent-StationRecordsComputerCircuitboard = консоль станционного учёта (консольная плата)
+    .desc = Компьютерная печатная плата для консоли станционного учёта.

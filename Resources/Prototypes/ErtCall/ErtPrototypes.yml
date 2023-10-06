@@ -1,7 +1,7 @@
 #ERT START
 #Leader
 - type: entity
-  noSpawn: true
+  noSpawn: false
   parent: MobHuman
   id: ERTLeaderEVAPreset
   name: ERT leader
@@ -20,7 +20,7 @@
 
 #Medic
 - type: entity
-  noSpawn: true
+  noSpawn: false
   parent: MobHuman
   id: ERTMedicEVAPreset
   name: ERT medic
@@ -39,7 +39,7 @@
 
 #Security
 - type: entity
-  noSpawn: true
+  noSpawn: false
   parent: MobHuman
   id: ERTSecurityEVAPreset
   name: ERT security
@@ -58,7 +58,7 @@
 
 #Engineer
 - type: entity
-  noSpawn: true
+  noSpawn: false
   parent: MobHuman
   id: ERTEngineerEVAPreset
   name: ERT engineer
@@ -77,7 +77,7 @@
 
 #Junitor
 - type: entity
-  noSpawn: true
+  noSpawn: false
   parent: MobHuman
   id: ERTJunitorEVAPreset
   name: ERT junitor
@@ -99,7 +99,7 @@
 #CBURN START
 #Leader
 - type: entity
-  noSpawn: true
+  noSpawn: false
   parent: MobHuman
   id: CBURNLeaderEVAPreset
   name: CBURN Agent
@@ -117,7 +117,7 @@
 
 #Security
 - type: entity
-  noSpawn: true
+  noSpawn: false
   parent: MobHuman
   id: CBURNSecurityEVAPreset
   name: CBURN Agent
@@ -135,7 +135,7 @@
 
 #Medic
 - type: entity
-  noSpawn: true
+  noSpawn: false
   parent: MobHuman
   id: CBURNMedicEVAPreset
   name: CBURN Agent
@@ -154,7 +154,7 @@
 
 #DEAD SQUAD START
 - type: entity
-  noSpawn: true
+  noSpawn: false
   parent: MobHuman
   id: DeadSquadSecurityEVAPreset
   name: Dead Squad Agent

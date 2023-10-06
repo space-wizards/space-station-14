@@ -39,21 +39,11 @@ public sealed partial class BallisticAmmoProviderComponent : Component
     public List<EntityUid> Entities = new();
 
     /// <summary>
-    /// Will the ammoprovider automatically cycle through rounds or does it need doing manually.
+    /// Is the magazine allowed to be manually cycled to eject a cartridge.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("autoCycle")]
-    public bool AutoCycle = true;
-
-    /// <summary>
-    /// Is the gun ready to shoot; if AutoCycle is true then this will always stay true and not need to be manually done.
-    /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("cycled")]
-    [AutoNetworkedField]
-    public bool Cycled = true;
-
-    /// <summary>
-    /// Is the magazine allowed to be cycled
-    /// </summary>
+    /// <remarks>
+    /// Set to false for entities like turrets to avoid users being able to cycle them.
+    /// </remarks>
     [ViewVariables(VVAccess.ReadWrite), DataField("cycleable")]
     [AutoNetworkedField]
     public bool Cycleable = true;
@@ -63,4 +53,10 @@ public sealed partial class BallisticAmmoProviderComponent : Component
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("mayTransfer")]
     public bool MayTransfer = false;
+
+    /// <summary>
+    /// DoAfter delay for filling a bullet into another ballistic ammo provider.
+    /// </summary>
+    [DataField("fillDelay")]
+    public TimeSpan FillDelay = TimeSpan.FromSeconds(0.5);
 }

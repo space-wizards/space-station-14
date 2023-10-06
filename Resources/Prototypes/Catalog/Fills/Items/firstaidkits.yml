@@ -37,7 +37,7 @@
   - type: StorageFill
     contents:
       - id: MedicatedSuture
-        amount: 2
+      - id: Brutepack
       - id: Gauze
       - id: Bloodpack
       - id: SyringeTranexamicAcid
@@ -51,15 +51,13 @@
   suffix: Filled
   parent: MedkitToxin
   components:
-    - type: StorageFill
-      contents:
-        - id: SyringeSpaceacillin
-          amount: 2
-        - id: SyringeIpecac
-          amount: 2
-        - id: AntiPoisonMedipen
-        - id: PillDylovene
-          amount: 7
+  - type: StorageFill
+    contents:
+      - id: SyringeIpecac
+        amount: 2
+      - id: AntiPoisonMedipen
+      - id: PillDylovene
+        amount: 7
 
 - type: entity
   id: MedkitOxygenFilled
@@ -113,10 +111,10 @@
       - id: HandheldHealthAnalyzer
       - id: MedicatedSuture
       - id: RegenerativeMesh
+      - id: BruteAutoInjector
+      - id: BurnAutoInjector
       - id: SyringeEphedrine
       - id: SyringeTranexamicAcid
-      - id: SyringeBicaridine
-      - id: SyringeDermaline
       - id: AntiPoisonMedipen
       - id: Bloodpack
 

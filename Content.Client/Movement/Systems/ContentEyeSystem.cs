@@ -10,7 +10,7 @@ public sealed class ContentEyeSystem : SharedContentEyeSystem
 {
     [Dependency] private readonly IPlayerManager _player = default!;
 
-    public void RequestZoom(EntityUid uid, Vector2 zoom, ContentEyeComponent? content = null)
+    public void RequestZoom(EntityUid uid, Vector2 zoom, bool ignoreLimit, ContentEyeComponent? content = null)
     {
         if (!Resolve(uid, ref content, false))
             return;
@@ -18,6 +18,7 @@ public sealed class ContentEyeSystem : SharedContentEyeSystem
         RaisePredictiveEvent(new RequestTargetZoomEvent()
         {
             TargetZoom = zoom,
+            IgnoreLimit = ignoreLimit,
         });
     }
 
@@ -39,20 +40,5 @@ public sealed class ContentEyeSystem : SharedContentEyeSystem
         {
             Fov = value,
         });
-    }
-
-    public override void Update(float frameTime)
-    {
-        base.Update(frameTime);
-
-        var localPlayer = _player.LocalPlayer?.ControlledEntity;
-
-        if (!TryComp<ContentEyeComponent>(localPlayer, out var content) ||
-            !TryComp<EyeComponent>(localPlayer, out var eye))
-        {
-            return;
-        }
-
-        UpdateEye(localPlayer.Value, content, eye, frameTime);
     }
 }

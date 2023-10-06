@@ -3,7 +3,7 @@ using Robust.Shared.GameStates;
 
 namespace Content.Shared.DayTime;
 [RegisterComponent, NetworkedComponent]
-public sealed class DayTimeComponent : Component
+public sealed partial class DayTimeComponent : Component
 {
     [ViewVariables(VVAccess.ReadOnly), DataField("colorFrom")]
     public Color ColorFrom;

@@ -1,7 +1,8 @@
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Ame.Components;
 using Content.Server.Chat.Managers;
-using Content.Server.Mind.Components;
 using Content.Server.NodeContainer;
 using Content.Server.Power.Components;
 using Content.Shared.Ame;
@@ -9,6 +10,7 @@ using Content.Shared.Database;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
+using Content.Shared.Mind.Components;
 using Content.Shared.Popups;
 using Robust.Server.Containers;
 using Robust.Server.GameObjects;
@@ -205,7 +207,7 @@ public sealed class AmeControllerSystem : EntitySystem
 
         if (oldValue <= safeLimit && value > safeLimit)
         {
-            _chatManager.SendAdminAlert(user.Value, Loc.GetString("admin-alert-ame-over-limit", ("injection-amount", controller.InjectionAmount)), mindContainer);
+            _chatManager.SendAdminAlert(user.Value, Loc.GetString("admin-alert-ame-over-limit", ("injection-amount", controller.InjectionAmount)));
             SoundSystem.Play("/Audio/Effects/ame_overloading_admin_alert.ogg", Filter.Empty().AddPlayers(_adminManager.ActiveAdmins), AudioParams.Default.WithVolume(-4f));//Imperial admin alert sounds
         }
     }
@@ -248,7 +250,7 @@ public sealed class AmeControllerSystem : EntitySystem
             return;
         }
 
-        if (!HasComp<AmeFuelContainerComponent?>(args.Used))
+        if (!HasComp<AmeFuelContainerComponent>(args.Used))
         {
             _popupSystem.PopupEntity(Loc.GetString("ame-controller-component-interact-using-fail"), uid, args.User);
             return;

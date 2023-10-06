@@ -2,7 +2,7 @@
 
 - type: entity
   parent: BaseItem
-  id: SyndicatePersonalAI
+  id: SyndicatePersonalAIImperial
   name: syndicate personal ai device
   description: Your electronic pal who's fun to be with!
   components:
@@ -57,10 +57,10 @@
     allowedStates:
       - Alive
   - type: Appearance
-  - type: GenericVisualizer
-    visuals:
-      enum.PAIVisuals.Status:
-        screen:
-          Off: { state: pai-off-overlay }
-          Searching: { state: pai-searching-overlay }
-          On: { state: pai-on-overlay }
+#  - type: GenericVisualizer
+#    visuals:
+#      enum.PAIVisuals.Status:
+#        screen:
+#          Off: { state: pai-off-overlay }
+#          Searching: { state: pai-searching-overlay }
+#          On: { state: pai-on-overlay }

@@ -24,7 +24,7 @@ namespace Content.Shared.Alert
         /// minimum and incrementing upwards. If severities are not supported, the first entry is used.
         /// </summary>
         [DataField("icons", required: true)]
-        public readonly List<SpriteSpecifier> Icons = new();
+        public List<SpriteSpecifier> Icons = new();
 
         /// <summary>
         /// Name to show in tooltip window. Accepts formatting.

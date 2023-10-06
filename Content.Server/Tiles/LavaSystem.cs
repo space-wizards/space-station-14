@@ -33,7 +33,7 @@ public sealed class LavaSystem : EntitySystem
             // Apply the fury of a thousand suns
             var multiplier = flammable.FireStacks == 0f ? 5f : 1f;
             _flammable.AdjustFireStacks(otherUid, component.FireStacks * multiplier, flammable);
-            _flammable.Ignite(otherUid, flammable);
+            _flammable.Ignite(otherUid, uid, flammable);
         }
     }
 }

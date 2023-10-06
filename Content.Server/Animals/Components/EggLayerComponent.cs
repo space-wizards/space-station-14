@@ -12,7 +12,7 @@ namespace Content.Server.Animals.Components;
 ///     It also grants an action to players who are controlling these entities, allowing them to do it manually.
 /// </summary>
 [RegisterComponent]
-public sealed class EggLayerComponent : Component
+public sealed partial class EggLayerComponent : Component
 {
     [DataField("eggLayAction", customTypeSerializer: typeof(PrototypeIdSerializer<InstantActionPrototype>))]
     public string EggLayAction = "AnimalLayEgg";
@@ -52,4 +52,4 @@ public sealed class EggLayerComponent : Component
     public float AccumulatedFrametime;
 }
 
-public sealed class EggLayInstantActionEvent : InstantActionEvent {}
+public sealed partial class EggLayInstantActionEvent : InstantActionEvent {}

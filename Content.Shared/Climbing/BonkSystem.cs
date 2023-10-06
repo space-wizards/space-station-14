@@ -13,7 +13,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Climbing;
 
-public sealed class BonkSystem : EntitySystem
+public sealed partial class BonkSystem : EntitySystem
 {
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly DamageableSystem _damageableSystem = default!;
@@ -89,7 +89,7 @@ public sealed class BonkSystem : EntitySystem
     }
 
     [Serializable, NetSerializable]
-    private sealed class BonkDoAfterEvent : SimpleDoAfterEvent
+    private sealed partial class BonkDoAfterEvent : SimpleDoAfterEvent
     {
     }
 }

@@ -1,6 +1,6 @@
 #ERT START
 - type: entity
-  noSpawn: true
+  noSpawn: false
   parent: ClothingBackpackERTLeader
   id: ClothingBackpackCallERTLeaderFilled
   components:
@@ -9,7 +9,7 @@
         - id: BoxSurvival
 
 - type: entity
-  noSpawn: true
+  noSpawn: false
   parent: ClothingBackpackERTSecurity
   id: ClothingBackpackCallERTSecurityFilled
   components:
@@ -18,7 +18,7 @@
         - id: BoxSurvival
 
 - type: entity
-  noSpawn: true
+  noSpawn: false
   parent: ClothingBackpackERTMedical
   id: ClothingBackpackCallERTMedicalFilled
   components:
@@ -27,7 +27,7 @@
         - id: BoxSurvival
 
 - type: entity
-  noSpawn: true
+  noSpawn: false
   parent: ClothingBackpackERTEngineer
   id: ClothingBackpackCallERTEngineerFilled
   components:
@@ -36,7 +36,7 @@
         - id: BoxSurvival
 
 - type: entity
-  noSpawn: true
+  noSpawn: false
   parent: ClothingBackpackERTJanitor
   id: ClothingBackpackCallERTJanitorFilled
   components:
@@ -47,17 +47,17 @@
 
 #CBURN START
 - type: entity
-  noSpawn: true
+  noSpawn: false
   parent: ClothingBackpackDuffelCBURN
   id: ClothingBackpackCallERTCBURNFilled
   components:
     - type: StorageFill
       contents:
         - id: BoxSurvival
-        - id: PillRomerol
+        # - id: PillAmbuzolPlus
 
 - type: entity
-  noSpawn: true
+  noSpawn: false
   parent: ClothingBackpackDuffelCBURN
   id: ClothingBackpackCallERTCBURNFilledLeader
   components:
@@ -186,7 +186,7 @@
     capacity: 250
 
 - type: entity
-  noSpawn: true
+  noSpawn: false
   parent: ClothingBackpackDeadSquadSecurity
   id: ClothingBackpackDeadSquadSecurityFilled
   components:

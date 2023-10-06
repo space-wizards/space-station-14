@@ -127,6 +127,11 @@
         key: KnockedDown
         time: 3
         type: Remove
+      - !type:GenericStatusEffect
+        key: StaminaModifier
+        component: StaminaModifier
+        time: 3
+        type: Add
     Medicine:
       metabolismRate: 1.0
       effects:
@@ -152,6 +157,7 @@
   group: Narcotics
   desc: reagent-desc-thc
   flavor: bitter
+  flavorMinimum: 0.05
   color: "#808080"
   physicalDesc: reagent-physical-desc-crystalline
   plantMetabolism:

@@ -14,3 +14,17 @@ instruments-component-menu-stop-button = Стоп
 
 # SwappableInstrumentComponent
 swappable-instrument-component-style-set = Установить стиль на "{$style}"
+
+instruments-component-menu-input-button = Ввод MIDI
+instruments-component-menu-band-button = Присоединиться к группе
+instruments-component-menu-play-button = Проигрывание MIDI
+instruments-component-menu-loop-button = Цикл
+instruments-component-menu-channels-button = Канал
+instruments-component-menu-stop-button = Прекратить
+instruments-component-band-menu = Выбрать лидера группы
+instrument-component-band-refresh = Обновить
+instruments-component-channels-menu = Выбор MIDI-канала
+instrument-component-channel-name = MIDI-канал {$number}
+instruments-component-channels-all-button = Все
+instruments-component-channels-clear-button = Очистить
+

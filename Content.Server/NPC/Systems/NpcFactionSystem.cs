@@ -111,6 +111,20 @@ public sealed class NpcFactionSystem : EntitySystem
         }
     }
 
+    /// <summary>
+    /// Remove this entity from all factions.
+    /// </summary>
+    public void ClearFactions(EntityUid uid, bool dirty = true)
+    {
+        if (!TryComp<NpcFactionMemberComponent>(uid, out var component))
+            return;
+
+        component.Factions.Clear();
+
+        if (dirty)
+            RefreshFactions(component);
+    }
+
     public IEnumerable<EntityUid> GetNearbyHostiles(EntityUid entity, float range, NpcFactionMemberComponent? component = null)
     {
         if (!Resolve(entity, ref component, false))

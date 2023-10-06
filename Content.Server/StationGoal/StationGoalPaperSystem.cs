@@ -4,6 +4,7 @@ using Content.Shared.Random.Helpers;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Content.Shared.GameTicking;
+using Content.Shared.Paper;
 
 namespace Content.Server.StationGoal
 {
@@ -50,8 +51,10 @@ namespace Content.Server.StationGoal
                     Loc.GetString(goal.Text),
                     Loc.GetString("station-goal-fax-paper-name"),
                     null,
-                    "paper_stamp-centcom",
-                    new() { Loc.GetString("stamp-component-stamped-name-centcom") });
+                    "paper_stamp-centcom", new List<StampDisplayInfo>
+                    {
+                        new StampDisplayInfo { StampedName = Loc.GetString("stamp-component-stamped-name-centcom"), StampedColor = Color.FromHex("#BB3232") },
+                    });
                 _faxSystem.Receive(fax.Owner, printout, null, fax);
 
                 wasSent = true;

@@ -390,7 +390,7 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
 
     private void OnActionAdded(ActionType action)
     {
-        // if the action is toggled when we add it, start targetting
+        // if the action is toggled when we add it, start targeting
         if (action is TargetedAction targetAction && action.Toggled)
             StartTargeting(targetAction);
 

@@ -1,9 +1,11 @@
-﻿using Content.Server.DeviceNetwork.Components;
+using Content.Server.DeviceNetwork.Components;
 using Content.Server.EUI;
-using Content.Server.Ghost.Components;
 using Content.Shared.Eui;
 using Content.Shared.Fax;
 using Content.Shared.Follower;
+using Content.Shared.Ghost;
+using Content.Shared.Paper;
+using System.Collections.Generic;
 
 namespace Content.Server.Fax.AdminUI;
 
@@ -53,7 +55,8 @@ public sealed class AdminFaxEui : BaseEui
                 }
             case AdminFaxEuiMsg.Send sendData:
                 {
-                    var printout = new FaxPrintout(sendData.Content, sendData.Title, null, sendData.StampState, new() { sendData.From });
+                    var printout = new FaxPrintout(sendData.Content, sendData.Title, null, sendData.StampState,
+                            new() { new StampDisplayInfo { StampedName = sendData.From, StampedColor = sendData.StampColor } });
                     _faxSystem.Receive(sendData.Target, printout);
                     break;
                 }

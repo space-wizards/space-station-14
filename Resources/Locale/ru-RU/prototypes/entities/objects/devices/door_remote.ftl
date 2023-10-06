@@ -31,3 +31,6 @@ ent-DoorRemoteNuclearOperative = пульт от дверей ядерных о�
 ent-DoorRemoteAll = супер-пульт от шлюзов
     .suffix = Адмемы
     .desc = { ent-DoorRemoteDefault.desc }
+ent-DoorRemoteFirefight = пожарная дверь с дистанционным управлением
+    .desc = { ent-DoorRemoteDefault.desc }
+    .suffix = { "" }

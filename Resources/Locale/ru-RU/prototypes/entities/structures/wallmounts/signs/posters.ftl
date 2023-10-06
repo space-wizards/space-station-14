@@ -321,3 +321,7 @@ ent-PosterLegitAnatomyPoster = анатомический плакат
     .suffix = { "" }
 ent-PosterLegitMime = пантомима постмодерна
     .desc = Постмодернистское изображение пантомимы, превосходно!
+ent-PosterLegitCarpMount = настенный карп
+    .desc = «Карп настенный»
+ent-PaintingSadClown = Грустный клоун
+    .desc = Эта картина - грустный клоун! Это вызывает радость.

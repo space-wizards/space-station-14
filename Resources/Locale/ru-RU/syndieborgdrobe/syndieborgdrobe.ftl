@@ -1,0 +1,9 @@
+ent-VendingMachineBorgSyndieDrobe = Боргомат синдиката
+    .desc = Синдикат никогда не поставляет что-либо бесплатно. Даже содержимое автоматов.
+store-category-borgdrobe-borg = Борги
+borgdrobe-uplink-borg-saboteur-name = Саботажный борг
+borgdrobe-uplink-borg-saboteur-desc = Лучший саботёр, способный под видом Инженерного борга пробраться на станцию и выполнить поставленные задачи. 
+borgdrobe-uplink-borg-medical-name = Медицинский борг
+borgdrobe-uplink-borg-medical-desc = Медицинская единица, способная проводить хирургические операции сразу же.
+borgdrobe-uplink-borg-assault-name = Штурмовой борг
+borgdrobe-uplink-borg-assault-desc = бездушная машина для убийств, мясорубка и потеря надежды для станции NT. Он - воплощение хаоса и разрушения на поле битвы. Как минимум на этикетке.

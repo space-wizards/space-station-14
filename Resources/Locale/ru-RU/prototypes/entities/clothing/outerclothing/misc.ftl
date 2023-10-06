@@ -64,3 +64,6 @@ ent-ClothingOuterGhostSheet = простыня-призрак
 ent-ClothingOuterHospitalGown = больничная одежда
     .desc = Изготовлен из шерсти забитых ягнят. Жестокость делает его мягче.
     .suffix = { "" }
+ent-ClothingOuterApronBar = фартук
+    .desc = Темный фартук, предназначенный для барменов.
+    .suffix = Бармен

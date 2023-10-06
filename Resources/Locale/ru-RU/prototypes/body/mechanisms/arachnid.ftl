@@ -14,3 +14,4 @@ ent-LeftLegArachnid = левая нога арахнида
 ent-RightLegArachnid = правая нога арахнида
 ent-LeftFootArachnid = левая ступня арахнида
 ent-RightFootArachnid = правая ступня арахнида
+ent-OrganArachnidLungs = легкие арахнида

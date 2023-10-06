@@ -4,7 +4,7 @@ namespace Content.Server.Atmos.Components;
 /// Used to keep track of which analyzers are active for update purposes
 /// </summary>
 [RegisterComponent]
-public sealed class ActiveGasAnalyzerComponent : Component
+public sealed partial class ActiveGasAnalyzerComponent : Component
 {
     // Set to a tiny bit after the default because otherwise the user often gets a blank window when first using
     [DataField("accumulatedFrameTime"), ViewVariables(VVAccess.ReadWrite)]
