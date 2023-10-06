@@ -10983,6 +10983,16 @@ entities:
     - pos: 28.538687,-28.497456
       parent: 1
       type: Transform
+- proto: ActionToggleLight
+  entities:
+  - uid: 7458
+    components:
+    - flags: InContainer
+      type: MetaData
+    - parent: 7940
+      type: Transform
+    - container: 7940
+      type: InstantAction
 - proto: AirAlarm
   entities:
   - uid: 316
@@ -72225,9 +72235,25 @@ entities:
       type: Transform
   - uid: 7940
     components:
-    - pos: -60.466248,63.997437
+    - pos: -58.53795,64.84835
       parent: 1
       type: Transform
+    - toggleActionEntity: 7458
+      type: HandheldLight
+    - containers:
+        cell_slot: !type:ContainerSlot
+          showEnts: False
+          occludes: True
+          ent: null
+        actions: !type:Container
+          showEnts: False
+          occludes: True
+          ents:
+          - 7458
+      type: ContainerContainer
+    - canCollide: True
+      type: Physics
+    - type: ActionsContainer
   - uid: 10944
     components:
     - pos: -60.49684,41.882523
@@ -82871,7 +82897,7 @@ entities:
   entities:
   - uid: 4218
     components:
-    - pos: -42.570244,23.611063
+    - pos: -41.209343,23.558546
       parent: 1
       type: Transform
 - proto: SalvageMagnet
@@ -84034,36 +84060,50 @@ entities:
   entities:
   - uid: 749
     components:
+    - name: Southeast Solars SMES
+      type: MetaData
     - pos: 27.5,-7.5
       parent: 1
       type: Transform
   - uid: 921
     components:
+    - name: Grav SMES
+      type: MetaData
     - pos: 25.5,3.5
       parent: 1
       type: Transform
   - uid: 2761
     components:
+    - name: Telecomms SMES
+      type: MetaData
     - pos: 25.5,23.5
       parent: 1
       type: Transform
   - uid: 10147
     components:
+    - name: SMES Bank 4
+      type: MetaData
     - pos: -71.5,28.5
       parent: 1
       type: Transform
   - uid: 10148
     components:
+    - name: SMES Bank 3
+      type: MetaData
     - pos: -71.5,29.5
       parent: 1
       type: Transform
   - uid: 10149
     components:
+    - name: SMES Bank 2
+      type: MetaData
     - pos: -71.5,30.5
       parent: 1
       type: Transform
   - uid: 10165
     components:
+    - name: SMES Bank 1
+      type: MetaData
     - pos: -71.5,31.5
       parent: 1
       type: Transform
@@ -85267,71 +85307,99 @@ entities:
   entities:
   - uid: 606
     components:
+    - name: Science Substation
+      type: MetaData
     - pos: 11.5,-7.5
       parent: 1
       type: Transform
   - uid: 608
     components:
+    - name: Library Substation
+      type: MetaData
     - pos: -15.5,17.5
       parent: 1
       type: Transform
   - uid: 922
     components:
+    - name: Grav Substation
+      type: MetaData
     - pos: 25.5,1.5
       parent: 1
       type: Transform
   - uid: 2515
     components:
+    - name: Evac Substation
+      type: MetaData
     - pos: 23.5,9.5
       parent: 1
       type: Transform
   - uid: 2593
     components:
+    - name: Telecomms Substation
+      type: MetaData
     - pos: 28.5,23.5
       parent: 1
       type: Transform
   - uid: 2693
     components:
+    - name: Medical Substation
+      type: MetaData
     - pos: -9.5,18.5
       parent: 1
       type: Transform
   - uid: 3932
     components:
+    - name: Supply Substation
+      type: MetaData
     - pos: -24.5,-3.5
       parent: 1
       type: Transform
   - uid: 4339
     components:
+    - name: Tech Storage Substation
+      type: MetaData
     - pos: -40.5,15.5
       parent: 1
       type: Transform
   - uid: 6198
     components:
+    - name: Northeast Maints Substation
+      type: MetaData
     - pos: 18.5,46.5
       parent: 1
       type: Transform
   - uid: 6527
     components:
+    - name: Bridge Substation
+      type: MetaData
     - pos: -3.5,56.5
       parent: 1
       type: Transform
   - uid: 6812
     components:
+    - name: Service Substation
+      type: MetaData
     - pos: -35.5,57.5
       parent: 1
       type: Transform
   - uid: 9336
     components:
+    - name: Engineering Substation
+      type: MetaData
     - pos: -71.5,25.5
       parent: 1
       type: Transform
   - uid: 10141
     components:
+    - name: Security Substation
+      type: MetaData
     - pos: -65.5,59.5
       parent: 1
       type: Transform
   - uid: 10207
     components:
+    - name: PA Substation
+      type: MetaData
     - pos: -79.5,27.5
       parent: 1
       type: Transform

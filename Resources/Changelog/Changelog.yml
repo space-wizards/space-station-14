@@ -1,30 +1,4 @@
 Entries:
-- author: Bixkitts
-  changes:
-  - {message: Kudzu spread falling asleep when blocked by walls, type: Fix}
-  id: 4456
-  time: '2023-08-06T06:08:07.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Fix taxibots incorrectly pushing entities., type: Fix}
-  - {message: Taxibots were equipped with noslip tires., type: Tweak}
-  - {message: Nerf taxibot speed from 10 to 6 and reduce their volume significantly.,
-    type: Tweak}
-  id: 4457
-  time: '2023-08-06T06:37:42.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Adjusted pickaxe inhand sprites and added sprites for wielded pickaxes.,
-    type: Tweak}
-  id: 4458
-  time: '2023-08-06T06:50:00.0000000+00:00'
-- author: Errant
-  changes:
-  - {message: Active energy swords no longer heal small amounts of blunt damage on
-      every hit. Cybersun CEO reportedly thrown out an airlock over "Bluntgate" scandal.,
-    type: Fix}
-  id: 4459
-  time: '2023-08-06T08:19:32.0000000+00:00'
 - author: notafet
   changes:
   - {message: 'Add radiators, which transfer heat from a pipe to its surroundings.',
@@ -2958,3 +2932,23 @@ Entries:
   - {message: Fixed access while riding vehicles and mechs., type: Fix}
   id: 4955
   time: '2023-10-05T09:12:41.0000000+00:00'
+- author: brainfood1183
+  changes:
+  - {message: Rock anomalies have been detected by nanotrasen scientists., type: Add}
+  id: 4956
+  time: '2023-10-05T19:53:54.0000000+00:00'
+- author: notquitehadouken
+  changes:
+  - {message: Slimes no longer rot again, type: Fix}
+  id: 4957
+  time: '2023-10-05T19:56:40.0000000+00:00'
+- author: dahnte
+  changes:
+  - {message: Onion rings!, type: Add}
+  id: 4958
+  time: '2023-10-05T21:31:40.0000000+00:00'
+- author: gusxyz
+  changes:
+  - {message: Monkey's now are able to equip gas masks., type: Add}
+  id: 4959
+  time: '2023-10-05T21:34:37.0000000+00:00'
