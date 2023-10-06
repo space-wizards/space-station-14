@@ -50,6 +50,8 @@ public sealed class AmeControllerSystem : EntitySystem
         {
             if (controller.NextUpdate <= curTime)
                 UpdateController(uid, curTime, controller, nodes);
+            else if (controller.NextUIUpdate <= curTime)
+                UpdateUi(uid, controller);
         }
     }
 
