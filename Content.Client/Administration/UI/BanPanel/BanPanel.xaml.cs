@@ -113,7 +113,7 @@ public sealed partial class BanPanel : DefaultWindow
         SeverityOption.AddItem(Loc.GetString("admin-note-editor-severity-low"), (int) NoteSeverity.Minor);
         SeverityOption.AddItem(Loc.GetString("admin-note-editor-severity-medium"), (int) NoteSeverity.Medium);
         SeverityOption.AddItem(Loc.GetString("admin-note-editor-severity-high"), (int) NoteSeverity.High);
-        SeverityOption.SelectId((int) NoteSeverity.Medium);
+        SeverityOption.SelectId((int) NoteSeverity.High);
         SeverityOption.OnItemSelected += args => SeverityOption.SelectId(args.Id);
 
         MultiplierOption.AddItem(Loc.GetString("ban-panel-minutes"), (int) Multipliers.Minutes);
