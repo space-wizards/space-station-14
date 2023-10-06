@@ -1,23 +1,23 @@
 <Document>
-## Starting Out
-This is not an extensive list of recipes, these listings are to showcase the basics.
+## Начало
+Это не все существующие рецепты, этот список предназначен для демонстрации основ.
 
-Mixes are done in a Beaker, foods are cooked in a Microwave. Cook times will be listed.
+Продукты смешиваются в мензурке, еда готовится в микроволновке. Время готовки обычно указывается в рецепте.
 
-WARNING: This is not an automatically generated list, things here may become outdated. The wiki has much more than is listed here.
+ВНИМАНИЕ: Это не автоматически сгенерированный список, все, что здесь перечислено, может устареть. На Wiki есть гораздо больше, чем перечислено здесь.
 
-## The Basics: Mixing
+## Основы: Смешивание
 
-- Dough = 15 Flour, 10 Water
-- Cornmeal Dough = 1 Egg (6u), 10 Milk, 15 Cornmeal
-- Tofu = 5 Enzyme, 30 Soy Milk
-- Pie Dough = 2 Eggs (12u), 15 Flour, 5 Table Salt
-- Cake Batter = 2 Eggs(12u), 15 flour, 5 Sugar
-- Vegan Cake Batter = 15 Soy Milk, 15 Flour, 5 Sugar
-- Butter = 30 Milk, 5 Table Salt
-- Cheese Wheel = 5 Enzyme, 40 Milk
-- Meatball = 1 Egg (6u), 5 Flour, 5 Uncooked Animal Proteins
-- Uncooked Animal Protein: Grind Raw Meat
+- Тесто = 15 муки, 10 воды
+- Кукурузное тесто = 1 яйцо (6 ед.), 10 молока, 15 кукурузной муки
+- Тофу = 5 универсального фермента, 30 соевого молока
+- Тесто для пирога = 2 яйца (12 ед.), 15 муки, 5 столовой соли
+- Тесто для торта = 2 яйца(12 ед.), 15 муки, 5 сахара
+- Веганское тесто для торта = 15 соевого молока, 15 муки, 5 сахара
+- Масло = 30 молока, 5 столовой соли
+- Головка сыра = 5 универсального фермента, 40 молока
+- Фрикаделька = 1 яйцо (6 ед.), 5 муки, 5 непрожаренные животные протеины
+- Непрожаренные животные протеины: измельчить сырое мясо
 
 <Box>
 <GuideEntityEmbed Entity="FoodDough"/>
@@ -34,23 +34,23 @@ WARNING: This is not an automatically generated list, things here may become out
 <GuideEntityEmbed Entity="FoodCheese"/>
 </Box>
 
-## Secondary Products
+## Второстепенные продукты
 
-- Dough Slice: Cut Dough
-- Bun: Microwave Dough Slice for 5 Seconds
-- Cutlet: Slice Raw Meat
-- Cheese Wedge: Slice Cheese Wheel
-- Flat Dough: Use a rolling pin or a round object (fire extinguisher, soda can, bottle) on Dough.
+- Кусочек теста: нарезать тесто
+- Булочка: положить в микроволновку кусочек теста на 5 секунд
+- Сырая котлета: нарезать сырое мясо
+- Сырный ломтик: нарезать головку сыра
+- Плоское тесто: раскатайте тесто скалкой либо другим крыглым объектом (огнетушитель, жестяная банка, бутылка).
 
-## Food Examples
+## Примеры блюд
 
-- Bread: Microwave Dough for 10 Seconds
-- Plain Burger: Microwave 1 Bun and 1 Raw Meat for 10 Seconds
-- Tomato Soup: 10u Water, 1 Bowl, and 2 Tomatoes for 10 Seconds
-- Citrus Salad: 1 Bowl, 1 Lemon, 1 Lime, 1 Orange for 5 Seconds
-- Margherita Pizza: Microwave 1 Flat Dough, 1 Cheese Wedge, and 4 Tomatoes for 30 Seconds
-- Cake: 1 Cake Batter for 15 Seconds
-- Apple Pie: 1 Pie Dough, 3 Apples, and 1 Pie Tin for 15 Seconds
+- Хлеб: положить в микроволновку тесто на 10 секунд
+- Бургер: положить в микроволновку 1 булочку и 1 сырое мясо на 10 секунд
+- Томатный суп: 10 ед. воды, 1 пустая миска и 2 помидора на 10 секунд
+- Цитрусовый салат: 1 пустая миска, 1 лемон, 1 лайм, 1 апельсин на 5 секунд
+- Маргарита: положить в микроволновку 1 плоское тесто, 1 сырный ломтик и 4 помидора на 30 секунд
+- Торт: 1 тесто для торта в микроволновку на 15 секунд
+- Яблочный пирог: 1 тесто для пирога, 3 яблока и 1 формочку для пирога на 15 секунд
 
 <Box>
 <GuideEntityEmbed Entity="FoodBreadPlain"/>

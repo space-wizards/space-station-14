@@ -18,3 +18,6 @@ ent-WaterCooler = кулер с водой
 ent-WaterTankHighCapacity = водяной резервуар большой ёмкости
     .desc = Резервуар для жидкости под высоким давлением, предназначенный для хранения гигантских объемов воды.
     .suffix = Заполненный
+ent-GenericTank = { ent-StorageTank }
+    .suffix = Пустой
+    .desc = { ent-StorageTank.desc }
