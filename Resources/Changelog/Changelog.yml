@@ -1,9 +1,4 @@
 Entries:
-- author: Slava0135
-  changes:
-  - {message: fixed reflected projectiles dealing stamina damage, type: Fix}
-  id: 4464
-  time: '2023-08-06T13:44:42.0000000+00:00'
 - author: Errant
   changes:
   - {message: 'Wide attacks no longer cost stamina, deal weapon damage.', type: Tweak}
@@ -2950,3 +2945,9 @@ Entries:
       using their tail.', type: Tweak}
   id: 4963
   time: '2023-10-06T21:19:01.0000000+00:00'
+- author: chromiumboy
+  changes:
+  - {message: Fixed wire panels on bombs and vending machines not opening correctly.,
+    type: Fix}
+  id: 4964
+  time: '2023-10-06T21:26:02.0000000+00:00'
