@@ -2,7 +2,7 @@
   id: Box
   mapName: 'Box Station'
   mapPath: /Maps/box.yml
-  minPlayers: 0 # для ротации
+  minPlayers: 50
   stations:
     Boxstation:
       stationProto: StandardNanotrasenStation
@@ -24,40 +24,39 @@
             Bartender: [ 2, 2 ]
             Botanist: [ 3, 3 ]
             Chef: [ 2, 2 ]
-            Janitor: [ 3, 3 ]
-            Chaplain: [ 2, 2 ]
-            Librarian: [ 2, 2 ]
-            ServiceWorker: [ 4, 4 ]
+            Janitor: [ 2, 2 ]
+            Chaplain: [ 1, 1 ]
+            Librarian: [ 1, 1 ]
+            ServiceWorker: [ 2, 2 ]
             #engineering
             ChiefEngineer: [ 1, 1 ]
             SeniorEngineer: [ 1, 1 ]
             AtmosphericTechnician: [ 3, 3 ]
             StationEngineer: [ 4, 4 ]
-            TechnicalAssistant: [ 8, 8 ]
+            TechnicalAssistant: [ 4, 4 ]
             #medical
             ChiefMedicalOfficer: [ 1, 1 ]
             SeniorPhysician: [ 1, 1 ]
-            Chemist: [ 3, 3 ]
+            Chemist: [ 2, 3 ]
             MedicalDoctor: [ 3, 3 ]
             Paramedic: [ 1, 1 ]
-            MedicalIntern: [ 8, 8 ]
+            MedicalIntern: [ 4, 4 ]
             Psychologist: [ 1, 1 ]
             #science
             ResearchDirector: [ 1, 1 ]
-            SeniorResearcher: [ 1, 1 ]
+            SeniorResearcher: [ 1, 1 ]        
             Scientist: [ 4, 4 ]
-            ResearchAssistant: [ 4, 4 ]
-            #Borg: [ 2, 2 ] #SS220 legacy box
+            ResearchAssistant: [ 4, 4 ] 
+            Borg: [ 2, 2 ]
             #security
             HeadOfSecurity: [ 1, 1 ]
             Warden: [ 1, 1 ]
             SeniorOfficer: [ 1, 1 ]
-            SecurityOfficer: [ 5, 5 ]
+            SecurityOfficer: [ 4, 4 ]
             Detective: [ 1, 1 ]
-            SecurityCadet: [ 8, 8 ]
-            IAA: [ 1, 1 ] # Corvax-IAA
-            BlueShield: [ 1, 1 ]
-            Brigmedic: [ 1, 1 ]
+            SecurityCadet: [ 4, 4 ]
+            #Lawyer: [ 2, 2 ]
+            IAA: [ 1, 1 ] #Corvax-IAA
             #supply
             Quartermaster: [ 1, 1 ]
             SalvageSpecialist: [ 3, 3 ]
@@ -66,5 +65,5 @@
             Passenger: [ -1, -1 ]
             Clown: [ 1, 1 ]
             Mime: [ 1, 1 ]
-            Musician: [ 2, 2 ]
-
+            Musician: [ 1, 1 ]
+            
