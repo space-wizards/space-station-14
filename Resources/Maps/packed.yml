@@ -23799,6 +23799,46 @@ entities:
     - pos: 40.5,-46.5
       parent: 2
       type: Transform
+  - uid: 13156
+    components:
+    - pos: 17.5,-34.5
+      parent: 2
+      type: Transform
+  - uid: 13157
+    components:
+    - pos: 16.5,-34.5
+      parent: 2
+      type: Transform
+  - uid: 13158
+    components:
+    - pos: 15.5,-34.5
+      parent: 2
+      type: Transform
+  - uid: 13159
+    components:
+    - pos: 14.5,-34.5
+      parent: 2
+      type: Transform
+  - uid: 13160
+    components:
+    - pos: 13.5,-34.5
+      parent: 2
+      type: Transform
+  - uid: 13161
+    components:
+    - pos: 12.5,-34.5
+      parent: 2
+      type: Transform
+  - uid: 13162
+    components:
+    - pos: 11.5,-34.5
+      parent: 2
+      type: Transform
+  - uid: 13163
+    components:
+    - pos: 10.5,-34.5
+      parent: 2
+      type: Transform
 - proto: CableHVStack
   entities:
   - uid: 5629
@@ -69738,7 +69778,7 @@ entities:
       type: Transform
   - uid: 443
     components:
-    - name: Gravity Substation
+    - name: Gravity/Bridge Substation
       type: MetaData
     - pos: 14.5,35.5
       parent: 2
@@ -69747,14 +69787,14 @@ entities:
       type: PowerNetworkBattery
   - uid: 2160
     components:
-    - name: Library Substation
+    - name: Library/Chapel Substation
       type: MetaData
     - pos: 14.5,7.5
       parent: 2
       type: Transform
   - uid: 4076
     components:
-    - name: Telecomms Sub
+    - name: Telecomms Substation
       type: MetaData
     - pos: 22.5,-14.5
       parent: 2
@@ -69777,7 +69817,7 @@ entities:
       type: Transform
   - uid: 4431
     components:
-    - name: Solars South West Sub
+    - name: Solars South West Substation
       type: MetaData
     - pos: 4.5,-36.5
       parent: 2
@@ -69802,12 +69842,14 @@ entities:
       type: PowerNetworkBattery
   - uid: 6199
     components:
+    - name: Medical Substation
+      type: MetaData
     - pos: 69.5,-13.5
       parent: 2
       type: Transform
   - uid: 6379
     components:
-    - name: Science North West Substation
+    - name: Science Substation
       type: MetaData
     - pos: 50.5,27.5
       parent: 2
@@ -69816,7 +69858,7 @@ entities:
       type: PowerNetworkBattery
   - uid: 7576
     components:
-    - name: Medical South West Substation
+    - name: Bar/Chemistry Substation
       type: MetaData
     - pos: 52.5,-10.5
       parent: 2

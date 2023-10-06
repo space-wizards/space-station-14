@@ -8,15 +8,6 @@
   },
   "states": [
     {
-      "name": "clipboard"
-    },
-    {
-      "name": "clipboard_over"
-    },
-    {
-      "name": "clipboard_pen"
-    },
-    {
       "name": "envelope_closed"
     },
     {
@@ -322,10 +313,6 @@
     },
     {
       "name": "stamp-iaa"
-    },
-    {
-      "name": "clipboard-equipped-BELT",
-      "directions": 4
     },
 	{
       "name": "butt_scan"

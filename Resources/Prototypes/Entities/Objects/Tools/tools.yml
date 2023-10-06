@@ -423,6 +423,8 @@
     tags:
     - Multitool
   - type: TilePrying
+  - type: Prying
+    enabled: false
   - type: Tool
     qualities:
       - Screwing
@@ -498,3 +500,30 @@
       Wood: 50
   - type: StaticPrice
     price: 25
+
+- type: entity
+  parent: BaseItem
+  id: RollingPin
+  name: rolling pin
+  description: A tool used to shape and flatten dough.
+  components:
+  - type: Sprite
+    sprite: Objects/Tools/rolling_pin.rsi
+    state: icon
+  - type: Item
+    sprite: Objects/Tools/rolling_pin.rsi
+    size: 10
+  - type: ItemCooldown
+  - type: MeleeWeapon
+    soundHit: !type:SoundCollectionSpecifier
+      collection: BatonHit
+    damage:
+      types:
+        Blunt: 7
+        Stamina: 16
+  - type: Tool
+    qualities:
+    - Rolling
+  - type: PhysicalComposition
+    materialComposition:
+      Wood: 100

@@ -84,6 +84,13 @@
 #  - type: SandboxRule
 #
 - type: entity
+  id: Revolutionary
+  parent: BaseGameRule
+  noSpawn: true
+  components:
+  - type: RevolutionaryRule
+
+- type: entity
   id: Secret
   parent: BaseGameRule
   noSpawn: true

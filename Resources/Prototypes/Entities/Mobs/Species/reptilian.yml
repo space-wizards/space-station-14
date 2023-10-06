@@ -18,6 +18,7 @@
   - type: Body
     prototype: Reptilian
     requiredLegs: 2
+  - type: Perishable
   - type: Butcherable
     butcheringType: Spike
     spawned:
@@ -58,7 +59,6 @@
   - type: MovementSpeedModifier
     baseWalkSpeed : 2.7
     baseSprintSpeed : 4.5
-  - type: Perishable
 
 - type: entity
   parent: BaseSpeciesDummy
