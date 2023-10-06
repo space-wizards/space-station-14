@@ -107,7 +107,7 @@
   damagePerIntensity:
     types:
       Heat: 15
-      Blunt: 15
+      Blunt: 11
       Piercing: 6
       Structural: 15
   tileBreakChance: [ 0.75, 0.95, 1 ]
