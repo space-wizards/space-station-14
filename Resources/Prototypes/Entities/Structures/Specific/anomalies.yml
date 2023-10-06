@@ -339,6 +339,7 @@
     - Ambuzol
     - Tricordrazine
     - Artifexium
+    - Ethylredoxrazine
     funChemicals:
     - Desoxyephedrine
     - Ephedrine
@@ -355,6 +356,7 @@
     - SpaceGlue
     - CogChamp
     - Honk
+    - Carpetium
   - type: Drink
     solution: anomaly
   - type: DrainableSolution
