@@ -495,7 +495,7 @@
   description: uplink-syndicate-hypospray-module-desc
   productEntity: BorgModuleHypospray
   cost:
-    Telecrystal: 7
+    Telecrystal: 6
   categories:
     - UplinkUtility
 
