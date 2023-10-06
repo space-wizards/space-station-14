@@ -5,10 +5,12 @@ using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
+namespace Content.Shared.Ninja.Components;
+
 /// <summary>
 /// Adds an action to dash, teleport to clicked position, when this item is held.
 /// </summary>
-[RegisterComponent, NetworkedComponent, Access(typeof(DashAbilitySystem))]
+[RegisterComponent, NetworkedComponent, Access(typeof(DashAbilitySystem)), AutoGenerateComponentState]
 public sealed partial class DashAbilityComponent : Component
 {
     /// <summary>
@@ -17,7 +19,7 @@ public sealed partial class DashAbilityComponent : Component
     [DataField("dashAction", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>)), ViewVariables(VVAccess.ReadWrite)]
     public string DashAction = string.Empty;
 
-    [DataField("dashActionEntity")]
+    [DataField, AutoNetworkedField]
     public EntityUid? DashActionEntity;
 
     /// <summary>
