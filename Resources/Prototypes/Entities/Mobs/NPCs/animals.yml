@@ -981,6 +981,7 @@
     - Trash
     - VimPilot
     - Mouse
+    - Meat
   - type: Respirator
     damage:
       types:
@@ -2330,6 +2331,7 @@
     - VimPilot
     - Trash
     - Hamster
+    - Meat
   - type: Respirator
     damage:
       types:
