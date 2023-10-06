@@ -1,10 +1,4 @@
 Entries:
-- author: JoeHammad
-  changes:
-  - {message: 'Centcom has increased the spring strength on the brute and burn auto
-      injectors, they should now inject the full 20 units', type: Add}
-  id: 4463
-  time: '2023-08-06T11:38:07.0000000+00:00'
 - author: Slava0135
   changes:
   - {message: fixed reflected projectiles dealing stamina damage, type: Fix}
@@ -2949,3 +2943,10 @@ Entries:
   - {message: The Clothesmate now dispenses berets., type: Tweak}
   id: 4962
   time: '2023-10-06T18:49:08.0000000+00:00'
+- author: Lank
+  changes:
+  - {message: 'Reptilians have received a minor rework. Notable features include a
+      diet restriction to only meat, fruit and pills, and the ability to pull objects
+      using their tail.', type: Tweak}
+  id: 4963
+  time: '2023-10-06T21:19:01.0000000+00:00'
