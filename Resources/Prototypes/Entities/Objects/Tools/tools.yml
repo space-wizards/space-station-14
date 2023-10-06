@@ -515,9 +515,12 @@
     size: 10
   - type: ItemCooldown
   - type: MeleeWeapon
+    soundHit: !type:SoundCollectionSpecifier
+      collection: BatonHit
     damage:
       types:
         Blunt: 7
+        Stamina: 16
   - type: Tool
     qualities:
     - Rolling
