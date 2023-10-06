@@ -251,7 +251,23 @@
             ]
         },
         {
+            "name": "court",
+            "delays": [
+                [
+                    1
+                ]
+            ]
+        },
+        {
             "name": "cryogenics",
+            "delays": [
+                [
+                    1
+                ]
+            ]
+        },
+        {
+            "name": "custodian",
             "delays": [
                 [
                     1
@@ -815,6 +831,14 @@
             ]
         },
         {
+            "name": "law",
+            "delays": [
+                [
+                    1
+                ]
+            ]
+        },
+        {
             "name": "magnetics",
             "delays": [
                 [
@@ -920,6 +944,14 @@
         },
         {
             "name": "prison",
+            "delays": [
+                [
+                    1
+                ]
+            ]
+        },
+        {
+            "name": "psychology",
             "delays": [
                 [
                     1
