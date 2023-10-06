@@ -5,6 +5,9 @@
   id: AirAlarmElectronics
 
 - type: Tag
+  id: Airlock
+
+- type: Tag
   id: AirSensor
 
 - type: Tag
@@ -489,6 +492,9 @@
   id: GeigerCounter
 
 - type: Tag
+  id: GlassAirlock
+
+- type: Tag
   id: GlassBeaker
 
 - type: Tag
@@ -502,7 +508,6 @@
 
 - type: Tag
   id: GuideEmbeded
-
 
 - type: Tag
   id: Hamster
@@ -554,6 +559,9 @@
 
 - type: Tag
   id: HighRiskItem
+
+- type: Tag
+  id: HighSecDoor
 
 - type: Tag
   id: Hoe
@@ -767,6 +775,9 @@
 
 - type: Tag
   id: PetWearable
+
+- type: Tag
+  id: MonkeyWearable
 
 - type: Tag
   id: Pickaxe
@@ -1062,3 +1073,6 @@
 
 - type: Tag
   id: ZombifyableByMelee
+
+- type: Tag
+  id: MindShield
