@@ -463,11 +463,13 @@ public sealed class WiresSystem : SharedWiresSystem
             return;
 
         if (panel.Open &&
-            TryComp<WiresPanelSecurityComponent>(uid, out var wiresPanelSecurity) &&
-            wiresPanelSecurity.WiresAccessible &&
             (_toolSystem.HasQuality(args.Used, "Cutting", tool) ||
             _toolSystem.HasQuality(args.Used, "Pulsing", tool)))
         {
+            if (TryComp<WiresPanelSecurityComponent>(uid, out var wiresPanelSecurity) &&
+                !wiresPanelSecurity.WiresAccessible)
+                return;
+
             if (TryComp(args.User, out ActorComponent? actor))
             {
                 _uiSystem.TryOpen(uid, WiresUiKey.Key, actor.PlayerSession);
