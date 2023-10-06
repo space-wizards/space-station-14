@@ -25,7 +25,6 @@ enable_during_round = true
 
 [ic]
 flavor_text = true
-show_ssd_indicator = true
 
 [hub]
 tags = "lang:en,region:am_n_w,rp:med"
