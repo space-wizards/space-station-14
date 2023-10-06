@@ -31,6 +31,8 @@ public abstract partial class SharedHandsSystem : EntitySystem
         InitializeDrop();
         InitializePickup();
         InitializeVirtual();
+
+        SubscribeLocalEvent<HandsComponent, MapInitEvent>(OnMapInit);
     }
 
     public override void Shutdown()
@@ -215,6 +217,7 @@ public abstract partial class SharedHandsSystem : EntitySystem
             return true;
         }
 
+        handComp.ActiveHandName = hand.Name;
         handComp.ActiveHand = hand;
         OnHandSetActive?.Invoke(handComp);
 
@@ -251,5 +254,12 @@ public abstract partial class SharedHandsSystem : EntitySystem
             return false;
 
         return hands.Hands.TryGetValue(handId, out hand);
+    }
+
+    private void OnMapInit(EntityUid uid, HandsComponent comp, MapInitEvent args)
+    {
+        // ActiveHandName gets saved so update ActiveHand from it when loading
+        // this relies on TrySetActiveHand checking the name against ActiveHand?.Name instead of ActiveHandName, since they would be the same.
+        TrySetActiveHand(uid, comp.ActiveHandName, comp);
     }
 }
