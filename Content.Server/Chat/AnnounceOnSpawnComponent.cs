@@ -14,13 +14,13 @@ public sealed partial class AnnounceOnSpawnComponent : Component
     /// Locale id of the announcement message.
     /// </summary>
     [DataField(required: true)]
-    public string Message;
+    public LocId Message = string.Empty;
 
     /// <summary>
     /// Locale id of the announcement's sender, defaults to Central Command.
     /// </summary>
     [DataField]
-    public string? Sender;
+    public LocId? Sender;
 
     /// <summary>
     /// Sound override for the announcement.
