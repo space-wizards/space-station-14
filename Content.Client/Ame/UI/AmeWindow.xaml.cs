@@ -66,7 +66,7 @@ namespace Content.Client.Ame.UI
             InjectionAmount.Text = $"{castState.InjectionAmount}";
             // format power statistics to pretty numbers
             CurrentPowerSupply.Text = $"{castState.CurrentPowerSupply.ToString("N1")}";
-            MaxPowerSupply.Text = $"{castState.MaxPowerSupply.ToString("N1")}";
+            TargetedPowerSupply.Text = $"{castState.TargetedPowerSupply.ToString("N1")}";
         }
     }
 }

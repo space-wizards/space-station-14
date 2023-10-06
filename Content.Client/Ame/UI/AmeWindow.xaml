@@ -51,9 +51,9 @@
         </BoxContainer>
         <BoxContainer></BoxContainer>
         <BoxContainer Orientation="Horizontal">
-            <Label Text="{Loc 'ame-window-power-maxsupply-label'}" />
+            <Label Text="{Loc 'ame-window-power-targetsupply-label'}" />
             <Label Text=" " />
-            <Label Name="MaxPowerSupply" Text="0" />
+            <Label Name="TargetedPowerSupply" Text="0" />
             <Label Text=" kW" />
         </BoxContainer>
     </GridContainer>

@@ -18,9 +18,9 @@ public sealed class AmeControllerBoundUserInterfaceState : BoundUserInterfaceSta
     public readonly int InjectionAmount;
     public readonly int CoreCount;
     public readonly float CurrentPowerSupply;
-    public readonly float MaxPowerSupply;
+    public readonly float TargetedPowerSupply;
 
-    public AmeControllerBoundUserInterfaceState(bool hasPower, bool isMaster, bool injecting, bool hasFuelJar, int fuelAmount, int injectionAmount, int coreCount, float currentPowerSupply, float maxPowerSupply)
+    public AmeControllerBoundUserInterfaceState(bool hasPower, bool isMaster, bool injecting, bool hasFuelJar, int fuelAmount, int injectionAmount, int coreCount, float currentPowerSupply, float targetedPowerSupply)
     {
         HasPower = hasPower;
         IsMaster = isMaster;
@@ -30,7 +30,7 @@ public sealed class AmeControllerBoundUserInterfaceState : BoundUserInterfaceSta
         InjectionAmount = injectionAmount;
         CoreCount = coreCount;
         CurrentPowerSupply = currentPowerSupply;
-        MaxPowerSupply = maxPowerSupply;
+        TargetedPowerSupply = targetedPowerSupply;
     }
 }
 
