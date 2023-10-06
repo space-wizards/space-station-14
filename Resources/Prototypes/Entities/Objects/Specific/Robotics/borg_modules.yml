@@ -484,7 +484,6 @@
     items: 
     - BorgHypospray
     - Dropper
-    - ChemistryEmptyBottle01
 
 - type: entity
   parent: [ BaseBorgModule, BaseProviderBorgModule ]

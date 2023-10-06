@@ -402,10 +402,10 @@
       path: /Audio/Effects/unwrap.ogg
 
 - type: entity
-  parent: Hypopen  
-  id: BorgHypospray
   name: mini hypospray
+  parent: Hypopen
   description: Cybersun has produced these small hyposprays for discreet installation to cyborgs.
+  id: BorgHypospray
   components:
   - type: Sprite
     sprite: Objects/Specific/Medical/syndihypo.rsi

@@ -527,7 +527,7 @@
   description: uplink-syndicate-self-destruct-module-desc
   productEntity: BorgModuleSelfDestruct
   cost:
-    Telecrystal: 5
+    Telecrystal: 7
   categories:
     - UplinkUtility
 

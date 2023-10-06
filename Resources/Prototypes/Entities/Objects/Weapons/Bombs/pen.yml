@@ -37,10 +37,10 @@
       path: /Audio/Effects/unwrap.ogg
 
 - type: entity
-  parent: BaseItem
-  id: ButtonExploding
   name: self destruct trigger
+  parent: BaseItem
   description: A bright red button connected to some dangerous explosives. Destroy yourself and everyone in your vicinity.
+  id: ButtonExploding
   components:
   - type: Sprite
     sprite: Objects/Weapons/Bombs/exploding_button.rsi
