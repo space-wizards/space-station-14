@@ -1,10 +1,4 @@
 Entries:
-- author: deltanedas
-  changes:
-  - {message: 'Stimulants now double your stamina, making you harder to stun and letting
-      you use more heavy attacks.', type: Tweak}
-  id: 4462
-  time: '2023-08-06T11:06:23.0000000+00:00'
 - author: JoeHammad
   changes:
   - {message: 'Centcom has increased the spring strength on the brute and burn auto
@@ -2950,3 +2944,8 @@ Entries:
   - {message: Syndicate bombs collide again., type: Tweak}
   id: 4961
   time: '2023-10-06T06:29:58.0000000+00:00'
+- author: Ubaser
+  changes:
+  - {message: The Clothesmate now dispenses berets., type: Tweak}
+  id: 4962
+  time: '2023-10-06T18:49:08.0000000+00:00'
