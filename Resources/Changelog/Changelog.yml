@@ -1,10 +1,4 @@
 Entries:
-- author: Flareguy
-  changes:
-  - {message: Added external hull plating tiles & hardened reinforced tiles. They
-      can only be normally destroyed using bombs., type: Add}
-  id: 4461
-  time: '2023-08-06T08:27:48.0000000+00:00'
 - author: deltanedas
   changes:
   - {message: 'Stimulants now double your stamina, making you harder to stun and letting
@@ -2951,3 +2945,8 @@ Entries:
   - {message: The trees and rocks are now rotating to follow the camera., type: Tweak}
   id: 4960
   time: '2023-10-06T01:50:25.0000000+00:00'
+- author: gusxyz
+  changes:
+  - {message: Syndicate bombs collide again., type: Tweak}
+  id: 4961
+  time: '2023-10-06T06:29:58.0000000+00:00'
