@@ -1733,3 +1733,11 @@
     FoodCorn: 1
     FoodPlate: 1
     FoodButter: 1
+
+- type: microwaveMealRecipe
+  id: RecipeTacoShell
+  name: taco shell recipe
+  result: FoodTacoShell
+  time: 5
+  solids:
+    FoodDoughTortillaFlat: 1 # one third of a standard bread dough recipe

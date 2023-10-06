@@ -1,0 +1,18 @@
+- type: entity
+  name: taco shell
+  parent: FoodMealBase
+  id: FoodTacoShell
+  description: A taco shell, easy to hold, but falls on its side when put down.
+  components:
+  - type: Food
+  - type: Sprite
+    sprite: Objects/Consumable/Food/taco.rsi
+    layers:
+    - state: tacoshell
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 6.66 # Just using the same values as the bun values, since the recipe for taco shells is roughly the same as buns.
