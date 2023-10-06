@@ -11,6 +11,6 @@ namespace Content.Server.Chemistry.Components;
 [RegisterComponent, Access(typeof(SmokeSystem))]
 public sealed partial class SmokeDissipateSpawnComponent : Component
 {
-    [DataField(required: true)]
-    public EntProtoId Prototype = string.Empty;
+    [DataField("prototype", required: true, customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
+    public string Prototype = string.Empty;
 }
