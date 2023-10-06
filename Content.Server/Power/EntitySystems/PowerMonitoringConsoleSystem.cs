@@ -117,6 +117,40 @@ internal sealed class PowerMonitoringConsoleSystem : EntitySystem
                 totalSources += powerSupplier.MaxSupply;
             }
 
+            else if (TryComp<BatteryDischargerComponent>(ent, out var batteryDischarger))
+            {
+                if (TryComp<NodeContainerComponent>(ent, out var nodeContainer) && nodeContainer.Nodes.Count == 1)
+                {
+                    if (!TryComp(batteryDischarger.Owner, out PowerNetworkBatteryComponent? batteryComp))
+                        continue;
+
+                    var entry = new PowerMonitoringConsoleEntry
+                        (_entityManager.GetNetEntity(ent),
+                        GetNetCoordinates(xform.Coordinates),
+                        metaData.EntityName,
+                        prototype,
+                        batteryComp.NetworkBattery.CurrentSupply,
+                        true);
+
+                    sources.Add(entry);
+                    totalSources += batteryComp.NetworkBattery.CurrentSupply;
+                }
+
+                else if (TryComp<PowerNetworkBatteryComponent>(ent, out var networkBattery))
+                {
+                    var entry = new PowerMonitoringConsoleEntry
+                        (_entityManager.GetNetEntity(ent),
+                        GetNetCoordinates(xform.Coordinates),
+                        metaData.EntityName,
+                        prototype,
+                        networkBattery.NetworkBattery.CurrentReceiving,
+                        true);
+
+                    loads.Add(entry);
+                    totalLoads += networkBattery.NetworkBattery.CurrentReceiving;
+                }
+            }
+
             else if (TryComp<PowerNetworkBatteryComponent>(ent, out var networkBattery))
             {
                 var entry = new PowerMonitoringConsoleEntry

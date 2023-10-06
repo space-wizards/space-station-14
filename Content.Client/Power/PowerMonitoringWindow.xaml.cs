@@ -226,8 +226,6 @@ public sealed partial class PowerMonitoringWindow : FancyWindow
 
         if (monitorCoords != null)
             NavMap.TrackedEntities.Add(monitorCoords.Value, (true, Color.Cyan, icon1));
-
-    
     }
 
     private void AddTrackedEntity(EntityUid uid, EntityCoordinates coords, PowerMonitoringConsoleEntry entry)
@@ -324,7 +322,7 @@ public sealed partial class PowerMonitoringWindow : FancyWindow
         NavMap.TrackedEntities.Clear();
     }
 
-    public void UpdateEntry(PowerMonitoringButton child, PowerMonitoringConsoleEntry entry)
+    public void UpdateEntry(PowerMonitoringButton child, PowerMonitoringConsoleEntry entry, float offset = 38f)
     {
         var uid = _entManager.GetEntity(entry.NetEntity);
         child.EntityUid = uid;
@@ -369,14 +367,14 @@ public sealed partial class PowerMonitoringWindow : FancyWindow
             child.Grid.AddChild(child.Name);
         }
 
-        child.Name.MinWidth = 220f;
-        child.Name.MaxWidth = 220f;
+        child.Name.MinWidth = 220f + offset;
+        child.Name.MaxWidth = 220f + offset;
         child.Name.ClipText = true;
 
-        string name = Loc.GetString(entry.NameLocalized);
-
-        if (name.Length > nameCharLimit)
-            name = $"{name.Substring(0, nameCharLimit - 3)}...";
+        var name = Loc.GetString(entry.NameLocalized);
+        var _charLimit = (int) (child.Name.MaxWidth / 8f);
+        if (name.Length > _charLimit)
+            name = $"{name.Substring(0, _charLimit - 3)}...";
 
         child.Name.Text = name;
 
@@ -387,7 +385,7 @@ public sealed partial class PowerMonitoringWindow : FancyWindow
         }
 
         child.Value.Text = Loc.GetString("power-monitoring-window-value", ("value", entry.Size));
-        child.Value.MinWidth = 80f;
+        child.Value.MinWidth = 64f;
     }
 
     private void ButtonAction(PowerMonitoringButton child, PowerMonitoringConsoleEntry entry, GridContainer list)
@@ -438,20 +436,16 @@ public sealed partial class PowerMonitoringWindow : FancyWindow
         var scroll = MasterTabContainer.Children.ElementAt(MasterTabContainer.CurrentTab) as ScrollContainer;
         if (scroll == null)
             return;
-        Logger.Debug("Passed A");
 
         var grid = scroll.Children.ElementAt(0) as GridContainer;
         if (grid == null)
             return;
-        Logger.Debug("Passed B");
 
         var pos = grid.Children.FirstOrDefault(x => (x is PowerMonitoringEntry) && ((PowerMonitoringEntry)x).EntityUid == _trackedEntity);
         if (pos == null)
             return;
-        
-        _nextScrollStart = 40f * pos.GetPositionInParent();
 
-        Logger.Debug("next scroll: " + _nextScrollStart);
+        _nextScrollStart = 40f * pos.GetPositionInParent();
     }
 
     private void UpdateChildren(GridContainer list, PowerMonitoringConsoleEntry[] listVal, PowerMonitoringConsoleEntry[]? sources, PowerMonitoringConsoleEntry[]? loads)
@@ -461,6 +455,9 @@ public sealed partial class PowerMonitoringWindow : FancyWindow
         {
             list.RemoveChild(list.GetChild(list.ChildCount - 1));
         }
+
+        if (!listVal.Any())
+            return;
 
         // Add missing children
         while (list.ChildCount < listVal.Length)
@@ -486,7 +483,7 @@ public sealed partial class PowerMonitoringWindow : FancyWindow
             var grid = new GridContainer();
             grid.Columns = 1;
             grid.HorizontalExpand = true;
-            grid.Margin = new Thickness(20, 5, 0, 0);
+            grid.Margin = new Thickness(8, 5, 0, 0);
             grid.Visible = false;
             child.MainGrid = grid;
             child.AddChild(grid);
@@ -521,6 +518,9 @@ public sealed partial class PowerMonitoringWindow : FancyWindow
 
         foreach (var child in list.Children)
         {
+            if (child is not PowerMonitoringEntry)
+                continue;
+
             var castChild = (PowerMonitoringEntry) child;
             if (castChild == null)
                 continue;
@@ -537,9 +537,10 @@ public sealed partial class PowerMonitoringWindow : FancyWindow
 
             if (_trackedEntity == ent)
             {
-                UpdateEntrySourcesLoads(castChild.Sources, sources);
-                UpdateEntrySourcesLoads(castChild.Loads, loads);
                 castChild.MainGrid.Visible = true;
+                UpdateEntrySourcesLoads(castChild.Sources, sources); // Fix for sources
+                UpdateEntrySourcesLoads(castChild.Loads, loads, false);
+                
             }
 
             else
@@ -547,12 +548,12 @@ public sealed partial class PowerMonitoringWindow : FancyWindow
         }
     }
 
-    private void UpdateEntrySourcesLoads(GridContainer? list, PowerMonitoringConsoleEntry[]? listVal)
+    private void UpdateEntrySourcesLoads(GridContainer? list, PowerMonitoringConsoleEntry[]? listVal, bool isSource = true)
     {
         if (list == null)
             return;
 
-        if (listVal == null)
+        if (listVal == null || !listVal.Any())
         {
             list.Visible = false;
             return;
@@ -570,9 +571,16 @@ public sealed partial class PowerMonitoringWindow : FancyWindow
         while (list.ChildCount < listVal.Length)
         {
             var child = new PowerMonitoringEntry();
-            child.Orientation = BoxContainer.LayoutOrientation.Vertical;
+            child.Orientation = BoxContainer.LayoutOrientation.Horizontal;
             child.HorizontalExpand = true;
             list.AddChild(child);
+
+            var icon = new TextureRect();
+            icon.VerticalAlignment = VAlignment.Center;
+            icon.Margin = new Thickness(0, 0, 2, 0);
+            child.Symbol = icon;
+
+            child.AddChild(icon);
 
             var button = new PowerMonitoringButton();
             button.StyleClasses.Add("OpenBoth");
@@ -587,13 +595,24 @@ public sealed partial class PowerMonitoringWindow : FancyWindow
 
         foreach (var child in list.Children)
         {
+            if (child is not PowerMonitoringEntry)
+                continue;
+
             var castChild = (PowerMonitoringEntry) child;
             if (castChild == null)
                 continue;
             if (castChild.Button == null)
                 continue;
 
-            UpdateEntry(castChild.Button, listVal.ElementAt(child.GetPositionInParent()));
+            if (castChild.Symbol != null)
+            {
+                if (isSource)
+                    castChild.Symbol.Texture = new SpriteSpecifier.Texture(new("/Textures/Interface/PowerMonitoring/source_arrow.png")).Frame0();
+                else
+                    castChild.Symbol.Texture = new SpriteSpecifier.Texture(new("/Textures/Interface/PowerMonitoring/load_arrow.png")).Frame0();
+            }
+
+            UpdateEntry(castChild.Button, listVal.ElementAt(child.GetPositionInParent()), 0f);
         }
     }
 }
@@ -607,6 +626,7 @@ public sealed class PowerMonitoringEntry : BoxContainer
     public GridContainer? MainGrid;
     public GridContainer? Sources;
     public GridContainer? Loads;
+    public TextureRect? Symbol;
 }
 
 
