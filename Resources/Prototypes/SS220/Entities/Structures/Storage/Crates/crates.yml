@@ -8,3 +8,43 @@
     sprite: SS220/Structures/Storage/Crates/ussp_crate.rsi
   - type: Sprite
     sprite: SS220/Structures/Storage/Crates/ussp_crate.rsi
+
+- type: entity
+  parent: CrateGeneric
+  id: CrateWood
+  name: деревянный ящик
+  description: Простой ящик из дерева.
+  components:
+  - type: Sprite
+    sprite: SS220/Structures/Storage/Crates/wood_crate.rsi
+    layers:
+    - state: base
+    - state: closed
+      map: ["enum.StorageVisualLayers.Door"]
+  - type: Icon
+    sprite: SS220/Structures/Storage/Crates/wood_crate.rsi
+    state: base
+  - type: Damageable
+    damageModifierSet: Wood
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 15
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/woodhit.ogg
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MaterialWoodPlank1:
+            min: 1
+            max: 4
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Construction
+    graph: CrateWood
+    node: cratewood
+    containers:
+    - entity_storage

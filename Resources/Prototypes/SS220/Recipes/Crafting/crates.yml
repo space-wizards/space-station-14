@@ -1,0 +1,10 @@
+- type: construction
+  name: wood crate
+  id: CrateWood
+  graph: CrateWood
+  startNode: start
+  targetNode: cratewood
+  category: construction-category-storage
+  description: A simple wooden crate.
+  icon: { sprite: SS220/Structures/Storage/Crates/wood_crate.rsi, state: base }
+  objectType: Structure
