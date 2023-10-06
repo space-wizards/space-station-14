@@ -98,7 +98,7 @@
   name: flash
   parent: BaseItem
   id: Flash
-  description: An ultrabright flashbulb with a trigger, which causes the victim to be dazed and lose their eyesight for a moment. Useless when burnt out.
+  description: An ultrabright flashbulb with a trigger, which causes the victim to lose their eyesight for a moment. Useless when burnt out.
   components:
     - type: Sprite
       sprite: Objects/Weapons/Melee/flash.rsi
@@ -110,6 +110,7 @@
         visible: false
         shader: unshaded
     - type: Flash
+      slowTo: 1 # Also known as "Don't"
     - type: LimitedCharges
       maxCharges: 5
       charges: 5
