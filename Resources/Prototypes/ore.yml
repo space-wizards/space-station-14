@@ -37,6 +37,18 @@
   oreEntity: BananiumOre1
 
 - type: ore
+  id: OreQuartzCrab
+  oreEntity: MobQuartzCrab
+
+- type: ore
+  id: OreIronCrab
+  oreEntity: MobIronCrab
+
+- type: ore
+  id: OreUraniumCrab
+  oreEntity: MobUraniumCrab
+
+- type: ore
   id: OreArtifactFragment
   oreEntity: ArtifactFragment
   minOreYield: 2
@@ -53,3 +65,10 @@
     OreUranium: 1
     OreBananium: 0.5
     OreArtifactFragment: 0.5
+
+- type: weightedRandomOre
+  id: OreCrab
+  weights:
+    OreQuartzCrab: 5
+    OreIronCrab: 5
+    OreUraniumCrab: 3

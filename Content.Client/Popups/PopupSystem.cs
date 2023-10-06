@@ -150,7 +150,7 @@ namespace Content.Client.Popups
         public override void PopupClient(string message, EntityUid uid, EntityUid recipient, PopupType type = PopupType.Small)
         {
             if (_timing.IsFirstTimePredicted)
-                PopupEntity(message, uid, recipient);
+                PopupEntity(message, uid, recipient, type);
         }
 
         public override void PopupEntity(string message, EntityUid uid, PopupType type = PopupType.Small)
