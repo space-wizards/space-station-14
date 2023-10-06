@@ -5,6 +5,7 @@
   components:
   - type: Clickable
   - type: Sprite
+    noRot: true
     sprite: Objects/Decoration/Flora/flora_rockssolid.rsi
   - type: Physics
     bodyType: Static
