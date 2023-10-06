@@ -1,3 +1,4 @@
+using Content.Server.Temperature.Systems;
 using Content.Shared.Atmos;
 using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
@@ -53,7 +54,7 @@ public sealed partial class TemperatureComponent : Component
     {
         get
         {
-            return IoCManager.Resolve<IEntityManager>().System<TemperatureSystem>.GetHeatCapacity(Owner, this);
+            return IoCManager.Resolve<IEntityManager>().System<TemperatureSystem>().GetHeatCapacity(Owner, this);
         }
     }
 
