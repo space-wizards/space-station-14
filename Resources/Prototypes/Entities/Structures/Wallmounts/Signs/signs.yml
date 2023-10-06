@@ -62,15 +62,6 @@
     state: direction_chemistry
 
 - type: entity
-  parent: BaseSign
-  id: SignCourt
-  name: court sign
-  description: A sign labelling the courtroom.
-  components:
-  - type: Sprite
-    state: court
-
-- type: entity
   parent: BaseSignDirectional
   id: SignDirectionalCryo
   name: cryo sign
@@ -78,15 +69,6 @@
   components:
   - type: Sprite
     state: direction_cryo
-
-- type: entity
-  parent: BaseSign
-  id: SignCustodian
-  name: custodian sign
-  description: A sign labelling an area where the janitor works.
-  components:
-  - type: Sprite
-    state: custodian
 
 - type: entity
   parent: BaseSignDirectional
@@ -416,6 +398,15 @@
 
 - type: entity
   parent: BaseSign
+  id: SignCourt
+  name: court sign
+  description: A sign labelling the courtroom.
+  components:
+  - type: Sprite
+    state: court
+
+- type: entity
+  parent: BaseSign
   id: SignDisposalSpace
   name: disposal sign
   description: A sign indicating a disposal area.
@@ -557,6 +548,15 @@
   components:
   - type: Sprite
     state: interrogation
+
+- type: entity
+  parent: BaseSign
+  id: SignJanitor
+  name: janitor sign
+  description: A sign labelling an area where the janitor works.
+  components:
+  - type: Sprite
+    state: janitor
 
 - type: entity
   parent: BaseSign
