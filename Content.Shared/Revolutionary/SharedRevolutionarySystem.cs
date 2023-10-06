@@ -14,13 +14,13 @@ public sealed class SharedRevolutionarySystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<MindShieldComponent, ComponentInit>(MindShieldImplanted);
+        SubscribeLocalEvent<MindShieldComponent, MapInitEvent>(MindShieldImplanted);
     }
 
     /// <summary>
     /// When the mindshield is implanted in the rev it will popup saying they were deconverted. In Head Revs it will remove the mindshield component.
     /// </summary>
-    private void MindShieldImplanted(EntityUid uid, MindShieldComponent comp, ComponentInit init)
+    private void MindShieldImplanted(EntityUid uid, MindShieldComponent comp, MapInitEvent init)
     {
         if (HasComp<RevolutionaryComponent>(uid) && !HasComp<HeadRevolutionaryComponent>(uid))
         {

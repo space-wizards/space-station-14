@@ -1,22 +1,4 @@
 Entries:
-- author: notafet
-  changes:
-  - {message: 'Add radiators, which transfer heat from a pipe to its surroundings.',
-    type: Add}
-  id: 4460
-  time: '2023-08-06T08:21:05.0000000+00:00'
-- author: Flareguy
-  changes:
-  - {message: Added external hull plating tiles & hardened reinforced tiles. They
-      can only be normally destroyed using bombs., type: Add}
-  id: 4461
-  time: '2023-08-06T08:27:48.0000000+00:00'
-- author: deltanedas
-  changes:
-  - {message: 'Stimulants now double your stamina, making you harder to stun and letting
-      you use more heavy attacks.', type: Tweak}
-  id: 4462
-  time: '2023-08-06T11:06:23.0000000+00:00'
 - author: JoeHammad
   changes:
   - {message: 'Centcom has increased the spring strength on the brute and burn auto
@@ -2952,3 +2934,18 @@ Entries:
   - {message: Monkey's now are able to equip gas masks., type: Add}
   id: 4959
   time: '2023-10-05T21:34:37.0000000+00:00'
+- author: TheShuEd
+  changes:
+  - {message: The trees and rocks are now rotating to follow the camera., type: Tweak}
+  id: 4960
+  time: '2023-10-06T01:50:25.0000000+00:00'
+- author: gusxyz
+  changes:
+  - {message: Syndicate bombs collide again., type: Tweak}
+  id: 4961
+  time: '2023-10-06T06:29:58.0000000+00:00'
+- author: Ubaser
+  changes:
+  - {message: The Clothesmate now dispenses berets., type: Tweak}
+  id: 4962
+  time: '2023-10-06T18:49:08.0000000+00:00'
