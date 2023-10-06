@@ -4,7 +4,7 @@ namespace Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Components;
 
 /// <summary>
 /// Artifact polymorphs surrounding entities when triggered.
-/// </summary>ayed on polymorph
+/// </summary>
 [RegisterComponent]
 public sealed partial class PolyArtifactComponent : Component
 {
