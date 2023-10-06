@@ -32,10 +32,6 @@
       beepSound: /Audio/Machines/timer.ogg
     - type: Anchorable
       delay: 5
-    - type: Physics
-      bodyType: Dynamic
-    - type: Transform
-      anchored: false
     - type: Fixtures
       fixtures:
         fix1:
