@@ -1674,7 +1674,7 @@
     FoodKebabSkewer: 1
 
 - type: microwaveMealRecipe
-  id: RecipeFoodMealTaco
+  id: RecipeFoodMealSoftTaco
   name: taco recipe
   result: FoodMealTaco
   time: 10

@@ -548,7 +548,7 @@
 - type: entity
   name: taco
   parent: FoodMealBase
-  id: FoodMealTaco
+  id: FoodMealSoftTaco
   description: Take a bite!
   components:
   - type: FlavorProfile
