@@ -130,3 +130,16 @@
       - minTemperature: 445 #rouny
   - node: rouny steak
     entity: FoodMeatRounyCooked
+
+# bacon "steak"
+- type: constructionGraph
+  id: Bacon
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: bacon
+      steps:
+      - minTemperature: 345
+  - node: bacon
+    entity: FoodMeatBaconCooked

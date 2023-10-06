@@ -256,3 +256,17 @@
       - Dead
     - type: Rattle
 
+# Sec and Command implants
+
+- type: entity
+  parent: BaseSubdermalImplant
+  id: MindShieldImplant
+  name: mind-shield implant
+  description: This implant will ensure loyalty to Nanotrasen and prevent mind control devices.
+  noSpawn: true
+  components:
+   - type: SubdermalImplant
+     permanent: true
+   - type: Tag
+     tags:
+       - MindShield

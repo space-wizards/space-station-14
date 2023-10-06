@@ -2,11 +2,6 @@ namespace Content.Shared.Shuttles.Systems;
 
 public abstract partial class SharedShuttleSystem : EntitySystem
 {
-    public override void Initialize()
-    {
-        base.Initialize();
-        InitializeIFF();
-    }
 }
 
 [Flags]
