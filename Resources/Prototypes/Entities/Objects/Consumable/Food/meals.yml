@@ -546,7 +546,7 @@
           Quantity: 5
 
 - type: entity
-  name: taco
+  name: soft taco
   parent: FoodMealBase
   id: FoodMealSoftTaco
   description: Take a bite!
@@ -558,7 +558,7 @@
       - meaty
       - onion
   - type: Sprite
-    state: taco
+    state: softtaco
 
 - type: entity
   name: corn in butter
