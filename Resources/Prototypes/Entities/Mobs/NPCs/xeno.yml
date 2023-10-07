@@ -122,7 +122,7 @@
   - type: Sprite
     drawdepth: Mobs
     sprite: Mobs/Aliens/Xenos/praetorian.rsi
-    offset: 0,0.4
+    #offset: 0,0.4
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: running
@@ -155,7 +155,7 @@
   - type: Sprite
     drawdepth: Mobs
     sprite: Mobs/Aliens/Xenos/drone.rsi
-    offset: 0,0.2
+    #offset: 0,0.2
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: running
@@ -194,7 +194,7 @@
   - type: Sprite
     drawdepth: Mobs
     sprite: Mobs/Aliens/Xenos/queen.rsi
-    offset: 0,0.4
+    #offset: 0,0.4
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: running
@@ -239,7 +239,7 @@
   - type: Sprite
     drawdepth: Mobs
     sprite: Mobs/Aliens/Xenos/ravager.rsi
-    offset: 0,0.5
+    #offset: 0,0.5
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: running
@@ -281,7 +281,7 @@
   - type: Sprite
     drawdepth: Mobs
     sprite: Mobs/Aliens/Xenos/runner.rsi
-    offset: 0,0.6
+    #offset: 0,0.6
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: running
@@ -315,7 +315,7 @@
   - type: Sprite
     drawdepth: Mobs
     sprite: Mobs/Aliens/Xenos/rouny.rsi
-    offset: 0,0.6
+    #offset: 0,0.6
 
 - type: entity
   name: Spitter
@@ -325,7 +325,7 @@
   - type: Sprite
     drawdepth: Mobs
     sprite: Mobs/Aliens/Xenos/spitter.rsi
-    offset: 0,0.3
+    #offset: 0,0.3
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: running
