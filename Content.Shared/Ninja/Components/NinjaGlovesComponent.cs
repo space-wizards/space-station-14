@@ -31,7 +31,7 @@ public sealed partial class NinjaGlovesComponent : Component
     [DataField("toggleAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string ToggleAction = "ActionToggleNinjaGloves";
 
-    [DataField("toggleActionEntity")]
+    [DataField, AutoNetworkedField]
     public EntityUid? ToggleActionEntity;
 
     /// <summary>
