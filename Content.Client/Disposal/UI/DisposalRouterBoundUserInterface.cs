@@ -1,6 +1,6 @@
 ﻿using JetBrains.Annotations;
+using Content.Shared.Disposal;
 using Robust.Client.GameObjects;
-using static Content.Shared.Disposal.Components.SharedDisposalRouterComponent;
 
 namespace Content.Client.Disposal.UI
 {
@@ -26,14 +26,13 @@ namespace Content.Client.Disposal.UI
             _window.OpenCentered();
             _window.OnClose += Close;
 
-            _window.Confirm.OnPressed += _ => ButtonPressed(UiAction.Ok, _window.TagInput.Text);
-            _window.TagInput.OnTextEntered += args => ButtonPressed(UiAction.Ok, args.Text);
-
+            _window.Confirm.OnPressed += _ => ButtonPressed(_window.TagsInput.Text);
+            _window.TagsInput.OnTextEntered += args => ButtonPressed(args.Text);
         }
 
-        private void ButtonPressed(UiAction action, string tag)
+        private void ButtonPressed(string tags)
         {
-            SendMessage(new UiActionMessage(action, tag));
+            SendMessage(new RouterSetTagsMessage(tags));
             _window?.Close();
         }
 

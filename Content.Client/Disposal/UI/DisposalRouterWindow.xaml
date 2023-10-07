@@ -6,7 +6,7 @@
         <Label Text="{Loc 'disposal-router-window-tags-label'}" />
         <Control MinSize="0 10" />
         <BoxContainer Orientation="Horizontal">
-            <LineEdit Name="TagInput"
+            <LineEdit Name="TagsInput"
                       Access="Public"
                       HorizontalExpand="True"
                       MinSize="320 0"
