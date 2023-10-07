@@ -17,7 +17,6 @@ public sealed partial class DisposalTubeComponent : Component
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
     public TimeSpan LastClang;
 
-    [DataField]
     public bool Connected;
 
     [DataField]
