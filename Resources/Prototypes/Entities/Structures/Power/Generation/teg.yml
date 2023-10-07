@@ -51,6 +51,8 @@
         teg:
           !type:TegNodeGenerator
           nodeGroupID: Teg
+    - type: PowerMonitoringDevice
+      loadNode: output
     - type: Rotatable
 
     # Note that only the TEG center is an AtmosDevice.

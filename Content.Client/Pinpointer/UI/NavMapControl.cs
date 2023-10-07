@@ -16,6 +16,7 @@ using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Physics.Components;
 using Content.Shared.Power;
 using System.Linq;
+using Content.Client.Power;
 
 namespace Content.Client.Pinpointer.UI;
 
@@ -31,6 +32,9 @@ public sealed class NavMapControl : MapGridControl
 
     public Dictionary<EntityCoordinates, (bool Visible, Color Color)> TrackedCoordinates = new();
     public Dictionary<EntityCoordinates, (bool Visible, Color Color, Texture? Texture)> TrackedEntities = new();
+    public Dictionary<Vector2i, List<ChunkedLine>> CableGrid = default!;
+    public Dictionary<Vector2i, List<ChunkedLine>> FocusGrid = default!;
+    public Dictionary<Vector2i, List<ChunkedLine>> TileGrid = default!;
     public Dictionary<CableType, bool> ShowCables = new Dictionary<CableType, bool>
     {
         [CableType.HighVoltage] = false,
@@ -244,7 +248,7 @@ public sealed class NavMapControl : MapGridControl
         }
 
         // Draw the wall data
-        var area = new Box2(-WorldRange, -WorldRange, WorldRange + 1f, WorldRange + 1f).Translated(offset);
+        /*var area = new Box2(-WorldRange, -WorldRange, WorldRange + 1f, WorldRange + 1f).Translated(offset);
         var tileSize = new Vector2(grid.TileSize, -grid.TileSize);
 
         for (var x = Math.Floor(area.Left); x <= Math.Ceiling(area.Right); x += SharedNavMapSystem.ChunkSize * grid.TileSize)
@@ -351,18 +355,121 @@ public sealed class NavMapControl : MapGridControl
                     handle.DrawLine(Scale(position + new Vector2(0f, -grid.TileSize)), Scale(position + new Vector2(grid.TileSize, 0f)), lineColor);
                 }
             }
-        }
+        }*/
 
         // Draw cables
         if (FocusPowerCableChunks != null && FocusPowerCableChunks.Any())
         {
-            DrawCables(handle, PowerCableChunks, _unfocusCableData, area, grid, offset);
-            DrawCables(handle, FocusPowerCableChunks, _cableData, area, grid, offset);
+            //DrawCables(handle, PowerCableChunks, _unfocusCableData, area, grid, offset);
+            //DrawCables(handle, FocusPowerCableChunks, _cableData, area, grid, offset);
         }
 
         else
         {
-            DrawCables(handle, PowerCableChunks, _cableData, area, grid, offset);
+           // DrawCables(handle, PowerCableChunks, _cableData, area, grid, offset);
+        }
+
+        var area = new Box2(-WorldRange, -WorldRange, WorldRange + 1f, WorldRange + 1f).Translated(offset);
+
+        foreach ((var chunk, var chunkedLines) in TileGrid)
+        {
+            var offsetChunk = new Vector2(chunk.X, chunk.Y) * SharedNavMapSystem.ChunkSize;
+
+            if (offsetChunk.X < area.Left - SharedNavMapSystem.ChunkSize || offsetChunk.X > area.Right)
+                continue;
+
+            if (offsetChunk.Y < area.Bottom - SharedNavMapSystem.ChunkSize || offsetChunk.Y > area.Top)
+                continue;
+
+            foreach (var chunkedLine in chunkedLines)
+            {
+                handle.DrawLine
+                (Scale(chunkedLine.Origin - new Vector2(offset.X, -offset.Y)),
+                Scale(chunkedLine.Terminus - new Vector2(offset.X, -offset.Y)),
+                new Color(102, 164, 217));
+            }
+        }
+
+        if (CableGrid != null && CableGrid.Any())
+        {
+            foreach ((var chunk, var chunkedLines) in CableGrid)
+            {
+                var offsetChunk = new Vector2(chunk.X, chunk.Y) * SharedNavMapSystem.ChunkSize;
+
+                if (offsetChunk.X < area.Left - SharedNavMapSystem.ChunkSize || offsetChunk.X > area.Right)
+                    continue;
+
+                if (offsetChunk.Y < area.Bottom - SharedNavMapSystem.ChunkSize || offsetChunk.Y > area.Top)
+                    continue;
+
+                foreach (var chunkedLine in chunkedLines)
+                {
+                    if (WorldRange / WorldMaxRange < 0.5f)
+                    {
+                        var leftTop = new Vector2
+                            (Math.Min(chunkedLine.Origin.X, chunkedLine.Terminus.X) - 0.1f,
+                            Math.Min(chunkedLine.Origin.Y, chunkedLine.Terminus.Y) - 0.1f);
+
+                        var rightBottom = new Vector2
+                            (Math.Max(chunkedLine.Origin.X, chunkedLine.Terminus.X) + 0.1f,
+                            Math.Max(chunkedLine.Origin.Y, chunkedLine.Terminus.Y) + 0.1f);
+
+                        handle.DrawRect
+                            (new UIBox2(Scale(leftTop - new Vector2(offset.X, -offset.Y)),
+                            Scale(rightBottom - new Vector2(offset.X, -offset.Y))),
+                            chunkedLine.Color);
+                    }
+
+                    else
+                    {
+                        handle.DrawLine
+                            (Scale(chunkedLine.Origin - new Vector2(offset.X, -offset.Y)),
+                            Scale(chunkedLine.Terminus - new Vector2(offset.X, -offset.Y)),
+                            chunkedLine.Color);
+                    }
+                }
+            }
+        }
+
+        if (FocusGrid != null && FocusGrid.Any())
+        {
+            foreach ((var chunk, var chunkedLines) in FocusGrid)
+            {
+                var offsetChunk = new Vector2(chunk.X, chunk.Y) * SharedNavMapSystem.ChunkSize;
+
+                if (offsetChunk.X < area.Left - SharedNavMapSystem.ChunkSize || offsetChunk.X > area.Right)
+                    continue;
+
+                if (offsetChunk.Y < area.Bottom - SharedNavMapSystem.ChunkSize || offsetChunk.Y > area.Top)
+                    continue;
+
+                foreach (var chunkedLine in chunkedLines)
+                {
+                    if (WorldRange / WorldMaxRange < 0.5f)
+                    {
+                        var leftTop = new Vector2
+                            (Math.Min(chunkedLine.Origin.X, chunkedLine.Terminus.X) - 0.1f,
+                            Math.Min(chunkedLine.Origin.Y, chunkedLine.Terminus.Y) - 0.1f);
+
+                        var rightBottom = new Vector2
+                            (Math.Max(chunkedLine.Origin.X, chunkedLine.Terminus.X) + 0.1f,
+                            Math.Max(chunkedLine.Origin.Y, chunkedLine.Terminus.Y) + 0.1f);
+
+                        handle.DrawRect
+                            (new UIBox2(Scale(leftTop - new Vector2(offset.X, -offset.Y)),
+                            Scale(rightBottom - new Vector2(offset.X, -offset.Y))),
+                            chunkedLine.Color);
+                    }
+
+                    else
+                    {
+                        handle.DrawLine
+                            (Scale(chunkedLine.Origin - new Vector2(offset.X, -offset.Y)),
+                            Scale(chunkedLine.Terminus - new Vector2(offset.X, -offset.Y)),
+                            chunkedLine.Color);
+                    }
+                }
+            }
         }
 
         var curTime = Timing.RealTime;
@@ -429,7 +536,7 @@ public sealed class NavMapControl : MapGridControl
         }
     }
 
-    private void DrawCables(DrawingHandleScreen handle,
+    /*private void DrawCables(DrawingHandleScreen handle,
         Dictionary<Vector2i, NavMapChunkPowerCables> chunks,
         List<CableData> cableData,
         Box2 area,
@@ -547,7 +654,7 @@ public sealed class NavMapControl : MapGridControl
                 }
             }
         }
-    }
+    }*/
 
     private Vector2 Scale(Vector2 position)
     {

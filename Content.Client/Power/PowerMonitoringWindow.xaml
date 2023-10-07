@@ -41,7 +41,7 @@
             </BoxContainer>
             
             <!-- Power status -->
-            <BoxContainer Orientation="Vertical" VerticalExpand="True" SetWidth="440" Margin="10 10 10 10">
+            <BoxContainer Orientation="Vertical" VerticalExpand="True" SetWidth="440" Margin="0 10 10 10">
 
                 <!-- Power overview -->
                 <GridContainer Columns="2">
@@ -68,10 +68,6 @@
                     <ScrollContainer HorizontalExpand="True"                                   
                                      Margin="8, 8, 8, 8">
                         <GridContainer Name="ApcList" VerticalExpand="True" HorizontalExpand="True" Columns="1"/>
-                    </ScrollContainer>
-                    <ScrollContainer HorizontalExpand="True"                                     
-                                     Margin="8, 8, 8, 8">
-                        <GridContainer Name="MiscList" VerticalExpand="True" HorizontalExpand="True" Columns="1"/>
                     </ScrollContainer>
                 </TabContainer>
 
