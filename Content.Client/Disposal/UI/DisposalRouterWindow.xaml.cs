@@ -4,25 +4,23 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.UserInterface.XAML;
 
-namespace Content.Client.Disposal.UI
+namespace Content.Client.Disposal.UI;
+
+/// <summary>
+/// Client-side UI used to control a <see cref="SharedDisposalRouterComponent"/>
+/// </summary>
+[GenerateTypedNameReferences]
+public sealed partial class DisposalRouterWindow : DefaultWindow
 {
-    /// <summary>
-    /// Client-side UI used to control a <see cref="SharedDisposalRouterComponent"/>
-    /// </summary>
-    [GenerateTypedNameReferences]
-    public sealed partial class DisposalRouterWindow : DefaultWindow
+    public DisposalRouterWindow()
     {
-        public DisposalRouterWindow()
-        {
-            RobustXamlLoader.Load(this);
+        RobustXamlLoader.Load(this);
 
-            TagsInput.IsValid = tags => RouterSetTagsMessage.TagsRegex.IsMatch(tags);
-        }
+        TagsInput.IsValid = tags => RouterSetTagsMessage.TagsRegex.IsMatch(tags);
+    }
 
-
-        public void UpdateState(DisposalRouterUserInterfaceState state)
-        {
-            TagsInput.Text = state.Tags;
-        }
+    public void UpdateState(DisposalRouterUserInterfaceState state)
+    {
+        TagsInput.Text = state.Tags;
     }
 }

@@ -4,25 +4,23 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.UserInterface.XAML;
 
-namespace Content.Client.Disposal.UI
+namespace Content.Client.Disposal.UI;
+
+/// <summary>
+/// Client-side UI used to control a <see cref="SharedDisposalTaggerComponent"/>
+/// </summary>
+[GenerateTypedNameReferences]
+public sealed partial class DisposalTaggerWindow : DefaultWindow
 {
-    /// <summary>
-    /// Client-side UI used to control a <see cref="SharedDisposalTaggerComponent"/>
-    /// </summary>
-    [GenerateTypedNameReferences]
-    public sealed partial class DisposalTaggerWindow : DefaultWindow
+    public DisposalTaggerWindow()
     {
-        public DisposalTaggerWindow()
-        {
-            RobustXamlLoader.Load(this);
+        RobustXamlLoader.Load(this);
 
-            TagInput.IsValid = tag => TaggerSetTagMessage.TagRegex.IsMatch(tag);
-        }
+        TagInput.IsValid = tag => TaggerSetTagMessage.TagRegex.IsMatch(tag);
+    }
 
-
-        public void UpdateState(DisposalTaggerUserInterfaceState state)
-        {
-            TagInput.Text = state.Tag;
-        }
+    public void UpdateState(DisposalTaggerUserInterfaceState state)
+    {
+        TagInput.Text = state.Tag;
     }
 }
