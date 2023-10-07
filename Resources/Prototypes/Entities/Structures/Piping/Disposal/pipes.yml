@@ -197,11 +197,12 @@
       state: conpipe-j1s
   - type: DisposalTube
     containerId: DisposalRouter
-  - type: DisposalRouter
+  - type: DisposalJunction
     degrees:
     - 0
     - -90
     - 180
+  - type: DisposalRouter
   - type: ContainerContainer
     containers:
       DisposalRouter: !type:Container
@@ -245,7 +246,7 @@
       state: conpipe-j2s
   - type: DisposalTube
     containerId: DisposalRouter
-  - type: DisposalRouter
+  - type: DisposalJunction
     degrees:
     - 0
     - 90
