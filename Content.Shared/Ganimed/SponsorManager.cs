@@ -6,8 +6,9 @@ public sealed class SponsorManager
 {
     private Dictionary<string, DateTime> sponsors =
 		new Dictionary<string, DateTime>(){
+			{"Laastrog", new DateTime(2023, 08, 15)},
 			{"swaiper5", new DateTime(2023, 09, 26)},
-			{"localhost@temporaldarkness", new DateTime(2023, 09, 26)}
+			{"localhost@JoeGenero", new DateTime(2023, 10, 07)}
 		};
 
     public bool IsSponsor(String? nickname)

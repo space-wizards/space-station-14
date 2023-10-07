@@ -355,10 +355,19 @@ namespace Content.Client.Preferences.UI
 
             #region Eyes
 
-            _eyesPicker.OnEyeColorPicked += newColor =>
+            _sponsorManager = IoCManager.Resolve<SponsorManager>();
+			
+			_eyesPicker.OnEyeColorPicked += newColor =>
             {
                 if (Profile is null)
-                    return;
+                return;
+				if (_playerManager.LocalPlayer is null)
+					return;
+				if (!_sponsorManager.IsSponsor(_playerManager.LocalPlayer?.Session.ConnectedClient.UserName)) {
+					Profile = Profile.WithCharacterAppearance(
+                    Profile.Appearance.WithSpeakerColor(newColor));
+					CMarkings.CurrentSpeakerColor = Profile.Appearance.EyeColor;
+				}
                 Profile = Profile.WithCharacterAppearance(
                     Profile.Appearance.WithEyeColor(newColor));
                 CMarkings.CurrentEyeColor = Profile.Appearance.EyeColor;
@@ -1213,10 +1222,14 @@ namespace Content.Client.Preferences.UI
 
         private void UpdateEyePickers()
         {
-            if (Profile == null)
-            {
+            if (Profile is null)
                 return;
-            }
+			if (_playerManager.LocalPlayer is null)
+				return;
+			if (!_sponsorManager.IsSponsor(_playerManager.LocalPlayer?.Session.ConnectedClient.UserName)) {
+				CMarkings.CurrentSpeakerColor = Profile.Appearance.EyeColor;
+				_speakerPicker.SetData(Profile.Appearance.EyeColor);
+			}
 
             CMarkings.CurrentEyeColor = Profile.Appearance.EyeColor;
             _eyesPicker.SetData(Profile.Appearance.EyeColor);

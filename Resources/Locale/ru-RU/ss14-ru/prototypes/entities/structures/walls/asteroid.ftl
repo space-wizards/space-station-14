@@ -1,6 +1,12 @@
 ent-AsteroidRock = астероидный камень
     .desc = Каменистый астероид.
     .suffix = Низкое содержание руды
+ent-AsteroidRockCrab = астероидный камень
+    .desc = Каменистый астероид.
+    .suffix = рудный краб
+ent-AsteroidRockCrab1 = астероидный камень
+    .desc = Каменистый астероид.
+    .suffix = рудный краб
 ent-AsteroidRockMining = астероидный камень
     .desc = Это астероид.
     .suffix = Высокое содержание руды

@@ -18,3 +18,6 @@ ent-AnomalyBluespace = { ent-BaseAnomaly }
 ent-AnomalyIce = { ent-BaseAnomaly }
     .suffix = Лёд
     .desc = { ent-BaseAnomaly.desc }
+ent-AnomalyRock = { ent-BaseAnomaly }
+    .suffix = Скала
+    .desc = { ent-BaseAnomaly.desc }

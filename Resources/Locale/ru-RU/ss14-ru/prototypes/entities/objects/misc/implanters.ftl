@@ -42,4 +42,7 @@ ent-MacroBombImplanter = { ent-Implanter }
 ent-DeathRattleImplanter = { ent-Implanter }
     .desc = { ent-BaseImplantOnlyImplanterSyndi.desc }
     .suffix = Предсмертный хрип
+ent-MindShieldImplanter = { ent-Implanter }
+    .desc = { ent-BaseImplantOnlyImplanterSyndi.desc }
+    .suffix = Защита сознания
 

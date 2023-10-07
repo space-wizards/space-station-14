@@ -56,3 +56,5 @@ ent-FoodBakedCannabisBrownie = брауни
 	.suffix = Свежий 
 ent-FoodBakedCannabisBrownieBatch = брауни
     .desc = Полный противень "особых" брауни.
+ent-FoodOnionRings = луковые кольца
+    .desc = Можно съесть или сделать предложение.

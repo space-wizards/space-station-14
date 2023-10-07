@@ -98,3 +98,5 @@ ent-RubberStampApproved = печать ОДОБРЕНО
     .desc = { ent-RubberStampBase.desc }
 ent-RubberStampDenied = печать ОТКАЗАНО
     .desc = { ent-RubberStampBase.desc }
+ent-BoxFolderClipboard = планшет
+    .desc = Оружие деятеля на передовой бюрократии.

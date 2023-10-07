@@ -56,3 +56,5 @@ marking-LizardFrillsAxolotl-frills_axolotl = Унатх, воротник (Ак�
 marking-LizardFrillsAxolotl = Унатх, воротник (Аксолотль)
 marking-LizardFrillsHood-frills_hood = Унатх, воротник (Капюшон)
 marking-LizardFrillsHood = Унатх, воротник (Капюшон)
+marking-LizardHornsKoboldEars-horns_kobold_ears = Унатх, рожки (Кобольд)
+marking-LizardHornsKoboldEars = Унатх, рожки (Кобольд)
