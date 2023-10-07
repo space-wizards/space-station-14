@@ -126,6 +126,7 @@ namespace Content.Shared.Damage
         /// </summary>
         /// <remarks>
         ///     Only applies resistance to a damage type if it is dealing damage, not healing.
+        ///     This will never convert damage into healing.
         /// </remarks>
         public static DamageSpecifier ApplyModifierSet(DamageSpecifier damageSpec, DamageModifierSet modifierSet)
         {
