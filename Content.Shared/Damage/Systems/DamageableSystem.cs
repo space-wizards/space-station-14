@@ -171,15 +171,15 @@ namespace Content.Shared.Damage
             foreach (var (type, value) in damage.DamageDict)
             {
                 // CollectionsMarshal my beloved.
-                if (!dict.TryGetValue(type, out var existing))
+                if (!dict.TryGetValue(type, out var oldValue))
                     continue;
 
-                var newValue = FixedPoint2.Max(FixedPoint2.Zero, existing + value);
-                if (newValue == existing)
+                var newValue = FixedPoint2.Max(FixedPoint2.Zero, oldValue + value);
+                if (newValue == oldValue)
                     continue;
 
                 dict[type] = newValue;
-                delta.DamageDict[type] = existing - newValue;
+                delta.DamageDict[type] = newValue - oldValue;
             }
 
             if (delta.DamageDict.Count > 0)
