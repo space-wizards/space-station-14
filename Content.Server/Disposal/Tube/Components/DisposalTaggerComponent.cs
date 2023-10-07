@@ -6,6 +6,7 @@ namespace Content.Server.Disposal.Tube.Components;
 
 /// <summary>
 /// Adds a tag to contents that pass through this pipe.
+/// Requires <see cref="DisposalTransitComponent"/>.
 /// </summary>
 [RegisterComponent]
 public sealed partial class DisposalTaggerComponent : Component

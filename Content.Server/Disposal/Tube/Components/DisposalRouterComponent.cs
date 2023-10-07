@@ -6,6 +6,7 @@ namespace Content.Server.Disposal.Tube.Components;
 /// <summary>
 /// Routes contents to the side if they contain at least one tag specified.
 /// Goes straight ahead if not.
+/// Requires <see cref="DisposalJunctionComponent"/>.
 /// </summary>
 [RegisterComponent, Access(typeof(DisposalRouterSystem))]
 public sealed partial class DisposalRouterComponent : Component
