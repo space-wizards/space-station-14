@@ -176,6 +176,7 @@ namespace Content.Server.Disposal.Tube
             UpdateAnchored(uid, component, Transform(uid).Anchored);
         }
 
+        // FIXME: this sound never gets played, should be fixed at some point
         private void OnRelayMovement(EntityUid uid, DisposalTubeComponent component, ref ContainerRelayMovementEntityEvent args)
         {
             if (_timing.CurTime < component.LastClang + DisposalTubeComponent.ClangDelay)
@@ -217,29 +218,23 @@ namespace Content.Server.Disposal.Tube
         {
             if (!Resolve(target, ref targetTube))
                 return null;
-            var oppositeDirection = nextDirection.GetOpposite();
 
             var xform = Transform(target);
             if (!_mapMan.TryGetGrid(xform.GridUid, out var grid))
                 return null;
 
+            var oppositeDirection = nextDirection.GetOpposite();
             var position = xform.Coordinates;
             foreach (var entity in grid.GetInDir(position, nextDirection))
             {
-                if (!TryComp(entity, out DisposalTubeComponent? tube))
-                {
+                if (!TryComp<DisposalTubeComponent>(entity, out var tube))
                     continue;
-                }
 
                 if (!CanConnect(entity, tube, oppositeDirection))
-                {
                     continue;
-                }
 
                 if (!CanConnect(target, targetTube, nextDirection))
-                {
                     continue;
-                }
 
                 return entity;
             }
@@ -250,20 +245,15 @@ namespace Content.Server.Disposal.Tube
         public static void ConnectTube(EntityUid _, DisposalTubeComponent tube)
         {
             if (tube.Connected)
-            {
                 return;
-            }
 
             tube.Connected = true;
         }
 
-
         public void DisconnectTube(EntityUid _, DisposalTubeComponent tube)
         {
             if (!tube.Connected)
-            {
                 return;
-            }
 
             tube.Connected = false;
 
@@ -278,9 +268,7 @@ namespace Content.Server.Disposal.Tube
         public bool CanConnect(EntityUid tubeId, DisposalTubeComponent tube, Direction direction)
         {
             if (!tube.Connected)
-            {
                 return false;
-            }
 
             var ev = new GetDisposalsConnectableDirectionsEvent();
             RaiseLocalEvent(tubeId, ref ev);
