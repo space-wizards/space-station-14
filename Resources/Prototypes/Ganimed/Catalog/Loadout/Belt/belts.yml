@@ -55,3 +55,113 @@
   cost: 3
   exclusive: true
   prototype: ClothingBeltQuiver
+
+- type: loadout
+  id: LoadoutBeltClothingBeltHolster
+  category: loadout-category-belt
+  cost: 3
+  exclusive: true
+  sponsorOnly: true
+  prototype: ClothingBeltHolster
+
+- type: loadout
+  id: LoadoutBeltClothingBeltSuspenders
+  category: loadout-category-belt
+  cost: 1
+  exclusive: true
+  sponsorOnly: true
+  prototype: ClothingBeltSuspenders
+
+- type: loadout
+  id: LoadoutBeltClothingBeltPlantFilled
+  category: loadout-category-belt
+  cost: 3
+  exclusive: true
+  sponsorOnly: true
+  whitelistJobs:
+    - ServiceWorker
+    - Botanist
+    - Chef
+  prototype: ClothingBeltPlantFilled
+
+- type: loadout
+  id: LoadoutBeltClothingBeltUtilityFilled
+  category: loadout-category-belt
+  cost: 3
+  exclusive: true
+  sponsorOnly: true
+  whitelistJobs:
+    - ChiefEngineer
+    - SeniorEngineer
+    - AtmosphericTechnician
+    - StationEngineer
+    - TechnicalAssistant
+    - ResearchDirector
+    - ResearchAssistant
+    - Scientist
+    - SeniorResearcher
+    - CargoTechnician
+    - Quartermaster
+    - SalvageSpecialist
+  prototype: ClothingBeltUtilityFilled
+
+- type: loadout
+  id: LoadoutBeltClothingBeltParamedicFilled
+  category: loadout-category-belt
+  cost: 3
+  exclusive: true
+  sponsorOnly: true
+  whitelistJobs:
+    - ChiefMedicalOfficer
+    - Chemist
+    - Paramedic
+    - MedicalDoctor
+    - Psychologist
+    - MedicalIntern
+    - SeniorPhysician
+  prototype: ClothingBeltParamedicFilled
+
+- type: loadout
+  id: LoadoutBeltClothingBeltSecurityFilled
+  category: loadout-category-belt
+  cost: 3
+  exclusive: true
+  sponsorOnly: true
+  whitelistJobs:
+    - SecurityCadet
+    - SecurityOfficer
+    - Warden
+    - Detective
+    - HeadOfSecurity
+    - Captain
+    - SeniorOfficer
+  prototype: ClothingBeltSecurityFilled
+
+- type: loadout
+  id: LoadoutBeltClothingBeltChiefEngineerFilled
+  category: loadout-category-belt
+  cost: 3
+  exclusive: true
+  sponsorOnly: true
+  whitelistJobs:
+    - ChiefEngineer
+  prototype: ClothingBeltChiefEngineerFilled
+
+- type: loadout
+  id: LoadoutBeltClothingBeltJanitorFilled
+  category: loadout-category-belt
+  cost: 3
+  exclusive: true
+  sponsorOnly: true
+  whitelistJobs:
+    - Janitor
+    - ServiceWorker
+  prototype: ClothingBeltJanitor
+
+- type: loadout
+  id: LoadoutBeltClothingBeltChampion
+  category: loadout-category-belt
+  cost: 7
+  exclusive: true
+  sponsorOnly: true
+  prototype: ClothingBeltChampion

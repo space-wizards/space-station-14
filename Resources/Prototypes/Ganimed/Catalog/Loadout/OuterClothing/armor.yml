@@ -42,6 +42,27 @@
   prototype: ClothingOuterArmorBasic
 
 - type: loadout
+  id: LoadoutOuterClothingClothingOuterArmorBulletproof
+  category: loadout-category-outerClothing
+  cost: 3
+  exclusive: true
+  whitelistJobs:
+    - ChiefMedicalOfficer
+    - Quartermaster
+    - ChiefEngineer
+    - ResearchDirector
+    - HeadOfPersonnel
+    - SecurityCadet
+    - SecurityOfficer
+    - Warden
+    - Detective
+    - HeadOfSecurity
+    - Captain
+    - SeniorOfficer
+    - Bartender
+  prototype: ClothingOuterArmorBulletproof
+
+- type: loadout
   id: LoadoutOuterClothingClothingOuterArmorBasicOriginal
   category: loadout-category-outerClothing
   cost: 4
@@ -128,6 +149,20 @@
     - Warden
     - Captain
   prototype: ClothingOuterArmorReflective
+
+- type: loadout
+  id: LoadoutOuterClothingClothingOuterArmorRiot
+  category: loadout-category-outerClothing
+  cost: 5
+  exclusive: true
+  whitelistJobs:
+    - HeadOfSecurity
+    - Detective
+    - SeniorOfficer
+    - SecurityOfficer
+    - Warden
+    - Captain
+  prototype: ClothingOuterArmorRiot
 
 - type: loadout
   id: LoadoutOuterClothingClothingOuterArmorCaptanCarapace

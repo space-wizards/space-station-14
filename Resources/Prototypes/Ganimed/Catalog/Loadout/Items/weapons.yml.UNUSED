@@ -217,13 +217,13 @@
 - type: loadout
   id: LoadoutItemsPickaxe
   category: loadout-category-items
-  cost: 4
+  cost: 7
   exclusive: false
   whitelistJobs:
     - Quartermaster
     - SalvageSpecialist
 	- CargoTechnician
-  prototype: Pickaxe
+  prototype: WeaponProtoKineticAccelerator
 
 - type: loadout
   id: LoadoutItemsKitchenKnife

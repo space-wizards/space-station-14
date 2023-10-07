@@ -1,0 +1,63 @@
+- type: loadout
+  id: LoadoutNeckClothingNeckScarfStripedGreen
+  category: loadout-category-neck
+  cost: 1
+  exclusive: true
+  sponsorOnly: true
+  prototype: ClothingNeckScarfStripedGreen
+
+- type: loadout
+  id: LoadoutNeckClothingNeckScarfStripedBrown
+  category: loadout-category-neck
+  cost: 1
+  exclusive: true
+  sponsorOnly: true
+  prototype: ClothingNeckScarfStripedBrown
+
+- type: loadout
+  id: LoadoutNeckClothingNeckScarfStripedRed
+  category: loadout-category-neck
+  cost: 1
+  exclusive: true
+  sponsorOnly: true
+  prototype: ClothingNeckScarfStripedRed
+
+- type: loadout
+  id: LoadoutNeckClothingNeckScarfStripedOrange
+  category: loadout-category-neck
+  cost: 1
+  exclusive: true
+  sponsorOnly: true
+  prototype: ClothingNeckScarfStripedOrange
+
+- type: loadout
+  id: LoadoutNeckClothingNeckScarfStripedPurple
+  category: loadout-category-neck
+  cost: 1
+  exclusive: true
+  sponsorOnly: true
+  prototype: ClothingNeckScarfStripedPurple
+
+- type: loadout
+  id: LoadoutNeckClothingNeckScarfStripedLightBlue
+  category: loadout-category-neck
+  cost: 1
+  exclusive: true
+  sponsorOnly: true
+  prototype: ClothingNeckScarfStripedLightBlue
+
+- type: loadout
+  id: LoadoutNeckClothingNeckScarfStripedBlue
+  category: loadout-category-neck
+  cost: 1
+  exclusive: true
+  sponsorOnly: true
+  prototype: ClothingNeckScarfStripedBlue
+
+- type: loadout
+  id: LoadoutNeckClothingNeckScarfStripedBlack
+  category: loadout-category-neck
+  cost: 1
+  exclusive: true
+  sponsorOnly: true
+  prototype: ClothingNeckScarfStripedBlack

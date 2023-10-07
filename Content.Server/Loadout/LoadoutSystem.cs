@@ -54,10 +54,13 @@ public sealed class LoadoutSystem : EntitySystem
             var isBlacklisted = ev.JobId != null &&
                                 loadout.BlacklistJobs != null &&
                                 loadout.BlacklistJobs.Contains(ev.JobId);
+			var isSponsor = !(ev.Player is null) && !(ev.Player.ConnectedClient is null) &&
+                                _sponsorManager.IsSponsor(ev.Player.ConnectedClient.UserName);
+			var sponsorRestriction = !isSponsor && loadout.SponsorOnly;
             var isSpeciesRestricted = loadout.SpeciesRestrictions != null &&
                                       loadout.SpeciesRestrictions.Contains(ev.Profile.Species);
 
-            if (isWhitelisted || isBlacklisted || isSpeciesRestricted)
+            if (isWhitelisted || isBlacklisted || isSpeciesRestricted || sponsorRestriction)
                 continue;
 
             var entity = Spawn(loadout.Prototype, Transform(ev.Mob).Coordinates);

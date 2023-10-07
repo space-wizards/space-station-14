@@ -139,3 +139,11 @@
   cost: 1
   exclusive: true
   prototype: ClothingNeckHeadphones
+
+- type: loadout
+  id: LoadoutNeckClothingNeckBling
+  category: loadout-category-neck
+  cost: 4
+  exclusive: true
+  sponsorOnly: true
+  prototype: ClothingNeckBling

@@ -52,6 +52,22 @@
 - type: loadout
   id: LoadoutOuterClothingClothingOuterPonchoClassic
   category: loadout-category-outerClothing
-  cost: 1
+  cost: 2
   exclusive: true
   prototype: ClothingOuterPonchoClassic
+
+- type: loadout
+  id: LoadoutOuterClothingClothingOuterPoncho
+  category: loadout-category-outerClothing
+  cost: 2
+  exclusive: true
+  sponsorOnly: true
+  prototype: ClothingOuterPoncho
+
+- type: loadout
+  id: LoadoutOuterClothingClothingOuterGhostSheet
+  category: loadout-category-outerClothing
+  cost: 5
+  exclusive: true
+  sponsorOnly: true
+  prototype: ClothingOuterGhostSheet

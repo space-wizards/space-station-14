@@ -64,3 +64,37 @@
     - MedicalIntern
     - SeniorPhysician
   prototype: ClothingOuterBioVirology
+
+- type: loadout
+  id: LoadoutOuterClothingClothingOuterSuitRad
+  category: loadout-category-outerClothing
+  cost: 7
+  exclusive: true
+  whitelistJobs:
+    - TechnicalAssistant
+    - StationEngineer
+    - AtmosphericTechnician
+    - SeniorEngineer
+    - ChiefEngineer
+    - ResearchDirector
+    - ResearchAssistant
+    - Scientist
+    - SeniorResearcher
+  prototype: ClothingOuterSuitRad
+
+- type: loadout
+  id: LoadoutOuterClothingClothingOuterSuitRadOriginal
+  category: loadout-category-outerClothing
+  cost: 7
+  exclusive: true
+  whitelistJobs:
+    - TechnicalAssistant
+    - StationEngineer
+    - AtmosphericTechnician
+    - SeniorEngineer
+    - ChiefEngineer
+    - ResearchDirector
+    - ResearchAssistant
+    - Scientist
+    - SeniorResearcher
+  prototype: ClothingOuterSuitRadOriginal

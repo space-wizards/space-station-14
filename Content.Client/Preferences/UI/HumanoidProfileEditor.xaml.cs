@@ -594,10 +594,13 @@ namespace Content.Client.Preferences.UI
                         // Make sure they have enough loadout points
                         if (preference)
                         {
-                            var remain = _loadoutPoints.Value - loadout.Cost;
+                            
+							var remain = _loadoutPoints.Value - loadout.Cost;
                             if (remain < 0)
                                 preference = false;
-                            else
+                            else if (loadout.SponsorOnly && !_sponsorManager.IsSponsor(_playerManager.LocalPlayer?.Session.ConnectedClient.UserName))
+								preference = false;
+							else
                                 _loadoutPoints.Value = remain;
                         }
                         else
@@ -1621,17 +1624,24 @@ namespace Content.Client.Preferences.UI
 
                 _checkBox = new CheckBox
                 {
-                    Text = $"{loadoutMeta.EntityName} [{loadout.Cost}]",
+                    Text = loadout.SponsorOnly ? $"{loadoutMeta.EntityName} [{loadout.Cost}] ★" : $"{loadoutMeta.EntityName} [{loadout.Cost}]",
                     VerticalAlignment = VAlignment.Center
                 };
                 _checkBox.OnToggled += OnCheckBoxToggled;
 
                 var tooltip = "";
                 tooltip += $"{Loc.GetString(loadoutMeta.EntityDescription)}";
-                if (loadout.WhitelistJobs != null || loadout.BlacklistJobs != null || loadout.SpeciesRestrictions != null)
+                if (loadout.WhitelistJobs != null || loadout.BlacklistJobs != null || loadout.SpeciesRestrictions != null || loadout.SponsorOnly)
                     tooltip += "\n";
 
-                if (loadout.WhitelistJobs != null)
+                if (loadout.SponsorOnly)
+				{
+					tooltip += Loc.GetString("humanoid-profile-editor-loadouts-sponsor-only");
+					if (loadout.WhitelistJobs != null || loadout.SpeciesRestrictions != null || loadout.BlacklistJobs != null)
+						tooltip += "\n";
+				}
+				
+				if (loadout.WhitelistJobs != null)
                 {
                     tooltip += Loc.GetString("humanoid-profile-editor-loadouts-selector-whitelist");
                     if (loadout.WhitelistJobs != null)

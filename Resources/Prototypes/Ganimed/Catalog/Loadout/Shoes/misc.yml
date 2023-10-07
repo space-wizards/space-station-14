@@ -52,3 +52,15 @@
   cost: 3
   exclusive: true
   prototype: ClothingShoesWizard
+
+- type: loadout
+  id: LoadoutShoesClothingShoesChef
+  category: loadout-category-shoes
+  cost: 2
+  exclusive: true
+  whitelistJobs:
+    - Chef
+    - ServiceWorker
+    - Bartender
+  sponsorOnly: true
+  prototype: ClothingShoesChef

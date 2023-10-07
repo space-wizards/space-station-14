@@ -140,3 +140,17 @@
     - Clown
   prototype: LauncherCreamPie
   
+- type: loadout
+  id: LoadoutItemsCigPackMixed
+  category: loadout-category-items
+  cost: 3
+  exclusive: false
+  prototype: CigPackMixed
+  
+- type: loadout
+  id: LoadoutItemsWhoopieCushion
+  category: loadout-category-items
+  cost: 3
+  exclusive: false
+  prototype: WhoopieCushion
+  

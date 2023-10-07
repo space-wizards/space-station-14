@@ -20,11 +20,11 @@
   prototype: LargeBeaker
 
 - type: loadout
-  id: LoadoutItemsCheapLighter
+  id: LoadoutItemsLighter
   category: loadout-category-items
   cost: 1
   exclusive: false
-  prototype: CheapLighter
+  prototype: Lighter
 
 - type: loadout
   id: LoadoutItemsCheapRollerBedSpawnFolded
@@ -113,3 +113,17 @@
   cost: 2
   exclusive: false
   prototype: MicrophoneInstrument
+  
+- type: loadout
+  id: LoadoutItemsBoxFolderClipboard
+  category: loadout-category-items
+  cost: 3
+  exclusive: false
+  prototype: BoxFolderClipboard
+  
+- type: loadout
+  id: LoadoutItemsCigarGold
+  category: loadout-category-items
+  cost: 1
+  exclusive: false
+  prototype: CigarGold

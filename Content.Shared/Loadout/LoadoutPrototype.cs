@@ -52,4 +52,10 @@ public sealed class LoadoutPrototype : IPrototype
     /// </summary>
     [DataField("exclusive")]
     public bool Exclusive = false;
+	
+	/// <summary>
+    ///     Should this item be only available for sponsors?
+    /// </summary>
+    [DataField("sponsorOnly")]
+    public bool SponsorOnly = false;
 }

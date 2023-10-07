@@ -842,3 +842,47 @@
     - HeadOfSecurity
     - HeadOfPersonnel
   prototype: ClothingUniformJumpsuitBridgeOfficer
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpsuitAtmosCasual
+  category: loadout-category-uniform
+  cost: 2
+  exclusive: true
+  sponsorOnly: true
+  whitelistJobs:
+    - ChiefEngineer
+    - SeniorEngineer
+    - AtmosphericTechnician
+  prototype: ClothingUniformJumpsuitAtmosCasual
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpsuitDetective
+  category: loadout-category-uniform
+  cost: 3
+  exclusive: true
+  sponsorOnly: true
+  prototype: ClothingUniformJumpsuitDetective
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpskirtDetective
+  category: loadout-category-uniform
+  cost: 3
+  exclusive: true
+  sponsorOnly: true
+  prototype: ClothingUniformJumpskirtDetective
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpsuitLibrarian
+  category: loadout-category-uniform
+  cost: 2
+  exclusive: true
+  sponsorOnly: true
+  prototype: ClothingUniformJumpsuitLibrarian
+
+- type: loadout
+  id: LoadoutUniformClothingUniformJumpsuitLibrarianOriginal
+  category: loadout-category-uniform
+  cost: 2
+  exclusive: true
+  sponsorOnly: true
+  prototype: ClothingUniformJumpsuitLibrarianOriginal

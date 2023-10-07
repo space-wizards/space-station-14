@@ -118,3 +118,66 @@
   cost: 2
   exclusive: true
   prototype: ClothingMaskMuzzle
+
+- type: loadout
+  id: LoadoutMasksClothingMaskGas
+  category: loadout-category-masks
+  cost: 6
+  exclusive: true
+  sponsorOnly: true
+  prototype: ClothingMaskGas
+
+- type: loadout
+  id: LoadoutMasksClothingMaskGasSecurity
+  category: loadout-category-masks
+  cost: 2
+  exclusive: true
+  sponsorOnly: true
+  whitelistJobs:
+    - SecurityCadet
+    - SecurityOfficer
+    - Warden
+    - Detective
+    - HeadOfSecurity
+    - Captain
+    - SeniorOfficer
+  prototype: ClothingMaskGasSecurity
+
+- type: loadout
+  id: LoadoutMasksClothingMaskGasExplorer
+  category: loadout-category-masks
+  cost: 4
+  exclusive: true
+  sponsorOnly: true
+  whitelistJobs:
+    - SalvageSpecialist
+    - Quartermaster
+  prototype: ClothingMaskGasExplorer
+
+- type: loadout
+  id: LoadoutMasksClothingMaskGasMerc
+  category: loadout-category-masks
+  cost: 7
+  exclusive: true
+  sponsorOnly: true
+  whitelistJobs:
+    - SalvageSpecialist
+    - Quartermaster
+    - SecurityCadet
+    - SecurityOfficer
+    - Warden
+    - Detective
+    - HeadOfSecurity
+    - Captain
+    - SeniorOfficer
+  prototype: ClothingMaskGasMerc
+
+- type: loadout
+  id: LoadoutMasksClothingMaskGasCaptain
+  category: loadout-category-masks
+  cost: 2
+  exclusive: true
+  sponsorOnly: true
+  whitelistJobs:
+    - Captain
+  prototype: ClothingMaskGasCaptain

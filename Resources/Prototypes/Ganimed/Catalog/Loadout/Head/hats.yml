@@ -121,4 +121,53 @@
     - SeniorOfficer
     - Captain
   prototype: ClothingHeadHatWardenOriginal
+
+- type: loadout
+  id: LoadoutHeadClothingHeadHatChef
+  category: loadout-category-head
+  cost: 2
+  exclusive: true
+  whitelistJobs:
+    - Chef
+    - Bartender
+    - ServiceWorker
+  sponsorOnly: true
+  prototype: ClothingHeadHatChef
+
+- type: loadout
+  id: LoadoutHeadClothingHeadHatWizardFake
+  category: loadout-category-head
+  cost: 2
+  exclusive: true
+  sponsorOnly: true
+  prototype: ClothingHeadHatWizardFake
+
+- type: loadout
+  id: LoadoutHeadClothingHeadHatWeldingMaskPainted
+  category: loadout-category-head
+  cost: 2
+  exclusive: true
+  sponsorOnly: true
+  whitelistJobs:
+    - ChiefEngineer
+    - SeniorEngineer
+    - AtmosphericTechnician
+    - StationEngineer
+  prototype: ClothingHeadHatWeldingMaskPainted
+
+- type: loadout
+  id: LoadoutHeadClothingHeadHatCone
+  category: loadout-category-head
+  cost: 2
+  exclusive: true
+  sponsorOnly: true
+  prototype: ClothingHeadHatCone
+
+- type: loadout
+  id: LoadoutHeadClothingHeadFancyCrown
+  category: loadout-category-head
+  cost: 8
+  exclusive: true
+  sponsorOnly: true
+  prototype: ClothingHeadHatFancyCrown
   

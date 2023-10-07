@@ -88,3 +88,20 @@
     - ResearchDirector
     - SeniorResearcher
   prototype: ClothingShoesBootsMag
+
+- type: loadout
+  id: LoadoutShoesClothingShoesBootsJack
+  category: loadout-category-shoes
+  cost: 3
+  exclusive: true
+  whitelistJobs:
+    - SecurityCadet
+    - SecurityOfficer
+    - Warden
+    - Detective
+    - HeadOfSecurity
+    - Captain
+    - SeniorOfficer
+    - HeadOfPersonnel
+  sponsorOnly: true
+  prototype: ClothingShoesBootsJack
