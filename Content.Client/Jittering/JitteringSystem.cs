@@ -1,13 +1,7 @@
-using System;
-using System.Collections.Immutable;
 using System.Numerics;
 using Content.Shared.Jittering;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
-using Robust.Shared.Animations;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Maths;
 using Robust.Shared.Random;
 
 namespace Content.Client.Jittering
@@ -15,6 +9,7 @@ namespace Content.Client.Jittering
     public sealed class JitteringSystem : SharedJitteringSystem
     {
         [Dependency] private readonly IRobustRandom _random = default!;
+        [Dependency] private readonly AnimationPlayerSystem _animations = default!;
 
         private readonly float[] _sign = { -1, 1 };
         private readonly string _jitterAnimationKey = "jittering";
@@ -30,20 +25,19 @@ namespace Content.Client.Jittering
 
         private void OnStartup(EntityUid uid, JitteringComponent jittering, ComponentStartup args)
         {
-            if (!EntityManager.TryGetComponent(uid, out SpriteComponent? sprite))
+            if (!TryComp(uid, out SpriteComponent? sprite))
                 return;
 
-            var animationPlayer = EntityManager.EnsureComponent<AnimationPlayerComponent>(uid);
-
-            animationPlayer.Play(GetAnimation(jittering, sprite), _jitterAnimationKey);
+            var animationPlayer = EnsureComp<AnimationPlayerComponent>(uid);
+            _animations.Play(uid, animationPlayer, GetAnimation(jittering, sprite), _jitterAnimationKey);
         }
 
         private void OnShutdown(EntityUid uid, JitteringComponent jittering, ComponentShutdown args)
         {
-            if (EntityManager.TryGetComponent(uid, out AnimationPlayerComponent? animationPlayer))
-                animationPlayer.Stop(_jitterAnimationKey);
+            if (TryComp(uid, out AnimationPlayerComponent? animationPlayer))
+                _animations.Stop(uid, animationPlayer, _jitterAnimationKey);
 
-            if (EntityManager.TryGetComponent(uid, out SpriteComponent? sprite))
+            if (TryComp(uid, out SpriteComponent? sprite))
                 sprite.Offset = Vector2.Zero;
         }
 
@@ -52,9 +46,9 @@ namespace Content.Client.Jittering
             if(args.Key != _jitterAnimationKey)
                 return;
 
-            if(EntityManager.TryGetComponent(uid, out AnimationPlayerComponent? animationPlayer)
-            && EntityManager.TryGetComponent(uid, out SpriteComponent? sprite))
-                animationPlayer.Play(GetAnimation(jittering, sprite), _jitterAnimationKey);
+            if (TryComp(uid, out AnimationPlayerComponent? animationPlayer)
+                && TryComp(uid, out SpriteComponent? sprite))
+                _animations.Play(uid, animationPlayer, GetAnimation(jittering, sprite), _jitterAnimationKey);
         }
 
         private Animation GetAnimation(JitteringComponent jittering, SpriteComponent sprite)
