@@ -123,7 +123,7 @@ public sealed class DrainSystem : SharedDrainSystem
             if (!drain.AutoDrain)
             {
                 _ambientSoundSystem.SetAmbience(drain.Owner, false);
-                return;
+                continue;
             }
 
             if (!managerQuery.TryGetComponent(drain.Owner, out var manager))

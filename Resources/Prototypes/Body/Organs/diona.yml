@@ -16,6 +16,14 @@
         reagents:
         - ReagentId: Nutriment
           Quantity: 10
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
+  - type: FlavorProfile
+    flavors:
+      - people
 
 - type: entity
   id: OrganDionaBrain
@@ -35,6 +43,11 @@
       Lung:
         maxVol: 100
         canReact: False
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
   - type: Brain
   - type: Lung #lungs in they head. why they there tho?
   - type: Metabolizer
@@ -69,6 +82,11 @@
     solutions:
       stomach:
         maxVol: 50
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
   - type: Stomach
   - type: Metabolizer
     maxReagents: 6

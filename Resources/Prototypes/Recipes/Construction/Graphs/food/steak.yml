@@ -86,7 +86,7 @@
       - minTemperature: 345 #apparently trichinellosis is a concern
 
   - node: filet migrawr
-    entity: FoodMealBearsteak
+    entity: FoodMeatBearCooked
 
 # crab steak
 - type: constructionGraph
@@ -117,3 +117,29 @@
 
   - node: goliath steak
     entity: FoodMeatGoliathCooked
+
+# rouny steak
+- type: constructionGraph
+  id: RounySteak
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: rouny steak
+      steps:
+      - minTemperature: 445 #rouny
+  - node: rouny steak
+    entity: FoodMeatRounyCooked
+
+# bacon "steak"
+- type: constructionGraph
+  id: Bacon
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: bacon
+      steps:
+      - minTemperature: 345
+  - node: bacon
+    entity: FoodMeatBaconCooked
