@@ -214,6 +214,7 @@ namespace Content.Server.Database
                     profile.FacialHairName,
                     Color.FromHex(profile.FacialHairColor),
                     Color.FromHex(profile.EyeColor),
+                    Color.FromHex(profile.SpeakerColor),
                     Color.FromHex(profile.SkinColor),
                     markings
                 ),
@@ -249,6 +250,7 @@ namespace Content.Server.Database
             profile.FacialHairName = appearance.FacialHairStyleId;
             profile.FacialHairColor = appearance.FacialHairColor.ToHex();
             profile.EyeColor = appearance.EyeColor.ToHex();
+            profile.SpeakerColor = appearance.SpeakerColor.ToHex();
             profile.SkinColor = appearance.SkinColor.ToHex();
             profile.Clothing = humanoid.Clothing.ToString();
             profile.Backpack = humanoid.Backpack.ToString();
@@ -442,7 +444,7 @@ namespace Content.Server.Database
             ImmutableArray<byte>? hwId,
             bool includeUnbanned);
 
-        public abstract Task AddServerRoleBanAsync(ServerRoleBanDef serverRoleBan);
+        public abstract Task<ServerRoleBanDef> AddServerRoleBanAsync(ServerRoleBanDef serverRoleBan);
         public abstract Task AddServerRoleUnbanAsync(ServerRoleUnbanDef serverRoleUnban);
 
         public async Task EditServerRoleBan(int id, string reason, NoteSeverity severity, DateTime? expiration, Guid editedBy, DateTime editedAt)

@@ -8,7 +8,7 @@
       role: JobSeniorResearcher
       time: 43200 #12 hrs
     - !type:OverallPlaytimeRequirement
-      time: 64800 #18 hrs            
+      time: 144000 #40 hrs
   weight: 10
   startingGear: ResearchDirectorGear
   icon: "JobIconResearchDirector"
@@ -19,6 +19,10 @@
   - Command
   - Maintenance
   - ResearchDirector
+  special:
+  - !type:AddComponentSpecial
+    components:
+      - type: CommandStaff
 
 - type: startingGear
   id: ResearchDirectorGear

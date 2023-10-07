@@ -8,7 +8,7 @@ public sealed partial class SimpleColoring : LayerColoringType
     [DataField("color", required: true)]
     public Color Color = Color.White;
 
-    public override Color? GetCleanColor(Color? skin, Color? eyes, MarkingSet markingSet)
+    public override Color? GetCleanColor(Color? skin, Color? eyes, Color? speaker, MarkingSet markingSet)
     {
         return Color;
     }

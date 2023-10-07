@@ -18,3 +18,5 @@ tool-quality-honking-name = Хонканье
 tool-quality-honking-tool-name = Велосипедный клаксон
 tool-quality-woodcutting-name = Рубка дерева
 tool-quality-woodcutting-tool-name = Топор
+tool-quality-rolling-name = Раскатывание
+tool-quality-rolling-tool-name = Скалка

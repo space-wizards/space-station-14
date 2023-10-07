@@ -38,6 +38,7 @@ public sealed partial class MarkingPicker : Control
     private Sex _currentSex = Sex.Unsexed;
     public Color CurrentSkinColor = Color.White;
     public Color CurrentEyeColor = Color.Black;
+    public Color CurrentSpeakerColor = Color.Black;
     public Marking? HairMarking;
     public Marking? FacialHairMarking;
 
@@ -78,7 +79,7 @@ public sealed partial class MarkingPicker : Control
         }
     }
 
-    public void SetData(List<Marking> newMarkings, string species, Sex sex, Color skinColor, Color eyeColor)
+    public void SetData(List<Marking> newMarkings, string species, Sex sex, Color skinColor, Color eyeColor, Color speakerColor)
     {
         var pointsProto = _prototypeManager
             .Index<SpeciesPrototype>(species).MarkingPoints;
@@ -93,12 +94,13 @@ public sealed partial class MarkingPicker : Control
         _currentSex = sex;
         CurrentSkinColor = skinColor;
         CurrentEyeColor = eyeColor;
+        CurrentSpeakerColor = speakerColor;
 
         Populate(CMarkingSearch.Text);
         PopulateUsed();
     }
 
-    public void SetData(MarkingSet set, string species, Sex sex, Color skinColor, Color eyeColor)
+    public void SetData(MarkingSet set, string species, Sex sex, Color skinColor, Color eyeColor, Color speakerColor)
     {
         _currentMarkings = set;
 
@@ -111,6 +113,7 @@ public sealed partial class MarkingPicker : Control
         _currentSex = sex;
         CurrentSkinColor = skinColor;
         CurrentEyeColor = eyeColor;
+        CurrentSpeakerColor = speakerColor;
 
         Populate(CMarkingSearch.Text);
         PopulateUsed();
@@ -118,6 +121,7 @@ public sealed partial class MarkingPicker : Control
 
     public void SetSkinColor(Color color) => CurrentSkinColor = color;
     public void SetEyeColor(Color color) => CurrentEyeColor = color;
+    public void SetSpeakerColor(Color color) => CurrentSpeakerColor = color;
 
     public MarkingPicker()
     {
@@ -464,6 +468,7 @@ public sealed partial class MarkingPicker : Control
                 marking,
                 CurrentSkinColor,
                 CurrentEyeColor,
+                CurrentSpeakerColor,
                 markingSet
             );
             for (var i = 0; i < colors.Count; i++)

@@ -60,3 +60,5 @@ ent-BorgModuleConstruction = строительный модуль киборг�
     .desc =  { ent-BaseBorgModule.desc }
 ent-BorgModuleHarvesting = собирательский модуль киборга
     .desc =  { ent-BaseBorgModule.desc }
+ent-BorgModuleAdvancedTreatment = продвинутый медицинский модуль киборга
+    .desc =  { ent-BaseBorgModule.desc }

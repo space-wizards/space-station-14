@@ -581,24 +581,29 @@ namespace Content.Server.Database.Migrations.Sqlite
 
                     b.ToTable("job", (string)null);
                 });
-			
-			modelBuilder.Entity("Content.Server.Database.Loadout", b =>
+
+            modelBuilder.Entity("Content.Server.Database.Loadout", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER")
                         .HasColumnName("loadout_id");
+
                     b.Property<string>("LoadoutName")
                         .IsRequired()
                         .HasColumnType("TEXT")
                         .HasColumnName("loadout_name");
+
                     b.Property<int>("ProfileId")
                         .HasColumnType("INTEGER")
                         .HasColumnName("profile_id");
+
                     b.HasKey("Id")
                         .HasName("PK_loadout");
+
                     b.HasIndex("ProfileId", "LoadoutName")
                         .IsUnique();
+
                     b.ToTable("loadout", (string)null);
                 });
 
@@ -797,6 +802,11 @@ namespace Content.Server.Database.Migrations.Sqlite
                     b.Property<int>("Slot")
                         .HasColumnType("INTEGER")
                         .HasColumnName("slot");
+
+                    b.Property<string>("SpeakerColor")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasColumnName("speaker_color");
 
                     b.Property<string>("Species")
                         .IsRequired()
@@ -1457,8 +1467,8 @@ namespace Content.Server.Database.Migrations.Sqlite
 
                     b.Navigation("Profile");
                 });
-			
-			modelBuilder.Entity("Content.Server.Database.Loadout", b =>
+
+            modelBuilder.Entity("Content.Server.Database.Loadout", b =>
                 {
                     b.HasOne("Content.Server.Database.Profile", "Profile")
                         .WithMany("Loadouts")
@@ -1466,6 +1476,7 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("FK_loadout_profile_profile_id");
+
                     b.Navigation("Profile");
                 });
 
@@ -1695,9 +1706,9 @@ namespace Content.Server.Database.Migrations.Sqlite
 
                     b.Navigation("Jobs");
 
+                    b.Navigation("Loadouts");
+
                     b.Navigation("Traits");
-					
-					b.Navigation("Loadouts");
                 });
 
             modelBuilder.Entity("Content.Server.Database.Round", b =>

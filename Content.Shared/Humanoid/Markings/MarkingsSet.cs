@@ -272,7 +272,7 @@ public sealed partial class MarkingSet
     /// <param name="eyeColor">Eye color for marking coloring.</param>
     /// <param name="hairColor">Hair color for marking coloring.</param>
     /// <param name="markingManager">Marking manager.</param>
-    public void EnsureDefault(Color? skinColor = null, Color? eyeColor = null, MarkingManager? markingManager = null)
+    public void EnsureDefault(Color? skinColor = null, Color? eyeColor = null, Color? speakerColor = null, MarkingManager? markingManager = null)
     {
         IoCManager.Resolve(ref markingManager);
 
@@ -292,6 +292,7 @@ public sealed partial class MarkingSet
                             prototype,
                             skinColor,
                             eyeColor,
+                            speakerColor,
                             this
                         );
                     var marking = new Marking(points.DefaultMarkings[index], colors);

@@ -10,7 +10,7 @@ public sealed partial class CategoryColoring : LayerColoringType
     [DataField("category", required: true)]
     public MarkingCategories Category;
 
-    public override Color? GetCleanColor(Color? skin, Color? eyes, MarkingSet markingSet)
+    public override Color? GetCleanColor(Color? skin, Color? eyes, Color? speaker, MarkingSet markingSet)
     {
         Color? outColor = null;
         if (markingSet.TryGetCategory(Category, out var markings) &&

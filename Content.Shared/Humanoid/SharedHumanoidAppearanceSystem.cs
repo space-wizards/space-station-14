@@ -1,12 +1,10 @@
+using System.Linq;
 using Content.Shared.Humanoid.Markings;
 using Content.Shared.Humanoid.Prototypes;
-using Robust.Shared.GameStates;
-using Robust.Shared.Prototypes;
-using System.Linq;
-using Content.Shared.Decals;
 using Content.Shared.Preferences;
 using Robust.Shared.GameObjects.Components.Localization;
 using Robust.Shared.Network;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Humanoid;
 
@@ -32,7 +30,6 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
     {
         base.Initialize();
         SubscribeLocalEvent<HumanoidAppearanceComponent, ComponentInit>(OnInit);
-        SubscribeLocalEvent<HumanoidAppearanceComponent, ComponentGetState>(OnGetState);
     }
 
     private void OnInit(EntityUid uid, HumanoidAppearanceComponent humanoid, ComponentInit args)
@@ -58,20 +55,6 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
         LoadProfile(uid, startingSet.Profile, humanoid);
     }
 
-    private void OnGetState(EntityUid uid, HumanoidAppearanceComponent component, ref ComponentGetState args)
-    {
-        args.State = new HumanoidAppearanceState(component.MarkingSet,
-            component.PermanentlyHidden,
-            component.HiddenLayers,
-            component.CustomBaseLayers,
-            component.Sex,
-            component.Gender,
-            component.Age,
-            component.Species,
-            component.SkinColor,
-            component.EyeColor,
-            component.SpeakerColor);
-    }
 
     /// <summary>
     ///     Toggles a humanoid's sprite layer visibility.
@@ -213,7 +196,7 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
             return;
 
         if (humanoid.CustomBaseLayers.TryGetValue(layer, out var info))
-            humanoid.CustomBaseLayers[layer] = info with { ID = id };
+            humanoid.CustomBaseLayers[layer] = info with { Id = id };
         else
             humanoid.CustomBaseLayers[layer] = new(id);
 
@@ -281,6 +264,7 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
         SetSpecies(uid, profile.Species, false, humanoid);
         SetSex(uid, profile.Sex, false, humanoid);
         humanoid.EyeColor = profile.Appearance.EyeColor;
+        humanoid.SpeakerColor = profile.Appearance.SpeakerColor;
 
         SetSkinColor(uid, profile.Appearance.SkinColor, false);
 
@@ -331,6 +315,7 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
                 prototype,
                 profile.Appearance.SkinColor,
                 profile.Appearance.EyeColor,
+                profile.Appearance.SpeakerColor,
                 humanoid.MarkingSet
             );
             AddMarking(uid, marking.MarkingId, markingColors, false);
@@ -350,7 +335,6 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
         // var colors = _prototypeManager.Index<ColorPalettePrototype>(paletteId).Colors.Values.ToArray();
         // var colorIdx = Math.Abs(profile.Name.GetHashCode() % colors.Length);
         // humanoid.SpeakerColor = colors[colorIdx];
-		humanoid.SpeakerColor = profile.Appearance.EyeColor;
 
         Dirty(humanoid);
     }
@@ -394,7 +378,7 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
         {
             return;
         }
-        humanoid.MarkingSet.EnsureDefault(humanoid.SkinColor, humanoid.EyeColor, _markingManager);
+        humanoid.MarkingSet.EnsureDefault(humanoid.SkinColor, humanoid.EyeColor, humanoid.SpeakerColor, _markingManager);
     }
 
     /// <summary>

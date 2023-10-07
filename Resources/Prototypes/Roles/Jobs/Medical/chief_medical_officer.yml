@@ -11,7 +11,7 @@
       role: JobSeniorPhysician
       time: 28800 #8 hrs
     - !type:OverallPlaytimeRequirement
-      time: 86400 #24 hrs            
+      time: 144000 #40 hrs
   weight: 10
   startingGear: CMOGear
   icon: "JobIconChiefMedicalOfficer"
@@ -23,6 +23,10 @@
   - Maintenance
   - Chemistry
   - ChiefMedicalOfficer
+  special:
+  - !type:AddComponentSpecial
+    components:
+      - type: CommandStaff
 
 - type: startingGear
   id: CMOGear

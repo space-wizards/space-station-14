@@ -319,6 +319,7 @@ namespace Content.Server.Database
         public string FacialHairName { get; set; } = null!;
         public string FacialHairColor { get; set; } = null!;
         public string EyeColor { get; set; } = null!;
+        public string SpeakerColor { get; set; } = null!;
         public string SkinColor { get; set; } = null!;
         public string Clothing { get; set; } = null!;
         public string Backpack { get; set; } = null!;

@@ -30,6 +30,7 @@ research-technology-cloning = Клонирование
 research-technology-salvage-weapons = Утилизаторское оружие
 research-technology-draconic-munitions = Драконьи боеприпасы
 research-technology-explosive-technology = Взрывчатые вещества
+research-technology-practice-ammunition = Учебная аммуниция
 research-technology-weaponized-laser-manipulation = Военизированные лазерные манипуляции
 research-technology-nonlethal-ammunition = Нелетальные боеприпасы
 research-technology-optimized-ballistics = Оптимизированная баллистика

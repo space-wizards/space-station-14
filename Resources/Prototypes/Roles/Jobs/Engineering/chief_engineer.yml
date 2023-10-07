@@ -11,7 +11,6 @@
       role: JobSeniorEngineer
       time: 28800 #8 hrs
     - !type:OverallPlaytimeRequirement
-      time: 86400 #24 hrs   
   weight: 10
   startingGear: ChiefEngineerGear
   icon: "JobIconChiefEngineer"
@@ -24,6 +23,10 @@
   - External
   - ChiefEngineer
   - Atmospherics
+  special:
+  - !type:AddComponentSpecial
+    components:
+      - type: CommandStaff
 
 - type: startingGear
   id: ChiefEngineerGear

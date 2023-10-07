@@ -11,7 +11,7 @@
       role: JobSalvageSpecialist
       time: 18000 #5 hrs
     - !type:OverallPlaytimeRequirement
-      time: 144000 #40 hrs            
+      time: 144000 #40 hrs
   weight: 10
   startingGear: QuartermasterGear
   icon: "JobIconQuarterMaster"
@@ -33,6 +33,7 @@
     shoes: ClothingShoesColorBrown
     id: QuartermasterPDA
     ears: ClothingHeadsetQM
+    belt: BoxFolderClipboard
     pocket1: AppraisalTool
   innerclothingskirt: ClothingUniformJumpskirtQM
   satchel: ClothingBackpackSatchelQuartermasterFilled

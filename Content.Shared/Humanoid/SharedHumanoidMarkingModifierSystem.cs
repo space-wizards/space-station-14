@@ -1,6 +1,5 @@
 using Content.Shared.Humanoid.Markings;
 using Robust.Shared.Serialization;
-using static Content.Shared.Humanoid.HumanoidAppearanceState;
 
 namespace Content.Shared.Humanoid;
 
@@ -62,6 +61,7 @@ public sealed class HumanoidMarkingModifierState : BoundUserInterfaceState
     public Sex Sex { get; }
     public Color SkinColor { get; }
     public Color EyeColor { get; }
+    public Color SpeakerColor { get; }
     public Color? HairColor { get; }
     public Color? FacialHairColor { get; }
     public Dictionary<HumanoidVisualLayers, CustomBaseLayerInfo> CustomBaseLayers { get; }

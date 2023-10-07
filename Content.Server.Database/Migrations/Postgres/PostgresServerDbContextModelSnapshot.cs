@@ -625,22 +625,28 @@ namespace Content.Server.Database.Migrations.Postgres
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
                         .HasColumnName("loadout_id");
+
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
                     b.Property<string>("LoadoutName")
                         .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("loadout_name");
+
                     b.Property<int>("ProfileId")
                         .HasColumnType("integer")
                         .HasColumnName("profile_id");
+
                     b.HasKey("Id")
                         .HasName("PK_loadout");
+
                     b.HasIndex("ProfileId", "LoadoutName")
                         .IsUnique();
+
                     b.ToTable("loadout", (string)null);
                 });
-			
-			modelBuilder.Entity("Content.Server.Database.PlayTime", b =>
+
+            modelBuilder.Entity("Content.Server.Database.PlayTime", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -846,6 +852,11 @@ namespace Content.Server.Database.Migrations.Postgres
                     b.Property<int>("Slot")
                         .HasColumnType("integer")
                         .HasColumnName("slot");
+
+                    b.Property<string>("SpeakerColor")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("speaker_color");
 
                     b.Property<string>("Species")
                         .IsRequired()
@@ -1528,8 +1539,8 @@ namespace Content.Server.Database.Migrations.Postgres
 
                     b.Navigation("Profile");
                 });
-			
-			modelBuilder.Entity("Content.Server.Database.Loadout", b =>
+
+            modelBuilder.Entity("Content.Server.Database.Loadout", b =>
                 {
                     b.HasOne("Content.Server.Database.Profile", "Profile")
                         .WithMany("Loadouts")
@@ -1537,6 +1548,7 @@ namespace Content.Server.Database.Migrations.Postgres
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("FK_loadout_profile_profile_id");
+
                     b.Navigation("Profile");
                 });
 
@@ -1766,9 +1778,9 @@ namespace Content.Server.Database.Migrations.Postgres
 
                     b.Navigation("Jobs");
 
-                    b.Navigation("Traits");
-					
                     b.Navigation("Loadouts");
+
+                    b.Navigation("Traits");
                 });
 
             modelBuilder.Entity("Content.Server.Database.Round", b =>

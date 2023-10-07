@@ -1,3 +1,8 @@
+ent-GenericTank = жидкостный резервуар
+    .desc = Резервуар для хранения жидкостей.
+ent-GenericTank = { ent-StorageTank }
+    .desc = { ent-StorageTank.desc }
+    .suffix = Пустой
 ent-WeldingFuelTank = топливный резервуар
     .desc = Топливный резервуар. Используется для хранения большого количества топлива.
     .suffix = Пустой

@@ -12,14 +12,12 @@ using Content.Shared.Mobs.Components;
 using Content.Shared.Movement.Events;
 using Content.Shared.Popups;
 using Content.Shared.Pulling.Components;
-using Content.Shared.Pulling.Events;
 using Content.Shared.Standing;
 using Content.Shared.Storage.Components;
 using Content.Shared.Stunnable;
 using Content.Shared.Throwing;
 using Content.Shared.Vehicle.Components;
 using Content.Shared.Verbs;
-using Robust.Shared.GameStates;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Utility;
@@ -32,7 +30,6 @@ public abstract partial class SharedBuckleSystem
     {
         SubscribeLocalEvent<BuckleComponent, ComponentStartup>(OnBuckleComponentStartup);
         SubscribeLocalEvent<BuckleComponent, ComponentShutdown>(OnBuckleComponentShutdown);
-        SubscribeLocalEvent<BuckleComponent, ComponentGetState>(OnBuckleComponentGetState);
         SubscribeLocalEvent<BuckleComponent, MoveEvent>(OnBuckleMove);
         SubscribeLocalEvent<BuckleComponent, InteractHandEvent>(OnBuckleInteractHand);
         SubscribeLocalEvent<BuckleComponent, GetVerbsEvent<InteractionVerb>>(AddUnbuckleVerb);
@@ -56,11 +53,6 @@ public abstract partial class SharedBuckleSystem
         TryUnbuckle(uid, uid, true, component);
 
         component.BuckleTime = default;
-    }
-
-    private void OnBuckleComponentGetState(EntityUid uid, BuckleComponent component, ref ComponentGetState args)
-    {
-        args.State = new BuckleComponentState(component.Buckled, GetNetEntity(component.BuckledTo), GetNetEntity(component.LastEntityBuckledTo), component.DontCollide);
     }
 
     private void OnBuckleMove(EntityUid uid, BuckleComponent component, ref MoveEvent ev)
@@ -434,7 +426,7 @@ public abstract partial class SharedBuckleSystem
             if (attemptEvent.Cancelled)
                 return false;
 
-            if (_gameTiming.CurTime < buckleComp.BuckleTime + buckleComp.UnbuckleDelay)
+            if (_gameTiming.CurTime < buckleComp.BuckleTime + buckleComp.Delay)
                 return false;
 
             if (!_interaction.InRangeUnobstructed(userUid, strapUid, buckleComp.Range, popup: true))

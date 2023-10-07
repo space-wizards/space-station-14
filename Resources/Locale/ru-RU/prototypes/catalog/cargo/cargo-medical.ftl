@@ -20,3 +20,5 @@ ent-ChemistryS = { ent-CrateChemistryS }
     .desc = { ent-CrateChemistryS.desc }
 ent-ChemistryD = { ent-CrateChemistryD }
     .desc = { ent-CrateChemistryD.desc }
+ent-MedicalMindShieldImplants = { ent-MedicalMindShieldImplants }
+    .desc = { ent-MedicalMindShieldImplants.desc }

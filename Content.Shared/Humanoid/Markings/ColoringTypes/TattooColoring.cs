@@ -5,7 +5,7 @@ namespace Content.Shared.Humanoid.Markings;
 /// </summary>
 public sealed partial class TattooColoring : LayerColoringType
 {
-    public override Color? GetCleanColor(Color? skin, Color? eyes, MarkingSet markingSet)
+    public override Color? GetCleanColor(Color? skin, Color? eyes, Color? speaker, MarkingSet markingSet)
     {
         if (skin == null)
         {
