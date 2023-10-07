@@ -1,9 +1,4 @@
 Entries:
-- author: moony
-  changes:
-  - {message: You can turn APCs on during power grid checks again., type: Tweak}
-  id: 4468
-  time: '2023-08-06T18:39:49.0000000+00:00'
 - author: Flareguy
   changes:
   - {message: 'The bleeding alert sprite is now drawn at double the resolution, as
@@ -2951,3 +2946,9 @@ Entries:
   - {message: Now the Secret Doors can be welded shut., type: Add}
   id: 4967
   time: '2023-10-07T00:45:12.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Certain mobs will now fight back when provoked. Try not to get robusted.,
+    type: Add}
+  id: 4968
+  time: '2023-10-07T00:56:18.0000000+00:00'
