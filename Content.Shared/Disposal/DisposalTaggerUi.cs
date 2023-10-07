@@ -17,7 +17,7 @@ public sealed class DisposalTaggerUserInterfaceState : BoundUserInterfaceState
 [Serializable, NetSerializable]
 public sealed class TaggerSetTagMessage : BoundUserInterfaceMessage
 {
-    public static readonly Regex TagRegex = new("^[a-zA-Z0-9 ]$", RegexOptions.Compiled);
+    public static readonly Regex TagRegex = new("^[a-zA-Z0-9 ]*$", RegexOptions.Compiled);
 
     public readonly string Tag;
 

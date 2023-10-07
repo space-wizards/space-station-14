@@ -59,35 +59,6 @@ namespace Content.Server.Disposal.Tube
 
             SubscribeLocalEvent<DisposalTransitComponent, GetDisposalsConnectableDirectionsEvent>(OnGetTransitConnectableDirections);
             SubscribeLocalEvent<DisposalTransitComponent, GetDisposalsNextDirectionEvent>(OnGetTransitNextDirection);
-
-            SubscribeLocalEvent<DisposalTaggerComponent, ComponentRemove>(OnComponentRemove);
-            SubscribeLocalEvent<DisposalTaggerComponent, GetDisposalsNextDirectionEvent>(OnGetTaggerNextDirection);
-
-            SubscribeLocalEvent<DisposalTaggerComponent, ActivatableUIOpenAttemptEvent>(OnOpenTaggerUIAttempt);
-
-            SubscribeLocalEvent<DisposalTaggerComponent, TaggerSetTagMessage>(OnTaggerSetTag);
-        }
-
-
-        /// <summary>
-        /// Handles ui messages from the client. For things such as button presses
-        /// which interact with the world and require server action.
-        /// </summary>
-        /// <param name="msg">A user interface message from the client.</param>
-        private void OnTaggerSetTag(EntityUid uid, DisposalTaggerComponent tagger, TaggerSetTagMessage msg)
-        {
-            if (!DisposalTaggerUiKey.Key.Equals(msg.UiKey))
-                return;
-
-            // Ignore malformed strings
-            if (!TaggerSetTagMessage.TagRegex.IsMatch(msg.Tag))
-                return;
-
-            if (TryComp<PhysicsComponent>(uid, out var physBody) && physBody.BodyType != BodyType.Static)
-                return;
-
-            tagger.Tag = msg.Tag;
-            _audioSystem.PlayPvs(tagger.ClickSound, uid);
         }
 
         private void OnComponentInit(EntityUid uid, DisposalTubeComponent tube, ComponentInit args)
@@ -98,11 +69,6 @@ namespace Content.Server.Disposal.Tube
         private void OnComponentRemove(EntityUid uid, DisposalTubeComponent tube, ComponentRemove args)
         {
             DisconnectTube(uid, tube);
-        }
-
-        private void OnComponentRemove(EntityUid uid, DisposalTaggerComponent tagger, ComponentRemove args)
-        {
-            _uiSystem.TryCloseAll(uid, DisposalTaggerUiKey.Key);
         }
 
         private void OnGetBendConnectableDirections(EntityUid uid, DisposalBendComponent component, ref GetDisposalsConnectableDirectionsEvent args)
@@ -199,11 +165,6 @@ namespace Content.Server.Disposal.Tube
             args.Next = previousDF == forward ? backward : forward;
         }
 
-        private void OnGetTaggerNextDirection(EntityUid uid, DisposalTaggerComponent component, ref GetDisposalsNextDirectionEvent args)
-        {
-            args.Holder.Tags.Add(component.Tag);
-        }
-
         private void OnDeconstruct(EntityUid uid, DisposalTubeComponent component, ConstructionBeforeDeleteEvent args)
         {
             DisconnectTube(uid, component);
@@ -228,25 +189,6 @@ namespace Content.Server.Disposal.Tube
         private void OnBreak(EntityUid uid, DisposalTubeComponent component, BreakageEventArgs args)
         {
             DisconnectTube(uid, component);
-        }
-
-        private void OnOpenTaggerUIAttempt(EntityUid uid, DisposalTaggerComponent tagger, ActivatableUIOpenAttemptEvent args)
-        {
-            if (!TryComp<HandsComponent>(args.User, out var hands))
-            {
-                _popups.PopupEntity(Loc.GetString("disposal-tagger-window-activate-no-hands"), uid, args.User);
-                return;
-            }
-
-            var activeHandEntity = hands.ActiveHandEntity;
-            if (activeHandEntity != null)
-            {
-                args.Cancel();
-            }
-
-            if (_uiSystem.TryGetUi(uid, DisposalTaggerUiKey.Key, out var bui))
-                _uiSystem.SetUiState(bui,
-                    new DisposalTaggerUserInterfaceState(tagger.Tag));
         }
 
         private void OnAnchorChange(EntityUid uid, DisposalTubeComponent component, ref AnchorStateChangedEvent args)
