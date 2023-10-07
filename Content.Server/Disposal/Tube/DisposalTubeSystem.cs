@@ -25,16 +25,17 @@ namespace Content.Server.Disposal.Tube
 {
     public sealed class DisposalTubeSystem : EntitySystem
     {
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
-        [Dependency] private readonly IMapManager _mapManager = default!;
+        [Dependency] private readonly AtmosphereSystem _atmos = default!;
+        [Dependency] private readonly DisposableSystem _disposable = default!;
+        [Dependency] private readonly IGameTiming _timing = default!;
+        [Dependency] private readonly IMapManager _mapMan = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
-        [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
-        [Dependency] private readonly PopupSystem _popups = default!;
-        [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
-        [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
-        [Dependency] private readonly DisposableSystem _disposableSystem = default!;
-        [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
-        [Dependency] private readonly AtmosphereSystem _atmosSystem = default!;
+        [Dependency] private readonly PopupSystem _popup = default!;
+        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+        [Dependency] private readonly SharedAudioSystem _audio = default!;
+        [Dependency] private readonly SharedContainerSystem _container = default!;
+        [Dependency] private readonly UserInterfaceSystem _ui = default!;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -63,7 +64,7 @@ namespace Content.Server.Disposal.Tube
 
         private void OnComponentInit(EntityUid uid, DisposalTubeComponent tube, ComponentInit args)
         {
-            tube.Contents = _containerSystem.EnsureContainer<Container>(uid, tube.ContainerId);
+            tube.Contents = _container.EnsureContainer<Container>(uid, tube.ContainerId);
         }
 
         private void OnComponentRemove(EntityUid uid, DisposalTubeComponent tube, ComponentRemove args)
@@ -177,13 +178,13 @@ namespace Content.Server.Disposal.Tube
 
         private void OnRelayMovement(EntityUid uid, DisposalTubeComponent component, ref ContainerRelayMovementEntityEvent args)
         {
-            if (_gameTiming.CurTime < component.LastClang + DisposalTubeComponent.ClangDelay)
+            if (_timing.CurTime < component.LastClang + DisposalTubeComponent.ClangDelay)
             {
                 return;
             }
 
-            component.LastClang = _gameTiming.CurTime;
-            _audioSystem.PlayPvs(component.ClangSound, uid);
+            component.LastClang = _timing.CurTime;
+            _audio.PlayPvs(component.ClangSound, uid);
         }
 
         private void OnBreak(EntityUid uid, DisposalTubeComponent component, BreakageEventArgs args)
@@ -203,12 +204,12 @@ namespace Content.Server.Disposal.Tube
                 ConnectTube(uid, component);
 
                 // TODO this visual data should just generalized into some anchored-visuals system/comp, this has nothing to do with disposal tubes.
-                _appearanceSystem.SetData(uid, DisposalTubeVisuals.VisualState, DisposalTubeVisualState.Anchored);
+                _appearance.SetData(uid, DisposalTubeVisuals.VisualState, DisposalTubeVisualState.Anchored);
             }
             else
             {
                 DisconnectTube(uid, component);
-                _appearanceSystem.SetData(uid, DisposalTubeVisuals.VisualState, DisposalTubeVisualState.Free);
+                _appearance.SetData(uid, DisposalTubeVisuals.VisualState, DisposalTubeVisualState.Free);
             }
         }
 
@@ -219,7 +220,7 @@ namespace Content.Server.Disposal.Tube
             var oppositeDirection = nextDirection.GetOpposite();
 
             var xform = Transform(target);
-            if (!_mapManager.TryGetGrid(xform.GridUid, out var grid))
+            if (!_mapMan.TryGetGrid(xform.GridUid, out var grid))
                 return null;
 
             var position = xform.Coordinates;
@@ -270,7 +271,7 @@ namespace Content.Server.Disposal.Tube
             foreach (var entity in tube.Contents.ContainedEntities.ToArray())
             {
                 if (query.TryGetComponent(entity, out var holder))
-                    _disposableSystem.ExitDisposals(entity, holder);
+                    _disposable.ExitDisposals(entity, holder);
             }
         }
 
@@ -292,7 +293,7 @@ namespace Content.Server.Disposal.Tube
             RaiseLocalEvent(tubeId, ref ev);
             var directions = string.Join(", ", ev.Connectable);
 
-            _popups.PopupEntity(Loc.GetString("disposal-tube-component-popup-directions-text", ("directions", directions)), tubeId, recipient);
+            _popup.PopupEntity(Loc.GetString("disposal-tube-component-popup-directions-text", ("directions", directions)), tubeId, recipient);
         }
 
         public bool TryInsert(EntityUid uid, DisposalUnitComponent from, IEnumerable<string>? tags = default, DisposalEntryComponent? entry = null)
@@ -306,16 +307,16 @@ namespace Content.Server.Disposal.Tube
 
             foreach (var entity in from.Container.ContainedEntities.ToArray())
             {
-                _disposableSystem.TryInsert(holder, entity, holderComponent);
+                _disposable.TryInsert(holder, entity, holderComponent);
             }
 
-            _atmosSystem.Merge(holderComponent.Air, from.Air);
+            _atmos.Merge(holderComponent.Air, from.Air);
             from.Air.Clear();
 
             if (tags != default)
                 holderComponent.Tags.UnionWith(tags);
 
-            return _disposableSystem.EnterTube(holder, uid, holderComponent);
+            return _disposable.EnterTube(holder, uid, holderComponent);
         }
     }
 }
