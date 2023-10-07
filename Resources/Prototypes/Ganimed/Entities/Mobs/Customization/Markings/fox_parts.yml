@@ -1,0 +1,10 @@
+- type: marking
+  id: FoxTail
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Human, Dwarf]
+  sprites:
+  - sprite:  Ganimed/Mobs/Customization/fox_parts.rsi
+    state:  tail_fox
+  - sprite:  Ganimed/Mobs/Customization/fox_parts.rsi
+    state:  tail_fox_end
