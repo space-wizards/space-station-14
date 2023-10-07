@@ -454,7 +454,7 @@
     mirrorEntity: DisposalSignalRouterFlipped
   - type: Construction
     graph: DisposalPipe
-    node: signal_router
+    node: signalrouter
 
 - type: entity
   parent: DisposalSignalRouter
