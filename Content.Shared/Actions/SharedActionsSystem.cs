@@ -595,11 +595,23 @@ public abstract class SharedActionsSystem : EntitySystem
         if (action.AttachedEntity == null)
         {
             // action was already removed?
+            // Sometimes entity/component deletion will result in the same action being removed multiple times.
+            // TODO actions fix this?
             DebugTools.Assert(!comp.Actions.Contains(actionId.Value) || GameTiming.ApplyingState);
             return;
         }
 
-        DebugTools.Assert(action.AttachedEntity == performer);
+        if (action.AttachedEntity != performer)
+        {
+            Log.Error($"Attempting to remove an action from an entity that it wasn't provided to." +
+                      $"action: {ToPrettyString(actionId)}" +
+                      $"attached: {ToPrettyString(action.AttachedEntity)}" +
+                      $"performer: {ToPrettyString(performer)}");
+
+            DebugTools.Assert(!comp.Actions.Contains(actionId.Value));
+            return;
+        }
+
         comp.Actions.Remove(actionId.Value);
         action.AttachedEntity = null;
         Dirty(actionId.Value, action);
