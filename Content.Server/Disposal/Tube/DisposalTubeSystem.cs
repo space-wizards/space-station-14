@@ -66,7 +66,6 @@ namespace Content.Server.Disposal.Tube
             SubscribeLocalEvent<DisposalTransitComponent, GetDisposalsNextDirectionEvent>(OnGetTransitNextDirection);
 
             SubscribeLocalEvent<DisposalTaggerComponent, ComponentRemove>(OnComponentRemove);
-            SubscribeLocalEvent<DisposalTaggerComponent, GetDisposalsConnectableDirectionsEvent>(OnGetTaggerConnectableDirections);
             SubscribeLocalEvent<DisposalTaggerComponent, GetDisposalsNextDirectionEvent>(OnGetTaggerNextDirection);
 
             SubscribeLocalEvent<DisposalRouterComponent, ActivatableUIOpenAttemptEvent>(OnOpenRouterUIAttempt);
@@ -257,15 +256,9 @@ namespace Content.Server.Disposal.Tube
             args.Next = previousDF == forward ? backward : forward;
         }
 
-        private void OnGetTaggerConnectableDirections(EntityUid uid, DisposalTaggerComponent component, ref GetDisposalsConnectableDirectionsEvent args)
-        {
-            OnGetTransitConnectableDirections(uid, component, ref args);
-        }
-
         private void OnGetTaggerNextDirection(EntityUid uid, DisposalTaggerComponent component, ref GetDisposalsNextDirectionEvent args)
         {
             args.Holder.Tags.Add(component.Tag);
-            OnGetTransitNextDirection(uid, component, ref args);
         }
 
         private void OnDeconstruct(EntityUid uid, DisposalTubeComponent component, ConstructionBeforeDeleteEvent args)

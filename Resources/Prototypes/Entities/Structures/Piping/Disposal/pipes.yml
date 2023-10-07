@@ -126,6 +126,7 @@
       state: conpipe-tagger
   - type: DisposalTube
     containerId: DisposalTagger
+  - type: DisposalTransit
   - type: DisposalTagger
   - type: ContainerContainer
     containers:

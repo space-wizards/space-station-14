@@ -6,7 +6,7 @@ using static Content.Shared.Disposal.Components.SharedDisposalTaggerComponent;
 namespace Content.Server.Disposal.Tube.Components;
 
 [RegisterComponent]
-public sealed partial class DisposalTaggerComponent : DisposalTransitComponent
+public sealed partial class DisposalTaggerComponent : Component
 {
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public string Tag = string.Empty;
