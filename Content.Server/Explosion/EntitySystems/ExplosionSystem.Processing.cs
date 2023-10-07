@@ -9,7 +9,6 @@ using Content.Shared.Maps;
 using Content.Shared.Mind.Components;
 using Content.Shared.Physics;
 using Content.Shared.Projectiles;
-using Robust.Shared.Spawners;
 using Content.Shared.Tag;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
@@ -17,8 +16,8 @@ using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Random;
+using Robust.Shared.Spawners;
 using Robust.Shared.Timing;
-using TimedDespawnComponent = Robust.Shared.Spawners.TimedDespawnComponent;
 
 namespace Content.Server.Explosion.EntitySystems;
 
@@ -399,7 +398,7 @@ public sealed partial class ExplosionSystem : EntitySystem
             if (ev.DamageCoefficient == 1)
             {
                 // no damage-dict multiplication required.
-                _damageableSystem.TryChangeDamage(uid, damage, ignoreResistances: true, damageable: damageable);
+                _damageableSystem.TryChangeDamage(uid, damage, ignoreResistances: false, damageable: damageable);
                 if (HasComp<MindContainerComponent>(uid) || HasComp<ExplosiveComponent>(uid))
                 {
                     var damageStr = string.Join(", ", damage.DamageDict.Select(entry => $"{entry.Key}: {entry.Value}"));
@@ -410,7 +409,7 @@ public sealed partial class ExplosionSystem : EntitySystem
             else
             {
                 var appliedDamage = damage * ev.DamageCoefficient;
-                _damageableSystem.TryChangeDamage(uid, appliedDamage, ignoreResistances: true, damageable: damageable);
+                _damageableSystem.TryChangeDamage(uid, appliedDamage, ignoreResistances: false, damageable: damageable);
                 if (HasComp<MindContainerComponent>(uid) || HasComp<ExplosiveComponent>(uid))
                 {
                     var damageStr = string.Join(", ", appliedDamage.DamageDict.Select(entry => $"{entry.Key}: {entry.Value}"));
