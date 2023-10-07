@@ -1,10 +1,4 @@
 Entries:
-- author: Errant
-  changes:
-  - {message: 'Wide attacks no longer cost stamina, deal weapon damage.', type: Tweak}
-  - {message: Primary/Single-target melee attacks deal +25% damage., type: Tweak}
-  id: 4465
-  time: '2023-08-06T16:01:44.0000000+00:00'
 - author: Ilya246
   changes:
   - {message: Increase radiator heat transfer rate., type: Tweak}
@@ -2951,3 +2945,9 @@ Entries:
     type: Fix}
   id: 4964
   time: '2023-10-06T21:26:02.0000000+00:00'
+- author: TheShuEd
+  changes:
+  - {message: 'Beer anomaly added! And no, it''s an anomaly of ominisine. Hmm. No.
+      It seems to be capable of producing ANY substance.', type: Add}
+  id: 4965
+  time: '2023-10-07T00:26:35.0000000+00:00'
