@@ -1,9 +1,4 @@
 Entries:
-- author: forthbridge
-  changes:
-  - {message: Spaceshrooms now spawn as a structure instead of an item, type: Fix}
-  id: 4467
-  time: '2023-08-06T17:40:43.0000000+00:00'
 - author: moony
   changes:
   - {message: You can turn APCs on during power grid checks again., type: Tweak}
@@ -2951,3 +2946,8 @@ Entries:
   - {message: Fixed not being able to throw items into disposals from close up., type: Fix}
   id: 4966
   time: '2023-10-07T00:43:54.0000000+00:00'
+- author: Nimfar11
+  changes:
+  - {message: Now the Secret Doors can be welded shut., type: Add}
+  id: 4967
+  time: '2023-10-07T00:45:12.0000000+00:00'
