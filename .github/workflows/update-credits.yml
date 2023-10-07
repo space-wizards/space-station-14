@@ -8,6 +8,9 @@ on:
 jobs:
   get_credits:
     runs-on: ubuntu-latest
+    # Hey there fork dev! If you like to include your own contributors in this then you can probably just change this to your own repo
+    # Do this in dump_github_contributors.ps1 too into your own repo
+    if: github.repository == 'space-wizards/space-station-14'
     
     steps:
       - uses: actions/checkout@v3.6.0
@@ -17,7 +20,8 @@ jobs:
       - name: Get this week's Contributors
         shell: pwsh
         run: Tools/dump_github_contributors.ps1 > Resources/Credits/GitHub.txt
-        
+
+      # TODO
       #- name: Get this week's Patreons
       #  run: Tools/script2dumppatreons > Resources/Credits/Patrons.yml        
         
