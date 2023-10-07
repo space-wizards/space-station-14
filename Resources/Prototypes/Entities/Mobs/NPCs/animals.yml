@@ -1597,9 +1597,13 @@
   - type: SolutionContainerManager
     solutions:
       melee:
-        reagents:
-        - ReagentId: Toxin
-          Quantity: 50
+        maxVol: 30
+  - type: SolutionRegeneration
+    solution: melee
+    generated:
+      reagents:
+      - ReagentId: Toxin
+        Quantity: 1
   - type: MeleeChemicalInjector
     transferAmount: 0.75
     solution: melee
