@@ -276,7 +276,6 @@
     shiveringHeatRegulation: 2000
     normalBodyTemperature: 310.15
     thermalRegulationTemperatureThreshold: 25
-  - type: Perishable
   - type: Butcherable
     butcheringType: Spike # TODO human.
     spawned:

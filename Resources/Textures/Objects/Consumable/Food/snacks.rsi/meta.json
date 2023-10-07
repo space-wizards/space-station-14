@@ -8,15 +8,6 @@
   },
   "states": [
     {
-      "name": "beans"
-    },
-    {
-      "name": "beans-empty"
-    },
-    {
-      "name": "beans-open"
-    },
-    {
       "name": "boritos"
     },
     {
@@ -103,24 +94,6 @@
     {
       "name": "packet-inhand-left",
       "directions": 4
-    },
-    {
-      "name": "peachtin"
-    },
-    {
-      "name": "peachtin-empty"
-    },
-    {
-      "name": "peachtin-open"
-    },
-    {
-      "name": "peachtinmaint"
-    },
-    {
-      "name": "peachtinmaint-empty"
-    },
-    {
-      "name": "peachtinmaint-open"
     },
     {
       "name": "pistachio"

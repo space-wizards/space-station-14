@@ -18,7 +18,6 @@ public sealed class AirlockSystem : SharedAirlockSystem
     [Dependency] private readonly WiresSystem _wiresSystem = default!;
     [Dependency] private readonly PowerReceiverSystem _power = default!;
     [Dependency] private readonly DoorBoltSystem _bolts = default!;
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
     public override void Initialize()
     {
@@ -153,10 +152,12 @@ public sealed class AirlockSystem : SharedAirlockSystem
     {
         if (TryComp<WiresPanelComponent>(uid, out var panel) &&
             panel.Open &&
-            _prototypeManager.TryIndex<WiresPanelSecurityLevelPrototype>(panel.CurrentSecurityLevelID, out var securityLevelPrototype) &&
-            securityLevelPrototype.WiresAccessible &&
             TryComp<ActorComponent>(args.User, out var actor))
         {
+            if (TryComp<WiresPanelSecurityComponent>(uid, out var wiresPanelSecurity) &&
+                !wiresPanelSecurity.WiresAccessible)
+                return;
+
             _wiresSystem.OpenUserInterface(uid, actor.PlayerSession);
             args.Handled = true;
             return;
@@ -179,7 +180,7 @@ public sealed class AirlockSystem : SharedAirlockSystem
     {
         if (this.IsPowered(uid, EntityManager) && !args.PryPowered)
         {
-            Popup.PopupClient(Loc.GetString("airlock-component-cannot-pry-is-powered-message"), uid, args.User);
+            Popup.PopupEntity(Loc.GetString("airlock-component-cannot-pry-is-powered-message"), uid, args.User);
             args.Cancelled = true;
         }
     }

@@ -9,6 +9,9 @@
     state: icon
   - type: Item
     size: 10
+  - type: Tag
+    tags:
+    - Sidearm
   - type: Clothing
     sprite: Objects/Weapons/Guns/Revolvers/deckard.rsi
     quickEquip: false
