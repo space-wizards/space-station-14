@@ -1,9 +1,4 @@
 Entries:
-- author: Ilya246
-  changes:
-  - {message: Increase radiator heat transfer rate., type: Tweak}
-  id: 4466
-  time: '2023-08-06T17:23:43.0000000+00:00'
 - author: forthbridge
   changes:
   - {message: Spaceshrooms now spawn as a structure instead of an item, type: Fix}
@@ -2951,3 +2946,8 @@ Entries:
       It seems to be capable of producing ANY substance.', type: Add}
   id: 4965
   time: '2023-10-07T00:26:35.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Fixed not being able to throw items into disposals from close up., type: Fix}
+  id: 4966
+  time: '2023-10-07T00:43:54.0000000+00:00'
