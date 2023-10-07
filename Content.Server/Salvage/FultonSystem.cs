@@ -66,7 +66,7 @@ public sealed class FultonSystem : SharedFultonSystem
             RaiseNetworkEvent(new FultonAnimationMessage()
             {
                 Entity = GetNetEntity(uid, metadata),
-                Coordinates = GetNetCoordinates(oldCoords, metadata),
+                Coordinates = GetNetCoordinates(oldCoords),
             });
         }
 

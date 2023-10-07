@@ -278,7 +278,7 @@ public sealed class PlantHolderSystem : EntitySystem
         if (HasComp<SharpComponent>(args.Used))
             DoHarvest(uid, args.User, component);
 
-        if (TryComp<ProduceComponent?>(args.Used, out var produce))
+        if (TryComp<ProduceComponent>(args.Used, out var produce))
         {
             _popup.PopupCursor(Loc.GetString("plant-holder-component-compost-message",
                 ("owner", uid),
@@ -347,6 +347,7 @@ public sealed class PlantHolderSystem : EntitySystem
         if (component.MutationLevel > 0)
         {
             Mutate(uid, Math.Min(component.MutationLevel, 25), component);
+            component.UpdateSpriteAfterUpdate = true;
             component.MutationLevel = 0;
         }
 
@@ -844,7 +845,7 @@ public sealed class PlantHolderSystem : EntitySystem
         if (component.Seed != null)
         {
             EnsureUniqueSeed(uid, component);
-            _mutation.MutateSeed(component.Seed, severity);
+            _mutation.MutateSeed(ref component.Seed, severity);
         }
     }
 

@@ -64,6 +64,10 @@
         color: green
       - state: skewer-meat-alpha4
         color: brown
+  - type: Tag
+    tags:
+    - Meat
+    - Fruit
 
 - type: entity
   name: meat kebab
@@ -78,6 +82,9 @@
       - state: skewer-meat2
       - state: skewer-meat3
       - state: skewer-meat4
+  - type: Tag
+    tags:
+    - Meat
 
 - type: entity
   name: human kebab

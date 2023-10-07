@@ -1,5 +1,4 @@
 using System.Numerics;
-using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 
 namespace Content.Shared.Gravity;
@@ -18,8 +17,6 @@ public abstract class SharedFloatingVisualizerSystem : EntitySystem
         SubscribeLocalEvent<FloatingVisualsComponent, ComponentStartup>(OnComponentStartup);
         SubscribeLocalEvent<GravityChangedEvent>(OnGravityChanged);
         SubscribeLocalEvent<FloatingVisualsComponent, EntParentChangedMessage>(OnEntParentChanged);
-        SubscribeLocalEvent<FloatingVisualsComponent, ComponentGetState>(OnComponentGetState);
-        SubscribeLocalEvent<FloatingVisualsComponent, ComponentHandleState>(OnComponentHandleState);
     }
 
     /// <summary>
@@ -70,20 +67,5 @@ public abstract class SharedFloatingVisualizerSystem : EntitySystem
         var transform = args.Transform;
         if (CanFloat(uid, component, transform))
             FloatAnimation(uid, component.Offset, component.AnimationKey, component.AnimationTime);
-    }
-
-    private void OnComponentGetState(EntityUid uid, FloatingVisualsComponent component, ref ComponentGetState args)
-    {
-        args.State = new SharedFloatingVisualsComponentState(component.AnimationTime, component.Offset, component.CanFloat);
-    }
-
-    private void OnComponentHandleState(EntityUid uid, FloatingVisualsComponent component, ref ComponentHandleState args)
-    {
-        if (args.Current is not SharedFloatingVisualsComponentState state)
-            return;
-
-        component.AnimationTime = state.AnimationTime;
-        component.Offset = state.Offset;
-        component.CanFloat = state.HasGravity;
     }
 }

@@ -154,7 +154,7 @@ namespace Content.Server.Explosion.EntitySystems
 
         private void HandleRattleTrigger(EntityUid uid, RattleComponent component, TriggerEvent args)
         {
-            if (!TryComp<SubdermalImplantComponent?>(uid, out var implanted))
+            if (!TryComp<SubdermalImplantComponent>(uid, out var implanted))
                 return;
 
             if (implanted.ImplantedEntity == null)
@@ -219,6 +219,14 @@ namespace Content.Server.Explosion.EntitySystems
             var triggerEvent = new TriggerEvent(trigger, user);
             EntityManager.EventBus.RaiseLocalEvent(trigger, triggerEvent, true);
             return triggerEvent.Handled;
+        }
+
+        public void TryDelay(EntityUid uid, float amount, ActiveTimerTriggerComponent? comp = null)
+        {
+            if (!Resolve(uid, ref comp, false))
+                return;
+
+            comp.TimeRemaining += amount;
         }
 
         public void HandleTimerTrigger(EntityUid uid, EntityUid? user, float delay , float beepInterval, float? initialBeepDelay, SoundSpecifier? beepSound)

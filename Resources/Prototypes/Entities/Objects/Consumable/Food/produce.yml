@@ -109,6 +109,25 @@
   - type: Log
 
 - type: entity
+  name: steel-cap log
+  description: Steel doesn't grow on trees! It grows on mushrooms, of course.
+  id: SteelLog
+  parent: ProduceBase
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/steelcap.rsi
+  - type: SolutionContainerManager
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 12
+  - type: Produce
+    seedId: steelcap
+  - type: Log
+    spawnedPrototype: SheetSteel1
+    spawnCount: 1
+
+- type: entity
   name: nettle
   description: Stingy little prick.
   id: Nettle
@@ -135,6 +154,39 @@
     transferAmount: 6 #To OD someone you would need 2 nettles and about 6-7 hits, the DOT is likely to crit them if they are running away with almost no health
     solution: food
     pierceArmor: false
+  - type: Extractable
+    grindableSolutionName: food
+
+- type: entity
+  name: death nettle
+  description: This nettle's out for blood.
+  id: DeathNettle
+  parent: ProduceBase
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/death_nettle.rsi
+  - type: Item
+    size: 10
+    sprite: Objects/Specific/Hydroponics/death_nettle.rsi
+  - type: MeleeWeapon
+    damage:
+      types:
+        Heat: 6
+        Caustic: 6
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: SulfuricAcid
+          Quantity: 15
+        - ReagentId: FluorosulfuricAcid
+          Quantity: 15
+  - type: Produce
+    seedId: deathNettle
+  - type: MeleeChemicalInjector
+    transferAmount: 6 
+    solution: food
+    pierceArmor: true # We do a little trolling
   - type: Extractable
     grindableSolutionName: food
 
@@ -167,6 +219,40 @@
       reagents:
       - ReagentId: JuiceBanana
         Quantity: 10
+  - type: Tag
+    tags:
+    - Fruit
+    
+- type: entity
+  name: mimana
+  parent: FoodProduceBase
+  id: FoodMimana
+  description: Mime's favorite.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - banana
+      - nothing
+  - type: Food
+    trash: TrashMimanaPeel
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 7
+        reagents:
+        - ReagentId: MuteToxin
+          Quantity: 5
+        - ReagentId: Vitamin
+          Quantity: 2
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/mimana.rsi
+  - type: Produce
+    seedId: mimana
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: Nothing
+        Quantity: 5
 
 - type: entity
   name: banana peel
@@ -217,6 +303,24 @@
   - type: Extractable
     grindableSolutionName: food
   - type: SpaceGarbage
+
+- type: entity
+  name: mimana peel
+  parent: TrashBananaPeel
+  id: TrashMimanaPeel
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/mimana.rsi
+    state: peel
+  - type: Item
+    sprite: Objects/Specific/Hydroponics/mimana.rsi
+    heldPrefix: peel  
+  - type: Slippery
+    slipSound:
+      path: /Audio/Effects/slip.ogg
+      params:
+        volume: -100
+    launchForwardsMultiplier: 1.6
 
 - type: entity
   name: bananium peel
@@ -342,6 +446,7 @@
   - type: Tag
     tags:
     - Lemon
+    - Fruit
 
 - type: entity
   name: lime
@@ -364,6 +469,7 @@
   - type: Tag
     tags:
     - Lime
+    - Fruit
 
 - type: entity
   name: orange
@@ -383,6 +489,9 @@
       reagents:
       - ReagentId: JuiceOrange
         Quantity: 10
+  - type: Tag
+    tags:
+    - Meat
 
 - type: entity
   name: pineapple
@@ -416,6 +525,9 @@
   - type: SliceableFood
     count: 5
     slice: FoodPineappleSlice
+  - type: Tag
+    tags:
+    - Fruit
 
 - type: entity
   name: potato
@@ -447,7 +559,7 @@
 
 - type: entity
   name: tomato
-  parent: FoodProduceBase
+  parent: [FoodProduceBase, ItemHeftyBase]
   id: FoodTomato
   description: I say to-mah-to, you say tom-mae-to.
   components:
@@ -475,15 +587,6 @@
       reagents:
       - ReagentId: JuiceTomato
         Quantity: 10
-  - type: DamageOnLand
-    damage:
-      types:
-        Blunt: 1
-  - type: DamageOtherOnHit
-    damage:
-      types:
-        Blunt: 1
-       #Dignity: 25
   - type: Damageable
     damageContainer: Biological
   - type: DamageOnHighSpeedImpact
@@ -504,6 +607,95 @@
         solution: food
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: Tag
+    tags:
+    - Fruit
+
+- type: entity
+  name: blue tomato
+  parent: FoodTomato
+  id: FoodBlueTomato
+  description: This one is blue.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 19
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
+        - ReagentId: SpaceLube
+          Quantity: 10
+        - ReagentId: Vitamin
+          Quantity: 4
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/blue_tomato.rsi
+  - type: Produce
+    seedId: blueTomato
+  - type: Extractable
+    grindableSolutionName: food
+    juiceSolution:
+      reagents:
+      - ReagentId: SpaceLube
+        Quantity: 10
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 1
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: desecration
+      - !type:SpillBehavior
+        solution: food
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Tag
+    tags:
+    - Fruit
+
+- type: entity
+  name: blood tomato
+  parent: FoodTomato
+  id: FoodBloodTomato
+  description: Wait, that's not ketchup...
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 14
+        reagents:
+        - ReagentId: Blood
+          Quantity: 10
+        - ReagentId: Vitamin
+          Quantity: 4
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/blood_tomato.rsi
+  - type: Produce
+    seedId: bloodTomato
+  - type: Extractable
+    grindableSolutionName: food
+    juiceSolution:
+      reagents:
+      - ReagentId: Blood
+        Quantity: 10
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 1
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: desecration
+      - !type:SpillBehavior
+        solution: food
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Tag
+    tags:
+    - Fruit # Fuck you they're a fruit
 
 - type: entity
   name: eggplant
@@ -527,6 +719,9 @@
     sprite: Objects/Specific/Hydroponics/eggplant.rsi
   - type: Produce
     seedId: eggplant
+  - type: Tag
+    tags:
+    - Fruit
 
 - type: entity
   name: apple
@@ -555,6 +750,9 @@
       reagents:
       - ReagentId: JuiceApple
         Quantity: 10
+  - type: Tag
+    tags:
+    - Fruit
 
 - type: entity
   name: cocoa pod
@@ -585,6 +783,9 @@
       - id: FoodCocoaBeans
     sound:
       path: /Audio/Effects/packetrip.ogg
+  - type: Tag
+    tags:
+    - Fruit
 
 - type: entity
   name: ear of corn
@@ -751,6 +952,9 @@
       reagents:
       - ReagentId: JuicePineapple
         Quantity: 2
+  - type: Tag
+    tags:
+    - Fruit
 
 - type: entity
   name: onion slice
@@ -822,6 +1026,32 @@
       sprite: Objects/Specific/Hydroponics/chili.rsi
     - type: Produce
       seedId: chili
+
+- type: entity
+  name: chilly pepper
+  parent: FoodProduceBase
+  id: FoodChilly
+  description: Icy hot.
+  components:
+    - type: FlavorProfile
+      flavors:
+        - spicy
+        - cold
+    - type: SolutionContainerManager
+      solutions:
+        food:
+          maxVol: 18
+          reagents:
+            - ReagentId: Nutriment
+              Quantity: 4
+            - ReagentId: Frostoil
+              Quantity: 10
+            - ReagentId: Vitamin
+              Quantity: 4
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/chilly.rsi
+    - type: Produce
+      seedId: chilly
 
 - type: entity
   name: aloe
@@ -942,6 +1172,43 @@
     - Ambrosia
 
 - type: entity
+  name: ambrosia deus
+  parent: FoodProduceBase
+  id: FoodAmbrosiaDeus
+  description: An extremely sought-after medicinal plant. May have some funky side effects.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - leafy
+      - medicine
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 22
+        reagents:
+        - ReagentId: Omnizine
+          Quantity: 5
+        - ReagentId: SpaceDrugs
+          Quantity: 5
+        - ReagentId: Nutriment
+          Quantity: 2
+        - ReagentId: Desoxyephedrine
+          Quantity: 10
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/ambrosia_deus.rsi
+  - type: Produce
+    seedId: ambrosiaDeus
+  - type: Extractable
+    grindableSolutionName: food
+  - type: Clothing
+    sprite: Objects/Specific/Hydroponics/ambrosia_deus.rsi
+    slots:
+    - HEAD
+  - type: Tag
+    tags:
+    - Ambrosia
+
+- type: entity
   name: galaxythistle
   parent: FoodProduceBase
   id: FoodGalaxythistle
@@ -966,6 +1233,7 @@
   - type: Tag
     tags:
     - Galaxythistle
+    - Fruit # Probably? 
 
 - type: entity
   name: fly amanita
@@ -1017,6 +1285,9 @@
     seedId: gatfruit
   - type: Food
     trash: WeaponRevolverPython
+  - type: Tag
+    tags:
+    - Fruit # It's in the name
 
 - type: entity
   name: rice bushel
@@ -1059,8 +1330,33 @@
         Quantity: 5
 
 - type: entity
+  name: koibean
+  description: These beans seem a little bit fishy.
+  id: FoodKoibean
+  parent: ProduceBase
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/koibean.rsi
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 9
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
+        - ReagentId: CarpoToxin
+          Quantity: 4
+  - type: Produce
+    seedId: koibean
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: CarpoToxin
+        Quantity: 4
+
+- type: entity
   name: watermelon
-  parent: FoodProduceBase
+  parent: [FoodProduceBase, ItemHeftyBase]
   id: FoodWatermelon
   description: Round green object that you can slice and eat.
   components:
@@ -1089,14 +1385,6 @@
       reagents:
       - ReagentId: JuiceWatermelon
         Quantity: 20
-  - type: DamageOnLand
-    damage:
-      types:
-        Blunt: 1
-  - type: DamageOtherOnHit
-    damage:
-      types:
-        Blunt: 1
   - type: Damageable
     damageContainer: Biological
   - type: DamageOnHighSpeedImpact
@@ -1124,6 +1412,9 @@
     butcheringType: Knife
     spawned:
     - id: ClothingHeadHatWatermelon
+  - type: Tag
+    tags:
+    - Fruit
 
 - type: entity
   name: watermelon slice
@@ -1154,6 +1445,9 @@
       reagents:
       - ReagentId: JuiceWatermelon
         Quantity: 4
+  - type: Tag
+    tags:
+    - Fruit
 
 - type: entity
   name: grapes
@@ -1182,3 +1476,88 @@
       reagents:
       - ReagentId: JuiceGrape
         Quantity: 10
+
+- type: entity
+  name: berries
+  parent: FoodProduceBase
+  id: FoodBerries
+  description: A handful of various types of berries.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - berry
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 11
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
+        - ReagentId: Vitamin
+          Quantity: 4
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/berries.rsi
+  - type: Produce
+    seedId: berries
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: JuiceBerry
+        Quantity: 10
+  - type: Tag
+    tags:
+    - Fruit
+
+- type: entity
+  name: bungo fruit
+  parent: FoodProduceBase
+  id: FoodBungo
+  description: The humble bungo fruit.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - bungo
+  - type: Food
+    trash: FoodBungoPit
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+        - ReagentId: Enzyme
+          Quantity: 10
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/bungo.rsi
+  - type: Produce
+    seedId: bungo
+
+- type: entity
+  name: bungo pit
+  parent: FoodInjectableBase
+  id: FoodBungoPit
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/bungo.rsi
+    state: pit
+  - type: Tag
+    tags:
+    - Recyclable
+    - Trash
+    - Fruit
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 7
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 2
+        - ReagentId: Bungotoxin
+          Quantity: 5
+  - type: Extractable
+    grindableSolutionName: food
+  - type: Seed
+    seedId: bungo
+  - type: SpaceGarbage
+  - type: BadFood

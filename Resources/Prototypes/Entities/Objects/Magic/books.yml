@@ -20,7 +20,6 @@
   components:
     - type: Spellbook
       spells:
-        FlashRune: -1
         ActionSpawnMagicarpSpell: -1
 
 - type: entity
@@ -99,7 +98,7 @@
     - state: spell_default
   - type: Spellbook
     spells:
-      FlashRune: -1
-      ExplosionRune: -1
-      IgniteRune: -1
-      StunRune: -1
+      ActionFlashRune: -1
+      ActionExplosionRune: -1
+      ActionIgniteRune: -1
+      ActionStunRune: -1

@@ -32,9 +32,13 @@ namespace Content.Server.Shuttles.Systems
         private const string DockingJoint = "docking";
         private const float DockingRadius = 0.20f;
 
+        private EntityQuery<PhysicsComponent> _physicsQuery;
+
         public override void Initialize()
         {
             base.Initialize();
+            _physicsQuery = GetEntityQuery<PhysicsComponent>();
+
             SubscribeLocalEvent<DockingComponent, ComponentStartup>(OnStartup);
             SubscribeLocalEvent<DockingComponent, ComponentShutdown>(OnShutdown);
             SubscribeLocalEvent<DockingComponent, AnchorStateChangedEvent>(OnAnchorChange);
