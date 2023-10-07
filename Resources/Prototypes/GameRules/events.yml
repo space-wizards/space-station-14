@@ -66,19 +66,19 @@
   - type: RandomEntityStorageSpawnRule
     prototype: MobSkeletonCloset
 
-# - type: entity
-  # parent: BaseGameRule
-  # id: DragonSpawn
-  # noSpawn: true
-  # components:
-  # - type: StationEvent
-    # weight: 5
-    # duration: 1
-    # earliestStart: 45
-    # reoccurrenceDelay: 60
-    # minimumPlayers: 20
-  # - type: RandomSpawnRule
-    # prototype: SpawnPointGhostDragon
+- type: entity
+  parent: BaseGameRule
+  id: DragonSpawn
+  noSpawn: true
+  components:
+  - type: StationEvent
+    weight: 0
+    duration: 1
+    earliestStart: 45
+    reoccurrenceDelay: 60
+    minimumPlayers: 20
+  - type: RandomSpawnRule
+    prototype: SpawnPointGhostDragon
 
 # - type: entity
   # parent: BaseGameRule
@@ -93,18 +93,18 @@
     # minimumPlayers: 40
   # - type: NinjaSpawnRule
 
-# - type: entity
-  # parent: BaseGameRule
-  # id: RevenantSpawn
-  # noSpawn: true
-  # components:
-  # - type: StationEvent
-    # weight: 7.5
-    # duration: 1
-    # earliestStart: 45
-    # minimumPlayers: 20
-  # - type: RandomSpawnRule
-    # prototype: MobRevenant
+- type: entity
+  parent: BaseGameRule
+  id: RevenantSpawn
+  noSpawn: true
+  components:
+  - type: StationEvent
+    weight: 7.5
+    duration: 1
+    earliestStart: 45
+    minimumPlayers: 20
+  - type: RandomSpawnRule
+    prototype: MobRevenant
 
 - type: entity
   id: FalseAlarm
