@@ -27,9 +27,9 @@ public sealed class ConfigPresetTests
                 originalCVars.Add((cvar, value));
             }
 
-            var saveStream = new MemoryStream();
-            config.SaveToTomlStream(saveStream, config.GetRegisteredCVars());
-            saveStream.Position = 0;
+            var originalCvarsStream = new MemoryStream();
+            config.SaveToTomlStream(originalCvarsStream, config.GetRegisteredCVars());
+            originalCvarsStream.Position = 0;
 
             var presets = resources.ContentFindFiles(EntryPoint.ConfigPresetsDir);
             Assert.Multiple(() =>
@@ -41,7 +41,7 @@ public sealed class ConfigPresetTests
                 }
             });
 
-            config.LoadDefaultsFromTomlStream(saveStream);
+            config.LoadDefaultsFromTomlStream(originalCvarsStream);
 
             foreach (var originalCVar in originalCVars)
             {
