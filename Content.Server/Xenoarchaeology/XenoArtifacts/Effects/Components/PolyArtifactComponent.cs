@@ -11,12 +11,12 @@ public sealed partial class PolyArtifactComponent : Component
     /// <summary>
     /// range of the effect.
     /// </summary>
-    [DataField("range")]
+    [DataField]
     public float Range = 2f;
 
     /// <summary>
     /// Sound to play on polymorph.
     /// </summary>
-    [DataField("polySound")]
+    [DataField]
     public SoundSpecifier PolySound = new SoundPathSpecifier("/Audio/Weapons/Guns/Gunshots/Magic/staff_animation.ogg");
 }

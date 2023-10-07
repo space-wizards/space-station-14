@@ -15,7 +15,7 @@ public sealed class PolyArtifactSystem : EntitySystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
 
     [ValidatePrototypeId<PolymorphPrototype>]
-    private const string PolymorphPrototypeName = "ArtifactMonkey";
+    public const string PolymorphPrototypeName = "ArtifactMonkey";
 
     /// <summary>
     /// On effect trigger polymorphs targets in range.
@@ -41,6 +41,7 @@ public sealed class PolyArtifactSystem : EntitySystem
             }
 
             else
+
                 continue;
         }
     }
