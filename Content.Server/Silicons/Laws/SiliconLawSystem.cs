@@ -1,27 +1,26 @@
-﻿using System.Linq;
 using Content.Server.Administration;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking;
-using Content.Server.Mind;
-using Content.Server.Mind.Components;
+using Content.Server.Radio.Components;
 using Content.Server.Roles;
 using Content.Server.Station.Systems;
 using Content.Shared.Actions;
-using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Administration;
 using Content.Shared.Chat;
 using Content.Shared.Emag.Components;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Examine;
+using Content.Shared.Mind;
+using Content.Shared.Mind.Components;
 using Content.Shared.Roles;
 using Content.Shared.Silicons.Laws;
 using Content.Shared.Silicons.Laws.Components;
+using Content.Shared.Stunnable;
 using Content.Shared.Wires;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Toolshed;
-using Content.Shared.Stunnable;
 
 namespace Content.Server.Silicons.Laws;
 
@@ -30,18 +29,19 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
 {
     [Dependency] private readonly IChatManager _chatManager = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
-    [Dependency] private readonly MindSystem _mind = default!;
+    [Dependency] private readonly SharedMindSystem _mind = default!;
     [Dependency] private readonly SharedActionsSystem _actions = default!;
     [Dependency] private readonly StationSystem _station = default!;
     [Dependency] private readonly UserInterfaceSystem _userInterface = default!;
     [Dependency] private readonly SharedStunSystem _stunSystem = default!;
+    [Dependency] private readonly IEntityManager _entityManager = default!;
+    [Dependency] private readonly SharedRoleSystem _roles = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
     {
         base.Initialize();
 
-        SubscribeLocalEvent<SiliconLawBoundComponent, ComponentStartup>(OnComponentStartup);
         SubscribeLocalEvent<SiliconLawBoundComponent, ComponentShutdown>(OnComponentShutdown);
         SubscribeLocalEvent<SiliconLawBoundComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<SiliconLawBoundComponent, MindAddedMessage>(OnMindAdded);
@@ -56,20 +56,15 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
         SubscribeLocalEvent<EmagSiliconLawComponent, ExaminedEvent>(OnExamined);
     }
 
-    private void OnComponentStartup(EntityUid uid, SiliconLawBoundComponent component, ComponentStartup args)
-    {
-        component.ProvidedAction = new (_prototype.Index<InstantActionPrototype>(component.ViewLawsAction));
-        _actions.AddAction(uid, component.ProvidedAction, null);
-    }
-
     private void OnComponentShutdown(EntityUid uid, SiliconLawBoundComponent component, ComponentShutdown args)
     {
-        if (component.ProvidedAction != null)
-            _actions.RemoveAction(uid, component.ProvidedAction);
+        if (component.ViewLawsActionEntity != null)
+            _actions.RemoveAction(uid, component.ViewLawsActionEntity);
     }
 
     private void OnMapInit(EntityUid uid, SiliconLawBoundComponent component, MapInitEvent args)
     {
+        _actions.AddAction(uid, ref component.ViewLawsActionEntity, component.ViewLawsAction);
         GetLaws(uid, component);
     }
 
@@ -95,7 +90,10 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
 
     private void OnBoundUIOpened(EntityUid uid, SiliconLawBoundComponent component, BoundUIOpenedEvent args)
     {
-        var state = new SiliconLawBuiState(GetLaws(uid));
+        _entityManager.TryGetComponent<IntrinsicRadioTransmitterComponent>(uid, out var intrinsicRadio);
+        HashSet<string>? radioChannels = intrinsicRadio?.Channels;
+
+        var state = new SiliconLawBuiState(GetLaws(uid), radioChannels);
         _userInterface.TrySetUiState(args.Entity, SiliconLawsUiKey.Key, state, (IPlayerSession) args.Session);
     }
 
@@ -172,20 +170,18 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
         if (component.AntagonistRole == null)
             return;
 
-        if (args.OldMind.Roles.FirstOrDefault(r => r is SubvertedSiliconRole) is not { } role)
-            return;
-
-        _mind.RemoveRole(args.OldMind, role);
+        _roles.MindTryRemoveRole<SubvertedSiliconRoleComponent>(args.OldMindId);
     }
 
     private void EnsureEmaggedRole(EntityUid uid, EmagSiliconLawComponent component)
     {
-        if (component.AntagonistRole == null || !_mind.TryGetMind(uid, out var mind))
+        if (component.AntagonistRole == null || !_mind.TryGetMind(uid, out var mindId, out _))
             return;
 
-        if (_mind.HasRole<SubvertedSiliconRole>(mind))
+        if (_roles.MindHasRole<SubvertedSiliconRoleComponent>(mindId))
             return;
-        _mind.AddRole(mind, new SubvertedSiliconRole(mind, _prototype.Index<AntagPrototype>(component.AntagonistRole)));
+
+        _roles.MindAddRole(mindId, new SubvertedSiliconRoleComponent { PrototypeId = component.AntagonistRole });
     }
 
     public List<SiliconLaw> GetLaws(EntityUid uid, SiliconLawBoundComponent? component = null)

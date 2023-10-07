@@ -1,4 +1,5 @@
 store-currency-inserted = {CAPITALIZE(THE($used))} is inserted into the {THE($target)}.
+store-currency-war-boost-given = { CAPITALIZE($target) } starts buzzing
 store-currency-inserted-implant = {CAPITALIZE(THE($used))} is inserted into your implant.
 
 store-currency-free = Free

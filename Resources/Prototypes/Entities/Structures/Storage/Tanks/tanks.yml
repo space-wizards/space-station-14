@@ -157,3 +157,24 @@
     solution: tank
   - type: ReagentTank
     transferAmount: 100
+
+- type: entity
+  id: GenericTank
+  parent: StorageTank
+  suffix: Empty
+  components:
+    - type: StaticPrice
+      price: 500
+    - type: Sprite
+      sprite: Structures/Storage/tanks.rsi
+      layers:
+        - state: generictank-1
+        - state: watertank-2-1
+          map: ["enum.SolutionContainerLayers.Fill"]
+          visible: false
+    - type: Appearance
+    - type: SolutionContainerVisuals
+      maxFillLevels: 5
+      fillBaseName: watertank-2-
+    - type: ExaminableSolution
+      solution: tank

@@ -14,8 +14,8 @@ public sealed class FilterTests
     [TestCase(DateOrder.Descending)]
     public async Task Date(DateOrder order)
     {
-        await using var pairTracker = await PoolManager.GetServerClient(AddTests.LogTestSettings);
-        var server = pairTracker.Pair.Server;
+        await using var pair = await PoolManager.GetServerClient(AddTests.LogTestSettings);
+        var server = pair.Server;
 
         var sEntities = server.ResolveDependency<IEntityManager>();
 
@@ -24,7 +24,7 @@ public sealed class FilterTests
         var commonGuid = Guid.NewGuid();
         var firstGuid = Guid.NewGuid();
         var secondGuid = Guid.NewGuid();
-        var testMap = await PoolManager.CreateTestMap(pairTracker);
+        var testMap = await pair.CreateTestMap();
         var coordinates = testMap.GridCoords;
 
         await server.WaitPost(() =>
@@ -96,6 +96,6 @@ public sealed class FilterTests
 
             return firstFound && secondFound;
         });
-        await pairTracker.CleanReturnAsync();
+        await pair.CleanReturnAsync();
     }
 }

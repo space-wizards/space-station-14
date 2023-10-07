@@ -74,8 +74,9 @@
     enabled: false
     usesApcPower: true
   - type: WiresPanel
+  - type: WiresPanelSecurity
   - type: Wires
-    BoardName: "Airlock Control"
+    BoardName: wires-board-name-airlock
     LayoutId: Airlock
   - type: DoorSignalControl
   - type: DeviceNetwork
@@ -131,5 +132,10 @@
   - type: AccessReader
   - type: StaticPrice
     price: 150
+  - type: Tag
+    tags:
+      - Airlock 
+      # This tag is used to nagivate the Airlock construction graph. It's needed because the construction graph is shared between Airlock, AirlockGlass, and HighSecDoor
   placement:
     mode: SnapgridCenter
+

@@ -74,6 +74,8 @@
       charger_slot: !type:ContainerSlot
       machine_board: !type:Container
       machine_parts: !type:Container
+  - type: StaticPrice
+    price: 15
 
 - type: entity
   name: recharger
@@ -95,6 +97,8 @@
           - HitscanBatteryAmmoProvider
           - ProjectileBatteryAmmoProvider
           - Stunbaton
+  - type: StaticPrice
+    price: 15
 
 - type: entity
   name: wall recharger
@@ -272,3 +276,5 @@
       entity_storage: !type:Container
       machine_board: !type:Container
       machine_parts: !type:Container
+  - type: StaticPrice
+    price: 15
