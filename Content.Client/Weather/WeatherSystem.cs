@@ -1,5 +1,6 @@
 using System.Numerics;
 using Content.Shared.Weather;
+using Robust.Client.Audio;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
@@ -11,6 +12,7 @@ using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Player;
+using AudioComponent = Robust.Shared.Audio.Components.AudioComponent;
 
 namespace Content.Client.Weather;
 

@@ -1,6 +1,8 @@
 using Content.Shared.Doors.Components;
 using Content.Shared.Popups;
 using Content.Shared.Prying.Components;
+using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 
 namespace Content.Shared.Doors.Systems;
 

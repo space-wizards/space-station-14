@@ -9,6 +9,8 @@ using Content.Shared.Anomaly;
 using Content.Shared.Anomaly.Components;
 using Content.Shared.DoAfter;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Prototypes;

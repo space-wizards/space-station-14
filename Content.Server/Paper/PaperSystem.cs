@@ -13,6 +13,7 @@ using Robust.Server.Player;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
 using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using static Content.Shared.Paper.SharedPaperComponent;
 
 namespace Content.Server.Paper

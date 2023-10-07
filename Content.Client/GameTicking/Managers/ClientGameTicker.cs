@@ -7,6 +7,8 @@ using Content.Shared.GameWindow;
 using JetBrains.Annotations;
 using Robust.Client.Graphics;
 using Robust.Client.State;
+using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;

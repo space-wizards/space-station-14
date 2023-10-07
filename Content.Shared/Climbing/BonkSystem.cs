@@ -8,6 +8,8 @@ using Robust.Shared.Configuration;
 using Content.Shared.Popups;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction.Components;
+using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Serialization;
 

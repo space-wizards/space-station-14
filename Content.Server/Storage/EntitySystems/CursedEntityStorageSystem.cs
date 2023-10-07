@@ -5,6 +5,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Random;
 using System.Linq;
 using Content.Shared.Storage.Components;
+using Robust.Shared.Audio.Systems;
 
 namespace Content.Server.Storage.EntitySystems;
 

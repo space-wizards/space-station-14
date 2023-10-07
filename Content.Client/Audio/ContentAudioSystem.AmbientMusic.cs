@@ -9,6 +9,7 @@ using Robust.Client.Player;
 using Robust.Client.ResourceManagement;
 using Robust.Client.State;
 using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;

@@ -5,6 +5,8 @@ using Content.Server.Tools.Components;
 using Content.Shared.Maps;
 using Content.Shared.Tools;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map;
 
 namespace Content.Server.Tools

@@ -33,6 +33,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Random;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Robust.Shared.Audio.Systems;
 
 namespace Content.Server.Ninja.Systems;
 

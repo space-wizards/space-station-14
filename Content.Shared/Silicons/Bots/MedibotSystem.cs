@@ -1,5 +1,6 @@
 using Content.Shared.Emag.Systems;
 using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 
 namespace Content.Shared.Silicons.Bots;
 

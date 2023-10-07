@@ -1,5 +1,7 @@
 using Content.Shared.DoAfter;
 using Content.Shared.Tools.Components;
+using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;

@@ -7,6 +7,7 @@ using Content.Shared.Ninja.Components;
 using Content.Shared.Physics;
 using Content.Shared.Popups;
 using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Timing;
 

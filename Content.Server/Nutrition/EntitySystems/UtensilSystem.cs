@@ -2,6 +2,7 @@ using Content.Server.Nutrition.Components;
 using Content.Server.Popups;
 using Content.Shared.Interaction;
 using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 

@@ -5,6 +5,7 @@ using Content.Shared.Inventory.Events;
 using Content.Shared.Ninja.Components;
 using Content.Shared.Timing;
 using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;

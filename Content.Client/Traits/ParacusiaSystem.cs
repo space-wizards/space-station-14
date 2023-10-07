@@ -4,6 +4,8 @@ using Content.Client.Camera;
 using Robust.Shared.Random;
 using Robust.Client.GameObjects;
 using Robust.Client.Player;
+using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Timing;
 
 namespace Content.Client.Traits;

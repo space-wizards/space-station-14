@@ -13,6 +13,7 @@ using Robust.Shared.Utility;
 using System.Linq;
 using System.Numerics;
 using Robust.Client.GameObjects;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Player;
 
 namespace Content.Client.Audio;

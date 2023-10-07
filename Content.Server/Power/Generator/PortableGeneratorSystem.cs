@@ -3,6 +3,7 @@ using Content.Server.Popups;
 using Content.Shared.DoAfter;
 using Content.Shared.Power.Generator;
 using Content.Shared.Verbs;
+using Robust.Server.Audio;
 using Robust.Server.GameObjects;
 using Robust.Shared.Player;
 using Robust.Shared.Random;

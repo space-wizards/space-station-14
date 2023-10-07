@@ -7,6 +7,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Silicons.Bots;
 using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Player;
 
 namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators.Specific;

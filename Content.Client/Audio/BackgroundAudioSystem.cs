@@ -5,6 +5,7 @@ using JetBrains.Annotations;
 using Robust.Client;
 using Robust.Client.State;
 using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
 using Robust.Shared.Player;
 

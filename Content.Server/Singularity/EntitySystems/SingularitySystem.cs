@@ -10,6 +10,8 @@ using Content.Shared.Singularity.Events;
 using Content.Server.Physics.Components;
 using Content.Server.Singularity.Components;
 using Content.Server.Singularity.Events;
+using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 
 namespace Content.Server.Singularity.EntitySystems;
 

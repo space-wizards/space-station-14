@@ -1,6 +1,7 @@
 using Content.Shared.Audio;
 using Robust.Client.GameObjects;
 using Robust.Shared.Audio;
+using AudioComponent = Robust.Shared.Audio.Components.AudioComponent;
 
 namespace Content.Client.Audio;
 

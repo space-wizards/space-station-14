@@ -11,6 +11,7 @@ using Content.Shared.Forensics;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Verbs;
+using Robust.Shared.Audio.Systems;
 
 namespace Content.Server.Forensics
 {
