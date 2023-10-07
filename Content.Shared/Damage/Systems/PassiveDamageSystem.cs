@@ -38,13 +38,13 @@ public sealed class PassiveDamageSystem : EntitySystem
             if (comp.NextDamage > curTime)
                 continue;
 
-            if (comp.DamageCap != null && damage.TotalDamage > comp.DamageCap)
+            if (comp.DamageCap != 0 && damage.TotalDamage >= comp.DamageCap)
                 continue;
             
             // Set the next time they can take damage
             comp.NextDamage = curTime + TimeSpan.FromSeconds(1f);
 
-            // Damage tehm
+            // Damage them
             foreach (var allowedState in comp.AllowedStates)
             {
                 if(allowedState == mobState.CurrentState)
