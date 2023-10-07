@@ -9,8 +9,10 @@ using Content.Shared.Construction.EntitySystems;
 using Content.Shared.Construction.Steps;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
+using Content.Shared.Prying.Systems;
 using Content.Shared.Radio.EntitySystems;
 using Content.Shared.Tools.Components;
+using Content.Shared.Tools.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Utility;
@@ -37,7 +39,7 @@ namespace Content.Server.Construction
 
             // Event handling. Add your subscriptions here! Just make sure they're all handled by EnqueueEvent.
             SubscribeLocalEvent<ConstructionComponent, InteractUsingEvent>(EnqueueEvent,
-                new []{typeof(AnchorableSystem)},
+                new []{typeof(AnchorableSystem), typeof(PryingSystem), typeof(WeldableSystem)},
                 new []{typeof(EncryptionKeySystem)});
             SubscribeLocalEvent<ConstructionComponent, OnTemperatureChangeEvent>(EnqueueEvent);
             SubscribeLocalEvent<ConstructionComponent, PartAssemblyPartInsertedEvent>(EnqueueEvent);
