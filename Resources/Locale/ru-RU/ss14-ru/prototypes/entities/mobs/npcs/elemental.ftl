@@ -30,6 +30,6 @@ ent-ReagentSlimeToxin = реагентный слайм
 ent-ReagentSlimeNapalm = реагентный слайм
     .desc = Он состоит из жидкости и хочет растворить вас в себе.
 	.suffix = Напалм
-ent-ReagentSlimeOmnizineq = реагентный слайм
+ent-ReagentSlimeOmnizine = реагентный слайм
     .desc = Он состоит из жидкости и хочет растворить вас в себе.
 	.suffix = Омнизин
