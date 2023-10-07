@@ -4,10 +4,6 @@ using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Ninja.Components;
 using Content.Shared.Timing;
-using Robust.Shared.Audio;
-using Robust.Shared.Network;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
 
 namespace Content.Shared.Ninja.Systems;
 
@@ -21,6 +17,7 @@ public abstract class SharedNinjaSuitSystem : EntitySystem
     [Dependency] protected readonly SharedSpaceNinjaSystem _ninja = default!;
     [Dependency] protected readonly StealthClothingSystem StealthClothing = default!;
     [Dependency] protected readonly UseDelaySystem UseDelay = default!;
+    [Dependency] private readonly ActionContainerSystem _actionContainer = default!;
 
     public override void Initialize()
     {
@@ -30,6 +27,15 @@ public abstract class SharedNinjaSuitSystem : EntitySystem
         SubscribeLocalEvent<NinjaSuitComponent, GetItemActionsEvent>(OnGetItemActions);
         SubscribeLocalEvent<NinjaSuitComponent, AddStealthActionEvent>(OnAddStealthAction);
         SubscribeLocalEvent<NinjaSuitComponent, GotUnequippedEvent>(OnUnequipped);
+        SubscribeLocalEvent<NinjaSuitComponent, MapInitEvent>(OnMapInit);
+    }
+
+    private void OnMapInit(EntityUid uid, NinjaSuitComponent component, MapInitEvent args)
+    {
+        _actionContainer.EnsureAction(uid, ref component.RecallKatanaActionEntity, component.RecallKatanaAction);
+        _actionContainer.EnsureAction(uid, ref component.CreateThrowingStarActionEntity, component.CreateThrowingStarAction);
+        _actionContainer.EnsureAction(uid, ref component.EmpActionEntity, component.EmpAction);
+        Dirty(uid, component);
     }
 
     /// <summary>

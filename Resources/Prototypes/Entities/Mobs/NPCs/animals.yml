@@ -1633,7 +1633,19 @@
     damage:
       types:
         Piercing: 6
-        Poison: 6
+  - type: SolutionContainerManager
+    solutions:
+      melee:
+        maxVol: 30
+  - type: SolutionRegeneration
+    solution: melee
+    generated:
+      reagents:
+      - ReagentId: Toxin
+        Quantity: 1
+  - type: MeleeChemicalInjector
+    transferAmount: 0.75
+    solution: melee
   - type: ReplacementAccent
     accent: xeno
   - type: InteractionPopup
@@ -1710,7 +1722,6 @@
       damage:
         types:
           Piercing: 8
-          Poison: 6
     - type: FootstepModifier
       footstepSoundCollection:
         collection: FootstepClownFast
