@@ -441,6 +441,16 @@
   - type: DisposalTube
     containerId: DisposalSignalRouter
   - type: DisposalSignalRouter
+  - type: DeviceLinkSink
+    ports:
+    - On
+    - Off
+    - Toggle
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    receiveFrequencyId: BasicDevice
+  - type: WirelessNetworkConnection
+    range: 200
   - type: ContainerContainer
     containers:
       DisposalSignalRouter: !type:Container
