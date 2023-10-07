@@ -137,7 +137,8 @@
   - type: TileSpawnAnomaly
     floorTileId: FloorFlesh
   - type: EntitySpawnAnomaly
-    superCriticalSpawn: FleshKudzu
+    superCriticalSpawns:
+    - FleshKudzu
     spawns:
     - MobFleshJared
     - MobFleshGolem
@@ -231,3 +232,140 @@
     releasedGas: 8 # Frezon. Please replace if there is a better way to specify this
     releaseOnMaxSeverity: true
     spawnRadius: 0
+
+- type: entity
+  id: AnomalyRock
+  parent: BaseAnomaly
+  suffix: Rock
+  components:
+  - type: Sprite
+    layers:
+    - state: anom6
+      map: ["enum.AnomalyVisualLayers.Base"]
+    - state: anom6-pulse
+      map: ["enum.AnomalyVisualLayers.Animated"]
+      visible: false
+  - type: PointLight
+    radius: 2.0
+    energy: 7.5
+    color: "#5ca8cb"
+    castShadows: false
+  - type: TileSpawnAnomaly
+    floorTileId: FloorAsteroidTile
+    spawnChance: 0.8
+  - type: EntitySpawnAnomaly
+    maxSpawnAmount: 50
+    spawnRange: 10
+    spawns:
+    - AsteroidRock
+    - AsteroidCrabSpawner
+    - CrystalSpawner
+    superCriticalSpawns:
+    - AsteroidRock
+    - SpawnMobOreCrab
+
+- type: entity
+  id: AnomalyLiquid
+  parent: BaseAnomaly
+  suffix: Liquid
+  components:
+  - type: Sprite
+    sprite: Structures/Specific/Anomalies/liquid_anom.rsi
+    layers:
+    - state: anom
+      map: ["enum.AnomalyVisualLayers.Base"]
+    - state: pulse
+      map: ["enum.AnomalyVisualLayers.Animated"]
+      visible: false
+  - type: RandomSprite
+    selected: # Initialized layer values. Edited through the ReagentProducerAnomalySystem
+      enum.AnomalyVisualLayers.Base:
+        anom: "#ffffff"
+      enum.AnomalyVisualLayers.Animated:
+        pulse: "#ffffff"
+  - type: PointLight
+    radius: 4.0
+    energy: 3.5
+    color: "#bbbbbb"
+  - type: BadFood
+  - type: Anomaly
+    anomalyContactDamage:
+      types:
+        Slash: 1
+  - type: EntitySpawnAnomaly
+    superCriticalSpawns: 
+    - ReagentSlimeSpawner
+    spawns:
+      - PuddleSparkle
+  - type: SolutionContainerManager
+    solutions:
+      anomaly:
+        maxVol: 1500
+  - type: PuddleCreateAnomaly
+    solution: anomaly
+  - type: InjectionAnomaly
+    solution: anomaly
+  - type: ReagentProducerAnomaly
+    solution: anomaly
+    needRecolor: true
+    dangerousChemicals:
+    - UnstableMutagen
+    - Mold
+    - PolytrinicAcid
+    - FerrochromicAcid
+    - FluorosulfuricAcid
+    - SulfuricAcid
+    - HeartbreakerToxin
+    - VentCrud
+    - UncookedAnimalProteins
+    - Thermite
+    - Napalm
+    - Phlogiston
+    - ChlorineTrifluoride
+    - FoamingAgent
+    - BuzzochloricBees
+    - RobustHarvest
+    usefulChemicals:
+    - Cryptobiolin
+    - Dylovene
+    - Arithrazine
+    - Bicaridine
+    - Cryoxadone
+    - Dermaline
+    - Dexalin
+    - DexalinPlus
+    - Epinephrine
+    - Leporazine
+    - Ambuzol
+    - Tricordrazine
+    - Artifexium
+    - Ethylredoxrazine
+    funChemicals:
+    - Desoxyephedrine
+    - Ephedrine
+    - THC
+    - THCOil
+    - SpaceDrugs
+    - Nocturine
+    - MuteToxin
+    - NorepinephricAcid
+    - Pax
+    - Ipecac
+    - Cognizine
+    - Beer
+    - SpaceGlue
+    - CogChamp
+    - Honk
+    - Carpetium
+  - type: Drink
+    solution: anomaly
+  - type: DrainableSolution
+    solution: anomaly
+  - type: DrawableSolution
+    solution: anomaly
+  - type: ExaminableSolution
+    solution: anomaly
+  - type: RefillableSolution
+    solution: anomaly
+  - type: InjectableSolution
+    solution: beaker
