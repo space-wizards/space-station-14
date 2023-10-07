@@ -1,20 +1,18 @@
 using Content.Server.Disposal.Tube;
 using Content.Server.Disposal.Tube.Components;
 using Content.Server.UserInterface;
-using Content.Shared.Disposal.Components;
+using Content.Shared.Disposal;
 using Content.Shared.Hands.Components;
 using Content.Shared.Popups;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
-using static Content.Shared.Disposal.Components.SharedDisposalRouterComponent;
 
 namespace Content.Server.Disposal.Tube.Systems;
 
 /// <summary>
 /// Handles routing and UI logic for disposal routers.
-/// UI is handled by DisposalTubeSystem.
 /// </summary>
 public sealed class DisposalRouterSystem : EntitySystem
 {
@@ -31,7 +29,7 @@ public sealed class DisposalRouterSystem : EntitySystem
         SubscribeLocalEvent<DisposalRouterComponent, GetDisposalsNextDirectionEvent>(OnGetNextDirection, after: new[] { typeof(DisposalTubeSystem) });
         // TODO: maybe this could use simple dialog thing that rename trick uses?
         SubscribeLocalEvent<DisposalRouterComponent, ActivatableUIOpenAttemptEvent>(OnOpenUIAttempt);
-        SubscribeLocalEvent<DisposalRouterComponent, SharedDisposalRouterComponent.UiActionMessage>(OnUiAction);
+        SubscribeLocalEvent<DisposalRouterComponent, RouterSetTagsMessage>(OnSetTags);
     }
 
     private void OnComponentRemove(EntityUid uid, DisposalRouterComponent comp, ComponentRemove args)
@@ -80,9 +78,13 @@ public sealed class DisposalRouterSystem : EntitySystem
     /// which interact with the world and require server action.
     /// </summary>
     /// <param name="msg">A user interface message from the client.</param>
-    private void OnUiAction(EntityUid uid, DisposalRouterComponent router, SharedDisposalRouterComponent.UiActionMessage msg)
+    private void OnSetTags(EntityUid uid, DisposalRouterComponent comp, RouterSetTagsMessage msg)
     {
         if (!DisposalRouterUiKey.Key.Equals(msg.UiKey))
+            return;
+
+        // Ignore malformed strings
+        if (!RouterSetTagsMessage.TagsRegex.IsMatch(msg.Tags))
             return;
 
         // this seems both unneccessary and too little
@@ -93,15 +95,12 @@ public sealed class DisposalRouterSystem : EntitySystem
         if (TryComp<PhysicsComponent>(uid, out var physBody) && physBody.BodyType != BodyType.Static)
             return;
 
-        //Check for correct message and ignore maleformed strings
-        if (msg.Action == SharedDisposalRouterComponent.UiAction.Ok && SharedDisposalRouterComponent.TagRegex.IsMatch(msg.Tags))
+        comp.Tags.Clear();
+        foreach (var tag in msg.Tags.Split(',', StringSplitOptions.RemoveEmptyEntries))
         {
-            router.Tags.Clear();
-            foreach (var tag in msg.Tags.Split(',', StringSplitOptions.RemoveEmptyEntries))
-            {
-                router.Tags.Add(tag.Trim());
-                _audio.PlayPvs(router.ClickSound, uid);
-            }
+            comp.Tags.Add(tag.Trim());
         }
+
+        _audio.PlayPvs(comp.ClickSound, uid);
     }
 }

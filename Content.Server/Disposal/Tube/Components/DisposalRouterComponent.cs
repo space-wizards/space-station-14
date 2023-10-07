@@ -1,6 +1,5 @@
 using Content.Server.Disposal.Tube.Systems;
 using Robust.Shared.Audio;
-using static Content.Shared.Disposal.Components.SharedDisposalRouterComponent;
 
 namespace Content.Server.Disposal.Tube.Components;
 

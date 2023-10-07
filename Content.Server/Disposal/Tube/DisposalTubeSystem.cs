@@ -8,6 +8,7 @@ using Content.Server.Disposal.Unit.EntitySystems;
 using Content.Server.Popups;
 using Content.Server.UserInterface;
 using Content.Shared.Destructible;
+using Content.Shared.Disposal;
 using Content.Shared.Disposal.Components;
 using Content.Shared.Hands.Components;
 using Content.Shared.Movement.Events;
@@ -19,7 +20,6 @@ using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
-using static Content.Shared.Disposal.Components.SharedDisposalTaggerComponent;
 
 namespace Content.Server.Disposal.Tube
 {
@@ -65,7 +65,7 @@ namespace Content.Server.Disposal.Tube
 
             SubscribeLocalEvent<DisposalTaggerComponent, ActivatableUIOpenAttemptEvent>(OnOpenTaggerUIAttempt);
 
-            SubscribeLocalEvent<DisposalTaggerComponent, SharedDisposalTaggerComponent.UiActionMessage>(OnUiAction);
+            SubscribeLocalEvent<DisposalTaggerComponent, TaggerSetTagMessage>(OnTaggerSetTag);
         }
 
 
@@ -74,19 +74,20 @@ namespace Content.Server.Disposal.Tube
         /// which interact with the world and require server action.
         /// </summary>
         /// <param name="msg">A user interface message from the client.</param>
-        private void OnUiAction(EntityUid uid, DisposalTaggerComponent tagger, SharedDisposalTaggerComponent.UiActionMessage msg)
+        private void OnTaggerSetTag(EntityUid uid, DisposalTaggerComponent tagger, TaggerSetTagMessage msg)
         {
             if (!DisposalTaggerUiKey.Key.Equals(msg.UiKey))
                 return;
+
+            // Ignore malformed strings
+            if (!TaggerSetTagMessage.TagRegex.IsMatch(msg.Tag))
+                return;
+
             if (TryComp<PhysicsComponent>(uid, out var physBody) && physBody.BodyType != BodyType.Static)
                 return;
 
-            //Check for correct message and ignore maleformed strings
-            if (msg.Action == SharedDisposalTaggerComponent.UiAction.Ok && SharedDisposalTaggerComponent.TagRegex.IsMatch(msg.Tag))
-            {
-                tagger.Tag = msg.Tag;
-                _audioSystem.PlayPvs(tagger.ClickSound, uid, AudioParams.Default.WithVolume(-2f));
-            }
+            tagger.Tag = msg.Tag;
+            _audioSystem.PlayPvs(tagger.ClickSound, uid);
         }
 
         private void OnComponentInit(EntityUid uid, DisposalTubeComponent tube, ComponentInit args)
