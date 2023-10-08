@@ -369,3 +369,42 @@
     solution: anomaly
   - type: InjectableSolution
     solution: beaker
+
+- type: entity
+  id: ShadowAnomaly
+  parent: BaseAnomaly
+  suffix: Shadow
+  components:
+  - type: Sprite
+    sprite: Structures/Specific/Anomalies/shadow_anom.rsi
+    layers:
+    - state: anom
+      map: ["enum.AnomalyVisualLayers.Base"]
+    - state: pulse
+      map: ["enum.AnomalyVisualLayers.Animated"]
+      visible: false
+  - type: PointLight
+    radius: 1.5
+    energy: 12.5
+    color: "#793a80"
+  - type: AmbientSound
+    range: 5
+    volume: -5
+    sound:
+      path: /Audio/Ambience/anomaly_scary.ogg
+  - type: Anomaly
+    anomalyContactDamage:
+      types:
+        Cold: 10
+    animationTime: 4
+    offset: "-0.1,0.1"
+  - type: EntitySpawnAnomaly
+    spawns:
+    - ShadowKudzuWeak
+    spawnRange: 12
+    minSpawnAmount: 5
+    maxSpawnAmount: 10
+    superCriticalSpawns:
+    - ShadowKudzu
+    superCriticalSpawnRange: 20
+    superCriticalMaxSpawnAmount: 20
