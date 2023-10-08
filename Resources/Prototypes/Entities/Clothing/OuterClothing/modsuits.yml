@@ -39,6 +39,7 @@
       event: !type:ToggleActionEvent
   - type: PointLight
     enabled: false
+    mask: /Textures/Effects/LightMasks/cone.png
     radius: 9
     softness: 20
     autoRot: true
@@ -69,6 +70,7 @@
         Shock: 0.75
         Caustic: 0.45
         Radiation: 0.3 
+        Heat: 0.6
   - type: ClothingSpeedModifier
     walkModifier: 0.8 #0.7
     sprintModifier: 0.8 #0.7
@@ -83,6 +85,7 @@
       event: !type:ToggleActionEvent
   - type: PointLight
     enabled: false
+    mask: /Textures/Effects/LightMasks/cone.png
     radius: 10
     softness: 20
     autoRot: true
@@ -116,7 +119,7 @@
         Shock: 0.6
         Caustic: 0.45
         Radiation: 0.2
-        Heat: 0.8
+        Heat: 0.5
   - type: ClothingSpeedModifier
     walkModifier: 0.85
     sprintModifier: 0.85
@@ -144,12 +147,13 @@
   - type: Armor
     modifiers:
       coefficients:
-        Shock: 0.8  
+        Shock: 0.5  
         Caustic: 0.1 #0.1
-        Radiation: 0.4 
-        Heat: 0.5
+        Radiation: 0.3 
+        Heat: 0.35
   - type: PointLight
     enabled: false
+    mask: /Textures/Effects/LightMasks/cone.png
     radius: 9
     softness: 20
     autoRot: true
@@ -250,13 +254,15 @@
       coefficients:
         Caustic: 0.7
         Radiation: 0.7
+        Heat: 0.8
   - type: ClothingSpeedModifier
     walkModifier: 0.9
     sprintModifier: 0.9
   - type: PointLight
     color: "#ebebeb"
     enabled: false
-    radius: 2.75
+    mask: /Textures/Effects/LightMasks/cone.png
+    radius: 6
     softness: 20
     autoRot: true
   - type: ToggleableClothing
@@ -324,14 +330,15 @@
         Piercing: 0.6
         Shock: 0.2  #добавлено
         Caustic: 0.3
-        Heat: 0.8 #добавлено
+        Heat: 0.7 #добавлено
   - type: ClothingSpeedModifier
     walkModifier: 0.75
     sprintModifier: 0.75
   - type: PointLight
     color: "red"
     enabled: false
-    radius: 3
+    mask: /Textures/Effects/LightMasks/cone.png
+    radius: 7
     softness: 20
     autoRot: true
   - type: ToggleableClothing
@@ -403,14 +410,15 @@
         Piercing: 0.4 #0.5
         Shock: 0.2
         Radiation: 0.4 #0.5
-        Heat: 0.6 #добавлено
+        Heat: 0.5 #добавлено
   - type: ClothingSpeedModifier
     walkModifier: 0.8
     sprintModifier: 0.8
   - type: PointLight
     color: "#eec344"
     enabled: false
-    radius: 7
+    mask: /Textures/Effects/LightMasks/cone.png
+    radius: 12
     softness: 20
     autoRot: true
   - type: ToggleableClothing
@@ -442,7 +450,7 @@
         Blunt: 0.8
         Slash: 0.8
         Piercing: 0.7
-        Heat: 0.8 #добавлено
+        Heat: 0.7 #добавлено
         Caustic: 0.5 #dобавлено
   - type: ClothingSpeedModifier
     walkModifier: 0.95 #0.65
@@ -450,7 +458,8 @@
   - type: PointLight
     color: "#70c5c7"
     enabled: false
-    radius: 5
+    mask: /Textures/Effects/LightMasks/cone.png
+    radius: 15
     softness: 20
     autoRot: true
   - type: ToggleableClothing
@@ -515,20 +524,21 @@
   - type: Armor
     modifiers:
       coefficients:
-        Blunt: 0.6 #0.8
-        Slash: 0.75 #0.8
-        Piercing: 0.65 #0.8
+        Blunt: 0.5 #0.8
+        Slash: 0.65 #0.8
+        Piercing: 0.55 #0.8
         Shock: 0.6
         Radiation: 0
-        Heat: 0.25
-        Caustic: 0.5 #0.5
+        Heat: 0.15
+        Caustic: 0.25 #0.5
   - type: ClothingSpeedModifier
     walkModifier: 0.9 #0.8
     sprintModifier: 0.9 #0.8
   - type: PointLight
     color: "#e6aa5c"
     enabled: false
-    radius: 14
+    mask: /Textures/Effects/LightMasks/cone.png
+    radius: 18
     softness: 20
     autoRot: true
   - type: ToggleableClothing
@@ -558,13 +568,14 @@
         Slash: 0.95
         Shock: 0.95
         Radiation: 0.8
-        Heat: 0.9
+        Heat: 0.7
   - type: ClothingSpeedModifier
     walkModifier: 0.85
     sprintModifier: 0.85
   - type: PointLight
     color: "#a0f1e8"
     enabled: false
+    mask: /Textures/Effects/LightMasks/cone.png
     radius: 5
     softness: 20
     autoRot: true
@@ -641,6 +652,7 @@
     sprintModifier: 0.6
   - type: PointLight
     color: "#9a26dd"
+    mask: /Textures/Effects/LightMasks/cone.png
     enabled: false
     radius: 7
     softness: 20
@@ -723,7 +735,8 @@
   - type: PointLight
     color: "#b289db"
     enabled: false
-    radius: 8
+    mask: /Textures/Effects/LightMasks/cone.png
+    radius: 12
     softness: 20
     autoRot: true
 
@@ -747,7 +760,8 @@
   - type: PointLight
     color: "#a0f1e8"
     enabled: false
-    radius: 7
+    mask: /Textures/Effects/LightMasks/cone.png
+    radius: 12
     softness: 20
     autoRot: true
   - type: Armor
@@ -759,7 +773,7 @@
         Shock: 0.7 #отсутствует
         Caustic: 0.7 #так же
         Radiation: 0.3 # так же
-        Heat: 0.75 #про лаваленд не забывать, отсутствует
+        Heat: 0.6 #про лаваленд не забывать, отсутствует
   - type: ClothingSpeedModifier
     walkModifier: 0.8 #оригинал - 0.75
     sprintModifier: 0.8
@@ -842,7 +856,8 @@
   - type: PointLight
     color: "#a0f1e8"
     enabled: false
-    radius: 9
+    mask: /Textures/Effects/LightMasks/cone.png
+    radius: 15
     softness: 20
     autoRot: true
   - type: ToggleableClothing
@@ -881,7 +896,8 @@
   - type: PointLight
     color: "green"
     enabled: false
-    radius: 12
+    mask: /Textures/Effects/LightMasks/cone.png
+    radius: 18
     softness: 20
     autoRot: true
   - type: ToggleableClothing
@@ -922,7 +938,8 @@
   - type: PointLight
     color: "red"
     enabled: false
-    radius: 6
+    mask: /Textures/Effects/LightMasks/cone.png
+    radius: 12
     softness: 20
     autoRot: true
   - type: ToggleableClothing
