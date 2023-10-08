@@ -8,6 +8,7 @@ using Content.Shared.Administration.Logs;
 using Content.Shared.CCVar;
 using Content.Shared.Database;
 using Prometheus;
+using Robust.Server.GameObjects;
 using Robust.Shared;
 using Robust.Shared.Configuration;
 using Robust.Shared.Reflection;
@@ -81,6 +82,9 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
     // 1 when saving, 0 otherwise
     private int _savingLogs;
     private int _logsDropped;
+    private EntityQuery<TransformComponent> _xformQuery;
+    private EntityQuery<MetaDataComponent> _metaQuery;
+    private EntityQuery<ActorComponent> _actorQuery;
 
     public void Initialize()
     {
@@ -100,6 +104,10 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
             value => _preRoundQueueMax = value, true);
         _configuration.OnValueChanged(CCVars.AdminLogsDropThreshold,
             value => _dropThreshold = value, true);
+
+        _xformQuery = _entityManager.GetEntityQuery<TransformComponent>();
+        _metaQuery = _entityManager.GetEntityQuery<MetaDataComponent>();
+        _actorQuery = _entityManager.GetEntityQuery<ActorComponent>();
 
         if (_metricsEnabled)
         {
@@ -278,7 +286,7 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
         }
     }
 
-    private void Add(LogType type, LogImpact impact, string message, JsonDocument json, HashSet<Guid> players, List<AdminLogEntity> entities)
+    private void Add(int id, LogType type, LogImpact impact, string message, JsonDocument json, List<AdminLogPlayer> players, List<AdminLogEntity> entities)
     {
         var preRound = _runLevel == GameRunLevel.PreRoundLobby;
         var count = preRound ? _preRoundLogQueue.Count : _logQueue.Count;
@@ -288,29 +296,25 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
             return;
         }
 
+        // TODO fix AdminLogEntity
+        // Or maybe just remove it altogether.
+        foreach (var entity in entities)
+        {
+            entity.Uid = 0;
+        }
+
         var log = new AdminLog
         {
-            Id = NextLogId,
+            Id = id,
             RoundId = _currentRoundId,
             Type = type,
             Impact = impact,
             Date = DateTime.UtcNow,
             Message = message,
             Json = json,
-            Players = new List<AdminLogPlayer>(players.Count),
+            Players = players,
             Entities = entities
         };
-
-        foreach (var id in players)
-        {
-            var player = new AdminLogPlayer
-            {
-                LogId = log.Id,
-                PlayerUserId = id
-            };
-
-            log.Players.Add(player);
-        }
 
         if (preRound)
         {
@@ -331,10 +335,10 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
             return;
         }
 
-        var (json, players, entities) = ToJson(handler.Values);
+        var id = NextLogId;
+        var (json, players, entities) = ToJson(id, handler.Values);
         var message = handler.ToStringAndClear();
-
-        Add(type, impact, message, json, players, entities);
+        Add(id, type, impact, message, json, players, entities);
     }
 
     public override void Add(LogType type, ref LogStringHandler handler)

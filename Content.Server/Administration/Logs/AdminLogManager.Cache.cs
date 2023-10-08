@@ -16,6 +16,7 @@ public sealed partial class AdminLogManager
 
     // TODO ADMIN LOGS make this thread safe or remove thread safety from the main partial class
     private readonly Dictionary<int, List<SharedAdminLog>> _roundsLogCache = new(MaxRoundsCached);
+    private List<SharedAdminLog> _currentRoundCache = default!;
 
     private static readonly Gauge CacheRoundCount = Metrics.CreateGauge(
         "admin_logs_cache_round_count",
@@ -42,30 +43,29 @@ public sealed partial class AdminLogManager
         }
 
         _roundsLogCache.Add(_currentRoundId, list);
+        _currentRoundCache = list;
         CacheRoundCount.Set(_roundsLogCache.Count);
     }
 
     private void CacheLog(AdminLog log)
     {
-        var players = log.Players.Select(player => player.PlayerUserId).ToArray();
-        var record = new SharedAdminLog(log.Id, log.Type, log.Impact, log.Date, log.Message, players);
+        // TODO ALLOCATIONS admin logs
+        // Make player-log serializable and remove this list conversion.
+        var players = new Guid[log.Players.Count];
+        for (int i = 0; i < players.Length; i++)
+        {
+            players[i] = log.Players[i].PlayerUserId;
+        }
 
+        var record = new SharedAdminLog(log.Id, log.Type, log.Impact, log.Date, log.Message, players);
         CacheLog(record);
     }
 
     private void CacheLog(SharedAdminLog log)
     {
-        // TODO ADMIN LOGS remove redundant data and don't do a dictionary lookup per log
-        var cache = _roundsLogCache[_currentRoundId];
-        cache.Add(log);
-        CacheLogCount.Set(cache.Count);
-    }
-
-    private void CacheLogs(IEnumerable<SharedAdminLog> logs)
-    {
-        var cache = _roundsLogCache[_currentRoundId];
-        cache.AddRange(logs);
-        CacheLogCount.Set(cache.Count);
+        // TODO ADMIN LOGS remove redundant data
+        _currentRoundCache.Add(log);
+        CacheLogCount.Set(_currentRoundCache.Count);
     }
 
     private bool TryGetCache(int roundId, [NotNullWhen(true)] out List<SharedAdminLog>? cache)
