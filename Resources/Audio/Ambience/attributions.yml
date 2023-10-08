@@ -84,3 +84,8 @@
   license: "CC-BY-SA-3.0"
   copyright: "Taken from BeeStation"
   source: "https://github.com/BeeStation/BeeStation-Hornet/commit/cf8c667dcca196c0e81af37ed0c27b9bdee9c888"
+
+- files: ["anomaly_scary.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Created by dimbark1, edited and converted to mono by TheShuEd (github)"
+  source: "https://freesound.org/people/dimbark1/sounds/316797/"
