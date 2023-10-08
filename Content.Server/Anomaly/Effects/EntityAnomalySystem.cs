@@ -8,6 +8,7 @@ using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Anomaly.Effects;
 
@@ -26,7 +27,7 @@ public sealed class EntityAnomalySystem : EntitySystem
     private void OnPulse(EntityUid uid, EntitySpawnAnomalyComponent component, ref AnomalyPulseEvent args)
     {
         var range = component.SpawnRange * args.Stability;
-        var amount = (int) (component.MaxSpawnAmount * args.Severity + 0.5f);
+        var amount = (int) (MathHelper.Lerp(component.MinSpawnAmount, component.MaxSpawnAmount, args.Severity) + 0.5f);
 
         var xform = Transform(uid);
         SpawnMonstersOnOpenTiles(component, xform, amount, range, component.Spawns);
@@ -38,12 +39,12 @@ public sealed class EntityAnomalySystem : EntitySystem
         // A cluster of monsters
         SpawnMonstersOnOpenTiles(component, xform, component.MaxSpawnAmount, component.SpawnRange, component.Spawns);
         // And so much meat (for the meat anomaly at least)
-        SpawnMonstersOnOpenTiles(component, xform, component.MaxSpawnAmount, component.SpawnRange, component.SuperCriticalSpawns);
+        SpawnMonstersOnOpenTiles(component, xform, component.SuperCriticalMaxSpawnAmount, component.SuperCriticalSpawnRange, component.SuperCriticalSpawns);
     }
 
     private void SpawnMonstersOnOpenTiles(EntitySpawnAnomalyComponent component, TransformComponent xform, int amount, float radius, List<EntProtoId> spawns)
     {
-        if (!component.Spawns.Any())
+        if (spawns.Count == 0)
             return;
 
         if (!_map.TryGetGrid(xform.GridUid, out var grid))
@@ -61,6 +62,10 @@ public sealed class EntityAnomalySystem : EntitySystem
         var amountCounter = 0;
         foreach (var tileref in tilerefs)
         {
+            //cut to a circle
+            if (MathF.Sqrt(MathF.Pow(tileref.X - xform.LocalPosition.X, 2) + MathF.Pow(tileref.Y - xform.LocalPosition.Y, 2)) > radius)
+                continue;
+                
             var valid = true;
             foreach (var ent in grid.GetAnchoredEntities(tileref.GridIndices))
             {
