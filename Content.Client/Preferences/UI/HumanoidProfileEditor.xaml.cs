@@ -1557,7 +1557,7 @@ namespace Content.Client.Preferences.UI
                 // Create a checkbox to get the loadout
                 _checkBox = new CheckBox
                 {
-                    Text = $"[{loadout.Cost}] {Loc.GetString(loadout.Name)}",
+                    Text = $"[{loadout.Cost}] {(string.IsNullOrEmpty(loadout.Name) ? entityManager.GetComponent<MetaDataComponent>(dummyLoadoutItem).EntityName : Loc.GetString(loadout.Name))}",
                     VerticalAlignment = VAlignment.Center
                 };
                 _checkBox.OnToggled += OnCheckBoxToggled;

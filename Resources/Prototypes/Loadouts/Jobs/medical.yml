@@ -1,6 +1,5 @@
 - type: loadout
   id: LoadoutMedicalGlovesNitrile
-  name: Nitrile gloves
   description: An alternate job equipment.
   category: Jobs
   cost: 1
@@ -14,7 +13,6 @@
 
 - type: loadout
   id: LoadoutMedicalEyesMediHUD
-  name: Medical HUD
   description: An alternate job equipment.
   category: Jobs
   cost: 3
@@ -28,7 +26,6 @@
 
 - type: loadout
   id: LoadoutMedicalOuterLabcoat
-  name: Lab coat
   description: An alternate job equipment.
   category: Jobs
   cost: 2
@@ -41,7 +38,6 @@
 
 - type: loadout
   id: LoadoutMedicalNeckStethoscope
-  name: Stethoscope
   description: An alternate job equipment.
   category: Jobs
   cost: 1
@@ -54,7 +50,6 @@
 
 - type: loadout
   id: LoadoutMedicalUniformScrubsBlue
-  name: Blue Scrubs
   description: An alternate job equipment.
   category: Jobs
   cost: 2
@@ -66,7 +61,6 @@
 
 - type: loadout
   id: LoadoutMedicalUniformScrubsGreen
-  name: Green Scrubs
   description: An alternate job equipment.
   category: Jobs
   cost: 2
@@ -78,7 +72,6 @@
 
 - type: loadout
   id: LoadoutMedicalUniformScrubsPurple
-  name: Purple Scrubs
   description: An alternate job equipment.
   category: Jobs
   cost: 2
@@ -90,7 +83,6 @@
 
 - type: loadout
   id: LoadoutMedicalOuterLabcoatChem
-  name: Chemist Lab Coat
   description: An alternate job equipment.
   category: Jobs
   cost: 2
@@ -102,7 +94,6 @@
 
 - type: loadout
   id: LoadoutMedicalItemHandLabeler
-  name: Hand Labeler
   description: An alternate job equipment.
   category: Jobs
   exclusive: true
@@ -113,7 +104,6 @@
 
 - type: loadout
   id: LoadoutMedicalUniformParamedicJumpsuit
-  name: Paramedic Jumpsuit
   description: An alternate job equipment.
   category: Jobs
   cost: 2
@@ -125,7 +115,6 @@
 
 - type: loadout
   id: LoadoutMedicalUniformParamedicJumpskirt
-  name: Paramedic jumpskirt
   description: An alternate job equipment.
   category: Jobs
   cost: 2
@@ -137,7 +126,6 @@
 
 - type: loadout
   id: LoadoutMedicalHeadNurse
-  name: Nurse hat
   description: An alternate job equipment.
   category: Jobs
   cost: 2

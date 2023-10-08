@@ -1,6 +1,5 @@
 - type: loadout
   id: LoadoutSecurityUniformGrey
-  name: Grey Security Jumpsuit
   description: An alternate job equipment.
   category: Jobs
   cost: 2
@@ -14,7 +13,6 @@
 
 - type: loadout
   id: LoadoutSecurityOuterArmorBasic
-  name: Basic Armor Vest
   description: An alternate job equipment.
   category: Jobs
   cost: 4
@@ -27,7 +25,6 @@
 
 - type: loadout
   id: LoadoutSecurityHeadHelmetBasic
-  name: Basic Helmet
   description: An alternate job equipment.
   category: Jobs
   cost: 2
@@ -40,7 +37,6 @@
 
 - type: loadout
   id: LoadoutSecurityMaskGasSwat
-  name: SWAT Gas Mask
   description: An alternate job equipment.
   category: Jobs
   cost: 2
@@ -55,7 +51,6 @@
 
 - type: loadout
   id: LoadoutSecurityEyesGlasses
-  name: Security Glasses
   description: An alternate job equipment.
   category: Jobs
   cost: 1
@@ -71,7 +66,6 @@
 
 - type: loadout
   id: LoadoutSecurityEyesHud
-  name: Security HUD
   description: An alternate job equipment.
   category: Jobs
   cost: 3
@@ -86,7 +80,6 @@
 
 - type: loadout
   id: LoadoutSecurityShoesBootsCombatFilled
-  name: Combat Boots
   description: An alternate job equipment.
   category: Jobs
   cost: 3
@@ -100,7 +93,6 @@
 
 - type: loadout
   id: LoadoutSecurityShoesJackboots
-  name: Jackboots
   description: A really nice, heavy, pair of black boots.
   category: Jobs
   cost: 1

@@ -1,6 +1,5 @@
 - type: loadout
   id: LoadoutScienceOuterCoat
-  name: Science Lab Coat
   description: An alternate job equipment.
   category: Jobs
   cost: 2
@@ -14,7 +13,6 @@
 
 - type: loadout
   id: LoadoutScienceOuterLabcoat
-  name: Lab coat
   description: An alternate job equipment.
   category: Jobs
   cost: 2
@@ -27,7 +25,6 @@
 
 - type: loadout
   id: LoadoutScienceOuterLabcoatSeniorResearcher
-  name: Senior Researcher Lab Coat
   description: An alternate job equipment.
   category: Jobs
   cost: 2
@@ -39,7 +36,6 @@
 
 - type: loadout
   id: LoadoutScienceHatBeret
-  name: Science Beret
   description: An alternate job equipment.
   category: Jobs
   cost: 1

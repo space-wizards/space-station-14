@@ -1,6 +1,5 @@
 - type: loadout
   id: LoadoutEngineeringUniformHazard
-  name: Engineering hazard suit
   description: An alternate job equipment.
   category: Jobs
   cost: 2
@@ -12,7 +11,6 @@
 
 - type: loadout
   id: LoadoutEngineeringOuterHazard
-  name: Engineering hazard vest
   description: An alternate job equipment.
   category: Jobs
   cost: 2
@@ -48,7 +46,6 @@
 
 - type: loadout
   id: LoadoutEngineeringEyesMeson
-  name: Engineer goggles
   description: An alternate job equipment.
   category: Jobs
   cost: 2
@@ -61,7 +58,6 @@
 
 - type: loadout
   id: LoadoutEngineeringHeadBeret
-  name: Engineering Beret
   description: An alternate job equipment.
   category: Jobs
   cost: 1
@@ -75,7 +71,6 @@
 
 - type: loadout
   id: LoadoutEngineeringHeadHardhatBlue
-  name: Hard hat
   description: An alternate job equipment.
   category: Jobs
   cost: 2
@@ -88,7 +83,6 @@
 
 - type: loadout
   id: LoadoutEngineeringHeadHardhatOrange
-  name: Hard hat
   description: An alternate job equipment.
   category: Jobs
   cost: 2
@@ -101,7 +95,6 @@
 
 - type: loadout
   id: LoadoutEngineeringHeadHardhatYellow
-  name: Hard hat
   description: An alternate job equipment.
   category: Jobs
   cost: 2
@@ -114,7 +107,6 @@
 
 - type: loadout
   id: LoadoutEngineeringHeadHardhatWhite
-  name: Hard hat
   description: An alternate job equipment.
   category: Jobs
   cost: 2
@@ -127,7 +119,6 @@
 
 - type: loadout
   id: LoadoutEngineeringHeadHardhatRed
-  name: Hard hat
   description: An alternate job equipment.
   category: Jobs
   cost: 2
@@ -140,7 +131,6 @@
 
 - type: loadout
   id: LoadoutEngineeringItemInflatable
-  name: Emergency inflatable set
   description: A box containing infaltable walls and doors, for quickly patching up breaches.
   category: Jobs
   cost: 4

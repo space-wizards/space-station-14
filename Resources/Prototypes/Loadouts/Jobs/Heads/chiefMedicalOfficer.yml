@@ -1,6 +1,5 @@
 - type: loadout
   id: LoadoutCommandCMONeckMantle
-  name: CMO Mantle
   description: To show who has the authority around here. It seems unusually clean.
   category: Jobs
   cost: 2
@@ -12,7 +11,6 @@
 
 - type: loadout
   id: LoadoutCommandCMONeckCloak
-  name: CMO Cloak
   description: To really show who has the authority around here. It seems unusually clean.
   category: Jobs
   cost: 2
@@ -24,7 +22,6 @@
 
 - type: loadout
   id: LoadoutCommandCMOOuterWinter
-  name: CMO Winter Coat
   description: A warm coat for the cold of space. It seems unusually clean.
   category: Jobs
   cost: 2
@@ -35,7 +32,6 @@
 
 - type: loadout
   id: LoadoutCommandCMOOuterLab
-  name: CMO Lab Coat
   description: A lab coat for the CMO. It seems unusually clean.
   category: Jobs
   cost: 1
@@ -46,7 +42,6 @@
 
 - type: loadout
   id: LoadoutCommandCMOHatBeret
-  name: CMO Beret
   description: A beret for the CMO. It seems unusually clean.
   category: Jobs
   cost: 1

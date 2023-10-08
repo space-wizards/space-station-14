@@ -1,6 +1,5 @@
 - type: loadout
   id: LoadoutNeckScarfStripedRed
-  name: Red striped scarf
   description: Keep your neck warm and stylish.
   category: Accessories
   cost: 1
@@ -9,7 +8,6 @@
 
 - type: loadout
   id: LoadoutNeckScarfStripedBlue
-  name: Blue striped scarf
   description: Keep your neck warm and stylish.
   category: Accessories
   cost: 1
@@ -18,7 +16,6 @@
 
 - type: loadout
   id: LoadoutNeckScarfStripedGreen
-  name: Green striped scarf
   description: Keep your neck warm and stylish.
   category: Accessories
   cost: 1
@@ -27,7 +24,6 @@
 
 - type: loadout
   id: LoadoutNeckScarfStripedZebra
-  name: Zebra striped scarf
   description: Keep your neck warm and stylish.
   category: Accessories
   cost: 1

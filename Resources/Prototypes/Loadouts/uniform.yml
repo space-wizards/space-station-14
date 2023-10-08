@@ -1,6 +1,5 @@
 - type: loadout
   id: LoadoutUniformAncientJumpsuit
-  name: Ancient jumpsuit
   description: The legend of the Greytide.
   category: Uniform
   cost: 2
@@ -14,7 +13,6 @@
 
 - type: loadout
   id: LoadoutUniformJumpsuitColorBlack
-  name: Black Jumpsuit
   description: A black jumpsuit.
   category: Uniform
   cost: 2
@@ -23,7 +21,6 @@
 
 - type: loadout
   id: LoadoutUniformJumpskirtColorBlack
-  name: Black Jumpskirt
   description: A black jumpskirt.
   category: Uniform
   cost: 2
@@ -32,7 +29,6 @@
 
 - type: loadout
   id: LoadoutUniformJumpsuitColorBlue
-  name: Blue Jumpsuit
   description: A blue jumpsuit.
   category: Uniform
   cost: 2
@@ -41,7 +37,6 @@
 
 - type: loadout
   id: LoadoutUniformJumpskirtColorBlue
-  name: Blue Jumpskirt
   description: A blue jumpskirt.
   category: Uniform
   cost: 2
@@ -50,7 +45,6 @@
 
 - type: loadout
   id: LoadoutUniformJumpsuitColorGreen
-  name: Green Jumpsuit
   description: A green jumpsuit.
   category: Uniform
   cost: 2
@@ -59,7 +53,6 @@
 
 - type: loadout
   id: LoadoutUniformJumpskirtColorGreen
-  name: Green Jumpskirt
   description: A green jumpskirt.
   category: Uniform
   cost: 2
@@ -68,7 +61,6 @@
 
 - type: loadout
   id: LoadoutUniformJumpsuitColorOrange
-  name: Orange Jumpsuit
   description: An orange jumpsuit.
   category: Uniform
   cost: 2
@@ -77,7 +69,6 @@
 
 - type: loadout
   id: LoadoutUniformJumpskirtColorOrange
-  name: Orange Jumpskirt
   description: An orange jumpskirt.
   category: Uniform
   cost: 2
@@ -86,7 +77,6 @@
 
 - type: loadout
   id: LoadoutUniformJumpsuitColorPink
-  name: Pink Jumpsuit
   description: A pink jumpsuit.
   category: Uniform
   cost: 2
@@ -95,7 +85,6 @@
 
 - type: loadout
   id: LoadoutUniformJumpskirtColorPink
-  name: Pink Jumpskirt
   description: A pink jumpskirt.
   category: Uniform
   cost: 2
@@ -104,7 +93,6 @@
 
 - type: loadout
   id: LoadoutUniformJumpsuitColorRed
-  name: Red Jumpsuit
   description: A red jumpsuit.
   category: Uniform
   cost: 2
@@ -113,7 +101,6 @@
 
 - type: loadout
   id: LoadoutUniformJumpskirtColorRed
-  name: Red Jumpskirt
   description: A red jumpskirt.
   category: Uniform
   cost: 2
@@ -122,7 +109,6 @@
 
 - type: loadout
   id: LoadoutUniformJumpsuitColorWhite
-  name: White Jumpsuit
   description: A white jumpsuit.
   category: Uniform
   cost: 2
@@ -131,7 +117,6 @@
 
 - type: loadout
   id: LoadoutUniformJumpskirtColorWhite
-  name: White Jumpskirt
   description: A white jumpskirt.
   category: Uniform
   cost: 2
@@ -140,7 +125,6 @@
 
 - type: loadout
   id: LoadoutUniformJumpsuitColorYellow
-  name: Yellow Jumpsuit
   description: A yellow jumpsuit.
   category: Uniform
   cost: 2
@@ -149,7 +133,6 @@
 
 - type: loadout
   id: LoadoutUniformJumpskirtColorYellow
-  name: Yellow Jumpskirt
   description: A yellow jumpskirt.
   category: Uniform
   cost: 2
@@ -158,7 +141,6 @@
 
 - type: loadout
   id: LoadoutUniformJumpsuitColorDarkBlue
-  name: Dark Blue Jumpsuit
   description: A dark blue jumpsuit.
   category: Uniform
   cost: 2
@@ -167,7 +149,6 @@
 
 - type: loadout
   id: LoadoutUniformJumpskirtColorDarkBlue
-  name: Dark Blue Jumpskirt
   description: A dark blue jumpskirt.
   category: Uniform
   cost: 2
@@ -176,7 +157,6 @@
 
 - type: loadout
   id: LoadoutUniformJumpsuitColorTeal
-  name: Teal Jumpsuit
   description: A teal jumpsuit.
   category: Uniform
   cost: 2
@@ -185,7 +165,6 @@
 
 - type: loadout
   id: LoadoutUniformJumpskirtColorTeal
-  name: Teal Jumpskirt
   description: A teal jumpskirt.
   category: Uniform
   cost: 2
@@ -194,7 +173,6 @@
 
 - type: loadout
   id: LoadoutUniformJumpsuitColorPurple
-  name: Purple Jumpsuit
   description: A purple jumpsuit.
   category: Uniform
   cost: 2
@@ -203,7 +181,6 @@
 
 - type: loadout
   id: LoadoutUniformJumpskirtColorPurple
-  name: Purple Jumpskirt
   description: A purple jumpskirt.
   category: Uniform
   cost: 2
@@ -212,7 +189,6 @@
 
 - type: loadout
   id: LoadoutUniformJumpsuitColorDarkGreen
-  name: Dark Green Jumpsuit
   description: A dark green jumpsuit.
   category: Uniform
   cost: 2
@@ -221,7 +197,6 @@
 
 - type: loadout
   id: LoadoutUniformJumpskirtColorDarkGreen
-  name: Dark Green Jumpskirt
   description: A dark green jumpskirt.
   category: Uniform
   cost: 2
@@ -230,7 +205,6 @@
 
 - type: loadout
   id: LoadoutUniformJumpsuitColorLightBrown
-  name: Light Brown Jumpsuit
   description: A light brown jumpsuit.
   category: Uniform
   cost: 2
@@ -239,7 +213,6 @@
 
 - type: loadout
   id: LoadoutUniformJumpskirtColorLightBrown
-  name: Light Brown Jumpskirt
   description: A light brown jumpskirt.
   category: Uniform
   cost: 2
@@ -248,7 +221,6 @@
 
 - type: loadout
   id: LoadoutUniformJumpsuitColorBrown
-  name: Brown Jumpsuit
   description: A brown jumpsuit.
   category: Uniform
   cost: 2
@@ -257,7 +229,6 @@
 
 - type: loadout
   id: LoadoutUniformJumpskirtColorBrown
-  name: Brown Jumpskirt
   description: A brown jumpskirt.
   category: Uniform
   cost: 2
@@ -266,7 +237,6 @@
 
 - type: loadout
   id: LoadoutUniformJumpsuitColorMaroon
-  name: Maroon Jumpsuit
   description: A maroon jumpsuit.
   category: Uniform
   cost: 2
@@ -275,7 +245,6 @@
 
 - type: loadout
   id: LoadoutUniformJumpskirtColorMaroon
-  name: Maroon Jumpskirt
   description: A maroon jumpskirt.
   category: Uniform
   cost: 2
@@ -284,7 +253,6 @@
 
 - type: loadout
   id: LoadoutUniformJumpsuitColorRainbow
-  name: Rainbow Jumpsuit
   description: A rainbow jumpsuit.
   category: Uniform
   cost: 2
@@ -293,7 +261,6 @@
 
 - type: loadout
   id: LoadoutUniformJumpskirtColorRainbow
-  name: Rainbow Jumpskirt
   description: A rainbow jumpskirt.
   category: Uniform
   cost: 2
