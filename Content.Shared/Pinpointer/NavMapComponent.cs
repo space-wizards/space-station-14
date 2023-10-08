@@ -43,17 +43,11 @@ public sealed class NavMapChunkPowerCables
     /// <summary>
     /// Bitmask for tiles, 1 for occupied and 0 for empty.
     /// </summary>
-    public Dictionary<CableType, int> CableData = new Dictionary<CableType, int>
-    {
-        [CableType.HighVoltage] = 0,
-        [CableType.MediumVoltage] = 0,
-        [CableType.Apc] = 0,
-    };
-
-    public int Terminals = 0;
+    public Dictionary<CableType, int> CableData;
 
     public NavMapChunkPowerCables(Vector2i origin)
     {
         Origin = origin;
+        CableData = new Dictionary<CableType, int>();
     }
 }

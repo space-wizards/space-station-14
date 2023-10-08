@@ -26,14 +26,13 @@ namespace Content.Client.Pinpointer.UI;
 public sealed class NavMapControl : MapGridControl
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
-    private SharedTransformSystem _transform;
 
     public EntityUid? MapUid;
 
     public Dictionary<EntityCoordinates, (bool Visible, Color Color)> TrackedCoordinates = new();
     public Dictionary<EntityCoordinates, (bool Visible, Color Color, Texture? Texture)> TrackedEntities = new();
-    public Dictionary<Vector2i, List<ChunkedLine>> CableGrid = default!;
-    public Dictionary<Vector2i, List<ChunkedLine>> FocusGrid = default!;
+    public Dictionary<Vector2i, List<ChunkedLine>> PowerCableNetwork = default!;
+    public Dictionary<Vector2i, List<ChunkedLine>>? FocusCableNetwork;
     public Dictionary<Vector2i, List<ChunkedLine>> TileGrid = default!;
     public Dictionary<CableType, bool> ShowCables = new Dictionary<CableType, bool>
     {
@@ -60,9 +59,6 @@ public sealed class NavMapControl : MapGridControl
 
     private List<CableData> _unfocusCableData = new List<CableData>()
     {
-        //new CableData(CableType.HighVoltage, new Color(190,122,0)),
-        //new CableData(CableType.MediumVoltage, new Color(135,135,0), new Vector2(-0.2f, -0.2f)),
-        //new CableData(CableType.Apc, new Color(30,115,30), new Vector2(0.2f, 0.2f)),
         new CableData(CableType.HighVoltage, new Color(82,52,0)),
         new CableData(CableType.MediumVoltage, new Color(80,80,0), new Vector2(-0.2f, -0.2f)),
         new CableData(CableType.Apc, new Color(20,76,20), new Vector2(0.2f, 0.2f)),
@@ -90,8 +86,6 @@ public sealed class NavMapControl : MapGridControl
     public NavMapControl() : base(8f, 128f, 48f)
     {
         IoCManager.InjectDependencies(this);
-
-        _transform = _entManager.System<SharedTransformSystem>();
         var cache = IoCManager.Resolve<IResourceCache>();
         _font = new VectorFont(cache.GetResource<FontResource>("/EngineFonts/NotoSans/NotoSans-Regular.ttf"), 16);
 
@@ -390,9 +384,9 @@ public sealed class NavMapControl : MapGridControl
             }
         }
 
-        if (CableGrid != null && CableGrid.Any())
+        if (PowerCableNetwork != null && PowerCableNetwork.Any())
         {
-            foreach ((var chunk, var chunkedLines) in CableGrid)
+            foreach ((var chunk, var chunkedLines) in PowerCableNetwork)
             {
                 var offsetChunk = new Vector2(chunk.X, chunk.Y) * SharedNavMapSystem.ChunkSize;
 
@@ -431,9 +425,9 @@ public sealed class NavMapControl : MapGridControl
             }
         }
 
-        if (FocusGrid != null && FocusGrid.Any())
+        if (FocusCableNetwork != null && FocusCableNetwork.Any())
         {
-            foreach ((var chunk, var chunkedLines) in FocusGrid)
+            foreach ((var chunk, var chunkedLines) in FocusCableNetwork)
             {
                 var offsetChunk = new Vector2(chunk.X, chunk.Y) * SharedNavMapSystem.ChunkSize;
 

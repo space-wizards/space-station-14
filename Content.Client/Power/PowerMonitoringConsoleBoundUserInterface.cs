@@ -7,10 +7,7 @@ public sealed class PowerMonitoringConsoleBoundUserInterface : BoundUserInterfac
     [ViewVariables]
     private PowerMonitoringWindow? _menu;
 
-    public PowerMonitoringConsoleBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
-    {
-
-    }
+    public PowerMonitoringConsoleBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey) { }
 
     protected override void Open()
     {
@@ -42,16 +39,16 @@ public sealed class PowerMonitoringConsoleBoundUserInterface : BoundUserInterfac
             castState.TotalLoads,
             castState.AllSources,
             castState.AllLoads,
-            castState.SubSources,
-            castState.SubLoads,
+            castState.FocusSources,
+            castState.FocusLoads,
             castState.PowerCableChunks,
-            castState.FocusChunks,
+            castState.FocusCableChunks,
             xform?.Coordinates);
     }
 
     public void RequestPowerMonitoringData(NetEntity? netEntity)
     {
-        SendMessage(new RequestPowerMonitoringDataMessage(netEntity));
+        SendMessage(new RequestPowerMonitoringUpdateMessage(netEntity));
     }
 
     protected override void Dispose(bool disposing)

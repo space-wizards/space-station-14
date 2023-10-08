@@ -1,40 +1,37 @@
-using Content.Shared.Power;
+using Content.Server.NodeContainer.Nodes;
+using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NodeContainer;
 using Content.Server.Power.Components;
+using Content.Server.Power.NodeGroups;
+using Content.Shared.Pinpointer;
+using Content.Shared.Power;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
-using Content.Server.Pinpointer;
-using Content.Shared.Pinpointer;
-using Robust.Shared.Map.Components;
-using Content.Server.NodeContainer.Nodes;
-using Content.Server.NodeContainer.NodeGroups;
-using Content.Server.NodeContainer.EntitySystems;
 using Robust.Server.GameStates;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Players;
-using Content.Server.Power.NodeGroups;
 using System.Linq;
 using Robust.Shared.Map;
-using Content.Server.Power.Nodes;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Content.Server.Power.EntitySystems;
 
 [UsedImplicitly]
-internal sealed class PowerMonitoringConsoleSystem : EntitySystem
+internal sealed partial class PowerMonitoringConsoleSystem : EntitySystem
 {
-    [Dependency] private readonly EntityManager _entityManager = default!;
     [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
     [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
     [Dependency] private readonly SharedMapSystem _sharedMapSystem = default!;
 
+    private List<EntityUid> _trackedDevices = new();
     private float _updateTimer = 1.0f;
     private const float UpdateTime = 1.0f;
-    private List<EntityUid> trackedEntities = new();
 
     public override void Initialize()
     {
         base.Initialize();
 
-        SubscribeLocalEvent<PowerMonitoringConsoleComponent, RequestPowerMonitoringDataMessage>(OnDataRequestReceived);
+        SubscribeLocalEvent<PowerMonitoringConsoleComponent, RequestPowerMonitoringUpdateMessage>(OnUpdateRequestReceived);
         SubscribeLocalEvent<ExpandPvsEvent>(OnExpandPvsEvent);
     }
 
@@ -46,27 +43,29 @@ internal sealed class PowerMonitoringConsoleSystem : EntitySystem
         {
             _updateTimer -= UpdateTime;
 
-            trackedEntities.Clear();
+            // On update, update our list of anchored power monitoring devices
+            _trackedDevices.Clear();
 
             var query = AllEntityQuery<PowerMonitoringDeviceComponent, TransformComponent>();
-            while (query.MoveNext(out var uid, out var component, out var xform))
+            while (query.MoveNext(out var ent, out var _, out var xform))
             {
                 if (xform.Anchored)
-                {
-                    trackedEntities.Add(uid);
-                }
+                    _trackedDevices.Add(ent);
             }
         }
     }
 
+    // Sends the list of tracked power monitoring devices to all player sessions with one or more power monitoring consoles open
+    // This expansion of PVS is needed so that the sprites for these device are available to the the player UI
+    // Out-of-range devices will be automatically removed from the player PVS when the UI closes
     private void OnExpandPvsEvent(ref ExpandPvsEvent ev)
     {
-        var powerMonitoringConsoleQuery = AllEntityQuery<PowerMonitoringConsoleComponent>();
-        while (powerMonitoringConsoleQuery.MoveNext(out var uid, out var component))
+        var query = AllEntityQuery<PowerMonitoringConsoleComponent>();
+        while (query.MoveNext(out var uid, out var _))
         {
             if (_userInterfaceSystem.SessionHasOpenUi(uid, PowerMonitoringConsoleUiKey.Key, ev.Session))
             {
-                foreach (var ent in trackedEntities)
+                foreach (var ent in _trackedDevices)
                     ev.Entities.Add(ent);
 
                 break;
@@ -74,157 +73,128 @@ internal sealed class PowerMonitoringConsoleSystem : EntitySystem
         }
     }
 
-    private void OnDataRequestReceived(EntityUid uid, PowerMonitoringConsoleComponent component, RequestPowerMonitoringDataMessage args)
+    private void OnUpdateRequestReceived(EntityUid uid, PowerMonitoringConsoleComponent component, RequestPowerMonitoringUpdateMessage args)
     {
-        UpdateUIState(uid, component, args.NetEntity, args.Session);
+        UpdateUIState(uid, component, GetEntity(args.FocusDevice), args.Session);
     }
 
-    public void UpdateUIState(EntityUid target, PowerMonitoringConsoleComponent powerMonitoring, NetEntity? netEntity, ICommonSession session)
+    public void UpdateUIState(EntityUid uid, PowerMonitoringConsoleComponent powerMonitoring, EntityUid? focus, ICommonSession session)
     {
-        if (!_userInterfaceSystem.TryGetUi(target, PowerMonitoringConsoleUiKey.Key, out var bui))
+        if (!_userInterfaceSystem.TryGetUi(uid, PowerMonitoringConsoleUiKey.Key, out var bui))
             return;
 
-        var consoleXform = _entityManager.GetComponent<TransformComponent>(target);
+        var consoleXform = Transform(uid);
+
         if (consoleXform?.GridUid == null)
             return;
 
-        MapGridComponent? mapGrid = null;
-        if (!Resolve(consoleXform.GridUid.Value, ref mapGrid))
+        var gridUid = consoleXform.GridUid.Value;
+
+        if (!TryComp<MapGridComponent>(gridUid, out var mapGrid))
             return;
 
+        // Data to be send to the client
         var totalSources = 0f;
         var totalLoads = 0f;
-        var sources = new List<PowerMonitoringConsoleEntry>();
-        var loads = new List<PowerMonitoringConsoleEntry>();
+        var allSources = new List<PowerMonitoringConsoleEntry>();
+        var allLoads = new List<PowerMonitoringConsoleEntry>();
+        var sourcesForFocus = new List<PowerMonitoringConsoleEntry>();
+        var loadsForFocus = new List<PowerMonitoringConsoleEntry>();
+        var cableNetwork = GetPowerCableNetworkBitMask(gridUid, mapGrid);
+        var focusNetwork = new Dictionary<Vector2i, NavMapChunkPowerCables>();
 
-        foreach (var ent in trackedEntities)
+        foreach (var ent in _trackedDevices)
         {
-            var metaData = MetaData(ent);
-            var prototype = metaData.EntityPrototype?.ID ?? "";
-            var xform = Transform(ent);
+            // Generate a new console entry
+            var powerValue = 0f;
 
-            if (TryComp<PowerSupplierComponent>(ent, out var powerSupplier))
+            if (!TryMakeConsoleEntry(ent, out var entry))
+                continue;
+
+            var device = Comp<PowerMonitoringDeviceComponent>(ent);
+
+            // Generators
+            if (device.Group == PowerMonitoringConsoleGroup.Generator)
             {
-                var entry = new PowerMonitoringConsoleEntry
-                    (_entityManager.GetNetEntity(ent),
-                    GetNetCoordinates(xform.Coordinates),
-                    metaData.EntityName,
-                    prototype,
-                    powerSupplier.MaxSupply,
-                    true);
+                if (TryComp<PowerSupplierComponent>(ent, out var powerSupplier))
+                    entry.PowerValue = powerSupplier.MaxSupply;
 
-                sources.Add(entry);
-                totalSources += powerSupplier.MaxSupply;
+                else if (TryComp<BatteryDischargerComponent>(ent, out var batteryDischarger) &&
+                    TryComp(ent, out PowerNetworkBatteryComponent? battery))
+                    entry.PowerValue = battery.NetworkBattery.CurrentSupply;
+
+                allSources.Add(entry);
+                totalSources += powerValue;
             }
 
-            else if (TryComp<BatteryDischargerComponent>(ent, out var batteryDischarger))
+            // SMES / substation / APC
+            else if (device.Group == PowerMonitoringConsoleGroup.SMES ||
+                device.Group == PowerMonitoringConsoleGroup.Substation ||
+                device.Group == PowerMonitoringConsoleGroup.APC)
             {
-                if (TryComp<NodeContainerComponent>(ent, out var nodeContainer) && nodeContainer.Nodes.Count == 1)
-                {
-                    if (!TryComp(batteryDischarger.Owner, out PowerNetworkBatteryComponent? batteryComp))
-                        continue;
+                if (TryComp<PowerNetworkBatteryComponent>(ent, out var battery))
+                    entry.PowerValue = battery.NetworkBattery.CurrentReceiving;
 
-                    var entry = new PowerMonitoringConsoleEntry
-                        (_entityManager.GetNetEntity(ent),
-                        GetNetCoordinates(xform.Coordinates),
-                        metaData.EntityName,
-                        prototype,
-                        batteryComp.NetworkBattery.CurrentSupply,
-                        true);
-
-                    sources.Add(entry);
-                    totalSources += batteryComp.NetworkBattery.CurrentSupply;
-                }
-
-                else if (TryComp<PowerNetworkBatteryComponent>(ent, out var networkBattery))
-                {
-                    var entry = new PowerMonitoringConsoleEntry
-                        (_entityManager.GetNetEntity(ent),
-                        GetNetCoordinates(xform.Coordinates),
-                        metaData.EntityName,
-                        prototype,
-                        networkBattery.NetworkBattery.CurrentReceiving,
-                        true);
-
-                    loads.Add(entry);
-                    totalLoads += networkBattery.NetworkBattery.CurrentReceiving;
-                }
+                allLoads.Add(entry);
+                totalLoads += powerValue;
             }
 
-            else if (TryComp<PowerNetworkBatteryComponent>(ent, out var networkBattery))
+            // Power consumers
+            else if (device.Group == PowerMonitoringConsoleGroup.Consumer)
             {
-                var entry = new PowerMonitoringConsoleEntry
-                    (_entityManager.GetNetEntity(ent),
-                    GetNetCoordinates(xform.Coordinates),
-                    metaData.EntityName,
-                    prototype,
-                    networkBattery.NetworkBattery.CurrentReceiving,
-                    true);
+                if (TryComp<PowerConsumerComponent>(ent, out var consumer))
+                    entry.PowerValue = consumer.ReceivedPower;
 
-                loads.Add(entry);
-                totalLoads += networkBattery.NetworkBattery.CurrentReceiving;
+                allLoads.Add(entry);
+                totalLoads += powerValue;
             }
         }
 
-        var _sources = new List<PowerMonitoringConsoleEntry>();
-        var _loads = new List<PowerMonitoringConsoleEntry>();
-        var _output = new Dictionary<Vector2i, NavMapChunkPowerCables>();
-
-        if (netEntity != null)
+        // Get necessary data on the currently selected device on the power monitoring console (if applicable)
+        if (focus != null)
         {
-            var uid = _entityManager.GetEntity(netEntity);
-
-            if (uid != null &&
-                _entityManager.TryGetComponent<NodeContainerComponent>(uid, out var nodeContainer) &&
-                _entityManager.TryGetComponent<PowerMonitoringDeviceComponent>(uid, out var powerMonitoringDevice))
+            if (TryComp<NodeContainerComponent>(focus, out var nodeContainer) &&
+                TryComp<PowerMonitoringDeviceComponent>(focus, out var device))
             {
-                //Logger.Debug("Get data for: " + uid);
-                List<Node> reachableSources = new List<Node>();
-                List<Node> reachableLoads = new List<Node>();
+                List<Node> reachableSourceNodes = new List<Node>();
+                List<Node> reachableLoadNodes = new List<Node>();
 
-                var xform = Transform(uid.Value);
-                if (nodeContainer.Nodes.TryGetValue(powerMonitoringDevice.SourceNode, out var sourceNode))
+                if (nodeContainer.Nodes.TryGetValue(device.SourceNode, out var sourceNode))
                 {
-                    GetTotalSourcesForNode(uid.Value, sourceNode, out _sources);
-                    reachableSources = FloodFillNode(sourceNode);
+                    GetSourcesForNode(focus.Value, sourceNode, out sourcesForFocus);
+                    reachableSourceNodes = FloodFillNode(sourceNode);
                 }
 
-                if (nodeContainer.Nodes.TryGetValue(powerMonitoringDevice.LoadNode, out var loadNode))
+                if (nodeContainer.Nodes.TryGetValue(device.LoadNode, out var loadNode))
                 {
-                    GetTotalLoadsForNode(uid.Value, loadNode, out _loads);
-                    reachableLoads = FloodFillNode(loadNode);
+                    GetLoadsForNode(focus.Value, loadNode, out loadsForFocus);
+                    reachableLoadNodes = FloodFillNode(loadNode);
                 }
 
-                var reachableNodes = reachableSources.Concat(reachableLoads).ToList();
-
-                _output = GetSpecificPowerCables(mapGrid, reachableNodes);
-                //Logger.Debug("reachables: " + reachableNodes.Count);
-                //Logger.Debug("no. sources: " + _sources.Count);
-                //Logger.Debug("no. loads: " + _loads.Count);
+                var reachableNodes = reachableSourceNodes.Concat(reachableLoadNodes).ToList();
+                focusNetwork = GetPowerCableNetworkBitMask(gridUid, mapGrid, reachableNodes);
             }
         }
 
-        // Sort
-        //loads.Sort(CompareLoadOrSources);
-        //sources.Sort(CompareLoadOrSources);
+        // Sort found devices alphabetically (not by power usage; otherwise their position on the UI will shift)
+        allSources.Sort(AlphabeticalSort);
+        allLoads.Sort(AlphabeticalSort);
 
-        // Get power cable data
-        var powerCableChunks = GetPowerCableChunks(mapGrid);
-
-        // Actually set state
+        // Set the UI state
         _userInterfaceSystem.SetUiState(bui,
             new PowerMonitoringConsoleBoundInterfaceState
                 (totalSources,
                 totalLoads,
-                sources.ToArray(),
-                loads.ToArray(),
-                _sources.ToArray(),
-                _loads.ToArray(),
-                powerCableChunks,
-                _output));
+                allSources.ToArray(),
+                allLoads.ToArray(),
+                sourcesForFocus.ToArray(),
+                loadsForFocus.ToArray(),
+                cableNetwork,
+                focusNetwork),
+            session);
     }
 
-    private double GetTotalSourcesForNode(EntityUid uid, Node node, out List<PowerMonitoringConsoleEntry> sources)
+    private double GetSourcesForNode(EntityUid uid, Node node, out List<PowerMonitoringConsoleEntry> sources)
     {
         var totalSources = 0.0d;
         sources = new List<PowerMonitoringConsoleEntry>();
@@ -234,32 +204,41 @@ internal sealed class PowerMonitoringConsoleSystem : EntitySystem
 
         foreach (PowerSupplierComponent powerSupplier in netQ.Suppliers)
         {
-            if (uid == powerSupplier.Owner)
+            var ent = powerSupplier.Owner;
+
+            if (uid == ent)
                 continue;
 
             var supply = powerSupplier.Enabled ? powerSupplier.MaxSupply : 0f;
 
-            sources.Add(LoadOrSource(powerSupplier, supply, false));
+            if (TryMakeConsoleEntry(ent, out var entry, supply))
+                sources.Add(entry);
+
             totalSources += supply;
         }
 
         foreach (var batteryDischarger in netQ.Dischargers)
         {
-            if (uid == batteryDischarger.Owner)
+            var ent = batteryDischarger.Owner;
+
+            if (uid == ent)
                 continue;
 
-            if (!TryComp(batteryDischarger.Owner, out PowerNetworkBatteryComponent? batteryComp))
+            if (!TryComp(ent, out PowerNetworkBatteryComponent? battery))
                 continue;
 
-            var rate = batteryComp.NetworkBattery.CurrentSupply;
-            sources.Add(LoadOrSource(batteryDischarger, rate, true));
+            var rate = battery.NetworkBattery.CurrentSupply;
+
+            if (TryMakeConsoleEntry(ent, out var entry, rate))
+                sources.Add(entry);
+
             totalSources += rate;
         }
 
         return totalSources;
     }
 
-    private double GetTotalLoadsForNode(EntityUid uid, Node node, out List<PowerMonitoringConsoleEntry> loads)
+    private double GetLoadsForNode(EntityUid uid, Node node, out List<PowerMonitoringConsoleEntry> loads)
     {
         var totalLoads = 0.0d;
         loads = new List<PowerMonitoringConsoleEntry>();
@@ -269,158 +248,56 @@ internal sealed class PowerMonitoringConsoleSystem : EntitySystem
 
         foreach (PowerConsumerComponent powerConsumer in netQ.Consumers)
         {
-            if (uid == powerConsumer.Owner)
+            var ent = powerConsumer.Owner;
+
+            if (uid == ent)
                 continue;
 
-            if (!powerConsumer.ShowInMonitor)
-                continue;
+            if (TryMakeConsoleEntry(ent, out var entry, powerConsumer.DrawRate))
+                loads.Add(entry);
 
-            loads.Add(LoadOrSource(powerConsumer, powerConsumer.DrawRate, false));
             totalLoads += powerConsumer.DrawRate;
         }
 
         foreach (var batteryCharger in netQ.Chargers)
         {
-            if (uid == batteryCharger.Owner)
+            var ent = batteryCharger.Owner;
+
+            if (uid == ent)
                 continue;
 
-            if (!TryComp(batteryCharger.Owner, out PowerNetworkBatteryComponent? batteryComp))
+            if (!TryComp(ent, out PowerNetworkBatteryComponent? batteryComp))
                 continue;
 
             var rate = batteryComp.NetworkBattery.CurrentReceiving;
-            loads.Add(LoadOrSource(batteryCharger, rate, true));
+
+            if (TryMakeConsoleEntry(ent, out var entry, rate))
+                loads.Add(entry);
+
             totalLoads += rate;
         }
 
         return totalLoads;
     }
 
-    private PowerMonitoringConsoleEntry LoadOrSource(Component component, double rate, bool isBattery)
+    private bool TryMakeConsoleEntry(EntityUid uid, [NotNullWhen(true)] out PowerMonitoringConsoleEntry? entry, double powerValue = 0d)
     {
-        var metaData = MetaData(component.Owner);
-        var xform = Transform(component.Owner);
-        var coordinates = _entityManager.GetNetCoordinates(xform.Coordinates);
-        var netEntity = _entityManager.GetNetEntity(component.Owner);
-        var id = metaData.EntityPrototype != null ? metaData.EntityPrototype.ID : "none";
+        entry = null;
 
-        return new PowerMonitoringConsoleEntry(netEntity, coordinates, metaData.EntityName, id, rate, isBattery);
+        if (!TryComp<PowerMonitoringDeviceComponent>(uid, out var device))
+            return false;
+
+        var metaData = MetaData(uid);
+        var xform = Transform(uid);
+        NetCoordinates? coordinates = device.LocationOnMonitor ? GetNetCoordinates(xform.Coordinates) : null;
+        var netEntity = GetNetEntity(uid);
+
+        entry = new PowerMonitoringConsoleEntry(netEntity, coordinates, device.Group, metaData.EntityName, powerValue);
+        return true;
     }
 
-    private Dictionary<Vector2i, NavMapChunkPowerCables> GetPowerCableChunks(MapGridComponent grid)
+    private int AlphabeticalSort(PowerMonitoringConsoleEntry x, PowerMonitoringConsoleEntry y)
     {
-        var chunks = new Dictionary<Vector2i, NavMapChunkPowerCables>();
-        var tiles = grid.GetAllTilesEnumerator();
-
-        while (tiles.MoveNext(out var tile))
-        {
-            var gridIndices = tile.Value.GridIndices;
-            var chunkOrigin = SharedMapSystem.GetChunkIndices(gridIndices, SharedNavMapSystem.ChunkSize);
-
-            if (!chunks.TryGetValue(chunkOrigin, out var chunk))
-            {
-                chunk = new NavMapChunkPowerCables(chunkOrigin);
-                chunks[chunkOrigin] = chunk;
-            }
-
-            var relative = SharedMapSystem.GetChunkRelative(gridIndices, SharedNavMapSystem.ChunkSize);
-            var flag = SharedNavMapSystem.GetFlag(relative);
-
-            chunk.CableData[CableType.HighVoltage] &= ~flag;
-            chunk.CableData[CableType.MediumVoltage] &= ~flag;
-            chunk.CableData[CableType.Apc] &= ~flag;
-
-            var enumerator = grid.GetAnchoredEntitiesEnumerator(gridIndices);
-            while (enumerator.MoveNext(out var ent))
-            {
-                if (!TryComp<NodeContainerComponent>(ent, out var nodeContainer))
-                    continue;
-
-                if (nodeContainer.Nodes.Any(x => x.Value is CableTerminalNode))
-                {
-                    chunk.Terminals |= flag;
-                    continue;
-                }
-
-                if (!_nodeContainer.TryGetNode<Node>(nodeContainer, "power", out var node))
-                    continue;
-
-                switch (node.NodeGroupID)
-                {
-                    case NodeGroupID.HVPower: chunk.CableData[CableType.HighVoltage] |= flag; break;
-                    case NodeGroupID.MVPower: chunk.CableData[CableType.MediumVoltage] |= flag; break;
-                    case NodeGroupID.Apc: chunk.CableData[CableType.Apc] |= flag; break;
-                }
-            }
-
-            if (chunk.CableData[CableType.HighVoltage] == 0 &&
-                chunk.CableData[CableType.MediumVoltage] == 0 &&
-                chunk.CableData[CableType.Apc] == 0)
-                chunks.Remove(chunkOrigin);
-        }
-
-        return chunks;
-    }
-
-    private Dictionary<Vector2i, NavMapChunkPowerCables> GetSpecificPowerCables(MapGridComponent grid, IEnumerable<Node> list)
-    {
-        var chunks = new Dictionary<Vector2i, NavMapChunkPowerCables>();
-
-        foreach (var node in list)
-        {
-            if (node == null)
-                continue;
-
-            var xform = Transform(node.Owner);
-            var tile = _sharedMapSystem.GetTileRef(grid.Owner, grid, xform.Coordinates);
-            var chunkOrigin = SharedMapSystem.GetChunkIndices(tile.GridIndices, SharedNavMapSystem.ChunkSize);
-
-            if (!chunks.TryGetValue(chunkOrigin, out var chunk))
-            {
-                chunk = new NavMapChunkPowerCables(chunkOrigin);
-                chunks[chunkOrigin] = chunk;
-            }
-
-            var gridIndices = tile.GridIndices;
-            var relative = SharedMapSystem.GetChunkRelative(gridIndices, SharedNavMapSystem.ChunkSize);
-            var flag = SharedNavMapSystem.GetFlag(relative);
-
-            switch (node.NodeGroupID)
-            {
-                case NodeGroupID.HVPower: chunk.CableData[CableType.HighVoltage] |= flag; break;
-                case NodeGroupID.MVPower: chunk.CableData[CableType.MediumVoltage] |= flag; break;
-                case NodeGroupID.Apc: chunk.CableData[CableType.Apc] |= flag; break;
-            }
-        }
-
-        return chunks;
-    }
-
-    private List<Node> FloodFillNode(Node rootNode)
-    {
-        rootNode.FloodGen += 1;
-        var allNodes = new List<Node>();
-        var stack = new Stack<Node>();
-        stack.Push(rootNode);
-
-        while (stack.TryPop(out var node))
-        {
-            allNodes.Add(node);
-
-            foreach (var reachable in node.ReachableNodes)
-            {
-                if (reachable.FloodGen == rootNode.FloodGen)
-                    continue;
-
-                reachable.FloodGen = rootNode.FloodGen;
-                stack.Push(reachable);
-            }
-        }
-
-        return allNodes;
-    }
-
-    private int CompareLoadOrSources(PowerMonitoringConsoleEntry x, PowerMonitoringConsoleEntry y)
-    {
-        return -x.Size.CompareTo(y.Size);
+        return x.NameLocalized.CompareTo(y.NameLocalized);
     }
 }

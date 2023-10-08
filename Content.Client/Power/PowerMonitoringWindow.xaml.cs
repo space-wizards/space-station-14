@@ -1,5 +1,3 @@
-using System.Linq;
-using System.Numerics;
 using Content.Client.Pinpointer.UI;
 using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Controls;
@@ -15,40 +13,34 @@ using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+using System.Linq;
+using System.Numerics;
 
 namespace Content.Client.Power;
 
 [GenerateTypedNameReferences]
 public sealed partial class PowerMonitoringWindow : FancyWindow
 {
-    private List<Control> _rowsContent = new();
     private readonly IEntityManager _entManager;
-    private EntityUid? _stationUid;
-    private EntityUid? _trackedEntity;
-    private readonly SpriteSystem _spriteSystem = default!;
-    private readonly MetaDataSystem _metaDataSystem = default!;
+    private readonly SpriteSystem _spriteSystem;
 
     private float _updateTimer = 1.0f;
     private const float UpdateTime = 1.0f;
 
-    private int nameCharLimit = 25;
-    private float? _nextScrollStart;
+    private EntityUid? _trackedEntity;
+    private float? _nextScrollValue;
 
-    public static int IconSize = 16; // XAML has a `VSeparationOverride` of 20 for each row.
     public event Action<NetEntity?>? RequestPowerMonitoringDataAction;
 
-    private List<CableData> _cableData = new List<CableData>()
+    private List<CableData> _networkColors = new List<CableData>()
     {
         new CableData(CableType.HighVoltage, Color.Orange),
         new CableData(CableType.MediumVoltage, Color.Yellow, new Vector2(-0.2f, -0.2f)),
         new CableData(CableType.Apc, Color.LimeGreen, new Vector2(0.2f, 0.2f)),
     };
 
-    private List<CableData> _unfocusCableData = new List<CableData>()
+    private List<CableData> _darkNetworkData = new List<CableData>()
     {
-        //new CableData(CableType.HighVoltage, new Color(190,122,0)),
-        //new CableData(CableType.MediumVoltage, new Color(135,135,0), new Vector2(-0.2f, -0.2f)),
-        //new CableData(CableType.Apc, new Color(30,115,30), new Vector2(0.2f, 0.2f)),
         new CableData(CableType.HighVoltage, new Color(82,52,0)),
         new CableData(CableType.MediumVoltage, new Color(80,80,0), new Vector2(-0.2f, -0.2f)),
         new CableData(CableType.Apc, new Color(20,76,20), new Vector2(0.2f, 0.2f)),
@@ -58,28 +50,14 @@ public sealed partial class PowerMonitoringWindow : FancyWindow
     {
         RobustXamlLoader.Load(this);
         _entManager = IoCManager.Resolve<IEntityManager>();
-        _stationUid = mapUid;
-        _spriteSystem = IoCManager.Resolve<IEntityManager>().System<SpriteSystem>();
-        _metaDataSystem = IoCManager.Resolve<IEntityManager>().System<MetaDataSystem>();
+        _spriteSystem = IoCManager.Resolve<SpriteSystem>();
 
+        // Get grid uid
         if (_entManager.TryGetComponent<TransformComponent>(mapUid, out var xform))
-        {
             NavMap.MapUid = xform.GridUid;
-        }
 
         else
-        {
             NavMap.Visible = false;
-            SetSize = new Vector2(775, 400);
-            MinSize = SetSize;
-        }
-
-        NavMap.ShowCables = new Dictionary<CableType, bool>
-        {
-            [CableType.HighVoltage] = true,
-            [CableType.MediumVoltage] = true,
-            [CableType.Apc] = true,
-        };
 
         // Set UI tab titles
         MasterTabContainer.SetTabTitle(0, Loc.GetString("power-monitoring-window-label-sources"));
@@ -92,6 +70,14 @@ public sealed partial class PowerMonitoringWindow : FancyWindow
         ShowMVCable.OnToggled += _ => OnShowCableToggled(ShowMVCable, CableType.MediumVoltage);
         ShowLVCable.OnToggled += _ => OnShowCableToggled(ShowLVCable, CableType.Apc);
 
+        NavMap.ShowCables = new Dictionary<CableType, bool>
+        {
+            [CableType.HighVoltage] = true,
+            [CableType.MediumVoltage] = true,
+            [CableType.Apc] = true,
+        };
+
+        // Turn off beacons (they obscure too much)
         NavMap.ShowBeacons = false;
 
         // Set power monitoring data request action
@@ -106,232 +92,145 @@ public sealed partial class PowerMonitoringWindow : FancyWindow
     public void ShowEntites
         (float totalSources,
         float totalLoads,
-        PowerMonitoringConsoleEntry[] sources,
-        PowerMonitoringConsoleEntry[] loads,
-        PowerMonitoringConsoleEntry[] _sources,
-        PowerMonitoringConsoleEntry[] _loads,
+        PowerMonitoringConsoleEntry[] allSources,
+        PowerMonitoringConsoleEntry[] allLoads,
+        PowerMonitoringConsoleEntry[] focusSources,
+        PowerMonitoringConsoleEntry[] focusLoads,
         Dictionary<Vector2i, NavMapChunkPowerCables> powerCableChunks,
-        Dictionary<Vector2i, NavMapChunkPowerCables>? focusPowerCableChunks,
+        Dictionary<Vector2i, NavMapChunkPowerCables>? focusCableChunks,
         EntityCoordinates? monitorCoords)
     {
-        ClearAllSensors();
-
-        NavMap.PowerCableChunks = powerCableChunks;
-        NavMap.FocusPowerCableChunks = focusPowerCableChunks;
-
         if (!_entManager.TryGetComponent<MapGridComponent>(NavMap.MapUid, out var grid))
             return;
 
         if (!_entManager.TryGetComponent<NavMapComponent>(NavMap.MapUid, out var navMap))
             return;
 
-        if (focusPowerCableChunks != null && focusPowerCableChunks.Any())
-        {
-            NavMap.CableGrid = DecodePowerCableChunks(powerCableChunks, _unfocusCableData, grid);
-            NavMap.FocusGrid = DecodePowerCableChunks(focusPowerCableChunks, _cableData, grid);
-        }
-        else
-        {
-            NavMap.CableGrid = DecodePowerCableChunks(powerCableChunks, _cableData, grid);
-            NavMap.FocusGrid = default!;
-        }
+        // Reset nav map values
+        NavMap.TrackedCoordinates.Clear();
+        NavMap.TrackedEntities.Clear();
+        NavMap.FocusCableNetwork = null;
 
+        // Update nav map tile grid
         NavMap.TileGrid = DecodeTileChunks(navMap.Chunks, grid);
 
-        TotalSources.Text = Loc.GetString("power-monitoring-window-value", ("value", totalSources));
-        TotalLoads.Text = Loc.GetString("power-monitoring-window-value", ("value", totalLoads));
-
-        TotalLoads.FontColorOverride = totalSources < totalLoads && !MathHelper.CloseToPercent(totalSources, totalLoads, 0.1f) ? new Color(180, 0, 0) : Color.White;
-
-        UpdateChildren(SourcesList, sources, null, _loads);
-
-        var apcList = loads.Where(x => x.IconEntityPrototypeId.Contains("APC"));
-        UpdateChildren(ApcList, apcList.ToArray(), _sources, null);
-
-        var substationList = loads.Where(x => x.IconEntityPrototypeId.Contains("Substation"));
-        UpdateChildren(SubstationList, substationList.ToArray(), _sources, _loads);
-
-        var smesList = loads.Where(x => x.IconEntityPrototypeId.Contains("SMES"));
-        UpdateChildren(SMESList, smesList.ToArray(), _sources, _loads);
-
-
-        foreach (var source in sources)
+        // Update nav map power cable networks
+        if (focusCableChunks != null && focusCableChunks.Any())
         {
-            AddTrackedEntity(_entManager.GetEntity(source.NetEntity), _entManager.GetCoordinates(source.Coordinates), source);
-
-            if ((_sources == null || !_sources.Any()) &&
-                (_loads == null || !_loads.Any()))
-                AddTrackedHighlighted(_entManager.GetEntity(source.NetEntity), _entManager.GetCoordinates(source.Coordinates), source);
+            NavMap.PowerCableNetwork = DecodePowerCableChunks(powerCableChunks, _darkNetworkData, grid);
+            NavMap.FocusCableNetwork = DecodePowerCableChunks(focusCableChunks, _networkColors, grid);
         }
 
-        foreach (var load in loads)
+        else
         {
-            AddTrackedEntity(_entManager.GetEntity(load.NetEntity), _entManager.GetCoordinates(load.Coordinates), load);
-
-            if ((_sources == null || !_sources.Any()) &&
-                (_loads == null || !_loads.Any()))
-                AddTrackedHighlighted(_entManager.GetEntity(load.NetEntity), _entManager.GetCoordinates(load.Coordinates), load);
+            NavMap.PowerCableNetwork = DecodePowerCableChunks(powerCableChunks, _networkColors, grid);
         }
 
-        foreach (var source in _sources)
+        // Draw all sources on the map
+        bool useDarkColors = focusSources.Any() || focusLoads.Any();
+
+        foreach (var source in allSources)
         {
-            AddTrackedHighlighted(_entManager.GetEntity(source.NetEntity), _entManager.GetCoordinates(source.Coordinates), source);
-
-            //SpawnEntry(source, SourcesList);
-        }
-
-        foreach (var load in _loads)
-        {
-            AddTrackedHighlighted(_entManager.GetEntity(load.NetEntity), _entManager.GetCoordinates(load.Coordinates), load);
-
-            //SpawnEntry(source, SourcesList);
-        }
-
-        // add a row for each sensor
-        /*foreach (var load in loads)
-        {
-            var entity = _entManager.GetEntity(load.NetEntity);
-            var coordinates = _entManager.GetCoordinates(load.Coordinates);
-
-            // add button with username
-            var nameButton = new PowerMonitoringButton()
-            {
-                entityUid = entity,
-                Coordinates = coordinates,
-                Text = load.NameLocalized,
-                Margin = new Thickness(5f, 5f),
-            };
-
-            if (entity == _trackedButton?.entityUid)
-                nameButton.AddStyleClass(StyleNano.StyleClassButtonColorGreen);
-
-            //SensorsTable.AddChild(nameButton);
-            //_rowsContent.Add(nameButton);
-
-            var powerLabel = new Label();
-            powerLabel.Text = load.Size.ToString();
-
-            //SensorsTable.AddChild(powerLabel);
-            //_rowsContent.Add(powerLabel);
-
-            IRsiStateLike? iconState = null;
-            if (load.IconEntityPrototypeId != null)
-                iconState = _spriteSystem.GetPrototypeIcon(load.IconEntityPrototypeId);
-            if (load.IconEntityPrototypeId == null)
+            if (source.Coordinates == null)
                 continue;
 
-            if (coordinates != null && NavMap.Visible)
-            {
-                //NavMap.TrackedEntities.TryAdd(coordinates,
-                //    (true, entity == _trackedButton?.entityUid ? StyleNano.PointGreen : Color.White, iconState?.TextureFor(Direction.South)));
+            AddTrackedEntityToNavMap(_entManager.GetEntity(source.NetEntity), _entManager.GetCoordinates(source.Coordinates.Value), source, useDarkColors);
+        }
 
-                //NavMap.TrackedCoordinates.TryAdd(coordinates,
-                //    (true, entity == _trackedButton?.entityUid ? Color.White : color));
+        foreach (var load in allLoads)
+        {
+            if (load.Coordinates == null)
+                continue;
 
-                //NavMap.TrackedEntities.TryAdd(coordinates,
-                //    (true, entity == _trackedButton?.entityUid ? Color.White : color, icon));
+            AddTrackedEntityToNavMap(_entManager.GetEntity(load.NetEntity), _entManager.GetCoordinates(load.Coordinates.Value), load, useDarkColors);
+        }
 
-                nameButton.OnButtonUp += args =>
-                {
-                    if (_trackedButton != null && _trackedButton?.Coordinates != null)
-                        NavMap.TrackedCoordinates[_trackedButton.Coordinates.Value] = (true, color);
-                    //NavMap.TrackedEntities[_trackedButton.Coordinates.Value] = (true, Color.White, iconState?.TextureFor(Direction.South));
+        foreach (var source in focusSources)
+        {
+            if (source.Coordinates == null)
+                continue;
 
-                    NavMap.TrackedCoordinates[coordinates] = (true, Color.White);
-                    //NavMap.TrackedEntities[coordinates] = (true, StyleNano.PointGreen, iconState?.TextureFor(Direction.South));
-                    NavMap.CenterToCoordinates(coordinates);
+            AddTrackedEntityToNavMap(_entManager.GetEntity(source.NetEntity), _entManager.GetCoordinates(source.Coordinates.Value), source);
+        }
 
-                    nameButton.AddStyleClass(StyleNano.StyleClassButtonColorGreen);
-                    if (_trackedButton != null)
-                    {   //Make previous button default
-                        var previousButton = SensorsTable.GetChild(_trackedButton.IndexInTable);
-                        previousButton.RemoveStyleClass(StyleNano.StyleClassButtonColorGreen);
-                    }
+        foreach (var load in focusLoads)
+        {
+            if (load.Coordinates == null)
+                continue;
 
-                    _trackedButton = nameButton;
-                    _trackedButton.IndexInTable = nameButton.GetPositionInParent();
-                };
-            }
-        }*/
+            AddTrackedEntityToNavMap(_entManager.GetEntity(load.NetEntity), _entManager.GetCoordinates(load.Coordinates.Value), load);
+        }
 
-        // Show monitor point
-        var icon1 = new SpriteSpecifier.Texture(new("/Textures/Interface/PowerMonitoring/beveled_circle.png")).Frame0();
+        // Show monitor location
+        var monitor = _spriteSystem.Frame0(new SpriteSpecifier.Texture(new(PowerMonitoringHelper.CircleIconPath)));
 
         if (monitorCoords != null)
-            NavMap.TrackedEntities.Add(monitorCoords.Value, (true, Color.Cyan, icon1));
+            NavMap.TrackedEntities.Add(monitorCoords.Value, (true, Color.Cyan, monitor));
+
+        // Update power status text
+        TotalSources.Text = Loc.GetString("power-monitoring-window-value", ("value", totalSources));
+        TotalLoads.Text = Loc.GetString("power-monitoring-window-value", ("value", totalLoads));
+        TotalLoads.FontColorOverride = totalSources < totalLoads && !MathHelper.CloseToPercent(totalSources, totalLoads, 0.1f) ? new Color(180, 0, 0) : Color.White;
+
+        // Update generator list
+        UpdatePowerMonitoringConsoleEntries(SourcesList, allSources, null, focusLoads);
+
+        // Update SMES list
+        var smesList = allLoads.Where(x => x.Group == PowerMonitoringConsoleGroup.SMES);
+        UpdatePowerMonitoringConsoleEntries(SMESList, smesList.ToArray(), focusSources, focusLoads);
+
+        // Update substation list
+        var substationList = allLoads.Where(x => x.Group == PowerMonitoringConsoleGroup.Substation);
+        UpdatePowerMonitoringConsoleEntries(SubstationList, substationList.ToArray(), focusSources, focusLoads);
+
+        // Update APC list
+        var apcList = allLoads.Where(x => x.Group == PowerMonitoringConsoleGroup.APC);
+        UpdatePowerMonitoringConsoleEntries(ApcList, apcList.ToArray(), focusSources, null);
     }
 
-    private void AddTrackedEntity(EntityUid uid, EntityCoordinates coords, PowerMonitoringConsoleEntry entry)
+    private void AddTrackedEntityToNavMap(EntityUid uid, EntityCoordinates coords, PowerMonitoringConsoleEntry entry, bool useDarkColors = false)
     {
         if (!NavMap.Visible)
             return;
 
-        var color = new Color(54, 0, 54);
-        var icon = new SpriteSpecifier.Texture(new("/Textures/Interface/PowerMonitoring/beveled_circle.png")).Frame0();
+        var color = useDarkColors ? new Color(54, 0, 54) : Color.Purple;
+        var icon = _spriteSystem.Frame0(new SpriteSpecifier.Texture(new(PowerMonitoringHelper.CircleIconPath)));
 
-        if (entry.IconEntityPrototypeId.Contains("APC"))
+        if (entry.Group == PowerMonitoringConsoleGroup.SMES)
         {
-            color = new Color(20, 76, 20);
-            icon = new SpriteSpecifier.Texture(new("/Textures/Interface/PowerMonitoring/beveled_triangle.png")).Frame0();
+            color = useDarkColors ? new Color(82, 52, 0) : Color.Orange;
+            icon = _spriteSystem.Frame0(new SpriteSpecifier.Texture(new(PowerMonitoringHelper.TriangleIconPath)));
         }
 
-        else if (entry.IconEntityPrototypeId.Contains("Substation"))
+        else if (entry.Group == PowerMonitoringConsoleGroup.Substation)
         {
-            color = new Color(80, 80, 0);
-            icon = new SpriteSpecifier.Texture(new("/Textures/Interface/PowerMonitoring/beveled_square.png")).Frame0();
+            color = useDarkColors ? new Color(80, 80, 0) : Color.Yellow;
+            icon = _spriteSystem.Frame0(new SpriteSpecifier.Texture(new(PowerMonitoringHelper.TriangleIconPath)));
         }
 
-        else if (entry.IconEntityPrototypeId.Contains("SMES"))
+        else if (entry.Group == PowerMonitoringConsoleGroup.APC)
         {
-            color = new Color(82, 52, 0);
-            icon = new SpriteSpecifier.Texture(new("/Textures/Interface/PowerMonitoring/beveled_hexagon.png")).Frame0();
+            color = useDarkColors ? new Color(20, 76, 20) : Color.LimeGreen;
+            icon = _spriteSystem.Frame0(new SpriteSpecifier.Texture(new(PowerMonitoringHelper.TriangleIconPath)));
         }
 
+        // Set to white if currently the focus
         color = uid == _trackedEntity ? Color.White : color;
+
         NavMap.TrackedEntities.TryAdd(coords, (true, color, icon));
-    }
-
-    private void AddTrackedHighlighted(EntityUid uid, EntityCoordinates coords, PowerMonitoringConsoleEntry entry)
-    {
-        if (!NavMap.Visible)
-            return;
-
-        if (NavMap.TrackedEntities.TryGetValue(coords, out var tracked))
-        {
-            tracked.Color = Color.Purple;
-
-            if (entry.IconEntityPrototypeId.Contains("APC"))
-            {
-                tracked.Color = Color.LimeGreen;
-            }
-
-            else if (entry.IconEntityPrototypeId.Contains("Substation"))
-            {
-                tracked.Color = Color.Yellow;
-            }
-
-            else if (entry.IconEntityPrototypeId.Contains("SMES"))
-            {
-                tracked.Color = Color.Orange;
-            }
-
-            tracked.Color = uid == _trackedEntity ? Color.White : tracked.Color;
-            NavMap.TrackedEntities[coords] = tracked;
-        }
     }
 
     protected override void FrameUpdate(FrameEventArgs args)
     {
-        if (_nextScrollStart != null)
+        if (_nextScrollValue != null)
         {
             var scroll = MasterTabContainer.Children.ElementAt(MasterTabContainer.CurrentTab) as ScrollContainer;
             if (scroll == null)
                 return;
 
-            scroll.SetScrollValue(new Vector2(0, _nextScrollStart.Value));
+            scroll.SetScrollValue(new Vector2(0, _nextScrollValue.Value));
 
-            Logger.Debug("applied scroll: " + _nextScrollStart);
-            _nextScrollStart = null;
+            _nextScrollValue = null;
         }
 
         _updateTimer += args.DeltaSeconds;
@@ -341,18 +240,6 @@ public sealed partial class PowerMonitoringWindow : FancyWindow
             _updateTimer -= UpdateTime;
             RequestPowerMonitoringDataAction?.Invoke(_entManager.GetNetEntity(_trackedEntity));
         }
-    }
-
-    private void ClearAllSensors()
-    {
-        foreach (var child in _rowsContent)
-        {
-            //SensorsTable.RemoveChild(child);
-        }
-
-        _rowsContent.Clear();
-        NavMap.TrackedCoordinates.Clear();
-        NavMap.TrackedEntities.Clear();
     }
 
     public void UpdateEntry(PowerMonitoringButton child, PowerMonitoringConsoleEntry entry, float offset = 38f)
@@ -417,7 +304,7 @@ public sealed partial class PowerMonitoringWindow : FancyWindow
             child.Grid.AddChild(child.Value);
         }
 
-        child.Value.Text = Loc.GetString("power-monitoring-window-value", ("value", entry.Size));
+        child.Value.Text = Loc.GetString("power-monitoring-window-value", ("value", entry.PowerValue));
         child.Value.MinWidth = 64f;
     }
 
@@ -433,7 +320,8 @@ public sealed partial class PowerMonitoringWindow : FancyWindow
 
         child.AddStyleClass(StyleNano.StyleClassButtonColorGreen);
 
-        NavMap.CenterToCoordinates(_entManager.GetCoordinates(entry.Coordinates));
+        if (entry.Coordinates != null)
+            NavMap.CenterToCoordinates(_entManager.GetCoordinates(entry.Coordinates.Value));
 
         if (_trackedEntity != null)
         {
@@ -451,21 +339,16 @@ public sealed partial class PowerMonitoringWindow : FancyWindow
         RequestPowerMonitoringDataAction?.Invoke(_entManager.GetNetEntity(_trackedEntity));
         _updateTimer = 0f;
 
-        if (entry.IconEntityPrototypeId.Contains("APC"))
+        switch (entry.Group)
         {
-            MasterTabContainer.CurrentTab = 3;
-        }
-        else if (entry.IconEntityPrototypeId.Contains("Substation"))
-        {
-            MasterTabContainer.CurrentTab = 2;
-        }
-        else if (entry.IconEntityPrototypeId.Contains("SMES"))
-        {
-            MasterTabContainer.CurrentTab = 1;
-        }
-        else
-        {
-            MasterTabContainer.CurrentTab = 0;
+            case PowerMonitoringConsoleGroup.Generator:
+                MasterTabContainer.CurrentTab = 0; break;
+            case PowerMonitoringConsoleGroup.SMES:
+                MasterTabContainer.CurrentTab = 1; break;
+            case PowerMonitoringConsoleGroup.Substation:
+                MasterTabContainer.CurrentTab = 2; break;
+            case PowerMonitoringConsoleGroup.APC:
+                MasterTabContainer.CurrentTab = 3; break;
         }
 
         var scroll = MasterTabContainer.Children.ElementAt(MasterTabContainer.CurrentTab) as ScrollContainer;
@@ -480,10 +363,10 @@ public sealed partial class PowerMonitoringWindow : FancyWindow
         if (pos == null)
             return;
 
-        _nextScrollStart = 40f * pos.GetPositionInParent();
+        _nextScrollValue = 40f * pos.GetPositionInParent();
     }
 
-    private void UpdateChildren(GridContainer list, PowerMonitoringConsoleEntry[] listVal, PowerMonitoringConsoleEntry[]? sources, PowerMonitoringConsoleEntry[]? loads)
+    private void UpdatePowerMonitoringConsoleEntries(GridContainer list, PowerMonitoringConsoleEntry[] listVal, PowerMonitoringConsoleEntry[]? sources, PowerMonitoringConsoleEntry[]? loads)
     {
         // Remove excess children
         while (list.ChildCount > listVal.Length)
@@ -627,10 +510,8 @@ public sealed partial class PowerMonitoringWindow : FancyWindow
 
             if (castChild.Symbol != null)
             {
-                if (isSource)
-                    castChild.Symbol.Texture = new SpriteSpecifier.Texture(new("/Textures/Interface/PowerMonitoring/source_arrow.png")).Frame0();
-                else
-                    castChild.Symbol.Texture = new SpriteSpecifier.Texture(new("/Textures/Interface/PowerMonitoring/load_arrow.png")).Frame0();
+                castChild.Symbol.Texture = _spriteSystem.Frame0
+                    (new SpriteSpecifier.Texture(new(isSource ? PowerMonitoringHelper.SourceIconPath : PowerMonitoringHelper.LoadIconPath)));
             }
 
             UpdateEntry(castChild.Button, listVal.ElementAt(child.GetPositionInParent()), 0f);
