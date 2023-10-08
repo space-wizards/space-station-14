@@ -12,8 +12,8 @@
 - type: entity
   parent: ClothingOuterStorageBase
   id: ClothingOuterCoatBlueCoat
-  name: blue old-fashioned coat
-  description: An outdated and worn-out piece of fashion. It still maintains some of it's charm and you almost feel an urge to smile.
+  name: blue high-fashioned coat
+  description: A premium-quality piece of fashion. Maintains high degree of it's charm and you almost feel an urge to smile. Also, comes packed with some armor!
   components:
   - type: Sprite
     sprite: Ganimed/Clothing/OuterClothing/Coats/blue_coat.rsi
@@ -30,7 +30,7 @@
 - type: entity
   parent: ClothingOuterBase
   id: ClothingOuterNightDress
-  name: red old-fashioned coat
+  name: deep blue aquilegia dress 
   description: A dress of futuristic dark neon tones and high royal court designs. Truly a dangerous mix of different times.
   components:
   - type: Sprite
