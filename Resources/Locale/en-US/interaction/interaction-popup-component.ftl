@@ -46,6 +46,7 @@ petting-failure-holo = You reach out to pet {THE($target)}, but {POSS-ADJ($targe
 petting-failure-dragon = You raise your hand, but as {THE($target)} roars, you decide you'd rather not be toasty carp food.
 petting-failure-hamster = You reach out to pet {THE($target)}, but {SUBJECT($target)} attempts to bite your finger and only your quick reflexes save you from an almost fatal injury.
 petting-failure-bear = You reach out to pet {THE($target)}, but {SUBJECT($target)} growls, making you think twice.
+petting-failure-shadow = You're trying to pet {THE($target)}, but your hand passes through the cold darkness of his body.
 
 ## Petting silicons
 
