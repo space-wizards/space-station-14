@@ -1,0 +1,99 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Made by brainfood1183 (github)",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "7oclockmoustache",
+      "directions": 4
+    },
+    {
+      "name": "abe",
+      "directions": 4
+    },
+    {
+      "name": "chaplin",
+      "directions": 4
+    },
+    {
+      "name": "chefstache",
+      "directions": 4
+    },
+    {
+      "name": "chin",
+      "directions": 4
+    },
+    {
+      "name": "curlystache",
+      "directions": 4
+    },
+    {
+      "name": "frenchdetective",
+      "directions": 4
+    },
+    {
+      "name": "fumanchu",
+      "directions": 4
+    },
+    {
+      "name": "hip",
+      "directions": 4
+    },
+    {
+      "name": "impstache",
+      "directions": 4
+    },
+    {
+      "name": "jensen",
+      "directions": 4
+    },
+    {
+      "name": "martialartist",
+      "directions": 4
+    },
+    {
+      "name": "moustache",
+      "directions": 4
+    },
+    {
+      "name": "pencilstache",
+      "directions": 4
+    },
+    {
+      "name": "shaved",
+      "directions": 4
+    },
+    {
+      "name": "smallstache",
+      "directions": 4
+    },
+    {
+      "name": "tridentstache",
+      "directions": 4
+    },
+    {
+      "name": "vandyke",
+      "directions": 4
+    },
+    {
+      "name": "volaju",
+      "directions": 4
+    },
+    {
+      "name": "walrus",
+      "directions": 4
+    },
+    {
+      "name": "watson",
+      "directions": 4
+    },
+    {
+      "name": "wise",
+      "directions": 4
+    }
+  ]
+}

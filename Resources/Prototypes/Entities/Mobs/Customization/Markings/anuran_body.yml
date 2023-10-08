@@ -1,0 +1,62 @@
+- type: marking
+  id: AnuranBodyBellyMedium
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Anuran]
+  sprites:
+    - sprite: Mobs/Customization/anuran_body.rsi
+      state: body_belly1
+
+- type: marking
+  id: AnuranBodyBellyLarge
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Anuran]
+  sprites:
+    - sprite: Mobs/Customization/anuran_body.rsi
+      state: body_belly2
+
+- type: marking
+  id: AnuranBodyBellySmall
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Anuran]
+  sprites:
+    - sprite: Mobs/Customization/anuran_body.rsi
+      state: body_belly3
+
+- type: marking
+  id: AnuranBodyBellyChest
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Anuran]
+  sprites:
+    - sprite: Mobs/Customization/anuran_body.rsi
+      state: body_belly4
+
+- type: marking
+  id: AnuranBodySwirls
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Anuran]
+  sprites:
+    - sprite: Mobs/Customization/anuran_body.rsi
+      state: body_swirls
+
+- type: marking
+  id: AnuranBodyTiger
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Anuran]
+  sprites:
+    - sprite: Mobs/Customization/anuran_body.rsi
+      state: body_tiger
+
+- type: marking
+  id: AnuranBodyBackStripe
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Anuran]
+  sprites:
+    - sprite: Mobs/Customization/anuran_body.rsi
+      state: body_back_stripe

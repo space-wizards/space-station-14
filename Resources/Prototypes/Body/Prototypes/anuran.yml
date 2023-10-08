@@ -1,0 +1,49 @@
+﻿- type: body
+  id: Anuran
+  name: "anuran"
+  root: torso
+  slots:
+    head:
+      part: HeadAnuran
+      connections:
+      - torso
+      organs:
+        brain: OrganHumanBrain
+        eyes: OrganHumanEyes
+    torso:
+      part: TorsoAnuran
+      connections:
+      - left_arm
+      - right_arm
+      - left_leg
+      - right_leg
+      organs:
+        heart: OrganHumanHeart
+        lungs: OrganHumanLungs
+        stomach: OrganHumanStomach
+        liver: OrganHumanLiver
+        kidneys: OrganHumanKidneys
+    right_arm:
+      part: RightArmAnuran
+      connections:
+      - right_hand
+    left_arm:
+      part: LeftArmAnuran
+      connections:
+      - left_hand
+    right_hand:
+      part: RightHandAnuran
+    left_hand:
+      part: LeftHandAnuran
+    right_leg:
+      part: RightLegAnuran
+      connections:
+      - right_foot
+    left_leg:
+      part: LeftLegAnuran
+      connections:
+      - left_foot
+    right_foot:
+      part: RightFootAnuran
+    left_foot:
+      part: LeftFootAnuran

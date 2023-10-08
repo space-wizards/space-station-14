@@ -1,0 +1,155 @@
+- type: species
+  id: Anuran
+  name: species-name-anuran
+  roundStart: true
+  prototype: MobAnuran
+  sprites: MobAnuranSprites
+  defaultSkinTone: "#72b751"
+  markingLimits: MobAnuranMarkingLimits
+  dollPrototype: MobAnuranDummy
+  skinColoration: Hues
+
+# The lack of a layer means that
+# this person cannot have round-start anything
+# applied to that layer. It has to instead
+# be defined as a 'custom base layer'
+# in either the mob's starting marking prototype,
+# or it has to be added in C#.
+- type: speciesBaseSprites
+  id: MobAnuranSprites
+  sprites:
+    Head: MobAnuranHead
+    FacialHair: MobAnuranAnyMarking
+    Chest: MobAnuranTorso
+    Eyes: MobAnuranEyes
+    LArm: MobAnuranLArm
+    RArm: MobAnuranRArm
+    LHand: MobAnuranLHand
+    RHand: MobAnuranRHand
+    LLeg: MobAnuranLLeg
+    RLeg: MobAnuranRLeg
+    LFoot: MobAnuranLFoot
+    RFoot: MobAnuranRFoot
+
+- type: markingPoints
+  id: MobAnuranMarkingLimits
+  onlyWhitelisted: true
+  points:
+    Hair:
+      points: 1
+      required: false
+    FacialHair:
+      points: 1
+      required: false
+    Tail: # the cat tail joke
+      points: 0
+      required: false
+    HeadTop: # the cat ear joke
+      points: 0
+      required: false
+    Chest:
+      points: 1
+      required: false
+    Legs:
+      points: 2
+      required: false
+    Arms:
+      points: 2
+      required: false
+
+- type: humanoidBaseSprite
+  id: MobAnuranEyes
+  baseSprite:
+    sprite: Mobs/Customization/eyes.rsi
+    state: anuran_eyes_s
+
+- type: humanoidBaseSprite
+  id: MobAnuranAnyMarking
+
+- type: humanoidBaseSprite
+  id: MobAnuranMarkingMatchSkin
+  markingsMatchSkin: true
+
+- type: humanoidBaseSprite
+  id: MobAnuranHead
+  baseSprite:
+    sprite: Mobs/Species/Anuran/parts.rsi
+    state: head_m
+
+- type: humanoidBaseSprite
+  id: MobAnuranHeadMale
+  baseSprite:
+    sprite: Mobs/Species/Anuran/parts.rsi
+    state: head_m
+
+- type: humanoidBaseSprite
+  id: MobAnuranHeadFemale
+  baseSprite:
+    sprite: Mobs/Species/Anuran/parts.rsi
+    state: head_f
+
+- type: humanoidBaseSprite
+  id: MobAnuranTorso
+  baseSprite:
+    sprite: Mobs/Species/Anuran/parts.rsi
+    state: torso_m
+
+- type: humanoidBaseSprite
+  id: MobAnuranTorsoMale
+  baseSprite:
+    sprite: Mobs/Species/Anuran/parts.rsi
+    state: torso_m
+
+- type: humanoidBaseSprite
+  id: MobAnuranTorsoFemale
+  baseSprite:
+    sprite: Mobs/Species/Anuran/parts.rsi
+    state: torso_f
+
+- type: humanoidBaseSprite
+  id: MobAnuranLLeg
+  baseSprite:
+    sprite: Mobs/Species/Anuran/parts.rsi
+    state: l_leg
+
+- type: humanoidBaseSprite
+  id: MobAnuranLArm
+  baseSprite:
+    sprite: Mobs/Species/Anuran/parts.rsi
+    state: l_arm
+
+- type: humanoidBaseSprite
+  id: MobAnuranLHand
+  baseSprite:
+    sprite: Mobs/Species/Anuran/parts.rsi
+    state: l_hand
+
+- type: humanoidBaseSprite
+  id: MobAnuranLFoot
+  baseSprite:
+    sprite: Mobs/Species/Anuran/parts.rsi
+    state: l_foot
+
+- type: humanoidBaseSprite
+  id: MobAnuranRLeg
+  baseSprite:
+    sprite: Mobs/Species/Anuran/parts.rsi
+    state: r_leg
+
+- type: humanoidBaseSprite
+  id: MobAnuranRArm
+  baseSprite:
+    sprite: Mobs/Species/Anuran/parts.rsi
+    state: r_arm
+
+- type: humanoidBaseSprite
+  id: MobAnuranRHand
+  baseSprite:
+    sprite: Mobs/Species/Anuran/parts.rsi
+    state: r_hand
+
+- type: humanoidBaseSprite
+  id: MobAnuranRFoot
+  baseSprite:
+    sprite: Mobs/Species/Anuran/parts.rsi
+    state: r_foot

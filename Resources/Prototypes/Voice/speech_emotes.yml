@@ -126,6 +126,30 @@
    - chittered!
 
 - type: emote
+  id: Croak
+  category: Vocal
+  chatMessages: [croaks.]
+  chatTriggers:
+   - croak
+   - croak.
+   - croak!
+   - croaks
+   - croaks.
+   - croaks!
+   - croaked
+   - croaked.
+   - croaked!
+   - ribbit
+   - ribbit.
+   - ribbit!
+   - ribbits
+   - ribbits.
+   - ribbits!
+   - ribbited
+   - ribbited.
+   - ribbited!
+
+- type: emote
   id: Squeak
   category: Vocal
   chatMessages: [squeaks.]

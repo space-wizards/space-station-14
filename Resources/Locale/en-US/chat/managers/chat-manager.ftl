@@ -110,3 +110,9 @@ chat-speech-verb-ghost-1 = complains
 chat-speech-verb-ghost-2 = breathes
 chat-speech-verb-ghost-3 = hums
 chat-speech-verb-ghost-4 = mutters
+
+chat-speech-verb-amphibian-1 = croaks
+chat-speech-verb-amphibian-2 = ribbits
+chat-speech-verb-amphibian-3 = rasps
+
+chat-speech-verb-bird-1 = chirps

@@ -1,0 +1,76 @@
+- type: entity
+  save: false
+  name: Urist McCroaks
+  parent: BaseMobSpeciesOrganic
+  id: BaseMobAnuran
+  abstract: true
+  components:
+  - type: HumanoidAppearance
+    species: Anuran
+  - type: Hunger
+    starvationDamage:
+      types:
+        Cold: 1
+  - type: Thirst
+  - type: Icon
+    sprite: Mobs/Species/Anuran/parts.rsi
+    state: full
+  - type: Body
+    prototype: Anuran
+    requiredLegs: 2
+  - type: Perishable
+  - type: Butcherable
+    butcheringType: Spike
+    spawned:
+    - id: FoodMeatLizard
+      amount: 5
+  - type: Inventory
+    templateId: diona
+    speciesId: anuran
+  - type: LizardAccent
+  - type: Speech
+    speechVerb: Anuran
+  - type: Vocal
+    sounds:
+      Male: UnisexAnuran
+      Female: UnisexAnuran
+      Unsexed: UnisexAnuran
+  - type: Damageable
+    damageContainer: Biological
+    damageModifierSet: Scale
+  - type: MeleeWeapon
+    hidden: true
+    soundHit:
+      path: /Audio/Weapons/pierce.ogg
+    angle: 30
+    animation: WeaponArcPunch
+    damage:
+      types:
+        Blunt: 5
+  - type: Temperature
+    heatDamageThreshold: 400
+    coldDamageThreshold: 285
+    currentTemperature: 310.15
+    specificHeat: 46
+    coldDamage:
+      types:
+        Cold : 0.1 #per second, scales with temperature & other constants
+    heatDamage:
+      types:
+        Heat : 0.2 #per second, scales with temperature & other constants
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 2.5
+    baseSprintSpeed : 4.3
+
+- type: entity
+  parent: BaseSpeciesDummy
+  id: MobAnuranDummy
+  noSpawn: true
+  description: A dummy anuran meant to be used in character setup.
+  components:
+  - type: Inventory
+    templateId: anuran
+  - type: HumanoidAppearance
+    species: Anuran
+
+#Ribbit

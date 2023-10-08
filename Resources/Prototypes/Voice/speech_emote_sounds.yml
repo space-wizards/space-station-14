@@ -269,6 +269,16 @@
     Squeak:
       path: /Audio/Voice/Moth/moth_squeak.ogg
 
+- type: emoteSounds
+  id: UnisexAnuran
+  params:
+    variation: 0.125
+  sounds:
+    Scream:
+      path: /Audio/Voice/Anuran/anuran_scream.ogg
+    Croak:
+      path: /Audio/Voice/Anuran/anuran_croaks.ogg
+
 # body emotes
 - type: emoteSounds
   id: GeneralBodyEmotes

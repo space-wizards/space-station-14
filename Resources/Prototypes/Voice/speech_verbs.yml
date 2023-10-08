@@ -47,6 +47,14 @@
   - chat-speech-verb-insect-1
 
 - type: speechVerb
+  id: Anuran
+  speechVerbStrings:
+  - chat-speech-verb-amphibian-1
+  - chat-speech-verb-amphibian-2
+  - chat-speech-verb-amphibian-3
+  - chat-speech-verb-bird-1
+
+- type: speechVerb
   id: Robotic
   speechVerbStrings:
   - chat-speech-verb-robotic-1

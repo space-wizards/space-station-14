@@ -1,0 +1,176 @@
+- type: marking
+  id: AnuranFacialHairAbe
+  bodyPart: FacialHair
+  markingCategory: FacialHair
+  speciesRestriction: [Anuran]
+  sprites:
+    - sprite: Mobs/Customization/anuran_facial_hair.rsi
+      state: abe
+- type: marking
+  id: AnuranFacialHairChefStache
+  bodyPart: FacialHair
+  markingCategory: FacialHair
+  speciesRestriction: [Anuran]
+  sprites:
+    - sprite: Mobs/Customization/anuran_facial_hair.rsi
+      state: chefstache
+- type: marking
+  id: AnuranFacialHairImp
+  bodyPart: FacialHair
+  markingCategory: FacialHair
+  speciesRestriction: [Anuran]
+  sprites:
+    - sprite: Mobs/Customization/anuran_facial_hair.rsi
+      state: impstache
+- type: marking
+  id: AnuranFacialHairFrench
+  bodyPart: FacialHair
+  markingCategory: FacialHair
+  speciesRestriction: [Anuran]
+  sprites:
+    - sprite: Mobs/Customization/anuran_facial_hair.rsi
+      state: frenchdetective
+- type: marking
+  id: AnuranFacialHairShaved
+  bodyPart: FacialHair
+  markingCategory: FacialHair
+  speciesRestriction: [Anuran]
+  sprites:
+    - sprite: Mobs/Customization/anuran_facial_hair.rsi
+      state: shaved
+- type: marking
+  id: anuranFacialHairTrident
+  bodyPart: FacialHair
+  markingCategory: FacialHair
+  speciesRestriction: [Anuran]
+  sprites:
+    - sprite: Mobs/Customization/anuran_facial_hair.rsi
+      state: tridentstache
+- type: marking
+  id: AnuranFacialHairHip
+  bodyPart: FacialHair
+  markingCategory: FacialHair
+  speciesRestriction: [Anuran]
+  sprites:
+    - sprite: Mobs/Customization/anuran_facial_hair.rsi
+      state: hip
+- type: marking
+  id: anuranFacialHairJensen
+  bodyPart: FacialHair
+  markingCategory: FacialHair
+  speciesRestriction: [Anuran]
+  sprites:
+    - sprite: Mobs/Customization/anuran_facial_hair.rsi
+      state: jensen
+- type: marking
+  id: AnuranFacialHairWise
+  bodyPart: FacialHair
+  markingCategory: FacialHair
+  speciesRestriction: [Anuran]
+  sprites:
+    - sprite: Mobs/Customization/anuran_facial_hair.rsi
+      state: wise
+- type: marking
+  id: AnuranFacialHairMartialartist
+  bodyPart: FacialHair
+  markingCategory: FacialHair
+  speciesRestriction: [Anuran]
+  sprites:
+    - sprite: Mobs/Customization/anuran_facial_hair.rsi
+      state: martialartist
+- type: marking
+  id: AnuranFacialHairVolaju
+  bodyPart: FacialHair
+  markingCategory: FacialHair
+  speciesRestriction: [Anuran]
+  sprites:
+    - sprite: Mobs/Customization/anuran_facial_hair.rsi
+      state: volaju
+- type: marking
+  id: AnuranFacialHair7oclockmoustache
+  bodyPart: FacialHair
+  markingCategory: FacialHair
+  speciesRestriction: [Anuran]
+  sprites:
+    - sprite: Mobs/Customization/anuran_facial_hair.rsi
+      state: 7oclockmoustache
+- type: marking
+  id: AnuranFacialHairMoustache
+  bodyPart: FacialHair
+  markingCategory: FacialHair
+  speciesRestriction: [Anuran]
+  sprites:
+    - sprite: Mobs/Customization/anuran_facial_hair.rsi
+      state: moustache
+- type: marking
+  id: AnuranFacialHairPencilstache
+  bodyPart: FacialHair
+  markingCategory: FacialHair
+  speciesRestriction: [Anuran]
+  sprites:
+    - sprite: Mobs/Customization/anuran_facial_hair.rsi
+      state: pencilstache
+- type: marking
+  id: AnuranFacialHairSmallstache
+  bodyPart: FacialHair
+  markingCategory: FacialHair
+  speciesRestriction: [Anuran]
+  sprites:
+    - sprite: Mobs/Customization/anuran_facial_hair.rsi
+      state: smallstache
+- type: marking
+  id: AnuranFacialHairWalrus
+  bodyPart: FacialHair
+  markingCategory: FacialHair
+  speciesRestriction: [Anuran]
+  sprites:
+    - sprite: Mobs/Customization/anuran_facial_hair.rsi
+      state: walrus
+- type: marking
+  id: AnuranFacialHairFumanchu
+  bodyPart: FacialHair
+  markingCategory: FacialHair
+  speciesRestriction: [Anuran]
+  sprites:
+    - sprite: Mobs/Customization/anuran_facial_hair.rsi
+      state: fumanchu
+- type: marking
+  id: AnuranFacialHairChaplin
+  bodyPart: FacialHair
+  markingCategory: FacialHair
+  speciesRestriction: [Anuran]
+  sprites:
+    - sprite: Mobs/Customization/anuran_facial_hair.rsi
+      state: chaplin
+- type: marking
+  id: AnuranFacialHairVandyke
+  bodyPart: FacialHair
+  markingCategory: FacialHair
+  speciesRestriction: [Anuran]
+  sprites:
+    - sprite: Mobs/Customization/anuran_facial_hair.rsi
+      state: vandyke
+- type: marking
+  id: AnuranFacialHairWatson
+  bodyPart: FacialHair
+  markingCategory: FacialHair
+  speciesRestriction: [Anuran]
+  sprites:
+    - sprite: Mobs/Customization/anuran_facial_hair.rsi
+      state: watson
+- type: marking
+  id: AnuranFacialHairChin
+  bodyPart: FacialHair
+  markingCategory: FacialHair
+  speciesRestriction: [Anuran]
+  sprites:
+    - sprite: Mobs/Customization/anuran_facial_hair.rsi
+      state: chin
+- type: marking
+  id: AnuranFacialHairCurly
+  bodyPart: FacialHair
+  markingCategory: FacialHair
+  speciesRestriction: [Anuran]
+  sprites:
+    - sprite: Mobs/Customization/anuran_facial_hair.rsi
+      state: curlystache

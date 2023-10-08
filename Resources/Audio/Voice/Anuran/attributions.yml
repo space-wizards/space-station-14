@@ -1,0 +1,9 @@
+- files: ["moth_scream.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from https://github.com/tgstation/tgstation/commit/31c19654e0f641166ecd80c672ea05362fd19488"
+  source: "https://github.com/tgstation/tgstation/commits/master/sound/voice/moth/scream_moth.ogg"
+
+- files: ["anuran_croaks"]
+  license: "CC0-1.0"
+  copyright: "Made by egomassive and taken from freesound.org"
+  source: "https://freesound.org/people/egomassive/sounds/536759/"
