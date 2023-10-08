@@ -20,11 +20,11 @@ public sealed class EntityCoordinatesConverter : AdminLogConverter<SerializableE
         writer.WriteNumber("x", value.X);
         writer.WriteNumber("y", value.Y);
 
-        if (value.Map != null)
+        if (value.Station != null)
         {
-            writer.WriteStartObject("map");
-            writer.WriteNumber("uid", value.Map.Value.Id);
-            writer.WriteString("name", value.MapName);
+            writer.WriteStartObject("station");
+            writer.WriteNumber("uid", value.Station.Value.Id);
+            writer.WriteString("name", value.StationName);
             writer.WriteEndObject();
         }
 
@@ -37,5 +37,5 @@ public readonly record struct SerializableEntityCoordinates(
     string? ParentName,
     float X,
     float Y,
-    EntityUid? Map,
-    string? MapName);
+    EntityUid? Station,
+    string? StationName);

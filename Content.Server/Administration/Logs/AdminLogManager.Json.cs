@@ -56,16 +56,16 @@ public sealed partial class AdminLogManager
                     AddEntity(id, rep, entities, players);
                     break;
                 case EntityCoordinates coords:
-                    _xformQuery.TryGetComponent(coords.EntityId, out var xform);
-                    _metaQuery.TryGetComponent(coords.EntityId, out var metaData);
-                    _metaQuery.TryGetComponent(xform?.MapUid, out var mapMeta);
+                    _metaQuery.TryGetComponent(coords.EntityId, out var meta);
+                    _stationQuery.TryGetComponent(coords.EntityId, out var stationMember);
+                    _metaQuery.TryGetComponent(stationMember?.Station, out var stationMeta);
                     parsed.Add(parsedKey, new SerializableEntityCoordinates(
                         coords.EntityId,
-                        metaData?.EntityName,
+                        meta?.EntityName,
                         coords.X,
                         coords.Y,
-                        xform?.MapUid,
-                        mapMeta?.EntityName));
+                        stationMember?.Station,
+                        stationMeta?.EntityName));
                     break;
                 case IPlayerSession player:
                     var name = AddPlayer(id, player, entities, players);

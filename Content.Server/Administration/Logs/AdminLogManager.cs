@@ -4,6 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Database;
 using Content.Server.GameTicking;
+using Content.Server.Station.Components;
 using Content.Shared.Administration.Logs;
 using Content.Shared.CCVar;
 using Content.Shared.Database;
@@ -82,9 +83,8 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
     // 1 when saving, 0 otherwise
     private int _savingLogs;
     private int _logsDropped;
-    private EntityQuery<TransformComponent> _xformQuery;
     private EntityQuery<MetaDataComponent> _metaQuery;
-    private EntityQuery<ActorComponent> _actorQuery;
+    private EntityQuery<StationMemberComponent> _stationQuery;
 
     public void Initialize()
     {
@@ -105,9 +105,8 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
         _configuration.OnValueChanged(CCVars.AdminLogsDropThreshold,
             value => _dropThreshold = value, true);
 
-        _xformQuery = _entityManager.GetEntityQuery<TransformComponent>();
         _metaQuery = _entityManager.GetEntityQuery<MetaDataComponent>();
-        _actorQuery = _entityManager.GetEntityQuery<ActorComponent>();
+        _stationQuery = _entityManager.GetEntityQuery<StationMemberComponent>();
 
         if (_metricsEnabled)
         {
