@@ -7,9 +7,9 @@
   components:
   - type: Transform
     anchored: true
+    noRot: false
   - type: Sprite
     snapCardinals: true
-    noRot: false
   - type: Appearance
   - type: Charger
     slotId: charger_slot
