@@ -48,8 +48,7 @@ public sealed class MindShieldSystem : EntitySystem
     /// </summary>
     public void MindShieldRemovalCheck(EntityUid implanted, EntityUid implant)
     {
-        if (HasComp<RevolutionaryComponent>(implanted) &&
-            !HasComp<HeadRevolutionaryComponent>(implanted))
+        if (HasComp<HeadRevolutionaryComponent>(implanted))
         {
             _popupSystem.PopupEntity(Loc.GetString("head-rev-break-mindshield"), implanted);
             QueueDel(implant);
