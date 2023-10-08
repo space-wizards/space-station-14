@@ -168,6 +168,14 @@
     access: [["Medical"]]
 
 - type: entity
+  parent: AirlockMedical
+  id: AirlockParamedicLocked
+  suffix: Paramedic, Locked
+  components:
+  - type: AccessReader
+    access: [["Paramedic"]]
+
+- type: entity
   parent: AirlockVirology
   id: AirlockVirologyLocked
   suffix: Virology, Locked
@@ -449,6 +457,14 @@
   components:
   - type: AccessReader
     access: [["Medical"]]
+
+- type: entity
+  parent: AirlockMedicalGlass
+  id: AirlockParamedicGlassLocked
+  suffix: Paramedic, Locked
+  components:
+  - type: AccessReader
+    access: [["Paramedic"]]
 
 - type: entity
   parent: AirlockVirologyGlass
