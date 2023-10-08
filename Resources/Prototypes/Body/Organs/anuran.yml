@@ -1,0 +1,34 @@
+- type: entity
+  id: OrganAnuranLungs
+  parent: BaseHumanOrgan
+  name: amphibian lungs
+  description: "Allows the amphibian to breathe underwater."
+  components:
+  - type: Sprite
+    sprite: Mobs/Species/Slime/organs.rsi
+    layers:
+      - state: lung-l-slime
+      - state: lung-r-slime
+  - type: Lung
+  - type: Metabolizer
+    removeEmpty: true
+    solutionOnBody: false
+    solution: "Lung"
+    metabolizerTypes: [ Anuran ]
+    groups:
+    - id: Gas
+      rateModifier: 100.0
+  - type: SolutionContainerManager
+    solutions:
+      organ:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+      Lung:
+        maxVol: 120.0
+        canReact: false
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5

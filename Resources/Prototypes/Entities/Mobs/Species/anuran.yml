@@ -25,7 +25,7 @@
     - id: FoodMeatLizard
       amount: 5
   - type: Inventory
-    templateId: diona
+    templateId: anuran
     speciesId: anuran
   - type: LizardAccent
   - type: Speech
@@ -37,11 +37,11 @@
       Unsexed: UnisexAnuran
   - type: Damageable
     damageContainer: Biological
-    damageModifierSet: Scale
+    damageModifierSet: Anuran
   - type: MeleeWeapon
     hidden: true
     soundHit:
-      path: /Audio/Weapons/pierce.ogg
+      path: /Audio/Weapons/punch.ogg
     angle: 30
     animation: WeaponArcPunch
     damage:
@@ -58,9 +58,6 @@
     heatDamage:
       types:
         Heat : 0.2 #per second, scales with temperature & other constants
-  - type: MovementSpeedModifier
-    baseWalkSpeed : 2.5
-    baseSprintSpeed : 4.3
 
 - type: entity
   parent: BaseSpeciesDummy
@@ -70,6 +67,7 @@
   components:
   - type: Inventory
     templateId: anuran
+    speciesId: anuran
   - type: HumanoidAppearance
     species: Anuran
 

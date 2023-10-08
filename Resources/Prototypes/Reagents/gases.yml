@@ -25,6 +25,10 @@
       - !type:Oxygenate
         conditions:
         - !type:OrganType
+          type: Anuran
+      - !type:Oxygenate
+        conditions:
+        - !type:OrganType
           type: Plant
       # Convert Oxygen into CO2.
       - !type:ModifyLungGas

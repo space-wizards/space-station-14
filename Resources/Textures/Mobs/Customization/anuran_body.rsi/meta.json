@@ -28,6 +28,30 @@
       "directions": 4
     },
     {
+      "name": "body_head_stripe",
+      "directions": 4
+    },
+    {
+      "name": "body_head_chin",
+      "directions": 4
+    },
+    {
+      "name": "body_head_tiger",
+      "directions": 4
+    },
+    {
+      "name": "body_arms_swirls",
+      "directions": 4
+    },
+    {
+      "name": "body_head_lips",
+      "directions": 4
+    },
+    {
+      "name": "body_legs_swirls",
+      "directions": 4
+    },
+    {
       "name": "body_back_stripe",
       "directions": 4
     },

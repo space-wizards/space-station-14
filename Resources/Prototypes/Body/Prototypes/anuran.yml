@@ -19,7 +19,7 @@
       - right_leg
       organs:
         heart: OrganHumanHeart
-        lungs: OrganHumanLungs
+        lungs: OrganAnuranLungs
         stomach: OrganHumanStomach
         liver: OrganHumanLiver
         kidneys: OrganHumanKidneys

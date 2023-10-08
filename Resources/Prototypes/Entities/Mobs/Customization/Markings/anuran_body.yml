@@ -60,3 +60,39 @@
   sprites:
     - sprite: Mobs/Customization/anuran_body.rsi
       state: body_back_stripe
+
+- type: marking
+  id: AnuranBodyHeadStripe
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [Anuran]
+  sprites:
+    - sprite: Mobs/Customization/anuran_body.rsi
+      state: body_head_stripe
+
+- type: marking
+  id: AnuranBodyHeadChin
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [Anuran]
+  sprites:
+    - sprite: Mobs/Customization/anuran_body.rsi
+      state: body_head_chin
+
+- type: marking
+  id: AnuranBodyHeadTiger
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [Anuran]
+  sprites:
+    - sprite: Mobs/Customization/anuran_body.rsi
+      state: body_head_tiger
+
+- type: marking
+  id: AnuranBodyHeadLips
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [Anuran]
+  sprites:
+    - sprite: Mobs/Customization/anuran_body.rsi
+      state: body_head_lips
