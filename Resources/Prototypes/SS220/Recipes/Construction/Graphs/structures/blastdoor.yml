@@ -1,0 +1,105 @@
+﻿- type: constructionGraph
+  id: BlastDoorG
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: frame1
+          completed:
+            - !type:SnapToGrid { }
+          steps:
+            - material: Plasteel
+              amount: 8
+              doAfter: 2
+
+
+    - node: frame1
+      entity: BlastDoorFrame
+      edges:
+        - to: frame2
+          conditions:
+            - !type:EntityAnchored
+              anchored: true
+          steps:
+            - material: Cable
+              amount: 5
+              doAfter: 2
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetPlasteel1
+              amount: 8
+            - !type:DeleteEntity {}
+          conditions:
+            - !type:EntityAnchored
+              anchored: true
+          steps:
+            - tool: Welding
+              doAfter: 2
+
+    - node: frame2
+      edges:
+        - to: frame3
+          conditions:
+            - !type:EntityAnchored
+              anchored: true
+          steps:
+            - tag: DoorElectronics
+              name: Door Electronics
+              icon:
+                sprite: "Objects/Misc/module.rsi"
+                state: "door_electronics"
+        - to: frame1
+          completed:
+            - !type:SpawnPrototype
+              prototype: CableApcStack1
+              amount: 2
+          conditions:
+            - !type:EntityAnchored
+              anchored: true
+          steps:
+            - tool: Cutting
+              doAfter: 1.5
+
+    - node: frame3
+      edges:
+        - to: frame4
+          conditions:
+            - !type:EntityAnchored
+              anchored: true
+          steps:
+            - tool: Screwing
+              doAfter: 2
+
+    - node: frame4
+      edges:
+        - to: Blastdoor
+          conditions:
+            - !type:EntityAnchored
+              anchored: true
+          steps:
+            - tool: Anchoring
+              doAfter: 2
+        - to: frame2
+          completed:
+            - !type:SpawnPrototype
+              prototype: DoorElectronics
+              amount: 1
+          conditions:
+            - !type:EntityAnchored
+              anchored: true
+          steps:
+            - tool: Screwing
+              doAfter: 2
+
+    - node: Blastdoor
+      entity: BlastDoor
+      edges:
+        - to: frame4
+          conditions:
+            - !type:DoorWelded
+              welded: true
+          steps:
+            - tool: Anchoring
+              doAfter: 2
+

@@ -1,0 +1,14 @@
+- type: construction
+  name: blast door
+  id: BlastDoor
+  graph: BlastDoorG
+  startNode: start
+  targetNode: Blastdoor
+  category: construction-category-structures
+  description: This one says 'BLAST DONGER'.
+  icon:
+    sprite: Structures/Doors/Shutters/blastdoor.rsi
+    state: assembly
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: true

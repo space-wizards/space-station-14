@@ -27,6 +27,13 @@
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: StrongMetallic
+  - type: Construction
+    graph: BlastDoorG
+    node: Blastdoor
+    containers:
+    - board
+  - type: StaticPrice
+    price: 250
 
 - type: entity
   id: BlastDoorOpen
@@ -43,3 +50,46 @@
     airBlocked: false
   - type: RadiationBlocker
     enabled: false
+
+- type: entity
+  id: BlastDoorFrame
+  parent: BaseStructureDynamic
+  name: каркас гермозатвора
+  description: Имеется надпись "ОПАСНОСТЬ ВЗРЫВА".
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Shutters/blastdoor.rsi
+    state: assembly
+  - type: InteractionOutline
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 500
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+  - type: Physics
+    bodyType: Dynamic
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.45,-0.45,0.45,0.45"
+        density: 55
+        mask:
+        - Impassable
+        - HighImpassable
+        layer:
+        - HighImpassable
+  - type: Transform
+    noRot: true
+  - type: Construction
+    graph: BlastDoorG
+    node: frame1
+    containers:
+    - board
