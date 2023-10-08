@@ -1,4 +1,6 @@
 using Robust.Shared.Audio;
+using Content.Shared.Polymorph;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Components;
 
@@ -8,6 +10,9 @@ namespace Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Components;
 [RegisterComponent]
 public sealed partial class PolyArtifactComponent : Component
 {
+    [DataField]
+    public ProtoId<PolymorphPrototype> PolymorphPrototypeName = "ArtifactMonkey";
+
     /// <summary>
     /// range of the effect.
     /// </summary>
