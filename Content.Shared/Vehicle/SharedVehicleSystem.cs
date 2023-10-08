@@ -1,6 +1,5 @@
 using System.Numerics;
 using Content.Shared.Access.Components;
-using Content.Shared.Access.Systems;
 using Content.Shared.Actions;
 using Content.Shared.Audio;
 using Content.Shared.Buckle;
@@ -35,7 +34,6 @@ public abstract partial class SharedVehicleSystem : EntitySystem
     [Dependency] private readonly SharedAmbientSoundSystem _ambientSound = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly TagSystem _tagSystem = default!;
-    [Dependency] private readonly AccessReaderSystem _access = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedHandVirtualItemSystem _virtualItemSystem = default!;
     [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
@@ -91,8 +89,8 @@ public abstract partial class SharedVehicleSystem : EntitySystem
         // This code should be purged anyway but with that being said this doesn't handle components being changed.
         if (TryComp<StrapComponent>(uid, out var strap))
         {
-            component.BaseBuckleOffset = strap.BuckleOffset;
-            strap.BuckleOffsetUnclamped = Vector2.Zero;
+            component.BaseBuckleOffset = strap.BuckleOffsetClamped;
+            strap.BuckleOffset = Vector2.Zero;
         }
 
         _modifier.RefreshMovementSpeedModifiers(uid);
@@ -301,9 +299,9 @@ public abstract partial class SharedVehicleSystem : EntitySystem
             return;
 
         // TODO: Strap should handle this but buckle E/C moment.
-        var oldOffset = strap.BuckleOffsetUnclamped;
+        var oldOffset = strap.BuckleOffset;
 
-        strap.BuckleOffsetUnclamped = xform.LocalRotation.Degrees switch
+        strap.BuckleOffset = xform.LocalRotation.Degrees switch
         {
             < 45f => new(0, component.SouthOverride),
             <= 135f => component.BaseBuckleOffset,
@@ -312,13 +310,13 @@ public abstract partial class SharedVehicleSystem : EntitySystem
             _ => new(0, component.SouthOverride)
         };
 
-        if (!oldOffset.Equals(strap.BuckleOffsetUnclamped))
+        if (!oldOffset.Equals(strap.BuckleOffset))
             Dirty(strap);
 
         foreach (var buckledEntity in strap.BuckledEntities)
         {
             var buckleXform = Transform(buckledEntity);
-            _transform.SetLocalPositionNoLerp(buckleXform, strap.BuckleOffset);
+            _transform.SetLocalPositionNoLerp(buckleXform, strap.BuckleOffsetClamped);
         }
     }
 
@@ -326,11 +324,7 @@ public abstract partial class SharedVehicleSystem : EntitySystem
     {
         if (component.Rider == null)
             return;
-        var rider = component.Rider.Value;
-
-        args.Entities.Add(rider);
-        _access.FindAccessItemsInventory(rider, out var items);
-        args.Entities.UnionWith(items);
+        args.Entities.Add(component.Rider.Value);
     }
 
     /// <summary>

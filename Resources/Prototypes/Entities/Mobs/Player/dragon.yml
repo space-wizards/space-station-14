@@ -133,6 +133,8 @@
     spawnsLeft: 2
     spawnsProto: MobCarpDragon
     spawnRiftAction: ActionSpawnRift
+  - type: GenericAntag
+    rule: Dragon
   - type: GuideHelp
     guides:
     - MinorAntagonists
@@ -144,21 +146,22 @@
   components:
   - type: GhostRole
     description: ghost-role-information-space-dragon-dungeon-description
-  # less tanky, no crit
+  - type: SlowOnDamage
+    speedModifierThresholds:
+      100: 0.7
   - type: MobThresholds
     thresholds:
       0: Alive
-      300: Dead
+      200: Dead
   # less meat spawned since it's a lot easier to kill
   - type: Butcherable
     spawned:
     - id: FoodMeatDragon
       amount: 1
-  # half damage, spread evenly
   - type: MeleeWeapon
     damage:
       groups:
-        Brute: 15
+        Brute: 12
 
 - type: entity
   id: ActionSpawnRift
