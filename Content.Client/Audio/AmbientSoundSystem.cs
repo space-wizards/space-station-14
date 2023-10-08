@@ -13,6 +13,7 @@ using Robust.Shared.Utility;
 using System.Linq;
 using System.Numerics;
 using Robust.Client.GameObjects;
+using Robust.Shared.Audio.Effects;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Player;
 
@@ -306,7 +307,6 @@ public sealed class AmbientSoundSystem : SharedAmbientSoundSystem
                     .WithMaxDistance(comp.Range);
 
                 var stream = _audio.PlayEntity(comp.Sound, Filter.Local(), uid, false, audioParams);
-
                 _playingSounds[comp] = (stream.Value.Entity, comp.Sound, key);
                 playingCount++;
 

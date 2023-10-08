@@ -4,6 +4,7 @@ using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Ninja.Components;
 using Content.Shared.Timing;
+using Robust.Shared.Audio.Systems;
 
 namespace Content.Shared.Ninja.Systems;
 
