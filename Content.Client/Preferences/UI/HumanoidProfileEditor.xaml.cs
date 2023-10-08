@@ -1,5 +1,6 @@
 using System.Linq;
 using System.Numerics;
+using System.Text;
 using Content.Client.Humanoid;
 using Content.Client.Lobby.UI;
 using Content.Client.Message;
@@ -1562,24 +1563,24 @@ namespace Content.Client.Preferences.UI
                 };
                 _checkBox.OnToggled += OnCheckBoxToggled;
 
-                var tooltip = "";
+                var tooltip = new StringBuilder();
                 // Add the loadout description to the tooltip if there is one
                 var desc = Loc.GetString($"loadout-description-{loadout.ID}") == $"loadout-description-{loadout.ID}" ? entityManager.GetComponent<MetaDataComponent>(dummyLoadoutItem).EntityDescription : Loc.GetString($"loadout-description-{loadout.ID}");
                 if (!string.IsNullOrEmpty(desc))
                 {
-                    tooltip += $"{Loc.GetString(desc)}";
+                    tooltip.Append($"{Loc.GetString(desc)}");
                     if (loadoutSystem.LoadoutWhitelistExists(loadout) || loadoutSystem.LoadoutBlacklistExists(loadout))
-                        tooltip += "\n";
+                        tooltip.AppendLine();
                 }
 
                 // Add the loadout whitelist and blacklist descriptions to the tooltip if there are any
-                tooltip += loadoutSystem.GetLoadoutWhitelistString(loadout);
-                tooltip += loadoutSystem.GetLoadoutBlacklistString(loadout);
+                tooltip.Append(loadoutSystem.GetLoadoutWhitelistString(loadout));
+                tooltip.Append(loadoutSystem.GetLoadoutBlacklistString(loadout));
 
                 // If the tooltip has any content, add it to the checkbox
-                if (!string.IsNullOrEmpty(tooltip))
+                if (!string.IsNullOrEmpty(tooltip.ToString()))
                 {
-                    _checkBox.ToolTip = tooltip;
+                    _checkBox.ToolTip = tooltip.ToString();
                     _checkBox.TooltipDelay = 0.2f;
                 }
 
