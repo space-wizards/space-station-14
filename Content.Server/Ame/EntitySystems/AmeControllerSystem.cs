@@ -73,16 +73,17 @@ public sealed class AmeControllerSystem : EntitySystem
 
         if (!controller.Injecting)
             return;
-        if (!TryGetAmeGraph(uid, out var graphId, out var graph, poly: poly))
+        if (!TryGetAmeGraph(uid, out var ameId, out var ame, poly: poly))
             return;
 
         if (TryComp<AmeFuelContainerComponent>(controller.JarSlot.ContainedEntity, out var fuelJar) && fuelJar.FuelAmount > 0)
         {
             var availableInject = Math.Min(controller.InjectionAmount, fuelJar.FuelAmount);
-            var powerOutput = group.InjectFuel(availableInject, out var overloading);
+            var powerOutput = _ameSystem.InjectFuel(ameId, availableInject, out var overloading, ame);
+            fuelJar.FuelAmount -= availableInject;
+
             if (TryComp<PowerSupplierComponent>(uid, out var powerOutlet))
                 powerOutlet.MaxSupply = powerOutput;
-            fuelJar.FuelAmount -= availableInject;
 
             if (availableInject > 0)
                 _audioSystem.PlayPvs(controller.InjectSound, uid, AudioParams.Default.WithVolume(overloading ? 10f : 0f));
@@ -94,13 +95,13 @@ public sealed class AmeControllerSystem : EntitySystem
             SetInjecting(uid, false, null, controller);
         }
 
-        controller.Stability = _ameSystem.GetTotalStability(graphId, graph);
+        controller.Stability = _ameSystem.GetTotalStability(ameId, ame);
 
-        group.UpdateCoreVisuals();
+        _ameSystem.UpdateVisuals(ameId, ame);
         UpdateDisplay(uid, controller.Stability, controller);
 
         if (controller.Stability <= 0)
-            _ameSystem.ExplodeCores(graphId, graph);
+            _ameSystem.ExplodeCores(ameId, ame);
     }
 
     public void UpdateUi(EntityUid uid, AmeControllerComponent? controller = null)
