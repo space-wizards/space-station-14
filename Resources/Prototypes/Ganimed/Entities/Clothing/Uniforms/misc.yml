@@ -30,3 +30,12 @@
     sprite: Ganimed/Clothing/Uniforms/nightdress.rsi
   - type: Clothing
     sprite: Ganimed/Clothing/Uniforms/nightdress.rsi
+
+- type: entity
+  parent: ClothingUniformJumpskirtCapFormalDress
+  id: ClothingUniformJumpskirtCapFormalDressAlter
+  components:
+  - type: Sprite
+    sprite: Ganimed/Clothing/Uniforms/capformaldress.rsi
+  - type: Clothing
+    sprite: Ganimed/Clothing/Uniforms/capformaldress.rsi
