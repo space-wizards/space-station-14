@@ -61,6 +61,7 @@ namespace Content.Client.Preferences.UI
         private readonly IConfigurationManager _configurationManager;
         private readonly MarkingManager _markingManager;
         private readonly JobRequirementsManager _requirements;
+        private readonly LoadoutSystem _loadoutSystem;
 
         private LineEdit _ageEdit => CAgeEdit;
         private LineEdit _nameEdit => CNameEdit;
@@ -120,6 +121,7 @@ namespace Content.Client.Preferences.UI
             _preferencesManager = preferencesManager;
             _configurationManager = configurationManager;
             _markingManager = IoCManager.Resolve<MarkingManager>();
+            _loadoutSystem = IoCManager.Resolve<LoadoutSystem>();
 
             #region Left
 
@@ -518,7 +520,7 @@ namespace Content.Client.Preferences.UI
                 // Fill categories
                 foreach (var loadout in loadouts.OrderBy(l => !l.Exclusive))
                 {
-                    var selector = new LoadoutPreferenceSelector(loadout);
+                    var selector = new LoadoutPreferenceSelector(loadout, _prototypeManager, _entMan, _loadoutSystem);
 
                     // Look for an existing loadout category
                     BoxContainer? match = null;
@@ -1533,21 +1535,17 @@ namespace Content.Client.Preferences.UI
 
             public event Action<bool>? PreferenceChanged;
 
-            public LoadoutPreferenceSelector(LoadoutPrototype loadout)
+            public LoadoutPreferenceSelector(LoadoutPrototype loadout, IPrototypeManager prototypeManager, IEntityManager entityManager, LoadoutSystem loadoutSystem)
             {
                 Loadout = loadout;
 
-                // Dependencies
-                var entMan = IoCManager.Resolve<IEntityManager>();
-                var loadoutSystem = EntitySystem.Get<LoadoutSystem>();
-
                 // Does the loadout item entity exist?
-                var exists = IoCManager.Resolve<IPrototypeManager>().TryIndex<EntityPrototype>(loadout.Item!, out _);
+                var exists = prototypeManager.TryIndex<EntityPrototype>(loadout.Item!, out _);
                 // Spawn an Error entity if it doesn't exist, instead of crashing the client
-                var dummyLoadoutItem = entMan.SpawnEntity(exists ? loadout.Item : "Error", MapCoordinates.Nullspace);
+                var dummyLoadoutItem = entityManager.SpawnEntity(exists ? loadout.Item : "Error", MapCoordinates.Nullspace);
 
                 // Get the sprite component of the dummy entity and create a sprite view for it
-                var sprite = entMan.GetComponent<SpriteComponent>(dummyLoadoutItem);
+                var sprite = entityManager.GetComponent<SpriteComponent>(dummyLoadoutItem);
                 var previewLoadout = new SpriteView
                 {
                     Sprite = sprite,
