@@ -7,7 +7,8 @@
   exclusive: true
   jobWhitelist:
     - Clown
-  item: ClothingUniformJumpsuitJesterAlt
+  items:
+    - ClothingUniformJumpsuitJesterAlt
 
 - type: loadout
   id: LoadoutServiceClownShoesJester
@@ -18,7 +19,8 @@
   exclusive: true
   jobWhitelist:
     - Clown
-  item: ClothingShoesJester
+  items:
+    - ClothingShoesJester
 
 - type: loadout
   id: LoadoutServiceClownHeadJesterHatAlt
@@ -29,7 +31,8 @@
   exclusive: true
   jobWhitelist:
     - Clown
-  item: ClothingHeadHatJesterAlt
+  items:
+    - ClothingHeadHatJesterAlt
 
 - type: loadout
   id: LoadoutServiceBartenderUniformPurple
@@ -40,7 +43,8 @@
   exclusive: true
   jobWhitelist:
     - Bartender
-  item: ClothingUniformJumpsuitBartenderPurple
+  items:
+    - ClothingUniformJumpsuitBartenderPurple
 
 - type: loadout
   id: LoadoutServiceBotanistUniformOveralls
@@ -51,7 +55,8 @@
   exclusive: true
   jobWhitelist:
     - Botanist
-  item: ClothingUniformOveralls
+  items:
+    - ClothingUniformOveralls
 
 - type: loadout
   id: LoadoutServiceLawyerUniformBlueSuit
@@ -62,7 +67,8 @@
   exclusive: true
   jobWhitelist:
     - Lawyer
-  item: ClothingUniformJumpsuitLawyerBlue
+  items:
+    - ClothingUniformJumpsuitLawyerBlue
 
 - type: loadout
   id: LoadoutServiceLawyerUniformBlueSkirt
@@ -73,7 +79,8 @@
   exclusive: true
   jobWhitelist:
     - Lawyer
-  item: ClothingUniformJumpskirtLawyerBlue
+  items:
+    - ClothingUniformJumpskirtLawyerBlue
 
 - type: loadout
   id: LoadoutServiceLawyerUniformRedSuit
@@ -84,7 +91,8 @@
   exclusive: true
   jobWhitelist:
     - Lawyer
-  item: ClothingUniformJumpsuitLawyerRed
+  items:
+    - ClothingUniformJumpsuitLawyerRed
 
 - type: loadout
   id: LoadoutServiceLawyerUniformRedSkirt
@@ -95,7 +103,8 @@
   exclusive: true
   jobWhitelist:
     - Lawyer
-  item: ClothingUniformJumpskirtLawyerRed
+  items:
+    - ClothingUniformJumpskirtLawyerRed
 
 - type: loadout
   id: LoadoutServiceLawyerUniformPurpleSuit
@@ -106,7 +115,8 @@
   exclusive: true
   jobWhitelist:
     - Lawyer
-  item: ClothingUniformJumpsuitLawyerPurple
+  items:
+    - ClothingUniformJumpsuitLawyerPurple
 
 - type: loadout
   id: LoadoutServiceLawyerUniformPurpleSkirt
@@ -117,7 +127,8 @@
   exclusive: true
   jobWhitelist:
     - Lawyer
-  item: ClothingUniformJumpskirtLawyerPurple
+  items:
+    - ClothingUniformJumpskirtLawyerPurple
 
 - type: loadout
   id: LoadoutServiceLawyerUniformGoodSuit
@@ -128,7 +139,8 @@
   exclusive: true
   jobWhitelist:
     - Lawyer
-  item: ClothingUniformJumpsuitLawyerGood
+  items:
+    - ClothingUniformJumpsuitLawyerGood
 
 - type: loadout
   id: LoadoutServiceLawyerUniformGoodSkirt
@@ -139,7 +151,8 @@
   exclusive: true
   jobWhitelist:
     - Lawyer
-  item: ClothingUniformJumpskirtLawyerGood
+  items:
+    - ClothingUniformJumpskirtLawyerGood
 
 - type: loadout
   id: LoadoutServiceReporterUniformJournalist
@@ -150,7 +163,8 @@
   exclusive: true
   jobWhitelist:
     - Reporter
-  item: ClothingUniformJumpsuitJournalist
+  items:
+    - ClothingUniformJumpsuitJournalist
 
 - type: loadout
   id: LoadoutServiceReporterUniformDetectivesuit
@@ -161,7 +175,8 @@
   exclusive: true
   jobWhitelist:
     - Reporter
-  item: ClothingUniformJumpsuitDetective
+  items:
+    - ClothingUniformJumpsuitDetective
 
 - type: loadout
   id: LoadoutServiceReporterUniformDetectiveskirt
@@ -172,4 +187,5 @@
   exclusive: true
   jobWhitelist:
     - Reporter
-  item: ClothingUniformJumpskirtDetective
+  items:
+    - ClothingUniformJumpskirtDetective

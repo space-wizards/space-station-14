@@ -7,7 +7,8 @@
   exclusive: true
   jobWhitelist:
     - ChiefEngineer
-  item: ClothingNeckMantleCE
+  items:
+    - ClothingNeckMantleCE
 
 - type: loadout
   id: LoadoutCommandCENeckCloak
@@ -18,7 +19,8 @@
   exclusive: true
   jobWhitelist:
     - ChiefEngineer
-  item: ClothingNeckCloakCe
+  items:
+    - ClothingNeckCloakCe
 
 - type: loadout
   id: LoadoutCommandCEOuterWinter
@@ -28,4 +30,5 @@
   cost: 2
   jobWhitelist:
     - ChiefEngineer
-  item: ClothingOuterWinterCE
+  items:
+    - ClothingOuterWinterCE

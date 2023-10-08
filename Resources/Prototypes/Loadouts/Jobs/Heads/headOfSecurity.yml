@@ -7,7 +7,8 @@
   exclusive: true
   jobWhitelist:
     - HeadOfSecurity
-  item: ClothingNeckMantleHOS
+  items:
+    - ClothingNeckMantleHOS
 
 - type: loadout
   id: LoadoutCommandHOSNeckCloak
@@ -18,7 +19,8 @@
   exclusive: true
   jobWhitelist:
     - HeadOfSecurity
-  item: ClothingNeckCloakHos
+  items:
+    - ClothingNeckCloakHos
 
 - type: loadout
   id: LoadoutCommandHOSJumpsuitAlt
@@ -29,7 +31,8 @@
   exclusive: true
   jobWhitelist:
     - HeadOfSecurity
-  item: ClothingUniformJumpsuitHoSAlt
+  items:
+    - ClothingUniformJumpsuitHoSAlt
 
 - type: loadout
   id: LoadoutCommandHOSJumpsuitBlue
@@ -40,7 +43,8 @@
   exclusive: true
   jobWhitelist:
     - HeadOfSecurity
-  item: ClothingUniformJumpsuitHoSBlue
+  items:
+    - ClothingUniformJumpsuitHoSBlue
 
 - type: loadout
   id: LoadoutCommandHOSJumpsuitGrey
@@ -51,7 +55,8 @@
   exclusive: true
   jobWhitelist:
     - HeadOfSecurity
-  item: ClothingUniformJumpsuitHoSGrey
+  items:
+    - ClothingUniformJumpsuitHoSGrey
 
 - type: loadout
   id: LoadoutCommandHOSJumpsuitParade
@@ -62,7 +67,8 @@
   exclusive: true
   jobWhitelist:
     - HeadOfSecurity
-  item: ClothingUniformJumpsuitHoSParadeMale
+  items:
+    - ClothingUniformJumpsuitHoSParadeMale
 
 - type: loadout
   id: LoadoutCommandHOSJumpsuitFormal
@@ -73,7 +79,8 @@
   exclusive: true
   jobWhitelist:
     - HeadOfSecurity
-  item: ClothingUniformJumpsuitHosFormal
+  items:
+    - ClothingUniformJumpsuitHosFormal
 
 - type: loadout
   id: LoadoutCommandHOSJumpskirtAlt
@@ -84,7 +91,8 @@
   exclusive: true
   jobWhitelist:
     - HeadOfSecurity
-  item: ClothingUniformJumpskirtHoSAlt
+  items:
+    - ClothingUniformJumpskirtHoSAlt
 
 - type: loadout
   id: LoadoutCommandHOSJumpskirtParade
@@ -95,7 +103,8 @@
   exclusive: true
   jobWhitelist:
     - HeadOfSecurity
-  item: ClothingUniformJumpskirtHoSParadeMale
+  items:
+    - ClothingUniformJumpskirtHoSParadeMale
 
 - type: loadout
   id: LoadoutCommandHOSJumpskirtFormal
@@ -106,7 +115,8 @@
   exclusive: true
   jobWhitelist:
     - HeadOfSecurity
-  item: ClothingUniformJumpskirtHosFormal
+  items:
+    - ClothingUniformJumpskirtHosFormal
 
 - type: loadout
   id: LoadoutCommandHOSOuterWinter
@@ -116,7 +126,8 @@
   cost: 2
   jobWhitelist:
     - HeadOfSecurity
-  item: ClothingOuterWinterHoS
+  items:
+    - ClothingOuterWinterHoS
 
 - type: loadout
   id: LoadoutCommandHOSOuterTrench
@@ -126,7 +137,8 @@
   cost: 2
   jobWhitelist:
     - HeadOfSecurity
-  item: ClothingOuterCoatHoSTrench
+  items:
+    - ClothingOuterCoatHoSTrench
 
 - type: loadout
   id: LoadoutCommandHOSHatBeret
@@ -136,7 +148,8 @@
   cost: 1
   jobWhitelist:
     - HeadOfSecurity
-  item: ClothingHeadHatBeretHoS
+  items:
+    - ClothingHeadHatBeretHoS
 
 - type: loadout
   id: LoadoutCommandHOSHatHoshat
@@ -146,4 +159,5 @@
   cost: 1
   jobWhitelist:
     - HeadOfSecurity
-  item: ClothingHeadHatHoshat
+  items:
+    - ClothingHeadHatHoshat

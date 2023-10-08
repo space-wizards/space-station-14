@@ -7,7 +7,8 @@
   exclusive: true
   jobWhitelist:
     - ResearchDirector
-  item: ClothingNeckMantleRD
+  items:
+    - ClothingNeckMantleRD
 
 - type: loadout
   id: LoadoutCommandRDNeckCloak
@@ -18,7 +19,8 @@
   exclusive: true
   jobWhitelist:
     - ResearchDirector
-  item: ClothingNeckCloakRd
+  items:
+    - ClothingNeckCloakRd
 
 - type: loadout
   id: LoadoutCommandRDOuterWinter
@@ -28,4 +30,5 @@
   cost: 2
   jobWhitelist:
     - ResearchDirector
-  item: ClothingOuterWinterRD
+  items:
+    - ClothingOuterWinterRD

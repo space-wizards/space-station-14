@@ -4,7 +4,8 @@
   description: Gentlemen.
   category: Accessories
   cost: 2
-  item: ClothingHeadHatBeaverHat
+  items:
+    - ClothingHeadHatBeaverHat
 
 - type: loadout
   id: LoadoutHeadTophat
@@ -12,7 +13,8 @@
   description: A stylish black tophat.
   category: Accessories
   cost: 2
-  item: ClothingHeadHatTophat
+  items:
+    - ClothingHeadHatTophat
 
 - type: loadout
   id: LoadoutHeadHatBluesoft
@@ -20,7 +22,8 @@
   description: A cap.
   category: Accessories
   cost: 1
-  item: ClothingHeadHatBluesoft
+  items:
+    - ClothingHeadHatBluesoft
 
 - type: loadout
   id: LoadoutHeadHatBluesoftFlipped
@@ -28,7 +31,8 @@
   description: A cap.
   category: Accessories
   cost: 1
-  item: ClothingHeadHatBluesoftFlipped
+  items:
+    - ClothingHeadHatBluesoftFlipped
 
 - type: loadout
   id: LoadoutHeadHatCorpsoft
@@ -36,7 +40,8 @@
   description: A cap.
   category: Accessories
   cost: 1
-  item: ClothingHeadHatCorpsoft
+  items:
+    - ClothingHeadHatCorpsoft
 
 - type: loadout
   id: LoadoutHeadHatCorpsoftFlipped
@@ -44,7 +49,8 @@
   description: A cap.
   category: Accessories
   cost: 1
-  item: ClothingHeadHatCorpsoftFlipped
+  items:
+    - ClothingHeadHatCorpsoftFlipped
 
 - type: loadout
   id: LoadoutHeadHatGreensoft
@@ -52,7 +58,8 @@
   description: A cap.
   category: Accessories
   cost: 1
-  item: ClothingHeadHatGreensoft
+  items:
+    - ClothingHeadHatGreensoft
 
 - type: loadout
   id: LoadoutHeadHatGreensoftFlipped
@@ -60,7 +67,8 @@
   description: A cap.
   category: Accessories
   cost: 1
-  item: ClothingHeadHatGreensoftFlipped
+  items:
+    - ClothingHeadHatGreensoftFlipped
 
 - type: loadout
   id: LoadoutHeadHatGreysoft
@@ -68,7 +76,8 @@
   description: A cap.
   category: Accessories
   cost: 1
-  item: ClothingHeadHatGreysoft
+  items:
+    - ClothingHeadHatGreysoft
 
 - type: loadout
   id: LoadoutHeadHatGreysoftFlipped
@@ -76,7 +85,8 @@
   description: A cap.
   category: Accessories
   cost: 1
-  item: ClothingHeadHatGreysoftFlipped
+  items:
+    - ClothingHeadHatGreysoftFlipped
 
 - type: loadout
   id: LoadoutHeadHatOrangesoft
@@ -84,7 +94,8 @@
   description: A cap.
   category: Accessories
   cost: 1
-  item: ClothingHeadHatOrangesoft
+  items:
+    - ClothingHeadHatOrangesoft
 
 - type: loadout
   id: LoadoutHeadHatOrangesoftFlipped
@@ -92,7 +103,8 @@
   description: A cap.
   category: Accessories
   cost: 1
-  item: ClothingHeadHatOrangesoftFlipped
+  items:
+    - ClothingHeadHatOrangesoftFlipped
 
 - type: loadout
   id: LoadoutHeadHatPurplesoft
@@ -100,7 +112,8 @@
   description: A cap.
   category: Accessories
   cost: 1
-  item: ClothingHeadHatPurplesoft
+  items:
+    - ClothingHeadHatPurplesoft
 
 - type: loadout
   id: LoadoutHeadHatPurplesoftFlipped
@@ -108,7 +121,8 @@
   description: A cap.
   category: Accessories
   cost: 1
-  item: ClothingHeadHatPurplesoftFlipped
+  items:
+    - ClothingHeadHatPurplesoftFlipped
 
 - type: loadout
   id: LoadoutHeadHatRedsoft
@@ -116,7 +130,8 @@
   description: A cap.
   category: Accessories
   cost: 1
-  item: ClothingHeadHatRedsoft
+  items:
+    - ClothingHeadHatRedsoft
 
 - type: loadout
   id: LoadoutHeadHatRedsoftFlipped
@@ -124,7 +139,8 @@
   description: A cap.
   category: Accessories
   cost: 1
-  item: ClothingHeadHatRedsoftFlipped
+  items:
+    - ClothingHeadHatRedsoftFlipped
 
 - type: loadout
   id: LoadoutHeadHatYellowsoft
@@ -132,7 +148,8 @@
   description: A cap.
   category: Accessories
   cost: 1
-  item: ClothingHeadHatYellowsoft
+  items:
+    - ClothingHeadHatYellowsoft
 
 - type: loadout
   id: LoadoutHeadHatYellowsoftFlipped
@@ -140,4 +157,5 @@
   description: A cap.
   category: Accessories
   cost: 1
-  item: ClothingHeadHatYellowsoftFlipped
+  items:
+    - ClothingHeadHatYellowsoftFlipped

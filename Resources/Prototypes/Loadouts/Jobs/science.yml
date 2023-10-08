@@ -9,7 +9,8 @@
     - Scientist
     - ResearchAssistant
     - ResearchDirector
-  item: ClothingOuterCoatRnd
+  items:
+    - ClothingOuterCoatRnd
 
 - type: loadout
   id: LoadoutScienceOuterLabcoat
@@ -21,7 +22,8 @@
   jobWhitelist:
     - Scientist
     - ResearchAssistant
-  item: ClothingOuterCoatLab
+  items:
+    - ClothingOuterCoatLab
 
 - type: loadout
   id: LoadoutScienceOuterLabcoatSeniorResearcher
@@ -32,7 +34,8 @@
   exclusive: true
   jobWhitelist:
     - SeniorResearcher
-  item: ClothingOuterCoatLabSeniorResearcher
+  items:
+    - ClothingOuterCoatLabSeniorResearcher
 
 - type: loadout
   id: LoadoutScienceHatBeret
@@ -44,4 +47,5 @@
   jobWhitelist:
     - Scientist
     - ResearchAssistant
-  item: ClothingHeadHatBeretRND
+  items:
+    - ClothingHeadHatBeretRND

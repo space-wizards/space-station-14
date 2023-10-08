@@ -4,7 +4,8 @@
   description: Cool guys always have one.
   category: Items
   cost: 1
-  item: Cigarette
+  items:
+    - Cigarette
 
 - type: loadout
   id: LoadoutItemCigsGreen
@@ -12,7 +13,8 @@
   description: A pack a day keeps the doctor well paid!
   category: Items
   cost: 2
-  item: CigPackGreen
+  items:
+    - CigPackGreen
 
 - type: loadout
   id: LoadoutItemCigsRed
@@ -20,7 +22,8 @@
   description: A pack a day keeps the doctor well paid!
   category: Items
   cost: 2
-  item: CigPackRed
+  items:
+    - CigPackRed
 
 - type: loadout
   id: LoadoutItemCigsBlue
@@ -28,7 +31,8 @@
   description: A pack a day keeps the doctor well paid!
   category: Items
   cost: 2
-  item: CigPackBlue
+  items:
+    - CigPackBlue
 
 - type: loadout
   id: LoadoutItemCigsBlack
@@ -36,7 +40,8 @@
   description: A pack a day keeps the doctor well paid!
   category: Items
   cost: 2
-  item: CigPackBlack
+  items:
+    - CigPackBlack
 
 - type: loadout
   id: LoadoutItemPAI
@@ -44,7 +49,8 @@
   description: A little flakey on booting up, but a more loyal friend you won't find.
   category: Items
   cost: 3
-  item: PersonalAI
+  items:
+    - PersonalAI
 
 - type: loadout
   id: LoadoutItemLighter
@@ -52,7 +58,8 @@
   description: A basic lighter.
   category: Items
   cost: 2
-  item: Lighter
+  items:
+    - Lighter
 
 - type: loadout
   id: LoadoutItemLighterCheap
@@ -60,7 +67,8 @@
   description: A very basic lighter.
   category: Items
   cost: 1
-  item: CheapLighter
+  items:
+    - CheapLighter
 
 - type: loadout
   id: LoadoutItemMatches
@@ -68,7 +76,8 @@
   description: A box of matches.
   category: Items
   cost: 1
-  item: Matchbox
+  items:
+    - Matchbox
 
 - type: loadout
   id: LoadoutItemPlushieSharkBlue
@@ -76,7 +85,8 @@
   description: Dive into battle with your very own aquatic ally, the Blue Shark Plushie! It's more cuddly than fierce, but don't underestimate its ability to strike fear into the hearts of your enemies… or at least make them laugh as they're devoured by cuteness overload.
   category: Items
   cost: 2
-  item: PlushieSharkBlue
+  items:
+    - PlushieSharkBlue
 
 - type: loadout
   id: LoadoutItemPlushieSharkPink
@@ -84,7 +94,8 @@
   description: Unleash the power of pink with the Pink Shark Plushie! This rosy-hued predator might not have real teeth, but its sheer adorableness is enough to take a bite out of anyone's resolve. Watch as foes melt away in the face of its cottony charm.
   category: Items
   cost: 2
-  item: PlushieSharkPink
+  items:
+    - PlushieSharkPink
 
 - type: loadout
   id: LoadoutItemPlushieSharkGrey
@@ -92,7 +103,8 @@
   description: Introducing the Grey Shark Plushie, the apex predator of snuggles! With its sleek and understated design, this plushie strikes the perfect balance between cuddle companion and imaginary ocean guardian. Beware; opponents may be mesmerized by its dorsal fin's hypnotic sway!
   category: Items
   cost: 2
-  item: PlushieSharkGrey
+  items:
+    - PlushieSharkGrey
 
 - type: loadout
   id: LoadoutItemPlushieCarp
@@ -100,4 +112,5 @@
   description: Brace for extraterrestrial antics with the Purple Space Carp Plushie! A fishy invader from the cosmic deep, this plushie brings a splash of humor to zero-gravity escapades. From hostile waters to interstellar giggles, it's a cuddly contradiction that's out of this world
   category: Items
   cost: 2
-  item: PlushieCarp
+  items:
+    - PlushieCarp

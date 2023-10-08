@@ -7,7 +7,8 @@
   exclusive: true
   jobWhitelist:
     - ChiefMedicalOfficer
-  item: ClothingNeckMantleCMO
+  items:
+    - ClothingNeckMantleCMO
 
 - type: loadout
   id: LoadoutCommandCMONeckCloak
@@ -18,7 +19,8 @@
   exclusive: true
   jobWhitelist:
     - ChiefMedicalOfficer
-  item: ClothingCloakCmo
+  items:
+    - ClothingCloakCmo
 
 - type: loadout
   id: LoadoutCommandCMOOuterWinter
@@ -28,7 +30,8 @@
   cost: 2
   jobWhitelist:
     - ChiefMedicalOfficer
-  item: ClothingOuterWinterCMO
+  items:
+    - ClothingOuterWinterCMO
 
 - type: loadout
   id: LoadoutCommandCMOOuterLab
@@ -38,7 +41,8 @@
   cost: 1
   jobWhitelist:
     - ChiefMedicalOfficer
-  item: ClothingOuterCoatLabCmo
+  items:
+    - ClothingOuterCoatLabCmo
 
 - type: loadout
   id: LoadoutCommandCMOHatBeret
@@ -48,4 +52,5 @@
   cost: 1
   jobWhitelist:
     - ChiefMedicalOfficer
-  item: ClothingHeadHatBeretCmo
+  items:
+    - ClothingHeadHatBeretCmo

@@ -4,7 +4,8 @@
   description: Keep your neck warm and stylish.
   category: Accessories
   cost: 1
-  item: ClothingNeckScarfStripedRed
+  items:
+    - ClothingNeckScarfStripedRed
 
 - type: loadout
   id: LoadoutNeckScarfStripedBlue
@@ -12,7 +13,8 @@
   description: Keep your neck warm and stylish.
   category: Accessories
   cost: 1
-  item: ClothingNeckScarfStripedBlue
+  items:
+    - ClothingNeckScarfStripedBlue
 
 - type: loadout
   id: LoadoutNeckScarfStripedGreen
@@ -20,7 +22,8 @@
   description: Keep your neck warm and stylish.
   category: Accessories
   cost: 1
-  item: ClothingNeckScarfStripedGreen
+  items:
+    - ClothingNeckScarfStripedGreen
 
 - type: loadout
   id: LoadoutNeckScarfStripedZebra
@@ -28,4 +31,5 @@
   description: Keep your neck warm and stylish.
   category: Accessories
   cost: 1
-  item: ClothingNeckScarfStripedZebra
+  items:
+    - ClothingNeckScarfStripedZebra

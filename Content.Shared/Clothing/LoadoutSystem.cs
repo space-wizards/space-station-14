@@ -63,39 +63,41 @@ public sealed class LoadoutSystem : EntitySystem
                 loadoutProto.SpeciesBlacklist != null && loadoutProto.SpeciesBlacklist.Contains(profile.Species))
                 continue;
 
-            // Spawn the loadout item
-            var spawned = EntityManager.SpawnEntity(loadoutProto.Item, EntityManager.GetComponent<TransformComponent>(uid).Coordinates);
+            // Spawn the loadout items
+            var spawned = EntityManager.SpawnEntities(EntityManager.GetComponent<TransformComponent>(uid).Coordinates.ToMap(EntityManager), loadoutProto.Items!);
 
-
-            if (EntityManager.TryGetComponent<ClothingComponent>(spawned, out var clothingComp) &&
-                _inventory.TryGetSlots(uid, out var slotDefinitions))
+            foreach (var item in spawned)
             {
-                var deleted = false;
-                foreach (var curSlot in slotDefinitions)
+                if (EntityManager.TryGetComponent<ClothingComponent>(item, out var clothingComp) &&
+                    _inventory.TryGetSlots(uid, out var slotDefinitions))
                 {
-                    // If the loadout can't equip here or we've already deleted an item from this slot, skip it
-                    if (!clothingComp.Slots.HasFlag(curSlot.SlotFlags) || deleted)
-                        continue;
-
-                    slot = curSlot.Name;
-
-                    // If the loadout is exclusive delete the equipped item
-                    if (loadoutProto.Exclusive)
+                    var deleted = false;
+                    foreach (var curSlot in slotDefinitions)
                     {
-                        // Get the item in the slot
-                        if (!_inventory.TryGetSlotEntity(uid, curSlot.Name, out var slotItem))
+                        // If the loadout can't equip here or we've already deleted an item from this slot, skip it
+                        if (!clothingComp.Slots.HasFlag(curSlot.SlotFlags) || deleted)
                             continue;
 
-                        EntityManager.DeleteEntity(slotItem.Value);
-                        deleted = true;
+                        slot = curSlot.Name;
+
+                        // If the loadout is exclusive delete the equipped item
+                        if (loadoutProto.Exclusive)
+                        {
+                            // Get the item in the slot
+                            if (!_inventory.TryGetSlotEntity(uid, curSlot.Name, out var slotItem))
+                                continue;
+
+                            EntityManager.DeleteEntity(slotItem.Value);
+                            deleted = true;
+                        }
                     }
                 }
+
+
+                // Equip the loadout
+                if (!_inventory.TryEquip(uid, item, slot, false, !string.IsNullOrEmpty(slot), true))
+                    failedLoadouts.Add(item);
             }
-
-
-            // Equip the loadout
-            if (!_inventory.TryEquip(uid, spawned, slot, false, !string.IsNullOrEmpty(slot), true))
-                failedLoadouts.Add(spawned);
         }
 
         // Return a list of items that couldn't be equipped so the server can handle it if it wants

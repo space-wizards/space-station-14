@@ -7,7 +7,8 @@
   exclusive: true
   jobWhitelist:
     - Captain
-  item: ClothingNeckMantleCap
+  items:
+    - ClothingNeckMantleCap
 
 - type: loadout
   id: LoadoutCommandCapNeckCloak
@@ -18,7 +19,8 @@
   exclusive: true
   jobWhitelist:
     - Captain
-  item: ClothingNeckCloakCap
+  items:
+    - ClothingNeckCloakCap
 
 - type: loadout
   id: LoadoutCommandCapNeckCloakFormal
@@ -29,7 +31,8 @@
   exclusive: true
   jobWhitelist:
     - Captain
-  item: ClothingNeckCloakCapFormal
+  items:
+    - ClothingNeckCloakCapFormal
 
 - type: loadout
   id: LoadoutCommandCapJumpsuitFormal
@@ -40,7 +43,8 @@
   exclusive: true
   jobWhitelist:
     - Captain
-  item: ClothingUniformJumpsuitCapFormal
+  items:
+    - ClothingUniformJumpsuitCapFormal
 
 - type: loadout
   id: LoadoutCommandCapJumpskirtFormal
@@ -51,7 +55,8 @@
   exclusive: true
   jobWhitelist:
     - Captain
-  item: ClothingUniformJumpskirtCapFormalDress
+  items:
+    - ClothingUniformJumpskirtCapFormalDress
 
 - type: loadout
   id: LoadoutCommandCapOuterWinter
@@ -61,7 +66,8 @@
   cost: 2
   jobWhitelist:
     - Captain
-  item: ClothingOuterWinterCap
+  items:
+    - ClothingOuterWinterCap
 
 - type: loadout
   id: LoadoutCommandCapGloves
@@ -71,7 +77,8 @@
   cost: 1
   jobWhitelist:
     - Captain
-  item: ClothingHandsGlovesCaptain
+  items:
+    - ClothingHandsGlovesCaptain
 
 - type: loadout
   id: LoadoutCommandCapHat
@@ -81,7 +88,8 @@
   cost: 1
   jobWhitelist:
     - Captain
-  item: ClothingHeadHatCaptain
+  items:
+    - ClothingHeadHatCaptain
 
 - type: loadout
   id: LoadoutCommandCapHatCapcap
@@ -91,7 +99,8 @@
   cost: 1
   jobWhitelist:
     - Captain
-  item: ClothingHeadHatCapcap
+  items:
+    - ClothingHeadHatCapcap
 
 - type: loadout
   id: LoadoutCommandCapMaskGas
@@ -101,7 +110,8 @@
   cost: 1
   jobWhitelist:
     - Captain
-  item: ClothingMaskGasCaptain
+  items:
+    - ClothingMaskGasCaptain
 
 - type: loadout
   id: LoadoutCommandCapItemDrinkFlask
@@ -111,4 +121,5 @@
   cost: 1
   jobWhitelist:
     - Captain
-  item: DrinkFlask
+  items:
+    - DrinkFlask

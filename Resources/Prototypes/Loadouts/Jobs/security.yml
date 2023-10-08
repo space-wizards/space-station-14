@@ -9,7 +9,8 @@
     - SecurityOfficer
     - SecurityCadet
     - Warden
-  item: ClothingUniformJumpsuitSecGrey
+  items:
+    - ClothingUniformJumpsuitSecGrey
 
 - type: loadout
   id: LoadoutSecurityOuterArmorBasic
@@ -21,7 +22,8 @@
   jobWhitelist:
     - SecurityOfficer
     - SeniorOfficer
-  item: ClothingOuterArmorBasic
+  items:
+    - ClothingOuterArmorBasic
 
 - type: loadout
   id: LoadoutSecurityHeadHelmetBasic
@@ -33,7 +35,8 @@
   jobWhitelist:
     - SecurityOfficer
     - SeniorOfficer
-  item: ClothingHeadHelmetBasic
+  items:
+    - ClothingHeadHelmetBasic
 
 - type: loadout
   id: LoadoutSecurityMaskGasSwat
@@ -47,7 +50,8 @@
     - SecurityCadet
     - Warden
     - HeadOfSecurity
-  item: ClothingMaskGasSwat
+  items:
+    - ClothingMaskGasSwat
 
 - type: loadout
   id: LoadoutSecurityEyesGlasses
@@ -62,7 +66,8 @@
     - SeniorOfficer
     - Warden
     - HeadOfSecurity
-  item: ClothingEyesGlassesSecurity
+  items:
+    - ClothingEyesGlassesSecurity
 
 - type: loadout
   id: LoadoutSecurityEyesHud
@@ -76,7 +81,8 @@
     - SecurityCadet
     - Warden
     - HeadOfSecurity
-  item: ClothingEyesHudSecurity
+  items:
+    - ClothingEyesHudSecurity
 
 - type: loadout
   id: LoadoutSecurityShoesBootsCombatFilled
@@ -89,7 +95,8 @@
     - SecurityOfficer
     - Warden
     - HeadOfSecurity
-  item: ClothingShoesBootsCombatFilled
+  items:
+    - ClothingShoesBootsCombatFilled
 
 - type: loadout
   id: LoadoutSecurityShoesJackboots
@@ -103,4 +110,5 @@
     - SecurityCadet
     - Warden
     - HeadOfSecurity
-  item: ClothingShoesBootsJack
+  items:
+    - ClothingShoesBootsJack

@@ -6,7 +6,8 @@
   category: Accessories
   cost: 1
   exclusive: true
-  item: ClothingShoesColorBlack
+  items:
+    - ClothingShoesColorBlack
 
 - type: loadout
   id: LoadoutShoesBlue
@@ -15,7 +16,8 @@
   category: Accessories
   cost: 1
   exclusive: true
-  item: ClothingShoesColorBlue
+  items:
+    - ClothingShoesColorBlue
 
 - type: loadout
   id: LoadoutShoesBrown
@@ -24,7 +26,8 @@
   category: Accessories
   cost: 1
   exclusive: true
-  item: ClothingShoesColorBrown
+  items:
+    - ClothingShoesColorBrown
 
 - type: loadout
   id: LoadoutShoesGreen
@@ -33,7 +36,8 @@
   category: Accessories
   cost: 1
   exclusive: true
-  item: ClothingShoesColorGreen
+  items:
+    - ClothingShoesColorGreen
 
 - type: loadout
   id: LoadoutShoesOrange
@@ -42,7 +46,8 @@
   category: Accessories
   cost: 1
   exclusive: true
-  item: ClothingShoesColorOrange
+  items:
+    - ClothingShoesColorOrange
 
 - type: loadout
   id: LoadoutShoesPurple
@@ -51,7 +56,8 @@
   category: Accessories
   cost: 1
   exclusive: true
-  item: ClothingShoesColorPurple
+  items:
+    - ClothingShoesColorPurple
 
 - type: loadout
   id: LoadoutShoesRed
@@ -60,7 +66,8 @@
   category: Accessories
   cost: 1
   exclusive: true
-  item: ClothingShoesColorRed
+  items:
+    - ClothingShoesColorRed
 
 - type: loadout
   id: LoadoutShoesWhite
@@ -69,7 +76,8 @@
   category: Accessories
   cost: 1
   exclusive: true
-  item: ClothingShoesColorWhite
+  items:
+    - ClothingShoesColorWhite
 
 - type: loadout
   id: LoadoutShoesYellow
@@ -78,7 +86,8 @@
   category: Accessories
   cost: 1
   exclusive: true
-  item: ClothingShoesColorYellow
+  items:
+    - ClothingShoesColorYellow
 
 
 # Miscellaneous
@@ -89,4 +98,5 @@
   category: Accessories
   cost: 1
   exclusive: true
-  item: ClothingShoeSlippersDuck
+  items:
+    - ClothingShoeSlippersDuck

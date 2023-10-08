@@ -9,7 +9,8 @@
     - MedicalDoctor
     - Paramedic
     - ChiefMedicalOfficer
-  item: ClothingHandsGlovesNitrile
+  items:
+    - ClothingHandsGlovesNitrile
 
 - type: loadout
   id: LoadoutMedicalEyesMediHUD
@@ -22,7 +23,8 @@
     - MedicalDoctor
     - Paramedic
     - ChiefMedicalOfficer
-  item: ClothingEyesHudMedical
+  items:
+    - ClothingEyesHudMedical
 
 - type: loadout
   id: LoadoutMedicalOuterLabcoat
@@ -34,7 +36,8 @@
   jobWhitelist:
     - MedicalDoctor
     - Chemist
-  item: ClothingOuterCoatLab
+  items:
+    - ClothingOuterCoatLab
 
 - type: loadout
   id: LoadoutMedicalNeckStethoscope
@@ -46,7 +49,8 @@
   jobWhitelist:
     - MedicalDoctor
     - ChiefMedicalOfficer
-  item: ClothingNeckStethoscope
+  items:
+    - ClothingNeckStethoscope
 
 - type: loadout
   id: LoadoutMedicalUniformScrubsBlue
@@ -57,7 +61,8 @@
   exclusive: true
   jobWhitelist:
     - MedicalDoctor
-  item: UniformScrubsColorBlue
+  items:
+    - UniformScrubsColorBlue
 
 - type: loadout
   id: LoadoutMedicalUniformScrubsGreen
@@ -68,7 +73,8 @@
   exclusive: true
   jobWhitelist:
     - MedicalDoctor
-  item: UniformScrubsColorGreen
+  items:
+    - UniformScrubsColorGreen
 
 - type: loadout
   id: LoadoutMedicalUniformScrubsPurple
@@ -79,7 +85,8 @@
   exclusive: true
   jobWhitelist:
     - MedicalDoctor
-  item: UniformScrubsColorPurple
+  items:
+    - UniformScrubsColorPurple
 
 - type: loadout
   id: LoadoutMedicalOuterLabcoatChem
@@ -90,7 +97,8 @@
   exclusive: true
   jobWhitelist:
     - Chemist
-  item: ClothingOuterCoatLabChem
+  items:
+    - ClothingOuterCoatLabChem
 
 - type: loadout
   id: LoadoutMedicalItemHandLabeler
@@ -100,7 +108,8 @@
   exclusive: true
   jobWhitelist:
     - Chemist
-  item: HandLabeler
+  items:
+    - HandLabeler
 
 - type: loadout
   id: LoadoutMedicalUniformParamedicJumpsuit
@@ -111,7 +120,8 @@
   exclusive: true
   jobWhitelist:
     - Paramedic
-  item: ClothingUniformJumpsuitParamedic
+  items:
+    - ClothingUniformJumpsuitParamedic
 
 - type: loadout
   id: LoadoutMedicalUniformParamedicJumpskirt
@@ -122,7 +132,8 @@
   exclusive: true
   jobWhitelist:
     - Paramedic
-  item: ClothingUniformJumpskirtParamedic
+  items:
+    - ClothingUniformJumpskirtParamedic
 
 - type: loadout
   id: LoadoutMedicalHeadNurse
@@ -133,4 +144,5 @@
   exclusive: true
   jobWhitelist:
     - MedicalDoctor
-  item: ClothingHeadNurseHat
+  items:
+    - ClothingHeadNurseHat

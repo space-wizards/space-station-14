@@ -1,5 +1,6 @@
 using Content.Shared.Whitelist;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
 namespace Content.Shared.Loadouts
 {
@@ -34,8 +35,8 @@ namespace Content.Shared.Loadouts
         /// <summary>
         ///     The item to give.
         /// </summary>
-        [DataField("item")]
-        public string? Item;
+        [DataField("items", customTypeSerializer: typeof(PrototypeIdListSerializer<EntityPrototype>))]
+        public List<string> Items = new();
 
 
         /// <summary>

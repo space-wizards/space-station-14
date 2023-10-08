@@ -121,7 +121,7 @@ namespace Content.Client.Preferences.UI
             _preferencesManager = preferencesManager;
             _configurationManager = configurationManager;
             _markingManager = IoCManager.Resolve<MarkingManager>();
-            _loadoutSystem = IoCManager.Resolve<LoadoutSystem>();
+            _loadoutSystem = EntitySystem.Get<LoadoutSystem>();
 
             #region Left
 
@@ -520,7 +520,7 @@ namespace Content.Client.Preferences.UI
                 // Fill categories
                 foreach (var loadout in loadouts.OrderBy(l => !l.Exclusive))
                 {
-                    var selector = new LoadoutPreferenceSelector(loadout, _prototypeManager, _entMan, _loadoutSystem);
+                    var selector = new LoadoutPreferenceSelector(loadout, _entMan, _loadoutSystem);
 
                     // Look for an existing loadout category
                     BoxContainer? match = null;
@@ -1535,14 +1535,12 @@ namespace Content.Client.Preferences.UI
 
             public event Action<bool>? PreferenceChanged;
 
-            public LoadoutPreferenceSelector(LoadoutPrototype loadout, IPrototypeManager prototypeManager, IEntityManager entityManager, LoadoutSystem loadoutSystem)
+            public LoadoutPreferenceSelector(LoadoutPrototype loadout, IEntityManager entityManager, LoadoutSystem loadoutSystem)
             {
                 Loadout = loadout;
 
-                // Does the loadout item entity exist?
-                var exists = prototypeManager.TryIndex<EntityPrototype>(loadout.Item!, out _);
-                // Spawn an Error entity if it doesn't exist, instead of crashing the client
-                var dummyLoadoutItem = entityManager.SpawnEntity(exists ? loadout.Item : "Error", MapCoordinates.Nullspace);
+                // Display the first item in the loadout as a preview
+                var dummyLoadoutItem = entityManager.SpawnEntity(loadout.Items.First(), MapCoordinates.Nullspace);
 
                 // Get the sprite component of the dummy entity and create a sprite view for it
                 var sprite = entityManager.GetComponent<SpriteComponent>(dummyLoadoutItem);
