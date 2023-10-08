@@ -37,6 +37,9 @@
   components:
   - type: Sprite
     state: muffin-berry
+  - type: Tag
+    tags:
+    - Fruit
 
 - type: entity
   name: cherry muffin
@@ -46,6 +49,9 @@
   components:
   - type: Sprite
     state: muffin-cherry
+  - type: Tag
+    tags:
+    - Fruit
 
 - type: entity
   name: bluecherry muffin
@@ -55,6 +61,9 @@
   components:
   - type: Sprite
     state: muffin-bluecherry
+  - type: Tag
+    tags:
+    - Fruit
 
 - type: entity
   name: honey bun #TODO honey
@@ -138,6 +147,9 @@
           Quantity: 5
         - ReagentId: Vitamin
           Quantity: 1
+  - type: Tag
+    tags:
+    - Fruit
 
 - type: entity
   name: sugar cookie
@@ -278,6 +290,7 @@
   - type: Tag
     tags:
     - Pancake
+    - Fruit
 
 - type: entity
   name: chocolate chip pancake
