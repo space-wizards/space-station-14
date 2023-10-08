@@ -1,0 +1,26 @@
+- type: entity
+  id: EffectDarknessPulse
+  noSpawn: true
+  components:
+  - type: TimedDespawn
+    lifetime: 0.78
+  - type: Sprite
+    drawdepth: Effects
+    noRot: true
+    layers:
+      - shader: unshaded
+        map: ["enum.EffectLayers.Unshaded"]
+        color: "#793a80dd"
+        sprite: Effects/emp.rsi
+        state: emp_pulse
+  - type: EffectVisuals
+  - type: PointLight
+    color: "#793a80dd"
+    radius: 3
+  - type: Tag
+    tags:
+      - HideContextMenu
+  - type: AnimationPlayer
+  - type: EmitSoundOnSpawn
+    sound: 
+      path: /Audio/Items/hiss.ogg
