@@ -24,6 +24,9 @@ namespace Content.Server.Body.Systems
 
         private void HandleMind(EntityUid newEntity, EntityUid oldEntity)
         {
+            if (TerminatingOrDeleted(newEntity) || TerminatingOrDeleted(oldEntity))
+                return;
+
             EnsureComp<MindContainerComponent>(newEntity);
             EnsureComp<MindContainerComponent>(oldEntity);
 
