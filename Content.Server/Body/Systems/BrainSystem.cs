@@ -2,7 +2,6 @@ using Content.Server.Body.Components;
 using Content.Server.Ghost.Components;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Events;
-using Content.Shared.Body.Organ;
 using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
 using Content.Shared.Movement.Components;
@@ -20,7 +19,7 @@ namespace Content.Server.Body.Systems
             base.Initialize();
 
             SubscribeLocalEvent<BrainComponent, AddedToPartInBodyEvent>((uid, _, args) => HandleMind(args.Body, uid));
-            SubscribeLocalEvent<BrainComponent, RemovedFromPartInBodyEvent>((uid, _, args) => HandleMind(args.OldBody, uid));
+            SubscribeLocalEvent<BrainComponent, RemovedFromPartInBodyEvent>((uid, _, args) => HandleMind(uid, args.OldBody));
         }
 
         private void HandleMind(EntityUid newEntity, EntityUid oldEntity)
