@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Fix crusher., type: Fix}
-  id: 4475
-  time: '2023-08-07T17:05:18.0000000+00:00'
 - author: MilenVolf
   changes:
   - {message: 'Moths now have more types of wings, antennas and many fashionable markings
@@ -2950,3 +2945,8 @@ Entries:
   - {message: Diona now move at the same speed as other species., type: Tweak}
   id: 4974
   time: '2023-10-08T21:02:46.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Updated the PDA ringtone UI to have a small delay between sets., type: Tweak}
+  id: 4975
+  time: '2023-10-08T21:25:08.0000000+00:00'
