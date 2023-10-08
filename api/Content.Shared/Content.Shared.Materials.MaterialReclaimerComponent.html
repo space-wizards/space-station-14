@@ -1,0 +1,741 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class MaterialReclaimerComponent
+   </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class MaterialReclaimerComponent
+   ">
+    <meta name="generator" content="docfx 2.56.7.0">
+    
+    <link rel="shortcut icon" href="../../favicon.ico">
+    <link rel="stylesheet" href="../../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../../styles/docfx.css">
+    <link rel="stylesheet" href="../../styles/main.css">
+    <meta property="docfx:navrel" content="../../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../../index.html">
+                <img id="logo" class="svg" src="../../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Content.Shared.Materials.MaterialReclaimerComponent">
+  
+  
+  <h1 id="Content_Shared_Materials_MaterialReclaimerComponent" data-uid="Content.Shared.Materials.MaterialReclaimerComponent" class="text-break">Class MaterialReclaimerComponent
+  </h1>
+  <div class="markdown level0 summary"><p>This is a machine that handles converting entities
+into the raw materials and chemicals that make them up.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level1"><span class="xref">MaterialReclaimerComponent</span></div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Content.Shared.Materials.html">Content.Shared.Materials</a></h6>
+  <h6><strong>Assembly</strong>: Content.Shared.dll</h6>
+  <h5 id="Content_Shared_Materials_MaterialReclaimerComponent_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public sealed class MaterialReclaimerComponent : Component</code></pre>
+  </div>
+  <h3 id="fields">Fields
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Materials_MaterialReclaimerComponent_BaseMaterialProcessRate.md&amp;value=---%0Auid%3A%20Content.Shared.Materials.MaterialReclaimerComponent.BaseMaterialProcessRate%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Materials/MaterialReclaimerComponent.cs/#L53">View Source</a>
+  </span>
+  <h4 id="Content_Shared_Materials_MaterialReclaimerComponent_BaseMaterialProcessRate" data-uid="Content.Shared.Materials.MaterialReclaimerComponent.BaseMaterialProcessRate">BaseMaterialProcessRate</h4>
+  <div class="markdown level1 summary"><p>How quickly it takes to consume X amount of materials per second.
+For example, with a rate of 50, an entity with 100 total material takes 2 seconds to process.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public float BaseMaterialProcessRate</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Materials_MaterialReclaimerComponent_Blacklist.md&amp;value=---%0Auid%3A%20Content.Shared.Materials.MaterialReclaimerComponent.Blacklist%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Materials/MaterialReclaimerComponent.cs/#L103">View Source</a>
+  </span>
+  <h4 id="Content_Shared_Materials_MaterialReclaimerComponent_Blacklist" data-uid="Content.Shared.Materials.MaterialReclaimerComponent.Blacklist">Blacklist</h4>
+  <div class="markdown level1 summary"><p>a blacklist for what entities cannot be inserted into this reclaimer</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public EntityWhitelist Blacklist</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Whitelist.EntityWhitelist.html">EntityWhitelist</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Materials_MaterialReclaimerComponent_CutOffSound.md&amp;value=---%0Auid%3A%20Content.Shared.Materials.MaterialReclaimerComponent.CutOffSound%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Materials/MaterialReclaimerComponent.cs/#L115">View Source</a>
+  </span>
+  <h4 id="Content_Shared_Materials_MaterialReclaimerComponent_CutOffSound" data-uid="Content.Shared.Materials.MaterialReclaimerComponent.CutOffSound">CutOffSound</h4>
+  <div class="markdown level1 summary"><p>whether or not we cut off the sound early when the reclaiming ends.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool CutOffSound</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Materials_MaterialReclaimerComponent_Efficiency.md&amp;value=---%0Auid%3A%20Content.Shared.Materials.MaterialReclaimerComponent.Efficiency%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Materials/MaterialReclaimerComponent.cs/#L38">View Source</a>
+  </span>
+  <h4 id="Content_Shared_Materials_MaterialReclaimerComponent_Efficiency" data-uid="Content.Shared.Materials.MaterialReclaimerComponent.Efficiency">Efficiency</h4>
+  <div class="markdown level1 summary"><p>How efficiently the materials are reclaimed.
+In practice, a multiplier per material when calculating the output of the reclaimer.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public float Efficiency</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Materials_MaterialReclaimerComponent_Enabled.md&amp;value=---%0Auid%3A%20Content.Shared.Materials.MaterialReclaimerComponent.Enabled%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Materials/MaterialReclaimerComponent.cs/#L31">View Source</a>
+  </span>
+  <h4 id="Content_Shared_Materials_MaterialReclaimerComponent_Enabled" data-uid="Content.Shared.Materials.MaterialReclaimerComponent.Enabled">Enabled</h4>
+  <div class="markdown level1 summary"><p>An &quot;enable&quot; toggle for things like interfacing with machine linking</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool Enabled</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Materials_MaterialReclaimerComponent_ItemsProcessed.md&amp;value=---%0Auid%3A%20Content.Shared.Materials.MaterialReclaimerComponent.ItemsProcessed%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Materials/MaterialReclaimerComponent.cs/#L138">View Source</a>
+  </span>
+  <h4 id="Content_Shared_Materials_MaterialReclaimerComponent_ItemsProcessed" data-uid="Content.Shared.Materials.MaterialReclaimerComponent.ItemsProcessed">ItemsProcessed</h4>
+  <div class="markdown level1 summary"><p>A counter of how many items have been processed</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int ItemsProcessed</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Content_Shared_Materials_MaterialReclaimerComponent_ItemsProcessed_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>I saw this on the recycler and i'm porting it because it's cute af</p>
+</div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Materials_MaterialReclaimerComponent_MachinePartProcessRate.md&amp;value=---%0Auid%3A%20Content.Shared.Materials.MaterialReclaimerComponent.MachinePartProcessRate%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Materials/MaterialReclaimerComponent.cs/#L66">View Source</a>
+  </span>
+  <h4 id="Content_Shared_Materials_MaterialReclaimerComponent_MachinePartProcessRate" data-uid="Content.Shared.Materials.MaterialReclaimerComponent.MachinePartProcessRate">MachinePartProcessRate</h4>
+  <div class="markdown level1 summary"><p>Machine part whose rating modifies <a class="xref" href="Content.Shared.Materials.MaterialReclaimerComponent.html#Content_Shared_Materials_MaterialReclaimerComponent_MaterialProcessRate">MaterialProcessRate</a></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ProtoId&lt;MachinePartPrototype&gt; MachinePartProcessRate</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Robust.Shared.Prototypes.ProtoId</span>&lt;<a class="xref" href="Content.Shared.Construction.Prototypes.MachinePartPrototype.html">MachinePartPrototype</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Materials_MaterialReclaimerComponent_MaterialProcessRate.md&amp;value=---%0Auid%3A%20Content.Shared.Materials.MaterialReclaimerComponent.MaterialProcessRate%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Materials/MaterialReclaimerComponent.cs/#L60">View Source</a>
+  </span>
+  <h4 id="Content_Shared_Materials_MaterialReclaimerComponent_MaterialProcessRate" data-uid="Content.Shared.Materials.MaterialReclaimerComponent.MaterialProcessRate">MaterialProcessRate</h4>
+  <div class="markdown level1 summary"><p>How quickly it takes to consume X amount of materials per second.
+For example, with a rate of 50, an entity with 100 total material takes 2 seconds to process.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public float MaterialProcessRate</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Materials_MaterialReclaimerComponent_MinimumProcessDuration.md&amp;value=---%0Auid%3A%20Content.Shared.Materials.MaterialReclaimerComponent.MinimumProcessDuration%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Materials/MaterialReclaimerComponent.cs/#L79">View Source</a>
+  </span>
+  <h4 id="Content_Shared_Materials_MaterialReclaimerComponent_MinimumProcessDuration" data-uid="Content.Shared.Materials.MaterialReclaimerComponent.MinimumProcessDuration">MinimumProcessDuration</h4>
+  <div class="markdown level1 summary"><p>The minimum amount fo time it can take to process an entity.
+this value supercedes the calculated one using <a class="xref" href="Content.Shared.Materials.MaterialReclaimerComponent.html#Content_Shared_Materials_MaterialReclaimerComponent_MaterialProcessRate">MaterialProcessRate</a></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public TimeSpan MinimumProcessDuration</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TimeSpan</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Materials_MaterialReclaimerComponent_NextSound.md&amp;value=---%0Auid%3A%20Content.Shared.Materials.MaterialReclaimerComponent.NextSound%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Materials/MaterialReclaimerComponent.cs/#L121">View Source</a>
+  </span>
+  <h4 id="Content_Shared_Materials_MaterialReclaimerComponent_NextSound" data-uid="Content.Shared.Materials.MaterialReclaimerComponent.NextSound">NextSound</h4>
+  <div class="markdown level1 summary"><p>When the next sound will be allowed to be played. Used to prevent spam.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public TimeSpan NextSound</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TimeSpan</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Materials_MaterialReclaimerComponent_OutputSolution.md&amp;value=---%0Auid%3A%20Content.Shared.Materials.MaterialReclaimerComponent.OutputSolution%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Materials/MaterialReclaimerComponent.cs/#L91">View Source</a>
+  </span>
+  <h4 id="Content_Shared_Materials_MaterialReclaimerComponent_OutputSolution" data-uid="Content.Shared.Materials.MaterialReclaimerComponent.OutputSolution">OutputSolution</h4>
+  <div class="markdown level1 summary"><p>The solution itself.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Solution OutputSolution</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Chemistry.Components.Solution.html">Solution</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Materials_MaterialReclaimerComponent_PartRatingProcessRateMultiplier.md&amp;value=---%0Auid%3A%20Content.Shared.Materials.MaterialReclaimerComponent.PartRatingProcessRateMultiplier%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Materials/MaterialReclaimerComponent.cs/#L72">View Source</a>
+  </span>
+  <h4 id="Content_Shared_Materials_MaterialReclaimerComponent_PartRatingProcessRateMultiplier" data-uid="Content.Shared.Materials.MaterialReclaimerComponent.PartRatingProcessRateMultiplier">PartRatingProcessRateMultiplier</h4>
+  <div class="markdown level1 summary"><p>How much the machine part quality affects the <a class="xref" href="Content.Shared.Materials.MaterialReclaimerComponent.html#Content_Shared_Materials_MaterialReclaimerComponent_MaterialProcessRate">MaterialProcessRate</a></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public float PartRatingProcessRateMultiplier</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Materials_MaterialReclaimerComponent_Powered.md&amp;value=---%0Auid%3A%20Content.Shared.Materials.MaterialReclaimerComponent.Powered%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Materials/MaterialReclaimerComponent.cs/#L25">View Source</a>
+  </span>
+  <h4 id="Content_Shared_Materials_MaterialReclaimerComponent_Powered" data-uid="Content.Shared.Materials.MaterialReclaimerComponent.Powered">Powered</h4>
+  <div class="markdown level1 summary"><p>Whether or not the machine has power. We put it here
+so we can network and predict it.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool Powered</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Materials_MaterialReclaimerComponent_ScaleProcessSpeed.md&amp;value=---%0Auid%3A%20Content.Shared.Materials.MaterialReclaimerComponent.ScaleProcessSpeed%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Materials/MaterialReclaimerComponent.cs/#L46">View Source</a>
+  </span>
+  <h4 id="Content_Shared_Materials_MaterialReclaimerComponent_ScaleProcessSpeed" data-uid="Content.Shared.Materials.MaterialReclaimerComponent.ScaleProcessSpeed">ScaleProcessSpeed</h4>
+  <div class="markdown level1 summary"><p>Whether or not the process
+speed scales with the amount of materials being processed
+or if it's just <a class="xref" href="Content.Shared.Materials.MaterialReclaimerComponent.html#Content_Shared_Materials_MaterialReclaimerComponent_MinimumProcessDuration">MinimumProcessDuration</a></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool ScaleProcessSpeed</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Materials_MaterialReclaimerComponent_SolutionContainerId.md&amp;value=---%0Auid%3A%20Content.Shared.Materials.MaterialReclaimerComponent.SolutionContainerId%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Materials/MaterialReclaimerComponent.cs/#L85">View Source</a>
+  </span>
+  <h4 id="Content_Shared_Materials_MaterialReclaimerComponent_SolutionContainerId" data-uid="Content.Shared.Materials.MaterialReclaimerComponent.SolutionContainerId">SolutionContainerId</h4>
+  <div class="markdown level1 summary"><p>The id of our output solution</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string SolutionContainerId</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Materials_MaterialReclaimerComponent_Sound.md&amp;value=---%0Auid%3A%20Content.Shared.Materials.MaterialReclaimerComponent.Sound%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Materials/MaterialReclaimerComponent.cs/#L109">View Source</a>
+  </span>
+  <h4 id="Content_Shared_Materials_MaterialReclaimerComponent_Sound" data-uid="Content.Shared.Materials.MaterialReclaimerComponent.Sound">Sound</h4>
+  <div class="markdown level1 summary"><p>The sound played when something is being processed.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public SoundSpecifier Sound</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Robust.Shared.Audio.SoundSpecifier</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Materials_MaterialReclaimerComponent_SoundCooldown.md&amp;value=---%0Auid%3A%20Content.Shared.Materials.MaterialReclaimerComponent.SoundCooldown%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Materials/MaterialReclaimerComponent.cs/#L127">View Source</a>
+  </span>
+  <h4 id="Content_Shared_Materials_MaterialReclaimerComponent_SoundCooldown" data-uid="Content.Shared.Materials.MaterialReclaimerComponent.SoundCooldown">SoundCooldown</h4>
+  <div class="markdown level1 summary"><p>Minimum time inbetween each <a class="xref" href="Content.Shared.Materials.MaterialReclaimerComponent.html#Content_Shared_Materials_MaterialReclaimerComponent_Sound">Sound</a></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public TimeSpan SoundCooldown</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TimeSpan</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Materials_MaterialReclaimerComponent_Stream.md&amp;value=---%0Auid%3A%20Content.Shared.Materials.MaterialReclaimerComponent.Stream%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Materials/MaterialReclaimerComponent.cs/#L129">View Source</a>
+  </span>
+  <h4 id="Content_Shared_Materials_MaterialReclaimerComponent_Stream" data-uid="Content.Shared.Materials.MaterialReclaimerComponent.Stream">Stream</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IPlayingAudioStream Stream</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Robust.Shared.Audio.IPlayingAudioStream</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Materials_MaterialReclaimerComponent_Whitelist.md&amp;value=---%0Auid%3A%20Content.Shared.Materials.MaterialReclaimerComponent.Whitelist%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Materials/MaterialReclaimerComponent.cs/#L97">View Source</a>
+  </span>
+  <h4 id="Content_Shared_Materials_MaterialReclaimerComponent_Whitelist" data-uid="Content.Shared.Materials.MaterialReclaimerComponent.Whitelist">Whitelist</h4>
+  <div class="markdown level1 summary"><p>a whitelist for what entities can be inserted into this reclaimer</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public EntityWhitelist Whitelist</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Whitelist.EntityWhitelist.html">EntityWhitelist</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Materials_MaterialReclaimerComponent.md&amp;value=---%0Auid%3A%20Content.Shared.Materials.MaterialReclaimerComponent%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Materials/MaterialReclaimerComponent.cs/#L16" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <div class="toggle-mode">
+                <div class="icon">
+                  <i aria-hidden="true">☀</i>
+                </div>
+                <label class="switch">
+                  <input type="checkbox" id="switch-style">
+                  <span class="slider round"></span>
+                </label>
+                <div class="icon">
+                  <i aria-hidden="true">☾</i>
+                </div>
+              </div>
+          
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <h5>In This Article</h5>
+              <div></div>
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <div class="pull-left">
+              
+              <span>Generated by <strong>DocFX</strong></span>
+            </div>
+            <div class="toggle-mode pull-right visible-sm visible-xs">
+              <div class="icon">
+                <i aria-hidden="true">☀</i>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="switch-style-m">
+                <span class="slider round"></span>
+              </label>
+              <div class="icon">
+                <i aria-hidden="true">☾</i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <script type="text/javascript" src="../../styles/toggle-theme.js"></script>
+      </footer>    </div>
+    
+    <script type="text/javascript" src="../../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../../styles/docfx.js"></script>
+    <script type="text/javascript" src="../../styles/main.js"></script>
+  </body>
+</html>

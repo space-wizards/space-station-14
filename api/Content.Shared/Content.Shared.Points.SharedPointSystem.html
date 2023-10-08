@@ -1,0 +1,413 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class SharedPointSystem
+   </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class SharedPointSystem
+   ">
+    <meta name="generator" content="docfx 2.56.7.0">
+    
+    <link rel="shortcut icon" href="../../favicon.ico">
+    <link rel="stylesheet" href="../../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../../styles/docfx.css">
+    <link rel="stylesheet" href="../../styles/main.css">
+    <meta property="docfx:navrel" content="../../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../../index.html">
+                <img id="logo" class="svg" src="../../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Content.Shared.Points.SharedPointSystem">
+  
+  
+  <h1 id="Content_Shared_Points_SharedPointSystem" data-uid="Content.Shared.Points.SharedPointSystem" class="text-break">Class SharedPointSystem
+  </h1>
+  <div class="markdown level0 summary"><p>This handles modifying point counts for <a class="xref" href="Content.Shared.Points.PointManagerComponent.html">PointManagerComponent</a></p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level1"><span class="xref">SharedPointSystem</span></div>
+      <div class="level2"><a class="xref" href="../Content.Client/Content.Client.Points.PointSystem.html">PointSystem</a></div>
+      <div class="level2"><a class="xref" href="../Content.Server/Content.Server.Points.PointSystem.html">PointSystem</a></div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Content.Shared.Points.html">Content.Shared.Points</a></h6>
+  <h6><strong>Assembly</strong>: Content.Shared.dll</h6>
+  <h5 id="Content_Shared_Points_SharedPointSystem_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public abstract class SharedPointSystem : EntitySystem</code></pre>
+  </div>
+  <h3 id="methods">Methods
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Points_SharedPointSystem_AdjustPointValue_Robust_Shared_Network_NetUserId_Content_Shared_FixedPoint_FixedPoint2_EntityUid_Content_Shared_Points_PointManagerComponent_.md&amp;value=---%0Auid%3A%20Content.Shared.Points.SharedPointSystem.AdjustPointValue(Robust.Shared.Network.NetUserId%2CContent.Shared.FixedPoint.FixedPoint2%2CEntityUid%2CContent.Shared.Points.PointManagerComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Points/SharedPointSystem.cs/#L15">View Source</a>
+  </span>
+  <a id="Content_Shared_Points_SharedPointSystem_AdjustPointValue_" data-uid="Content.Shared.Points.SharedPointSystem.AdjustPointValue*"></a>
+  <h4 id="Content_Shared_Points_SharedPointSystem_AdjustPointValue_Robust_Shared_Network_NetUserId_Content_Shared_FixedPoint_FixedPoint2_EntityUid_Content_Shared_Points_PointManagerComponent_" data-uid="Content.Shared.Points.SharedPointSystem.AdjustPointValue(Robust.Shared.Network.NetUserId,Content.Shared.FixedPoint.FixedPoint2,EntityUid,Content.Shared.Points.PointManagerComponent)">AdjustPointValue(NetUserId, FixedPoint2, EntityUid, PointManagerComponent)</h4>
+  <div class="markdown level1 summary"><p>Adds the specified point value to a player.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void AdjustPointValue(NetUserId userId, FixedPoint2 value, EntityUid uid, PointManagerComponent component = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Robust.Shared.Network.NetUserId</span></td>
+        <td><span class="parametername">userId</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Shared.FixedPoint.FixedPoint2.html">FixedPoint2</a></td>
+        <td><span class="parametername">value</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Points.PointManagerComponent.html">PointManagerComponent</a></td>
+        <td><span class="parametername">component</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Points_SharedPointSystem_EnsurePlayer_Robust_Shared_Network_NetUserId_EntityUid_Content_Shared_Points_PointManagerComponent_.md&amp;value=---%0Auid%3A%20Content.Shared.Points.SharedPointSystem.EnsurePlayer(Robust.Shared.Network.NetUserId%2CEntityUid%2CContent.Shared.Points.PointManagerComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Points/SharedPointSystem.cs/#L61">View Source</a>
+  </span>
+  <a id="Content_Shared_Points_SharedPointSystem_EnsurePlayer_" data-uid="Content.Shared.Points.SharedPointSystem.EnsurePlayer*"></a>
+  <h4 id="Content_Shared_Points_SharedPointSystem_EnsurePlayer_Robust_Shared_Network_NetUserId_EntityUid_Content_Shared_Points_PointManagerComponent_" data-uid="Content.Shared.Points.SharedPointSystem.EnsurePlayer(Robust.Shared.Network.NetUserId,EntityUid,Content.Shared.Points.PointManagerComponent)">EnsurePlayer(NetUserId, EntityUid, PointManagerComponent)</h4>
+  <div class="markdown level1 summary"><p>Ensures that a player is being tracked by the PointManager, giving them a default score of 0.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void EnsurePlayer(NetUserId userId, EntityUid uid, PointManagerComponent component = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Robust.Shared.Network.NetUserId</span></td>
+        <td><span class="parametername">userId</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Points.PointManagerComponent.html">PointManagerComponent</a></td>
+        <td><span class="parametername">component</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Points_SharedPointSystem_GetPointValue_Robust_Shared_Network_NetUserId_EntityUid_Content_Shared_Points_PointManagerComponent_.md&amp;value=---%0Auid%3A%20Content.Shared.Points.SharedPointSystem.GetPointValue(Robust.Shared.Network.NetUserId%2CEntityUid%2CContent.Shared.Points.PointManagerComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Points/SharedPointSystem.cs/#L48">View Source</a>
+  </span>
+  <a id="Content_Shared_Points_SharedPointSystem_GetPointValue_" data-uid="Content.Shared.Points.SharedPointSystem.GetPointValue*"></a>
+  <h4 id="Content_Shared_Points_SharedPointSystem_GetPointValue_Robust_Shared_Network_NetUserId_EntityUid_Content_Shared_Points_PointManagerComponent_" data-uid="Content.Shared.Points.SharedPointSystem.GetPointValue(Robust.Shared.Network.NetUserId,EntityUid,Content.Shared.Points.PointManagerComponent)">GetPointValue(NetUserId, EntityUid, PointManagerComponent)</h4>
+  <div class="markdown level1 summary"><p>Gets the amount of points for a given player</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public FixedPoint2 GetPointValue(NetUserId userId, EntityUid uid, PointManagerComponent component = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Robust.Shared.Network.NetUserId</span></td>
+        <td><span class="parametername">userId</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Points.PointManagerComponent.html">PointManagerComponent</a></td>
+        <td><span class="parametername">component</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.FixedPoint.FixedPoint2.html">FixedPoint2</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Points_SharedPointSystem_GetScoreboard_EntityUid_Content_Shared_Points_PointManagerComponent_.md&amp;value=---%0Auid%3A%20Content.Shared.Points.SharedPointSystem.GetScoreboard(EntityUid%2CContent.Shared.Points.PointManagerComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Points/SharedPointSystem.cs/#L74">View Source</a>
+  </span>
+  <a id="Content_Shared_Points_SharedPointSystem_GetScoreboard_" data-uid="Content.Shared.Points.SharedPointSystem.GetScoreboard*"></a>
+  <h4 id="Content_Shared_Points_SharedPointSystem_GetScoreboard_EntityUid_Content_Shared_Points_PointManagerComponent_" data-uid="Content.Shared.Points.SharedPointSystem.GetScoreboard(EntityUid,Content.Shared.Points.PointManagerComponent)">GetScoreboard(EntityUid, PointManagerComponent)</h4>
+  <div class="markdown level1 summary"><p>Returns a formatted message containing a ranking of all the currently online players and their scores.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual FormattedMessage GetScoreboard(EntityUid uid, PointManagerComponent component = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Points.PointManagerComponent.html">PointManagerComponent</a></td>
+        <td><span class="parametername">component</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Robust.Shared.Utility.FormattedMessage</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Points_SharedPointSystem_SetPointValue_Robust_Shared_Network_NetUserId_Content_Shared_FixedPoint_FixedPoint2_EntityUid_Content_Shared_Points_PointManagerComponent_.md&amp;value=---%0Auid%3A%20Content.Shared.Points.SharedPointSystem.SetPointValue(Robust.Shared.Network.NetUserId%2CContent.Shared.FixedPoint.FixedPoint2%2CEntityUid%2CContent.Shared.Points.PointManagerComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Points/SharedPointSystem.cs/#L29">View Source</a>
+  </span>
+  <a id="Content_Shared_Points_SharedPointSystem_SetPointValue_" data-uid="Content.Shared.Points.SharedPointSystem.SetPointValue*"></a>
+  <h4 id="Content_Shared_Points_SharedPointSystem_SetPointValue_Robust_Shared_Network_NetUserId_Content_Shared_FixedPoint_FixedPoint2_EntityUid_Content_Shared_Points_PointManagerComponent_" data-uid="Content.Shared.Points.SharedPointSystem.SetPointValue(Robust.Shared.Network.NetUserId,Content.Shared.FixedPoint.FixedPoint2,EntityUid,Content.Shared.Points.PointManagerComponent)">SetPointValue(NetUserId, FixedPoint2, EntityUid, PointManagerComponent)</h4>
+  <div class="markdown level1 summary"><p>Sets the amount of points for a player</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetPointValue(NetUserId userId, FixedPoint2 value, EntityUid uid, PointManagerComponent component = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Robust.Shared.Network.NetUserId</span></td>
+        <td><span class="parametername">userId</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Shared.FixedPoint.FixedPoint2.html">FixedPoint2</a></td>
+        <td><span class="parametername">value</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Points.PointManagerComponent.html">PointManagerComponent</a></td>
+        <td><span class="parametername">component</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Points_SharedPointSystem.md&amp;value=---%0Auid%3A%20Content.Shared.Points.SharedPointSystem%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Points/SharedPointSystem.cs/#L10" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <div class="toggle-mode">
+                <div class="icon">
+                  <i aria-hidden="true">☀</i>
+                </div>
+                <label class="switch">
+                  <input type="checkbox" id="switch-style">
+                  <span class="slider round"></span>
+                </label>
+                <div class="icon">
+                  <i aria-hidden="true">☾</i>
+                </div>
+              </div>
+          
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <h5>In This Article</h5>
+              <div></div>
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <div class="pull-left">
+              
+              <span>Generated by <strong>DocFX</strong></span>
+            </div>
+            <div class="toggle-mode pull-right visible-sm visible-xs">
+              <div class="icon">
+                <i aria-hidden="true">☀</i>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="switch-style-m">
+                <span class="slider round"></span>
+              </label>
+              <div class="icon">
+                <i aria-hidden="true">☾</i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <script type="text/javascript" src="../../styles/toggle-theme.js"></script>
+      </footer>    </div>
+    
+    <script type="text/javascript" src="../../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../../styles/docfx.js"></script>
+    <script type="text/javascript" src="../../styles/main.js"></script>
+  </body>
+</html>

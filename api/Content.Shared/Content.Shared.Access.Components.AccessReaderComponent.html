@@ -1,0 +1,321 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class AccessReaderComponent
+   </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class AccessReaderComponent
+   ">
+    <meta name="generator" content="docfx 2.56.7.0">
+    
+    <link rel="shortcut icon" href="../../favicon.ico">
+    <link rel="stylesheet" href="../../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../../styles/docfx.css">
+    <link rel="stylesheet" href="../../styles/main.css">
+    <meta property="docfx:navrel" content="../../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../../index.html">
+                <img id="logo" class="svg" src="../../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Content.Shared.Access.Components.AccessReaderComponent">
+  
+  
+  <h1 id="Content_Shared_Access_Components_AccessReaderComponent" data-uid="Content.Shared.Access.Components.AccessReaderComponent" class="text-break">Class AccessReaderComponent
+  </h1>
+  <div class="markdown level0 summary"><p>Stores access levels necessary to &quot;use&quot; an entity
+and allows checking if something or somebody is authorized with these access levels.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level1"><span class="xref">AccessReaderComponent</span></div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Content.Shared.Access.Components.html">Content.Shared.Access.Components</a></h6>
+  <h6><strong>Assembly</strong>: Content.Shared.dll</h6>
+  <h5 id="Content_Shared_Access_Components_AccessReaderComponent_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public sealed class AccessReaderComponent : Component</code></pre>
+  </div>
+  <h3 id="fields">Fields
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Access_Components_AccessReaderComponent_AccessKeys.md&amp;value=---%0Auid%3A%20Content.Shared.Access.Components.AccessReaderComponent.AccessKeys%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Access/Components/AccessReaderComponent.cs/#L40">View Source</a>
+  </span>
+  <h4 id="Content_Shared_Access_Components_AccessReaderComponent_AccessKeys" data-uid="Content.Shared.Access.Components.AccessReaderComponent.AccessKeys">AccessKeys</h4>
+  <div class="markdown level1 summary"><p>A list of <a class="xref" href="Content.Shared.StationRecords.StationRecordKey.html">StationRecordKey</a>s that grant access. Only a single matching key is required tp gaim
+access.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public HashSet&lt;StationRecordKey&gt; AccessKeys</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">HashSet</span>&lt;<a class="xref" href="Content.Shared.StationRecords.StationRecordKey.html">StationRecordKey</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Access_Components_AccessReaderComponent_AccessLists.md&amp;value=---%0Auid%3A%20Content.Shared.Access.Components.AccessReaderComponent.AccessLists%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Access/Components/AccessReaderComponent.cs/#L33">View Source</a>
+  </span>
+  <h4 id="Content_Shared_Access_Components_AccessReaderComponent_AccessLists" data-uid="Content.Shared.Access.Components.AccessReaderComponent.AccessLists">AccessLists</h4>
+  <div class="markdown level1 summary"><p>List of access groups that grant access to this reader. Only a single matching group is required to gain access.
+A group matches if it is a subset of the set being checked against.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public List&lt;HashSet&lt;string&gt;&gt; AccessLists</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">List</span>&lt;<span class="xref">HashSet</span>&lt;<span class="xref">System.String</span>&gt;&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Access_Components_AccessReaderComponent_ContainerAccessProvider.md&amp;value=---%0Auid%3A%20Content.Shared.Access.Components.AccessReaderComponent.ContainerAccessProvider%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Access/Components/AccessReaderComponent.cs/#L52">View Source</a>
+  </span>
+  <h4 id="Content_Shared_Access_Components_AccessReaderComponent_ContainerAccessProvider" data-uid="Content.Shared.Access.Components.AccessReaderComponent.ContainerAccessProvider">ContainerAccessProvider</h4>
+  <div class="markdown level1 summary"><p>If specified, then this access reader will instead pull access requirements from entities contained in the
+given container.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string? ContainerAccessProvider</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">System.String</span>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Content_Shared_Access_Components_AccessReaderComponent_ContainerAccessProvider_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>This effectively causes <a class="xref" href="Content.Shared.Access.Components.AccessReaderComponent.html#Content_Shared_Access_Components_AccessReaderComponent_DenyTags">DenyTags</a>, <a class="xref" href="Content.Shared.Access.Components.AccessReaderComponent.html#Content_Shared_Access_Components_AccessReaderComponent_AccessLists">AccessLists</a>, and <a class="xref" href="Content.Shared.Access.Components.AccessReaderComponent.html#Content_Shared_Access_Components_AccessReaderComponent_AccessKeys">AccessKeys</a> to be
+ignored, though <a class="xref" href="Content.Shared.Access.Components.AccessReaderComponent.html#Content_Shared_Access_Components_AccessReaderComponent_Enabled">Enabled</a> is still respected. Access is denied if there are no valid entities or
+they all deny access.</p>
+</div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Access_Components_AccessReaderComponent_DenyTags.md&amp;value=---%0Auid%3A%20Content.Shared.Access.Components.AccessReaderComponent.DenyTags%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Access/Components/AccessReaderComponent.cs/#L26">View Source</a>
+  </span>
+  <h4 id="Content_Shared_Access_Components_AccessReaderComponent_DenyTags" data-uid="Content.Shared.Access.Components.AccessReaderComponent.DenyTags">DenyTags</h4>
+  <div class="markdown level1 summary"><p>The set of tags that will automatically deny an allowed check, if any of them are present.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public HashSet&lt;string&gt; DenyTags</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">HashSet</span>&lt;<span class="xref">System.String</span>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Access_Components_AccessReaderComponent_Enabled.md&amp;value=---%0Auid%3A%20Content.Shared.Access.Components.AccessReaderComponent.Enabled%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Access/Components/AccessReaderComponent.cs/#L20">View Source</a>
+  </span>
+  <h4 id="Content_Shared_Access_Components_AccessReaderComponent_Enabled" data-uid="Content.Shared.Access.Components.AccessReaderComponent.Enabled">Enabled</h4>
+  <div class="markdown level1 summary"><p>Whether or not the accessreader is enabled.
+If not, it will always let people through.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool Enabled</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Access_Components_AccessReaderComponent.md&amp;value=---%0Auid%3A%20Content.Shared.Access.Components.AccessReaderComponent%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Access/Components/AccessReaderComponent.cs/#L12" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <div class="toggle-mode">
+                <div class="icon">
+                  <i aria-hidden="true">☀</i>
+                </div>
+                <label class="switch">
+                  <input type="checkbox" id="switch-style">
+                  <span class="slider round"></span>
+                </label>
+                <div class="icon">
+                  <i aria-hidden="true">☾</i>
+                </div>
+              </div>
+          
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <h5>In This Article</h5>
+              <div></div>
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <div class="pull-left">
+              
+              <span>Generated by <strong>DocFX</strong></span>
+            </div>
+            <div class="toggle-mode pull-right visible-sm visible-xs">
+              <div class="icon">
+                <i aria-hidden="true">☀</i>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="switch-style-m">
+                <span class="slider round"></span>
+              </label>
+              <div class="icon">
+                <i aria-hidden="true">☾</i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <script type="text/javascript" src="../../styles/toggle-theme.js"></script>
+      </footer>    </div>
+    
+    <script type="text/javascript" src="../../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../../styles/docfx.js"></script>
+    <script type="text/javascript" src="../../styles/main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,874 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class SingularitySystem
+   </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class SingularitySystem
+   ">
+    <meta name="generator" content="docfx 2.56.7.0">
+    
+    <link rel="shortcut icon" href="../../favicon.ico">
+    <link rel="stylesheet" href="../../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../../styles/docfx.css">
+    <link rel="stylesheet" href="../../styles/main.css">
+    <meta property="docfx:navrel" content="../../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../../index.html">
+                <img id="logo" class="svg" src="../../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Content.Server.Singularity.EntitySystems.SingularitySystem">
+  
+  
+  <h1 id="Content_Server_Singularity_EntitySystems_SingularitySystem" data-uid="Content.Server.Singularity.EntitySystems.SingularitySystem" class="text-break">Class SingularitySystem
+  </h1>
+  <div class="markdown level0 summary"><p>The server-side version of <a class="xref" href="../Content.Shared/Content.Shared.Singularity.EntitySystems.SharedSingularitySystem.html">SharedSingularitySystem</a>.
+Primarily responsible for managing <a class="xref" href="../Content.Shared/Content.Shared.Singularity.Components.SingularityComponent.html">SingularityComponent</a>s.
+Handles their accumulation of energy upon consuming entities (see <a class="xref" href="../Content.Shared/Content.Shared.Singularity.Components.EventHorizonComponent.html">EventHorizonComponent</a>) and gradual dissipation.
+Also handles synchronizing server-side components with the singuarities level.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level1"><a class="xref" href="../Content.Shared/Content.Shared.Singularity.EntitySystems.SharedSingularitySystem.html">SharedSingularitySystem</a></div>
+    <div class="level2"><span class="xref">SingularitySystem</span></div>
+  </div>
+  <div class="inheritedMembers">
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Content.Server.Singularity.EntitySystems.html">Content.Server.Singularity.EntitySystems</a></h6>
+  <h6><strong>Assembly</strong>: Content.Server.dll</h6>
+  <h5 id="Content_Server_Singularity_EntitySystems_SingularitySystem_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public sealed class SingularitySystem : SharedSingularitySystem</code></pre>
+  </div>
+  <h3 id="fields">Fields
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Singularity_EntitySystems_SingularitySystem_BaseEntityEnergy.md&amp;value=---%0Auid%3A%20Content.Server.Singularity.EntitySystems.SingularitySystem.BaseEntityEnergy%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Singularity/EntitySystems/SingularitySystem.cs/#L38">View Source</a>
+  </span>
+  <h4 id="Content_Server_Singularity_EntitySystems_SingularitySystem_BaseEntityEnergy" data-uid="Content.Server.Singularity.EntitySystems.SingularitySystem.BaseEntityEnergy">BaseEntityEnergy</h4>
+  <div class="markdown level1 summary"><p>The amount of energy singulos accumulate when they eat an entity.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public const float BaseEntityEnergy = null</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Singularity_EntitySystems_SingularitySystem_BaseTileEnergy.md&amp;value=---%0Auid%3A%20Content.Server.Singularity.EntitySystems.SingularitySystem.BaseTileEnergy%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Singularity/EntitySystems/SingularitySystem.cs/#L33">View Source</a>
+  </span>
+  <h4 id="Content_Server_Singularity_EntitySystems_SingularitySystem_BaseTileEnergy" data-uid="Content.Server.Singularity.EntitySystems.SingularitySystem.BaseTileEnergy">BaseTileEnergy</h4>
+  <div class="markdown level1 summary"><p>The amount of energy singulos accumulate when they eat a tile.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public const float BaseTileEnergy = null</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Singularity_EntitySystems_SingularitySystem_AdjustEnergy_EntityUid_System_Single_System_Single_System_Single_System_Boolean_System_Boolean_Content_Shared_Singularity_Components_SingularityComponent_.md&amp;value=---%0Auid%3A%20Content.Server.Singularity.EntitySystems.SingularitySystem.AdjustEnergy(EntityUid%2CSystem.Single%2CSystem.Single%2CSystem.Single%2CSystem.Boolean%2CSystem.Boolean%2CContent.Shared.Singularity.Components.SingularityComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Singularity/EntitySystems/SingularitySystem.cs/#L153">View Source</a>
+  </span>
+  <a id="Content_Server_Singularity_EntitySystems_SingularitySystem_AdjustEnergy_" data-uid="Content.Server.Singularity.EntitySystems.SingularitySystem.AdjustEnergy*"></a>
+  <h4 id="Content_Server_Singularity_EntitySystems_SingularitySystem_AdjustEnergy_EntityUid_System_Single_System_Single_System_Single_System_Boolean_System_Boolean_Content_Shared_Singularity_Components_SingularityComponent_" data-uid="Content.Server.Singularity.EntitySystems.SingularitySystem.AdjustEnergy(EntityUid,System.Single,System.Single,System.Single,System.Boolean,System.Boolean,Content.Shared.Singularity.Components.SingularityComponent)">AdjustEnergy(EntityUid, Single, Single, Single, Boolean, Boolean, SingularityComponent)</h4>
+  <div class="markdown level1 summary"><p>Adjusts the amount of energy the singularity has accumulated.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void AdjustEnergy(EntityUid uid, float delta, float min = null, float max = null, bool snapMin = true, bool snapMax = true, SingularityComponent singularity = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td><p>The uid of the singularity to adjust the energy of.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td><span class="parametername">delta</span></td>
+        <td><p>The amount to adjust the energy of the singuarity.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td><span class="parametername">min</span></td>
+        <td><p>The minimum amount of energy for the singularity to be adjusted to.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td><span class="parametername">max</span></td>
+        <td><p>The maximum amount of energy for the singularity to be adjusted to.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">snapMin</span></td>
+        <td><p>Whether the amount of energy in the singularity should be forced to within the specified range if it already is below it.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">snapMax</span></td>
+        <td><p>Whether the amount of energy in the singularity should be forced to within the specified range if it already is above it.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="../Content.Shared/Content.Shared.Singularity.Components.SingularityComponent.html">SingularityComponent</a></td>
+        <td><span class="parametername">singularity</span></td>
+        <td><p>The state of the singularity to adjust the energy of.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Singularity_EntitySystems_SingularitySystem_Initialize.md&amp;value=---%0Auid%3A%20Content.Server.Singularity.EntitySystems.SingularitySystem.Initialize%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Singularity/EntitySystems/SingularitySystem.cs/#L40">View Source</a>
+  </span>
+  <a id="Content_Server_Singularity_EntitySystems_SingularitySystem_Initialize_" data-uid="Content.Server.Singularity.EntitySystems.SingularitySystem.Initialize*"></a>
+  <h4 id="Content_Server_Singularity_EntitySystems_SingularitySystem_Initialize" data-uid="Content.Server.Singularity.EntitySystems.SingularitySystem.Initialize">Initialize()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override void Initialize()</code></pre>
+  </div>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="../Content.Shared/Content.Shared.Singularity.EntitySystems.SharedSingularitySystem.html#Content_Shared_Singularity_EntitySystems_SharedSingularitySystem_Initialize">SharedSingularitySystem.Initialize()</a></div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Singularity_EntitySystems_SingularitySystem_OnConsumed_EntityUid_Content_Server_Singularity_Components_SinguloFoodComponent_Content_Server_Singularity_Events_EventHorizonConsumedEntityEvent__.md&amp;value=---%0Auid%3A%20Content.Server.Singularity.EntitySystems.SingularitySystem.OnConsumed(EntityUid%2CContent.Server.Singularity.Components.SinguloFoodComponent%2CContent.Server.Singularity.Events.EventHorizonConsumedEntityEvent%40)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Singularity/EntitySystems/SingularitySystem.cs/#L297">View Source</a>
+  </span>
+  <a id="Content_Server_Singularity_EntitySystems_SingularitySystem_OnConsumed_" data-uid="Content.Server.Singularity.EntitySystems.SingularitySystem.OnConsumed*"></a>
+  <h4 id="Content_Server_Singularity_EntitySystems_SingularitySystem_OnConsumed_EntityUid_Content_Server_Singularity_Components_SinguloFoodComponent_Content_Server_Singularity_Events_EventHorizonConsumedEntityEvent__" data-uid="Content.Server.Singularity.EntitySystems.SingularitySystem.OnConsumed(EntityUid,Content.Server.Singularity.Components.SinguloFoodComponent,Content.Server.Singularity.Events.EventHorizonConsumedEntityEvent@)">OnConsumed(EntityUid, SinguloFoodComponent, ref EventHorizonConsumedEntityEvent)</h4>
+  <div class="markdown level1 summary"><p>Adds some bonus energy from any singularity food to the singularity that consumes it.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void OnConsumed(EntityUid uid, SinguloFoodComponent comp, ref EventHorizonConsumedEntityEvent args)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td><p>The entity UID of the singularity food that is being consumed.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Server.Singularity.Components.SinguloFoodComponent.html">SinguloFoodComponent</a></td>
+        <td><span class="parametername">comp</span></td>
+        <td><p>The component of the singularity food that is being consumed.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">Content.Server.Singularity.Events.EventHorizonConsumedEntityEvent</span></td>
+        <td><span class="parametername">args</span></td>
+        <td><p>The event arguments.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Singularity_EntitySystems_SingularitySystem_OnConsumedEntity_EntityUid_Content_Shared_Singularity_Components_SingularityComponent_Content_Server_Singularity_Events_EntityConsumedByEventHorizonEvent__.md&amp;value=---%0Auid%3A%20Content.Server.Singularity.EntitySystems.SingularitySystem.OnConsumedEntity(EntityUid%2CContent.Shared.Singularity.Components.SingularityComponent%2CContent.Server.Singularity.Events.EntityConsumedByEventHorizonEvent%40)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Singularity/EntitySystems/SingularitySystem.cs/#L259">View Source</a>
+  </span>
+  <a id="Content_Server_Singularity_EntitySystems_SingularitySystem_OnConsumedEntity_" data-uid="Content.Server.Singularity.EntitySystems.SingularitySystem.OnConsumedEntity*"></a>
+  <h4 id="Content_Server_Singularity_EntitySystems_SingularitySystem_OnConsumedEntity_EntityUid_Content_Shared_Singularity_Components_SingularityComponent_Content_Server_Singularity_Events_EntityConsumedByEventHorizonEvent__" data-uid="Content.Server.Singularity.EntitySystems.SingularitySystem.OnConsumedEntity(EntityUid,Content.Shared.Singularity.Components.SingularityComponent,Content.Server.Singularity.Events.EntityConsumedByEventHorizonEvent@)">OnConsumedEntity(EntityUid, SingularityComponent, ref EntityConsumedByEventHorizonEvent)</h4>
+  <div class="markdown level1 summary"><p>Adds the energy of any entities that are consumed to the singularity that consumed them.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void OnConsumedEntity(EntityUid uid, SingularityComponent comp, ref EntityConsumedByEventHorizonEvent args)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td><p>The entity UID of the singularity that is consuming the entity.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="../Content.Shared/Content.Shared.Singularity.Components.SingularityComponent.html">SingularityComponent</a></td>
+        <td><span class="parametername">comp</span></td>
+        <td><p>The component of the singularity that is consuming the entity.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">Content.Server.Singularity.Events.EntityConsumedByEventHorizonEvent</span></td>
+        <td><span class="parametername">args</span></td>
+        <td><p>The event arguments.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Singularity_EntitySystems_SingularitySystem_OnConsumedTiles_EntityUid_Content_Shared_Singularity_Components_SingularityComponent_Content_Server_Singularity_Events_TilesConsumedByEventHorizonEvent__.md&amp;value=---%0Auid%3A%20Content.Server.Singularity.EntitySystems.SingularitySystem.OnConsumedTiles(EntityUid%2CContent.Shared.Singularity.Components.SingularityComponent%2CContent.Server.Singularity.Events.TilesConsumedByEventHorizonEvent%40)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Singularity/EntitySystems/SingularitySystem.cs/#L270">View Source</a>
+  </span>
+  <a id="Content_Server_Singularity_EntitySystems_SingularitySystem_OnConsumedTiles_" data-uid="Content.Server.Singularity.EntitySystems.SingularitySystem.OnConsumedTiles*"></a>
+  <h4 id="Content_Server_Singularity_EntitySystems_SingularitySystem_OnConsumedTiles_EntityUid_Content_Shared_Singularity_Components_SingularityComponent_Content_Server_Singularity_Events_TilesConsumedByEventHorizonEvent__" data-uid="Content.Server.Singularity.EntitySystems.SingularitySystem.OnConsumedTiles(EntityUid,Content.Shared.Singularity.Components.SingularityComponent,Content.Server.Singularity.Events.TilesConsumedByEventHorizonEvent@)">OnConsumedTiles(EntityUid, SingularityComponent, ref TilesConsumedByEventHorizonEvent)</h4>
+  <div class="markdown level1 summary"><p>Adds the energy of any tiles that are consumed to the singularity that consumed them.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void OnConsumedTiles(EntityUid uid, SingularityComponent comp, ref TilesConsumedByEventHorizonEvent args)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td><p>The entity UID of the singularity that is consuming the tiles.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="../Content.Shared/Content.Shared.Singularity.Components.SingularityComponent.html">SingularityComponent</a></td>
+        <td><span class="parametername">comp</span></td>
+        <td><p>The component of the singularity that is consuming the tiles.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">Content.Server.Singularity.Events.TilesConsumedByEventHorizonEvent</span></td>
+        <td><span class="parametername">args</span></td>
+        <td><p>The event arguments.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Singularity_EntitySystems_SingularitySystem_OnDistortionStartup_EntityUid_Content_Shared_Singularity_Components_SingularityDistortionComponent_ComponentStartup_.md&amp;value=---%0Auid%3A%20Content.Server.Singularity.EntitySystems.SingularitySystem.OnDistortionStartup(EntityUid%2CContent.Shared.Singularity.Components.SingularityDistortionComponent%2CComponentStartup)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Singularity/EntitySystems/SingularitySystem.cs/#L220">View Source</a>
+  </span>
+  <a id="Content_Server_Singularity_EntitySystems_SingularitySystem_OnDistortionStartup_" data-uid="Content.Server.Singularity.EntitySystems.SingularitySystem.OnDistortionStartup*"></a>
+  <h4 id="Content_Server_Singularity_EntitySystems_SingularitySystem_OnDistortionStartup_EntityUid_Content_Shared_Singularity_Components_SingularityDistortionComponent_ComponentStartup_" data-uid="Content.Server.Singularity.EntitySystems.SingularitySystem.OnDistortionStartup(EntityUid,Content.Shared.Singularity.Components.SingularityDistortionComponent,ComponentStartup)">OnDistortionStartup(EntityUid, SingularityDistortionComponent, ComponentStartup)</h4>
+  <div class="markdown level1 summary"><p>Makes entities that have the singularity distortion visual warping always get their state shared with the client.
+This prevents some major popin with large distortion ranges.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void OnDistortionStartup(EntityUid uid, SingularityDistortionComponent comp, ComponentStartup args)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td><p>The entity UID of the entity that is gaining the shader.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="../Content.Shared/Content.Shared.Singularity.Components.SingularityDistortionComponent.html">SingularityDistortionComponent</a></td>
+        <td><span class="parametername">comp</span></td>
+        <td><p>The component of the shader that the entity is gaining.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">ComponentStartup</span></td>
+        <td><span class="parametername">args</span></td>
+        <td><p>The event arguments.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Singularity_EntitySystems_SingularitySystem_OnSingularityShutdown_EntityUid_Content_Shared_Singularity_Components_SingularityComponent_ComponentShutdown_.md&amp;value=---%0Auid%3A%20Content.Server.Singularity.EntitySystems.SingularitySystem.OnSingularityShutdown(EntityUid%2CContent.Shared.Singularity.Components.SingularityComponent%2CComponentShutdown)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Singularity/EntitySystems/SingularitySystem.cs/#L233">View Source</a>
+  </span>
+  <a id="Content_Server_Singularity_EntitySystems_SingularitySystem_OnSingularityShutdown_" data-uid="Content.Server.Singularity.EntitySystems.SingularitySystem.OnSingularityShutdown*"></a>
+  <h4 id="Content_Server_Singularity_EntitySystems_SingularitySystem_OnSingularityShutdown_EntityUid_Content_Shared_Singularity_Components_SingularityComponent_ComponentShutdown_" data-uid="Content.Server.Singularity.EntitySystems.SingularitySystem.OnSingularityShutdown(EntityUid,Content.Shared.Singularity.Components.SingularityComponent,ComponentShutdown)">OnSingularityShutdown(EntityUid, SingularityComponent, ComponentShutdown)</h4>
+  <div class="markdown level1 summary"><p>Handles playing the shutdown sounds when a singulo dissipates.
+Always stops the ambient singularity rumble.
+The dissipations sound only plays if the singularity is being destroyed.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void OnSingularityShutdown(EntityUid uid, SingularityComponent comp, ComponentShutdown args)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td><p>The entity UID of the singularity that is dissipating.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="../Content.Shared/Content.Shared.Singularity.Components.SingularityComponent.html">SingularityComponent</a></td>
+        <td><span class="parametername">comp</span></td>
+        <td><p>The component of the singularity that is dissipating.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">ComponentShutdown</span></td>
+        <td><span class="parametername">args</span></td>
+        <td><p>The event arguments.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Singularity_EntitySystems_SingularitySystem_OnSingularityStartup_EntityUid_Content_Shared_Singularity_Components_SingularityComponent_ComponentStartup_.md&amp;value=---%0Auid%3A%20Content.Server.Singularity.EntitySystems.SingularitySystem.OnSingularityStartup(EntityUid%2CContent.Shared.Singularity.Components.SingularityComponent%2CComponentStartup)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Singularity/EntitySystems/SingularitySystem.cs/#L200">View Source</a>
+  </span>
+  <a id="Content_Server_Singularity_EntitySystems_SingularitySystem_OnSingularityStartup_" data-uid="Content.Server.Singularity.EntitySystems.SingularitySystem.OnSingularityStartup*"></a>
+  <h4 id="Content_Server_Singularity_EntitySystems_SingularitySystem_OnSingularityStartup_EntityUid_Content_Shared_Singularity_Components_SingularityComponent_ComponentStartup_" data-uid="Content.Server.Singularity.EntitySystems.SingularitySystem.OnSingularityStartup(EntityUid,Content.Shared.Singularity.Components.SingularityComponent,ComponentStartup)">OnSingularityStartup(EntityUid, SingularityComponent, ComponentStartup)</h4>
+  <div class="markdown level1 summary"><p>Handles playing the startup sounds when a singulo forms.
+Always sets up the ambient singularity rumble.
+The formation sound only plays if the singularity is being created.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected override void OnSingularityStartup(EntityUid uid, SingularityComponent comp, ComponentStartup args)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td><p>The entity UID of the singularity that is forming.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="../Content.Shared/Content.Shared.Singularity.Components.SingularityComponent.html">SingularityComponent</a></td>
+        <td><span class="parametername">comp</span></td>
+        <td><p>The component of the singularity that is forming.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">ComponentStartup</span></td>
+        <td><span class="parametername">args</span></td>
+        <td><p>The event arguments.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Singularity_EntitySystems_SingularitySystem_SetEnergy_EntityUid_System_Single_Content_Shared_Singularity_Components_SingularityComponent_.md&amp;value=---%0Auid%3A%20Content.Server.Singularity.EntitySystems.SingularitySystem.SetEnergy(EntityUid%2CSystem.Single%2CContent.Shared.Singularity.Components.SingularityComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Singularity/EntitySystems/SingularitySystem.cs/#L122">View Source</a>
+  </span>
+  <a id="Content_Server_Singularity_EntitySystems_SingularitySystem_SetEnergy_" data-uid="Content.Server.Singularity.EntitySystems.SingularitySystem.SetEnergy*"></a>
+  <h4 id="Content_Server_Singularity_EntitySystems_SingularitySystem_SetEnergy_EntityUid_System_Single_Content_Shared_Singularity_Components_SingularityComponent_" data-uid="Content.Server.Singularity.EntitySystems.SingularitySystem.SetEnergy(EntityUid,System.Single,Content.Shared.Singularity.Components.SingularityComponent)">SetEnergy(EntityUid, Single, SingularityComponent)</h4>
+  <div class="markdown level1 summary"><p>Setter for <a class="xref" href="../Content.Shared/Content.Shared.Singularity.Components.SingularityComponent.html#Content_Shared_Singularity_Components_SingularityComponent_Energy">Energy</a>.
+Also updates the level of the singularity accordingly.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetEnergy(EntityUid uid, float value, SingularityComponent singularity = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td><p>The uid of the singularity to set the energy of.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td><span class="parametername">value</span></td>
+        <td><p>The amount of energy for the singularity to have.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="../Content.Shared/Content.Shared.Singularity.Components.SingularityComponent.html">SingularityComponent</a></td>
+        <td><span class="parametername">singularity</span></td>
+        <td><p>The state of the singularity to set the energy of.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Singularity_EntitySystems_SingularitySystem_SetUpdatePeriod_EntityUid_TimeSpan_Content_Shared_Singularity_Components_SingularityComponent_.md&amp;value=---%0Auid%3A%20Content.Server.Singularity.EntitySystems.SingularitySystem.SetUpdatePeriod(EntityUid%2CTimeSpan%2CContent.Shared.Singularity.Components.SingularityComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Singularity/EntitySystems/SingularitySystem.cs/#L172">View Source</a>
+  </span>
+  <a id="Content_Server_Singularity_EntitySystems_SingularitySystem_SetUpdatePeriod_" data-uid="Content.Server.Singularity.EntitySystems.SingularitySystem.SetUpdatePeriod*"></a>
+  <h4 id="Content_Server_Singularity_EntitySystems_SingularitySystem_SetUpdatePeriod_EntityUid_TimeSpan_Content_Shared_Singularity_Components_SingularityComponent_" data-uid="Content.Server.Singularity.EntitySystems.SingularitySystem.SetUpdatePeriod(EntityUid,TimeSpan,Content.Shared.Singularity.Components.SingularityComponent)">SetUpdatePeriod(EntityUid, TimeSpan, SingularityComponent)</h4>
+  <div class="markdown level1 summary"><p>Setter for <a class="xref" href="../Content.Shared/Content.Shared.Singularity.Components.SingularityComponent.html#Content_Shared_Singularity_Components_SingularityComponent_TargetUpdatePeriod">TargetUpdatePeriod</a>.
+If the new target time implies that the singularity should have updated it does so immediately.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetUpdatePeriod(EntityUid uid, TimeSpan value, SingularityComponent singularity = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td><p>The uid of the singularity to set the update period for.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">TimeSpan</span></td>
+        <td><span class="parametername">value</span></td>
+        <td><p>The new update period for the singularity.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="../Content.Shared/Content.Shared.Singularity.Components.SingularityComponent.html">SingularityComponent</a></td>
+        <td><span class="parametername">singularity</span></td>
+        <td><p>The state of the singularity to set the update period for.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Singularity_EntitySystems_SingularitySystem_Shutdown.md&amp;value=---%0Auid%3A%20Content.Server.Singularity.EntitySystems.SingularitySystem.Shutdown%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Singularity/EntitySystems/SingularitySystem.cs/#L61">View Source</a>
+  </span>
+  <a id="Content_Server_Singularity_EntitySystems_SingularitySystem_Shutdown_" data-uid="Content.Server.Singularity.EntitySystems.SingularitySystem.Shutdown*"></a>
+  <h4 id="Content_Server_Singularity_EntitySystems_SingularitySystem_Shutdown" data-uid="Content.Server.Singularity.EntitySystems.SingularitySystem.Shutdown">Shutdown()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override void Shutdown()</code></pre>
+  </div>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="../Content.Shared/Content.Shared.Singularity.EntitySystems.SharedSingularitySystem.html#Content_Shared_Singularity_EntitySystems_SharedSingularitySystem_Shutdown">SharedSingularitySystem.Shutdown()</a></div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Singularity_EntitySystems_SingularitySystem_Update_EntityUid_Content_Shared_Singularity_Components_SingularityComponent_.md&amp;value=---%0Auid%3A%20Content.Server.Singularity.EntitySystems.SingularitySystem.Update(EntityUid%2CContent.Shared.Singularity.Components.SingularityComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Singularity/EntitySystems/SingularitySystem.cs/#L91">View Source</a>
+  </span>
+  <a id="Content_Server_Singularity_EntitySystems_SingularitySystem_Update_" data-uid="Content.Server.Singularity.EntitySystems.SingularitySystem.Update*"></a>
+  <h4 id="Content_Server_Singularity_EntitySystems_SingularitySystem_Update_EntityUid_Content_Shared_Singularity_Components_SingularityComponent_" data-uid="Content.Server.Singularity.EntitySystems.SingularitySystem.Update(EntityUid,Content.Shared.Singularity.Components.SingularityComponent)">Update(EntityUid, SingularityComponent)</h4>
+  <div class="markdown level1 summary"><p>Handles the gradual energy loss and dissipation of singularity.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Update(EntityUid uid, SingularityComponent singularity = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td><p>The uid of the singularity to update.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="../Content.Shared/Content.Shared.Singularity.Components.SingularityComponent.html">SingularityComponent</a></td>
+        <td><span class="parametername">singularity</span></td>
+        <td><p>The state of the singularity to update.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Singularity_EntitySystems_SingularitySystem_Update_EntityUid_TimeSpan_Content_Shared_Singularity_Components_SingularityComponent_.md&amp;value=---%0Auid%3A%20Content.Server.Singularity.EntitySystems.SingularitySystem.Update(EntityUid%2CTimeSpan%2CContent.Shared.Singularity.Components.SingularityComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Singularity/EntitySystems/SingularitySystem.cs/#L103">View Source</a>
+  </span>
+  <a id="Content_Server_Singularity_EntitySystems_SingularitySystem_Update_" data-uid="Content.Server.Singularity.EntitySystems.SingularitySystem.Update*"></a>
+  <h4 id="Content_Server_Singularity_EntitySystems_SingularitySystem_Update_EntityUid_TimeSpan_Content_Shared_Singularity_Components_SingularityComponent_" data-uid="Content.Server.Singularity.EntitySystems.SingularitySystem.Update(EntityUid,TimeSpan,Content.Shared.Singularity.Components.SingularityComponent)">Update(EntityUid, TimeSpan, SingularityComponent)</h4>
+  <div class="markdown level1 summary"><p>Handles the gradual energy loss and dissipation of a singularity.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Update(EntityUid uid, TimeSpan frameTime, SingularityComponent singularity = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td><p>The uid of the singularity to update.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">TimeSpan</span></td>
+        <td><span class="parametername">frameTime</span></td>
+        <td><p>The amount of time that has elapsed since the last update.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="../Content.Shared/Content.Shared.Singularity.Components.SingularityComponent.html">SingularityComponent</a></td>
+        <td><span class="parametername">singularity</span></td>
+        <td><p>The state of the singularity to update.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Singularity_EntitySystems_SingularitySystem_Update_System_Single_.md&amp;value=---%0Auid%3A%20Content.Server.Singularity.EntitySystems.SingularitySystem.Update(System.Single)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Singularity/EntitySystems/SingularitySystem.cs/#L73">View Source</a>
+  </span>
+  <a id="Content_Server_Singularity_EntitySystems_SingularitySystem_Update_" data-uid="Content.Server.Singularity.EntitySystems.SingularitySystem.Update*"></a>
+  <h4 id="Content_Server_Singularity_EntitySystems_SingularitySystem_Update_System_Single_" data-uid="Content.Server.Singularity.EntitySystems.SingularitySystem.Update(System.Single)">Update(Single)</h4>
+  <div class="markdown level1 summary"><p>Handles the gradual dissipation of all singularities.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override void Update(float frameTime)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td><span class="parametername">frameTime</span></td>
+        <td><p>The amount of time since the last set of updates.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Singularity_EntitySystems_SingularitySystem_UpdateEnergyDrain_EntityUid_Content_Shared_Singularity_Components_SingularityComponent_Content_Shared_Singularity_Events_SingularityLevelChangedEvent_.md&amp;value=---%0Auid%3A%20Content.Server.Singularity.EntitySystems.SingularitySystem.UpdateEnergyDrain(EntityUid%2CContent.Shared.Singularity.Components.SingularityComponent%2CContent.Shared.Singularity.Events.SingularityLevelChangedEvent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Singularity/EntitySystems/SingularitySystem.cs/#L309">View Source</a>
+  </span>
+  <a id="Content_Server_Singularity_EntitySystems_SingularitySystem_UpdateEnergyDrain_" data-uid="Content.Server.Singularity.EntitySystems.SingularitySystem.UpdateEnergyDrain*"></a>
+  <h4 id="Content_Server_Singularity_EntitySystems_SingularitySystem_UpdateEnergyDrain_EntityUid_Content_Shared_Singularity_Components_SingularityComponent_Content_Shared_Singularity_Events_SingularityLevelChangedEvent_" data-uid="Content.Server.Singularity.EntitySystems.SingularitySystem.UpdateEnergyDrain(EntityUid,Content.Shared.Singularity.Components.SingularityComponent,Content.Shared.Singularity.Events.SingularityLevelChangedEvent)">UpdateEnergyDrain(EntityUid, SingularityComponent, SingularityLevelChangedEvent)</h4>
+  <div class="markdown level1 summary"><p>Updates the rate at which the singularities energy drains at when its level changes.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void UpdateEnergyDrain(EntityUid uid, SingularityComponent comp, SingularityLevelChangedEvent args)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td><p>The entity UID of the singularity that changed in level.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="../Content.Shared/Content.Shared.Singularity.Components.SingularityComponent.html">SingularityComponent</a></td>
+        <td><span class="parametername">comp</span></td>
+        <td><p>The component of the singularity that changed in level.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="../Content.Shared/Content.Shared.Singularity.Events.SingularityLevelChangedEvent.html">SingularityLevelChangedEvent</a></td>
+        <td><span class="parametername">args</span></td>
+        <td><p>The event arguments.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Singularity_EntitySystems_SingularitySystem.md&amp;value=---%0Auid%3A%20Content.Server.Singularity.EntitySystems.SingularitySystem%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Singularity/EntitySystems/SingularitySystem.cs/#L22" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <div class="toggle-mode">
+                <div class="icon">
+                  <i aria-hidden="true">☀</i>
+                </div>
+                <label class="switch">
+                  <input type="checkbox" id="switch-style">
+                  <span class="slider round"></span>
+                </label>
+                <div class="icon">
+                  <i aria-hidden="true">☾</i>
+                </div>
+              </div>
+          
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <h5>In This Article</h5>
+              <div></div>
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <div class="pull-left">
+              
+              <span>Generated by <strong>DocFX</strong></span>
+            </div>
+            <div class="toggle-mode pull-right visible-sm visible-xs">
+              <div class="icon">
+                <i aria-hidden="true">☀</i>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="switch-style-m">
+                <span class="slider round"></span>
+              </label>
+              <div class="icon">
+                <i aria-hidden="true">☾</i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <script type="text/javascript" src="../../styles/toggle-theme.js"></script>
+      </footer>    </div>
+    
+    <script type="text/javascript" src="../../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../../styles/docfx.js"></script>
+    <script type="text/javascript" src="../../styles/main.js"></script>
+  </body>
+</html>

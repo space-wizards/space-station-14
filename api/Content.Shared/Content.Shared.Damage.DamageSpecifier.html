@@ -1,0 +1,1331 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class DamageSpecifier
+   </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class DamageSpecifier
+   ">
+    <meta name="generator" content="docfx 2.56.7.0">
+    
+    <link rel="shortcut icon" href="../../favicon.ico">
+    <link rel="stylesheet" href="../../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../../styles/docfx.css">
+    <link rel="stylesheet" href="../../styles/main.css">
+    <meta property="docfx:navrel" content="../../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../../index.html">
+                <img id="logo" class="svg" src="../../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Content.Shared.Damage.DamageSpecifier">
+  
+  
+  <h1 id="Content_Shared_Damage_DamageSpecifier" data-uid="Content.Shared.Damage.DamageSpecifier" class="text-break">Class DamageSpecifier
+  </h1>
+  <div class="markdown level0 summary"><p>This class represents a collection of damage types and damage values.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level1"><span class="xref">DamageSpecifier</span></div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Content.Shared.Damage.html">Content.Shared.Damage</a></h6>
+  <h6><strong>Assembly</strong>: Content.Shared.dll</h6>
+  <h5 id="Content_Shared_Damage_DamageSpecifier_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public sealed class DamageSpecifier : IEquatable&lt;DamageSpecifier&gt;</code></pre>
+  </div>
+  <h5 id="Content_Shared_Damage_DamageSpecifier_remarks"><strong>Remarks</strong></h5>
+  <div class="markdown level0 remarks"><p>The actual damage information is stored in <a class="xref" href="Content.Shared.Damage.DamageSpecifier.html#Content_Shared_Damage_DamageSpecifier_DamageDict">DamageDict</a>. This class provides
+functions to apply resistance sets and supports basic math operations to modify this dictionary.</p>
+</div>
+  <h3 id="constructors">Constructors
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Damage_DamageSpecifier__ctor.md&amp;value=---%0Auid%3A%20Content.Shared.Damage.DamageSpecifier.%23ctor%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Damage/DamageSpecifier.cs/#L61">View Source</a>
+  </span>
+  <a id="Content_Shared_Damage_DamageSpecifier__ctor_" data-uid="Content.Shared.Damage.DamageSpecifier.#ctor*"></a>
+  <h4 id="Content_Shared_Damage_DamageSpecifier__ctor" data-uid="Content.Shared.Damage.DamageSpecifier.#ctor">DamageSpecifier()</h4>
+  <div class="markdown level1 summary"><p>Constructor that just results in an empty dictionary.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public DamageSpecifier()</code></pre>
+  </div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Damage_DamageSpecifier__ctor_Content_Shared_Damage_DamageSpecifier_.md&amp;value=---%0Auid%3A%20Content.Shared.Damage.DamageSpecifier.%23ctor(Content.Shared.Damage.DamageSpecifier)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Damage/DamageSpecifier.cs/#L66">View Source</a>
+  </span>
+  <a id="Content_Shared_Damage_DamageSpecifier__ctor_" data-uid="Content.Shared.Damage.DamageSpecifier.#ctor*"></a>
+  <h4 id="Content_Shared_Damage_DamageSpecifier__ctor_Content_Shared_Damage_DamageSpecifier_" data-uid="Content.Shared.Damage.DamageSpecifier.#ctor(Content.Shared.Damage.DamageSpecifier)">DamageSpecifier(DamageSpecifier)</h4>
+  <div class="markdown level1 summary"><p>Constructor that takes another DamageSpecifier instance and copies it.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public DamageSpecifier(DamageSpecifier damageSpec)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Damage.DamageSpecifier.html">DamageSpecifier</a></td>
+        <td><span class="parametername">damageSpec</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Damage_DamageSpecifier__ctor_Content_Shared_Damage_Prototypes_DamageGroupPrototype_Content_Shared_FixedPoint_FixedPoint2_.md&amp;value=---%0Auid%3A%20Content.Shared.Damage.DamageSpecifier.%23ctor(Content.Shared.Damage.Prototypes.DamageGroupPrototype%2CContent.Shared.FixedPoint.FixedPoint2)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Damage/DamageSpecifier.cs/#L82">View Source</a>
+  </span>
+  <a id="Content_Shared_Damage_DamageSpecifier__ctor_" data-uid="Content.Shared.Damage.DamageSpecifier.#ctor*"></a>
+  <h4 id="Content_Shared_Damage_DamageSpecifier__ctor_Content_Shared_Damage_Prototypes_DamageGroupPrototype_Content_Shared_FixedPoint_FixedPoint2_" data-uid="Content.Shared.Damage.DamageSpecifier.#ctor(Content.Shared.Damage.Prototypes.DamageGroupPrototype,Content.Shared.FixedPoint.FixedPoint2)">DamageSpecifier(DamageGroupPrototype, FixedPoint2)</h4>
+  <div class="markdown level1 summary"><p>Constructor that takes a single damage group prototype and a damage value. The value is divided between members of the damage group.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public DamageSpecifier(DamageGroupPrototype group, FixedPoint2 value)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Damage.Prototypes.DamageGroupPrototype.html">DamageGroupPrototype</a></td>
+        <td><span class="parametername">group</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Shared.FixedPoint.FixedPoint2.html">FixedPoint2</a></td>
+        <td><span class="parametername">value</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Damage_DamageSpecifier__ctor_Content_Shared_Damage_Prototypes_DamageTypePrototype_Content_Shared_FixedPoint_FixedPoint2_.md&amp;value=---%0Auid%3A%20Content.Shared.Damage.DamageSpecifier.%23ctor(Content.Shared.Damage.Prototypes.DamageTypePrototype%2CContent.Shared.FixedPoint.FixedPoint2)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Damage/DamageSpecifier.cs/#L74">View Source</a>
+  </span>
+  <a id="Content_Shared_Damage_DamageSpecifier__ctor_" data-uid="Content.Shared.Damage.DamageSpecifier.#ctor*"></a>
+  <h4 id="Content_Shared_Damage_DamageSpecifier__ctor_Content_Shared_Damage_Prototypes_DamageTypePrototype_Content_Shared_FixedPoint_FixedPoint2_" data-uid="Content.Shared.Damage.DamageSpecifier.#ctor(Content.Shared.Damage.Prototypes.DamageTypePrototype,Content.Shared.FixedPoint.FixedPoint2)">DamageSpecifier(DamageTypePrototype, FixedPoint2)</h4>
+  <div class="markdown level1 summary"><p>Constructor that takes a single damage type prototype and a damage value.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public DamageSpecifier(DamageTypePrototype type, FixedPoint2 value)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Damage.Prototypes.DamageTypePrototype.html">DamageTypePrototype</a></td>
+        <td><span class="parametername">type</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Shared.FixedPoint.FixedPoint2.html">FixedPoint2</a></td>
+        <td><span class="parametername">value</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="properties">Properties
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Damage_DamageSpecifier_DamageDict.md&amp;value=---%0Auid%3A%20Content.Shared.Damage.DamageSpecifier.DamageDict%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Damage/DamageSpecifier.cs/#L35">View Source</a>
+  </span>
+  <a id="Content_Shared_Damage_DamageSpecifier_DamageDict_" data-uid="Content.Shared.Damage.DamageSpecifier.DamageDict*"></a>
+  <h4 id="Content_Shared_Damage_DamageSpecifier_DamageDict" data-uid="Content.Shared.Damage.DamageSpecifier.DamageDict">DamageDict</h4>
+  <div class="markdown level1 summary"><p>Main DamageSpecifier dictionary. Most DamageSpecifier functions exist to somehow modifying this.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Dictionary&lt;string, FixedPoint2&gt; DamageDict { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Dictionary</span>&lt;<span class="xref">System.String</span>, <a class="xref" href="Content.Shared.FixedPoint.FixedPoint2.html">FixedPoint2</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Damage_DamageSpecifier_Empty.md&amp;value=---%0Auid%3A%20Content.Shared.Damage.DamageSpecifier.Empty%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Damage/DamageSpecifier.cs/#L54">View Source</a>
+  </span>
+  <a id="Content_Shared_Damage_DamageSpecifier_Empty_" data-uid="Content.Shared.Damage.DamageSpecifier.Empty*"></a>
+  <h4 id="Content_Shared_Damage_DamageSpecifier_Empty" data-uid="Content.Shared.Damage.DamageSpecifier.Empty">Empty</h4>
+  <div class="markdown level1 summary"><p>Whether this damage specifier has any entries.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool Empty { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Damage_DamageSpecifier_Total.md&amp;value=---%0Auid%3A%20Content.Shared.Damage.DamageSpecifier.Total%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Damage/DamageSpecifier.cs/#L48">View Source</a>
+  </span>
+  <a id="Content_Shared_Damage_DamageSpecifier_Total_" data-uid="Content.Shared.Damage.DamageSpecifier.Total*"></a>
+  <h4 id="Content_Shared_Damage_DamageSpecifier_Total" data-uid="Content.Shared.Damage.DamageSpecifier.Total">Total</h4>
+  <div class="markdown level1 summary"><p>Sum of the damage values.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public FixedPoint2 Total { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.FixedPoint.FixedPoint2.html">FixedPoint2</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Content_Shared_Damage_DamageSpecifier_Total_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Note that this being zero does not mean this damage has no effect. Healing in one type may cancel damage
+in another. For this purpose, you should instead use <a class="xref" href="Content.Shared.Damage.DamageSpecifier.html#Content_Shared_Damage_DamageSpecifier_TrimZeros">TrimZeros()</a> and then check the <a class="xref" href="Content.Shared.Damage.DamageSpecifier.html#Content_Shared_Damage_DamageSpecifier_Empty">Empty</a> property.</p>
+</div>
+  <h3 id="methods">Methods
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Damage_DamageSpecifier_ApplyModifierSet_Content_Shared_Damage_DamageSpecifier_Content_Shared_Damage_DamageModifierSet_.md&amp;value=---%0Auid%3A%20Content.Shared.Damage.DamageSpecifier.ApplyModifierSet(Content.Shared.Damage.DamageSpecifier%2CContent.Shared.Damage.DamageModifierSet)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Damage/DamageSpecifier.cs/#L104">View Source</a>
+  </span>
+  <a id="Content_Shared_Damage_DamageSpecifier_ApplyModifierSet_" data-uid="Content.Shared.Damage.DamageSpecifier.ApplyModifierSet*"></a>
+  <h4 id="Content_Shared_Damage_DamageSpecifier_ApplyModifierSet_Content_Shared_Damage_DamageSpecifier_Content_Shared_Damage_DamageModifierSet_" data-uid="Content.Shared.Damage.DamageSpecifier.ApplyModifierSet(Content.Shared.Damage.DamageSpecifier,Content.Shared.Damage.DamageModifierSet)">ApplyModifierSet(DamageSpecifier, DamageModifierSet)</h4>
+  <div class="markdown level1 summary"><p>Reduce (or increase) damages by applying a damage modifier set.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static DamageSpecifier ApplyModifierSet(DamageSpecifier damageSpec, DamageModifierSet modifierSet)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Damage.DamageSpecifier.html">DamageSpecifier</a></td>
+        <td><span class="parametername">damageSpec</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Damage.DamageModifierSet.html">DamageModifierSet</a></td>
+        <td><span class="parametername">modifierSet</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Damage.DamageSpecifier.html">DamageSpecifier</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Content_Shared_Damage_DamageSpecifier_ApplyModifierSet_Content_Shared_Damage_DamageSpecifier_Content_Shared_Damage_DamageModifierSet__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Only applies resistance to a damage type if it is dealing damage, not healing.</p>
+</div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Damage_DamageSpecifier_ApplyModifierSets_Content_Shared_Damage_DamageSpecifier_IEnumerable_Content_Shared_Damage_DamageModifierSet__.md&amp;value=---%0Auid%3A%20Content.Shared.Damage.DamageSpecifier.ApplyModifierSets(Content.Shared.Damage.DamageSpecifier%2CIEnumerable%7BContent.Shared.Damage.DamageModifierSet%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Damage/DamageSpecifier.cs/#L147">View Source</a>
+  </span>
+  <a id="Content_Shared_Damage_DamageSpecifier_ApplyModifierSets_" data-uid="Content.Shared.Damage.DamageSpecifier.ApplyModifierSets*"></a>
+  <h4 id="Content_Shared_Damage_DamageSpecifier_ApplyModifierSets_Content_Shared_Damage_DamageSpecifier_IEnumerable_Content_Shared_Damage_DamageModifierSet__" data-uid="Content.Shared.Damage.DamageSpecifier.ApplyModifierSets(Content.Shared.Damage.DamageSpecifier,IEnumerable{Content.Shared.Damage.DamageModifierSet})">ApplyModifierSets(DamageSpecifier, IEnumerable&lt;DamageModifierSet&gt;)</h4>
+  <div class="markdown level1 summary"><p>Reduce (or increase) damages by applying multiple modifier sets.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static DamageSpecifier ApplyModifierSets(DamageSpecifier damageSpec, IEnumerable&lt;DamageModifierSet&gt; modifierSets)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Damage.DamageSpecifier.html">DamageSpecifier</a></td>
+        <td><span class="parametername">damageSpec</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">IEnumerable</span>&lt;<a class="xref" href="Content.Shared.Damage.DamageModifierSet.html">DamageModifierSet</a>&gt;</td>
+        <td><span class="parametername">modifierSets</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Damage.DamageSpecifier.html">DamageSpecifier</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Damage_DamageSpecifier_Clamp_Content_Shared_FixedPoint_FixedPoint2_Content_Shared_FixedPoint_FixedPoint2_.md&amp;value=---%0Auid%3A%20Content.Shared.Damage.DamageSpecifier.Clamp(Content.Shared.FixedPoint.FixedPoint2%2CContent.Shared.FixedPoint.FixedPoint2)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Damage/DamageSpecifier.cs/#L176">View Source</a>
+  </span>
+  <a id="Content_Shared_Damage_DamageSpecifier_Clamp_" data-uid="Content.Shared.Damage.DamageSpecifier.Clamp*"></a>
+  <h4 id="Content_Shared_Damage_DamageSpecifier_Clamp_Content_Shared_FixedPoint_FixedPoint2_Content_Shared_FixedPoint_FixedPoint2_" data-uid="Content.Shared.Damage.DamageSpecifier.Clamp(Content.Shared.FixedPoint.FixedPoint2,Content.Shared.FixedPoint.FixedPoint2)">Clamp(FixedPoint2, FixedPoint2)</h4>
+  <div class="markdown level1 summary"><p>Clamps each damage value to be within the given range.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Clamp(FixedPoint2 minValue, FixedPoint2 maxValue)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.FixedPoint.FixedPoint2.html">FixedPoint2</a></td>
+        <td><span class="parametername">minValue</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Shared.FixedPoint.FixedPoint2.html">FixedPoint2</a></td>
+        <td><span class="parametername">maxValue</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Damage_DamageSpecifier_ClampMax_Content_Shared_FixedPoint_FixedPoint2_.md&amp;value=---%0Auid%3A%20Content.Shared.Damage.DamageSpecifier.ClampMax(Content.Shared.FixedPoint.FixedPoint2)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Damage/DamageSpecifier.cs/#L204">View Source</a>
+  </span>
+  <a id="Content_Shared_Damage_DamageSpecifier_ClampMax_" data-uid="Content.Shared.Damage.DamageSpecifier.ClampMax*"></a>
+  <h4 id="Content_Shared_Damage_DamageSpecifier_ClampMax_Content_Shared_FixedPoint_FixedPoint2_" data-uid="Content.Shared.Damage.DamageSpecifier.ClampMax(Content.Shared.FixedPoint.FixedPoint2)">ClampMax(FixedPoint2)</h4>
+  <div class="markdown level1 summary"><p>Sets all damage values to be at most some number. Note that if a damage type is not present in the
+dictionary, these will not be added.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void ClampMax(FixedPoint2 maxValue)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.FixedPoint.FixedPoint2.html">FixedPoint2</a></td>
+        <td><span class="parametername">maxValue</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Damage_DamageSpecifier_ClampMin_Content_Shared_FixedPoint_FixedPoint2_.md&amp;value=---%0Auid%3A%20Content.Shared.Damage.DamageSpecifier.ClampMin(Content.Shared.FixedPoint.FixedPoint2)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Damage/DamageSpecifier.cs/#L189">View Source</a>
+  </span>
+  <a id="Content_Shared_Damage_DamageSpecifier_ClampMin_" data-uid="Content.Shared.Damage.DamageSpecifier.ClampMin*"></a>
+  <h4 id="Content_Shared_Damage_DamageSpecifier_ClampMin_Content_Shared_FixedPoint_FixedPoint2_" data-uid="Content.Shared.Damage.DamageSpecifier.ClampMin(Content.Shared.FixedPoint.FixedPoint2)">ClampMin(FixedPoint2)</h4>
+  <div class="markdown level1 summary"><p>Sets all damage values to be at least as large as the given number.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void ClampMin(FixedPoint2 minValue)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.FixedPoint.FixedPoint2.html">FixedPoint2</a></td>
+        <td><span class="parametername">minValue</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Content_Shared_Damage_DamageSpecifier_ClampMin_Content_Shared_FixedPoint_FixedPoint2__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Note that this only acts on damage types present in the dictionary. It will not add new damage types.</p>
+</div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Damage_DamageSpecifier_Equals_Content_Shared_Damage_DamageSpecifier_.md&amp;value=---%0Auid%3A%20Content.Shared.Damage.DamageSpecifier.Equals(Content.Shared.Damage.DamageSpecifier)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Damage/DamageSpecifier.cs/#L362">View Source</a>
+  </span>
+  <a id="Content_Shared_Damage_DamageSpecifier_Equals_" data-uid="Content.Shared.Damage.DamageSpecifier.Equals*"></a>
+  <h4 id="Content_Shared_Damage_DamageSpecifier_Equals_Content_Shared_Damage_DamageSpecifier_" data-uid="Content.Shared.Damage.DamageSpecifier.Equals(Content.Shared.Damage.DamageSpecifier)">Equals(DamageSpecifier)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool Equals(DamageSpecifier other)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Damage.DamageSpecifier.html">DamageSpecifier</a></td>
+        <td><span class="parametername">other</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Damage_DamageSpecifier_ExclusiveAdd_Content_Shared_Damage_DamageSpecifier_.md&amp;value=---%0Auid%3A%20Content.Shared.Damage.DamageSpecifier.ExclusiveAdd(Content.Shared.Damage.DamageSpecifier)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Damage/DamageSpecifier.cs/#L223">View Source</a>
+  </span>
+  <a id="Content_Shared_Damage_DamageSpecifier_ExclusiveAdd_" data-uid="Content.Shared.Damage.DamageSpecifier.ExclusiveAdd*"></a>
+  <h4 id="Content_Shared_Damage_DamageSpecifier_ExclusiveAdd_Content_Shared_Damage_DamageSpecifier_" data-uid="Content.Shared.Damage.DamageSpecifier.ExclusiveAdd(Content.Shared.Damage.DamageSpecifier)">ExclusiveAdd(DamageSpecifier)</h4>
+  <div class="markdown level1 summary"><p>This adds the damage values of some other <a class="xref" href="Content.Shared.Damage.DamageSpecifier.html">DamageSpecifier</a> to the current one without
+adding any new damage types.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void ExclusiveAdd(DamageSpecifier other)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Damage.DamageSpecifier.html">DamageSpecifier</a></td>
+        <td><span class="parametername">other</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Content_Shared_Damage_DamageSpecifier_ExclusiveAdd_Content_Shared_Damage_DamageSpecifier__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>This is used for <a class="xref" href="Content.Shared.Damage.DamageableComponent.html">DamageableComponent</a>s, such that only &quot;supported&quot; damage types are
+actually added to the component. In most other instances, you can just use the addition operator.</p>
+</div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Damage_DamageSpecifier_GetDamagePerGroup_Robust_Shared_Prototypes_IPrototypeManager_.md&amp;value=---%0Auid%3A%20Content.Shared.Damage.DamageSpecifier.GetDamagePerGroup(Robust.Shared.Prototypes.IPrototypeManager)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Damage/DamageSpecifier.cs/#L265">View Source</a>
+  </span>
+  <a id="Content_Shared_Damage_DamageSpecifier_GetDamagePerGroup_" data-uid="Content.Shared.Damage.DamageSpecifier.GetDamagePerGroup*"></a>
+  <h4 id="Content_Shared_Damage_DamageSpecifier_GetDamagePerGroup_Robust_Shared_Prototypes_IPrototypeManager_" data-uid="Content.Shared.Damage.DamageSpecifier.GetDamagePerGroup(Robust.Shared.Prototypes.IPrototypeManager)">GetDamagePerGroup(IPrototypeManager)</h4>
+  <div class="markdown level1 summary"><p>Returns a dictionary using <a class="xref" href="Content.Shared.Damage.Prototypes.DamageGroupPrototype.html#Content_Shared_Damage_Prototypes_DamageGroupPrototype_ID">ID</a> keys, with values calculated by adding
+up the values for each damage type in that group</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Dictionary&lt;string, FixedPoint2&gt; GetDamagePerGroup(IPrototypeManager protoManager = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Robust.Shared.Prototypes.IPrototypeManager</span></td>
+        <td><span class="parametername">protoManager</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Dictionary</span>&lt;<span class="xref">System.String</span>, <a class="xref" href="Content.Shared.FixedPoint.FixedPoint2.html">FixedPoint2</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Content_Shared_Damage_DamageSpecifier_GetDamagePerGroup_Robust_Shared_Prototypes_IPrototypeManager__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>If a damage type is associated with more than one supported damage group, it will contribute to the
+total of each group. If no members of a group are present in this <a class="xref" href="Content.Shared.Damage.DamageSpecifier.html">DamageSpecifier</a>, the
+group is not included in the resulting dictionary.</p>
+</div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Damage_DamageSpecifier_TrimZeros.md&amp;value=---%0Auid%3A%20Content.Shared.Damage.DamageSpecifier.TrimZeros%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Damage/DamageSpecifier.cs/#L162">View Source</a>
+  </span>
+  <a id="Content_Shared_Damage_DamageSpecifier_TrimZeros_" data-uid="Content.Shared.Damage.DamageSpecifier.TrimZeros*"></a>
+  <h4 id="Content_Shared_Damage_DamageSpecifier_TrimZeros" data-uid="Content.Shared.Damage.DamageSpecifier.TrimZeros">TrimZeros()</h4>
+  <div class="markdown level1 summary"><p>Remove any damage entries with zero damage.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void TrimZeros()</code></pre>
+  </div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Damage_DamageSpecifier_TryGetDamageInGroup_Content_Shared_Damage_Prototypes_DamageGroupPrototype_Content_Shared_FixedPoint_FixedPoint2__.md&amp;value=---%0Auid%3A%20Content.Shared.Damage.DamageSpecifier.TryGetDamageInGroup(Content.Shared.Damage.Prototypes.DamageGroupPrototype%2CContent.Shared.FixedPoint.FixedPoint2%40)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Damage/DamageSpecifier.cs/#L240">View Source</a>
+  </span>
+  <a id="Content_Shared_Damage_DamageSpecifier_TryGetDamageInGroup_" data-uid="Content.Shared.Damage.DamageSpecifier.TryGetDamageInGroup*"></a>
+  <h4 id="Content_Shared_Damage_DamageSpecifier_TryGetDamageInGroup_Content_Shared_Damage_Prototypes_DamageGroupPrototype_Content_Shared_FixedPoint_FixedPoint2__" data-uid="Content.Shared.Damage.DamageSpecifier.TryGetDamageInGroup(Content.Shared.Damage.Prototypes.DamageGroupPrototype,Content.Shared.FixedPoint.FixedPoint2@)">TryGetDamageInGroup(DamageGroupPrototype, out FixedPoint2)</h4>
+  <div class="markdown level1 summary"><p>Add up all the damage values for damage types that are members of a given group.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool TryGetDamageInGroup(DamageGroupPrototype group, out FixedPoint2 total)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Damage.Prototypes.DamageGroupPrototype.html">DamageGroupPrototype</a></td>
+        <td><span class="parametername">group</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Shared.FixedPoint.FixedPoint2.html">FixedPoint2</a></td>
+        <td><span class="parametername">total</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Content_Shared_Damage_DamageSpecifier_TryGetDamageInGroup_Content_Shared_Damage_Prototypes_DamageGroupPrototype_Content_Shared_FixedPoint_FixedPoint2___remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>If no members of the group are included in this specifier, returns false.</p>
+</div>
+  <h3 id="operators">Operators
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Damage_DamageSpecifier_op_Addition_Content_Shared_Damage_DamageSpecifier_Content_Shared_Damage_DamageSpecifier_.md&amp;value=---%0Auid%3A%20Content.Shared.Damage.DamageSpecifier.op_Addition(Content.Shared.Damage.DamageSpecifier%2CContent.Shared.Damage.DamageSpecifier)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Damage/DamageSpecifier.cs/#L321">View Source</a>
+  </span>
+  <a id="Content_Shared_Damage_DamageSpecifier_op_Addition_" data-uid="Content.Shared.Damage.DamageSpecifier.op_Addition*"></a>
+  <h4 id="Content_Shared_Damage_DamageSpecifier_op_Addition_Content_Shared_Damage_DamageSpecifier_Content_Shared_Damage_DamageSpecifier_" data-uid="Content.Shared.Damage.DamageSpecifier.op_Addition(Content.Shared.Damage.DamageSpecifier,Content.Shared.Damage.DamageSpecifier)">Addition(DamageSpecifier, DamageSpecifier)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static DamageSpecifier operator +(DamageSpecifier damageSpecA, DamageSpecifier damageSpecB)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Damage.DamageSpecifier.html">DamageSpecifier</a></td>
+        <td><span class="parametername">damageSpecA</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Damage.DamageSpecifier.html">DamageSpecifier</a></td>
+        <td><span class="parametername">damageSpecB</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Damage.DamageSpecifier.html">DamageSpecifier</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Damage_DamageSpecifier_op_Division_Content_Shared_Damage_DamageSpecifier_Content_Shared_FixedPoint_FixedPoint2_.md&amp;value=---%0Auid%3A%20Content.Shared.Damage.DamageSpecifier.op_Division(Content.Shared.Damage.DamageSpecifier%2CContent.Shared.FixedPoint.FixedPoint2)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Damage/DamageSpecifier.cs/#L300">View Source</a>
+  </span>
+  <a id="Content_Shared_Damage_DamageSpecifier_op_Division_" data-uid="Content.Shared.Damage.DamageSpecifier.op_Division*"></a>
+  <h4 id="Content_Shared_Damage_DamageSpecifier_op_Division_Content_Shared_Damage_DamageSpecifier_Content_Shared_FixedPoint_FixedPoint2_" data-uid="Content.Shared.Damage.DamageSpecifier.op_Division(Content.Shared.Damage.DamageSpecifier,Content.Shared.FixedPoint.FixedPoint2)">Division(DamageSpecifier, FixedPoint2)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static DamageSpecifier operator /(DamageSpecifier damageSpec, FixedPoint2 factor)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Damage.DamageSpecifier.html">DamageSpecifier</a></td>
+        <td><span class="parametername">damageSpec</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Shared.FixedPoint.FixedPoint2.html">FixedPoint2</a></td>
+        <td><span class="parametername">factor</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Damage.DamageSpecifier.html">DamageSpecifier</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Damage_DamageSpecifier_op_Division_Content_Shared_Damage_DamageSpecifier_System_Single_.md&amp;value=---%0Auid%3A%20Content.Shared.Damage.DamageSpecifier.op_Division(Content.Shared.Damage.DamageSpecifier%2CSystem.Single)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Damage/DamageSpecifier.cs/#L310">View Source</a>
+  </span>
+  <a id="Content_Shared_Damage_DamageSpecifier_op_Division_" data-uid="Content.Shared.Damage.DamageSpecifier.op_Division*"></a>
+  <h4 id="Content_Shared_Damage_DamageSpecifier_op_Division_Content_Shared_Damage_DamageSpecifier_System_Single_" data-uid="Content.Shared.Damage.DamageSpecifier.op_Division(Content.Shared.Damage.DamageSpecifier,System.Single)">Division(DamageSpecifier, Single)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static DamageSpecifier operator /(DamageSpecifier damageSpec, float factor)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Damage.DamageSpecifier.html">DamageSpecifier</a></td>
+        <td><span class="parametername">damageSpec</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td><span class="parametername">factor</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Damage.DamageSpecifier.html">DamageSpecifier</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Damage_DamageSpecifier_op_Multiply_Content_Shared_Damage_DamageSpecifier_Content_Shared_FixedPoint_FixedPoint2_.md&amp;value=---%0Auid%3A%20Content.Shared.Damage.DamageSpecifier.op_Multiply(Content.Shared.Damage.DamageSpecifier%2CContent.Shared.FixedPoint.FixedPoint2)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Damage/DamageSpecifier.cs/#L280">View Source</a>
+  </span>
+  <a id="Content_Shared_Damage_DamageSpecifier_op_Multiply_" data-uid="Content.Shared.Damage.DamageSpecifier.op_Multiply*"></a>
+  <h4 id="Content_Shared_Damage_DamageSpecifier_op_Multiply_Content_Shared_Damage_DamageSpecifier_Content_Shared_FixedPoint_FixedPoint2_" data-uid="Content.Shared.Damage.DamageSpecifier.op_Multiply(Content.Shared.Damage.DamageSpecifier,Content.Shared.FixedPoint.FixedPoint2)">Multiply(DamageSpecifier, FixedPoint2)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static DamageSpecifier operator *(DamageSpecifier damageSpec, FixedPoint2 factor)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Damage.DamageSpecifier.html">DamageSpecifier</a></td>
+        <td><span class="parametername">damageSpec</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Shared.FixedPoint.FixedPoint2.html">FixedPoint2</a></td>
+        <td><span class="parametername">factor</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Damage.DamageSpecifier.html">DamageSpecifier</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Damage_DamageSpecifier_op_Multiply_Content_Shared_Damage_DamageSpecifier_System_Single_.md&amp;value=---%0Auid%3A%20Content.Shared.Damage.DamageSpecifier.op_Multiply(Content.Shared.Damage.DamageSpecifier%2CSystem.Single)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Damage/DamageSpecifier.cs/#L290">View Source</a>
+  </span>
+  <a id="Content_Shared_Damage_DamageSpecifier_op_Multiply_" data-uid="Content.Shared.Damage.DamageSpecifier.op_Multiply*"></a>
+  <h4 id="Content_Shared_Damage_DamageSpecifier_op_Multiply_Content_Shared_Damage_DamageSpecifier_System_Single_" data-uid="Content.Shared.Damage.DamageSpecifier.op_Multiply(Content.Shared.Damage.DamageSpecifier,System.Single)">Multiply(DamageSpecifier, Single)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static DamageSpecifier operator *(DamageSpecifier damageSpec, float factor)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Damage.DamageSpecifier.html">DamageSpecifier</a></td>
+        <td><span class="parametername">damageSpec</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td><span class="parametername">factor</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Damage.DamageSpecifier.html">DamageSpecifier</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Damage_DamageSpecifier_op_Multiply_Content_Shared_FixedPoint_FixedPoint2_Content_Shared_Damage_DamageSpecifier_.md&amp;value=---%0Auid%3A%20Content.Shared.Damage.DamageSpecifier.op_Multiply(Content.Shared.FixedPoint.FixedPoint2%2CContent.Shared.Damage.DamageSpecifier)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Damage/DamageSpecifier.cs/#L360">View Source</a>
+  </span>
+  <a id="Content_Shared_Damage_DamageSpecifier_op_Multiply_" data-uid="Content.Shared.Damage.DamageSpecifier.op_Multiply*"></a>
+  <h4 id="Content_Shared_Damage_DamageSpecifier_op_Multiply_Content_Shared_FixedPoint_FixedPoint2_Content_Shared_Damage_DamageSpecifier_" data-uid="Content.Shared.Damage.DamageSpecifier.op_Multiply(Content.Shared.FixedPoint.FixedPoint2,Content.Shared.Damage.DamageSpecifier)">Multiply(FixedPoint2, DamageSpecifier)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static DamageSpecifier operator *(FixedPoint2 factor, DamageSpecifier damageSpec)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.FixedPoint.FixedPoint2.html">FixedPoint2</a></td>
+        <td><span class="parametername">factor</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Damage.DamageSpecifier.html">DamageSpecifier</a></td>
+        <td><span class="parametername">damageSpec</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Damage.DamageSpecifier.html">DamageSpecifier</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Damage_DamageSpecifier_op_Multiply_System_Single_Content_Shared_Damage_DamageSpecifier_.md&amp;value=---%0Auid%3A%20Content.Shared.Damage.DamageSpecifier.op_Multiply(System.Single%2CContent.Shared.Damage.DamageSpecifier)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Damage/DamageSpecifier.cs/#L358">View Source</a>
+  </span>
+  <a id="Content_Shared_Damage_DamageSpecifier_op_Multiply_" data-uid="Content.Shared.Damage.DamageSpecifier.op_Multiply*"></a>
+  <h4 id="Content_Shared_Damage_DamageSpecifier_op_Multiply_System_Single_Content_Shared_Damage_DamageSpecifier_" data-uid="Content.Shared.Damage.DamageSpecifier.op_Multiply(System.Single,Content.Shared.Damage.DamageSpecifier)">Multiply(Single, DamageSpecifier)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static DamageSpecifier operator *(float factor, DamageSpecifier damageSpec)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td><span class="parametername">factor</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Damage.DamageSpecifier.html">DamageSpecifier</a></td>
+        <td><span class="parametername">damageSpec</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Damage.DamageSpecifier.html">DamageSpecifier</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Damage_DamageSpecifier_op_Subtraction_Content_Shared_Damage_DamageSpecifier_Content_Shared_Damage_DamageSpecifier_.md&amp;value=---%0Auid%3A%20Content.Shared.Damage.DamageSpecifier.op_Subtraction(Content.Shared.Damage.DamageSpecifier%2CContent.Shared.Damage.DamageSpecifier)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Damage/DamageSpecifier.cs/#L340">View Source</a>
+  </span>
+  <a id="Content_Shared_Damage_DamageSpecifier_op_Subtraction_" data-uid="Content.Shared.Damage.DamageSpecifier.op_Subtraction*"></a>
+  <h4 id="Content_Shared_Damage_DamageSpecifier_op_Subtraction_Content_Shared_Damage_DamageSpecifier_Content_Shared_Damage_DamageSpecifier_" data-uid="Content.Shared.Damage.DamageSpecifier.op_Subtraction(Content.Shared.Damage.DamageSpecifier,Content.Shared.Damage.DamageSpecifier)">Subtraction(DamageSpecifier, DamageSpecifier)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static DamageSpecifier operator -(DamageSpecifier damageSpecA, DamageSpecifier damageSpecB)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Damage.DamageSpecifier.html">DamageSpecifier</a></td>
+        <td><span class="parametername">damageSpecA</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Damage.DamageSpecifier.html">DamageSpecifier</a></td>
+        <td><span class="parametername">damageSpecB</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Damage.DamageSpecifier.html">DamageSpecifier</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Damage_DamageSpecifier_op_UnaryNegation_Content_Shared_Damage_DamageSpecifier_.md&amp;value=---%0Auid%3A%20Content.Shared.Damage.DamageSpecifier.op_UnaryNegation(Content.Shared.Damage.DamageSpecifier)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Damage/DamageSpecifier.cs/#L356">View Source</a>
+  </span>
+  <a id="Content_Shared_Damage_DamageSpecifier_op_UnaryNegation_" data-uid="Content.Shared.Damage.DamageSpecifier.op_UnaryNegation*"></a>
+  <h4 id="Content_Shared_Damage_DamageSpecifier_op_UnaryNegation_Content_Shared_Damage_DamageSpecifier_" data-uid="Content.Shared.Damage.DamageSpecifier.op_UnaryNegation(Content.Shared.Damage.DamageSpecifier)">UnaryNegation(DamageSpecifier)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static DamageSpecifier operator -(DamageSpecifier damageSpec)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Damage.DamageSpecifier.html">DamageSpecifier</a></td>
+        <td><span class="parametername">damageSpec</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Damage.DamageSpecifier.html">DamageSpecifier</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Damage_DamageSpecifier_op_UnaryPlus_Content_Shared_Damage_DamageSpecifier_.md&amp;value=---%0Auid%3A%20Content.Shared.Damage.DamageSpecifier.op_UnaryPlus(Content.Shared.Damage.DamageSpecifier)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Damage/DamageSpecifier.cs/#L354">View Source</a>
+  </span>
+  <a id="Content_Shared_Damage_DamageSpecifier_op_UnaryPlus_" data-uid="Content.Shared.Damage.DamageSpecifier.op_UnaryPlus*"></a>
+  <h4 id="Content_Shared_Damage_DamageSpecifier_op_UnaryPlus_Content_Shared_Damage_DamageSpecifier_" data-uid="Content.Shared.Damage.DamageSpecifier.op_UnaryPlus(Content.Shared.Damage.DamageSpecifier)">UnaryPlus(DamageSpecifier)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static DamageSpecifier operator +(DamageSpecifier damageSpec)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Damage.DamageSpecifier.html">DamageSpecifier</a></td>
+        <td><span class="parametername">damageSpec</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Damage.DamageSpecifier.html">DamageSpecifier</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Damage_DamageSpecifier.md&amp;value=---%0Auid%3A%20Content.Shared.Damage.DamageSpecifier%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Damage/DamageSpecifier.cs/#L18" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <div class="toggle-mode">
+                <div class="icon">
+                  <i aria-hidden="true">☀</i>
+                </div>
+                <label class="switch">
+                  <input type="checkbox" id="switch-style">
+                  <span class="slider round"></span>
+                </label>
+                <div class="icon">
+                  <i aria-hidden="true">☾</i>
+                </div>
+              </div>
+          
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <h5>In This Article</h5>
+              <div></div>
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <div class="pull-left">
+              
+              <span>Generated by <strong>DocFX</strong></span>
+            </div>
+            <div class="toggle-mode pull-right visible-sm visible-xs">
+              <div class="icon">
+                <i aria-hidden="true">☀</i>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="switch-style-m">
+                <span class="slider round"></span>
+              </label>
+              <div class="icon">
+                <i aria-hidden="true">☾</i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <script type="text/javascript" src="../../styles/toggle-theme.js"></script>
+      </footer>    </div>
+    
+    <script type="text/javascript" src="../../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../../styles/docfx.js"></script>
+    <script type="text/javascript" src="../../styles/main.js"></script>
+  </body>
+</html>

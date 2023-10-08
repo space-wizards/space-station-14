@@ -1,0 +1,1254 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class SharedMoverController
+   </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class SharedMoverController
+   ">
+    <meta name="generator" content="docfx 2.56.7.0">
+    
+    <link rel="shortcut icon" href="../../favicon.ico">
+    <link rel="stylesheet" href="../../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../../styles/docfx.css">
+    <link rel="stylesheet" href="../../styles/main.css">
+    <meta property="docfx:navrel" content="../../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../../index.html">
+                <img id="logo" class="svg" src="../../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Content.Shared.Movement.Systems.SharedMoverController">
+  
+  
+  <h1 id="Content_Shared_Movement_Systems_SharedMoverController" data-uid="Content.Shared.Movement.Systems.SharedMoverController" class="text-break">Class SharedMoverController
+  </h1>
+  <div class="markdown level0 summary"><p>Handles player and NPC mob movement.
+NPCs are handled server-side only.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level1"><span class="xref">Robust.Shared.GameObjects.EntitySystem</span></div>
+    <div class="level2"><span class="xref">Robust.Shared.Physics.Controllers.VirtualController</span></div>
+    <div class="level3"><span class="xref">SharedMoverController</span></div>
+      <div class="level4"><a class="xref" href="../Content.Client/Content.Client.Physics.Controllers.MoverController.html">MoverController</a></div>
+      <div class="level4"><a class="xref" href="../Content.Server/Content.Server.Physics.Controllers.MoverController.html">MoverController</a></div>
+  </div>
+  <div classs="implements">
+    <h5>Implements</h5>
+    <div><span class="xref">Robust.Shared.GameObjects.IEntitySystem</span></div>
+    <div><span class="xref">Robust.Shared.GameObjects.IEntityEventSubscriber</span></div>
+    <div><span class="xref">Robust.Shared.IoC.IPostInjectInit</span></div>
+  </div>
+  <div class="inheritedMembers">
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Content.Shared.Movement.Systems.html">Content.Shared.Movement.Systems</a></h6>
+  <h6><strong>Assembly</strong>: Content.Shared.dll</h6>
+  <h5 id="Content_Shared_Movement_Systems_SharedMoverController_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public abstract class SharedMoverController : VirtualController, IEntitySystem, IEntityEventSubscriber, IPostInjectInit</code></pre>
+  </div>
+  <h3 id="fields">Fields
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Movement_Systems_SharedMoverController_CanMoveInAirQuery.md&amp;value=---%0Auid%3A%20Content.Shared.Movement.Systems.SharedMoverController.CanMoveInAirQuery%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Movement/Systems/SharedMoverController.cs/#L56">View Source</a>
+  </span>
+  <h4 id="Content_Shared_Movement_Systems_SharedMoverController_CanMoveInAirQuery" data-uid="Content.Shared.Movement.Systems.SharedMoverController.CanMoveInAirQuery">CanMoveInAirQuery</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected EntityQuery&lt;CanMoveInAirComponent&gt; CanMoveInAirQuery</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityQuery</span>&lt;<a class="xref" href="Content.Shared.Movement.Components.CanMoveInAirComponent.html">CanMoveInAirComponent</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Movement_Systems_SharedMoverController_MobMoverQuery.md&amp;value=---%0Auid%3A%20Content.Shared.Movement.Systems.SharedMoverController.MobMoverQuery%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Movement/Systems/SharedMoverController.cs/#L49">View Source</a>
+  </span>
+  <h4 id="Content_Shared_Movement_Systems_SharedMoverController_MobMoverQuery" data-uid="Content.Shared.Movement.Systems.SharedMoverController.MobMoverQuery">MobMoverQuery</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected EntityQuery&lt;MobMoverComponent&gt; MobMoverQuery</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityQuery</span>&lt;<a class="xref" href="Content.Shared.Movement.Components.MobMoverComponent.html">MobMoverComponent</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Movement_Systems_SharedMoverController_ModifierQuery.md&amp;value=---%0Auid%3A%20Content.Shared.Movement.Systems.SharedMoverController.ModifierQuery%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Movement/Systems/SharedMoverController.cs/#L51">View Source</a>
+  </span>
+  <h4 id="Content_Shared_Movement_Systems_SharedMoverController_ModifierQuery" data-uid="Content.Shared.Movement.Systems.SharedMoverController.ModifierQuery">ModifierQuery</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected EntityQuery&lt;MovementSpeedModifierComponent&gt; ModifierQuery</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityQuery</span>&lt;<a class="xref" href="Content.Shared.Movement.Components.MovementSpeedModifierComponent.html">MovementSpeedModifierComponent</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Movement_Systems_SharedMoverController_MoverQuery.md&amp;value=---%0Auid%3A%20Content.Shared.Movement.Systems.SharedMoverController.MoverQuery%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Movement/Systems/SharedMoverController.cs/#L48">View Source</a>
+  </span>
+  <h4 id="Content_Shared_Movement_Systems_SharedMoverController_MoverQuery" data-uid="Content.Shared.Movement.Systems.SharedMoverController.MoverQuery">MoverQuery</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected EntityQuery&lt;InputMoverComponent&gt; MoverQuery</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityQuery</span>&lt;<a class="xref" href="Content.Shared.Movement.Components.InputMoverComponent.html">InputMoverComponent</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Movement_Systems_SharedMoverController_NoRotateQuery.md&amp;value=---%0Auid%3A%20Content.Shared.Movement.Systems.SharedMoverController.NoRotateQuery%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Movement/Systems/SharedMoverController.cs/#L57">View Source</a>
+  </span>
+  <h4 id="Content_Shared_Movement_Systems_SharedMoverController_NoRotateQuery" data-uid="Content.Shared.Movement.Systems.SharedMoverController.NoRotateQuery">NoRotateQuery</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected EntityQuery&lt;NoRotateOnMoveComponent&gt; NoRotateQuery</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityQuery</span>&lt;<a class="xref" href="Content.Shared.Movement.Components.NoRotateOnMoveComponent.html">NoRotateOnMoveComponent</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Movement_Systems_SharedMoverController_Physics.md&amp;value=---%0Auid%3A%20Content.Shared.Movement.Systems.SharedMoverController.Physics%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Movement/Systems/SharedMoverController.cs/#L44">View Source</a>
+  </span>
+  <h4 id="Content_Shared_Movement_Systems_SharedMoverController_Physics" data-uid="Content.Shared.Movement.Systems.SharedMoverController.Physics">Physics</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected readonly SharedPhysicsSystem Physics</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Robust.Shared.Physics.Systems.SharedPhysicsSystem</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Movement_Systems_SharedMoverController_PhysicsQuery.md&amp;value=---%0Auid%3A%20Content.Shared.Movement.Systems.SharedMoverController.PhysicsQuery%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Movement/Systems/SharedMoverController.cs/#L52">View Source</a>
+  </span>
+  <h4 id="Content_Shared_Movement_Systems_SharedMoverController_PhysicsQuery" data-uid="Content.Shared.Movement.Systems.SharedMoverController.PhysicsQuery">PhysicsQuery</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected EntityQuery&lt;PhysicsComponent&gt; PhysicsQuery</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityQuery</span>&lt;<span class="xref">Robust.Shared.Physics.Components.PhysicsComponent</span>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Movement_Systems_SharedMoverController_PullableQuery.md&amp;value=---%0Auid%3A%20Content.Shared.Movement.Systems.SharedMoverController.PullableQuery%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Movement/Systems/SharedMoverController.cs/#L54">View Source</a>
+  </span>
+  <h4 id="Content_Shared_Movement_Systems_SharedMoverController_PullableQuery" data-uid="Content.Shared.Movement.Systems.SharedMoverController.PullableQuery">PullableQuery</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected EntityQuery&lt;SharedPullableComponent&gt; PullableQuery</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityQuery</span>&lt;<a class="xref" href="Content.Shared.Pulling.Components.SharedPullableComponent.html">SharedPullableComponent</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Movement_Systems_SharedMoverController_RelayQuery.md&amp;value=---%0Auid%3A%20Content.Shared.Movement.Systems.SharedMoverController.RelayQuery%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Movement/Systems/SharedMoverController.cs/#L53">View Source</a>
+  </span>
+  <h4 id="Content_Shared_Movement_Systems_SharedMoverController_RelayQuery" data-uid="Content.Shared.Movement.Systems.SharedMoverController.RelayQuery">RelayQuery</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected EntityQuery&lt;RelayInputMoverComponent&gt; RelayQuery</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityQuery</span>&lt;<a class="xref" href="Content.Shared.Movement.Components.RelayInputMoverComponent.html">RelayInputMoverComponent</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Movement_Systems_SharedMoverController_RelayTargetQuery.md&amp;value=---%0Auid%3A%20Content.Shared.Movement.Systems.SharedMoverController.RelayTargetQuery%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Movement/Systems/SharedMoverController.cs/#L50">View Source</a>
+  </span>
+  <h4 id="Content_Shared_Movement_Systems_SharedMoverController_RelayTargetQuery" data-uid="Content.Shared.Movement.Systems.SharedMoverController.RelayTargetQuery">RelayTargetQuery</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected EntityQuery&lt;MovementRelayTargetComponent&gt; RelayTargetQuery</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityQuery</span>&lt;<a class="xref" href="Content.Shared.Movement.Components.MovementRelayTargetComponent.html">MovementRelayTargetComponent</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Movement_Systems_SharedMoverController_Timing.md&amp;value=---%0Auid%3A%20Content.Shared.Movement.Systems.SharedMoverController.Timing%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Movement/Systems/SharedMoverController.cs/#L34">View Source</a>
+  </span>
+  <h4 id="Content_Shared_Movement_Systems_SharedMoverController_Timing" data-uid="Content.Shared.Movement.Systems.SharedMoverController.Timing">Timing</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected readonly IGameTiming Timing</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Robust.Shared.Timing.IGameTiming</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Movement_Systems_SharedMoverController_UsedMobMovement.md&amp;value=---%0Auid%3A%20Content.Shared.Movement.Systems.SharedMoverController.UsedMobMovement%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Movement/Systems/SharedMoverController.cs/#L74">View Source</a>
+  </span>
+  <h4 id="Content_Shared_Movement_Systems_SharedMoverController_UsedMobMovement" data-uid="Content.Shared.Movement.Systems.SharedMoverController.UsedMobMovement">UsedMobMovement</h4>
+  <div class="markdown level1 summary"><p>Cache the mob movement calculation to re-use elsewhere.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Dictionary&lt;EntityUid, bool&gt; UsedMobMovement</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Dictionary</span>&lt;<span class="xref">EntityUid</span>, <span class="xref">System.Boolean</span>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Movement_Systems_SharedMoverController_XformQuery.md&amp;value=---%0Auid%3A%20Content.Shared.Movement.Systems.SharedMoverController.XformQuery%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Movement/Systems/SharedMoverController.cs/#L55">View Source</a>
+  </span>
+  <h4 id="Content_Shared_Movement_Systems_SharedMoverController_XformQuery" data-uid="Content.Shared.Movement.Systems.SharedMoverController.XformQuery">XformQuery</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected EntityQuery&lt;TransformComponent&gt; XformQuery</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityQuery</span>&lt;<span class="xref">TransformComponent</span>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="properties">Properties
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Movement_Systems_SharedMoverController_CameraRotationLocked.md&amp;value=---%0Auid%3A%20Content.Shared.Movement.Systems.SharedMoverController.CameraRotationLocked%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Movement/Systems/SharedMoverController.Input.cs/#L21">View Source</a>
+  </span>
+  <a id="Content_Shared_Movement_Systems_SharedMoverController_CameraRotationLocked_" data-uid="Content.Shared.Movement.Systems.SharedMoverController.CameraRotationLocked*"></a>
+  <h4 id="Content_Shared_Movement_Systems_SharedMoverController_CameraRotationLocked" data-uid="Content.Shared.Movement.Systems.SharedMoverController.CameraRotationLocked">CameraRotationLocked</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool CameraRotationLocked { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Movement_Systems_SharedMoverController_DiagonalMovementEnabled.md&amp;value=---%0Auid%3A%20Content.Shared.Movement.Systems.SharedMoverController.DiagonalMovementEnabled%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Movement/Systems/SharedMoverController.Input.cs/#L89">View Source</a>
+  </span>
+  <a id="Content_Shared_Movement_Systems_SharedMoverController_DiagonalMovementEnabled_" data-uid="Content.Shared.Movement.Systems.SharedMoverController.DiagonalMovementEnabled*"></a>
+  <h4 id="Content_Shared_Movement_Systems_SharedMoverController_DiagonalMovementEnabled" data-uid="Content.Shared.Movement.Systems.SharedMoverController.DiagonalMovementEnabled">DiagonalMovementEnabled</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool DiagonalMovementEnabled { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Movement_Systems_SharedMoverController_CanSound.md&amp;value=---%0Auid%3A%20Content.Shared.Movement.Systems.SharedMoverController.CanSound%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Movement/Systems/SharedMoverController.cs/#L393">View Source</a>
+  </span>
+  <a id="Content_Shared_Movement_Systems_SharedMoverController_CanSound_" data-uid="Content.Shared.Movement.Systems.SharedMoverController.CanSound*"></a>
+  <h4 id="Content_Shared_Movement_Systems_SharedMoverController_CanSound" data-uid="Content.Shared.Movement.Systems.SharedMoverController.CanSound">CanSound()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected abstract bool CanSound()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Movement_Systems_SharedMoverController_GetParentGridAngle_Content_Shared_Movement_Components_InputMoverComponent_.md&amp;value=---%0Auid%3A%20Content.Shared.Movement.Systems.SharedMoverController.GetParentGridAngle(Content.Shared.Movement.Components.InputMoverComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Movement/Systems/SharedMoverController.Input.cs/#L176">View Source</a>
+  </span>
+  <a id="Content_Shared_Movement_Systems_SharedMoverController_GetParentGridAngle_" data-uid="Content.Shared.Movement.Systems.SharedMoverController.GetParentGridAngle*"></a>
+  <h4 id="Content_Shared_Movement_Systems_SharedMoverController_GetParentGridAngle_Content_Shared_Movement_Components_InputMoverComponent_" data-uid="Content.Shared.Movement.Systems.SharedMoverController.GetParentGridAngle(Content.Shared.Movement.Components.InputMoverComponent)">GetParentGridAngle(InputMoverComponent)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Angle GetParentGridAngle(InputMoverComponent mover)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Movement.Components.InputMoverComponent.html">InputMoverComponent</a></td>
+        <td><span class="parametername">mover</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Angle</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Movement_Systems_SharedMoverController_GetVelocityInput_Content_Shared_Movement_Components_InputMoverComponent_.md&amp;value=---%0Auid%3A%20Content.Shared.Movement.Systems.SharedMoverController.GetVelocityInput(Content.Shared.Movement.Components.InputMoverComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Movement/Systems/SharedMoverController.Input.cs/#L314">View Source</a>
+  </span>
+  <a id="Content_Shared_Movement_Systems_SharedMoverController_GetVelocityInput_" data-uid="Content.Shared.Movement.Systems.SharedMoverController.GetVelocityInput*"></a>
+  <h4 id="Content_Shared_Movement_Systems_SharedMoverController_GetVelocityInput_Content_Shared_Movement_Components_InputMoverComponent_" data-uid="Content.Shared.Movement.Systems.SharedMoverController.GetVelocityInput(Content.Shared.Movement.Components.InputMoverComponent)">GetVelocityInput(InputMoverComponent)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public (Vector2 Walking, Vector2 Sprinting) GetVelocityInput(InputMoverComponent mover)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Movement.Components.InputMoverComponent.html">InputMoverComponent</a></td>
+        <td><span class="parametername">mover</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.ValueTuple</span>&lt;<span class="xref">Vector2</span>, <span class="xref">Vector2</span>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Movement_Systems_SharedMoverController_HandleMobMovement_EntityUid_Content_Shared_Movement_Components_InputMoverComponent_EntityUid_Robust_Shared_Physics_Components_PhysicsComponent_TransformComponent_System_Single_.md&amp;value=---%0Auid%3A%20Content.Shared.Movement.Systems.SharedMoverController.HandleMobMovement(EntityUid%2CContent.Shared.Movement.Components.InputMoverComponent%2CEntityUid%2CRobust.Shared.Physics.Components.PhysicsComponent%2CTransformComponent%2CSystem.Single)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Movement/Systems/SharedMoverController.cs/#L118">View Source</a>
+  </span>
+  <a id="Content_Shared_Movement_Systems_SharedMoverController_HandleMobMovement_" data-uid="Content.Shared.Movement.Systems.SharedMoverController.HandleMobMovement*"></a>
+  <h4 id="Content_Shared_Movement_Systems_SharedMoverController_HandleMobMovement_EntityUid_Content_Shared_Movement_Components_InputMoverComponent_EntityUid_Robust_Shared_Physics_Components_PhysicsComponent_TransformComponent_System_Single_" data-uid="Content.Shared.Movement.Systems.SharedMoverController.HandleMobMovement(EntityUid,Content.Shared.Movement.Components.InputMoverComponent,EntityUid,Robust.Shared.Physics.Components.PhysicsComponent,TransformComponent,System.Single)">HandleMobMovement(EntityUid, InputMoverComponent, EntityUid, PhysicsComponent, TransformComponent, Single)</h4>
+  <div class="markdown level1 summary"><p>Movement while considering actionblockers, weightlessness, etc.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected void HandleMobMovement(EntityUid uid, InputMoverComponent mover, EntityUid physicsUid, PhysicsComponent physicsComponent, TransformComponent xform, float frameTime)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Movement.Components.InputMoverComponent.html">InputMoverComponent</a></td>
+        <td><span class="parametername">mover</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">physicsUid</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">Robust.Shared.Physics.Components.PhysicsComponent</span></td>
+        <td><span class="parametername">physicsComponent</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">TransformComponent</span></td>
+        <td><span class="parametername">xform</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td><span class="parametername">frameTime</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Movement_Systems_SharedMoverController_HandleShuttleInput_EntityUid_Content_Shared_Movement_Systems_ShuttleButtons_System_UInt16_System_Boolean_.md&amp;value=---%0Auid%3A%20Content.Shared.Movement.Systems.SharedMoverController.HandleShuttleInput(EntityUid%2CContent.Shared.Movement.Systems.ShuttleButtons%2CSystem.UInt16%2CSystem.Boolean)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Movement/Systems/SharedMoverController.Input.cs/#L93">View Source</a>
+  </span>
+  <a id="Content_Shared_Movement_Systems_SharedMoverController_HandleShuttleInput_" data-uid="Content.Shared.Movement.Systems.SharedMoverController.HandleShuttleInput*"></a>
+  <h4 id="Content_Shared_Movement_Systems_SharedMoverController_HandleShuttleInput_EntityUid_Content_Shared_Movement_Systems_ShuttleButtons_System_UInt16_System_Boolean_" data-uid="Content.Shared.Movement.Systems.SharedMoverController.HandleShuttleInput(EntityUid,Content.Shared.Movement.Systems.ShuttleButtons,System.UInt16,System.Boolean)">HandleShuttleInput(EntityUid, ShuttleButtons, UInt16, Boolean)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected virtual void HandleShuttleInput(EntityUid uid, ShuttleButtons button, ushort subTick, bool state)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Movement.Systems.ShuttleButtons.html">ShuttleButtons</a></td>
+        <td><span class="parametername">button</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.UInt16</span></td>
+        <td><span class="parametername">subTick</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">state</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Movement_Systems_SharedMoverController_Initialize.md&amp;value=---%0Auid%3A%20Content.Shared.Movement.Systems.SharedMoverController.Initialize%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Movement/Systems/SharedMoverController.cs/#L76">View Source</a>
+  </span>
+  <a id="Content_Shared_Movement_Systems_SharedMoverController_Initialize_" data-uid="Content.Shared.Movement.Systems.SharedMoverController.Initialize*"></a>
+  <h4 id="Content_Shared_Movement_Systems_SharedMoverController_Initialize" data-uid="Content.Shared.Movement.Systems.SharedMoverController.Initialize">Initialize()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override void Initialize()</code></pre>
+  </div>
+  <h5 class="overrides">Overrides</h5>
+  <div><span class="xref">Robust.Shared.Physics.Controllers.VirtualController.Initialize()</span></div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Movement_Systems_SharedMoverController_LerpRotation_EntityUid_Content_Shared_Movement_Components_InputMoverComponent_System_Single_.md&amp;value=---%0Auid%3A%20Content.Shared.Movement.Systems.SharedMoverController.LerpRotation(EntityUid%2CContent.Shared.Movement.Components.InputMoverComponent%2CSystem.Single)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Movement/Systems/SharedMoverController.cs/#L289">View Source</a>
+  </span>
+  <a id="Content_Shared_Movement_Systems_SharedMoverController_LerpRotation_" data-uid="Content.Shared.Movement.Systems.SharedMoverController.LerpRotation*"></a>
+  <h4 id="Content_Shared_Movement_Systems_SharedMoverController_LerpRotation_EntityUid_Content_Shared_Movement_Components_InputMoverComponent_System_Single_" data-uid="Content.Shared.Movement.Systems.SharedMoverController.LerpRotation(EntityUid,Content.Shared.Movement.Components.InputMoverComponent,System.Single)">LerpRotation(EntityUid, InputMoverComponent, Single)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void LerpRotation(EntityUid uid, InputMoverComponent mover, float frameTime)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Movement.Components.InputMoverComponent.html">InputMoverComponent</a></td>
+        <td><span class="parametername">mover</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td><span class="parametername">frameTime</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Movement_Systems_SharedMoverController_ResetCamera_EntityUid_.md&amp;value=---%0Auid%3A%20Content.Shared.Movement.Systems.SharedMoverController.ResetCamera(EntityUid)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Movement/Systems/SharedMoverController.Input.cs/#L109">View Source</a>
+  </span>
+  <a id="Content_Shared_Movement_Systems_SharedMoverController_ResetCamera_" data-uid="Content.Shared.Movement.Systems.SharedMoverController.ResetCamera*"></a>
+  <h4 id="Content_Shared_Movement_Systems_SharedMoverController_ResetCamera_EntityUid_" data-uid="Content.Shared.Movement.Systems.SharedMoverController.ResetCamera(EntityUid)">ResetCamera(EntityUid)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void ResetCamera(EntityUid uid)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Movement_Systems_SharedMoverController_RotateCamera_EntityUid_Angle_.md&amp;value=---%0Auid%3A%20Content.Shared.Movement.Systems.SharedMoverController.RotateCamera(EntityUid%2CAngle)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Movement/Systems/SharedMoverController.Input.cs/#L100">View Source</a>
+  </span>
+  <a id="Content_Shared_Movement_Systems_SharedMoverController_RotateCamera_" data-uid="Content.Shared.Movement.Systems.SharedMoverController.RotateCamera*"></a>
+  <h4 id="Content_Shared_Movement_Systems_SharedMoverController_RotateCamera_EntityUid_Angle_" data-uid="Content.Shared.Movement.Systems.SharedMoverController.RotateCamera(EntityUid,Angle)">RotateCamera(EntityUid, Angle)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void RotateCamera(EntityUid uid, Angle angle)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">Angle</span></td>
+        <td><span class="parametername">angle</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Movement_Systems_SharedMoverController_SetMoveInput_Content_Shared_Movement_Components_InputMoverComponent_Content_Shared_Movement_Systems_MoveButtons_.md&amp;value=---%0Auid%3A%20Content.Shared.Movement.Systems.SharedMoverController.SetMoveInput(Content.Shared.Movement.Components.InputMoverComponent%2CContent.Shared.Movement.Systems.MoveButtons)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Movement/Systems/SharedMoverController.Input.cs/#L67">View Source</a>
+  </span>
+  <a id="Content_Shared_Movement_Systems_SharedMoverController_SetMoveInput_" data-uid="Content.Shared.Movement.Systems.SharedMoverController.SetMoveInput*"></a>
+  <h4 id="Content_Shared_Movement_Systems_SharedMoverController_SetMoveInput_Content_Shared_Movement_Components_InputMoverComponent_Content_Shared_Movement_Systems_MoveButtons_" data-uid="Content.Shared.Movement.Systems.SharedMoverController.SetMoveInput(Content.Shared.Movement.Components.InputMoverComponent,Content.Shared.Movement.Systems.MoveButtons)">SetMoveInput(InputMoverComponent, MoveButtons)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected void SetMoveInput(InputMoverComponent component, MoveButtons buttons)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Movement.Components.InputMoverComponent.html">InputMoverComponent</a></td>
+        <td><span class="parametername">component</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Movement.Systems.MoveButtons.html">MoveButtons</a></td>
+        <td><span class="parametername">buttons</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Movement_Systems_SharedMoverController_SetRelay_EntityUid_EntityUid_.md&amp;value=---%0Auid%3A%20Content.Shared.Movement.Systems.SharedMoverController.SetRelay(EntityUid%2CEntityUid)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Movement/Systems/SharedMoverController.Relay.cs/#L29">View Source</a>
+  </span>
+  <a id="Content_Shared_Movement_Systems_SharedMoverController_SetRelay_" data-uid="Content.Shared.Movement.Systems.SharedMoverController.SetRelay*"></a>
+  <h4 id="Content_Shared_Movement_Systems_SharedMoverController_SetRelay_EntityUid_EntityUid_" data-uid="Content.Shared.Movement.Systems.SharedMoverController.SetRelay(EntityUid,EntityUid)">SetRelay(EntityUid, EntityUid)</h4>
+  <div class="markdown level1 summary"><p>Sets the relay entity and marks the component as dirty. This only exists because people have previously
+forgotten to Dirty(), so fuck you, you have to use this method now.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetRelay(EntityUid uid, EntityUid relayEntity)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">relayEntity</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Movement_Systems_SharedMoverController_SetSprinting_Content_Shared_Movement_Components_InputMoverComponent_System_UInt16_System_Boolean_.md&amp;value=---%0Auid%3A%20Content.Shared.Movement.Systems.SharedMoverController.SetSprinting(Content.Shared.Movement.Components.InputMoverComponent%2CSystem.UInt16%2CSystem.Boolean)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Movement/Systems/SharedMoverController.Input.cs/#L418">View Source</a>
+  </span>
+  <a id="Content_Shared_Movement_Systems_SharedMoverController_SetSprinting_" data-uid="Content.Shared.Movement.Systems.SharedMoverController.SetSprinting*"></a>
+  <h4 id="Content_Shared_Movement_Systems_SharedMoverController_SetSprinting_Content_Shared_Movement_Components_InputMoverComponent_System_UInt16_System_Boolean_" data-uid="Content.Shared.Movement.Systems.SharedMoverController.SetSprinting(Content.Shared.Movement.Components.InputMoverComponent,System.UInt16,System.Boolean)">SetSprinting(InputMoverComponent, UInt16, Boolean)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetSprinting(InputMoverComponent component, ushort subTick, bool walking)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Movement.Components.InputMoverComponent.html">InputMoverComponent</a></td>
+        <td><span class="parametername">component</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.UInt16</span></td>
+        <td><span class="parametername">subTick</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">walking</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Movement_Systems_SharedMoverController_SetVelocityDirection_Content_Shared_Movement_Components_InputMoverComponent_Direction_System_UInt16_System_Boolean_.md&amp;value=---%0Auid%3A%20Content.Shared.Movement.Systems.SharedMoverController.SetVelocityDirection(Content.Shared.Movement.Components.InputMoverComponent%2CDirection%2CSystem.UInt16%2CSystem.Boolean)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Movement/Systems/SharedMoverController.Input.cs/#L362">View Source</a>
+  </span>
+  <a id="Content_Shared_Movement_Systems_SharedMoverController_SetVelocityDirection_" data-uid="Content.Shared.Movement.Systems.SharedMoverController.SetVelocityDirection*"></a>
+  <h4 id="Content_Shared_Movement_Systems_SharedMoverController_SetVelocityDirection_Content_Shared_Movement_Components_InputMoverComponent_Direction_System_UInt16_System_Boolean_" data-uid="Content.Shared.Movement.Systems.SharedMoverController.SetVelocityDirection(Content.Shared.Movement.Components.InputMoverComponent,Direction,System.UInt16,System.Boolean)">SetVelocityDirection(InputMoverComponent, Direction, UInt16, Boolean)</h4>
+  <div class="markdown level1 summary"><p>Toggles one of the four cardinal directions. Each of the four directions are
+composed into a single direction vector, <see cref="!:VelocityDir"></see>. Enabling
+opposite directions will cancel each other out, resulting in no direction.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetVelocityDirection(InputMoverComponent component, Direction direction, ushort subTick, bool enabled)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Movement.Components.InputMoverComponent.html">InputMoverComponent</a></td>
+        <td><span class="parametername">component</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">Direction</span></td>
+        <td><span class="parametername">direction</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.UInt16</span></td>
+        <td><span class="parametername">subTick</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">enabled</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Movement_Systems_SharedMoverController_Shutdown.md&amp;value=---%0Auid%3A%20Content.Shared.Movement.Systems.SharedMoverController.Shutdown%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Movement/Systems/SharedMoverController.cs/#L101">View Source</a>
+  </span>
+  <a id="Content_Shared_Movement_Systems_SharedMoverController_Shutdown_" data-uid="Content.Shared.Movement.Systems.SharedMoverController.Shutdown*"></a>
+  <h4 id="Content_Shared_Movement_Systems_SharedMoverController_Shutdown" data-uid="Content.Shared.Movement.Systems.SharedMoverController.Shutdown">Shutdown()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override void Shutdown()</code></pre>
+  </div>
+  <h5 class="overrides">Overrides</h5>
+  <div><span class="xref">Robust.Shared.GameObjects.EntitySystem.Shutdown()</span></div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Movement_Systems_SharedMoverController_UpdateAfterSolve_System_Boolean_System_Single_.md&amp;value=---%0Auid%3A%20Content.Shared.Movement.Systems.SharedMoverController.UpdateAfterSolve(System.Boolean%2CSystem.Single)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Movement/Systems/SharedMoverController.cs/#L109">View Source</a>
+  </span>
+  <a id="Content_Shared_Movement_Systems_SharedMoverController_UpdateAfterSolve_" data-uid="Content.Shared.Movement.Systems.SharedMoverController.UpdateAfterSolve*"></a>
+  <h4 id="Content_Shared_Movement_Systems_SharedMoverController_UpdateAfterSolve_System_Boolean_System_Single_" data-uid="Content.Shared.Movement.Systems.SharedMoverController.UpdateAfterSolve(System.Boolean,System.Single)">UpdateAfterSolve(Boolean, Single)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override void UpdateAfterSolve(bool prediction, float frameTime)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">prediction</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td><span class="parametername">frameTime</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><span class="xref">Robust.Shared.Physics.Controllers.VirtualController.UpdateAfterSolve(System.Boolean, System.Single)</span></div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Movement_Systems_SharedMoverController_UseMobMovement_EntityUid_.md&amp;value=---%0Auid%3A%20Content.Shared.Movement.Systems.SharedMoverController.UseMobMovement(EntityUid)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Movement/Systems/SharedMoverController.cs/#L360">View Source</a>
+  </span>
+  <a id="Content_Shared_Movement_Systems_SharedMoverController_UseMobMovement_" data-uid="Content.Shared.Movement.Systems.SharedMoverController.UseMobMovement*"></a>
+  <h4 id="Content_Shared_Movement_Systems_SharedMoverController_UseMobMovement_EntityUid_" data-uid="Content.Shared.Movement.Systems.SharedMoverController.UseMobMovement(EntityUid)">UseMobMovement(EntityUid)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool UseMobMovement(EntityUid uid)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <span class="xref">Robust.Shared.GameObjects.IEntitySystem</span>
+  </div>
+  <div>
+      <span class="xref">Robust.Shared.GameObjects.IEntityEventSubscriber</span>
+  </div>
+  <div>
+      <span class="xref">Robust.Shared.IoC.IPostInjectInit</span>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Movement_Systems_SharedMoverController.md&amp;value=---%0Auid%3A%20Content.Shared.Movement.Systems.SharedMoverController%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Movement/Systems/SharedMoverController.Relay.cs/#L5" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <div class="toggle-mode">
+                <div class="icon">
+                  <i aria-hidden="true">☀</i>
+                </div>
+                <label class="switch">
+                  <input type="checkbox" id="switch-style">
+                  <span class="slider round"></span>
+                </label>
+                <div class="icon">
+                  <i aria-hidden="true">☾</i>
+                </div>
+              </div>
+          
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <h5>In This Article</h5>
+              <div></div>
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <div class="pull-left">
+              
+              <span>Generated by <strong>DocFX</strong></span>
+            </div>
+            <div class="toggle-mode pull-right visible-sm visible-xs">
+              <div class="icon">
+                <i aria-hidden="true">☀</i>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="switch-style-m">
+                <span class="slider round"></span>
+              </label>
+              <div class="icon">
+                <i aria-hidden="true">☾</i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <script type="text/javascript" src="../../styles/toggle-theme.js"></script>
+      </footer>    </div>
+    
+    <script type="text/javascript" src="../../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../../styles/docfx.js"></script>
+    <script type="text/javascript" src="../../styles/main.js"></script>
+  </body>
+</html>

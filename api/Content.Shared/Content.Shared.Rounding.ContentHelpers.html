@@ -1,0 +1,369 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class ContentHelpers
+   </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class ContentHelpers
+   ">
+    <meta name="generator" content="docfx 2.56.7.0">
+    
+    <link rel="shortcut icon" href="../../favicon.ico">
+    <link rel="stylesheet" href="../../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../../styles/docfx.css">
+    <link rel="stylesheet" href="../../styles/main.css">
+    <meta property="docfx:navrel" content="../../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../../index.html">
+                <img id="logo" class="svg" src="../../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Content.Shared.Rounding.ContentHelpers">
+  
+  
+  <h1 id="Content_Shared_Rounding_ContentHelpers" data-uid="Content.Shared.Rounding.ContentHelpers" class="text-break">Class ContentHelpers
+  </h1>
+  <div class="markdown level0 summary"></div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level1"><span class="xref">ContentHelpers</span></div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Content.Shared.Rounding.html">Content.Shared.Rounding</a></h6>
+  <h6><strong>Assembly</strong>: Content.Shared.dll</h6>
+  <h5 id="Content_Shared_Rounding_ContentHelpers_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static class ContentHelpers : object</code></pre>
+  </div>
+  <h3 id="methods">Methods
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Rounding_ContentHelpers_RoundToEqualLevels_System_Double_System_Double_System_Int32_.md&amp;value=---%0Auid%3A%20Content.Shared.Rounding.ContentHelpers.RoundToEqualLevels(System.Double%2CSystem.Double%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Rounding/ContentHelpers.cs/#L116">View Source</a>
+  </span>
+  <a id="Content_Shared_Rounding_ContentHelpers_RoundToEqualLevels_" data-uid="Content.Shared.Rounding.ContentHelpers.RoundToEqualLevels*"></a>
+  <h4 id="Content_Shared_Rounding_ContentHelpers_RoundToEqualLevels_System_Double_System_Double_System_Int32_" data-uid="Content.Shared.Rounding.ContentHelpers.RoundToEqualLevels(System.Double,System.Double,System.Int32)">RoundToEqualLevels(Double, Double, Int32)</h4>
+  <div class="markdown level1 summary"><p>Basically helper for when you need to choose 0..N-1 element based on what
+percentage does actual/max takes.
+Example:
+We have a stack of 30 <code data-dev-comment-type="paramref" class="paramref">max</code> elements.
+When <code data-dev-comment-type="paramref" class="paramref">actual</code> is:</p>
+<ul>
+<li>0..9 we return 0.</li>
+<li>10..19 we return 1.</li>
+<li>20..30 we return 2.</li>
+</ul>
+<p>Useful when selecting N sprites for display in stacks, etc.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static int RoundToEqualLevels(double actual, double max, int levels)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Double</span></td>
+        <td><span class="parametername">actual</span></td>
+        <td><p>How many out of max elements are there</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Double</span></td>
+        <td><span class="parametername">max</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">levels</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><p>The</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Rounding_ContentHelpers_RoundToLevels_System_Double_System_Double_System_Int32_.md&amp;value=---%0Auid%3A%20Content.Shared.Rounding.ContentHelpers.RoundToLevels(System.Double%2CSystem.Double%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Rounding/ContentHelpers.cs/#L20">View Source</a>
+  </span>
+  <a id="Content_Shared_Rounding_ContentHelpers_RoundToLevels_" data-uid="Content.Shared.Rounding.ContentHelpers.RoundToLevels*"></a>
+  <h4 id="Content_Shared_Rounding_ContentHelpers_RoundToLevels_System_Double_System_Double_System_Int32_" data-uid="Content.Shared.Rounding.ContentHelpers.RoundToLevels(System.Double,System.Double,System.Int32)">RoundToLevels(Double, Double, Int32)</h4>
+  <div class="markdown level1 summary"><p>Assigns the value <code data-dev-comment-type="paramref" class="paramref">actual</code> going from 0 to <code data-dev-comment-type="paramref" class="paramref">max</code>
+such that it is divided into a set of (amount <code data-dev-comment-type="paramref" class="paramref">levels</code>) &quot;levels&quot;.
+Rounding is performed to the &quot;middle&quot; so that the highest and lowest levels are only assigned
+if <code data-dev-comment-type="paramref" class="paramref">actual</code> is exactly <code data-dev-comment-type="paramref" class="paramref">max</code> or 0.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static int RoundToLevels(double actual, double max, int levels)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Double</span></td>
+        <td><span class="parametername">actual</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Double</span></td>
+        <td><span class="parametername">max</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">levels</span></td>
+        <td><p>The amount of levels to subdivide into.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><p>An integer from 0 to <code data-dev-comment-type="paramref" class="paramref">levels</code>-1.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Content_Shared_Rounding_ContentHelpers_RoundToLevels_System_Double_System_Double_System_Int32__examples">Examples</h5>
+  <p>Say you have a progress bar going from 0 -&gt; 100 inclusive and you want to map this to 6 sprite states (0, 4 intermediates and full).
+This method allows you to easily map this progress bar to the sprite states.</p>
+
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Rounding_ContentHelpers_RoundToNearestLevels_System_Double_System_Double_System_Int32_.md&amp;value=---%0Auid%3A%20Content.Shared.Rounding.ContentHelpers.RoundToNearestLevels(System.Double%2CSystem.Double%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Rounding/ContentHelpers.cs/#L79">View Source</a>
+  </span>
+  <a id="Content_Shared_Rounding_ContentHelpers_RoundToNearestLevels_" data-uid="Content.Shared.Rounding.ContentHelpers.RoundToNearestLevels*"></a>
+  <h4 id="Content_Shared_Rounding_ContentHelpers_RoundToNearestLevels_System_Double_System_Double_System_Int32_" data-uid="Content.Shared.Rounding.ContentHelpers.RoundToNearestLevels(System.Double,System.Double,System.Int32)">RoundToNearestLevels(Double, Double, Int32)</h4>
+  <div class="markdown level1 summary"><p>Returns the segment <code data-dev-comment-type="paramref" class="paramref">actual</code> lies on on a decimal scale from 0 to <code data-dev-comment-type="paramref" class="paramref">max</code> divided into
+<code data-dev-comment-type="paramref" class="paramref">levels</code> sections. In less mathematical terms, same as <a class="xref" href="Content.Shared.Rounding.ContentHelpers.html#Content_Shared_Rounding_ContentHelpers_RoundToLevels_System_Double_System_Double_System_Int32_">RoundToLevels(Double, Double, Int32)</a>
+except <code data-dev-comment-type="paramref" class="paramref">actual</code> is rounded to the nearest matching level instead of 0 and the highest level being
+precisely 0 and max and no other value.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static int RoundToNearestLevels(double actual, double max, int levels)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Double</span></td>
+        <td><span class="parametername">actual</span></td>
+        <td><p>The point to be rounded to the nearest level.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Double</span></td>
+        <td><span class="parametername">max</span></td>
+        <td><p>The maximum value of the scale.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">levels</span></td>
+        <td><p>Number of segments the scale is subdivided into.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><p>The segment <code data-dev-comment-type="paramref" class="paramref">actual</code> lies on.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Content_Shared_Rounding_ContentHelpers_RoundToNearestLevels_System_Double_System_Double_System_Int32__examples">Examples</h5>
+  <p>You have a 5-segment progress bar used to display a percentile value.
+You want the display to match the percentile value as accurately as possible, so that eg.
+95% is rounded up to 5, 89.99% is rounded down to 4, 15% is rounded up to 1 and 5% is rounded down
+to 0, in terms of number of segments lit.
+In this case you would use <pre><code>RoundToNearestLevels(value, max, 5)</code></pre></p>
+
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Rounding_ContentHelpers.md&amp;value=---%0Auid%3A%20Content.Shared.Rounding.ContentHelpers%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Rounding/ContentHelpers.cs/#L3" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <div class="toggle-mode">
+                <div class="icon">
+                  <i aria-hidden="true">☀</i>
+                </div>
+                <label class="switch">
+                  <input type="checkbox" id="switch-style">
+                  <span class="slider round"></span>
+                </label>
+                <div class="icon">
+                  <i aria-hidden="true">☾</i>
+                </div>
+              </div>
+          
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <h5>In This Article</h5>
+              <div></div>
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <div class="pull-left">
+              
+              <span>Generated by <strong>DocFX</strong></span>
+            </div>
+            <div class="toggle-mode pull-right visible-sm visible-xs">
+              <div class="icon">
+                <i aria-hidden="true">☀</i>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="switch-style-m">
+                <span class="slider round"></span>
+              </label>
+              <div class="icon">
+                <i aria-hidden="true">☾</i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <script type="text/javascript" src="../../styles/toggle-theme.js"></script>
+      </footer>    </div>
+    
+    <script type="text/javascript" src="../../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../../styles/docfx.js"></script>
+    <script type="text/javascript" src="../../styles/main.js"></script>
+  </body>
+</html>

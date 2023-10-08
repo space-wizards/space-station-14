@@ -1,0 +1,723 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class SharedMechSystem
+   </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class SharedMechSystem
+   ">
+    <meta name="generator" content="docfx 2.56.7.0">
+    
+    <link rel="shortcut icon" href="../../favicon.ico">
+    <link rel="stylesheet" href="../../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../../styles/docfx.css">
+    <link rel="stylesheet" href="../../styles/main.css">
+    <meta property="docfx:navrel" content="../../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../../index.html">
+                <img id="logo" class="svg" src="../../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Content.Shared.Mech.EntitySystems.SharedMechSystem">
+  
+  
+  <h1 id="Content_Shared_Mech_EntitySystems_SharedMechSystem" data-uid="Content.Shared.Mech.EntitySystems.SharedMechSystem" class="text-break">Class SharedMechSystem
+  </h1>
+  <div class="markdown level0 summary"><p>Handles all of the interactions, UI handling, and items shennanigans for <a class="xref" href="Content.Shared.Mech.Components.MechComponent.html">MechComponent</a></p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level1"><span class="xref">SharedMechSystem</span></div>
+      <div class="level2"><a class="xref" href="../Content.Client/Content.Client.Mech.MechSystem.html">MechSystem</a></div>
+      <div class="level2"><a class="xref" href="../Content.Server/Content.Server.Mech.Systems.MechSystem.html">MechSystem</a></div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Content.Shared.Mech.EntitySystems.html">Content.Shared.Mech.EntitySystems</a></h6>
+  <h6><strong>Assembly</strong>: Content.Shared.dll</h6>
+  <h5 id="Content_Shared_Mech_EntitySystems_SharedMechSystem_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public abstract class SharedMechSystem : EntitySystem</code></pre>
+  </div>
+  <h3 id="methods">Methods
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Mech_EntitySystems_SharedMechSystem_BreakMech_EntityUid_Content_Shared_Mech_Components_MechComponent_.md&amp;value=---%0Auid%3A%20Content.Shared.Mech.EntitySystems.SharedMechSystem.BreakMech(EntityUid%2CContent.Shared.Mech.Components.MechComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Mech/EntitySystems/SharedMechSystem.cs/#L146">View Source</a>
+  </span>
+  <a id="Content_Shared_Mech_EntitySystems_SharedMechSystem_BreakMech_" data-uid="Content.Shared.Mech.EntitySystems.SharedMechSystem.BreakMech*"></a>
+  <h4 id="Content_Shared_Mech_EntitySystems_SharedMechSystem_BreakMech_EntityUid_Content_Shared_Mech_Components_MechComponent_" data-uid="Content.Shared.Mech.EntitySystems.SharedMechSystem.BreakMech(EntityUid,Content.Shared.Mech.Components.MechComponent)">BreakMech(EntityUid, MechComponent)</h4>
+  <div class="markdown level1 summary"><p>Destroys the mech, removing the user and ejecting all installed equipment.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual void BreakMech(EntityUid uid, MechComponent component = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Mech.Components.MechComponent.html">MechComponent</a></td>
+        <td><span class="parametername">component</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Mech_EntitySystems_SharedMechSystem_CanInsert_EntityUid_EntityUid_Content_Shared_Mech_Components_MechComponent_.md&amp;value=---%0Auid%3A%20Content.Shared.Mech.EntitySystems.SharedMechSystem.CanInsert(EntityUid%2CEntityUid%2CContent.Shared.Mech.Components.MechComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Mech/EntitySystems/SharedMechSystem.cs/#L326">View Source</a>
+  </span>
+  <a id="Content_Shared_Mech_EntitySystems_SharedMechSystem_CanInsert_" data-uid="Content.Shared.Mech.EntitySystems.SharedMechSystem.CanInsert*"></a>
+  <h4 id="Content_Shared_Mech_EntitySystems_SharedMechSystem_CanInsert_EntityUid_EntityUid_Content_Shared_Mech_Components_MechComponent_" data-uid="Content.Shared.Mech.EntitySystems.SharedMechSystem.CanInsert(EntityUid,EntityUid,Content.Shared.Mech.Components.MechComponent)">CanInsert(EntityUid, EntityUid, MechComponent)</h4>
+  <div class="markdown level1 summary"><p>Checks if an entity can be inserted into the mech.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool CanInsert(EntityUid uid, EntityUid toInsert, MechComponent component = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">toInsert</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Mech.Components.MechComponent.html">MechComponent</a></td>
+        <td><span class="parametername">component</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Mech_EntitySystems_SharedMechSystem_CycleEquipment_EntityUid_Content_Shared_Mech_Components_MechComponent_.md&amp;value=---%0Auid%3A%20Content.Shared.Mech.EntitySystems.SharedMechSystem.CycleEquipment(EntityUid%2CContent.Shared.Mech.Components.MechComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Mech/EntitySystems/SharedMechSystem.cs/#L167">View Source</a>
+  </span>
+  <a id="Content_Shared_Mech_EntitySystems_SharedMechSystem_CycleEquipment_" data-uid="Content.Shared.Mech.EntitySystems.SharedMechSystem.CycleEquipment*"></a>
+  <h4 id="Content_Shared_Mech_EntitySystems_SharedMechSystem_CycleEquipment_EntityUid_Content_Shared_Mech_Components_MechComponent_" data-uid="Content.Shared.Mech.EntitySystems.SharedMechSystem.CycleEquipment(EntityUid,Content.Shared.Mech.Components.MechComponent)">CycleEquipment(EntityUid, MechComponent)</h4>
+  <div class="markdown level1 summary"><p>Cycles through the currently selected equipment.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void CycleEquipment(EntityUid uid, MechComponent component = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Mech.Components.MechComponent.html">MechComponent</a></td>
+        <td><span class="parametername">component</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Mech_EntitySystems_SharedMechSystem_Initialize.md&amp;value=---%0Auid%3A%20Content.Shared.Mech.EntitySystems.SharedMechSystem.Initialize%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Mech/EntitySystems/SharedMechSystem.cs/#L40">View Source</a>
+  </span>
+  <a id="Content_Shared_Mech_EntitySystems_SharedMechSystem_Initialize_" data-uid="Content.Shared.Mech.EntitySystems.SharedMechSystem.Initialize*"></a>
+  <h4 id="Content_Shared_Mech_EntitySystems_SharedMechSystem_Initialize" data-uid="Content.Shared.Mech.EntitySystems.SharedMechSystem.Initialize">Initialize()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override void Initialize()</code></pre>
+  </div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Mech_EntitySystems_SharedMechSystem_InsertEquipment_EntityUid_EntityUid_Content_Shared_Mech_Components_MechComponent_Content_Shared_Mech_Equipment_Components_MechEquipmentComponent_.md&amp;value=---%0Auid%3A%20Content.Shared.Mech.EntitySystems.SharedMechSystem.InsertEquipment(EntityUid%2CEntityUid%2CContent.Shared.Mech.Components.MechComponent%2CContent.Shared.Mech.Equipment.Components.MechEquipmentComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Mech/EntitySystems/SharedMechSystem.cs/#L203">View Source</a>
+  </span>
+  <a id="Content_Shared_Mech_EntitySystems_SharedMechSystem_InsertEquipment_" data-uid="Content.Shared.Mech.EntitySystems.SharedMechSystem.InsertEquipment*"></a>
+  <h4 id="Content_Shared_Mech_EntitySystems_SharedMechSystem_InsertEquipment_EntityUid_EntityUid_Content_Shared_Mech_Components_MechComponent_Content_Shared_Mech_Equipment_Components_MechEquipmentComponent_" data-uid="Content.Shared.Mech.EntitySystems.SharedMechSystem.InsertEquipment(EntityUid,EntityUid,Content.Shared.Mech.Components.MechComponent,Content.Shared.Mech.Equipment.Components.MechEquipmentComponent)">InsertEquipment(EntityUid, EntityUid, MechComponent, MechEquipmentComponent)</h4>
+  <div class="markdown level1 summary"><p>Inserts an equipment item into the mech.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void InsertEquipment(EntityUid uid, EntityUid toInsert, MechComponent component = null, MechEquipmentComponent equipmentComponent = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">toInsert</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Mech.Components.MechComponent.html">MechComponent</a></td>
+        <td><span class="parametername">component</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Mech.Equipment.Components.MechEquipmentComponent.html">MechEquipmentComponent</a></td>
+        <td><span class="parametername">equipmentComponent</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Mech_EntitySystems_SharedMechSystem_IsEmpty_Content_Shared_Mech_Components_MechComponent_.md&amp;value=---%0Auid%3A%20Content.Shared.Mech.EntitySystems.SharedMechSystem.IsEmpty(Content.Shared.Mech.Components.MechComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Mech/EntitySystems/SharedMechSystem.cs/#L314">View Source</a>
+  </span>
+  <a id="Content_Shared_Mech_EntitySystems_SharedMechSystem_IsEmpty_" data-uid="Content.Shared.Mech.EntitySystems.SharedMechSystem.IsEmpty*"></a>
+  <h4 id="Content_Shared_Mech_EntitySystems_SharedMechSystem_IsEmpty_Content_Shared_Mech_Components_MechComponent_" data-uid="Content.Shared.Mech.EntitySystems.SharedMechSystem.IsEmpty(Content.Shared.Mech.Components.MechComponent)">IsEmpty(MechComponent)</h4>
+  <div class="markdown level1 summary"><p>Checks if the pilot is present</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsEmpty(MechComponent component)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Mech.Components.MechComponent.html">MechComponent</a></td>
+        <td><span class="parametername">component</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>Whether or not the pilot is present</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Mech_EntitySystems_SharedMechSystem_RemoveEquipment_EntityUid_EntityUid_Content_Shared_Mech_Components_MechComponent_Content_Shared_Mech_Equipment_Components_MechEquipmentComponent_System_Boolean_.md&amp;value=---%0Auid%3A%20Content.Shared.Mech.EntitySystems.SharedMechSystem.RemoveEquipment(EntityUid%2CEntityUid%2CContent.Shared.Mech.Components.MechComponent%2CContent.Shared.Mech.Equipment.Components.MechEquipmentComponent%2CSystem.Boolean)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Mech/EntitySystems/SharedMechSystem.cs/#L233">View Source</a>
+  </span>
+  <a id="Content_Shared_Mech_EntitySystems_SharedMechSystem_RemoveEquipment_" data-uid="Content.Shared.Mech.EntitySystems.SharedMechSystem.RemoveEquipment*"></a>
+  <h4 id="Content_Shared_Mech_EntitySystems_SharedMechSystem_RemoveEquipment_EntityUid_EntityUid_Content_Shared_Mech_Components_MechComponent_Content_Shared_Mech_Equipment_Components_MechEquipmentComponent_System_Boolean_" data-uid="Content.Shared.Mech.EntitySystems.SharedMechSystem.RemoveEquipment(EntityUid,EntityUid,Content.Shared.Mech.Components.MechComponent,Content.Shared.Mech.Equipment.Components.MechEquipmentComponent,System.Boolean)">RemoveEquipment(EntityUid, EntityUid, MechComponent, MechEquipmentComponent, Boolean)</h4>
+  <div class="markdown level1 summary"><p>Removes an equipment item from a mech.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void RemoveEquipment(EntityUid uid, EntityUid toRemove, MechComponent component = null, MechEquipmentComponent equipmentComponent = null, bool forced = false)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">toRemove</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Mech.Components.MechComponent.html">MechComponent</a></td>
+        <td><span class="parametername">component</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Mech.Equipment.Components.MechEquipmentComponent.html">MechEquipmentComponent</a></td>
+        <td><span class="parametername">equipmentComponent</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">forced</span></td>
+        <td><p>Whether or not the removal can be cancelled</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Mech_EntitySystems_SharedMechSystem_SetIntegrity_EntityUid_Content_Shared_FixedPoint_FixedPoint2_Content_Shared_Mech_Components_MechComponent_.md&amp;value=---%0Auid%3A%20Content.Shared.Mech.EntitySystems.SharedMechSystem.SetIntegrity(EntityUid%2CContent.Shared.FixedPoint.FixedPoint2%2CContent.Shared.Mech.Components.MechComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Mech/EntitySystems/SharedMechSystem.cs/#L288">View Source</a>
+  </span>
+  <a id="Content_Shared_Mech_EntitySystems_SharedMechSystem_SetIntegrity_" data-uid="Content.Shared.Mech.EntitySystems.SharedMechSystem.SetIntegrity*"></a>
+  <h4 id="Content_Shared_Mech_EntitySystems_SharedMechSystem_SetIntegrity_EntityUid_Content_Shared_FixedPoint_FixedPoint2_Content_Shared_Mech_Components_MechComponent_" data-uid="Content.Shared.Mech.EntitySystems.SharedMechSystem.SetIntegrity(EntityUid,Content.Shared.FixedPoint.FixedPoint2,Content.Shared.Mech.Components.MechComponent)">SetIntegrity(EntityUid, FixedPoint2, MechComponent)</h4>
+  <div class="markdown level1 summary"><p>Sets the integrity of the mech.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetIntegrity(EntityUid uid, FixedPoint2 value, MechComponent component = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td><p>The mech itself</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Shared.FixedPoint.FixedPoint2.html">FixedPoint2</a></td>
+        <td><span class="parametername">value</span></td>
+        <td><p>The value the integrity will be set at</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Mech.Components.MechComponent.html">MechComponent</a></td>
+        <td><span class="parametername">component</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Mech_EntitySystems_SharedMechSystem_TryChangeEnergy_EntityUid_Content_Shared_FixedPoint_FixedPoint2_Content_Shared_Mech_Components_MechComponent_.md&amp;value=---%0Auid%3A%20Content.Shared.Mech.EntitySystems.SharedMechSystem.TryChangeEnergy(EntityUid%2CContent.Shared.FixedPoint.FixedPoint2%2CContent.Shared.Mech.Components.MechComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Mech/EntitySystems/SharedMechSystem.cs/#L268">View Source</a>
+  </span>
+  <a id="Content_Shared_Mech_EntitySystems_SharedMechSystem_TryChangeEnergy_" data-uid="Content.Shared.Mech.EntitySystems.SharedMechSystem.TryChangeEnergy*"></a>
+  <h4 id="Content_Shared_Mech_EntitySystems_SharedMechSystem_TryChangeEnergy_EntityUid_Content_Shared_FixedPoint_FixedPoint2_Content_Shared_Mech_Components_MechComponent_" data-uid="Content.Shared.Mech.EntitySystems.SharedMechSystem.TryChangeEnergy(EntityUid,Content.Shared.FixedPoint.FixedPoint2,Content.Shared.Mech.Components.MechComponent)">TryChangeEnergy(EntityUid, FixedPoint2, MechComponent)</h4>
+  <div class="markdown level1 summary"><p>Attempts to change the amount of energy in the mech.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual bool TryChangeEnergy(EntityUid uid, FixedPoint2 delta, MechComponent component = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td><p>The mech itself</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Shared.FixedPoint.FixedPoint2.html">FixedPoint2</a></td>
+        <td><span class="parametername">delta</span></td>
+        <td><p>The change in energy</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Mech.Components.MechComponent.html">MechComponent</a></td>
+        <td><span class="parametername">component</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>If the energy was successfully changed.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Mech_EntitySystems_SharedMechSystem_TryEject_EntityUid_Content_Shared_Mech_Components_MechComponent_.md&amp;value=---%0Auid%3A%20Content.Shared.Mech.EntitySystems.SharedMechSystem.TryEject(EntityUid%2CContent.Shared.Mech.Components.MechComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Mech/EntitySystems/SharedMechSystem.cs/#L374">View Source</a>
+  </span>
+  <a id="Content_Shared_Mech_EntitySystems_SharedMechSystem_TryEject_" data-uid="Content.Shared.Mech.EntitySystems.SharedMechSystem.TryEject*"></a>
+  <h4 id="Content_Shared_Mech_EntitySystems_SharedMechSystem_TryEject_EntityUid_Content_Shared_Mech_Components_MechComponent_" data-uid="Content.Shared.Mech.EntitySystems.SharedMechSystem.TryEject(EntityUid,Content.Shared.Mech.Components.MechComponent)">TryEject(EntityUid, MechComponent)</h4>
+  <div class="markdown level1 summary"><p>Attempts to eject the current pilot from the mech</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool TryEject(EntityUid uid, MechComponent component = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Mech.Components.MechComponent.html">MechComponent</a></td>
+        <td><span class="parametername">component</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>Whether or not the pilot was ejected.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Mech_EntitySystems_SharedMechSystem_TryInsert_EntityUid_System_Nullable_EntityUid__Content_Shared_Mech_Components_MechComponent_.md&amp;value=---%0Auid%3A%20Content.Shared.Mech.EntitySystems.SharedMechSystem.TryInsert(EntityUid%2CSystem.Nullable%7BEntityUid%7D%2CContent.Shared.Mech.Components.MechComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Mech/EntitySystems/SharedMechSystem.cs/#L351">View Source</a>
+  </span>
+  <a id="Content_Shared_Mech_EntitySystems_SharedMechSystem_TryInsert_" data-uid="Content.Shared.Mech.EntitySystems.SharedMechSystem.TryInsert*"></a>
+  <h4 id="Content_Shared_Mech_EntitySystems_SharedMechSystem_TryInsert_EntityUid_System_Nullable_EntityUid__Content_Shared_Mech_Components_MechComponent_" data-uid="Content.Shared.Mech.EntitySystems.SharedMechSystem.TryInsert(EntityUid,System.Nullable{EntityUid},Content.Shared.Mech.Components.MechComponent)">TryInsert(EntityUid, Nullable&lt;EntityUid&gt;, MechComponent)</h4>
+  <div class="markdown level1 summary"><p>Attempts to insert a pilot into the mech.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool TryInsert(EntityUid uid, EntityUid? toInsert, MechComponent component = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">EntityUid</span>&gt;</td>
+        <td><span class="parametername">toInsert</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Mech.Components.MechComponent.html">MechComponent</a></td>
+        <td><span class="parametername">component</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>Whether or not the entity was inserted</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Mech_EntitySystems_SharedMechSystem_UpdateUserInterface_EntityUid_Content_Shared_Mech_Components_MechComponent_.md&amp;value=---%0Auid%3A%20Content.Shared.Mech.EntitySystems.SharedMechSystem.UpdateUserInterface(EntityUid%2CContent.Shared.Mech.Components.MechComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Mech/EntitySystems/SharedMechSystem.cs/#L340">View Source</a>
+  </span>
+  <a id="Content_Shared_Mech_EntitySystems_SharedMechSystem_UpdateUserInterface_" data-uid="Content.Shared.Mech.EntitySystems.SharedMechSystem.UpdateUserInterface*"></a>
+  <h4 id="Content_Shared_Mech_EntitySystems_SharedMechSystem_UpdateUserInterface_EntityUid_Content_Shared_Mech_Components_MechComponent_" data-uid="Content.Shared.Mech.EntitySystems.SharedMechSystem.UpdateUserInterface(EntityUid,Content.Shared.Mech.Components.MechComponent)">UpdateUserInterface(EntityUid, MechComponent)</h4>
+  <div class="markdown level1 summary"><p>Updates the user interface</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual void UpdateUserInterface(EntityUid uid, MechComponent component = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Mech.Components.MechComponent.html">MechComponent</a></td>
+        <td><span class="parametername">component</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Content_Shared_Mech_EntitySystems_SharedMechSystem_UpdateUserInterface_EntityUid_Content_Shared_Mech_Components_MechComponent__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>This is defined here so that UI updates can be accessed from shared.</p>
+</div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Mech_EntitySystems_SharedMechSystem.md&amp;value=---%0Auid%3A%20Content.Shared.Mech.EntitySystems.SharedMechSystem%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Mech/EntitySystems/SharedMechSystem.cs/#L27" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <div class="toggle-mode">
+                <div class="icon">
+                  <i aria-hidden="true">☀</i>
+                </div>
+                <label class="switch">
+                  <input type="checkbox" id="switch-style">
+                  <span class="slider round"></span>
+                </label>
+                <div class="icon">
+                  <i aria-hidden="true">☾</i>
+                </div>
+              </div>
+          
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <h5>In This Article</h5>
+              <div></div>
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <div class="pull-left">
+              
+              <span>Generated by <strong>DocFX</strong></span>
+            </div>
+            <div class="toggle-mode pull-right visible-sm visible-xs">
+              <div class="icon">
+                <i aria-hidden="true">☀</i>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="switch-style-m">
+                <span class="slider round"></span>
+              </label>
+              <div class="icon">
+                <i aria-hidden="true">☾</i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <script type="text/javascript" src="../../styles/toggle-theme.js"></script>
+      </footer>    </div>
+    
+    <script type="text/javascript" src="../../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../../styles/docfx.js"></script>
+    <script type="text/javascript" src="../../styles/main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,761 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class MarkingManager
+   </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class MarkingManager
+   ">
+    <meta name="generator" content="docfx 2.56.7.0">
+    
+    <link rel="shortcut icon" href="../../favicon.ico">
+    <link rel="stylesheet" href="../../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../../styles/docfx.css">
+    <link rel="stylesheet" href="../../styles/main.css">
+    <meta property="docfx:navrel" content="../../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../../index.html">
+                <img id="logo" class="svg" src="../../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Content.Shared.Humanoid.Markings.MarkingManager">
+  
+  
+  <h1 id="Content_Shared_Humanoid_Markings_MarkingManager" data-uid="Content.Shared.Humanoid.Markings.MarkingManager" class="text-break">Class MarkingManager
+  </h1>
+  <div class="markdown level0 summary"></div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level1"><span class="xref">MarkingManager</span></div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Content.Shared.Humanoid.Markings.html">Content.Shared.Humanoid.Markings</a></h6>
+  <h6><strong>Assembly</strong>: Content.Shared.dll</h6>
+  <h5 id="Content_Shared_Humanoid_Markings_MarkingManager_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public sealed class MarkingManager : object</code></pre>
+  </div>
+  <h3 id="properties">Properties
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Humanoid_Markings_MarkingManager_CategorizedMarkings.md&amp;value=---%0Auid%3A%20Content.Shared.Humanoid.Markings.MarkingManager.CategorizedMarkings%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Humanoid/Markings/MarkingManager.cs/#L33">View Source</a>
+  </span>
+  <a id="Content_Shared_Humanoid_Markings_MarkingManager_CategorizedMarkings_" data-uid="Content.Shared.Humanoid.Markings.MarkingManager.CategorizedMarkings*"></a>
+  <h4 id="Content_Shared_Humanoid_Markings_MarkingManager_CategorizedMarkings" data-uid="Content.Shared.Humanoid.Markings.MarkingManager.CategorizedMarkings">CategorizedMarkings</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IReadOnlyDictionary&lt;MarkingCategories, Dictionary&lt;string, MarkingPrototype&gt;&gt; CategorizedMarkings { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IReadOnlyDictionary</span>&lt;<a class="xref" href="Content.Shared.Humanoid.Markings.MarkingCategories.html">MarkingCategories</a>, <span class="xref">Dictionary</span>&lt;<span class="xref">System.String</span>, <a class="xref" href="Content.Shared.Humanoid.Markings.MarkingPrototype.html">MarkingPrototype</a>&gt;&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Humanoid_Markings_MarkingManager_Markings.md&amp;value=---%0Auid%3A%20Content.Shared.Humanoid.Markings.MarkingManager.Markings%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Humanoid/Markings/MarkingManager.cs/#L32">View Source</a>
+  </span>
+  <a id="Content_Shared_Humanoid_Markings_MarkingManager_Markings_" data-uid="Content.Shared.Humanoid.Markings.MarkingManager.Markings*"></a>
+  <h4 id="Content_Shared_Humanoid_Markings_MarkingManager_Markings" data-uid="Content.Shared.Humanoid.Markings.MarkingManager.Markings">Markings</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IReadOnlyDictionary&lt;string, MarkingPrototype&gt; Markings { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IReadOnlyDictionary</span>&lt;<span class="xref">System.String</span>, <a class="xref" href="Content.Shared.Humanoid.Markings.MarkingPrototype.html">MarkingPrototype</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Humanoid_Markings_MarkingManager_CanBeApplied_System_String_Content_Shared_Humanoid_Sex_Content_Shared_Humanoid_Markings_Marking_Robust_Shared_Prototypes_IPrototypeManager_.md&amp;value=---%0Auid%3A%20Content.Shared.Humanoid.Markings.MarkingManager.CanBeApplied(System.String%2CContent.Shared.Humanoid.Sex%2CContent.Shared.Humanoid.Markings.Marking%2CRobust.Shared.Prototypes.IPrototypeManager)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Humanoid/Markings/MarkingManager.cs/#L194">View Source</a>
+  </span>
+  <a id="Content_Shared_Humanoid_Markings_MarkingManager_CanBeApplied_" data-uid="Content.Shared.Humanoid.Markings.MarkingManager.CanBeApplied*"></a>
+  <h4 id="Content_Shared_Humanoid_Markings_MarkingManager_CanBeApplied_System_String_Content_Shared_Humanoid_Sex_Content_Shared_Humanoid_Markings_Marking_Robust_Shared_Prototypes_IPrototypeManager_" data-uid="Content.Shared.Humanoid.Markings.MarkingManager.CanBeApplied(System.String,Content.Shared.Humanoid.Sex,Content.Shared.Humanoid.Markings.Marking,Robust.Shared.Prototypes.IPrototypeManager)">CanBeApplied(String, Sex, Marking, IPrototypeManager)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool CanBeApplied(string species, Sex sex, Marking marking, IPrototypeManager prototypeManager = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">species</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Humanoid.Sex.html">Sex</a></td>
+        <td><span class="parametername">sex</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Humanoid.Markings.Marking.html">Marking</a></td>
+        <td><span class="parametername">marking</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">Robust.Shared.Prototypes.IPrototypeManager</span></td>
+        <td><span class="parametername">prototypeManager</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Humanoid_Markings_MarkingManager_CanBeApplied_System_String_Content_Shared_Humanoid_Sex_Content_Shared_Humanoid_Markings_MarkingPrototype_Robust_Shared_Prototypes_IPrototypeManager_.md&amp;value=---%0Auid%3A%20Content.Shared.Humanoid.Markings.MarkingManager.CanBeApplied(System.String%2CContent.Shared.Humanoid.Sex%2CContent.Shared.Humanoid.Markings.MarkingPrototype%2CRobust.Shared.Prototypes.IPrototypeManager)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Humanoid/Markings/MarkingManager.cs/#L225">View Source</a>
+  </span>
+  <a id="Content_Shared_Humanoid_Markings_MarkingManager_CanBeApplied_" data-uid="Content.Shared.Humanoid.Markings.MarkingManager.CanBeApplied*"></a>
+  <h4 id="Content_Shared_Humanoid_Markings_MarkingManager_CanBeApplied_System_String_Content_Shared_Humanoid_Sex_Content_Shared_Humanoid_Markings_MarkingPrototype_Robust_Shared_Prototypes_IPrototypeManager_" data-uid="Content.Shared.Humanoid.Markings.MarkingManager.CanBeApplied(System.String,Content.Shared.Humanoid.Sex,Content.Shared.Humanoid.Markings.MarkingPrototype,Robust.Shared.Prototypes.IPrototypeManager)">CanBeApplied(String, Sex, MarkingPrototype, IPrototypeManager)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool CanBeApplied(string species, Sex sex, MarkingPrototype prototype, IPrototypeManager prototypeManager = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">species</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Humanoid.Sex.html">Sex</a></td>
+        <td><span class="parametername">sex</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Humanoid.Markings.MarkingPrototype.html">MarkingPrototype</a></td>
+        <td><span class="parametername">prototype</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">Robust.Shared.Prototypes.IPrototypeManager</span></td>
+        <td><span class="parametername">prototypeManager</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Humanoid_Markings_MarkingManager_Initialize.md&amp;value=---%0Auid%3A%20Content.Shared.Humanoid.Markings.MarkingManager.Initialize%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Humanoid/Markings/MarkingManager.cs/#L15">View Source</a>
+  </span>
+  <a id="Content_Shared_Humanoid_Markings_MarkingManager_Initialize_" data-uid="Content.Shared.Humanoid.Markings.MarkingManager.Initialize*"></a>
+  <h4 id="Content_Shared_Humanoid_Markings_MarkingManager_Initialize" data-uid="Content.Shared.Humanoid.Markings.MarkingManager.Initialize">Initialize()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Initialize()</code></pre>
+  </div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Humanoid_Markings_MarkingManager_IsValidMarking_Content_Shared_Humanoid_Markings_Marking_Content_Shared_Humanoid_Markings_MarkingCategories_System_String_Content_Shared_Humanoid_Sex_.md&amp;value=---%0Auid%3A%20Content.Shared.Humanoid.Markings.MarkingManager.IsValidMarking(Content.Shared.Humanoid.Markings.Marking%2CContent.Shared.Humanoid.Markings.MarkingCategories%2CSystem.String%2CContent.Shared.Humanoid.Sex)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Humanoid/Markings/MarkingManager.cs/#L157">View Source</a>
+  </span>
+  <a id="Content_Shared_Humanoid_Markings_MarkingManager_IsValidMarking_" data-uid="Content.Shared.Humanoid.Markings.MarkingManager.IsValidMarking*"></a>
+  <h4 id="Content_Shared_Humanoid_Markings_MarkingManager_IsValidMarking_Content_Shared_Humanoid_Markings_Marking_Content_Shared_Humanoid_Markings_MarkingCategories_System_String_Content_Shared_Humanoid_Sex_" data-uid="Content.Shared.Humanoid.Markings.MarkingManager.IsValidMarking(Content.Shared.Humanoid.Markings.Marking,Content.Shared.Humanoid.Markings.MarkingCategories,System.String,Content.Shared.Humanoid.Sex)">IsValidMarking(Marking, MarkingCategories, String, Sex)</h4>
+  <div class="markdown level1 summary"><p>Check if a marking is valid according to the category, species, and current data this marking has.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsValidMarking(Marking marking, MarkingCategories category, string species, Sex sex)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Humanoid.Markings.Marking.html">Marking</a></td>
+        <td><span class="parametername">marking</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Humanoid.Markings.MarkingCategories.html">MarkingCategories</a></td>
+        <td><span class="parametername">category</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">species</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Humanoid.Sex.html">Sex</a></td>
+        <td><span class="parametername">sex</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Humanoid_Markings_MarkingManager_MarkingsByCategory_Content_Shared_Humanoid_Markings_MarkingCategories_.md&amp;value=---%0Auid%3A%20Content.Shared.Humanoid.Markings.MarkingManager.MarkingsByCategory(Content.Shared.Humanoid.Markings.MarkingCategories)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Humanoid/Markings/MarkingManager.cs/#L35">View Source</a>
+  </span>
+  <a id="Content_Shared_Humanoid_Markings_MarkingManager_MarkingsByCategory_" data-uid="Content.Shared.Humanoid.Markings.MarkingManager.MarkingsByCategory*"></a>
+  <h4 id="Content_Shared_Humanoid_Markings_MarkingManager_MarkingsByCategory_Content_Shared_Humanoid_Markings_MarkingCategories_" data-uid="Content.Shared.Humanoid.Markings.MarkingManager.MarkingsByCategory(Content.Shared.Humanoid.Markings.MarkingCategories)">MarkingsByCategory(MarkingCategories)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IReadOnlyDictionary&lt;string, MarkingPrototype&gt; MarkingsByCategory(MarkingCategories category)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Humanoid.Markings.MarkingCategories.html">MarkingCategories</a></td>
+        <td><span class="parametername">category</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IReadOnlyDictionary</span>&lt;<span class="xref">System.String</span>, <a class="xref" href="Content.Shared.Humanoid.Markings.MarkingPrototype.html">MarkingPrototype</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Humanoid_Markings_MarkingManager_MarkingsByCategoryAndSex_Content_Shared_Humanoid_Markings_MarkingCategories_Content_Shared_Humanoid_Sex_.md&amp;value=---%0Auid%3A%20Content.Shared.Humanoid.Markings.MarkingManager.MarkingsByCategoryAndSex(Content.Shared.Humanoid.Markings.MarkingCategories%2CContent.Shared.Humanoid.Sex)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Humanoid/Markings/MarkingManager.cs/#L85">View Source</a>
+  </span>
+  <a id="Content_Shared_Humanoid_Markings_MarkingManager_MarkingsByCategoryAndSex_" data-uid="Content.Shared.Humanoid.Markings.MarkingManager.MarkingsByCategoryAndSex*"></a>
+  <h4 id="Content_Shared_Humanoid_Markings_MarkingManager_MarkingsByCategoryAndSex_Content_Shared_Humanoid_Markings_MarkingCategories_Content_Shared_Humanoid_Sex_" data-uid="Content.Shared.Humanoid.Markings.MarkingManager.MarkingsByCategoryAndSex(Content.Shared.Humanoid.Markings.MarkingCategories,Content.Shared.Humanoid.Sex)">MarkingsByCategoryAndSex(MarkingCategories, Sex)</h4>
+  <div class="markdown level1 summary"><p>Markings by category and sex.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IReadOnlyDictionary&lt;string, MarkingPrototype&gt; MarkingsByCategoryAndSex(MarkingCategories category, Sex sex)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Humanoid.Markings.MarkingCategories.html">MarkingCategories</a></td>
+        <td><span class="parametername">category</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Humanoid.Sex.html">Sex</a></td>
+        <td><span class="parametername">sex</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IReadOnlyDictionary</span>&lt;<span class="xref">System.String</span>, <a class="xref" href="Content.Shared.Humanoid.Markings.MarkingPrototype.html">MarkingPrototype</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Content_Shared_Humanoid_Markings_MarkingManager_MarkingsByCategoryAndSex_Content_Shared_Humanoid_Markings_MarkingCategories_Content_Shared_Humanoid_Sex__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>This is done per category, as enumerating over every single marking by species isn't useful.
+Please make a pull request if you find a use case for that behavior.</p>
+</div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Humanoid_Markings_MarkingManager_MarkingsByCategoryAndSpecies_Content_Shared_Humanoid_Markings_MarkingCategories_System_String_.md&amp;value=---%0Auid%3A%20Content.Shared.Humanoid.Markings.MarkingManager.MarkingsByCategoryAndSpecies(Content.Shared.Humanoid.Markings.MarkingCategories%2CSystem.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Humanoid/Markings/MarkingManager.cs/#L51">View Source</a>
+  </span>
+  <a id="Content_Shared_Humanoid_Markings_MarkingManager_MarkingsByCategoryAndSpecies_" data-uid="Content.Shared.Humanoid.Markings.MarkingManager.MarkingsByCategoryAndSpecies*"></a>
+  <h4 id="Content_Shared_Humanoid_Markings_MarkingManager_MarkingsByCategoryAndSpecies_Content_Shared_Humanoid_Markings_MarkingCategories_System_String_" data-uid="Content.Shared.Humanoid.Markings.MarkingManager.MarkingsByCategoryAndSpecies(Content.Shared.Humanoid.Markings.MarkingCategories,System.String)">MarkingsByCategoryAndSpecies(MarkingCategories, String)</h4>
+  <div class="markdown level1 summary"><p>Markings by category and species.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IReadOnlyDictionary&lt;string, MarkingPrototype&gt; MarkingsByCategoryAndSpecies(MarkingCategories category, string species)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Humanoid.Markings.MarkingCategories.html">MarkingCategories</a></td>
+        <td><span class="parametername">category</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">species</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IReadOnlyDictionary</span>&lt;<span class="xref">System.String</span>, <a class="xref" href="Content.Shared.Humanoid.Markings.MarkingPrototype.html">MarkingPrototype</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Content_Shared_Humanoid_Markings_MarkingManager_MarkingsByCategoryAndSpecies_Content_Shared_Humanoid_Markings_MarkingCategories_System_String__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>This is done per category, as enumerating over every single marking by species isn't useful.
+Please make a pull request if you find a use case for that behavior.</p>
+</div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Humanoid_Markings_MarkingManager_MarkingsByCategoryAndSpeciesAndSex_Content_Shared_Humanoid_Markings_MarkingCategories_System_String_Content_Shared_Humanoid_Sex_.md&amp;value=---%0Auid%3A%20Content.Shared.Humanoid.Markings.MarkingManager.MarkingsByCategoryAndSpeciesAndSex(Content.Shared.Humanoid.Markings.MarkingCategories%2CSystem.String%2CContent.Shared.Humanoid.Sex)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Humanoid/Markings/MarkingManager.cs/#L114">View Source</a>
+  </span>
+  <a id="Content_Shared_Humanoid_Markings_MarkingManager_MarkingsByCategoryAndSpeciesAndSex_" data-uid="Content.Shared.Humanoid.Markings.MarkingManager.MarkingsByCategoryAndSpeciesAndSex*"></a>
+  <h4 id="Content_Shared_Humanoid_Markings_MarkingManager_MarkingsByCategoryAndSpeciesAndSex_Content_Shared_Humanoid_Markings_MarkingCategories_System_String_Content_Shared_Humanoid_Sex_" data-uid="Content.Shared.Humanoid.Markings.MarkingManager.MarkingsByCategoryAndSpeciesAndSex(Content.Shared.Humanoid.Markings.MarkingCategories,System.String,Content.Shared.Humanoid.Sex)">MarkingsByCategoryAndSpeciesAndSex(MarkingCategories, String, Sex)</h4>
+  <div class="markdown level1 summary"><p>Markings by category, species and sex.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IReadOnlyDictionary&lt;string, MarkingPrototype&gt; MarkingsByCategoryAndSpeciesAndSex(MarkingCategories category, string species, Sex sex)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Humanoid.Markings.MarkingCategories.html">MarkingCategories</a></td>
+        <td><span class="parametername">category</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">species</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Humanoid.Sex.html">Sex</a></td>
+        <td><span class="parametername">sex</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IReadOnlyDictionary</span>&lt;<span class="xref">System.String</span>, <a class="xref" href="Content.Shared.Humanoid.Markings.MarkingPrototype.html">MarkingPrototype</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Content_Shared_Humanoid_Markings_MarkingManager_MarkingsByCategoryAndSpeciesAndSex_Content_Shared_Humanoid_Markings_MarkingCategories_System_String_Content_Shared_Humanoid_Sex__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>This is done per category, as enumerating over every single marking by species isn't useful.
+Please make a pull request if you find a use case for that behavior.</p>
+</div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Humanoid_Markings_MarkingManager_MustMatchSkin_System_String_Content_Shared_Humanoid_HumanoidVisualLayers_System_Single__Robust_Shared_Prototypes_IPrototypeManager_.md&amp;value=---%0Auid%3A%20Content.Shared.Humanoid.Markings.MarkingManager.MustMatchSkin(System.String%2CContent.Shared.Humanoid.HumanoidVisualLayers%2CSystem.Single%40%2CRobust.Shared.Prototypes.IPrototypeManager)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Humanoid/Markings/MarkingManager.cs/#L251">View Source</a>
+  </span>
+  <a id="Content_Shared_Humanoid_Markings_MarkingManager_MustMatchSkin_" data-uid="Content.Shared.Humanoid.Markings.MarkingManager.MustMatchSkin*"></a>
+  <h4 id="Content_Shared_Humanoid_Markings_MarkingManager_MustMatchSkin_System_String_Content_Shared_Humanoid_HumanoidVisualLayers_System_Single__Robust_Shared_Prototypes_IPrototypeManager_" data-uid="Content.Shared.Humanoid.Markings.MarkingManager.MustMatchSkin(System.String,Content.Shared.Humanoid.HumanoidVisualLayers,System.Single@,Robust.Shared.Prototypes.IPrototypeManager)">MustMatchSkin(String, HumanoidVisualLayers, out Single, IPrototypeManager)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool MustMatchSkin(string species, HumanoidVisualLayers layer, out float alpha, IPrototypeManager prototypeManager = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">species</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Humanoid.HumanoidVisualLayers.html">HumanoidVisualLayers</a></td>
+        <td><span class="parametername">layer</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td><span class="parametername">alpha</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">Robust.Shared.Prototypes.IPrototypeManager</span></td>
+        <td><span class="parametername">prototypeManager</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Humanoid_Markings_MarkingManager_TryGetMarking_Content_Shared_Humanoid_Markings_Marking_Content_Shared_Humanoid_Markings_MarkingPrototype__.md&amp;value=---%0Auid%3A%20Content.Shared.Humanoid.Markings.MarkingManager.TryGetMarking(Content.Shared.Humanoid.Markings.Marking%2CContent.Shared.Humanoid.Markings.MarkingPrototype%40)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Humanoid/Markings/MarkingManager.cs/#L144">View Source</a>
+  </span>
+  <a id="Content_Shared_Humanoid_Markings_MarkingManager_TryGetMarking_" data-uid="Content.Shared.Humanoid.Markings.MarkingManager.TryGetMarking*"></a>
+  <h4 id="Content_Shared_Humanoid_Markings_MarkingManager_TryGetMarking_Content_Shared_Humanoid_Markings_Marking_Content_Shared_Humanoid_Markings_MarkingPrototype__" data-uid="Content.Shared.Humanoid.Markings.MarkingManager.TryGetMarking(Content.Shared.Humanoid.Markings.Marking,Content.Shared.Humanoid.Markings.MarkingPrototype@)">TryGetMarking(Marking, out MarkingPrototype)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool TryGetMarking(Marking marking, out MarkingPrototype markingResult)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Humanoid.Markings.Marking.html">Marking</a></td>
+        <td><span class="parametername">marking</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Humanoid.Markings.MarkingPrototype.html">MarkingPrototype</a></td>
+        <td><span class="parametername">markingResult</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Humanoid_Markings_MarkingManager.md&amp;value=---%0Auid%3A%20Content.Shared.Humanoid.Markings.MarkingManager%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Humanoid/Markings/MarkingManager.cs/#L7" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <div class="toggle-mode">
+                <div class="icon">
+                  <i aria-hidden="true">☀</i>
+                </div>
+                <label class="switch">
+                  <input type="checkbox" id="switch-style">
+                  <span class="slider round"></span>
+                </label>
+                <div class="icon">
+                  <i aria-hidden="true">☾</i>
+                </div>
+              </div>
+          
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <h5>In This Article</h5>
+              <div></div>
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <div class="pull-left">
+              
+              <span>Generated by <strong>DocFX</strong></span>
+            </div>
+            <div class="toggle-mode pull-right visible-sm visible-xs">
+              <div class="icon">
+                <i aria-hidden="true">☀</i>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="switch-style-m">
+                <span class="slider round"></span>
+              </label>
+              <div class="icon">
+                <i aria-hidden="true">☾</i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <script type="text/javascript" src="../../styles/toggle-theme.js"></script>
+      </footer>    </div>
+    
+    <script type="text/javascript" src="../../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../../styles/docfx.js"></script>
+    <script type="text/javascript" src="../../styles/main.js"></script>
+  </body>
+</html>

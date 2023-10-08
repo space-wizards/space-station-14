@@ -1,0 +1,2759 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Struct FixedPoint2
+   </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Struct FixedPoint2
+   ">
+    <meta name="generator" content="docfx 2.56.7.0">
+    
+    <link rel="shortcut icon" href="../../favicon.ico">
+    <link rel="stylesheet" href="../../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../../styles/docfx.css">
+    <link rel="stylesheet" href="../../styles/main.css">
+    <meta property="docfx:navrel" content="../../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../../index.html">
+                <img id="logo" class="svg" src="../../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Content.Shared.FixedPoint.FixedPoint2">
+  
+  
+  <h1 id="Content_Shared_FixedPoint_FixedPoint2" data-uid="Content.Shared.FixedPoint.FixedPoint2" class="text-break">Struct FixedPoint2
+  </h1>
+  <div class="markdown level0 summary"><p>Represents a quantity of something, to a precision of 0.01.
+To enforce this level of precision, floats are shifted by 2 decimal points, rounded, and converted to an int.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div classs="implements">
+    <h5>Implements</h5>
+    <div><span class="xref">Robust.Shared.Serialization.ISelfSerialize</span></div>
+    <div><span class="xref">IComparable</span>&lt;<a class="xref" href="Content.Shared.FixedPoint.FixedPoint2.html">FixedPoint2</a>&gt;</div>
+    <div><span class="xref">IEquatable</span>&lt;<a class="xref" href="Content.Shared.FixedPoint.FixedPoint2.html">FixedPoint2</a>&gt;</div>
+    <div><span class="xref">IFormattable</span></div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Content.Shared.FixedPoint.html">Content.Shared.FixedPoint</a></h6>
+  <h6><strong>Assembly</strong>: Content.Shared.dll</h6>
+  <h5 id="Content_Shared_FixedPoint_FixedPoint2_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public struct FixedPoint2 : ISelfSerialize, IComparable&lt;FixedPoint2&gt;, IEquatable&lt;FixedPoint2&gt;, IFormattable</code></pre>
+  </div>
+  <h3 id="properties">Properties
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_FixedPoint_FixedPoint2_Epsilon.md&amp;value=---%0Auid%3A%20Content.Shared.FixedPoint.FixedPoint2.Epsilon%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/FixedPoint/FixedPoint2.cs/#L20">View Source</a>
+  </span>
+  <a id="Content_Shared_FixedPoint_FixedPoint2_Epsilon_" data-uid="Content.Shared.FixedPoint.FixedPoint2.Epsilon*"></a>
+  <h4 id="Content_Shared_FixedPoint_FixedPoint2_Epsilon" data-uid="Content.Shared.FixedPoint.FixedPoint2.Epsilon">Epsilon</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static FixedPoint2 Epsilon { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.FixedPoint.FixedPoint2.html">FixedPoint2</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_FixedPoint_FixedPoint2_MaxValue.md&amp;value=---%0Auid%3A%20Content.Shared.FixedPoint.FixedPoint2.MaxValue%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/FixedPoint/FixedPoint2.cs/#L19">View Source</a>
+  </span>
+  <a id="Content_Shared_FixedPoint_FixedPoint2_MaxValue_" data-uid="Content.Shared.FixedPoint.FixedPoint2.MaxValue*"></a>
+  <h4 id="Content_Shared_FixedPoint_FixedPoint2_MaxValue" data-uid="Content.Shared.FixedPoint.FixedPoint2.MaxValue">MaxValue</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static FixedPoint2 MaxValue { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.FixedPoint.FixedPoint2.html">FixedPoint2</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_FixedPoint_FixedPoint2_Value.md&amp;value=---%0Auid%3A%20Content.Shared.FixedPoint.FixedPoint2.Value%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/FixedPoint/FixedPoint2.cs/#L15">View Source</a>
+  </span>
+  <a id="Content_Shared_FixedPoint_FixedPoint2_Value_" data-uid="Content.Shared.FixedPoint.FixedPoint2.Value*"></a>
+  <h4 id="Content_Shared_FixedPoint_FixedPoint2_Value" data-uid="Content.Shared.FixedPoint.FixedPoint2.Value">Value</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int Value { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_FixedPoint_FixedPoint2_Zero.md&amp;value=---%0Auid%3A%20Content.Shared.FixedPoint.FixedPoint2.Zero%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/FixedPoint/FixedPoint2.cs/#L21">View Source</a>
+  </span>
+  <a id="Content_Shared_FixedPoint_FixedPoint2_Zero_" data-uid="Content.Shared.FixedPoint.FixedPoint2.Zero*"></a>
+  <h4 id="Content_Shared_FixedPoint_FixedPoint2_Zero" data-uid="Content.Shared.FixedPoint.FixedPoint2.Zero">Zero</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static FixedPoint2 Zero { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.FixedPoint.FixedPoint2.html">FixedPoint2</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_FixedPoint_FixedPoint2_Abs_Content_Shared_FixedPoint_FixedPoint2_.md&amp;value=---%0Auid%3A%20Content.Shared.FixedPoint.FixedPoint2.Abs(Content.Shared.FixedPoint.FixedPoint2)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/FixedPoint/FixedPoint2.cs/#L230">View Source</a>
+  </span>
+  <a id="Content_Shared_FixedPoint_FixedPoint2_Abs_" data-uid="Content.Shared.FixedPoint.FixedPoint2.Abs*"></a>
+  <h4 id="Content_Shared_FixedPoint_FixedPoint2_Abs_Content_Shared_FixedPoint_FixedPoint2_" data-uid="Content.Shared.FixedPoint.FixedPoint2.Abs(Content.Shared.FixedPoint.FixedPoint2)">Abs(FixedPoint2)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static FixedPoint2 Abs(FixedPoint2 a)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.FixedPoint.FixedPoint2.html">FixedPoint2</a></td>
+        <td><span class="parametername">a</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.FixedPoint.FixedPoint2.html">FixedPoint2</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_FixedPoint_FixedPoint2_Clamp_Content_Shared_FixedPoint_FixedPoint2_Content_Shared_FixedPoint_FixedPoint2_Content_Shared_FixedPoint_FixedPoint2_.md&amp;value=---%0Auid%3A%20Content.Shared.FixedPoint.FixedPoint2.Clamp(Content.Shared.FixedPoint.FixedPoint2%2CContent.Shared.FixedPoint.FixedPoint2%2CContent.Shared.FixedPoint.FixedPoint2)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/FixedPoint/FixedPoint2.cs/#L240">View Source</a>
+  </span>
+  <a id="Content_Shared_FixedPoint_FixedPoint2_Clamp_" data-uid="Content.Shared.FixedPoint.FixedPoint2.Clamp*"></a>
+  <h4 id="Content_Shared_FixedPoint_FixedPoint2_Clamp_Content_Shared_FixedPoint_FixedPoint2_Content_Shared_FixedPoint_FixedPoint2_Content_Shared_FixedPoint_FixedPoint2_" data-uid="Content.Shared.FixedPoint.FixedPoint2.Clamp(Content.Shared.FixedPoint.FixedPoint2,Content.Shared.FixedPoint.FixedPoint2,Content.Shared.FixedPoint.FixedPoint2)">Clamp(FixedPoint2, FixedPoint2, FixedPoint2)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static FixedPoint2 Clamp(FixedPoint2 reagent, FixedPoint2 min, FixedPoint2 max)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.FixedPoint.FixedPoint2.html">FixedPoint2</a></td>
+        <td><span class="parametername">reagent</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Shared.FixedPoint.FixedPoint2.html">FixedPoint2</a></td>
+        <td><span class="parametername">min</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Shared.FixedPoint.FixedPoint2.html">FixedPoint2</a></td>
+        <td><span class="parametername">max</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.FixedPoint.FixedPoint2.html">FixedPoint2</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_FixedPoint_FixedPoint2_CompareTo_Content_Shared_FixedPoint_FixedPoint2_.md&amp;value=---%0Auid%3A%20Content.Shared.FixedPoint.FixedPoint2.CompareTo(Content.Shared.FixedPoint.FixedPoint2)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/FixedPoint/FixedPoint2.cs/#L294">View Source</a>
+  </span>
+  <a id="Content_Shared_FixedPoint_FixedPoint2_CompareTo_" data-uid="Content.Shared.FixedPoint.FixedPoint2.CompareTo*"></a>
+  <h4 id="Content_Shared_FixedPoint_FixedPoint2_CompareTo_Content_Shared_FixedPoint_FixedPoint2_" data-uid="Content.Shared.FixedPoint.FixedPoint2.CompareTo(Content.Shared.FixedPoint.FixedPoint2)">CompareTo(FixedPoint2)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int CompareTo(FixedPoint2 other)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.FixedPoint.FixedPoint2.html">FixedPoint2</a></td>
+        <td><span class="parametername">other</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_FixedPoint_FixedPoint2_Deserialize_System_String_.md&amp;value=---%0Auid%3A%20Content.Shared.FixedPoint.FixedPoint2.Deserialize(System.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/FixedPoint/FixedPoint2.cs/#L262">View Source</a>
+  </span>
+  <a id="Content_Shared_FixedPoint_FixedPoint2_Deserialize_" data-uid="Content.Shared.FixedPoint.FixedPoint2.Deserialize*"></a>
+  <h4 id="Content_Shared_FixedPoint_FixedPoint2_Deserialize_System_String_" data-uid="Content.Shared.FixedPoint.FixedPoint2.Deserialize(System.String)">Deserialize(String)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Deserialize(string value)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">value</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_FixedPoint_FixedPoint2_Dist_Content_Shared_FixedPoint_FixedPoint2_Content_Shared_FixedPoint_FixedPoint2_.md&amp;value=---%0Auid%3A%20Content.Shared.FixedPoint.FixedPoint2.Dist(Content.Shared.FixedPoint.FixedPoint2%2CContent.Shared.FixedPoint.FixedPoint2)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/FixedPoint/FixedPoint2.cs/#L235">View Source</a>
+  </span>
+  <a id="Content_Shared_FixedPoint_FixedPoint2_Dist_" data-uid="Content.Shared.FixedPoint.FixedPoint2.Dist*"></a>
+  <h4 id="Content_Shared_FixedPoint_FixedPoint2_Dist_Content_Shared_FixedPoint_FixedPoint2_Content_Shared_FixedPoint_FixedPoint2_" data-uid="Content.Shared.FixedPoint.FixedPoint2.Dist(Content.Shared.FixedPoint.FixedPoint2,Content.Shared.FixedPoint.FixedPoint2)">Dist(FixedPoint2, FixedPoint2)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static FixedPoint2 Dist(FixedPoint2 a, FixedPoint2 b)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.FixedPoint.FixedPoint2.html">FixedPoint2</a></td>
+        <td><span class="parametername">a</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Shared.FixedPoint.FixedPoint2.html">FixedPoint2</a></td>
+        <td><span class="parametername">b</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.FixedPoint.FixedPoint2.html">FixedPoint2</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_FixedPoint_FixedPoint2_Double.md&amp;value=---%0Auid%3A%20Content.Shared.FixedPoint.FixedPoint2.Double%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/FixedPoint/FixedPoint2.cs/#L181">View Source</a>
+  </span>
+  <a id="Content_Shared_FixedPoint_FixedPoint2_Double_" data-uid="Content.Shared.FixedPoint.FixedPoint2.Double*"></a>
+  <h4 id="Content_Shared_FixedPoint_FixedPoint2_Double" data-uid="Content.Shared.FixedPoint.FixedPoint2.Double">Double()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double Double()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Double</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_FixedPoint_FixedPoint2_Equals_Content_Shared_FixedPoint_FixedPoint2_.md&amp;value=---%0Auid%3A%20Content.Shared.FixedPoint.FixedPoint2.Equals(Content.Shared.FixedPoint.FixedPoint2)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/FixedPoint/FixedPoint2.cs/#L289">View Source</a>
+  </span>
+  <a id="Content_Shared_FixedPoint_FixedPoint2_Equals_" data-uid="Content.Shared.FixedPoint.FixedPoint2.Equals*"></a>
+  <h4 id="Content_Shared_FixedPoint_FixedPoint2_Equals_Content_Shared_FixedPoint_FixedPoint2_" data-uid="Content.Shared.FixedPoint.FixedPoint2.Equals(Content.Shared.FixedPoint.FixedPoint2)">Equals(FixedPoint2)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool Equals(FixedPoint2 other)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.FixedPoint.FixedPoint2.html">FixedPoint2</a></td>
+        <td><span class="parametername">other</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_FixedPoint_FixedPoint2_Equals_System_Nullable_System_Object__.md&amp;value=---%0Auid%3A%20Content.Shared.FixedPoint.FixedPoint2.Equals(System.Nullable%7BSystem.Object%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/FixedPoint/FixedPoint2.cs/#L250">View Source</a>
+  </span>
+  <a id="Content_Shared_FixedPoint_FixedPoint2_Equals_" data-uid="Content.Shared.FixedPoint.FixedPoint2.Equals*"></a>
+  <h4 id="Content_Shared_FixedPoint_FixedPoint2_Equals_System_Nullable_System_Object__" data-uid="Content.Shared.FixedPoint.FixedPoint2.Equals(System.Nullable{System.Object})">Equals(Nullable&lt;Object&gt;)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override bool Equals(object? obj)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">System.Object</span>&gt;</td>
+        <td><span class="parametername">obj</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_FixedPoint_FixedPoint2_Float.md&amp;value=---%0Auid%3A%20Content.Shared.FixedPoint.FixedPoint2.Float%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/FixedPoint/FixedPoint2.cs/#L176">View Source</a>
+  </span>
+  <a id="Content_Shared_FixedPoint_FixedPoint2_Float_" data-uid="Content.Shared.FixedPoint.FixedPoint2.Float*"></a>
+  <h4 id="Content_Shared_FixedPoint_FixedPoint2_Float" data-uid="Content.Shared.FixedPoint.FixedPoint2.Float">Float()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public float Float()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_FixedPoint_FixedPoint2_FromCents_System_Int32_.md&amp;value=---%0Auid%3A%20Content.Shared.FixedPoint.FixedPoint2.FromCents(System.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/FixedPoint/FixedPoint2.cs/#L46">View Source</a>
+  </span>
+  <a id="Content_Shared_FixedPoint_FixedPoint2_FromCents_" data-uid="Content.Shared.FixedPoint.FixedPoint2.FromCents*"></a>
+  <h4 id="Content_Shared_FixedPoint_FixedPoint2_FromCents_System_Int32_" data-uid="Content.Shared.FixedPoint.FixedPoint2.FromCents(System.Int32)">FromCents(Int32)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static FixedPoint2 FromCents(int value)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">value</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.FixedPoint.FixedPoint2.html">FixedPoint2</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_FixedPoint_FixedPoint2_GetHashCode.md&amp;value=---%0Auid%3A%20Content.Shared.FixedPoint.FixedPoint2.GetHashCode%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/FixedPoint/FixedPoint2.cs/#L256">View Source</a>
+  </span>
+  <a id="Content_Shared_FixedPoint_FixedPoint2_GetHashCode_" data-uid="Content.Shared.FixedPoint.FixedPoint2.GetHashCode*"></a>
+  <h4 id="Content_Shared_FixedPoint_FixedPoint2_GetHashCode" data-uid="Content.Shared.FixedPoint.FixedPoint2.GetHashCode">GetHashCode()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override int GetHashCode()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_FixedPoint_FixedPoint2_Int.md&amp;value=---%0Auid%3A%20Content.Shared.FixedPoint.FixedPoint2.Int%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/FixedPoint/FixedPoint2.cs/#L186">View Source</a>
+  </span>
+  <a id="Content_Shared_FixedPoint_FixedPoint2_Int_" data-uid="Content.Shared.FixedPoint.FixedPoint2.Int*"></a>
+  <h4 id="Content_Shared_FixedPoint_FixedPoint2_Int" data-uid="Content.Shared.FixedPoint.FixedPoint2.Int">Int()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int Int()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_FixedPoint_FixedPoint2_Max_Content_Shared_FixedPoint_FixedPoint2_Content_Shared_FixedPoint_FixedPoint2_.md&amp;value=---%0Auid%3A%20Content.Shared.FixedPoint.FixedPoint2.Max(Content.Shared.FixedPoint.FixedPoint2%2CContent.Shared.FixedPoint.FixedPoint2)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/FixedPoint/FixedPoint2.cs/#L210">View Source</a>
+  </span>
+  <a id="Content_Shared_FixedPoint_FixedPoint2_Max_" data-uid="Content.Shared.FixedPoint.FixedPoint2.Max*"></a>
+  <h4 id="Content_Shared_FixedPoint_FixedPoint2_Max_Content_Shared_FixedPoint_FixedPoint2_Content_Shared_FixedPoint_FixedPoint2_" data-uid="Content.Shared.FixedPoint.FixedPoint2.Max(Content.Shared.FixedPoint.FixedPoint2,Content.Shared.FixedPoint.FixedPoint2)">Max(FixedPoint2, FixedPoint2)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static FixedPoint2 Max(FixedPoint2 a, FixedPoint2 b)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.FixedPoint.FixedPoint2.html">FixedPoint2</a></td>
+        <td><span class="parametername">a</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Shared.FixedPoint.FixedPoint2.html">FixedPoint2</a></td>
+        <td><span class="parametername">b</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.FixedPoint.FixedPoint2.html">FixedPoint2</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_FixedPoint_FixedPoint2_Min_Content_Shared_FixedPoint_FixedPoint2_Content_Shared_FixedPoint_FixedPoint2_.md&amp;value=---%0Auid%3A%20Content.Shared.FixedPoint.FixedPoint2.Min(Content.Shared.FixedPoint.FixedPoint2%2CContent.Shared.FixedPoint.FixedPoint2)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/FixedPoint/FixedPoint2.cs/#L205">View Source</a>
+  </span>
+  <a id="Content_Shared_FixedPoint_FixedPoint2_Min_" data-uid="Content.Shared.FixedPoint.FixedPoint2.Min*"></a>
+  <h4 id="Content_Shared_FixedPoint_FixedPoint2_Min_Content_Shared_FixedPoint_FixedPoint2_Content_Shared_FixedPoint_FixedPoint2_" data-uid="Content.Shared.FixedPoint.FixedPoint2.Min(Content.Shared.FixedPoint.FixedPoint2,Content.Shared.FixedPoint.FixedPoint2)">Min(FixedPoint2, FixedPoint2)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static FixedPoint2 Min(FixedPoint2 a, FixedPoint2 b)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.FixedPoint.FixedPoint2.html">FixedPoint2</a></td>
+        <td><span class="parametername">a</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Shared.FixedPoint.FixedPoint2.html">FixedPoint2</a></td>
+        <td><span class="parametername">b</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.FixedPoint.FixedPoint2.html">FixedPoint2</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_FixedPoint_FixedPoint2_Min_Content_Shared_FixedPoint_FixedPoint2___.md&amp;value=---%0Auid%3A%20Content.Shared.FixedPoint.FixedPoint2.Min(Content.Shared.FixedPoint.FixedPoint2%5B%5D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/FixedPoint/FixedPoint2.cs/#L200">View Source</a>
+  </span>
+  <a id="Content_Shared_FixedPoint_FixedPoint2_Min_" data-uid="Content.Shared.FixedPoint.FixedPoint2.Min*"></a>
+  <h4 id="Content_Shared_FixedPoint_FixedPoint2_Min_Content_Shared_FixedPoint_FixedPoint2___" data-uid="Content.Shared.FixedPoint.FixedPoint2.Min(Content.Shared.FixedPoint.FixedPoint2[])">Min(FixedPoint2[])</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static FixedPoint2 Min(params FixedPoint2[] fixedPoints)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.FixedPoint.FixedPoint2.html">FixedPoint2</a>[]</td>
+        <td><span class="parametername">fixedPoints</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.FixedPoint.FixedPoint2.html">FixedPoint2</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_FixedPoint_FixedPoint2_New_System_Double_.md&amp;value=---%0Auid%3A%20Content.Shared.FixedPoint.FixedPoint2.New(System.Double)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/FixedPoint/FixedPoint2.cs/#L61">View Source</a>
+  </span>
+  <a id="Content_Shared_FixedPoint_FixedPoint2_New_" data-uid="Content.Shared.FixedPoint.FixedPoint2.New*"></a>
+  <h4 id="Content_Shared_FixedPoint_FixedPoint2_New_System_Double_" data-uid="Content.Shared.FixedPoint.FixedPoint2.New(System.Double)">New(Double)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static FixedPoint2 New(double value)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Double</span></td>
+        <td><span class="parametername">value</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.FixedPoint.FixedPoint2.html">FixedPoint2</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_FixedPoint_FixedPoint2_New_System_Int32_.md&amp;value=---%0Auid%3A%20Content.Shared.FixedPoint.FixedPoint2.New(System.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/FixedPoint/FixedPoint2.cs/#L41">View Source</a>
+  </span>
+  <a id="Content_Shared_FixedPoint_FixedPoint2_New_" data-uid="Content.Shared.FixedPoint.FixedPoint2.New*"></a>
+  <h4 id="Content_Shared_FixedPoint_FixedPoint2_New_System_Int32_" data-uid="Content.Shared.FixedPoint.FixedPoint2.New(System.Int32)">New(Int32)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static FixedPoint2 New(int value)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">value</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.FixedPoint.FixedPoint2.html">FixedPoint2</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_FixedPoint_FixedPoint2_New_System_Single_.md&amp;value=---%0Auid%3A%20Content.Shared.FixedPoint.FixedPoint2.New(System.Single)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/FixedPoint/FixedPoint2.cs/#L48">View Source</a>
+  </span>
+  <a id="Content_Shared_FixedPoint_FixedPoint2_New_" data-uid="Content.Shared.FixedPoint.FixedPoint2.New*"></a>
+  <h4 id="Content_Shared_FixedPoint_FixedPoint2_New_System_Single_" data-uid="Content.Shared.FixedPoint.FixedPoint2.New(System.Single)">New(Single)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static FixedPoint2 New(float value)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td><span class="parametername">value</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.FixedPoint.FixedPoint2.html">FixedPoint2</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_FixedPoint_FixedPoint2_New_System_String_.md&amp;value=---%0Auid%3A%20Content.Shared.FixedPoint.FixedPoint2.New(System.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/FixedPoint/FixedPoint2.cs/#L66">View Source</a>
+  </span>
+  <a id="Content_Shared_FixedPoint_FixedPoint2_New_" data-uid="Content.Shared.FixedPoint.FixedPoint2.New*"></a>
+  <h4 id="Content_Shared_FixedPoint_FixedPoint2_New_System_String_" data-uid="Content.Shared.FixedPoint.FixedPoint2.New(System.String)">New(String)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static FixedPoint2 New(string value)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">value</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.FixedPoint.FixedPoint2.html">FixedPoint2</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_FixedPoint_FixedPoint2_NewCeiling_System_Single_.md&amp;value=---%0Auid%3A%20Content.Shared.FixedPoint.FixedPoint2.NewCeiling(System.Single)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/FixedPoint/FixedPoint2.cs/#L56">View Source</a>
+  </span>
+  <a id="Content_Shared_FixedPoint_FixedPoint2_NewCeiling_" data-uid="Content.Shared.FixedPoint.FixedPoint2.NewCeiling*"></a>
+  <h4 id="Content_Shared_FixedPoint_FixedPoint2_NewCeiling_System_Single_" data-uid="Content.Shared.FixedPoint.FixedPoint2.NewCeiling(System.Single)">NewCeiling(Single)</h4>
+  <div class="markdown level1 summary"><p>Create the closest <a class="xref" href="Content.Shared.FixedPoint.FixedPoint2.html">FixedPoint2</a> for a float value, always rounding up.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static FixedPoint2 NewCeiling(float value)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td><span class="parametername">value</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.FixedPoint.FixedPoint2.html">FixedPoint2</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_FixedPoint_FixedPoint2_Serialize.md&amp;value=---%0Auid%3A%20Content.Shared.FixedPoint.FixedPoint2.Serialize%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/FixedPoint/FixedPoint2.cs/#L279">View Source</a>
+  </span>
+  <a id="Content_Shared_FixedPoint_FixedPoint2_Serialize_" data-uid="Content.Shared.FixedPoint.FixedPoint2.Serialize*"></a>
+  <h4 id="Content_Shared_FixedPoint_FixedPoint2_Serialize" data-uid="Content.Shared.FixedPoint.FixedPoint2.Serialize">Serialize()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string Serialize()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_FixedPoint_FixedPoint2_Sign_Content_Shared_FixedPoint_FixedPoint2_.md&amp;value=---%0Auid%3A%20Content.Shared.FixedPoint.FixedPoint2.Sign(Content.Shared.FixedPoint.FixedPoint2)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/FixedPoint/FixedPoint2.cs/#L215">View Source</a>
+  </span>
+  <a id="Content_Shared_FixedPoint_FixedPoint2_Sign_" data-uid="Content.Shared.FixedPoint.FixedPoint2.Sign*"></a>
+  <h4 id="Content_Shared_FixedPoint_FixedPoint2_Sign_Content_Shared_FixedPoint_FixedPoint2_" data-uid="Content.Shared.FixedPoint.FixedPoint2.Sign(Content.Shared.FixedPoint.FixedPoint2)">Sign(FixedPoint2)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static int Sign(FixedPoint2 value)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.FixedPoint.FixedPoint2.html">FixedPoint2</a></td>
+        <td><span class="parametername">value</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_FixedPoint_FixedPoint2_ToString.md&amp;value=---%0Auid%3A%20Content.Shared.FixedPoint.FixedPoint2.ToString%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/FixedPoint/FixedPoint2.cs/#L272">View Source</a>
+  </span>
+  <a id="Content_Shared_FixedPoint_FixedPoint2_ToString_" data-uid="Content.Shared.FixedPoint.FixedPoint2.ToString*"></a>
+  <h4 id="Content_Shared_FixedPoint_FixedPoint2_ToString" data-uid="Content.Shared.FixedPoint.FixedPoint2.ToString">ToString()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override string ToString()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_FixedPoint_FixedPoint2_ToString_System_Nullable_System_String__System_Nullable_IFormatProvider__.md&amp;value=---%0Auid%3A%20Content.Shared.FixedPoint.FixedPoint2.ToString(System.Nullable%7BSystem.String%7D%2CSystem.Nullable%7BIFormatProvider%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/FixedPoint/FixedPoint2.cs/#L274">View Source</a>
+  </span>
+  <a id="Content_Shared_FixedPoint_FixedPoint2_ToString_" data-uid="Content.Shared.FixedPoint.FixedPoint2.ToString*"></a>
+  <h4 id="Content_Shared_FixedPoint_FixedPoint2_ToString_System_Nullable_System_String__System_Nullable_IFormatProvider__" data-uid="Content.Shared.FixedPoint.FixedPoint2.ToString(System.Nullable{System.String},System.Nullable{IFormatProvider})">ToString(Nullable&lt;String&gt;, Nullable&lt;IFormatProvider&gt;)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string ToString(string? format, IFormatProvider? formatProvider)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">System.String</span>&gt;</td>
+        <td><span class="parametername">format</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">IFormatProvider</span>&gt;</td>
+        <td><span class="parametername">formatProvider</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="operators">Operators
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_FixedPoint_FixedPoint2_op_Addition_Content_Shared_FixedPoint_FixedPoint2_Content_Shared_FixedPoint_FixedPoint2_.md&amp;value=---%0Auid%3A%20Content.Shared.FixedPoint.FixedPoint2.op_Addition(Content.Shared.FixedPoint.FixedPoint2%2CContent.Shared.FixedPoint.FixedPoint2)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/FixedPoint/FixedPoint2.cs/#L80">View Source</a>
+  </span>
+  <a id="Content_Shared_FixedPoint_FixedPoint2_op_Addition_" data-uid="Content.Shared.FixedPoint.FixedPoint2.op_Addition*"></a>
+  <h4 id="Content_Shared_FixedPoint_FixedPoint2_op_Addition_Content_Shared_FixedPoint_FixedPoint2_Content_Shared_FixedPoint_FixedPoint2_" data-uid="Content.Shared.FixedPoint.FixedPoint2.op_Addition(Content.Shared.FixedPoint.FixedPoint2,Content.Shared.FixedPoint.FixedPoint2)">Addition(FixedPoint2, FixedPoint2)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static FixedPoint2 operator +(FixedPoint2 a, FixedPoint2 b)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.FixedPoint.FixedPoint2.html">FixedPoint2</a></td>
+        <td><span class="parametername">a</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Shared.FixedPoint.FixedPoint2.html">FixedPoint2</a></td>
+        <td><span class="parametername">b</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.FixedPoint.FixedPoint2.html">FixedPoint2</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_FixedPoint_FixedPoint2_op_Division_Content_Shared_FixedPoint_FixedPoint2_Content_Shared_FixedPoint_FixedPoint2_.md&amp;value=---%0Auid%3A%20Content.Shared.FixedPoint.FixedPoint2.op_Division(Content.Shared.FixedPoint.FixedPoint2%2CContent.Shared.FixedPoint.FixedPoint2)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/FixedPoint/FixedPoint2.cs/#L106">View Source</a>
+  </span>
+  <a id="Content_Shared_FixedPoint_FixedPoint2_op_Division_" data-uid="Content.Shared.FixedPoint.FixedPoint2.op_Division*"></a>
+  <h4 id="Content_Shared_FixedPoint_FixedPoint2_op_Division_Content_Shared_FixedPoint_FixedPoint2_Content_Shared_FixedPoint_FixedPoint2_" data-uid="Content.Shared.FixedPoint.FixedPoint2.op_Division(Content.Shared.FixedPoint.FixedPoint2,Content.Shared.FixedPoint.FixedPoint2)">Division(FixedPoint2, FixedPoint2)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static FixedPoint2 operator /(FixedPoint2 a, FixedPoint2 b)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.FixedPoint.FixedPoint2.html">FixedPoint2</a></td>
+        <td><span class="parametername">a</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Shared.FixedPoint.FixedPoint2.html">FixedPoint2</a></td>
+        <td><span class="parametername">b</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.FixedPoint.FixedPoint2.html">FixedPoint2</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_FixedPoint_FixedPoint2_op_Division_Content_Shared_FixedPoint_FixedPoint2_System_Single_.md&amp;value=---%0Auid%3A%20Content.Shared.FixedPoint.FixedPoint2.op_Division(Content.Shared.FixedPoint.FixedPoint2%2CSystem.Single)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/FixedPoint/FixedPoint2.cs/#L111">View Source</a>
+  </span>
+  <a id="Content_Shared_FixedPoint_FixedPoint2_op_Division_" data-uid="Content.Shared.FixedPoint.FixedPoint2.op_Division*"></a>
+  <h4 id="Content_Shared_FixedPoint_FixedPoint2_op_Division_Content_Shared_FixedPoint_FixedPoint2_System_Single_" data-uid="Content.Shared.FixedPoint.FixedPoint2.op_Division(Content.Shared.FixedPoint.FixedPoint2,System.Single)">Division(FixedPoint2, Single)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static FixedPoint2 operator /(FixedPoint2 a, float b)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.FixedPoint.FixedPoint2.html">FixedPoint2</a></td>
+        <td><span class="parametername">a</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td><span class="parametername">b</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.FixedPoint.FixedPoint2.html">FixedPoint2</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_FixedPoint_FixedPoint2_op_Equality_Content_Shared_FixedPoint_FixedPoint2_Content_Shared_FixedPoint_FixedPoint2_.md&amp;value=---%0Auid%3A%20Content.Shared.FixedPoint.FixedPoint2.op_Equality(Content.Shared.FixedPoint.FixedPoint2%2CContent.Shared.FixedPoint.FixedPoint2)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/FixedPoint/FixedPoint2.cs/#L146">View Source</a>
+  </span>
+  <a id="Content_Shared_FixedPoint_FixedPoint2_op_Equality_" data-uid="Content.Shared.FixedPoint.FixedPoint2.op_Equality*"></a>
+  <h4 id="Content_Shared_FixedPoint_FixedPoint2_op_Equality_Content_Shared_FixedPoint_FixedPoint2_Content_Shared_FixedPoint_FixedPoint2_" data-uid="Content.Shared.FixedPoint.FixedPoint2.op_Equality(Content.Shared.FixedPoint.FixedPoint2,Content.Shared.FixedPoint.FixedPoint2)">Equality(FixedPoint2, FixedPoint2)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool operator ==(FixedPoint2 a, FixedPoint2 b)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.FixedPoint.FixedPoint2.html">FixedPoint2</a></td>
+        <td><span class="parametername">a</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Shared.FixedPoint.FixedPoint2.html">FixedPoint2</a></td>
+        <td><span class="parametername">b</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_FixedPoint_FixedPoint2_op_Equality_Content_Shared_FixedPoint_FixedPoint2_System_Int32_.md&amp;value=---%0Auid%3A%20Content.Shared.FixedPoint.FixedPoint2.op_Equality(Content.Shared.FixedPoint.FixedPoint2%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/FixedPoint/FixedPoint2.cs/#L136">View Source</a>
+  </span>
+  <a id="Content_Shared_FixedPoint_FixedPoint2_op_Equality_" data-uid="Content.Shared.FixedPoint.FixedPoint2.op_Equality*"></a>
+  <h4 id="Content_Shared_FixedPoint_FixedPoint2_op_Equality_Content_Shared_FixedPoint_FixedPoint2_System_Int32_" data-uid="Content.Shared.FixedPoint.FixedPoint2.op_Equality(Content.Shared.FixedPoint.FixedPoint2,System.Int32)">Equality(FixedPoint2, Int32)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool operator ==(FixedPoint2 a, int b)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.FixedPoint.FixedPoint2.html">FixedPoint2</a></td>
+        <td><span class="parametername">a</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">b</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_FixedPoint_FixedPoint2_op_Explicit_Content_Shared_FixedPoint_FixedPoint2__System_Double.md&amp;value=---%0Auid%3A%20Content.Shared.FixedPoint.FixedPoint2.op_Explicit(Content.Shared.FixedPoint.FixedPoint2)~System.Double%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/FixedPoint/FixedPoint2.cs/#L197">View Source</a>
+  </span>
+  <a id="Content_Shared_FixedPoint_FixedPoint2_op_Explicit_" data-uid="Content.Shared.FixedPoint.FixedPoint2.op_Explicit*"></a>
+  <h4 id="Content_Shared_FixedPoint_FixedPoint2_op_Explicit_Content_Shared_FixedPoint_FixedPoint2__System_Double" data-uid="Content.Shared.FixedPoint.FixedPoint2.op_Explicit(Content.Shared.FixedPoint.FixedPoint2)~System.Double">Explicit(FixedPoint2 to Double)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static explicit operator double (FixedPoint2 n)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.FixedPoint.FixedPoint2.html">FixedPoint2</a></td>
+        <td><span class="parametername">n</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Double</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_FixedPoint_FixedPoint2_op_Explicit_Content_Shared_FixedPoint_FixedPoint2__System_Int32.md&amp;value=---%0Auid%3A%20Content.Shared.FixedPoint.FixedPoint2.op_Explicit(Content.Shared.FixedPoint.FixedPoint2)~System.Int32%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/FixedPoint/FixedPoint2.cs/#L198">View Source</a>
+  </span>
+  <a id="Content_Shared_FixedPoint_FixedPoint2_op_Explicit_" data-uid="Content.Shared.FixedPoint.FixedPoint2.op_Explicit*"></a>
+  <h4 id="Content_Shared_FixedPoint_FixedPoint2_op_Explicit_Content_Shared_FixedPoint_FixedPoint2__System_Int32" data-uid="Content.Shared.FixedPoint.FixedPoint2.op_Explicit(Content.Shared.FixedPoint.FixedPoint2)~System.Int32">Explicit(FixedPoint2 to Int32)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static explicit operator int (FixedPoint2 n)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.FixedPoint.FixedPoint2.html">FixedPoint2</a></td>
+        <td><span class="parametername">n</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_FixedPoint_FixedPoint2_op_Explicit_Content_Shared_FixedPoint_FixedPoint2__System_Single.md&amp;value=---%0Auid%3A%20Content.Shared.FixedPoint.FixedPoint2.op_Explicit(Content.Shared.FixedPoint.FixedPoint2)~System.Single%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/FixedPoint/FixedPoint2.cs/#L196">View Source</a>
+  </span>
+  <a id="Content_Shared_FixedPoint_FixedPoint2_op_Explicit_" data-uid="Content.Shared.FixedPoint.FixedPoint2.op_Explicit*"></a>
+  <h4 id="Content_Shared_FixedPoint_FixedPoint2_op_Explicit_Content_Shared_FixedPoint_FixedPoint2__System_Single" data-uid="Content.Shared.FixedPoint.FixedPoint2.op_Explicit(Content.Shared.FixedPoint.FixedPoint2)~System.Single">Explicit(FixedPoint2 to Single)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static explicit operator float (FixedPoint2 n)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.FixedPoint.FixedPoint2.html">FixedPoint2</a></td>
+        <td><span class="parametername">n</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_FixedPoint_FixedPoint2_op_GreaterThan_Content_Shared_FixedPoint_FixedPoint2_Content_Shared_FixedPoint_FixedPoint2_.md&amp;value=---%0Auid%3A%20Content.Shared.FixedPoint.FixedPoint2.op_GreaterThan(Content.Shared.FixedPoint.FixedPoint2%2CContent.Shared.FixedPoint.FixedPoint2)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/FixedPoint/FixedPoint2.cs/#L171">View Source</a>
+  </span>
+  <a id="Content_Shared_FixedPoint_FixedPoint2_op_GreaterThan_" data-uid="Content.Shared.FixedPoint.FixedPoint2.op_GreaterThan*"></a>
+  <h4 id="Content_Shared_FixedPoint_FixedPoint2_op_GreaterThan_Content_Shared_FixedPoint_FixedPoint2_Content_Shared_FixedPoint_FixedPoint2_" data-uid="Content.Shared.FixedPoint.FixedPoint2.op_GreaterThan(Content.Shared.FixedPoint.FixedPoint2,Content.Shared.FixedPoint.FixedPoint2)">GreaterThan(FixedPoint2, FixedPoint2)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool operator&gt;(FixedPoint2 a, FixedPoint2 b)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.FixedPoint.FixedPoint2.html">FixedPoint2</a></td>
+        <td><span class="parametername">a</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Shared.FixedPoint.FixedPoint2.html">FixedPoint2</a></td>
+        <td><span class="parametername">b</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_FixedPoint_FixedPoint2_op_GreaterThan_Content_Shared_FixedPoint_FixedPoint2_System_Int32_.md&amp;value=---%0Auid%3A%20Content.Shared.FixedPoint.FixedPoint2.op_GreaterThan(Content.Shared.FixedPoint.FixedPoint2%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/FixedPoint/FixedPoint2.cs/#L131">View Source</a>
+  </span>
+  <a id="Content_Shared_FixedPoint_FixedPoint2_op_GreaterThan_" data-uid="Content.Shared.FixedPoint.FixedPoint2.op_GreaterThan*"></a>
+  <h4 id="Content_Shared_FixedPoint_FixedPoint2_op_GreaterThan_Content_Shared_FixedPoint_FixedPoint2_System_Int32_" data-uid="Content.Shared.FixedPoint.FixedPoint2.op_GreaterThan(Content.Shared.FixedPoint.FixedPoint2,System.Int32)">GreaterThan(FixedPoint2, Int32)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool operator&gt;(FixedPoint2 a, int b)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.FixedPoint.FixedPoint2.html">FixedPoint2</a></td>
+        <td><span class="parametername">a</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">b</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_FixedPoint_FixedPoint2_op_GreaterThanOrEqual_Content_Shared_FixedPoint_FixedPoint2_Content_Shared_FixedPoint_FixedPoint2_.md&amp;value=---%0Auid%3A%20Content.Shared.FixedPoint.FixedPoint2.op_GreaterThanOrEqual(Content.Shared.FixedPoint.FixedPoint2%2CContent.Shared.FixedPoint.FixedPoint2)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/FixedPoint/FixedPoint2.cs/#L161">View Source</a>
+  </span>
+  <a id="Content_Shared_FixedPoint_FixedPoint2_op_GreaterThanOrEqual_" data-uid="Content.Shared.FixedPoint.FixedPoint2.op_GreaterThanOrEqual*"></a>
+  <h4 id="Content_Shared_FixedPoint_FixedPoint2_op_GreaterThanOrEqual_Content_Shared_FixedPoint_FixedPoint2_Content_Shared_FixedPoint_FixedPoint2_" data-uid="Content.Shared.FixedPoint.FixedPoint2.op_GreaterThanOrEqual(Content.Shared.FixedPoint.FixedPoint2,Content.Shared.FixedPoint.FixedPoint2)">GreaterThanOrEqual(FixedPoint2, FixedPoint2)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool operator &gt;=(FixedPoint2 a, FixedPoint2 b)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.FixedPoint.FixedPoint2.html">FixedPoint2</a></td>
+        <td><span class="parametername">a</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Shared.FixedPoint.FixedPoint2.html">FixedPoint2</a></td>
+        <td><span class="parametername">b</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_FixedPoint_FixedPoint2_op_GreaterThanOrEqual_Content_Shared_FixedPoint_FixedPoint2_System_Int32_.md&amp;value=---%0Auid%3A%20Content.Shared.FixedPoint.FixedPoint2.op_GreaterThanOrEqual(Content.Shared.FixedPoint.FixedPoint2%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/FixedPoint/FixedPoint2.cs/#L121">View Source</a>
+  </span>
+  <a id="Content_Shared_FixedPoint_FixedPoint2_op_GreaterThanOrEqual_" data-uid="Content.Shared.FixedPoint.FixedPoint2.op_GreaterThanOrEqual*"></a>
+  <h4 id="Content_Shared_FixedPoint_FixedPoint2_op_GreaterThanOrEqual_Content_Shared_FixedPoint_FixedPoint2_System_Int32_" data-uid="Content.Shared.FixedPoint.FixedPoint2.op_GreaterThanOrEqual(Content.Shared.FixedPoint.FixedPoint2,System.Int32)">GreaterThanOrEqual(FixedPoint2, Int32)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool operator &gt;=(FixedPoint2 a, int b)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.FixedPoint.FixedPoint2.html">FixedPoint2</a></td>
+        <td><span class="parametername">a</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">b</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_FixedPoint_FixedPoint2_op_Implicit_System_Double__Content_Shared_FixedPoint_FixedPoint2.md&amp;value=---%0Auid%3A%20Content.Shared.FixedPoint.FixedPoint2.op_Implicit(System.Double)~Content.Shared.FixedPoint.FixedPoint2%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/FixedPoint/FixedPoint2.cs/#L193">View Source</a>
+  </span>
+  <a id="Content_Shared_FixedPoint_FixedPoint2_op_Implicit_" data-uid="Content.Shared.FixedPoint.FixedPoint2.op_Implicit*"></a>
+  <h4 id="Content_Shared_FixedPoint_FixedPoint2_op_Implicit_System_Double__Content_Shared_FixedPoint_FixedPoint2" data-uid="Content.Shared.FixedPoint.FixedPoint2.op_Implicit(System.Double)~Content.Shared.FixedPoint.FixedPoint2">Implicit(Double to FixedPoint2)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static implicit operator FixedPoint2(double n)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Double</span></td>
+        <td><span class="parametername">n</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.FixedPoint.FixedPoint2.html">FixedPoint2</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_FixedPoint_FixedPoint2_op_Implicit_System_Int32__Content_Shared_FixedPoint_FixedPoint2.md&amp;value=---%0Auid%3A%20Content.Shared.FixedPoint.FixedPoint2.op_Implicit(System.Int32)~Content.Shared.FixedPoint.FixedPoint2%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/FixedPoint/FixedPoint2.cs/#L194">View Source</a>
+  </span>
+  <a id="Content_Shared_FixedPoint_FixedPoint2_op_Implicit_" data-uid="Content.Shared.FixedPoint.FixedPoint2.op_Implicit*"></a>
+  <h4 id="Content_Shared_FixedPoint_FixedPoint2_op_Implicit_System_Int32__Content_Shared_FixedPoint_FixedPoint2" data-uid="Content.Shared.FixedPoint.FixedPoint2.op_Implicit(System.Int32)~Content.Shared.FixedPoint.FixedPoint2">Implicit(Int32 to FixedPoint2)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static implicit operator FixedPoint2(int n)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">n</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.FixedPoint.FixedPoint2.html">FixedPoint2</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_FixedPoint_FixedPoint2_op_Implicit_System_Single__Content_Shared_FixedPoint_FixedPoint2.md&amp;value=---%0Auid%3A%20Content.Shared.FixedPoint.FixedPoint2.op_Implicit(System.Single)~Content.Shared.FixedPoint.FixedPoint2%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/FixedPoint/FixedPoint2.cs/#L192">View Source</a>
+  </span>
+  <a id="Content_Shared_FixedPoint_FixedPoint2_op_Implicit_" data-uid="Content.Shared.FixedPoint.FixedPoint2.op_Implicit*"></a>
+  <h4 id="Content_Shared_FixedPoint_FixedPoint2_op_Implicit_System_Single__Content_Shared_FixedPoint_FixedPoint2" data-uid="Content.Shared.FixedPoint.FixedPoint2.op_Implicit(System.Single)~Content.Shared.FixedPoint.FixedPoint2">Implicit(Single to FixedPoint2)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static implicit operator FixedPoint2(float n)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td><span class="parametername">n</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.FixedPoint.FixedPoint2.html">FixedPoint2</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_FixedPoint_FixedPoint2_op_Inequality_Content_Shared_FixedPoint_FixedPoint2_Content_Shared_FixedPoint_FixedPoint2_.md&amp;value=---%0Auid%3A%20Content.Shared.FixedPoint.FixedPoint2.op_Inequality(Content.Shared.FixedPoint.FixedPoint2%2CContent.Shared.FixedPoint.FixedPoint2)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/FixedPoint/FixedPoint2.cs/#L151">View Source</a>
+  </span>
+  <a id="Content_Shared_FixedPoint_FixedPoint2_op_Inequality_" data-uid="Content.Shared.FixedPoint.FixedPoint2.op_Inequality*"></a>
+  <h4 id="Content_Shared_FixedPoint_FixedPoint2_op_Inequality_Content_Shared_FixedPoint_FixedPoint2_Content_Shared_FixedPoint_FixedPoint2_" data-uid="Content.Shared.FixedPoint.FixedPoint2.op_Inequality(Content.Shared.FixedPoint.FixedPoint2,Content.Shared.FixedPoint.FixedPoint2)">Inequality(FixedPoint2, FixedPoint2)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool operator !=(FixedPoint2 a, FixedPoint2 b)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.FixedPoint.FixedPoint2.html">FixedPoint2</a></td>
+        <td><span class="parametername">a</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Shared.FixedPoint.FixedPoint2.html">FixedPoint2</a></td>
+        <td><span class="parametername">b</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_FixedPoint_FixedPoint2_op_Inequality_Content_Shared_FixedPoint_FixedPoint2_System_Int32_.md&amp;value=---%0Auid%3A%20Content.Shared.FixedPoint.FixedPoint2.op_Inequality(Content.Shared.FixedPoint.FixedPoint2%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/FixedPoint/FixedPoint2.cs/#L141">View Source</a>
+  </span>
+  <a id="Content_Shared_FixedPoint_FixedPoint2_op_Inequality_" data-uid="Content.Shared.FixedPoint.FixedPoint2.op_Inequality*"></a>
+  <h4 id="Content_Shared_FixedPoint_FixedPoint2_op_Inequality_Content_Shared_FixedPoint_FixedPoint2_System_Int32_" data-uid="Content.Shared.FixedPoint.FixedPoint2.op_Inequality(Content.Shared.FixedPoint.FixedPoint2,System.Int32)">Inequality(FixedPoint2, Int32)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool operator !=(FixedPoint2 a, int b)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.FixedPoint.FixedPoint2.html">FixedPoint2</a></td>
+        <td><span class="parametername">a</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">b</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_FixedPoint_FixedPoint2_op_LessThan_Content_Shared_FixedPoint_FixedPoint2_Content_Shared_FixedPoint_FixedPoint2_.md&amp;value=---%0Auid%3A%20Content.Shared.FixedPoint.FixedPoint2.op_LessThan(Content.Shared.FixedPoint.FixedPoint2%2CContent.Shared.FixedPoint.FixedPoint2)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/FixedPoint/FixedPoint2.cs/#L166">View Source</a>
+  </span>
+  <a id="Content_Shared_FixedPoint_FixedPoint2_op_LessThan_" data-uid="Content.Shared.FixedPoint.FixedPoint2.op_LessThan*"></a>
+  <h4 id="Content_Shared_FixedPoint_FixedPoint2_op_LessThan_Content_Shared_FixedPoint_FixedPoint2_Content_Shared_FixedPoint_FixedPoint2_" data-uid="Content.Shared.FixedPoint.FixedPoint2.op_LessThan(Content.Shared.FixedPoint.FixedPoint2,Content.Shared.FixedPoint.FixedPoint2)">LessThan(FixedPoint2, FixedPoint2)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool operator &lt;(FixedPoint2 a, FixedPoint2 b)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.FixedPoint.FixedPoint2.html">FixedPoint2</a></td>
+        <td><span class="parametername">a</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Shared.FixedPoint.FixedPoint2.html">FixedPoint2</a></td>
+        <td><span class="parametername">b</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_FixedPoint_FixedPoint2_op_LessThan_Content_Shared_FixedPoint_FixedPoint2_System_Int32_.md&amp;value=---%0Auid%3A%20Content.Shared.FixedPoint.FixedPoint2.op_LessThan(Content.Shared.FixedPoint.FixedPoint2%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/FixedPoint/FixedPoint2.cs/#L126">View Source</a>
+  </span>
+  <a id="Content_Shared_FixedPoint_FixedPoint2_op_LessThan_" data-uid="Content.Shared.FixedPoint.FixedPoint2.op_LessThan*"></a>
+  <h4 id="Content_Shared_FixedPoint_FixedPoint2_op_LessThan_Content_Shared_FixedPoint_FixedPoint2_System_Int32_" data-uid="Content.Shared.FixedPoint.FixedPoint2.op_LessThan(Content.Shared.FixedPoint.FixedPoint2,System.Int32)">LessThan(FixedPoint2, Int32)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool operator &lt;(FixedPoint2 a, int b)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.FixedPoint.FixedPoint2.html">FixedPoint2</a></td>
+        <td><span class="parametername">a</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">b</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_FixedPoint_FixedPoint2_op_LessThanOrEqual_Content_Shared_FixedPoint_FixedPoint2_Content_Shared_FixedPoint_FixedPoint2_.md&amp;value=---%0Auid%3A%20Content.Shared.FixedPoint.FixedPoint2.op_LessThanOrEqual(Content.Shared.FixedPoint.FixedPoint2%2CContent.Shared.FixedPoint.FixedPoint2)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/FixedPoint/FixedPoint2.cs/#L156">View Source</a>
+  </span>
+  <a id="Content_Shared_FixedPoint_FixedPoint2_op_LessThanOrEqual_" data-uid="Content.Shared.FixedPoint.FixedPoint2.op_LessThanOrEqual*"></a>
+  <h4 id="Content_Shared_FixedPoint_FixedPoint2_op_LessThanOrEqual_Content_Shared_FixedPoint_FixedPoint2_Content_Shared_FixedPoint_FixedPoint2_" data-uid="Content.Shared.FixedPoint.FixedPoint2.op_LessThanOrEqual(Content.Shared.FixedPoint.FixedPoint2,Content.Shared.FixedPoint.FixedPoint2)">LessThanOrEqual(FixedPoint2, FixedPoint2)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool operator &lt;=(FixedPoint2 a, FixedPoint2 b)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.FixedPoint.FixedPoint2.html">FixedPoint2</a></td>
+        <td><span class="parametername">a</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Shared.FixedPoint.FixedPoint2.html">FixedPoint2</a></td>
+        <td><span class="parametername">b</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_FixedPoint_FixedPoint2_op_LessThanOrEqual_Content_Shared_FixedPoint_FixedPoint2_System_Int32_.md&amp;value=---%0Auid%3A%20Content.Shared.FixedPoint.FixedPoint2.op_LessThanOrEqual(Content.Shared.FixedPoint.FixedPoint2%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/FixedPoint/FixedPoint2.cs/#L116">View Source</a>
+  </span>
+  <a id="Content_Shared_FixedPoint_FixedPoint2_op_LessThanOrEqual_" data-uid="Content.Shared.FixedPoint.FixedPoint2.op_LessThanOrEqual*"></a>
+  <h4 id="Content_Shared_FixedPoint_FixedPoint2_op_LessThanOrEqual_Content_Shared_FixedPoint_FixedPoint2_System_Int32_" data-uid="Content.Shared.FixedPoint.FixedPoint2.op_LessThanOrEqual(Content.Shared.FixedPoint.FixedPoint2,System.Int32)">LessThanOrEqual(FixedPoint2, Int32)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool operator &lt;=(FixedPoint2 a, int b)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.FixedPoint.FixedPoint2.html">FixedPoint2</a></td>
+        <td><span class="parametername">a</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">b</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_FixedPoint_FixedPoint2_op_Multiply_Content_Shared_FixedPoint_FixedPoint2_Content_Shared_FixedPoint_FixedPoint2_.md&amp;value=---%0Auid%3A%20Content.Shared.FixedPoint.FixedPoint2.op_Multiply(Content.Shared.FixedPoint.FixedPoint2%2CContent.Shared.FixedPoint.FixedPoint2)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/FixedPoint/FixedPoint2.cs/#L86">View Source</a>
+  </span>
+  <a id="Content_Shared_FixedPoint_FixedPoint2_op_Multiply_" data-uid="Content.Shared.FixedPoint.FixedPoint2.op_Multiply*"></a>
+  <h4 id="Content_Shared_FixedPoint_FixedPoint2_op_Multiply_Content_Shared_FixedPoint_FixedPoint2_Content_Shared_FixedPoint_FixedPoint2_" data-uid="Content.Shared.FixedPoint.FixedPoint2.op_Multiply(Content.Shared.FixedPoint.FixedPoint2,Content.Shared.FixedPoint.FixedPoint2)">Multiply(FixedPoint2, FixedPoint2)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static FixedPoint2 operator *(FixedPoint2 a, FixedPoint2 b)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.FixedPoint.FixedPoint2.html">FixedPoint2</a></td>
+        <td><span class="parametername">a</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Shared.FixedPoint.FixedPoint2.html">FixedPoint2</a></td>
+        <td><span class="parametername">b</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.FixedPoint.FixedPoint2.html">FixedPoint2</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_FixedPoint_FixedPoint2_op_Multiply_Content_Shared_FixedPoint_FixedPoint2_System_Double_.md&amp;value=---%0Auid%3A%20Content.Shared.FixedPoint.FixedPoint2.op_Multiply(Content.Shared.FixedPoint.FixedPoint2%2CSystem.Double)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/FixedPoint/FixedPoint2.cs/#L96">View Source</a>
+  </span>
+  <a id="Content_Shared_FixedPoint_FixedPoint2_op_Multiply_" data-uid="Content.Shared.FixedPoint.FixedPoint2.op_Multiply*"></a>
+  <h4 id="Content_Shared_FixedPoint_FixedPoint2_op_Multiply_Content_Shared_FixedPoint_FixedPoint2_System_Double_" data-uid="Content.Shared.FixedPoint.FixedPoint2.op_Multiply(Content.Shared.FixedPoint.FixedPoint2,System.Double)">Multiply(FixedPoint2, Double)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static FixedPoint2 operator *(FixedPoint2 a, double b)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.FixedPoint.FixedPoint2.html">FixedPoint2</a></td>
+        <td><span class="parametername">a</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Double</span></td>
+        <td><span class="parametername">b</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.FixedPoint.FixedPoint2.html">FixedPoint2</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_FixedPoint_FixedPoint2_op_Multiply_Content_Shared_FixedPoint_FixedPoint2_System_Int32_.md&amp;value=---%0Auid%3A%20Content.Shared.FixedPoint.FixedPoint2.op_Multiply(Content.Shared.FixedPoint.FixedPoint2%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/FixedPoint/FixedPoint2.cs/#L101">View Source</a>
+  </span>
+  <a id="Content_Shared_FixedPoint_FixedPoint2_op_Multiply_" data-uid="Content.Shared.FixedPoint.FixedPoint2.op_Multiply*"></a>
+  <h4 id="Content_Shared_FixedPoint_FixedPoint2_op_Multiply_Content_Shared_FixedPoint_FixedPoint2_System_Int32_" data-uid="Content.Shared.FixedPoint.FixedPoint2.op_Multiply(Content.Shared.FixedPoint.FixedPoint2,System.Int32)">Multiply(FixedPoint2, Int32)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static FixedPoint2 operator *(FixedPoint2 a, int b)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.FixedPoint.FixedPoint2.html">FixedPoint2</a></td>
+        <td><span class="parametername">a</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">b</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.FixedPoint.FixedPoint2.html">FixedPoint2</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_FixedPoint_FixedPoint2_op_Multiply_Content_Shared_FixedPoint_FixedPoint2_System_Single_.md&amp;value=---%0Auid%3A%20Content.Shared.FixedPoint.FixedPoint2.op_Multiply(Content.Shared.FixedPoint.FixedPoint2%2CSystem.Single)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/FixedPoint/FixedPoint2.cs/#L91">View Source</a>
+  </span>
+  <a id="Content_Shared_FixedPoint_FixedPoint2_op_Multiply_" data-uid="Content.Shared.FixedPoint.FixedPoint2.op_Multiply*"></a>
+  <h4 id="Content_Shared_FixedPoint_FixedPoint2_op_Multiply_Content_Shared_FixedPoint_FixedPoint2_System_Single_" data-uid="Content.Shared.FixedPoint.FixedPoint2.op_Multiply(Content.Shared.FixedPoint.FixedPoint2,System.Single)">Multiply(FixedPoint2, Single)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static FixedPoint2 operator *(FixedPoint2 a, float b)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.FixedPoint.FixedPoint2.html">FixedPoint2</a></td>
+        <td><span class="parametername">a</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td><span class="parametername">b</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.FixedPoint.FixedPoint2.html">FixedPoint2</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_FixedPoint_FixedPoint2_op_Subtraction_Content_Shared_FixedPoint_FixedPoint2_Content_Shared_FixedPoint_FixedPoint2_.md&amp;value=---%0Auid%3A%20Content.Shared.FixedPoint.FixedPoint2.op_Subtraction(Content.Shared.FixedPoint.FixedPoint2%2CContent.Shared.FixedPoint.FixedPoint2)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/FixedPoint/FixedPoint2.cs/#L83">View Source</a>
+  </span>
+  <a id="Content_Shared_FixedPoint_FixedPoint2_op_Subtraction_" data-uid="Content.Shared.FixedPoint.FixedPoint2.op_Subtraction*"></a>
+  <h4 id="Content_Shared_FixedPoint_FixedPoint2_op_Subtraction_Content_Shared_FixedPoint_FixedPoint2_Content_Shared_FixedPoint_FixedPoint2_" data-uid="Content.Shared.FixedPoint.FixedPoint2.op_Subtraction(Content.Shared.FixedPoint.FixedPoint2,Content.Shared.FixedPoint.FixedPoint2)">Subtraction(FixedPoint2, FixedPoint2)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static FixedPoint2 operator -(FixedPoint2 a, FixedPoint2 b)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.FixedPoint.FixedPoint2.html">FixedPoint2</a></td>
+        <td><span class="parametername">a</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Shared.FixedPoint.FixedPoint2.html">FixedPoint2</a></td>
+        <td><span class="parametername">b</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.FixedPoint.FixedPoint2.html">FixedPoint2</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_FixedPoint_FixedPoint2_op_UnaryNegation_Content_Shared_FixedPoint_FixedPoint2_.md&amp;value=---%0Auid%3A%20Content.Shared.FixedPoint.FixedPoint2.op_UnaryNegation(Content.Shared.FixedPoint.FixedPoint2)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/FixedPoint/FixedPoint2.cs/#L78">View Source</a>
+  </span>
+  <a id="Content_Shared_FixedPoint_FixedPoint2_op_UnaryNegation_" data-uid="Content.Shared.FixedPoint.FixedPoint2.op_UnaryNegation*"></a>
+  <h4 id="Content_Shared_FixedPoint_FixedPoint2_op_UnaryNegation_Content_Shared_FixedPoint_FixedPoint2_" data-uid="Content.Shared.FixedPoint.FixedPoint2.op_UnaryNegation(Content.Shared.FixedPoint.FixedPoint2)">UnaryNegation(FixedPoint2)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static FixedPoint2 operator -(FixedPoint2 a)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.FixedPoint.FixedPoint2.html">FixedPoint2</a></td>
+        <td><span class="parametername">a</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.FixedPoint.FixedPoint2.html">FixedPoint2</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_FixedPoint_FixedPoint2_op_UnaryPlus_Content_Shared_FixedPoint_FixedPoint2_.md&amp;value=---%0Auid%3A%20Content.Shared.FixedPoint.FixedPoint2.op_UnaryPlus(Content.Shared.FixedPoint.FixedPoint2)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/FixedPoint/FixedPoint2.cs/#L76">View Source</a>
+  </span>
+  <a id="Content_Shared_FixedPoint_FixedPoint2_op_UnaryPlus_" data-uid="Content.Shared.FixedPoint.FixedPoint2.op_UnaryPlus*"></a>
+  <h4 id="Content_Shared_FixedPoint_FixedPoint2_op_UnaryPlus_Content_Shared_FixedPoint_FixedPoint2_" data-uid="Content.Shared.FixedPoint.FixedPoint2.op_UnaryPlus(Content.Shared.FixedPoint.FixedPoint2)">UnaryPlus(FixedPoint2)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static FixedPoint2 operator +(FixedPoint2 a)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.FixedPoint.FixedPoint2.html">FixedPoint2</a></td>
+        <td><span class="parametername">a</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.FixedPoint.FixedPoint2.html">FixedPoint2</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <span class="xref">Robust.Shared.Serialization.ISelfSerialize</span>
+  </div>
+  <div>
+      <span class="xref">IComparable&lt;&gt;</span>
+  </div>
+  <div>
+      <span class="xref">IEquatable&lt;&gt;</span>
+  </div>
+  <div>
+      <span class="xref">IFormattable</span>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_FixedPoint_FixedPoint2.md&amp;value=---%0Auid%3A%20Content.Shared.FixedPoint.FixedPoint2%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/FixedPoint/FixedPoint2.cs/#L12" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <div class="toggle-mode">
+                <div class="icon">
+                  <i aria-hidden="true">☀</i>
+                </div>
+                <label class="switch">
+                  <input type="checkbox" id="switch-style">
+                  <span class="slider round"></span>
+                </label>
+                <div class="icon">
+                  <i aria-hidden="true">☾</i>
+                </div>
+              </div>
+          
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <h5>In This Article</h5>
+              <div></div>
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <div class="pull-left">
+              
+              <span>Generated by <strong>DocFX</strong></span>
+            </div>
+            <div class="toggle-mode pull-right visible-sm visible-xs">
+              <div class="icon">
+                <i aria-hidden="true">☀</i>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="switch-style-m">
+                <span class="slider round"></span>
+              </label>
+              <div class="icon">
+                <i aria-hidden="true">☾</i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <script type="text/javascript" src="../../styles/toggle-theme.js"></script>
+      </footer>    </div>
+    
+    <script type="text/javascript" src="../../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../../styles/docfx.js"></script>
+    <script type="text/javascript" src="../../styles/main.js"></script>
+  </body>
+</html>

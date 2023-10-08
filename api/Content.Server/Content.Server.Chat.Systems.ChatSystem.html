@@ -1,0 +1,1046 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class ChatSystem
+   </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class ChatSystem
+   ">
+    <meta name="generator" content="docfx 2.56.7.0">
+    
+    <link rel="shortcut icon" href="../../favicon.ico">
+    <link rel="stylesheet" href="../../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../../styles/docfx.css">
+    <link rel="stylesheet" href="../../styles/main.css">
+    <meta property="docfx:navrel" content="../../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../../index.html">
+                <img id="logo" class="svg" src="../../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Content.Server.Chat.Systems.ChatSystem">
+  
+  
+  <h1 id="Content_Server_Chat_Systems_ChatSystem" data-uid="Content.Server.Chat.Systems.ChatSystem" class="text-break">Class ChatSystem
+  </h1>
+  <div class="markdown level0 summary"><p>ChatSystem is responsible for in-simulation chat handling, such as whispering, speaking, emoting, etc.
+ChatSystem depends on ChatManager to actually send the messages.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level1"><a class="xref" href="../Content.Shared/Content.Shared.Chat.SharedChatSystem.html">SharedChatSystem</a></div>
+    <div class="level2"><span class="xref">ChatSystem</span></div>
+  </div>
+  <div class="inheritedMembers">
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Content.Server.Chat.Systems.html">Content.Server.Chat.Systems</a></h6>
+  <h6><strong>Assembly</strong>: Content.Server.dll</h6>
+  <h5 id="Content_Server_Chat_Systems_ChatSystem_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public sealed class ChatSystem : SharedChatSystem</code></pre>
+  </div>
+  <h3 id="fields">Fields
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Chat_Systems_ChatSystem_DefaultAnnouncementSound.md&amp;value=---%0Auid%3A%20Content.Server.Chat.Systems.ChatSystem.DefaultAnnouncementSound%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Chat/Systems/ChatSystem.cs/#L60">View Source</a>
+  </span>
+  <h4 id="Content_Server_Chat_Systems_ChatSystem_DefaultAnnouncementSound" data-uid="Content.Server.Chat.Systems.ChatSystem.DefaultAnnouncementSound">DefaultAnnouncementSound</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public const string DefaultAnnouncementSound = null</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Chat_Systems_ChatSystem_VoiceRange.md&amp;value=---%0Auid%3A%20Content.Server.Chat.Systems.ChatSystem.VoiceRange%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Chat/Systems/ChatSystem.cs/#L57">View Source</a>
+  </span>
+  <h4 id="Content_Server_Chat_Systems_ChatSystem_VoiceRange" data-uid="Content.Server.Chat.Systems.ChatSystem.VoiceRange">VoiceRange</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public const int VoiceRange = null</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Chat_Systems_ChatSystem_WhisperClearRange.md&amp;value=---%0Auid%3A%20Content.Server.Chat.Systems.ChatSystem.WhisperClearRange%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Chat/Systems/ChatSystem.cs/#L58">View Source</a>
+  </span>
+  <h4 id="Content_Server_Chat_Systems_ChatSystem_WhisperClearRange" data-uid="Content.Server.Chat.Systems.ChatSystem.WhisperClearRange">WhisperClearRange</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public const int WhisperClearRange = null</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Chat_Systems_ChatSystem_WhisperMuffledRange.md&amp;value=---%0Auid%3A%20Content.Server.Chat.Systems.ChatSystem.WhisperMuffledRange%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Chat/Systems/ChatSystem.cs/#L59">View Source</a>
+  </span>
+  <h4 id="Content_Server_Chat_Systems_ChatSystem_WhisperMuffledRange" data-uid="Content.Server.Chat.Systems.ChatSystem.WhisperMuffledRange">WhisperMuffledRange</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public const int WhisperMuffledRange = null</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Chat_Systems_ChatSystem_DispatchGlobalAnnouncement_System_String_System_String_System_Boolean_Robust_Shared_Audio_SoundSpecifier_System_Nullable_Color__.md&amp;value=---%0Auid%3A%20Content.Server.Chat.Systems.ChatSystem.DispatchGlobalAnnouncement(System.String%2CSystem.String%2CSystem.Boolean%2CRobust.Shared.Audio.SoundSpecifier%2CSystem.Nullable%7BColor%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Chat/Systems/ChatSystem.cs/#L293">View Source</a>
+  </span>
+  <a id="Content_Server_Chat_Systems_ChatSystem_DispatchGlobalAnnouncement_" data-uid="Content.Server.Chat.Systems.ChatSystem.DispatchGlobalAnnouncement*"></a>
+  <h4 id="Content_Server_Chat_Systems_ChatSystem_DispatchGlobalAnnouncement_System_String_System_String_System_Boolean_Robust_Shared_Audio_SoundSpecifier_System_Nullable_Color__" data-uid="Content.Server.Chat.Systems.ChatSystem.DispatchGlobalAnnouncement(System.String,System.String,System.Boolean,Robust.Shared.Audio.SoundSpecifier,System.Nullable{Color})">DispatchGlobalAnnouncement(String, String, Boolean, SoundSpecifier, Nullable&lt;Color&gt;)</h4>
+  <div class="markdown level1 summary"><p>Dispatches an announcement to all.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void DispatchGlobalAnnouncement(string message, string sender = &quot;Central Command&quot;, bool playSound = true, SoundSpecifier announcementSound = null, Color? colorOverride = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">message</span></td>
+        <td><p>The contents of the message</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">sender</span></td>
+        <td><p>The sender (Communications Console in Communications Console Announcement)</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">playSound</span></td>
+        <td><p>Play the announcement sound</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">Robust.Shared.Audio.SoundSpecifier</span></td>
+        <td><span class="parametername">announcementSound</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">Color</span>&gt;</td>
+        <td><span class="parametername">colorOverride</span></td>
+        <td><p>Optional color for the announcement message</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Chat_Systems_ChatSystem_DispatchStationAnnouncement_EntityUid_System_String_System_String_System_Boolean_Robust_Shared_Audio_SoundSpecifier_System_Nullable_Color__.md&amp;value=---%0Auid%3A%20Content.Server.Chat.Systems.ChatSystem.DispatchStationAnnouncement(EntityUid%2CSystem.String%2CSystem.String%2CSystem.Boolean%2CRobust.Shared.Audio.SoundSpecifier%2CSystem.Nullable%7BColor%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Chat/Systems/ChatSystem.cs/#L318">View Source</a>
+  </span>
+  <a id="Content_Server_Chat_Systems_ChatSystem_DispatchStationAnnouncement_" data-uid="Content.Server.Chat.Systems.ChatSystem.DispatchStationAnnouncement*"></a>
+  <h4 id="Content_Server_Chat_Systems_ChatSystem_DispatchStationAnnouncement_EntityUid_System_String_System_String_System_Boolean_Robust_Shared_Audio_SoundSpecifier_System_Nullable_Color__" data-uid="Content.Server.Chat.Systems.ChatSystem.DispatchStationAnnouncement(EntityUid,System.String,System.String,System.Boolean,Robust.Shared.Audio.SoundSpecifier,System.Nullable{Color})">DispatchStationAnnouncement(EntityUid, String, String, Boolean, SoundSpecifier, Nullable&lt;Color&gt;)</h4>
+  <div class="markdown level1 summary"><p>Dispatches an announcement on a specific station</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void DispatchStationAnnouncement(EntityUid source, string message, string sender = &quot;Central Command&quot;, bool playDefaultSound = true, SoundSpecifier announcementSound = null, Color? colorOverride = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">source</span></td>
+        <td><p>The entity making the announcement (used to determine the station)</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">message</span></td>
+        <td><p>The contents of the message</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">sender</span></td>
+        <td><p>The sender (Communications Console in Communications Console Announcement)</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">playDefaultSound</span></td>
+        <td><p>Play the announcement sound</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">Robust.Shared.Audio.SoundSpecifier</span></td>
+        <td><span class="parametername">announcementSound</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">Color</span>&gt;</td>
+        <td><span class="parametername">colorOverride</span></td>
+        <td><p>Optional color for the announcement message</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Chat_Systems_ChatSystem_Initialize.md&amp;value=---%0Auid%3A%20Content.Server.Chat.Systems.ChatSystem.Initialize%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Chat/Systems/ChatSystem.cs/#L67">View Source</a>
+  </span>
+  <a id="Content_Server_Chat_Systems_ChatSystem_Initialize_" data-uid="Content.Server.Chat.Systems.ChatSystem.Initialize*"></a>
+  <h4 id="Content_Server_Chat_Systems_ChatSystem_Initialize" data-uid="Content.Server.Chat.Systems.ChatSystem.Initialize">Initialize()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override void Initialize()</code></pre>
+  </div>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="../Content.Shared/Content.Shared.Chat.SharedChatSystem.html#Content_Shared_Chat_SharedChatSystem_Initialize">SharedChatSystem.Initialize()</a></div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Chat_Systems_ChatSystem_Shutdown.md&amp;value=---%0Auid%3A%20Content.Server.Chat.Systems.ChatSystem.Shutdown%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Chat/Systems/ChatSystem.cs/#L78">View Source</a>
+  </span>
+  <a id="Content_Server_Chat_Systems_ChatSystem_Shutdown_" data-uid="Content.Server.Chat.Systems.ChatSystem.Shutdown*"></a>
+  <h4 id="Content_Server_Chat_Systems_ChatSystem_Shutdown" data-uid="Content.Server.Chat.Systems.ChatSystem.Shutdown">Shutdown()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override void Shutdown()</code></pre>
+  </div>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="../Content.Shared/Content.Shared.Chat.SharedChatSystem.html#Content_Shared_Chat_SharedChatSystem_Shutdown">SharedChatSystem.Shutdown()</a></div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Chat_Systems_ChatSystem_TransformSpeech_EntityUid_System_String_.md&amp;value=---%0Auid%3A%20Content.Server.Chat.Systems.ChatSystem.TransformSpeech(EntityUid%2CSystem.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Chat/Systems/ChatSystem.cs/#L707">View Source</a>
+  </span>
+  <a id="Content_Server_Chat_Systems_ChatSystem_TransformSpeech_" data-uid="Content.Server.Chat.Systems.ChatSystem.TransformSpeech*"></a>
+  <h4 id="Content_Server_Chat_Systems_ChatSystem_TransformSpeech_EntityUid_System_String_" data-uid="Content.Server.Chat.Systems.ChatSystem.TransformSpeech(EntityUid,System.String)">TransformSpeech(EntityUid, String)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string TransformSpeech(EntityUid sender, string message)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">sender</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">message</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Chat_Systems_ChatSystem_TryEmoteWithChat_EntityUid_Content_Shared_Chat_Prototypes_EmotePrototype_Content_Server_Chat_Systems_ChatTransmitRange_System_Boolean_System_Nullable_System_String__System_Boolean_.md&amp;value=---%0Auid%3A%20Content.Server.Chat.Systems.ChatSystem.TryEmoteWithChat(EntityUid%2CContent.Shared.Chat.Prototypes.EmotePrototype%2CContent.Server.Chat.Systems.ChatTransmitRange%2CSystem.Boolean%2CSystem.Nullable%7BSystem.String%7D%2CSystem.Boolean)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Chat/Systems/ChatSystem.Emote.cs/#L81">View Source</a>
+  </span>
+  <a id="Content_Server_Chat_Systems_ChatSystem_TryEmoteWithChat_" data-uid="Content.Server.Chat.Systems.ChatSystem.TryEmoteWithChat*"></a>
+  <h4 id="Content_Server_Chat_Systems_ChatSystem_TryEmoteWithChat_EntityUid_Content_Shared_Chat_Prototypes_EmotePrototype_Content_Server_Chat_Systems_ChatTransmitRange_System_Boolean_System_Nullable_System_String__System_Boolean_" data-uid="Content.Server.Chat.Systems.ChatSystem.TryEmoteWithChat(EntityUid,Content.Shared.Chat.Prototypes.EmotePrototype,Content.Server.Chat.Systems.ChatTransmitRange,System.Boolean,System.Nullable{System.String},System.Boolean)">TryEmoteWithChat(EntityUid, EmotePrototype, ChatTransmitRange, Boolean, Nullable&lt;String&gt;, Boolean)</h4>
+  <div class="markdown level1 summary"><p>Makes selected entity to emote using <a class="xref" href="../Content.Shared/Content.Shared.Chat.Prototypes.EmotePrototype.html">EmotePrototype</a> and sends message to chat.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void TryEmoteWithChat(EntityUid source, EmotePrototype emote, ChatTransmitRange range = ChatTransmitRange.Normal, bool hideLog = false, string? nameOverride = null, bool ignoreActionBlocker = false)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">source</span></td>
+        <td><p>The entity that is speaking</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="../Content.Shared/Content.Shared.Chat.Prototypes.EmotePrototype.html">EmotePrototype</a></td>
+        <td><span class="parametername">emote</span></td>
+        <td><p>The emote prototype. Should has valid <a class="xref" href="../Content.Shared/Content.Shared.Chat.Prototypes.EmotePrototype.html#Content_Shared_Chat_Prototypes_EmotePrototype_ChatMessages">ChatMessages</a></p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Server.Chat.Systems.ChatTransmitRange.html">ChatTransmitRange</a></td>
+        <td><span class="parametername">range</span></td>
+        <td><p>Conceptual range of transmission, if it shows in the chat window, if it shows to far-away ghosts or ghosts at all...</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">hideLog</span></td>
+        <td><p>Whether or not this message should appear in the adminlog window</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">System.String</span>&gt;</td>
+        <td><span class="parametername">nameOverride</span></td>
+        <td><p>The name to use for the speaking entity. Usually this should just be modified via <a class="xref" href="Content.Server.Chat.Systems.TransformSpeakerNameEvent.html">TransformSpeakerNameEvent</a>. If this is set, the event will not get raised.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">ignoreActionBlocker</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Chat_Systems_ChatSystem_TryEmoteWithChat_EntityUid_System_String_Content_Server_Chat_Systems_ChatTransmitRange_System_Boolean_System_Nullable_System_String__System_Boolean_.md&amp;value=---%0Auid%3A%20Content.Server.Chat.Systems.ChatSystem.TryEmoteWithChat(EntityUid%2CSystem.String%2CContent.Server.Chat.Systems.ChatTransmitRange%2CSystem.Boolean%2CSystem.Nullable%7BSystem.String%7D%2CSystem.Boolean)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Chat/Systems/ChatSystem.Emote.cs/#L58">View Source</a>
+  </span>
+  <a id="Content_Server_Chat_Systems_ChatSystem_TryEmoteWithChat_" data-uid="Content.Server.Chat.Systems.ChatSystem.TryEmoteWithChat*"></a>
+  <h4 id="Content_Server_Chat_Systems_ChatSystem_TryEmoteWithChat_EntityUid_System_String_Content_Server_Chat_Systems_ChatTransmitRange_System_Boolean_System_Nullable_System_String__System_Boolean_" data-uid="Content.Server.Chat.Systems.ChatSystem.TryEmoteWithChat(EntityUid,System.String,Content.Server.Chat.Systems.ChatTransmitRange,System.Boolean,System.Nullable{System.String},System.Boolean)">TryEmoteWithChat(EntityUid, String, ChatTransmitRange, Boolean, Nullable&lt;String&gt;, Boolean)</h4>
+  <div class="markdown level1 summary"><p>Makes selected entity to emote using <a class="xref" href="../Content.Shared/Content.Shared.Chat.Prototypes.EmotePrototype.html">EmotePrototype</a> and sends message to chat.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void TryEmoteWithChat(EntityUid source, string emoteId, ChatTransmitRange range = ChatTransmitRange.Normal, bool hideLog = false, string? nameOverride = null, bool ignoreActionBlocker = false)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">source</span></td>
+        <td><p>The entity that is speaking</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">emoteId</span></td>
+        <td><p>The id of emote prototype. Should has valid <a class="xref" href="../Content.Shared/Content.Shared.Chat.Prototypes.EmotePrototype.html#Content_Shared_Chat_Prototypes_EmotePrototype_ChatMessages">ChatMessages</a></p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Server.Chat.Systems.ChatTransmitRange.html">ChatTransmitRange</a></td>
+        <td><span class="parametername">range</span></td>
+        <td><p>Conceptual range of transmission, if it shows in the chat window, if it shows to far-away ghosts or ghosts at all...</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">hideLog</span></td>
+        <td><p>Whether or not this message should appear in the adminlog window</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">System.String</span>&gt;</td>
+        <td><span class="parametername">nameOverride</span></td>
+        <td><p>The name to use for the speaking entity. Usually this should just be modified via <a class="xref" href="Content.Server.Chat.Systems.TransformSpeakerNameEvent.html">TransformSpeakerNameEvent</a>. If this is set, the event will not get raised.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">ignoreActionBlocker</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Chat_Systems_ChatSystem_TryEmoteWithoutChat_EntityUid_Content_Shared_Chat_Prototypes_EmotePrototype_System_Boolean_.md&amp;value=---%0Auid%3A%20Content.Server.Chat.Systems.ChatSystem.TryEmoteWithoutChat(EntityUid%2CContent.Shared.Chat.Prototypes.EmotePrototype%2CSystem.Boolean)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Chat/Systems/ChatSystem.Emote.cs/#L116">View Source</a>
+  </span>
+  <a id="Content_Server_Chat_Systems_ChatSystem_TryEmoteWithoutChat_" data-uid="Content.Server.Chat.Systems.ChatSystem.TryEmoteWithoutChat*"></a>
+  <h4 id="Content_Server_Chat_Systems_ChatSystem_TryEmoteWithoutChat_EntityUid_Content_Shared_Chat_Prototypes_EmotePrototype_System_Boolean_" data-uid="Content.Server.Chat.Systems.ChatSystem.TryEmoteWithoutChat(EntityUid,Content.Shared.Chat.Prototypes.EmotePrototype,System.Boolean)">TryEmoteWithoutChat(EntityUid, EmotePrototype, Boolean)</h4>
+  <div class="markdown level1 summary"><p>Makes selected entity to emote using <a class="xref" href="../Content.Shared/Content.Shared.Chat.Prototypes.EmotePrototype.html">EmotePrototype</a> without sending any messages to chat.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void TryEmoteWithoutChat(EntityUid uid, EmotePrototype proto, bool ignoreActionBlocker = false)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="../Content.Shared/Content.Shared.Chat.Prototypes.EmotePrototype.html">EmotePrototype</a></td>
+        <td><span class="parametername">proto</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">ignoreActionBlocker</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Chat_Systems_ChatSystem_TryEmoteWithoutChat_EntityUid_System_String_System_Boolean_.md&amp;value=---%0Auid%3A%20Content.Server.Chat.Systems.ChatSystem.TryEmoteWithoutChat(EntityUid%2CSystem.String%2CSystem.Boolean)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Chat/Systems/ChatSystem.Emote.cs/#L105">View Source</a>
+  </span>
+  <a id="Content_Server_Chat_Systems_ChatSystem_TryEmoteWithoutChat_" data-uid="Content.Server.Chat.Systems.ChatSystem.TryEmoteWithoutChat*"></a>
+  <h4 id="Content_Server_Chat_Systems_ChatSystem_TryEmoteWithoutChat_EntityUid_System_String_System_Boolean_" data-uid="Content.Server.Chat.Systems.ChatSystem.TryEmoteWithoutChat(EntityUid,System.String,System.Boolean)">TryEmoteWithoutChat(EntityUid, String, Boolean)</h4>
+  <div class="markdown level1 summary"><p>Makes selected entity to emote using <a class="xref" href="../Content.Shared/Content.Shared.Chat.Prototypes.EmotePrototype.html">EmotePrototype</a> without sending any messages to chat.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void TryEmoteWithoutChat(EntityUid uid, string emoteId, bool ignoreActionBlocker = false)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">emoteId</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">ignoreActionBlocker</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Chat_Systems_ChatSystem_TryPlayEmoteSound_EntityUid_Content_Shared_Chat_Prototypes_EmoteSoundsPrototype_Content_Shared_Chat_Prototypes_EmotePrototype_.md&amp;value=---%0Auid%3A%20Content.Server.Chat.Systems.ChatSystem.TryPlayEmoteSound(EntityUid%2CContent.Shared.Chat.Prototypes.EmoteSoundsPrototype%2CContent.Shared.Chat.Prototypes.EmotePrototype)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Chat/Systems/ChatSystem.Emote.cs/#L128">View Source</a>
+  </span>
+  <a id="Content_Server_Chat_Systems_ChatSystem_TryPlayEmoteSound_" data-uid="Content.Server.Chat.Systems.ChatSystem.TryPlayEmoteSound*"></a>
+  <h4 id="Content_Server_Chat_Systems_ChatSystem_TryPlayEmoteSound_EntityUid_Content_Shared_Chat_Prototypes_EmoteSoundsPrototype_Content_Shared_Chat_Prototypes_EmotePrototype_" data-uid="Content.Server.Chat.Systems.ChatSystem.TryPlayEmoteSound(EntityUid,Content.Shared.Chat.Prototypes.EmoteSoundsPrototype,Content.Shared.Chat.Prototypes.EmotePrototype)">TryPlayEmoteSound(EntityUid, EmoteSoundsPrototype, EmotePrototype)</h4>
+  <div class="markdown level1 summary"><p>Tries to find and play relevant emote sound in emote sounds collection.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool TryPlayEmoteSound(EntityUid uid, EmoteSoundsPrototype proto, EmotePrototype emote)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="../Content.Shared/Content.Shared.Chat.Prototypes.EmoteSoundsPrototype.html">EmoteSoundsPrototype</a></td>
+        <td><span class="parametername">proto</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="../Content.Shared/Content.Shared.Chat.Prototypes.EmotePrototype.html">EmotePrototype</a></td>
+        <td><span class="parametername">emote</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>True if emote sound was played.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Chat_Systems_ChatSystem_TryPlayEmoteSound_EntityUid_Content_Shared_Chat_Prototypes_EmoteSoundsPrototype_System_String_.md&amp;value=---%0Auid%3A%20Content.Server.Chat.Systems.ChatSystem.TryPlayEmoteSound(EntityUid%2CContent.Shared.Chat.Prototypes.EmoteSoundsPrototype%2CSystem.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Chat/Systems/ChatSystem.Emote.cs/#L137">View Source</a>
+  </span>
+  <a id="Content_Server_Chat_Systems_ChatSystem_TryPlayEmoteSound_" data-uid="Content.Server.Chat.Systems.ChatSystem.TryPlayEmoteSound*"></a>
+  <h4 id="Content_Server_Chat_Systems_ChatSystem_TryPlayEmoteSound_EntityUid_Content_Shared_Chat_Prototypes_EmoteSoundsPrototype_System_String_" data-uid="Content.Server.Chat.Systems.ChatSystem.TryPlayEmoteSound(EntityUid,Content.Shared.Chat.Prototypes.EmoteSoundsPrototype,System.String)">TryPlayEmoteSound(EntityUid, EmoteSoundsPrototype, String)</h4>
+  <div class="markdown level1 summary"><p>Tries to find and play relevant emote sound in emote sounds collection.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool TryPlayEmoteSound(EntityUid uid, EmoteSoundsPrototype proto, string emoteId)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="../Content.Shared/Content.Shared.Chat.Prototypes.EmoteSoundsPrototype.html">EmoteSoundsPrototype</a></td>
+        <td><span class="parametername">proto</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">emoteId</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>True if emote sound was played.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Chat_Systems_ChatSystem_TrySendInGameICMessage_EntityUid_System_String_Content_Server_Chat_Systems_InGameICChatType_Content_Server_Chat_Systems_ChatTransmitRange_System_Boolean_Robust_Shared_Console_IConsoleShell_Robust_Server_Player_IPlayerSession_System_Nullable_System_String__System_Boolean_System_Boolean_.md&amp;value=---%0Auid%3A%20Content.Server.Chat.Systems.ChatSystem.TrySendInGameICMessage(EntityUid%2CSystem.String%2CContent.Server.Chat.Systems.InGameICChatType%2CContent.Server.Chat.Systems.ChatTransmitRange%2CSystem.Boolean%2CRobust.Shared.Console.IConsoleShell%2CRobust.Server.Player.IPlayerSession%2CSystem.Nullable%7BSystem.String%7D%2CSystem.Boolean%2CSystem.Boolean)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Chat/Systems/ChatSystem.cs/#L165">View Source</a>
+  </span>
+  <a id="Content_Server_Chat_Systems_ChatSystem_TrySendInGameICMessage_" data-uid="Content.Server.Chat.Systems.ChatSystem.TrySendInGameICMessage*"></a>
+  <h4 id="Content_Server_Chat_Systems_ChatSystem_TrySendInGameICMessage_EntityUid_System_String_Content_Server_Chat_Systems_InGameICChatType_Content_Server_Chat_Systems_ChatTransmitRange_System_Boolean_Robust_Shared_Console_IConsoleShell_Robust_Server_Player_IPlayerSession_System_Nullable_System_String__System_Boolean_System_Boolean_" data-uid="Content.Server.Chat.Systems.ChatSystem.TrySendInGameICMessage(EntityUid,System.String,Content.Server.Chat.Systems.InGameICChatType,Content.Server.Chat.Systems.ChatTransmitRange,System.Boolean,Robust.Shared.Console.IConsoleShell,Robust.Server.Player.IPlayerSession,System.Nullable{System.String},System.Boolean,System.Boolean)">TrySendInGameICMessage(EntityUid, String, InGameICChatType, ChatTransmitRange, Boolean, IConsoleShell, IPlayerSession, Nullable&lt;String&gt;, Boolean, Boolean)</h4>
+  <div class="markdown level1 summary"><p>Sends an in-character chat message to relevant clients.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void TrySendInGameICMessage(EntityUid source, string message, InGameICChatType desiredType, ChatTransmitRange range, bool hideLog = false, IConsoleShell shell = null, IPlayerSession player = null, string? nameOverride = null, bool checkRadioPrefix = true, bool ignoreActionBlocker = false)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">source</span></td>
+        <td><p>The entity that is speaking</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">message</span></td>
+        <td><p>The message being spoken or emoted</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Server.Chat.Systems.InGameICChatType.html">InGameICChatType</a></td>
+        <td><span class="parametername">desiredType</span></td>
+        <td><p>The chat type</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Server.Chat.Systems.ChatTransmitRange.html">ChatTransmitRange</a></td>
+        <td><span class="parametername">range</span></td>
+        <td><p>Conceptual range of transmission, if it shows in the chat window, if it shows to far-away ghosts or ghosts at all...</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">hideLog</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">Robust.Shared.Console.IConsoleShell</span></td>
+        <td><span class="parametername">shell</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">Robust.Server.Player.IPlayerSession</span></td>
+        <td><span class="parametername">player</span></td>
+        <td><p>The player doing the speaking</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">System.String</span>&gt;</td>
+        <td><span class="parametername">nameOverride</span></td>
+        <td><p>The name to use for the speaking entity. Usually this should just be modified via <a class="xref" href="Content.Server.Chat.Systems.TransformSpeakerNameEvent.html">TransformSpeakerNameEvent</a>. If this is set, the event will not get raised.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">checkRadioPrefix</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">ignoreActionBlocker</span></td>
+        <td><p>If set to true, action blocker will not be considered for whether an entity can send this message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Chat_Systems_ChatSystem_TrySendInGameICMessage_EntityUid_System_String_Content_Server_Chat_Systems_InGameICChatType_System_Boolean_System_Boolean_Robust_Shared_Console_IConsoleShell_Robust_Server_Player_IPlayerSession_System_Nullable_System_String__System_Boolean_System_Boolean_.md&amp;value=---%0Auid%3A%20Content.Server.Chat.Systems.ChatSystem.TrySendInGameICMessage(EntityUid%2CSystem.String%2CContent.Server.Chat.Systems.InGameICChatType%2CSystem.Boolean%2CSystem.Boolean%2CRobust.Shared.Console.IConsoleShell%2CRobust.Server.Player.IPlayerSession%2CSystem.Nullable%7BSystem.String%7D%2CSystem.Boolean%2CSystem.Boolean)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Chat/Systems/ChatSystem.cs/#L141">View Source</a>
+  </span>
+  <a id="Content_Server_Chat_Systems_ChatSystem_TrySendInGameICMessage_" data-uid="Content.Server.Chat.Systems.ChatSystem.TrySendInGameICMessage*"></a>
+  <h4 id="Content_Server_Chat_Systems_ChatSystem_TrySendInGameICMessage_EntityUid_System_String_Content_Server_Chat_Systems_InGameICChatType_System_Boolean_System_Boolean_Robust_Shared_Console_IConsoleShell_Robust_Server_Player_IPlayerSession_System_Nullable_System_String__System_Boolean_System_Boolean_" data-uid="Content.Server.Chat.Systems.ChatSystem.TrySendInGameICMessage(EntityUid,System.String,Content.Server.Chat.Systems.InGameICChatType,System.Boolean,System.Boolean,Robust.Shared.Console.IConsoleShell,Robust.Server.Player.IPlayerSession,System.Nullable{System.String},System.Boolean,System.Boolean)">TrySendInGameICMessage(EntityUid, String, InGameICChatType, Boolean, Boolean, IConsoleShell, IPlayerSession, Nullable&lt;String&gt;, Boolean, Boolean)</h4>
+  <div class="markdown level1 summary"><p>Sends an in-character chat message to relevant clients.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void TrySendInGameICMessage(EntityUid source, string message, InGameICChatType desiredType, bool hideChat, bool hideLog = false, IConsoleShell shell = null, IPlayerSession player = null, string? nameOverride = null, bool checkRadioPrefix = true, bool ignoreActionBlocker = false)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">source</span></td>
+        <td><p>The entity that is speaking</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">message</span></td>
+        <td><p>The message being spoken or emoted</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Server.Chat.Systems.InGameICChatType.html">InGameICChatType</a></td>
+        <td><span class="parametername">desiredType</span></td>
+        <td><p>The chat type</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">hideChat</span></td>
+        <td><p>Whether or not this message should appear in the chat window</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">hideLog</span></td>
+        <td><p>Whether or not this message should appear in the adminlog window</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">Robust.Shared.Console.IConsoleShell</span></td>
+        <td><span class="parametername">shell</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">Robust.Server.Player.IPlayerSession</span></td>
+        <td><span class="parametername">player</span></td>
+        <td><p>The player doing the speaking</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">System.String</span>&gt;</td>
+        <td><span class="parametername">nameOverride</span></td>
+        <td><p>The name to use for the speaking entity. Usually this should just be modified via <a class="xref" href="Content.Server.Chat.Systems.TransformSpeakerNameEvent.html">TransformSpeakerNameEvent</a>. If this is set, the event will not get raised.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">checkRadioPrefix</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">ignoreActionBlocker</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Chat_Systems_ChatSystem_TrySendInGameOOCMessage_EntityUid_System_String_Content_Server_Chat_Systems_InGameOOCChatType_System_Boolean_Robust_Shared_Console_IConsoleShell_Robust_Server_Player_IPlayerSession_.md&amp;value=---%0Auid%3A%20Content.Server.Chat.Systems.ChatSystem.TrySendInGameOOCMessage(EntityUid%2CSystem.String%2CContent.Server.Chat.Systems.InGameOOCChatType%2CSystem.Boolean%2CRobust.Shared.Console.IConsoleShell%2CRobust.Server.Player.IPlayerSession)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Chat/Systems/ChatSystem.cs/#L244">View Source</a>
+  </span>
+  <a id="Content_Server_Chat_Systems_ChatSystem_TrySendInGameOOCMessage_" data-uid="Content.Server.Chat.Systems.ChatSystem.TrySendInGameOOCMessage*"></a>
+  <h4 id="Content_Server_Chat_Systems_ChatSystem_TrySendInGameOOCMessage_EntityUid_System_String_Content_Server_Chat_Systems_InGameOOCChatType_System_Boolean_Robust_Shared_Console_IConsoleShell_Robust_Server_Player_IPlayerSession_" data-uid="Content.Server.Chat.Systems.ChatSystem.TrySendInGameOOCMessage(EntityUid,System.String,Content.Server.Chat.Systems.InGameOOCChatType,System.Boolean,Robust.Shared.Console.IConsoleShell,Robust.Server.Player.IPlayerSession)">TrySendInGameOOCMessage(EntityUid, String, InGameOOCChatType, Boolean, IConsoleShell, IPlayerSession)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void TrySendInGameOOCMessage(EntityUid source, string message, InGameOOCChatType type, bool hideChat, IConsoleShell shell = null, IPlayerSession player = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">source</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">message</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Server.Chat.Systems.InGameOOCChatType.html">InGameOOCChatType</a></td>
+        <td><span class="parametername">type</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">hideChat</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">Robust.Shared.Console.IConsoleShell</span></td>
+        <td><span class="parametername">shell</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">Robust.Server.Player.IPlayerSession</span></td>
+        <td><span class="parametername">player</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Chat_Systems_ChatSystem.md&amp;value=---%0Auid%3A%20Content.Server.Chat.Systems.ChatSystem%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Chat/Systems/ChatSystem.Emote.cs/#L8" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <div class="toggle-mode">
+                <div class="icon">
+                  <i aria-hidden="true">☀</i>
+                </div>
+                <label class="switch">
+                  <input type="checkbox" id="switch-style">
+                  <span class="slider round"></span>
+                </label>
+                <div class="icon">
+                  <i aria-hidden="true">☾</i>
+                </div>
+              </div>
+          
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <h5>In This Article</h5>
+              <div></div>
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <div class="pull-left">
+              
+              <span>Generated by <strong>DocFX</strong></span>
+            </div>
+            <div class="toggle-mode pull-right visible-sm visible-xs">
+              <div class="icon">
+                <i aria-hidden="true">☀</i>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="switch-style-m">
+                <span class="slider round"></span>
+              </label>
+              <div class="icon">
+                <i aria-hidden="true">☾</i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <script type="text/javascript" src="../../styles/toggle-theme.js"></script>
+      </footer>    </div>
+    
+    <script type="text/javascript" src="../../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../../styles/docfx.js"></script>
+    <script type="text/javascript" src="../../styles/main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,208 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Namespace Content.Server.Explosion.Components
+   </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Namespace Content.Server.Explosion.Components
+   ">
+    <meta name="generator" content="docfx 2.56.7.0">
+    
+    <link rel="shortcut icon" href="../../favicon.ico">
+    <link rel="stylesheet" href="../../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../../styles/docfx.css">
+    <link rel="stylesheet" href="../../styles/main.css">
+    <meta property="docfx:navrel" content="../../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../../index.html">
+                <img id="logo" class="svg" src="../../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Content.Server.Explosion.Components">
+  
+  <h1 id="Content_Server_Explosion_Components" data-uid="Content.Server.Explosion.Components" class="text-break">Namespace Content.Server.Explosion.Components
+  </h1>
+  <div class="markdown level0 summary"></div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="markdown level0 remarks"></div>
+    <h3 id="classes">Classes
+  </h3>
+      <h4><a class="xref" href="Content.Server.Explosion.Components.ActiveTimerTriggerComponent.html">ActiveTimerTriggerComponent</a></h4>
+      <section><p>Component for tracking active trigger timers. A timers can activated by some other component, e.g. <a class="xref" href="Content.Server.Explosion.Components.OnUseTimerTriggerComponent.html">OnUseTimerTriggerComponent</a>.</p>
+</section>
+      <h4><a class="xref" href="Content.Server.Explosion.Components.ActiveTriggerOnTimedCollideComponent.html">ActiveTriggerOnTimedCollideComponent</a></h4>
+      <section></section>
+      <h4><a class="xref" href="Content.Server.Explosion.Components.AnchorOnTriggerComponent.html">AnchorOnTriggerComponent</a></h4>
+      <section><p>Will anchor the attached entity upon a <a class="xref" href="Content.Server.Explosion.EntitySystems.TriggerEvent.html">TriggerEvent</a>.</p>
+</section>
+      <h4><a class="xref" href="Content.Server.Explosion.Components.AutomatedTimerComponent.html">AutomatedTimerComponent</a></h4>
+      <section><p>Disallows starting the timer by hand, must be stuck or triggered by a system.</p>
+</section>
+      <h4><a class="xref" href="Content.Server.Explosion.Components.ClusterGrenadeComponent.html">ClusterGrenadeComponent</a></h4>
+      <section></section>
+      <h4><a class="xref" href="Content.Server.Explosion.Components.DeleteOnTriggerComponent.html">DeleteOnTriggerComponent</a></h4>
+      <section><p>Will delete the attached entity upon a <a class="xref" href="Content.Server.Explosion.EntitySystems.TriggerEvent.html">TriggerEvent</a>.</p>
+</section>
+      <h4><a class="xref" href="Content.Server.Explosion.Components.ExplodeOnTriggerComponent.html">ExplodeOnTriggerComponent</a></h4>
+      <section><p>Explode using the entity's <a class="xref" href="Content.Server.Explosion.Components.ExplosiveComponent.html">ExplosiveComponent</a> if Triggered.</p>
+</section>
+      <h4><a class="xref" href="Content.Server.Explosion.Components.ExplosionResistanceComponent.html">ExplosionResistanceComponent</a></h4>
+      <section><p>Component that provides entities with explosion resistance.</p>
+</section>
+      <h4><a class="xref" href="Content.Server.Explosion.Components.ExplosiveComponent.html">ExplosiveComponent</a></h4>
+      <section><p>Specifies an explosion that can be spawned by this entity. The explosion itself is spawned via <a class="xref" href="Content.Server.Explosion.EntitySystems.ExplosionSystem.html#Content_Server_Explosion_EntitySystems_ExplosionSystem_TriggerExplosive_EntityUid_Content_Server_Explosion_Components_ExplosiveComponent_System_Boolean_System_Nullable_System_Single__System_Nullable_System_Single__System_Nullable_EntityUid__">TriggerExplosive(EntityUid, ExplosiveComponent, Boolean, Nullable&lt;Single&gt;, Nullable&lt;Single&gt;, Nullable&lt;EntityUid&gt;)</a>.</p>
+</section>
+      <h4><a class="xref" href="Content.Server.Explosion.Components.GibOnTriggerComponent.html">GibOnTriggerComponent</a></h4>
+      <section><p>Gibs on trigger, self explanatory.
+Also in case of an implant using this, gibs the implant user instead.</p>
+</section>
+      <h4><a class="xref" href="Content.Server.Explosion.Components.OnUseTimerTriggerComponent.html">OnUseTimerTriggerComponent</a></h4>
+      <section></section>
+      <h4><a class="xref" href="Content.Server.Explosion.Components.SoundOnTriggerComponent.html">SoundOnTriggerComponent</a></h4>
+      <section><p>Will play sound from the attached entity upon a <a class="xref" href="Content.Server.Explosion.EntitySystems.TriggerEvent.html">TriggerEvent</a>.</p>
+</section>
+      <h4><a class="xref" href="Content.Server.Explosion.Components.SpawnOnTriggerComponent.html">SpawnOnTriggerComponent</a></h4>
+      <section></section>
+      <h4><a class="xref" href="Content.Server.Explosion.Components.TriggerOnActivateComponent.html">TriggerOnActivateComponent</a></h4>
+      <section><p>Triggers on click.</p>
+</section>
+      <h4><a class="xref" href="Content.Server.Explosion.Components.TriggerOnCollideComponent.html">TriggerOnCollideComponent</a></h4>
+      <section></section>
+      <h4><a class="xref" href="Content.Server.Explosion.Components.TriggerOnMobstateChangeComponent.html">TriggerOnMobstateChangeComponent</a></h4>
+      <section><p>Use where you want something to trigger on mobstate change</p>
+</section>
+      <h4><a class="xref" href="Content.Server.Explosion.Components.TriggerOnProximityComponent.html">TriggerOnProximityComponent</a></h4>
+      <section><p>Raises a <a class="xref" href="Content.Server.Explosion.EntitySystems.TriggerEvent.html">TriggerEvent</a> whenever an entity collides with a fixture attached to the owner of this component.</p>
+</section>
+      <h4><a class="xref" href="Content.Server.Explosion.Components.TriggerOnSignalComponent.html">TriggerOnSignalComponent</a></h4>
+      <section><p>Sends a trigger when signal is received.</p>
+</section>
+      <h4><a class="xref" href="Content.Server.Explosion.Components.TriggerOnSlipComponent.html">TriggerOnSlipComponent</a></h4>
+      <section></section>
+      <h4><a class="xref" href="Content.Server.Explosion.Components.TriggerOnStepTriggerComponent.html">TriggerOnStepTriggerComponent</a></h4>
+      <section><p>This is used for entities that want the more generic 'trigger' behavior after a step trigger occurs.
+Not done by default, since it's not useful for everything and might cause weird behavior. But it is useful for a lot of stuff like mousetraps.</p>
+</section>
+      <h4><a class="xref" href="Content.Server.Explosion.Components.TriggerOnTimedCollideComponent.html">TriggerOnTimedCollideComponent</a></h4>
+      <section><p>Triggers when the entity is overlapped for the specified duration.</p>
+</section>
+      <h4><a class="xref" href="Content.Server.Explosion.Components.TriggerOnVoiceComponent.html">TriggerOnVoiceComponent</a></h4>
+      <section><p>Sends a trigger when the keyphrase is heard</p>
+</section>
+      <h4><a class="xref" href="Content.Server.Explosion.Components.TriggerWhenEmptyComponent.html">TriggerWhenEmptyComponent</a></h4>
+      <section><p>Triggers a gun when attempting to shoot while it's empty</p>
+</section>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                </ul>
+              </div>
+              <div class="toggle-mode">
+                <div class="icon">
+                  <i aria-hidden="true">☀</i>
+                </div>
+                <label class="switch">
+                  <input type="checkbox" id="switch-style">
+                  <span class="slider round"></span>
+                </label>
+                <div class="icon">
+                  <i aria-hidden="true">☾</i>
+                </div>
+              </div>
+          
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <h5>In This Article</h5>
+              <div></div>
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <div class="pull-left">
+              
+              <span>Generated by <strong>DocFX</strong></span>
+            </div>
+            <div class="toggle-mode pull-right visible-sm visible-xs">
+              <div class="icon">
+                <i aria-hidden="true">☀</i>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="switch-style-m">
+                <span class="slider round"></span>
+              </label>
+              <div class="icon">
+                <i aria-hidden="true">☾</i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <script type="text/javascript" src="../../styles/toggle-theme.js"></script>
+      </footer>    </div>
+    
+    <script type="text/javascript" src="../../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../../styles/docfx.js"></script>
+    <script type="text/javascript" src="../../styles/main.js"></script>
+  </body>
+</html>

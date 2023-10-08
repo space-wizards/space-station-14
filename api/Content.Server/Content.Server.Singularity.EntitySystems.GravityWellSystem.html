@@ -1,0 +1,697 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class GravityWellSystem
+   </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class GravityWellSystem
+   ">
+    <meta name="generator" content="docfx 2.56.7.0">
+    
+    <link rel="shortcut icon" href="../../favicon.ico">
+    <link rel="stylesheet" href="../../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../../styles/docfx.css">
+    <link rel="stylesheet" href="../../styles/main.css">
+    <meta property="docfx:navrel" content="../../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../../index.html">
+                <img id="logo" class="svg" src="../../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Content.Server.Singularity.EntitySystems.GravityWellSystem">
+  
+  
+  <h1 id="Content_Server_Singularity_EntitySystems_GravityWellSystem" data-uid="Content.Server.Singularity.EntitySystems.GravityWellSystem" class="text-break">Class GravityWellSystem
+  </h1>
+  <div class="markdown level0 summary"><p>The server side version of <a class="xref" href="../Content.Shared/Content.Shared.Singularity.EntitySystems.SharedGravityWellSystem.html">SharedGravityWellSystem</a>.
+Primarily responsible for managing <a class="xref" href="Content.Server.Singularity.Components.GravityWellComponent.html">GravityWellComponent</a>s.
+Handles the gravitational pulses they can emit.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level1"><a class="xref" href="../Content.Shared/Content.Shared.Singularity.EntitySystems.SharedGravityWellSystem.html">SharedGravityWellSystem</a></div>
+    <div class="level2"><span class="xref">GravityWellSystem</span></div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Content.Server.Singularity.EntitySystems.html">Content.Server.Singularity.EntitySystems</a></h6>
+  <h6><strong>Assembly</strong>: Content.Server.dll</h6>
+  <h5 id="Content_Server_Singularity_EntitySystems_GravityWellSystem_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public sealed class GravityWellSystem : SharedGravityWellSystem</code></pre>
+  </div>
+  <h3 id="fields">Fields
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Singularity_EntitySystems_GravityWellSystem_MinGravPulseRange.md&amp;value=---%0Auid%3A%20Content.Server.Singularity.EntitySystems.GravityWellSystem.MinGravPulseRange%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Singularity/EntitySystems/GravityWellSystem.cs/#L33">View Source</a>
+  </span>
+  <h4 id="Content_Server_Singularity_EntitySystems_GravityWellSystem_MinGravPulseRange" data-uid="Content.Server.Singularity.EntitySystems.GravityWellSystem.MinGravPulseRange">MinGravPulseRange</h4>
+  <div class="markdown level1 summary"><p>The minimum range at which gravpulses will act.
+Prevents division by zero problems.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public const float MinGravPulseRange = null</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Singularity_EntitySystems_GravityWellSystem_GravPulse_EntityUid_System_Single_System_Single_Matrix3__System_Nullable_TransformComponent__.md&amp;value=---%0Auid%3A%20Content.Server.Singularity.EntitySystems.GravityWellSystem.GravPulse(EntityUid%2CSystem.Single%2CSystem.Single%2CMatrix3%40%2CSystem.Nullable%7BTransformComponent%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Singularity/EntitySystems/GravityWellSystem.cs/#L128">View Source</a>
+  </span>
+  <a id="Content_Server_Singularity_EntitySystems_GravityWellSystem_GravPulse_" data-uid="Content.Server.Singularity.EntitySystems.GravityWellSystem.GravPulse*"></a>
+  <h4 id="Content_Server_Singularity_EntitySystems_GravityWellSystem_GravPulse_EntityUid_System_Single_System_Single_Matrix3__System_Nullable_TransformComponent__" data-uid="Content.Server.Singularity.EntitySystems.GravityWellSystem.GravPulse(EntityUid,System.Single,System.Single,Matrix3@,System.Nullable{TransformComponent})">GravPulse(EntityUid, Single, Single, Matrix3, Nullable&lt;TransformComponent&gt;)</h4>
+  <div class="markdown level1 summary"><p>Greates a gravitational pulse, shoving around all entities within some distance of an epicenter.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void GravPulse(EntityUid uid, float maxRange, float minRange, in Matrix3 baseMatrixDeltaV, TransformComponent? xform = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td><p>The entity at the epicenter of the gravity pulse.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td><span class="parametername">maxRange</span></td>
+        <td><p>The maximum distance at which entities can be affected by the gravity pulse.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td><span class="parametername">minRange</span></td>
+        <td><p>The minimum distance at which entities can be affected by the gravity pulse.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">Matrix3</span></td>
+        <td><span class="parametername">baseMatrixDeltaV</span></td>
+        <td><p>The base velocity added to any entities within affected by the gravity pulse scaled by the displacement of those entities from the epicenter.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">TransformComponent</span>&gt;</td>
+        <td><span class="parametername">xform</span></td>
+        <td><p>(optional) The transform of the entity at the epicenter of the gravitational pulse.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Singularity_EntitySystems_GravityWellSystem_GravPulse_EntityUid_System_Single_System_Single_System_Single_System_Single_System_Nullable_TransformComponent__.md&amp;value=---%0Auid%3A%20Content.Server.Singularity.EntitySystems.GravityWellSystem.GravPulse(EntityUid%2CSystem.Single%2CSystem.Single%2CSystem.Single%2CSystem.Single%2CSystem.Nullable%7BTransformComponent%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Singularity/EntitySystems/GravityWellSystem.cs/#L143">View Source</a>
+  </span>
+  <a id="Content_Server_Singularity_EntitySystems_GravityWellSystem_GravPulse_" data-uid="Content.Server.Singularity.EntitySystems.GravityWellSystem.GravPulse*"></a>
+  <h4 id="Content_Server_Singularity_EntitySystems_GravityWellSystem_GravPulse_EntityUid_System_Single_System_Single_System_Single_System_Single_System_Nullable_TransformComponent__" data-uid="Content.Server.Singularity.EntitySystems.GravityWellSystem.GravPulse(EntityUid,System.Single,System.Single,System.Single,System.Single,System.Nullable{TransformComponent})">GravPulse(EntityUid, Single, Single, Single, Single, Nullable&lt;TransformComponent&gt;)</h4>
+  <div class="markdown level1 summary"><p>Greates a gravitational pulse, shoving around all entities within some distance of an epicenter.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void GravPulse(EntityUid uid, float maxRange, float minRange, float baseRadialDeltaV = 0F, float baseTangentialDeltaV = 0F, TransformComponent? xform = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td><p>The entity at the epicenter of the gravity pulse.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td><span class="parametername">maxRange</span></td>
+        <td><p>The maximum distance at which entities can be affected by the gravity pulse.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td><span class="parametername">minRange</span></td>
+        <td><p>The minimum distance at which entities can be affected by the gravity pulse.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td><span class="parametername">baseRadialDeltaV</span></td>
+        <td><p>The base radial velocity that will be added to entities within range towards the center of the gravitational pulse.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td><span class="parametername">baseTangentialDeltaV</span></td>
+        <td><p>The base tangential velocity that will be added to entities within countrclockwise around the center of the gravitational pulse.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">TransformComponent</span>&gt;</td>
+        <td><span class="parametername">xform</span></td>
+        <td><p>(optional) The transform of the entity at the epicenter of the gravitational pulse.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Singularity_EntitySystems_GravityWellSystem_GravPulse_Robust_Shared_Map_EntityCoordinates_System_Single_System_Single_Matrix3__.md&amp;value=---%0Auid%3A%20Content.Server.Singularity.EntitySystems.GravityWellSystem.GravPulse(Robust.Shared.Map.EntityCoordinates%2CSystem.Single%2CSystem.Single%2CMatrix3%40)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Singularity/EntitySystems/GravityWellSystem.cs/#L156">View Source</a>
+  </span>
+  <a id="Content_Server_Singularity_EntitySystems_GravityWellSystem_GravPulse_" data-uid="Content.Server.Singularity.EntitySystems.GravityWellSystem.GravPulse*"></a>
+  <h4 id="Content_Server_Singularity_EntitySystems_GravityWellSystem_GravPulse_Robust_Shared_Map_EntityCoordinates_System_Single_System_Single_Matrix3__" data-uid="Content.Server.Singularity.EntitySystems.GravityWellSystem.GravPulse(Robust.Shared.Map.EntityCoordinates,System.Single,System.Single,Matrix3@)">GravPulse(EntityCoordinates, Single, Single, Matrix3)</h4>
+  <div class="markdown level1 summary"><p>Greates a gravitational pulse, shoving around all entities within some distance of an epicenter.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void GravPulse(EntityCoordinates entityPos, float maxRange, float minRange, in Matrix3 baseMatrixDeltaV)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Robust.Shared.Map.EntityCoordinates</span></td>
+        <td><span class="parametername">entityPos</span></td>
+        <td><p>The epicenter of the gravity pulse.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td><span class="parametername">maxRange</span></td>
+        <td><p>The maximum distance at which entities can be affected by the gravity pulse.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td><span class="parametername">minRange</span></td>
+        <td><p>The minimum distance at which entities can be affected by the gravity pulse.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">Matrix3</span></td>
+        <td><span class="parametername">baseMatrixDeltaV</span></td>
+        <td><p>The base velocity added to any entities within affected by the gravity pulse scaled by the displacement of those entities from the epicenter.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Singularity_EntitySystems_GravityWellSystem_GravPulse_Robust_Shared_Map_EntityCoordinates_System_Single_System_Single_System_Single_System_Single_.md&amp;value=---%0Auid%3A%20Content.Server.Singularity.EntitySystems.GravityWellSystem.GravPulse(Robust.Shared.Map.EntityCoordinates%2CSystem.Single%2CSystem.Single%2CSystem.Single%2CSystem.Single)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Singularity/EntitySystems/GravityWellSystem.cs/#L167">View Source</a>
+  </span>
+  <a id="Content_Server_Singularity_EntitySystems_GravityWellSystem_GravPulse_" data-uid="Content.Server.Singularity.EntitySystems.GravityWellSystem.GravPulse*"></a>
+  <h4 id="Content_Server_Singularity_EntitySystems_GravityWellSystem_GravPulse_Robust_Shared_Map_EntityCoordinates_System_Single_System_Single_System_Single_System_Single_" data-uid="Content.Server.Singularity.EntitySystems.GravityWellSystem.GravPulse(Robust.Shared.Map.EntityCoordinates,System.Single,System.Single,System.Single,System.Single)">GravPulse(EntityCoordinates, Single, Single, Single, Single)</h4>
+  <div class="markdown level1 summary"><p>Greates a gravitational pulse, shoving around all entities within some distance of an epicenter.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void GravPulse(EntityCoordinates entityPos, float maxRange, float minRange, float baseRadialDeltaV = 0F, float baseTangentialDeltaV = 0F)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Robust.Shared.Map.EntityCoordinates</span></td>
+        <td><span class="parametername">entityPos</span></td>
+        <td><p>The epicenter of the gravity pulse.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td><span class="parametername">maxRange</span></td>
+        <td><p>The maximum distance at which entities can be affected by the gravity pulse.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td><span class="parametername">minRange</span></td>
+        <td><p>The minimum distance at which entities can be affected by the gravity pulse.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td><span class="parametername">baseRadialDeltaV</span></td>
+        <td><p>The base radial velocity that will be added to entities within range towards the center of the gravitational pulse.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td><span class="parametername">baseTangentialDeltaV</span></td>
+        <td><p>The base tangential velocity that will be added to entities within countrclockwise around the center of the gravitational pulse.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Singularity_EntitySystems_GravityWellSystem_GravPulse_Robust_Shared_Map_MapCoordinates_System_Single_System_Single_Matrix3__.md&amp;value=---%0Auid%3A%20Content.Server.Singularity.EntitySystems.GravityWellSystem.GravPulse(Robust.Shared.Map.MapCoordinates%2CSystem.Single%2CSystem.Single%2CMatrix3%40)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Singularity/EntitySystems/GravityWellSystem.cs/#L177">View Source</a>
+  </span>
+  <a id="Content_Server_Singularity_EntitySystems_GravityWellSystem_GravPulse_" data-uid="Content.Server.Singularity.EntitySystems.GravityWellSystem.GravPulse*"></a>
+  <h4 id="Content_Server_Singularity_EntitySystems_GravityWellSystem_GravPulse_Robust_Shared_Map_MapCoordinates_System_Single_System_Single_Matrix3__" data-uid="Content.Server.Singularity.EntitySystems.GravityWellSystem.GravPulse(Robust.Shared.Map.MapCoordinates,System.Single,System.Single,Matrix3@)">GravPulse(MapCoordinates, Single, Single, Matrix3)</h4>
+  <div class="markdown level1 summary"><p>Causes a gravitational pulse, shoving around all entities within some distance of an epicenter.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void GravPulse(MapCoordinates mapPos, float maxRange, float minRange, in Matrix3 baseMatrixDeltaV)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Robust.Shared.Map.MapCoordinates</span></td>
+        <td><span class="parametername">mapPos</span></td>
+        <td><p>The epicenter of the gravity pulse.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td><span class="parametername">maxRange</span></td>
+        <td><p>The maximum distance at which entities can be affected by the gravity pulse.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td><span class="parametername">minRange</span></td>
+        <td><p>The minimum distance at which entities can be affected by the gravity pulse. Exists to prevent div/0 errors.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">Matrix3</span></td>
+        <td><span class="parametername">baseMatrixDeltaV</span></td>
+        <td><p>The base velocity added to any entities within affected by the gravity pulse scaled by the displacement of those entities from the epicenter.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Singularity_EntitySystems_GravityWellSystem_GravPulse_Robust_Shared_Map_MapCoordinates_System_Single_System_Single_System_Single_System_Single_.md&amp;value=---%0Auid%3A%20Content.Server.Singularity.EntitySystems.GravityWellSystem.GravPulse(Robust.Shared.Map.MapCoordinates%2CSystem.Single%2CSystem.Single%2CSystem.Single%2CSystem.Single)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Singularity/EntitySystems/GravityWellSystem.cs/#L216">View Source</a>
+  </span>
+  <a id="Content_Server_Singularity_EntitySystems_GravityWellSystem_GravPulse_" data-uid="Content.Server.Singularity.EntitySystems.GravityWellSystem.GravPulse*"></a>
+  <h4 id="Content_Server_Singularity_EntitySystems_GravityWellSystem_GravPulse_Robust_Shared_Map_MapCoordinates_System_Single_System_Single_System_Single_System_Single_" data-uid="Content.Server.Singularity.EntitySystems.GravityWellSystem.GravPulse(Robust.Shared.Map.MapCoordinates,System.Single,System.Single,System.Single,System.Single)">GravPulse(MapCoordinates, Single, Single, Single, Single)</h4>
+  <div class="markdown level1 summary"><p>Causes a gravitational pulse, shoving around all entities within some distance of an epicenter.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void GravPulse(MapCoordinates mapPos, float maxRange, float minRange = 0F, float baseRadialDeltaV = 0F, float baseTangentialDeltaV = 0F)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Robust.Shared.Map.MapCoordinates</span></td>
+        <td><span class="parametername">mapPos</span></td>
+        <td><p>The epicenter of the gravity pulse.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td><span class="parametername">maxRange</span></td>
+        <td><p>The maximum distance at which entities can be affected by the gravity pulse.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td><span class="parametername">minRange</span></td>
+        <td><p>The minimum distance at which entities can be affected by the gravity pulse. Exists to prevent div/0 errors.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td><span class="parametername">baseRadialDeltaV</span></td>
+        <td><p>The base amount of velocity that will be added to entities in range towards the epicenter of the pulse.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td><span class="parametername">baseTangentialDeltaV</span></td>
+        <td><p>The base amount of velocity that will be added to entities in range counterclockwise relative to the epicenter of the pulse.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Singularity_EntitySystems_GravityWellSystem_Initialize.md&amp;value=---%0Auid%3A%20Content.Server.Singularity.EntitySystems.GravityWellSystem.Initialize%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Singularity/EntitySystems/GravityWellSystem.cs/#L35">View Source</a>
+  </span>
+  <a id="Content_Server_Singularity_EntitySystems_GravityWellSystem_Initialize_" data-uid="Content.Server.Singularity.EntitySystems.GravityWellSystem.Initialize*"></a>
+  <h4 id="Content_Server_Singularity_EntitySystems_GravityWellSystem_Initialize" data-uid="Content.Server.Singularity.EntitySystems.GravityWellSystem.Initialize">Initialize()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override void Initialize()</code></pre>
+  </div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Singularity_EntitySystems_GravityWellSystem_OnGravityWellStartup_EntityUid_Content_Server_Singularity_Components_GravityWellComponent_ComponentStartup_.md&amp;value=---%0Auid%3A%20Content.Server.Singularity.EntitySystems.GravityWellSystem.OnGravityWellStartup(EntityUid%2CContent.Server.Singularity.Components.GravityWellComponent%2CComponentStartup)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Singularity/EntitySystems/GravityWellSystem.cs/#L260">View Source</a>
+  </span>
+  <a id="Content_Server_Singularity_EntitySystems_GravityWellSystem_OnGravityWellStartup_" data-uid="Content.Server.Singularity.EntitySystems.GravityWellSystem.OnGravityWellStartup*"></a>
+  <h4 id="Content_Server_Singularity_EntitySystems_GravityWellSystem_OnGravityWellStartup_EntityUid_Content_Server_Singularity_Components_GravityWellComponent_ComponentStartup_" data-uid="Content.Server.Singularity.EntitySystems.GravityWellSystem.OnGravityWellStartup(EntityUid,Content.Server.Singularity.Components.GravityWellComponent,ComponentStartup)">OnGravityWellStartup(EntityUid, GravityWellComponent, ComponentStartup)</h4>
+  <div class="markdown level1 summary"><p>Resets the pulse timings of the gravity well when the components starts up.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void OnGravityWellStartup(EntityUid uid, GravityWellComponent comp, ComponentStartup args)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td><p>The uid of the gravity well to start up.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Server.Singularity.Components.GravityWellComponent.html">GravityWellComponent</a></td>
+        <td><span class="parametername">comp</span></td>
+        <td><p>The state of the gravity well to start up.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">ComponentStartup</span></td>
+        <td><span class="parametername">args</span></td>
+        <td><p>The startup prompt arguments.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Singularity_EntitySystems_GravityWellSystem_SetPulsePeriod_EntityUid_TimeSpan_Content_Server_Singularity_Components_GravityWellComponent_.md&amp;value=---%0Auid%3A%20Content.Server.Singularity.EntitySystems.GravityWellSystem.SetPulsePeriod(EntityUid%2CTimeSpan%2CContent.Server.Singularity.Components.GravityWellComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Singularity/EntitySystems/GravityWellSystem.cs/#L234">View Source</a>
+  </span>
+  <a id="Content_Server_Singularity_EntitySystems_GravityWellSystem_SetPulsePeriod_" data-uid="Content.Server.Singularity.EntitySystems.GravityWellSystem.SetPulsePeriod*"></a>
+  <h4 id="Content_Server_Singularity_EntitySystems_GravityWellSystem_SetPulsePeriod_EntityUid_TimeSpan_Content_Server_Singularity_Components_GravityWellComponent_" data-uid="Content.Server.Singularity.EntitySystems.GravityWellSystem.SetPulsePeriod(EntityUid,TimeSpan,Content.Server.Singularity.Components.GravityWellComponent)">SetPulsePeriod(EntityUid, TimeSpan, GravityWellComponent)</h4>
+  <div class="markdown level1 summary"><p>Sets the pulse period for a gravity well.
+If the new pulse period implies that the gravity well was intended to pulse already it does so immediately.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetPulsePeriod(EntityUid uid, TimeSpan value, GravityWellComponent gravWell = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td><p>The uid of the gravity well to set the pulse period for.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">TimeSpan</span></td>
+        <td><span class="parametername">value</span></td>
+        <td><p>The new pulse period for the gravity well.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Server.Singularity.Components.GravityWellComponent.html">GravityWellComponent</a></td>
+        <td><span class="parametername">gravWell</span></td>
+        <td><p>The state of the gravity well to set the pulse period for.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Singularity_EntitySystems_GravityWellSystem_Shutdown.md&amp;value=---%0Auid%3A%20Content.Server.Singularity.EntitySystems.GravityWellSystem.Shutdown%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Singularity/EntitySystems/GravityWellSystem.cs/#L44">View Source</a>
+  </span>
+  <a id="Content_Server_Singularity_EntitySystems_GravityWellSystem_Shutdown_" data-uid="Content.Server.Singularity.EntitySystems.GravityWellSystem.Shutdown*"></a>
+  <h4 id="Content_Server_Singularity_EntitySystems_GravityWellSystem_Shutdown" data-uid="Content.Server.Singularity.EntitySystems.GravityWellSystem.Shutdown">Shutdown()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override void Shutdown()</code></pre>
+  </div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Singularity_EntitySystems_GravityWellSystem_Update_System_Single_.md&amp;value=---%0Auid%3A%20Content.Server.Singularity.EntitySystems.GravityWellSystem.Update(System.Single)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Singularity/EntitySystems/GravityWellSystem.cs/#L56">View Source</a>
+  </span>
+  <a id="Content_Server_Singularity_EntitySystems_GravityWellSystem_Update_" data-uid="Content.Server.Singularity.EntitySystems.GravityWellSystem.Update*"></a>
+  <h4 id="Content_Server_Singularity_EntitySystems_GravityWellSystem_Update_System_Single_" data-uid="Content.Server.Singularity.EntitySystems.GravityWellSystem.Update(System.Single)">Update(Single)</h4>
+  <div class="markdown level1 summary"><p>Updates the pulse cooldowns of all gravity wells.
+If they are off cooldown it makes them emit a gravitational pulse and reset their cooldown.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override void Update(float frameTime)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td><span class="parametername">frameTime</span></td>
+        <td><p>The time elapsed since the last set of updates.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Singularity_EntitySystems_GravityWellSystem.md&amp;value=---%0Auid%3A%20Content.Server.Singularity.EntitySystems.GravityWellSystem%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Singularity/EntitySystems/GravityWellSystem.cs/#L19" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <div class="toggle-mode">
+                <div class="icon">
+                  <i aria-hidden="true">☀</i>
+                </div>
+                <label class="switch">
+                  <input type="checkbox" id="switch-style">
+                  <span class="slider round"></span>
+                </label>
+                <div class="icon">
+                  <i aria-hidden="true">☾</i>
+                </div>
+              </div>
+          
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <h5>In This Article</h5>
+              <div></div>
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <div class="pull-left">
+              
+              <span>Generated by <strong>DocFX</strong></span>
+            </div>
+            <div class="toggle-mode pull-right visible-sm visible-xs">
+              <div class="icon">
+                <i aria-hidden="true">☀</i>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="switch-style-m">
+                <span class="slider round"></span>
+              </label>
+              <div class="icon">
+                <i aria-hidden="true">☾</i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <script type="text/javascript" src="../../styles/toggle-theme.js"></script>
+      </footer>    </div>
+    
+    <script type="text/javascript" src="../../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../../styles/docfx.js"></script>
+    <script type="text/javascript" src="../../styles/main.js"></script>
+  </body>
+</html>

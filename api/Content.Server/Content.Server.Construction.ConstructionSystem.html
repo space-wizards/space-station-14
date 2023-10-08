@@ -1,0 +1,1287 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class ConstructionSystem
+   </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class ConstructionSystem
+   ">
+    <meta name="generator" content="docfx 2.56.7.0">
+    
+    <link rel="shortcut icon" href="../../favicon.ico">
+    <link rel="stylesheet" href="../../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../../styles/docfx.css">
+    <link rel="stylesheet" href="../../styles/main.css">
+    <meta property="docfx:navrel" content="../../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../../index.html">
+                <img id="logo" class="svg" src="../../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Content.Server.Construction.ConstructionSystem">
+  
+  
+  <h1 id="Content_Server_Construction_ConstructionSystem" data-uid="Content.Server.Construction.ConstructionSystem" class="text-break">Class ConstructionSystem
+  </h1>
+  <div class="markdown level0 summary"><p>The server-side implementation of the construction system, which is used for constructing entities in game.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level1"><a class="xref" href="../Content.Shared/Content.Shared.Construction.SharedConstructionSystem.html">SharedConstructionSystem</a></div>
+    <div class="level2"><span class="xref">ConstructionSystem</span></div>
+  </div>
+  <div class="inheritedMembers">
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Content.Server.Construction.html">Content.Server.Construction</a></h6>
+  <h6><strong>Assembly</strong>: Content.Server.dll</h6>
+  <h5 id="Content_Server_Construction_ConstructionSystem_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public sealed class ConstructionSystem : SharedConstructionSystem</code></pre>
+  </div>
+  <h3 id="methods">Methods
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Construction_ConstructionSystem_AddContainer_EntityUid_System_String_Content_Server_Construction_Components_ConstructionComponent_.md&amp;value=---%0Auid%3A%20Content.Server.Construction.ConstructionSystem.AddContainer(EntityUid%2CSystem.String%2CContent.Server.Construction.Components.ConstructionComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Construction/ConstructionSystem.Graph.cs/#L30">View Source</a>
+  </span>
+  <a id="Content_Server_Construction_ConstructionSystem_AddContainer_" data-uid="Content.Server.Construction.ConstructionSystem.AddContainer*"></a>
+  <h4 id="Content_Server_Construction_ConstructionSystem_AddContainer_EntityUid_System_String_Content_Server_Construction_Components_ConstructionComponent_" data-uid="Content.Server.Construction.ConstructionSystem.AddContainer(EntityUid,System.String,Content.Server.Construction.Components.ConstructionComponent)">AddContainer(EntityUid, String, ConstructionComponent)</h4>
+  <div class="markdown level1 summary"><p>Sets a container on an entity as being handled by Construction. This essentially means that it will
+be transferred if the entity prototype changes. <span class="xref">Content.Server.Construction.ConstructionSystem.ChangeEntity(EntityUid,System.Nullable{EntityUid},System.String,Content.Server.Construction.Components.ConstructionComponent,System.Nullable{MetaDataComponent},System.Nullable{TransformComponent},Robust.Shared.Containers.ContainerManagerComponent)</span></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool AddContainer(EntityUid uid, string container, ConstructionComponent construction = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td><p>The target entity.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">container</span></td>
+        <td><p>The container identifier. This method does not check whether the container exists.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Server.Construction.Components.ConstructionComponent.html">ConstructionComponent</a></td>
+        <td><span class="parametername">construction</span></td>
+        <td><p>The construction component of the target entity. Will be resolved if null.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>Whether we could set the container as being handled by construction or not. Also returns false if
+the entity does not have a <a class="xref" href="Content.Server.Construction.Components.ConstructionComponent.html">ConstructionComponent</a>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Construction_ConstructionSystem_ChangeGraph_EntityUid_System_Nullable_EntityUid__System_String_System_String_System_Boolean_Content_Server_Construction_Components_ConstructionComponent_.md&amp;value=---%0Auid%3A%20Content.Server.Construction.ConstructionSystem.ChangeGraph(EntityUid%2CSystem.Nullable%7BEntityUid%7D%2CSystem.String%2CSystem.String%2CSystem.Boolean%2CContent.Server.Construction.Components.ConstructionComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Construction/ConstructionSystem.Graph.cs/#L425">View Source</a>
+  </span>
+  <a id="Content_Server_Construction_ConstructionSystem_ChangeGraph_" data-uid="Content.Server.Construction.ConstructionSystem.ChangeGraph*"></a>
+  <h4 id="Content_Server_Construction_ConstructionSystem_ChangeGraph_EntityUid_System_Nullable_EntityUid__System_String_System_String_System_Boolean_Content_Server_Construction_Components_ConstructionComponent_" data-uid="Content.Server.Construction.ConstructionSystem.ChangeGraph(EntityUid,System.Nullable{EntityUid},System.String,System.String,System.Boolean,Content.Server.Construction.Components.ConstructionComponent)">ChangeGraph(EntityUid, Nullable&lt;EntityUid&gt;, String, String, Boolean, ConstructionComponent)</h4>
+  <div class="markdown level1 summary"><p>Performs a construction graph change on a construction entity, also changing the node to a valid one on
+the new graph.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool ChangeGraph(EntityUid uid, EntityUid? userUid, string graphId, string nodeId, bool performActions = true, ConstructionComponent construction = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td><p>The target entity.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">EntityUid</span>&gt;</td>
+        <td><span class="parametername">userUid</span></td>
+        <td><p>An optional user entity, for actions.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">graphId</span></td>
+        <td><p>The identifier for the construction graph to switch to.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">nodeId</span></td>
+        <td><p>The identifier for a node on the new construction graph to switch to.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">performActions</span></td>
+        <td><p>Whether actions on the new node will be performed or not.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Server.Construction.Components.ConstructionComponent.html">ConstructionComponent</a></td>
+        <td><span class="parametername">construction</span></td>
+        <td><p>The construction component of the target entity. Will be resolved if null.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>Whether the construction graph change succeeded or not. Returns false if the entity does not have
+a <a class="xref" href="Content.Server.Construction.Components.ConstructionComponent.html">ConstructionComponent</a>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Construction_ConstructionSystem_ChangeNode_EntityUid_System_Nullable_EntityUid__System_String_System_Boolean_Content_Server_Construction_Components_ConstructionComponent_.md&amp;value=---%0Auid%3A%20Content.Server.Construction.ConstructionSystem.ChangeNode(EntityUid%2CSystem.Nullable%7BEntityUid%7D%2CSystem.String%2CSystem.Boolean%2CContent.Server.Construction.Components.ConstructionComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Construction/ConstructionSystem.Graph.cs/#L243">View Source</a>
+  </span>
+  <a id="Content_Server_Construction_ConstructionSystem_ChangeNode_" data-uid="Content.Server.Construction.ConstructionSystem.ChangeNode*"></a>
+  <h4 id="Content_Server_Construction_ConstructionSystem_ChangeNode_EntityUid_System_Nullable_EntityUid__System_String_System_Boolean_Content_Server_Construction_Components_ConstructionComponent_" data-uid="Content.Server.Construction.ConstructionSystem.ChangeNode(EntityUid,System.Nullable{EntityUid},System.String,System.Boolean,Content.Server.Construction.Components.ConstructionComponent)">ChangeNode(EntityUid, Nullable&lt;EntityUid&gt;, String, Boolean, ConstructionComponent)</h4>
+  <div class="markdown level1 summary"><p>Performs a node change on a construction entity, optionally performing the actions for the new node.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool ChangeNode(EntityUid uid, EntityUid? userUid, string id, bool performActions = true, ConstructionComponent construction = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td><p>The target entity.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">EntityUid</span>&gt;</td>
+        <td><span class="parametername">userUid</span></td>
+        <td><p>An optional user entity, for actions.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">id</span></td>
+        <td><p>The identifier of the node to change to.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">performActions</span></td>
+        <td><p>Whether the actions for the new node will be performed or not.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Server.Construction.Components.ConstructionComponent.html">ConstructionComponent</a></td>
+        <td><span class="parametername">construction</span></td>
+        <td><p>The construction component of the target entity. Will be resolved if null.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>Whether the node change succeeded or not. Also returns false if the entity does not have a <a class="xref" href="Content.Server.Construction.Components.ConstructionComponent.html">ConstructionComponent</a>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Content_Server_Construction_ConstructionSystem_ChangeNode_EntityUid_System_Nullable_EntityUid__System_String_System_Boolean_Content_Server_Construction_Components_ConstructionComponent__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>This method also updates the construction pathfinding automatically, if the node change succeeds.</p>
+</div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Construction_ConstructionSystem_ClearPathfinding_EntityUid_Content_Server_Construction_Components_ConstructionComponent_.md&amp;value=---%0Auid%3A%20Content.Server.Construction.ConstructionSystem.ClearPathfinding(EntityUid%2CContent.Server.Construction.Components.ConstructionComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Construction/ConstructionSystem.Pathfinding.cs/#L141">View Source</a>
+  </span>
+  <a id="Content_Server_Construction_ConstructionSystem_ClearPathfinding_" data-uid="Content.Server.Construction.ConstructionSystem.ClearPathfinding*"></a>
+  <h4 id="Content_Server_Construction_ConstructionSystem_ClearPathfinding_EntityUid_Content_Server_Construction_Components_ConstructionComponent_" data-uid="Content.Server.Construction.ConstructionSystem.ClearPathfinding(EntityUid,Content.Server.Construction.Components.ConstructionComponent)">ClearPathfinding(EntityUid, ConstructionComponent)</h4>
+  <div class="markdown level1 summary"><p>Clears the pathfinding targets on a construction entity.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void ClearPathfinding(EntityUid uid, ConstructionComponent construction = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td><p>The target entity.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Server.Construction.Components.ConstructionComponent.html">ConstructionComponent</a></td>
+        <td><span class="parametername">construction</span></td>
+        <td><p>The construction component of the target entity. Will be resolved if null.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Construction_ConstructionSystem_GetCurrentEdge_EntityUid_Content_Server_Construction_Components_ConstructionComponent_.md&amp;value=---%0Auid%3A%20Content.Server.Construction.ConstructionSystem.GetCurrentEdge(EntityUid%2CContent.Server.Construction.Components.ConstructionComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Construction/ConstructionSystem.Graph.cs/#L83">View Source</a>
+  </span>
+  <a id="Content_Server_Construction_ConstructionSystem_GetCurrentEdge_" data-uid="Content.Server.Construction.ConstructionSystem.GetCurrentEdge*"></a>
+  <h4 id="Content_Server_Construction_ConstructionSystem_GetCurrentEdge_EntityUid_Content_Server_Construction_Components_ConstructionComponent_" data-uid="Content.Server.Construction.ConstructionSystem.GetCurrentEdge(EntityUid,Content.Server.Construction.Components.ConstructionComponent)">GetCurrentEdge(EntityUid, ConstructionComponent)</h4>
+  <div class="markdown level1 summary"><p>Gets the construction graph edge the entity is currently at, or null.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ConstructionGraphEdge GetCurrentEdge(EntityUid uid, ConstructionComponent construction = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td><p>The target entity.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Server.Construction.Components.ConstructionComponent.html">ConstructionComponent</a></td>
+        <td><span class="parametername">construction</span></td>
+        <td><p>The construction component of the target entity. Will be resolved if null.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="../Content.Shared/Content.Shared.Construction.ConstructionGraphEdge.html">ConstructionGraphEdge</a></td>
+        <td><p>The construction graph edge the entity is currently at, if any. Also returns null if the entity
+does not have a <a class="xref" href="Content.Server.Construction.Components.ConstructionComponent.html">ConstructionComponent</a>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Content_Server_Construction_ConstructionSystem_GetCurrentEdge_EntityUid_Content_Server_Construction_Components_ConstructionComponent__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>An entity with a valid construction state might not always be at an edge.</p>
+</div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Construction_ConstructionSystem_GetCurrentEdgeAndStep_EntityUid_Content_Server_Construction_Components_ConstructionComponent_.md&amp;value=---%0Auid%3A%20Content.Server.Construction.ConstructionSystem.GetCurrentEdgeAndStep(EntityUid%2CContent.Server.Construction.Components.ConstructionComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Construction/ConstructionSystem.Graph.cs/#L184">View Source</a>
+  </span>
+  <a id="Content_Server_Construction_ConstructionSystem_GetCurrentEdgeAndStep_" data-uid="Content.Server.Construction.ConstructionSystem.GetCurrentEdgeAndStep*"></a>
+  <h4 id="Content_Server_Construction_ConstructionSystem_GetCurrentEdgeAndStep_EntityUid_Content_Server_Construction_Components_ConstructionComponent_" data-uid="Content.Server.Construction.ConstructionSystem.GetCurrentEdgeAndStep(EntityUid,Content.Server.Construction.Components.ConstructionComponent)">GetCurrentEdgeAndStep(EntityUid, ConstructionComponent)</h4>
+  <div class="markdown level1 summary"><p>Gets both the construction edge and step the entity is currently at, if any.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public (ConstructionGraphEdge edge, ConstructionGraphStep step) GetCurrentEdgeAndStep(EntityUid uid, ConstructionComponent construction = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td><p>The target entity.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Server.Construction.Components.ConstructionComponent.html">ConstructionComponent</a></td>
+        <td><span class="parametername">construction</span></td>
+        <td><p>The construction component of the target entity. Will be resolved if null.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.ValueTuple</span>&lt;<a class="xref" href="../Content.Shared/Content.Shared.Construction.ConstructionGraphEdge.html">ConstructionGraphEdge</a>, <a class="xref" href="../Content.Shared/Content.Shared.Construction.Steps.ConstructionGraphStep.html">ConstructionGraphStep</a>&gt;</td>
+        <td><p>A tuple containing the current edge and step the entity's construction state is at.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Content_Server_Construction_ConstructionSystem_GetCurrentEdgeAndStep_EntityUid_Content_Server_Construction_Components_ConstructionComponent__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The edge, step or both could be null. A valid construction state does not necessarily need them.</p>
+</div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Construction_ConstructionSystem_GetCurrentGraph_EntityUid_Content_Server_Construction_Components_ConstructionComponent_.md&amp;value=---%0Auid%3A%20Content.Server.Construction.ConstructionSystem.GetCurrentGraph(EntityUid%2CContent.Server.Construction.Components.ConstructionComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Construction/ConstructionSystem.Graph.cs/#L46">View Source</a>
+  </span>
+  <a id="Content_Server_Construction_ConstructionSystem_GetCurrentGraph_" data-uid="Content.Server.Construction.ConstructionSystem.GetCurrentGraph*"></a>
+  <h4 id="Content_Server_Construction_ConstructionSystem_GetCurrentGraph_EntityUid_Content_Server_Construction_Components_ConstructionComponent_" data-uid="Content.Server.Construction.ConstructionSystem.GetCurrentGraph(EntityUid,Content.Server.Construction.Components.ConstructionComponent)">GetCurrentGraph(EntityUid, ConstructionComponent)</h4>
+  <div class="markdown level1 summary"><p>Gets the current construction graph of an entity, or null.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ConstructionGraphPrototype GetCurrentGraph(EntityUid uid, ConstructionComponent construction = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td><p>The target entity.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Server.Construction.Components.ConstructionComponent.html">ConstructionComponent</a></td>
+        <td><span class="parametername">construction</span></td>
+        <td><p>The construction component of the target entity. Will be resolved if null.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="../Content.Shared/Content.Shared.Construction.Prototypes.ConstructionGraphPrototype.html">ConstructionGraphPrototype</a></td>
+        <td><p>The current construction graph of an entity or null if invalid. Also returns null if the entity
+does not have a <a class="xref" href="Content.Server.Construction.Components.ConstructionComponent.html">ConstructionComponent</a>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Content_Server_Construction_ConstructionSystem_GetCurrentGraph_EntityUid_Content_Server_Construction_Components_ConstructionComponent__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>An entity with a valid construction state will always have a valid graph.</p>
+</div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Construction_ConstructionSystem_GetCurrentNode_EntityUid_Content_Server_Construction_Components_ConstructionComponent_.md&amp;value=---%0Auid%3A%20Content.Server.Construction.ConstructionSystem.GetCurrentNode(EntityUid%2CContent.Server.Construction.Components.ConstructionComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Construction/ConstructionSystem.Graph.cs/#L64">View Source</a>
+  </span>
+  <a id="Content_Server_Construction_ConstructionSystem_GetCurrentNode_" data-uid="Content.Server.Construction.ConstructionSystem.GetCurrentNode*"></a>
+  <h4 id="Content_Server_Construction_ConstructionSystem_GetCurrentNode_EntityUid_Content_Server_Construction_Components_ConstructionComponent_" data-uid="Content.Server.Construction.ConstructionSystem.GetCurrentNode(EntityUid,Content.Server.Construction.Components.ConstructionComponent)">GetCurrentNode(EntityUid, ConstructionComponent)</h4>
+  <div class="markdown level1 summary"><p>Gets the construction graph node the entity is currently at, or null.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ConstructionGraphNode GetCurrentNode(EntityUid uid, ConstructionComponent construction = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td><p>The target entity.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Server.Construction.Components.ConstructionComponent.html">ConstructionComponent</a></td>
+        <td><span class="parametername">construction</span></td>
+        <td><p>The construction component of the target entity. Will be resolved if null.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="../Content.Shared/Content.Shared.Construction.ConstructionGraphNode.html">ConstructionGraphNode</a></td>
+        <td><p>The current construction graph node the entity is currently at, or null if invalid. Also returns
+null if the entity does not have a <a class="xref" href="Content.Server.Construction.Components.ConstructionComponent.html">ConstructionComponent</a>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Content_Server_Construction_ConstructionSystem_GetCurrentNode_EntityUid_Content_Server_Construction_Components_ConstructionComponent__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>An entity with a valid construction state will always be at a valid node.</p>
+</div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Construction_ConstructionSystem_GetCurrentNodeAndEdge_EntityUid_Content_Server_Construction_Components_ConstructionComponent_.md&amp;value=---%0Auid%3A%20Content.Server.Construction.ConstructionSystem.GetCurrentNodeAndEdge(EntityUid%2CContent.Server.Construction.Components.ConstructionComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Construction/ConstructionSystem.Graph.cs/#L97">View Source</a>
+  </span>
+  <a id="Content_Server_Construction_ConstructionSystem_GetCurrentNodeAndEdge_" data-uid="Content.Server.Construction.ConstructionSystem.GetCurrentNodeAndEdge*"></a>
+  <h4 id="Content_Server_Construction_ConstructionSystem_GetCurrentNodeAndEdge_EntityUid_Content_Server_Construction_Components_ConstructionComponent_" data-uid="Content.Server.Construction.ConstructionSystem.GetCurrentNodeAndEdge(EntityUid,Content.Server.Construction.Components.ConstructionComponent)">GetCurrentNodeAndEdge(EntityUid, ConstructionComponent)</h4>
+  <div class="markdown level1 summary"><p>Variant of <a class="xref" href="Content.Server.Construction.ConstructionSystem.html#Content_Server_Construction_ConstructionSystem_GetCurrentEdge_EntityUid_Content_Server_Construction_Components_ConstructionComponent_">GetCurrentEdge(EntityUid, ConstructionComponent)</a> that returns both the node and edge.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public (ConstructionGraphNode, ConstructionGraphEdge) GetCurrentNodeAndEdge(EntityUid uid, ConstructionComponent construction = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Server.Construction.Components.ConstructionComponent.html">ConstructionComponent</a></td>
+        <td><span class="parametername">construction</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.ValueTuple</span>&lt;<a class="xref" href="../Content.Shared/Content.Shared.Construction.ConstructionGraphNode.html">ConstructionGraphNode</a>, <a class="xref" href="../Content.Shared/Content.Shared.Construction.ConstructionGraphEdge.html">ConstructionGraphEdge</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Construction_ConstructionSystem_GetCurrentStep_EntityUid_Content_Server_Construction_Components_ConstructionComponent_.md&amp;value=---%0Auid%3A%20Content.Server.Construction.ConstructionSystem.GetCurrentStep(EntityUid%2CContent.Server.Construction.Components.ConstructionComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Construction/ConstructionSystem.Graph.cs/#L119">View Source</a>
+  </span>
+  <a id="Content_Server_Construction_ConstructionSystem_GetCurrentStep_" data-uid="Content.Server.Construction.ConstructionSystem.GetCurrentStep*"></a>
+  <h4 id="Content_Server_Construction_ConstructionSystem_GetCurrentStep_EntityUid_Content_Server_Construction_Components_ConstructionComponent_" data-uid="Content.Server.Construction.ConstructionSystem.GetCurrentStep(EntityUid,Content.Server.Construction.Components.ConstructionComponent)">GetCurrentStep(EntityUid, ConstructionComponent)</h4>
+  <div class="markdown level1 summary"><p>Gets the construction graph step the entity is currently at, or null.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ConstructionGraphStep GetCurrentStep(EntityUid uid, ConstructionComponent construction = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td><p>The target entity.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Server.Construction.Components.ConstructionComponent.html">ConstructionComponent</a></td>
+        <td><span class="parametername">construction</span></td>
+        <td><p>The construction component of the target entity. Will be resolved if null.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="../Content.Shared/Content.Shared.Construction.Steps.ConstructionGraphStep.html">ConstructionGraphStep</a></td>
+        <td><p>The construction graph step the entity is currently at, if any. Also returns null if the entity
+does not have a <a class="xref" href="Content.Server.Construction.Components.ConstructionComponent.html">ConstructionComponent</a>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Content_Server_Construction_ConstructionSystem_GetCurrentStep_EntityUid_Content_Server_Construction_Components_ConstructionComponent__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>An entity with a valid construction state might not always be at a step or an edge.</p>
+</div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Construction_ConstructionSystem_GetEdgeFromNode_Content_Shared_Construction_ConstructionGraphNode_System_Int32_.md&amp;value=---%0Auid%3A%20Content.Server.Construction.ConstructionSystem.GetEdgeFromNode(Content.Shared.Construction.ConstructionGraphNode%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Construction/ConstructionSystem.Graph.cs/#L217">View Source</a>
+  </span>
+  <a id="Content_Server_Construction_ConstructionSystem_GetEdgeFromNode_" data-uid="Content.Server.Construction.ConstructionSystem.GetEdgeFromNode*"></a>
+  <h4 id="Content_Server_Construction_ConstructionSystem_GetEdgeFromNode_Content_Shared_Construction_ConstructionGraphNode_System_Int32_" data-uid="Content.Server.Construction.ConstructionSystem.GetEdgeFromNode(Content.Shared.Construction.ConstructionGraphNode,System.Int32)">GetEdgeFromNode(ConstructionGraphNode, Int32)</h4>
+  <div class="markdown level1 summary"><p>Gets an edge from a construction node given its index.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ConstructionGraphEdge GetEdgeFromNode(ConstructionGraphNode node, int index)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="../Content.Shared/Content.Shared.Construction.ConstructionGraphNode.html">ConstructionGraphNode</a></td>
+        <td><span class="parametername">node</span></td>
+        <td><p>The construction node where to get the edge.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">index</span></td>
+        <td><p>The index or position of the edge on the node.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="../Content.Shared/Content.Shared.Construction.ConstructionGraphEdge.html">ConstructionGraphEdge</a></td>
+        <td><p>The edge on that index in the construction node, or null if none.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Construction_ConstructionSystem_GetNodeFromGraph_Content_Shared_Construction_Prototypes_ConstructionGraphPrototype_System_String_.md&amp;value=---%0Auid%3A%20Content.Server.Construction.ConstructionSystem.GetNodeFromGraph(Content.Shared.Construction.Prototypes.ConstructionGraphPrototype%2CSystem.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Construction/ConstructionSystem.Graph.cs/#L206">View Source</a>
+  </span>
+  <a id="Content_Server_Construction_ConstructionSystem_GetNodeFromGraph_" data-uid="Content.Server.Construction.ConstructionSystem.GetNodeFromGraph*"></a>
+  <h4 id="Content_Server_Construction_ConstructionSystem_GetNodeFromGraph_Content_Shared_Construction_Prototypes_ConstructionGraphPrototype_System_String_" data-uid="Content.Server.Construction.ConstructionSystem.GetNodeFromGraph(Content.Shared.Construction.Prototypes.ConstructionGraphPrototype,System.String)">GetNodeFromGraph(ConstructionGraphPrototype, String)</h4>
+  <div class="markdown level1 summary"><p>Gets a node from a construction graph given its identifier.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ConstructionGraphNode GetNodeFromGraph(ConstructionGraphPrototype graph, string id)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="../Content.Shared/Content.Shared.Construction.Prototypes.ConstructionGraphPrototype.html">ConstructionGraphPrototype</a></td>
+        <td><span class="parametername">graph</span></td>
+        <td><p>The construction graph where to get the node.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">id</span></td>
+        <td><p>The identifier that corresponds to the node.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="../Content.Shared/Content.Shared.Construction.ConstructionGraphNode.html">ConstructionGraphNode</a></td>
+        <td><p>The node that corresponds to the identifier, or null if it doesn't exist.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Construction_ConstructionSystem_GetStepFromEdge_Content_Shared_Construction_ConstructionGraphEdge_System_Int32_.md&amp;value=---%0Auid%3A%20Content.Server.Construction.ConstructionSystem.GetStepFromEdge(Content.Shared.Construction.ConstructionGraphEdge%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Construction/ConstructionSystem.Graph.cs/#L228">View Source</a>
+  </span>
+  <a id="Content_Server_Construction_ConstructionSystem_GetStepFromEdge_" data-uid="Content.Server.Construction.ConstructionSystem.GetStepFromEdge*"></a>
+  <h4 id="Content_Server_Construction_ConstructionSystem_GetStepFromEdge_Content_Shared_Construction_ConstructionGraphEdge_System_Int32_" data-uid="Content.Server.Construction.ConstructionSystem.GetStepFromEdge(Content.Shared.Construction.ConstructionGraphEdge,System.Int32)">GetStepFromEdge(ConstructionGraphEdge, Int32)</h4>
+  <div class="markdown level1 summary"><p>Gets a step from a construction edge given its index.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ConstructionGraphStep GetStepFromEdge(ConstructionGraphEdge edge, int index)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="../Content.Shared/Content.Shared.Construction.ConstructionGraphEdge.html">ConstructionGraphEdge</a></td>
+        <td><span class="parametername">edge</span></td>
+        <td><p>The construction edge where to get the step.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">index</span></td>
+        <td><p>The index or position of the step on the edge.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="../Content.Shared/Content.Shared.Construction.Steps.ConstructionGraphStep.html">ConstructionGraphStep</a></td>
+        <td><p>The edge on that index in the construction edge, or null if none.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Construction_ConstructionSystem_GetTargetEdge_EntityUid_Content_Server_Construction_Components_ConstructionComponent_.md&amp;value=---%0Auid%3A%20Content.Server.Construction.ConstructionSystem.GetTargetEdge(EntityUid%2CContent.Server.Construction.Components.ConstructionComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Construction/ConstructionSystem.Graph.cs/#L163">View Source</a>
+  </span>
+  <a id="Content_Server_Construction_ConstructionSystem_GetTargetEdge_" data-uid="Content.Server.Construction.ConstructionSystem.GetTargetEdge*"></a>
+  <h4 id="Content_Server_Construction_ConstructionSystem_GetTargetEdge_EntityUid_Content_Server_Construction_Components_ConstructionComponent_" data-uid="Content.Server.Construction.ConstructionSystem.GetTargetEdge(EntityUid,Content.Server.Construction.Components.ConstructionComponent)">GetTargetEdge(EntityUid, ConstructionComponent)</h4>
+  <div class="markdown level1 summary"><p>Gets the construction graph edge the entity's construction pathfinding is currently targeting, if any.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ConstructionGraphEdge GetTargetEdge(EntityUid uid, ConstructionComponent construction)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td><p>The target entity.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Server.Construction.Components.ConstructionComponent.html">ConstructionComponent</a></td>
+        <td><span class="parametername">construction</span></td>
+        <td><p>The construction component of the target entity. Will be resolved if null.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="../Content.Shared/Content.Shared.Construction.ConstructionGraphEdge.html">ConstructionGraphEdge</a></td>
+        <td><p>The construction graph edge the entity's construction pathfinding is currently targeting, or null
+if it's not currently targeting any edge. Also returns null if the entity does not have a
+<a class="xref" href="Content.Server.Construction.Components.ConstructionComponent.html">ConstructionComponent</a>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Content_Server_Construction_ConstructionSystem_GetTargetEdge_EntityUid_Content_Server_Construction_Components_ConstructionComponent__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Target edges are entirely optional and only used for pathfinding purposes. The targeted edge will
+be an edge on the current construction node the entity is at.</p>
+</div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Construction_ConstructionSystem_GetTargetNode_EntityUid_Content_Server_Construction_Components_ConstructionComponent_.md&amp;value=---%0Auid%3A%20Content.Server.Construction.ConstructionSystem.GetTargetNode(EntityUid%2CContent.Server.Construction.Components.ConstructionComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Construction/ConstructionSystem.Graph.cs/#L139">View Source</a>
+  </span>
+  <a id="Content_Server_Construction_ConstructionSystem_GetTargetNode_" data-uid="Content.Server.Construction.ConstructionSystem.GetTargetNode*"></a>
+  <h4 id="Content_Server_Construction_ConstructionSystem_GetTargetNode_EntityUid_Content_Server_Construction_Components_ConstructionComponent_" data-uid="Content.Server.Construction.ConstructionSystem.GetTargetNode(EntityUid,Content.Server.Construction.Components.ConstructionComponent)">GetTargetNode(EntityUid, ConstructionComponent)</h4>
+  <div class="markdown level1 summary"><p>Gets the construction graph node the entity's construction pathfinding is currently targeting, if any.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ConstructionGraphNode GetTargetNode(EntityUid uid, ConstructionComponent construction)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td><p>The target entity.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Server.Construction.Components.ConstructionComponent.html">ConstructionComponent</a></td>
+        <td><span class="parametername">construction</span></td>
+        <td><p>The construction component of the target entity. Will be resolved if null.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="../Content.Shared/Content.Shared.Construction.ConstructionGraphNode.html">ConstructionGraphNode</a></td>
+        <td><p>The construction graph node the entity's construction pathfinding is currently targeting, or null
+if it's not currently targeting any node. Also returns null if the entity does not have a
+<a class="xref" href="Content.Server.Construction.Components.ConstructionComponent.html">ConstructionComponent</a>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Content_Server_Construction_ConstructionSystem_GetTargetNode_EntityUid_Content_Server_Construction_Components_ConstructionComponent__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Target nodes are entirely optional and only used for pathfinding purposes.</p>
+</div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Construction_ConstructionSystem_Initialize.md&amp;value=---%0Auid%3A%20Content.Server.Construction.ConstructionSystem.Initialize%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Construction/ConstructionSystem.cs/#L30">View Source</a>
+  </span>
+  <a id="Content_Server_Construction_ConstructionSystem_Initialize_" data-uid="Content.Server.Construction.ConstructionSystem.Initialize*"></a>
+  <h4 id="Content_Server_Construction_ConstructionSystem_Initialize" data-uid="Content.Server.Construction.ConstructionSystem.Initialize">Initialize()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override void Initialize()</code></pre>
+  </div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Construction_ConstructionSystem_SetPathfindingTarget_EntityUid_System_Nullable_System_String__Content_Server_Construction_Components_ConstructionComponent_.md&amp;value=---%0Auid%3A%20Content.Server.Construction.ConstructionSystem.SetPathfindingTarget(EntityUid%2CSystem.Nullable%7BSystem.String%7D%2CContent.Server.Construction.Components.ConstructionComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Construction/ConstructionSystem.Pathfinding.cs/#L16">View Source</a>
+  </span>
+  <a id="Content_Server_Construction_ConstructionSystem_SetPathfindingTarget_" data-uid="Content.Server.Construction.ConstructionSystem.SetPathfindingTarget*"></a>
+  <h4 id="Content_Server_Construction_ConstructionSystem_SetPathfindingTarget_EntityUid_System_Nullable_System_String__Content_Server_Construction_Components_ConstructionComponent_" data-uid="Content.Server.Construction.ConstructionSystem.SetPathfindingTarget(EntityUid,System.Nullable{System.String},Content.Server.Construction.Components.ConstructionComponent)">SetPathfindingTarget(EntityUid, Nullable&lt;String&gt;, ConstructionComponent)</h4>
+  <div class="markdown level1 summary"><p>Sets or clears a pathfinding target node for a given construction entity.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool SetPathfindingTarget(EntityUid uid, string? targetNodeId, ConstructionComponent construction = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td><p>The target entity.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">System.String</span>&gt;</td>
+        <td><span class="parametername">targetNodeId</span></td>
+        <td><p>The target node to pathfind, or null to clear the current pathfinding node.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Server.Construction.Components.ConstructionComponent.html">ConstructionComponent</a></td>
+        <td><span class="parametername">construction</span></td>
+        <td><p>The construction component of the target entity. Will be resolved if null.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>Whether we could set/clear the pathfinding target node.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Construction_ConstructionSystem_TryStartItemConstruction_System_String_EntityUid_.md&amp;value=---%0Auid%3A%20Content.Server.Construction.ConstructionSystem.TryStartItemConstruction(System.String%2CEntityUid)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Construction/ConstructionSystem.Initial.cs/#L317">View Source</a>
+  </span>
+  <a id="Content_Server_Construction_ConstructionSystem_TryStartItemConstruction_" data-uid="Content.Server.Construction.ConstructionSystem.TryStartItemConstruction*"></a>
+  <h4 id="Content_Server_Construction_ConstructionSystem_TryStartItemConstruction_System_String_EntityUid_" data-uid="Content.Server.Construction.ConstructionSystem.TryStartItemConstruction(System.String,EntityUid)">TryStartItemConstruction(String, EntityUid)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;bool&gt; TryStartItemConstruction(string prototype, EntityUid user)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">prototype</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">user</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Task</span>&lt;<span class="xref">System.Boolean</span>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Construction_ConstructionSystem_Update_System_Single_.md&amp;value=---%0Auid%3A%20Content.Server.Construction.ConstructionSystem.Update(System.Single)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Construction/ConstructionSystem.cs/#L93">View Source</a>
+  </span>
+  <a id="Content_Server_Construction_ConstructionSystem_Update_" data-uid="Content.Server.Construction.ConstructionSystem.Update*"></a>
+  <h4 id="Content_Server_Construction_ConstructionSystem_Update_System_Single_" data-uid="Content.Server.Construction.ConstructionSystem.Update(System.Single)">Update(Single)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override void Update(float frameTime)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td><span class="parametername">frameTime</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Construction_ConstructionSystem_UpdatePathfinding_EntityUid_Content_Server_Construction_Components_ConstructionComponent_.md&amp;value=---%0Auid%3A%20Content.Server.Construction.ConstructionSystem.UpdatePathfinding(EntityUid%2CContent.Server.Construction.Components.ConstructionComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Construction/ConstructionSystem.Pathfinding.cs/#L48">View Source</a>
+  </span>
+  <a id="Content_Server_Construction_ConstructionSystem_UpdatePathfinding_" data-uid="Content.Server.Construction.ConstructionSystem.UpdatePathfinding*"></a>
+  <h4 id="Content_Server_Construction_ConstructionSystem_UpdatePathfinding_EntityUid_Content_Server_Construction_Components_ConstructionComponent_" data-uid="Content.Server.Construction.ConstructionSystem.UpdatePathfinding(EntityUid,Content.Server.Construction.Components.ConstructionComponent)">UpdatePathfinding(EntityUid, ConstructionComponent)</h4>
+  <div class="markdown level1 summary"><p>Updates the pathfinding state for the current construction state of an entity.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool UpdatePathfinding(EntityUid uid, ConstructionComponent construction = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td><p>The target entity.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Server.Construction.Components.ConstructionComponent.html">ConstructionComponent</a></td>
+        <td><span class="parametername">construction</span></td>
+        <td><p>The construction component of the target entity. Will be resolved if null.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>Whether we could update the pathfinding state correctly.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Construction_ConstructionSystem.md&amp;value=---%0Auid%3A%20Content.Server.Construction.ConstructionSystem%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Construction/ConstructionSystem.Pathfinding.cs/#L7" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <div class="toggle-mode">
+                <div class="icon">
+                  <i aria-hidden="true">☀</i>
+                </div>
+                <label class="switch">
+                  <input type="checkbox" id="switch-style">
+                  <span class="slider round"></span>
+                </label>
+                <div class="icon">
+                  <i aria-hidden="true">☾</i>
+                </div>
+              </div>
+          
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <h5>In This Article</h5>
+              <div></div>
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <div class="pull-left">
+              
+              <span>Generated by <strong>DocFX</strong></span>
+            </div>
+            <div class="toggle-mode pull-right visible-sm visible-xs">
+              <div class="icon">
+                <i aria-hidden="true">☀</i>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="switch-style-m">
+                <span class="slider round"></span>
+              </label>
+              <div class="icon">
+                <i aria-hidden="true">☾</i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <script type="text/javascript" src="../../styles/toggle-theme.js"></script>
+      </footer>    </div>
+    
+    <script type="text/javascript" src="../../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../../styles/docfx.js"></script>
+    <script type="text/javascript" src="../../styles/main.js"></script>
+  </body>
+</html>

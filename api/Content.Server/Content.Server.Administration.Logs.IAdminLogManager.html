@@ -1,0 +1,692 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Interface IAdminLogManager
+   </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Interface IAdminLogManager
+   ">
+    <meta name="generator" content="docfx 2.56.7.0">
+    
+    <link rel="shortcut icon" href="../../favicon.ico">
+    <link rel="stylesheet" href="../../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../../styles/docfx.css">
+    <link rel="stylesheet" href="../../styles/main.css">
+    <meta property="docfx:navrel" content="../../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../../index.html">
+                <img id="logo" class="svg" src="../../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Content.Server.Administration.Logs.IAdminLogManager">
+  
+  
+  <h1 id="Content_Server_Administration_Logs_IAdminLogManager" data-uid="Content.Server.Administration.Logs.IAdminLogManager" class="text-break">Interface IAdminLogManager
+  </h1>
+  <div class="markdown level0 summary"></div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritedMembers">
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Content.Server.Administration.Logs.html">Content.Server.Administration.Logs</a></h6>
+  <h6><strong>Assembly</strong>: Content.Server.dll</h6>
+  <h5 id="Content_Server_Administration_Logs_IAdminLogManager_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public interface IAdminLogManager : ISharedAdminLogManager</code></pre>
+  </div>
+  <h3 id="methods">Methods
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Administration_Logs_IAdminLogManager_All_Content_Server_Administration_Logs_LogFilter_System_Nullable_Func_List_Content_Shared_Administration_Logs_SharedAdminLog____.md&amp;value=---%0Auid%3A%20Content.Server.Administration.Logs.IAdminLogManager.All(Content.Server.Administration.Logs.LogFilter%2CSystem.Nullable%7BFunc%7BList%7BContent.Shared.Administration.Logs.SharedAdminLog%7D%7D%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Administration/Logs/IAdminLogManager.cs/#L18">View Source</a>
+  </span>
+  <a id="Content_Server_Administration_Logs_IAdminLogManager_All_" data-uid="Content.Server.Administration.Logs.IAdminLogManager.All*"></a>
+  <h4 id="Content_Server_Administration_Logs_IAdminLogManager_All_Content_Server_Administration_Logs_LogFilter_System_Nullable_Func_List_Content_Shared_Administration_Logs_SharedAdminLog____" data-uid="Content.Server.Administration.Logs.IAdminLogManager.All(Content.Server.Administration.Logs.LogFilter,System.Nullable{Func{List{Content.Shared.Administration.Logs.SharedAdminLog}}})">All(LogFilter, Nullable&lt;Func&lt;List&lt;SharedAdminLog&gt;&gt;&gt;)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Task&lt;List&lt;SharedAdminLog&gt;&gt; All(LogFilter filter = null, Func&lt;List&lt;SharedAdminLog&gt;&gt;? listProvider = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Server.Administration.Logs.LogFilter.html">LogFilter</a></td>
+        <td><span class="parametername">filter</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">Func</span>&lt;<span class="xref">List</span>&lt;<span class="xref">Content.Shared.Administration.Logs.SharedAdminLog</span>&gt;&gt;&gt;</td>
+        <td><span class="parametername">listProvider</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Task</span>&lt;<span class="xref">List</span>&lt;<span class="xref">Content.Shared.Administration.Logs.SharedAdminLog</span>&gt;&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Administration_Logs_IAdminLogManager_AllJson_Content_Server_Administration_Logs_LogFilter_.md&amp;value=---%0Auid%3A%20Content.Server.Administration.Logs.IAdminLogManager.AllJson(Content.Server.Administration.Logs.LogFilter)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Administration/Logs/IAdminLogManager.cs/#L20">View Source</a>
+  </span>
+  <a id="Content_Server_Administration_Logs_IAdminLogManager_AllJson_" data-uid="Content.Server.Administration.Logs.IAdminLogManager.AllJson*"></a>
+  <h4 id="Content_Server_Administration_Logs_IAdminLogManager_AllJson_Content_Server_Administration_Logs_LogFilter_" data-uid="Content.Server.Administration.Logs.IAdminLogManager.AllJson(Content.Server.Administration.Logs.LogFilter)">AllJson(LogFilter)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">IAsyncEnumerable&lt;JsonDocument&gt; AllJson(LogFilter filter = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Server.Administration.Logs.LogFilter.html">LogFilter</a></td>
+        <td><span class="parametername">filter</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IAsyncEnumerable</span>&lt;<span class="xref">JsonDocument</span>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Administration_Logs_IAdminLogManager_AllMessages_Content_Server_Administration_Logs_LogFilter_.md&amp;value=---%0Auid%3A%20Content.Server.Administration.Logs.IAdminLogManager.AllMessages(Content.Server.Administration.Logs.LogFilter)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Administration/Logs/IAdminLogManager.cs/#L19">View Source</a>
+  </span>
+  <a id="Content_Server_Administration_Logs_IAdminLogManager_AllMessages_" data-uid="Content.Server.Administration.Logs.IAdminLogManager.AllMessages*"></a>
+  <h4 id="Content_Server_Administration_Logs_IAdminLogManager_AllMessages_Content_Server_Administration_Logs_LogFilter_" data-uid="Content.Server.Administration.Logs.IAdminLogManager.AllMessages(Content.Server.Administration.Logs.LogFilter)">AllMessages(LogFilter)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">IAsyncEnumerable&lt;string&gt; AllMessages(LogFilter filter = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Server.Administration.Logs.LogFilter.html">LogFilter</a></td>
+        <td><span class="parametername">filter</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IAsyncEnumerable</span>&lt;<span class="xref">System.String</span>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Administration_Logs_IAdminLogManager_CountLogs_System_Int32_.md&amp;value=---%0Auid%3A%20Content.Server.Administration.Logs.IAdminLogManager.CountLogs(System.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Administration/Logs/IAdminLogManager.cs/#L26">View Source</a>
+  </span>
+  <a id="Content_Server_Administration_Logs_IAdminLogManager_CountLogs_" data-uid="Content.Server.Administration.Logs.IAdminLogManager.CountLogs*"></a>
+  <h4 id="Content_Server_Administration_Logs_IAdminLogManager_CountLogs_System_Int32_" data-uid="Content.Server.Administration.Logs.IAdminLogManager.CountLogs(System.Int32)">CountLogs(Int32)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Task&lt;int&gt; CountLogs(int round)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">round</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Task</span>&lt;<span class="xref">System.Int32</span>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Administration_Logs_IAdminLogManager_CurrentRound.md&amp;value=---%0Auid%3A%20Content.Server.Administration.Logs.IAdminLogManager.CurrentRound%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Administration/Logs/IAdminLogManager.cs/#L25">View Source</a>
+  </span>
+  <a id="Content_Server_Administration_Logs_IAdminLogManager_CurrentRound_" data-uid="Content.Server.Administration.Logs.IAdminLogManager.CurrentRound*"></a>
+  <h4 id="Content_Server_Administration_Logs_IAdminLogManager_CurrentRound" data-uid="Content.Server.Administration.Logs.IAdminLogManager.CurrentRound">CurrentRound()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Task&lt;Round&gt; CurrentRound()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Task</span>&lt;<span class="xref">Content.Server.Database.Round</span>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Administration_Logs_IAdminLogManager_CurrentRoundJson_Content_Server_Administration_Logs_LogFilter_.md&amp;value=---%0Auid%3A%20Content.Server.Administration.Logs.IAdminLogManager.CurrentRoundJson(Content.Server.Administration.Logs.LogFilter)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Administration/Logs/IAdminLogManager.cs/#L24">View Source</a>
+  </span>
+  <a id="Content_Server_Administration_Logs_IAdminLogManager_CurrentRoundJson_" data-uid="Content.Server.Administration.Logs.IAdminLogManager.CurrentRoundJson*"></a>
+  <h4 id="Content_Server_Administration_Logs_IAdminLogManager_CurrentRoundJson_Content_Server_Administration_Logs_LogFilter_" data-uid="Content.Server.Administration.Logs.IAdminLogManager.CurrentRoundJson(Content.Server.Administration.Logs.LogFilter)">CurrentRoundJson(LogFilter)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">IAsyncEnumerable&lt;JsonDocument&gt; CurrentRoundJson(LogFilter filter = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Server.Administration.Logs.LogFilter.html">LogFilter</a></td>
+        <td><span class="parametername">filter</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IAsyncEnumerable</span>&lt;<span class="xref">JsonDocument</span>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Administration_Logs_IAdminLogManager_CurrentRoundLogs_Content_Server_Administration_Logs_LogFilter_.md&amp;value=---%0Auid%3A%20Content.Server.Administration.Logs.IAdminLogManager.CurrentRoundLogs(Content.Server.Administration.Logs.LogFilter)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Administration/Logs/IAdminLogManager.cs/#L22">View Source</a>
+  </span>
+  <a id="Content_Server_Administration_Logs_IAdminLogManager_CurrentRoundLogs_" data-uid="Content.Server.Administration.Logs.IAdminLogManager.CurrentRoundLogs*"></a>
+  <h4 id="Content_Server_Administration_Logs_IAdminLogManager_CurrentRoundLogs_Content_Server_Administration_Logs_LogFilter_" data-uid="Content.Server.Administration.Logs.IAdminLogManager.CurrentRoundLogs(Content.Server.Administration.Logs.LogFilter)">CurrentRoundLogs(LogFilter)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Task&lt;List&lt;SharedAdminLog&gt;&gt; CurrentRoundLogs(LogFilter filter = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Server.Administration.Logs.LogFilter.html">LogFilter</a></td>
+        <td><span class="parametername">filter</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Task</span>&lt;<span class="xref">List</span>&lt;<span class="xref">Content.Shared.Administration.Logs.SharedAdminLog</span>&gt;&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Administration_Logs_IAdminLogManager_CurrentRoundMessages_Content_Server_Administration_Logs_LogFilter_.md&amp;value=---%0Auid%3A%20Content.Server.Administration.Logs.IAdminLogManager.CurrentRoundMessages(Content.Server.Administration.Logs.LogFilter)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Administration/Logs/IAdminLogManager.cs/#L23">View Source</a>
+  </span>
+  <a id="Content_Server_Administration_Logs_IAdminLogManager_CurrentRoundMessages_" data-uid="Content.Server.Administration.Logs.IAdminLogManager.CurrentRoundMessages*"></a>
+  <h4 id="Content_Server_Administration_Logs_IAdminLogManager_CurrentRoundMessages_Content_Server_Administration_Logs_LogFilter_" data-uid="Content.Server.Administration.Logs.IAdminLogManager.CurrentRoundMessages(Content.Server.Administration.Logs.LogFilter)">CurrentRoundMessages(LogFilter)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">IAsyncEnumerable&lt;string&gt; CurrentRoundMessages(LogFilter filter = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Server.Administration.Logs.LogFilter.html">LogFilter</a></td>
+        <td><span class="parametername">filter</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IAsyncEnumerable</span>&lt;<span class="xref">System.String</span>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Administration_Logs_IAdminLogManager_Initialize.md&amp;value=---%0Auid%3A%20Content.Server.Administration.Logs.IAdminLogManager.Initialize%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Administration/Logs/IAdminLogManager.cs/#L11">View Source</a>
+  </span>
+  <a id="Content_Server_Administration_Logs_IAdminLogManager_Initialize_" data-uid="Content.Server.Administration.Logs.IAdminLogManager.Initialize*"></a>
+  <h4 id="Content_Server_Administration_Logs_IAdminLogManager_Initialize" data-uid="Content.Server.Administration.Logs.IAdminLogManager.Initialize">Initialize()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void Initialize()</code></pre>
+  </div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Administration_Logs_IAdminLogManager_Round_System_Int32_.md&amp;value=---%0Auid%3A%20Content.Server.Administration.Logs.IAdminLogManager.Round(System.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Administration/Logs/IAdminLogManager.cs/#L21">View Source</a>
+  </span>
+  <a id="Content_Server_Administration_Logs_IAdminLogManager_Round_" data-uid="Content.Server.Administration.Logs.IAdminLogManager.Round*"></a>
+  <h4 id="Content_Server_Administration_Logs_IAdminLogManager_Round_System_Int32_" data-uid="Content.Server.Administration.Logs.IAdminLogManager.Round(System.Int32)">Round(Int32)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Task&lt;Round&gt; Round(int roundId)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">roundId</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Task</span>&lt;<span class="xref">Content.Server.Database.Round</span>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Administration_Logs_IAdminLogManager_RoundStarting_System_Int32_.md&amp;value=---%0Auid%3A%20Content.Server.Administration.Logs.IAdminLogManager.RoundStarting(System.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Administration/Logs/IAdminLogManager.cs/#L15">View Source</a>
+  </span>
+  <a id="Content_Server_Administration_Logs_IAdminLogManager_RoundStarting_" data-uid="Content.Server.Administration.Logs.IAdminLogManager.RoundStarting*"></a>
+  <h4 id="Content_Server_Administration_Logs_IAdminLogManager_RoundStarting_System_Int32_" data-uid="Content.Server.Administration.Logs.IAdminLogManager.RoundStarting(System.Int32)">RoundStarting(Int32)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void RoundStarting(int id)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">id</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Administration_Logs_IAdminLogManager_RunLevelChanged_Content_Server_GameTicking_GameRunLevel_.md&amp;value=---%0Auid%3A%20Content.Server.Administration.Logs.IAdminLogManager.RunLevelChanged(Content.Server.GameTicking.GameRunLevel)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Administration/Logs/IAdminLogManager.cs/#L16">View Source</a>
+  </span>
+  <a id="Content_Server_Administration_Logs_IAdminLogManager_RunLevelChanged_" data-uid="Content.Server.Administration.Logs.IAdminLogManager.RunLevelChanged*"></a>
+  <h4 id="Content_Server_Administration_Logs_IAdminLogManager_RunLevelChanged_Content_Server_GameTicking_GameRunLevel_" data-uid="Content.Server.Administration.Logs.IAdminLogManager.RunLevelChanged(Content.Server.GameTicking.GameRunLevel)">RunLevelChanged(GameRunLevel)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void RunLevelChanged(GameRunLevel level)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Server.GameTicking.GameRunLevel.html">GameRunLevel</a></td>
+        <td><span class="parametername">level</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Administration_Logs_IAdminLogManager_Shutdown.md&amp;value=---%0Auid%3A%20Content.Server.Administration.Logs.IAdminLogManager.Shutdown%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Administration/Logs/IAdminLogManager.cs/#L12">View Source</a>
+  </span>
+  <a id="Content_Server_Administration_Logs_IAdminLogManager_Shutdown_" data-uid="Content.Server.Administration.Logs.IAdminLogManager.Shutdown*"></a>
+  <h4 id="Content_Server_Administration_Logs_IAdminLogManager_Shutdown" data-uid="Content.Server.Administration.Logs.IAdminLogManager.Shutdown">Shutdown()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Task Shutdown()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Task</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Administration_Logs_IAdminLogManager_Update.md&amp;value=---%0Auid%3A%20Content.Server.Administration.Logs.IAdminLogManager.Update%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Administration/Logs/IAdminLogManager.cs/#L13">View Source</a>
+  </span>
+  <a id="Content_Server_Administration_Logs_IAdminLogManager_Update_" data-uid="Content.Server.Administration.Logs.IAdminLogManager.Update*"></a>
+  <h4 id="Content_Server_Administration_Logs_IAdminLogManager_Update" data-uid="Content.Server.Administration.Logs.IAdminLogManager.Update">Update()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void Update()</code></pre>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Administration_Logs_IAdminLogManager.md&amp;value=---%0Auid%3A%20Content.Server.Administration.Logs.IAdminLogManager%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Administration/Logs/IAdminLogManager.cs/#L9" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <div class="toggle-mode">
+                <div class="icon">
+                  <i aria-hidden="true">☀</i>
+                </div>
+                <label class="switch">
+                  <input type="checkbox" id="switch-style">
+                  <span class="slider round"></span>
+                </label>
+                <div class="icon">
+                  <i aria-hidden="true">☾</i>
+                </div>
+              </div>
+          
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <h5>In This Article</h5>
+              <div></div>
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <div class="pull-left">
+              
+              <span>Generated by <strong>DocFX</strong></span>
+            </div>
+            <div class="toggle-mode pull-right visible-sm visible-xs">
+              <div class="icon">
+                <i aria-hidden="true">☀</i>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="switch-style-m">
+                <span class="slider round"></span>
+              </label>
+              <div class="icon">
+                <i aria-hidden="true">☾</i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <script type="text/javascript" src="../../styles/toggle-theme.js"></script>
+      </footer>    </div>
+    
+    <script type="text/javascript" src="../../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../../styles/docfx.js"></script>
+    <script type="text/javascript" src="../../styles/main.js"></script>
+  </body>
+</html>

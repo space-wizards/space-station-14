@@ -1,0 +1,229 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Namespace Content.Shared.Storage.Components
+   </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Namespace Content.Shared.Storage.Components
+   ">
+    <meta name="generator" content="docfx 2.56.7.0">
+    
+    <link rel="shortcut icon" href="../../favicon.ico">
+    <link rel="stylesheet" href="../../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../../styles/docfx.css">
+    <link rel="stylesheet" href="../../styles/main.css">
+    <meta property="docfx:navrel" content="../../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../../index.html">
+                <img id="logo" class="svg" src="../../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Content.Shared.Storage.Components">
+  
+  <h1 id="Content_Shared_Storage_Components" data-uid="Content.Shared.Storage.Components" class="text-break">Namespace Content.Shared.Storage.Components
+  </h1>
+  <div class="markdown level0 summary"></div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="markdown level0 remarks"></div>
+    <h3 id="classes">Classes
+  </h3>
+      <h4><a class="xref" href="Content.Shared.Storage.Components.BinComponent.html">BinComponent</a></h4>
+      <section><p>This is used for things like paper bins, in which
+you can only take off of the top of the bin.</p>
+</section>
+      <h4><a class="xref" href="Content.Shared.Storage.Components.DumpableComponent.html">DumpableComponent</a></h4>
+      <section><p>Lets you dump this container on the ground using a verb,
+or when interacting with it on a disposal unit or placeable surface.</p>
+</section>
+      <h4><a class="xref" href="Content.Shared.Storage.Components.DumpableDoAfterEvent.html">DumpableDoAfterEvent</a></h4>
+      <section></section>
+      <h4><a class="xref" href="Content.Shared.Storage.Components.EntityStorageComponentState.html">EntityStorageComponentState</a></h4>
+      <section></section>
+      <h4><a class="xref" href="Content.Shared.Storage.Components.InsideEntityStorageComponent.html">InsideEntityStorageComponent</a></h4>
+      <section><p>Added to entities contained within entity storage, for directed event purposes.</p>
+</section>
+      <h4><a class="xref" href="Content.Shared.Storage.Components.ItemCounterComponent.html">ItemCounterComponent</a></h4>
+      <section><p>Storage that spawns and counts a single item.
+Usually used for things like matchboxes, cigarette packs,
+cigar cases etc.</p>
+</section>
+      <h4><a class="xref" href="Content.Shared.Storage.Components.ItemMapperComponent.html">ItemMapperComponent</a></h4>
+      <section><p><code>ItemMapperComponent</code> is a <see cref="!:Component"></see> that maps string labels to an <a class="xref" href="Content.Shared.Whitelist.EntityWhitelist.html">EntityWhitelist</a> of elements. Useful primarily  for visualization.</p>
+<p>
+To define a mapping, create a <code>mapLayers</code> map in configuration <code>ItemMapper</code> component and with <a class="xref" href="Content.Shared.Storage.Components.ItemMapperComponent.html#Content_Shared_Storage_Components_ItemMapperComponent_MapLayers">MapLayers</a> mapping.
+Each map layer maps layer name to an <a class="xref" href="Content.Shared.Whitelist.EntityWhitelist.html">EntityWhitelist</a>, plus special modifiers for min and max item count.
+Min and max count are useful when you need to visualize a certain number of items, for example, to display one, two, three, or more items.
+</p>
+<p>
+If you need a more straightforward way to change appearance where only variable is how many items, rather than which items
+and how many, see <a class="xref" href="Content.Shared.Storage.Components.ItemCounterComponent.html">ItemCounterComponent</a>
+</p>
+<p>
+For a contrived example, create a tool-belt with a Power drill slot and two light bulb slots.
+To use this for visualization, we need <see cref="!:AppearanceComponent"></see> a or VisualizerSystem, e.g.
+<pre><code>  - type: Appearance
+     visuals:
+     - type: MappedItemVisualizer</code></pre>
+To map <code>Powerdrill</code> <strong><a class="xref" href="Content.Shared.Tag.TagComponent.html">TagComponent</a></strong> to the given example, we need the following code.
+<pre><code>- type: ItemMapper
+  mapLayers:
+    drill:
+      whitelist:
+        tags:
+        - Powerdrill
+#... to be continued</code></pre>
+To map <code>Lightbulb</code> <strong><see cref="!:Component"></see></strong> (not tag) to two different layers (for one and two light bulbs, respectively)
+<pre><code>#... to be continued
+    lightbulb1:
+      minCount: 1
+      whitelist:
+        component:
+        - Lightbulb
+    lightbulb2:
+      minCount: 2
+      whitelist:
+        component:
+        - Lightbulb</code></pre>
+The min count will ensure that <code>lightbulb1</code> layer is only displayed when one or more light bulbs are in the belt.
+And <code>lightbulb2</code> layer will only be shown when two or more light bulbs are inserted.
+</p>
+<a class="xref" href="Content.Shared.Whitelist.EntityWhitelist.html">EntityWhitelist</a>
+<a class="xref" href="Content.Shared.Storage.Components.SharedMapLayerData.html">SharedMapLayerData</a>
+</section>
+      <h4><a class="xref" href="Content.Shared.Storage.Components.SharedEntityStorageComponent.html">SharedEntityStorageComponent</a></h4>
+      <section></section>
+      <h4><a class="xref" href="Content.Shared.Storage.Components.SharedMapLayerData.html">SharedMapLayerData</a></h4>
+      <section></section>
+      <h4><a class="xref" href="Content.Shared.Storage.Components.ShowLayerData.html">ShowLayerData</a></h4>
+      <section></section>
+      <h4><a class="xref" href="Content.Shared.Storage.Components.StorageFillComponent.html">StorageFillComponent</a></h4>
+      <section></section>
+      <h4><a class="xref" href="Content.Shared.Storage.Components.StorageFillVisualizerComponent.html">StorageFillVisualizerComponent</a></h4>
+      <section><p>Change sprite depending on a storage fill percent.</p>
+</section>
+    <h3 id="enums">Enums
+  </h3>
+      <h4><a class="xref" href="Content.Shared.Storage.Components.SharedBagOpenVisuals.html">SharedBagOpenVisuals</a></h4>
+      <section></section>
+      <h4><a class="xref" href="Content.Shared.Storage.Components.SharedBagState.html">SharedBagState</a></h4>
+      <section></section>
+      <h4><a class="xref" href="Content.Shared.Storage.Components.StorageFillLayers.html">StorageFillLayers</a></h4>
+      <section></section>
+      <h4><a class="xref" href="Content.Shared.Storage.Components.StorageFillVisuals.html">StorageFillVisuals</a></h4>
+      <section></section>
+      <h4><a class="xref" href="Content.Shared.Storage.Components.StorageMapVisuals.html">StorageMapVisuals</a></h4>
+      <section></section>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                </ul>
+              </div>
+              <div class="toggle-mode">
+                <div class="icon">
+                  <i aria-hidden="true">☀</i>
+                </div>
+                <label class="switch">
+                  <input type="checkbox" id="switch-style">
+                  <span class="slider round"></span>
+                </label>
+                <div class="icon">
+                  <i aria-hidden="true">☾</i>
+                </div>
+              </div>
+          
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <h5>In This Article</h5>
+              <div></div>
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <div class="pull-left">
+              
+              <span>Generated by <strong>DocFX</strong></span>
+            </div>
+            <div class="toggle-mode pull-right visible-sm visible-xs">
+              <div class="icon">
+                <i aria-hidden="true">☀</i>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="switch-style-m">
+                <span class="slider round"></span>
+              </label>
+              <div class="icon">
+                <i aria-hidden="true">☾</i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <script type="text/javascript" src="../../styles/toggle-theme.js"></script>
+      </footer>    </div>
+    
+    <script type="text/javascript" src="../../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../../styles/docfx.js"></script>
+    <script type="text/javascript" src="../../styles/main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,623 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class AccessReaderSystem
+   </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class AccessReaderSystem
+   ">
+    <meta name="generator" content="docfx 2.56.7.0">
+    
+    <link rel="shortcut icon" href="../../favicon.ico">
+    <link rel="stylesheet" href="../../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../../styles/docfx.css">
+    <link rel="stylesheet" href="../../styles/main.css">
+    <meta property="docfx:navrel" content="../../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../../index.html">
+                <img id="logo" class="svg" src="../../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Content.Shared.Access.Systems.AccessReaderSystem">
+  
+  
+  <h1 id="Content_Shared_Access_Systems_AccessReaderSystem" data-uid="Content.Shared.Access.Systems.AccessReaderSystem" class="text-break">Class AccessReaderSystem
+  </h1>
+  <div class="markdown level0 summary"></div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level1"><span class="xref">AccessReaderSystem</span></div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Content.Shared.Access.Systems.html">Content.Shared.Access.Systems</a></h6>
+  <h6><strong>Assembly</strong>: Content.Shared.dll</h6>
+  <h5 id="Content_Shared_Access_Systems_AccessReaderSystem_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public sealed class AccessReaderSystem : EntitySystem</code></pre>
+  </div>
+  <h3 id="methods">Methods
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Access_Systems_AccessReaderSystem_AreAccessTagsAllowed_ICollection_System_String__Content_Shared_Access_Components_AccessReaderComponent_.md&amp;value=---%0Auid%3A%20Content.Shared.Access.Systems.AccessReaderSystem.AreAccessTagsAllowed(ICollection%7BSystem.String%7D%2CContent.Shared.Access.Components.AccessReaderComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Access/Systems/AccessReaderSystem.cs/#L141">View Source</a>
+  </span>
+  <a id="Content_Shared_Access_Systems_AccessReaderSystem_AreAccessTagsAllowed_" data-uid="Content.Shared.Access.Systems.AccessReaderSystem.AreAccessTagsAllowed*"></a>
+  <h4 id="Content_Shared_Access_Systems_AccessReaderSystem_AreAccessTagsAllowed_ICollection_System_String__Content_Shared_Access_Components_AccessReaderComponent_" data-uid="Content.Shared.Access.Systems.AccessReaderSystem.AreAccessTagsAllowed(ICollection{System.String},Content.Shared.Access.Components.AccessReaderComponent)">AreAccessTagsAllowed(ICollection&lt;String&gt;, AccessReaderComponent)</h4>
+  <div class="markdown level1 summary"><p>Compares the given tags with the readers access list to see if it is allowed.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool AreAccessTagsAllowed(ICollection&lt;string&gt; accessTags, AccessReaderComponent reader)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">ICollection</span>&lt;<span class="xref">System.String</span>&gt;</td>
+        <td><span class="parametername">accessTags</span></td>
+        <td><p>A list of access tags</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Access.Components.AccessReaderComponent.html">AccessReaderComponent</a></td>
+        <td><span class="parametername">reader</span></td>
+        <td><p>An access reader to check against</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Access_Systems_AccessReaderSystem_AreStationRecordKeysAllowed_ICollection_Content_Shared_StationRecords_StationRecordKey__Content_Shared_Access_Components_AccessReaderComponent_.md&amp;value=---%0Auid%3A%20Content.Shared.Access.Systems.AccessReaderSystem.AreStationRecordKeysAllowed(ICollection%7BContent.Shared.StationRecords.StationRecordKey%7D%2CContent.Shared.Access.Components.AccessReaderComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Access/Systems/AccessReaderSystem.cs/#L168">View Source</a>
+  </span>
+  <a id="Content_Shared_Access_Systems_AccessReaderSystem_AreStationRecordKeysAllowed_" data-uid="Content.Shared.Access.Systems.AccessReaderSystem.AreStationRecordKeysAllowed*"></a>
+  <h4 id="Content_Shared_Access_Systems_AccessReaderSystem_AreStationRecordKeysAllowed_ICollection_Content_Shared_StationRecords_StationRecordKey__Content_Shared_Access_Components_AccessReaderComponent_" data-uid="Content.Shared.Access.Systems.AccessReaderSystem.AreStationRecordKeysAllowed(ICollection{Content.Shared.StationRecords.StationRecordKey},Content.Shared.Access.Components.AccessReaderComponent)">AreStationRecordKeysAllowed(ICollection&lt;StationRecordKey&gt;, AccessReaderComponent)</h4>
+  <div class="markdown level1 summary"><p>Compares the given stationrecordkeys with the accessreader to see if it is allowed.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool AreStationRecordKeysAllowed(ICollection&lt;StationRecordKey&gt; keys, AccessReaderComponent reader)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">ICollection</span>&lt;<a class="xref" href="Content.Shared.StationRecords.StationRecordKey.html">StationRecordKey</a>&gt;</td>
+        <td><span class="parametername">keys</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Access.Components.AccessReaderComponent.html">AccessReaderComponent</a></td>
+        <td><span class="parametername">reader</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Access_Systems_AccessReaderSystem_FindAccessItemsInventory_EntityUid_HashSet_EntityUid___.md&amp;value=---%0Auid%3A%20Content.Shared.Access.Systems.AccessReaderSystem.FindAccessItemsInventory(EntityUid%2CHashSet%7BEntityUid%7D%40)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Access/Systems/AccessReaderSystem.cs/#L273">View Source</a>
+  </span>
+  <a id="Content_Shared_Access_Systems_AccessReaderSystem_FindAccessItemsInventory_" data-uid="Content.Shared.Access.Systems.AccessReaderSystem.FindAccessItemsInventory*"></a>
+  <h4 id="Content_Shared_Access_Systems_AccessReaderSystem_FindAccessItemsInventory_EntityUid_HashSet_EntityUid___" data-uid="Content.Shared.Access.Systems.AccessReaderSystem.FindAccessItemsInventory(EntityUid,HashSet{EntityUid}@)">FindAccessItemsInventory(EntityUid, out HashSet&lt;EntityUid&gt;)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool FindAccessItemsInventory(EntityUid uid, out HashSet&lt;EntityUid&gt; items)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">HashSet</span>&lt;<span class="xref">EntityUid</span>&gt;</td>
+        <td><span class="parametername">items</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Access_Systems_AccessReaderSystem_FindAccessTags_EntityUid_System_Nullable_HashSet_EntityUid___.md&amp;value=---%0Auid%3A%20Content.Shared.Access.Systems.AccessReaderSystem.FindAccessTags(EntityUid%2CSystem.Nullable%7BHashSet%7BEntityUid%7D%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Access/Systems/AccessReaderSystem.cs/#L205">View Source</a>
+  </span>
+  <a id="Content_Shared_Access_Systems_AccessReaderSystem_FindAccessTags_" data-uid="Content.Shared.Access.Systems.AccessReaderSystem.FindAccessTags*"></a>
+  <h4 id="Content_Shared_Access_Systems_AccessReaderSystem_FindAccessTags_EntityUid_System_Nullable_HashSet_EntityUid___" data-uid="Content.Shared.Access.Systems.AccessReaderSystem.FindAccessTags(EntityUid,System.Nullable{HashSet{EntityUid}})">FindAccessTags(EntityUid, Nullable&lt;HashSet&lt;EntityUid&gt;&gt;)</h4>
+  <div class="markdown level1 summary"><p>Finds the access tags on the given entity</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ICollection&lt;string&gt; FindAccessTags(EntityUid uid, HashSet&lt;EntityUid&gt;? items = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td><p>The entity that is being searched.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">HashSet</span>&lt;<span class="xref">EntityUid</span>&gt;&gt;</td>
+        <td><span class="parametername">items</span></td>
+        <td><p>All of the items to search for access. If none are passed in, <a class="xref" href="Content.Shared.Access.Systems.AccessReaderSystem.html#Content_Shared_Access_Systems_AccessReaderSystem_FindPotentialAccessItems_EntityUid_">FindPotentialAccessItems(EntityUid)</a> will be used.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">ICollection</span>&lt;<span class="xref">System.String</span>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Access_Systems_AccessReaderSystem_FindPotentialAccessItems_EntityUid_.md&amp;value=---%0Auid%3A%20Content.Shared.Access.Systems.AccessReaderSystem.FindPotentialAccessItems(EntityUid)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Access/Systems/AccessReaderSystem.cs/#L182">View Source</a>
+  </span>
+  <a id="Content_Shared_Access_Systems_AccessReaderSystem_FindPotentialAccessItems_" data-uid="Content.Shared.Access.Systems.AccessReaderSystem.FindPotentialAccessItems*"></a>
+  <h4 id="Content_Shared_Access_Systems_AccessReaderSystem_FindPotentialAccessItems_EntityUid_" data-uid="Content.Shared.Access.Systems.AccessReaderSystem.FindPotentialAccessItems(EntityUid)">FindPotentialAccessItems(EntityUid)</h4>
+  <div class="markdown level1 summary"><p>Finds all the items that could potentially give access to a given entity</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public HashSet&lt;EntityUid&gt; FindPotentialAccessItems(EntityUid uid)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">HashSet</span>&lt;<span class="xref">EntityUid</span>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Access_Systems_AccessReaderSystem_FindStationRecordKeys_EntityUid_ICollection_Content_Shared_StationRecords_StationRecordKey___System_Nullable_HashSet_EntityUid___.md&amp;value=---%0Auid%3A%20Content.Shared.Access.Systems.AccessReaderSystem.FindStationRecordKeys(EntityUid%2CICollection%7BContent.Shared.StationRecords.StationRecordKey%7D%40%2CSystem.Nullable%7BHashSet%7BEntityUid%7D%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Access/Systems/AccessReaderSystem.cs/#L226">View Source</a>
+  </span>
+  <a id="Content_Shared_Access_Systems_AccessReaderSystem_FindStationRecordKeys_" data-uid="Content.Shared.Access.Systems.AccessReaderSystem.FindStationRecordKeys*"></a>
+  <h4 id="Content_Shared_Access_Systems_AccessReaderSystem_FindStationRecordKeys_EntityUid_ICollection_Content_Shared_StationRecords_StationRecordKey___System_Nullable_HashSet_EntityUid___" data-uid="Content.Shared.Access.Systems.AccessReaderSystem.FindStationRecordKeys(EntityUid,ICollection{Content.Shared.StationRecords.StationRecordKey}@,System.Nullable{HashSet{EntityUid}})">FindStationRecordKeys(EntityUid, out ICollection&lt;StationRecordKey&gt;, Nullable&lt;HashSet&lt;EntityUid&gt;&gt;)</h4>
+  <div class="markdown level1 summary"><p>Finds the access tags on the given entity</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool FindStationRecordKeys(EntityUid uid, out ICollection&lt;StationRecordKey&gt; recordKeys, HashSet&lt;EntityUid&gt;? items = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td><p>The entity that is being searched.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">ICollection</span>&lt;<a class="xref" href="Content.Shared.StationRecords.StationRecordKey.html">StationRecordKey</a>&gt;</td>
+        <td><span class="parametername">recordKeys</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">HashSet</span>&lt;<span class="xref">EntityUid</span>&gt;&gt;</td>
+        <td><span class="parametername">items</span></td>
+        <td><p>All of the items to search for access. If none are passed in, <a class="xref" href="Content.Shared.Access.Systems.AccessReaderSystem.html#Content_Shared_Access_Systems_AccessReaderSystem_FindPotentialAccessItems_EntityUid_">FindPotentialAccessItems(EntityUid)</a> will be used.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Access_Systems_AccessReaderSystem_Initialize.md&amp;value=---%0Auid%3A%20Content.Shared.Access.Systems.AccessReaderSystem.Initialize%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Access/Systems/AccessReaderSystem.cs/#L26">View Source</a>
+  </span>
+  <a id="Content_Shared_Access_Systems_AccessReaderSystem_Initialize_" data-uid="Content.Shared.Access.Systems.AccessReaderSystem.Initialize*"></a>
+  <h4 id="Content_Shared_Access_Systems_AccessReaderSystem_Initialize" data-uid="Content.Shared.Access.Systems.AccessReaderSystem.Initialize">Initialize()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override void Initialize()</code></pre>
+  </div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Access_Systems_AccessReaderSystem_IsAllowed_EntityUid_EntityUid_Content_Shared_Access_Components_AccessReaderComponent_.md&amp;value=---%0Auid%3A%20Content.Shared.Access.Systems.AccessReaderSystem.IsAllowed(EntityUid%2CEntityUid%2CContent.Shared.Access.Components.AccessReaderComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Access/Systems/AccessReaderSystem.cs/#L84">View Source</a>
+  </span>
+  <a id="Content_Shared_Access_Systems_AccessReaderSystem_IsAllowed_" data-uid="Content.Shared.Access.Systems.AccessReaderSystem.IsAllowed*"></a>
+  <h4 id="Content_Shared_Access_Systems_AccessReaderSystem_IsAllowed_EntityUid_EntityUid_Content_Shared_Access_Components_AccessReaderComponent_" data-uid="Content.Shared.Access.Systems.AccessReaderSystem.IsAllowed(EntityUid,EntityUid,Content.Shared.Access.Components.AccessReaderComponent)">IsAllowed(EntityUid, EntityUid, AccessReaderComponent)</h4>
+  <div class="markdown level1 summary"><p>Searches the source for access tags
+then compares it with the all targets accesses to see if it is allowed.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsAllowed(EntityUid user, EntityUid target, AccessReaderComponent reader = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">user</span></td>
+        <td><p>The entity that wants access.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">target</span></td>
+        <td><p>The entity to search for an access reader</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Access.Components.AccessReaderComponent.html">AccessReaderComponent</a></td>
+        <td><span class="parametername">reader</span></td>
+        <td><p>Optional reader from the target entity</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Access_Systems_AccessReaderSystem_IsAllowed_ICollection_System_String__ICollection_Content_Shared_StationRecords_StationRecordKey__EntityUid_Content_Shared_Access_Components_AccessReaderComponent_.md&amp;value=---%0Auid%3A%20Content.Shared.Access.Systems.AccessReaderSystem.IsAllowed(ICollection%7BSystem.String%7D%2CICollection%7BContent.Shared.StationRecords.StationRecordKey%7D%2CEntityUid%2CContent.Shared.Access.Components.AccessReaderComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Access/Systems/AccessReaderSystem.cs/#L102">View Source</a>
+  </span>
+  <a id="Content_Shared_Access_Systems_AccessReaderSystem_IsAllowed_" data-uid="Content.Shared.Access.Systems.AccessReaderSystem.IsAllowed*"></a>
+  <h4 id="Content_Shared_Access_Systems_AccessReaderSystem_IsAllowed_ICollection_System_String__ICollection_Content_Shared_StationRecords_StationRecordKey__EntityUid_Content_Shared_Access_Components_AccessReaderComponent_" data-uid="Content.Shared.Access.Systems.AccessReaderSystem.IsAllowed(ICollection{System.String},ICollection{Content.Shared.StationRecords.StationRecordKey},EntityUid,Content.Shared.Access.Components.AccessReaderComponent)">IsAllowed(ICollection&lt;String&gt;, ICollection&lt;StationRecordKey&gt;, EntityUid, AccessReaderComponent)</h4>
+  <div class="markdown level1 summary"><p>Check whether the given access permissions satisfy an access reader's requirements.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsAllowed(ICollection&lt;string&gt; access, ICollection&lt;StationRecordKey&gt; stationKeys, EntityUid target, AccessReaderComponent reader)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">ICollection</span>&lt;<span class="xref">System.String</span>&gt;</td>
+        <td><span class="parametername">access</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">ICollection</span>&lt;<a class="xref" href="Content.Shared.StationRecords.StationRecordKey.html">StationRecordKey</a>&gt;</td>
+        <td><span class="parametername">stationKeys</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">target</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Access.Components.AccessReaderComponent.html">AccessReaderComponent</a></td>
+        <td><span class="parametername">reader</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Access_Systems_AccessReaderSystem.md&amp;value=---%0Auid%3A%20Content.Shared.Access.Systems.AccessReaderSystem%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Access/Systems/AccessReaderSystem.cs/#L18" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <div class="toggle-mode">
+                <div class="icon">
+                  <i aria-hidden="true">☀</i>
+                </div>
+                <label class="switch">
+                  <input type="checkbox" id="switch-style">
+                  <span class="slider round"></span>
+                </label>
+                <div class="icon">
+                  <i aria-hidden="true">☾</i>
+                </div>
+              </div>
+          
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <h5>In This Article</h5>
+              <div></div>
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <div class="pull-left">
+              
+              <span>Generated by <strong>DocFX</strong></span>
+            </div>
+            <div class="toggle-mode pull-right visible-sm visible-xs">
+              <div class="icon">
+                <i aria-hidden="true">☀</i>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="switch-style-m">
+                <span class="slider round"></span>
+              </label>
+              <div class="icon">
+                <i aria-hidden="true">☾</i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <script type="text/javascript" src="../../styles/toggle-theme.js"></script>
+      </footer>    </div>
+    
+    <script type="text/javascript" src="../../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../../styles/docfx.js"></script>
+    <script type="text/javascript" src="../../styles/main.js"></script>
+  </body>
+</html>

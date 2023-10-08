@@ -1,0 +1,837 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class ParticleAcceleratorControlBoxComponent
+   </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class ParticleAcceleratorControlBoxComponent
+   ">
+    <meta name="generator" content="docfx 2.56.7.0">
+    
+    <link rel="shortcut icon" href="../../favicon.ico">
+    <link rel="stylesheet" href="../../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../../styles/docfx.css">
+    <link rel="stylesheet" href="../../styles/main.css">
+    <meta property="docfx:navrel" content="../../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../../index.html">
+                <img id="logo" class="svg" src="../../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Content.Server.ParticleAccelerator.Components.ParticleAcceleratorControlBoxComponent">
+  
+  
+  <h1 id="Content_Server_ParticleAccelerator_Components_ParticleAcceleratorControlBoxComponent" data-uid="Content.Server.ParticleAccelerator.Components.ParticleAcceleratorControlBoxComponent" class="text-break">Class ParticleAcceleratorControlBoxComponent
+  </h1>
+  <div class="markdown level0 summary"><p>Is the computer thing people interact with to control the PA.
+Also contains primary logic for actual PA behavior, part scanning, etc...</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level1"><span class="xref">ParticleAcceleratorControlBoxComponent</span></div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Content.Server.ParticleAccelerator.Components.html">Content.Server.ParticleAccelerator.Components</a></h6>
+  <h6><strong>Assembly</strong>: Content.Server.dll</h6>
+  <h5 id="Content_Server_ParticleAccelerator_Components_ParticleAcceleratorControlBoxComponent_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public sealed class ParticleAcceleratorControlBoxComponent : Component</code></pre>
+  </div>
+  <h3 id="fields">Fields
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_ParticleAccelerator_Components_ParticleAcceleratorControlBoxComponent_Assembled.md&amp;value=---%0Auid%3A%20Content.Server.ParticleAccelerator.Components.ParticleAcceleratorControlBoxComponent.Assembled%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/ParticleAccelerator/Components/ParticleAcceleratorControlBoxComponent.cs/#L19">View Source</a>
+  </span>
+  <h4 id="Content_Server_ParticleAccelerator_Components_ParticleAcceleratorControlBoxComponent_Assembled" data-uid="Content.Server.ParticleAccelerator.Components.ParticleAcceleratorControlBoxComponent.Assembled">Assembled</h4>
+  <div class="markdown level1 summary"><p>Whether the PA parts have been correctly arranged to make a functional device.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool Assembled</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_ParticleAccelerator_Components_ParticleAcceleratorControlBoxComponent_BasePowerDraw.md&amp;value=---%0Auid%3A%20Content.Server.ParticleAccelerator.Components.ParticleAcceleratorControlBoxComponent.BasePowerDraw%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/ParticleAccelerator/Components/ParticleAcceleratorControlBoxComponent.cs/#L116">View Source</a>
+  </span>
+  <h4 id="Content_Server_ParticleAccelerator_Components_ParticleAcceleratorControlBoxComponent_BasePowerDraw" data-uid="Content.Server.ParticleAccelerator.Components.ParticleAcceleratorControlBoxComponent.BasePowerDraw">BasePowerDraw</h4>
+  <div class="markdown level1 summary"><p>The amount of power (in watts) the PA draws just by existing as a functional machine.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int BasePowerDraw</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_ParticleAccelerator_Components_ParticleAcceleratorControlBoxComponent_CanBeEnabled.md&amp;value=---%0Auid%3A%20Content.Server.ParticleAccelerator.Components.ParticleAcceleratorControlBoxComponent.CanBeEnabled%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/ParticleAccelerator/Components/ParticleAcceleratorControlBoxComponent.cs/#L175">View Source</a>
+  </span>
+  <h4 id="Content_Server_ParticleAccelerator_Components_ParticleAcceleratorControlBoxComponent_CanBeEnabled" data-uid="Content.Server.ParticleAccelerator.Components.ParticleAcceleratorControlBoxComponent.CanBeEnabled">CanBeEnabled</h4>
+  <div class="markdown level1 summary"><p>Whether the PA can be turned on.
+Modified by <a class="xref" href="Content.Server.ParticleAccelerator.Wires.ParticleAcceleratorPowerWireAction.html">ParticleAcceleratorPowerWireAction</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool CanBeEnabled</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_ParticleAccelerator_Components_ParticleAcceleratorControlBoxComponent_ChargeTime.md&amp;value=---%0Auid%3A%20Content.Server.ParticleAccelerator.Components.ParticleAcceleratorControlBoxComponent.ChargeTime%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/ParticleAccelerator/Components/ParticleAcceleratorControlBoxComponent.cs/#L154">View Source</a>
+  </span>
+  <h4 id="Content_Server_ParticleAccelerator_Components_ParticleAcceleratorControlBoxComponent_ChargeTime" data-uid="Content.Server.ParticleAccelerator.Components.ParticleAcceleratorControlBoxComponent.ChargeTime">ChargeTime</h4>
+  <div class="markdown level1 summary"><p>Delay between consecutive PA shots.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public TimeSpan ChargeTime</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TimeSpan</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_ParticleAccelerator_Components_ParticleAcceleratorControlBoxComponent_CurrentlyRescanning.md&amp;value=---%0Auid%3A%20Content.Server.ParticleAccelerator.Components.ParticleAcceleratorControlBoxComponent.CurrentlyRescanning%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/ParticleAccelerator/Components/ParticleAcceleratorControlBoxComponent.cs/#L46">View Source</a>
+  </span>
+  <h4 id="Content_Server_ParticleAccelerator_Components_ParticleAcceleratorControlBoxComponent_CurrentlyRescanning" data-uid="Content.Server.ParticleAccelerator.Components.ParticleAcceleratorControlBoxComponent.CurrentlyRescanning">CurrentlyRescanning</h4>
+  <div class="markdown level1 summary"><p>Block re-entrant rescanning.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool CurrentlyRescanning</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_ParticleAccelerator_Components_ParticleAcceleratorControlBoxComponent_Enabled.md&amp;value=---%0Auid%3A%20Content.Server.ParticleAccelerator.Components.ParticleAcceleratorControlBoxComponent.Enabled%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/ParticleAccelerator/Components/ParticleAcceleratorControlBoxComponent.cs/#L26">View Source</a>
+  </span>
+  <h4 id="Content_Server_ParticleAccelerator_Components_ParticleAcceleratorControlBoxComponent_Enabled" data-uid="Content.Server.ParticleAccelerator.Components.ParticleAcceleratorControlBoxComponent.Enabled">Enabled</h4>
+  <div class="markdown level1 summary"><p>Whether the PA is currently set to fire at the console.
+Requires <a class="xref" href="Content.Server.ParticleAccelerator.Components.ParticleAcceleratorControlBoxComponent.html#Content_Server_ParticleAccelerator_Components_ParticleAcceleratorControlBoxComponent_Assembled">Assembled</a> to be true.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool Enabled</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_ParticleAccelerator_Components_ParticleAcceleratorControlBoxComponent_EndCap.md&amp;value=---%0Auid%3A%20Content.Server.ParticleAccelerator.Components.ParticleAcceleratorControlBoxComponent.EndCap%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/ParticleAccelerator/Components/ParticleAcceleratorControlBoxComponent.cs/#L75">View Source</a>
+  </span>
+  <h4 id="Content_Server_ParticleAccelerator_Components_ParticleAcceleratorControlBoxComponent_EndCap" data-uid="Content.Server.ParticleAccelerator.Components.ParticleAcceleratorControlBoxComponent.EndCap">EndCap</h4>
+  <div class="markdown level1 summary"><p>Whether the PA is currently firing or charging to fire.
+Implies the existance of a <a class="xref" href="Content.Server.ParticleAccelerator.Components.ParticleAcceleratorEndCapComponent.html">ParticleAcceleratorEndCapComponent</a> attached to this entity.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public EntityUid? EndCap</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">EntityUid</span>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_ParticleAccelerator_Components_ParticleAcceleratorControlBoxComponent_Firing.md&amp;value=---%0Auid%3A%20Content.Server.ParticleAccelerator.Components.ParticleAcceleratorControlBoxComponent.Firing%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/ParticleAccelerator/Components/ParticleAcceleratorControlBoxComponent.cs/#L40">View Source</a>
+  </span>
+  <h4 id="Content_Server_ParticleAccelerator_Components_ParticleAcceleratorControlBoxComponent_Firing" data-uid="Content.Server.ParticleAccelerator.Components.ParticleAcceleratorControlBoxComponent.Firing">Firing</h4>
+  <div class="markdown level1 summary"><p>Whether the PA is currently firing or charging to fire.
+Requires <a class="xref" href="Content.Server.ParticleAccelerator.Components.ParticleAcceleratorControlBoxComponent.html#Content_Server_ParticleAccelerator_Components_ParticleAcceleratorControlBoxComponent_Powered">Powered</a> to be true.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool Firing</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_ParticleAccelerator_Components_ParticleAcceleratorControlBoxComponent_ForeEmitter.md&amp;value=---%0Auid%3A%20Content.Server.ParticleAccelerator.Components.ParticleAcceleratorControlBoxComponent.ForeEmitter%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/ParticleAccelerator/Components/ParticleAcceleratorControlBoxComponent.cs/#L96">View Source</a>
+  </span>
+  <h4 id="Content_Server_ParticleAccelerator_Components_ParticleAcceleratorControlBoxComponent_ForeEmitter" data-uid="Content.Server.ParticleAccelerator.Components.ParticleAcceleratorControlBoxComponent.ForeEmitter">ForeEmitter</h4>
+  <div class="markdown level1 summary"><p>Whether the PA is currently firing or charging to fire.
+Implies the existance of a <a class="xref" href="Content.Server.ParticleAccelerator.Components.ParticleAcceleratorEmitterComponent.html">ParticleAcceleratorEmitterComponent</a> attached to this entity.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public EntityUid? ForeEmitter</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">EntityUid</span>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_ParticleAccelerator_Components_ParticleAcceleratorControlBoxComponent_FuelChamber.md&amp;value=---%0Auid%3A%20Content.Server.ParticleAccelerator.Components.ParticleAcceleratorControlBoxComponent.FuelChamber%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/ParticleAccelerator/Components/ParticleAcceleratorControlBoxComponent.cs/#L82">View Source</a>
+  </span>
+  <h4 id="Content_Server_ParticleAccelerator_Components_ParticleAcceleratorControlBoxComponent_FuelChamber" data-uid="Content.Server.ParticleAccelerator.Components.ParticleAcceleratorControlBoxComponent.FuelChamber">FuelChamber</h4>
+  <div class="markdown level1 summary"><p>Whether the PA is currently firing or charging to fire.
+Implies the existance of a <a class="xref" href="Content.Server.ParticleAccelerator.Components.ParticleAcceleratorFuelChamberComponent.html">ParticleAcceleratorFuelChamberComponent</a> attached to this entity.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public EntityUid? FuelChamber</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">EntityUid</span>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_ParticleAccelerator_Components_ParticleAcceleratorControlBoxComponent_InterfaceDisabled.md&amp;value=---%0Auid%3A%20Content.Server.ParticleAccelerator.Components.ParticleAcceleratorControlBoxComponent.InterfaceDisabled%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/ParticleAccelerator/Components/ParticleAcceleratorControlBoxComponent.cs/#L161">View Source</a>
+  </span>
+  <h4 id="Content_Server_ParticleAccelerator_Components_ParticleAcceleratorControlBoxComponent_InterfaceDisabled" data-uid="Content.Server.ParticleAccelerator.Components.ParticleAcceleratorControlBoxComponent.InterfaceDisabled">InterfaceDisabled</h4>
+  <div class="markdown level1 summary"><p>Whether the interface has been disabled via a cut wire or not.
+Modified by <a class="xref" href="Content.Server.ParticleAccelerator.Wires.ParticleAcceleratorKeyboardWireAction.html">ParticleAcceleratorKeyboardWireAction</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool InterfaceDisabled</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_ParticleAccelerator_Components_ParticleAcceleratorControlBoxComponent_LastFire.md&amp;value=---%0Auid%3A%20Content.Server.ParticleAccelerator.Components.ParticleAcceleratorControlBoxComponent.LastFire%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/ParticleAccelerator/Components/ParticleAcceleratorControlBoxComponent.cs/#L130">View Source</a>
+  </span>
+  <h4 id="Content_Server_ParticleAccelerator_Components_ParticleAcceleratorControlBoxComponent_LastFire" data-uid="Content.Server.ParticleAccelerator.Components.ParticleAcceleratorControlBoxComponent.LastFire">LastFire</h4>
+  <div class="markdown level1 summary"><p>The time at which the PA last fired a wave of particles.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public TimeSpan LastFire</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TimeSpan</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_ParticleAccelerator_Components_ParticleAcceleratorControlBoxComponent_LevelPowerDraw.md&amp;value=---%0Auid%3A%20Content.Server.ParticleAccelerator.Components.ParticleAcceleratorControlBoxComponent.LevelPowerDraw%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/ParticleAccelerator/Components/ParticleAcceleratorControlBoxComponent.cs/#L123">View Source</a>
+  </span>
+  <h4 id="Content_Server_ParticleAccelerator_Components_ParticleAcceleratorControlBoxComponent_LevelPowerDraw" data-uid="Content.Server.ParticleAccelerator.Components.ParticleAcceleratorControlBoxComponent.LevelPowerDraw">LevelPowerDraw</h4>
+  <div class="markdown level1 summary"><p>The amount of power (in watts) the PA draws per level when turned on.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int LevelPowerDraw</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_ParticleAccelerator_Components_ParticleAcceleratorControlBoxComponent_MaxStrength.md&amp;value=---%0Auid%3A%20Content.Server.ParticleAccelerator.Components.ParticleAcceleratorControlBoxComponent.MaxStrength%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/ParticleAccelerator/Components/ParticleAcceleratorControlBoxComponent.cs/#L61">View Source</a>
+  </span>
+  <h4 id="Content_Server_ParticleAccelerator_Components_ParticleAcceleratorControlBoxComponent_MaxStrength" data-uid="Content.Server.ParticleAccelerator.Components.ParticleAcceleratorControlBoxComponent.MaxStrength">MaxStrength</h4>
+  <div class="markdown level1 summary"><p>The maximum strength level this particle accelerator can be set to operate at.
+Modified by <a class="xref" href="Content.Server.ParticleAccelerator.Wires.ParticleAcceleratorLimiterWireAction.html">ParticleAcceleratorLimiterWireAction</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ParticleAcceleratorPowerState MaxStrength</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="../Content.Shared/Content.Shared.Singularity.Components.ParticleAcceleratorPowerState.html">ParticleAcceleratorPowerState</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_ParticleAccelerator_Components_ParticleAcceleratorControlBoxComponent_NextFire.md&amp;value=---%0Auid%3A%20Content.Server.ParticleAccelerator.Components.ParticleAcceleratorControlBoxComponent.NextFire%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/ParticleAccelerator/Components/ParticleAcceleratorControlBoxComponent.cs/#L137">View Source</a>
+  </span>
+  <h4 id="Content_Server_ParticleAccelerator_Components_ParticleAcceleratorControlBoxComponent_NextFire" data-uid="Content.Server.ParticleAccelerator.Components.ParticleAcceleratorControlBoxComponent.NextFire">NextFire</h4>
+  <div class="markdown level1 summary"><p>The time at which the PA will next fire a wave of particles.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public TimeSpan NextFire</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TimeSpan</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_ParticleAccelerator_Components_ParticleAcceleratorControlBoxComponent_PortEmitter.md&amp;value=---%0Auid%3A%20Content.Server.ParticleAccelerator.Components.ParticleAcceleratorControlBoxComponent.PortEmitter%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/ParticleAccelerator/Components/ParticleAcceleratorControlBoxComponent.cs/#L89">View Source</a>
+  </span>
+  <h4 id="Content_Server_ParticleAccelerator_Components_ParticleAcceleratorControlBoxComponent_PortEmitter" data-uid="Content.Server.ParticleAccelerator.Components.ParticleAcceleratorControlBoxComponent.PortEmitter">PortEmitter</h4>
+  <div class="markdown level1 summary"><p>Whether the PA is currently firing or charging to fire.
+Implies the existance of a <a class="xref" href="Content.Server.ParticleAccelerator.Components.ParticleAcceleratorEmitterComponent.html">ParticleAcceleratorEmitterComponent</a> attached to this entity.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public EntityUid? PortEmitter</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">EntityUid</span>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_ParticleAccelerator_Components_ParticleAcceleratorControlBoxComponent_PowerBox.md&amp;value=---%0Auid%3A%20Content.Server.ParticleAccelerator.Components.ParticleAcceleratorControlBoxComponent.PowerBox%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/ParticleAccelerator/Components/ParticleAcceleratorControlBoxComponent.cs/#L68">View Source</a>
+  </span>
+  <h4 id="Content_Server_ParticleAccelerator_Components_ParticleAcceleratorControlBoxComponent_PowerBox" data-uid="Content.Server.ParticleAccelerator.Components.ParticleAcceleratorControlBoxComponent.PowerBox">PowerBox</h4>
+  <div class="markdown level1 summary"><p>The power supply unit of the assembled particle accelerator.
+Implies the existance of a <a class="xref" href="Content.Server.ParticleAccelerator.Components.ParticleAcceleratorPowerBoxComponent.html">ParticleAcceleratorPowerBoxComponent</a> attached to this entity.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public EntityUid? PowerBox</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">EntityUid</span>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_ParticleAccelerator_Components_ParticleAcceleratorControlBoxComponent_Powered.md&amp;value=---%0Auid%3A%20Content.Server.ParticleAccelerator.Components.ParticleAcceleratorControlBoxComponent.Powered%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/ParticleAccelerator/Components/ParticleAcceleratorControlBoxComponent.cs/#L33">View Source</a>
+  </span>
+  <h4 id="Content_Server_ParticleAccelerator_Components_ParticleAcceleratorControlBoxComponent_Powered" data-uid="Content.Server.ParticleAccelerator.Components.ParticleAcceleratorControlBoxComponent.Powered">Powered</h4>
+  <div class="markdown level1 summary"><p>Whether the PA actually has the power necessary to fire.
+Requires <a class="xref" href="Content.Server.ParticleAccelerator.Components.ParticleAcceleratorControlBoxComponent.html#Content_Server_ParticleAccelerator_Components_ParticleAcceleratorControlBoxComponent_Enabled">Enabled</a> to be true.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool Powered</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_ParticleAccelerator_Components_ParticleAcceleratorControlBoxComponent_RequiredPowerRatio.md&amp;value=---%0Auid%3A%20Content.Server.ParticleAccelerator.Components.ParticleAcceleratorControlBoxComponent.RequiredPowerRatio%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/ParticleAccelerator/Components/ParticleAcceleratorControlBoxComponent.cs/#L109">View Source</a>
+  </span>
+  <h4 id="Content_Server_ParticleAccelerator_Components_ParticleAcceleratorControlBoxComponent_RequiredPowerRatio" data-uid="Content.Server.ParticleAccelerator.Components.ParticleAcceleratorControlBoxComponent.RequiredPowerRatio">RequiredPowerRatio</h4>
+  <div class="markdown level1 summary"><p>The amount of power the particle accelerator must be provided with relative to the expected power draw to function.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public const float RequiredPowerRatio = null</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_ParticleAccelerator_Components_ParticleAcceleratorControlBoxComponent_SelectedStrength.md&amp;value=---%0Auid%3A%20Content.Server.ParticleAccelerator.Components.ParticleAcceleratorControlBoxComponent.SelectedStrength%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/ParticleAccelerator/Components/ParticleAcceleratorControlBoxComponent.cs/#L54">View Source</a>
+  </span>
+  <h4 id="Content_Server_ParticleAccelerator_Components_ParticleAcceleratorControlBoxComponent_SelectedStrength" data-uid="Content.Server.ParticleAccelerator.Components.ParticleAcceleratorControlBoxComponent.SelectedStrength">SelectedStrength</h4>
+  <div class="markdown level1 summary"><p>Whether the PA is currently firing or charging to fire.
+Bounded by <a class="xref" href="../Content.Shared/Content.Shared.Singularity.Components.ParticleAcceleratorPowerState.html#Content_Shared_Singularity_Components_ParticleAcceleratorPowerState_Standby">Standby</a> and <a class="xref" href="Content.Server.ParticleAccelerator.Components.ParticleAcceleratorControlBoxComponent.html#Content_Server_ParticleAccelerator_Components_ParticleAcceleratorControlBoxComponent_MaxStrength">MaxStrength</a>.
+Modified by <a class="xref" href="Content.Server.ParticleAccelerator.Wires.ParticleAcceleratorStrengthWireAction.html">ParticleAcceleratorStrengthWireAction</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ParticleAcceleratorPowerState SelectedStrength</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="../Content.Shared/Content.Shared.Singularity.Components.ParticleAcceleratorPowerState.html">ParticleAcceleratorPowerState</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_ParticleAccelerator_Components_ParticleAcceleratorControlBoxComponent_StarboardEmitter.md&amp;value=---%0Auid%3A%20Content.Server.ParticleAccelerator.Components.ParticleAcceleratorControlBoxComponent.StarboardEmitter%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/ParticleAccelerator/Components/ParticleAcceleratorControlBoxComponent.cs/#L103">View Source</a>
+  </span>
+  <h4 id="Content_Server_ParticleAccelerator_Components_ParticleAcceleratorControlBoxComponent_StarboardEmitter" data-uid="Content.Server.ParticleAccelerator.Components.ParticleAcceleratorControlBoxComponent.StarboardEmitter">StarboardEmitter</h4>
+  <div class="markdown level1 summary"><p>Whether the PA is currently firing or charging to fire.
+Implies the existance of a <a class="xref" href="Content.Server.ParticleAccelerator.Components.ParticleAcceleratorEmitterComponent.html">ParticleAcceleratorEmitterComponent</a> attached to this entity.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public EntityUid? StarboardEmitter</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">EntityUid</span>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_ParticleAccelerator_Components_ParticleAcceleratorControlBoxComponent_StrengthLocked.md&amp;value=---%0Auid%3A%20Content.Server.ParticleAccelerator.Components.ParticleAcceleratorControlBoxComponent.StrengthLocked%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/ParticleAccelerator/Components/ParticleAcceleratorControlBoxComponent.cs/#L168">View Source</a>
+  </span>
+  <h4 id="Content_Server_ParticleAccelerator_Components_ParticleAcceleratorControlBoxComponent_StrengthLocked" data-uid="Content.Server.ParticleAccelerator.Components.ParticleAcceleratorControlBoxComponent.StrengthLocked">StrengthLocked</h4>
+  <div class="markdown level1 summary"><p>Whether the ability to change the strength of the PA has been disabled via a cut wire or not.
+Modified by <a class="xref" href="Content.Server.ParticleAccelerator.Wires.ParticleAcceleratorStrengthWireAction.html">ParticleAcceleratorStrengthWireAction</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool StrengthLocked</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_ParticleAccelerator_Components_ParticleAcceleratorControlBoxComponent.md&amp;value=---%0Auid%3A%20Content.Server.ParticleAccelerator.Components.ParticleAcceleratorControlBoxComponent%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/ParticleAccelerator/Components/ParticleAcceleratorControlBoxComponent.cs/#L12" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <div class="toggle-mode">
+                <div class="icon">
+                  <i aria-hidden="true">☀</i>
+                </div>
+                <label class="switch">
+                  <input type="checkbox" id="switch-style">
+                  <span class="slider round"></span>
+                </label>
+                <div class="icon">
+                  <i aria-hidden="true">☾</i>
+                </div>
+              </div>
+          
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <h5>In This Article</h5>
+              <div></div>
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <div class="pull-left">
+              
+              <span>Generated by <strong>DocFX</strong></span>
+            </div>
+            <div class="toggle-mode pull-right visible-sm visible-xs">
+              <div class="icon">
+                <i aria-hidden="true">☀</i>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="switch-style-m">
+                <span class="slider round"></span>
+              </label>
+              <div class="icon">
+                <i aria-hidden="true">☾</i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <script type="text/javascript" src="../../styles/toggle-theme.js"></script>
+      </footer>    </div>
+    
+    <script type="text/javascript" src="../../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../../styles/docfx.js"></script>
+    <script type="text/javascript" src="../../styles/main.js"></script>
+  </body>
+</html>

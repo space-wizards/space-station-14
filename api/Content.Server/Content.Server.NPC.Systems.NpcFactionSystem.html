@@ -1,0 +1,1180 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class NpcFactionSystem
+   </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class NpcFactionSystem
+   ">
+    <meta name="generator" content="docfx 2.56.7.0">
+    
+    <link rel="shortcut icon" href="../../favicon.ico">
+    <link rel="stylesheet" href="../../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../../styles/docfx.css">
+    <link rel="stylesheet" href="../../styles/main.css">
+    <meta property="docfx:navrel" content="../../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../../index.html">
+                <img id="logo" class="svg" src="../../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Content.Server.NPC.Systems.NpcFactionSystem">
+  
+  
+  <h1 id="Content_Server_NPC_Systems_NpcFactionSystem" data-uid="Content.Server.NPC.Systems.NpcFactionSystem" class="text-break">Class NpcFactionSystem
+  </h1>
+  <div class="markdown level0 summary"><p>Outlines faction relationships with each other.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level1"><span class="xref">NpcFactionSystem</span></div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Content.Server.NPC.Systems.html">Content.Server.NPC.Systems</a></h6>
+  <h6><strong>Assembly</strong>: Content.Server.dll</h6>
+  <h5 id="Content_Server_NPC_Systems_NpcFactionSystem_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public sealed class NpcFactionSystem : EntitySystem</code></pre>
+  </div>
+  <h3 id="methods">Methods
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_NPC_Systems_NpcFactionSystem_AddFaction_EntityUid_System_String_System_Boolean_.md&amp;value=---%0Auid%3A%20Content.Server.NPC.Systems.NpcFactionSystem.AddFaction(EntityUid%2CSystem.String%2CSystem.Boolean)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/NPC/Systems/NpcFactionSystem.cs/#L75">View Source</a>
+  </span>
+  <a id="Content_Server_NPC_Systems_NpcFactionSystem_AddFaction_" data-uid="Content.Server.NPC.Systems.NpcFactionSystem.AddFaction*"></a>
+  <h4 id="Content_Server_NPC_Systems_NpcFactionSystem_AddFaction_EntityUid_System_String_System_Boolean_" data-uid="Content.Server.NPC.Systems.NpcFactionSystem.AddFaction(EntityUid,System.String,System.Boolean)">AddFaction(EntityUid, String, Boolean)</h4>
+  <div class="markdown level1 summary"><p>Adds this entity to the particular faction.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void AddFaction(EntityUid uid, string faction, bool dirty = true)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">faction</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">dirty</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_NPC_Systems_NpcFactionSystem_AggroEntities_EntityUid_IEnumerable_EntityUid__Content_Server_NPC_Components_FactionExceptionComponent_.md&amp;value=---%0Auid%3A%20Content.Server.NPC.Systems.NpcFactionSystem.AggroEntities(EntityUid%2CIEnumerable%7BEntityUid%7D%2CContent.Server.NPC.Components.FactionExceptionComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/NPC/Systems/NpcFactionSystem.Exception.cs/#L122">View Source</a>
+  </span>
+  <a id="Content_Server_NPC_Systems_NpcFactionSystem_AggroEntities_" data-uid="Content.Server.NPC.Systems.NpcFactionSystem.AggroEntities*"></a>
+  <h4 id="Content_Server_NPC_Systems_NpcFactionSystem_AggroEntities_EntityUid_IEnumerable_EntityUid__Content_Server_NPC_Components_FactionExceptionComponent_" data-uid="Content.Server.NPC.Systems.NpcFactionSystem.AggroEntities(EntityUid,IEnumerable{EntityUid},Content.Server.NPC.Components.FactionExceptionComponent)">AggroEntities(EntityUid, IEnumerable&lt;EntityUid&gt;, FactionExceptionComponent)</h4>
+  <div class="markdown level1 summary"><p>Makes a list of entities no longer be considered hostile, if it was.
+Doesn't apply to regular faction hostilities.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void AggroEntities(EntityUid uid, IEnumerable&lt;EntityUid&gt; entities, FactionExceptionComponent comp = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">IEnumerable</span>&lt;<span class="xref">EntityUid</span>&gt;</td>
+        <td><span class="parametername">entities</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Server.NPC.Components.FactionExceptionComponent.html">FactionExceptionComponent</a></td>
+        <td><span class="parametername">comp</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_NPC_Systems_NpcFactionSystem_AggroEntity_EntityUid_EntityUid_Content_Server_NPC_Components_FactionExceptionComponent_.md&amp;value=---%0Auid%3A%20Content.Server.NPC.Systems.NpcFactionSystem.AggroEntity(EntityUid%2CEntityUid%2CContent.Server.NPC.Components.FactionExceptionComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/NPC/Systems/NpcFactionSystem.Exception.cs/#L98">View Source</a>
+  </span>
+  <a id="Content_Server_NPC_Systems_NpcFactionSystem_AggroEntity_" data-uid="Content.Server.NPC.Systems.NpcFactionSystem.AggroEntity*"></a>
+  <h4 id="Content_Server_NPC_Systems_NpcFactionSystem_AggroEntity_EntityUid_EntityUid_Content_Server_NPC_Components_FactionExceptionComponent_" data-uid="Content.Server.NPC.Systems.NpcFactionSystem.AggroEntity(EntityUid,EntityUid,Content.Server.NPC.Components.FactionExceptionComponent)">AggroEntity(EntityUid, EntityUid, FactionExceptionComponent)</h4>
+  <div class="markdown level1 summary"><p>Makes an entity always be considered hostile.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void AggroEntity(EntityUid uid, EntityUid target, FactionExceptionComponent comp = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">target</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Server.NPC.Components.FactionExceptionComponent.html">FactionExceptionComponent</a></td>
+        <td><span class="parametername">comp</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_NPC_Systems_NpcFactionSystem_ClearFactions_EntityUid_System_Boolean_.md&amp;value=---%0Auid%3A%20Content.Server.NPC.Systems.NpcFactionSystem.ClearFactions(EntityUid%2CSystem.Boolean)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/NPC/Systems/NpcFactionSystem.cs/#L119">View Source</a>
+  </span>
+  <a id="Content_Server_NPC_Systems_NpcFactionSystem_ClearFactions_" data-uid="Content.Server.NPC.Systems.NpcFactionSystem.ClearFactions*"></a>
+  <h4 id="Content_Server_NPC_Systems_NpcFactionSystem_ClearFactions_EntityUid_System_Boolean_" data-uid="Content.Server.NPC.Systems.NpcFactionSystem.ClearFactions(EntityUid,System.Boolean)">ClearFactions(EntityUid, Boolean)</h4>
+  <div class="markdown level1 summary"><p>Remove this entity from all factions.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void ClearFactions(EntityUid uid, bool dirty = true)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">dirty</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_NPC_Systems_NpcFactionSystem_DeAggroEntity_EntityUid_EntityUid_Content_Server_NPC_Components_FactionExceptionComponent_.md&amp;value=---%0Auid%3A%20Content.Server.NPC.Systems.NpcFactionSystem.DeAggroEntity(EntityUid%2CEntityUid%2CContent.Server.NPC.Components.FactionExceptionComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/NPC/Systems/NpcFactionSystem.Exception.cs/#L109">View Source</a>
+  </span>
+  <a id="Content_Server_NPC_Systems_NpcFactionSystem_DeAggroEntity_" data-uid="Content.Server.NPC.Systems.NpcFactionSystem.DeAggroEntity*"></a>
+  <h4 id="Content_Server_NPC_Systems_NpcFactionSystem_DeAggroEntity_EntityUid_EntityUid_Content_Server_NPC_Components_FactionExceptionComponent_" data-uid="Content.Server.NPC.Systems.NpcFactionSystem.DeAggroEntity(EntityUid,EntityUid,Content.Server.NPC.Components.FactionExceptionComponent)">DeAggroEntity(EntityUid, EntityUid, FactionExceptionComponent)</h4>
+  <div class="markdown level1 summary"><p>Makes an entity no longer be considered hostile, if it was.
+Doesn't apply to regular faction hostilities.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void DeAggroEntity(EntityUid uid, EntityUid target, FactionExceptionComponent comp = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">target</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Server.NPC.Components.FactionExceptionComponent.html">FactionExceptionComponent</a></td>
+        <td><span class="parametername">comp</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_NPC_Systems_NpcFactionSystem_GetHostiles_EntityUid_Content_Server_NPC_Components_FactionExceptionComponent_.md&amp;value=---%0Auid%3A%20Content.Server.NPC.Systems.NpcFactionSystem.GetHostiles(EntityUid%2CContent.Server.NPC.Components.FactionExceptionComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/NPC/Systems/NpcFactionSystem.Exception.cs/#L65">View Source</a>
+  </span>
+  <a id="Content_Server_NPC_Systems_NpcFactionSystem_GetHostiles_" data-uid="Content.Server.NPC.Systems.NpcFactionSystem.GetHostiles*"></a>
+  <h4 id="Content_Server_NPC_Systems_NpcFactionSystem_GetHostiles_EntityUid_Content_Server_NPC_Components_FactionExceptionComponent_" data-uid="Content.Server.NPC.Systems.NpcFactionSystem.GetHostiles(EntityUid,Content.Server.NPC.Components.FactionExceptionComponent)">GetHostiles(EntityUid, FactionExceptionComponent)</h4>
+  <div class="markdown level1 summary"><p>Returns the specific hostile entities for a given entity.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IEnumerable&lt;EntityUid&gt; GetHostiles(EntityUid uid, FactionExceptionComponent comp = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Server.NPC.Components.FactionExceptionComponent.html">FactionExceptionComponent</a></td>
+        <td><span class="parametername">comp</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IEnumerable</span>&lt;<span class="xref">EntityUid</span>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_NPC_Systems_NpcFactionSystem_GetNearbyFriendlies_EntityUid_System_Single_Content_Server_NPC_Components_NpcFactionMemberComponent_.md&amp;value=---%0Auid%3A%20Content.Server.NPC.Systems.NpcFactionSystem.GetNearbyFriendlies(EntityUid%2CSystem.Single%2CContent.Server.NPC.Components.NpcFactionMemberComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/NPC/Systems/NpcFactionSystem.cs/#L147">View Source</a>
+  </span>
+  <a id="Content_Server_NPC_Systems_NpcFactionSystem_GetNearbyFriendlies_" data-uid="Content.Server.NPC.Systems.NpcFactionSystem.GetNearbyFriendlies*"></a>
+  <h4 id="Content_Server_NPC_Systems_NpcFactionSystem_GetNearbyFriendlies_EntityUid_System_Single_Content_Server_NPC_Components_NpcFactionMemberComponent_" data-uid="Content.Server.NPC.Systems.NpcFactionSystem.GetNearbyFriendlies(EntityUid,System.Single,Content.Server.NPC.Components.NpcFactionMemberComponent)">GetNearbyFriendlies(EntityUid, Single, NpcFactionMemberComponent)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IEnumerable&lt;EntityUid&gt; GetNearbyFriendlies(EntityUid entity, float range, NpcFactionMemberComponent component = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">entity</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td><span class="parametername">range</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Server.NPC.Components.NpcFactionMemberComponent.html">NpcFactionMemberComponent</a></td>
+        <td><span class="parametername">component</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IEnumerable</span>&lt;<span class="xref">EntityUid</span>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_NPC_Systems_NpcFactionSystem_GetNearbyHostiles_EntityUid_System_Single_Content_Server_NPC_Components_NpcFactionMemberComponent_.md&amp;value=---%0Auid%3A%20Content.Server.NPC.Systems.NpcFactionSystem.GetNearbyHostiles(EntityUid%2CSystem.Single%2CContent.Server.NPC.Components.NpcFactionMemberComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/NPC/Systems/NpcFactionSystem.cs/#L130">View Source</a>
+  </span>
+  <a id="Content_Server_NPC_Systems_NpcFactionSystem_GetNearbyHostiles_" data-uid="Content.Server.NPC.Systems.NpcFactionSystem.GetNearbyHostiles*"></a>
+  <h4 id="Content_Server_NPC_Systems_NpcFactionSystem_GetNearbyHostiles_EntityUid_System_Single_Content_Server_NPC_Components_NpcFactionMemberComponent_" data-uid="Content.Server.NPC.Systems.NpcFactionSystem.GetNearbyHostiles(EntityUid,System.Single,Content.Server.NPC.Components.NpcFactionMemberComponent)">GetNearbyHostiles(EntityUid, Single, NpcFactionMemberComponent)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IEnumerable&lt;EntityUid&gt; GetNearbyHostiles(EntityUid entity, float range, NpcFactionMemberComponent component = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">entity</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td><span class="parametername">range</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Server.NPC.Components.NpcFactionMemberComponent.html">NpcFactionMemberComponent</a></td>
+        <td><span class="parametername">component</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IEnumerable</span>&lt;<span class="xref">EntityUid</span>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_NPC_Systems_NpcFactionSystem_IgnoreEntities_EntityUid_IEnumerable_EntityUid__Content_Server_NPC_Components_FactionExceptionComponent_.md&amp;value=---%0Auid%3A%20Content.Server.NPC.Systems.NpcFactionSystem.IgnoreEntities(EntityUid%2CIEnumerable%7BEntityUid%7D%2CContent.Server.NPC.Components.FactionExceptionComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/NPC/Systems/NpcFactionSystem.Exception.cs/#L86">View Source</a>
+  </span>
+  <a id="Content_Server_NPC_Systems_NpcFactionSystem_IgnoreEntities_" data-uid="Content.Server.NPC.Systems.NpcFactionSystem.IgnoreEntities*"></a>
+  <h4 id="Content_Server_NPC_Systems_NpcFactionSystem_IgnoreEntities_EntityUid_IEnumerable_EntityUid__Content_Server_NPC_Components_FactionExceptionComponent_" data-uid="Content.Server.NPC.Systems.NpcFactionSystem.IgnoreEntities(EntityUid,IEnumerable{EntityUid},Content.Server.NPC.Components.FactionExceptionComponent)">IgnoreEntities(EntityUid, IEnumerable&lt;EntityUid&gt;, FactionExceptionComponent)</h4>
+  <div class="markdown level1 summary"><p>Prevents a list of entities from an enemy faction from being attacked</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void IgnoreEntities(EntityUid uid, IEnumerable&lt;EntityUid&gt; ignored, FactionExceptionComponent comp = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">IEnumerable</span>&lt;<span class="xref">EntityUid</span>&gt;</td>
+        <td><span class="parametername">ignored</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Server.NPC.Components.FactionExceptionComponent.html">FactionExceptionComponent</a></td>
+        <td><span class="parametername">comp</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_NPC_Systems_NpcFactionSystem_IgnoreEntity_EntityUid_EntityUid_Content_Server_NPC_Components_FactionExceptionComponent_.md&amp;value=---%0Auid%3A%20Content.Server.NPC.Systems.NpcFactionSystem.IgnoreEntity(EntityUid%2CEntityUid%2CContent.Server.NPC.Components.FactionExceptionComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/NPC/Systems/NpcFactionSystem.Exception.cs/#L76">View Source</a>
+  </span>
+  <a id="Content_Server_NPC_Systems_NpcFactionSystem_IgnoreEntity_" data-uid="Content.Server.NPC.Systems.NpcFactionSystem.IgnoreEntity*"></a>
+  <h4 id="Content_Server_NPC_Systems_NpcFactionSystem_IgnoreEntity_EntityUid_EntityUid_Content_Server_NPC_Components_FactionExceptionComponent_" data-uid="Content.Server.NPC.Systems.NpcFactionSystem.IgnoreEntity(EntityUid,EntityUid,Content.Server.NPC.Components.FactionExceptionComponent)">IgnoreEntity(EntityUid, EntityUid, FactionExceptionComponent)</h4>
+  <div class="markdown level1 summary"><p>Prevents an entity from an enemy faction from being attacked</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void IgnoreEntity(EntityUid uid, EntityUid target, FactionExceptionComponent comp = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">target</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Server.NPC.Components.FactionExceptionComponent.html">FactionExceptionComponent</a></td>
+        <td><span class="parametername">comp</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_NPC_Systems_NpcFactionSystem_Initialize.md&amp;value=---%0Auid%3A%20Content.Server.NPC.Systems.NpcFactionSystem.Initialize%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/NPC/Systems/NpcFactionSystem.cs/#L23">View Source</a>
+  </span>
+  <a id="Content_Server_NPC_Systems_NpcFactionSystem_Initialize_" data-uid="Content.Server.NPC.Systems.NpcFactionSystem.Initialize*"></a>
+  <h4 id="Content_Server_NPC_Systems_NpcFactionSystem_Initialize" data-uid="Content.Server.NPC.Systems.NpcFactionSystem.Initialize">Initialize()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override void Initialize()</code></pre>
+  </div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_NPC_Systems_NpcFactionSystem_InitializeException.md&amp;value=---%0Auid%3A%20Content.Server.NPC.Systems.NpcFactionSystem.InitializeException%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/NPC/Systems/NpcFactionSystem.Exception.cs/#L14">View Source</a>
+  </span>
+  <a id="Content_Server_NPC_Systems_NpcFactionSystem_InitializeException_" data-uid="Content.Server.NPC.Systems.NpcFactionSystem.InitializeException*"></a>
+  <h4 id="Content_Server_NPC_Systems_NpcFactionSystem_InitializeException" data-uid="Content.Server.NPC.Systems.NpcFactionSystem.InitializeException">InitializeException()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void InitializeException()</code></pre>
+  </div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_NPC_Systems_NpcFactionSystem_IsEntityFriendly_EntityUid_EntityUid_Content_Server_NPC_Components_NpcFactionMemberComponent_Content_Server_NPC_Components_NpcFactionMemberComponent_.md&amp;value=---%0Auid%3A%20Content.Server.NPC.Systems.NpcFactionSystem.IsEntityFriendly(EntityUid%2CEntityUid%2CContent.Server.NPC.Components.NpcFactionMemberComponent%2CContent.Server.NPC.Components.NpcFactionMemberComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/NPC/Systems/NpcFactionSystem.cs/#L175">View Source</a>
+  </span>
+  <a id="Content_Server_NPC_Systems_NpcFactionSystem_IsEntityFriendly_" data-uid="Content.Server.NPC.Systems.NpcFactionSystem.IsEntityFriendly*"></a>
+  <h4 id="Content_Server_NPC_Systems_NpcFactionSystem_IsEntityFriendly_EntityUid_EntityUid_Content_Server_NPC_Components_NpcFactionMemberComponent_Content_Server_NPC_Components_NpcFactionMemberComponent_" data-uid="Content.Server.NPC.Systems.NpcFactionSystem.IsEntityFriendly(EntityUid,EntityUid,Content.Server.NPC.Components.NpcFactionMemberComponent,Content.Server.NPC.Components.NpcFactionMemberComponent)">IsEntityFriendly(EntityUid, EntityUid, NpcFactionMemberComponent, NpcFactionMemberComponent)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsEntityFriendly(EntityUid uidA, EntityUid uidB, NpcFactionMemberComponent factionA = null, NpcFactionMemberComponent factionB = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uidA</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uidB</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Server.NPC.Components.NpcFactionMemberComponent.html">NpcFactionMemberComponent</a></td>
+        <td><span class="parametername">factionA</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Server.NPC.Components.NpcFactionMemberComponent.html">NpcFactionMemberComponent</a></td>
+        <td><span class="parametername">factionB</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_NPC_Systems_NpcFactionSystem_IsFactionFriendly_System_String_EntityUid_Content_Server_NPC_Components_NpcFactionMemberComponent_.md&amp;value=---%0Auid%3A%20Content.Server.NPC.Systems.NpcFactionSystem.IsFactionFriendly(System.String%2CEntityUid%2CContent.Server.NPC.Components.NpcFactionMemberComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/NPC/Systems/NpcFactionSystem.cs/#L188">View Source</a>
+  </span>
+  <a id="Content_Server_NPC_Systems_NpcFactionSystem_IsFactionFriendly_" data-uid="Content.Server.NPC.Systems.NpcFactionSystem.IsFactionFriendly*"></a>
+  <h4 id="Content_Server_NPC_Systems_NpcFactionSystem_IsFactionFriendly_System_String_EntityUid_Content_Server_NPC_Components_NpcFactionMemberComponent_" data-uid="Content.Server.NPC.Systems.NpcFactionSystem.IsFactionFriendly(System.String,EntityUid,Content.Server.NPC.Components.NpcFactionMemberComponent)">IsFactionFriendly(String, EntityUid, NpcFactionMemberComponent)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsFactionFriendly(string target, EntityUid with, NpcFactionMemberComponent factionWith = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">target</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">with</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Server.NPC.Components.NpcFactionMemberComponent.html">NpcFactionMemberComponent</a></td>
+        <td><span class="parametername">factionWith</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_NPC_Systems_NpcFactionSystem_IsFactionFriendly_System_String_System_String_.md&amp;value=---%0Auid%3A%20Content.Server.NPC.Systems.NpcFactionSystem.IsFactionFriendly(System.String%2CSystem.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/NPC/Systems/NpcFactionSystem.cs/#L183">View Source</a>
+  </span>
+  <a id="Content_Server_NPC_Systems_NpcFactionSystem_IsFactionFriendly_" data-uid="Content.Server.NPC.Systems.NpcFactionSystem.IsFactionFriendly*"></a>
+  <h4 id="Content_Server_NPC_Systems_NpcFactionSystem_IsFactionFriendly_System_String_System_String_" data-uid="Content.Server.NPC.Systems.NpcFactionSystem.IsFactionFriendly(System.String,System.String)">IsFactionFriendly(String, String)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsFactionFriendly(string target, string with)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">target</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">with</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_NPC_Systems_NpcFactionSystem_IsFactionHostile_System_String_EntityUid_Content_Server_NPC_Components_NpcFactionMemberComponent_.md&amp;value=---%0Auid%3A%20Content.Server.NPC.Systems.NpcFactionSystem.IsFactionHostile(System.String%2CEntityUid%2CContent.Server.NPC.Components.NpcFactionMemberComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/NPC/Systems/NpcFactionSystem.cs/#L202">View Source</a>
+  </span>
+  <a id="Content_Server_NPC_Systems_NpcFactionSystem_IsFactionHostile_" data-uid="Content.Server.NPC.Systems.NpcFactionSystem.IsFactionHostile*"></a>
+  <h4 id="Content_Server_NPC_Systems_NpcFactionSystem_IsFactionHostile_System_String_EntityUid_Content_Server_NPC_Components_NpcFactionMemberComponent_" data-uid="Content.Server.NPC.Systems.NpcFactionSystem.IsFactionHostile(System.String,EntityUid,Content.Server.NPC.Components.NpcFactionMemberComponent)">IsFactionHostile(String, EntityUid, NpcFactionMemberComponent)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsFactionHostile(string target, EntityUid with, NpcFactionMemberComponent factionWith = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">target</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">with</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Server.NPC.Components.NpcFactionMemberComponent.html">NpcFactionMemberComponent</a></td>
+        <td><span class="parametername">factionWith</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_NPC_Systems_NpcFactionSystem_IsFactionHostile_System_String_System_String_.md&amp;value=---%0Auid%3A%20Content.Server.NPC.Systems.NpcFactionSystem.IsFactionHostile(System.String%2CSystem.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/NPC/Systems/NpcFactionSystem.cs/#L197">View Source</a>
+  </span>
+  <a id="Content_Server_NPC_Systems_NpcFactionSystem_IsFactionHostile_" data-uid="Content.Server.NPC.Systems.NpcFactionSystem.IsFactionHostile*"></a>
+  <h4 id="Content_Server_NPC_Systems_NpcFactionSystem_IsFactionHostile_System_String_System_String_" data-uid="Content.Server.NPC.Systems.NpcFactionSystem.IsFactionHostile(System.String,System.String)">IsFactionHostile(String, String)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsFactionHostile(string target, string with)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">target</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">with</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_NPC_Systems_NpcFactionSystem_IsFactionNeutral_System_String_System_String_.md&amp;value=---%0Auid%3A%20Content.Server.NPC.Systems.NpcFactionSystem.IsFactionNeutral(System.String%2CSystem.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/NPC/Systems/NpcFactionSystem.cs/#L211">View Source</a>
+  </span>
+  <a id="Content_Server_NPC_Systems_NpcFactionSystem_IsFactionNeutral_" data-uid="Content.Server.NPC.Systems.NpcFactionSystem.IsFactionNeutral*"></a>
+  <h4 id="Content_Server_NPC_Systems_NpcFactionSystem_IsFactionNeutral_System_String_System_String_" data-uid="Content.Server.NPC.Systems.NpcFactionSystem.IsFactionNeutral(System.String,System.String)">IsFactionNeutral(String, String)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsFactionNeutral(string target, string with)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">target</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">with</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_NPC_Systems_NpcFactionSystem_IsIgnored_EntityUid_EntityUid_Content_Server_NPC_Components_FactionExceptionComponent_.md&amp;value=---%0Auid%3A%20Content.Server.NPC.Systems.NpcFactionSystem.IsIgnored(EntityUid%2CEntityUid%2CContent.Server.NPC.Components.FactionExceptionComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/NPC/Systems/NpcFactionSystem.Exception.cs/#L54">View Source</a>
+  </span>
+  <a id="Content_Server_NPC_Systems_NpcFactionSystem_IsIgnored_" data-uid="Content.Server.NPC.Systems.NpcFactionSystem.IsIgnored*"></a>
+  <h4 id="Content_Server_NPC_Systems_NpcFactionSystem_IsIgnored_EntityUid_EntityUid_Content_Server_NPC_Components_FactionExceptionComponent_" data-uid="Content.Server.NPC.Systems.NpcFactionSystem.IsIgnored(EntityUid,EntityUid,Content.Server.NPC.Components.FactionExceptionComponent)">IsIgnored(EntityUid, EntityUid, FactionExceptionComponent)</h4>
+  <div class="markdown level1 summary"><p>Returns whether the entity from an enemy faction won't be attacked</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsIgnored(EntityUid uid, EntityUid target, FactionExceptionComponent comp = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">target</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Server.NPC.Components.FactionExceptionComponent.html">FactionExceptionComponent</a></td>
+        <td><span class="parametername">comp</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_NPC_Systems_NpcFactionSystem_MakeFriendly_System_String_System_String_.md&amp;value=---%0Auid%3A%20Content.Server.NPC.Systems.NpcFactionSystem.MakeFriendly(System.String%2CSystem.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/NPC/Systems/NpcFactionSystem.cs/#L219">View Source</a>
+  </span>
+  <a id="Content_Server_NPC_Systems_NpcFactionSystem_MakeFriendly_" data-uid="Content.Server.NPC.Systems.NpcFactionSystem.MakeFriendly*"></a>
+  <h4 id="Content_Server_NPC_Systems_NpcFactionSystem_MakeFriendly_System_String_System_String_" data-uid="Content.Server.NPC.Systems.NpcFactionSystem.MakeFriendly(System.String,System.String)">MakeFriendly(String, String)</h4>
+  <div class="markdown level1 summary"><p>Makes the source faction friendly to the target faction, 1-way.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void MakeFriendly(string source, string target)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">source</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">target</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_NPC_Systems_NpcFactionSystem_MakeHostile_System_String_System_String_.md&amp;value=---%0Auid%3A%20Content.Server.NPC.Systems.NpcFactionSystem.MakeHostile(System.String%2CSystem.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/NPC/Systems/NpcFactionSystem.cs/#L262">View Source</a>
+  </span>
+  <a id="Content_Server_NPC_Systems_NpcFactionSystem_MakeHostile_" data-uid="Content.Server.NPC.Systems.NpcFactionSystem.MakeHostile*"></a>
+  <h4 id="Content_Server_NPC_Systems_NpcFactionSystem_MakeHostile_System_String_System_String_" data-uid="Content.Server.NPC.Systems.NpcFactionSystem.MakeHostile(System.String,System.String)">MakeHostile(String, String)</h4>
+  <div class="markdown level1 summary"><p>Makes the source faction hostile to the target faction, 1-way.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void MakeHostile(string source, string target)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">source</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">target</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_NPC_Systems_NpcFactionSystem_RemoveFaction_EntityUid_System_String_System_Boolean_.md&amp;value=---%0Auid%3A%20Content.Server.NPC.Systems.NpcFactionSystem.RemoveFaction(EntityUid%2CSystem.String%2CSystem.Boolean)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/NPC/Systems/NpcFactionSystem.cs/#L96">View Source</a>
+  </span>
+  <a id="Content_Server_NPC_Systems_NpcFactionSystem_RemoveFaction_" data-uid="Content.Server.NPC.Systems.NpcFactionSystem.RemoveFaction*"></a>
+  <h4 id="Content_Server_NPC_Systems_NpcFactionSystem_RemoveFaction_EntityUid_System_String_System_Boolean_" data-uid="Content.Server.NPC.Systems.NpcFactionSystem.RemoveFaction(EntityUid,System.String,System.Boolean)">RemoveFaction(EntityUid, String, Boolean)</h4>
+  <div class="markdown level1 summary"><p>Removes this entity from the particular faction.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void RemoveFaction(EntityUid uid, string faction, bool dirty = true)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">faction</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">dirty</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_NPC_Systems_NpcFactionSystem_Shutdown.md&amp;value=---%0Auid%3A%20Content.Server.NPC.Systems.NpcFactionSystem.Shutdown%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/NPC/Systems/NpcFactionSystem.cs/#L34">View Source</a>
+  </span>
+  <a id="Content_Server_NPC_Systems_NpcFactionSystem_Shutdown_" data-uid="Content.Server.NPC.Systems.NpcFactionSystem.Shutdown*"></a>
+  <h4 id="Content_Server_NPC_Systems_NpcFactionSystem_Shutdown" data-uid="Content.Server.NPC.Systems.NpcFactionSystem.Shutdown">Shutdown()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override void Shutdown()</code></pre>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_NPC_Systems_NpcFactionSystem.md&amp;value=---%0Auid%3A%20Content.Server.NPC.Systems.NpcFactionSystem%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/NPC/Systems/NpcFactionSystem.Exception.cs/#L9" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <div class="toggle-mode">
+                <div class="icon">
+                  <i aria-hidden="true">☀</i>
+                </div>
+                <label class="switch">
+                  <input type="checkbox" id="switch-style">
+                  <span class="slider round"></span>
+                </label>
+                <div class="icon">
+                  <i aria-hidden="true">☾</i>
+                </div>
+              </div>
+          
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <h5>In This Article</h5>
+              <div></div>
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <div class="pull-left">
+              
+              <span>Generated by <strong>DocFX</strong></span>
+            </div>
+            <div class="toggle-mode pull-right visible-sm visible-xs">
+              <div class="icon">
+                <i aria-hidden="true">☀</i>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="switch-style-m">
+                <span class="slider round"></span>
+              </label>
+              <div class="icon">
+                <i aria-hidden="true">☾</i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <script type="text/javascript" src="../../styles/toggle-theme.js"></script>
+      </footer>    </div>
+    
+    <script type="text/javascript" src="../../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../../styles/docfx.js"></script>
+    <script type="text/javascript" src="../../styles/main.js"></script>
+  </body>
+</html>

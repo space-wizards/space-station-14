@@ -1,0 +1,522 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Interface IVoteHandle
+   </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Interface IVoteHandle
+   ">
+    <meta name="generator" content="docfx 2.56.7.0">
+    
+    <link rel="shortcut icon" href="../../favicon.ico">
+    <link rel="stylesheet" href="../../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../../styles/docfx.css">
+    <link rel="stylesheet" href="../../styles/main.css">
+    <meta property="docfx:navrel" content="../../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../../index.html">
+                <img id="logo" class="svg" src="../../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Content.Server.Voting.IVoteHandle">
+  
+  
+  <h1 id="Content_Server_Voting_IVoteHandle" data-uid="Content.Server.Voting.IVoteHandle" class="text-break">Interface IVoteHandle
+  </h1>
+  <div class="markdown level0 summary"><p>A handle to vote, active or past.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Content.Server.Voting.html">Content.Server.Voting</a></h6>
+  <h6><strong>Assembly</strong>: Content.Server.dll</h6>
+  <h5 id="Content_Server_Voting_IVoteHandle_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public interface IVoteHandle</code></pre>
+  </div>
+  <h5 id="Content_Server_Voting_IVoteHandle_remarks"><strong>Remarks</strong></h5>
+  <div class="markdown level0 remarks"><p>
+Vote options are referred to by UI/networking as integer IDs.
+These IDs are the index of the vote option in the <a class="xref" href="Content.Server.Voting.VoteOptions.html#Content_Server_Voting_VoteOptions_Options">Options</a> list
+used to create the vote.
+</p>
+</div>
+  <h3 id="properties">Properties
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Voting_IVoteHandle_Cancelled.md&amp;value=---%0Auid%3A%20Content.Server.Voting.IVoteHandle.Cancelled%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Voting/IVoteHandle.cs/#L44">View Source</a>
+  </span>
+  <a id="Content_Server_Voting_IVoteHandle_Cancelled_" data-uid="Content.Server.Voting.IVoteHandle.Cancelled*"></a>
+  <h4 id="Content_Server_Voting_IVoteHandle_Cancelled" data-uid="Content.Server.Voting.IVoteHandle.Cancelled">Cancelled</h4>
+  <div class="markdown level1 summary"><p>Whether the vote was cancelled by an administrator and did not finish naturally.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool Cancelled { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Content_Server_Voting_IVoteHandle_Cancelled_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>If this is true, <a class="xref" href="Content.Server.Voting.IVoteHandle.html#Content_Server_Voting_IVoteHandle_Finished">Finished</a> is also true.</p>
+</div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Voting_IVoteHandle_Finished.md&amp;value=---%0Auid%3A%20Content.Server.Voting.IVoteHandle.Finished%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Voting/IVoteHandle.cs/#L36">View Source</a>
+  </span>
+  <a id="Content_Server_Voting_IVoteHandle_Finished_" data-uid="Content.Server.Voting.IVoteHandle.Finished*"></a>
+  <h4 id="Content_Server_Voting_IVoteHandle_Finished" data-uid="Content.Server.Voting.IVoteHandle.Finished">Finished</h4>
+  <div class="markdown level1 summary"><p>Whether the vote has finished and is no longer active.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool Finished { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Voting_IVoteHandle_Id.md&amp;value=---%0Auid%3A%20Content.Server.Voting.IVoteHandle.Id%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Voting/IVoteHandle.cs/#L21">View Source</a>
+  </span>
+  <a id="Content_Server_Voting_IVoteHandle_Id_" data-uid="Content.Server.Voting.IVoteHandle.Id*"></a>
+  <h4 id="Content_Server_Voting_IVoteHandle_Id" data-uid="Content.Server.Voting.IVoteHandle.Id">Id</h4>
+  <div class="markdown level1 summary"><p>The numeric ID of the vote. Can be used in <a class="xref" href="Content.Server.Voting.Managers.IVoteManager.html#Content_Server_Voting_Managers_IVoteManager_TryGetVote_System_Int32_Content_Server_Voting_IVoteHandle__">TryGetVote(Int32, out IVoteHandle)</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">int Id { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Voting_IVoteHandle_InitiatorText.md&amp;value=---%0Auid%3A%20Content.Server.Voting.IVoteHandle.InitiatorText%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Voting/IVoteHandle.cs/#L31">View Source</a>
+  </span>
+  <a id="Content_Server_Voting_IVoteHandle_InitiatorText_" data-uid="Content.Server.Voting.IVoteHandle.InitiatorText*"></a>
+  <h4 id="Content_Server_Voting_IVoteHandle_InitiatorText" data-uid="Content.Server.Voting.IVoteHandle.InitiatorText">InitiatorText</h4>
+  <div class="markdown level1 summary"><p>Text representing who/what initiated the vote.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">string InitiatorText { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Voting_IVoteHandle_Title.md&amp;value=---%0Auid%3A%20Content.Server.Voting.IVoteHandle.Title%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Voting/IVoteHandle.cs/#L26">View Source</a>
+  </span>
+  <a id="Content_Server_Voting_IVoteHandle_Title_" data-uid="Content.Server.Voting.IVoteHandle.Title*"></a>
+  <h4 id="Content_Server_Voting_IVoteHandle_Title" data-uid="Content.Server.Voting.IVoteHandle.Title">Title</h4>
+  <div class="markdown level1 summary"><p>The title of the vote.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">string Title { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Voting_IVoteHandle_VotesPerOption.md&amp;value=---%0Auid%3A%20Content.Server.Voting.IVoteHandle.VotesPerOption%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Voting/IVoteHandle.cs/#L49">View Source</a>
+  </span>
+  <a id="Content_Server_Voting_IVoteHandle_VotesPerOption_" data-uid="Content.Server.Voting.IVoteHandle.VotesPerOption*"></a>
+  <h4 id="Content_Server_Voting_IVoteHandle_VotesPerOption" data-uid="Content.Server.Voting.IVoteHandle.VotesPerOption">VotesPerOption</h4>
+  <div class="markdown level1 summary"><p>Current count of votes per option type.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">IReadOnlyDictionary&lt;object, int&gt; VotesPerOption { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IReadOnlyDictionary</span>&lt;<span class="xref">System.Object</span>, <span class="xref">System.Int32</span>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Voting_IVoteHandle_Cancel.md&amp;value=---%0Auid%3A%20Content.Server.Voting.IVoteHandle.Cancel%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Voting/IVoteHandle.cs/#L83">View Source</a>
+  </span>
+  <a id="Content_Server_Voting_IVoteHandle_Cancel_" data-uid="Content.Server.Voting.IVoteHandle.Cancel*"></a>
+  <h4 id="Content_Server_Voting_IVoteHandle_Cancel" data-uid="Content.Server.Voting.IVoteHandle.Cancel">Cancel()</h4>
+  <div class="markdown level1 summary"><p>Cancel this vote.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void Cancel()</code></pre>
+  </div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Voting_IVoteHandle_CastVote_Robust_Server_Player_IPlayerSession_System_Nullable_System_Int32__.md&amp;value=---%0Auid%3A%20Content.Server.Voting.IVoteHandle.CastVote(Robust.Server.Player.IPlayerSession%2CSystem.Nullable%7BSystem.Int32%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Voting/IVoteHandle.cs/#L78">View Source</a>
+  </span>
+  <a id="Content_Server_Voting_IVoteHandle_CastVote_" data-uid="Content.Server.Voting.IVoteHandle.CastVote*"></a>
+  <h4 id="Content_Server_Voting_IVoteHandle_CastVote_Robust_Server_Player_IPlayerSession_System_Nullable_System_Int32__" data-uid="Content.Server.Voting.IVoteHandle.CastVote(Robust.Server.Player.IPlayerSession,System.Nullable{System.Int32})">CastVote(IPlayerSession, Nullable&lt;Int32&gt;)</h4>
+  <div class="markdown level1 summary"><p>Cast a vote for a specific player.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void CastVote(IPlayerSession session, int? optionId)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Robust.Server.Player.IPlayerSession</span></td>
+        <td><span class="parametername">session</span></td>
+        <td><p>The player session to vote for.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">System.Int32</span>&gt;</td>
+        <td><span class="parametername">optionId</span></td>
+        <td><p>The integer option ID to vote for. If null, &quot;no vote&quot; is selected (abstaining).</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Voting_IVoteHandle_IsValidOption_System_Int32_.md&amp;value=---%0Auid%3A%20Content.Server.Voting.IVoteHandle.IsValidOption(System.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Voting/IVoteHandle.cs/#L66">View Source</a>
+  </span>
+  <a id="Content_Server_Voting_IVoteHandle_IsValidOption_" data-uid="Content.Server.Voting.IVoteHandle.IsValidOption*"></a>
+  <h4 id="Content_Server_Voting_IVoteHandle_IsValidOption_System_Int32_" data-uid="Content.Server.Voting.IVoteHandle.IsValidOption(System.Int32)">IsValidOption(Int32)</h4>
+  <div class="markdown level1 summary"><p>Check whether a certain integer option ID is valid.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool IsValidOption(int optionId)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">optionId</span></td>
+        <td><p>The integer ID of the option.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>True if the option ID is valid, false otherwise.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="events">Events
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Voting_IVoteHandle_OnCancelled.md&amp;value=---%0Auid%3A%20Content.Server.Voting.IVoteHandle.OnCancelled%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Voting/IVoteHandle.cs/#L59">View Source</a>
+  </span>
+  <h4 id="Content_Server_Voting_IVoteHandle_OnCancelled" data-uid="Content.Server.Voting.IVoteHandle.OnCancelled">OnCancelled</h4>
+  <div class="markdown level1 summary"><p>Invoked if this vote gets cancelled.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">event VoteCancelledEventHandler OnCancelled</code></pre>
+  </div>
+  <h5 class="eventType">Event Type</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Server.Voting.VoteCancelledEventHandler.html">VoteCancelledEventHandler</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Voting_IVoteHandle_OnFinished.md&amp;value=---%0Auid%3A%20Content.Server.Voting.IVoteHandle.OnFinished%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Voting/IVoteHandle.cs/#L54">View Source</a>
+  </span>
+  <h4 id="Content_Server_Voting_IVoteHandle_OnFinished" data-uid="Content.Server.Voting.IVoteHandle.OnFinished">OnFinished</h4>
+  <div class="markdown level1 summary"><p>Invoked when this vote has successfully finished.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">event VoteFinishedEventHandler OnFinished</code></pre>
+  </div>
+  <h5 class="eventType">Event Type</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Server.Voting.VoteFinishedEventHandler.html">VoteFinishedEventHandler</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Voting_IVoteHandle.md&amp;value=---%0Auid%3A%20Content.Server.Voting.IVoteHandle%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Voting/IVoteHandle.cs/#L16" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <div class="toggle-mode">
+                <div class="icon">
+                  <i aria-hidden="true">☀</i>
+                </div>
+                <label class="switch">
+                  <input type="checkbox" id="switch-style">
+                  <span class="slider round"></span>
+                </label>
+                <div class="icon">
+                  <i aria-hidden="true">☾</i>
+                </div>
+              </div>
+          
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <h5>In This Article</h5>
+              <div></div>
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <div class="pull-left">
+              
+              <span>Generated by <strong>DocFX</strong></span>
+            </div>
+            <div class="toggle-mode pull-right visible-sm visible-xs">
+              <div class="icon">
+                <i aria-hidden="true">☀</i>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="switch-style-m">
+                <span class="slider round"></span>
+              </label>
+              <div class="icon">
+                <i aria-hidden="true">☾</i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <script type="text/javascript" src="../../styles/toggle-theme.js"></script>
+      </footer>    </div>
+    
+    <script type="text/javascript" src="../../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../../styles/docfx.js"></script>
+    <script type="text/javascript" src="../../styles/main.js"></script>
+  </body>
+</html>

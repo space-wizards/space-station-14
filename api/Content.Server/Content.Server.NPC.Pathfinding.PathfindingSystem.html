@@ -1,0 +1,1317 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class PathfindingSystem
+   </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class PathfindingSystem
+   ">
+    <meta name="generator" content="docfx 2.56.7.0">
+    
+    <link rel="shortcut icon" href="../../favicon.ico">
+    <link rel="stylesheet" href="../../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../../styles/docfx.css">
+    <link rel="stylesheet" href="../../styles/main.css">
+    <meta property="docfx:navrel" content="../../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../../index.html">
+                <img id="logo" class="svg" src="../../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Content.Server.NPC.Pathfinding.PathfindingSystem">
+  
+  
+  <h1 id="Content_Server_NPC_Pathfinding_PathfindingSystem" data-uid="Content.Server.NPC.Pathfinding.PathfindingSystem" class="text-break">Class PathfindingSystem
+  </h1>
+  <div class="markdown level0 summary"><p>This system handles pathfinding graph updates as well as dispatches to the pathfinder
+(90% of what it's doing is graph updates so not much point splitting the 2 roles)</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level1"><a class="xref" href="../Content.Shared/Content.Shared.NPC.SharedPathfindingSystem.html">SharedPathfindingSystem</a></div>
+    <div class="level2"><span class="xref">PathfindingSystem</span></div>
+  </div>
+  <div class="inheritedMembers">
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Content.Server.NPC.Pathfinding.html">Content.Server.NPC.Pathfinding</a></h6>
+  <h6><strong>Assembly</strong>: Content.Server.dll</h6>
+  <h5 id="Content_Server_NPC_Pathfinding_PathfindingSystem_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public sealed class PathfindingSystem : SharedPathfindingSystem</code></pre>
+  </div>
+  <h3 id="fields">Fields
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_NPC_Pathfinding_PathfindingSystem_PathfindingCollisionLayer.md&amp;value=---%0Auid%3A%20Content.Server.NPC.Pathfinding.PathfindingSystem.PathfindingCollisionLayer%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/NPC/Pathfinding/PathfindingSystem.Grid.cs/#L31">View Source</a>
+  </span>
+  <h4 id="Content_Server_NPC_Pathfinding_PathfindingSystem_PathfindingCollisionLayer" data-uid="Content.Server.NPC.Pathfinding.PathfindingSystem.PathfindingCollisionLayer">PathfindingCollisionLayer</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public const int PathfindingCollisionLayer = null</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_NPC_Pathfinding_PathfindingSystem_PathfindingCollisionMask.md&amp;value=---%0Auid%3A%20Content.Server.NPC.Pathfinding.PathfindingSystem.PathfindingCollisionMask%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/NPC/Pathfinding/PathfindingSystem.Grid.cs/#L30">View Source</a>
+  </span>
+  <h4 id="Content_Server_NPC_Pathfinding_PathfindingSystem_PathfindingCollisionMask" data-uid="Content.Server.NPC.Pathfinding.PathfindingSystem.PathfindingCollisionMask">PathfindingCollisionMask</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public const int PathfindingCollisionMask = null</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_NPC_Pathfinding_PathfindingSystem_PauseUpdating.md&amp;value=---%0Auid%3A%20Content.Server.NPC.Pathfinding.PathfindingSystem.PauseUpdating%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/NPC/Pathfinding/PathfindingSystem.Grid.cs/#L40">View Source</a>
+  </span>
+  <h4 id="Content_Server_NPC_Pathfinding_PathfindingSystem_PauseUpdating" data-uid="Content.Server.NPC.Pathfinding.PathfindingSystem.PauseUpdating">PauseUpdating</h4>
+  <div class="markdown level1 summary"><p>If true, UpdateGrid() will not process grids.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool PauseUpdating</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Content_Server_NPC_Pathfinding_PathfindingSystem_PauseUpdating_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Useful if something like a large explosion is in the process of shredding the grid, as it avoids unneccesary
+updating.</p>
+</div>
+  <h3 id="methods">Methods
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_NPC_Pathfinding_PathfindingSystem_EuclideanDistance_Content_Server_NPC_Pathfinding_PathPoly_Content_Server_NPC_Pathfinding_PathPoly_.md&amp;value=---%0Auid%3A%20Content.Server.NPC.Pathfinding.PathfindingSystem.EuclideanDistance(Content.Server.NPC.Pathfinding.PathPoly%2CContent.Server.NPC.Pathfinding.PathPoly)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/NPC/Pathfinding/PathfindingSystem.Distance.cs/#L8">View Source</a>
+  </span>
+  <a id="Content_Server_NPC_Pathfinding_PathfindingSystem_EuclideanDistance_" data-uid="Content.Server.NPC.Pathfinding.PathfindingSystem.EuclideanDistance*"></a>
+  <h4 id="Content_Server_NPC_Pathfinding_PathfindingSystem_EuclideanDistance_Content_Server_NPC_Pathfinding_PathPoly_Content_Server_NPC_Pathfinding_PathPoly_" data-uid="Content.Server.NPC.Pathfinding.PathfindingSystem.EuclideanDistance(Content.Server.NPC.Pathfinding.PathPoly,Content.Server.NPC.Pathfinding.PathPoly)">EuclideanDistance(PathPoly, PathPoly)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public float EuclideanDistance(PathPoly start, PathPoly end)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Server.NPC.Pathfinding.PathPoly.html">PathPoly</a></td>
+        <td><span class="parametername">start</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Server.NPC.Pathfinding.PathPoly.html">PathPoly</a></td>
+        <td><span class="parametername">end</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_NPC_Pathfinding_PathfindingSystem_GetFlags_Content_Server_NPC_NPCBlackboard_.md&amp;value=---%0Auid%3A%20Content.Server.NPC.Pathfinding.PathfindingSystem.GetFlags(Content.Server.NPC.NPCBlackboard)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/NPC/Pathfinding/PathfindingSystem.cs/#L428">View Source</a>
+  </span>
+  <a id="Content_Server_NPC_Pathfinding_PathfindingSystem_GetFlags_" data-uid="Content.Server.NPC.Pathfinding.PathfindingSystem.GetFlags*"></a>
+  <h4 id="Content_Server_NPC_Pathfinding_PathfindingSystem_GetFlags_Content_Server_NPC_NPCBlackboard_" data-uid="Content.Server.NPC.Pathfinding.PathfindingSystem.GetFlags(Content.Server.NPC.NPCBlackboard)">GetFlags(NPCBlackboard)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public PathFlags GetFlags(NPCBlackboard blackboard)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Server.NPC.NPCBlackboard.html">NPCBlackboard</a></td>
+        <td><span class="parametername">blackboard</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Server.NPC.Pathfinding.PathFlags.html">PathFlags</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_NPC_Pathfinding_PathfindingSystem_GetFlags_EntityUid_.md&amp;value=---%0Auid%3A%20Content.Server.NPC.Pathfinding.PathfindingSystem.GetFlags(EntityUid)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/NPC/Pathfinding/PathfindingSystem.cs/#L418">View Source</a>
+  </span>
+  <a id="Content_Server_NPC_Pathfinding_PathfindingSystem_GetFlags_" data-uid="Content.Server.NPC.Pathfinding.PathfindingSystem.GetFlags*"></a>
+  <h4 id="Content_Server_NPC_Pathfinding_PathfindingSystem_GetFlags_EntityUid_" data-uid="Content.Server.NPC.Pathfinding.PathfindingSystem.GetFlags(EntityUid)">GetFlags(EntityUid)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public PathFlags GetFlags(EntityUid uid)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Server.NPC.Pathfinding.PathFlags.html">PathFlags</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_NPC_Pathfinding_PathfindingSystem_GetPath_EntityUid_EntityUid_System_Single_CancellationToken_Content_Server_NPC_Pathfinding_PathFlags_.md&amp;value=---%0Auid%3A%20Content.Server.NPC.Pathfinding.PathfindingSystem.GetPath(EntityUid%2CEntityUid%2CSystem.Single%2CCancellationToken%2CContent.Server.NPC.Pathfinding.PathFlags)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/NPC/Pathfinding/PathfindingSystem.cs/#L298">View Source</a>
+  </span>
+  <a id="Content_Server_NPC_Pathfinding_PathfindingSystem_GetPath_" data-uid="Content.Server.NPC.Pathfinding.PathfindingSystem.GetPath*"></a>
+  <h4 id="Content_Server_NPC_Pathfinding_PathfindingSystem_GetPath_EntityUid_EntityUid_System_Single_CancellationToken_Content_Server_NPC_Pathfinding_PathFlags_" data-uid="Content.Server.NPC.Pathfinding.PathfindingSystem.GetPath(EntityUid,EntityUid,System.Single,CancellationToken,Content.Server.NPC.Pathfinding.PathFlags)">GetPath(EntityUid, EntityUid, Single, CancellationToken, PathFlags)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;PathResultEvent&gt; GetPath(EntityUid entity, EntityUid target, float range, CancellationToken cancelToken, PathFlags flags = default(PathFlags))</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">entity</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">target</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td><span class="parametername">range</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">CancellationToken</span></td>
+        <td><span class="parametername">cancelToken</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Server.NPC.Pathfinding.PathFlags.html">PathFlags</a></td>
+        <td><span class="parametername">flags</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Task</span>&lt;<a class="xref" href="Content.Server.NPC.Pathfinding.PathResultEvent.html">PathResultEvent</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_NPC_Pathfinding_PathfindingSystem_GetPath_EntityUid_Robust_Shared_Map_EntityCoordinates_Robust_Shared_Map_EntityCoordinates_System_Single_CancellationToken_Content_Server_NPC_Pathfinding_PathFlags_.md&amp;value=---%0Auid%3A%20Content.Server.NPC.Pathfinding.PathfindingSystem.GetPath(EntityUid%2CRobust.Shared.Map.EntityCoordinates%2CRobust.Shared.Map.EntityCoordinates%2CSystem.Single%2CCancellationToken%2CContent.Server.NPC.Pathfinding.PathFlags)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/NPC/Pathfinding/PathfindingSystem.cs/#L313">View Source</a>
+  </span>
+  <a id="Content_Server_NPC_Pathfinding_PathfindingSystem_GetPath_" data-uid="Content.Server.NPC.Pathfinding.PathfindingSystem.GetPath*"></a>
+  <h4 id="Content_Server_NPC_Pathfinding_PathfindingSystem_GetPath_EntityUid_Robust_Shared_Map_EntityCoordinates_Robust_Shared_Map_EntityCoordinates_System_Single_CancellationToken_Content_Server_NPC_Pathfinding_PathFlags_" data-uid="Content.Server.NPC.Pathfinding.PathfindingSystem.GetPath(EntityUid,Robust.Shared.Map.EntityCoordinates,Robust.Shared.Map.EntityCoordinates,System.Single,CancellationToken,Content.Server.NPC.Pathfinding.PathFlags)">GetPath(EntityUid, EntityCoordinates, EntityCoordinates, Single, CancellationToken, PathFlags)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;PathResultEvent&gt; GetPath(EntityUid entity, EntityCoordinates start, EntityCoordinates end, float range, CancellationToken cancelToken, PathFlags flags = default(PathFlags))</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">entity</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">Robust.Shared.Map.EntityCoordinates</span></td>
+        <td><span class="parametername">start</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">Robust.Shared.Map.EntityCoordinates</span></td>
+        <td><span class="parametername">end</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td><span class="parametername">range</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">CancellationToken</span></td>
+        <td><span class="parametername">cancelToken</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Server.NPC.Pathfinding.PathFlags.html">PathFlags</a></td>
+        <td><span class="parametername">flags</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Task</span>&lt;<a class="xref" href="Content.Server.NPC.Pathfinding.PathResultEvent.html">PathResultEvent</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_NPC_Pathfinding_PathfindingSystem_GetPath_Robust_Shared_Map_EntityCoordinates_Robust_Shared_Map_EntityCoordinates_System_Single_System_Int32_System_Int32_CancellationToken_Content_Server_NPC_Pathfinding_PathFlags_.md&amp;value=---%0Auid%3A%20Content.Server.NPC.Pathfinding.PathfindingSystem.GetPath(Robust.Shared.Map.EntityCoordinates%2CRobust.Shared.Map.EntityCoordinates%2CSystem.Single%2CSystem.Int32%2CSystem.Int32%2CCancellationToken%2CContent.Server.NPC.Pathfinding.PathFlags)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/NPC/Pathfinding/PathfindingSystem.cs/#L343">View Source</a>
+  </span>
+  <a id="Content_Server_NPC_Pathfinding_PathfindingSystem_GetPath_" data-uid="Content.Server.NPC.Pathfinding.PathfindingSystem.GetPath*"></a>
+  <h4 id="Content_Server_NPC_Pathfinding_PathfindingSystem_GetPath_Robust_Shared_Map_EntityCoordinates_Robust_Shared_Map_EntityCoordinates_System_Single_System_Int32_System_Int32_CancellationToken_Content_Server_NPC_Pathfinding_PathFlags_" data-uid="Content.Server.NPC.Pathfinding.PathfindingSystem.GetPath(Robust.Shared.Map.EntityCoordinates,Robust.Shared.Map.EntityCoordinates,System.Single,System.Int32,System.Int32,CancellationToken,Content.Server.NPC.Pathfinding.PathFlags)">GetPath(EntityCoordinates, EntityCoordinates, Single, Int32, Int32, CancellationToken, PathFlags)</h4>
+  <div class="markdown level1 summary"><p>Asynchronously gets a path.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;PathResultEvent&gt; GetPath(EntityCoordinates start, EntityCoordinates end, float range, int layer, int mask, CancellationToken cancelToken, PathFlags flags = default(PathFlags))</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Robust.Shared.Map.EntityCoordinates</span></td>
+        <td><span class="parametername">start</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">Robust.Shared.Map.EntityCoordinates</span></td>
+        <td><span class="parametername">end</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td><span class="parametername">range</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">layer</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">mask</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">CancellationToken</span></td>
+        <td><span class="parametername">cancelToken</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Server.NPC.Pathfinding.PathFlags.html">PathFlags</a></td>
+        <td><span class="parametername">flags</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Task</span>&lt;<a class="xref" href="Content.Server.NPC.Pathfinding.PathResultEvent.html">PathResultEvent</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_NPC_Pathfinding_PathfindingSystem_GetPath_Vector2i_Vector2i_System_Boolean_.md&amp;value=---%0Auid%3A%20Content.Server.NPC.Pathfinding.PathfindingSystem.GetPath(Vector2i%2CVector2i%2CSystem.Boolean)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/NPC/Pathfinding/PathfindingSystem.Helper.cs/#L8">View Source</a>
+  </span>
+  <a id="Content_Server_NPC_Pathfinding_PathfindingSystem_GetPath_" data-uid="Content.Server.NPC.Pathfinding.PathfindingSystem.GetPath*"></a>
+  <h4 id="Content_Server_NPC_Pathfinding_PathfindingSystem_GetPath_Vector2i_Vector2i_System_Boolean_" data-uid="Content.Server.NPC.Pathfinding.PathfindingSystem.GetPath(Vector2i,Vector2i,System.Boolean)">GetPath(Vector2i, Vector2i, Boolean)</h4>
+  <div class="markdown level1 summary"><p>Finds a generic path from start to end.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public List&lt;Vector2i&gt; GetPath(Vector2i start, Vector2i end, bool diagonal = false)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Vector2i</span></td>
+        <td><span class="parametername">start</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">Vector2i</span></td>
+        <td><span class="parametername">end</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">diagonal</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">List</span>&lt;<span class="xref">Vector2i</span>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_NPC_Pathfinding_PathfindingSystem_GetPathDistance_EntityUid_Robust_Shared_Map_EntityCoordinates_System_Single_CancellationToken_Content_Server_NPC_Pathfinding_PathFlags_.md&amp;value=---%0Auid%3A%20Content.Server.NPC.Pathfinding.PathfindingSystem.GetPathDistance(EntityUid%2CRobust.Shared.Map.EntityCoordinates%2CSystem.Single%2CCancellationToken%2CContent.Server.NPC.Pathfinding.PathFlags)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/NPC/Pathfinding/PathfindingSystem.cs/#L267">View Source</a>
+  </span>
+  <a id="Content_Server_NPC_Pathfinding_PathfindingSystem_GetPathDistance_" data-uid="Content.Server.NPC.Pathfinding.PathfindingSystem.GetPathDistance*"></a>
+  <h4 id="Content_Server_NPC_Pathfinding_PathfindingSystem_GetPathDistance_EntityUid_Robust_Shared_Map_EntityCoordinates_System_Single_CancellationToken_Content_Server_NPC_Pathfinding_PathFlags_" data-uid="Content.Server.NPC.Pathfinding.PathfindingSystem.GetPathDistance(EntityUid,Robust.Shared.Map.EntityCoordinates,System.Single,CancellationToken,Content.Server.NPC.Pathfinding.PathFlags)">GetPathDistance(EntityUid, EntityCoordinates, Single, CancellationToken, PathFlags)</h4>
+  <div class="markdown level1 summary"><p>Gets the estimated distance from the entity to the target node.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;float?&gt; GetPathDistance(EntityUid entity, EntityCoordinates end, float range, CancellationToken cancelToken, PathFlags flags = default(PathFlags))</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">entity</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">Robust.Shared.Map.EntityCoordinates</span></td>
+        <td><span class="parametername">end</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td><span class="parametername">range</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">CancellationToken</span></td>
+        <td><span class="parametername">cancelToken</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Server.NPC.Pathfinding.PathFlags.html">PathFlags</a></td>
+        <td><span class="parametername">flags</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Task</span>&lt;<span class="xref">System.Nullable</span>&lt;<span class="xref">System.Single</span>&gt;&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_NPC_Pathfinding_PathfindingSystem_GetPathEvent_EntityUid_Robust_Shared_Map_EntityCoordinates_Robust_Shared_Map_EntityCoordinates_System_Single_CancellationToken_Content_Server_NPC_Pathfinding_PathFlags_.md&amp;value=---%0Auid%3A%20Content.Server.NPC.Pathfinding.PathfindingSystem.GetPathEvent(EntityUid%2CRobust.Shared.Map.EntityCoordinates%2CRobust.Shared.Map.EntityCoordinates%2CSystem.Single%2CCancellationToken%2CContent.Server.NPC.Pathfinding.PathFlags)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/NPC/Pathfinding/PathfindingSystem.cs/#L360">View Source</a>
+  </span>
+  <a id="Content_Server_NPC_Pathfinding_PathfindingSystem_GetPathEvent_" data-uid="Content.Server.NPC.Pathfinding.PathfindingSystem.GetPathEvent*"></a>
+  <h4 id="Content_Server_NPC_Pathfinding_PathfindingSystem_GetPathEvent_EntityUid_Robust_Shared_Map_EntityCoordinates_Robust_Shared_Map_EntityCoordinates_System_Single_CancellationToken_Content_Server_NPC_Pathfinding_PathFlags_" data-uid="Content.Server.NPC.Pathfinding.PathfindingSystem.GetPathEvent(EntityUid,Robust.Shared.Map.EntityCoordinates,Robust.Shared.Map.EntityCoordinates,System.Single,CancellationToken,Content.Server.NPC.Pathfinding.PathFlags)">GetPathEvent(EntityUid, EntityCoordinates, EntityCoordinates, Single, CancellationToken, PathFlags)</h4>
+  <div class="markdown level1 summary"><p>Raises the pathfinding result event on the entity when finished.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void GetPathEvent(EntityUid uid, EntityCoordinates start, EntityCoordinates end, float range, CancellationToken cancelToken, PathFlags flags = default(PathFlags))</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">Robust.Shared.Map.EntityCoordinates</span></td>
+        <td><span class="parametername">start</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">Robust.Shared.Map.EntityCoordinates</span></td>
+        <td><span class="parametername">end</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td><span class="parametername">range</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">CancellationToken</span></td>
+        <td><span class="parametername">cancelToken</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Server.NPC.Pathfinding.PathFlags.html">PathFlags</a></td>
+        <td><span class="parametername">flags</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_NPC_Pathfinding_PathfindingSystem_GetPathSafe_EntityUid_Robust_Shared_Map_EntityCoordinates_Robust_Shared_Map_EntityCoordinates_System_Single_CancellationToken_Content_Server_NPC_Pathfinding_PathFlags_.md&amp;value=---%0Auid%3A%20Content.Server.NPC.Pathfinding.PathfindingSystem.GetPathSafe(EntityUid%2CRobust.Shared.Map.EntityCoordinates%2CRobust.Shared.Map.EntityCoordinates%2CSystem.Single%2CCancellationToken%2CContent.Server.NPC.Pathfinding.PathFlags)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/NPC/Pathfinding/PathfindingSystem.cs/#L328">View Source</a>
+  </span>
+  <a id="Content_Server_NPC_Pathfinding_PathfindingSystem_GetPathSafe_" data-uid="Content.Server.NPC.Pathfinding.PathfindingSystem.GetPathSafe*"></a>
+  <h4 id="Content_Server_NPC_Pathfinding_PathfindingSystem_GetPathSafe_EntityUid_Robust_Shared_Map_EntityCoordinates_Robust_Shared_Map_EntityCoordinates_System_Single_CancellationToken_Content_Server_NPC_Pathfinding_PathFlags_" data-uid="Content.Server.NPC.Pathfinding.PathfindingSystem.GetPathSafe(EntityUid,Robust.Shared.Map.EntityCoordinates,Robust.Shared.Map.EntityCoordinates,System.Single,CancellationToken,Content.Server.NPC.Pathfinding.PathFlags)">GetPathSafe(EntityUid, EntityCoordinates, EntityCoordinates, Single, CancellationToken, PathFlags)</h4>
+  <div class="markdown level1 summary"><p>Gets a path in a thread-safe way.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;PathResultEvent&gt; GetPathSafe(EntityUid entity, EntityCoordinates start, EntityCoordinates end, float range, CancellationToken cancelToken, PathFlags flags = default(PathFlags))</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">entity</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">Robust.Shared.Map.EntityCoordinates</span></td>
+        <td><span class="parametername">start</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">Robust.Shared.Map.EntityCoordinates</span></td>
+        <td><span class="parametername">end</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td><span class="parametername">range</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">CancellationToken</span></td>
+        <td><span class="parametername">cancelToken</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Server.NPC.Pathfinding.PathFlags.html">PathFlags</a></td>
+        <td><span class="parametername">flags</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Task</span>&lt;<a class="xref" href="Content.Server.NPC.Pathfinding.PathResultEvent.html">PathResultEvent</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_NPC_Pathfinding_PathfindingSystem_GetPoly_Robust_Shared_Map_EntityCoordinates_.md&amp;value=---%0Auid%3A%20Content.Server.NPC.Pathfinding.PathfindingSystem.GetPoly(Robust.Shared.Map.EntityCoordinates)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/NPC/Pathfinding/PathfindingSystem.cs/#L375">View Source</a>
+  </span>
+  <a id="Content_Server_NPC_Pathfinding_PathfindingSystem_GetPoly_" data-uid="Content.Server.NPC.Pathfinding.PathfindingSystem.GetPoly*"></a>
+  <h4 id="Content_Server_NPC_Pathfinding_PathfindingSystem_GetPoly_Robust_Shared_Map_EntityCoordinates_" data-uid="Content.Server.NPC.Pathfinding.PathfindingSystem.GetPoly(Robust.Shared.Map.EntityCoordinates)">GetPoly(EntityCoordinates)</h4>
+  <div class="markdown level1 summary"><p>Gets the relevant poly for the specified coordinates if it exists.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public PathPoly GetPoly(EntityCoordinates coordinates)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Robust.Shared.Map.EntityCoordinates</span></td>
+        <td><span class="parametername">coordinates</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Server.NPC.Pathfinding.PathPoly.html">PathPoly</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_NPC_Pathfinding_PathfindingSystem_GetRandomPath_EntityUid_System_Single_CancellationToken_System_Int32_Content_Server_NPC_Pathfinding_PathFlags_.md&amp;value=---%0Auid%3A%20Content.Server.NPC.Pathfinding.PathfindingSystem.GetRandomPath(EntityUid%2CSystem.Single%2CCancellationToken%2CSystem.Int32%2CContent.Server.NPC.Pathfinding.PathFlags)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/NPC/Pathfinding/PathfindingSystem.cs/#L237">View Source</a>
+  </span>
+  <a id="Content_Server_NPC_Pathfinding_PathfindingSystem_GetRandomPath_" data-uid="Content.Server.NPC.Pathfinding.PathfindingSystem.GetRandomPath*"></a>
+  <h4 id="Content_Server_NPC_Pathfinding_PathfindingSystem_GetRandomPath_EntityUid_System_Single_CancellationToken_System_Int32_Content_Server_NPC_Pathfinding_PathFlags_" data-uid="Content.Server.NPC.Pathfinding.PathfindingSystem.GetRandomPath(EntityUid,System.Single,CancellationToken,System.Int32,Content.Server.NPC.Pathfinding.PathFlags)">GetRandomPath(EntityUid, Single, CancellationToken, Int32, PathFlags)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;PathResultEvent&gt; GetRandomPath(EntityUid entity, float maxRange, CancellationToken cancelToken, int limit = 40, PathFlags flags = default(PathFlags))</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">entity</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td><span class="parametername">maxRange</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">CancellationToken</span></td>
+        <td><span class="parametername">cancelToken</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">limit</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Server.NPC.Pathfinding.PathFlags.html">PathFlags</a></td>
+        <td><span class="parametername">flags</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Task</span>&lt;<a class="xref" href="Content.Server.NPC.Pathfinding.PathResultEvent.html">PathResultEvent</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_NPC_Pathfinding_PathfindingSystem_Initialize.md&amp;value=---%0Auid%3A%20Content.Server.NPC.Pathfinding.PathfindingSystem.Initialize%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/NPC/Pathfinding/PathfindingSystem.cs/#L66">View Source</a>
+  </span>
+  <a id="Content_Server_NPC_Pathfinding_PathfindingSystem_Initialize_" data-uid="Content.Server.NPC.Pathfinding.PathfindingSystem.Initialize*"></a>
+  <h4 id="Content_Server_NPC_Pathfinding_PathfindingSystem_Initialize" data-uid="Content.Server.NPC.Pathfinding.PathfindingSystem.Initialize">Initialize()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override void Initialize()</code></pre>
+  </div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_NPC_Pathfinding_PathfindingSystem_ManhattanDistance_Content_Server_NPC_Pathfinding_PathPoly_Content_Server_NPC_Pathfinding_PathPoly_.md&amp;value=---%0Auid%3A%20Content.Server.NPC.Pathfinding.PathfindingSystem.ManhattanDistance(Content.Server.NPC.Pathfinding.PathPoly%2CContent.Server.NPC.Pathfinding.PathPoly)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/NPC/Pathfinding/PathfindingSystem.Distance.cs/#L14">View Source</a>
+  </span>
+  <a id="Content_Server_NPC_Pathfinding_PathfindingSystem_ManhattanDistance_" data-uid="Content.Server.NPC.Pathfinding.PathfindingSystem.ManhattanDistance*"></a>
+  <h4 id="Content_Server_NPC_Pathfinding_PathfindingSystem_ManhattanDistance_Content_Server_NPC_Pathfinding_PathPoly_Content_Server_NPC_Pathfinding_PathPoly_" data-uid="Content.Server.NPC.Pathfinding.PathfindingSystem.ManhattanDistance(Content.Server.NPC.Pathfinding.PathPoly,Content.Server.NPC.Pathfinding.PathPoly)">ManhattanDistance(PathPoly, PathPoly)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public float ManhattanDistance(PathPoly start, PathPoly end)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Server.NPC.Pathfinding.PathPoly.html">PathPoly</a></td>
+        <td><span class="parametername">start</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Server.NPC.Pathfinding.PathPoly.html">PathPoly</a></td>
+        <td><span class="parametername">end</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_NPC_Pathfinding_PathfindingSystem_OctileDistance_Content_Server_NPC_Pathfinding_PathPoly_Content_Server_NPC_Pathfinding_PathPoly_.md&amp;value=---%0Auid%3A%20Content.Server.NPC.Pathfinding.PathfindingSystem.OctileDistance(Content.Server.NPC.Pathfinding.PathPoly%2CContent.Server.NPC.Pathfinding.PathPoly)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/NPC/Pathfinding/PathfindingSystem.Distance.cs/#L20">View Source</a>
+  </span>
+  <a id="Content_Server_NPC_Pathfinding_PathfindingSystem_OctileDistance_" data-uid="Content.Server.NPC.Pathfinding.PathfindingSystem.OctileDistance*"></a>
+  <h4 id="Content_Server_NPC_Pathfinding_PathfindingSystem_OctileDistance_Content_Server_NPC_Pathfinding_PathPoly_Content_Server_NPC_Pathfinding_PathPoly_" data-uid="Content.Server.NPC.Pathfinding.PathfindingSystem.OctileDistance(Content.Server.NPC.Pathfinding.PathPoly,Content.Server.NPC.Pathfinding.PathPoly)">OctileDistance(PathPoly, PathPoly)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public float OctileDistance(PathPoly start, PathPoly end)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Server.NPC.Pathfinding.PathPoly.html">PathPoly</a></td>
+        <td><span class="parametername">start</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Server.NPC.Pathfinding.PathPoly.html">PathPoly</a></td>
+        <td><span class="parametername">end</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_NPC_Pathfinding_PathfindingSystem_RemovePortal_System_Int32_.md&amp;value=---%0Auid%3A%20Content.Server.NPC.Pathfinding.PathfindingSystem.RemovePortal(System.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/NPC/Pathfinding/PathfindingSystem.cs/#L207">View Source</a>
+  </span>
+  <a id="Content_Server_NPC_Pathfinding_PathfindingSystem_RemovePortal_" data-uid="Content.Server.NPC.Pathfinding.PathfindingSystem.RemovePortal*"></a>
+  <h4 id="Content_Server_NPC_Pathfinding_PathfindingSystem_RemovePortal_System_Int32_" data-uid="Content.Server.NPC.Pathfinding.PathfindingSystem.RemovePortal(System.Int32)">RemovePortal(Int32)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool RemovePortal(int handle)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">handle</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_NPC_Pathfinding_PathfindingSystem_Shutdown.md&amp;value=---%0Auid%3A%20Content.Server.NPC.Pathfinding.PathfindingSystem.Shutdown%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/NPC/Pathfinding/PathfindingSystem.cs/#L74">View Source</a>
+  </span>
+  <a id="Content_Server_NPC_Pathfinding_PathfindingSystem_Shutdown_" data-uid="Content.Server.NPC.Pathfinding.PathfindingSystem.Shutdown*"></a>
+  <h4 id="Content_Server_NPC_Pathfinding_PathfindingSystem_Shutdown" data-uid="Content.Server.NPC.Pathfinding.PathfindingSystem.Shutdown">Shutdown()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override void Shutdown()</code></pre>
+  </div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_NPC_Pathfinding_PathfindingSystem_Simplify_List_Content_Server_NPC_Pathfinding_PathPoly__System_Single_.md&amp;value=---%0Auid%3A%20Content.Server.NPC.Pathfinding.PathfindingSystem.Simplify(List%7BContent.Server.NPC.Pathfinding.PathPoly%7D%2CSystem.Single)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/NPC/Pathfinding/PathfindingSystem.Common.cs/#L90">View Source</a>
+  </span>
+  <a id="Content_Server_NPC_Pathfinding_PathfindingSystem_Simplify_" data-uid="Content.Server.NPC.Pathfinding.PathfindingSystem.Simplify*"></a>
+  <h4 id="Content_Server_NPC_Pathfinding_PathfindingSystem_Simplify_List_Content_Server_NPC_Pathfinding_PathPoly__System_Single_" data-uid="Content.Server.NPC.Pathfinding.PathfindingSystem.Simplify(List{Content.Server.NPC.Pathfinding.PathPoly},System.Single)">Simplify(List&lt;PathPoly&gt;, Single)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public List&lt;PathPoly&gt; Simplify(List&lt;PathPoly&gt; vertices, float tolerance = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">List</span>&lt;<a class="xref" href="Content.Server.NPC.Pathfinding.PathPoly.html">PathPoly</a>&gt;</td>
+        <td><span class="parametername">vertices</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td><span class="parametername">tolerance</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">List</span>&lt;<a class="xref" href="Content.Server.NPC.Pathfinding.PathPoly.html">PathPoly</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_NPC_Pathfinding_PathfindingSystem_TryCreatePortal_Robust_Shared_Map_EntityCoordinates_Robust_Shared_Map_EntityCoordinates_System_Int32__.md&amp;value=---%0Auid%3A%20Content.Server.NPC.Pathfinding.PathfindingSystem.TryCreatePortal(Robust.Shared.Map.EntityCoordinates%2CRobust.Shared.Map.EntityCoordinates%2CSystem.Int32%40)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/NPC/Pathfinding/PathfindingSystem.cs/#L166">View Source</a>
+  </span>
+  <a id="Content_Server_NPC_Pathfinding_PathfindingSystem_TryCreatePortal_" data-uid="Content.Server.NPC.Pathfinding.PathfindingSystem.TryCreatePortal*"></a>
+  <h4 id="Content_Server_NPC_Pathfinding_PathfindingSystem_TryCreatePortal_Robust_Shared_Map_EntityCoordinates_Robust_Shared_Map_EntityCoordinates_System_Int32__" data-uid="Content.Server.NPC.Pathfinding.PathfindingSystem.TryCreatePortal(Robust.Shared.Map.EntityCoordinates,Robust.Shared.Map.EntityCoordinates,System.Int32@)">TryCreatePortal(EntityCoordinates, EntityCoordinates, out Int32)</h4>
+  <div class="markdown level1 summary"><p>Creates neighbouring edges at both locations, each leading to the other.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool TryCreatePortal(EntityCoordinates coordsA, EntityCoordinates coordsB, out int handle)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Robust.Shared.Map.EntityCoordinates</span></td>
+        <td><span class="parametername">coordsA</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">Robust.Shared.Map.EntityCoordinates</span></td>
+        <td><span class="parametername">coordsB</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">handle</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_NPC_Pathfinding_PathfindingSystem_Update_System_Single_.md&amp;value=---%0Auid%3A%20Content.Server.NPC.Pathfinding.PathfindingSystem.Update(System.Single)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/NPC/Pathfinding/PathfindingSystem.cs/#L81">View Source</a>
+  </span>
+  <a id="Content_Server_NPC_Pathfinding_PathfindingSystem_Update_" data-uid="Content.Server.NPC.Pathfinding.PathfindingSystem.Update*"></a>
+  <h4 id="Content_Server_NPC_Pathfinding_PathfindingSystem_Update_System_Single_" data-uid="Content.Server.NPC.Pathfinding.PathfindingSystem.Update(System.Single)">Update(Single)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override void Update(float frameTime)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td><span class="parametername">frameTime</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_NPC_Pathfinding_PathfindingSystem.md&amp;value=---%0Auid%3A%20Content.Server.NPC.Pathfinding.PathfindingSystem%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/NPC/Pathfinding/PathfindingSystem.Helper.cs/#L3" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <div class="toggle-mode">
+                <div class="icon">
+                  <i aria-hidden="true">☀</i>
+                </div>
+                <label class="switch">
+                  <input type="checkbox" id="switch-style">
+                  <span class="slider round"></span>
+                </label>
+                <div class="icon">
+                  <i aria-hidden="true">☾</i>
+                </div>
+              </div>
+          
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <h5>In This Article</h5>
+              <div></div>
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <div class="pull-left">
+              
+              <span>Generated by <strong>DocFX</strong></span>
+            </div>
+            <div class="toggle-mode pull-right visible-sm visible-xs">
+              <div class="icon">
+                <i aria-hidden="true">☀</i>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="switch-style-m">
+                <span class="slider round"></span>
+              </label>
+              <div class="icon">
+                <i aria-hidden="true">☾</i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <script type="text/javascript" src="../../styles/toggle-theme.js"></script>
+      </footer>    </div>
+    
+    <script type="text/javascript" src="../../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../../styles/docfx.js"></script>
+    <script type="text/javascript" src="../../styles/main.js"></script>
+  </body>
+</html>

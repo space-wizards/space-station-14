@@ -1,0 +1,200 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Namespace Content.Server.GameTicking
+   </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Namespace Content.Server.GameTicking
+   ">
+    <meta name="generator" content="docfx 2.56.7.0">
+    
+    <link rel="shortcut icon" href="../../favicon.ico">
+    <link rel="stylesheet" href="../../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../../styles/docfx.css">
+    <link rel="stylesheet" href="../../styles/main.css">
+    <meta property="docfx:navrel" content="../../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../../index.html">
+                <img id="logo" class="svg" src="../../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Content.Server.GameTicking">
+  
+  <h1 id="Content_Server_GameTicking" data-uid="Content.Server.GameTicking" class="text-break">Namespace Content.Server.GameTicking
+  </h1>
+  <div class="markdown level0 summary"></div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="markdown level0 remarks"></div>
+    <h3 id="classes">Classes
+  </h3>
+      <h4><a class="xref" href="Content.Server.GameTicking.GameRunLevelChangedEvent.html">GameRunLevelChangedEvent</a></h4>
+      <section></section>
+      <h4><a class="xref" href="Content.Server.GameTicking.GameTicker.html">GameTicker</a></h4>
+      <section></section>
+      <h4><a class="xref" href="Content.Server.GameTicking.GhostAttemptHandleEvent.html">GhostAttemptHandleEvent</a></h4>
+      <section></section>
+      <h4><a class="xref" href="Content.Server.GameTicking.LoadingMapsEvent.html">LoadingMapsEvent</a></h4>
+      <section><p>Event raised before maps are loaded in pre-round setup.
+Contains a list of game map prototypes to load; modify it if you want to load different maps,
+for example as part of a game rule.</p>
+</section>
+      <h4><a class="xref" href="Content.Server.GameTicking.ManifestEntry.html">ManifestEntry</a></h4>
+      <section><p>Describes an entry in the crew manifest.</p>
+</section>
+      <h4><a class="xref" href="Content.Server.GameTicking.PlayerBeforeSpawnEvent.html">PlayerBeforeSpawnEvent</a></h4>
+      <section><p>Event raised broadcast before a player is spawned by the GameTicker.
+You can use this event to spawn a player off-station on late-join but also at round start.
+When this event is handled, the GameTicker will not perform its own player-spawning logic.</p>
+</section>
+      <h4><a class="xref" href="Content.Server.GameTicking.PlayerJoinedLobbyEvent.html">PlayerJoinedLobbyEvent</a></h4>
+      <section></section>
+      <h4><a class="xref" href="Content.Server.GameTicking.PlayerSpawnCompleteEvent.html">PlayerSpawnCompleteEvent</a></h4>
+      <section><p>Event raised both directed and broadcast when a player has been spawned by the GameTicker.
+You can use this to handle people late-joining, or to handle people being spawned at round start.
+Can be used to give random players a role, modify their equipment, etc.</p>
+</section>
+      <h4><a class="xref" href="Content.Server.GameTicking.PostGameMapLoad.html">PostGameMapLoad</a></h4>
+      <section><p>Event raised after the game loads a given map.</p>
+</section>
+      <h4><a class="xref" href="Content.Server.GameTicking.PreGameMapLoad.html">PreGameMapLoad</a></h4>
+      <section><p>Event raised before the game loads a given map.
+This event is mutable, and load options should be tweaked if necessary.</p>
+</section>
+      <h4><a class="xref" href="Content.Server.GameTicking.RefreshLateJoinAllowedEvent.html">RefreshLateJoinAllowedEvent</a></h4>
+      <section><p>Event raised to refresh the late join status.
+If you want to disallow late joins, listen to this and call Disallow.</p>
+</section>
+      <h4><a class="xref" href="Content.Server.GameTicking.RoundEndTextAppendEvent.html">RoundEndTextAppendEvent</a></h4>
+      <section><p>Event raised to allow subscribers to add text to the round end summary screen.</p>
+</section>
+      <h4><a class="xref" href="Content.Server.GameTicking.RoundStartAttemptEvent.html">RoundStartAttemptEvent</a></h4>
+      <section><p>Attempt event raised on round start.
+This can be listened to by GameRule systems to cancel round start if some condition is not met, like player count.</p>
+</section>
+      <h4><a class="xref" href="Content.Server.GameTicking.RulePlayerJobsAssignedEvent.html">RulePlayerJobsAssignedEvent</a></h4>
+      <section><p>Event raised after players were assigned jobs by the GameTicker.
+You can give on-station people special roles by listening to this event.</p>
+</section>
+      <h4><a class="xref" href="Content.Server.GameTicking.RulePlayerSpawningEvent.html">RulePlayerSpawningEvent</a></h4>
+      <section><p>Event raised before readied up players are spawned and given jobs by the GameTicker.
+You can use this to spawn people off-station, like in the case of nuke ops or wizard.
+Remove the players you spawned from the PlayerPool and call <a class="xref" href="Content.Server.GameTicking.GameTicker.html#Content_Server_GameTicking_GameTicker_PlayerJoinGame_Robust_Server_Player_IPlayerSession_System_Boolean_">PlayerJoinGame(IPlayerSession, Boolean)</a> on them.</p>
+</section>
+    <h3 id="enums">Enums
+  </h3>
+      <h4><a class="xref" href="Content.Server.GameTicking.GameRunLevel.html">GameRunLevel</a></h4>
+      <section></section>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                </ul>
+              </div>
+              <div class="toggle-mode">
+                <div class="icon">
+                  <i aria-hidden="true">☀</i>
+                </div>
+                <label class="switch">
+                  <input type="checkbox" id="switch-style">
+                  <span class="slider round"></span>
+                </label>
+                <div class="icon">
+                  <i aria-hidden="true">☾</i>
+                </div>
+              </div>
+          
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <h5>In This Article</h5>
+              <div></div>
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <div class="pull-left">
+              
+              <span>Generated by <strong>DocFX</strong></span>
+            </div>
+            <div class="toggle-mode pull-right visible-sm visible-xs">
+              <div class="icon">
+                <i aria-hidden="true">☀</i>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="switch-style-m">
+                <span class="slider round"></span>
+              </label>
+              <div class="icon">
+                <i aria-hidden="true">☾</i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <script type="text/javascript" src="../../styles/toggle-theme.js"></script>
+      </footer>    </div>
+    
+    <script type="text/javascript" src="../../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../../styles/docfx.js"></script>
+    <script type="text/javascript" src="../../styles/main.js"></script>
+  </body>
+</html>

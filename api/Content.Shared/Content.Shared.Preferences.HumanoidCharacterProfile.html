@@ -1,0 +1,1847 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class HumanoidCharacterProfile
+   </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class HumanoidCharacterProfile
+   ">
+    <meta name="generator" content="docfx 2.56.7.0">
+    
+    <link rel="shortcut icon" href="../../favicon.ico">
+    <link rel="stylesheet" href="../../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../../styles/docfx.css">
+    <link rel="stylesheet" href="../../styles/main.css">
+    <meta property="docfx:navrel" content="../../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../../index.html">
+                <img id="logo" class="svg" src="../../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Content.Shared.Preferences.HumanoidCharacterProfile">
+  
+  
+  <h1 id="Content_Shared_Preferences_HumanoidCharacterProfile" data-uid="Content.Shared.Preferences.HumanoidCharacterProfile" class="text-break">Class HumanoidCharacterProfile
+  </h1>
+  <div class="markdown level0 summary"><p>Character profile. Looks immutable, but uses non-immutable semantics internally for serialization/code sanity purposes.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level1"><span class="xref">HumanoidCharacterProfile</span></div>
+  </div>
+  <div classs="implements">
+    <h5>Implements</h5>
+    <div><a class="xref" href="Content.Shared.Preferences.ICharacterProfile.html">ICharacterProfile</a></div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Content.Shared.Preferences.html">Content.Shared.Preferences</a></h6>
+  <h6><strong>Assembly</strong>: Content.Shared.dll</h6>
+  <h5 id="Content_Shared_Preferences_HumanoidCharacterProfile_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public sealed class HumanoidCharacterProfile : object, ICharacterProfile</code></pre>
+  </div>
+  <h3 id="constructors">Constructors
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Preferences_HumanoidCharacterProfile__ctor.md&amp;value=---%0Auid%3A%20Content.Shared.Preferences.HumanoidCharacterProfile.%23ctor%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Preferences/HumanoidCharacterProfile.cs/#L105">View Source</a>
+  </span>
+  <a id="Content_Shared_Preferences_HumanoidCharacterProfile__ctor_" data-uid="Content.Shared.Preferences.HumanoidCharacterProfile.#ctor*"></a>
+  <h4 id="Content_Shared_Preferences_HumanoidCharacterProfile__ctor" data-uid="Content.Shared.Preferences.HumanoidCharacterProfile.#ctor">HumanoidCharacterProfile()</h4>
+  <div class="markdown level1 summary"><p>Get the default humanoid character profile, using internal constant values.
+Defaults to <a class="xref" href="Content.Shared.Humanoid.SharedHumanoidAppearanceSystem.html#Content_Shared_Humanoid_SharedHumanoidAppearanceSystem_DefaultSpecies">DefaultSpecies</a> for the species.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public HumanoidCharacterProfile()</code></pre>
+  </div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Preferences_HumanoidCharacterProfile__ctor_System_String_System_String_System_String_System_Int32_Content_Shared_Humanoid_Sex_Robust_Shared_Enums_Gender_Content_Shared_Humanoid_HumanoidCharacterAppearance_Content_Shared_Preferences_ClothingPreference_Content_Shared_Preferences_BackpackPreference_IReadOnlyDictionary_System_String_Content_Shared_Preferences_JobPriority__Content_Shared_Preferences_PreferenceUnavailableMode_IReadOnlyList_System_String__IReadOnlyList_System_String__.md&amp;value=---%0Auid%3A%20Content.Shared.Preferences.HumanoidCharacterProfile.%23ctor(System.String%2CSystem.String%2CSystem.String%2CSystem.Int32%2CContent.Shared.Humanoid.Sex%2CRobust.Shared.Enums.Gender%2CContent.Shared.Humanoid.HumanoidCharacterAppearance%2CContent.Shared.Preferences.ClothingPreference%2CContent.Shared.Preferences.BackpackPreference%2CIReadOnlyDictionary%7BSystem.String%2CContent.Shared.Preferences.JobPriority%7D%2CContent.Shared.Preferences.PreferenceUnavailableMode%2CIReadOnlyList%7BSystem.String%7D%2CIReadOnlyList%7BSystem.String%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Preferences/HumanoidCharacterProfile.cs/#L81">View Source</a>
+  </span>
+  <a id="Content_Shared_Preferences_HumanoidCharacterProfile__ctor_" data-uid="Content.Shared.Preferences.HumanoidCharacterProfile.#ctor*"></a>
+  <h4 id="Content_Shared_Preferences_HumanoidCharacterProfile__ctor_System_String_System_String_System_String_System_Int32_Content_Shared_Humanoid_Sex_Robust_Shared_Enums_Gender_Content_Shared_Humanoid_HumanoidCharacterAppearance_Content_Shared_Preferences_ClothingPreference_Content_Shared_Preferences_BackpackPreference_IReadOnlyDictionary_System_String_Content_Shared_Preferences_JobPriority__Content_Shared_Preferences_PreferenceUnavailableMode_IReadOnlyList_System_String__IReadOnlyList_System_String__" data-uid="Content.Shared.Preferences.HumanoidCharacterProfile.#ctor(System.String,System.String,System.String,System.Int32,Content.Shared.Humanoid.Sex,Robust.Shared.Enums.Gender,Content.Shared.Humanoid.HumanoidCharacterAppearance,Content.Shared.Preferences.ClothingPreference,Content.Shared.Preferences.BackpackPreference,IReadOnlyDictionary{System.String,Content.Shared.Preferences.JobPriority},Content.Shared.Preferences.PreferenceUnavailableMode,IReadOnlyList{System.String},IReadOnlyList{System.String})">HumanoidCharacterProfile(String, String, String, Int32, Sex, Gender, HumanoidCharacterAppearance, ClothingPreference, BackpackPreference, IReadOnlyDictionary&lt;String, JobPriority&gt;, PreferenceUnavailableMode, IReadOnlyList&lt;String&gt;, IReadOnlyList&lt;String&gt;)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public HumanoidCharacterProfile(string name, string flavortext, string species, int age, Sex sex, Gender gender, HumanoidCharacterAppearance appearance, ClothingPreference clothing, BackpackPreference backpack, IReadOnlyDictionary&lt;string, JobPriority&gt; jobPriorities, PreferenceUnavailableMode preferenceUnavailable, IReadOnlyList&lt;string&gt; antagPreferences, IReadOnlyList&lt;string&gt; traitPreferences)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">name</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">flavortext</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">species</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">age</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Humanoid.Sex.html">Sex</a></td>
+        <td><span class="parametername">sex</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">Robust.Shared.Enums.Gender</span></td>
+        <td><span class="parametername">gender</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Humanoid.HumanoidCharacterAppearance.html">HumanoidCharacterAppearance</a></td>
+        <td><span class="parametername">appearance</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Preferences.ClothingPreference.html">ClothingPreference</a></td>
+        <td><span class="parametername">clothing</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Preferences.BackpackPreference.html">BackpackPreference</a></td>
+        <td><span class="parametername">backpack</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">IReadOnlyDictionary</span>&lt;<span class="xref">System.String</span>, <a class="xref" href="Content.Shared.Preferences.JobPriority.html">JobPriority</a>&gt;</td>
+        <td><span class="parametername">jobPriorities</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Preferences.PreferenceUnavailableMode.html">PreferenceUnavailableMode</a></td>
+        <td><span class="parametername">preferenceUnavailable</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">IReadOnlyList</span>&lt;<span class="xref">System.String</span>&gt;</td>
+        <td><span class="parametername">antagPreferences</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">IReadOnlyList</span>&lt;<span class="xref">System.String</span>&gt;</td>
+        <td><span class="parametername">traitPreferences</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="fields">Fields
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Preferences_HumanoidCharacterProfile_MaxDescLength.md&amp;value=---%0Auid%3A%20Content.Shared.Preferences.HumanoidCharacterProfile.MaxDescLength%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Preferences/HumanoidCharacterProfile.cs/#L28">View Source</a>
+  </span>
+  <h4 id="Content_Shared_Preferences_HumanoidCharacterProfile_MaxDescLength" data-uid="Content.Shared.Preferences.HumanoidCharacterProfile.MaxDescLength">MaxDescLength</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public const int MaxDescLength = null</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Preferences_HumanoidCharacterProfile_MaxNameLength.md&amp;value=---%0Auid%3A%20Content.Shared.Preferences.HumanoidCharacterProfile.MaxNameLength%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Preferences/HumanoidCharacterProfile.cs/#L27">View Source</a>
+  </span>
+  <h4 id="Content_Shared_Preferences_HumanoidCharacterProfile_MaxNameLength" data-uid="Content.Shared.Preferences.HumanoidCharacterProfile.MaxNameLength">MaxNameLength</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public const int MaxNameLength = null</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="properties">Properties
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Preferences_HumanoidCharacterProfile_Age.md&amp;value=---%0Auid%3A%20Content.Shared.Preferences.HumanoidCharacterProfile.Age%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Preferences/HumanoidCharacterProfile.cs/#L194">View Source</a>
+  </span>
+  <a id="Content_Shared_Preferences_HumanoidCharacterProfile_Age_" data-uid="Content.Shared.Preferences.HumanoidCharacterProfile.Age*"></a>
+  <h4 id="Content_Shared_Preferences_HumanoidCharacterProfile_Age" data-uid="Content.Shared.Preferences.HumanoidCharacterProfile.Age">Age</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int Age { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Preferences_HumanoidCharacterProfile_AntagPreferences.md&amp;value=---%0Auid%3A%20Content.Shared.Preferences.HumanoidCharacterProfile.AntagPreferences%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Preferences/HumanoidCharacterProfile.cs/#L210">View Source</a>
+  </span>
+  <a id="Content_Shared_Preferences_HumanoidCharacterProfile_AntagPreferences_" data-uid="Content.Shared.Preferences.HumanoidCharacterProfile.AntagPreferences*"></a>
+  <h4 id="Content_Shared_Preferences_HumanoidCharacterProfile_AntagPreferences" data-uid="Content.Shared.Preferences.HumanoidCharacterProfile.AntagPreferences">AntagPreferences</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IReadOnlyList&lt;string&gt; AntagPreferences { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IReadOnlyList</span>&lt;<span class="xref">System.String</span>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Preferences_HumanoidCharacterProfile_Appearance.md&amp;value=---%0Auid%3A%20Content.Shared.Preferences.HumanoidCharacterProfile.Appearance%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Preferences/HumanoidCharacterProfile.cs/#L205">View Source</a>
+  </span>
+  <a id="Content_Shared_Preferences_HumanoidCharacterProfile_Appearance_" data-uid="Content.Shared.Preferences.HumanoidCharacterProfile.Appearance*"></a>
+  <h4 id="Content_Shared_Preferences_HumanoidCharacterProfile_Appearance" data-uid="Content.Shared.Preferences.HumanoidCharacterProfile.Appearance">Appearance</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public HumanoidCharacterAppearance Appearance { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Humanoid.HumanoidCharacterAppearance.html">HumanoidCharacterAppearance</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Preferences_HumanoidCharacterProfile_Backpack.md&amp;value=---%0Auid%3A%20Content.Shared.Preferences.HumanoidCharacterProfile.Backpack%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Preferences/HumanoidCharacterProfile.cs/#L208">View Source</a>
+  </span>
+  <a id="Content_Shared_Preferences_HumanoidCharacterProfile_Backpack_" data-uid="Content.Shared.Preferences.HumanoidCharacterProfile.Backpack*"></a>
+  <h4 id="Content_Shared_Preferences_HumanoidCharacterProfile_Backpack" data-uid="Content.Shared.Preferences.HumanoidCharacterProfile.Backpack">Backpack</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public BackpackPreference Backpack { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Preferences.BackpackPreference.html">BackpackPreference</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Preferences_HumanoidCharacterProfile_CharacterAppearance.md&amp;value=---%0Auid%3A%20Content.Shared.Preferences.HumanoidCharacterProfile.CharacterAppearance%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Preferences/HumanoidCharacterProfile.cs/#L203">View Source</a>
+  </span>
+  <a id="Content_Shared_Preferences_HumanoidCharacterProfile_CharacterAppearance_" data-uid="Content.Shared.Preferences.HumanoidCharacterProfile.CharacterAppearance*"></a>
+  <h4 id="Content_Shared_Preferences_HumanoidCharacterProfile_CharacterAppearance" data-uid="Content.Shared.Preferences.HumanoidCharacterProfile.CharacterAppearance">CharacterAppearance</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ICharacterAppearance CharacterAppearance { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Humanoid.ICharacterAppearance.html">ICharacterAppearance</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Preferences_HumanoidCharacterProfile_Clothing.md&amp;value=---%0Auid%3A%20Content.Shared.Preferences.HumanoidCharacterProfile.Clothing%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Preferences/HumanoidCharacterProfile.cs/#L207">View Source</a>
+  </span>
+  <a id="Content_Shared_Preferences_HumanoidCharacterProfile_Clothing_" data-uid="Content.Shared.Preferences.HumanoidCharacterProfile.Clothing*"></a>
+  <h4 id="Content_Shared_Preferences_HumanoidCharacterProfile_Clothing" data-uid="Content.Shared.Preferences.HumanoidCharacterProfile.Clothing">Clothing</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ClothingPreference Clothing { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Preferences.ClothingPreference.html">ClothingPreference</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Preferences_HumanoidCharacterProfile_FlavorText.md&amp;value=---%0Auid%3A%20Content.Shared.Preferences.HumanoidCharacterProfile.FlavorText%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Preferences/HumanoidCharacterProfile.cs/#L191">View Source</a>
+  </span>
+  <a id="Content_Shared_Preferences_HumanoidCharacterProfile_FlavorText_" data-uid="Content.Shared.Preferences.HumanoidCharacterProfile.FlavorText*"></a>
+  <h4 id="Content_Shared_Preferences_HumanoidCharacterProfile_FlavorText" data-uid="Content.Shared.Preferences.HumanoidCharacterProfile.FlavorText">FlavorText</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string FlavorText { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Preferences_HumanoidCharacterProfile_Gender.md&amp;value=---%0Auid%3A%20Content.Shared.Preferences.HumanoidCharacterProfile.Gender%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Preferences/HumanoidCharacterProfile.cs/#L200">View Source</a>
+  </span>
+  <a id="Content_Shared_Preferences_HumanoidCharacterProfile_Gender_" data-uid="Content.Shared.Preferences.HumanoidCharacterProfile.Gender*"></a>
+  <h4 id="Content_Shared_Preferences_HumanoidCharacterProfile_Gender" data-uid="Content.Shared.Preferences.HumanoidCharacterProfile.Gender">Gender</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Gender Gender { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Robust.Shared.Enums.Gender</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Preferences_HumanoidCharacterProfile_JobPriorities.md&amp;value=---%0Auid%3A%20Content.Shared.Preferences.HumanoidCharacterProfile.JobPriorities%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Preferences/HumanoidCharacterProfile.cs/#L209">View Source</a>
+  </span>
+  <a id="Content_Shared_Preferences_HumanoidCharacterProfile_JobPriorities_" data-uid="Content.Shared.Preferences.HumanoidCharacterProfile.JobPriorities*"></a>
+  <h4 id="Content_Shared_Preferences_HumanoidCharacterProfile_JobPriorities" data-uid="Content.Shared.Preferences.HumanoidCharacterProfile.JobPriorities">JobPriorities</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IReadOnlyDictionary&lt;string, JobPriority&gt; JobPriorities { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IReadOnlyDictionary</span>&lt;<span class="xref">System.String</span>, <a class="xref" href="Content.Shared.Preferences.JobPriority.html">JobPriority</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Preferences_HumanoidCharacterProfile_Name.md&amp;value=---%0Auid%3A%20Content.Shared.Preferences.HumanoidCharacterProfile.Name%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Preferences/HumanoidCharacterProfile.cs/#L190">View Source</a>
+  </span>
+  <a id="Content_Shared_Preferences_HumanoidCharacterProfile_Name_" data-uid="Content.Shared.Preferences.HumanoidCharacterProfile.Name*"></a>
+  <h4 id="Content_Shared_Preferences_HumanoidCharacterProfile_Name" data-uid="Content.Shared.Preferences.HumanoidCharacterProfile.Name">Name</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string Name { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Preferences_HumanoidCharacterProfile_PreferenceUnavailable.md&amp;value=---%0Auid%3A%20Content.Shared.Preferences.HumanoidCharacterProfile.PreferenceUnavailable%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Preferences/HumanoidCharacterProfile.cs/#L212">View Source</a>
+  </span>
+  <a id="Content_Shared_Preferences_HumanoidCharacterProfile_PreferenceUnavailable_" data-uid="Content.Shared.Preferences.HumanoidCharacterProfile.PreferenceUnavailable*"></a>
+  <h4 id="Content_Shared_Preferences_HumanoidCharacterProfile_PreferenceUnavailable" data-uid="Content.Shared.Preferences.HumanoidCharacterProfile.PreferenceUnavailable">PreferenceUnavailable</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public PreferenceUnavailableMode PreferenceUnavailable { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Preferences.PreferenceUnavailableMode.html">PreferenceUnavailableMode</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Preferences_HumanoidCharacterProfile_Sex.md&amp;value=---%0Auid%3A%20Content.Shared.Preferences.HumanoidCharacterProfile.Sex%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Preferences/HumanoidCharacterProfile.cs/#L197">View Source</a>
+  </span>
+  <a id="Content_Shared_Preferences_HumanoidCharacterProfile_Sex_" data-uid="Content.Shared.Preferences.HumanoidCharacterProfile.Sex*"></a>
+  <h4 id="Content_Shared_Preferences_HumanoidCharacterProfile_Sex" data-uid="Content.Shared.Preferences.HumanoidCharacterProfile.Sex">Sex</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Sex Sex { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Humanoid.Sex.html">Sex</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Preferences_HumanoidCharacterProfile_Species.md&amp;value=---%0Auid%3A%20Content.Shared.Preferences.HumanoidCharacterProfile.Species%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Preferences/HumanoidCharacterProfile.cs/#L192">View Source</a>
+  </span>
+  <a id="Content_Shared_Preferences_HumanoidCharacterProfile_Species_" data-uid="Content.Shared.Preferences.HumanoidCharacterProfile.Species*"></a>
+  <h4 id="Content_Shared_Preferences_HumanoidCharacterProfile_Species" data-uid="Content.Shared.Preferences.HumanoidCharacterProfile.Species">Species</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string Species { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Preferences_HumanoidCharacterProfile_Summary.md&amp;value=---%0Auid%3A%20Content.Shared.Preferences.HumanoidCharacterProfile.Summary%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Preferences/HumanoidCharacterProfile.cs/#L329">View Source</a>
+  </span>
+  <a id="Content_Shared_Preferences_HumanoidCharacterProfile_Summary_" data-uid="Content.Shared.Preferences.HumanoidCharacterProfile.Summary*"></a>
+  <h4 id="Content_Shared_Preferences_HumanoidCharacterProfile_Summary" data-uid="Content.Shared.Preferences.HumanoidCharacterProfile.Summary">Summary</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string Summary { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Preferences_HumanoidCharacterProfile_TraitPreferences.md&amp;value=---%0Auid%3A%20Content.Shared.Preferences.HumanoidCharacterProfile.TraitPreferences%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Preferences/HumanoidCharacterProfile.cs/#L211">View Source</a>
+  </span>
+  <a id="Content_Shared_Preferences_HumanoidCharacterProfile_TraitPreferences_" data-uid="Content.Shared.Preferences.HumanoidCharacterProfile.TraitPreferences*"></a>
+  <h4 id="Content_Shared_Preferences_HumanoidCharacterProfile_TraitPreferences" data-uid="Content.Shared.Preferences.HumanoidCharacterProfile.TraitPreferences">TraitPreferences</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IReadOnlyList&lt;string&gt; TraitPreferences { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IReadOnlyList</span>&lt;<span class="xref">System.String</span>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Preferences_HumanoidCharacterProfile_DefaultWithSpecies_System_String_.md&amp;value=---%0Auid%3A%20Content.Shared.Preferences.HumanoidCharacterProfile.DefaultWithSpecies(System.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Preferences/HumanoidCharacterProfile.cs/#L130">View Source</a>
+  </span>
+  <a id="Content_Shared_Preferences_HumanoidCharacterProfile_DefaultWithSpecies_" data-uid="Content.Shared.Preferences.HumanoidCharacterProfile.DefaultWithSpecies*"></a>
+  <h4 id="Content_Shared_Preferences_HumanoidCharacterProfile_DefaultWithSpecies_System_String_" data-uid="Content.Shared.Preferences.HumanoidCharacterProfile.DefaultWithSpecies(System.String)">DefaultWithSpecies(String)</h4>
+  <div class="markdown level1 summary"><p>Return a default character profile, based on species.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static HumanoidCharacterProfile DefaultWithSpecies(string species = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">species</span></td>
+        <td><p>The species to use in this default profile. The default species is <a class="xref" href="Content.Shared.Humanoid.SharedHumanoidAppearanceSystem.html#Content_Shared_Humanoid_SharedHumanoidAppearanceSystem_DefaultSpecies">DefaultSpecies</a>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Preferences.HumanoidCharacterProfile.html">HumanoidCharacterProfile</a></td>
+        <td><p>Humanoid character profile with default settings.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Preferences_HumanoidCharacterProfile_EnsureValid.md&amp;value=---%0Auid%3A%20Content.Shared.Preferences.HumanoidCharacterProfile.EnsureValid%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Preferences/HumanoidCharacterProfile.cs/#L353">View Source</a>
+  </span>
+  <a id="Content_Shared_Preferences_HumanoidCharacterProfile_EnsureValid_" data-uid="Content.Shared.Preferences.HumanoidCharacterProfile.EnsureValid*"></a>
+  <h4 id="Content_Shared_Preferences_HumanoidCharacterProfile_EnsureValid" data-uid="Content.Shared.Preferences.HumanoidCharacterProfile.EnsureValid">EnsureValid()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void EnsureValid()</code></pre>
+  </div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Preferences_HumanoidCharacterProfile_Equals_System_Nullable_System_Object__.md&amp;value=---%0Auid%3A%20Content.Shared.Preferences.HumanoidCharacterProfile.Equals(System.Nullable%7BSystem.Object%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Preferences/HumanoidCharacterProfile.cs/#L511">View Source</a>
+  </span>
+  <a id="Content_Shared_Preferences_HumanoidCharacterProfile_Equals_" data-uid="Content.Shared.Preferences.HumanoidCharacterProfile.Equals*"></a>
+  <h4 id="Content_Shared_Preferences_HumanoidCharacterProfile_Equals_System_Nullable_System_Object__" data-uid="Content.Shared.Preferences.HumanoidCharacterProfile.Equals(System.Nullable{System.Object})">Equals(Nullable&lt;Object&gt;)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override bool Equals(object? obj)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">System.Object</span>&gt;</td>
+        <td><span class="parametername">obj</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Preferences_HumanoidCharacterProfile_GetHashCode.md&amp;value=---%0Auid%3A%20Content.Shared.Preferences.HumanoidCharacterProfile.GetHashCode%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Preferences/HumanoidCharacterProfile.cs/#L516">View Source</a>
+  </span>
+  <a id="Content_Shared_Preferences_HumanoidCharacterProfile_GetHashCode_" data-uid="Content.Shared.Preferences.HumanoidCharacterProfile.GetHashCode*"></a>
+  <h4 id="Content_Shared_Preferences_HumanoidCharacterProfile_GetHashCode" data-uid="Content.Shared.Preferences.HumanoidCharacterProfile.GetHashCode">GetHashCode()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override int GetHashCode()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Preferences_HumanoidCharacterProfile_GetName_System_String_Robust_Shared_Enums_Gender_.md&amp;value=---%0Auid%3A%20Content.Shared.Preferences.HumanoidCharacterProfile.GetName(System.String%2CRobust.Shared.Enums.Gender)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Preferences/HumanoidCharacterProfile.cs/#L505">View Source</a>
+  </span>
+  <a id="Content_Shared_Preferences_HumanoidCharacterProfile_GetName_" data-uid="Content.Shared.Preferences.HumanoidCharacterProfile.GetName*"></a>
+  <h4 id="Content_Shared_Preferences_HumanoidCharacterProfile_GetName_System_String_Robust_Shared_Enums_Gender_" data-uid="Content.Shared.Preferences.HumanoidCharacterProfile.GetName(System.String,Robust.Shared.Enums.Gender)">GetName(String, Gender)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static string GetName(string species, Gender gender)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">species</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">Robust.Shared.Enums.Gender</span></td>
+        <td><span class="parametername">gender</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Preferences_HumanoidCharacterProfile_MemberwiseEquals_Content_Shared_Preferences_ICharacterProfile_.md&amp;value=---%0Auid%3A%20Content.Shared.Preferences.HumanoidCharacterProfile.MemberwiseEquals(Content.Shared.Preferences.ICharacterProfile)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Preferences/HumanoidCharacterProfile.cs/#L337">View Source</a>
+  </span>
+  <a id="Content_Shared_Preferences_HumanoidCharacterProfile_MemberwiseEquals_" data-uid="Content.Shared.Preferences.HumanoidCharacterProfile.MemberwiseEquals*"></a>
+  <h4 id="Content_Shared_Preferences_HumanoidCharacterProfile_MemberwiseEquals_Content_Shared_Preferences_ICharacterProfile_" data-uid="Content.Shared.Preferences.HumanoidCharacterProfile.MemberwiseEquals(Content.Shared.Preferences.ICharacterProfile)">MemberwiseEquals(ICharacterProfile)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool MemberwiseEquals(ICharacterProfile maybeOther)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Preferences.ICharacterProfile.html">ICharacterProfile</a></td>
+        <td><span class="parametername">maybeOther</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Preferences_HumanoidCharacterProfile_Random_System_Nullable_HashSet_System_String___.md&amp;value=---%0Auid%3A%20Content.Shared.Preferences.HumanoidCharacterProfile.Random(System.Nullable%7BHashSet%7BSystem.String%7D%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Preferences/HumanoidCharacterProfile.cs/#L152">View Source</a>
+  </span>
+  <a id="Content_Shared_Preferences_HumanoidCharacterProfile_Random_" data-uid="Content.Shared.Preferences.HumanoidCharacterProfile.Random*"></a>
+  <h4 id="Content_Shared_Preferences_HumanoidCharacterProfile_Random_System_Nullable_HashSet_System_String___" data-uid="Content.Shared.Preferences.HumanoidCharacterProfile.Random(System.Nullable{HashSet{System.String}})">Random(Nullable&lt;HashSet&lt;String&gt;&gt;)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static HumanoidCharacterProfile Random(HashSet&lt;string&gt;? ignoredSpecies = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">HashSet</span>&lt;<span class="xref">System.String</span>&gt;&gt;</td>
+        <td><span class="parametername">ignoredSpecies</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Preferences.HumanoidCharacterProfile.html">HumanoidCharacterProfile</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Preferences_HumanoidCharacterProfile_RandomWithSpecies_System_String_.md&amp;value=---%0Auid%3A%20Content.Shared.Preferences.HumanoidCharacterProfile.RandomWithSpecies(System.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Preferences/HumanoidCharacterProfile.cs/#L166">View Source</a>
+  </span>
+  <a id="Content_Shared_Preferences_HumanoidCharacterProfile_RandomWithSpecies_" data-uid="Content.Shared.Preferences.HumanoidCharacterProfile.RandomWithSpecies*"></a>
+  <h4 id="Content_Shared_Preferences_HumanoidCharacterProfile_RandomWithSpecies_System_String_" data-uid="Content.Shared.Preferences.HumanoidCharacterProfile.RandomWithSpecies(System.String)">RandomWithSpecies(String)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static HumanoidCharacterProfile RandomWithSpecies(string species = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">species</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Preferences.HumanoidCharacterProfile.html">HumanoidCharacterProfile</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Preferences_HumanoidCharacterProfile_WithAge_System_Int32_.md&amp;value=---%0Auid%3A%20Content.Shared.Preferences.HumanoidCharacterProfile.WithAge(System.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Preferences/HumanoidCharacterProfile.cs/#L224">View Source</a>
+  </span>
+  <a id="Content_Shared_Preferences_HumanoidCharacterProfile_WithAge_" data-uid="Content.Shared.Preferences.HumanoidCharacterProfile.WithAge*"></a>
+  <h4 id="Content_Shared_Preferences_HumanoidCharacterProfile_WithAge_System_Int32_" data-uid="Content.Shared.Preferences.HumanoidCharacterProfile.WithAge(System.Int32)">WithAge(Int32)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public HumanoidCharacterProfile WithAge(int age)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">age</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Preferences.HumanoidCharacterProfile.html">HumanoidCharacterProfile</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Preferences_HumanoidCharacterProfile_WithAntagPreference_System_String_System_Boolean_.md&amp;value=---%0Auid%3A%20Content.Shared.Preferences.HumanoidCharacterProfile.WithAntagPreference(System.String%2CSystem.Boolean)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Preferences/HumanoidCharacterProfile.cs/#L287">View Source</a>
+  </span>
+  <a id="Content_Shared_Preferences_HumanoidCharacterProfile_WithAntagPreference_" data-uid="Content.Shared.Preferences.HumanoidCharacterProfile.WithAntagPreference*"></a>
+  <h4 id="Content_Shared_Preferences_HumanoidCharacterProfile_WithAntagPreference_System_String_System_Boolean_" data-uid="Content.Shared.Preferences.HumanoidCharacterProfile.WithAntagPreference(System.String,System.Boolean)">WithAntagPreference(String, Boolean)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public HumanoidCharacterProfile WithAntagPreference(string antagId, bool pref)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">antagId</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">pref</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Preferences.HumanoidCharacterProfile.html">HumanoidCharacterProfile</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Preferences_HumanoidCharacterProfile_WithAntagPreferences_IEnumerable_System_String__.md&amp;value=---%0Auid%3A%20Content.Shared.Preferences.HumanoidCharacterProfile.WithAntagPreferences(IEnumerable%7BSystem.String%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Preferences/HumanoidCharacterProfile.cs/#L282">View Source</a>
+  </span>
+  <a id="Content_Shared_Preferences_HumanoidCharacterProfile_WithAntagPreferences_" data-uid="Content.Shared.Preferences.HumanoidCharacterProfile.WithAntagPreferences*"></a>
+  <h4 id="Content_Shared_Preferences_HumanoidCharacterProfile_WithAntagPreferences_IEnumerable_System_String__" data-uid="Content.Shared.Preferences.HumanoidCharacterProfile.WithAntagPreferences(IEnumerable{System.String})">WithAntagPreferences(IEnumerable&lt;String&gt;)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public HumanoidCharacterProfile WithAntagPreferences(IEnumerable&lt;string&gt; antagPreferences)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IEnumerable</span>&lt;<span class="xref">System.String</span>&gt;</td>
+        <td><span class="parametername">antagPreferences</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Preferences.HumanoidCharacterProfile.html">HumanoidCharacterProfile</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Preferences_HumanoidCharacterProfile_WithBackpackPreference_Content_Shared_Preferences_BackpackPreference_.md&amp;value=---%0Auid%3A%20Content.Shared.Preferences.HumanoidCharacterProfile.WithBackpackPreference(Content.Shared.Preferences.BackpackPreference)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Preferences/HumanoidCharacterProfile.cs/#L254">View Source</a>
+  </span>
+  <a id="Content_Shared_Preferences_HumanoidCharacterProfile_WithBackpackPreference_" data-uid="Content.Shared.Preferences.HumanoidCharacterProfile.WithBackpackPreference*"></a>
+  <h4 id="Content_Shared_Preferences_HumanoidCharacterProfile_WithBackpackPreference_Content_Shared_Preferences_BackpackPreference_" data-uid="Content.Shared.Preferences.HumanoidCharacterProfile.WithBackpackPreference(Content.Shared.Preferences.BackpackPreference)">WithBackpackPreference(BackpackPreference)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public HumanoidCharacterProfile WithBackpackPreference(BackpackPreference backpack)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Preferences.BackpackPreference.html">BackpackPreference</a></td>
+        <td><span class="parametername">backpack</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Preferences.HumanoidCharacterProfile.html">HumanoidCharacterProfile</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Preferences_HumanoidCharacterProfile_WithCharacterAppearance_Content_Shared_Humanoid_HumanoidCharacterAppearance_.md&amp;value=---%0Auid%3A%20Content.Shared.Preferences.HumanoidCharacterProfile.WithCharacterAppearance(Content.Shared.Humanoid.HumanoidCharacterAppearance)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Preferences/HumanoidCharacterProfile.cs/#L245">View Source</a>
+  </span>
+  <a id="Content_Shared_Preferences_HumanoidCharacterProfile_WithCharacterAppearance_" data-uid="Content.Shared.Preferences.HumanoidCharacterProfile.WithCharacterAppearance*"></a>
+  <h4 id="Content_Shared_Preferences_HumanoidCharacterProfile_WithCharacterAppearance_Content_Shared_Humanoid_HumanoidCharacterAppearance_" data-uid="Content.Shared.Preferences.HumanoidCharacterProfile.WithCharacterAppearance(Content.Shared.Humanoid.HumanoidCharacterAppearance)">WithCharacterAppearance(HumanoidCharacterAppearance)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public HumanoidCharacterProfile WithCharacterAppearance(HumanoidCharacterAppearance appearance)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Humanoid.HumanoidCharacterAppearance.html">HumanoidCharacterAppearance</a></td>
+        <td><span class="parametername">appearance</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Preferences.HumanoidCharacterProfile.html">HumanoidCharacterProfile</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Preferences_HumanoidCharacterProfile_WithClothingPreference_Content_Shared_Preferences_ClothingPreference_.md&amp;value=---%0Auid%3A%20Content.Shared.Preferences.HumanoidCharacterProfile.WithClothingPreference(Content.Shared.Preferences.ClothingPreference)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Preferences/HumanoidCharacterProfile.cs/#L250">View Source</a>
+  </span>
+  <a id="Content_Shared_Preferences_HumanoidCharacterProfile_WithClothingPreference_" data-uid="Content.Shared.Preferences.HumanoidCharacterProfile.WithClothingPreference*"></a>
+  <h4 id="Content_Shared_Preferences_HumanoidCharacterProfile_WithClothingPreference_Content_Shared_Preferences_ClothingPreference_" data-uid="Content.Shared.Preferences.HumanoidCharacterProfile.WithClothingPreference(Content.Shared.Preferences.ClothingPreference)">WithClothingPreference(ClothingPreference)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public HumanoidCharacterProfile WithClothingPreference(ClothingPreference clothing)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Preferences.ClothingPreference.html">ClothingPreference</a></td>
+        <td><span class="parametername">clothing</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Preferences.HumanoidCharacterProfile.html">HumanoidCharacterProfile</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Preferences_HumanoidCharacterProfile_WithFlavorText_System_String_.md&amp;value=---%0Auid%3A%20Content.Shared.Preferences.HumanoidCharacterProfile.WithFlavorText(System.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Preferences/HumanoidCharacterProfile.cs/#L219">View Source</a>
+  </span>
+  <a id="Content_Shared_Preferences_HumanoidCharacterProfile_WithFlavorText_" data-uid="Content.Shared.Preferences.HumanoidCharacterProfile.WithFlavorText*"></a>
+  <h4 id="Content_Shared_Preferences_HumanoidCharacterProfile_WithFlavorText_System_String_" data-uid="Content.Shared.Preferences.HumanoidCharacterProfile.WithFlavorText(System.String)">WithFlavorText(String)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public HumanoidCharacterProfile WithFlavorText(string flavorText)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">flavorText</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Preferences.HumanoidCharacterProfile.html">HumanoidCharacterProfile</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Preferences_HumanoidCharacterProfile_WithGender_Robust_Shared_Enums_Gender_.md&amp;value=---%0Auid%3A%20Content.Shared.Preferences.HumanoidCharacterProfile.WithGender(Robust.Shared.Enums.Gender)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Preferences/HumanoidCharacterProfile.cs/#L234">View Source</a>
+  </span>
+  <a id="Content_Shared_Preferences_HumanoidCharacterProfile_WithGender_" data-uid="Content.Shared.Preferences.HumanoidCharacterProfile.WithGender*"></a>
+  <h4 id="Content_Shared_Preferences_HumanoidCharacterProfile_WithGender_Robust_Shared_Enums_Gender_" data-uid="Content.Shared.Preferences.HumanoidCharacterProfile.WithGender(Robust.Shared.Enums.Gender)">WithGender(Gender)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public HumanoidCharacterProfile WithGender(Gender gender)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Robust.Shared.Enums.Gender</span></td>
+        <td><span class="parametername">gender</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Preferences.HumanoidCharacterProfile.html">HumanoidCharacterProfile</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Preferences_HumanoidCharacterProfile_WithJobPriorities_IEnumerable_KeyValuePair_System_String_Content_Shared_Preferences_JobPriority___.md&amp;value=---%0Auid%3A%20Content.Shared.Preferences.HumanoidCharacterProfile.WithJobPriorities(IEnumerable%7BKeyValuePair%7BSystem.String%2CContent.Shared.Preferences.JobPriority%7D%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Preferences/HumanoidCharacterProfile.cs/#L258">View Source</a>
+  </span>
+  <a id="Content_Shared_Preferences_HumanoidCharacterProfile_WithJobPriorities_" data-uid="Content.Shared.Preferences.HumanoidCharacterProfile.WithJobPriorities*"></a>
+  <h4 id="Content_Shared_Preferences_HumanoidCharacterProfile_WithJobPriorities_IEnumerable_KeyValuePair_System_String_Content_Shared_Preferences_JobPriority___" data-uid="Content.Shared.Preferences.HumanoidCharacterProfile.WithJobPriorities(IEnumerable{KeyValuePair{System.String,Content.Shared.Preferences.JobPriority}})">WithJobPriorities(IEnumerable&lt;KeyValuePair&lt;String, JobPriority&gt;&gt;)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public HumanoidCharacterProfile WithJobPriorities(IEnumerable&lt;KeyValuePair&lt;string, JobPriority&gt;&gt; jobPriorities)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IEnumerable</span>&lt;<span class="xref">KeyValuePair</span>&lt;<span class="xref">System.String</span>, <a class="xref" href="Content.Shared.Preferences.JobPriority.html">JobPriority</a>&gt;&gt;</td>
+        <td><span class="parametername">jobPriorities</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Preferences.HumanoidCharacterProfile.html">HumanoidCharacterProfile</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Preferences_HumanoidCharacterProfile_WithJobPriority_System_String_Content_Shared_Preferences_JobPriority_.md&amp;value=---%0Auid%3A%20Content.Shared.Preferences.HumanoidCharacterProfile.WithJobPriority(System.String%2CContent.Shared.Preferences.JobPriority)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Preferences/HumanoidCharacterProfile.cs/#L263">View Source</a>
+  </span>
+  <a id="Content_Shared_Preferences_HumanoidCharacterProfile_WithJobPriority_" data-uid="Content.Shared.Preferences.HumanoidCharacterProfile.WithJobPriority*"></a>
+  <h4 id="Content_Shared_Preferences_HumanoidCharacterProfile_WithJobPriority_System_String_Content_Shared_Preferences_JobPriority_" data-uid="Content.Shared.Preferences.HumanoidCharacterProfile.WithJobPriority(System.String,Content.Shared.Preferences.JobPriority)">WithJobPriority(String, JobPriority)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public HumanoidCharacterProfile WithJobPriority(string jobId, JobPriority priority)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">jobId</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Preferences.JobPriority.html">JobPriority</a></td>
+        <td><span class="parametername">priority</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Preferences.HumanoidCharacterProfile.html">HumanoidCharacterProfile</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Preferences_HumanoidCharacterProfile_WithName_System_String_.md&amp;value=---%0Auid%3A%20Content.Shared.Preferences.HumanoidCharacterProfile.WithName(System.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Preferences/HumanoidCharacterProfile.cs/#L214">View Source</a>
+  </span>
+  <a id="Content_Shared_Preferences_HumanoidCharacterProfile_WithName_" data-uid="Content.Shared.Preferences.HumanoidCharacterProfile.WithName*"></a>
+  <h4 id="Content_Shared_Preferences_HumanoidCharacterProfile_WithName_System_String_" data-uid="Content.Shared.Preferences.HumanoidCharacterProfile.WithName(System.String)">WithName(String)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public HumanoidCharacterProfile WithName(string name)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">name</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Preferences.HumanoidCharacterProfile.html">HumanoidCharacterProfile</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Preferences_HumanoidCharacterProfile_WithPreferenceUnavailable_Content_Shared_Preferences_PreferenceUnavailableMode_.md&amp;value=---%0Auid%3A%20Content.Shared.Preferences.HumanoidCharacterProfile.WithPreferenceUnavailable(Content.Shared.Preferences.PreferenceUnavailableMode)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Preferences/HumanoidCharacterProfile.cs/#L277">View Source</a>
+  </span>
+  <a id="Content_Shared_Preferences_HumanoidCharacterProfile_WithPreferenceUnavailable_" data-uid="Content.Shared.Preferences.HumanoidCharacterProfile.WithPreferenceUnavailable*"></a>
+  <h4 id="Content_Shared_Preferences_HumanoidCharacterProfile_WithPreferenceUnavailable_Content_Shared_Preferences_PreferenceUnavailableMode_" data-uid="Content.Shared.Preferences.HumanoidCharacterProfile.WithPreferenceUnavailable(Content.Shared.Preferences.PreferenceUnavailableMode)">WithPreferenceUnavailable(PreferenceUnavailableMode)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public HumanoidCharacterProfile WithPreferenceUnavailable(PreferenceUnavailableMode mode)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Preferences.PreferenceUnavailableMode.html">PreferenceUnavailableMode</a></td>
+        <td><span class="parametername">mode</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Preferences.HumanoidCharacterProfile.html">HumanoidCharacterProfile</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Preferences_HumanoidCharacterProfile_WithSex_Content_Shared_Humanoid_Sex_.md&amp;value=---%0Auid%3A%20Content.Shared.Preferences.HumanoidCharacterProfile.WithSex(Content.Shared.Humanoid.Sex)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Preferences/HumanoidCharacterProfile.cs/#L229">View Source</a>
+  </span>
+  <a id="Content_Shared_Preferences_HumanoidCharacterProfile_WithSex_" data-uid="Content.Shared.Preferences.HumanoidCharacterProfile.WithSex*"></a>
+  <h4 id="Content_Shared_Preferences_HumanoidCharacterProfile_WithSex_Content_Shared_Humanoid_Sex_" data-uid="Content.Shared.Preferences.HumanoidCharacterProfile.WithSex(Content.Shared.Humanoid.Sex)">WithSex(Sex)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public HumanoidCharacterProfile WithSex(Sex sex)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Humanoid.Sex.html">Sex</a></td>
+        <td><span class="parametername">sex</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Preferences.HumanoidCharacterProfile.html">HumanoidCharacterProfile</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Preferences_HumanoidCharacterProfile_WithSpecies_System_String_.md&amp;value=---%0Auid%3A%20Content.Shared.Preferences.HumanoidCharacterProfile.WithSpecies(System.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Preferences/HumanoidCharacterProfile.cs/#L239">View Source</a>
+  </span>
+  <a id="Content_Shared_Preferences_HumanoidCharacterProfile_WithSpecies_" data-uid="Content.Shared.Preferences.HumanoidCharacterProfile.WithSpecies*"></a>
+  <h4 id="Content_Shared_Preferences_HumanoidCharacterProfile_WithSpecies_System_String_" data-uid="Content.Shared.Preferences.HumanoidCharacterProfile.WithSpecies(System.String)">WithSpecies(String)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public HumanoidCharacterProfile WithSpecies(string species)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">species</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Preferences.HumanoidCharacterProfile.html">HumanoidCharacterProfile</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Preferences_HumanoidCharacterProfile_WithTraitPreference_System_String_System_Boolean_.md&amp;value=---%0Auid%3A%20Content.Shared.Preferences.HumanoidCharacterProfile.WithTraitPreference(System.String%2CSystem.Boolean)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Preferences/HumanoidCharacterProfile.cs/#L307">View Source</a>
+  </span>
+  <a id="Content_Shared_Preferences_HumanoidCharacterProfile_WithTraitPreference_" data-uid="Content.Shared.Preferences.HumanoidCharacterProfile.WithTraitPreference*"></a>
+  <h4 id="Content_Shared_Preferences_HumanoidCharacterProfile_WithTraitPreference_System_String_System_Boolean_" data-uid="Content.Shared.Preferences.HumanoidCharacterProfile.WithTraitPreference(System.String,System.Boolean)">WithTraitPreference(String, Boolean)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public HumanoidCharacterProfile WithTraitPreference(string traitId, bool pref)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">traitId</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">pref</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Preferences.HumanoidCharacterProfile.html">HumanoidCharacterProfile</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <a class="xref" href="Content.Shared.Preferences.ICharacterProfile.html">ICharacterProfile</a>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Preferences_HumanoidCharacterProfile.md&amp;value=---%0Auid%3A%20Content.Shared.Preferences.HumanoidCharacterProfile%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Preferences/HumanoidCharacterProfile.cs/#L23" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <div class="toggle-mode">
+                <div class="icon">
+                  <i aria-hidden="true">☀</i>
+                </div>
+                <label class="switch">
+                  <input type="checkbox" id="switch-style">
+                  <span class="slider round"></span>
+                </label>
+                <div class="icon">
+                  <i aria-hidden="true">☾</i>
+                </div>
+              </div>
+          
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <h5>In This Article</h5>
+              <div></div>
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <div class="pull-left">
+              
+              <span>Generated by <strong>DocFX</strong></span>
+            </div>
+            <div class="toggle-mode pull-right visible-sm visible-xs">
+              <div class="icon">
+                <i aria-hidden="true">☀</i>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="switch-style-m">
+                <span class="slider round"></span>
+              </label>
+              <div class="icon">
+                <i aria-hidden="true">☾</i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <script type="text/javascript" src="../../styles/toggle-theme.js"></script>
+      </footer>    </div>
+    
+    <script type="text/javascript" src="../../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../../styles/docfx.js"></script>
+    <script type="text/javascript" src="../../styles/main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,840 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class TurfHelpers
+   </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class TurfHelpers
+   ">
+    <meta name="generator" content="docfx 2.56.7.0">
+    
+    <link rel="shortcut icon" href="../../favicon.ico">
+    <link rel="stylesheet" href="../../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../../styles/docfx.css">
+    <link rel="stylesheet" href="../../styles/main.css">
+    <meta property="docfx:navrel" content="../../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../../index.html">
+                <img id="logo" class="svg" src="../../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Content.Shared.Maps.TurfHelpers">
+  
+  
+  <h1 id="Content_Shared_Maps_TurfHelpers" data-uid="Content.Shared.Maps.TurfHelpers" class="text-break">Class TurfHelpers
+  </h1>
+  <div class="markdown level0 summary"></div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level1"><span class="xref">TurfHelpers</span></div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Content.Shared.Maps.html">Content.Shared.Maps</a></h6>
+  <h6><strong>Assembly</strong>: Content.Shared.dll</h6>
+  <h5 id="Content_Shared_Maps_TurfHelpers_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static class TurfHelpers : object</code></pre>
+  </div>
+  <h3 id="methods">Methods
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Maps_TurfHelpers_GetContentTileDefinition_Robust_Shared_Map_Tile_Robust_Shared_Map_ITileDefinitionManager_.md&amp;value=---%0Auid%3A%20Content.Shared.Maps.TurfHelpers.GetContentTileDefinition(Robust.Shared.Map.Tile%2CRobust.Shared.Map.ITileDefinitionManager)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Maps/TurfHelpers.cs/#L62">View Source</a>
+  </span>
+  <a id="Content_Shared_Maps_TurfHelpers_GetContentTileDefinition_" data-uid="Content.Shared.Maps.TurfHelpers.GetContentTileDefinition*"></a>
+  <h4 id="Content_Shared_Maps_TurfHelpers_GetContentTileDefinition_Robust_Shared_Map_Tile_Robust_Shared_Map_ITileDefinitionManager_" data-uid="Content.Shared.Maps.TurfHelpers.GetContentTileDefinition(Robust.Shared.Map.Tile,Robust.Shared.Map.ITileDefinitionManager)">GetContentTileDefinition(Tile, ITileDefinitionManager)</h4>
+  <div class="markdown level1 summary"><p>Returns the content tile definition for a tile.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static ContentTileDefinition GetContentTileDefinition(this Tile tile, ITileDefinitionManager tileDefinitionManager = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Robust.Shared.Map.Tile</span></td>
+        <td><span class="parametername">tile</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">Robust.Shared.Map.ITileDefinitionManager</span></td>
+        <td><span class="parametername">tileDefinitionManager</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Maps.ContentTileDefinition.html">ContentTileDefinition</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Maps_TurfHelpers_GetContentTileDefinition_Robust_Shared_Map_TileRef_Robust_Shared_Map_ITileDefinitionManager_.md&amp;value=---%0Auid%3A%20Content.Shared.Maps.TurfHelpers.GetContentTileDefinition(Robust.Shared.Map.TileRef%2CRobust.Shared.Map.ITileDefinitionManager)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Maps/TurfHelpers.cs/#L79">View Source</a>
+  </span>
+  <a id="Content_Shared_Maps_TurfHelpers_GetContentTileDefinition_" data-uid="Content.Shared.Maps.TurfHelpers.GetContentTileDefinition*"></a>
+  <h4 id="Content_Shared_Maps_TurfHelpers_GetContentTileDefinition_Robust_Shared_Map_TileRef_Robust_Shared_Map_ITileDefinitionManager_" data-uid="Content.Shared.Maps.TurfHelpers.GetContentTileDefinition(Robust.Shared.Map.TileRef,Robust.Shared.Map.ITileDefinitionManager)">GetContentTileDefinition(TileRef, ITileDefinitionManager)</h4>
+  <div class="markdown level1 summary"><p>Returns the content tile definition for a tile ref.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static ContentTileDefinition GetContentTileDefinition(this TileRef tile, ITileDefinitionManager tileDefinitionManager = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Robust.Shared.Map.TileRef</span></td>
+        <td><span class="parametername">tile</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">Robust.Shared.Map.ITileDefinitionManager</span></td>
+        <td><span class="parametername">tileDefinitionManager</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Maps.ContentTileDefinition.html">ContentTileDefinition</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Maps_TurfHelpers_GetEntitiesInTile_Robust_Shared_Map_EntityCoordinates_LookupFlags_System_Nullable_EntityLookupSystem__.md&amp;value=---%0Auid%3A%20Content.Shared.Maps.TurfHelpers.GetEntitiesInTile(Robust.Shared.Map.EntityCoordinates%2CLookupFlags%2CSystem.Nullable%7BEntityLookupSystem%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Maps/TurfHelpers.cs/#L134">View Source</a>
+  </span>
+  <a id="Content_Shared_Maps_TurfHelpers_GetEntitiesInTile_" data-uid="Content.Shared.Maps.TurfHelpers.GetEntitiesInTile*"></a>
+  <h4 id="Content_Shared_Maps_TurfHelpers_GetEntitiesInTile_Robust_Shared_Map_EntityCoordinates_LookupFlags_System_Nullable_EntityLookupSystem__" data-uid="Content.Shared.Maps.TurfHelpers.GetEntitiesInTile(Robust.Shared.Map.EntityCoordinates,LookupFlags,System.Nullable{EntityLookupSystem})">GetEntitiesInTile(EntityCoordinates, LookupFlags, Nullable&lt;EntityLookupSystem&gt;)</h4>
+  <div class="markdown level1 summary"><p>Helper that returns all entities in a turf.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IEnumerable&lt;EntityUid&gt; GetEntitiesInTile(this EntityCoordinates coordinates, LookupFlags flags = null, EntityLookupSystem? lookupSystem = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Robust.Shared.Map.EntityCoordinates</span></td>
+        <td><span class="parametername">coordinates</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">LookupFlags</span></td>
+        <td><span class="parametername">flags</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">EntityLookupSystem</span>&gt;</td>
+        <td><span class="parametername">lookupSystem</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IEnumerable</span>&lt;<span class="xref">EntityUid</span>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Maps_TurfHelpers_GetEntitiesInTile_Robust_Shared_Map_TileRef_LookupFlags_System_Nullable_EntityLookupSystem__.md&amp;value=---%0Auid%3A%20Content.Shared.Maps.TurfHelpers.GetEntitiesInTile(Robust.Shared.Map.TileRef%2CLookupFlags%2CSystem.Nullable%7BEntityLookupSystem%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Maps/TurfHelpers.cs/#L119">View Source</a>
+  </span>
+  <a id="Content_Shared_Maps_TurfHelpers_GetEntitiesInTile_" data-uid="Content.Shared.Maps.TurfHelpers.GetEntitiesInTile*"></a>
+  <h4 id="Content_Shared_Maps_TurfHelpers_GetEntitiesInTile_Robust_Shared_Map_TileRef_LookupFlags_System_Nullable_EntityLookupSystem__" data-uid="Content.Shared.Maps.TurfHelpers.GetEntitiesInTile(Robust.Shared.Map.TileRef,LookupFlags,System.Nullable{EntityLookupSystem})">GetEntitiesInTile(TileRef, LookupFlags, Nullable&lt;EntityLookupSystem&gt;)</h4>
+  <div class="markdown level1 summary"><p>Helper that returns all entities in a turf.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IEnumerable&lt;EntityUid&gt; GetEntitiesInTile(this TileRef turf, LookupFlags flags = null, EntityLookupSystem? lookupSystem = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Robust.Shared.Map.TileRef</span></td>
+        <td><span class="parametername">turf</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">LookupFlags</span></td>
+        <td><span class="parametername">flags</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">EntityLookupSystem</span>&gt;</td>
+        <td><span class="parametername">lookupSystem</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IEnumerable</span>&lt;<span class="xref">EntityUid</span>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Maps_TurfHelpers_GetEntitiesInTile_Vector2i_EntityUid_LookupFlags_System_Nullable_EntityLookupSystem__.md&amp;value=---%0Auid%3A%20Content.Shared.Maps.TurfHelpers.GetEntitiesInTile(Vector2i%2CEntityUid%2CLookupFlags%2CSystem.Nullable%7BEntityLookupSystem%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Maps/TurfHelpers.cs/#L148">View Source</a>
+  </span>
+  <a id="Content_Shared_Maps_TurfHelpers_GetEntitiesInTile_" data-uid="Content.Shared.Maps.TurfHelpers.GetEntitiesInTile*"></a>
+  <h4 id="Content_Shared_Maps_TurfHelpers_GetEntitiesInTile_Vector2i_EntityUid_LookupFlags_System_Nullable_EntityLookupSystem__" data-uid="Content.Shared.Maps.TurfHelpers.GetEntitiesInTile(Vector2i,EntityUid,LookupFlags,System.Nullable{EntityLookupSystem})">GetEntitiesInTile(Vector2i, EntityUid, LookupFlags, Nullable&lt;EntityLookupSystem&gt;)</h4>
+  <div class="markdown level1 summary"><p>Helper that returns all entities in a turf.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IEnumerable&lt;EntityUid&gt; GetEntitiesInTile(this Vector2i indices, EntityUid gridId, LookupFlags flags = null, EntityLookupSystem? lookupSystem = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Vector2i</span></td>
+        <td><span class="parametername">indices</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">gridId</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">LookupFlags</span></td>
+        <td><span class="parametername">flags</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">EntityLookupSystem</span>&gt;</td>
+        <td><span class="parametername">lookupSystem</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IEnumerable</span>&lt;<span class="xref">EntityUid</span>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Maps_TurfHelpers_GetTileRef_Robust_Shared_Map_EntityCoordinates_System_Nullable_IEntityManager__Robust_Shared_Map_IMapManager_.md&amp;value=---%0Auid%3A%20Content.Shared.Maps.TurfHelpers.GetTileRef(Robust.Shared.Map.EntityCoordinates%2CSystem.Nullable%7BIEntityManager%7D%2CRobust.Shared.Map.IMapManager)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Maps/TurfHelpers.cs/#L36">View Source</a>
+  </span>
+  <a id="Content_Shared_Maps_TurfHelpers_GetTileRef_" data-uid="Content.Shared.Maps.TurfHelpers.GetTileRef*"></a>
+  <h4 id="Content_Shared_Maps_TurfHelpers_GetTileRef_Robust_Shared_Map_EntityCoordinates_System_Nullable_IEntityManager__Robust_Shared_Map_IMapManager_" data-uid="Content.Shared.Maps.TurfHelpers.GetTileRef(Robust.Shared.Map.EntityCoordinates,System.Nullable{IEntityManager},Robust.Shared.Map.IMapManager)">GetTileRef(EntityCoordinates, Nullable&lt;IEntityManager&gt;, IMapManager)</h4>
+  <div class="markdown level1 summary"><p>Attempts to get the turf at a certain coordinates or null if no such turf is found.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static TileRef? GetTileRef(this EntityCoordinates coordinates, IEntityManager? entityManager = null, IMapManager mapManager = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Robust.Shared.Map.EntityCoordinates</span></td>
+        <td><span class="parametername">coordinates</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">IEntityManager</span>&gt;</td>
+        <td><span class="parametername">entityManager</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">Robust.Shared.Map.IMapManager</span></td>
+        <td><span class="parametername">mapManager</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">Robust.Shared.Map.TileRef</span>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Maps_TurfHelpers_GetTileRef_Vector2i_EntityUid_Robust_Shared_Map_IMapManager_.md&amp;value=---%0Auid%3A%20Content.Shared.Maps.TurfHelpers.GetTileRef(Vector2i%2CEntityUid%2CRobust.Shared.Map.IMapManager)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Maps/TurfHelpers.cs/#L20">View Source</a>
+  </span>
+  <a id="Content_Shared_Maps_TurfHelpers_GetTileRef_" data-uid="Content.Shared.Maps.TurfHelpers.GetTileRef*"></a>
+  <h4 id="Content_Shared_Maps_TurfHelpers_GetTileRef_Vector2i_EntityUid_Robust_Shared_Map_IMapManager_" data-uid="Content.Shared.Maps.TurfHelpers.GetTileRef(Vector2i,EntityUid,Robust.Shared.Map.IMapManager)">GetTileRef(Vector2i, EntityUid, IMapManager)</h4>
+  <div class="markdown level1 summary"><p>Attempts to get the turf at map indices with grid id or null if no such turf is found.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static TileRef GetTileRef(this Vector2i vector2i, EntityUid gridId, IMapManager mapManager = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Vector2i</span></td>
+        <td><span class="parametername">vector2i</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">gridId</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">Robust.Shared.Map.IMapManager</span></td>
+        <td><span class="parametername">mapManager</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Robust.Shared.Map.TileRef</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Maps_TurfHelpers_IsBlockedTurf_Robust_Shared_Map_TileRef_System_Boolean_System_Nullable_EntityLookupSystem__.md&amp;value=---%0Auid%3A%20Content.Shared.Maps.TurfHelpers.IsBlockedTurf(Robust.Shared.Map.TileRef%2CSystem.Boolean%2CSystem.Nullable%7BEntityLookupSystem%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Maps/TurfHelpers.cs/#L157">View Source</a>
+  </span>
+  <a id="Content_Shared_Maps_TurfHelpers_IsBlockedTurf_" data-uid="Content.Shared.Maps.TurfHelpers.IsBlockedTurf*"></a>
+  <h4 id="Content_Shared_Maps_TurfHelpers_IsBlockedTurf_Robust_Shared_Map_TileRef_System_Boolean_System_Nullable_EntityLookupSystem__" data-uid="Content.Shared.Maps.TurfHelpers.IsBlockedTurf(Robust.Shared.Map.TileRef,System.Boolean,System.Nullable{EntityLookupSystem})">IsBlockedTurf(TileRef, Boolean, Nullable&lt;EntityLookupSystem&gt;)</h4>
+  <div class="markdown level1 summary"><p>Checks if a turf has something dense on it.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool IsBlockedTurf(this TileRef turf, bool filterMobs, EntityLookupSystem? physics = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Robust.Shared.Map.TileRef</span></td>
+        <td><span class="parametername">turf</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">filterMobs</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">EntityLookupSystem</span>&gt;</td>
+        <td><span class="parametername">physics</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Maps_TurfHelpers_IsSpace_Robust_Shared_Map_Tile_Robust_Shared_Map_ITileDefinitionManager_.md&amp;value=---%0Auid%3A%20Content.Shared.Maps.TurfHelpers.IsSpace(Robust.Shared.Map.Tile%2CRobust.Shared.Map.ITileDefinitionManager)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Maps/TurfHelpers.cs/#L71">View Source</a>
+  </span>
+  <a id="Content_Shared_Maps_TurfHelpers_IsSpace_" data-uid="Content.Shared.Maps.TurfHelpers.IsSpace*"></a>
+  <h4 id="Content_Shared_Maps_TurfHelpers_IsSpace_Robust_Shared_Map_Tile_Robust_Shared_Map_ITileDefinitionManager_" data-uid="Content.Shared.Maps.TurfHelpers.IsSpace(Robust.Shared.Map.Tile,Robust.Shared.Map.ITileDefinitionManager)">IsSpace(Tile, ITileDefinitionManager)</h4>
+  <div class="markdown level1 summary"><p>Returns whether a tile is considered space.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool IsSpace(this Tile tile, ITileDefinitionManager tileDefinitionManager = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Robust.Shared.Map.Tile</span></td>
+        <td><span class="parametername">tile</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">Robust.Shared.Map.ITileDefinitionManager</span></td>
+        <td><span class="parametername">tileDefinitionManager</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Maps_TurfHelpers_IsSpace_Robust_Shared_Map_TileRef_Robust_Shared_Map_ITileDefinitionManager_.md&amp;value=---%0Auid%3A%20Content.Shared.Maps.TurfHelpers.IsSpace(Robust.Shared.Map.TileRef%2CRobust.Shared.Map.ITileDefinitionManager)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Maps/TurfHelpers.cs/#L87">View Source</a>
+  </span>
+  <a id="Content_Shared_Maps_TurfHelpers_IsSpace_" data-uid="Content.Shared.Maps.TurfHelpers.IsSpace*"></a>
+  <h4 id="Content_Shared_Maps_TurfHelpers_IsSpace_Robust_Shared_Map_TileRef_Robust_Shared_Map_ITileDefinitionManager_" data-uid="Content.Shared.Maps.TurfHelpers.IsSpace(Robust.Shared.Map.TileRef,Robust.Shared.Map.ITileDefinitionManager)">IsSpace(TileRef, ITileDefinitionManager)</h4>
+  <div class="markdown level1 summary"><p>Returns whether a tile ref is considered space.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool IsSpace(this TileRef tile, ITileDefinitionManager tileDefinitionManager = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Robust.Shared.Map.TileRef</span></td>
+        <td><span class="parametername">tile</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">Robust.Shared.Map.ITileDefinitionManager</span></td>
+        <td><span class="parametername">tileDefinitionManager</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Maps_TurfHelpers_PickVariant_Content_Shared_Maps_ContentTileDefinition_Robust_Shared_Random_IRobustRandom_.md&amp;value=---%0Auid%3A%20Content.Shared.Maps.TurfHelpers.PickVariant(Content.Shared.Maps.ContentTileDefinition%2CRobust.Shared.Random.IRobustRandom)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Maps/TurfHelpers.cs/#L95">View Source</a>
+  </span>
+  <a id="Content_Shared_Maps_TurfHelpers_PickVariant_" data-uid="Content.Shared.Maps.TurfHelpers.PickVariant*"></a>
+  <h4 id="Content_Shared_Maps_TurfHelpers_PickVariant_Content_Shared_Maps_ContentTileDefinition_Robust_Shared_Random_IRobustRandom_" data-uid="Content.Shared.Maps.TurfHelpers.PickVariant(Content.Shared.Maps.ContentTileDefinition,Robust.Shared.Random.IRobustRandom)">PickVariant(ContentTileDefinition, IRobustRandom)</h4>
+  <div class="markdown level1 summary"><p>Returns a weighted pick of a tile variant.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static byte PickVariant(this ContentTileDefinition tile, IRobustRandom random = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Maps.ContentTileDefinition.html">ContentTileDefinition</a></td>
+        <td><span class="parametername">tile</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">Robust.Shared.Random.IRobustRandom</span></td>
+        <td><span class="parametername">random</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Maps_TurfHelpers_TryGetTileRef_Robust_Shared_Map_EntityCoordinates_System_Nullable_Robust_Shared_Map_TileRef___System_Nullable_IEntityManager__Robust_Shared_Map_IMapManager_.md&amp;value=---%0Auid%3A%20Content.Shared.Maps.TurfHelpers.TryGetTileRef(Robust.Shared.Map.EntityCoordinates%2CSystem.Nullable%7BRobust.Shared.Map.TileRef%7D%40%2CSystem.Nullable%7BIEntityManager%7D%2CRobust.Shared.Map.IMapManager)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Maps/TurfHelpers.cs/#L54">View Source</a>
+  </span>
+  <a id="Content_Shared_Maps_TurfHelpers_TryGetTileRef_" data-uid="Content.Shared.Maps.TurfHelpers.TryGetTileRef*"></a>
+  <h4 id="Content_Shared_Maps_TurfHelpers_TryGetTileRef_Robust_Shared_Map_EntityCoordinates_System_Nullable_Robust_Shared_Map_TileRef___System_Nullable_IEntityManager__Robust_Shared_Map_IMapManager_" data-uid="Content.Shared.Maps.TurfHelpers.TryGetTileRef(Robust.Shared.Map.EntityCoordinates,System.Nullable{Robust.Shared.Map.TileRef}@,System.Nullable{IEntityManager},Robust.Shared.Map.IMapManager)">TryGetTileRef(EntityCoordinates, out Nullable&lt;TileRef&gt;, Nullable&lt;IEntityManager&gt;, IMapManager)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool TryGetTileRef(this EntityCoordinates coordinates, out TileRef? turf, IEntityManager? entityManager = null, IMapManager mapManager = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Robust.Shared.Map.EntityCoordinates</span></td>
+        <td><span class="parametername">coordinates</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">Robust.Shared.Map.TileRef</span>&gt;</td>
+        <td><span class="parametername">turf</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">IEntityManager</span>&gt;</td>
+        <td><span class="parametername">entityManager</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">Robust.Shared.Map.IMapManager</span></td>
+        <td><span class="parametername">mapManager</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Maps_TurfHelpers.md&amp;value=---%0Auid%3A%20Content.Shared.Maps.TurfHelpers%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Maps/TurfHelpers.cs/#L15" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <div class="toggle-mode">
+                <div class="icon">
+                  <i aria-hidden="true">☀</i>
+                </div>
+                <label class="switch">
+                  <input type="checkbox" id="switch-style">
+                  <span class="slider round"></span>
+                </label>
+                <div class="icon">
+                  <i aria-hidden="true">☾</i>
+                </div>
+              </div>
+          
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <h5>In This Article</h5>
+              <div></div>
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <div class="pull-left">
+              
+              <span>Generated by <strong>DocFX</strong></span>
+            </div>
+            <div class="toggle-mode pull-right visible-sm visible-xs">
+              <div class="icon">
+                <i aria-hidden="true">☀</i>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="switch-style-m">
+                <span class="slider round"></span>
+              </label>
+              <div class="icon">
+                <i aria-hidden="true">☾</i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <script type="text/javascript" src="../../styles/toggle-theme.js"></script>
+      </footer>    </div>
+    
+    <script type="text/javascript" src="../../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../../styles/docfx.js"></script>
+    <script type="text/javascript" src="../../styles/main.js"></script>
+  </body>
+</html>

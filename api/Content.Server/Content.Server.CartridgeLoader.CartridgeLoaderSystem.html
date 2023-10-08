@@ -1,0 +1,1094 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class CartridgeLoaderSystem
+   </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class CartridgeLoaderSystem
+   ">
+    <meta name="generator" content="docfx 2.56.7.0">
+    
+    <link rel="shortcut icon" href="../../favicon.ico">
+    <link rel="stylesheet" href="../../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../../styles/docfx.css">
+    <link rel="stylesheet" href="../../styles/main.css">
+    <meta property="docfx:navrel" content="../../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../../index.html">
+                <img id="logo" class="svg" src="../../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Content.Server.CartridgeLoader.CartridgeLoaderSystem">
+  
+  
+  <h1 id="Content_Server_CartridgeLoader_CartridgeLoaderSystem" data-uid="Content.Server.CartridgeLoader.CartridgeLoaderSystem" class="text-break">Class CartridgeLoaderSystem
+  </h1>
+  <div class="markdown level0 summary"></div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level1"><a class="xref" href="../Content.Shared/Content.Shared.CartridgeLoader.SharedCartridgeLoaderSystem.html">SharedCartridgeLoaderSystem</a></div>
+    <div class="level2"><span class="xref">CartridgeLoaderSystem</span></div>
+  </div>
+  <div class="inheritedMembers">
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Content.Server.CartridgeLoader.html">Content.Server.CartridgeLoader</a></h6>
+  <h6><strong>Assembly</strong>: Content.Server.dll</h6>
+  <h5 id="Content_Server_CartridgeLoader_CartridgeLoaderSystem_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public sealed class CartridgeLoaderSystem : SharedCartridgeLoaderSystem</code></pre>
+  </div>
+  <h3 id="methods">Methods
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_CartridgeLoader_CartridgeLoaderSystem_ActivateProgram_EntityUid_EntityUid_Content_Shared_CartridgeLoader_CartridgeLoaderComponent_.md&amp;value=---%0Auid%3A%20Content.Server.CartridgeLoader.CartridgeLoaderSystem.ActivateProgram(EntityUid%2CEntityUid%2CContent.Shared.CartridgeLoader.CartridgeLoaderComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/CartridgeLoader/CartridgeLoaderSystem.cs/#L238">View Source</a>
+  </span>
+  <a id="Content_Server_CartridgeLoader_CartridgeLoaderSystem_ActivateProgram_" data-uid="Content.Server.CartridgeLoader.CartridgeLoaderSystem.ActivateProgram*"></a>
+  <h4 id="Content_Server_CartridgeLoader_CartridgeLoaderSystem_ActivateProgram_EntityUid_EntityUid_Content_Shared_CartridgeLoader_CartridgeLoaderComponent_" data-uid="Content.Server.CartridgeLoader.CartridgeLoaderSystem.ActivateProgram(EntityUid,EntityUid,Content.Shared.CartridgeLoader.CartridgeLoaderComponent)">ActivateProgram(EntityUid, EntityUid, CartridgeLoaderComponent)</h4>
+  <div class="markdown level1 summary"><p>Activates a program or cartridge and displays its ui fragment. Deactivates any previously active program.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void ActivateProgram(EntityUid loaderUid, EntityUid programUid, CartridgeLoaderComponent loader = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">loaderUid</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">programUid</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="../Content.Shared/Content.Shared.CartridgeLoader.CartridgeLoaderComponent.html">CartridgeLoaderComponent</a></td>
+        <td><span class="parametername">loader</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_CartridgeLoader_CartridgeLoaderSystem_DeactivateProgram_EntityUid_EntityUid_Content_Shared_CartridgeLoader_CartridgeLoaderComponent_.md&amp;value=---%0Auid%3A%20Content.Server.CartridgeLoader.CartridgeLoaderSystem.DeactivateProgram(EntityUid%2CEntityUid%2CContent.Shared.CartridgeLoader.CartridgeLoaderComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/CartridgeLoader/CartridgeLoaderSystem.cs/#L259">View Source</a>
+  </span>
+  <a id="Content_Server_CartridgeLoader_CartridgeLoaderSystem_DeactivateProgram_" data-uid="Content.Server.CartridgeLoader.CartridgeLoaderSystem.DeactivateProgram*"></a>
+  <h4 id="Content_Server_CartridgeLoader_CartridgeLoaderSystem_DeactivateProgram_EntityUid_EntityUid_Content_Shared_CartridgeLoader_CartridgeLoaderComponent_" data-uid="Content.Server.CartridgeLoader.CartridgeLoaderSystem.DeactivateProgram(EntityUid,EntityUid,Content.Shared.CartridgeLoader.CartridgeLoaderComponent)">DeactivateProgram(EntityUid, EntityUid, CartridgeLoaderComponent)</h4>
+  <div class="markdown level1 summary"><p>Deactivates the currently active program or cartridge.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void DeactivateProgram(EntityUid loaderUid, EntityUid programUid, CartridgeLoaderComponent loader = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">loaderUid</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">programUid</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="../Content.Shared/Content.Shared.CartridgeLoader.CartridgeLoaderComponent.html">CartridgeLoaderComponent</a></td>
+        <td><span class="parametername">loader</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_CartridgeLoader_CartridgeLoaderSystem_GetAvailablePrograms_EntityUid_Content_Shared_CartridgeLoader_CartridgeLoaderComponent_.md&amp;value=---%0Auid%3A%20Content.Server.CartridgeLoader.CartridgeLoaderSystem.GetAvailablePrograms(EntityUid%2CContent.Shared.CartridgeLoader.CartridgeLoaderComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/CartridgeLoader/CartridgeLoaderSystem.cs/#L140">View Source</a>
+  </span>
+  <a id="Content_Server_CartridgeLoader_CartridgeLoaderSystem_GetAvailablePrograms_" data-uid="Content.Server.CartridgeLoader.CartridgeLoaderSystem.GetAvailablePrograms*"></a>
+  <h4 id="Content_Server_CartridgeLoader_CartridgeLoaderSystem_GetAvailablePrograms_EntityUid_Content_Shared_CartridgeLoader_CartridgeLoaderComponent_" data-uid="Content.Server.CartridgeLoader.CartridgeLoaderSystem.GetAvailablePrograms(EntityUid,Content.Shared.CartridgeLoader.CartridgeLoaderComponent)">GetAvailablePrograms(EntityUid, CartridgeLoaderComponent)</h4>
+  <div class="markdown level1 summary"><p>Returns a list of all installed programs and the inserted cartridge if it isn't already installed</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public List&lt;NetEntity&gt; GetAvailablePrograms(EntityUid uid, CartridgeLoaderComponent loader = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td><p>The cartridge loaders uid</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="../Content.Shared/Content.Shared.CartridgeLoader.CartridgeLoaderComponent.html">CartridgeLoaderComponent</a></td>
+        <td><span class="parametername">loader</span></td>
+        <td><p>The cartridge loader component</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">List</span>&lt;<span class="xref">NetEntity</span>&gt;</td>
+        <td><p>A list of all the available program entity ids</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_CartridgeLoader_CartridgeLoaderSystem_GetInstalled_EntityUid_Robust_Shared_Containers_ContainerManagerComponent_.md&amp;value=---%0Auid%3A%20Content.Server.CartridgeLoader.CartridgeLoaderSystem.GetInstalled(EntityUid%2CRobust.Shared.Containers.ContainerManagerComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/CartridgeLoader/CartridgeLoaderSystem.cs/#L33">View Source</a>
+  </span>
+  <a id="Content_Server_CartridgeLoader_CartridgeLoaderSystem_GetInstalled_" data-uid="Content.Server.CartridgeLoader.CartridgeLoaderSystem.GetInstalled*"></a>
+  <h4 id="Content_Server_CartridgeLoader_CartridgeLoaderSystem_GetInstalled_EntityUid_Robust_Shared_Containers_ContainerManagerComponent_" data-uid="Content.Server.CartridgeLoader.CartridgeLoaderSystem.GetInstalled(EntityUid,Robust.Shared.Containers.ContainerManagerComponent)">GetInstalled(EntityUid, ContainerManagerComponent)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IReadOnlyList&lt;EntityUid&gt; GetInstalled(EntityUid uid, ContainerManagerComponent comp = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">Robust.Shared.Containers.ContainerManagerComponent</span></td>
+        <td><span class="parametername">comp</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IReadOnlyList</span>&lt;<span class="xref">EntityUid</span>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_CartridgeLoader_CartridgeLoaderSystem_HasProgram__1_EntityUid_System_Boolean_Content_Shared_CartridgeLoader_CartridgeLoaderComponent_Robust_Shared_Containers_ContainerManagerComponent_.md&amp;value=---%0Auid%3A%20Content.Server.CartridgeLoader.CartridgeLoaderSystem.HasProgram%60%601(EntityUid%2CSystem.Boolean%2CContent.Shared.CartridgeLoader.CartridgeLoaderComponent%2CRobust.Shared.Containers.ContainerManagerComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/CartridgeLoader/CartridgeLoaderSystem.cs/#L84">View Source</a>
+  </span>
+  <a id="Content_Server_CartridgeLoader_CartridgeLoaderSystem_HasProgram_" data-uid="Content.Server.CartridgeLoader.CartridgeLoaderSystem.HasProgram*"></a>
+  <h4 id="Content_Server_CartridgeLoader_CartridgeLoaderSystem_HasProgram__1_EntityUid_System_Boolean_Content_Shared_CartridgeLoader_CartridgeLoaderComponent_Robust_Shared_Containers_ContainerManagerComponent_" data-uid="Content.Server.CartridgeLoader.CartridgeLoaderSystem.HasProgram``1(EntityUid,System.Boolean,Content.Shared.CartridgeLoader.CartridgeLoaderComponent,Robust.Shared.Containers.ContainerManagerComponent)">HasProgram&lt;T&gt;(EntityUid, Boolean, CartridgeLoaderComponent, ContainerManagerComponent)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool HasProgram&lt;T&gt;(EntityUid uid, bool installedOnly = false, CartridgeLoaderComponent loader = null, ContainerManagerComponent containerManager = null)
+    where T : IComponent</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">installedOnly</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="../Content.Shared/Content.Shared.CartridgeLoader.CartridgeLoaderComponent.html">CartridgeLoaderComponent</a></td>
+        <td><span class="parametername">loader</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">Robust.Shared.Containers.ContainerManagerComponent</span></td>
+        <td><span class="parametername">containerManager</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_CartridgeLoader_CartridgeLoaderSystem_Initialize.md&amp;value=---%0Auid%3A%20Content.Server.CartridgeLoader.CartridgeLoaderSystem.Initialize%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/CartridgeLoader/CartridgeLoaderSystem.cs/#L21">View Source</a>
+  </span>
+  <a id="Content_Server_CartridgeLoader_CartridgeLoaderSystem_Initialize_" data-uid="Content.Server.CartridgeLoader.CartridgeLoaderSystem.Initialize*"></a>
+  <h4 id="Content_Server_CartridgeLoader_CartridgeLoaderSystem_Initialize" data-uid="Content.Server.CartridgeLoader.CartridgeLoaderSystem.Initialize">Initialize()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override void Initialize()</code></pre>
+  </div>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="../Content.Shared/Content.Shared.CartridgeLoader.SharedCartridgeLoaderSystem.html#Content_Shared_CartridgeLoader_SharedCartridgeLoaderSystem_Initialize">SharedCartridgeLoaderSystem.Initialize()</a></div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_CartridgeLoader_CartridgeLoaderSystem_InstallCartridge_EntityUid_EntityUid_Content_Shared_CartridgeLoader_CartridgeLoaderComponent_.md&amp;value=---%0Auid%3A%20Content.Server.CartridgeLoader.CartridgeLoaderSystem.InstallCartridge(EntityUid%2CEntityUid%2CContent.Shared.CartridgeLoader.CartridgeLoaderComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/CartridgeLoader/CartridgeLoaderSystem.cs/#L162">View Source</a>
+  </span>
+  <a id="Content_Server_CartridgeLoader_CartridgeLoaderSystem_InstallCartridge_" data-uid="Content.Server.CartridgeLoader.CartridgeLoaderSystem.InstallCartridge*"></a>
+  <h4 id="Content_Server_CartridgeLoader_CartridgeLoaderSystem_InstallCartridge_EntityUid_EntityUid_Content_Shared_CartridgeLoader_CartridgeLoaderComponent_" data-uid="Content.Server.CartridgeLoader.CartridgeLoaderSystem.InstallCartridge(EntityUid,EntityUid,Content.Shared.CartridgeLoader.CartridgeLoaderComponent)">InstallCartridge(EntityUid, EntityUid, CartridgeLoaderComponent)</h4>
+  <div class="markdown level1 summary"><p>Installs a cartridge by spawning an invisible version of the cartridges prototype into the cartridge loaders program container program container</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool InstallCartridge(EntityUid loaderUid, EntityUid cartridgeUid, CartridgeLoaderComponent loader = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">loaderUid</span></td>
+        <td><p>The cartridge loader uid</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">cartridgeUid</span></td>
+        <td><p>The uid of the cartridge to be installed</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="../Content.Shared/Content.Shared.CartridgeLoader.CartridgeLoaderComponent.html">CartridgeLoaderComponent</a></td>
+        <td><span class="parametername">loader</span></td>
+        <td><p>The cartridge loader component</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>Whether installing the cartridge was successful</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_CartridgeLoader_CartridgeLoaderSystem_InstallProgram_EntityUid_System_String_System_Boolean_Content_Shared_CartridgeLoader_CartridgeLoaderComponent_.md&amp;value=---%0Auid%3A%20Content.Server.CartridgeLoader.CartridgeLoaderSystem.InstallProgram(EntityUid%2CSystem.String%2CSystem.Boolean%2CContent.Shared.CartridgeLoader.CartridgeLoaderComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/CartridgeLoader/CartridgeLoaderSystem.cs/#L183">View Source</a>
+  </span>
+  <a id="Content_Server_CartridgeLoader_CartridgeLoaderSystem_InstallProgram_" data-uid="Content.Server.CartridgeLoader.CartridgeLoaderSystem.InstallProgram*"></a>
+  <h4 id="Content_Server_CartridgeLoader_CartridgeLoaderSystem_InstallProgram_EntityUid_System_String_System_Boolean_Content_Shared_CartridgeLoader_CartridgeLoaderComponent_" data-uid="Content.Server.CartridgeLoader.CartridgeLoaderSystem.InstallProgram(EntityUid,System.String,System.Boolean,Content.Shared.CartridgeLoader.CartridgeLoaderComponent)">InstallProgram(EntityUid, String, Boolean, CartridgeLoaderComponent)</h4>
+  <div class="markdown level1 summary"><p>Installs a program by its prototype</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool InstallProgram(EntityUid loaderUid, string prototype, bool deinstallable = true, CartridgeLoaderComponent loader = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">loaderUid</span></td>
+        <td><p>The cartridge loader uid</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">prototype</span></td>
+        <td><p>The prototype name</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">deinstallable</span></td>
+        <td><p>Whether the program can be deinstalled or not</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="../Content.Shared/Content.Shared.CartridgeLoader.CartridgeLoaderComponent.html">CartridgeLoaderComponent</a></td>
+        <td><span class="parametername">loader</span></td>
+        <td><p>The cartridge loader component</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>Whether installing the cartridge was successful</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_CartridgeLoader_CartridgeLoaderSystem_OnItemInserted_EntityUid_Content_Shared_CartridgeLoader_CartridgeLoaderComponent_Robust_Shared_Containers_EntInsertedIntoContainerMessage_.md&amp;value=---%0Auid%3A%20Content.Server.CartridgeLoader.CartridgeLoaderSystem.OnItemInserted(EntityUid%2CContent.Shared.CartridgeLoader.CartridgeLoaderComponent%2CRobust.Shared.Containers.EntInsertedIntoContainerMessage)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/CartridgeLoader/CartridgeLoaderSystem.cs/#L311">View Source</a>
+  </span>
+  <a id="Content_Server_CartridgeLoader_CartridgeLoaderSystem_OnItemInserted_" data-uid="Content.Server.CartridgeLoader.CartridgeLoaderSystem.OnItemInserted*"></a>
+  <h4 id="Content_Server_CartridgeLoader_CartridgeLoaderSystem_OnItemInserted_EntityUid_Content_Shared_CartridgeLoader_CartridgeLoaderComponent_Robust_Shared_Containers_EntInsertedIntoContainerMessage_" data-uid="Content.Server.CartridgeLoader.CartridgeLoaderSystem.OnItemInserted(EntityUid,Content.Shared.CartridgeLoader.CartridgeLoaderComponent,Robust.Shared.Containers.EntInsertedIntoContainerMessage)">OnItemInserted(EntityUid, CartridgeLoaderComponent, EntInsertedIntoContainerMessage)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected override void OnItemInserted(EntityUid uid, CartridgeLoaderComponent loader, EntInsertedIntoContainerMessage args)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="../Content.Shared/Content.Shared.CartridgeLoader.CartridgeLoaderComponent.html">CartridgeLoaderComponent</a></td>
+        <td><span class="parametername">loader</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">Robust.Shared.Containers.EntInsertedIntoContainerMessage</span></td>
+        <td><span class="parametername">args</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_CartridgeLoader_CartridgeLoaderSystem_OnItemRemoved_EntityUid_Content_Shared_CartridgeLoader_CartridgeLoaderComponent_Robust_Shared_Containers_EntRemovedFromContainerMessage_.md&amp;value=---%0Auid%3A%20Content.Server.CartridgeLoader.CartridgeLoaderSystem.OnItemRemoved(EntityUid%2CContent.Shared.CartridgeLoader.CartridgeLoaderComponent%2CRobust.Shared.Containers.EntRemovedFromContainerMessage)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/CartridgeLoader/CartridgeLoaderSystem.cs/#L320">View Source</a>
+  </span>
+  <a id="Content_Server_CartridgeLoader_CartridgeLoaderSystem_OnItemRemoved_" data-uid="Content.Server.CartridgeLoader.CartridgeLoaderSystem.OnItemRemoved*"></a>
+  <h4 id="Content_Server_CartridgeLoader_CartridgeLoaderSystem_OnItemRemoved_EntityUid_Content_Shared_CartridgeLoader_CartridgeLoaderComponent_Robust_Shared_Containers_EntRemovedFromContainerMessage_" data-uid="Content.Server.CartridgeLoader.CartridgeLoaderSystem.OnItemRemoved(EntityUid,Content.Shared.CartridgeLoader.CartridgeLoaderComponent,Robust.Shared.Containers.EntRemovedFromContainerMessage)">OnItemRemoved(EntityUid, CartridgeLoaderComponent, EntRemovedFromContainerMessage)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected override void OnItemRemoved(EntityUid uid, CartridgeLoaderComponent loader, EntRemovedFromContainerMessage args)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="../Content.Shared/Content.Shared.CartridgeLoader.CartridgeLoaderComponent.html">CartridgeLoaderComponent</a></td>
+        <td><span class="parametername">loader</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">Robust.Shared.Containers.EntRemovedFromContainerMessage</span></td>
+        <td><span class="parametername">args</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_CartridgeLoader_CartridgeLoaderSystem_RegisterBackgroundProgram_EntityUid_EntityUid_Content_Shared_CartridgeLoader_CartridgeLoaderComponent_.md&amp;value=---%0Auid%3A%20Content.Server.CartridgeLoader.CartridgeLoaderSystem.RegisterBackgroundProgram(EntityUid%2CEntityUid%2CContent.Shared.CartridgeLoader.CartridgeLoaderComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/CartridgeLoader/CartridgeLoaderSystem.cs/#L280">View Source</a>
+  </span>
+  <a id="Content_Server_CartridgeLoader_CartridgeLoaderSystem_RegisterBackgroundProgram_" data-uid="Content.Server.CartridgeLoader.CartridgeLoaderSystem.RegisterBackgroundProgram*"></a>
+  <h4 id="Content_Server_CartridgeLoader_CartridgeLoaderSystem_RegisterBackgroundProgram_EntityUid_EntityUid_Content_Shared_CartridgeLoader_CartridgeLoaderComponent_" data-uid="Content.Server.CartridgeLoader.CartridgeLoaderSystem.RegisterBackgroundProgram(EntityUid,EntityUid,Content.Shared.CartridgeLoader.CartridgeLoaderComponent)">RegisterBackgroundProgram(EntityUid, EntityUid, CartridgeLoaderComponent)</h4>
+  <div class="markdown level1 summary"><p>Registers the given program as a running in the background. Programs running in the background will receive certain events like device net packets but not ui messages</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void RegisterBackgroundProgram(EntityUid loaderUid, EntityUid cartridgeUid, CartridgeLoaderComponent loader = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">loaderUid</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">cartridgeUid</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="../Content.Shared/Content.Shared.CartridgeLoader.CartridgeLoaderComponent.html">CartridgeLoaderComponent</a></td>
+        <td><span class="parametername">loader</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Content_Server_CartridgeLoader_CartridgeLoaderSystem_RegisterBackgroundProgram_EntityUid_EntityUid_Content_Shared_CartridgeLoader_CartridgeLoaderComponent__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Programs wanting to use this functionality will have to provide a way to register and unregister themselves as background programs through their ui fragment.</p>
+</div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_CartridgeLoader_CartridgeLoaderSystem_TryGetProgram__1_EntityUid_System_Nullable_EntityUid_____0__System_Boolean_Content_Shared_CartridgeLoader_CartridgeLoaderComponent_Robust_Shared_Containers_ContainerManagerComponent_.md&amp;value=---%0Auid%3A%20Content.Server.CartridgeLoader.CartridgeLoaderSystem.TryGetProgram%60%601(EntityUid%2CSystem.Nullable%7BEntityUid%7D%40%2C%60%600%40%2CSystem.Boolean%2CContent.Shared.CartridgeLoader.CartridgeLoaderComponent%2CRobust.Shared.Containers.ContainerManagerComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/CartridgeLoader/CartridgeLoaderSystem.cs/#L41">View Source</a>
+  </span>
+  <a id="Content_Server_CartridgeLoader_CartridgeLoaderSystem_TryGetProgram_" data-uid="Content.Server.CartridgeLoader.CartridgeLoaderSystem.TryGetProgram*"></a>
+  <h4 id="Content_Server_CartridgeLoader_CartridgeLoaderSystem_TryGetProgram__1_EntityUid_System_Nullable_EntityUid_____0__System_Boolean_Content_Shared_CartridgeLoader_CartridgeLoaderComponent_Robust_Shared_Containers_ContainerManagerComponent_" data-uid="Content.Server.CartridgeLoader.CartridgeLoaderSystem.TryGetProgram``1(EntityUid,System.Nullable{EntityUid}@,``0@,System.Boolean,Content.Shared.CartridgeLoader.CartridgeLoaderComponent,Robust.Shared.Containers.ContainerManagerComponent)">TryGetProgram&lt;T&gt;(EntityUid, out Nullable&lt;EntityUid&gt;, out T, Boolean, CartridgeLoaderComponent, ContainerManagerComponent)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool TryGetProgram&lt;T&gt;(EntityUid uid, out EntityUid? programUid, out T program, bool installedOnly = false, CartridgeLoaderComponent loader = null, ContainerManagerComponent containerManager = null)
+    where T : IComponent</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">EntityUid</span>&gt;</td>
+        <td><span class="parametername">programUid</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td><span class="parametername">program</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">installedOnly</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="../Content.Shared/Content.Shared.CartridgeLoader.CartridgeLoaderComponent.html">CartridgeLoaderComponent</a></td>
+        <td><span class="parametername">loader</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">Robust.Shared.Containers.ContainerManagerComponent</span></td>
+        <td><span class="parametername">containerManager</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_CartridgeLoader_CartridgeLoaderSystem_TryGetProgram__1_EntityUid_System_Nullable_EntityUid___System_Boolean_Content_Shared_CartridgeLoader_CartridgeLoaderComponent_Robust_Shared_Containers_ContainerManagerComponent_.md&amp;value=---%0Auid%3A%20Content.Server.CartridgeLoader.CartridgeLoaderSystem.TryGetProgram%60%601(EntityUid%2CSystem.Nullable%7BEntityUid%7D%40%2CSystem.Boolean%2CContent.Shared.CartridgeLoader.CartridgeLoaderComponent%2CRobust.Shared.Containers.ContainerManagerComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/CartridgeLoader/CartridgeLoaderSystem.cs/#L74">View Source</a>
+  </span>
+  <a id="Content_Server_CartridgeLoader_CartridgeLoaderSystem_TryGetProgram_" data-uid="Content.Server.CartridgeLoader.CartridgeLoaderSystem.TryGetProgram*"></a>
+  <h4 id="Content_Server_CartridgeLoader_CartridgeLoaderSystem_TryGetProgram__1_EntityUid_System_Nullable_EntityUid___System_Boolean_Content_Shared_CartridgeLoader_CartridgeLoaderComponent_Robust_Shared_Containers_ContainerManagerComponent_" data-uid="Content.Server.CartridgeLoader.CartridgeLoaderSystem.TryGetProgram``1(EntityUid,System.Nullable{EntityUid}@,System.Boolean,Content.Shared.CartridgeLoader.CartridgeLoaderComponent,Robust.Shared.Containers.ContainerManagerComponent)">TryGetProgram&lt;T&gt;(EntityUid, out Nullable&lt;EntityUid&gt;, Boolean, CartridgeLoaderComponent, ContainerManagerComponent)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool TryGetProgram&lt;T&gt;(EntityUid uid, out EntityUid? programUid, bool installedOnly = false, CartridgeLoaderComponent loader = null, ContainerManagerComponent containerManager = null)
+    where T : IComponent</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">EntityUid</span>&gt;</td>
+        <td><span class="parametername">programUid</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">installedOnly</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="../Content.Shared/Content.Shared.CartridgeLoader.CartridgeLoaderComponent.html">CartridgeLoaderComponent</a></td>
+        <td><span class="parametername">loader</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">Robust.Shared.Containers.ContainerManagerComponent</span></td>
+        <td><span class="parametername">containerManager</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_CartridgeLoader_CartridgeLoaderSystem_UninstallProgram_EntityUid_EntityUid_Content_Shared_CartridgeLoader_CartridgeLoaderComponent_.md&amp;value=---%0Auid%3A%20Content.Server.CartridgeLoader.CartridgeLoaderSystem.UninstallProgram(EntityUid%2CEntityUid%2CContent.Shared.CartridgeLoader.CartridgeLoaderComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/CartridgeLoader/CartridgeLoaderSystem.cs/#L218">View Source</a>
+  </span>
+  <a id="Content_Server_CartridgeLoader_CartridgeLoaderSystem_UninstallProgram_" data-uid="Content.Server.CartridgeLoader.CartridgeLoaderSystem.UninstallProgram*"></a>
+  <h4 id="Content_Server_CartridgeLoader_CartridgeLoaderSystem_UninstallProgram_EntityUid_EntityUid_Content_Shared_CartridgeLoader_CartridgeLoaderComponent_" data-uid="Content.Server.CartridgeLoader.CartridgeLoaderSystem.UninstallProgram(EntityUid,EntityUid,Content.Shared.CartridgeLoader.CartridgeLoaderComponent)">UninstallProgram(EntityUid, EntityUid, CartridgeLoaderComponent)</h4>
+  <div class="markdown level1 summary"><p>Uninstalls a program using its uid</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool UninstallProgram(EntityUid loaderUid, EntityUid programUid, CartridgeLoaderComponent loader = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">loaderUid</span></td>
+        <td><p>The cartridge loader uid</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">programUid</span></td>
+        <td><p>The uid of the program to be uninstalled</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="../Content.Shared/Content.Shared.CartridgeLoader.CartridgeLoaderComponent.html">CartridgeLoaderComponent</a></td>
+        <td><span class="parametername">loader</span></td>
+        <td><p>The cartridge loader component</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>Whether uninstalling the program was successful</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_CartridgeLoader_CartridgeLoaderSystem_UnregisterBackgroundProgram_EntityUid_EntityUid_Content_Shared_CartridgeLoader_CartridgeLoaderComponent_.md&amp;value=---%0Auid%3A%20Content.Server.CartridgeLoader.CartridgeLoaderSystem.UnregisterBackgroundProgram(EntityUid%2CEntityUid%2CContent.Shared.CartridgeLoader.CartridgeLoaderComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/CartridgeLoader/CartridgeLoaderSystem.cs/#L297">View Source</a>
+  </span>
+  <a id="Content_Server_CartridgeLoader_CartridgeLoaderSystem_UnregisterBackgroundProgram_" data-uid="Content.Server.CartridgeLoader.CartridgeLoaderSystem.UnregisterBackgroundProgram*"></a>
+  <h4 id="Content_Server_CartridgeLoader_CartridgeLoaderSystem_UnregisterBackgroundProgram_EntityUid_EntityUid_Content_Shared_CartridgeLoader_CartridgeLoaderComponent_" data-uid="Content.Server.CartridgeLoader.CartridgeLoaderSystem.UnregisterBackgroundProgram(EntityUid,EntityUid,Content.Shared.CartridgeLoader.CartridgeLoaderComponent)">UnregisterBackgroundProgram(EntityUid, EntityUid, CartridgeLoaderComponent)</h4>
+  <div class="markdown level1 summary"><p>Unregisters the given program as running in the background</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void UnregisterBackgroundProgram(EntityUid loaderUid, EntityUid cartridgeUid, CartridgeLoaderComponent loader = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">loaderUid</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">cartridgeUid</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="../Content.Shared/Content.Shared.CartridgeLoader.CartridgeLoaderComponent.html">CartridgeLoaderComponent</a></td>
+        <td><span class="parametername">loader</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_CartridgeLoader_CartridgeLoaderSystem_UpdateCartridgeUiState_EntityUid_BoundUserInterfaceState_Robust_Server_Player_IPlayerSession_Content_Shared_CartridgeLoader_CartridgeLoaderComponent_.md&amp;value=---%0Auid%3A%20Content.Server.CartridgeLoader.CartridgeLoaderSystem.UpdateCartridgeUiState(EntityUid%2CBoundUserInterfaceState%2CRobust.Server.Player.IPlayerSession%2CContent.Shared.CartridgeLoader.CartridgeLoaderComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/CartridgeLoader/CartridgeLoaderSystem.cs/#L125">View Source</a>
+  </span>
+  <a id="Content_Server_CartridgeLoader_CartridgeLoaderSystem_UpdateCartridgeUiState_" data-uid="Content.Server.CartridgeLoader.CartridgeLoaderSystem.UpdateCartridgeUiState*"></a>
+  <h4 id="Content_Server_CartridgeLoader_CartridgeLoaderSystem_UpdateCartridgeUiState_EntityUid_BoundUserInterfaceState_Robust_Server_Player_IPlayerSession_Content_Shared_CartridgeLoader_CartridgeLoaderComponent_" data-uid="Content.Server.CartridgeLoader.CartridgeLoaderSystem.UpdateCartridgeUiState(EntityUid,BoundUserInterfaceState,Robust.Server.Player.IPlayerSession,Content.Shared.CartridgeLoader.CartridgeLoaderComponent)">UpdateCartridgeUiState(EntityUid, BoundUserInterfaceState, IPlayerSession, CartridgeLoaderComponent)</h4>
+  <div class="markdown level1 summary"><p>Updates the programs ui state</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void UpdateCartridgeUiState(EntityUid loaderUid, BoundUserInterfaceState state, IPlayerSession session = null, CartridgeLoaderComponent loader = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">loaderUid</span></td>
+        <td><p>The cartridge loaders entity uid</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">BoundUserInterfaceState</span></td>
+        <td><span class="parametername">state</span></td>
+        <td><p>The programs ui state. Programs should use their own ui state class inheriting from <see cref="!:BoundUserInterfaceState"></see></p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">Robust.Server.Player.IPlayerSession</span></td>
+        <td><span class="parametername">session</span></td>
+        <td><p>The players session</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="../Content.Shared/Content.Shared.CartridgeLoader.CartridgeLoaderComponent.html">CartridgeLoaderComponent</a></td>
+        <td><span class="parametername">loader</span></td>
+        <td><p>The cartridge loader component</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Content_Server_CartridgeLoader_CartridgeLoaderSystem_UpdateCartridgeUiState_EntityUid_BoundUserInterfaceState_Robust_Server_Player_IPlayerSession_Content_Shared_CartridgeLoader_CartridgeLoaderComponent__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>This method is called &quot;UpdateCartridgeUiState&quot; but cartridges and a programs are the same. A cartridge is just a program as a visible item.</p>
+</div>
+  <h5 id="Content_Server_CartridgeLoader_CartridgeLoaderSystem_UpdateCartridgeUiState_EntityUid_BoundUserInterfaceState_Robust_Server_Player_IPlayerSession_Content_Shared_CartridgeLoader_CartridgeLoaderComponent__seealso">See Also</h5>
+  <div class="seealso">
+      <div><span class="xref">Content.Server.CartridgeLoader.Cartridges.NotekeeperCartridgeSystem.UpdateUiState(EntityUid,EntityUid,Content.Server.CartridgeLoader.Cartridges.NotekeeperCartridgeComponent)</span></div>
+  </div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_CartridgeLoader_CartridgeLoaderSystem_UpdateUiState_EntityUid_Robust_Server_Player_IPlayerSession_Content_Shared_CartridgeLoader_CartridgeLoaderComponent_.md&amp;value=---%0Auid%3A%20Content.Server.CartridgeLoader.CartridgeLoaderSystem.UpdateUiState(EntityUid%2CRobust.Server.Player.IPlayerSession%2CContent.Shared.CartridgeLoader.CartridgeLoaderComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/CartridgeLoader/CartridgeLoaderSystem.cs/#L101">View Source</a>
+  </span>
+  <a id="Content_Server_CartridgeLoader_CartridgeLoaderSystem_UpdateUiState_" data-uid="Content.Server.CartridgeLoader.CartridgeLoaderSystem.UpdateUiState*"></a>
+  <h4 id="Content_Server_CartridgeLoader_CartridgeLoaderSystem_UpdateUiState_EntityUid_Robust_Server_Player_IPlayerSession_Content_Shared_CartridgeLoader_CartridgeLoaderComponent_" data-uid="Content.Server.CartridgeLoader.CartridgeLoaderSystem.UpdateUiState(EntityUid,Robust.Server.Player.IPlayerSession,Content.Shared.CartridgeLoader.CartridgeLoaderComponent)">UpdateUiState(EntityUid, IPlayerSession, CartridgeLoaderComponent)</h4>
+  <div class="markdown level1 summary"><p>Updates the cartridge loaders ui state.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void UpdateUiState(EntityUid loaderUid, IPlayerSession session, CartridgeLoaderComponent loader)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">loaderUid</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">Robust.Server.Player.IPlayerSession</span></td>
+        <td><span class="parametername">session</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="../Content.Shared/Content.Shared.CartridgeLoader.CartridgeLoaderComponent.html">CartridgeLoaderComponent</a></td>
+        <td><span class="parametername">loader</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Content_Server_CartridgeLoader_CartridgeLoaderSystem_UpdateUiState_EntityUid_Robust_Server_Player_IPlayerSession_Content_Shared_CartridgeLoader_CartridgeLoaderComponent__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Because the cartridge loader integrates with the ui of the entity using it, the entities ui state needs to inherit from <a class="xref" href="../Content.Shared/Content.Shared.CartridgeLoader.CartridgeLoaderUiState.html">CartridgeLoaderUiState</a>
+and use this method to update its state so the cartridge loaders state can be added to it.</p>
+</div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_CartridgeLoader_CartridgeLoaderSystem.md&amp;value=---%0Auid%3A%20Content.Server.CartridgeLoader.CartridgeLoaderSystem%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/CartridgeLoader/CartridgeLoaderSystem.cs/#L15" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <div class="toggle-mode">
+                <div class="icon">
+                  <i aria-hidden="true">☀</i>
+                </div>
+                <label class="switch">
+                  <input type="checkbox" id="switch-style">
+                  <span class="slider round"></span>
+                </label>
+                <div class="icon">
+                  <i aria-hidden="true">☾</i>
+                </div>
+              </div>
+          
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <h5>In This Article</h5>
+              <div></div>
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <div class="pull-left">
+              
+              <span>Generated by <strong>DocFX</strong></span>
+            </div>
+            <div class="toggle-mode pull-right visible-sm visible-xs">
+              <div class="icon">
+                <i aria-hidden="true">☀</i>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="switch-style-m">
+                <span class="slider round"></span>
+              </label>
+              <div class="icon">
+                <i aria-hidden="true">☾</i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <script type="text/javascript" src="../../styles/toggle-theme.js"></script>
+      </footer>    </div>
+    
+    <script type="text/javascript" src="../../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../../styles/docfx.js"></script>
+    <script type="text/javascript" src="../../styles/main.js"></script>
+  </body>
+</html>

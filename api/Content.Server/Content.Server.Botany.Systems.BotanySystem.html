@@ -1,0 +1,597 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class BotanySystem
+   </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class BotanySystem
+   ">
+    <meta name="generator" content="docfx 2.56.7.0">
+    
+    <link rel="shortcut icon" href="../../favicon.ico">
+    <link rel="stylesheet" href="../../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../../styles/docfx.css">
+    <link rel="stylesheet" href="../../styles/main.css">
+    <meta property="docfx:navrel" content="../../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../../index.html">
+                <img id="logo" class="svg" src="../../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Content.Server.Botany.Systems.BotanySystem">
+  
+  
+  <h1 id="Content_Server_Botany_Systems_BotanySystem" data-uid="Content.Server.Botany.Systems.BotanySystem" class="text-break">Class BotanySystem
+  </h1>
+  <div class="markdown level0 summary"></div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level1"><span class="xref">BotanySystem</span></div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Content.Server.Botany.Systems.html">Content.Server.Botany.Systems</a></h6>
+  <h6><strong>Assembly</strong>: Content.Server.dll</h6>
+  <h5 id="Content_Server_Botany_Systems_BotanySystem_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public sealed class BotanySystem : EntitySystem</code></pre>
+  </div>
+  <h3 id="methods">Methods
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Botany_Systems_BotanySystem_AutoHarvest_SeedData_Robust_Shared_Map_EntityCoordinates_System_Int32_.md&amp;value=---%0Auid%3A%20Content.Server.Botany.Systems.BotanySystem.AutoHarvest(SeedData%2CRobust.Shared.Map.EntityCoordinates%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Botany/Systems/BotanySystem.Seed.cs/#L120">View Source</a>
+  </span>
+  <a id="Content_Server_Botany_Systems_BotanySystem_AutoHarvest_" data-uid="Content.Server.Botany.Systems.BotanySystem.AutoHarvest*"></a>
+  <h4 id="Content_Server_Botany_Systems_BotanySystem_AutoHarvest_SeedData_Robust_Shared_Map_EntityCoordinates_System_Int32_" data-uid="Content.Server.Botany.Systems.BotanySystem.AutoHarvest(SeedData,Robust.Shared.Map.EntityCoordinates,System.Int32)">AutoHarvest(SeedData, EntityCoordinates, Int32)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IEnumerable&lt;EntityUid&gt; AutoHarvest(SeedData proto, EntityCoordinates position, int yieldMod = 1)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">SeedData</span></td>
+        <td><span class="parametername">proto</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">Robust.Shared.Map.EntityCoordinates</span></td>
+        <td><span class="parametername">position</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">yieldMod</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IEnumerable</span>&lt;<span class="xref">EntityUid</span>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Botany_Systems_BotanySystem_CanHarvest_SeedData_System_Nullable_EntityUid__.md&amp;value=---%0Auid%3A%20Content.Server.Botany.Systems.BotanySystem.CanHarvest(SeedData%2CSystem.Nullable%7BEntityUid%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Botany/Systems/BotanySystem.Seed.cs/#L211">View Source</a>
+  </span>
+  <a id="Content_Server_Botany_Systems_BotanySystem_CanHarvest_" data-uid="Content.Server.Botany.Systems.BotanySystem.CanHarvest*"></a>
+  <h4 id="Content_Server_Botany_Systems_BotanySystem_CanHarvest_SeedData_System_Nullable_EntityUid__" data-uid="Content.Server.Botany.Systems.BotanySystem.CanHarvest(SeedData,System.Nullable{EntityUid})">CanHarvest(SeedData, Nullable&lt;EntityUid&gt;)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool CanHarvest(SeedData proto, EntityUid? held = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">SeedData</span></td>
+        <td><span class="parametername">proto</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">EntityUid</span>&gt;</td>
+        <td><span class="parametername">held</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Botany_Systems_BotanySystem_GenerateProduct_SeedData_Robust_Shared_Map_EntityCoordinates_System_Int32_.md&amp;value=---%0Auid%3A%20Content.Server.Botany.Systems.BotanySystem.GenerateProduct(SeedData%2CRobust.Shared.Map.EntityCoordinates%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Botany/Systems/BotanySystem.Seed.cs/#L142">View Source</a>
+  </span>
+  <a id="Content_Server_Botany_Systems_BotanySystem_GenerateProduct_" data-uid="Content.Server.Botany.Systems.BotanySystem.GenerateProduct*"></a>
+  <h4 id="Content_Server_Botany_Systems_BotanySystem_GenerateProduct_SeedData_Robust_Shared_Map_EntityCoordinates_System_Int32_" data-uid="Content.Server.Botany.Systems.BotanySystem.GenerateProduct(SeedData,Robust.Shared.Map.EntityCoordinates,System.Int32)">GenerateProduct(SeedData, EntityCoordinates, Int32)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IEnumerable&lt;EntityUid&gt; GenerateProduct(SeedData proto, EntityCoordinates position, int yieldMod = 1)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">SeedData</span></td>
+        <td><span class="parametername">proto</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">Robust.Shared.Map.EntityCoordinates</span></td>
+        <td><span class="parametername">position</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">yieldMod</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IEnumerable</span>&lt;<span class="xref">EntityUid</span>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Botany_Systems_BotanySystem_Harvest_SeedData_EntityUid_System_Int32_.md&amp;value=---%0Auid%3A%20Content.Server.Botany.Systems.BotanySystem.Harvest(SeedData%2CEntityUid%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Botany/Systems/BotanySystem.Seed.cs/#L129">View Source</a>
+  </span>
+  <a id="Content_Server_Botany_Systems_BotanySystem_Harvest_" data-uid="Content.Server.Botany.Systems.BotanySystem.Harvest*"></a>
+  <h4 id="Content_Server_Botany_Systems_BotanySystem_Harvest_SeedData_EntityUid_System_Int32_" data-uid="Content.Server.Botany.Systems.BotanySystem.Harvest(SeedData,EntityUid,System.Int32)">Harvest(SeedData, EntityUid, Int32)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IEnumerable&lt;EntityUid&gt; Harvest(SeedData proto, EntityUid user, int yieldMod = 1)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">SeedData</span></td>
+        <td><span class="parametername">proto</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">user</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">yieldMod</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IEnumerable</span>&lt;<span class="xref">EntityUid</span>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Botany_Systems_BotanySystem_Initialize.md&amp;value=---%0Auid%3A%20Content.Server.Botany.Systems.BotanySystem.Initialize%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Botany/Systems/BotanySystem.Seed.cs/#L40">View Source</a>
+  </span>
+  <a id="Content_Server_Botany_Systems_BotanySystem_Initialize_" data-uid="Content.Server.Botany.Systems.BotanySystem.Initialize*"></a>
+  <h4 id="Content_Server_Botany_Systems_BotanySystem_Initialize" data-uid="Content.Server.Botany.Systems.BotanySystem.Initialize">Initialize()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override void Initialize()</code></pre>
+  </div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Botany_Systems_BotanySystem_ProduceGrown_EntityUid_Content_Server_Botany_Components_ProduceComponent_.md&amp;value=---%0Auid%3A%20Content.Server.Botany.Systems.BotanySystem.ProduceGrown(EntityUid%2CContent.Server.Botany.Components.ProduceComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Botany/Systems/BotanySystem.Produce.cs/#L9">View Source</a>
+  </span>
+  <a id="Content_Server_Botany_Systems_BotanySystem_ProduceGrown_" data-uid="Content.Server.Botany.Systems.BotanySystem.ProduceGrown*"></a>
+  <h4 id="Content_Server_Botany_Systems_BotanySystem_ProduceGrown_EntityUid_Content_Server_Botany_Components_ProduceComponent_" data-uid="Content.Server.Botany.Systems.BotanySystem.ProduceGrown(EntityUid,Content.Server.Botany.Components.ProduceComponent)">ProduceGrown(EntityUid, ProduceComponent)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void ProduceGrown(EntityUid uid, ProduceComponent produce)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Server.Botany.Components.ProduceComponent.html">ProduceComponent</a></td>
+        <td><span class="parametername">produce</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Botany_Systems_BotanySystem_SpawnSeedPacket_SeedData_Robust_Shared_Map_EntityCoordinates_EntityUid_.md&amp;value=---%0Auid%3A%20Content.Server.Botany.Systems.BotanySystem.SpawnSeedPacket(SeedData%2CRobust.Shared.Map.EntityCoordinates%2CEntityUid)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Botany/Systems/BotanySystem.Seed.cs/#L104">View Source</a>
+  </span>
+  <a id="Content_Server_Botany_Systems_BotanySystem_SpawnSeedPacket_" data-uid="Content.Server.Botany.Systems.BotanySystem.SpawnSeedPacket*"></a>
+  <h4 id="Content_Server_Botany_Systems_BotanySystem_SpawnSeedPacket_SeedData_Robust_Shared_Map_EntityCoordinates_EntityUid_" data-uid="Content.Server.Botany.Systems.BotanySystem.SpawnSeedPacket(SeedData,Robust.Shared.Map.EntityCoordinates,EntityUid)">SpawnSeedPacket(SeedData, EntityCoordinates, EntityUid)</h4>
+  <div class="markdown level1 summary"><p>Spawns a new seed packet on the floor at a position, then tries to put it in the user's hands if possible.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public EntityUid SpawnSeedPacket(SeedData proto, EntityCoordinates coords, EntityUid user)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">SeedData</span></td>
+        <td><span class="parametername">proto</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">Robust.Shared.Map.EntityCoordinates</span></td>
+        <td><span class="parametername">coords</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">user</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Botany_Systems_BotanySystem_TryGetSeed_Content_Server_Botany_Components_ProduceComponent_SeedData__.md&amp;value=---%0Auid%3A%20Content.Server.Botany.Systems.BotanySystem.TryGetSeed(Content.Server.Botany.Components.ProduceComponent%2CSeedData%40)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Botany/Systems/BotanySystem.Seed.cs/#L66">View Source</a>
+  </span>
+  <a id="Content_Server_Botany_Systems_BotanySystem_TryGetSeed_" data-uid="Content.Server.Botany.Systems.BotanySystem.TryGetSeed*"></a>
+  <h4 id="Content_Server_Botany_Systems_BotanySystem_TryGetSeed_Content_Server_Botany_Components_ProduceComponent_SeedData__" data-uid="Content.Server.Botany.Systems.BotanySystem.TryGetSeed(Content.Server.Botany.Components.ProduceComponent,SeedData@)">TryGetSeed(ProduceComponent, out SeedData)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool TryGetSeed(ProduceComponent comp, out SeedData seed)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Server.Botany.Components.ProduceComponent.html">ProduceComponent</a></td>
+        <td><span class="parametername">comp</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">SeedData</span></td>
+        <td><span class="parametername">seed</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Botany_Systems_BotanySystem_TryGetSeed_Content_Server_Botany_Components_SeedComponent_SeedData__.md&amp;value=---%0Auid%3A%20Content.Server.Botany.Systems.BotanySystem.TryGetSeed(Content.Server.Botany.Components.SeedComponent%2CSeedData%40)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Botany/Systems/BotanySystem.Seed.cs/#L47">View Source</a>
+  </span>
+  <a id="Content_Server_Botany_Systems_BotanySystem_TryGetSeed_" data-uid="Content.Server.Botany.Systems.BotanySystem.TryGetSeed*"></a>
+  <h4 id="Content_Server_Botany_Systems_BotanySystem_TryGetSeed_Content_Server_Botany_Components_SeedComponent_SeedData__" data-uid="Content.Server.Botany.Systems.BotanySystem.TryGetSeed(Content.Server.Botany.Components.SeedComponent,SeedData@)">TryGetSeed(SeedComponent, out SeedData)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool TryGetSeed(SeedComponent comp, out SeedData seed)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Server.Botany.Components.SeedComponent.html">SeedComponent</a></td>
+        <td><span class="parametername">comp</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">SeedData</span></td>
+        <td><span class="parametername">seed</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Botany_Systems_BotanySystem.md&amp;value=---%0Auid%3A%20Content.Server.Botany.Systems.BotanySystem%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Botany/Systems/BotanySystem.Seed.cs/#L27" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <div class="toggle-mode">
+                <div class="icon">
+                  <i aria-hidden="true">☀</i>
+                </div>
+                <label class="switch">
+                  <input type="checkbox" id="switch-style">
+                  <span class="slider round"></span>
+                </label>
+                <div class="icon">
+                  <i aria-hidden="true">☾</i>
+                </div>
+              </div>
+          
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <h5>In This Article</h5>
+              <div></div>
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <div class="pull-left">
+              
+              <span>Generated by <strong>DocFX</strong></span>
+            </div>
+            <div class="toggle-mode pull-right visible-sm visible-xs">
+              <div class="icon">
+                <i aria-hidden="true">☀</i>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="switch-style-m">
+                <span class="slider round"></span>
+              </label>
+              <div class="icon">
+                <i aria-hidden="true">☾</i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <script type="text/javascript" src="../../styles/toggle-theme.js"></script>
+      </footer>    </div>
+    
+    <script type="text/javascript" src="../../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../../styles/docfx.js"></script>
+    <script type="text/javascript" src="../../styles/main.js"></script>
+  </body>
+</html>

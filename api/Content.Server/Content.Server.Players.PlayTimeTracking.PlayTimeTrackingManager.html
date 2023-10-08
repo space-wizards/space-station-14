@@ -1,0 +1,804 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class PlayTimeTrackingManager
+   </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class PlayTimeTrackingManager
+   ">
+    <meta name="generator" content="docfx 2.56.7.0">
+    
+    <link rel="shortcut icon" href="../../favicon.ico">
+    <link rel="stylesheet" href="../../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../../styles/docfx.css">
+    <link rel="stylesheet" href="../../styles/main.css">
+    <meta property="docfx:navrel" content="../../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../../index.html">
+                <img id="logo" class="svg" src="../../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Content.Server.Players.PlayTimeTracking.PlayTimeTrackingManager">
+  
+  
+  <h1 id="Content_Server_Players_PlayTimeTracking_PlayTimeTrackingManager" data-uid="Content.Server.Players.PlayTimeTracking.PlayTimeTrackingManager" class="text-break">Class PlayTimeTrackingManager
+  </h1>
+  <div class="markdown level0 summary"><p>Tracks play time for players, across all roles.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level1"><span class="xref">PlayTimeTrackingManager</span></div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Content.Server.Players.PlayTimeTracking.html">Content.Server.Players.PlayTimeTracking</a></h6>
+  <h6><strong>Assembly</strong>: Content.Server.dll</h6>
+  <h5 id="Content_Server_Players_PlayTimeTracking_PlayTimeTrackingManager_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public sealed class PlayTimeTrackingManager : object</code></pre>
+  </div>
+  <h5 id="Content_Server_Players_PlayTimeTracking_PlayTimeTrackingManager_remarks"><strong>Remarks</strong></h5>
+  <div class="markdown level0 remarks"><p>
+Play time is tracked in distinct &quot;trackers&quot; (defined in <a class="xref" href="../Content.Shared/Content.Shared.Players.PlayTimeTracking.PlayTimeTrackerPrototype.html">PlayTimeTrackerPrototype</a>).
+Most jobs correspond to one such tracker, but there are also more trackers like <code>&quot;Overall&quot;</code> which tracks cumulative playtime across all roles.
+</p>
+<p>
+To actually figure out what trackers are active, <a class="xref" href="Content.Server.Players.PlayTimeTracking.PlayTimeTrackingManager.html#Content_Server_Players_PlayTimeTracking_PlayTimeTrackingManager_CalcTrackers">CalcTrackers</a> is invoked in a &quot;refresh&quot;.
+The next time the trackers are refreshed, these trackers all get the time since the last refresh added.
+Refreshes are triggered by <a class="xref" href="Content.Server.Players.PlayTimeTracking.PlayTimeTrackingManager.html#Content_Server_Players_PlayTimeTracking_PlayTimeTrackingManager_QueueRefreshTrackers_Robust_Server_Player_IPlayerSession_">QueueRefreshTrackers(IPlayerSession)</a>, and should be raised through events such as players&apos; roles changing.
+</p>
+<p>
+Because the calculation system does not persistently keep ticking timers,
+APIs like <a class="xref" href="Content.Server.Players.PlayTimeTracking.PlayTimeTrackingManager.html#Content_Server_Players_PlayTimeTracking_PlayTimeTrackingManager_GetPlayTimeForTracker_Robust_Server_Player_IPlayerSession_System_String_">GetPlayTimeForTracker(IPlayerSession, String)</a> will not see live-updating information.
+A light-weight form of refresh is a &quot;flush&quot; through <a class="xref" href="Content.Server.Players.PlayTimeTracking.PlayTimeTrackingManager.html#Content_Server_Players_PlayTimeTracking_PlayTimeTrackingManager_FlushTracker_Robust_Server_Player_IPlayerSession_">FlushTracker(IPlayerSession)</a>.
+This will not cause active trackers to be re-calculated like a refresh,
+but it will ensure stored play time info is up to date.
+</p>
+<p>
+Trackers are auto-saved to DB on a cvar-configured interval. This interval is independent of refreshes,
+but does do a flush to get the latest info.
+Some things like round restarts and player disconnects cause immediate saving of one or all sessions.
+</p>
+<p>
+Tracker data is loaded from the database when the client connects as part of <a class="xref" href="Content.Server.Database.UserDbDataManager.html">UserDbDataManager</a>.
+</p>
+<p>
+Timing logic in this manager is ran **out** of simulation.
+This means that we use real time, not simulation time, for timing everything here.
+</p>
+<p>
+Operations like refreshing and sending play time info to clients are deferred until the next frame (note: not tick).
+</p>
+</div>
+  <h3 id="methods">Methods
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Players_PlayTimeTracking_PlayTimeTrackingManager_AddTimeToOverallPlaytime_Robust_Server_Player_IPlayerSession_TimeSpan_.md&amp;value=---%0Auid%3A%20Content.Server.Players.PlayTimeTracking.PlayTimeTrackingManager.AddTimeToOverallPlaytime(Robust.Server.Player.IPlayerSession%2CTimeSpan)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Players/PlayTimeTracking/PlayTimeTrackingManager.cs/#L344">View Source</a>
+  </span>
+  <a id="Content_Server_Players_PlayTimeTracking_PlayTimeTrackingManager_AddTimeToOverallPlaytime_" data-uid="Content.Server.Players.PlayTimeTracking.PlayTimeTrackingManager.AddTimeToOverallPlaytime*"></a>
+  <h4 id="Content_Server_Players_PlayTimeTracking_PlayTimeTrackingManager_AddTimeToOverallPlaytime_Robust_Server_Player_IPlayerSession_TimeSpan_" data-uid="Content.Server.Players.PlayTimeTracking.PlayTimeTrackingManager.AddTimeToOverallPlaytime(Robust.Server.Player.IPlayerSession,TimeSpan)">AddTimeToOverallPlaytime(IPlayerSession, TimeSpan)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void AddTimeToOverallPlaytime(IPlayerSession id, TimeSpan time)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Robust.Server.Player.IPlayerSession</span></td>
+        <td><span class="parametername">id</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">TimeSpan</span></td>
+        <td><span class="parametername">time</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Players_PlayTimeTracking_PlayTimeTrackingManager_AddTimeToTracker_Robust_Server_Player_IPlayerSession_System_String_TimeSpan_.md&amp;value=---%0Auid%3A%20Content.Server.Players.PlayTimeTracking.PlayTimeTrackingManager.AddTimeToTracker(Robust.Server.Player.IPlayerSession%2CSystem.String%2CTimeSpan)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Players/PlayTimeTracking/PlayTimeTrackingManager.cs/#L328">View Source</a>
+  </span>
+  <a id="Content_Server_Players_PlayTimeTracking_PlayTimeTrackingManager_AddTimeToTracker_" data-uid="Content.Server.Players.PlayTimeTracking.PlayTimeTrackingManager.AddTimeToTracker*"></a>
+  <h4 id="Content_Server_Players_PlayTimeTracking_PlayTimeTrackingManager_AddTimeToTracker_Robust_Server_Player_IPlayerSession_System_String_TimeSpan_" data-uid="Content.Server.Players.PlayTimeTracking.PlayTimeTrackingManager.AddTimeToTracker(Robust.Server.Player.IPlayerSession,System.String,TimeSpan)">AddTimeToTracker(IPlayerSession, String, TimeSpan)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void AddTimeToTracker(IPlayerSession id, string tracker, TimeSpan time)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Robust.Server.Player.IPlayerSession</span></td>
+        <td><span class="parametername">id</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">tracker</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">TimeSpan</span></td>
+        <td><span class="parametername">time</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Players_PlayTimeTracking_PlayTimeTrackingManager_ClientDisconnected_Robust_Server_Player_IPlayerSession_.md&amp;value=---%0Auid%3A%20Content.Server.Players.PlayTimeTracking.PlayTimeTrackingManager.ClientDisconnected(Robust.Server.Player.IPlayerSession)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Players/PlayTimeTracking/PlayTimeTrackingManager.cs/#L321">View Source</a>
+  </span>
+  <a id="Content_Server_Players_PlayTimeTracking_PlayTimeTrackingManager_ClientDisconnected_" data-uid="Content.Server.Players.PlayTimeTracking.PlayTimeTrackingManager.ClientDisconnected*"></a>
+  <h4 id="Content_Server_Players_PlayTimeTracking_PlayTimeTrackingManager_ClientDisconnected_Robust_Server_Player_IPlayerSession_" data-uid="Content.Server.Players.PlayTimeTracking.PlayTimeTrackingManager.ClientDisconnected(Robust.Server.Player.IPlayerSession)">ClientDisconnected(IPlayerSession)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void ClientDisconnected(IPlayerSession session)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Robust.Server.Player.IPlayerSession</span></td>
+        <td><span class="parametername">session</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Players_PlayTimeTracking_PlayTimeTrackingManager_FlushAllTrackers.md&amp;value=---%0Auid%3A%20Content.Server.Players.PlayTimeTracking.PlayTimeTrackingManager.FlushAllTrackers%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Players/PlayTimeTracking/PlayTimeTrackingManager.cs/#L169">View Source</a>
+  </span>
+  <a id="Content_Server_Players_PlayTimeTracking_PlayTimeTrackingManager_FlushAllTrackers_" data-uid="Content.Server.Players.PlayTimeTracking.PlayTimeTrackingManager.FlushAllTrackers*"></a>
+  <h4 id="Content_Server_Players_PlayTimeTracking_PlayTimeTrackingManager_FlushAllTrackers" data-uid="Content.Server.Players.PlayTimeTracking.PlayTimeTrackingManager.FlushAllTrackers">FlushAllTrackers()</h4>
+  <div class="markdown level1 summary"><p>Flush all trackers for all players.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void FlushAllTrackers()</code></pre>
+  </div>
+  <h5 id="Content_Server_Players_PlayTimeTracking_PlayTimeTrackingManager_FlushAllTrackers_seealso">See Also</h5>
+  <div class="seealso">
+      <div><a class="xref" href="Content.Server.Players.PlayTimeTracking.PlayTimeTrackingManager.html#Content_Server_Players_PlayTimeTracking_PlayTimeTrackingManager_FlushTracker_Robust_Server_Player_IPlayerSession_">FlushTracker(IPlayerSession)</a></div>
+  </div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Players_PlayTimeTracking_PlayTimeTrackingManager_FlushTracker_Robust_Server_Player_IPlayerSession_.md&amp;value=---%0Auid%3A%20Content.Server.Players.PlayTimeTracking.PlayTimeTrackingManager.FlushTracker(Robust.Server.Player.IPlayerSession)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Players/PlayTimeTracking/PlayTimeTrackingManager.cs/#L184">View Source</a>
+  </span>
+  <a id="Content_Server_Players_PlayTimeTracking_PlayTimeTrackingManager_FlushTracker_" data-uid="Content.Server.Players.PlayTimeTracking.PlayTimeTrackingManager.FlushTracker*"></a>
+  <h4 id="Content_Server_Players_PlayTimeTracking_PlayTimeTrackingManager_FlushTracker_Robust_Server_Player_IPlayerSession_" data-uid="Content.Server.Players.PlayTimeTracking.PlayTimeTrackingManager.FlushTracker(Robust.Server.Player.IPlayerSession)">FlushTracker(IPlayerSession)</h4>
+  <div class="markdown level1 summary"><p>Flush time tracker information for a player,
+so APIs like <a class="xref" href="Content.Server.Players.PlayTimeTracking.PlayTimeTrackingManager.html#Content_Server_Players_PlayTimeTracking_PlayTimeTrackingManager_GetPlayTimeForTracker_Robust_Server_Player_IPlayerSession_System_String_">GetPlayTimeForTracker(IPlayerSession, String)</a> return up-to-date info.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void FlushTracker(IPlayerSession player)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Robust.Server.Player.IPlayerSession</span></td>
+        <td><span class="parametername">player</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Content_Server_Players_PlayTimeTracking_PlayTimeTrackingManager_FlushTracker_Robust_Server_Player_IPlayerSession__seealso">See Also</h5>
+  <div class="seealso">
+      <div><a class="xref" href="Content.Server.Players.PlayTimeTracking.PlayTimeTrackingManager.html#Content_Server_Players_PlayTimeTracking_PlayTimeTrackingManager_FlushAllTrackers">FlushAllTrackers()</a></div>
+  </div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Players_PlayTimeTracking_PlayTimeTrackingManager_GetOverallPlaytime_Robust_Server_Player_IPlayerSession_.md&amp;value=---%0Auid%3A%20Content.Server.Players.PlayTimeTracking.PlayTimeTrackingManager.GetOverallPlaytime(Robust.Server.Player.IPlayerSession)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Players/PlayTimeTracking/PlayTimeTrackingManager.cs/#L349">View Source</a>
+  </span>
+  <a id="Content_Server_Players_PlayTimeTracking_PlayTimeTrackingManager_GetOverallPlaytime_" data-uid="Content.Server.Players.PlayTimeTracking.PlayTimeTrackingManager.GetOverallPlaytime*"></a>
+  <h4 id="Content_Server_Players_PlayTimeTracking_PlayTimeTrackingManager_GetOverallPlaytime_Robust_Server_Player_IPlayerSession_" data-uid="Content.Server.Players.PlayTimeTracking.PlayTimeTrackingManager.GetOverallPlaytime(Robust.Server.Player.IPlayerSession)">GetOverallPlaytime(IPlayerSession)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public TimeSpan GetOverallPlaytime(IPlayerSession id)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Robust.Server.Player.IPlayerSession</span></td>
+        <td><span class="parametername">id</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TimeSpan</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Players_PlayTimeTracking_PlayTimeTrackingManager_GetPlayTimeForTracker_Robust_Server_Player_IPlayerSession_System_String_.md&amp;value=---%0Auid%3A%20Content.Server.Players.PlayTimeTracking.PlayTimeTrackingManager.GetPlayTimeForTracker(Robust.Server.Player.IPlayerSession%2CSystem.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Players/PlayTimeTracking/PlayTimeTrackingManager.cs/#L375">View Source</a>
+  </span>
+  <a id="Content_Server_Players_PlayTimeTracking_PlayTimeTrackingManager_GetPlayTimeForTracker_" data-uid="Content.Server.Players.PlayTimeTracking.PlayTimeTrackingManager.GetPlayTimeForTracker*"></a>
+  <h4 id="Content_Server_Players_PlayTimeTracking_PlayTimeTrackingManager_GetPlayTimeForTracker_Robust_Server_Player_IPlayerSession_System_String_" data-uid="Content.Server.Players.PlayTimeTracking.PlayTimeTrackingManager.GetPlayTimeForTracker(Robust.Server.Player.IPlayerSession,System.String)">GetPlayTimeForTracker(IPlayerSession, String)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public TimeSpan GetPlayTimeForTracker(IPlayerSession id, string tracker)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Robust.Server.Player.IPlayerSession</span></td>
+        <td><span class="parametername">id</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">tracker</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TimeSpan</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Players_PlayTimeTracking_PlayTimeTrackingManager_GetTrackerTimes_Robust_Server_Player_IPlayerSession_.md&amp;value=---%0Auid%3A%20Content.Server.Players.PlayTimeTracking.PlayTimeTrackingManager.GetTrackerTimes(Robust.Server.Player.IPlayerSession)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Players/PlayTimeTracking/PlayTimeTrackingManager.cs/#L367">View Source</a>
+  </span>
+  <a id="Content_Server_Players_PlayTimeTracking_PlayTimeTrackingManager_GetTrackerTimes_" data-uid="Content.Server.Players.PlayTimeTracking.PlayTimeTrackingManager.GetTrackerTimes*"></a>
+  <h4 id="Content_Server_Players_PlayTimeTracking_PlayTimeTrackingManager_GetTrackerTimes_Robust_Server_Player_IPlayerSession_" data-uid="Content.Server.Players.PlayTimeTracking.PlayTimeTrackingManager.GetTrackerTimes(Robust.Server.Player.IPlayerSession)">GetTrackerTimes(IPlayerSession)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Dictionary&lt;string, TimeSpan&gt; GetTrackerTimes(IPlayerSession id)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Robust.Server.Player.IPlayerSession</span></td>
+        <td><span class="parametername">id</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Dictionary</span>&lt;<span class="xref">System.String</span>, <span class="xref">TimeSpan</span>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Players_PlayTimeTracking_PlayTimeTrackingManager_Initialize.md&amp;value=---%0Auid%3A%20Content.Server.Players.PlayTimeTracking.PlayTimeTrackingManager.Initialize%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Players/PlayTimeTracking/PlayTimeTrackingManager.cs/#L83">View Source</a>
+  </span>
+  <a id="Content_Server_Players_PlayTimeTracking_PlayTimeTrackingManager_Initialize_" data-uid="Content.Server.Players.PlayTimeTracking.PlayTimeTrackingManager.Initialize*"></a>
+  <h4 id="Content_Server_Players_PlayTimeTracking_PlayTimeTrackingManager_Initialize" data-uid="Content.Server.Players.PlayTimeTracking.PlayTimeTrackingManager.Initialize">Initialize()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Initialize()</code></pre>
+  </div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Players_PlayTimeTracking_PlayTimeTrackingManager_LoadData_Robust_Server_Player_IPlayerSession_CancellationToken_.md&amp;value=---%0Auid%3A%20Content.Server.Players.PlayTimeTracking.PlayTimeTrackingManager.LoadData(Robust.Server.Player.IPlayerSession%2CCancellationToken)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Players/PlayTimeTracking/PlayTimeTrackingManager.cs/#L302">View Source</a>
+  </span>
+  <a id="Content_Server_Players_PlayTimeTracking_PlayTimeTrackingManager_LoadData_" data-uid="Content.Server.Players.PlayTimeTracking.PlayTimeTrackingManager.LoadData*"></a>
+  <h4 id="Content_Server_Players_PlayTimeTracking_PlayTimeTrackingManager_LoadData_Robust_Server_Player_IPlayerSession_CancellationToken_" data-uid="Content.Server.Players.PlayTimeTracking.PlayTimeTrackingManager.LoadData(Robust.Server.Player.IPlayerSession,CancellationToken)">LoadData(IPlayerSession, CancellationToken)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task LoadData(IPlayerSession session, CancellationToken cancel)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Robust.Server.Player.IPlayerSession</span></td>
+        <td><span class="parametername">session</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">CancellationToken</span></td>
+        <td><span class="parametername">cancel</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Task</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Players_PlayTimeTracking_PlayTimeTrackingManager_QueueRefreshTrackers_Robust_Server_Player_IPlayerSession_.md&amp;value=---%0Auid%3A%20Content.Server.Players.PlayTimeTracking.PlayTimeTrackingManager.QueueRefreshTrackers(Robust.Server.Player.IPlayerSession)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Players/PlayTimeTracking/PlayTimeTrackingManager.cs/#L386">View Source</a>
+  </span>
+  <a id="Content_Server_Players_PlayTimeTracking_PlayTimeTrackingManager_QueueRefreshTrackers_" data-uid="Content.Server.Players.PlayTimeTracking.PlayTimeTrackingManager.QueueRefreshTrackers*"></a>
+  <h4 id="Content_Server_Players_PlayTimeTracking_PlayTimeTrackingManager_QueueRefreshTrackers_Robust_Server_Player_IPlayerSession_" data-uid="Content.Server.Players.PlayTimeTracking.PlayTimeTrackingManager.QueueRefreshTrackers(Robust.Server.Player.IPlayerSession)">QueueRefreshTrackers(IPlayerSession)</h4>
+  <div class="markdown level1 summary"><p>Queue for play time trackers to be refreshed on a player, in case the set of active trackers may have changed.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void QueueRefreshTrackers(IPlayerSession player)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Robust.Server.Player.IPlayerSession</span></td>
+        <td><span class="parametername">player</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Players_PlayTimeTracking_PlayTimeTrackingManager_QueueSendTimers_Robust_Server_Player_IPlayerSession_.md&amp;value=---%0Auid%3A%20Content.Server.Players.PlayTimeTracking.PlayTimeTrackingManager.QueueSendTimers(Robust.Server.Player.IPlayerSession)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Players/PlayTimeTracking/PlayTimeTrackingManager.cs/#L395">View Source</a>
+  </span>
+  <a id="Content_Server_Players_PlayTimeTracking_PlayTimeTrackingManager_QueueSendTimers_" data-uid="Content.Server.Players.PlayTimeTracking.PlayTimeTrackingManager.QueueSendTimers*"></a>
+  <h4 id="Content_Server_Players_PlayTimeTracking_PlayTimeTrackingManager_QueueSendTimers_Robust_Server_Player_IPlayerSession_" data-uid="Content.Server.Players.PlayTimeTracking.PlayTimeTrackingManager.QueueSendTimers(Robust.Server.Player.IPlayerSession)">QueueSendTimers(IPlayerSession)</h4>
+  <div class="markdown level1 summary"><p>Queue for play time information to be sent to a client, for showing in UIs etc.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void QueueSendTimers(IPlayerSession player)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Robust.Server.Player.IPlayerSession</span></td>
+        <td><span class="parametername">player</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Players_PlayTimeTracking_PlayTimeTrackingManager_Save.md&amp;value=---%0Auid%3A%20Content.Server.Players.PlayTimeTracking.PlayTimeTrackingManager.Save%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Players/PlayTimeTracking/PlayTimeTrackingManager.cs/#L219">View Source</a>
+  </span>
+  <a id="Content_Server_Players_PlayTimeTracking_PlayTimeTrackingManager_Save_" data-uid="Content.Server.Players.PlayTimeTracking.PlayTimeTrackingManager.Save*"></a>
+  <h4 id="Content_Server_Players_PlayTimeTracking_PlayTimeTrackingManager_Save" data-uid="Content.Server.Players.PlayTimeTracking.PlayTimeTrackingManager.Save">Save()</h4>
+  <div class="markdown level1 summary"><p>Save all modified time trackers for all players to the database.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Save()</code></pre>
+  </div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Players_PlayTimeTracking_PlayTimeTrackingManager_SaveSession_Robust_Server_Player_IPlayerSession_.md&amp;value=---%0Auid%3A%20Content.Server.Players.PlayTimeTracking.PlayTimeTrackingManager.SaveSession(Robust.Server.Player.IPlayerSession)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Players/PlayTimeTracking/PlayTimeTrackingManager.cs/#L231">View Source</a>
+  </span>
+  <a id="Content_Server_Players_PlayTimeTracking_PlayTimeTrackingManager_SaveSession_" data-uid="Content.Server.Players.PlayTimeTracking.PlayTimeTrackingManager.SaveSession*"></a>
+  <h4 id="Content_Server_Players_PlayTimeTracking_PlayTimeTrackingManager_SaveSession_Robust_Server_Player_IPlayerSession_" data-uid="Content.Server.Players.PlayTimeTracking.PlayTimeTrackingManager.SaveSession(Robust.Server.Player.IPlayerSession)">SaveSession(IPlayerSession)</h4>
+  <div class="markdown level1 summary"><p>Save all modified time trackers for a player to the database.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SaveSession(IPlayerSession session)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Robust.Server.Player.IPlayerSession</span></td>
+        <td><span class="parametername">session</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Players_PlayTimeTracking_PlayTimeTrackingManager_Shutdown.md&amp;value=---%0Auid%3A%20Content.Server.Players.PlayTimeTracking.PlayTimeTrackingManager.Shutdown%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Players/PlayTimeTracking/PlayTimeTrackingManager.cs/#L92">View Source</a>
+  </span>
+  <a id="Content_Server_Players_PlayTimeTracking_PlayTimeTrackingManager_Shutdown_" data-uid="Content.Server.Players.PlayTimeTracking.PlayTimeTrackingManager.Shutdown*"></a>
+  <h4 id="Content_Server_Players_PlayTimeTracking_PlayTimeTrackingManager_Shutdown" data-uid="Content.Server.Players.PlayTimeTracking.PlayTimeTrackingManager.Shutdown">Shutdown()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Shutdown()</code></pre>
+  </div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Players_PlayTimeTracking_PlayTimeTrackingManager_TryGetTrackerTimes_Robust_Server_Player_IPlayerSession_System_Nullable_Dictionary_System_String_TimeSpan____.md&amp;value=---%0Auid%3A%20Content.Server.Players.PlayTimeTracking.PlayTimeTrackingManager.TryGetTrackerTimes(Robust.Server.Player.IPlayerSession%2CSystem.Nullable%7BDictionary%7BSystem.String%2CTimeSpan%7D%7D%40)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Players/PlayTimeTracking/PlayTimeTrackingManager.cs/#L354">View Source</a>
+  </span>
+  <a id="Content_Server_Players_PlayTimeTracking_PlayTimeTrackingManager_TryGetTrackerTimes_" data-uid="Content.Server.Players.PlayTimeTracking.PlayTimeTrackingManager.TryGetTrackerTimes*"></a>
+  <h4 id="Content_Server_Players_PlayTimeTracking_PlayTimeTrackingManager_TryGetTrackerTimes_Robust_Server_Player_IPlayerSession_System_Nullable_Dictionary_System_String_TimeSpan____" data-uid="Content.Server.Players.PlayTimeTracking.PlayTimeTrackingManager.TryGetTrackerTimes(Robust.Server.Player.IPlayerSession,System.Nullable{Dictionary{System.String,TimeSpan}}@)">TryGetTrackerTimes(IPlayerSession, out Nullable&lt;Dictionary&lt;String, TimeSpan&gt;&gt;)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool TryGetTrackerTimes(IPlayerSession id, out Dictionary&lt;string, TimeSpan&gt;? time)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Robust.Server.Player.IPlayerSession</span></td>
+        <td><span class="parametername">id</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">Dictionary</span>&lt;<span class="xref">System.String</span>, <span class="xref">TimeSpan</span>&gt;&gt;</td>
+        <td><span class="parametername">time</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Players_PlayTimeTracking_PlayTimeTrackingManager_Update.md&amp;value=---%0Auid%3A%20Content.Server.Players.PlayTimeTracking.PlayTimeTrackingManager.Update%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Players/PlayTimeTracking/PlayTimeTrackingManager.cs/#L99">View Source</a>
+  </span>
+  <a id="Content_Server_Players_PlayTimeTracking_PlayTimeTrackingManager_Update_" data-uid="Content.Server.Players.PlayTimeTracking.PlayTimeTrackingManager.Update*"></a>
+  <h4 id="Content_Server_Players_PlayTimeTracking_PlayTimeTrackingManager_Update" data-uid="Content.Server.Players.PlayTimeTracking.PlayTimeTrackingManager.Update">Update()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Update()</code></pre>
+  </div>
+  <h3 id="events">Events
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Players_PlayTimeTracking_PlayTimeTrackingManager_CalcTrackers.md&amp;value=---%0Auid%3A%20Content.Server.Players.PlayTimeTracking.PlayTimeTrackingManager.CalcTrackers%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Players/PlayTimeTracking/PlayTimeTrackingManager.cs/#L81">View Source</a>
+  </span>
+  <h4 id="Content_Server_Players_PlayTimeTracking_PlayTimeTrackingManager_CalcTrackers" data-uid="Content.Server.Players.PlayTimeTracking.PlayTimeTrackingManager.CalcTrackers">CalcTrackers</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public event CalcPlayTimeTrackersCallback CalcTrackers</code></pre>
+  </div>
+  <h5 class="eventType">Event Type</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Server.Players.PlayTimeTracking.CalcPlayTimeTrackersCallback.html">CalcPlayTimeTrackersCallback</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Players_PlayTimeTracking_PlayTimeTrackingManager.md&amp;value=---%0Auid%3A%20Content.Server.Players.PlayTimeTracking.PlayTimeTrackingManager%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Players/PlayTimeTracking/PlayTimeTrackingManager.cs/#L57" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <div class="toggle-mode">
+                <div class="icon">
+                  <i aria-hidden="true">☀</i>
+                </div>
+                <label class="switch">
+                  <input type="checkbox" id="switch-style">
+                  <span class="slider round"></span>
+                </label>
+                <div class="icon">
+                  <i aria-hidden="true">☾</i>
+                </div>
+              </div>
+          
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <h5>In This Article</h5>
+              <div></div>
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <div class="pull-left">
+              
+              <span>Generated by <strong>DocFX</strong></span>
+            </div>
+            <div class="toggle-mode pull-right visible-sm visible-xs">
+              <div class="icon">
+                <i aria-hidden="true">☀</i>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="switch-style-m">
+                <span class="slider round"></span>
+              </label>
+              <div class="icon">
+                <i aria-hidden="true">☾</i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <script type="text/javascript" src="../../styles/toggle-theme.js"></script>
+      </footer>    </div>
+    
+    <script type="text/javascript" src="../../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../../styles/docfx.js"></script>
+    <script type="text/javascript" src="../../styles/main.js"></script>
+  </body>
+</html>

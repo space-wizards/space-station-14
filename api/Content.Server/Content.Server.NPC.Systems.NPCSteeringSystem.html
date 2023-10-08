@@ -1,0 +1,488 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class NPCSteeringSystem
+   </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class NPCSteeringSystem
+   ">
+    <meta name="generator" content="docfx 2.56.7.0">
+    
+    <link rel="shortcut icon" href="../../favicon.ico">
+    <link rel="stylesheet" href="../../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../../styles/docfx.css">
+    <link rel="stylesheet" href="../../styles/main.css">
+    <meta property="docfx:navrel" content="../../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../../index.html">
+                <img id="logo" class="svg" src="../../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Content.Server.NPC.Systems.NPCSteeringSystem">
+  
+  
+  <h1 id="Content_Server_NPC_Systems_NPCSteeringSystem" data-uid="Content.Server.NPC.Systems.NPCSteeringSystem" class="text-break">Class NPCSteeringSystem
+  </h1>
+  <div class="markdown level0 summary"></div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level1"><a class="xref" href="../Content.Shared/Content.Shared.NPC.SharedNPCSteeringSystem.html">SharedNPCSteeringSystem</a></div>
+    <div class="level2"><span class="xref">NPCSteeringSystem</span></div>
+  </div>
+  <div class="inheritedMembers">
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Content.Server.NPC.Systems.html">Content.Server.NPC.Systems</a></h6>
+  <h6><strong>Assembly</strong>: Content.Server.dll</h6>
+  <h5 id="Content_Server_NPC_Systems_NPCSteeringSystem_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public sealed class NPCSteeringSystem : SharedNPCSteeringSystem</code></pre>
+  </div>
+  <h3 id="fields">Fields
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_NPC_Systems_NPCSteeringSystem_AntiStuck.md&amp;value=---%0Auid%3A%20Content.Server.NPC.Systems.NPCSteeringSystem.AntiStuck%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/NPC/Systems/NPCSteeringSystem.cs/#L78">View Source</a>
+  </span>
+  <h4 id="Content_Server_NPC_Systems_NPCSteeringSystem_AntiStuck" data-uid="Content.Server.NPC.Systems.NPCSteeringSystem.AntiStuck">AntiStuck</h4>
+  <div class="markdown level1 summary"><p>Enabled antistuck detection so if an NPC is in the same spot for a while it will re-path.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool AntiStuck</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_NPC_Systems_NPCSteeringSystem_Directions.md&amp;value=---%0Auid%3A%20Content.Server.NPC.Systems.NPCSteeringSystem.Directions%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/NPC/Systems/NPCSteeringSystem.cs/#L84">View Source</a>
+  </span>
+  <h4 id="Content_Server_NPC_Systems_NPCSteeringSystem_Directions" data-uid="Content.Server.NPC.Systems.NPCSteeringSystem.Directions">Directions</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static readonly Vector2[] Directions</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Vector2</span>[]</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_NPC_Systems_NPCSteeringSystem_Initialize.md&amp;value=---%0Auid%3A%20Content.Server.NPC.Systems.NPCSteeringSystem.Initialize%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/NPC/Systems/NPCSteeringSystem.cs/#L90">View Source</a>
+  </span>
+  <a id="Content_Server_NPC_Systems_NPCSteeringSystem_Initialize_" data-uid="Content.Server.NPC.Systems.NPCSteeringSystem.Initialize*"></a>
+  <h4 id="Content_Server_NPC_Systems_NPCSteeringSystem_Initialize" data-uid="Content.Server.NPC.Systems.NPCSteeringSystem.Initialize">Initialize()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override void Initialize()</code></pre>
+  </div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_NPC_Systems_NPCSteeringSystem_PrunePath_EntityUid_Robust_Shared_Map_MapCoordinates_Vector2_List_Content_Server_NPC_Pathfinding_PathPoly__.md&amp;value=---%0Auid%3A%20Content.Server.NPC.Systems.NPCSteeringSystem.PrunePath(EntityUid%2CRobust.Shared.Map.MapCoordinates%2CVector2%2CList%7BContent.Server.NPC.Pathfinding.PathPoly%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/NPC/Systems/NPCSteeringSystem.Context.cs/#L357">View Source</a>
+  </span>
+  <a id="Content_Server_NPC_Systems_NPCSteeringSystem_PrunePath_" data-uid="Content.Server.NPC.Systems.NPCSteeringSystem.PrunePath*"></a>
+  <h4 id="Content_Server_NPC_Systems_NPCSteeringSystem_PrunePath_EntityUid_Robust_Shared_Map_MapCoordinates_Vector2_List_Content_Server_NPC_Pathfinding_PathPoly__" data-uid="Content.Server.NPC.Systems.NPCSteeringSystem.PrunePath(EntityUid,Robust.Shared.Map.MapCoordinates,Vector2,List{Content.Server.NPC.Pathfinding.PathPoly})">PrunePath(EntityUid, MapCoordinates, Vector2, List&lt;PathPoly&gt;)</h4>
+  <div class="markdown level1 summary"><p>We may be pathfinding and moving at the same time in which case early nodes may be out of date.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void PrunePath(EntityUid uid, MapCoordinates mapCoordinates, Vector2 direction, List&lt;PathPoly&gt; nodes)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">Robust.Shared.Map.MapCoordinates</span></td>
+        <td><span class="parametername">mapCoordinates</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">Vector2</span></td>
+        <td><span class="parametername">direction</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">List</span>&lt;<a class="xref" href="Content.Server.NPC.Pathfinding.PathPoly.html">PathPoly</a>&gt;</td>
+        <td><span class="parametername">nodes</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_NPC_Systems_NPCSteeringSystem_Register_EntityUid_Robust_Shared_Map_EntityCoordinates_Content_Server_NPC_Components_NPCSteeringComponent_.md&amp;value=---%0Auid%3A%20Content.Server.NPC.Systems.NPCSteeringSystem.Register(EntityUid%2CRobust.Shared.Map.EntityCoordinates%2CContent.Server.NPC.Components.NPCSteeringComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/NPC/Systems/NPCSteeringSystem.cs/#L178">View Source</a>
+  </span>
+  <a id="Content_Server_NPC_Systems_NPCSteeringSystem_Register_" data-uid="Content.Server.NPC.Systems.NPCSteeringSystem.Register*"></a>
+  <h4 id="Content_Server_NPC_Systems_NPCSteeringSystem_Register_EntityUid_Robust_Shared_Map_EntityCoordinates_Content_Server_NPC_Components_NPCSteeringComponent_" data-uid="Content.Server.NPC.Systems.NPCSteeringSystem.Register(EntityUid,Robust.Shared.Map.EntityCoordinates,Content.Server.NPC.Components.NPCSteeringComponent)">Register(EntityUid, EntityCoordinates, NPCSteeringComponent)</h4>
+  <div class="markdown level1 summary"><p>Adds the AI to the steering system to move towards a specific target</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public NPCSteeringComponent Register(EntityUid uid, EntityCoordinates coordinates, NPCSteeringComponent component = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">Robust.Shared.Map.EntityCoordinates</span></td>
+        <td><span class="parametername">coordinates</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Server.NPC.Components.NPCSteeringComponent.html">NPCSteeringComponent</a></td>
+        <td><span class="parametername">component</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Server.NPC.Components.NPCSteeringComponent.html">NPCSteeringComponent</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_NPC_Systems_NPCSteeringSystem_Shutdown.md&amp;value=---%0Auid%3A%20Content.Server.NPC.Systems.NPCSteeringSystem.Shutdown%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/NPC/Systems/NPCSteeringSystem.cs/#L144">View Source</a>
+  </span>
+  <a id="Content_Server_NPC_Systems_NPCSteeringSystem_Shutdown_" data-uid="Content.Server.NPC.Systems.NPCSteeringSystem.Shutdown*"></a>
+  <h4 id="Content_Server_NPC_Systems_NPCSteeringSystem_Shutdown" data-uid="Content.Server.NPC.Systems.NPCSteeringSystem.Shutdown">Shutdown()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override void Shutdown()</code></pre>
+  </div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_NPC_Systems_NPCSteeringSystem_TryRegister_EntityUid_Robust_Shared_Map_EntityCoordinates_Content_Server_NPC_Components_NPCSteeringComponent_.md&amp;value=---%0Auid%3A%20Content.Server.NPC.Systems.NPCSteeringSystem.TryRegister(EntityUid%2CRobust.Shared.Map.EntityCoordinates%2CContent.Server.NPC.Components.NPCSteeringComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/NPC/Systems/NPCSteeringSystem.cs/#L203">View Source</a>
+  </span>
+  <a id="Content_Server_NPC_Systems_NPCSteeringSystem_TryRegister_" data-uid="Content.Server.NPC.Systems.NPCSteeringSystem.TryRegister*"></a>
+  <h4 id="Content_Server_NPC_Systems_NPCSteeringSystem_TryRegister_EntityUid_Robust_Shared_Map_EntityCoordinates_Content_Server_NPC_Components_NPCSteeringComponent_" data-uid="Content.Server.NPC.Systems.NPCSteeringSystem.TryRegister(EntityUid,Robust.Shared.Map.EntityCoordinates,Content.Server.NPC.Components.NPCSteeringComponent)">TryRegister(EntityUid, EntityCoordinates, NPCSteeringComponent)</h4>
+  <div class="markdown level1 summary"><p>Attempts to register the entity. Does nothing if the coordinates already registered.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool TryRegister(EntityUid uid, EntityCoordinates coordinates, NPCSteeringComponent component = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">Robust.Shared.Map.EntityCoordinates</span></td>
+        <td><span class="parametername">coordinates</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Server.NPC.Components.NPCSteeringComponent.html">NPCSteeringComponent</a></td>
+        <td><span class="parametername">component</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_NPC_Systems_NPCSteeringSystem_Unregister_EntityUid_Content_Server_NPC_Components_NPCSteeringComponent_.md&amp;value=---%0Auid%3A%20Content.Server.NPC.Systems.NPCSteeringSystem.Unregister(EntityUid%2CContent.Server.NPC.Components.NPCSteeringComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/NPC/Systems/NPCSteeringSystem.cs/#L217">View Source</a>
+  </span>
+  <a id="Content_Server_NPC_Systems_NPCSteeringSystem_Unregister_" data-uid="Content.Server.NPC.Systems.NPCSteeringSystem.Unregister*"></a>
+  <h4 id="Content_Server_NPC_Systems_NPCSteeringSystem_Unregister_EntityUid_Content_Server_NPC_Components_NPCSteeringComponent_" data-uid="Content.Server.NPC.Systems.NPCSteeringSystem.Unregister(EntityUid,Content.Server.NPC.Components.NPCSteeringComponent)">Unregister(EntityUid, NPCSteeringComponent)</h4>
+  <div class="markdown level1 summary"><p>Stops the steering behavior for the AI and cleans up.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Unregister(EntityUid uid, NPCSteeringComponent component = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Server.NPC.Components.NPCSteeringComponent.html">NPCSteeringComponent</a></td>
+        <td><span class="parametername">component</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_NPC_Systems_NPCSteeringSystem_Update_System_Single_.md&amp;value=---%0Auid%3A%20Content.Server.NPC.Systems.NPCSteeringSystem.Update(System.Single)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/NPC/Systems/NPCSteeringSystem.cs/#L232">View Source</a>
+  </span>
+  <a id="Content_Server_NPC_Systems_NPCSteeringSystem_Update_" data-uid="Content.Server.NPC.Systems.NPCSteeringSystem.Update*"></a>
+  <h4 id="Content_Server_NPC_Systems_NPCSteeringSystem_Update_System_Single_" data-uid="Content.Server.NPC.Systems.NPCSteeringSystem.Update(System.Single)">Update(Single)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override void Update(float frameTime)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td><span class="parametername">frameTime</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_NPC_Systems_NPCSteeringSystem.md&amp;value=---%0Auid%3A%20Content.Server.NPC.Systems.NPCSteeringSystem%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/NPC/Systems/NPCSteeringSystem.Obstacles.cs/#L15" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <div class="toggle-mode">
+                <div class="icon">
+                  <i aria-hidden="true">☀</i>
+                </div>
+                <label class="switch">
+                  <input type="checkbox" id="switch-style">
+                  <span class="slider round"></span>
+                </label>
+                <div class="icon">
+                  <i aria-hidden="true">☾</i>
+                </div>
+              </div>
+          
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <h5>In This Article</h5>
+              <div></div>
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <div class="pull-left">
+              
+              <span>Generated by <strong>DocFX</strong></span>
+            </div>
+            <div class="toggle-mode pull-right visible-sm visible-xs">
+              <div class="icon">
+                <i aria-hidden="true">☀</i>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="switch-style-m">
+                <span class="slider round"></span>
+              </label>
+              <div class="icon">
+                <i aria-hidden="true">☾</i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <script type="text/javascript" src="../../styles/toggle-theme.js"></script>
+      </footer>    </div>
+    
+    <script type="text/javascript" src="../../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../../styles/docfx.js"></script>
+    <script type="text/javascript" src="../../styles/main.js"></script>
+  </body>
+</html>

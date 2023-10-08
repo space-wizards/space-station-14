@@ -1,0 +1,817 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class StationEventSystem&lt;T&gt;
+   </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class StationEventSystem&lt;T&gt;
+   ">
+    <meta name="generator" content="docfx 2.56.7.0">
+    
+    <link rel="shortcut icon" href="../../favicon.ico">
+    <link rel="stylesheet" href="../../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../../styles/docfx.css">
+    <link rel="stylesheet" href="../../styles/main.css">
+    <meta property="docfx:navrel" content="../../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../../index.html">
+                <img id="logo" class="svg" src="../../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Content.Server.StationEvents.Events.StationEventSystem`1">
+  
+  
+  <h1 id="Content_Server_StationEvents_Events_StationEventSystem_1" data-uid="Content.Server.StationEvents.Events.StationEventSystem`1" class="text-break">Class StationEventSystem&lt;T&gt;
+  </h1>
+  <div class="markdown level0 summary"><p>An abstract entity system inherited by all station events for their behavior.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level1"><a class="xref" href="Content.Server.GameTicking.Rules.GameRuleSystem-1.html">GameRuleSystem</a>&lt;T&gt;</div>
+    <div class="level2"><span class="xref">StationEventSystem&lt;T&gt;</span></div>
+      <div class="level3"><a class="xref" href="Content.Server.StationEvents.Events.AnomalySpawnRule.html">AnomalySpawnRule</a></div>
+      <div class="level3"><a class="xref" href="Content.Server.StationEvents.Events.BluespaceArtifactRule.html">BluespaceArtifactRule</a></div>
+      <div class="level3"><a class="xref" href="Content.Server.StationEvents.Events.BluespaceLockerRule.html">BluespaceLockerRule</a></div>
+      <div class="level3"><a class="xref" href="Content.Server.StationEvents.Events.BreakerFlipRule.html">BreakerFlipRule</a></div>
+      <div class="level3"><a class="xref" href="Content.Server.StationEvents.Events.BureaucraticErrorRule.html">BureaucraticErrorRule</a></div>
+      <div class="level3"><a class="xref" href="Content.Server.StationEvents.Events.CargoGiftsRule.html">CargoGiftsRule</a></div>
+      <div class="level3"><a class="xref" href="Content.Server.StationEvents.Events.FalseAlarmRule.html">FalseAlarmRule</a></div>
+      <div class="level3"><a class="xref" href="Content.Server.StationEvents.Events.ImmovableRodRule.html">ImmovableRodRule</a></div>
+      <div class="level3"><a class="xref" href="Content.Server.StationEvents.Events.KudzuGrowthRule.html">KudzuGrowthRule</a></div>
+      <div class="level3"><a class="xref" href="Content.Server.StationEvents.Events.LoneOpsSpawnRule.html">LoneOpsSpawnRule</a></div>
+      <div class="level3"><a class="xref" href="Content.Server.StationEvents.Events.MassHallucinationsRule.html">MassHallucinationsRule</a></div>
+      <div class="level3"><a class="xref" href="Content.Server.StationEvents.Events.MeteorSwarmRule.html">MeteorSwarmRule</a></div>
+      <div class="level3"><a class="xref" href="Content.Server.StationEvents.Events.NinjaSpawnRule.html">NinjaSpawnRule</a></div>
+      <div class="level3"><a class="xref" href="Content.Server.StationEvents.Events.PowerGridCheckRule.html">PowerGridCheckRule</a></div>
+      <div class="level3"><a class="xref" href="Content.Server.StationEvents.Events.RandomEntityStorageSpawnRule.html">RandomEntityStorageSpawnRule</a></div>
+      <div class="level3"><a class="xref" href="Content.Server.StationEvents.Events.RandomSentienceRule.html">RandomSentienceRule</a></div>
+      <div class="level3"><a class="xref" href="Content.Server.StationEvents.Events.RandomSpawnRule.html">RandomSpawnRule</a></div>
+      <div class="level3"><a class="xref" href="Content.Server.StationEvents.Events.SolarFlareRule.html">SolarFlareRule</a></div>
+      <div class="level3"><a class="xref" href="Content.Server.StationEvents.Events.VentClogRule.html">VentClogRule</a></div>
+      <div class="level3"><a class="xref" href="Content.Server.StationEvents.Events.VentCrittersRule.html">VentCrittersRule</a></div>
+  </div>
+  <div class="inheritedMembers">
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Content.Server.StationEvents.Events.html">Content.Server.StationEvents.Events</a></h6>
+  <h6><strong>Assembly</strong>: Content.Server.dll</h6>
+  <h5 id="Content_Server_StationEvents_Events_StationEventSystem_1_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public abstract class StationEventSystem&lt;T&gt; : GameRuleSystem&lt;T&gt; where T : Component</code></pre>
+  </div>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="fields">Fields
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_StationEvents_Events_StationEventSystem_1_AdminLogManager.md&amp;value=---%0Auid%3A%20Content.Server.StationEvents.Events.StationEventSystem%601.AdminLogManager%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/StationEvents/Events/StationEventSystem.cs/#L27">View Source</a>
+  </span>
+  <h4 id="Content_Server_StationEvents_Events_StationEventSystem_1_AdminLogManager" data-uid="Content.Server.StationEvents.Events.StationEventSystem`1.AdminLogManager">AdminLogManager</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected readonly IAdminLogManager AdminLogManager</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Server.Administration.Logs.IAdminLogManager.html">IAdminLogManager</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_StationEvents_Events_StationEventSystem_1_Audio.md&amp;value=---%0Auid%3A%20Content.Server.StationEvents.Events.StationEventSystem%601.Audio%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/StationEvents/Events/StationEventSystem.cs/#L34">View Source</a>
+  </span>
+  <h4 id="Content_Server_StationEvents_Events_StationEventSystem_1_Audio" data-uid="Content.Server.StationEvents.Events.StationEventSystem`1.Audio">Audio</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected readonly SharedAudioSystem Audio</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">SharedAudioSystem</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_StationEvents_Events_StationEventSystem_1_ChatSystem.md&amp;value=---%0Auid%3A%20Content.Server.StationEvents.Events.StationEventSystem%601.ChatSystem%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/StationEvents/Events/StationEventSystem.cs/#L33">View Source</a>
+  </span>
+  <h4 id="Content_Server_StationEvents_Events_StationEventSystem_1_ChatSystem" data-uid="Content.Server.StationEvents.Events.StationEventSystem`1.ChatSystem">ChatSystem</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected readonly ChatSystem ChatSystem</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Server.Chat.Systems.ChatSystem.html">ChatSystem</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_StationEvents_Events_StationEventSystem_1_MapManager.md&amp;value=---%0Auid%3A%20Content.Server.StationEvents.Events.StationEventSystem%601.MapManager%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/StationEvents/Events/StationEventSystem.cs/#L29">View Source</a>
+  </span>
+  <h4 id="Content_Server_StationEvents_Events_StationEventSystem_1_MapManager" data-uid="Content.Server.StationEvents.Events.StationEventSystem`1.MapManager">MapManager</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected readonly IMapManager MapManager</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Robust.Shared.Map.IMapManager</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_StationEvents_Events_StationEventSystem_1_PrototypeManager.md&amp;value=---%0Auid%3A%20Content.Server.StationEvents.Events.StationEventSystem%601.PrototypeManager%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/StationEvents/Events/StationEventSystem.cs/#L30">View Source</a>
+  </span>
+  <h4 id="Content_Server_StationEvents_Events_StationEventSystem_1_PrototypeManager" data-uid="Content.Server.StationEvents.Events.StationEventSystem`1.PrototypeManager">PrototypeManager</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected readonly IPrototypeManager PrototypeManager</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Robust.Shared.Prototypes.IPrototypeManager</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_StationEvents_Events_StationEventSystem_1_RobustRandom.md&amp;value=---%0Auid%3A%20Content.Server.StationEvents.Events.StationEventSystem%601.RobustRandom%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/StationEvents/Events/StationEventSystem.cs/#L31">View Source</a>
+  </span>
+  <h4 id="Content_Server_StationEvents_Events_StationEventSystem_1_RobustRandom" data-uid="Content.Server.StationEvents.Events.StationEventSystem`1.RobustRandom">RobustRandom</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected readonly IRobustRandom RobustRandom</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Robust.Shared.Random.IRobustRandom</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_StationEvents_Events_StationEventSystem_1_Sawmill.md&amp;value=---%0Auid%3A%20Content.Server.StationEvents.Events.StationEventSystem%601.Sawmill%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/StationEvents/Events/StationEventSystem.cs/#L38">View Source</a>
+  </span>
+  <h4 id="Content_Server_StationEvents_Events_StationEventSystem_1_Sawmill" data-uid="Content.Server.StationEvents.Events.StationEventSystem`1.Sawmill">Sawmill</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected ISawmill Sawmill</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">ISawmill</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_StationEvents_Events_StationEventSystem_1_StationSystem.md&amp;value=---%0Auid%3A%20Content.Server.StationEvents.Events.StationEventSystem%601.StationSystem%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/StationEvents/Events/StationEventSystem.cs/#L36">View Source</a>
+  </span>
+  <h4 id="Content_Server_StationEvents_Events_StationEventSystem_1_StationSystem" data-uid="Content.Server.StationEvents.Events.StationEventSystem`1.StationSystem">StationSystem</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected readonly StationSystem StationSystem</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Server.Station.Systems.StationSystem.html">StationSystem</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_StationEvents_Events_StationEventSystem_1_Added_EntityUid__0_Content_Server_GameTicking_Rules_Components_GameRuleComponent_Content_Server_GameTicking_Rules_Components_GameRuleAddedEvent_.md&amp;value=---%0Auid%3A%20Content.Server.StationEvents.Events.StationEventSystem%601.Added(EntityUid%2C%600%2CContent.Server.GameTicking.Rules.Components.GameRuleComponent%2CContent.Server.GameTicking.Rules.Components.GameRuleAddedEvent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/StationEvents/Events/StationEventSystem.cs/#L48">View Source</a>
+  </span>
+  <a id="Content_Server_StationEvents_Events_StationEventSystem_1_Added_" data-uid="Content.Server.StationEvents.Events.StationEventSystem`1.Added*"></a>
+  <h4 id="Content_Server_StationEvents_Events_StationEventSystem_1_Added_EntityUid__0_Content_Server_GameTicking_Rules_Components_GameRuleComponent_Content_Server_GameTicking_Rules_Components_GameRuleAddedEvent_" data-uid="Content.Server.StationEvents.Events.StationEventSystem`1.Added(EntityUid,`0,Content.Server.GameTicking.Rules.Components.GameRuleComponent,Content.Server.GameTicking.Rules.Components.GameRuleAddedEvent)">Added(EntityUid, T, GameRuleComponent, GameRuleAddedEvent)</h4>
+  <div class="markdown level1 summary"><p>Called when the gamerule is added</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected override void Added(EntityUid uid, T component, GameRuleComponent gameRule, GameRuleAddedEvent args)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td><span class="parametername">component</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Server.GameTicking.Rules.Components.GameRuleComponent.html">GameRuleComponent</a></td>
+        <td><span class="parametername">gameRule</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">Content.Server.GameTicking.Rules.Components.GameRuleAddedEvent</span></td>
+        <td><span class="parametername">args</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><span class="xref">Content.Server.GameTicking.Rules.GameRuleSystem&lt;T&gt;.Added(EntityUid, T, Content.Server.GameTicking.Rules.Components.GameRuleComponent, Content.Server.GameTicking.Rules.Components.GameRuleAddedEvent)</span></div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_StationEvents_Events_StationEventSystem_1_Ended_EntityUid__0_Content_Server_GameTicking_Rules_Components_GameRuleComponent_Content_Server_GameTicking_Rules_Components_GameRuleEndedEvent_.md&amp;value=---%0Auid%3A%20Content.Server.StationEvents.Events.StationEventSystem%601.Ended(EntityUid%2C%600%2CContent.Server.GameTicking.Rules.Components.GameRuleComponent%2CContent.Server.GameTicking.Rules.Components.GameRuleEndedEvent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/StationEvents/Events/StationEventSystem.cs/#L87">View Source</a>
+  </span>
+  <a id="Content_Server_StationEvents_Events_StationEventSystem_1_Ended_" data-uid="Content.Server.StationEvents.Events.StationEventSystem`1.Ended*"></a>
+  <h4 id="Content_Server_StationEvents_Events_StationEventSystem_1_Ended_EntityUid__0_Content_Server_GameTicking_Rules_Components_GameRuleComponent_Content_Server_GameTicking_Rules_Components_GameRuleEndedEvent_" data-uid="Content.Server.StationEvents.Events.StationEventSystem`1.Ended(EntityUid,`0,Content.Server.GameTicking.Rules.Components.GameRuleComponent,Content.Server.GameTicking.Rules.Components.GameRuleEndedEvent)">Ended(EntityUid, T, GameRuleComponent, GameRuleEndedEvent)</h4>
+  <div class="markdown level1 summary"><p>Called when the gamerule ends</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected override void Ended(EntityUid uid, T component, GameRuleComponent gameRule, GameRuleEndedEvent args)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td><span class="parametername">component</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Server.GameTicking.Rules.Components.GameRuleComponent.html">GameRuleComponent</a></td>
+        <td><span class="parametername">gameRule</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">Content.Server.GameTicking.Rules.Components.GameRuleEndedEvent</span></td>
+        <td><span class="parametername">args</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><span class="xref">Content.Server.GameTicking.Rules.GameRuleSystem&lt;T&gt;.Ended(EntityUid, T, Content.Server.GameTicking.Rules.Components.GameRuleComponent, Content.Server.GameTicking.Rules.Components.GameRuleEndedEvent)</span></div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_StationEvents_Events_StationEventSystem_1_ForceEndSelf_EntityUid_Content_Server_GameTicking_Rules_Components_GameRuleComponent_.md&amp;value=---%0Auid%3A%20Content.Server.StationEvents.Events.StationEventSystem%601.ForceEndSelf(EntityUid%2CContent.Server.GameTicking.Rules.Components.GameRuleComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/StationEvents/Events/StationEventSystem.cs/#L132">View Source</a>
+  </span>
+  <a id="Content_Server_StationEvents_Events_StationEventSystem_1_ForceEndSelf_" data-uid="Content.Server.StationEvents.Events.StationEventSystem`1.ForceEndSelf*"></a>
+  <h4 id="Content_Server_StationEvents_Events_StationEventSystem_1_ForceEndSelf_EntityUid_Content_Server_GameTicking_Rules_Components_GameRuleComponent_" data-uid="Content.Server.StationEvents.Events.StationEventSystem`1.ForceEndSelf(EntityUid,Content.Server.GameTicking.Rules.Components.GameRuleComponent)">ForceEndSelf(EntityUid, GameRuleComponent)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected void ForceEndSelf(EntityUid uid, GameRuleComponent component = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Server.GameTicking.Rules.Components.GameRuleComponent.html">GameRuleComponent</a></td>
+        <td><span class="parametername">component</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_StationEvents_Events_StationEventSystem_1_GetSeverityModifier.md&amp;value=---%0Auid%3A%20Content.Server.StationEvents.Events.StationEventSystem%601.GetSeverityModifier%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/StationEvents/Events/StationEventSystem.cs/#L215">View Source</a>
+  </span>
+  <a id="Content_Server_StationEvents_Events_StationEventSystem_1_GetSeverityModifier_" data-uid="Content.Server.StationEvents.Events.StationEventSystem`1.GetSeverityModifier*"></a>
+  <h4 id="Content_Server_StationEvents_Events_StationEventSystem_1_GetSeverityModifier" data-uid="Content.Server.StationEvents.Events.StationEventSystem`1.GetSeverityModifier">GetSeverityModifier()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public float GetSeverityModifier()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_StationEvents_Events_StationEventSystem_1_Initialize.md&amp;value=---%0Auid%3A%20Content.Server.StationEvents.Events.StationEventSystem%601.Initialize%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/StationEvents/Events/StationEventSystem.cs/#L40">View Source</a>
+  </span>
+  <a id="Content_Server_StationEvents_Events_StationEventSystem_1_Initialize_" data-uid="Content.Server.StationEvents.Events.StationEventSystem`1.Initialize*"></a>
+  <h4 id="Content_Server_StationEvents_Events_StationEventSystem_1_Initialize" data-uid="Content.Server.StationEvents.Events.StationEventSystem`1.Initialize">Initialize()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override void Initialize()</code></pre>
+  </div>
+  <h5 class="overrides">Overrides</h5>
+  <div><span class="xref">Content.Server.GameTicking.Rules.GameRuleSystem&lt;T&gt;.Initialize()</span></div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_StationEvents_Events_StationEventSystem_1_Started_EntityUid__0_Content_Server_GameTicking_Rules_Components_GameRuleComponent_Content_Server_GameTicking_Rules_Components_GameRuleStartedEvent_.md&amp;value=---%0Auid%3A%20Content.Server.StationEvents.Events.StationEventSystem%601.Started(EntityUid%2C%600%2CContent.Server.GameTicking.Rules.Components.GameRuleComponent%2CContent.Server.GameTicking.Rules.Components.GameRuleStartedEvent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/StationEvents/Events/StationEventSystem.cs/#L67">View Source</a>
+  </span>
+  <a id="Content_Server_StationEvents_Events_StationEventSystem_1_Started_" data-uid="Content.Server.StationEvents.Events.StationEventSystem`1.Started*"></a>
+  <h4 id="Content_Server_StationEvents_Events_StationEventSystem_1_Started_EntityUid__0_Content_Server_GameTicking_Rules_Components_GameRuleComponent_Content_Server_GameTicking_Rules_Components_GameRuleStartedEvent_" data-uid="Content.Server.StationEvents.Events.StationEventSystem`1.Started(EntityUid,`0,Content.Server.GameTicking.Rules.Components.GameRuleComponent,Content.Server.GameTicking.Rules.Components.GameRuleStartedEvent)">Started(EntityUid, T, GameRuleComponent, GameRuleStartedEvent)</h4>
+  <div class="markdown level1 summary"><p>Called when the gamerule begins</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected override void Started(EntityUid uid, T component, GameRuleComponent gameRule, GameRuleStartedEvent args)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td><span class="parametername">component</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Server.GameTicking.Rules.Components.GameRuleComponent.html">GameRuleComponent</a></td>
+        <td><span class="parametername">gameRule</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">Content.Server.GameTicking.Rules.Components.GameRuleStartedEvent</span></td>
+        <td><span class="parametername">args</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><span class="xref">Content.Server.GameTicking.Rules.GameRuleSystem&lt;T&gt;.Started(EntityUid, T, Content.Server.GameTicking.Rules.Components.GameRuleComponent, Content.Server.GameTicking.Rules.Components.GameRuleStartedEvent)</span></div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_StationEvents_Events_StationEventSystem_1_TryFindRandomTile_Vector2i__System_Nullable_EntityUid___EntityUid__Robust_Shared_Map_EntityCoordinates__.md&amp;value=---%0Auid%3A%20Content.Server.StationEvents.Events.StationEventSystem%601.TryFindRandomTile(Vector2i%40%2CSystem.Nullable%7BEntityUid%7D%40%2CEntityUid%40%2CRobust.Shared.Map.EntityCoordinates%40)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/StationEvents/Events/StationEventSystem.cs/#L168">View Source</a>
+  </span>
+  <a id="Content_Server_StationEvents_Events_StationEventSystem_1_TryFindRandomTile_" data-uid="Content.Server.StationEvents.Events.StationEventSystem`1.TryFindRandomTile*"></a>
+  <h4 id="Content_Server_StationEvents_Events_StationEventSystem_1_TryFindRandomTile_Vector2i__System_Nullable_EntityUid___EntityUid__Robust_Shared_Map_EntityCoordinates__" data-uid="Content.Server.StationEvents.Events.StationEventSystem`1.TryFindRandomTile(Vector2i@,System.Nullable{EntityUid}@,EntityUid@,Robust.Shared.Map.EntityCoordinates@)">TryFindRandomTile(out Vector2i, out Nullable&lt;EntityUid&gt;, out EntityUid, out EntityCoordinates)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected bool TryFindRandomTile(out Vector2i tile, out EntityUid? targetStation, out EntityUid targetGrid, out EntityCoordinates targetCoords)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Vector2i</span></td>
+        <td><span class="parametername">tile</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">EntityUid</span>&gt;</td>
+        <td><span class="parametername">targetStation</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">targetGrid</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">Robust.Shared.Map.EntityCoordinates</span></td>
+        <td><span class="parametername">targetCoords</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_StationEvents_Events_StationEventSystem_1_TryGetRandomStation_System_Nullable_EntityUid___System_Nullable_Func_EntityUid_System_Boolean___.md&amp;value=---%0Auid%3A%20Content.Server.StationEvents.Events.StationEventSystem%601.TryGetRandomStation(System.Nullable%7BEntityUid%7D%40%2CSystem.Nullable%7BFunc%7BEntityUid%2CSystem.Boolean%7D%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/StationEvents/Events/StationEventSystem.cs/#L137">View Source</a>
+  </span>
+  <a id="Content_Server_StationEvents_Events_StationEventSystem_1_TryGetRandomStation_" data-uid="Content.Server.StationEvents.Events.StationEventSystem`1.TryGetRandomStation*"></a>
+  <h4 id="Content_Server_StationEvents_Events_StationEventSystem_1_TryGetRandomStation_System_Nullable_EntityUid___System_Nullable_Func_EntityUid_System_Boolean___" data-uid="Content.Server.StationEvents.Events.StationEventSystem`1.TryGetRandomStation(System.Nullable{EntityUid}@,System.Nullable{Func{EntityUid,System.Boolean}})">TryGetRandomStation(out Nullable&lt;EntityUid&gt;, Nullable&lt;Func&lt;EntityUid, Boolean&gt;&gt;)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected bool TryGetRandomStation(out EntityUid? station, Func&lt;EntityUid, bool&gt;? filter = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">EntityUid</span>&gt;</td>
+        <td><span class="parametername">station</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">Func</span>&lt;<span class="xref">EntityUid</span>, <span class="xref">System.Boolean</span>&gt;&gt;</td>
+        <td><span class="parametername">filter</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_StationEvents_Events_StationEventSystem_1_Update_System_Single_.md&amp;value=---%0Auid%3A%20Content.Server.StationEvents.Events.StationEventSystem%601.Update(System.Single)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/StationEvents/Events/StationEventSystem.cs/#L109">View Source</a>
+  </span>
+  <a id="Content_Server_StationEvents_Events_StationEventSystem_1_Update_" data-uid="Content.Server.StationEvents.Events.StationEventSystem`1.Update*"></a>
+  <h4 id="Content_Server_StationEvents_Events_StationEventSystem_1_Update_System_Single_" data-uid="Content.Server.StationEvents.Events.StationEventSystem`1.Update(System.Single)">Update(Single)</h4>
+  <div class="markdown level1 summary"><p>Called every tick when this event is running.
+Events are responsible for their own lifetime, so this handles starting and ending after time.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override void Update(float frameTime)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td><span class="parametername">frameTime</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><span class="xref">Content.Server.GameTicking.Rules.GameRuleSystem&lt;T&gt;.Update(System.Single)</span></div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_StationEvents_Events_StationEventSystem_1.md&amp;value=---%0Auid%3A%20Content.Server.StationEvents.Events.StationEventSystem%601%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/StationEvents/Events/StationEventSystem.cs/#L25" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <div class="toggle-mode">
+                <div class="icon">
+                  <i aria-hidden="true">☀</i>
+                </div>
+                <label class="switch">
+                  <input type="checkbox" id="switch-style">
+                  <span class="slider round"></span>
+                </label>
+                <div class="icon">
+                  <i aria-hidden="true">☾</i>
+                </div>
+              </div>
+          
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <h5>In This Article</h5>
+              <div></div>
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <div class="pull-left">
+              
+              <span>Generated by <strong>DocFX</strong></span>
+            </div>
+            <div class="toggle-mode pull-right visible-sm visible-xs">
+              <div class="icon">
+                <i aria-hidden="true">☀</i>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="switch-style-m">
+                <span class="slider round"></span>
+              </label>
+              <div class="icon">
+                <i aria-hidden="true">☾</i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <script type="text/javascript" src="../../styles/toggle-theme.js"></script>
+      </footer>    </div>
+    
+    <script type="text/javascript" src="../../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../../styles/docfx.js"></script>
+    <script type="text/javascript" src="../../styles/main.js"></script>
+  </body>
+</html>

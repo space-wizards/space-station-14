@@ -1,0 +1,1428 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class StationJobsSystem
+   </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class StationJobsSystem
+   ">
+    <meta name="generator" content="docfx 2.56.7.0">
+    
+    <link rel="shortcut icon" href="../../favicon.ico">
+    <link rel="stylesheet" href="../../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../../styles/docfx.css">
+    <link rel="stylesheet" href="../../styles/main.css">
+    <meta property="docfx:navrel" content="../../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../../index.html">
+                <img id="logo" class="svg" src="../../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Content.Server.Station.Systems.StationJobsSystem">
+  
+  
+  <h1 id="Content_Server_Station_Systems_StationJobsSystem" data-uid="Content.Server.Station.Systems.StationJobsSystem" class="text-break">Class StationJobsSystem
+  </h1>
+  <div class="markdown level0 summary"><p>Manages job slots for stations.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level1"><span class="xref">StationJobsSystem</span></div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Content.Server.Station.Systems.html">Content.Server.Station.Systems</a></h6>
+  <h6><strong>Assembly</strong>: Content.Server.dll</h6>
+  <h5 id="Content_Server_Station_Systems_StationJobsSystem_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public sealed class StationJobsSystem : EntitySystem</code></pre>
+  </div>
+  <h3 id="methods">Methods
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Station_Systems_StationJobsSystem_AssignJobs_Dictionary_Robust_Shared_Network_NetUserId_Content_Shared_Preferences_HumanoidCharacterProfile__IReadOnlyList_EntityUid__System_Boolean_.md&amp;value=---%0Auid%3A%20Content.Server.Station.Systems.StationJobsSystem.AssignJobs(Dictionary%7BRobust.Shared.Network.NetUserId%2CContent.Shared.Preferences.HumanoidCharacterProfile%7D%2CIReadOnlyList%7BEntityUid%7D%2CSystem.Boolean)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Station/Systems/StationJobsSystem.Roundstart.cs/#L54">View Source</a>
+  </span>
+  <a id="Content_Server_Station_Systems_StationJobsSystem_AssignJobs_" data-uid="Content.Server.Station.Systems.StationJobsSystem.AssignJobs*"></a>
+  <h4 id="Content_Server_Station_Systems_StationJobsSystem_AssignJobs_Dictionary_Robust_Shared_Network_NetUserId_Content_Shared_Preferences_HumanoidCharacterProfile__IReadOnlyList_EntityUid__System_Boolean_" data-uid="Content.Server.Station.Systems.StationJobsSystem.AssignJobs(Dictionary{Robust.Shared.Network.NetUserId,Content.Shared.Preferences.HumanoidCharacterProfile},IReadOnlyList{EntityUid},System.Boolean)">AssignJobs(Dictionary&lt;NetUserId, HumanoidCharacterProfile&gt;, IReadOnlyList&lt;EntityUid&gt;, Boolean)</h4>
+  <div class="markdown level1 summary"><p>Assigns jobs based on the given preferences and list of stations to assign for.
+This does NOT change the slots on the station, only figures out where each player should go.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Dictionary&lt;NetUserId, (string? , EntityUid)&gt; AssignJobs(Dictionary&lt;NetUserId, HumanoidCharacterProfile&gt; profiles, IReadOnlyList&lt;EntityUid&gt; stations, bool useRoundStartJobs = true)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Dictionary</span>&lt;<span class="xref">Robust.Shared.Network.NetUserId</span>, <a class="xref" href="../Content.Shared/Content.Shared.Preferences.HumanoidCharacterProfile.html">HumanoidCharacterProfile</a>&gt;</td>
+        <td><span class="parametername">profiles</span></td>
+        <td><p>The profiles to use for selection.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">IReadOnlyList</span>&lt;<span class="xref">EntityUid</span>&gt;</td>
+        <td><span class="parametername">stations</span></td>
+        <td><p>List of stations to assign for.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">useRoundStartJobs</span></td>
+        <td><p>Whether or not to use the round-start jobs for the stations instead of their current jobs.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Dictionary</span>&lt;<span class="xref">Robust.Shared.Network.NetUserId</span>, <span class="xref">System.ValueTuple</span>&lt;<span class="xref">System.Nullable</span>&lt;<span class="xref">System.String</span>&gt;, <span class="xref">EntityUid</span>&gt;&gt;</td>
+        <td><p>List of players and their assigned jobs.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Content_Server_Station_Systems_StationJobsSystem_AssignJobs_Dictionary_Robust_Shared_Network_NetUserId_Content_Shared_Preferences_HumanoidCharacterProfile__IReadOnlyList_EntityUid__System_Boolean__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>You probably shouldn't use useRoundStartJobs mid-round if the station has been available to join,
+as there may end up being more round-start slots than available slots, which can cause weird behavior.
+A warning to all who enter ye cursed lands: This function is long and mildly incomprehensible. Best used without touching.</p>
+</div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Station_Systems_StationJobsSystem_AssignOverflowJobs_Dictionary_Robust_Shared_Network_NetUserId_System_ValueTuple_System_Nullable_System_String__EntityUid____IEnumerable_Robust_Shared_Network_NetUserId__IReadOnlyDictionary_Robust_Shared_Network_NetUserId_Content_Shared_Preferences_HumanoidCharacterProfile__IReadOnlyList_EntityUid__.md&amp;value=---%0Auid%3A%20Content.Server.Station.Systems.StationJobsSystem.AssignOverflowJobs(Dictionary%7BRobust.Shared.Network.NetUserId%2CSystem.ValueTuple%7BSystem.Nullable%7BSystem.String%7D%2CEntityUid%7D%7D%40%2CIEnumerable%7BRobust.Shared.Network.NetUserId%7D%2CIReadOnlyDictionary%7BRobust.Shared.Network.NetUserId%2CContent.Shared.Preferences.HumanoidCharacterProfile%7D%2CIReadOnlyList%7BEntityUid%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Station/Systems/StationJobsSystem.Roundstart.cs/#L275">View Source</a>
+  </span>
+  <a id="Content_Server_Station_Systems_StationJobsSystem_AssignOverflowJobs_" data-uid="Content.Server.Station.Systems.StationJobsSystem.AssignOverflowJobs*"></a>
+  <h4 id="Content_Server_Station_Systems_StationJobsSystem_AssignOverflowJobs_Dictionary_Robust_Shared_Network_NetUserId_System_ValueTuple_System_Nullable_System_String__EntityUid____IEnumerable_Robust_Shared_Network_NetUserId__IReadOnlyDictionary_Robust_Shared_Network_NetUserId_Content_Shared_Preferences_HumanoidCharacterProfile__IReadOnlyList_EntityUid__" data-uid="Content.Server.Station.Systems.StationJobsSystem.AssignOverflowJobs(Dictionary{Robust.Shared.Network.NetUserId,System.ValueTuple{System.Nullable{System.String},EntityUid}}@,IEnumerable{Robust.Shared.Network.NetUserId},IReadOnlyDictionary{Robust.Shared.Network.NetUserId,Content.Shared.Preferences.HumanoidCharacterProfile},IReadOnlyList{EntityUid})">AssignOverflowJobs(ref Dictionary&lt;NetUserId, (Nullable&lt;String&gt;, EntityUid)&gt;, IEnumerable&lt;NetUserId&gt;, IReadOnlyDictionary&lt;NetUserId, HumanoidCharacterProfile&gt;, IReadOnlyList&lt;EntityUid&gt;)</h4>
+  <div class="markdown level1 summary"><p>Attempts to assign overflow jobs to any player in allPlayersToAssign that is not in assignedJobs.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void AssignOverflowJobs(ref Dictionary&lt;NetUserId, (string? , EntityUid)&gt; assignedJobs, IEnumerable&lt;NetUserId&gt; allPlayersToAssign, IReadOnlyDictionary&lt;NetUserId, HumanoidCharacterProfile&gt; profiles, IReadOnlyList&lt;EntityUid&gt; stations)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Dictionary</span>&lt;<span class="xref">Robust.Shared.Network.NetUserId</span>, <span class="xref">System.ValueTuple</span>&lt;<span class="xref">System.Nullable</span>&lt;<span class="xref">System.String</span>&gt;, <span class="xref">EntityUid</span>&gt;&gt;</td>
+        <td><span class="parametername">assignedJobs</span></td>
+        <td><p>All assigned jobs.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">IEnumerable</span>&lt;<span class="xref">Robust.Shared.Network.NetUserId</span>&gt;</td>
+        <td><span class="parametername">allPlayersToAssign</span></td>
+        <td><p>All players that might need an overflow assigned.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">IReadOnlyDictionary</span>&lt;<span class="xref">Robust.Shared.Network.NetUserId</span>, <a class="xref" href="../Content.Shared/Content.Shared.Preferences.HumanoidCharacterProfile.html">HumanoidCharacterProfile</a>&gt;</td>
+        <td><span class="parametername">profiles</span></td>
+        <td><p>Player character profiles.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">IReadOnlyList</span>&lt;<span class="xref">EntityUid</span>&gt;</td>
+        <td><span class="parametername">stations</span></td>
+        <td><p>The stations to consider for spawn location.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Station_Systems_StationJobsSystem_CalcExtendedAccess_Dictionary_EntityUid_System_Int32__.md&amp;value=---%0Auid%3A%20Content.Server.Station.Systems.StationJobsSystem.CalcExtendedAccess(Dictionary%7BEntityUid%2CSystem.Int32%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Station/Systems/StationJobsSystem.Roundstart.cs/#L315">View Source</a>
+  </span>
+  <a id="Content_Server_Station_Systems_StationJobsSystem_CalcExtendedAccess_" data-uid="Content.Server.Station.Systems.StationJobsSystem.CalcExtendedAccess*"></a>
+  <h4 id="Content_Server_Station_Systems_StationJobsSystem_CalcExtendedAccess_Dictionary_EntityUid_System_Int32__" data-uid="Content.Server.Station.Systems.StationJobsSystem.CalcExtendedAccess(Dictionary{EntityUid,System.Int32})">CalcExtendedAccess(Dictionary&lt;EntityUid, Int32&gt;)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void CalcExtendedAccess(Dictionary&lt;EntityUid, int&gt; jobsCount)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Dictionary</span>&lt;<span class="xref">EntityUid</span>, <span class="xref">System.Int32</span>&gt;</td>
+        <td><span class="parametername">jobsCount</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Station_Systems_StationJobsSystem_GetAvailableJobs_EntityUid_Content_Server_Station_Components_StationJobsComponent_.md&amp;value=---%0Auid%3A%20Content.Server.Station.Systems.StationJobsSystem.GetAvailableJobs(EntityUid%2CContent.Server.Station.Components.StationJobsComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Station/Systems/StationJobsSystem.cs/#L337">View Source</a>
+  </span>
+  <a id="Content_Server_Station_Systems_StationJobsSystem_GetAvailableJobs_" data-uid="Content.Server.Station.Systems.StationJobsSystem.GetAvailableJobs*"></a>
+  <h4 id="Content_Server_Station_Systems_StationJobsSystem_GetAvailableJobs_EntityUid_Content_Server_Station_Components_StationJobsComponent_" data-uid="Content.Server.Station.Systems.StationJobsSystem.GetAvailableJobs(EntityUid,Content.Server.Station.Components.StationJobsComponent)">GetAvailableJobs(EntityUid, StationJobsComponent)</h4>
+  <div class="markdown level1 summary"><p>Returns all jobs available on the station.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IReadOnlySet&lt;string&gt; GetAvailableJobs(EntityUid station, StationJobsComponent stationJobs = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">station</span></td>
+        <td><p>Station to get jobs for</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Server.Station.Components.StationJobsComponent.html">StationJobsComponent</a></td>
+        <td><span class="parametername">stationJobs</span></td>
+        <td><p>Resolve pattern, station jobs component of the station.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IReadOnlySet</span>&lt;<span class="xref">System.String</span>&gt;</td>
+        <td><p>Set containing all jobs available.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Station_Systems_StationJobsSystem_GetJobs_EntityUid_Content_Server_Station_Components_StationJobsComponent_.md&amp;value=---%0Auid%3A%20Content.Server.Station.Systems.StationJobsSystem.GetJobs(EntityUid%2CContent.Server.Station.Components.StationJobsComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Station/Systems/StationJobsSystem.cs/#L367">View Source</a>
+  </span>
+  <a id="Content_Server_Station_Systems_StationJobsSystem_GetJobs_" data-uid="Content.Server.Station.Systems.StationJobsSystem.GetJobs*"></a>
+  <h4 id="Content_Server_Station_Systems_StationJobsSystem_GetJobs_EntityUid_Content_Server_Station_Components_StationJobsComponent_" data-uid="Content.Server.Station.Systems.StationJobsSystem.GetJobs(EntityUid,Content.Server.Station.Components.StationJobsComponent)">GetJobs(EntityUid, StationJobsComponent)</h4>
+  <div class="markdown level1 summary"><p>Returns a readonly dictionary of all jobs and their slot info.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IReadOnlyDictionary&lt;string, uint?&gt; GetJobs(EntityUid station, StationJobsComponent stationJobs = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">station</span></td>
+        <td><p>Station to get jobs for</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Server.Station.Components.StationJobsComponent.html">StationJobsComponent</a></td>
+        <td><span class="parametername">stationJobs</span></td>
+        <td><p>Resolve pattern, station jobs component of the station.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IReadOnlyDictionary</span>&lt;<span class="xref">System.String</span>, <span class="xref">System.Nullable</span>&lt;<span class="xref">System.UInt32</span>&gt;&gt;</td>
+        <td><p>List of all jobs on the station.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Station_Systems_StationJobsSystem_GetOverflowJobs_EntityUid_Content_Server_Station_Components_StationJobsComponent_.md&amp;value=---%0Auid%3A%20Content.Server.Station.Systems.StationJobsSystem.GetOverflowJobs(EntityUid%2CContent.Server.Station.Components.StationJobsComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Station/Systems/StationJobsSystem.cs/#L352">View Source</a>
+  </span>
+  <a id="Content_Server_Station_Systems_StationJobsSystem_GetOverflowJobs_" data-uid="Content.Server.Station.Systems.StationJobsSystem.GetOverflowJobs*"></a>
+  <h4 id="Content_Server_Station_Systems_StationJobsSystem_GetOverflowJobs_EntityUid_Content_Server_Station_Components_StationJobsComponent_" data-uid="Content.Server.Station.Systems.StationJobsSystem.GetOverflowJobs(EntityUid,Content.Server.Station.Components.StationJobsComponent)">GetOverflowJobs(EntityUid, StationJobsComponent)</h4>
+  <div class="markdown level1 summary"><p>Returns all overflow jobs available on the station.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IReadOnlySet&lt;string&gt; GetOverflowJobs(EntityUid station, StationJobsComponent stationJobs = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">station</span></td>
+        <td><p>Station to get jobs for</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Server.Station.Components.StationJobsComponent.html">StationJobsComponent</a></td>
+        <td><span class="parametername">stationJobs</span></td>
+        <td><p>Resolve pattern, station jobs component of the station.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IReadOnlySet</span>&lt;<span class="xref">System.String</span>&gt;</td>
+        <td><p>Set containing all overflow jobs available.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Station_Systems_StationJobsSystem_GetRoundStartJobs_EntityUid_Content_Server_Station_Components_StationJobsComponent_.md&amp;value=---%0Auid%3A%20Content.Server.Station.Systems.StationJobsSystem.GetRoundStartJobs(EntityUid%2CContent.Server.Station.Components.StationJobsComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Station/Systems/StationJobsSystem.cs/#L382">View Source</a>
+  </span>
+  <a id="Content_Server_Station_Systems_StationJobsSystem_GetRoundStartJobs_" data-uid="Content.Server.Station.Systems.StationJobsSystem.GetRoundStartJobs*"></a>
+  <h4 id="Content_Server_Station_Systems_StationJobsSystem_GetRoundStartJobs_EntityUid_Content_Server_Station_Components_StationJobsComponent_" data-uid="Content.Server.Station.Systems.StationJobsSystem.GetRoundStartJobs(EntityUid,Content.Server.Station.Components.StationJobsComponent)">GetRoundStartJobs(EntityUid, StationJobsComponent)</h4>
+  <div class="markdown level1 summary"><p>Returns a readonly dictionary of all round-start jobs and their slot info.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IReadOnlyDictionary&lt;string, uint?&gt; GetRoundStartJobs(EntityUid station, StationJobsComponent stationJobs = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">station</span></td>
+        <td><p>Station to get jobs for</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Server.Station.Components.StationJobsComponent.html">StationJobsComponent</a></td>
+        <td><span class="parametername">stationJobs</span></td>
+        <td><p>Resolve pattern, station jobs component of the station.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IReadOnlyDictionary</span>&lt;<span class="xref">System.String</span>, <span class="xref">System.Nullable</span>&lt;<span class="xref">System.UInt32</span>&gt;&gt;</td>
+        <td><p>List of all round-start jobs.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Station_Systems_StationJobsSystem_Initialize.md&amp;value=---%0Auid%3A%20Content.Server.Station.Systems.StationJobsSystem.Initialize%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Station/Systems/StationJobsSystem.cs/#L30">View Source</a>
+  </span>
+  <a id="Content_Server_Station_Systems_StationJobsSystem_Initialize_" data-uid="Content.Server.Station.Systems.StationJobsSystem.Initialize*"></a>
+  <h4 id="Content_Server_Station_Systems_StationJobsSystem_Initialize" data-uid="Content.Server.Station.Systems.StationJobsSystem.Initialize">Initialize()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override void Initialize()</code></pre>
+  </div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Station_Systems_StationJobsSystem_IsJobUnlimited_EntityUid_Content_Shared_Roles_JobPrototype_Content_Server_Station_Components_StationJobsComponent_.md&amp;value=---%0Auid%3A%20Content.Server.Station.Systems.StationJobsSystem.IsJobUnlimited(EntityUid%2CContent.Shared.Roles.JobPrototype%2CContent.Server.Station.Components.StationJobsComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Station/Systems/StationJobsSystem.cs/#L271">View Source</a>
+  </span>
+  <a id="Content_Server_Station_Systems_StationJobsSystem_IsJobUnlimited_" data-uid="Content.Server.Station.Systems.StationJobsSystem.IsJobUnlimited*"></a>
+  <h4 id="Content_Server_Station_Systems_StationJobsSystem_IsJobUnlimited_EntityUid_Content_Shared_Roles_JobPrototype_Content_Server_Station_Components_StationJobsComponent_" data-uid="Content.Server.Station.Systems.StationJobsSystem.IsJobUnlimited(EntityUid,Content.Shared.Roles.JobPrototype,Content.Server.Station.Components.StationJobsComponent)">IsJobUnlimited(EntityUid, JobPrototype, StationJobsComponent)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsJobUnlimited(EntityUid station, JobPrototype job, StationJobsComponent stationJobs = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">station</span></td>
+        <td><p>Station to check.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="../Content.Shared/Content.Shared.Roles.JobPrototype.html">JobPrototype</a></td>
+        <td><span class="parametername">job</span></td>
+        <td><p>Job to check.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Server.Station.Components.StationJobsComponent.html">StationJobsComponent</a></td>
+        <td><span class="parametername">stationJobs</span></td>
+        <td><p>Resolve pattern, station jobs component of the station.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Station_Systems_StationJobsSystem_IsJobUnlimited_EntityUid_System_String_Content_Server_Station_Components_StationJobsComponent_.md&amp;value=---%0Auid%3A%20Content.Server.Station.Systems.StationJobsSystem.IsJobUnlimited(EntityUid%2CSystem.String%2CContent.Server.Station.Components.StationJobsComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Station/Systems/StationJobsSystem.cs/#L284">View Source</a>
+  </span>
+  <a id="Content_Server_Station_Systems_StationJobsSystem_IsJobUnlimited_" data-uid="Content.Server.Station.Systems.StationJobsSystem.IsJobUnlimited*"></a>
+  <h4 id="Content_Server_Station_Systems_StationJobsSystem_IsJobUnlimited_EntityUid_System_String_Content_Server_Station_Components_StationJobsComponent_" data-uid="Content.Server.Station.Systems.StationJobsSystem.IsJobUnlimited(EntityUid,System.String,Content.Server.Station.Components.StationJobsComponent)">IsJobUnlimited(EntityUid, String, StationJobsComponent)</h4>
+  <div class="markdown level1 summary"><p>Checks if the given job is unlimited.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsJobUnlimited(EntityUid station, string jobPrototypeId, StationJobsComponent stationJobs = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">station</span></td>
+        <td><p>Station to check.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">jobPrototypeId</span></td>
+        <td><p>Job prototype ID to check.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Server.Station.Components.StationJobsComponent.html">StationJobsComponent</a></td>
+        <td><span class="parametername">stationJobs</span></td>
+        <td><p>Resolve pattern, station jobs component of the station.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>Returns if the given slot is unlimited.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Station_Systems_StationJobsSystem_MakeJobUnlimited_EntityUid_Content_Shared_Roles_JobPrototype_Content_Server_Station_Components_StationJobsComponent_.md&amp;value=---%0Auid%3A%20Content.Server.Station.Systems.StationJobsSystem.MakeJobUnlimited(EntityUid%2CContent.Shared.Roles.JobPrototype%2CContent.Server.Station.Components.StationJobsComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Station/Systems/StationJobsSystem.cs/#L241">View Source</a>
+  </span>
+  <a id="Content_Server_Station_Systems_StationJobsSystem_MakeJobUnlimited_" data-uid="Content.Server.Station.Systems.StationJobsSystem.MakeJobUnlimited*"></a>
+  <h4 id="Content_Server_Station_Systems_StationJobsSystem_MakeJobUnlimited_EntityUid_Content_Shared_Roles_JobPrototype_Content_Server_Station_Components_StationJobsComponent_" data-uid="Content.Server.Station.Systems.StationJobsSystem.MakeJobUnlimited(EntityUid,Content.Shared.Roles.JobPrototype,Content.Server.Station.Components.StationJobsComponent)">MakeJobUnlimited(EntityUid, JobPrototype, StationJobsComponent)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void MakeJobUnlimited(EntityUid station, JobPrototype job, StationJobsComponent stationJobs = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">station</span></td>
+        <td><p>Station to make a job unlimited on.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="../Content.Shared/Content.Shared.Roles.JobPrototype.html">JobPrototype</a></td>
+        <td><span class="parametername">job</span></td>
+        <td><p>Job to make unlimited.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Server.Station.Components.StationJobsComponent.html">StationJobsComponent</a></td>
+        <td><span class="parametername">stationJobs</span></td>
+        <td><p>Resolve pattern, station jobs component of the station.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Station_Systems_StationJobsSystem_MakeJobUnlimited_EntityUid_System_String_Content_Server_Station_Components_StationJobsComponent_.md&amp;value=---%0Auid%3A%20Content.Server.Station.Systems.StationJobsSystem.MakeJobUnlimited(EntityUid%2CSystem.String%2CContent.Server.Station.Components.StationJobsComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Station/Systems/StationJobsSystem.cs/#L253">View Source</a>
+  </span>
+  <a id="Content_Server_Station_Systems_StationJobsSystem_MakeJobUnlimited_" data-uid="Content.Server.Station.Systems.StationJobsSystem.MakeJobUnlimited*"></a>
+  <h4 id="Content_Server_Station_Systems_StationJobsSystem_MakeJobUnlimited_EntityUid_System_String_Content_Server_Station_Components_StationJobsComponent_" data-uid="Content.Server.Station.Systems.StationJobsSystem.MakeJobUnlimited(EntityUid,System.String,Content.Server.Station.Components.StationJobsComponent)">MakeJobUnlimited(EntityUid, String, StationJobsComponent)</h4>
+  <div class="markdown level1 summary"><p>Makes the given job have unlimited slots.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void MakeJobUnlimited(EntityUid station, string jobPrototypeId, StationJobsComponent stationJobs = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">station</span></td>
+        <td><p>Station to make a job unlimited on.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">jobPrototypeId</span></td>
+        <td><p>Job prototype ID to make unlimited.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Server.Station.Components.StationJobsComponent.html">StationJobsComponent</a></td>
+        <td><span class="parametername">stationJobs</span></td>
+        <td><p>Resolve pattern, station jobs component of the station.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Station_Systems_StationJobsSystem_PickBestAvailableJobWithPriority_EntityUid_IReadOnlyDictionary_System_String_Content_Shared_Preferences_JobPriority__System_Boolean_System_Nullable_IReadOnlySet_System_String___.md&amp;value=---%0Auid%3A%20Content.Server.Station.Systems.StationJobsSystem.PickBestAvailableJobWithPriority(EntityUid%2CIReadOnlyDictionary%7BSystem.String%2CContent.Shared.Preferences.JobPriority%7D%2CSystem.Boolean%2CSystem.Nullable%7BIReadOnlySet%7BSystem.String%7D%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Station/Systems/StationJobsSystem.cs/#L398">View Source</a>
+  </span>
+  <a id="Content_Server_Station_Systems_StationJobsSystem_PickBestAvailableJobWithPriority_" data-uid="Content.Server.Station.Systems.StationJobsSystem.PickBestAvailableJobWithPriority*"></a>
+  <h4 id="Content_Server_Station_Systems_StationJobsSystem_PickBestAvailableJobWithPriority_EntityUid_IReadOnlyDictionary_System_String_Content_Shared_Preferences_JobPriority__System_Boolean_System_Nullable_IReadOnlySet_System_String___" data-uid="Content.Server.Station.Systems.StationJobsSystem.PickBestAvailableJobWithPriority(EntityUid,IReadOnlyDictionary{System.String,Content.Shared.Preferences.JobPriority},System.Boolean,System.Nullable{IReadOnlySet{System.String}})">PickBestAvailableJobWithPriority(EntityUid, IReadOnlyDictionary&lt;String, JobPriority&gt;, Boolean, Nullable&lt;IReadOnlySet&lt;String&gt;&gt;)</h4>
+  <div class="markdown level1 summary"><p>Looks at the given priority list, and picks the best available job (optionally with the given exclusions)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string? PickBestAvailableJobWithPriority(EntityUid station, IReadOnlyDictionary&lt;string, JobPriority&gt; jobPriorities, bool pickOverflows, IReadOnlySet&lt;string&gt;? disallowedJobs = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">station</span></td>
+        <td><p>Station to pick from.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">IReadOnlyDictionary</span>&lt;<span class="xref">System.String</span>, <a class="xref" href="../Content.Shared/Content.Shared.Preferences.JobPriority.html">JobPriority</a>&gt;</td>
+        <td><span class="parametername">jobPriorities</span></td>
+        <td><p>The priority list to use for selecting a job.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">pickOverflows</span></td>
+        <td><p>Whether or not to pick from the overflow list.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">IReadOnlySet</span>&lt;<span class="xref">System.String</span>&gt;&gt;</td>
+        <td><span class="parametername">disallowedJobs</span></td>
+        <td><p>A set of disallowed jobs, if any.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">System.String</span>&gt;</td>
+        <td><p>The selected job, if any.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Station_Systems_StationJobsSystem_TryAdjustJobSlot_EntityUid_Content_Shared_Roles_JobPrototype_System_Int32_System_Boolean_System_Boolean_Content_Server_Station_Components_StationJobsComponent_.md&amp;value=---%0Auid%3A%20Content.Server.Station.Systems.StationJobsSystem.TryAdjustJobSlot(EntityUid%2CContent.Shared.Roles.JobPrototype%2CSystem.Int32%2CSystem.Boolean%2CSystem.Boolean%2CContent.Server.Station.Components.StationJobsComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Station/Systems/StationJobsSystem.cs/#L116">View Source</a>
+  </span>
+  <a id="Content_Server_Station_Systems_StationJobsSystem_TryAdjustJobSlot_" data-uid="Content.Server.Station.Systems.StationJobsSystem.TryAdjustJobSlot*"></a>
+  <h4 id="Content_Server_Station_Systems_StationJobsSystem_TryAdjustJobSlot_EntityUid_Content_Shared_Roles_JobPrototype_System_Int32_System_Boolean_System_Boolean_Content_Server_Station_Components_StationJobsComponent_" data-uid="Content.Server.Station.Systems.StationJobsSystem.TryAdjustJobSlot(EntityUid,Content.Shared.Roles.JobPrototype,System.Int32,System.Boolean,System.Boolean,Content.Server.Station.Components.StationJobsComponent)">TryAdjustJobSlot(EntityUid, JobPrototype, Int32, Boolean, Boolean, StationJobsComponent)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool TryAdjustJobSlot(EntityUid station, JobPrototype job, int amount, bool createSlot = false, bool clamp = false, StationJobsComponent stationJobs = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">station</span></td>
+        <td><p>Station to adjust the job slot on.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="../Content.Shared/Content.Shared.Roles.JobPrototype.html">JobPrototype</a></td>
+        <td><span class="parametername">job</span></td>
+        <td><p>Job to adjust.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">amount</span></td>
+        <td><p>Amount to adjust by.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">createSlot</span></td>
+        <td><p>Whether or not it should create the slot if it doesn't exist.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">clamp</span></td>
+        <td><p>Whether or not to clamp to zero if you'd remove more jobs than are available.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Server.Station.Components.StationJobsComponent.html">StationJobsComponent</a></td>
+        <td><span class="parametername">stationJobs</span></td>
+        <td><p>Resolve pattern, station jobs component of the station.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Station_Systems_StationJobsSystem_TryAdjustJobSlot_EntityUid_System_String_System_Int32_System_Boolean_System_Boolean_Content_Server_Station_Components_StationJobsComponent_.md&amp;value=---%0Auid%3A%20Content.Server.Station.Systems.StationJobsSystem.TryAdjustJobSlot(EntityUid%2CSystem.String%2CSystem.Int32%2CSystem.Boolean%2CSystem.Boolean%2CContent.Server.Station.Components.StationJobsComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Station/Systems/StationJobsSystem.cs/#L133">View Source</a>
+  </span>
+  <a id="Content_Server_Station_Systems_StationJobsSystem_TryAdjustJobSlot_" data-uid="Content.Server.Station.Systems.StationJobsSystem.TryAdjustJobSlot*"></a>
+  <h4 id="Content_Server_Station_Systems_StationJobsSystem_TryAdjustJobSlot_EntityUid_System_String_System_Int32_System_Boolean_System_Boolean_Content_Server_Station_Components_StationJobsComponent_" data-uid="Content.Server.Station.Systems.StationJobsSystem.TryAdjustJobSlot(EntityUid,System.String,System.Int32,System.Boolean,System.Boolean,Content.Server.Station.Components.StationJobsComponent)">TryAdjustJobSlot(EntityUid, String, Int32, Boolean, Boolean, StationJobsComponent)</h4>
+  <div class="markdown level1 summary"><p>Attempts to adjust the given job slot by the amount provided.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool TryAdjustJobSlot(EntityUid station, string jobPrototypeId, int amount, bool createSlot = false, bool clamp = false, StationJobsComponent stationJobs = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">station</span></td>
+        <td><p>Station to adjust the job slot on.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">jobPrototypeId</span></td>
+        <td><p>Job prototype ID to adjust.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">amount</span></td>
+        <td><p>Amount to adjust by.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">createSlot</span></td>
+        <td><p>Whether or not it should create the slot if it doesn't exist.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">clamp</span></td>
+        <td><p>Whether or not to clamp to zero if you'd remove more jobs than are available.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Server.Station.Components.StationJobsComponent.html">StationJobsComponent</a></td>
+        <td><span class="parametername">stationJobs</span></td>
+        <td><p>Resolve pattern, station jobs component of the station.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>Whether or not slot adjustment was a success.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Station_Systems_StationJobsSystem_TryAssignJob_EntityUid_Content_Shared_Roles_JobPrototype_Content_Server_Station_Components_StationJobsComponent_.md&amp;value=---%0Auid%3A%20Content.Server.Station.Systems.StationJobsSystem.TryAssignJob(EntityUid%2CContent.Shared.Roles.JobPrototype%2CContent.Server.Station.Components.StationJobsComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Station/Systems/StationJobsSystem.cs/#L91">View Source</a>
+  </span>
+  <a id="Content_Server_Station_Systems_StationJobsSystem_TryAssignJob_" data-uid="Content.Server.Station.Systems.StationJobsSystem.TryAssignJob*"></a>
+  <h4 id="Content_Server_Station_Systems_StationJobsSystem_TryAssignJob_EntityUid_Content_Shared_Roles_JobPrototype_Content_Server_Station_Components_StationJobsComponent_" data-uid="Content.Server.Station.Systems.StationJobsSystem.TryAssignJob(EntityUid,Content.Shared.Roles.JobPrototype,Content.Server.Station.Components.StationJobsComponent)">TryAssignJob(EntityUid, JobPrototype, StationJobsComponent)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool TryAssignJob(EntityUid station, JobPrototype job, StationJobsComponent stationJobs = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">station</span></td>
+        <td><p>Station to assign a job on.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="../Content.Shared/Content.Shared.Roles.JobPrototype.html">JobPrototype</a></td>
+        <td><span class="parametername">job</span></td>
+        <td><p>Job to assign.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Server.Station.Components.StationJobsComponent.html">StationJobsComponent</a></td>
+        <td><span class="parametername">stationJobs</span></td>
+        <td><p>Resolve pattern, station jobs component of the station.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Station_Systems_StationJobsSystem_TryAssignJob_EntityUid_System_String_Content_Server_Station_Components_StationJobsComponent_.md&amp;value=---%0Auid%3A%20Content.Server.Station.Systems.StationJobsSystem.TryAssignJob(EntityUid%2CSystem.String%2CContent.Server.Station.Components.StationJobsComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Station/Systems/StationJobsSystem.cs/#L104">View Source</a>
+  </span>
+  <a id="Content_Server_Station_Systems_StationJobsSystem_TryAssignJob_" data-uid="Content.Server.Station.Systems.StationJobsSystem.TryAssignJob*"></a>
+  <h4 id="Content_Server_Station_Systems_StationJobsSystem_TryAssignJob_EntityUid_System_String_Content_Server_Station_Components_StationJobsComponent_" data-uid="Content.Server.Station.Systems.StationJobsSystem.TryAssignJob(EntityUid,System.String,Content.Server.Station.Components.StationJobsComponent)">TryAssignJob(EntityUid, String, StationJobsComponent)</h4>
+  <div class="markdown level1 summary"><p>Attempts to assign the given job once. (essentially, it decrements the slot if possible).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool TryAssignJob(EntityUid station, string jobPrototypeId, StationJobsComponent stationJobs = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">station</span></td>
+        <td><p>Station to assign a job on.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">jobPrototypeId</span></td>
+        <td><p>Job prototype ID to assign.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Server.Station.Components.StationJobsComponent.html">StationJobsComponent</a></td>
+        <td><span class="parametername">stationJobs</span></td>
+        <td><p>Resolve pattern, station jobs component of the station.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>Whether or not assignment was a success.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Station_Systems_StationJobsSystem_TryGetJobSlot_EntityUid_Content_Shared_Roles_JobPrototype_System_Nullable_System_UInt32___Content_Server_Station_Components_StationJobsComponent_.md&amp;value=---%0Auid%3A%20Content.Server.Station.Systems.StationJobsSystem.TryGetJobSlot(EntityUid%2CContent.Shared.Roles.JobPrototype%2CSystem.Nullable%7BSystem.UInt32%7D%40%2CContent.Server.Station.Components.StationJobsComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Station/Systems/StationJobsSystem.cs/#L298">View Source</a>
+  </span>
+  <a id="Content_Server_Station_Systems_StationJobsSystem_TryGetJobSlot_" data-uid="Content.Server.Station.Systems.StationJobsSystem.TryGetJobSlot*"></a>
+  <h4 id="Content_Server_Station_Systems_StationJobsSystem_TryGetJobSlot_EntityUid_Content_Shared_Roles_JobPrototype_System_Nullable_System_UInt32___Content_Server_Station_Components_StationJobsComponent_" data-uid="Content.Server.Station.Systems.StationJobsSystem.TryGetJobSlot(EntityUid,Content.Shared.Roles.JobPrototype,System.Nullable{System.UInt32}@,Content.Server.Station.Components.StationJobsComponent)">TryGetJobSlot(EntityUid, JobPrototype, out Nullable&lt;UInt32&gt;, StationJobsComponent)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool TryGetJobSlot(EntityUid station, JobPrototype job, out uint? slots, StationJobsComponent stationJobs = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">station</span></td>
+        <td><p>Station to get slot info from.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="../Content.Shared/Content.Shared.Roles.JobPrototype.html">JobPrototype</a></td>
+        <td><span class="parametername">job</span></td>
+        <td><p>Job to get slot info for.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">System.UInt32</span>&gt;</td>
+        <td><span class="parametername">slots</span></td>
+        <td><p>The number of slots remaining. Null if infinite.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Server.Station.Components.StationJobsComponent.html">StationJobsComponent</a></td>
+        <td><span class="parametername">stationJobs</span></td>
+        <td><p>Resolve pattern, station jobs component of the station.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Station_Systems_StationJobsSystem_TryGetJobSlot_EntityUid_System_String_System_Nullable_System_UInt32___Content_Server_Station_Components_StationJobsComponent_.md&amp;value=---%0Auid%3A%20Content.Server.Station.Systems.StationJobsSystem.TryGetJobSlot(EntityUid%2CSystem.String%2CSystem.Nullable%7BSystem.UInt32%7D%40%2CContent.Server.Station.Components.StationJobsComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Station/Systems/StationJobsSystem.cs/#L313">View Source</a>
+  </span>
+  <a id="Content_Server_Station_Systems_StationJobsSystem_TryGetJobSlot_" data-uid="Content.Server.Station.Systems.StationJobsSystem.TryGetJobSlot*"></a>
+  <h4 id="Content_Server_Station_Systems_StationJobsSystem_TryGetJobSlot_EntityUid_System_String_System_Nullable_System_UInt32___Content_Server_Station_Components_StationJobsComponent_" data-uid="Content.Server.Station.Systems.StationJobsSystem.TryGetJobSlot(EntityUid,System.String,System.Nullable{System.UInt32}@,Content.Server.Station.Components.StationJobsComponent)">TryGetJobSlot(EntityUid, String, out Nullable&lt;UInt32&gt;, StationJobsComponent)</h4>
+  <div class="markdown level1 summary"><p>Returns information about the given job slot.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool TryGetJobSlot(EntityUid station, string jobPrototypeId, out uint? slots, StationJobsComponent stationJobs = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">station</span></td>
+        <td><p>Station to get slot info from.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">jobPrototypeId</span></td>
+        <td><p>Job prototype ID to get slot info for.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">System.UInt32</span>&gt;</td>
+        <td><span class="parametername">slots</span></td>
+        <td><p>The number of slots remaining. Null if infinite.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Server.Station.Components.StationJobsComponent.html">StationJobsComponent</a></td>
+        <td><span class="parametername">stationJobs</span></td>
+        <td><p>Resolve pattern, station jobs component of the station.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>Whether or not the slot exists.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Content_Server_Station_Systems_StationJobsSystem_TryGetJobSlot_EntityUid_System_String_System_Nullable_System_UInt32___Content_Server_Station_Components_StationJobsComponent__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>slots will be null if the slot doesn't exist, as well, so make sure to check the return value.</p>
+</div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Station_Systems_StationJobsSystem_TrySetJobSlot_EntityUid_Content_Shared_Roles_JobPrototype_System_Int32_System_Boolean_Content_Server_Station_Components_StationJobsComponent_.md&amp;value=---%0Auid%3A%20Content.Server.Station.Systems.StationJobsSystem.TrySetJobSlot(EntityUid%2CContent.Shared.Roles.JobPrototype%2CSystem.Int32%2CSystem.Boolean%2CContent.Server.Station.Components.StationJobsComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Station/Systems/StationJobsSystem.cs/#L193">View Source</a>
+  </span>
+  <a id="Content_Server_Station_Systems_StationJobsSystem_TrySetJobSlot_" data-uid="Content.Server.Station.Systems.StationJobsSystem.TrySetJobSlot*"></a>
+  <h4 id="Content_Server_Station_Systems_StationJobsSystem_TrySetJobSlot_EntityUid_Content_Shared_Roles_JobPrototype_System_Int32_System_Boolean_Content_Server_Station_Components_StationJobsComponent_" data-uid="Content.Server.Station.Systems.StationJobsSystem.TrySetJobSlot(EntityUid,Content.Shared.Roles.JobPrototype,System.Int32,System.Boolean,Content.Server.Station.Components.StationJobsComponent)">TrySetJobSlot(EntityUid, JobPrototype, Int32, Boolean, StationJobsComponent)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool TrySetJobSlot(EntityUid station, JobPrototype jobPrototype, int amount, bool createSlot = false, StationJobsComponent stationJobs = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">station</span></td>
+        <td><p>Station to adjust the job slot on.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="../Content.Shared/Content.Shared.Roles.JobPrototype.html">JobPrototype</a></td>
+        <td><span class="parametername">jobPrototype</span></td>
+        <td><p>Job prototype to adjust.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">amount</span></td>
+        <td><p>Amount to set to.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">createSlot</span></td>
+        <td><p>Whether or not it should create the slot if it doesn't exist.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Server.Station.Components.StationJobsComponent.html">StationJobsComponent</a></td>
+        <td><span class="parametername">stationJobs</span></td>
+        <td><p>Resolve pattern, station jobs component of the station.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Station_Systems_StationJobsSystem_TrySetJobSlot_EntityUid_System_String_System_Int32_System_Boolean_Content_Server_Station_Components_StationJobsComponent_.md&amp;value=---%0Auid%3A%20Content.Server.Station.Systems.StationJobsSystem.TrySetJobSlot(EntityUid%2CSystem.String%2CSystem.Int32%2CSystem.Boolean%2CContent.Server.Station.Components.StationJobsComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Station/Systems/StationJobsSystem.cs/#L209">View Source</a>
+  </span>
+  <a id="Content_Server_Station_Systems_StationJobsSystem_TrySetJobSlot_" data-uid="Content.Server.Station.Systems.StationJobsSystem.TrySetJobSlot*"></a>
+  <h4 id="Content_Server_Station_Systems_StationJobsSystem_TrySetJobSlot_EntityUid_System_String_System_Int32_System_Boolean_Content_Server_Station_Components_StationJobsComponent_" data-uid="Content.Server.Station.Systems.StationJobsSystem.TrySetJobSlot(EntityUid,System.String,System.Int32,System.Boolean,Content.Server.Station.Components.StationJobsComponent)">TrySetJobSlot(EntityUid, String, Int32, Boolean, StationJobsComponent)</h4>
+  <div class="markdown level1 summary"><p>Attempts to set the given job slot to the amount provided.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool TrySetJobSlot(EntityUid station, string jobPrototypeId, int amount, bool createSlot = false, StationJobsComponent stationJobs = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">station</span></td>
+        <td><p>Station to adjust the job slot on.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">jobPrototypeId</span></td>
+        <td><p>Job prototype ID to adjust.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">amount</span></td>
+        <td><p>Amount to set to.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">createSlot</span></td>
+        <td><p>Whether or not it should create the slot if it doesn't exist.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Server.Station.Components.StationJobsComponent.html">StationJobsComponent</a></td>
+        <td><span class="parametername">stationJobs</span></td>
+        <td><p>Resolve pattern, station jobs component of the station.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>Whether or not setting the value succeeded.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Station_Systems_StationJobsSystem_Update_System_Single_.md&amp;value=---%0Auid%3A%20Content.Server.Station.Systems.StationJobsSystem.Update(System.Single)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Station/Systems/StationJobsSystem.cs/#L39">View Source</a>
+  </span>
+  <a id="Content_Server_Station_Systems_StationJobsSystem_Update_" data-uid="Content.Server.Station.Systems.StationJobsSystem.Update*"></a>
+  <h4 id="Content_Server_Station_Systems_StationJobsSystem_Update_System_Single_" data-uid="Content.Server.Station.Systems.StationJobsSystem.Update(System.Single)">Update(Single)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override void Update(float _)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td><span class="parametername">_</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Station_Systems_StationJobsSystem.md&amp;value=---%0Auid%3A%20Content.Server.Station.Systems.StationJobsSystem%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Station/Systems/StationJobsSystem.Roundstart.cs/#L15" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <div class="toggle-mode">
+                <div class="icon">
+                  <i aria-hidden="true">☀</i>
+                </div>
+                <label class="switch">
+                  <input type="checkbox" id="switch-style">
+                  <span class="slider round"></span>
+                </label>
+                <div class="icon">
+                  <i aria-hidden="true">☾</i>
+                </div>
+              </div>
+          
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <h5>In This Article</h5>
+              <div></div>
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <div class="pull-left">
+              
+              <span>Generated by <strong>DocFX</strong></span>
+            </div>
+            <div class="toggle-mode pull-right visible-sm visible-xs">
+              <div class="icon">
+                <i aria-hidden="true">☀</i>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="switch-style-m">
+                <span class="slider round"></span>
+              </label>
+              <div class="icon">
+                <i aria-hidden="true">☾</i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <script type="text/javascript" src="../../styles/toggle-theme.js"></script>
+      </footer>    </div>
+    
+    <script type="text/javascript" src="../../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../../styles/docfx.js"></script>
+    <script type="text/javascript" src="../../styles/main.js"></script>
+  </body>
+</html>

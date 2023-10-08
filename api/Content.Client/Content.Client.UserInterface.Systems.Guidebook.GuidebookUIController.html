@@ -1,0 +1,505 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class GuidebookUIController
+   </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class GuidebookUIController
+   ">
+    <meta name="generator" content="docfx 2.56.7.0">
+    
+    <link rel="shortcut icon" href="../../favicon.ico">
+    <link rel="stylesheet" href="../../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../../styles/docfx.css">
+    <link rel="stylesheet" href="../../styles/main.css">
+    <meta property="docfx:navrel" content="../../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../../index.html">
+                <img id="logo" class="svg" src="../../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Content.Client.UserInterface.Systems.Guidebook.GuidebookUIController">
+  
+  
+  <h1 id="Content_Client_UserInterface_Systems_Guidebook_GuidebookUIController" data-uid="Content.Client.UserInterface.Systems.Guidebook.GuidebookUIController" class="text-break">Class GuidebookUIController
+  </h1>
+  <div class="markdown level0 summary"></div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level1"><span class="xref">Robust.Client.UserInterface.Controllers.UIController</span></div>
+    <div class="level2"><span class="xref">GuidebookUIController</span></div>
+  </div>
+  <div classs="implements">
+    <h5>Implements</h5>
+    <div><span class="xref">Robust.Shared.GameObjects.IEntityEventSubscriber</span></div>
+    <div><span class="xref">Robust.Client.UserInterface.Controllers.IOnStateEntered</span>&lt;<a class="xref" href="Content.Client.Lobby.LobbyState.html">LobbyState</a>&gt;</div>
+    <div><span class="xref">Robust.Client.UserInterface.Controllers.IOnStateEntered</span>&lt;<a class="xref" href="Content.Client.Gameplay.GameplayState.html">GameplayState</a>&gt;</div>
+    <div><span class="xref">Robust.Client.UserInterface.Controllers.IOnStateExited</span>&lt;<a class="xref" href="Content.Client.Lobby.LobbyState.html">LobbyState</a>&gt;</div>
+    <div><span class="xref">Robust.Client.UserInterface.Controllers.IOnStateExited</span>&lt;<a class="xref" href="Content.Client.Gameplay.GameplayState.html">GameplayState</a>&gt;</div>
+    <div><span class="xref">Robust.Client.UserInterface.Controllers.IOnSystemChanged</span>&lt;<a class="xref" href="Content.Client.Guidebook.GuidebookSystem.html">GuidebookSystem</a>&gt;</div>
+    <div><span class="xref">Robust.Client.UserInterface.Controllers.IOnSystemLoaded</span>&lt;<a class="xref" href="Content.Client.Guidebook.GuidebookSystem.html">GuidebookSystem</a>&gt;</div>
+    <div><span class="xref">Robust.Client.UserInterface.Controllers.IOnSystemUnloaded</span>&lt;<a class="xref" href="Content.Client.Guidebook.GuidebookSystem.html">GuidebookSystem</a>&gt;</div>
+  </div>
+  <div class="inheritedMembers">
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Content.Client.UserInterface.Systems.Guidebook.html">Content.Client.UserInterface.Systems.Guidebook</a></h6>
+  <h6><strong>Assembly</strong>: Content.Client.dll</h6>
+  <h5 id="Content_Client_UserInterface_Systems_Guidebook_GuidebookUIController_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public sealed class GuidebookUIController : UIController, IEntityEventSubscriber, IOnStateEntered&lt;LobbyState&gt;, IOnStateEntered&lt;GameplayState&gt;, IOnStateExited&lt;LobbyState&gt;, IOnStateExited&lt;GameplayState&gt;, IOnSystemChanged&lt;GuidebookSystem&gt;, IOnSystemLoaded&lt;GuidebookSystem&gt;, IOnSystemUnloaded&lt;GuidebookSystem&gt;</code></pre>
+  </div>
+  <h3 id="methods">Methods
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Client_UserInterface_Systems_Guidebook_GuidebookUIController_OnStateEntered_Content_Client_Gameplay_GameplayState_.md&amp;value=---%0Auid%3A%20Content.Client.UserInterface.Systems.Guidebook.GuidebookUIController.OnStateEntered(Content.Client.Gameplay.GameplayState)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Client/UserInterface/Systems/Guidebook/GuidebookUIController.cs/#L30">View Source</a>
+  </span>
+  <a id="Content_Client_UserInterface_Systems_Guidebook_GuidebookUIController_OnStateEntered_" data-uid="Content.Client.UserInterface.Systems.Guidebook.GuidebookUIController.OnStateEntered*"></a>
+  <h4 id="Content_Client_UserInterface_Systems_Guidebook_GuidebookUIController_OnStateEntered_Content_Client_Gameplay_GameplayState_" data-uid="Content.Client.UserInterface.Systems.Guidebook.GuidebookUIController.OnStateEntered(Content.Client.Gameplay.GameplayState)">OnStateEntered(GameplayState)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void OnStateEntered(GameplayState state)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Client.Gameplay.GameplayState.html">GameplayState</a></td>
+        <td><span class="parametername">state</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Client_UserInterface_Systems_Guidebook_GuidebookUIController_OnStateEntered_Content_Client_Lobby_LobbyState_.md&amp;value=---%0Auid%3A%20Content.Client.UserInterface.Systems.Guidebook.GuidebookUIController.OnStateEntered(Content.Client.Lobby.LobbyState)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Client/UserInterface/Systems/Guidebook/GuidebookUIController.cs/#L25">View Source</a>
+  </span>
+  <a id="Content_Client_UserInterface_Systems_Guidebook_GuidebookUIController_OnStateEntered_" data-uid="Content.Client.UserInterface.Systems.Guidebook.GuidebookUIController.OnStateEntered*"></a>
+  <h4 id="Content_Client_UserInterface_Systems_Guidebook_GuidebookUIController_OnStateEntered_Content_Client_Lobby_LobbyState_" data-uid="Content.Client.UserInterface.Systems.Guidebook.GuidebookUIController.OnStateEntered(Content.Client.Lobby.LobbyState)">OnStateEntered(LobbyState)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void OnStateEntered(LobbyState state)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Client.Lobby.LobbyState.html">LobbyState</a></td>
+        <td><span class="parametername">state</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Client_UserInterface_Systems_Guidebook_GuidebookUIController_OnStateExited_Content_Client_Gameplay_GameplayState_.md&amp;value=---%0Auid%3A%20Content.Client.UserInterface.Systems.Guidebook.GuidebookUIController.OnStateExited(Content.Client.Gameplay.GameplayState)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Client/UserInterface/Systems/Guidebook/GuidebookUIController.cs/#L56">View Source</a>
+  </span>
+  <a id="Content_Client_UserInterface_Systems_Guidebook_GuidebookUIController_OnStateExited_" data-uid="Content.Client.UserInterface.Systems.Guidebook.GuidebookUIController.OnStateExited*"></a>
+  <h4 id="Content_Client_UserInterface_Systems_Guidebook_GuidebookUIController_OnStateExited_Content_Client_Gameplay_GameplayState_" data-uid="Content.Client.UserInterface.Systems.Guidebook.GuidebookUIController.OnStateExited(Content.Client.Gameplay.GameplayState)">OnStateExited(GameplayState)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void OnStateExited(GameplayState state)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Client.Gameplay.GameplayState.html">GameplayState</a></td>
+        <td><span class="parametername">state</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Client_UserInterface_Systems_Guidebook_GuidebookUIController_OnStateExited_Content_Client_Lobby_LobbyState_.md&amp;value=---%0Auid%3A%20Content.Client.UserInterface.Systems.Guidebook.GuidebookUIController.OnStateExited(Content.Client.Lobby.LobbyState)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Client/UserInterface/Systems/Guidebook/GuidebookUIController.cs/#L51">View Source</a>
+  </span>
+  <a id="Content_Client_UserInterface_Systems_Guidebook_GuidebookUIController_OnStateExited_" data-uid="Content.Client.UserInterface.Systems.Guidebook.GuidebookUIController.OnStateExited*"></a>
+  <h4 id="Content_Client_UserInterface_Systems_Guidebook_GuidebookUIController_OnStateExited_Content_Client_Lobby_LobbyState_" data-uid="Content.Client.UserInterface.Systems.Guidebook.GuidebookUIController.OnStateExited(Content.Client.Lobby.LobbyState)">OnStateExited(LobbyState)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void OnStateExited(LobbyState state)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Client.Lobby.LobbyState.html">LobbyState</a></td>
+        <td><span class="parametername">state</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Client_UserInterface_Systems_Guidebook_GuidebookUIController_OnSystemLoaded_Content_Client_Guidebook_GuidebookSystem_.md&amp;value=---%0Auid%3A%20Content.Client.UserInterface.Systems.Guidebook.GuidebookUIController.OnSystemLoaded(Content.Client.Guidebook.GuidebookSystem)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Client/UserInterface/Systems/Guidebook/GuidebookUIController.cs/#L75">View Source</a>
+  </span>
+  <a id="Content_Client_UserInterface_Systems_Guidebook_GuidebookUIController_OnSystemLoaded_" data-uid="Content.Client.UserInterface.Systems.Guidebook.GuidebookUIController.OnSystemLoaded*"></a>
+  <h4 id="Content_Client_UserInterface_Systems_Guidebook_GuidebookUIController_OnSystemLoaded_Content_Client_Guidebook_GuidebookSystem_" data-uid="Content.Client.UserInterface.Systems.Guidebook.GuidebookUIController.OnSystemLoaded(Content.Client.Guidebook.GuidebookSystem)">OnSystemLoaded(GuidebookSystem)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void OnSystemLoaded(GuidebookSystem system)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Client.Guidebook.GuidebookSystem.html">GuidebookSystem</a></td>
+        <td><span class="parametername">system</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Client_UserInterface_Systems_Guidebook_GuidebookUIController_OnSystemUnloaded_Content_Client_Guidebook_GuidebookSystem_.md&amp;value=---%0Auid%3A%20Content.Client.UserInterface.Systems.Guidebook.GuidebookUIController.OnSystemUnloaded(Content.Client.Guidebook.GuidebookSystem)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Client/UserInterface/Systems/Guidebook/GuidebookUIController.cs/#L80">View Source</a>
+  </span>
+  <a id="Content_Client_UserInterface_Systems_Guidebook_GuidebookUIController_OnSystemUnloaded_" data-uid="Content.Client.UserInterface.Systems.Guidebook.GuidebookUIController.OnSystemUnloaded*"></a>
+  <h4 id="Content_Client_UserInterface_Systems_Guidebook_GuidebookUIController_OnSystemUnloaded_Content_Client_Guidebook_GuidebookSystem_" data-uid="Content.Client.UserInterface.Systems.Guidebook.GuidebookUIController.OnSystemUnloaded(Content.Client.Guidebook.GuidebookSystem)">OnSystemUnloaded(GuidebookSystem)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void OnSystemUnloaded(GuidebookSystem system)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Client.Guidebook.GuidebookSystem.html">GuidebookSystem</a></td>
+        <td><span class="parametername">system</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Client_UserInterface_Systems_Guidebook_GuidebookUIController_ToggleGuidebook_List_System_String__System_Nullable_List_System_String___System_Nullable_System_String__System_Boolean_System_Nullable_System_String__.md&amp;value=---%0Auid%3A%20Content.Client.UserInterface.Systems.Guidebook.GuidebookUIController.ToggleGuidebook(List%7BSystem.String%7D%2CSystem.Nullable%7BList%7BSystem.String%7D%7D%2CSystem.Nullable%7BSystem.String%7D%2CSystem.Boolean%2CSystem.Nullable%7BSystem.String%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Client/UserInterface/Systems/Guidebook/GuidebookUIController.cs/#L173">View Source</a>
+  </span>
+  <a id="Content_Client_UserInterface_Systems_Guidebook_GuidebookUIController_ToggleGuidebook_" data-uid="Content.Client.UserInterface.Systems.Guidebook.GuidebookUIController.ToggleGuidebook*"></a>
+  <h4 id="Content_Client_UserInterface_Systems_Guidebook_GuidebookUIController_ToggleGuidebook_List_System_String__System_Nullable_List_System_String___System_Nullable_System_String__System_Boolean_System_Nullable_System_String__" data-uid="Content.Client.UserInterface.Systems.Guidebook.GuidebookUIController.ToggleGuidebook(List{System.String},System.Nullable{List{System.String}},System.Nullable{System.String},System.Boolean,System.Nullable{System.String})">ToggleGuidebook(List&lt;String&gt;, Nullable&lt;List&lt;String&gt;&gt;, Nullable&lt;String&gt;, Boolean, Nullable&lt;String&gt;)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void ToggleGuidebook(List&lt;string&gt; guideList, List&lt;string&gt;? rootEntries = null, string? forceRoot = null, bool includeChildren = true, string? selected = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">List</span>&lt;<span class="xref">System.String</span>&gt;</td>
+        <td><span class="parametername">guideList</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">List</span>&lt;<span class="xref">System.String</span>&gt;&gt;</td>
+        <td><span class="parametername">rootEntries</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">System.String</span>&gt;</td>
+        <td><span class="parametername">forceRoot</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">includeChildren</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">System.String</span>&gt;</td>
+        <td><span class="parametername">selected</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Client_UserInterface_Systems_Guidebook_GuidebookUIController_ToggleGuidebook_System_Nullable_Dictionary_System_String_Content_Client_Guidebook_GuideEntry___System_Nullable_List_System_String___System_Nullable_System_String__System_Boolean_System_Nullable_System_String__.md&amp;value=---%0Auid%3A%20Content.Client.UserInterface.Systems.Guidebook.GuidebookUIController.ToggleGuidebook(System.Nullable%7BDictionary%7BSystem.String%2CContent.Client.Guidebook.GuideEntry%7D%7D%2CSystem.Nullable%7BList%7BSystem.String%7D%7D%2CSystem.Nullable%7BSystem.String%7D%2CSystem.Boolean%2CSystem.Nullable%7BSystem.String%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Client/UserInterface/Systems/Guidebook/GuidebookUIController.cs/#L130">View Source</a>
+  </span>
+  <a id="Content_Client_UserInterface_Systems_Guidebook_GuidebookUIController_ToggleGuidebook_" data-uid="Content.Client.UserInterface.Systems.Guidebook.GuidebookUIController.ToggleGuidebook*"></a>
+  <h4 id="Content_Client_UserInterface_Systems_Guidebook_GuidebookUIController_ToggleGuidebook_System_Nullable_Dictionary_System_String_Content_Client_Guidebook_GuideEntry___System_Nullable_List_System_String___System_Nullable_System_String__System_Boolean_System_Nullable_System_String__" data-uid="Content.Client.UserInterface.Systems.Guidebook.GuidebookUIController.ToggleGuidebook(System.Nullable{Dictionary{System.String,Content.Client.Guidebook.GuideEntry}},System.Nullable{List{System.String}},System.Nullable{System.String},System.Boolean,System.Nullable{System.String})">ToggleGuidebook(Nullable&lt;Dictionary&lt;String, GuideEntry&gt;&gt;, Nullable&lt;List&lt;String&gt;&gt;, Nullable&lt;String&gt;, Boolean, Nullable&lt;String&gt;)</h4>
+  <div class="markdown level1 summary"><p>Opens or closes the guidebook.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void ToggleGuidebook(Dictionary&lt;string, GuideEntry&gt;? guides = null, List&lt;string&gt;? rootEntries = null, string? forceRoot = null, bool includeChildren = true, string? selected = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">Dictionary</span>&lt;<span class="xref">System.String</span>, <a class="xref" href="Content.Client.Guidebook.GuideEntry.html">GuideEntry</a>&gt;&gt;</td>
+        <td><span class="parametername">guides</span></td>
+        <td><p>What guides should be shown. If not specified, this will instead list all the entries</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">List</span>&lt;<span class="xref">System.String</span>&gt;&gt;</td>
+        <td><span class="parametername">rootEntries</span></td>
+        <td><p>A list of guides that should form the base of the table of contents. If not specified,
+this will automatically simply be a list of all guides that have no parent.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">System.String</span>&gt;</td>
+        <td><span class="parametername">forceRoot</span></td>
+        <td><p>This forces a singular guide to contain all other guides. This guide will
+contain its own children, in addition to what would normally be the root guides if this were not
+specified.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">includeChildren</span></td>
+        <td><p>Whether or not to automatically include child entries. If false, this will ONLY
+show the specified entries</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">System.String</span>&gt;</td>
+        <td><span class="parametername">selected</span></td>
+        <td><p>The guide whose contents should be displayed when the guidebook is opened</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <span class="xref">Robust.Shared.GameObjects.IEntityEventSubscriber</span>
+  </div>
+  <div>
+      <span class="xref">Robust.Client.UserInterface.Controllers.IOnStateEntered&lt;T&gt;</span>
+  </div>
+  <div>
+      <span class="xref">Robust.Client.UserInterface.Controllers.IOnStateEntered&lt;T&gt;</span>
+  </div>
+  <div>
+      <span class="xref">Robust.Client.UserInterface.Controllers.IOnStateExited&lt;T&gt;</span>
+  </div>
+  <div>
+      <span class="xref">Robust.Client.UserInterface.Controllers.IOnStateExited&lt;T&gt;</span>
+  </div>
+  <div>
+      <span class="xref">Robust.Client.UserInterface.Controllers.IOnSystemChanged&lt;T&gt;</span>
+  </div>
+  <div>
+      <span class="xref">Robust.Client.UserInterface.Controllers.IOnSystemLoaded&lt;T&gt;</span>
+  </div>
+  <div>
+      <span class="xref">Robust.Client.UserInterface.Controllers.IOnSystemUnloaded&lt;T&gt;</span>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Client_UserInterface_Systems_Guidebook_GuidebookUIController.md&amp;value=---%0Auid%3A%20Content.Client.UserInterface.Systems.Guidebook.GuidebookUIController%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Client/UserInterface/Systems/Guidebook/GuidebookUIController.cs/#L17" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <div class="toggle-mode">
+                <div class="icon">
+                  <i aria-hidden="true">☀</i>
+                </div>
+                <label class="switch">
+                  <input type="checkbox" id="switch-style">
+                  <span class="slider round"></span>
+                </label>
+                <div class="icon">
+                  <i aria-hidden="true">☾</i>
+                </div>
+              </div>
+          
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <h5>In This Article</h5>
+              <div></div>
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <div class="pull-left">
+              
+              <span>Generated by <strong>DocFX</strong></span>
+            </div>
+            <div class="toggle-mode pull-right visible-sm visible-xs">
+              <div class="icon">
+                <i aria-hidden="true">☀</i>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="switch-style-m">
+                <span class="slider round"></span>
+              </label>
+              <div class="icon">
+                <i aria-hidden="true">☾</i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <script type="text/javascript" src="../../styles/toggle-theme.js"></script>
+      </footer>    </div>
+    
+    <script type="text/javascript" src="../../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../../styles/docfx.js"></script>
+    <script type="text/javascript" src="../../styles/main.js"></script>
+  </body>
+</html>

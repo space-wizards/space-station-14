@@ -1,0 +1,699 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class DamageVisualsComponent
+   </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class DamageVisualsComponent
+   ">
+    <meta name="generator" content="docfx 2.56.7.0">
+    
+    <link rel="shortcut icon" href="../../favicon.ico">
+    <link rel="stylesheet" href="../../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../../styles/docfx.css">
+    <link rel="stylesheet" href="../../styles/main.css">
+    <meta property="docfx:navrel" content="../../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../../index.html">
+                <img id="logo" class="svg" src="../../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Content.Client.Damage.DamageVisualsComponent">
+  
+  
+  <h1 id="Content_Client_Damage_DamageVisualsComponent" data-uid="Content.Client.Damage.DamageVisualsComponent" class="text-break">Class DamageVisualsComponent
+  </h1>
+  <div class="markdown level0 summary"></div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level1"><span class="xref">DamageVisualsComponent</span></div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Content.Client.Damage.html">Content.Client.Damage</a></h6>
+  <h6><strong>Assembly</strong>: Content.Client.dll</h6>
+  <h5 id="Content_Client_Damage_DamageVisualsComponent_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public sealed class DamageVisualsComponent : Component</code></pre>
+  </div>
+  <h3 id="fields">Fields
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Client_Damage_DamageVisualsComponent_DamageGroup.md&amp;value=---%0Auid%3A%20Content.Client.Damage.DamageVisualsComponent.DamageGroup%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Client/Damage/DamageVisualsComponent.cs/#L87">View Source</a>
+  </span>
+  <h4 id="Content_Client_Damage_DamageVisualsComponent_DamageGroup" data-uid="Content.Client.Damage.DamageVisualsComponent.DamageGroup">DamageGroup</h4>
+  <div class="markdown level1 summary"><p>A single damage group to target.
+This should only be defined if
+overlay is set to false.
+If this is defined with damageSprites,
+this will be ignored.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string? DamageGroup</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">System.String</span>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Content_Client_Damage_DamageVisualsComponent_DamageGroup_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>This is here because otherwise,
+you would need several permutations
+of group sprites depending on
+what kind of damage combination
+you would want, on which threshold.</p>
+</div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Client_Damage_DamageVisualsComponent_DamageOverlay.md&amp;value=---%0Auid%3A%20Content.Client.Damage.DamageVisualsComponent.DamageOverlay%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Client/Damage/DamageVisualsComponent.cs/#L116">View Source</a>
+  </span>
+  <h4 id="Content_Client_Damage_DamageVisualsComponent_DamageOverlay" data-uid="Content.Client.Damage.DamageVisualsComponent.DamageOverlay">DamageOverlay</h4>
+  <div class="markdown level1 summary"><p>This is the overlay sprite used, if _trackAllDamage is
+enabled. Supports no complex per-group layering,
+just an actually simple damage overlay. See
+DamageVisualizerSprite for more information.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public DamageVisualizerSprite DamageOverlay</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Client.Damage.DamageVisualizerSprite.html">DamageVisualizerSprite</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Client_Damage_DamageVisualsComponent_DamageOverlayGroups.md&amp;value=---%0Auid%3A%20Content.Client.Damage.DamageVisualsComponent.DamageOverlayGroups%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Client/Damage/DamageVisualsComponent.cs/#L58">View Source</a>
+  </span>
+  <h4 id="Content_Client_Damage_DamageVisualsComponent_DamageOverlayGroups" data-uid="Content.Client.Damage.DamageVisualsComponent.DamageOverlayGroups">DamageOverlayGroups</h4>
+  <div class="markdown level1 summary"><p>The actual sprites for every damage group
+that the entity should display visually.</p>
+<p>This is keyed by a damage group identifier
+(for example, Brute), and has a value
+of a DamageVisualizerSprite (see below)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Dictionary&lt;string, DamageVisualizerSprite&gt;? DamageOverlayGroups</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">Dictionary</span>&lt;<span class="xref">System.String</span>, <a class="xref" href="Content.Client.Damage.DamageVisualizerSprite.html">DamageVisualizerSprite</a>&gt;&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Client_Damage_DamageVisualsComponent_Disabled.md&amp;value=---%0Auid%3A%20Content.Client.Damage.DamageVisualsComponent.Disabled%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Client/Damage/DamageVisualsComponent.cs/#L119">View Source</a>
+  </span>
+  <h4 id="Content_Client_Damage_DamageVisualsComponent_Disabled" data-uid="Content.Client.Damage.DamageVisualsComponent.Disabled">Disabled</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool Disabled</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Client_Damage_DamageVisualsComponent_DisabledLayers.md&amp;value=---%0Auid%3A%20Content.Client.Damage.DamageVisualsComponent.DisabledLayers%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Client/Damage/DamageVisualsComponent.cs/#L122">View Source</a>
+  </span>
+  <h4 id="Content_Client_Damage_DamageVisualsComponent_DisabledLayers" data-uid="Content.Client.Damage.DamageVisualsComponent.DisabledLayers">DisabledLayers</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public readonly Dictionary&lt;object, bool&gt; DisabledLayers</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Dictionary</span>&lt;<span class="xref">System.Object</span>, <span class="xref">System.Boolean</span>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Client_Damage_DamageVisualsComponent_Divisor.md&amp;value=---%0Auid%3A%20Content.Client.Damage.DamageVisualsComponent.Divisor%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Client/Damage/DamageVisualsComponent.cs/#L100">View Source</a>
+  </span>
+  <h4 id="Content_Client_Damage_DamageVisualsComponent_Divisor" data-uid="Content.Client.Damage.DamageVisualsComponent.Divisor">Divisor</h4>
+  <div class="markdown level1 summary"><p>Set this if you want incoming damage to be
+divided.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public float Divisor</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Content_Client_Damage_DamageVisualsComponent_Divisor_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>This is more useful if you have similar
+damage sprites in between entities,
+but with different damage thresholds
+and you want to avoid duplicating
+these sprites.</p>
+</div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Client_Damage_DamageVisualsComponent_LastDamageThreshold.md&amp;value=---%0Auid%3A%20Content.Client.Damage.DamageVisualsComponent.LastDamageThreshold%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Client/Damage/DamageVisualsComponent.cs/#L121">View Source</a>
+  </span>
+  <h4 id="Content_Client_Damage_DamageVisualsComponent_LastDamageThreshold" data-uid="Content.Client.Damage.DamageVisualsComponent.LastDamageThreshold">LastDamageThreshold</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public FixedPoint2 LastDamageThreshold</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="../Content.Shared/Content.Shared.FixedPoint.FixedPoint2.html">FixedPoint2</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Client_Damage_DamageVisualsComponent_LastThresholdPerGroup.md&amp;value=---%0Auid%3A%20Content.Client.Damage.DamageVisualsComponent.LastThresholdPerGroup%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Client/Damage/DamageVisualsComponent.cs/#L124">View Source</a>
+  </span>
+  <h4 id="Content_Client_Damage_DamageVisualsComponent_LastThresholdPerGroup" data-uid="Content.Client.Damage.DamageVisualsComponent.LastThresholdPerGroup">LastThresholdPerGroup</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public readonly Dictionary&lt;string, FixedPoint2&gt; LastThresholdPerGroup</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Dictionary</span>&lt;<span class="xref">System.String</span>, <a class="xref" href="../Content.Shared/Content.Shared.FixedPoint.FixedPoint2.html">FixedPoint2</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Client_Damage_DamageVisualsComponent_LayerMapKeyStates.md&amp;value=---%0Auid%3A%20Content.Client.Damage.DamageVisualsComponent.LayerMapKeyStates%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Client/Damage/DamageVisualsComponent.cs/#L123">View Source</a>
+  </span>
+  <h4 id="Content_Client_Damage_DamageVisualsComponent_LayerMapKeyStates" data-uid="Content.Client.Damage.DamageVisualsComponent.LayerMapKeyStates">LayerMapKeyStates</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public readonly Dictionary&lt;object, string&gt; LayerMapKeyStates</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Dictionary</span>&lt;<span class="xref">System.Object</span>, <span class="xref">System.String</span>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Client_Damage_DamageVisualsComponent_Overlay.md&amp;value=---%0Auid%3A%20Content.Client.Damage.DamageVisualsComponent.Overlay%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Client/Damage/DamageVisualsComponent.cs/#L71">View Source</a>
+  </span>
+  <h4 id="Content_Client_Damage_DamageVisualsComponent_Overlay" data-uid="Content.Client.Damage.DamageVisualsComponent.Overlay">Overlay</h4>
+  <div class="markdown level1 summary"><p>Sets if you want sprites to overlay the
+entity when damaged, or if you would
+rather have each target layer's state
+replaced by a different state
+within its RSI.</p>
+<p>This cannot be set to false if:</p>
+<ul>
+<li>There are no target layers</li>
+<li>There is no damage group</li>
+</ul>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool Overlay</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Client_Damage_DamageVisualsComponent_TargetLayerMapKeys.md&amp;value=---%0Auid%3A%20Content.Client.Damage.DamageVisualsComponent.TargetLayerMapKeys%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Client/Damage/DamageVisualsComponent.cs/#L118">View Source</a>
+  </span>
+  <h4 id="Content_Client_Damage_DamageVisualsComponent_TargetLayerMapKeys" data-uid="Content.Client.Damage.DamageVisualsComponent.TargetLayerMapKeys">TargetLayerMapKeys</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public readonly List&lt;Enum&gt; TargetLayerMapKeys</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">List</span>&lt;<span class="xref">Enum</span>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Client_Damage_DamageVisualsComponent_TargetLayers.md&amp;value=---%0Auid%3A%20Content.Client.Damage.DamageVisualsComponent.TargetLayers%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Client/Damage/DamageVisualsComponent.cs/#L48">View Source</a>
+  </span>
+  <h4 id="Content_Client_Damage_DamageVisualsComponent_TargetLayers" data-uid="Content.Client.Damage.DamageVisualsComponent.TargetLayers">TargetLayers</h4>
+  <div class="markdown level1 summary"><p>Layers to target, by layerMapKey.
+If a target layer map key is invalid
+(in essence, undefined), then the target
+layer is removed from the list for efficiency.</p>
+<p>If no layers are valid, then the visualizer
+is marked as invalid.</p>
+<p>If this is not defined, however, the visualizer
+instead adds an overlay to the sprite.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public List&lt;Enum&gt;? TargetLayers</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">List</span>&lt;<span class="xref">Enum</span>&gt;&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Content_Client_Damage_DamageVisualsComponent_TargetLayers_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Layers can be disabled here by passing
+the layer's name as a key to SetData,
+and passing in a bool set to either 'false'
+to disable it, or 'true' to enable it.
+Setting the layer as disabled will make it
+completely invisible.</p>
+</div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Client_Damage_DamageVisualsComponent_Thresholds.md&amp;value=---%0Auid%3A%20Content.Client.Damage.DamageVisualsComponent.Thresholds%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Client/Damage/DamageVisualsComponent.cs/#L26">View Source</a>
+  </span>
+  <h4 id="Content_Client_Damage_DamageVisualsComponent_Thresholds" data-uid="Content.Client.Damage.DamageVisualsComponent.Thresholds">Thresholds</h4>
+  <div class="markdown level1 summary"><p>Damage thresholds between damage state changes.</p>
+<p>If there are any negative thresholds, or there is
+less than one threshold, the visualizer is marked
+as invalid.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public List&lt;FixedPoint2&gt; Thresholds</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">List</span>&lt;<a class="xref" href="../Content.Shared/Content.Shared.FixedPoint.FixedPoint2.html">FixedPoint2</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Content_Client_Damage_DamageVisualsComponent_Thresholds_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>A 'zeroth' threshold is automatically added,
+and this list is automatically sorted for
+efficiency beforehand. As such, the zeroth
+threshold is not required - and negative
+thresholds are automatically caught as
+invalid. The zeroth threshold automatically
+sets all layers to invisible, so a sprite
+isn't required for it.</p>
+</div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Client_Damage_DamageVisualsComponent_TopMostLayerKey.md&amp;value=---%0Auid%3A%20Content.Client.Damage.DamageVisualsComponent.TopMostLayerKey%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Client/Damage/DamageVisualsComponent.cs/#L125">View Source</a>
+  </span>
+  <h4 id="Content_Client_Damage_DamageVisualsComponent_TopMostLayerKey" data-uid="Content.Client.Damage.DamageVisualsComponent.TopMostLayerKey">TopMostLayerKey</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string TopMostLayerKey</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Client_Damage_DamageVisualsComponent_TrackAllDamage.md&amp;value=---%0Auid%3A%20Content.Client.Damage.DamageVisualsComponent.TrackAllDamage%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Client/Damage/DamageVisualsComponent.cs/#L109">View Source</a>
+  </span>
+  <h4 id="Content_Client_Damage_DamageVisualsComponent_TrackAllDamage" data-uid="Content.Client.Damage.DamageVisualsComponent.TrackAllDamage">TrackAllDamage</h4>
+  <div class="markdown level1 summary"><p>Set this to track all damage, instead of specific groups.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool TrackAllDamage</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Content_Client_Damage_DamageVisualsComponent_TrackAllDamage_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>This will only work if you have damageOverlay
+defined - otherwise, it will not work.</p>
+</div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Client_Damage_DamageVisualsComponent_Valid.md&amp;value=---%0Auid%3A%20Content.Client.Damage.DamageVisualsComponent.Valid%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Client/Damage/DamageVisualsComponent.cs/#L120">View Source</a>
+  </span>
+  <h4 id="Content_Client_Damage_DamageVisualsComponent_Valid" data-uid="Content.Client.Damage.DamageVisualsComponent.Valid">Valid</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool Valid</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Client_Damage_DamageVisualsComponent.md&amp;value=---%0Auid%3A%20Content.Client.Damage.DamageVisualsComponent%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Client/Damage/DamageVisualsComponent.cs/#L5" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <div class="toggle-mode">
+                <div class="icon">
+                  <i aria-hidden="true">☀</i>
+                </div>
+                <label class="switch">
+                  <input type="checkbox" id="switch-style">
+                  <span class="slider round"></span>
+                </label>
+                <div class="icon">
+                  <i aria-hidden="true">☾</i>
+                </div>
+              </div>
+          
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <h5>In This Article</h5>
+              <div></div>
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <div class="pull-left">
+              
+              <span>Generated by <strong>DocFX</strong></span>
+            </div>
+            <div class="toggle-mode pull-right visible-sm visible-xs">
+              <div class="icon">
+                <i aria-hidden="true">☀</i>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="switch-style-m">
+                <span class="slider round"></span>
+              </label>
+              <div class="icon">
+                <i aria-hidden="true">☾</i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <script type="text/javascript" src="../../styles/toggle-theme.js"></script>
+      </footer>    </div>
+    
+    <script type="text/javascript" src="../../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../../styles/docfx.js"></script>
+    <script type="text/javascript" src="../../styles/main.js"></script>
+  </body>
+</html>

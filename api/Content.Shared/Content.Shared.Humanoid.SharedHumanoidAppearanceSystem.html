@@ -1,0 +1,838 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class SharedHumanoidAppearanceSystem
+   </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class SharedHumanoidAppearanceSystem
+   ">
+    <meta name="generator" content="docfx 2.56.7.0">
+    
+    <link rel="shortcut icon" href="../../favicon.ico">
+    <link rel="stylesheet" href="../../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../../styles/docfx.css">
+    <link rel="stylesheet" href="../../styles/main.css">
+    <meta property="docfx:navrel" content="../../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../../index.html">
+                <img id="logo" class="svg" src="../../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Content.Shared.Humanoid.SharedHumanoidAppearanceSystem">
+  
+  
+  <h1 id="Content_Shared_Humanoid_SharedHumanoidAppearanceSystem" data-uid="Content.Shared.Humanoid.SharedHumanoidAppearanceSystem" class="text-break">Class SharedHumanoidAppearanceSystem
+  </h1>
+  <div class="markdown level0 summary"><p>HumanoidSystem. Primarily deals with the appearance and visual data
+of a humanoid entity. HumanoidVisualizer is what deals with actually
+organizing the sprites and setting up the sprite component's layers.</p>
+<p>This is a shared system, because while it is server authoritative,
+you still need a local copy so that players can set up their
+characters.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level1"><span class="xref">SharedHumanoidAppearanceSystem</span></div>
+      <div class="level2"><a class="xref" href="../Content.Client/Content.Client.Humanoid.HumanoidAppearanceSystem.html">HumanoidAppearanceSystem</a></div>
+      <div class="level2"><a class="xref" href="../Content.Server/Content.Server.Humanoid.HumanoidAppearanceSystem.html">HumanoidAppearanceSystem</a></div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Content.Shared.Humanoid.html">Content.Shared.Humanoid</a></h6>
+  <h6><strong>Assembly</strong>: Content.Shared.dll</h6>
+  <h5 id="Content_Shared_Humanoid_SharedHumanoidAppearanceSystem_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public abstract class SharedHumanoidAppearanceSystem : EntitySystem</code></pre>
+  </div>
+  <h3 id="fields">Fields
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Humanoid_SharedHumanoidAppearanceSystem_DefaultSpecies.md&amp;value=---%0Auid%3A%20Content.Shared.Humanoid.SharedHumanoidAppearanceSystem.DefaultSpecies%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Humanoid/SharedHumanoidAppearanceSystem.cs/#L27">View Source</a>
+  </span>
+  <h4 id="Content_Shared_Humanoid_SharedHumanoidAppearanceSystem_DefaultSpecies" data-uid="Content.Shared.Humanoid.SharedHumanoidAppearanceSystem.DefaultSpecies">DefaultSpecies</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public const string DefaultSpecies = null</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Humanoid_SharedHumanoidAppearanceSystem_AddMarking_EntityUid_System_String_IReadOnlyList_Color__System_Boolean_System_Boolean_Content_Shared_Humanoid_HumanoidAppearanceComponent_.md&amp;value=---%0Auid%3A%20Content.Shared.Humanoid.SharedHumanoidAppearanceSystem.AddMarking(EntityUid%2CSystem.String%2CIReadOnlyList%7BColor%7D%2CSystem.Boolean%2CSystem.Boolean%2CContent.Shared.Humanoid.HumanoidAppearanceComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Humanoid/SharedHumanoidAppearanceSystem.cs/#L385">View Source</a>
+  </span>
+  <a id="Content_Shared_Humanoid_SharedHumanoidAppearanceSystem_AddMarking_" data-uid="Content.Shared.Humanoid.SharedHumanoidAppearanceSystem.AddMarking*"></a>
+  <h4 id="Content_Shared_Humanoid_SharedHumanoidAppearanceSystem_AddMarking_EntityUid_System_String_IReadOnlyList_Color__System_Boolean_System_Boolean_Content_Shared_Humanoid_HumanoidAppearanceComponent_" data-uid="Content.Shared.Humanoid.SharedHumanoidAppearanceSystem.AddMarking(EntityUid,System.String,IReadOnlyList{Color},System.Boolean,System.Boolean,Content.Shared.Humanoid.HumanoidAppearanceComponent)">AddMarking(EntityUid, String, IReadOnlyList&lt;Color&gt;, Boolean, Boolean, HumanoidAppearanceComponent)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void AddMarking(EntityUid uid, string marking, IReadOnlyList&lt;Color&gt; colors, bool sync = true, bool forced = false, HumanoidAppearanceComponent humanoid = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td><p>Humanoid mob's UID</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">marking</span></td>
+        <td><p>Marking ID to use</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">IReadOnlyList</span>&lt;<span class="xref">Color</span>&gt;</td>
+        <td><span class="parametername">colors</span></td>
+        <td><p>Colors to apply against this marking's set of sprites.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">sync</span></td>
+        <td><p>Whether to immediately sync this marking or not</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">forced</span></td>
+        <td><p>If this marking was forced (ignores marking points)</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Humanoid.HumanoidAppearanceComponent.html">HumanoidAppearanceComponent</a></td>
+        <td><span class="parametername">humanoid</span></td>
+        <td><p>Humanoid component of the entity</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Humanoid_SharedHumanoidAppearanceSystem_AddMarking_EntityUid_System_String_System_Nullable_Color__System_Boolean_System_Boolean_Content_Shared_Humanoid_HumanoidAppearanceComponent_.md&amp;value=---%0Auid%3A%20Content.Shared.Humanoid.SharedHumanoidAppearanceSystem.AddMarking(EntityUid%2CSystem.String%2CSystem.Nullable%7BColor%7D%2CSystem.Boolean%2CSystem.Boolean%2CContent.Shared.Humanoid.HumanoidAppearanceComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Humanoid/SharedHumanoidAppearanceSystem.cs/#L343">View Source</a>
+  </span>
+  <a id="Content_Shared_Humanoid_SharedHumanoidAppearanceSystem_AddMarking_" data-uid="Content.Shared.Humanoid.SharedHumanoidAppearanceSystem.AddMarking*"></a>
+  <h4 id="Content_Shared_Humanoid_SharedHumanoidAppearanceSystem_AddMarking_EntityUid_System_String_System_Nullable_Color__System_Boolean_System_Boolean_Content_Shared_Humanoid_HumanoidAppearanceComponent_" data-uid="Content.Shared.Humanoid.SharedHumanoidAppearanceSystem.AddMarking(EntityUid,System.String,System.Nullable{Color},System.Boolean,System.Boolean,Content.Shared.Humanoid.HumanoidAppearanceComponent)">AddMarking(EntityUid, String, Nullable&lt;Color&gt;, Boolean, Boolean, HumanoidAppearanceComponent)</h4>
+  <div class="markdown level1 summary"><p>Adds a marking to this humanoid.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void AddMarking(EntityUid uid, string marking, Color? color = null, bool sync = true, bool forced = false, HumanoidAppearanceComponent humanoid = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td><p>Humanoid mob's UID</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">marking</span></td>
+        <td><p>Marking ID to use</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">Color</span>&gt;</td>
+        <td><span class="parametername">color</span></td>
+        <td><p>Color to apply to all marking layers of this marking</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">sync</span></td>
+        <td><p>Whether to immediately sync this marking or not</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">forced</span></td>
+        <td><p>If this marking was forced (ignores marking points)</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Humanoid.HumanoidAppearanceComponent.html">HumanoidAppearanceComponent</a></td>
+        <td><span class="parametername">humanoid</span></td>
+        <td><p>Humanoid component of the entity</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Humanoid_SharedHumanoidAppearanceSystem_Initialize.md&amp;value=---%0Auid%3A%20Content.Shared.Humanoid.SharedHumanoidAppearanceSystem.Initialize%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Humanoid/SharedHumanoidAppearanceSystem.cs/#L29">View Source</a>
+  </span>
+  <a id="Content_Shared_Humanoid_SharedHumanoidAppearanceSystem_Initialize_" data-uid="Content.Shared.Humanoid.SharedHumanoidAppearanceSystem.Initialize*"></a>
+  <h4 id="Content_Shared_Humanoid_SharedHumanoidAppearanceSystem_Initialize" data-uid="Content.Shared.Humanoid.SharedHumanoidAppearanceSystem.Initialize">Initialize()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override void Initialize()</code></pre>
+  </div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Humanoid_SharedHumanoidAppearanceSystem_LoadProfile_EntityUid_Content_Shared_Preferences_HumanoidCharacterProfile_Content_Shared_Humanoid_HumanoidAppearanceComponent_.md&amp;value=---%0Auid%3A%20Content.Shared.Humanoid.SharedHumanoidAppearanceSystem.LoadProfile(EntityUid%2CContent.Shared.Preferences.HumanoidCharacterProfile%2CContent.Shared.Humanoid.HumanoidAppearanceComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Humanoid/SharedHumanoidAppearanceSystem.cs/#L256">View Source</a>
+  </span>
+  <a id="Content_Shared_Humanoid_SharedHumanoidAppearanceSystem_LoadProfile_" data-uid="Content.Shared.Humanoid.SharedHumanoidAppearanceSystem.LoadProfile*"></a>
+  <h4 id="Content_Shared_Humanoid_SharedHumanoidAppearanceSystem_LoadProfile_EntityUid_Content_Shared_Preferences_HumanoidCharacterProfile_Content_Shared_Humanoid_HumanoidAppearanceComponent_" data-uid="Content.Shared.Humanoid.SharedHumanoidAppearanceSystem.LoadProfile(EntityUid,Content.Shared.Preferences.HumanoidCharacterProfile,Content.Shared.Humanoid.HumanoidAppearanceComponent)">LoadProfile(EntityUid, HumanoidCharacterProfile, HumanoidAppearanceComponent)</h4>
+  <div class="markdown level1 summary"><p>Loads a humanoid character profile directly onto this humanoid mob.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual void LoadProfile(EntityUid uid, HumanoidCharacterProfile profile, HumanoidAppearanceComponent humanoid = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td><p>The mob's entity UID.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Preferences.HumanoidCharacterProfile.html">HumanoidCharacterProfile</a></td>
+        <td><span class="parametername">profile</span></td>
+        <td><p>The character profile to load.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Humanoid.HumanoidAppearanceComponent.html">HumanoidAppearanceComponent</a></td>
+        <td><span class="parametername">humanoid</span></td>
+        <td><p>Humanoid component of the entity</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Humanoid_SharedHumanoidAppearanceSystem_SetBaseLayerColor_EntityUid_Content_Shared_Humanoid_HumanoidVisualLayers_System_Nullable_Color__System_Boolean_Content_Shared_Humanoid_HumanoidAppearanceComponent_.md&amp;value=---%0Auid%3A%20Content.Shared.Humanoid.SharedHumanoidAppearanceSystem.SetBaseLayerColor(EntityUid%2CContent.Shared.Humanoid.HumanoidVisualLayers%2CSystem.Nullable%7BColor%7D%2CSystem.Boolean%2CContent.Shared.Humanoid.HumanoidAppearanceComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Humanoid/SharedHumanoidAppearanceSystem.cs/#L213">View Source</a>
+  </span>
+  <a id="Content_Shared_Humanoid_SharedHumanoidAppearanceSystem_SetBaseLayerColor_" data-uid="Content.Shared.Humanoid.SharedHumanoidAppearanceSystem.SetBaseLayerColor*"></a>
+  <h4 id="Content_Shared_Humanoid_SharedHumanoidAppearanceSystem_SetBaseLayerColor_EntityUid_Content_Shared_Humanoid_HumanoidVisualLayers_System_Nullable_Color__System_Boolean_Content_Shared_Humanoid_HumanoidAppearanceComponent_" data-uid="Content.Shared.Humanoid.SharedHumanoidAppearanceSystem.SetBaseLayerColor(EntityUid,Content.Shared.Humanoid.HumanoidVisualLayers,System.Nullable{Color},System.Boolean,Content.Shared.Humanoid.HumanoidAppearanceComponent)">SetBaseLayerColor(EntityUid, HumanoidVisualLayers, Nullable&lt;Color&gt;, Boolean, HumanoidAppearanceComponent)</h4>
+  <div class="markdown level1 summary"><p>Sets the color of this humanoid mob's base layer. See <a class="xref" href="Content.Shared.Humanoid.SharedHumanoidAppearanceSystem.html#Content_Shared_Humanoid_SharedHumanoidAppearanceSystem_SetBaseLayerId_EntityUid_Content_Shared_Humanoid_HumanoidVisualLayers_System_Nullable_System_String__System_Boolean_Content_Shared_Humanoid_HumanoidAppearanceComponent_">SetBaseLayerId(EntityUid, HumanoidVisualLayers, Nullable&lt;String&gt;, Boolean, HumanoidAppearanceComponent)</a> for a
+description of how base layers work.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetBaseLayerColor(EntityUid uid, HumanoidVisualLayers layer, Color? color, bool sync = true, HumanoidAppearanceComponent humanoid = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td><p>The humanoid mob's UID.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Humanoid.HumanoidVisualLayers.html">HumanoidVisualLayers</a></td>
+        <td><span class="parametername">layer</span></td>
+        <td><p>The layer to target on this humanoid mob.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">Color</span>&gt;</td>
+        <td><span class="parametername">color</span></td>
+        <td><p>The color to set this base layer to.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">sync</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Humanoid.HumanoidAppearanceComponent.html">HumanoidAppearanceComponent</a></td>
+        <td><span class="parametername">humanoid</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Humanoid_SharedHumanoidAppearanceSystem_SetBaseLayerId_EntityUid_Content_Shared_Humanoid_HumanoidVisualLayers_System_Nullable_System_String__System_Boolean_Content_Shared_Humanoid_HumanoidAppearanceComponent_.md&amp;value=---%0Auid%3A%20Content.Shared.Humanoid.SharedHumanoidAppearanceSystem.SetBaseLayerId(EntityUid%2CContent.Shared.Humanoid.HumanoidVisualLayers%2CSystem.Nullable%7BSystem.String%7D%2CSystem.Boolean%2CContent.Shared.Humanoid.HumanoidAppearanceComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Humanoid/SharedHumanoidAppearanceSystem.cs/#L191">View Source</a>
+  </span>
+  <a id="Content_Shared_Humanoid_SharedHumanoidAppearanceSystem_SetBaseLayerId_" data-uid="Content.Shared.Humanoid.SharedHumanoidAppearanceSystem.SetBaseLayerId*"></a>
+  <h4 id="Content_Shared_Humanoid_SharedHumanoidAppearanceSystem_SetBaseLayerId_EntityUid_Content_Shared_Humanoid_HumanoidVisualLayers_System_Nullable_System_String__System_Boolean_Content_Shared_Humanoid_HumanoidAppearanceComponent_" data-uid="Content.Shared.Humanoid.SharedHumanoidAppearanceSystem.SetBaseLayerId(EntityUid,Content.Shared.Humanoid.HumanoidVisualLayers,System.Nullable{System.String},System.Boolean,Content.Shared.Humanoid.HumanoidAppearanceComponent)">SetBaseLayerId(EntityUid, HumanoidVisualLayers, Nullable&lt;String&gt;, Boolean, HumanoidAppearanceComponent)</h4>
+  <div class="markdown level1 summary"><p>Sets the base layer ID of this humanoid mob. A humanoid mob's 'base layer' is
+the skin sprite that is applied to the mob's sprite upon appearance refresh.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetBaseLayerId(EntityUid uid, HumanoidVisualLayers layer, string? id, bool sync = true, HumanoidAppearanceComponent humanoid = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td><p>The humanoid mob's UID.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Humanoid.HumanoidVisualLayers.html">HumanoidVisualLayers</a></td>
+        <td><span class="parametername">layer</span></td>
+        <td><p>The layer to target on this humanoid mob.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">System.String</span>&gt;</td>
+        <td><span class="parametername">id</span></td>
+        <td><p>The ID of the sprite to use. See <a class="xref" href="Content.Shared.Humanoid.Prototypes.HumanoidSpeciesSpriteLayer.html">HumanoidSpeciesSpriteLayer</a>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">sync</span></td>
+        <td><p>Whether to synchronize this to the humanoid mob, or not.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Humanoid.HumanoidAppearanceComponent.html">HumanoidAppearanceComponent</a></td>
+        <td><span class="parametername">humanoid</span></td>
+        <td><p>Humanoid component of the entity</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Humanoid_SharedHumanoidAppearanceSystem_SetLayersVisibility_EntityUid_IEnumerable_Content_Shared_Humanoid_HumanoidVisualLayers__System_Boolean_System_Boolean_Content_Shared_Humanoid_HumanoidAppearanceComponent_.md&amp;value=---%0Auid%3A%20Content.Shared.Humanoid.SharedHumanoidAppearanceSystem.SetLayersVisibility(EntityUid%2CIEnumerable%7BContent.Shared.Humanoid.HumanoidVisualLayers%7D%2CSystem.Boolean%2CSystem.Boolean%2CContent.Shared.Humanoid.HumanoidAppearanceComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Humanoid/SharedHumanoidAppearanceSystem.cs/#L87">View Source</a>
+  </span>
+  <a id="Content_Shared_Humanoid_SharedHumanoidAppearanceSystem_SetLayersVisibility_" data-uid="Content.Shared.Humanoid.SharedHumanoidAppearanceSystem.SetLayersVisibility*"></a>
+  <h4 id="Content_Shared_Humanoid_SharedHumanoidAppearanceSystem_SetLayersVisibility_EntityUid_IEnumerable_Content_Shared_Humanoid_HumanoidVisualLayers__System_Boolean_System_Boolean_Content_Shared_Humanoid_HumanoidAppearanceComponent_" data-uid="Content.Shared.Humanoid.SharedHumanoidAppearanceSystem.SetLayersVisibility(EntityUid,IEnumerable{Content.Shared.Humanoid.HumanoidVisualLayers},System.Boolean,System.Boolean,Content.Shared.Humanoid.HumanoidAppearanceComponent)">SetLayersVisibility(EntityUid, IEnumerable&lt;HumanoidVisualLayers&gt;, Boolean, Boolean, HumanoidAppearanceComponent)</h4>
+  <div class="markdown level1 summary"><p>Sets the visibility for multiple layers at once on a humanoid's sprite.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetLayersVisibility(EntityUid uid, IEnumerable&lt;HumanoidVisualLayers&gt; layers, bool visible, bool permanent = false, HumanoidAppearanceComponent humanoid = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td><p>Humanoid mob's UID</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">IEnumerable</span>&lt;<a class="xref" href="Content.Shared.Humanoid.HumanoidVisualLayers.html">HumanoidVisualLayers</a>&gt;</td>
+        <td><span class="parametername">layers</span></td>
+        <td><p>An enumerable of all sprite layers that are going to have their visibility set</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">visible</span></td>
+        <td><p>The visibility state of the layers given</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">permanent</span></td>
+        <td><p>If this is a permanent change, or temporary. Permanent layers are stored in their own hash set.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Humanoid.HumanoidAppearanceComponent.html">HumanoidAppearanceComponent</a></td>
+        <td><span class="parametername">humanoid</span></td>
+        <td><p>Humanoid component of the entity</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Humanoid_SharedHumanoidAppearanceSystem_SetLayerVisibility_EntityUid_Content_Shared_Humanoid_HumanoidAppearanceComponent_Content_Shared_Humanoid_HumanoidVisualLayers_System_Boolean_System_Boolean_System_Boolean__.md&amp;value=---%0Auid%3A%20Content.Shared.Humanoid.SharedHumanoidAppearanceSystem.SetLayerVisibility(EntityUid%2CContent.Shared.Humanoid.HumanoidAppearanceComponent%2CContent.Shared.Humanoid.HumanoidVisualLayers%2CSystem.Boolean%2CSystem.Boolean%2CSystem.Boolean%40)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Humanoid/SharedHumanoidAppearanceSystem.cs/#L104">View Source</a>
+  </span>
+  <a id="Content_Shared_Humanoid_SharedHumanoidAppearanceSystem_SetLayerVisibility_" data-uid="Content.Shared.Humanoid.SharedHumanoidAppearanceSystem.SetLayerVisibility*"></a>
+  <h4 id="Content_Shared_Humanoid_SharedHumanoidAppearanceSystem_SetLayerVisibility_EntityUid_Content_Shared_Humanoid_HumanoidAppearanceComponent_Content_Shared_Humanoid_HumanoidVisualLayers_System_Boolean_System_Boolean_System_Boolean__" data-uid="Content.Shared.Humanoid.SharedHumanoidAppearanceSystem.SetLayerVisibility(EntityUid,Content.Shared.Humanoid.HumanoidAppearanceComponent,Content.Shared.Humanoid.HumanoidVisualLayers,System.Boolean,System.Boolean,System.Boolean@)">SetLayerVisibility(EntityUid, HumanoidAppearanceComponent, HumanoidVisualLayers, Boolean, Boolean, ref Boolean)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected virtual void SetLayerVisibility(EntityUid uid, HumanoidAppearanceComponent humanoid, HumanoidVisualLayers layer, bool visible, bool permanent, ref bool dirty)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Humanoid.HumanoidAppearanceComponent.html">HumanoidAppearanceComponent</a></td>
+        <td><span class="parametername">humanoid</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Humanoid.HumanoidVisualLayers.html">HumanoidVisualLayers</a></td>
+        <td><span class="parametername">layer</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">visible</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">permanent</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">dirty</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Humanoid_SharedHumanoidAppearanceSystem_SetLayerVisibility_EntityUid_Content_Shared_Humanoid_HumanoidVisualLayers_System_Boolean_System_Boolean_Content_Shared_Humanoid_HumanoidAppearanceComponent_.md&amp;value=---%0Auid%3A%20Content.Shared.Humanoid.SharedHumanoidAppearanceSystem.SetLayerVisibility(EntityUid%2CContent.Shared.Humanoid.HumanoidVisualLayers%2CSystem.Boolean%2CSystem.Boolean%2CContent.Shared.Humanoid.HumanoidAppearanceComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Humanoid/SharedHumanoidAppearanceSystem.cs/#L64">View Source</a>
+  </span>
+  <a id="Content_Shared_Humanoid_SharedHumanoidAppearanceSystem_SetLayerVisibility_" data-uid="Content.Shared.Humanoid.SharedHumanoidAppearanceSystem.SetLayerVisibility*"></a>
+  <h4 id="Content_Shared_Humanoid_SharedHumanoidAppearanceSystem_SetLayerVisibility_EntityUid_Content_Shared_Humanoid_HumanoidVisualLayers_System_Boolean_System_Boolean_Content_Shared_Humanoid_HumanoidAppearanceComponent_" data-uid="Content.Shared.Humanoid.SharedHumanoidAppearanceSystem.SetLayerVisibility(EntityUid,Content.Shared.Humanoid.HumanoidVisualLayers,System.Boolean,System.Boolean,Content.Shared.Humanoid.HumanoidAppearanceComponent)">SetLayerVisibility(EntityUid, HumanoidVisualLayers, Boolean, Boolean, HumanoidAppearanceComponent)</h4>
+  <div class="markdown level1 summary"><p>Toggles a humanoid's sprite layer visibility.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetLayerVisibility(EntityUid uid, HumanoidVisualLayers layer, bool visible, bool permanent = false, HumanoidAppearanceComponent humanoid = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td><p>Humanoid mob's UID</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Humanoid.HumanoidVisualLayers.html">HumanoidVisualLayers</a></td>
+        <td><span class="parametername">layer</span></td>
+        <td><p>Layer to toggle visibility for</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">visible</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">permanent</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Humanoid.HumanoidAppearanceComponent.html">HumanoidAppearanceComponent</a></td>
+        <td><span class="parametername">humanoid</span></td>
+        <td><p>Humanoid component of the entity</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Humanoid_SharedHumanoidAppearanceSystem_SetSex_EntityUid_Content_Shared_Humanoid_Sex_System_Boolean_Content_Shared_Humanoid_HumanoidAppearanceComponent_.md&amp;value=---%0Auid%3A%20Content.Shared.Humanoid.SharedHumanoidAppearanceSystem.SetSex(EntityUid%2CContent.Shared.Humanoid.Sex%2CSystem.Boolean%2CContent.Shared.Humanoid.HumanoidAppearanceComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Humanoid/SharedHumanoidAppearanceSystem.cs/#L234">View Source</a>
+  </span>
+  <a id="Content_Shared_Humanoid_SharedHumanoidAppearanceSystem_SetSex_" data-uid="Content.Shared.Humanoid.SharedHumanoidAppearanceSystem.SetSex*"></a>
+  <h4 id="Content_Shared_Humanoid_SharedHumanoidAppearanceSystem_SetSex_EntityUid_Content_Shared_Humanoid_Sex_System_Boolean_Content_Shared_Humanoid_HumanoidAppearanceComponent_" data-uid="Content.Shared.Humanoid.SharedHumanoidAppearanceSystem.SetSex(EntityUid,Content.Shared.Humanoid.Sex,System.Boolean,Content.Shared.Humanoid.HumanoidAppearanceComponent)">SetSex(EntityUid, Sex, Boolean, HumanoidAppearanceComponent)</h4>
+  <div class="markdown level1 summary"><p>Set a humanoid mob's sex. This will not change their gender.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetSex(EntityUid uid, Sex sex, bool sync = true, HumanoidAppearanceComponent humanoid = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td><p>The humanoid mob's UID.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Humanoid.Sex.html">Sex</a></td>
+        <td><span class="parametername">sex</span></td>
+        <td><p>The sex to set the mob to.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">sync</span></td>
+        <td><p>Whether to immediately synchronize this to the humanoid mob, or not.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Humanoid.HumanoidAppearanceComponent.html">HumanoidAppearanceComponent</a></td>
+        <td><span class="parametername">humanoid</span></td>
+        <td><p>Humanoid component of the entity</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Humanoid_SharedHumanoidAppearanceSystem_SetSkinColor_EntityUid_Color_System_Boolean_System_Boolean_Content_Shared_Humanoid_HumanoidAppearanceComponent_.md&amp;value=---%0Auid%3A%20Content.Shared.Humanoid.SharedHumanoidAppearanceSystem.SetSkinColor(EntityUid%2CColor%2CSystem.Boolean%2CSystem.Boolean%2CContent.Shared.Humanoid.HumanoidAppearanceComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Humanoid/SharedHumanoidAppearanceSystem.cs/#L161">View Source</a>
+  </span>
+  <a id="Content_Shared_Humanoid_SharedHumanoidAppearanceSystem_SetSkinColor_" data-uid="Content.Shared.Humanoid.SharedHumanoidAppearanceSystem.SetSkinColor*"></a>
+  <h4 id="Content_Shared_Humanoid_SharedHumanoidAppearanceSystem_SetSkinColor_EntityUid_Color_System_Boolean_System_Boolean_Content_Shared_Humanoid_HumanoidAppearanceComponent_" data-uid="Content.Shared.Humanoid.SharedHumanoidAppearanceSystem.SetSkinColor(EntityUid,Color,System.Boolean,System.Boolean,Content.Shared.Humanoid.HumanoidAppearanceComponent)">SetSkinColor(EntityUid, Color, Boolean, Boolean, HumanoidAppearanceComponent)</h4>
+  <div class="markdown level1 summary"><p>Sets the skin color of this humanoid mob. Will only affect base layers that are not custom,
+custom base layers should use <a class="xref" href="Content.Shared.Humanoid.SharedHumanoidAppearanceSystem.html#Content_Shared_Humanoid_SharedHumanoidAppearanceSystem_SetBaseLayerColor_EntityUid_Content_Shared_Humanoid_HumanoidVisualLayers_System_Nullable_Color__System_Boolean_Content_Shared_Humanoid_HumanoidAppearanceComponent_">SetBaseLayerColor(EntityUid, HumanoidVisualLayers, Nullable&lt;Color&gt;, Boolean, HumanoidAppearanceComponent)</a> instead.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual void SetSkinColor(EntityUid uid, Color skinColor, bool sync = true, bool verify = true, HumanoidAppearanceComponent humanoid = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td><p>The humanoid mob's UID.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">Color</span></td>
+        <td><span class="parametername">skinColor</span></td>
+        <td><p>Skin color to set on the humanoid mob.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">sync</span></td>
+        <td><p>Whether to synchronize this to the humanoid mob, or not.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">verify</span></td>
+        <td><p>Whether to verify the skin color can be set on this humanoid or not</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Humanoid.HumanoidAppearanceComponent.html">HumanoidAppearanceComponent</a></td>
+        <td><span class="parametername">humanoid</span></td>
+        <td><p>Humanoid component of the entity</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Humanoid_SharedHumanoidAppearanceSystem_SetSpecies_EntityUid_System_String_System_Boolean_Content_Shared_Humanoid_HumanoidAppearanceComponent_.md&amp;value=---%0Auid%3A%20Content.Shared.Humanoid.SharedHumanoidAppearanceSystem.SetSpecies(EntityUid%2CSystem.String%2CSystem.Boolean%2CContent.Shared.Humanoid.HumanoidAppearanceComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Humanoid/SharedHumanoidAppearanceSystem.cs/#L136">View Source</a>
+  </span>
+  <a id="Content_Shared_Humanoid_SharedHumanoidAppearanceSystem_SetSpecies_" data-uid="Content.Shared.Humanoid.SharedHumanoidAppearanceSystem.SetSpecies*"></a>
+  <h4 id="Content_Shared_Humanoid_SharedHumanoidAppearanceSystem_SetSpecies_EntityUid_System_String_System_Boolean_Content_Shared_Humanoid_HumanoidAppearanceComponent_" data-uid="Content.Shared.Humanoid.SharedHumanoidAppearanceSystem.SetSpecies(EntityUid,System.String,System.Boolean,Content.Shared.Humanoid.HumanoidAppearanceComponent)">SetSpecies(EntityUid, String, Boolean, HumanoidAppearanceComponent)</h4>
+  <div class="markdown level1 summary"><p>Set a humanoid mob's species. This will change their base sprites, as well as their current
+set of markings to fit against the mob's new species.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetSpecies(EntityUid uid, string species, bool sync = true, HumanoidAppearanceComponent humanoid = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td><p>The humanoid mob's UID.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">species</span></td>
+        <td><p>The species to set the mob to. Will return if the species prototype was invalid.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">sync</span></td>
+        <td><p>Whether to immediately synchronize this to the humanoid mob, or not.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Humanoid.HumanoidAppearanceComponent.html">HumanoidAppearanceComponent</a></td>
+        <td><span class="parametername">humanoid</span></td>
+        <td><p>Humanoid component of the entity</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Humanoid_SharedHumanoidAppearanceSystem.md&amp;value=---%0Auid%3A%20Content.Shared.Humanoid.SharedHumanoidAppearanceSystem%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Humanoid/SharedHumanoidAppearanceSystem.cs/#L20" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <div class="toggle-mode">
+                <div class="icon">
+                  <i aria-hidden="true">☀</i>
+                </div>
+                <label class="switch">
+                  <input type="checkbox" id="switch-style">
+                  <span class="slider round"></span>
+                </label>
+                <div class="icon">
+                  <i aria-hidden="true">☾</i>
+                </div>
+              </div>
+          
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <h5>In This Article</h5>
+              <div></div>
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <div class="pull-left">
+              
+              <span>Generated by <strong>DocFX</strong></span>
+            </div>
+            <div class="toggle-mode pull-right visible-sm visible-xs">
+              <div class="icon">
+                <i aria-hidden="true">☀</i>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="switch-style-m">
+                <span class="slider round"></span>
+              </label>
+              <div class="icon">
+                <i aria-hidden="true">☾</i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <script type="text/javascript" src="../../styles/toggle-theme.js"></script>
+      </footer>    </div>
+    
+    <script type="text/javascript" src="../../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../../styles/docfx.js"></script>
+    <script type="text/javascript" src="../../styles/main.js"></script>
+  </body>
+</html>

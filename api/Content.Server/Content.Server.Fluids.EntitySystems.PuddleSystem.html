@@ -1,0 +1,884 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class PuddleSystem
+   </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class PuddleSystem
+   ">
+    <meta name="generator" content="docfx 2.56.7.0">
+    
+    <link rel="shortcut icon" href="../../favicon.ico">
+    <link rel="stylesheet" href="../../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../../styles/docfx.css">
+    <link rel="stylesheet" href="../../styles/main.css">
+    <meta property="docfx:navrel" content="../../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../../index.html">
+                <img id="logo" class="svg" src="../../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Content.Server.Fluids.EntitySystems.PuddleSystem">
+  
+  
+  <h1 id="Content_Server_Fluids_EntitySystems_PuddleSystem" data-uid="Content.Server.Fluids.EntitySystems.PuddleSystem" class="text-break">Class PuddleSystem
+  </h1>
+  <div class="markdown level0 summary"><p>Handles solutions on floors. Also handles the spreader logic for where the solution overflows a specified volume.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level1"><a class="xref" href="../Content.Shared/Content.Shared.Fluids.SharedPuddleSystem.html">SharedPuddleSystem</a></div>
+    <div class="level2"><span class="xref">PuddleSystem</span></div>
+  </div>
+  <div class="inheritedMembers">
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Content.Server.Fluids.EntitySystems.html">Content.Server.Fluids.EntitySystems</a></h6>
+  <h6><strong>Assembly</strong>: Content.Server.dll</h6>
+  <h5 id="Content_Server_Fluids_EntitySystems_PuddleSystem_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public sealed class PuddleSystem : SharedPuddleSystem</code></pre>
+  </div>
+  <h3 id="fields">Fields
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Fluids_EntitySystems_PuddleSystem_EvaporationReagent.md&amp;value=---%0Auid%3A%20Content.Server.Fluids.EntitySystems.PuddleSystem.EvaporationReagent%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Fluids/EntitySystems/PuddleSystem.Evaporation.cs/#L14">View Source</a>
+  </span>
+  <h4 id="Content_Server_Fluids_EntitySystems_PuddleSystem_EvaporationReagent" data-uid="Content.Server.Fluids.EntitySystems.PuddleSystem.EvaporationReagent">EvaporationReagent</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public const string EvaporationReagent = null</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Fluids_EntitySystems_PuddleSystem_PuddleVolume.md&amp;value=---%0Auid%3A%20Content.Server.Fluids.EntitySystems.PuddleSystem.PuddleVolume%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Fluids/EntitySystems/PuddleSystem.cs/#L70">View Source</a>
+  </span>
+  <h4 id="Content_Server_Fluids_EntitySystems_PuddleSystem_PuddleVolume" data-uid="Content.Server.Fluids.EntitySystems.PuddleSystem.PuddleVolume">PuddleVolume</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static float PuddleVolume</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Fluids_EntitySystems_PuddleSystem_CanFullyEvaporate_Content_Shared_Chemistry_Components_Solution_.md&amp;value=---%0Auid%3A%20Content.Server.Fluids.EntitySystems.PuddleSystem.CanFullyEvaporate(Content.Shared.Chemistry.Components.Solution)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Fluids/EntitySystems/PuddleSystem.Evaporation.cs/#L66">View Source</a>
+  </span>
+  <a id="Content_Server_Fluids_EntitySystems_PuddleSystem_CanFullyEvaporate_" data-uid="Content.Server.Fluids.EntitySystems.PuddleSystem.CanFullyEvaporate*"></a>
+  <h4 id="Content_Server_Fluids_EntitySystems_PuddleSystem_CanFullyEvaporate_Content_Shared_Chemistry_Components_Solution_" data-uid="Content.Server.Fluids.EntitySystems.PuddleSystem.CanFullyEvaporate(Content.Shared.Chemistry.Components.Solution)">CanFullyEvaporate(Solution)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool CanFullyEvaporate(Solution solution)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="../Content.Shared/Content.Shared.Chemistry.Components.Solution.html">Solution</a></td>
+        <td><span class="parametername">solution</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Fluids_EntitySystems_PuddleSystem_CurrentVolume_EntityUid_Content_Shared_Fluids_Components_PuddleComponent_.md&amp;value=---%0Auid%3A%20Content.Server.Fluids.EntitySystems.PuddleSystem.CurrentVolume(EntityUid%2CContent.Shared.Fluids.Components.PuddleComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Fluids/EntitySystems/PuddleSystem.cs/#L400">View Source</a>
+  </span>
+  <a id="Content_Server_Fluids_EntitySystems_PuddleSystem_CurrentVolume_" data-uid="Content.Server.Fluids.EntitySystems.PuddleSystem.CurrentVolume*"></a>
+  <h4 id="Content_Server_Fluids_EntitySystems_PuddleSystem_CurrentVolume_EntityUid_Content_Shared_Fluids_Components_PuddleComponent_" data-uid="Content.Server.Fluids.EntitySystems.PuddleSystem.CurrentVolume(EntityUid,Content.Shared.Fluids.Components.PuddleComponent)">CurrentVolume(EntityUid, PuddleComponent)</h4>
+  <div class="markdown level1 summary"><p>Gets the current volume of the given puddle, which may not necessarily be PuddleVolume.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public FixedPoint2 CurrentVolume(EntityUid uid, PuddleComponent puddleComponent = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="../Content.Shared/Content.Shared.Fluids.Components.PuddleComponent.html">PuddleComponent</a></td>
+        <td><span class="parametername">puddleComponent</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="../Content.Shared/Content.Shared.FixedPoint.FixedPoint2.html">FixedPoint2</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Fluids_EntitySystems_PuddleSystem_GetOverflowSolution_EntityUid_Content_Shared_Fluids_Components_PuddleComponent_.md&amp;value=---%0Auid%3A%20Content.Server.Fluids.EntitySystems.PuddleSystem.GetOverflowSolution(EntityUid%2CContent.Shared.Fluids.Components.PuddleComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Fluids/EntitySystems/PuddleSystem.cs/#L479">View Source</a>
+  </span>
+  <a id="Content_Server_Fluids_EntitySystems_PuddleSystem_GetOverflowSolution_" data-uid="Content.Server.Fluids.EntitySystems.PuddleSystem.GetOverflowSolution*"></a>
+  <h4 id="Content_Server_Fluids_EntitySystems_PuddleSystem_GetOverflowSolution_EntityUid_Content_Shared_Fluids_Components_PuddleComponent_" data-uid="Content.Server.Fluids.EntitySystems.PuddleSystem.GetOverflowSolution(EntityUid,Content.Shared.Fluids.Components.PuddleComponent)">GetOverflowSolution(EntityUid, PuddleComponent)</h4>
+  <div class="markdown level1 summary"><p>Gets the solution amount above the overflow threshold for the puddle.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Solution GetOverflowSolution(EntityUid uid, PuddleComponent puddle = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="../Content.Shared/Content.Shared.Fluids.Components.PuddleComponent.html">PuddleComponent</a></td>
+        <td><span class="parametername">puddle</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="../Content.Shared/Content.Shared.Chemistry.Components.Solution.html">Solution</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Fluids_EntitySystems_PuddleSystem_Initialize.md&amp;value=---%0Auid%3A%20Content.Server.Fluids.EntitySystems.PuddleSystem.Initialize%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Fluids/EntitySystems/PuddleSystem.cs/#L82">View Source</a>
+  </span>
+  <a id="Content_Server_Fluids_EntitySystems_PuddleSystem_Initialize_" data-uid="Content.Server.Fluids.EntitySystems.PuddleSystem.Initialize*"></a>
+  <h4 id="Content_Server_Fluids_EntitySystems_PuddleSystem_Initialize" data-uid="Content.Server.Fluids.EntitySystems.PuddleSystem.Initialize">Initialize()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override void Initialize()</code></pre>
+  </div>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="../Content.Shared/Content.Shared.Fluids.SharedPuddleSystem.html#Content_Shared_Fluids_SharedPuddleSystem_Initialize">SharedPuddleSystem.Initialize()</a></div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Fluids_EntitySystems_PuddleSystem_TryAddSolution_EntityUid_Content_Shared_Chemistry_Components_Solution_System_Boolean_System_Boolean_Content_Shared_Fluids_Components_PuddleComponent_.md&amp;value=---%0Auid%3A%20Content.Server.Fluids.EntitySystems.PuddleSystem.TryAddSolution(EntityUid%2CContent.Shared.Chemistry.Components.Solution%2CSystem.Boolean%2CSystem.Boolean%2CContent.Shared.Fluids.Components.PuddleComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Fluids/EntitySystems/PuddleSystem.cs/#L420">View Source</a>
+  </span>
+  <a id="Content_Server_Fluids_EntitySystems_PuddleSystem_TryAddSolution_" data-uid="Content.Server.Fluids.EntitySystems.PuddleSystem.TryAddSolution*"></a>
+  <h4 id="Content_Server_Fluids_EntitySystems_PuddleSystem_TryAddSolution_EntityUid_Content_Shared_Chemistry_Components_Solution_System_Boolean_System_Boolean_Content_Shared_Fluids_Components_PuddleComponent_" data-uid="Content.Server.Fluids.EntitySystems.PuddleSystem.TryAddSolution(EntityUid,Content.Shared.Chemistry.Components.Solution,System.Boolean,System.Boolean,Content.Shared.Fluids.Components.PuddleComponent)">TryAddSolution(EntityUid, Solution, Boolean, Boolean, PuddleComponent)</h4>
+  <div class="markdown level1 summary"><p>Try to add solution to <code data-dev-comment-type="paramref" class="paramref">puddleUid</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool TryAddSolution(EntityUid puddleUid, Solution addedSolution, bool sound = true, bool checkForOverflow = true, PuddleComponent puddleComponent = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">puddleUid</span></td>
+        <td><p>Puddle to which we add</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="../Content.Shared/Content.Shared.Chemistry.Components.Solution.html">Solution</a></td>
+        <td><span class="parametername">addedSolution</span></td>
+        <td><p>Solution that is added to puddleComponent</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">sound</span></td>
+        <td><p>Play sound on overflow</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">checkForOverflow</span></td>
+        <td><p>Overflow on encountered values</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="../Content.Shared/Content.Shared.Fluids.Components.PuddleComponent.html">PuddleComponent</a></td>
+        <td><span class="parametername">puddleComponent</span></td>
+        <td><p>Optional resolved PuddleComponent</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Fluids_EntitySystems_PuddleSystem_TryGetPuddle_Robust_Shared_Map_TileRef_EntityUid__.md&amp;value=---%0Auid%3A%20Content.Server.Fluids.EntitySystems.PuddleSystem.TryGetPuddle(Robust.Shared.Map.TileRef%2CEntityUid%40)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Fluids/EntitySystems/PuddleSystem.cs/#L663">View Source</a>
+  </span>
+  <a id="Content_Server_Fluids_EntitySystems_PuddleSystem_TryGetPuddle_" data-uid="Content.Server.Fluids.EntitySystems.PuddleSystem.TryGetPuddle*"></a>
+  <h4 id="Content_Server_Fluids_EntitySystems_PuddleSystem_TryGetPuddle_Robust_Shared_Map_TileRef_EntityUid__" data-uid="Content.Server.Fluids.EntitySystems.PuddleSystem.TryGetPuddle(Robust.Shared.Map.TileRef,EntityUid@)">TryGetPuddle(TileRef, out EntityUid)</h4>
+  <div class="markdown level1 summary"><p>Tries to get the relevant puddle entity for a tile.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool TryGetPuddle(TileRef tile, out EntityUid puddleUid)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Robust.Shared.Map.TileRef</span></td>
+        <td><span class="parametername">tile</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">puddleUid</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Fluids_EntitySystems_PuddleSystem_TrySpillAt_EntityUid_Content_Shared_Chemistry_Components_Solution_EntityUid__System_Boolean_System_Nullable_TransformComponent__.md&amp;value=---%0Auid%3A%20Content.Server.Fluids.EntitySystems.PuddleSystem.TrySpillAt(EntityUid%2CContent.Shared.Chemistry.Components.Solution%2CEntityUid%40%2CSystem.Boolean%2CSystem.Nullable%7BTransformComponent%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Fluids/EntitySystems/PuddleSystem.cs/#L562">View Source</a>
+  </span>
+  <a id="Content_Server_Fluids_EntitySystems_PuddleSystem_TrySpillAt_" data-uid="Content.Server.Fluids.EntitySystems.PuddleSystem.TrySpillAt*"></a>
+  <h4 id="Content_Server_Fluids_EntitySystems_PuddleSystem_TrySpillAt_EntityUid_Content_Shared_Chemistry_Components_Solution_EntityUid__System_Boolean_System_Nullable_TransformComponent__" data-uid="Content.Server.Fluids.EntitySystems.PuddleSystem.TrySpillAt(EntityUid,Content.Shared.Chemistry.Components.Solution,EntityUid@,System.Boolean,System.Nullable{TransformComponent})">TrySpillAt(EntityUid, Solution, out EntityUid, Boolean, Nullable&lt;TransformComponent&gt;)</h4>
+  <div class="markdown level1 summary"><p><see cref="!:TrySpillAt(Robust.Shared.Map.EntityCoordinates,Content.Shared.Chemistry.Components.Solution,out Robust.Shared.GameObjects.EntityUid,bool)"></see></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool TrySpillAt(EntityUid uid, Solution solution, out EntityUid puddleUid, bool sound = true, TransformComponent? transformComponent = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="../Content.Shared/Content.Shared.Chemistry.Components.Solution.html">Solution</a></td>
+        <td><span class="parametername">solution</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">puddleUid</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">sound</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">TransformComponent</span>&gt;</td>
+        <td><span class="parametername">transformComponent</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Fluids_EntitySystems_PuddleSystem_TrySpillAt_Robust_Shared_Map_EntityCoordinates_Content_Shared_Chemistry_Components_Solution_EntityUid__System_Boolean_.md&amp;value=---%0Auid%3A%20Content.Server.Fluids.EntitySystems.PuddleSystem.TrySpillAt(Robust.Shared.Map.EntityCoordinates%2CContent.Shared.Chemistry.Components.Solution%2CEntityUid%40%2CSystem.Boolean)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Fluids/EntitySystems/PuddleSystem.cs/#L542">View Source</a>
+  </span>
+  <a id="Content_Server_Fluids_EntitySystems_PuddleSystem_TrySpillAt_" data-uid="Content.Server.Fluids.EntitySystems.PuddleSystem.TrySpillAt*"></a>
+  <h4 id="Content_Server_Fluids_EntitySystems_PuddleSystem_TrySpillAt_Robust_Shared_Map_EntityCoordinates_Content_Shared_Chemistry_Components_Solution_EntityUid__System_Boolean_" data-uid="Content.Server.Fluids.EntitySystems.PuddleSystem.TrySpillAt(Robust.Shared.Map.EntityCoordinates,Content.Shared.Chemistry.Components.Solution,EntityUid@,System.Boolean)">TrySpillAt(EntityCoordinates, Solution, out EntityUid, Boolean)</h4>
+  <div class="markdown level1 summary"><p>Spills solution at the specified coordinates.
+Will add to an existing puddle if present or create a new one if not.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool TrySpillAt(EntityCoordinates coordinates, Solution solution, out EntityUid puddleUid, bool sound = true)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Robust.Shared.Map.EntityCoordinates</span></td>
+        <td><span class="parametername">coordinates</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="../Content.Shared/Content.Shared.Chemistry.Components.Solution.html">Solution</a></td>
+        <td><span class="parametername">solution</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">puddleUid</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">sound</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Fluids_EntitySystems_PuddleSystem_TrySpillAt_Robust_Shared_Map_TileRef_Content_Shared_Chemistry_Components_Solution_EntityUid__System_Boolean_System_Boolean_.md&amp;value=---%0Auid%3A%20Content.Server.Fluids.EntitySystems.PuddleSystem.TrySpillAt(Robust.Shared.Map.TileRef%2CContent.Shared.Chemistry.Components.Solution%2CEntityUid%40%2CSystem.Boolean%2CSystem.Boolean)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Fluids/EntitySystems/PuddleSystem.cs/#L576">View Source</a>
+  </span>
+  <a id="Content_Server_Fluids_EntitySystems_PuddleSystem_TrySpillAt_" data-uid="Content.Server.Fluids.EntitySystems.PuddleSystem.TrySpillAt*"></a>
+  <h4 id="Content_Server_Fluids_EntitySystems_PuddleSystem_TrySpillAt_Robust_Shared_Map_TileRef_Content_Shared_Chemistry_Components_Solution_EntityUid__System_Boolean_System_Boolean_" data-uid="Content.Server.Fluids.EntitySystems.PuddleSystem.TrySpillAt(Robust.Shared.Map.TileRef,Content.Shared.Chemistry.Components.Solution,EntityUid@,System.Boolean,System.Boolean)">TrySpillAt(TileRef, Solution, out EntityUid, Boolean, Boolean)</h4>
+  <div class="markdown level1 summary"><p><see cref="!:TrySpillAt(Robust.Shared.Map.EntityCoordinates,Content.Shared.Chemistry.Components.Solution,out Robust.Shared.GameObjects.EntityUid,bool)"></see></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool TrySpillAt(TileRef tileRef, Solution solution, out EntityUid puddleUid, bool sound = true, bool tileReact = true)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Robust.Shared.Map.TileRef</span></td>
+        <td><span class="parametername">tileRef</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="../Content.Shared/Content.Shared.Chemistry.Components.Solution.html">Solution</a></td>
+        <td><span class="parametername">solution</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">puddleUid</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">sound</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">tileReact</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Fluids_EntitySystems_PuddleSystem_TrySplashSpillAt_EntityUid_Robust_Shared_Map_EntityCoordinates_Content_Shared_Chemistry_Components_Solution_EntityUid__System_Boolean_System_Nullable_EntityUid__.md&amp;value=---%0Auid%3A%20Content.Server.Fluids.EntitySystems.PuddleSystem.TrySplashSpillAt(EntityUid%2CRobust.Shared.Map.EntityCoordinates%2CContent.Shared.Chemistry.Components.Solution%2CEntityUid%40%2CSystem.Boolean%2CSystem.Nullable%7BEntityUid%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Fluids/EntitySystems/PuddleSystem.cs/#L499">View Source</a>
+  </span>
+  <a id="Content_Server_Fluids_EntitySystems_PuddleSystem_TrySplashSpillAt_" data-uid="Content.Server.Fluids.EntitySystems.PuddleSystem.TrySplashSpillAt*"></a>
+  <h4 id="Content_Server_Fluids_EntitySystems_PuddleSystem_TrySplashSpillAt_EntityUid_Robust_Shared_Map_EntityCoordinates_Content_Shared_Chemistry_Components_Solution_EntityUid__System_Boolean_System_Nullable_EntityUid__" data-uid="Content.Server.Fluids.EntitySystems.PuddleSystem.TrySplashSpillAt(EntityUid,Robust.Shared.Map.EntityCoordinates,Content.Shared.Chemistry.Components.Solution,EntityUid@,System.Boolean,System.Nullable{EntityUid})">TrySplashSpillAt(EntityUid, EntityCoordinates, Solution, out EntityUid, Boolean, Nullable&lt;EntityUid&gt;)</h4>
+  <div class="markdown level1 summary"><p>First splashes reagent on reactive entities near the spilling entity, then spills the rest regularly to a
+puddle. This is intended for 'destructive' spills, like when entities are destroyed or thrown.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool TrySplashSpillAt(EntityUid uid, EntityCoordinates coordinates, Solution solution, out EntityUid puddleUid, bool sound = true, EntityUid? user = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">Robust.Shared.Map.EntityCoordinates</span></td>
+        <td><span class="parametername">coordinates</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="../Content.Shared/Content.Shared.Chemistry.Components.Solution.html">Solution</a></td>
+        <td><span class="parametername">solution</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">puddleUid</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">sound</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">EntityUid</span>&gt;</td>
+        <td><span class="parametername">user</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Fluids_EntitySystems_PuddleSystem_Update_System_Single_.md&amp;value=---%0Auid%3A%20Content.Server.Fluids.EntitySystems.PuddleSystem.Update(System.Single)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Fluids/EntitySystems/PuddleSystem.cs/#L234">View Source</a>
+  </span>
+  <a id="Content_Server_Fluids_EntitySystems_PuddleSystem_Update_" data-uid="Content.Server.Fluids.EntitySystems.PuddleSystem.Update*"></a>
+  <h4 id="Content_Server_Fluids_EntitySystems_PuddleSystem_Update_System_Single_" data-uid="Content.Server.Fluids.EntitySystems.PuddleSystem.Update(System.Single)">Update(Single)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override void Update(float frameTime)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td><span class="parametername">frameTime</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Fluids_EntitySystems_PuddleSystem_WouldOverflow_EntityUid_Content_Shared_Chemistry_Components_Solution_Content_Shared_Fluids_Components_PuddleComponent_.md&amp;value=---%0Auid%3A%20Content.Server.Fluids.EntitySystems.PuddleSystem.WouldOverflow(EntityUid%2CContent.Shared.Chemistry.Components.Solution%2CContent.Shared.Fluids.Components.PuddleComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Fluids/EntitySystems/PuddleSystem.cs/#L457">View Source</a>
+  </span>
+  <a id="Content_Server_Fluids_EntitySystems_PuddleSystem_WouldOverflow_" data-uid="Content.Server.Fluids.EntitySystems.PuddleSystem.WouldOverflow*"></a>
+  <h4 id="Content_Server_Fluids_EntitySystems_PuddleSystem_WouldOverflow_EntityUid_Content_Shared_Chemistry_Components_Solution_Content_Shared_Fluids_Components_PuddleComponent_" data-uid="Content.Server.Fluids.EntitySystems.PuddleSystem.WouldOverflow(EntityUid,Content.Shared.Chemistry.Components.Solution,Content.Shared.Fluids.Components.PuddleComponent)">WouldOverflow(EntityUid, Solution, PuddleComponent)</h4>
+  <div class="markdown level1 summary"><p>Whether adding this solution to this puddle would overflow.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool WouldOverflow(EntityUid uid, Solution solution, PuddleComponent puddle = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="../Content.Shared/Content.Shared.Chemistry.Components.Solution.html">Solution</a></td>
+        <td><span class="parametername">solution</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="../Content.Shared/Content.Shared.Fluids.Components.PuddleComponent.html">PuddleComponent</a></td>
+        <td><span class="parametername">puddle</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Fluids_EntitySystems_PuddleSystem.md&amp;value=---%0Auid%3A%20Content.Server.Fluids.EntitySystems.PuddleSystem%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Fluids/EntitySystems/PuddleSystem.Transfers.cs/#L10" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <div class="toggle-mode">
+                <div class="icon">
+                  <i aria-hidden="true">☀</i>
+                </div>
+                <label class="switch">
+                  <input type="checkbox" id="switch-style">
+                  <span class="slider round"></span>
+                </label>
+                <div class="icon">
+                  <i aria-hidden="true">☾</i>
+                </div>
+              </div>
+          
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <h5>In This Article</h5>
+              <div></div>
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <div class="pull-left">
+              
+              <span>Generated by <strong>DocFX</strong></span>
+            </div>
+            <div class="toggle-mode pull-right visible-sm visible-xs">
+              <div class="icon">
+                <i aria-hidden="true">☀</i>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="switch-style-m">
+                <span class="slider round"></span>
+              </label>
+              <div class="icon">
+                <i aria-hidden="true">☾</i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <script type="text/javascript" src="../../styles/toggle-theme.js"></script>
+      </footer>    </div>
+    
+    <script type="text/javascript" src="../../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../../styles/docfx.js"></script>
+    <script type="text/javascript" src="../../styles/main.js"></script>
+  </body>
+</html>

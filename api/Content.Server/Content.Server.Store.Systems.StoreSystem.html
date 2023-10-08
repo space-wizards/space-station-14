@@ -1,0 +1,962 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class StoreSystem
+   </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class StoreSystem
+   ">
+    <meta name="generator" content="docfx 2.56.7.0">
+    
+    <link rel="shortcut icon" href="../../favicon.ico">
+    <link rel="stylesheet" href="../../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../../styles/docfx.css">
+    <link rel="stylesheet" href="../../styles/main.css">
+    <meta property="docfx:navrel" content="../../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../../index.html">
+                <img id="logo" class="svg" src="../../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Content.Server.Store.Systems.StoreSystem">
+  
+  
+  <h1 id="Content_Server_Store_Systems_StoreSystem" data-uid="Content.Server.Store.Systems.StoreSystem" class="text-break">Class StoreSystem
+  </h1>
+  <div class="markdown level0 summary"><p>Manages general interactions with a store and different entities,
+getting listings for stores, and interfacing with the store UI.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level1"><span class="xref">StoreSystem</span></div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Content.Server.Store.Systems.html">Content.Server.Store.Systems</a></h6>
+  <h6><strong>Assembly</strong>: Content.Server.dll</h6>
+  <h5 id="Content_Server_Store_Systems_StoreSystem_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public sealed class StoreSystem : EntitySystem</code></pre>
+  </div>
+  <h3 id="methods">Methods
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Store_Systems_StoreSystem_CloseUi_EntityUid_Content_Server_Store_Components_StoreComponent_.md&amp;value=---%0Auid%3A%20Content.Server.Store.Systems.StoreSystem.CloseUi(EntityUid%2CContent.Server.Store.Components.StoreComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Store/Systems/StoreSystem.Ui.cs/#L55">View Source</a>
+  </span>
+  <a id="Content_Server_Store_Systems_StoreSystem_CloseUi_" data-uid="Content.Server.Store.Systems.StoreSystem.CloseUi*"></a>
+  <h4 id="Content_Server_Store_Systems_StoreSystem_CloseUi_EntityUid_Content_Server_Store_Components_StoreComponent_" data-uid="Content.Server.Store.Systems.StoreSystem.CloseUi(EntityUid,Content.Server.Store.Components.StoreComponent)">CloseUi(EntityUid, StoreComponent)</h4>
+  <div class="markdown level1 summary"><p>Closes the store UI for everyone, if it's open</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void CloseUi(EntityUid uid, StoreComponent component = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Server.Store.Components.StoreComponent.html">StoreComponent</a></td>
+        <td><span class="parametername">component</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Store_Systems_StoreSystem_GetAllListings.md&amp;value=---%0Auid%3A%20Content.Server.Store.Systems.StoreSystem.GetAllListings%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Store/Systems/StoreSystem.Listings.cs/#L22">View Source</a>
+  </span>
+  <a id="Content_Server_Store_Systems_StoreSystem_GetAllListings_" data-uid="Content.Server.Store.Systems.StoreSystem.GetAllListings*"></a>
+  <h4 id="Content_Server_Store_Systems_StoreSystem_GetAllListings" data-uid="Content.Server.Store.Systems.StoreSystem.GetAllListings">GetAllListings()</h4>
+  <div class="markdown level1 summary"><p>Gets all listings from a prototype.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public HashSet&lt;ListingData&gt; GetAllListings()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">HashSet</span>&lt;<a class="xref" href="../Content.Shared/Content.Shared.Store.ListingData.html">ListingData</a>&gt;</td>
+        <td><p>All the listings</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Store_Systems_StoreSystem_GetAvailableListings_EntityUid_EntityUid_Content_Server_Store_Components_StoreComponent_.md&amp;value=---%0Auid%3A%20Content.Server.Store.Systems.StoreSystem.GetAvailableListings(EntityUid%2CEntityUid%2CContent.Server.Store.Components.StoreComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Store/Systems/StoreSystem.Listings.cs/#L70">View Source</a>
+  </span>
+  <a id="Content_Server_Store_Systems_StoreSystem_GetAvailableListings_" data-uid="Content.Server.Store.Systems.StoreSystem.GetAvailableListings*"></a>
+  <h4 id="Content_Server_Store_Systems_StoreSystem_GetAvailableListings_EntityUid_EntityUid_Content_Server_Store_Components_StoreComponent_" data-uid="Content.Server.Store.Systems.StoreSystem.GetAvailableListings(EntityUid,EntityUid,Content.Server.Store.Components.StoreComponent)">GetAvailableListings(EntityUid, EntityUid, StoreComponent)</h4>
+  <div class="markdown level1 summary"><p>Gets the available listings for a store</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IEnumerable&lt;ListingData&gt; GetAvailableListings(EntityUid buyer, EntityUid store, StoreComponent component)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">buyer</span></td>
+        <td><p>Either the account owner, user, or an inanimate object (e.g., surplus bundle)</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">store</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Server.Store.Components.StoreComponent.html">StoreComponent</a></td>
+        <td><span class="parametername">component</span></td>
+        <td><p>The store the listings are coming from.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IEnumerable</span>&lt;<a class="xref" href="../Content.Shared/Content.Shared.Store.ListingData.html">ListingData</a>&gt;</td>
+        <td><p>The available listings.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Store_Systems_StoreSystem_GetAvailableListings_EntityUid_System_Nullable_HashSet_Content_Shared_Store_ListingData___HashSet_System_String__System_Nullable_EntityUid__.md&amp;value=---%0Auid%3A%20Content.Server.Store.Systems.StoreSystem.GetAvailableListings(EntityUid%2CSystem.Nullable%7BHashSet%7BContent.Shared.Store.ListingData%7D%7D%2CHashSet%7BSystem.String%7D%2CSystem.Nullable%7BEntityUid%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Store/Systems/StoreSystem.Listings.cs/#L83">View Source</a>
+  </span>
+  <a id="Content_Server_Store_Systems_StoreSystem_GetAvailableListings_" data-uid="Content.Server.Store.Systems.StoreSystem.GetAvailableListings*"></a>
+  <h4 id="Content_Server_Store_Systems_StoreSystem_GetAvailableListings_EntityUid_System_Nullable_HashSet_Content_Shared_Store_ListingData___HashSet_System_String__System_Nullable_EntityUid__" data-uid="Content.Server.Store.Systems.StoreSystem.GetAvailableListings(EntityUid,System.Nullable{HashSet{Content.Shared.Store.ListingData}},HashSet{System.String},System.Nullable{EntityUid})">GetAvailableListings(EntityUid, Nullable&lt;HashSet&lt;ListingData&gt;&gt;, HashSet&lt;String&gt;, Nullable&lt;EntityUid&gt;)</h4>
+  <div class="markdown level1 summary"><p>Gets the available listings for a user given an overall set of listings and categories to filter by.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IEnumerable&lt;ListingData&gt; GetAvailableListings(EntityUid buyer, HashSet&lt;ListingData&gt;? listings, HashSet&lt;string&gt; categories, EntityUid? storeEntity = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">buyer</span></td>
+        <td><p>Either the account owner, user, or an inanimate object (e.g., surplus bundle)</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">HashSet</span>&lt;<a class="xref" href="../Content.Shared/Content.Shared.Store.ListingData.html">ListingData</a>&gt;&gt;</td>
+        <td><span class="parametername">listings</span></td>
+        <td><p>All of the listings that are available. If null, will just get all listings from the prototypes.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">HashSet</span>&lt;<span class="xref">System.String</span>&gt;</td>
+        <td><span class="parametername">categories</span></td>
+        <td><p>What categories to filter by.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">EntityUid</span>&gt;</td>
+        <td><span class="parametername">storeEntity</span></td>
+        <td><p>The physial entity of the store. Can be null.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IEnumerable</span>&lt;<a class="xref" href="../Content.Shared/Content.Shared.Store.ListingData.html">ListingData</a>&gt;</td>
+        <td><p>The available listings.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Store_Systems_StoreSystem_GetCurrencyValue_EntityUid_Content_Server_Store_Components_CurrencyComponent_.md&amp;value=---%0Auid%3A%20Content.Server.Store.Systems.StoreSystem.GetCurrencyValue(EntityUid%2CContent.Server.Store.Components.CurrencyComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Store/Systems/StoreSystem.cs/#L101">View Source</a>
+  </span>
+  <a id="Content_Server_Store_Systems_StoreSystem_GetCurrencyValue_" data-uid="Content.Server.Store.Systems.StoreSystem.GetCurrencyValue*"></a>
+  <h4 id="Content_Server_Store_Systems_StoreSystem_GetCurrencyValue_EntityUid_Content_Server_Store_Components_CurrencyComponent_" data-uid="Content.Server.Store.Systems.StoreSystem.GetCurrencyValue(EntityUid,Content.Server.Store.Components.CurrencyComponent)">GetCurrencyValue(EntityUid, CurrencyComponent)</h4>
+  <div class="markdown level1 summary"><p>Gets the value from an entity's currency component.
+Scales with stacks.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Dictionary&lt;string, FixedPoint2&gt; GetCurrencyValue(EntityUid uid, CurrencyComponent component)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Server.Store.Components.CurrencyComponent.html">CurrencyComponent</a></td>
+        <td><span class="parametername">component</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Dictionary</span>&lt;<span class="xref">System.String</span>, <a class="xref" href="../Content.Shared/Content.Shared.FixedPoint.FixedPoint2.html">FixedPoint2</a>&gt;</td>
+        <td><p>The value of the currency</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Store_Systems_StoreSystem_Initialize.md&amp;value=---%0Auid%3A%20Content.Server.Store.Systems.StoreSystem.Initialize%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Store/Systems/StoreSystem.cs/#L25">View Source</a>
+  </span>
+  <a id="Content_Server_Store_Systems_StoreSystem_Initialize_" data-uid="Content.Server.Store.Systems.StoreSystem.Initialize*"></a>
+  <h4 id="Content_Server_Store_Systems_StoreSystem_Initialize" data-uid="Content.Server.Store.Systems.StoreSystem.Initialize">Initialize()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override void Initialize()</code></pre>
+  </div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Store_Systems_StoreSystem_InitializeCommand.md&amp;value=---%0Auid%3A%20Content.Server.Store.Systems.StoreSystem.InitializeCommand%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Store/Systems/StoreSystem.Command.cs/#L13">View Source</a>
+  </span>
+  <a id="Content_Server_Store_Systems_StoreSystem_InitializeCommand_" data-uid="Content.Server.Store.Systems.StoreSystem.InitializeCommand*"></a>
+  <h4 id="Content_Server_Store_Systems_StoreSystem_InitializeCommand" data-uid="Content.Server.Store.Systems.StoreSystem.InitializeCommand">InitializeCommand()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void InitializeCommand()</code></pre>
+  </div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Store_Systems_StoreSystem_InitializeFromPreset_Content_Shared_Store_StorePresetPrototype_EntityUid_Content_Server_Store_Components_StoreComponent_.md&amp;value=---%0Auid%3A%20Content.Server.Store.Systems.StoreSystem.InitializeFromPreset(Content.Shared.Store.StorePresetPrototype%2CEntityUid%2CContent.Server.Store.Components.StoreComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Store/Systems/StoreSystem.cs/#L175">View Source</a>
+  </span>
+  <a id="Content_Server_Store_Systems_StoreSystem_InitializeFromPreset_" data-uid="Content.Server.Store.Systems.StoreSystem.InitializeFromPreset*"></a>
+  <h4 id="Content_Server_Store_Systems_StoreSystem_InitializeFromPreset_Content_Shared_Store_StorePresetPrototype_EntityUid_Content_Server_Store_Components_StoreComponent_" data-uid="Content.Server.Store.Systems.StoreSystem.InitializeFromPreset(Content.Shared.Store.StorePresetPrototype,EntityUid,Content.Server.Store.Components.StoreComponent)">InitializeFromPreset(StorePresetPrototype, EntityUid, StoreComponent)</h4>
+  <div class="markdown level1 summary"><p>Initializes a store based on a given preset</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void InitializeFromPreset(StorePresetPrototype preset, EntityUid uid, StoreComponent component)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="../Content.Shared/Content.Shared.Store.StorePresetPrototype.html">StorePresetPrototype</a></td>
+        <td><span class="parametername">preset</span></td>
+        <td><p>The StorePresetPrototype</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Server.Store.Components.StoreComponent.html">StoreComponent</a></td>
+        <td><span class="parametername">component</span></td>
+        <td><p>The store being initialized</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Store_Systems_StoreSystem_InitializeFromPreset_System_Nullable_System_String__EntityUid_Content_Server_Store_Components_StoreComponent_.md&amp;value=---%0Auid%3A%20Content.Server.Store.Systems.StoreSystem.InitializeFromPreset(System.Nullable%7BSystem.String%7D%2CEntityUid%2CContent.Server.Store.Components.StoreComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Store/Systems/StoreSystem.cs/#L158">View Source</a>
+  </span>
+  <a id="Content_Server_Store_Systems_StoreSystem_InitializeFromPreset_" data-uid="Content.Server.Store.Systems.StoreSystem.InitializeFromPreset*"></a>
+  <h4 id="Content_Server_Store_Systems_StoreSystem_InitializeFromPreset_System_Nullable_System_String__EntityUid_Content_Server_Store_Components_StoreComponent_" data-uid="Content.Server.Store.Systems.StoreSystem.InitializeFromPreset(System.Nullable{System.String},EntityUid,Content.Server.Store.Components.StoreComponent)">InitializeFromPreset(Nullable&lt;String&gt;, EntityUid, StoreComponent)</h4>
+  <div class="markdown level1 summary"><p>Initializes a store based on a preset ID</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void InitializeFromPreset(string? preset, EntityUid uid, StoreComponent component)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">System.String</span>&gt;</td>
+        <td><span class="parametername">preset</span></td>
+        <td><p>The ID of a store preset prototype</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Server.Store.Components.StoreComponent.html">StoreComponent</a></td>
+        <td><span class="parametername">component</span></td>
+        <td><p>The store being initialized</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Store_Systems_StoreSystem_ListingHasCategory_Content_Shared_Store_ListingData_HashSet_System_String__.md&amp;value=---%0Auid%3A%20Content.Server.Store.Systems.StoreSystem.ListingHasCategory(Content.Shared.Store.ListingData%2CHashSet%7BSystem.String%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Store/Systems/StoreSystem.Listings.cs/#L120">View Source</a>
+  </span>
+  <a id="Content_Server_Store_Systems_StoreSystem_ListingHasCategory_" data-uid="Content.Server.Store.Systems.StoreSystem.ListingHasCategory*"></a>
+  <h4 id="Content_Server_Store_Systems_StoreSystem_ListingHasCategory_Content_Shared_Store_ListingData_HashSet_System_String__" data-uid="Content.Server.Store.Systems.StoreSystem.ListingHasCategory(Content.Shared.Store.ListingData,HashSet{System.String})">ListingHasCategory(ListingData, HashSet&lt;String&gt;)</h4>
+  <div class="markdown level1 summary"><p>Checks if a listing appears in a list of given categories</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool ListingHasCategory(ListingData listing, HashSet&lt;string&gt; categories)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="../Content.Shared/Content.Shared.Store.ListingData.html">ListingData</a></td>
+        <td><span class="parametername">listing</span></td>
+        <td><p>The listing itself.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">HashSet</span>&lt;<span class="xref">System.String</span>&gt;</td>
+        <td><span class="parametername">categories</span></td>
+        <td><p>The categories to check through.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>If the listing was present in one of the categories.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Store_Systems_StoreSystem_RefreshAllListings_Content_Server_Store_Components_StoreComponent_.md&amp;value=---%0Auid%3A%20Content.Server.Store.Systems.StoreSystem.RefreshAllListings(Content.Server.Store.Components.StoreComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Store/Systems/StoreSystem.Listings.cs/#L13">View Source</a>
+  </span>
+  <a id="Content_Server_Store_Systems_StoreSystem_RefreshAllListings_" data-uid="Content.Server.Store.Systems.StoreSystem.RefreshAllListings*"></a>
+  <h4 id="Content_Server_Store_Systems_StoreSystem_RefreshAllListings_Content_Server_Store_Components_StoreComponent_" data-uid="Content.Server.Store.Systems.StoreSystem.RefreshAllListings(Content.Server.Store.Components.StoreComponent)">RefreshAllListings(StoreComponent)</h4>
+  <div class="markdown level1 summary"><p>Refreshes all listings on a store.
+Do not use if you don't know what you're doing.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void RefreshAllListings(StoreComponent component)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Server.Store.Components.StoreComponent.html">StoreComponent</a></td>
+        <td><span class="parametername">component</span></td>
+        <td><p>The store to refresh</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Store_Systems_StoreSystem_ToggleUi_EntityUid_EntityUid_Content_Server_Store_Components_StoreComponent_.md&amp;value=---%0Auid%3A%20Content.Server.Store.Systems.StoreSystem.ToggleUi(EntityUid%2CEntityUid%2CContent.Server.Store.Components.StoreComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Store/Systems/StoreSystem.Ui.cs/#L38">View Source</a>
+  </span>
+  <a id="Content_Server_Store_Systems_StoreSystem_ToggleUi_" data-uid="Content.Server.Store.Systems.StoreSystem.ToggleUi*"></a>
+  <h4 id="Content_Server_Store_Systems_StoreSystem_ToggleUi_EntityUid_EntityUid_Content_Server_Store_Components_StoreComponent_" data-uid="Content.Server.Store.Systems.StoreSystem.ToggleUi(EntityUid,EntityUid,Content.Server.Store.Components.StoreComponent)">ToggleUi(EntityUid, EntityUid, StoreComponent)</h4>
+  <div class="markdown level1 summary"><p>Toggles the store Ui open and closed</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void ToggleUi(EntityUid user, EntityUid storeEnt, StoreComponent component = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">user</span></td>
+        <td><p>the person doing the toggling</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">storeEnt</span></td>
+        <td><p>the store being toggled</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Server.Store.Components.StoreComponent.html">StoreComponent</a></td>
+        <td><span class="parametername">component</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Store_Systems_StoreSystem_TryAddCurrency_Dictionary_System_String_Content_Shared_FixedPoint_FixedPoint2__EntityUid_Content_Server_Store_Components_StoreComponent_.md&amp;value=---%0Auid%3A%20Content.Server.Store.Systems.StoreSystem.TryAddCurrency(Dictionary%7BSystem.String%2CContent.Shared.FixedPoint.FixedPoint2%7D%2CEntityUid%2CContent.Server.Store.Components.StoreComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Store/Systems/StoreSystem.cs/#L130">View Source</a>
+  </span>
+  <a id="Content_Server_Store_Systems_StoreSystem_TryAddCurrency_" data-uid="Content.Server.Store.Systems.StoreSystem.TryAddCurrency*"></a>
+  <h4 id="Content_Server_Store_Systems_StoreSystem_TryAddCurrency_Dictionary_System_String_Content_Shared_FixedPoint_FixedPoint2__EntityUid_Content_Server_Store_Components_StoreComponent_" data-uid="Content.Server.Store.Systems.StoreSystem.TryAddCurrency(Dictionary{System.String,Content.Shared.FixedPoint.FixedPoint2},EntityUid,Content.Server.Store.Components.StoreComponent)">TryAddCurrency(Dictionary&lt;String, FixedPoint2&gt;, EntityUid, StoreComponent)</h4>
+  <div class="markdown level1 summary"><p>Tries to add a currency to a store's balance</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool TryAddCurrency(Dictionary&lt;string, FixedPoint2&gt; currency, EntityUid uid, StoreComponent store = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Dictionary</span>&lt;<span class="xref">System.String</span>, <a class="xref" href="../Content.Shared/Content.Shared.FixedPoint.FixedPoint2.html">FixedPoint2</a>&gt;</td>
+        <td><span class="parametername">currency</span></td>
+        <td><p>The value to add to the store</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Server.Store.Components.StoreComponent.html">StoreComponent</a></td>
+        <td><span class="parametername">store</span></td>
+        <td><p>The store to add it to</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>Whether or not the currency was succesfully added</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Store_Systems_StoreSystem_TryAddCurrency_EntityUid_EntityUid_Content_Server_Store_Components_StoreComponent_Content_Server_Store_Components_CurrencyComponent_.md&amp;value=---%0Auid%3A%20Content.Server.Store.Systems.StoreSystem.TryAddCurrency(EntityUid%2CEntityUid%2CContent.Server.Store.Components.StoreComponent%2CContent.Server.Store.Components.CurrencyComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Store/Systems/StoreSystem.cs/#L115">View Source</a>
+  </span>
+  <a id="Content_Server_Store_Systems_StoreSystem_TryAddCurrency_" data-uid="Content.Server.Store.Systems.StoreSystem.TryAddCurrency*"></a>
+  <h4 id="Content_Server_Store_Systems_StoreSystem_TryAddCurrency_EntityUid_EntityUid_Content_Server_Store_Components_StoreComponent_Content_Server_Store_Components_CurrencyComponent_" data-uid="Content.Server.Store.Systems.StoreSystem.TryAddCurrency(EntityUid,EntityUid,Content.Server.Store.Components.StoreComponent,Content.Server.Store.Components.CurrencyComponent)">TryAddCurrency(EntityUid, EntityUid, StoreComponent, CurrencyComponent)</h4>
+  <div class="markdown level1 summary"><p>Tries to add a currency to a store's balance.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool TryAddCurrency(EntityUid currencyEnt, EntityUid storeEnt, StoreComponent store = null, CurrencyComponent currency = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">currencyEnt</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">storeEnt</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Server.Store.Components.StoreComponent.html">StoreComponent</a></td>
+        <td><span class="parametername">store</span></td>
+        <td><p>The store to add it to</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Server.Store.Components.CurrencyComponent.html">CurrencyComponent</a></td>
+        <td><span class="parametername">currency</span></td>
+        <td><p>The currency to add</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>Whether or not the currency was succesfully added</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Store_Systems_StoreSystem_TryAddListing_Content_Server_Store_Components_StoreComponent_Content_Shared_Store_ListingData_.md&amp;value=---%0Auid%3A%20Content.Server.Store.Systems.StoreSystem.TryAddListing(Content.Server.Store.Components.StoreComponent%2CContent.Shared.Store.ListingData)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Store/Systems/StoreSystem.Listings.cs/#L58">View Source</a>
+  </span>
+  <a id="Content_Server_Store_Systems_StoreSystem_TryAddListing_" data-uid="Content.Server.Store.Systems.StoreSystem.TryAddListing*"></a>
+  <h4 id="Content_Server_Store_Systems_StoreSystem_TryAddListing_Content_Server_Store_Components_StoreComponent_Content_Shared_Store_ListingData_" data-uid="Content.Server.Store.Systems.StoreSystem.TryAddListing(Content.Server.Store.Components.StoreComponent,Content.Shared.Store.ListingData)">TryAddListing(StoreComponent, ListingData)</h4>
+  <div class="markdown level1 summary"><p>Adds a listing to a store</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool TryAddListing(StoreComponent component, ListingData listing)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Server.Store.Components.StoreComponent.html">StoreComponent</a></td>
+        <td><span class="parametername">component</span></td>
+        <td><p>The store to add the listing to</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="../Content.Shared/Content.Shared.Store.ListingData.html">ListingData</a></td>
+        <td><span class="parametername">listing</span></td>
+        <td><p>The listing</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>Whether or not the listing was add successfully</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Store_Systems_StoreSystem_TryAddListing_Content_Server_Store_Components_StoreComponent_System_String_.md&amp;value=---%0Auid%3A%20Content.Server.Store.Systems.StoreSystem.TryAddListing(Content.Server.Store.Components.StoreComponent%2CSystem.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Store/Systems/StoreSystem.Listings.cs/#L42">View Source</a>
+  </span>
+  <a id="Content_Server_Store_Systems_StoreSystem_TryAddListing_" data-uid="Content.Server.Store.Systems.StoreSystem.TryAddListing*"></a>
+  <h4 id="Content_Server_Store_Systems_StoreSystem_TryAddListing_Content_Server_Store_Components_StoreComponent_System_String_" data-uid="Content.Server.Store.Systems.StoreSystem.TryAddListing(Content.Server.Store.Components.StoreComponent,System.String)">TryAddListing(StoreComponent, String)</h4>
+  <div class="markdown level1 summary"><p>Adds a listing from an Id to a store</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool TryAddListing(StoreComponent component, string listingId)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Server.Store.Components.StoreComponent.html">StoreComponent</a></td>
+        <td><span class="parametername">component</span></td>
+        <td><p>The store to add the listing to</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">listingId</span></td>
+        <td><p>The id of the listing</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>Whetehr or not the listing was added successfully</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Store_Systems_StoreSystem_UpdateUserInterface_System_Nullable_EntityUid__EntityUid_Content_Server_Store_Components_StoreComponent_System_Nullable_PlayerBoundUserInterface__.md&amp;value=---%0Auid%3A%20Content.Server.Store.Systems.StoreSystem.UpdateUserInterface(System.Nullable%7BEntityUid%7D%2CEntityUid%2CContent.Server.Store.Components.StoreComponent%2CSystem.Nullable%7BPlayerBoundUserInterface%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Store/Systems/StoreSystem.Ui.cs/#L70">View Source</a>
+  </span>
+  <a id="Content_Server_Store_Systems_StoreSystem_UpdateUserInterface_" data-uid="Content.Server.Store.Systems.StoreSystem.UpdateUserInterface*"></a>
+  <h4 id="Content_Server_Store_Systems_StoreSystem_UpdateUserInterface_System_Nullable_EntityUid__EntityUid_Content_Server_Store_Components_StoreComponent_System_Nullable_PlayerBoundUserInterface__" data-uid="Content.Server.Store.Systems.StoreSystem.UpdateUserInterface(System.Nullable{EntityUid},EntityUid,Content.Server.Store.Components.StoreComponent,System.Nullable{PlayerBoundUserInterface})">UpdateUserInterface(Nullable&lt;EntityUid&gt;, EntityUid, StoreComponent, Nullable&lt;PlayerBoundUserInterface&gt;)</h4>
+  <div class="markdown level1 summary"><p>Updates the user interface for a store and refreshes the listings</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void UpdateUserInterface(EntityUid? user, EntityUid store, StoreComponent component = null, PlayerBoundUserInterface? ui = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">EntityUid</span>&gt;</td>
+        <td><span class="parametername">user</span></td>
+        <td><p>The person who if opening the store ui. Listings are filtered based on this.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">store</span></td>
+        <td><p>The store entity itself</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Server.Store.Components.StoreComponent.html">StoreComponent</a></td>
+        <td><span class="parametername">component</span></td>
+        <td><p>The store component being refreshed.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">PlayerBoundUserInterface</span>&gt;</td>
+        <td><span class="parametername">ui</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Store_Systems_StoreSystem.md&amp;value=---%0Auid%3A%20Content.Server.Store.Systems.StoreSystem%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Store/Systems/StoreSystem.Ui.cs/#L16" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <div class="toggle-mode">
+                <div class="icon">
+                  <i aria-hidden="true">☀</i>
+                </div>
+                <label class="switch">
+                  <input type="checkbox" id="switch-style">
+                  <span class="slider round"></span>
+                </label>
+                <div class="icon">
+                  <i aria-hidden="true">☾</i>
+                </div>
+              </div>
+          
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <h5>In This Article</h5>
+              <div></div>
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <div class="pull-left">
+              
+              <span>Generated by <strong>DocFX</strong></span>
+            </div>
+            <div class="toggle-mode pull-right visible-sm visible-xs">
+              <div class="icon">
+                <i aria-hidden="true">☀</i>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="switch-style-m">
+                <span class="slider round"></span>
+              </label>
+              <div class="icon">
+                <i aria-hidden="true">☾</i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <script type="text/javascript" src="../../styles/toggle-theme.js"></script>
+      </footer>    </div>
+    
+    <script type="text/javascript" src="../../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../../styles/docfx.js"></script>
+    <script type="text/javascript" src="../../styles/main.js"></script>
+  </body>
+</html>

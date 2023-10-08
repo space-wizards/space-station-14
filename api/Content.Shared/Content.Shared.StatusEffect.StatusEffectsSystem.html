@@ -1,0 +1,976 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class StatusEffectsSystem
+   </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class StatusEffectsSystem
+   ">
+    <meta name="generator" content="docfx 2.56.7.0">
+    
+    <link rel="shortcut icon" href="../../favicon.ico">
+    <link rel="stylesheet" href="../../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../../styles/docfx.css">
+    <link rel="stylesheet" href="../../styles/main.css">
+    <meta property="docfx:navrel" content="../../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../../index.html">
+                <img id="logo" class="svg" src="../../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Content.Shared.StatusEffect.StatusEffectsSystem">
+  
+  
+  <h1 id="Content_Shared_StatusEffect_StatusEffectsSystem" data-uid="Content.Shared.StatusEffect.StatusEffectsSystem" class="text-break">Class StatusEffectsSystem
+  </h1>
+  <div class="markdown level0 summary"></div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level1"><span class="xref">StatusEffectsSystem</span></div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Content.Shared.StatusEffect.html">Content.Shared.StatusEffect</a></h6>
+  <h6><strong>Assembly</strong>: Content.Shared.dll</h6>
+  <h5 id="Content_Shared_StatusEffect_StatusEffectsSystem_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public sealed class StatusEffectsSystem : EntitySystem</code></pre>
+  </div>
+  <h3 id="methods">Methods
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_StatusEffect_StatusEffectsSystem_CanApplyEffect_EntityUid_System_String_Content_Shared_StatusEffect_StatusEffectsComponent_.md&amp;value=---%0Auid%3A%20Content.Shared.StatusEffect.StatusEffectsSystem.CanApplyEffect(EntityUid%2CSystem.String%2CContent.Shared.StatusEffect.StatusEffectsComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/StatusEffect/StatusEffectsSystem.cs/#L343">View Source</a>
+  </span>
+  <a id="Content_Shared_StatusEffect_StatusEffectsSystem_CanApplyEffect_" data-uid="Content.Shared.StatusEffect.StatusEffectsSystem.CanApplyEffect*"></a>
+  <h4 id="Content_Shared_StatusEffect_StatusEffectsSystem_CanApplyEffect_EntityUid_System_String_Content_Shared_StatusEffect_StatusEffectsComponent_" data-uid="Content.Shared.StatusEffect.StatusEffectsSystem.CanApplyEffect(EntityUid,System.String,Content.Shared.StatusEffect.StatusEffectsComponent)">CanApplyEffect(EntityUid, String, StatusEffectsComponent)</h4>
+  <div class="markdown level1 summary"><p>Returns whether a given entity can have a given effect applied to it.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool CanApplyEffect(EntityUid uid, string key, StatusEffectsComponent status = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td><p>The entity to check on.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">key</span></td>
+        <td><p>The status effect ID to check for</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Shared.StatusEffect.StatusEffectsComponent.html">StatusEffectsComponent</a></td>
+        <td><span class="parametername">status</span></td>
+        <td><p>The status effect component, should you already have it.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_StatusEffect_StatusEffectsSystem_HasStatusEffect_EntityUid_System_String_Content_Shared_StatusEffect_StatusEffectsComponent_.md&amp;value=---%0Auid%3A%20Content.Shared.StatusEffect.StatusEffectsSystem.HasStatusEffect(EntityUid%2CSystem.String%2CContent.Shared.StatusEffect.StatusEffectsComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/StatusEffect/StatusEffectsSystem.cs/#L326">View Source</a>
+  </span>
+  <a id="Content_Shared_StatusEffect_StatusEffectsSystem_HasStatusEffect_" data-uid="Content.Shared.StatusEffect.StatusEffectsSystem.HasStatusEffect*"></a>
+  <h4 id="Content_Shared_StatusEffect_StatusEffectsSystem_HasStatusEffect_EntityUid_System_String_Content_Shared_StatusEffect_StatusEffectsComponent_" data-uid="Content.Shared.StatusEffect.StatusEffectsSystem.HasStatusEffect(EntityUid,System.String,Content.Shared.StatusEffect.StatusEffectsComponent)">HasStatusEffect(EntityUid, String, StatusEffectsComponent)</h4>
+  <div class="markdown level1 summary"><p>Returns whether a given entity has the status effect active.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool HasStatusEffect(EntityUid uid, string key, StatusEffectsComponent status = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td><p>The entity to check on.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">key</span></td>
+        <td><p>The status effect ID to check for</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Shared.StatusEffect.StatusEffectsComponent.html">StatusEffectsComponent</a></td>
+        <td><span class="parametername">status</span></td>
+        <td><p>The status effect component, should you already have it.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_StatusEffect_StatusEffectsSystem_Initialize.md&amp;value=---%0Auid%3A%20Content.Shared.StatusEffect.StatusEffectsSystem.Initialize%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/StatusEffect/StatusEffectsSystem.cs/#L21">View Source</a>
+  </span>
+  <a id="Content_Shared_StatusEffect_StatusEffectsSystem_Initialize_" data-uid="Content.Shared.StatusEffect.StatusEffectsSystem.Initialize*"></a>
+  <h4 id="Content_Shared_StatusEffect_StatusEffectsSystem_Initialize" data-uid="Content.Shared.StatusEffect.StatusEffectsSystem.Initialize">Initialize()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override void Initialize()</code></pre>
+  </div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_StatusEffect_StatusEffectsSystem_TryAddStatusEffect_EntityUid_System_String_TimeSpan_System_Boolean_Content_Shared_StatusEffect_StatusEffectsComponent_System_Nullable_TimeSpan__.md&amp;value=---%0Auid%3A%20Content.Shared.StatusEffect.StatusEffectsSystem.TryAddStatusEffect(EntityUid%2CSystem.String%2CTimeSpan%2CSystem.Boolean%2CContent.Shared.StatusEffect.StatusEffectsComponent%2CSystem.Nullable%7BTimeSpan%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/StatusEffect/StatusEffectsSystem.cs/#L171">View Source</a>
+  </span>
+  <a id="Content_Shared_StatusEffect_StatusEffectsSystem_TryAddStatusEffect_" data-uid="Content.Shared.StatusEffect.StatusEffectsSystem.TryAddStatusEffect*"></a>
+  <h4 id="Content_Shared_StatusEffect_StatusEffectsSystem_TryAddStatusEffect_EntityUid_System_String_TimeSpan_System_Boolean_Content_Shared_StatusEffect_StatusEffectsComponent_System_Nullable_TimeSpan__" data-uid="Content.Shared.StatusEffect.StatusEffectsSystem.TryAddStatusEffect(EntityUid,System.String,TimeSpan,System.Boolean,Content.Shared.StatusEffect.StatusEffectsComponent,System.Nullable{TimeSpan})">TryAddStatusEffect(EntityUid, String, TimeSpan, Boolean, StatusEffectsComponent, Nullable&lt;TimeSpan&gt;)</h4>
+  <div class="markdown level1 summary"><p>Tries to add a status effect to an entity with a certain timer.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool TryAddStatusEffect(EntityUid uid, string key, TimeSpan time, bool refresh, StatusEffectsComponent status = null, TimeSpan? startTime = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td><p>The entity to add the effect to.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">key</span></td>
+        <td><p>The status effect ID to add.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">TimeSpan</span></td>
+        <td><span class="parametername">time</span></td>
+        <td><p>How long the effect should last for.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">refresh</span></td>
+        <td><p>The status effect cooldown should be refreshed (true) or accumulated (false).</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Shared.StatusEffect.StatusEffectsComponent.html">StatusEffectsComponent</a></td>
+        <td><span class="parametername">status</span></td>
+        <td><p>The status effects component to change, if you already have it.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">TimeSpan</span>&gt;</td>
+        <td><span class="parametername">startTime</span></td>
+        <td><p>The time at which the status effect started. This exists mostly for prediction
+resetting.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>False if the effect could not be added, or if the effect already existed.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Content_Shared_StatusEffect_StatusEffectsSystem_TryAddStatusEffect_EntityUid_System_String_TimeSpan_System_Boolean_Content_Shared_StatusEffect_StatusEffectsComponent_System_Nullable_TimeSpan___remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>This obviously does not add any actual 'effects' on its own. Use the generic overload,
+which takes in a component type, if you want to automatically add and remove a component.</p>
+<p>If the effect already exists, it will simply replace the cooldown with the new one given.
+If you want special 'effect merging' behavior, do it your own damn self!</p>
+</div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_StatusEffect_StatusEffectsSystem_TryAddStatusEffect_EntityUid_System_String_TimeSpan_System_Boolean_System_String_Content_Shared_StatusEffect_StatusEffectsComponent_.md&amp;value=---%0Auid%3A%20Content.Shared.StatusEffect.StatusEffectsSystem.TryAddStatusEffect(EntityUid%2CSystem.String%2CTimeSpan%2CSystem.Boolean%2CSystem.String%2CContent.Shared.StatusEffect.StatusEffectsComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/StatusEffect/StatusEffectsSystem.cs/#L129">View Source</a>
+  </span>
+  <a id="Content_Shared_StatusEffect_StatusEffectsSystem_TryAddStatusEffect_" data-uid="Content.Shared.StatusEffect.StatusEffectsSystem.TryAddStatusEffect*"></a>
+  <h4 id="Content_Shared_StatusEffect_StatusEffectsSystem_TryAddStatusEffect_EntityUid_System_String_TimeSpan_System_Boolean_System_String_Content_Shared_StatusEffect_StatusEffectsComponent_" data-uid="Content.Shared.StatusEffect.StatusEffectsSystem.TryAddStatusEffect(EntityUid,System.String,TimeSpan,System.Boolean,System.String,Content.Shared.StatusEffect.StatusEffectsComponent)">TryAddStatusEffect(EntityUid, String, TimeSpan, Boolean, String, StatusEffectsComponent)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool TryAddStatusEffect(EntityUid uid, string key, TimeSpan time, bool refresh, string component, StatusEffectsComponent status = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">key</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">TimeSpan</span></td>
+        <td><span class="parametername">time</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">refresh</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">component</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Shared.StatusEffect.StatusEffectsComponent.html">StatusEffectsComponent</a></td>
+        <td><span class="parametername">status</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_StatusEffect_StatusEffectsSystem_TryAddStatusEffect__1_EntityUid_System_String_TimeSpan_System_Boolean_Content_Shared_StatusEffect_StatusEffectsComponent_.md&amp;value=---%0Auid%3A%20Content.Shared.StatusEffect.StatusEffectsSystem.TryAddStatusEffect%60%601(EntityUid%2CSystem.String%2CTimeSpan%2CSystem.Boolean%2CContent.Shared.StatusEffect.StatusEffectsComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/StatusEffect/StatusEffectsSystem.cs/#L108">View Source</a>
+  </span>
+  <a id="Content_Shared_StatusEffect_StatusEffectsSystem_TryAddStatusEffect_" data-uid="Content.Shared.StatusEffect.StatusEffectsSystem.TryAddStatusEffect*"></a>
+  <h4 id="Content_Shared_StatusEffect_StatusEffectsSystem_TryAddStatusEffect__1_EntityUid_System_String_TimeSpan_System_Boolean_Content_Shared_StatusEffect_StatusEffectsComponent_" data-uid="Content.Shared.StatusEffect.StatusEffectsSystem.TryAddStatusEffect``1(EntityUid,System.String,TimeSpan,System.Boolean,Content.Shared.StatusEffect.StatusEffectsComponent)">TryAddStatusEffect&lt;T&gt;(EntityUid, String, TimeSpan, Boolean, StatusEffectsComponent)</h4>
+  <div class="markdown level1 summary"><p>Tries to add a status effect to an entity, with a given component added as well.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool TryAddStatusEffect&lt;T&gt;(EntityUid uid, string key, TimeSpan time, bool refresh, StatusEffectsComponent status = null)
+    where T : Component, new()</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td><p>The entity to add the effect to.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">key</span></td>
+        <td><p>The status effect ID to add.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">TimeSpan</span></td>
+        <td><span class="parametername">time</span></td>
+        <td><p>How long the effect should last for.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">refresh</span></td>
+        <td><p>The status effect cooldown should be refreshed (true) or accumulated (false).</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Shared.StatusEffect.StatusEffectsComponent.html">StatusEffectsComponent</a></td>
+        <td><span class="parametername">status</span></td>
+        <td><p>The status effects component to change, if you already have it.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>False if the effect could not be added or the component already exists, true otherwise.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T</span></td>
+        <td><p>The component type to add and remove from the entity.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_StatusEffect_StatusEffectsSystem_TryAddTime_EntityUid_System_String_TimeSpan_Content_Shared_StatusEffect_StatusEffectsComponent_.md&amp;value=---%0Auid%3A%20Content.Shared.StatusEffect.StatusEffectsSystem.TryAddTime(EntityUid%2CSystem.String%2CTimeSpan%2CContent.Shared.StatusEffect.StatusEffectsComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/StatusEffect/StatusEffectsSystem.cs/#L370">View Source</a>
+  </span>
+  <a id="Content_Shared_StatusEffect_StatusEffectsSystem_TryAddTime_" data-uid="Content.Shared.StatusEffect.StatusEffectsSystem.TryAddTime*"></a>
+  <h4 id="Content_Shared_StatusEffect_StatusEffectsSystem_TryAddTime_EntityUid_System_String_TimeSpan_Content_Shared_StatusEffect_StatusEffectsComponent_" data-uid="Content.Shared.StatusEffect.StatusEffectsSystem.TryAddTime(EntityUid,System.String,TimeSpan,Content.Shared.StatusEffect.StatusEffectsComponent)">TryAddTime(EntityUid, String, TimeSpan, StatusEffectsComponent)</h4>
+  <div class="markdown level1 summary"><p>Tries to add to the timer of an already existing status effect.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool TryAddTime(EntityUid uid, string key, TimeSpan time, StatusEffectsComponent status = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td><p>The entity to add time to.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">key</span></td>
+        <td><p>The status effect to add time to.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">TimeSpan</span></td>
+        <td><span class="parametername">time</span></td>
+        <td><p>The amount of time to add.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Shared.StatusEffect.StatusEffectsComponent.html">StatusEffectsComponent</a></td>
+        <td><span class="parametername">status</span></td>
+        <td><p>The status effect component, should you already have it.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_StatusEffect_StatusEffectsSystem_TryGetTime_EntityUid_System_String_System_Nullable_System_ValueTuple_TimeSpan_TimeSpan____Content_Shared_StatusEffect_StatusEffectsComponent_.md&amp;value=---%0Auid%3A%20Content.Shared.StatusEffect.StatusEffectsSystem.TryGetTime(EntityUid%2CSystem.String%2CSystem.Nullable%7BSystem.ValueTuple%7BTimeSpan%2CTimeSpan%7D%7D%40%2CContent.Shared.StatusEffect.StatusEffectsComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/StatusEffect/StatusEffectsSystem.cs/#L459">View Source</a>
+  </span>
+  <a id="Content_Shared_StatusEffect_StatusEffectsSystem_TryGetTime_" data-uid="Content.Shared.StatusEffect.StatusEffectsSystem.TryGetTime*"></a>
+  <h4 id="Content_Shared_StatusEffect_StatusEffectsSystem_TryGetTime_EntityUid_System_String_System_Nullable_System_ValueTuple_TimeSpan_TimeSpan____Content_Shared_StatusEffect_StatusEffectsComponent_" data-uid="Content.Shared.StatusEffect.StatusEffectsSystem.TryGetTime(EntityUid,System.String,System.Nullable{System.ValueTuple{TimeSpan,TimeSpan}}@,Content.Shared.StatusEffect.StatusEffectsComponent)">TryGetTime(EntityUid, String, out Nullable&lt;(TimeSpan, TimeSpan)&gt;, StatusEffectsComponent)</h4>
+  <div class="markdown level1 summary"><p>Gets the cooldown for a given status effect on an entity.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool TryGetTime(EntityUid uid, string key, out (TimeSpan, TimeSpan)? time, StatusEffectsComponent status = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td><p>The entity to check for status effects on.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">key</span></td>
+        <td><p>The status effect to get time for.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">System.ValueTuple</span>&lt;<span class="xref">TimeSpan</span>, <span class="xref">TimeSpan</span>&gt;&gt;</td>
+        <td><span class="parametername">time</span></td>
+        <td><p>Out var for the time, if it exists.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Shared.StatusEffect.StatusEffectsComponent.html">StatusEffectsComponent</a></td>
+        <td><span class="parametername">status</span></td>
+        <td><p>The status effects component to use, if any.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>False if the status effect was not active, true otherwise.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_StatusEffect_StatusEffectsSystem_TryRemoveAllStatusEffects_EntityUid_Content_Shared_StatusEffect_StatusEffectsComponent_.md&amp;value=---%0Auid%3A%20Content.Shared.StatusEffect.StatusEffectsSystem.TryRemoveAllStatusEffects(EntityUid%2CContent.Shared.StatusEffect.StatusEffectsComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/StatusEffect/StatusEffectsSystem.cs/#L303">View Source</a>
+  </span>
+  <a id="Content_Shared_StatusEffect_StatusEffectsSystem_TryRemoveAllStatusEffects_" data-uid="Content.Shared.StatusEffect.StatusEffectsSystem.TryRemoveAllStatusEffects*"></a>
+  <h4 id="Content_Shared_StatusEffect_StatusEffectsSystem_TryRemoveAllStatusEffects_EntityUid_Content_Shared_StatusEffect_StatusEffectsComponent_" data-uid="Content.Shared.StatusEffect.StatusEffectsSystem.TryRemoveAllStatusEffects(EntityUid,Content.Shared.StatusEffect.StatusEffectsComponent)">TryRemoveAllStatusEffects(EntityUid, StatusEffectsComponent)</h4>
+  <div class="markdown level1 summary"><p>Tries to remove all status effects from a given entity.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool TryRemoveAllStatusEffects(EntityUid uid, StatusEffectsComponent status = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td><p>The entity to remove effects from.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Shared.StatusEffect.StatusEffectsComponent.html">StatusEffectsComponent</a></td>
+        <td><span class="parametername">status</span></td>
+        <td><p>The status effects component to change, if you already have it.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>False if any status effects failed to be removed, true if they all did.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_StatusEffect_StatusEffectsSystem_TryRemoveStatusEffect_EntityUid_System_String_Content_Shared_StatusEffect_StatusEffectsComponent_System_Boolean_.md&amp;value=---%0Auid%3A%20Content.Shared.StatusEffect.StatusEffectsSystem.TryRemoveStatusEffect(EntityUid%2CSystem.String%2CContent.Shared.StatusEffect.StatusEffectsComponent%2CSystem.Boolean)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/StatusEffect/StatusEffectsSystem.cs/#L260">View Source</a>
+  </span>
+  <a id="Content_Shared_StatusEffect_StatusEffectsSystem_TryRemoveStatusEffect_" data-uid="Content.Shared.StatusEffect.StatusEffectsSystem.TryRemoveStatusEffect*"></a>
+  <h4 id="Content_Shared_StatusEffect_StatusEffectsSystem_TryRemoveStatusEffect_EntityUid_System_String_Content_Shared_StatusEffect_StatusEffectsComponent_System_Boolean_" data-uid="Content.Shared.StatusEffect.StatusEffectsSystem.TryRemoveStatusEffect(EntityUid,System.String,Content.Shared.StatusEffect.StatusEffectsComponent,System.Boolean)">TryRemoveStatusEffect(EntityUid, String, StatusEffectsComponent, Boolean)</h4>
+  <div class="markdown level1 summary"><p>Attempts to remove a status effect from an entity.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool TryRemoveStatusEffect(EntityUid uid, string key, StatusEffectsComponent status = null, bool remComp = true)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td><p>The entity to remove an effect from.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">key</span></td>
+        <td><p>The effect ID to remove.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Shared.StatusEffect.StatusEffectsComponent.html">StatusEffectsComponent</a></td>
+        <td><span class="parametername">status</span></td>
+        <td><p>The status effects component to change, if you already have it.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">remComp</span></td>
+        <td><p>If true, status effect removal will also remove the relevant component. This option
+exists mostly for prediction resetting.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>False if the effect could not be removed, true otherwise.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Content_Shared_StatusEffect_StatusEffectsSystem_TryRemoveStatusEffect_EntityUid_System_String_Content_Shared_StatusEffect_StatusEffectsComponent_System_Boolean__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Obviously this doesn't automatically clear any effects a status effect might have.
+That's up to the removed component to handle itself when it's removed.</p>
+</div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_StatusEffect_StatusEffectsSystem_TryRemoveTime_EntityUid_System_String_TimeSpan_Content_Shared_StatusEffect_StatusEffectsComponent_.md&amp;value=---%0Auid%3A%20Content.Shared.StatusEffect.StatusEffectsSystem.TryRemoveTime(EntityUid%2CSystem.String%2CTimeSpan%2CContent.Shared.StatusEffect.StatusEffectsComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/StatusEffect/StatusEffectsSystem.cs/#L401">View Source</a>
+  </span>
+  <a id="Content_Shared_StatusEffect_StatusEffectsSystem_TryRemoveTime_" data-uid="Content.Shared.StatusEffect.StatusEffectsSystem.TryRemoveTime*"></a>
+  <h4 id="Content_Shared_StatusEffect_StatusEffectsSystem_TryRemoveTime_EntityUid_System_String_TimeSpan_Content_Shared_StatusEffect_StatusEffectsComponent_" data-uid="Content.Shared.StatusEffect.StatusEffectsSystem.TryRemoveTime(EntityUid,System.String,TimeSpan,Content.Shared.StatusEffect.StatusEffectsComponent)">TryRemoveTime(EntityUid, String, TimeSpan, StatusEffectsComponent)</h4>
+  <div class="markdown level1 summary"><p>Tries to remove time from the timer of an already existing status effect.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool TryRemoveTime(EntityUid uid, string key, TimeSpan time, StatusEffectsComponent status = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td><p>The entity to remove time from.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">key</span></td>
+        <td><p>The status effect to remove time from.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">TimeSpan</span></td>
+        <td><span class="parametername">time</span></td>
+        <td><p>The amount of time to add.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Shared.StatusEffect.StatusEffectsComponent.html">StatusEffectsComponent</a></td>
+        <td><span class="parametername">status</span></td>
+        <td><p>The status effect component, should you already have it.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_StatusEffect_StatusEffectsSystem_TrySetTime_EntityUid_System_String_TimeSpan_Content_Shared_StatusEffect_StatusEffectsComponent_.md&amp;value=---%0Auid%3A%20Content.Shared.StatusEffect.StatusEffectsSystem.TrySetTime(EntityUid%2CSystem.String%2CTimeSpan%2CContent.Shared.StatusEffect.StatusEffectsComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/StatusEffect/StatusEffectsSystem.cs/#L436">View Source</a>
+  </span>
+  <a id="Content_Shared_StatusEffect_StatusEffectsSystem_TrySetTime_" data-uid="Content.Shared.StatusEffect.StatusEffectsSystem.TrySetTime*"></a>
+  <h4 id="Content_Shared_StatusEffect_StatusEffectsSystem_TrySetTime_EntityUid_System_String_TimeSpan_Content_Shared_StatusEffect_StatusEffectsComponent_" data-uid="Content.Shared.StatusEffect.StatusEffectsSystem.TrySetTime(EntityUid,System.String,TimeSpan,Content.Shared.StatusEffect.StatusEffectsComponent)">TrySetTime(EntityUid, String, TimeSpan, StatusEffectsComponent)</h4>
+  <div class="markdown level1 summary"><p>Use if you want to set a cooldown directly.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool TrySetTime(EntityUid uid, string key, TimeSpan time, StatusEffectsComponent status = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">key</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">TimeSpan</span></td>
+        <td><span class="parametername">time</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Shared.StatusEffect.StatusEffectsComponent.html">StatusEffectsComponent</a></td>
+        <td><span class="parametername">status</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Content_Shared_StatusEffect_StatusEffectsSystem_TrySetTime_EntityUid_System_String_TimeSpan_Content_Shared_StatusEffect_StatusEffectsComponent__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Not used internally; just sets it itself.</p>
+</div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_StatusEffect_StatusEffectsSystem_Update_System_Single_.md&amp;value=---%0Auid%3A%20Content.Shared.StatusEffect.StatusEffectsSystem.Update(System.Single)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/StatusEffect/StatusEffectsSystem.cs/#L32">View Source</a>
+  </span>
+  <a id="Content_Shared_StatusEffect_StatusEffectsSystem_Update_" data-uid="Content.Shared.StatusEffect.StatusEffectsSystem.Update*"></a>
+  <h4 id="Content_Shared_StatusEffect_StatusEffectsSystem_Update_System_Single_" data-uid="Content.Shared.StatusEffect.StatusEffectsSystem.Update(System.Single)">Update(Single)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override void Update(float frameTime)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td><span class="parametername">frameTime</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_StatusEffect_StatusEffectsSystem.md&amp;value=---%0Auid%3A%20Content.Shared.StatusEffect.StatusEffectsSystem%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/StatusEffect/StatusEffectsSystem.cs/#L14" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <div class="toggle-mode">
+                <div class="icon">
+                  <i aria-hidden="true">☀</i>
+                </div>
+                <label class="switch">
+                  <input type="checkbox" id="switch-style">
+                  <span class="slider round"></span>
+                </label>
+                <div class="icon">
+                  <i aria-hidden="true">☾</i>
+                </div>
+              </div>
+          
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <h5>In This Article</h5>
+              <div></div>
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <div class="pull-left">
+              
+              <span>Generated by <strong>DocFX</strong></span>
+            </div>
+            <div class="toggle-mode pull-right visible-sm visible-xs">
+              <div class="icon">
+                <i aria-hidden="true">☀</i>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="switch-style-m">
+                <span class="slider round"></span>
+              </label>
+              <div class="icon">
+                <i aria-hidden="true">☾</i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <script type="text/javascript" src="../../styles/toggle-theme.js"></script>
+      </footer>    </div>
+    
+    <script type="text/javascript" src="../../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../../styles/docfx.js"></script>
+    <script type="text/javascript" src="../../styles/main.js"></script>
+  </body>
+</html>

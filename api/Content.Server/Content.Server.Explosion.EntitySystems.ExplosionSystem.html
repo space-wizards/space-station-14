@@ -1,0 +1,1348 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class ExplosionSystem
+   </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class ExplosionSystem
+   ">
+    <meta name="generator" content="docfx 2.56.7.0">
+    
+    <link rel="shortcut icon" href="../../favicon.ico">
+    <link rel="stylesheet" href="../../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../../styles/docfx.css">
+    <link rel="stylesheet" href="../../styles/main.css">
+    <meta property="docfx:navrel" content="../../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../../index.html">
+                <img id="logo" class="svg" src="../../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Content.Server.Explosion.EntitySystems.ExplosionSystem">
+  
+  
+  <h1 id="Content_Server_Explosion_EntitySystems_ExplosionSystem" data-uid="Content.Server.Explosion.EntitySystems.ExplosionSystem" class="text-break">Class ExplosionSystem
+  </h1>
+  <div class="markdown level0 summary"></div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level1"><span class="xref">ExplosionSystem</span></div>
+  </div>
+  <div classs="implements">
+    <h5>Implements</h5>
+    <div><span class="xref">EntitySystem</span></div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Content.Server.Explosion.EntitySystems.html">Content.Server.Explosion.EntitySystems</a></h6>
+  <h6><strong>Assembly</strong>: Content.Server.dll</h6>
+  <h5 id="Content_Server_Explosion_EntitySystems_ExplosionSystem_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public sealed class ExplosionSystem : EntitySystem, EntitySystem</code></pre>
+  </div>
+  <h3 id="fields">Fields
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Explosion_EntitySystems_ExplosionSystem_DefaultExplosionPrototypeId.md&amp;value=---%0Auid%3A%20Content.Server.Explosion.EntitySystems.ExplosionSystem.DefaultExplosionPrototypeId%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Explosion/EntitySystems/ExplosionSystem.cs/#L66">View Source</a>
+  </span>
+  <h4 id="Content_Server_Explosion_EntitySystems_ExplosionSystem_DefaultExplosionPrototypeId" data-uid="Content.Server.Explosion.EntitySystems.ExplosionSystem.DefaultExplosionPrototypeId">DefaultExplosionPrototypeId</h4>
+  <div class="markdown level1 summary"><p>The &quot;default&quot; explosion prototype.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public const string DefaultExplosionPrototypeId = null</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Content_Server_Explosion_EntitySystems_ExplosionSystem_DefaultExplosionPrototypeId_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Generally components should specify an explosion prototype via a yaml datafield, so that the yaml-linter can
+find errors. However some components, like rogue arrows, or some commands like the admin-smite need to have
+a &quot;default&quot; option specified outside of yaml data-fields. Hence this const string.</p>
+</div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Explosion_EntitySystems_ExplosionSystem_DefaultTileSize.md&amp;value=---%0Auid%3A%20Content.Server.Explosion.EntitySystems.ExplosionSystem.DefaultTileSize%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Explosion/EntitySystems/ExplosionSystem.cs/#L53">View Source</a>
+  </span>
+  <h4 id="Content_Server_Explosion_EntitySystems_ExplosionSystem_DefaultTileSize" data-uid="Content.Server.Explosion.EntitySystems.ExplosionSystem.DefaultTileSize">DefaultTileSize</h4>
+  <div class="markdown level1 summary"><p>&quot;Tile-size&quot; for space when there are no nearby grids to use as a reference.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public const ushort DefaultTileSize = null</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.UInt16</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="properties">Properties
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Explosion_EntitySystems_ExplosionSystem_IncrementalTileBreaking.md&amp;value=---%0Auid%3A%20Content.Server.Explosion.EntitySystems.ExplosionSystem.IncrementalTileBreaking%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Explosion/EntitySystems/ExplosionSystem.CVars.cs/#L13">View Source</a>
+  </span>
+  <a id="Content_Server_Explosion_EntitySystems_ExplosionSystem_IncrementalTileBreaking_" data-uid="Content.Server.Explosion.EntitySystems.ExplosionSystem.IncrementalTileBreaking*"></a>
+  <h4 id="Content_Server_Explosion_EntitySystems_ExplosionSystem_IncrementalTileBreaking" data-uid="Content.Server.Explosion.EntitySystems.ExplosionSystem.IncrementalTileBreaking">IncrementalTileBreaking</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IncrementalTileBreaking { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Explosion_EntitySystems_ExplosionSystem_MaxArea.md&amp;value=---%0Auid%3A%20Content.Server.Explosion.EntitySystems.ExplosionSystem.MaxArea%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Explosion/EntitySystems/ExplosionSystem.CVars.cs/#L8">View Source</a>
+  </span>
+  <a id="Content_Server_Explosion_EntitySystems_ExplosionSystem_MaxArea_" data-uid="Content.Server.Explosion.EntitySystems.ExplosionSystem.MaxArea*"></a>
+  <h4 id="Content_Server_Explosion_EntitySystems_ExplosionSystem_MaxArea" data-uid="Content.Server.Explosion.EntitySystems.ExplosionSystem.MaxArea">MaxArea</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int MaxArea { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Explosion_EntitySystems_ExplosionSystem_MaxIterations.md&amp;value=---%0Auid%3A%20Content.Server.Explosion.EntitySystems.ExplosionSystem.MaxIterations%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Explosion/EntitySystems/ExplosionSystem.CVars.cs/#L7">View Source</a>
+  </span>
+  <a id="Content_Server_Explosion_EntitySystems_ExplosionSystem_MaxIterations_" data-uid="Content.Server.Explosion.EntitySystems.ExplosionSystem.MaxIterations*"></a>
+  <h4 id="Content_Server_Explosion_EntitySystems_ExplosionSystem_MaxIterations" data-uid="Content.Server.Explosion.EntitySystems.ExplosionSystem.MaxIterations">MaxIterations</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int MaxIterations { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Explosion_EntitySystems_ExplosionSystem_MaxProcessingTime.md&amp;value=---%0Auid%3A%20Content.Server.Explosion.EntitySystems.ExplosionSystem.MaxProcessingTime%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Explosion/EntitySystems/ExplosionSystem.CVars.cs/#L9">View Source</a>
+  </span>
+  <a id="Content_Server_Explosion_EntitySystems_ExplosionSystem_MaxProcessingTime_" data-uid="Content.Server.Explosion.EntitySystems.ExplosionSystem.MaxProcessingTime*"></a>
+  <h4 id="Content_Server_Explosion_EntitySystems_ExplosionSystem_MaxProcessingTime" data-uid="Content.Server.Explosion.EntitySystems.ExplosionSystem.MaxProcessingTime">MaxProcessingTime</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public float MaxProcessingTime { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Explosion_EntitySystems_ExplosionSystem_SingleTickAreaLimit.md&amp;value=---%0Auid%3A%20Content.Server.Explosion.EntitySystems.ExplosionSystem.SingleTickAreaLimit%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Explosion/EntitySystems/ExplosionSystem.CVars.cs/#L14">View Source</a>
+  </span>
+  <a id="Content_Server_Explosion_EntitySystems_ExplosionSystem_SingleTickAreaLimit_" data-uid="Content.Server.Explosion.EntitySystems.ExplosionSystem.SingleTickAreaLimit*"></a>
+  <h4 id="Content_Server_Explosion_EntitySystems_ExplosionSystem_SingleTickAreaLimit" data-uid="Content.Server.Explosion.EntitySystems.ExplosionSystem.SingleTickAreaLimit">SingleTickAreaLimit</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int SingleTickAreaLimit { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Explosion_EntitySystems_ExplosionSystem_SleepNodeSys.md&amp;value=---%0Auid%3A%20Content.Server.Explosion.EntitySystems.ExplosionSystem.SleepNodeSys%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Explosion/EntitySystems/ExplosionSystem.CVars.cs/#L12">View Source</a>
+  </span>
+  <a id="Content_Server_Explosion_EntitySystems_ExplosionSystem_SleepNodeSys_" data-uid="Content.Server.Explosion.EntitySystems.ExplosionSystem.SleepNodeSys*"></a>
+  <h4 id="Content_Server_Explosion_EntitySystems_ExplosionSystem_SleepNodeSys" data-uid="Content.Server.Explosion.EntitySystems.ExplosionSystem.SleepNodeSys">SleepNodeSys</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool SleepNodeSys { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Explosion_EntitySystems_ExplosionSystem_ThrowLimit.md&amp;value=---%0Auid%3A%20Content.Server.Explosion.EntitySystems.ExplosionSystem.ThrowLimit%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Explosion/EntitySystems/ExplosionSystem.CVars.cs/#L11">View Source</a>
+  </span>
+  <a id="Content_Server_Explosion_EntitySystems_ExplosionSystem_ThrowLimit_" data-uid="Content.Server.Explosion.EntitySystems.ExplosionSystem.ThrowLimit*"></a>
+  <h4 id="Content_Server_Explosion_EntitySystems_ExplosionSystem_ThrowLimit" data-uid="Content.Server.Explosion.EntitySystems.ExplosionSystem.ThrowLimit">ThrowLimit</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int ThrowLimit { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Explosion_EntitySystems_ExplosionSystem_TilesPerTick.md&amp;value=---%0Auid%3A%20Content.Server.Explosion.EntitySystems.ExplosionSystem.TilesPerTick%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Explosion/EntitySystems/ExplosionSystem.CVars.cs/#L10">View Source</a>
+  </span>
+  <a id="Content_Server_Explosion_EntitySystems_ExplosionSystem_TilesPerTick_" data-uid="Content.Server.Explosion.EntitySystems.ExplosionSystem.TilesPerTick*"></a>
+  <h4 id="Content_Server_Explosion_EntitySystems_ExplosionSystem_TilesPerTick" data-uid="Content.Server.Explosion.EntitySystems.ExplosionSystem.TilesPerTick">TilesPerTick</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int TilesPerTick { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Explosion_EntitySystems_ExplosionSystem_DamageFloorTile_Robust_Shared_Map_TileRef_System_Single_System_Int32_System_Boolean_List_System_ValueTuple_Vector2i_Robust_Shared_Map_Tile___Content_Shared_Explosion_ExplosionPrototype_.md&amp;value=---%0Auid%3A%20Content.Server.Explosion.EntitySystems.ExplosionSystem.DamageFloorTile(Robust.Shared.Map.TileRef%2CSystem.Single%2CSystem.Int32%2CSystem.Boolean%2CList%7BSystem.ValueTuple%7BVector2i%2CRobust.Shared.Map.Tile%7D%7D%2CContent.Shared.Explosion.ExplosionPrototype)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Explosion/EntitySystems/ExplosionSystem.Processing.cs/#L450">View Source</a>
+  </span>
+  <a id="Content_Server_Explosion_EntitySystems_ExplosionSystem_DamageFloorTile_" data-uid="Content.Server.Explosion.EntitySystems.ExplosionSystem.DamageFloorTile*"></a>
+  <h4 id="Content_Server_Explosion_EntitySystems_ExplosionSystem_DamageFloorTile_Robust_Shared_Map_TileRef_System_Single_System_Int32_System_Boolean_List_System_ValueTuple_Vector2i_Robust_Shared_Map_Tile___Content_Shared_Explosion_ExplosionPrototype_" data-uid="Content.Server.Explosion.EntitySystems.ExplosionSystem.DamageFloorTile(Robust.Shared.Map.TileRef,System.Single,System.Int32,System.Boolean,List{System.ValueTuple{Vector2i,Robust.Shared.Map.Tile}},Content.Shared.Explosion.ExplosionPrototype)">DamageFloorTile(TileRef, Single, Int32, Boolean, List&lt;(Vector2i GridIndices, Tile Tile)&gt;, ExplosionPrototype)</h4>
+  <div class="markdown level1 summary"><p>Tries to damage floor tiles. Not to be confused with the function that damages entities intersecting the
+grid tile.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void DamageFloorTile(TileRef tileRef, float effectiveIntensity, int maxTileBreak, bool canCreateVacuum, List&lt;(Vector2i GridIndices, Tile Tile)&gt; damagedTiles, ExplosionPrototype type)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Robust.Shared.Map.TileRef</span></td>
+        <td><span class="parametername">tileRef</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td><span class="parametername">effectiveIntensity</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">maxTileBreak</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">canCreateVacuum</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">List</span>&lt;<span class="xref">System.ValueTuple</span>&lt;<span class="xref">Vector2i</span>, <span class="xref">Robust.Shared.Map.Tile</span>&gt;&gt;</td>
+        <td><span class="parametername">damagedTiles</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="../Content.Shared/Content.Shared.Explosion.ExplosionPrototype.html">ExplosionPrototype</a></td>
+        <td><span class="parametername">type</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Explosion_EntitySystems_ExplosionSystem_GenerateExplosionPreview_Content_Shared_Administration_SpawnExplosionEuiMsg_PreviewRequest_.md&amp;value=---%0Auid%3A%20Content.Server.Explosion.EntitySystems.ExplosionSystem.GenerateExplosionPreview(Content.Shared.Administration.SpawnExplosionEuiMsg.PreviewRequest)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Explosion/EntitySystems/ExplosionSystem.TileFill.cs/#L317">View Source</a>
+  </span>
+  <a id="Content_Server_Explosion_EntitySystems_ExplosionSystem_GenerateExplosionPreview_" data-uid="Content.Server.Explosion.EntitySystems.ExplosionSystem.GenerateExplosionPreview*"></a>
+  <h4 id="Content_Server_Explosion_EntitySystems_ExplosionSystem_GenerateExplosionPreview_Content_Shared_Administration_SpawnExplosionEuiMsg_PreviewRequest_" data-uid="Content.Server.Explosion.EntitySystems.ExplosionSystem.GenerateExplosionPreview(Content.Shared.Administration.SpawnExplosionEuiMsg.PreviewRequest)">GenerateExplosionPreview(SpawnExplosionEuiMsg.PreviewRequest)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ExplosionVisualsState GenerateExplosionPreview(SpawnExplosionEuiMsg.PreviewRequest request)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="../Content.Shared/Content.Shared.Administration.SpawnExplosionEuiMsg.PreviewRequest.html">SpawnExplosionEuiMsg.PreviewRequest</a></td>
+        <td><span class="parametername">request</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="../Content.Shared/Content.Shared.Explosion.ExplosionVisualsState.html">ExplosionVisualsState</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Explosion_EntitySystems_ExplosionSystem_GetExplosionTolerance_EntityUid_EntityQuery_Content_Shared_Damage_DamageableComponent__EntityQuery_Content_Server_Destructible_DestructibleComponent__.md&amp;value=---%0Auid%3A%20Content.Server.Explosion.EntitySystems.ExplosionSystem.GetExplosionTolerance(EntityUid%2CEntityQuery%7BContent.Shared.Damage.DamageableComponent%7D%2CEntityQuery%7BContent.Server.Destructible.DestructibleComponent%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Explosion/EntitySystems/ExplosionSystem.Airtight.cs/#L114">View Source</a>
+  </span>
+  <a id="Content_Server_Explosion_EntitySystems_ExplosionSystem_GetExplosionTolerance_" data-uid="Content.Server.Explosion.EntitySystems.ExplosionSystem.GetExplosionTolerance*"></a>
+  <h4 id="Content_Server_Explosion_EntitySystems_ExplosionSystem_GetExplosionTolerance_EntityUid_EntityQuery_Content_Shared_Damage_DamageableComponent__EntityQuery_Content_Server_Destructible_DestructibleComponent__" data-uid="Content.Server.Explosion.EntitySystems.ExplosionSystem.GetExplosionTolerance(EntityUid,EntityQuery{Content.Shared.Damage.DamageableComponent},EntityQuery{Content.Server.Destructible.DestructibleComponent})">GetExplosionTolerance(EntityUid, EntityQuery&lt;DamageableComponent&gt;, EntityQuery&lt;DestructibleComponent&gt;)</h4>
+  <div class="markdown level1 summary"><p>Return a dictionary that specifies how intense a given explosion type needs to be in order to destroy an entity.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public float[] GetExplosionTolerance(EntityUid uid, EntityQuery&lt;DamageableComponent&gt; damageQuery, EntityQuery&lt;DestructibleComponent&gt; destructibleQuery)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">EntityQuery</span>&lt;<a class="xref" href="../Content.Shared/Content.Shared.Damage.DamageableComponent.html">DamageableComponent</a>&gt;</td>
+        <td><span class="parametername">damageQuery</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">EntityQuery</span>&lt;<a class="xref" href="Content.Server.Destructible.DestructibleComponent.html">DestructibleComponent</a>&gt;</td>
+        <td><span class="parametername">destructibleQuery</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Single</span>[]</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Explosion_EntitySystems_ExplosionSystem_GetLocalGrids_Robust_Shared_Map_MapCoordinates_System_Single_System_Single_System_Single_.md&amp;value=---%0Auid%3A%20Content.Server.Explosion.EntitySystems.ExplosionSystem.GetLocalGrids(Robust.Shared.Map.MapCoordinates%2CSystem.Single%2CSystem.Single%2CSystem.Single)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Explosion/EntitySystems/ExplosionSystem.TileFill.cs/#L261">View Source</a>
+  </span>
+  <a id="Content_Server_Explosion_EntitySystems_ExplosionSystem_GetLocalGrids_" data-uid="Content.Server.Explosion.EntitySystems.ExplosionSystem.GetLocalGrids*"></a>
+  <h4 id="Content_Server_Explosion_EntitySystems_ExplosionSystem_GetLocalGrids_Robust_Shared_Map_MapCoordinates_System_Single_System_Single_System_Single_" data-uid="Content.Server.Explosion.EntitySystems.ExplosionSystem.GetLocalGrids(Robust.Shared.Map.MapCoordinates,System.Single,System.Single,System.Single)">GetLocalGrids(MapCoordinates, Single, Single, Single)</h4>
+  <div class="markdown level1 summary"><p>Look for grids in an area and returns them. Also selects a special grid that will be used to determine the
+orientation of an explosion in space.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public (List&lt;EntityUid&gt;, EntityUid? , float) GetLocalGrids(MapCoordinates epicenter, float totalIntensity, float slope, float maxIntensity)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Robust.Shared.Map.MapCoordinates</span></td>
+        <td><span class="parametername">epicenter</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td><span class="parametername">totalIntensity</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td><span class="parametername">slope</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td><span class="parametername">maxIntensity</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.ValueTuple</span>&lt;<span class="xref">List</span>&lt;<span class="xref">EntityUid</span>&gt;, <span class="xref">System.Nullable</span>&lt;<span class="xref">EntityUid</span>&gt;, <span class="xref">System.Single</span>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Content_Server_Explosion_EntitySystems_ExplosionSystem_GetLocalGrids_Robust_Shared_Map_MapCoordinates_System_Single_System_Single_System_Single__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Note that even though an explosion may start ON a grid, the explosion in space may still be orientated to
+match a separate grid. This is done so that if you have something like a tiny suicide-bomb shuttle exploding
+near a large station, the explosion will still orient to match the station, not the tiny shuttle.</p>
+</div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Explosion_EntitySystems_ExplosionSystem_Initialize.md&amp;value=---%0Auid%3A%20Content.Server.Explosion.EntitySystems.ExplosionSystem.Initialize%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Explosion/EntitySystems/ExplosionSystem.cs/#L68">View Source</a>
+  </span>
+  <a id="Content_Server_Explosion_EntitySystems_ExplosionSystem_Initialize_" data-uid="Content.Server.Explosion.EntitySystems.ExplosionSystem.Initialize*"></a>
+  <h4 id="Content_Server_Explosion_EntitySystems_ExplosionSystem_Initialize" data-uid="Content.Server.Explosion.EntitySystems.ExplosionSystem.Initialize">Initialize()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override void Initialize()</code></pre>
+  </div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Explosion_EntitySystems_ExplosionSystem_InitVisuals.md&amp;value=---%0Auid%3A%20Content.Server.Explosion.EntitySystems.ExplosionSystem.InitVisuals%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Explosion/EntitySystems/ExplosionSystem.Visuals.cs/#L11">View Source</a>
+  </span>
+  <a id="Content_Server_Explosion_EntitySystems_ExplosionSystem_InitVisuals_" data-uid="Content.Server.Explosion.EntitySystems.ExplosionSystem.InitVisuals*"></a>
+  <h4 id="Content_Server_Explosion_EntitySystems_ExplosionSystem_InitVisuals" data-uid="Content.Server.Explosion.EntitySystems.ExplosionSystem.InitVisuals">InitVisuals()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void InitVisuals()</code></pre>
+  </div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Explosion_EntitySystems_ExplosionSystem_IntensityToRadius_System_Single_System_Single_System_Single_.md&amp;value=---%0Auid%3A%20Content.Server.Explosion.EntitySystems.ExplosionSystem.IntensityToRadius(System.Single%2CSystem.Single%2CSystem.Single)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Explosion/EntitySystems/ExplosionSystem.cs/#L205">View Source</a>
+  </span>
+  <a id="Content_Server_Explosion_EntitySystems_ExplosionSystem_IntensityToRadius_" data-uid="Content.Server.Explosion.EntitySystems.ExplosionSystem.IntensityToRadius*"></a>
+  <h4 id="Content_Server_Explosion_EntitySystems_ExplosionSystem_IntensityToRadius_System_Single_System_Single_System_Single_" data-uid="Content.Server.Explosion.EntitySystems.ExplosionSystem.IntensityToRadius(System.Single,System.Single,System.Single)">IntensityToRadius(Single, Single, Single)</h4>
+  <div class="markdown level1 summary"><p>Inverse formula for <a class="xref" href="Content.Server.Explosion.EntitySystems.ExplosionSystem.html#Content_Server_Explosion_EntitySystems_ExplosionSystem_RadiusToIntensity_System_Single_System_Single_System_Single_">RadiusToIntensity(Single, Single, Single)</a></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public float IntensityToRadius(float totalIntensity, float slope, float maxIntensity)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td><span class="parametername">totalIntensity</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td><span class="parametername">slope</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td><span class="parametername">maxIntensity</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Explosion_EntitySystems_ExplosionSystem_IsBlockingTurf_EntityUid_EntityQuery_Robust_Shared_Physics_Components_PhysicsComponent__.md&amp;value=---%0Auid%3A%20Content.Server.Explosion.EntitySystems.ExplosionSystem.IsBlockingTurf(EntityUid%2CEntityQuery%7BRobust.Shared.Physics.Components.PhysicsComponent%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Explosion/EntitySystems/ExplosionSystem.Processing.cs/#L179">View Source</a>
+  </span>
+  <a id="Content_Server_Explosion_EntitySystems_ExplosionSystem_IsBlockingTurf_" data-uid="Content.Server.Explosion.EntitySystems.ExplosionSystem.IsBlockingTurf*"></a>
+  <h4 id="Content_Server_Explosion_EntitySystems_ExplosionSystem_IsBlockingTurf_EntityUid_EntityQuery_Robust_Shared_Physics_Components_PhysicsComponent__" data-uid="Content.Server.Explosion.EntitySystems.ExplosionSystem.IsBlockingTurf(EntityUid,EntityQuery{Robust.Shared.Physics.Components.PhysicsComponent})">IsBlockingTurf(EntityUid, EntityQuery&lt;PhysicsComponent&gt;)</h4>
+  <div class="markdown level1 summary"><p>Determines whether an entity is blocking a tile or not. (whether it can prevent the tile from being uprooted
+by an explosion).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsBlockingTurf(EntityUid uid, EntityQuery&lt;PhysicsComponent&gt; physicsQuery)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">EntityQuery</span>&lt;<span class="xref">Robust.Shared.Physics.Components.PhysicsComponent</span>&gt;</td>
+        <td><span class="parametername">physicsQuery</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Content_Server_Explosion_EntitySystems_ExplosionSystem_IsBlockingTurf_EntityUid_EntityQuery_Robust_Shared_Physics_Components_PhysicsComponent___remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Used for a variation of <see cref="!:TurfHelpers.IsBlockedTurf()"></see> that makes use of the fact that we have
+already done an entity lookup on a tile, and don't need to do so again.</p>
+</div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Explosion_EntitySystems_ExplosionSystem_QueueExplosion_EntityUid_System_String_System_Single_System_Single_System_Single_System_Single_System_Int32_System_Boolean_System_Nullable_EntityUid__System_Boolean_.md&amp;value=---%0Auid%3A%20Content.Server.Explosion.EntitySystems.ExplosionSystem.QueueExplosion(EntityUid%2CSystem.String%2CSystem.Single%2CSystem.Single%2CSystem.Single%2CSystem.Single%2CSystem.Int32%2CSystem.Boolean%2CSystem.Nullable%7BEntityUid%7D%2CSystem.Boolean)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Explosion/EntitySystems/ExplosionSystem.cs/#L225">View Source</a>
+  </span>
+  <a id="Content_Server_Explosion_EntitySystems_ExplosionSystem_QueueExplosion_" data-uid="Content.Server.Explosion.EntitySystems.ExplosionSystem.QueueExplosion*"></a>
+  <h4 id="Content_Server_Explosion_EntitySystems_ExplosionSystem_QueueExplosion_EntityUid_System_String_System_Single_System_Single_System_Single_System_Single_System_Int32_System_Boolean_System_Nullable_EntityUid__System_Boolean_" data-uid="Content.Server.Explosion.EntitySystems.ExplosionSystem.QueueExplosion(EntityUid,System.String,System.Single,System.Single,System.Single,System.Single,System.Int32,System.Boolean,System.Nullable{EntityUid},System.Boolean)">QueueExplosion(EntityUid, String, Single, Single, Single, Single, Int32, Boolean, Nullable&lt;EntityUid&gt;, Boolean)</h4>
+  <div class="markdown level1 summary"><p>Queue an explosions, centered on some entity.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void QueueExplosion(EntityUid uid, string typeId, float totalIntensity, float slope, float maxTileIntensity, float tileBreakScale = 1F, int maxTileBreak = null, bool canCreateVacuum = true, EntityUid? user = null, bool addLog = true)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">typeId</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td><span class="parametername">totalIntensity</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td><span class="parametername">slope</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td><span class="parametername">maxTileIntensity</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td><span class="parametername">tileBreakScale</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">maxTileBreak</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">canCreateVacuum</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">EntityUid</span>&gt;</td>
+        <td><span class="parametername">user</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">addLog</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Explosion_EntitySystems_ExplosionSystem_QueueExplosion_Robust_Shared_Map_MapCoordinates_System_String_System_Single_System_Single_System_Single_System_Single_System_Int32_System_Boolean_System_Boolean_.md&amp;value=---%0Auid%3A%20Content.Server.Explosion.EntitySystems.ExplosionSystem.QueueExplosion(Robust.Shared.Map.MapCoordinates%2CSystem.String%2CSystem.Single%2CSystem.Single%2CSystem.Single%2CSystem.Single%2CSystem.Int32%2CSystem.Boolean%2CSystem.Boolean)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Explosion/EntitySystems/ExplosionSystem.cs/#L262">View Source</a>
+  </span>
+  <a id="Content_Server_Explosion_EntitySystems_ExplosionSystem_QueueExplosion_" data-uid="Content.Server.Explosion.EntitySystems.ExplosionSystem.QueueExplosion*"></a>
+  <h4 id="Content_Server_Explosion_EntitySystems_ExplosionSystem_QueueExplosion_Robust_Shared_Map_MapCoordinates_System_String_System_Single_System_Single_System_Single_System_Single_System_Int32_System_Boolean_System_Boolean_" data-uid="Content.Server.Explosion.EntitySystems.ExplosionSystem.QueueExplosion(Robust.Shared.Map.MapCoordinates,System.String,System.Single,System.Single,System.Single,System.Single,System.Int32,System.Boolean,System.Boolean)">QueueExplosion(MapCoordinates, String, Single, Single, Single, Single, Int32, Boolean, Boolean)</h4>
+  <div class="markdown level1 summary"><p>Queue an explosion, with a specified epicenter and set of starting tiles.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void QueueExplosion(MapCoordinates epicenter, string typeId, float totalIntensity, float slope, float maxTileIntensity, float tileBreakScale = 1F, int maxTileBreak = null, bool canCreateVacuum = true, bool addLog = true)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Robust.Shared.Map.MapCoordinates</span></td>
+        <td><span class="parametername">epicenter</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">typeId</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td><span class="parametername">totalIntensity</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td><span class="parametername">slope</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td><span class="parametername">maxTileIntensity</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td><span class="parametername">tileBreakScale</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">maxTileBreak</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">canCreateVacuum</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">addLog</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Explosion_EntitySystems_ExplosionSystem_RadiusToIntensity_System_Single_System_Single_System_Single_.md&amp;value=---%0Auid%3A%20Content.Server.Explosion.EntitySystems.ExplosionSystem.RadiusToIntensity(System.Single%2CSystem.Single%2CSystem.Single)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Explosion/EntitySystems/ExplosionSystem.cs/#L179">View Source</a>
+  </span>
+  <a id="Content_Server_Explosion_EntitySystems_ExplosionSystem_RadiusToIntensity_" data-uid="Content.Server.Explosion.EntitySystems.ExplosionSystem.RadiusToIntensity*"></a>
+  <h4 id="Content_Server_Explosion_EntitySystems_ExplosionSystem_RadiusToIntensity_System_Single_System_Single_System_Single_" data-uid="Content.Server.Explosion.EntitySystems.ExplosionSystem.RadiusToIntensity(System.Single,System.Single,System.Single)">RadiusToIntensity(Single, Single, Single)</h4>
+  <div class="markdown level1 summary"><p>Find the strength needed to generate an explosion of a given radius. More useful for radii larger then 4, when the explosion becomes less &quot;blocky&quot;.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public float RadiusToIntensity(float radius, float slope, float maxIntensity = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td><span class="parametername">radius</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td><span class="parametername">slope</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td><span class="parametername">maxIntensity</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Content_Server_Explosion_EntitySystems_ExplosionSystem_RadiusToIntensity_System_Single_System_Single_System_Single__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>This assumes the explosion is in a vacuum / unobstructed. Given that explosions are not perfectly
+circular, here radius actually means the sqrt(Area/pi), where the area is the total number of tiles
+covered by the explosion. Until you get to radius 30+, this is functionally equivalent to the
+actual radius.</p>
+</div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Explosion_EntitySystems_ExplosionSystem_Shutdown.md&amp;value=---%0Auid%3A%20Content.Server.Explosion.EntitySystems.ExplosionSystem.Shutdown%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Explosion/EntitySystems/ExplosionSystem.cs/#L108">View Source</a>
+  </span>
+  <a id="Content_Server_Explosion_EntitySystems_ExplosionSystem_Shutdown_" data-uid="Content.Server.Explosion.EntitySystems.ExplosionSystem.Shutdown*"></a>
+  <h4 id="Content_Server_Explosion_EntitySystems_ExplosionSystem_Shutdown" data-uid="Content.Server.Explosion.EntitySystems.ExplosionSystem.Shutdown">Shutdown()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override void Shutdown()</code></pre>
+  </div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Explosion_EntitySystems_ExplosionSystem_TransformGridEdges_Robust_Shared_Map_MapCoordinates_System_Nullable_EntityUid__List_EntityUid__System_Single_.md&amp;value=---%0Auid%3A%20Content.Server.Explosion.EntitySystems.ExplosionSystem.TransformGridEdges(Robust.Shared.Map.MapCoordinates%2CSystem.Nullable%7BEntityUid%7D%2CList%7BEntityUid%7D%2CSystem.Single)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Explosion/EntitySystems/ExplosionSystem.GridMap.cs/#L46">View Source</a>
+  </span>
+  <a id="Content_Server_Explosion_EntitySystems_ExplosionSystem_TransformGridEdges_" data-uid="Content.Server.Explosion.EntitySystems.ExplosionSystem.TransformGridEdges*"></a>
+  <h4 id="Content_Server_Explosion_EntitySystems_ExplosionSystem_TransformGridEdges_Robust_Shared_Map_MapCoordinates_System_Nullable_EntityUid__List_EntityUid__System_Single_" data-uid="Content.Server.Explosion.EntitySystems.ExplosionSystem.TransformGridEdges(Robust.Shared.Map.MapCoordinates,System.Nullable{EntityUid},List{EntityUid},System.Single)">TransformGridEdges(MapCoordinates, Nullable&lt;EntityUid&gt;, List&lt;EntityUid&gt;, Single)</h4>
+  <div class="markdown level1 summary"><p>Take our map of grid edges, where each is defined in their own grid's reference frame, and map those
+edges all onto one grids reference frame.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public (Dictionary&lt;Vector2i, BlockedSpaceTile&gt;, ushort) TransformGridEdges(MapCoordinates epicentre, EntityUid? referenceGrid, List&lt;EntityUid&gt; localGrids, float maxDistance)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Robust.Shared.Map.MapCoordinates</span></td>
+        <td><span class="parametername">epicentre</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">EntityUid</span>&gt;</td>
+        <td><span class="parametername">referenceGrid</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">List</span>&lt;<span class="xref">EntityUid</span>&gt;</td>
+        <td><span class="parametername">localGrids</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td><span class="parametername">maxDistance</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.ValueTuple</span>&lt;<span class="xref">Dictionary</span>&lt;<span class="xref">Vector2i</span>, <span class="xref">BlockedSpaceTile</span>&gt;, <span class="xref">System.UInt16</span>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Explosion_EntitySystems_ExplosionSystem_TriggerExplosive_EntityUid_Content_Server_Explosion_Components_ExplosiveComponent_System_Boolean_System_Nullable_System_Single__System_Nullable_System_Single__System_Nullable_EntityUid__.md&amp;value=---%0Auid%3A%20Content.Server.Explosion.EntitySystems.ExplosionSystem.TriggerExplosive(EntityUid%2CContent.Server.Explosion.Components.ExplosiveComponent%2CSystem.Boolean%2CSystem.Nullable%7BSystem.Single%7D%2CSystem.Nullable%7BSystem.Single%7D%2CSystem.Nullable%7BEntityUid%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Explosion/EntitySystems/ExplosionSystem.cs/#L138">View Source</a>
+  </span>
+  <a id="Content_Server_Explosion_EntitySystems_ExplosionSystem_TriggerExplosive_" data-uid="Content.Server.Explosion.EntitySystems.ExplosionSystem.TriggerExplosive*"></a>
+  <h4 id="Content_Server_Explosion_EntitySystems_ExplosionSystem_TriggerExplosive_EntityUid_Content_Server_Explosion_Components_ExplosiveComponent_System_Boolean_System_Nullable_System_Single__System_Nullable_System_Single__System_Nullable_EntityUid__" data-uid="Content.Server.Explosion.EntitySystems.ExplosionSystem.TriggerExplosive(EntityUid,Content.Server.Explosion.Components.ExplosiveComponent,System.Boolean,System.Nullable{System.Single},System.Nullable{System.Single},System.Nullable{EntityUid})">TriggerExplosive(EntityUid, ExplosiveComponent, Boolean, Nullable&lt;Single&gt;, Nullable&lt;Single&gt;, Nullable&lt;EntityUid&gt;)</h4>
+  <div class="markdown level1 summary"><p>Given an entity with an explosive component, spawn the appropriate explosion.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void TriggerExplosive(EntityUid uid, ExplosiveComponent explosive = null, bool delete = true, float? totalIntensity = null, float? radius = null, EntityUid? user = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Server.Explosion.Components.ExplosiveComponent.html">ExplosiveComponent</a></td>
+        <td><span class="parametername">explosive</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">delete</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">System.Single</span>&gt;</td>
+        <td><span class="parametername">totalIntensity</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">System.Single</span>&gt;</td>
+        <td><span class="parametername">radius</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">EntityUid</span>&gt;</td>
+        <td><span class="parametername">user</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Content_Server_Explosion_EntitySystems_ExplosionSystem_TriggerExplosive_EntityUid_Content_Server_Explosion_Components_ExplosiveComponent_System_Boolean_System_Nullable_System_Single__System_Nullable_System_Single__System_Nullable_EntityUid___remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Also accepts radius or intensity arguments. This is useful for explosives where the intensity is not
+specified in the yaml / by the component, but determined dynamically (e.g., by the quantity of a
+solution in a reaction).</p>
+</div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Explosion_EntitySystems_ExplosionSystem_Update_System_Single_.md&amp;value=---%0Auid%3A%20Content.Server.Explosion.EntitySystems.ExplosionSystem.Update(System.Single)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Explosion/EntitySystems/ExplosionSystem.Processing.cs/#L74">View Source</a>
+  </span>
+  <a id="Content_Server_Explosion_EntitySystems_ExplosionSystem_Update_" data-uid="Content.Server.Explosion.EntitySystems.ExplosionSystem.Update*"></a>
+  <h4 id="Content_Server_Explosion_EntitySystems_ExplosionSystem_Update_System_Single_" data-uid="Content.Server.Explosion.EntitySystems.ExplosionSystem.Update(System.Single)">Update(Single)</h4>
+  <div class="markdown level1 summary"><p>Process the explosion queue.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override void Update(float frameTime)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td><span class="parametername">frameTime</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Explosion_EntitySystems_ExplosionSystem_UpdateAirtightMap_EntityUid_Robust_Shared_Map_Components_MapGridComponent_Vector2i_System_Nullable_EntityQuery_Content_Server_Atmos_Components_AirtightComponent___.md&amp;value=---%0Auid%3A%20Content.Server.Explosion.EntitySystems.ExplosionSystem.UpdateAirtightMap(EntityUid%2CRobust.Shared.Map.Components.MapGridComponent%2CVector2i%2CSystem.Nullable%7BEntityQuery%7BContent.Server.Atmos.Components.AirtightComponent%7D%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Explosion/EntitySystems/ExplosionSystem.Airtight.cs/#L61">View Source</a>
+  </span>
+  <a id="Content_Server_Explosion_EntitySystems_ExplosionSystem_UpdateAirtightMap_" data-uid="Content.Server.Explosion.EntitySystems.ExplosionSystem.UpdateAirtightMap*"></a>
+  <h4 id="Content_Server_Explosion_EntitySystems_ExplosionSystem_UpdateAirtightMap_EntityUid_Robust_Shared_Map_Components_MapGridComponent_Vector2i_System_Nullable_EntityQuery_Content_Server_Atmos_Components_AirtightComponent___" data-uid="Content.Server.Explosion.EntitySystems.ExplosionSystem.UpdateAirtightMap(EntityUid,Robust.Shared.Map.Components.MapGridComponent,Vector2i,System.Nullable{EntityQuery{Content.Server.Atmos.Components.AirtightComponent}})">UpdateAirtightMap(EntityUid, MapGridComponent, Vector2i, Nullable&lt;EntityQuery&lt;AirtightComponent&gt;&gt;)</h4>
+  <div class="markdown level1 summary"><p>Update the map of explosion blockers.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void UpdateAirtightMap(EntityUid gridId, MapGridComponent grid, Vector2i tile, EntityQuery&lt;AirtightComponent&gt;? query = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">gridId</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">Robust.Shared.Map.Components.MapGridComponent</span></td>
+        <td><span class="parametername">grid</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">Vector2i</span></td>
+        <td><span class="parametername">tile</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">EntityQuery</span>&lt;<a class="xref" href="Content.Server.Atmos.Components.AirtightComponent.html">AirtightComponent</a>&gt;&gt;</td>
+        <td><span class="parametername">query</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Content_Server_Explosion_EntitySystems_ExplosionSystem_UpdateAirtightMap_EntityUid_Robust_Shared_Map_Components_MapGridComponent_Vector2i_System_Nullable_EntityQuery_Content_Server_Atmos_Components_AirtightComponent____remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Gets a list of all airtight entities on a tile. Assembles a <a class="xref" href="../Content.Shared/Content.Shared.Atmos.AtmosDirection.html">AtmosDirection</a> that specifies
+what directions are blocked, along with the largest explosion tolerance. Note that as we only keep track
+of the largest tolerance, this means that the explosion map will actually be inaccurate if you have
+something like a normal and a reinforced windoor on the same tile. But given that this is a pretty rare
+occurrence, I am fine with this.</p>
+</div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Explosion_EntitySystems_ExplosionSystem_UpdateAirtightMap_EntityUid_Vector2i_Robust_Shared_Map_Components_MapGridComponent_System_Nullable_EntityQuery_Content_Server_Atmos_Components_AirtightComponent___.md&amp;value=---%0Auid%3A%20Content.Server.Explosion.EntitySystems.ExplosionSystem.UpdateAirtightMap(EntityUid%2CVector2i%2CRobust.Shared.Map.Components.MapGridComponent%2CSystem.Nullable%7BEntityQuery%7BContent.Server.Atmos.Components.AirtightComponent%7D%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Explosion/EntitySystems/ExplosionSystem.Airtight.cs/#L45">View Source</a>
+  </span>
+  <a id="Content_Server_Explosion_EntitySystems_ExplosionSystem_UpdateAirtightMap_" data-uid="Content.Server.Explosion.EntitySystems.ExplosionSystem.UpdateAirtightMap*"></a>
+  <h4 id="Content_Server_Explosion_EntitySystems_ExplosionSystem_UpdateAirtightMap_EntityUid_Vector2i_Robust_Shared_Map_Components_MapGridComponent_System_Nullable_EntityQuery_Content_Server_Atmos_Components_AirtightComponent___" data-uid="Content.Server.Explosion.EntitySystems.ExplosionSystem.UpdateAirtightMap(EntityUid,Vector2i,Robust.Shared.Map.Components.MapGridComponent,System.Nullable{EntityQuery{Content.Server.Atmos.Components.AirtightComponent}})">UpdateAirtightMap(EntityUid, Vector2i, MapGridComponent, Nullable&lt;EntityQuery&lt;AirtightComponent&gt;&gt;)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void UpdateAirtightMap(EntityUid gridId, Vector2i tile, MapGridComponent grid = null, EntityQuery&lt;AirtightComponent&gt;? query = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">gridId</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">Vector2i</span></td>
+        <td><span class="parametername">tile</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">Robust.Shared.Map.Components.MapGridComponent</span></td>
+        <td><span class="parametername">grid</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">EntityQuery</span>&lt;<a class="xref" href="Content.Server.Atmos.Components.AirtightComponent.html">AirtightComponent</a>&gt;&gt;</td>
+        <td><span class="parametername">query</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <span class="xref">EntitySystem</span>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Explosion_EntitySystems_ExplosionSystem.md&amp;value=---%0Auid%3A%20Content.Server.Explosion.EntitySystems.ExplosionSystem%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Explosion/EntitySystems/ExplosionSystem.Visuals.cs/#L9" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <div class="toggle-mode">
+                <div class="icon">
+                  <i aria-hidden="true">☀</i>
+                </div>
+                <label class="switch">
+                  <input type="checkbox" id="switch-style">
+                  <span class="slider round"></span>
+                </label>
+                <div class="icon">
+                  <i aria-hidden="true">☾</i>
+                </div>
+              </div>
+          
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <h5>In This Article</h5>
+              <div></div>
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <div class="pull-left">
+              
+              <span>Generated by <strong>DocFX</strong></span>
+            </div>
+            <div class="toggle-mode pull-right visible-sm visible-xs">
+              <div class="icon">
+                <i aria-hidden="true">☀</i>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="switch-style-m">
+                <span class="slider round"></span>
+              </label>
+              <div class="icon">
+                <i aria-hidden="true">☾</i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <script type="text/javascript" src="../../styles/toggle-theme.js"></script>
+      </footer>    </div>
+    
+    <script type="text/javascript" src="../../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../../styles/docfx.js"></script>
+    <script type="text/javascript" src="../../styles/main.js"></script>
+  </body>
+</html>

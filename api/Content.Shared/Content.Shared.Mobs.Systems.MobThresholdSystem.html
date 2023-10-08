@@ -1,0 +1,915 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class MobThresholdSystem
+   </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class MobThresholdSystem
+   ">
+    <meta name="generator" content="docfx 2.56.7.0">
+    
+    <link rel="shortcut icon" href="../../favicon.ico">
+    <link rel="stylesheet" href="../../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../../styles/docfx.css">
+    <link rel="stylesheet" href="../../styles/main.css">
+    <meta property="docfx:navrel" content="../../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../../index.html">
+                <img id="logo" class="svg" src="../../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Content.Shared.Mobs.Systems.MobThresholdSystem">
+  
+  
+  <h1 id="Content_Shared_Mobs_Systems_MobThresholdSystem" data-uid="Content.Shared.Mobs.Systems.MobThresholdSystem" class="text-break">Class MobThresholdSystem
+  </h1>
+  <div class="markdown level0 summary"></div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level1"><span class="xref">MobThresholdSystem</span></div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Content.Shared.Mobs.Systems.html">Content.Shared.Mobs.Systems</a></h6>
+  <h6><strong>Assembly</strong>: Content.Shared.dll</h6>
+  <h5 id="Content_Shared_Mobs_Systems_MobThresholdSystem_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public sealed class MobThresholdSystem : EntitySystem</code></pre>
+  </div>
+  <h3 id="methods">Methods
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Mobs_Systems_MobThresholdSystem_GetScaledDamage_EntityUid_EntityUid_Content_Shared_Damage_DamageSpecifier__.md&amp;value=---%0Auid%3A%20Content.Shared.Mobs.Systems.MobThresholdSystem.GetScaledDamage(EntityUid%2CEntityUid%2CContent.Shared.Damage.DamageSpecifier%40)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Mobs/Systems/MobThresholdSystem.cs/#L252">View Source</a>
+  </span>
+  <a id="Content_Shared_Mobs_Systems_MobThresholdSystem_GetScaledDamage_" data-uid="Content.Shared.Mobs.Systems.MobThresholdSystem.GetScaledDamage*"></a>
+  <h4 id="Content_Shared_Mobs_Systems_MobThresholdSystem_GetScaledDamage_EntityUid_EntityUid_Content_Shared_Damage_DamageSpecifier__" data-uid="Content.Shared.Mobs.Systems.MobThresholdSystem.GetScaledDamage(EntityUid,EntityUid,Content.Shared.Damage.DamageSpecifier@)">GetScaledDamage(EntityUid, EntityUid, out DamageSpecifier)</h4>
+  <div class="markdown level1 summary"><p>Takes the damage from one entity and scales it relative to the health of another</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool GetScaledDamage(EntityUid target1, EntityUid target2, out DamageSpecifier damage)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">target1</span></td>
+        <td><p>The entity whose damage will be scaled</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">target2</span></td>
+        <td><p>The entity whose health the damage will scale to</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Damage.DamageSpecifier.html">DamageSpecifier</a></td>
+        <td><span class="parametername">damage</span></td>
+        <td><p>The newly scaled damage. Can be null</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Mobs_Systems_MobThresholdSystem_GetThresholdForState_EntityUid_Content_Shared_Mobs_MobState_Content_Shared_Mobs_Components_MobThresholdsComponent_.md&amp;value=---%0Auid%3A%20Content.Shared.Mobs.Systems.MobThresholdSystem.GetThresholdForState(EntityUid%2CContent.Shared.Mobs.MobState%2CContent.Shared.Mobs.Components.MobThresholdsComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Mobs/Systems/MobThresholdSystem.cs/#L93">View Source</a>
+  </span>
+  <a id="Content_Shared_Mobs_Systems_MobThresholdSystem_GetThresholdForState_" data-uid="Content.Shared.Mobs.Systems.MobThresholdSystem.GetThresholdForState*"></a>
+  <h4 id="Content_Shared_Mobs_Systems_MobThresholdSystem_GetThresholdForState_EntityUid_Content_Shared_Mobs_MobState_Content_Shared_Mobs_Components_MobThresholdsComponent_" data-uid="Content.Shared.Mobs.Systems.MobThresholdSystem.GetThresholdForState(EntityUid,Content.Shared.Mobs.MobState,Content.Shared.Mobs.Components.MobThresholdsComponent)">GetThresholdForState(EntityUid, MobState, MobThresholdsComponent)</h4>
+  <div class="markdown level1 summary"><p>Get the Damage Threshold for the appropriate state if it exists</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public FixedPoint2 GetThresholdForState(EntityUid target, MobState mobState, MobThresholdsComponent thresholdComponent = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">target</span></td>
+        <td><p>Target Entity</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Mobs.MobState.html">MobState</a></td>
+        <td><span class="parametername">mobState</span></td>
+        <td><p>MobState we want the Damage Threshold of</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Mobs.Components.MobThresholdsComponent.html">MobThresholdsComponent</a></td>
+        <td><span class="parametername">thresholdComponent</span></td>
+        <td><p>Threshold Component Owned by the target</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.FixedPoint.FixedPoint2.html">FixedPoint2</a></td>
+        <td><p>the threshold or 0 if it doesn't exist</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Mobs_Systems_MobThresholdSystem_Initialize.md&amp;value=---%0Auid%3A%20Content.Shared.Mobs.Systems.MobThresholdSystem.Initialize%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Mobs/Systems/MobThresholdSystem.cs/#L16">View Source</a>
+  </span>
+  <a id="Content_Shared_Mobs_Systems_MobThresholdSystem_Initialize_" data-uid="Content.Shared.Mobs.Systems.MobThresholdSystem.Initialize*"></a>
+  <h4 id="Content_Shared_Mobs_Systems_MobThresholdSystem_Initialize" data-uid="Content.Shared.Mobs.Systems.MobThresholdSystem.Initialize">Initialize()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override void Initialize()</code></pre>
+  </div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Mobs_Systems_MobThresholdSystem_SetAllowRevives_EntityUid_System_Boolean_Content_Shared_Mobs_Components_MobThresholdsComponent_.md&amp;value=---%0Auid%3A%20Content.Shared.Mobs.Systems.MobThresholdSystem.SetAllowRevives(EntityUid%2CSystem.Boolean%2CContent.Shared.Mobs.Components.MobThresholdsComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Mobs/Systems/MobThresholdSystem.cs/#L320">View Source</a>
+  </span>
+  <a id="Content_Shared_Mobs_Systems_MobThresholdSystem_SetAllowRevives_" data-uid="Content.Shared.Mobs.Systems.MobThresholdSystem.SetAllowRevives*"></a>
+  <h4 id="Content_Shared_Mobs_Systems_MobThresholdSystem_SetAllowRevives_EntityUid_System_Boolean_Content_Shared_Mobs_Components_MobThresholdsComponent_" data-uid="Content.Shared.Mobs.Systems.MobThresholdSystem.SetAllowRevives(EntityUid,System.Boolean,Content.Shared.Mobs.Components.MobThresholdsComponent)">SetAllowRevives(EntityUid, Boolean, MobThresholdsComponent)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetAllowRevives(EntityUid uid, bool val, MobThresholdsComponent component = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">val</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Mobs.Components.MobThresholdsComponent.html">MobThresholdsComponent</a></td>
+        <td><span class="parametername">component</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Mobs_Systems_MobThresholdSystem_SetMobStateThreshold_EntityUid_Content_Shared_FixedPoint_FixedPoint2_Content_Shared_Mobs_MobState_Content_Shared_Mobs_Components_MobThresholdsComponent_.md&amp;value=---%0Auid%3A%20Content.Shared.Mobs.Systems.MobThresholdSystem.SetMobStateThreshold(EntityUid%2CContent.Shared.FixedPoint.FixedPoint2%2CContent.Shared.Mobs.MobState%2CContent.Shared.Mobs.Components.MobThresholdsComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Mobs/Systems/MobThresholdSystem.cs/#L280">View Source</a>
+  </span>
+  <a id="Content_Shared_Mobs_Systems_MobThresholdSystem_SetMobStateThreshold_" data-uid="Content.Shared.Mobs.Systems.MobThresholdSystem.SetMobStateThreshold*"></a>
+  <h4 id="Content_Shared_Mobs_Systems_MobThresholdSystem_SetMobStateThreshold_EntityUid_Content_Shared_FixedPoint_FixedPoint2_Content_Shared_Mobs_MobState_Content_Shared_Mobs_Components_MobThresholdsComponent_" data-uid="Content.Shared.Mobs.Systems.MobThresholdSystem.SetMobStateThreshold(EntityUid,Content.Shared.FixedPoint.FixedPoint2,Content.Shared.Mobs.MobState,Content.Shared.Mobs.Components.MobThresholdsComponent)">SetMobStateThreshold(EntityUid, FixedPoint2, MobState, MobThresholdsComponent)</h4>
+  <div class="markdown level1 summary"><p>Set a MobState Threshold or create a new one if it doesn't exist</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetMobStateThreshold(EntityUid target, FixedPoint2 damage, MobState mobState, MobThresholdsComponent threshold = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">target</span></td>
+        <td><p>Target Entity</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Shared.FixedPoint.FixedPoint2.html">FixedPoint2</a></td>
+        <td><span class="parametername">damage</span></td>
+        <td><p>Damageable Component owned by the target</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Mobs.MobState.html">MobState</a></td>
+        <td><span class="parametername">mobState</span></td>
+        <td><p>MobState Component owned by the target</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Mobs.Components.MobThresholdsComponent.html">MobThresholdsComponent</a></td>
+        <td><span class="parametername">threshold</span></td>
+        <td><p>MobThreshold Component owned by the target</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Mobs_Systems_MobThresholdSystem_TryGetDeadPercentage_EntityUid_Content_Shared_FixedPoint_FixedPoint2_System_Nullable_Content_Shared_FixedPoint_FixedPoint2___Content_Shared_Mobs_Components_MobThresholdsComponent_.md&amp;value=---%0Auid%3A%20Content.Shared.Mobs.Systems.MobThresholdSystem.TryGetDeadPercentage(EntityUid%2CContent.Shared.FixedPoint.FixedPoint2%2CSystem.Nullable%7BContent.Shared.FixedPoint.FixedPoint2%7D%40%2CContent.Shared.Mobs.Components.MobThresholdsComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Mobs/Systems/MobThresholdSystem.cs/#L228">View Source</a>
+  </span>
+  <a id="Content_Shared_Mobs_Systems_MobThresholdSystem_TryGetDeadPercentage_" data-uid="Content.Shared.Mobs.Systems.MobThresholdSystem.TryGetDeadPercentage*"></a>
+  <h4 id="Content_Shared_Mobs_Systems_MobThresholdSystem_TryGetDeadPercentage_EntityUid_Content_Shared_FixedPoint_FixedPoint2_System_Nullable_Content_Shared_FixedPoint_FixedPoint2___Content_Shared_Mobs_Components_MobThresholdsComponent_" data-uid="Content.Shared.Mobs.Systems.MobThresholdSystem.TryGetDeadPercentage(EntityUid,Content.Shared.FixedPoint.FixedPoint2,System.Nullable{Content.Shared.FixedPoint.FixedPoint2}@,Content.Shared.Mobs.Components.MobThresholdsComponent)">TryGetDeadPercentage(EntityUid, FixedPoint2, out Nullable&lt;FixedPoint2&gt;, MobThresholdsComponent)</h4>
+  <div class="markdown level1 summary"><p>Try to get a percentage of the Damage Threshold for death</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool TryGetDeadPercentage(EntityUid target, FixedPoint2 damage, out FixedPoint2? percentage, MobThresholdsComponent thresholdComponent = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">target</span></td>
+        <td><p>Target Entity</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Shared.FixedPoint.FixedPoint2.html">FixedPoint2</a></td>
+        <td><span class="parametername">damage</span></td>
+        <td><p>The damage being applied</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Nullable</span>&lt;<a class="xref" href="Content.Shared.FixedPoint.FixedPoint2.html">FixedPoint2</a>&gt;</td>
+        <td><span class="parametername">percentage</span></td>
+        <td><p>Percentage of Damage compared to the Death Threshold</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Mobs.Components.MobThresholdsComponent.html">MobThresholdsComponent</a></td>
+        <td><span class="parametername">thresholdComponent</span></td>
+        <td><p>Threshold Component Owned by the target</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>true if successfully retrieved death percentage</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Mobs_Systems_MobThresholdSystem_TryGetDeadThreshold_EntityUid_System_Nullable_Content_Shared_FixedPoint_FixedPoint2___Content_Shared_Mobs_Components_MobThresholdsComponent_.md&amp;value=---%0Auid%3A%20Content.Shared.Mobs.Systems.MobThresholdSystem.TryGetDeadThreshold(EntityUid%2CSystem.Nullable%7BContent.Shared.FixedPoint.FixedPoint2%7D%40%2CContent.Shared.Mobs.Components.MobThresholdsComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Mobs/Systems/MobThresholdSystem.cs/#L210">View Source</a>
+  </span>
+  <a id="Content_Shared_Mobs_Systems_MobThresholdSystem_TryGetDeadThreshold_" data-uid="Content.Shared.Mobs.Systems.MobThresholdSystem.TryGetDeadThreshold*"></a>
+  <h4 id="Content_Shared_Mobs_Systems_MobThresholdSystem_TryGetDeadThreshold_EntityUid_System_Nullable_Content_Shared_FixedPoint_FixedPoint2___Content_Shared_Mobs_Components_MobThresholdsComponent_" data-uid="Content.Shared.Mobs.Systems.MobThresholdSystem.TryGetDeadThreshold(EntityUid,System.Nullable{Content.Shared.FixedPoint.FixedPoint2}@,Content.Shared.Mobs.Components.MobThresholdsComponent)">TryGetDeadThreshold(EntityUid, out Nullable&lt;FixedPoint2&gt;, MobThresholdsComponent)</h4>
+  <div class="markdown level1 summary"><p>Try to get the Damage Threshold for death</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool TryGetDeadThreshold(EntityUid target, out FixedPoint2? threshold, MobThresholdsComponent thresholdComponent = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">target</span></td>
+        <td><p>Target Entity</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Nullable</span>&lt;<a class="xref" href="Content.Shared.FixedPoint.FixedPoint2.html">FixedPoint2</a>&gt;</td>
+        <td><span class="parametername">threshold</span></td>
+        <td><p>The Damage Threshold for death</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Mobs.Components.MobThresholdsComponent.html">MobThresholdsComponent</a></td>
+        <td><span class="parametername">thresholdComponent</span></td>
+        <td><p>Threshold Component owned by the target</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>true if successfully retrieved incapacitation threshold</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Mobs_Systems_MobThresholdSystem_TryGetIncapPercentage_EntityUid_Content_Shared_FixedPoint_FixedPoint2_System_Nullable_Content_Shared_FixedPoint_FixedPoint2___Content_Shared_Mobs_Components_MobThresholdsComponent_.md&amp;value=---%0Auid%3A%20Content.Shared.Mobs.Systems.MobThresholdSystem.TryGetIncapPercentage(EntityUid%2CContent.Shared.FixedPoint.FixedPoint2%2CSystem.Nullable%7BContent.Shared.FixedPoint.FixedPoint2%7D%40%2CContent.Shared.Mobs.Components.MobThresholdsComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Mobs/Systems/MobThresholdSystem.cs/#L185">View Source</a>
+  </span>
+  <a id="Content_Shared_Mobs_Systems_MobThresholdSystem_TryGetIncapPercentage_" data-uid="Content.Shared.Mobs.Systems.MobThresholdSystem.TryGetIncapPercentage*"></a>
+  <h4 id="Content_Shared_Mobs_Systems_MobThresholdSystem_TryGetIncapPercentage_EntityUid_Content_Shared_FixedPoint_FixedPoint2_System_Nullable_Content_Shared_FixedPoint_FixedPoint2___Content_Shared_Mobs_Components_MobThresholdsComponent_" data-uid="Content.Shared.Mobs.Systems.MobThresholdSystem.TryGetIncapPercentage(EntityUid,Content.Shared.FixedPoint.FixedPoint2,System.Nullable{Content.Shared.FixedPoint.FixedPoint2}@,Content.Shared.Mobs.Components.MobThresholdsComponent)">TryGetIncapPercentage(EntityUid, FixedPoint2, out Nullable&lt;FixedPoint2&gt;, MobThresholdsComponent)</h4>
+  <div class="markdown level1 summary"><p>Try to get a percentage of the Damage Threshold for crit or death. Outputs the first found percentage.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool TryGetIncapPercentage(EntityUid target, FixedPoint2 damage, out FixedPoint2? percentage, MobThresholdsComponent thresholdComponent = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">target</span></td>
+        <td><p>Target Entity</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Shared.FixedPoint.FixedPoint2.html">FixedPoint2</a></td>
+        <td><span class="parametername">damage</span></td>
+        <td><p>The damage being applied</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Nullable</span>&lt;<a class="xref" href="Content.Shared.FixedPoint.FixedPoint2.html">FixedPoint2</a>&gt;</td>
+        <td><span class="parametername">percentage</span></td>
+        <td><p>Percentage of Damage compared to the Incapacitation Threshold</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Mobs.Components.MobThresholdsComponent.html">MobThresholdsComponent</a></td>
+        <td><span class="parametername">thresholdComponent</span></td>
+        <td><p>Threshold Component Owned by the target</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>true if successfully retrieved incapacitation percentage</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Mobs_Systems_MobThresholdSystem_TryGetIncapThreshold_EntityUid_System_Nullable_Content_Shared_FixedPoint_FixedPoint2___Content_Shared_Mobs_Components_MobThresholdsComponent_.md&amp;value=---%0Auid%3A%20Content.Shared.Mobs.Systems.MobThresholdSystem.TryGetIncapThreshold(EntityUid%2CSystem.Nullable%7BContent.Shared.FixedPoint.FixedPoint2%7D%40%2CContent.Shared.Mobs.Components.MobThresholdsComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Mobs/Systems/MobThresholdSystem.cs/#L166">View Source</a>
+  </span>
+  <a id="Content_Shared_Mobs_Systems_MobThresholdSystem_TryGetIncapThreshold_" data-uid="Content.Shared.Mobs.Systems.MobThresholdSystem.TryGetIncapThreshold*"></a>
+  <h4 id="Content_Shared_Mobs_Systems_MobThresholdSystem_TryGetIncapThreshold_EntityUid_System_Nullable_Content_Shared_FixedPoint_FixedPoint2___Content_Shared_Mobs_Components_MobThresholdsComponent_" data-uid="Content.Shared.Mobs.Systems.MobThresholdSystem.TryGetIncapThreshold(EntityUid,System.Nullable{Content.Shared.FixedPoint.FixedPoint2}@,Content.Shared.Mobs.Components.MobThresholdsComponent)">TryGetIncapThreshold(EntityUid, out Nullable&lt;FixedPoint2&gt;, MobThresholdsComponent)</h4>
+  <div class="markdown level1 summary"><p>Try to get the Damage Threshold for crit or death. Outputs the first found threshold.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool TryGetIncapThreshold(EntityUid target, out FixedPoint2? threshold, MobThresholdsComponent thresholdComponent = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">target</span></td>
+        <td><p>Target Entity</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Nullable</span>&lt;<a class="xref" href="Content.Shared.FixedPoint.FixedPoint2.html">FixedPoint2</a>&gt;</td>
+        <td><span class="parametername">threshold</span></td>
+        <td><p>The Damage Threshold for incapacitation</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Mobs.Components.MobThresholdsComponent.html">MobThresholdsComponent</a></td>
+        <td><span class="parametername">thresholdComponent</span></td>
+        <td><p>Threshold Component owned by the target</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>true if successfully retrieved incapacitation threshold</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Mobs_Systems_MobThresholdSystem_TryGetNextState_EntityUid_Content_Shared_Mobs_MobState_System_Nullable_Content_Shared_Mobs_MobState___Content_Shared_Mobs_Components_MobThresholdsComponent_.md&amp;value=---%0Auid%3A%20Content.Shared.Mobs.Systems.MobThresholdSystem.TryGetNextState(EntityUid%2CContent.Shared.Mobs.MobState%2CSystem.Nullable%7BContent.Shared.Mobs.MobState%7D%40%2CContent.Shared.Mobs.Components.MobThresholdsComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Mobs/Systems/MobThresholdSystem.cs/#L62">View Source</a>
+  </span>
+  <a id="Content_Shared_Mobs_Systems_MobThresholdSystem_TryGetNextState_" data-uid="Content.Shared.Mobs.Systems.MobThresholdSystem.TryGetNextState*"></a>
+  <h4 id="Content_Shared_Mobs_Systems_MobThresholdSystem_TryGetNextState_EntityUid_Content_Shared_Mobs_MobState_System_Nullable_Content_Shared_Mobs_MobState___Content_Shared_Mobs_Components_MobThresholdsComponent_" data-uid="Content.Shared.Mobs.Systems.MobThresholdSystem.TryGetNextState(EntityUid,Content.Shared.Mobs.MobState,System.Nullable{Content.Shared.Mobs.MobState}@,Content.Shared.Mobs.Components.MobThresholdsComponent)">TryGetNextState(EntityUid, MobState, out Nullable&lt;MobState&gt;, MobThresholdsComponent)</h4>
+  <div class="markdown level1 summary"><p>Gets the next available state for a mob.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool TryGetNextState(EntityUid target, MobState mobState, out MobState? nextState, MobThresholdsComponent thresholdsComponent = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">target</span></td>
+        <td><p>Target entity</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Mobs.MobState.html">MobState</a></td>
+        <td><span class="parametername">mobState</span></td>
+        <td><p>Supplied MobState</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Nullable</span>&lt;<a class="xref" href="Content.Shared.Mobs.MobState.html">MobState</a>&gt;</td>
+        <td><span class="parametername">nextState</span></td>
+        <td><p>The following MobState. Can be null if there isn't one.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Mobs.Components.MobThresholdsComponent.html">MobThresholdsComponent</a></td>
+        <td><span class="parametername">thresholdsComponent</span></td>
+        <td><p>Threshold Component Owned by the target</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>True if the next mob state exists</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Mobs_Systems_MobThresholdSystem_TryGetPercentageForState_EntityUid_Content_Shared_Mobs_MobState_Content_Shared_FixedPoint_FixedPoint2_System_Nullable_Content_Shared_FixedPoint_FixedPoint2___Content_Shared_Mobs_Components_MobThresholdsComponent_.md&amp;value=---%0Auid%3A%20Content.Shared.Mobs.Systems.MobThresholdSystem.TryGetPercentageForState(EntityUid%2CContent.Shared.Mobs.MobState%2CContent.Shared.FixedPoint.FixedPoint2%2CSystem.Nullable%7BContent.Shared.FixedPoint.FixedPoint2%7D%40%2CContent.Shared.Mobs.Components.MobThresholdsComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Mobs/Systems/MobThresholdSystem.cs/#L147">View Source</a>
+  </span>
+  <a id="Content_Shared_Mobs_Systems_MobThresholdSystem_TryGetPercentageForState_" data-uid="Content.Shared.Mobs.Systems.MobThresholdSystem.TryGetPercentageForState*"></a>
+  <h4 id="Content_Shared_Mobs_Systems_MobThresholdSystem_TryGetPercentageForState_EntityUid_Content_Shared_Mobs_MobState_Content_Shared_FixedPoint_FixedPoint2_System_Nullable_Content_Shared_FixedPoint_FixedPoint2___Content_Shared_Mobs_Components_MobThresholdsComponent_" data-uid="Content.Shared.Mobs.Systems.MobThresholdSystem.TryGetPercentageForState(EntityUid,Content.Shared.Mobs.MobState,Content.Shared.FixedPoint.FixedPoint2,System.Nullable{Content.Shared.FixedPoint.FixedPoint2}@,Content.Shared.Mobs.Components.MobThresholdsComponent)">TryGetPercentageForState(EntityUid, MobState, FixedPoint2, out Nullable&lt;FixedPoint2&gt;, MobThresholdsComponent)</h4>
+  <div class="markdown level1 summary"><p>Try to get the a percentage of the Damage Threshold for the appropriate state if it exists</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool TryGetPercentageForState(EntityUid target, MobState mobState, FixedPoint2 damage, out FixedPoint2? percentage, MobThresholdsComponent thresholdComponent = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">target</span></td>
+        <td><p>Target Entity</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Mobs.MobState.html">MobState</a></td>
+        <td><span class="parametername">mobState</span></td>
+        <td><p>MobState we want the Damage Threshold of</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Shared.FixedPoint.FixedPoint2.html">FixedPoint2</a></td>
+        <td><span class="parametername">damage</span></td>
+        <td><p>The Damage being applied</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Nullable</span>&lt;<a class="xref" href="Content.Shared.FixedPoint.FixedPoint2.html">FixedPoint2</a>&gt;</td>
+        <td><span class="parametername">percentage</span></td>
+        <td><p>Percentage of Damage compared to the Threshold</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Mobs.Components.MobThresholdsComponent.html">MobThresholdsComponent</a></td>
+        <td><span class="parametername">thresholdComponent</span></td>
+        <td><p>Threshold Component Owned by the target</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>true if successfully retrieved a percentage</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Mobs_Systems_MobThresholdSystem_TryGetThresholdForState_EntityUid_Content_Shared_Mobs_MobState_System_Nullable_Content_Shared_FixedPoint_FixedPoint2___Content_Shared_Mobs_Components_MobThresholdsComponent_.md&amp;value=---%0Auid%3A%20Content.Shared.Mobs.Systems.MobThresholdSystem.TryGetThresholdForState(EntityUid%2CContent.Shared.Mobs.MobState%2CSystem.Nullable%7BContent.Shared.FixedPoint.FixedPoint2%7D%40%2CContent.Shared.Mobs.Components.MobThresholdsComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Mobs/Systems/MobThresholdSystem.cs/#L118">View Source</a>
+  </span>
+  <a id="Content_Shared_Mobs_Systems_MobThresholdSystem_TryGetThresholdForState_" data-uid="Content.Shared.Mobs.Systems.MobThresholdSystem.TryGetThresholdForState*"></a>
+  <h4 id="Content_Shared_Mobs_Systems_MobThresholdSystem_TryGetThresholdForState_EntityUid_Content_Shared_Mobs_MobState_System_Nullable_Content_Shared_FixedPoint_FixedPoint2___Content_Shared_Mobs_Components_MobThresholdsComponent_" data-uid="Content.Shared.Mobs.Systems.MobThresholdSystem.TryGetThresholdForState(EntityUid,Content.Shared.Mobs.MobState,System.Nullable{Content.Shared.FixedPoint.FixedPoint2}@,Content.Shared.Mobs.Components.MobThresholdsComponent)">TryGetThresholdForState(EntityUid, MobState, out Nullable&lt;FixedPoint2&gt;, MobThresholdsComponent)</h4>
+  <div class="markdown level1 summary"><p>Try to get the Damage Threshold for the appropriate state if it exists</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool TryGetThresholdForState(EntityUid target, MobState mobState, out FixedPoint2? threshold, MobThresholdsComponent thresholdComponent = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">target</span></td>
+        <td><p>Target Entity</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Mobs.MobState.html">MobState</a></td>
+        <td><span class="parametername">mobState</span></td>
+        <td><p>MobState we want the Damage Threshold of</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Nullable</span>&lt;<a class="xref" href="Content.Shared.FixedPoint.FixedPoint2.html">FixedPoint2</a>&gt;</td>
+        <td><span class="parametername">threshold</span></td>
+        <td><p>The damage Threshold for the given state</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Mobs.Components.MobThresholdsComponent.html">MobThresholdsComponent</a></td>
+        <td><span class="parametername">thresholdComponent</span></td>
+        <td><p>Threshold Component Owned by the target</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>true if successfully retrieved a threshold</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Mobs_Systems_MobThresholdSystem_VerifyThresholds_EntityUid_Content_Shared_Mobs_Components_MobThresholdsComponent_Content_Shared_Mobs_Components_MobStateComponent_Content_Shared_Damage_DamageableComponent_.md&amp;value=---%0Auid%3A%20Content.Shared.Mobs.Systems.MobThresholdSystem.VerifyThresholds(EntityUid%2CContent.Shared.Mobs.Components.MobThresholdsComponent%2CContent.Shared.Mobs.Components.MobStateComponent%2CContent.Shared.Damage.DamageableComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Mobs/Systems/MobThresholdSystem.cs/#L307">View Source</a>
+  </span>
+  <a id="Content_Shared_Mobs_Systems_MobThresholdSystem_VerifyThresholds_" data-uid="Content.Shared.Mobs.Systems.MobThresholdSystem.VerifyThresholds*"></a>
+  <h4 id="Content_Shared_Mobs_Systems_MobThresholdSystem_VerifyThresholds_EntityUid_Content_Shared_Mobs_Components_MobThresholdsComponent_Content_Shared_Mobs_Components_MobStateComponent_Content_Shared_Damage_DamageableComponent_" data-uid="Content.Shared.Mobs.Systems.MobThresholdSystem.VerifyThresholds(EntityUid,Content.Shared.Mobs.Components.MobThresholdsComponent,Content.Shared.Mobs.Components.MobStateComponent,Content.Shared.Damage.DamageableComponent)">VerifyThresholds(EntityUid, MobThresholdsComponent, MobStateComponent, DamageableComponent)</h4>
+  <div class="markdown level1 summary"><p>Checks to see if we should change states based on thresholds.
+Call this if you change the amount of damagable without triggering a damageChangedEvent or if you change</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void VerifyThresholds(EntityUid target, MobThresholdsComponent threshold = null, MobStateComponent mobState = null, DamageableComponent damageable = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">target</span></td>
+        <td><p>Target Entity</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Mobs.Components.MobThresholdsComponent.html">MobThresholdsComponent</a></td>
+        <td><span class="parametername">threshold</span></td>
+        <td><p>Threshold Component owned by the Target</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Mobs.Components.MobStateComponent.html">MobStateComponent</a></td>
+        <td><span class="parametername">mobState</span></td>
+        <td><p>MobState Component owned by the Target</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Damage.DamageableComponent.html">DamageableComponent</a></td>
+        <td><span class="parametername">damageable</span></td>
+        <td><p>Damageable Component owned by the Target</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Mobs_Systems_MobThresholdSystem.md&amp;value=---%0Auid%3A%20Content.Shared.Mobs.Systems.MobThresholdSystem%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Mobs/Systems/MobThresholdSystem.cs/#L11" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <div class="toggle-mode">
+                <div class="icon">
+                  <i aria-hidden="true">☀</i>
+                </div>
+                <label class="switch">
+                  <input type="checkbox" id="switch-style">
+                  <span class="slider round"></span>
+                </label>
+                <div class="icon">
+                  <i aria-hidden="true">☾</i>
+                </div>
+              </div>
+          
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <h5>In This Article</h5>
+              <div></div>
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <div class="pull-left">
+              
+              <span>Generated by <strong>DocFX</strong></span>
+            </div>
+            <div class="toggle-mode pull-right visible-sm visible-xs">
+              <div class="icon">
+                <i aria-hidden="true">☀</i>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="switch-style-m">
+                <span class="slider round"></span>
+              </label>
+              <div class="icon">
+                <i aria-hidden="true">☾</i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <script type="text/javascript" src="../../styles/toggle-theme.js"></script>
+      </footer>    </div>
+    
+    <script type="text/javascript" src="../../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../../styles/docfx.js"></script>
+    <script type="text/javascript" src="../../styles/main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,932 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class SharedSingularitySystem
+   </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class SharedSingularitySystem
+   ">
+    <meta name="generator" content="docfx 2.56.7.0">
+    
+    <link rel="shortcut icon" href="../../favicon.ico">
+    <link rel="stylesheet" href="../../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../../styles/docfx.css">
+    <link rel="stylesheet" href="../../styles/main.css">
+    <meta property="docfx:navrel" content="../../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../../index.html">
+                <img id="logo" class="svg" src="../../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Content.Shared.Singularity.EntitySystems.SharedSingularitySystem">
+  
+  
+  <h1 id="Content_Shared_Singularity_EntitySystems_SharedSingularitySystem" data-uid="Content.Shared.Singularity.EntitySystems.SharedSingularitySystem" class="text-break">Class SharedSingularitySystem
+  </h1>
+  <div class="markdown level0 summary"><p>The entity system primarily responsible for managing <a class="xref" href="Content.Shared.Singularity.Components.SingularityComponent.html">SingularityComponent</a>s.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level1"><span class="xref">SharedSingularitySystem</span></div>
+      <div class="level2"><a class="xref" href="../Content.Client/Content.Client.Singularity.EntitySystems.SingularitySystem.html">SingularitySystem</a></div>
+      <div class="level2"><a class="xref" href="../Content.Server/Content.Server.Singularity.EntitySystems.SingularitySystem.html">SingularitySystem</a></div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="../Content.Server/Content.Shared.Singularity.EntitySystems.html">Content.Shared.Singularity.EntitySystems</a></h6>
+  <h6><strong>Assembly</strong>: Content.Shared.dll</h6>
+  <h5 id="Content_Shared_Singularity_EntitySystems_SharedSingularitySystem_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public abstract class SharedSingularitySystem : EntitySystem</code></pre>
+  </div>
+  <h3 id="fields">Fields
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Singularity_EntitySystems_SharedSingularitySystem_BaseGravityWellAcceleration.md&amp;value=---%0Auid%3A%20Content.Shared.Singularity.EntitySystems.SharedSingularitySystem.BaseGravityWellAcceleration%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Singularity/EntitySystems/SharedSingularitySystem.cs/#L169">View Source</a>
+  </span>
+  <h4 id="Content_Shared_Singularity_EntitySystems_SharedSingularitySystem_BaseGravityWellAcceleration" data-uid="Content.Shared.Singularity.EntitySystems.SharedSingularitySystem.BaseGravityWellAcceleration">BaseGravityWellAcceleration</h4>
+  <div class="markdown level1 summary"><p>The scaling factor for the base acceleration of a singularities gravity well.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public const float BaseGravityWellAcceleration = null</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Singularity_EntitySystems_SharedSingularitySystem_BaseGravityWellRadius.md&amp;value=---%0Auid%3A%20Content.Shared.Singularity.EntitySystems.SharedSingularitySystem.BaseGravityWellRadius%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Singularity/EntitySystems/SharedSingularitySystem.cs/#L164">View Source</a>
+  </span>
+  <h4 id="Content_Shared_Singularity_EntitySystems_SharedSingularitySystem_BaseGravityWellRadius" data-uid="Content.Shared.Singularity.EntitySystems.SharedSingularitySystem.BaseGravityWellRadius">BaseGravityWellRadius</h4>
+  <div class="markdown level1 summary"><p>The scaling factor for the size of a singularities gravity well.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public const float BaseGravityWellRadius = null</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Singularity_EntitySystems_SharedSingularitySystem_DistortionContainerScaling.md&amp;value=---%0Auid%3A%20Content.Shared.Singularity.EntitySystems.SharedSingularitySystem.DistortionContainerScaling%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Singularity/EntitySystems/SharedSingularitySystem.cs/#L41">View Source</a>
+  </span>
+  <h4 id="Content_Shared_Singularity_EntitySystems_SharedSingularitySystem_DistortionContainerScaling" data-uid="Content.Shared.Singularity.EntitySystems.SharedSingularitySystem.DistortionContainerScaling">DistortionContainerScaling</h4>
+  <div class="markdown level1 summary"><p>The amount to scale a singularities distortion shader by when it's in a container.
+This is the inverse of an exponent, not a linear scaling factor.
+ie. n =&gt; intensity = intensity ** (1/n)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public const float DistortionContainerScaling = null</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Singularity_EntitySystems_SharedSingularitySystem_MaxSingularityLevel.md&amp;value=---%0Auid%3A%20Content.Shared.Singularity.EntitySystems.SharedSingularitySystem.MaxSingularityLevel%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Singularity/EntitySystems/SharedSingularitySystem.cs/#L34">View Source</a>
+  </span>
+  <h4 id="Content_Shared_Singularity_EntitySystems_SharedSingularitySystem_MaxSingularityLevel" data-uid="Content.Shared.Singularity.EntitySystems.SharedSingularitySystem.MaxSingularityLevel">MaxSingularityLevel</h4>
+  <div class="markdown level1 summary"><p>The maximum level a singularity can be set to.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public const byte MaxSingularityLevel = null</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Singularity_EntitySystems_SharedSingularitySystem_MinSingularityLevel.md&amp;value=---%0Auid%3A%20Content.Shared.Singularity.EntitySystems.SharedSingularitySystem.MinSingularityLevel%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Singularity/EntitySystems/SharedSingularitySystem.cs/#L29">View Source</a>
+  </span>
+  <h4 id="Content_Shared_Singularity_EntitySystems_SharedSingularitySystem_MinSingularityLevel" data-uid="Content.Shared.Singularity.EntitySystems.SharedSingularitySystem.MinSingularityLevel">MinSingularityLevel</h4>
+  <div class="markdown level1 summary"><p>The minimum level a singularity can be set to.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public const byte MinSingularityLevel = null</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Singularity_EntitySystems_SharedSingularitySystem_SingularityBreachThreshold.md&amp;value=---%0Auid%3A%20Content.Shared.Singularity.EntitySystems.SharedSingularitySystem.SingularityBreachThreshold%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Singularity/EntitySystems/SharedSingularitySystem.cs/#L174">View Source</a>
+  </span>
+  <h4 id="Content_Shared_Singularity_EntitySystems_SharedSingularitySystem_SingularityBreachThreshold" data-uid="Content.Shared.Singularity.EntitySystems.SharedSingularitySystem.SingularityBreachThreshold">SingularityBreachThreshold</h4>
+  <div class="markdown level1 summary"><p>The level at and above which a singularity should be capable of breaching containment.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public const byte SingularityBreachThreshold = null</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Singularity_EntitySystems_SharedSingularitySystem_Vvm.md&amp;value=---%0Auid%3A%20Content.Shared.Singularity.EntitySystems.SharedSingularitySystem.Vvm%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Singularity/EntitySystems/SharedSingularitySystem.cs/#L23">View Source</a>
+  </span>
+  <h4 id="Content_Shared_Singularity_EntitySystems_SharedSingularitySystem_Vvm" data-uid="Content.Shared.Singularity.EntitySystems.SharedSingularitySystem.Vvm">Vvm</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected readonly IViewVariablesManager Vvm</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IViewVariablesManager</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Singularity_EntitySystems_SharedSingularitySystem_CanBreachContainment_Content_Shared_Singularity_Components_SingularityComponent_.md&amp;value=---%0Auid%3A%20Content.Shared.Singularity.EntitySystems.SharedSingularitySystem.CanBreachContainment(Content.Shared.Singularity.Components.SingularityComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Singularity/EntitySystems/SharedSingularitySystem.cs/#L205">View Source</a>
+  </span>
+  <a id="Content_Shared_Singularity_EntitySystems_SharedSingularitySystem_CanBreachContainment_" data-uid="Content.Shared.Singularity.EntitySystems.SharedSingularitySystem.CanBreachContainment*"></a>
+  <h4 id="Content_Shared_Singularity_EntitySystems_SharedSingularitySystem_CanBreachContainment_Content_Shared_Singularity_Components_SingularityComponent_" data-uid="Content.Shared.Singularity.EntitySystems.SharedSingularitySystem.CanBreachContainment(Content.Shared.Singularity.Components.SingularityComponent)">CanBreachContainment(SingularityComponent)</h4>
+  <div class="markdown level1 summary"><p>Derives whether a singularity should be able to breach containment from its state.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool CanBreachContainment(SingularityComponent singulo)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Singularity.Components.SingularityComponent.html">SingularityComponent</a></td>
+        <td><span class="parametername">singulo</span></td>
+        <td><p>A singularity.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>Whether the singularity should be able to breach containment.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Singularity_EntitySystems_SharedSingularitySystem_EventHorizonRadius_Content_Shared_Singularity_Components_SingularityComponent_.md&amp;value=---%0Auid%3A%20Content.Shared.Singularity.EntitySystems.SharedSingularitySystem.EventHorizonRadius(Content.Shared.Singularity.Components.SingularityComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Singularity/EntitySystems/SharedSingularitySystem.cs/#L197">View Source</a>
+  </span>
+  <a id="Content_Shared_Singularity_EntitySystems_SharedSingularitySystem_EventHorizonRadius_" data-uid="Content.Shared.Singularity.EntitySystems.SharedSingularitySystem.EventHorizonRadius*"></a>
+  <h4 id="Content_Shared_Singularity_EntitySystems_SharedSingularitySystem_EventHorizonRadius_Content_Shared_Singularity_Components_SingularityComponent_" data-uid="Content.Shared.Singularity.EntitySystems.SharedSingularitySystem.EventHorizonRadius(Content.Shared.Singularity.Components.SingularityComponent)">EventHorizonRadius(SingularityComponent)</h4>
+  <div class="markdown level1 summary"><p>Derives the proper event horizon radius for a singularity from its state.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public float EventHorizonRadius(SingularityComponent singulo)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Singularity.Components.SingularityComponent.html">SingularityComponent</a></td>
+        <td><span class="parametername">singulo</span></td>
+        <td><p>A singularity.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td><p>The event horizon radius the singularity should have given its state.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Singularity_EntitySystems_SharedSingularitySystem_GetFalloff_System_Single_.md&amp;value=---%0Auid%3A%20Content.Shared.Singularity.EntitySystems.SharedSingularitySystem.GetFalloff(System.Single)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Singularity/EntitySystems/SharedSingularitySystem.cs/#L213">View Source</a>
+  </span>
+  <a id="Content_Shared_Singularity_EntitySystems_SharedSingularitySystem_GetFalloff_" data-uid="Content.Shared.Singularity.EntitySystems.SharedSingularitySystem.GetFalloff*"></a>
+  <h4 id="Content_Shared_Singularity_EntitySystems_SharedSingularitySystem_GetFalloff_System_Single_" data-uid="Content.Shared.Singularity.EntitySystems.SharedSingularitySystem.GetFalloff(System.Single)">GetFalloff(Single)</h4>
+  <div class="markdown level1 summary"><p>Derives the proper distortion shader falloff for a singularity from its state.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public float GetFalloff(float level)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td><span class="parametername">level</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td><p>The distortion shader falloff the singularity should have given its state.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Singularity_EntitySystems_SharedSingularitySystem_GetIntensity_System_Single_.md&amp;value=---%0Auid%3A%20Content.Shared.Singularity.EntitySystems.SharedSingularitySystem.GetIntensity(System.Single)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Singularity/EntitySystems/SharedSingularitySystem.cs/#L232">View Source</a>
+  </span>
+  <a id="Content_Shared_Singularity_EntitySystems_SharedSingularitySystem_GetIntensity_" data-uid="Content.Shared.Singularity.EntitySystems.SharedSingularitySystem.GetIntensity*"></a>
+  <h4 id="Content_Shared_Singularity_EntitySystems_SharedSingularitySystem_GetIntensity_System_Single_" data-uid="Content.Shared.Singularity.EntitySystems.SharedSingularitySystem.GetIntensity(System.Single)">GetIntensity(Single)</h4>
+  <div class="markdown level1 summary"><p>Derives the proper distortion shader intensity for a singularity from its state.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public float GetIntensity(float level)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td><span class="parametername">level</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td><p>The distortion shader intensity the singularity should have given its state.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Singularity_EntitySystems_SharedSingularitySystem_GravPulseAcceleration_Content_Shared_Singularity_Components_SingularityComponent_.md&amp;value=---%0Auid%3A%20Content.Shared.Singularity.EntitySystems.SharedSingularitySystem.GravPulseAcceleration(Content.Shared.Singularity.Components.SingularityComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Singularity/EntitySystems/SharedSingularitySystem.cs/#L189">View Source</a>
+  </span>
+  <a id="Content_Shared_Singularity_EntitySystems_SharedSingularitySystem_GravPulseAcceleration_" data-uid="Content.Shared.Singularity.EntitySystems.SharedSingularitySystem.GravPulseAcceleration*"></a>
+  <h4 id="Content_Shared_Singularity_EntitySystems_SharedSingularitySystem_GravPulseAcceleration_Content_Shared_Singularity_Components_SingularityComponent_" data-uid="Content.Shared.Singularity.EntitySystems.SharedSingularitySystem.GravPulseAcceleration(Content.Shared.Singularity.Components.SingularityComponent)">GravPulseAcceleration(SingularityComponent)</h4>
+  <div class="markdown level1 summary"><p>Derives the proper base gravitational acceleration for a singularity from its state.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public (float, float) GravPulseAcceleration(SingularityComponent singulo)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Singularity.Components.SingularityComponent.html">SingularityComponent</a></td>
+        <td><span class="parametername">singulo</span></td>
+        <td><p>A singularity.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.ValueTuple</span>&lt;<span class="xref">System.Single</span>, <span class="xref">System.Single</span>&gt;</td>
+        <td><p>The base gravitational acceleration the singularity should have given its state.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Singularity_EntitySystems_SharedSingularitySystem_GravPulseRange_Content_Shared_Singularity_Components_SingularityComponent_.md&amp;value=---%0Auid%3A%20Content.Shared.Singularity.EntitySystems.SharedSingularitySystem.GravPulseRange(Content.Shared.Singularity.Components.SingularityComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Singularity/EntitySystems/SharedSingularitySystem.cs/#L181">View Source</a>
+  </span>
+  <a id="Content_Shared_Singularity_EntitySystems_SharedSingularitySystem_GravPulseRange_" data-uid="Content.Shared.Singularity.EntitySystems.SharedSingularitySystem.GravPulseRange*"></a>
+  <h4 id="Content_Shared_Singularity_EntitySystems_SharedSingularitySystem_GravPulseRange_Content_Shared_Singularity_Components_SingularityComponent_" data-uid="Content.Shared.Singularity.EntitySystems.SharedSingularitySystem.GravPulseRange(Content.Shared.Singularity.Components.SingularityComponent)">GravPulseRange(SingularityComponent)</h4>
+  <div class="markdown level1 summary"><p>Derives the proper gravity well radius for a singularity from its state.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public float GravPulseRange(SingularityComponent singulo)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Singularity.Components.SingularityComponent.html">SingularityComponent</a></td>
+        <td><span class="parametername">singulo</span></td>
+        <td><p>A singularity.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td><p>The gravity well radius the singularity should have given its state.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Singularity_EntitySystems_SharedSingularitySystem_Initialize.md&amp;value=---%0Auid%3A%20Content.Shared.Singularity.EntitySystems.SharedSingularitySystem.Initialize%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Singularity/EntitySystems/SharedSingularitySystem.cs/#L44">View Source</a>
+  </span>
+  <a id="Content_Shared_Singularity_EntitySystems_SharedSingularitySystem_Initialize_" data-uid="Content.Shared.Singularity.EntitySystems.SharedSingularitySystem.Initialize*"></a>
+  <h4 id="Content_Shared_Singularity_EntitySystems_SharedSingularitySystem_Initialize" data-uid="Content.Shared.Singularity.EntitySystems.SharedSingularitySystem.Initialize">Initialize()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override void Initialize()</code></pre>
+  </div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Singularity_EntitySystems_SharedSingularitySystem_OnSingularityStartup_EntityUid_Content_Shared_Singularity_Components_SingularityComponent_ComponentStartup_.md&amp;value=---%0Auid%3A%20Content.Shared.Singularity.EntitySystems.SharedSingularitySystem.OnSingularityStartup(EntityUid%2CContent.Shared.Singularity.Components.SingularityComponent%2CComponentStartup)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Singularity/EntitySystems/SharedSingularitySystem.cs/#L273">View Source</a>
+  </span>
+  <a id="Content_Shared_Singularity_EntitySystems_SharedSingularitySystem_OnSingularityStartup_" data-uid="Content.Shared.Singularity.EntitySystems.SharedSingularitySystem.OnSingularityStartup*"></a>
+  <h4 id="Content_Shared_Singularity_EntitySystems_SharedSingularitySystem_OnSingularityStartup_EntityUid_Content_Shared_Singularity_Components_SingularityComponent_ComponentStartup_" data-uid="Content.Shared.Singularity.EntitySystems.SharedSingularitySystem.OnSingularityStartup(EntityUid,Content.Shared.Singularity.Components.SingularityComponent,ComponentStartup)">OnSingularityStartup(EntityUid, SingularityComponent, ComponentStartup)</h4>
+  <div class="markdown level1 summary"><p>Syncs other components with the state of the singularity via event on startup.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected virtual void OnSingularityStartup(EntityUid uid, SingularityComponent comp, ComponentStartup args)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td><p>The entity that is becoming a singularity.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Singularity.Components.SingularityComponent.html">SingularityComponent</a></td>
+        <td><span class="parametername">comp</span></td>
+        <td><p>The singularity component that is being added to the entity.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">ComponentStartup</span></td>
+        <td><span class="parametername">args</span></td>
+        <td><p>The event arguments.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Singularity_EntitySystems_SharedSingularitySystem_SetLevel_EntityUid_System_Byte_Content_Shared_Singularity_Components_SingularityComponent_.md&amp;value=---%0Auid%3A%20Content.Shared.Singularity.EntitySystems.SharedSingularitySystem.SetLevel(EntityUid%2CSystem.Byte%2CContent.Shared.Singularity.Components.SingularityComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Singularity/EntitySystems/SharedSingularitySystem.cs/#L80">View Source</a>
+  </span>
+  <a id="Content_Shared_Singularity_EntitySystems_SharedSingularitySystem_SetLevel_" data-uid="Content.Shared.Singularity.EntitySystems.SharedSingularitySystem.SetLevel*"></a>
+  <h4 id="Content_Shared_Singularity_EntitySystems_SharedSingularitySystem_SetLevel_EntityUid_System_Byte_Content_Shared_Singularity_Components_SingularityComponent_" data-uid="Content.Shared.Singularity.EntitySystems.SharedSingularitySystem.SetLevel(EntityUid,System.Byte,Content.Shared.Singularity.Components.SingularityComponent)">SetLevel(EntityUid, Byte, SingularityComponent)</h4>
+  <div class="markdown level1 summary"><p>Setter for <a class="xref" href="Content.Shared.Singularity.Components.SingularityComponent.html#Content_Shared_Singularity_Components_SingularityComponent_Level">Level</a>
+Also sends out an event alerting that the singularities level has changed.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetLevel(EntityUid uid, byte value, SingularityComponent singularity = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td><p>The uid of the singularity to change the level of.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td><span class="parametername">value</span></td>
+        <td><p>The new level the singularity should have.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Singularity.Components.SingularityComponent.html">SingularityComponent</a></td>
+        <td><span class="parametername">singularity</span></td>
+        <td><p>The state of the singularity to change the level of.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Singularity_EntitySystems_SharedSingularitySystem_SetRadsPerLevel_EntityUid_System_Single_Content_Shared_Singularity_Components_SingularityComponent_.md&amp;value=---%0Auid%3A%20Content.Shared.Singularity.EntitySystems.SharedSingularitySystem.SetRadsPerLevel(EntityUid%2CSystem.Single%2CContent.Shared.Singularity.Components.SingularityComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Singularity/EntitySystems/SharedSingularitySystem.cs/#L103">View Source</a>
+  </span>
+  <a id="Content_Shared_Singularity_EntitySystems_SharedSingularitySystem_SetRadsPerLevel_" data-uid="Content.Shared.Singularity.EntitySystems.SharedSingularitySystem.SetRadsPerLevel*"></a>
+  <h4 id="Content_Shared_Singularity_EntitySystems_SharedSingularitySystem_SetRadsPerLevel_EntityUid_System_Single_Content_Shared_Singularity_Components_SingularityComponent_" data-uid="Content.Shared.Singularity.EntitySystems.SharedSingularitySystem.SetRadsPerLevel(EntityUid,System.Single,Content.Shared.Singularity.Components.SingularityComponent)">SetRadsPerLevel(EntityUid, Single, SingularityComponent)</h4>
+  <div class="markdown level1 summary"><p>Setter for <a class="xref" href="Content.Shared.Singularity.Components.SingularityComponent.html#Content_Shared_Singularity_Components_SingularityComponent_RadsPerLevel">RadsPerLevel</a>
+Also updates the radiation output of the singularity according to the new values.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetRadsPerLevel(EntityUid uid, float value, SingularityComponent singularity = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td><p>The uid of the singularity to change the radioactivity of.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td><span class="parametername">value</span></td>
+        <td><p>The new radioactivity the singularity should have.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Singularity.Components.SingularityComponent.html">SingularityComponent</a></td>
+        <td><span class="parametername">singularity</span></td>
+        <td><p>The state of the singularity to change the radioactivity of.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Singularity_EntitySystems_SharedSingularitySystem_Shutdown.md&amp;value=---%0Auid%3A%20Content.Shared.Singularity.EntitySystems.SharedSingularitySystem.Shutdown%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Singularity/EntitySystems/SharedSingularitySystem.cs/#L62">View Source</a>
+  </span>
+  <a id="Content_Shared_Singularity_EntitySystems_SharedSingularitySystem_Shutdown_" data-uid="Content.Shared.Singularity.EntitySystems.SharedSingularitySystem.Shutdown*"></a>
+  <h4 id="Content_Shared_Singularity_EntitySystems_SharedSingularitySystem_Shutdown" data-uid="Content.Shared.Singularity.EntitySystems.SharedSingularitySystem.Shutdown">Shutdown()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override void Shutdown()</code></pre>
+  </div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Singularity_EntitySystems_SharedSingularitySystem_UpdateSingularityLevel_EntityUid_Content_Shared_Singularity_Components_SingularityComponent_.md&amp;value=---%0Auid%3A%20Content.Shared.Singularity.EntitySystems.SharedSingularitySystem.UpdateSingularityLevel(EntityUid%2CContent.Shared.Singularity.Components.SingularityComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Singularity/EntitySystems/SharedSingularitySystem.cs/#L139">View Source</a>
+  </span>
+  <a id="Content_Shared_Singularity_EntitySystems_SharedSingularitySystem_UpdateSingularityLevel_" data-uid="Content.Shared.Singularity.EntitySystems.SharedSingularitySystem.UpdateSingularityLevel*"></a>
+  <h4 id="Content_Shared_Singularity_EntitySystems_SharedSingularitySystem_UpdateSingularityLevel_EntityUid_Content_Shared_Singularity_Components_SingularityComponent_" data-uid="Content.Shared.Singularity.EntitySystems.SharedSingularitySystem.UpdateSingularityLevel(EntityUid,Content.Shared.Singularity.Components.SingularityComponent)">UpdateSingularityLevel(EntityUid, SingularityComponent)</h4>
+  <div class="markdown level1 summary"><p>Alerts the entity hosting the singularity that the level of the singularity has changed without the level actually changing.
+Used to sync components when the singularity component is added to an entity.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void UpdateSingularityLevel(EntityUid uid, SingularityComponent singularity = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td><p>The uid of the singularity.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Singularity.Components.SingularityComponent.html">SingularityComponent</a></td>
+        <td><span class="parametername">singularity</span></td>
+        <td><p>The state of the singularity.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Singularity_EntitySystems_SharedSingularitySystem_UpdateSingularityLevel_EntityUid_System_Byte_Content_Shared_Singularity_Components_SingularityComponent_.md&amp;value=---%0Auid%3A%20Content.Shared.Singularity.EntitySystems.SharedSingularitySystem.UpdateSingularityLevel(EntityUid%2CSystem.Byte%2CContent.Shared.Singularity.Components.SingularityComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Singularity/EntitySystems/SharedSingularitySystem.cs/#L123">View Source</a>
+  </span>
+  <a id="Content_Shared_Singularity_EntitySystems_SharedSingularitySystem_UpdateSingularityLevel_" data-uid="Content.Shared.Singularity.EntitySystems.SharedSingularitySystem.UpdateSingularityLevel*"></a>
+  <h4 id="Content_Shared_Singularity_EntitySystems_SharedSingularitySystem_UpdateSingularityLevel_EntityUid_System_Byte_Content_Shared_Singularity_Components_SingularityComponent_" data-uid="Content.Shared.Singularity.EntitySystems.SharedSingularitySystem.UpdateSingularityLevel(EntityUid,System.Byte,Content.Shared.Singularity.Components.SingularityComponent)">UpdateSingularityLevel(EntityUid, Byte, SingularityComponent)</h4>
+  <div class="markdown level1 summary"><p>Alerts the entity hosting the singularity that the level of the singularity has changed.
+Usually follows a SharedSingularitySystem.SetLevel call, but is also used on component startup to sync everything.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void UpdateSingularityLevel(EntityUid uid, byte oldValue, SingularityComponent singularity = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">uid</span></td>
+        <td><p>The uid of the singularity which's level has changed.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Byte</span></td>
+        <td><span class="parametername">oldValue</span></td>
+        <td><p>The old level of the singularity. May be equal to <a class="xref" href="Content.Shared.Singularity.Components.SingularityComponent.html#Content_Shared_Singularity_Components_SingularityComponent_Level">Level</a> if the component is starting.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Shared.Singularity.Components.SingularityComponent.html">SingularityComponent</a></td>
+        <td><span class="parametername">singularity</span></td>
+        <td><p>The state of the singularity which's level has changed.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Shared_Singularity_EntitySystems_SharedSingularitySystem.md&amp;value=---%0Auid%3A%20Content.Shared.Singularity.EntitySystems.SharedSingularitySystem%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Shared/Singularity/EntitySystems/SharedSingularitySystem.cs/#L16" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <div class="toggle-mode">
+                <div class="icon">
+                  <i aria-hidden="true">☀</i>
+                </div>
+                <label class="switch">
+                  <input type="checkbox" id="switch-style">
+                  <span class="slider round"></span>
+                </label>
+                <div class="icon">
+                  <i aria-hidden="true">☾</i>
+                </div>
+              </div>
+          
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <h5>In This Article</h5>
+              <div></div>
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <div class="pull-left">
+              
+              <span>Generated by <strong>DocFX</strong></span>
+            </div>
+            <div class="toggle-mode pull-right visible-sm visible-xs">
+              <div class="icon">
+                <i aria-hidden="true">☀</i>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="switch-style-m">
+                <span class="slider round"></span>
+              </label>
+              <div class="icon">
+                <i aria-hidden="true">☾</i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <script type="text/javascript" src="../../styles/toggle-theme.js"></script>
+      </footer>    </div>
+    
+    <script type="text/javascript" src="../../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../../styles/docfx.js"></script>
+    <script type="text/javascript" src="../../styles/main.js"></script>
+  </body>
+</html>

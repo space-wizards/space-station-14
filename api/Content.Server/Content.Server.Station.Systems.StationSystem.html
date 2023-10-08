@@ -1,0 +1,793 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class StationSystem
+   </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class StationSystem
+   ">
+    <meta name="generator" content="docfx 2.56.7.0">
+    
+    <link rel="shortcut icon" href="../../favicon.ico">
+    <link rel="stylesheet" href="../../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../../styles/docfx.css">
+    <link rel="stylesheet" href="../../styles/main.css">
+    <meta property="docfx:navrel" content="../../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../../index.html">
+                <img id="logo" class="svg" src="../../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Content.Server.Station.Systems.StationSystem">
+  
+  
+  <h1 id="Content_Server_Station_Systems_StationSystem" data-uid="Content.Server.Station.Systems.StationSystem" class="text-break">Class StationSystem
+  </h1>
+  <div class="markdown level0 summary"><p>System that manages stations.
+A station is, by default, just a name, optional map prototype, and optional grids.
+For jobs, look at StationJobSystem. For spawning, look at StationSpawningSystem.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level1"><span class="xref">StationSystem</span></div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Content.Server.Station.Systems.html">Content.Server.Station.Systems</a></h6>
+  <h6><strong>Assembly</strong>: Content.Server.dll</h6>
+  <h5 id="Content_Server_Station_Systems_StationSystem_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public sealed class StationSystem : EntitySystem</code></pre>
+  </div>
+  <h3 id="methods">Methods
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Station_Systems_StationSystem_AddGridToStation_EntityUid_EntityUid_Robust_Shared_Map_Components_MapGridComponent_Content_Server_Station_Components_StationDataComponent_System_Nullable_System_String__.md&amp;value=---%0Auid%3A%20Content.Server.Station.Systems.StationSystem.AddGridToStation(EntityUid%2CEntityUid%2CRobust.Shared.Map.Components.MapGridComponent%2CContent.Server.Station.Components.StationDataComponent%2CSystem.Nullable%7BSystem.String%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Station/Systems/StationSystem.cs/#L324">View Source</a>
+  </span>
+  <a id="Content_Server_Station_Systems_StationSystem_AddGridToStation_" data-uid="Content.Server.Station.Systems.StationSystem.AddGridToStation*"></a>
+  <h4 id="Content_Server_Station_Systems_StationSystem_AddGridToStation_EntityUid_EntityUid_Robust_Shared_Map_Components_MapGridComponent_Content_Server_Station_Components_StationDataComponent_System_Nullable_System_String__" data-uid="Content.Server.Station.Systems.StationSystem.AddGridToStation(EntityUid,EntityUid,Robust.Shared.Map.Components.MapGridComponent,Content.Server.Station.Components.StationDataComponent,System.Nullable{System.String})">AddGridToStation(EntityUid, EntityUid, MapGridComponent, StationDataComponent, Nullable&lt;String&gt;)</h4>
+  <div class="markdown level1 summary"><p>Adds the given grid to a station.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void AddGridToStation(EntityUid station, EntityUid mapGrid, MapGridComponent gridComponent = null, StationDataComponent stationData = null, string? name = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">station</span></td>
+        <td><p>Station to attach the grid to.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">mapGrid</span></td>
+        <td><p>Grid to attach.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">Robust.Shared.Map.Components.MapGridComponent</span></td>
+        <td><span class="parametername">gridComponent</span></td>
+        <td><p>Resolve pattern, grid component of mapGrid.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Server.Station.Components.StationDataComponent.html">StationDataComponent</a></td>
+        <td><span class="parametername">stationData</span></td>
+        <td><p>Resolve pattern, station data component of station.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">System.String</span>&gt;</td>
+        <td><span class="parametername">name</span></td>
+        <td><p>The name to assign to the grid if any.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Station_Systems_StationSystem_DeleteStation_EntityUid_Content_Server_Station_Components_StationDataComponent_.md&amp;value=---%0Auid%3A%20Content.Server.Station.Systems.StationSystem.DeleteStation(EntityUid%2CContent.Server.Station.Components.StationDataComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Station/Systems/StationSystem.cs/#L396">View Source</a>
+  </span>
+  <a id="Content_Server_Station_Systems_StationSystem_DeleteStation_" data-uid="Content.Server.Station.Systems.StationSystem.DeleteStation*"></a>
+  <h4 id="Content_Server_Station_Systems_StationSystem_DeleteStation_EntityUid_Content_Server_Station_Components_StationDataComponent_" data-uid="Content.Server.Station.Systems.StationSystem.DeleteStation(EntityUid,Content.Server.Station.Components.StationDataComponent)">DeleteStation(EntityUid, StationDataComponent)</h4>
+  <div class="markdown level1 summary"><p>Deletes the given station.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void DeleteStation(EntityUid station, StationDataComponent stationData = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">station</span></td>
+        <td><p>Station to delete.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Server.Station.Components.StationDataComponent.html">StationDataComponent</a></td>
+        <td><span class="parametername">stationData</span></td>
+        <td><p>Resolve pattern, station data component of station.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Station_Systems_StationSystem_GetInOwningStation_EntityUid_System_Single_.md&amp;value=---%0Auid%3A%20Content.Server.Station.Systems.StationSystem.GetInOwningStation(EntityUid%2CSystem.Single)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Station/Systems/StationSystem.cs/#L217">View Source</a>
+  </span>
+  <a id="Content_Server_Station_Systems_StationSystem_GetInOwningStation_" data-uid="Content.Server.Station.Systems.StationSystem.GetInOwningStation*"></a>
+  <h4 id="Content_Server_Station_Systems_StationSystem_GetInOwningStation_EntityUid_System_Single_" data-uid="Content.Server.Station.Systems.StationSystem.GetInOwningStation(EntityUid,System.Single)">GetInOwningStation(EntityUid, Single)</h4>
+  <div class="markdown level1 summary"><p>Tries to retrieve a filter for everything in the station the source is on.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Filter GetInOwningStation(EntityUid source, float range = 32F)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">source</span></td>
+        <td><p>The entity to use to find the station.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td><span class="parametername">range</span></td>
+        <td><p>The range around the station</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Robust.Shared.Player.Filter</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Station_Systems_StationSystem_GetInStation_Content_Server_Station_Components_StationDataComponent_System_Single_.md&amp;value=---%0Auid%3A%20Content.Server.Station.Systems.StationSystem.GetInStation(Content.Server.Station.Components.StationDataComponent%2CSystem.Single)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Station/Systems/StationSystem.cs/#L232">View Source</a>
+  </span>
+  <a id="Content_Server_Station_Systems_StationSystem_GetInStation_" data-uid="Content.Server.Station.Systems.StationSystem.GetInStation*"></a>
+  <h4 id="Content_Server_Station_Systems_StationSystem_GetInStation_Content_Server_Station_Components_StationDataComponent_System_Single_" data-uid="Content.Server.Station.Systems.StationSystem.GetInStation(Content.Server.Station.Components.StationDataComponent,System.Single)">GetInStation(StationDataComponent, Single)</h4>
+  <div class="markdown level1 summary"><p>Retrieves a filter for everything in a particular station or near its member grids.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Filter GetInStation(StationDataComponent dataComponent, float range = 32F)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Server.Station.Components.StationDataComponent.html">StationDataComponent</a></td>
+        <td><span class="parametername">dataComponent</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td><span class="parametername">range</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Robust.Shared.Player.Filter</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Station_Systems_StationSystem_GetLargestGrid_Content_Server_Station_Components_StationDataComponent_.md&amp;value=---%0Auid%3A%20Content.Server.Station.Systems.StationSystem.GetLargestGrid(Content.Server.Station.Components.StationDataComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Station/Systems/StationSystem.cs/#L193">View Source</a>
+  </span>
+  <a id="Content_Server_Station_Systems_StationSystem_GetLargestGrid_" data-uid="Content.Server.Station.Systems.StationSystem.GetLargestGrid*"></a>
+  <h4 id="Content_Server_Station_Systems_StationSystem_GetLargestGrid_Content_Server_Station_Components_StationDataComponent_" data-uid="Content.Server.Station.Systems.StationSystem.GetLargestGrid(Content.Server.Station.Components.StationDataComponent)">GetLargestGrid(StationDataComponent)</h4>
+  <div class="markdown level1 summary"><p>Gets the largest member grid from a station.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public EntityUid? GetLargestGrid(StationDataComponent component)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Server.Station.Components.StationDataComponent.html">StationDataComponent</a></td>
+        <td><span class="parametername">component</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">EntityUid</span>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Station_Systems_StationSystem_GetOwningStation_EntityUid_System_Nullable_TransformComponent__.md&amp;value=---%0Auid%3A%20Content.Server.Station.Systems.StationSystem.GetOwningStation(EntityUid%2CSystem.Nullable%7BTransformComponent%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Station/Systems/StationSystem.cs/#L413">View Source</a>
+  </span>
+  <a id="Content_Server_Station_Systems_StationSystem_GetOwningStation_" data-uid="Content.Server.Station.Systems.StationSystem.GetOwningStation*"></a>
+  <h4 id="Content_Server_Station_Systems_StationSystem_GetOwningStation_EntityUid_System_Nullable_TransformComponent__" data-uid="Content.Server.Station.Systems.StationSystem.GetOwningStation(EntityUid,System.Nullable{TransformComponent})">GetOwningStation(EntityUid, Nullable&lt;TransformComponent&gt;)</h4>
+  <div class="markdown level1 summary"><p>Gets the station that &quot;owns&quot; the given entity (essentially, the station the grid it's on is attached to)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public EntityUid? GetOwningStation(EntityUid entity, TransformComponent? xform = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">entity</span></td>
+        <td><p>Entity to find the owner of.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">TransformComponent</span>&gt;</td>
+        <td><span class="parametername">xform</span></td>
+        <td><p>Resolve pattern, transform of the entity.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">EntityUid</span>&gt;</td>
+        <td><p>The owning station, if any.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Content_Server_Station_Systems_StationSystem_GetOwningStation_EntityUid_System_Nullable_TransformComponent___remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>This does not remember what station an entity started on, it simply checks where it is currently located.</p>
+</div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Station_Systems_StationSystem_GetStationInMap_Robust_Shared_Map_MapId_.md&amp;value=---%0Auid%3A%20Content.Server.Station.Systems.StationSystem.GetStationInMap(Robust.Shared.Map.MapId)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Station/Systems/StationSystem.cs/#L456">View Source</a>
+  </span>
+  <a id="Content_Server_Station_Systems_StationSystem_GetStationInMap_" data-uid="Content.Server.Station.Systems.StationSystem.GetStationInMap*"></a>
+  <h4 id="Content_Server_Station_Systems_StationSystem_GetStationInMap_Robust_Shared_Map_MapId_" data-uid="Content.Server.Station.Systems.StationSystem.GetStationInMap(Robust.Shared.Map.MapId)">GetStationInMap(MapId)</h4>
+  <div class="markdown level1 summary"><p>Returns the first station that has a grid in a certain map.
+If the map has no stations, null is returned instead.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public EntityUid? GetStationInMap(MapId map)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Robust.Shared.Map.MapId</span></td>
+        <td><span class="parametername">map</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">EntityUid</span>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Content_Server_Station_Systems_StationSystem_GetStationInMap_Robust_Shared_Map_MapId__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>If there are multiple stations on a map it is probably arbitrary which one is returned.</p>
+</div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Station_Systems_StationSystem_GetStations.md&amp;value=---%0Auid%3A%20Content.Server.Station.Systems.StationSystem.GetStations%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Station/Systems/StationSystem.cs/#L439">View Source</a>
+  </span>
+  <a id="Content_Server_Station_Systems_StationSystem_GetStations_" data-uid="Content.Server.Station.Systems.StationSystem.GetStations*"></a>
+  <h4 id="Content_Server_Station_Systems_StationSystem_GetStations" data-uid="Content.Server.Station.Systems.StationSystem.GetStations">GetStations()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public List&lt;EntityUid&gt; GetStations()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">List</span>&lt;<span class="xref">EntityUid</span>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Station_Systems_StationSystem_GetStationsSet.md&amp;value=---%0Auid%3A%20Content.Server.Station.Systems.StationSystem.GetStationsSet%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Station/Systems/StationSystem.cs/#L444">View Source</a>
+  </span>
+  <a id="Content_Server_Station_Systems_StationSystem_GetStationsSet_" data-uid="Content.Server.Station.Systems.StationSystem.GetStationsSet*"></a>
+  <h4 id="Content_Server_Station_Systems_StationSystem_GetStationsSet" data-uid="Content.Server.Station.Systems.StationSystem.GetStationsSet">GetStationsSet()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public HashSet&lt;EntityUid&gt; GetStationsSet()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">HashSet</span>&lt;<span class="xref">EntityUid</span>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Station_Systems_StationSystem_Initialize.md&amp;value=---%0Auid%3A%20Content.Server.Station.Systems.StationSystem.Initialize%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Station/Systems/StationSystem.cs/#L46">View Source</a>
+  </span>
+  <a id="Content_Server_Station_Systems_StationSystem_Initialize_" data-uid="Content.Server.Station.Systems.StationSystem.Initialize*"></a>
+  <h4 id="Content_Server_Station_Systems_StationSystem_Initialize" data-uid="Content.Server.Station.Systems.StationSystem.Initialize">Initialize()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override void Initialize()</code></pre>
+  </div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Station_Systems_StationSystem_InitializeNewStation_Content_Server_Station_StationConfig_System_Nullable_IEnumerable_EntityUid___System_Nullable_System_String__.md&amp;value=---%0Auid%3A%20Content.Server.Station.Systems.StationSystem.InitializeNewStation(Content.Server.Station.StationConfig%2CSystem.Nullable%7BIEnumerable%7BEntityUid%7D%7D%2CSystem.Nullable%7BSystem.String%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Station/Systems/StationSystem.cs/#L291">View Source</a>
+  </span>
+  <a id="Content_Server_Station_Systems_StationSystem_InitializeNewStation_" data-uid="Content.Server.Station.Systems.StationSystem.InitializeNewStation*"></a>
+  <h4 id="Content_Server_Station_Systems_StationSystem_InitializeNewStation_Content_Server_Station_StationConfig_System_Nullable_IEnumerable_EntityUid___System_Nullable_System_String__" data-uid="Content.Server.Station.Systems.StationSystem.InitializeNewStation(Content.Server.Station.StationConfig,System.Nullable{IEnumerable{EntityUid}},System.Nullable{System.String})">InitializeNewStation(StationConfig, Nullable&lt;IEnumerable&lt;EntityUid&gt;&gt;, Nullable&lt;String&gt;)</h4>
+  <div class="markdown level1 summary"><p>Initializes a new station with the given information.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public EntityUid InitializeNewStation(StationConfig stationConfig, IEnumerable&lt;EntityUid&gt;? gridIds, string? name = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Content.Server.Station.StationConfig.html">StationConfig</a></td>
+        <td><span class="parametername">stationConfig</span></td>
+        <td><p>The game map prototype used, if any.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">IEnumerable</span>&lt;<span class="xref">EntityUid</span>&gt;&gt;</td>
+        <td><span class="parametername">gridIds</span></td>
+        <td><p>All grids that should be added to the station.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">System.String</span>&gt;</td>
+        <td><span class="parametername">name</span></td>
+        <td><p>Optional override for the station name.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><p>The initialized station.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Content_Server_Station_Systems_StationSystem_InitializeNewStation_Content_Server_Station_StationConfig_System_Nullable_IEnumerable_EntityUid___System_Nullable_System_String___remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>This is for ease of use, manually spawning the entity works just fine.</p>
+</div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Station_Systems_StationSystem_RemoveGridFromStation_EntityUid_EntityUid_Robust_Shared_Map_Components_MapGridComponent_Content_Server_Station_Components_StationDataComponent_.md&amp;value=---%0Auid%3A%20Content.Server.Station.Systems.StationSystem.RemoveGridFromStation(EntityUid%2CEntityUid%2CRobust.Shared.Map.Components.MapGridComponent%2CContent.Server.Station.Components.StationDataComponent)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Station/Systems/StationSystem.cs/#L351">View Source</a>
+  </span>
+  <a id="Content_Server_Station_Systems_StationSystem_RemoveGridFromStation_" data-uid="Content.Server.Station.Systems.StationSystem.RemoveGridFromStation*"></a>
+  <h4 id="Content_Server_Station_Systems_StationSystem_RemoveGridFromStation_EntityUid_EntityUid_Robust_Shared_Map_Components_MapGridComponent_Content_Server_Station_Components_StationDataComponent_" data-uid="Content.Server.Station.Systems.StationSystem.RemoveGridFromStation(EntityUid,EntityUid,Robust.Shared.Map.Components.MapGridComponent,Content.Server.Station.Components.StationDataComponent)">RemoveGridFromStation(EntityUid, EntityUid, MapGridComponent, StationDataComponent)</h4>
+  <div class="markdown level1 summary"><p>Removes the given grid from a station.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void RemoveGridFromStation(EntityUid station, EntityUid mapGrid, MapGridComponent gridComponent = null, StationDataComponent stationData = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">station</span></td>
+        <td><p>Station to remove the grid from.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">mapGrid</span></td>
+        <td><p>Grid to remove</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">Robust.Shared.Map.Components.MapGridComponent</span></td>
+        <td><span class="parametername">gridComponent</span></td>
+        <td><p>Resolve pattern, grid component of mapGrid.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Server.Station.Components.StationDataComponent.html">StationDataComponent</a></td>
+        <td><span class="parametername">stationData</span></td>
+        <td><p>Resolve pattern, station data component of station.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Station_Systems_StationSystem_RenameStation_EntityUid_System_String_System_Boolean_Content_Server_Station_Components_StationDataComponent_System_Nullable_MetaDataComponent__.md&amp;value=---%0Auid%3A%20Content.Server.Station.Systems.StationSystem.RenameStation(EntityUid%2CSystem.String%2CSystem.Boolean%2CContent.Server.Station.Components.StationDataComponent%2CSystem.Nullable%7BMetaDataComponent%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Station/Systems/StationSystem.cs/#L374">View Source</a>
+  </span>
+  <a id="Content_Server_Station_Systems_StationSystem_RenameStation_" data-uid="Content.Server.Station.Systems.StationSystem.RenameStation*"></a>
+  <h4 id="Content_Server_Station_Systems_StationSystem_RenameStation_EntityUid_System_String_System_Boolean_Content_Server_Station_Components_StationDataComponent_System_Nullable_MetaDataComponent__" data-uid="Content.Server.Station.Systems.StationSystem.RenameStation(EntityUid,System.String,System.Boolean,Content.Server.Station.Components.StationDataComponent,System.Nullable{MetaDataComponent})">RenameStation(EntityUid, String, Boolean, StationDataComponent, Nullable&lt;MetaDataComponent&gt;)</h4>
+  <div class="markdown level1 summary"><p>Renames the given station.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void RenameStation(EntityUid station, string name, bool loud = true, StationDataComponent stationData = null, MetaDataComponent? metaData = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EntityUid</span></td>
+        <td><span class="parametername">station</span></td>
+        <td><p>Station to rename.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>The new name to apply.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">loud</span></td>
+        <td><p>Whether or not to announce the rename.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Content.Server.Station.Components.StationDataComponent.html">StationDataComponent</a></td>
+        <td><span class="parametername">stationData</span></td>
+        <td><p>Resolve pattern, station data component of station.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">MetaDataComponent</span>&gt;</td>
+        <td><span class="parametername">metaData</span></td>
+        <td><p>Resolve pattern, metadata component of station.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Station_Systems_StationSystem_Shutdown.md&amp;value=---%0Auid%3A%20Content.Server.Station.Systems.StationSystem.Shutdown%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Station/Systems/StationSystem.cs/#L78">View Source</a>
+  </span>
+  <a id="Content_Server_Station_Systems_StationSystem_Shutdown_" data-uid="Content.Server.Station.Systems.StationSystem.Shutdown*"></a>
+  <h4 id="Content_Server_Station_Systems_StationSystem_Shutdown" data-uid="Content.Server.Station.Systems.StationSystem.Shutdown">Shutdown()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override void Shutdown()</code></pre>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/space-wizards/space-station-14/new/master/apiSpec/new?filename=Content_Server_Station_Systems_StationSystem.md&amp;value=---%0Auid%3A%20Content.Server.Station.Systems.StationSystem%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/space-wizards/space-station-14/blob/master/Content.Server/Station/Systems/StationSystem.cs/#L26" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <div class="toggle-mode">
+                <div class="icon">
+                  <i aria-hidden="true">☀</i>
+                </div>
+                <label class="switch">
+                  <input type="checkbox" id="switch-style">
+                  <span class="slider round"></span>
+                </label>
+                <div class="icon">
+                  <i aria-hidden="true">☾</i>
+                </div>
+              </div>
+          
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <h5>In This Article</h5>
+              <div></div>
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <div class="pull-left">
+              
+              <span>Generated by <strong>DocFX</strong></span>
+            </div>
+            <div class="toggle-mode pull-right visible-sm visible-xs">
+              <div class="icon">
+                <i aria-hidden="true">☀</i>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="switch-style-m">
+                <span class="slider round"></span>
+              </label>
+              <div class="icon">
+                <i aria-hidden="true">☾</i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <script type="text/javascript" src="../../styles/toggle-theme.js"></script>
+      </footer>    </div>
+    
+    <script type="text/javascript" src="../../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../../styles/docfx.js"></script>
+    <script type="text/javascript" src="../../styles/main.js"></script>
+  </body>
+</html>
