@@ -1,4 +1,3 @@
-using Content.Server.Chemistry.Components;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Fluids.EntitySystems;
 using Content.Shared.Audio;
@@ -71,16 +70,8 @@ namespace Content.Server.Chemistry.ReactionEffects
             var coords = grid.MapToGrid(transform.MapPosition);
             var ent = args.EntityManager.SpawnEntity(_prototypeId, coords.SnapToGrid());
 
-            if (!args.EntityManager.TryGetComponent<SmokeComponent>(ent, out var smokeComponent))
-            {
-                Logger.Error("Couldn't get AreaEffectComponent from " + _prototypeId);
-                args.EntityManager.QueueDeleteEntity(ent);
-                return;
-            }
-
             var smoke = args.EntityManager.System<SmokeSystem>();
-            smokeComponent.SpreadAmount = spreadAmount;
-            smoke.Start(ent, smokeComponent, splitSolution, _duration);
+            smoke.StartSmoke(ent, splitSolution, _duration, spreadAmount);
 
             SoundSystem.Play(_sound.GetSound(), Filter.Pvs(args.SolutionEntity), args.SolutionEntity, AudioHelpers.WithVariation(0.125f));
         }
