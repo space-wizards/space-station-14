@@ -1,70 +1,4 @@
 Entries:
-- author: deltanedas
-  changes:
-  - {message: 'Stimulants now double your stamina, making you harder to stun and letting
-      you use more heavy attacks.', type: Tweak}
-  id: 4462
-  time: '2023-08-06T11:06:23.0000000+00:00'
-- author: JoeHammad
-  changes:
-  - {message: 'Centcom has increased the spring strength on the brute and burn auto
-      injectors, they should now inject the full 20 units', type: Add}
-  id: 4463
-  time: '2023-08-06T11:38:07.0000000+00:00'
-- author: Slava0135
-  changes:
-  - {message: fixed reflected projectiles dealing stamina damage, type: Fix}
-  id: 4464
-  time: '2023-08-06T13:44:42.0000000+00:00'
-- author: Errant
-  changes:
-  - {message: 'Wide attacks no longer cost stamina, deal weapon damage.', type: Tweak}
-  - {message: Primary/Single-target melee attacks deal +25% damage., type: Tweak}
-  id: 4465
-  time: '2023-08-06T16:01:44.0000000+00:00'
-- author: Ilya246
-  changes:
-  - {message: Increase radiator heat transfer rate., type: Tweak}
-  id: 4466
-  time: '2023-08-06T17:23:43.0000000+00:00'
-- author: forthbridge
-  changes:
-  - {message: Spaceshrooms now spawn as a structure instead of an item, type: Fix}
-  id: 4467
-  time: '2023-08-06T17:40:43.0000000+00:00'
-- author: moony
-  changes:
-  - {message: You can turn APCs on during power grid checks again., type: Tweak}
-  id: 4468
-  time: '2023-08-06T18:39:49.0000000+00:00'
-- author: Flareguy
-  changes:
-  - {message: 'The bleeding alert sprite is now drawn at double the resolution, as
-      to fit in with everything else in the game.', type: Tweak}
-  id: 4469
-  time: '2023-08-06T23:49:28.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Chemical analysis goggles no longer require silver to create., type: Tweak}
-  id: 4470
-  time: '2023-08-07T03:44:25.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: Renamed spacebucks to spesos, type: Tweak}
-  id: 4471
-  time: '2023-08-07T05:43:35.0000000+00:00'
-- author: Slava0135
-  changes:
-  - {message: You can now examine throw damage on items., type: Add}
-  - {message: Fixed examine damage verbs of different types conflicting with each
-      other., type: Fix}
-  id: 4472
-  time: '2023-08-07T09:09:35.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Reproducible entities now have a capacity in confined areas., type: Fix}
-  id: 4473
-  time: '2023-08-07T09:48:47.0000000+00:00'
 - author: ubis1
   changes:
   - {message: some lathes can be emagged now; emaggable recipes list has been added
@@ -2950,3 +2884,70 @@ Entries:
   - {message: Syndicate bombs collide again., type: Tweak}
   id: 4961
   time: '2023-10-06T06:29:58.0000000+00:00'
+- author: Ubaser
+  changes:
+  - {message: The Clothesmate now dispenses berets., type: Tweak}
+  id: 4962
+  time: '2023-10-06T18:49:08.0000000+00:00'
+- author: Lank
+  changes:
+  - {message: 'Reptilians have received a minor rework. Notable features include a
+      diet restriction to only meat, fruit and pills, and the ability to pull objects
+      using their tail.', type: Tweak}
+  id: 4963
+  time: '2023-10-06T21:19:01.0000000+00:00'
+- author: chromiumboy
+  changes:
+  - {message: Fixed wire panels on bombs and vending machines not opening correctly.,
+    type: Fix}
+  id: 4964
+  time: '2023-10-06T21:26:02.0000000+00:00'
+- author: TheShuEd
+  changes:
+  - {message: 'Beer anomaly added! And no, it''s an anomaly of ominisine. Hmm. No.
+      It seems to be capable of producing ANY substance.', type: Add}
+  id: 4965
+  time: '2023-10-07T00:26:35.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Fixed not being able to throw items into disposals from close up., type: Fix}
+  id: 4966
+  time: '2023-10-07T00:43:54.0000000+00:00'
+- author: Nimfar11
+  changes:
+  - {message: Now the Secret Doors can be welded shut., type: Add}
+  id: 4967
+  time: '2023-10-07T00:45:12.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Certain mobs will now fight back when provoked. Try not to get robusted.,
+    type: Add}
+  id: 4968
+  time: '2023-10-07T00:56:18.0000000+00:00'
+- author: HerCoyote23
+  changes:
+  - {message: Tarantulas now inject real toxins into victims and they can pass through
+      armour., type: Tweak}
+  id: 4969
+  time: '2023-10-07T13:05:40.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Fixed not being able to sleep on a bed., type: Fix}
+  id: 4970
+  time: '2023-10-07T19:11:03.0000000+00:00'
+- author: JoeHammad
+  changes:
+  - {message: 'traitor gamemode is rarer, nukies and revs are more common', type: Tweak}
+  id: 4971
+  time: '2023-10-07T19:15:57.0000000+00:00'
+- author: Lank
+  changes:
+  - {message: Humanoid species now passively regenerate small bruises and burns.,
+    type: Tweak}
+  id: 4972
+  time: '2023-10-07T19:34:32.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Kudzu has been reenabled., type: Add}
+  id: 4973
+  time: '2023-10-07T19:59:39.0000000+00:00'

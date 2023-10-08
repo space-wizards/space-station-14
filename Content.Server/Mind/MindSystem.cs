@@ -31,6 +31,25 @@ public sealed class MindSystem : SharedMindSystem
         base.Initialize();
 
         SubscribeLocalEvent<MindContainerComponent, EntityTerminatingEvent>(OnMindContainerTerminating);
+        SubscribeLocalEvent<MindComponent, ComponentShutdown>(OnMindShutdown);
+    }
+
+    private void OnMindShutdown(EntityUid uid, MindComponent mind, ComponentShutdown args)
+    {
+        if (mind.UserId is {} user)
+        {
+            UserMinds.Remove(user);
+            if (_players.GetPlayerData(user).ContentData() is { } oldData)
+                oldData.Mind = null;
+            mind.UserId = null;
+        }
+
+        if (!TryComp(mind.OwnedEntity, out MetaDataComponent? meta) || meta.EntityLifeStage >= EntityLifeStage.Terminating)
+            return;
+
+        RaiseLocalEvent(mind.OwnedEntity.Value, new MindRemovedMessage(uid, mind), true);
+        mind.OwnedEntity = null;
+        mind.OwnedComponent = null;
     }
 
     private void OnMindContainerTerminating(EntityUid uid, MindContainerComponent component, ref EntityTerminatingEvent args)
@@ -195,10 +214,10 @@ public sealed class MindSystem : SharedMindSystem
     public override void TransferTo(EntityUid mindId, EntityUid? entity, bool ghostCheckOverride = false, bool createGhost = true,
         MindComponent? mind = null)
     {
-        base.TransferTo(mindId, entity, ghostCheckOverride, createGhost, mind);
-
-        if (!Resolve(mindId, ref mind))
+        if (mind == null && !Resolve(mindId, ref mind))
             return;
+
+        base.TransferTo(mindId, entity, ghostCheckOverride, createGhost, mind);
 
         if (entity == mind.OwnedEntity)
             return;

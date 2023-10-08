@@ -29,26 +29,6 @@
       "name": "box-closed"
     },
     {
-      "name": "tin-closed"
-    },
-    {
-      "name": "tin-hot",
-      "delays": [
-        [
-          0.5,
-          0.5,
-          0.5,
-          0.5
-        ]
-      ]
-    },
-    {
-      "name": "tin-open"
-    },
-    {
-      "name": "tin-trash"
-    },
-    {
       "name": "candy"
     },
     {
