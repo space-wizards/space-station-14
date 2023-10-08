@@ -7,7 +7,7 @@
   minPlayers: 0
   stations:
     Boxstation:
-      stationProto: StandardNanotrasenStation
+      stationProto: FrankensteinStation
       components:
         - type: StationNameSetup
           mapNameTemplate: '{0} Frankenstein {1}'
@@ -70,3 +70,14 @@
             Mime: [ 1, 1 ]
             Musician: [ 2, 2 ]
             Reporter: [ 2, 2 ]
+
+- type: entity
+  id: FrankensteinStation
+  parent: StandardNanotrasenStation
+  noSpawn: true
+  components:
+    - type: StationMinimap
+      minimapData: !type:StationMinimapData
+        mapTexture: SS220/ViewableMaps/Frankenstein.png
+        originOffset: 47, 186
+        mapScale: 6.4

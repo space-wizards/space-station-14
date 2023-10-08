@@ -1,14 +1,24 @@
 <DefaultWindow xmlns="https://spacestation14.io"
                xmlns:viewport="clr-namespace:Content.Client.Viewport"
+               xmlns:pv="clr-namespace:Content.Client.SS220.PictureViewer"
+               xmlns:cm="clr-namespace:Content.Client.SS220.CameraMap"
                Title="{Loc 'surveillance-camera-monitor-ui-window'}">
     <BoxContainer Orientation="Horizontal">
         <BoxContainer Orientation="Vertical" MinWidth="350" VerticalExpand="True">
             <!-- lazy -->
-            <OptionButton Name="SubnetSelector" />
-            <Button Name="SubnetRefreshButton" Text="{Loc 'surveillance-camera-monitor-ui-refresh-subnets'}" />
-            <ScrollContainer VerticalExpand="True">
-                <ItemList Name="SubnetList" />
-            </ScrollContainer>
+            <TabContainer Name="SelectorTabs" VerticalExpand="True"> <!-- SS220 Camera-Map begin -->
+                <BoxContainer Name="CameraList" Orientation="Vertical" MinWidth="350" VerticalExpand="True">
+                    <OptionButton Name="SubnetSelector" />
+                    <Button Name="SubnetRefreshButton" Text="{Loc 'surveillance-camera-monitor-ui-refresh-subnets'}" />
+                    <ScrollContainer VerticalExpand="True">
+                        <ItemList Name="SubnetList" />
+                    </ScrollContainer>
+                </BoxContainer>
+                <Control Name="CameraMap" VerticalExpand="True" MinWidth="450" MinHeight="350">
+                    <cm:CameraMap Name="MapViewer" Access="Public"/>
+                    <pv:PictureViewerControls Name="MapViewerControls"/>
+                </Control>
+            </TabContainer>
             <Button Name="CameraRefreshButton" Text="{Loc 'surveillance-camera-monitor-ui-refresh-cameras'}" />
             <Button Name="CameraDisconnectButton" Text="{Loc 'surveillance-camera-monitor-ui-disconnect'}" />
             <Label Name="CameraStatus" />

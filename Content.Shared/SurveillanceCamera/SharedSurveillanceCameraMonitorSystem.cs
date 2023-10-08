@@ -1,3 +1,4 @@
+using System.Numerics;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.SurveillanceCamera;
@@ -21,9 +22,9 @@ public sealed class SurveillanceCameraMonitorUiState : BoundUserInterfaceState
     public string ActiveSubnet { get; }
 
     // Known cameras, by address and name.
-    public Dictionary<string, string> Cameras { get; }
+    public Dictionary<string, (string, Vector2)> Cameras { get; }
 
-    public SurveillanceCameraMonitorUiState(NetEntity? activeCamera, HashSet<string> subnets, string activeAddress, string activeSubnet, Dictionary<string, string> cameras)
+    public SurveillanceCameraMonitorUiState(NetEntity? activeCamera, HashSet<string> subnets, string activeAddress, string activeSubnet, Dictionary<string, (string, Vector2)> cameras)
     {
         ActiveCamera = activeCamera;
         Subnets = subnets;

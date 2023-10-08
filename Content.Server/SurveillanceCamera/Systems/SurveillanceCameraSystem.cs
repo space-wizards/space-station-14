@@ -48,6 +48,8 @@ public sealed class SurveillanceCameraSystem : EntitySystem
     public const string CameraNameData = "surveillance_camera_data_name";
     public const string CameraSubnetData = "surveillance_camera_data_subnet";
 
+    public const string CameraPositionData = "surveillance_camera_data_position"; // SS220 Camera-Map
+
     public const int CameraNameLimit = 32;
 
     public override void Initialize()
@@ -58,7 +60,7 @@ public sealed class SurveillanceCameraSystem : EntitySystem
         SubscribeLocalEvent<SurveillanceCameraComponent, SurveillanceCameraSetupSetName>(OnSetName);
         SubscribeLocalEvent<SurveillanceCameraComponent, SurveillanceCameraSetupSetNetwork>(OnSetNetwork);
         SubscribeLocalEvent<SurveillanceCameraComponent, GetVerbsEvent<AlternativeVerb>>(AddVerbs);
-        
+
         SubscribeLocalEvent<SurveillanceCameraComponent, EmpPulseEvent>(OnEmpPulse);
         SubscribeLocalEvent<SurveillanceCameraComponent, EmpDisabledRemoved>(OnEmpDisabledRemoved);
     }
@@ -77,12 +79,15 @@ public sealed class SurveillanceCameraSystem : EntitySystem
 
         if (args.Data.TryGetValue(DeviceNetworkConstants.Command, out string? command))
         {
+            var position = Transform(uid).Coordinates.Position;
+
             var payload = new NetworkPayload()
             {
                 { DeviceNetworkConstants.Command, string.Empty },
                 { CameraAddressData, deviceNet.Address },
                 { CameraNameData, component.CameraId },
-                { CameraSubnetData, string.Empty }
+                { CameraSubnetData, string.Empty },
+                { CameraPositionData, position } //SS220 Camera-Map
             };
 
             var dest = string.Empty;

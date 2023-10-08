@@ -1,6 +1,8 @@
 using Content.Client.Eye;
+using Content.Shared.SS220.ViewableStationMap;
 using Content.Shared.SurveillanceCamera;
 using Robust.Client.GameObjects;
+using Robust.Shared.Serialization.TypeSerializers.Implementations;
 
 namespace Content.Client.SurveillanceCamera.UI;
 
@@ -41,6 +43,21 @@ public sealed class SurveillanceCameraMonitorBoundUserInterface : BoundUserInter
         _window.OnClose += Close;
         _window.CameraSwitchTimer += OnCameraSwitchTimer;
         _window.CameraDisconnect += OnCameraDisconnect;
+
+        // SS220 Camera-Map begin
+        _window.MapViewer.Selected += OnCameraSelected;
+
+        if (EntMan.TryGetComponent(Owner, out ViewableStationMapComponent? comp) && comp.MinimapData is StationMinimapData minimap)
+        {
+            if (!string.IsNullOrEmpty(minimap.MapTexture))
+            {
+                var path = SpriteSpecifierSerializer.TextureRoot / minimap.MapTexture;
+                _window.MapViewer.SetPictureCenterOffset(minimap.OriginOffset);
+                _window.MapViewer.MapScale = minimap.MapScale;
+                _window.SetMap(path);
+            }
+        }
+        // SS220 Camera-Map end
     }
 
     private void OnCameraSelected(string address)
@@ -79,6 +96,10 @@ public sealed class SurveillanceCameraMonitorBoundUserInterface : BoundUserInter
         {
             return;
         }
+
+        // SS220 Camera-Map begin
+        _window.MapViewer.SetSelectedAddress(cast.ActiveAddress);
+        // SS220 Camera-Map end
 
         var active = EntMan.GetEntity(cast.ActiveCamera);
 

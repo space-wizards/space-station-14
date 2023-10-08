@@ -31,7 +31,7 @@ public sealed partial class PictureViewerControls : BoxContainer
         {
             PanelOverride = new StyleBoxFlat()
             {
-                BackgroundColor = StyleNano.ButtonColorContext.WithAlpha(1f),
+                BackgroundColor = StyleNano.ButtonColorContext.WithAlpha(0.75f),
                 BorderColor = StyleNano.PanelDark
             },
             VerticalExpand = false,

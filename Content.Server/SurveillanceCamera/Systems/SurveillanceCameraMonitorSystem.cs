@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Numerics;
 using Content.Server.Chat.Systems;
 using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Systems;
@@ -141,7 +142,11 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
 
                     if (!component.KnownCameras.ContainsKey(address))
                     {
-                        component.KnownCameras.Add(address, name);
+                        //SS220 Camera-Map begin
+                        if (!args.Data.TryGetValue(SurveillanceCameraSystem.CameraPositionData, out var position) || position is not Vector2)
+                            position = Vector2.Zero;
+                        component.KnownCameras.Add(address, (name, (Vector2) position));
+                        //SS220 Camera-Map end
                     }
 
                     UpdateUserInterface(uid, component);

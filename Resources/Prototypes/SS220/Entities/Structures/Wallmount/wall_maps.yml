@@ -5,7 +5,6 @@
   description: "Карта станции Frankenstein."
   components:
   - type: ViewableStationMap
-    mapTexture: SS220/ViewableMaps/Frankenstein.png
   - type: Sprite
     state: frank_map
     sprite: SS220/Structures/Wallmounts/wallmap.rsi

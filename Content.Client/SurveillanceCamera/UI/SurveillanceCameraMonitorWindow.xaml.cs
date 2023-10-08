@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Numerics;
 using Content.Client.Resources;
 using Content.Client.Viewport;
 using Content.Shared.DeviceNetwork;
@@ -11,6 +12,7 @@ using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Graphics;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 
 namespace Content.Client.SurveillanceCamera.UI;
 
@@ -19,6 +21,19 @@ public sealed partial class SurveillanceCameraMonitorWindow : DefaultWindow
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IResourceCache _resourceCache = default!;
+
+    // SS220 Camera-Map begin
+    private enum TabNumbers
+    {
+        CameraList,
+        CameraMap
+    }
+
+    public void SetMap(ResPath mapPath)
+    {
+        MapViewer.ViewedPicture = mapPath;
+    }
+    // SS220 Camera-Map end
 
     public event Action<string>? CameraSelected;
     public event Action<string>? SubnetOpened;
@@ -71,12 +86,19 @@ public sealed partial class SurveillanceCameraMonitorWindow : DefaultWindow
         SubnetRefreshButton.OnPressed += _ => SubnetRefresh!();
         CameraRefreshButton.OnPressed += _ => CameraRefresh!();
         CameraDisconnectButton.OnPressed += _ => CameraDisconnect!();
+
+        // SS220 Camera-Map begin
+        SelectorTabs.SetTabTitle((int) TabNumbers.CameraList, "Список");
+        SelectorTabs.SetTabTitle((int) TabNumbers.CameraMap, "Карта");
+
+        MapViewerControls.AttachToViewer(MapViewer);
+        // SS220 Camera-Map end
     }
 
 
     // The UI class should get the eye from the entity, and then
     // pass it here so that the UI can change its view.
-    public void UpdateState(IEye? eye, HashSet<string> subnets, string activeAddress, string activeSubnet, Dictionary<string, string> cameras)
+    public void UpdateState(IEye? eye, HashSet<string> subnets, string activeAddress, string activeSubnet, Dictionary<string, (string, Vector2)> cameras)
     {
         _currentAddress = activeAddress;
         SetCameraView(eye);
@@ -121,13 +143,14 @@ public sealed partial class SurveillanceCameraMonitorWindow : DefaultWindow
         }
 
         PopulateCameraList(cameras);
+        MapViewer.Populate(cameras);
     }
 
-    private void PopulateCameraList(Dictionary<string, string> cameras)
+    private void PopulateCameraList(Dictionary<string, (string, Vector2)> cameras)
     {
         SubnetList.Clear();
 
-        foreach (var (address, name) in cameras)
+        foreach (var (address, (name, _)) in cameras)
         {
             AddCameraToList(name, address);
         }
