@@ -17,6 +17,17 @@
     {
       "name": "inhand-right",
       "directions": 4
+    },
+    {
+      "name": "icon1"
+    },
+    {
+      "name": "inhand-left1",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right1",
+      "directions": 4
     }
   ]
 }

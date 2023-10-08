@@ -5,9 +5,14 @@
   description: A ceremonial weapon belonging to the captain of the station.
   components:
   - type: Sharp
+  - type: Appearance
   - type: Sprite
     sprite: Objects/Weapons/Melee/captain_sabre.rsi
-    state: icon
+    layers:
+    - state: icon
+    - state: icon1
+      map: ["enum.SolutionContainerLayers.Fill"]
+      visible: false
   - type: MeleeWeapon
     attackRate: 1.5
     damage:
@@ -18,7 +23,7 @@
   - type: Reflect
     enabled: true
     reflectProb: .5
-    spread: 90        
+    spread: 90
   - type: Item
     size: 15
     sprite: Objects/Weapons/Melee/captain_sabre.rsi
@@ -26,6 +31,25 @@
     tags:
     - CaptainSabre
   - type: DisarmMalus
+  - type: SolutionContainerVisuals
+    maxFillLevels: 1
+    fillBaseName: icon
+  - type: SolutionContainerManager
+    solutions:
+      melee:
+        maxVol: 5
+  - type: MeleeChemicalInjector
+    solution: melee
+    transferAmount: 2
+  - type: MeleeChemicalPicker
+    solution: melee
+    transferAmount: 3
+  - type: RefillableSolution
+    solution: melee
+  - type: InjectableSolution
+    solution: melee
+  - type: ExaminableSolution
+    solution: melee
 
 - type: entity
   name: katana
