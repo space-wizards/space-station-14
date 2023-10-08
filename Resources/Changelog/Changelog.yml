@@ -1,10 +1,4 @@
 Entries:
-- author: ubis1
-  changes:
-  - {message: some lathes can be emagged now; emaggable recipes list has been added
-      for protolathes and autolathes, type: Add}
-  id: 4474
-  time: '2023-08-07T14:21:04.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Fix crusher., type: Fix}
@@ -2951,3 +2945,8 @@ Entries:
   - {message: Kudzu has been reenabled., type: Add}
   id: 4973
   time: '2023-10-07T19:59:39.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Diona now move at the same speed as other species., type: Tweak}
+  id: 4974
+  time: '2023-10-08T21:02:46.0000000+00:00'
