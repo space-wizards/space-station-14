@@ -1,6 +1,5 @@
 - type: loadout
   id: LoadoutCommandCMONeckMantle
-  description: To show who has the authority around here. It seems unusually clean.
   category: Jobs
   cost: 2
   exclusive: true
@@ -11,7 +10,6 @@
 
 - type: loadout
   id: LoadoutCommandCMONeckCloak
-  description: To really show who has the authority around here. It seems unusually clean.
   category: Jobs
   cost: 2
   exclusive: true
@@ -22,7 +20,6 @@
 
 - type: loadout
   id: LoadoutCommandCMOOuterWinter
-  description: A warm coat for the cold of space. It seems unusually clean.
   category: Jobs
   cost: 2
   jobWhitelist:
@@ -32,7 +29,6 @@
 
 - type: loadout
   id: LoadoutCommandCMOOuterLab
-  description: A lab coat for the CMO. It seems unusually clean.
   category: Jobs
   cost: 1
   jobWhitelist:
@@ -42,7 +38,6 @@
 
 - type: loadout
   id: LoadoutCommandCMOHatBeret
-  description: A beret for the CMO. It seems unusually clean.
   category: Jobs
   cost: 1
   jobWhitelist:

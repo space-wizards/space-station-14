@@ -1,6 +1,5 @@
 - type: loadout
   id: LoadoutHeadBeaverHat
-  description: Gentlemen.
   category: Accessories
   cost: 2
   items:
@@ -8,7 +7,6 @@
 
 - type: loadout
   id: LoadoutHeadTophat
-  description: A stylish black tophat.
   category: Accessories
   cost: 2
   items:
@@ -16,7 +14,6 @@
 
 - type: loadout
   id: LoadoutHeadHatBluesoft
-  description: A cap.
   category: Accessories
   cost: 1
   items:
@@ -24,7 +21,6 @@
 
 - type: loadout
   id: LoadoutHeadHatBluesoftFlipped
-  description: A cap.
   category: Accessories
   cost: 1
   items:
@@ -32,7 +28,6 @@
 
 - type: loadout
   id: LoadoutHeadHatCorpsoft
-  description: A cap.
   category: Accessories
   cost: 1
   items:
@@ -40,7 +35,6 @@
 
 - type: loadout
   id: LoadoutHeadHatCorpsoftFlipped
-  description: A cap.
   category: Accessories
   cost: 1
   items:
@@ -48,7 +42,6 @@
 
 - type: loadout
   id: LoadoutHeadHatGreensoft
-  description: A cap.
   category: Accessories
   cost: 1
   items:
@@ -56,7 +49,6 @@
 
 - type: loadout
   id: LoadoutHeadHatGreensoftFlipped
-  description: A cap.
   category: Accessories
   cost: 1
   items:
@@ -64,7 +56,6 @@
 
 - type: loadout
   id: LoadoutHeadHatGreysoft
-  description: A cap.
   category: Accessories
   cost: 1
   items:
@@ -72,7 +63,6 @@
 
 - type: loadout
   id: LoadoutHeadHatGreysoftFlipped
-  description: A cap.
   category: Accessories
   cost: 1
   items:
@@ -80,7 +70,6 @@
 
 - type: loadout
   id: LoadoutHeadHatOrangesoft
-  description: A cap.
   category: Accessories
   cost: 1
   items:
@@ -88,7 +77,6 @@
 
 - type: loadout
   id: LoadoutHeadHatOrangesoftFlipped
-  description: A cap.
   category: Accessories
   cost: 1
   items:
@@ -96,7 +84,6 @@
 
 - type: loadout
   id: LoadoutHeadHatPurplesoft
-  description: A cap.
   category: Accessories
   cost: 1
   items:
@@ -104,7 +91,6 @@
 
 - type: loadout
   id: LoadoutHeadHatPurplesoftFlipped
-  description: A cap.
   category: Accessories
   cost: 1
   items:
@@ -112,7 +98,6 @@
 
 - type: loadout
   id: LoadoutHeadHatRedsoft
-  description: A cap.
   category: Accessories
   cost: 1
   items:
@@ -120,7 +105,6 @@
 
 - type: loadout
   id: LoadoutHeadHatRedsoftFlipped
-  description: A cap.
   category: Accessories
   cost: 1
   items:
@@ -128,7 +112,6 @@
 
 - type: loadout
   id: LoadoutHeadHatYellowsoft
-  description: A cap.
   category: Accessories
   cost: 1
   items:
@@ -136,7 +119,6 @@
 
 - type: loadout
   id: LoadoutHeadHatYellowsoftFlipped
-  description: A cap.
   category: Accessories
   cost: 1
   items:

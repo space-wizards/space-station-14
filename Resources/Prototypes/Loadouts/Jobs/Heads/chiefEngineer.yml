@@ -1,6 +1,5 @@
 - type: loadout
   id: LoadoutCommandCENeckMantle
-  description: To show who has the authority around here. It seems over-engineered.
   category: Jobs
   cost: 2
   exclusive: true
@@ -11,7 +10,6 @@
 
 - type: loadout
   id: LoadoutCommandCENeckCloak
-  description: To really show who has the authority around here. It seems over-engineered.
   category: Jobs
   cost: 2
   exclusive: true
@@ -22,7 +20,6 @@
 
 - type: loadout
   id: LoadoutCommandCEOuterWinter
-  description: A warm coat for the cold of space. It seems over-engineered.
   category: Jobs
   cost: 2
   jobWhitelist:

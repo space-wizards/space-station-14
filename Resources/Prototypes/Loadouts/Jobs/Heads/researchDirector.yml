@@ -1,6 +1,5 @@
 - type: loadout
   id: LoadoutCommandRDNeckMantle
-  description: To show who has the authority around here.
   category: Jobs
   cost: 2
   exclusive: true
@@ -11,7 +10,6 @@
 
 - type: loadout
   id: LoadoutCommandRDNeckCloak
-  description: To really show who has the authority around here.
   category: Jobs
   cost: 2
   exclusive: true
@@ -22,7 +20,6 @@
 
 - type: loadout
   id: LoadoutCommandRDOuterWinter
-  description: A warm coat for the cold of space.
   category: Jobs
   cost: 2
   jobWhitelist:

@@ -1,6 +1,5 @@
 - type: loadout
   id: LoadoutCommandCapNeckMantle
-  description: To show who has the authority around here.
   category: Jobs
   cost: 2
   exclusive: true
@@ -11,7 +10,6 @@
 
 - type: loadout
   id: LoadoutCommandCapNeckCloak
-  description: To really show who has the authority around here.
   category: Jobs
   cost: 2
   exclusive: true
@@ -22,7 +20,6 @@
 
 - type: loadout
   id: LoadoutCommandCapNeckCloakFormal
-  description: More than just to show who has the authority, it also shows who has the greatest fashion sense.
   category: Jobs
   cost: 2
   exclusive: true
@@ -33,7 +30,6 @@
 
 - type: loadout
   id: LoadoutCommandCapJumpsuitFormal
-  description: The outfit is quite fancy. I am curious where the wearer could be heading to justify such a stylish look.
   category: Jobs
   cost: 3
   exclusive: true
@@ -44,7 +40,6 @@
 
 - type: loadout
   id: LoadoutCommandCapJumpskirtFormal
-  description: The outfit is quite fancy. I am curious where the wearer could be heading to justify such a stylish look.
   category: Jobs
   cost: 3
   exclusive: true
@@ -55,7 +50,6 @@
 
 - type: loadout
   id: LoadoutCommandCapOuterWinter
-  description: A warm coat for the cold of space.
   category: Jobs
   cost: 2
   jobWhitelist:
@@ -65,7 +59,6 @@
 
 - type: loadout
   id: LoadoutCommandCapGloves
-  description: The gloves of the captain. They are very nice gloves.
   category: Jobs
   cost: 1
   jobWhitelist:
@@ -75,7 +68,6 @@
 
 - type: loadout
   id: LoadoutCommandCapHat
-  description: The hat of the captain. It is a very nice hat.
   category: Jobs
   cost: 1
   jobWhitelist:
@@ -85,7 +77,6 @@
 
 - type: loadout
   id: LoadoutCommandCapHatCapcap
-  description: The Captain's cap, pretty nice.
   category: Jobs
   cost: 1
   jobWhitelist:
@@ -95,7 +86,6 @@
 
 - type: loadout
   id: LoadoutCommandCapMaskGas
-  description: Why would the captain need this? I don't know, but it looks cool.
   category: Jobs
   cost: 1
   jobWhitelist:
@@ -105,7 +95,6 @@
 
 - type: loadout
   id: LoadoutCommandCapItemDrinkFlask
-  description: The finest of flasks, for the finest of drinks.
   category: Jobs
   cost: 1
   jobWhitelist:

@@ -1,0 +1,18 @@
+# Alphabetically ordered
+- type: loadoutCategory
+  id: Accessories
+
+- type: loadoutCategory
+  id: Items
+
+- type: loadoutCategory
+  id: Jobs
+
+- type: loadoutCategory
+  id: Outer
+
+- type: loadoutCategory
+  id: Uncategorized
+
+- type: loadoutCategory
+  id: Uniform

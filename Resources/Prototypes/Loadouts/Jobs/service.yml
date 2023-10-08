@@ -1,6 +1,5 @@
 - type: loadout
   id: LoadoutServiceClownUniformJesterAlt
-  description: For the fool who knows their place.
   category: Jobs
   cost: 2
   exclusive: true
@@ -11,7 +10,6 @@
 
 - type: loadout
   id: LoadoutServiceClownShoesJester
-  description: For the fool who knows their place.
   category: Jobs
   cost: 1
   exclusive: true
@@ -22,7 +20,6 @@
 
 - type: loadout
   id: LoadoutServiceClownHeadJesterHatAlt
-  description: For the fool who knows their place.
   category: Jobs
   cost: 1
   exclusive: true
@@ -33,7 +30,6 @@
 
 - type: loadout
   id: LoadoutServiceBartenderUniformPurple
-  description: An alternate job equipment.
   category: Jobs
   cost: 2
   exclusive: true
@@ -44,7 +40,6 @@
 
 - type: loadout
   id: LoadoutServiceBotanistUniformOveralls
-  description: A rugged pair of overalls.
   category: Jobs
   cost: 2
   exclusive: true
@@ -55,7 +50,6 @@
 
 - type: loadout
   id: LoadoutServiceLawyerUniformBlueSuit
-  description: A suit, very legal indeed.
   category: Jobs
   cost: 2
   exclusive: true
@@ -66,7 +60,6 @@
 
 - type: loadout
   id: LoadoutServiceLawyerUniformBlueSkirt
-  description: A skirt, very legal indeed.
   category: Jobs
   cost: 2
   exclusive: true
@@ -77,7 +70,6 @@
 
 - type: loadout
   id: LoadoutServiceLawyerUniformRedSuit
-  description: A suit, very legal indeed.
   category: Jobs
   cost: 2
   exclusive: true
@@ -88,7 +80,6 @@
 
 - type: loadout
   id: LoadoutServiceLawyerUniformRedSkirt
-  description: A skirt, very legal indeed.
   category: Jobs
   cost: 2
   exclusive: true
@@ -99,7 +90,6 @@
 
 - type: loadout
   id: LoadoutServiceLawyerUniformPurpleSuit
-  description: A suit, very legal indeed.
   category: Jobs
   cost: 2
   exclusive: true
@@ -110,7 +100,6 @@
 
 - type: loadout
   id: LoadoutServiceLawyerUniformPurpleSkirt
-  description: A skirt, very legal indeed.
   category: Jobs
   cost: 2
   exclusive: true
@@ -121,7 +110,6 @@
 
 - type: loadout
   id: LoadoutServiceLawyerUniformGoodSuit
-  description: A suit, very legal indeed.
   category: Jobs
   cost: 2
   exclusive: true
@@ -132,7 +120,6 @@
 
 - type: loadout
   id: LoadoutServiceLawyerUniformGoodSkirt
-  description: A skirt, very legal indeed.
   category: Jobs
   cost: 2
   exclusive: true
@@ -143,7 +130,6 @@
 
 - type: loadout
   id: LoadoutServiceReporterUniformJournalist
-  description: For the reporter on the case!
   category: Jobs
   cost: 2
   exclusive: true
@@ -154,7 +140,6 @@
 
 - type: loadout
   id: LoadoutServiceReporterUniformDetectivesuit
-  description: Always reminds you of the one that got away...
   category: Jobs
   cost: 2
   exclusive: true
@@ -165,7 +150,6 @@
 
 - type: loadout
   id: LoadoutServiceReporterUniformDetectiveskirt
-  description: Always reminds you of the one that got away...
   category: Jobs
   cost: 2
   exclusive: true

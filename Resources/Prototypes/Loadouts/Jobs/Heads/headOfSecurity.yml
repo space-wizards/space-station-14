@@ -1,6 +1,5 @@
 - type: loadout
   id: LoadoutCommandHOSNeckMantle
-  description: To really show who has the authority around here.
   category: Jobs
   cost: 2
   exclusive: true
@@ -11,7 +10,6 @@
 
 - type: loadout
   id: LoadoutCommandHOSNeckCloak
-  description: To truly show who has the authority around here.
   category: Jobs
   cost: 2
   exclusive: true
@@ -22,7 +20,6 @@
 
 - type: loadout
   id: LoadoutCommandHOSJumpsuitAlt
-  description: An alternate job equipment.
   category: Jobs
   cost: 2
   exclusive: true
@@ -33,7 +30,6 @@
 
 - type: loadout
   id: LoadoutCommandHOSJumpsuitBlue
-  description: An alternate job equipment.
   category: Jobs
   cost: 2
   exclusive: true
@@ -44,7 +40,6 @@
 
 - type: loadout
   id: LoadoutCommandHOSJumpsuitGrey
-  description: An alternate job equipment.
   category: Jobs
   cost: 2
   exclusive: true
@@ -55,7 +50,6 @@
 
 - type: loadout
   id: LoadoutCommandHOSJumpsuitParade
-  description: A fancy uniform for a fancy officer, wonder what event they mey be attending.
   category: Jobs
   cost: 3
   exclusive: true
@@ -66,7 +60,6 @@
 
 - type: loadout
   id: LoadoutCommandHOSJumpsuitFormal
-  description: The outfit is quite fancy. I am curious where the wearer could be heading to justify such a stylish look.
   category: Jobs
   cost: 3
   exclusive: true
@@ -77,7 +70,6 @@
 
 - type: loadout
   id: LoadoutCommandHOSJumpskirtAlt
-  description: An alternate job equipment.
   category: Jobs
   cost: 2
   exclusive: true
@@ -88,7 +80,6 @@
 
 - type: loadout
   id: LoadoutCommandHOSJumpskirtParade
-  description: A fancy uniform for a fancy officer, wonder what event they mey be attending.
   category: Jobs
   cost: 3
   exclusive: true
@@ -99,7 +90,6 @@
 
 - type: loadout
   id: LoadoutCommandHOSJumpskirtFormal
-  description: The outfit is quite fancy. I am curious where the wearer could be heading to justify such a stylish look.
   category: Jobs
   cost: 3
   exclusive: true
@@ -110,7 +100,6 @@
 
 - type: loadout
   id: LoadoutCommandHOSOuterWinter
-  description: A warm coat for the cold of space.
   category: Jobs
   cost: 2
   jobWhitelist:
@@ -120,7 +109,6 @@
 
 - type: loadout
   id: LoadoutCommandHOSOuterTrench
-  description: A trench coat for the HOS.
   category: Jobs
   cost: 2
   jobWhitelist:
@@ -130,7 +118,6 @@
 
 - type: loadout
   id: LoadoutCommandHOSHatBeret
-  description: A beret for the HOS.
   category: Jobs
   cost: 1
   jobWhitelist:
@@ -140,7 +127,6 @@
 
 - type: loadout
   id: LoadoutCommandHOSHatHoshat
-  description: The HOS's hat, pretty nice.
   category: Jobs
   cost: 1
   jobWhitelist:

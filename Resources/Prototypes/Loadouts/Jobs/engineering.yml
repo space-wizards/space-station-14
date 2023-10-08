@@ -1,6 +1,5 @@
 - type: loadout
   id: LoadoutEngineeringUniformHazard
-  description: An alternate job equipment.
   category: Jobs
   cost: 2
   exclusive: true
@@ -11,7 +10,6 @@
 
 - type: loadout
   id: LoadoutEngineeringOuterHazard
-  description: An alternate job equipment.
   category: Jobs
   cost: 2
   exclusive: true
@@ -22,8 +20,6 @@
 
 - type: loadout
   id: LoadoutEngineeringOuterChickenSuit
-  name: Eggmospheric Technician Suit
-  description: For the Eggmos tech who always knows where home is...
   category: Jobs
   cost: 3
   exclusive: true
@@ -34,8 +30,6 @@
 
 - type: loadout
   id: LoadoutEngineeringHeadChicken
-  name: Eggmospheric Technician Helmet
-  description: For the Eggmos tech who always knows where home is...
   category: Jobs
   cost: 2
   exclusive: true
@@ -46,7 +40,6 @@
 
 - type: loadout
   id: LoadoutEngineeringEyesMeson
-  description: An alternate job equipment.
   category: Jobs
   cost: 2
   exclusive: true
@@ -58,7 +51,6 @@
 
 - type: loadout
   id: LoadoutEngineeringHeadBeret
-  description: An alternate job equipment.
   category: Jobs
   cost: 1
   exclusive: true
@@ -71,7 +63,6 @@
 
 - type: loadout
   id: LoadoutEngineeringHeadHardhatBlue
-  description: An alternate job equipment.
   category: Jobs
   cost: 2
   exclusive: true
@@ -83,7 +74,6 @@
 
 - type: loadout
   id: LoadoutEngineeringHeadHardhatOrange
-  description: An alternate job equipment.
   category: Jobs
   cost: 2
   exclusive: true
@@ -95,7 +85,6 @@
 
 - type: loadout
   id: LoadoutEngineeringHeadHardhatYellow
-  description: An alternate job equipment.
   category: Jobs
   cost: 2
   exclusive: true
@@ -107,7 +96,6 @@
 
 - type: loadout
   id: LoadoutEngineeringHeadHardhatWhite
-  description: An alternate job equipment.
   category: Jobs
   cost: 2
   exclusive: true
@@ -119,7 +107,6 @@
 
 - type: loadout
   id: LoadoutEngineeringHeadHardhatRed
-  description: An alternate job equipment.
   category: Jobs
   cost: 2
   exclusive: true
@@ -131,7 +118,6 @@
 
 - type: loadout
   id: LoadoutEngineeringItemInflatable
-  description: A box containing infaltable walls and doors, for quickly patching up breaches.
   category: Jobs
   cost: 4
   jobWhitelist:

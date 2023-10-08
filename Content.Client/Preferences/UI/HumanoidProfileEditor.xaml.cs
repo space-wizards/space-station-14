@@ -1557,14 +1557,15 @@ namespace Content.Client.Preferences.UI
                 // Create a checkbox to get the loadout
                 _checkBox = new CheckBox
                 {
-                    Text = $"[{loadout.Cost}] {(string.IsNullOrEmpty(loadout.Name) ? entityManager.GetComponent<MetaDataComponent>(dummyLoadoutItem).EntityName : Loc.GetString(loadout.Name))}",
+                    Text = $"[{loadout.Cost}] {(Loc.GetString($"loadout-name-{loadout.ID}") == $"loadout-name-{loadout.ID}" ? entityManager.GetComponent<MetaDataComponent>(dummyLoadoutItem).EntityName : Loc.GetString($"loadout-name-{loadout.ID}"))}",
                     VerticalAlignment = VAlignment.Center
                 };
                 _checkBox.OnToggled += OnCheckBoxToggled;
 
                 var tooltip = "";
                 // Add the loadout description to the tooltip if there is one
-                if (loadout.Description is { } desc)
+                var desc = Loc.GetString($"loadout-description-{loadout.ID}") == $"loadout-description-{loadout.ID}" ? entityManager.GetComponent<MetaDataComponent>(dummyLoadoutItem).EntityDescription : Loc.GetString($"loadout-description-{loadout.ID}");
+                if (!string.IsNullOrEmpty(desc))
                 {
                     tooltip += $"{Loc.GetString(desc)}";
                     if (loadoutSystem.LoadoutWhitelistExists(loadout) || loadoutSystem.LoadoutBlacklistExists(loadout))
@@ -1576,7 +1577,7 @@ namespace Content.Client.Preferences.UI
                 tooltip += loadoutSystem.GetLoadoutBlacklistString(loadout);
 
                 // If the tooltip has any content, add it to the checkbox
-                if (tooltip != "")
+                if (!string.IsNullOrEmpty(tooltip))
                 {
                     _checkBox.ToolTip = tooltip;
                     _checkBox.TooltipDelay = 0.2f;

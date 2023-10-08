@@ -1,6 +1,5 @@
 - type: loadout
   id: LoadoutCommandHOPNeckMantle
-  description: To show who has the authority around here.
   category: Jobs
   cost: 2
   exclusive: true
@@ -11,7 +10,6 @@
 
 - type: loadout
   id: LoadoutcommandHOPNeckCloak
-  description: To really show who has the authority around here.
   category: Jobs
   cost: 2
   exclusive: true
@@ -22,10 +20,8 @@
 
 - type: loadout
   id: LoadoutcommandHOPBackIan
-  description: A backpack that looks like Ian, how cute!
   category: Jobs
   cost: 4
-  exclusive: true
   jobWhitelist:
     - HeadOfPersonnel
   items:
@@ -33,7 +29,6 @@
 
 - type: loadout
   id: LoadoutCommandHOPHatCap
-  description: The HOP's cap, pretty nice.
   category: Jobs
   cost: 1
   jobWhitelist:

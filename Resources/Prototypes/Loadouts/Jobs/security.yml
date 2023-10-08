@@ -1,6 +1,5 @@
 - type: loadout
   id: LoadoutSecurityUniformGrey
-  description: An alternate job equipment.
   category: Jobs
   cost: 2
   exclusive: true
@@ -13,7 +12,6 @@
 
 - type: loadout
   id: LoadoutSecurityOuterArmorBasic
-  description: An alternate job equipment.
   category: Jobs
   cost: 4
   exclusive: true
@@ -25,7 +23,6 @@
 
 - type: loadout
   id: LoadoutSecurityHeadHelmetBasic
-  description: An alternate job equipment.
   category: Jobs
   cost: 2
   exclusive: true
@@ -37,7 +34,6 @@
 
 - type: loadout
   id: LoadoutSecurityMaskGasSwat
-  description: An alternate job equipment.
   category: Jobs
   cost: 2
   exclusive: true
@@ -51,7 +47,6 @@
 
 - type: loadout
   id: LoadoutSecurityEyesGlasses
-  description: An alternate job equipment.
   category: Jobs
   cost: 1
   exclusive: true
@@ -66,7 +61,6 @@
 
 - type: loadout
   id: LoadoutSecurityEyesHud
-  description: An alternate job equipment.
   category: Jobs
   cost: 3
   exclusive: true
@@ -80,7 +74,6 @@
 
 - type: loadout
   id: LoadoutSecurityShoesBootsCombatFilled
-  description: An alternate job equipment.
   category: Jobs
   cost: 3
   exclusive: true
@@ -93,7 +86,6 @@
 
 - type: loadout
   id: LoadoutSecurityShoesJackboots
-  description: A really nice, heavy, pair of black boots.
   category: Jobs
   cost: 1
   jobWhitelist:

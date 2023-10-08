@@ -1,41 +1,26 @@
 using Content.Shared.Whitelist;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
 namespace Content.Shared.Loadouts;
 
-/// <summary>
-///     Describes a loadout.
-/// </summary>
 [Prototype("loadout")]
 public sealed class LoadoutPrototype : IPrototype
 {
-    [ViewVariables]
     [IdDataField]
     public string ID { get; } = default!;
 
     /// <summary>
-    ///     The name of this loadout.
-    /// </summary>
-    [DataField("name")]
-    public string? Name;
-
-    /// <summary>
-    ///     The description of this loadout.
-    /// </summary>
-    [DataField("description")]
-    public string? Description;
-
-    /// <summary>
     ///     Which tab category to put this under.
     /// </summary>
-    [DataField("category")]
+    [DataField("category", customTypeSerializer:typeof(PrototypeIdSerializer<LoadoutCategoryPrototype>))]
     public string Category = "Uncategorized";
 
     /// <summary>
     ///     The item to give.
     /// </summary>
-    [DataField("items", customTypeSerializer: typeof(PrototypeIdListSerializer<EntityPrototype>))]
+    [DataField("items", customTypeSerializer: typeof(PrototypeIdListSerializer<EntityPrototype>), required: true)]
     public List<string> Items = new();
 
 

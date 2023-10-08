@@ -1,18 +1,16 @@
 # What? This isn't a thing?? :(
 # - type: loadout
 #   id: LoadoutCommandQMNeckMantle
-#   description: To show who has the authority around here. It's stained with beer.
 #   category: Jobs
 #   cost: 2
 #   exclusive: true
 #   jobWhitelist:
 #     - Quartermaster
 #   items:
-    - ClothingNeckMantleQM
+#     - ClothingNeckMantleQM
 
 - type: loadout
   id: LoadoutCommandQMNeckCloak
-  description: To really show who has the authority around here. It's stained with beer.
   category: Jobs
   cost: 2
   exclusive: true
@@ -23,7 +21,6 @@
 
 - type: loadout
   id: LoadoutCommandQMUniformTurtleneck
-  description: An alternate job equipment. It's stained with beer.
   category: Jobs
   cost: 2
   exclusive: true
@@ -34,7 +31,6 @@
 
 - type: loadout
   id: LoadoutCommandQMUniformTurtleneckSkirt
-  description: An alternate job equipment. It's stained with beer.
   category: Jobs
   cost: 2
   exclusive: true
@@ -45,7 +41,6 @@
 
 - type: loadout
   id: LoadoutCommandQMHeadSoft
-  description: The QM's hat. It's stained with beer.
   category: Jobs
   cost: 1
   jobWhitelist:

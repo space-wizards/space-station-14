@@ -1,6 +1,5 @@
 - type: loadout
   id: LoadoutScienceOuterCoat
-  description: An alternate job equipment.
   category: Jobs
   cost: 2
   exclusive: true
@@ -13,7 +12,6 @@
 
 - type: loadout
   id: LoadoutScienceOuterLabcoat
-  description: An alternate job equipment.
   category: Jobs
   cost: 2
   exclusive: true
@@ -25,7 +23,6 @@
 
 - type: loadout
   id: LoadoutScienceOuterLabcoatSeniorResearcher
-  description: An alternate job equipment.
   category: Jobs
   cost: 2
   exclusive: true
@@ -36,7 +33,6 @@
 
 - type: loadout
   id: LoadoutScienceHatBeret
-  description: An alternate job equipment.
   category: Jobs
   cost: 1
   exclusive: true

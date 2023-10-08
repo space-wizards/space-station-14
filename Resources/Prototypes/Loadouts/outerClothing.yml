@@ -1,6 +1,5 @@
 - type: loadout
   id: LoadoutOuterGhostSheet
-  description: Spooky..
   category: Outer
   cost: 2
   items:
@@ -8,7 +7,6 @@
 
 - type: loadout
   id: LoadoutOuterCoatBomberjacket
-  description: A sleek bomber jacket.
   category: Outer
   cost: 3
   items:
@@ -16,7 +14,6 @@
 
 - type: loadout
   id: LoadoutOuterCoatHoodieBlack
-  description: A warm hoodie.
   category: Outer
   cost: 2
   items:
@@ -24,7 +21,6 @@
 
 - type: loadout
   id: LoadoutOuterCoatHoodieGrey
-  description: A warm hoodie.
   category: Outer
   cost: 2
   items:
@@ -32,7 +28,6 @@
 
 - type: loadout
   id: LoadoutOuterCoatWinterCoat
-  description: For keeping nice and snug.
   category: Outer
   cost: 3
   items:

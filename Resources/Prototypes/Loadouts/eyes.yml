@@ -1,6 +1,5 @@
 - type: loadout
   id: LoadoutEyesEyepatch
-  description: Eyewear, for the fashionista without and eye.
   category: Accessories
   cost: 1
   items:
@@ -8,7 +7,6 @@
 
 - type: loadout
   id: LoadoutEyesBlindfold
-  description: Why would you want this?
   category: Accessories
   cost: 2
   items:
