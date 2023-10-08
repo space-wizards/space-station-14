@@ -10,6 +10,9 @@ namespace Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Components;
 [RegisterComponent]
 public sealed partial class PolyArtifactComponent : Component
 {
+    /// <summary>
+    /// The polymorph effect to trigger.
+    /// </summary>
     [DataField]
     public ProtoId<PolymorphPrototype> PolymorphPrototypeName = "ArtifactMonkey";
 
