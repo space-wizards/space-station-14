@@ -1,4 +1,6 @@
 using Content.Shared.Actions;
+using Content.Shared.MouseRotator;
+using Content.Shared.Movement.Components;
 using Content.Shared.Popups;
 using Content.Shared.Targeting;
 using Robust.Shared.Network;
@@ -25,11 +27,14 @@ public abstract class SharedCombatModeSystem : EntitySystem
     private void OnMapInit(EntityUid uid, CombatModeComponent component, MapInitEvent args)
     {
         _actionsSystem.AddAction(uid, ref component.CombatToggleActionEntity, component.CombatToggleAction);
+        Dirty(uid, component);
     }
 
     private void OnShutdown(EntityUid uid, CombatModeComponent component, ComponentShutdown args)
     {
         _actionsSystem.RemoveAction(uid, component.CombatToggleActionEntity);
+
+        SetMouseRotatorComponents(uid, false);
     }
 
     private void OnActionPerform(EntityUid uid, CombatModeComponent component, ToggleCombatActionEvent args)
@@ -76,6 +81,12 @@ public abstract class SharedCombatModeSystem : EntitySystem
 
         if (component.CombatToggleActionEntity != null)
             _actionsSystem.SetToggled(component.CombatToggleActionEntity, component.IsInCombatMode);
+
+        // Change mouse rotator comps if flag is set
+        if (!component.ToggleMouseRotator)
+            return;
+
+        SetMouseRotatorComponents(entity, value);
     }
 
     public virtual void SetActiveZone(EntityUid entity, TargetingZone zone,
@@ -85,6 +96,20 @@ public abstract class SharedCombatModeSystem : EntitySystem
             return;
 
         component.ActiveZone = zone;
+    }
+
+    private void SetMouseRotatorComponents(EntityUid uid, bool value)
+    {
+        if (value)
+        {
+            EnsureComp<MouseRotatorComponent>(uid);
+            EnsureComp<NoRotateOnMoveComponent>(uid);
+        }
+        else
+        {
+            RemComp<MouseRotatorComponent>(uid);
+            RemComp<NoRotateOnMoveComponent>(uid);
+        }
     }
 }
 

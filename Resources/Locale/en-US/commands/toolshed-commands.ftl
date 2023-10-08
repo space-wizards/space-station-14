@@ -40,6 +40,12 @@ command-description-stations-rename =
     Renames the given station.
 command-description-stations-largestgrid =
     Returns the largest grid the given station has, if any.
+command-description-stationevent-lsprob =
+    Lists the probability of different station events occuring out of the entire pool.
+command-description-stationevent-lsprobtime =
+    Lists the probability of different station events occuring based on the specified length of a round.
+command-description-stationevent-prob =
+    Returns the probability of a single station event occuring out of the entire pool.
 command-description-admins-active =
     Returns a list of active admins.
 command-description-admins-all =
