@@ -15,6 +15,7 @@
   - Maintenance
   extendedAccess:
   - Chemistry
+  - Paramedic
 
 - type: startingGear
   id: DoctorGear

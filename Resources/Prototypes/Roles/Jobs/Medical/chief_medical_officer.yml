@@ -28,6 +28,7 @@
   - Command
   - Maintenance
   - Chemistry
+  - Paramedic
   - ChiefMedicalOfficer
   special:
   - !type:AddImplantSpecial

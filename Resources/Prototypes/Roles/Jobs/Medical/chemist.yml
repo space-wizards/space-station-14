@@ -14,6 +14,8 @@
   - Medical
   - Chemistry
   - Maintenance
+  extendedAccess:
+  - Paramedic
 
 - type: startingGear
   id: ChemistGear
