@@ -12,6 +12,7 @@ using Content.Shared.CCVar;
 using Content.Shared.Clothing;
 using Content.Shared.Database;
 using Content.Shared.Inventory;
+using Content.Shared.Item;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
 using Content.Shared.Roles.Jobs;
@@ -228,16 +229,15 @@ namespace Content.Server.GameTicking
                 // Spawn the loadout, get a list of items that failed to equip
                 var failedLoadouts = _loadout.ApplyCharacterLoadout(mob, jobPrototype, character);
 
-                foreach (var loadout in failedLoadouts)
-                {
-                    // Try to find back-mounted storage apparatus
-                    if (!_inventory.TryGetSlotEntity(mob, "back", out var item) ||
-                        !EntityManager.TryGetComponent<StorageComponent>(item, out var inventory))
-                        continue;
-
+                // Try to find back-mounted storage apparatus
+                if (_inventory.TryGetSlotEntity(mob, "back", out var item) &&
+                    EntityManager.TryGetComponent<StorageComponent>(item, out var inventory))
                     // Try inserting the entity into the storage, if it can't, it leaves the loadout item on the ground
-                    inventory.Container.Insert(loadout);
-                }
+                    foreach (var loadout in failedLoadouts)
+                        // Check if the item can fit in the storage
+                        if (EntityManager.TryGetComponent<ItemComponent>(loadout, out var itemComp) &&
+                            inventory.StorageUsed + itemComp.Size <= inventory.StorageCapacityMax)
+                            inventory.Container.Insert(loadout);
             }
 
 
