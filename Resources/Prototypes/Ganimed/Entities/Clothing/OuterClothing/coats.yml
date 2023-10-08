@@ -8,3 +8,32 @@
     sprite: Ganimed/Clothing/OuterClothing/Coats/red_coat.rsi
   - type: Clothing
     sprite: Ganimed/Clothing/OuterClothing/Coats/red_coat.rsi
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: ClothingOuterCoatBlueCoat
+  name: blue old-fashioned coat
+  description: An outdated and worn-out piece of fashion. It still maintains some of it's charm and you almost feel an urge to smile.
+  components:
+  - type: Sprite
+    sprite: Ganimed/Clothing/OuterClothing/Coats/blue_coat.rsi
+  - type: Clothing
+    sprite: Ganimed/Clothing/OuterClothing/Coats/blue_coat.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.85
+        Slash: 0.75
+        Piercing: 0.80
+        Heat: 0.85
+
+- type: entity
+  parent: ClothingOuterBase
+  id: ClothingOuterNightDress
+  name: red old-fashioned coat
+  description: A dress of futuristic dark neon tones and high royal court designs. Truly a dangerous mix of different times.
+  components:
+  - type: Sprite
+    sprite: Ganimed/Clothing/OuterClothing/nightdress.rsi
+  - type: Clothing
+    sprite: Ganimed/Clothing/OuterClothing/nightdress.rsi
