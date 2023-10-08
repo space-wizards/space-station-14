@@ -36,10 +36,6 @@ public sealed class PolyArtifactSystem : EntitySystem
                 _poly.PolymorphEntity(target, component.PolymorphPrototypeName);
                 _audio.PlayPvs(component.PolySound, uid);
             }
-
-            else
-
-                continue;
         }
     }
 }
