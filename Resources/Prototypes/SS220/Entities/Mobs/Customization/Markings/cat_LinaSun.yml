@@ -1,0 +1,116 @@
+# © SS220, An EULA/CLA with a hosting restriction, full text: https://raw.githubusercontent.com/SerbiaStrong-220/space-station-14/master/CLA.txt
+
+- type: marking
+  id: Фелинидские уши с пирсингом
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Felinid]
+  coloring:
+    default:
+      type:
+        !type:CategoryColoring
+        category: Hair
+      fallbackTypes:
+        - !type:SkinColoring
+    layers:
+      ears_cat_inner:
+        type:
+          !type:SimpleColoring
+          color: "#FFFFFF"
+  sprites:
+  - sprite: SS220/Mobs/Customization/felinid_parts.rsi
+    state: ears_pirsing_outer
+  - sprite: SS220/Mobs/Customization/felinid_parts.rsi
+    state: ears_pirsing_inner  
+    
+- type: marking
+  id: Большие фелинидские ушы
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Felinid]
+  coloring:
+    default:
+      type:
+        !type:CategoryColoring
+        category: Hair
+      fallbackTypes:
+        - !type:SkinColoring
+    layers:
+      ears_cat_inner:
+        type:
+          !type:SimpleColoring
+          color: "#FFFFFF"
+  sprites:
+  - sprite: SS220/Mobs/Customization/felinid_parts.rsi
+    state: ears_big_outer
+  - sprite: SS220/Mobs/Customization/felinid_parts.rsi
+    state: ears_big_inner
+    
+- type: marking
+  id: Фелинидские уши
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Felinid]
+  coloring:
+    default:
+      type:
+        !type:CategoryColoring
+        category: Hair
+      fallbackTypes:
+        - !type:SkinColoring
+    layers:
+      ears_cat_inner:
+        type:
+          !type:SimpleColoring
+          color: "#FFFFFF"
+  sprites:
+  - sprite: SS220/Mobs/Customization/felinid_parts.rsi
+    state: ears_nyshka_outer
+  - sprite: SS220/Mobs/Customization/felinid_parts.rsi
+    state: ears_nyshka_inner  
+    
+- type: marking
+  id: Фелинидские уши [2]
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Felinid]
+  coloring:
+    default:
+      type:
+        !type:CategoryColoring
+        category: Hair
+      fallbackTypes:
+        - !type:SkinColoring
+    layers:
+      ears_cat_inner:
+        type:
+          !type:SimpleColoring
+          color: "#FFFFFF"
+  sprites:
+  - sprite: SS220/Mobs/Customization/felinid_parts.rsi
+    state: ears_food_outer
+  - sprite: SS220/Mobs/Customization/felinid_parts.rsi
+    state: ears_food_inner
+    
+- type: marking
+  id: Фелинидские уши вины
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Felinid]
+  coloring:
+    default:
+      type:
+        !type:CategoryColoring
+        category: Hair
+      fallbackTypes:
+        - !type:SkinColoring
+    layers:
+      ears_vini_inner:
+        type:
+          !type:SimpleColoring
+          color: "#FFFFFF"
+  sprites:
+  - sprite: SS220/Mobs/Customization/felinid_parts.rsi
+    state: ears_vini_outer
+  - sprite: SS220/Mobs/Customization/felinid_parts.rsi
+    state: ears_vini_inner

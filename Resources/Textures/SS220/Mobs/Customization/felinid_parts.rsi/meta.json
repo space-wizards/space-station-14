@@ -1,0 +1,51 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "by spo9k\u0026lina",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "ears_food_inner",
+      "directions": 4
+    },
+    {
+      "name": "ears_food_outer",
+      "directions": 4
+    },
+    {
+      "name": "ears_nyshka_inner",
+      "directions": 4
+    },
+    {
+      "name": "ears_nyshka_outer",
+      "directions": 4
+    },
+    {
+      "name": "ears_pirsing_inner",
+      "directions": 4
+    },
+    {
+      "name": "ears_pirsing_outer",
+      "directions": 4
+    },
+    {
+      "name": "ears_vini_inner",
+      "directions": 4
+    },
+    {
+      "name": "ears_vini_outer",
+      "directions": 4
+    },
+    {
+      "name": "ears_big_inner",
+      "directions": 4
+    },
+    {
+      "name": "ears_big_outer",
+      "directions": 4
+    }
+  ]
+}
