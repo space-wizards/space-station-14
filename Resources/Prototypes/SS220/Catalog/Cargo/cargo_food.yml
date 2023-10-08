@@ -4,7 +4,7 @@
     sprite: SS220/Structures/Storage/Tanks/barrel.rsi
     state: barrel
   product: BarrelBeerFull
-  cost: 2000
+  cost: 4000
   category: Food
   group: market
 

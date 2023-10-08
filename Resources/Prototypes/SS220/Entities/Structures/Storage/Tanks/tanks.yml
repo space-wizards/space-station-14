@@ -1,7 +1,7 @@
 - type: entity
   id: BarrelBeer
   parent: StorageTank
-  name: Бочка
+  name: бочка
   description: Бочка для хранения реагентов и напитков.
   suffix: Пустая
   components:
