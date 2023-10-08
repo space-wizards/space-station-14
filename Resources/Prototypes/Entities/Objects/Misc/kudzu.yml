@@ -208,3 +208,56 @@
         types:
           Asphyxiation: -0.25
 
+- type: entity
+  name: Dark Haze
+  id: ShadowKudzu
+  placement:
+    mode: SnapgridCenter
+    snap:
+      - Wall
+  components:
+    - type: Occluder
+    - type: Sprite
+      drawdepth: Effects
+      sprite: Effects/spookysmoke.rsi
+      state: spookysmoke
+      color: "#793a80dd"
+    - type: Appearance
+    - type: Transform
+      anchored: true
+    - type: Physics
+    - type: Fixtures
+      fixtures:
+        fix1:
+          hard: false
+          density: 7
+          shape:
+            !type:PhysShapeAabb
+            bounds: "-0.5,-0.5,0.5,0.5"
+          layer:
+          - Opaque
+    - type: SlowContacts
+      walkSpeedModifier: 0.7
+      sprintSpeedModifier: 0.7
+    - type: Kudzu
+      growthTickChance: 0.2
+      spreadChance: 0.6
+    - type: ShadowKudzu
+    - type: DestroyedByFlashing
+    - type: Flashable
+    - type: GrowingKudzu
+      growthTickChance: 0.5
+    - type: ActiveEdgeSpreader
+    - type: EdgeSpreader
+      id: Kudzu
+    - type: Tag
+      tags:
+        - HideContextMenu
+
+- type: entity
+  name: Haze
+  id: ShadowKudzuWeak
+  parent: ShadowKudzu
+  components:
+    - type: Kudzu
+      spreadChance: 0.05 #appears during pulsation. It should spread REALLY slowly.
