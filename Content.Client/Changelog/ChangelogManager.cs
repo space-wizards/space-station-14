@@ -130,9 +130,18 @@ namespace Content.Client.Changelog
         [DataDefinition]
         public sealed partial class Changelog
         {
+            /// <summary>
+            ///     The name to use for this changelog.
+            ///     If left unspecified, the name of the file is used instead.
+            ///     Used during localization to find the user-displayed name of this changelog.
+            /// </summary>
             [DataField("Name")]
             public string Name = string.Empty;
 
+            /// <summary>
+            ///     The individual entries in this changelog.
+            ///     These are not kept around in memory in the changelog manager.
+            /// </summary>
             [DataField("Entries")]
             public List<ChangelogEntry> Entries = new();
 
@@ -144,6 +153,10 @@ namespace Content.Client.Changelog
             [DataField("AdminOnly")]
             public bool AdminOnly;
 
+            /// <summary>
+            ///     Used when ordering the changelog tabs for the user to see.
+            ///     Larger numbers are displayed later, smaller numbers are displayed earlier.
+            /// </summary>
             [DataField("Order")]
             public int Order;
         }
