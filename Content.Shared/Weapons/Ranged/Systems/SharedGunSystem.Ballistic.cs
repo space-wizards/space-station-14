@@ -6,7 +6,6 @@ using Content.Shared.Verbs;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
 using Robust.Shared.Containers;
-using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 
@@ -73,7 +72,7 @@ public abstract partial class SharedGunSystem
 
         args.Handled = true;
 
-        _doAfter.TryStartDoAfter(new DoAfterArgs(args.User, component.FillDelay, new AmmoFillDoAfterEvent(), used: uid, target: args.Target, eventTarget: uid)
+        _doAfter.TryStartDoAfter(new DoAfterArgs(EntityManager, args.User, component.FillDelay, new AmmoFillDoAfterEvent(), used: uid, target: args.Target, eventTarget: uid)
         {
             BreakOnTargetMove = true,
             BreakOnUserMove = true,
@@ -133,15 +132,16 @@ public abstract partial class SharedGunSystem
                     uid,
                     args.User);
 
-                // play sound to be cool
                 SimulateInsertAmmo(ent.Value, uid, Transform(uid).Coordinates);
             }
             else
             {
+                // play sound to be cool
+                Audio.PlayPredicted(component.SoundInsert, uid, args.User);
                 SimulateInsertAmmo(ent.Value, args.Target.Value, Transform(args.Target.Value).Coordinates);
             }
 
-            if (ent.Value.IsClientSide())
+            if (IsClientSide(ent.Value))
                 Del(ent.Value);
         }
 
@@ -216,7 +216,7 @@ public abstract partial class SharedGunSystem
     {
         // TODO this should be part of the prototype, not set on map init.
         // Alternatively, just track spawned count, instead of unspawned count.
-        if (component.FillProto != null)
+        if (component.Proto != null)
         {
             component.UnspawnedCount = Math.Max(0, component.Capacity - component.Container.ContainedEntities.Count);
             UpdateBallisticAppearance(uid, component);
@@ -246,7 +246,7 @@ public abstract partial class SharedGunSystem
             else if (component.UnspawnedCount > 0)
             {
                 component.UnspawnedCount--;
-                entity = Spawn(component.FillProto, args.Coordinates);
+                entity = Spawn(component.Proto, args.Coordinates);
                 args.Ammo.Add((entity, EnsureShootable(entity)));
             }
         }

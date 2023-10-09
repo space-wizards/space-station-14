@@ -533,3 +533,19 @@
         damage:
           types:
             Poison: 0.6 # Makes it 20 damage per unit.
+
+- type: reagent
+  id: Bungotoxin
+  name: reagent-name-bungotoxin
+  group: Toxins
+  desc: reagent-desc-bungotoxin
+  physicalDesc: reagent-physical-desc-nondescript
+  color: "#EBFF8E"
+  metabolisms:
+    Poison:
+      metabolismRate: 0.2
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: 1.8

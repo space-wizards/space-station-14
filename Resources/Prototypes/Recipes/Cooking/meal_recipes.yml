@@ -360,11 +360,10 @@
   result: FoodBreadMimana
   time: 15
   reagents:
-    MilkSoy: 5
-    Nothing: 5 #replace with mimana
+    Nothing: 5
   solids:
     FoodDough: 1
-    FoodTofu: 1
+    FoodMimana: 1
 
 - type: microwaveMealRecipe
   id: RecipeBread
@@ -483,14 +482,22 @@
   solids:
     FoodBreadPlainSlice: 2
 
-#Pizzas
+- type: microwaveMealRecipe
+  id: RecipeOnionRings
+  name: onion rings recipe
+  result: FoodOnionRings
+  time: 15
+  solids:
+    FoodOnionSlice: 1
+
+#Pizzas TODO: contruction graph based pizza
 - type: microwaveMealRecipe
   id: RecipeMargheritaPizza
   name: margherita pizza recipe
   result: FoodPizzaMargherita
   time: 30
   solids:
-    FoodDough: 1
+    FoodDoughFlat: 1
     FoodCheeseSlice: 1
     FoodTomato: 4
 
@@ -500,7 +507,7 @@
   result: FoodPizzaMushroom
   time: 25
   solids:
-    FoodDough: 1
+    FoodDoughFlat: 1
     FoodMushroom: 5
 
 - type: microwaveMealRecipe
@@ -509,7 +516,7 @@
   result: FoodPizzaMeat
   time: 30
   solids:
-    FoodDough: 1
+    FoodDoughFlat: 1
     FoodMeat: 3
     FoodCheeseSlice: 1
     FoodTomato: 1
@@ -520,7 +527,7 @@
   result: FoodPizzaVegetable
   time: 30
   solids:
-    FoodDough: 1
+    FoodDoughFlat: 1
     FoodEggplant: 1
     FoodCarrot: 1
     FoodCorn: 1
@@ -532,7 +539,7 @@
   result: FoodPizzaPineapple
   time: 30
   solids:
-    FoodDough: 1
+    FoodDoughFlat: 1
     FoodMeatChickenCutlet: 3
     FoodPineappleSlice: 5
 
@@ -542,7 +549,7 @@
   result: FoodPizzaDank
   time: 30
   solids:
-    FoodDough: 1
+    FoodDoughFlat: 1
     FoodAmbrosiaVulgaris: 3
     FoodCheeseSlice: 1
     FoodTomato: 1
@@ -553,7 +560,7 @@
   result: FoodPizzaDonkpocket
   time: 30
   solids:
-    FoodDough: 1
+    FoodDoughFlat: 1
     FoodDonkpocketWarm: 3
     FoodCheeseSlice: 1
     FoodTomato: 1
@@ -804,8 +811,7 @@
     Blood: 10
   solids:
     FoodBowlBig: 1
-    FoodTomato: 2
-  #todo Replace with blood tomato
+    FoodBloodTomato: 2
 
 - type: microwaveMealRecipe
   id: RecipeWingFangChuSoup
@@ -869,6 +875,18 @@
     FoodBowlBig: 1
     FoodBanana: 1
     MonkeyCube: 1
+
+- type: microwaveMealRecipe
+  id: RecipeBungoSoup
+  name: bungo soup recipe
+  result: FoodSoupBungo
+  time: 10
+  reagents:
+    Water: 5
+  solids:
+    FoodBowlBig: 1
+    FoodBungo: 2
+    FoodChili: 1
 
 #Other
 
@@ -947,7 +965,7 @@
   id: RecipePopcorn
   name: popcorn recipe
   result: FoodSnackPopcorn
-  time: 5
+  time: 20
   solids:
     FoodCorn: 1
 
@@ -960,6 +978,18 @@
     Flour: 5
     Milk: 5
     Egg: 6
+
+- type: microwaveMealRecipe
+  id: RecipeBlueberryPancake
+  name: blueberry pancake recipe
+  result: FoodBakedPancakeBb
+  time: 5
+  reagents:
+    Flour: 5
+    Milk: 5
+    Egg: 6
+  solids:
+    FoodBerries: 2
 
 - type: microwaveMealRecipe
   id: RecipeWaffles
@@ -1051,6 +1081,16 @@
     FoodPlateTin: 1
 
 - type: microwaveMealRecipe
+  id: RecipeBerryClafoutis
+  name: berry clafoutis
+  result: FoodPieClafoutis
+  time: 15
+  solids:
+    FoodDoughPie: 1
+    FoodBerries: 3
+    FoodPlateTin: 1
+
+- type: microwaveMealRecipe
   id: RecipeMeatPie
   name: meat pie recipe
   result: FoodPieMeat
@@ -1105,6 +1145,15 @@
   solids:
     FoodCakePlain: 1
     FoodOrange: 3
+
+- type: microwaveMealRecipe
+  id: RecipeBlueberryCake
+  name: blueberry cake recipe
+  result: FoodCakeBlueberry
+  time: 5
+  solids:
+    FoodCakePlain: 1
+    FoodBerries: 3
 
 - type: microwaveMealRecipe
   id: RecipeLimeCake
@@ -1236,7 +1285,7 @@
     FoodButter: 2
     FoodSnackChocolateBar: 2
     FoodEgg: 3
-    
+
 #Donks i guess
 - type: microwaveMealRecipe
   id: RecipeWarmDonkpocket
@@ -1521,7 +1570,7 @@
   name: medicated suture recipe
   result: MedicatedSuture
   time: 10
-  solids: 
+  solids:
     FoodPoppy: 1
     Brutepack: 1
     MaterialCloth1: 1
@@ -1540,7 +1589,7 @@
     MaterialCloth1: 1
   reagents:
     Sigynate: 50
-    Dermaline: 50 
+    Dermaline: 50
 
 # Suppermatter
 - type: microwaveMealRecipe
@@ -1653,7 +1702,6 @@
   solids:
     FoodSpaceshroom: 1
 
-#cannabis    
 - type: microwaveMealRecipe
   id: RecipeCannabisButter
   name: cannabis butter recipe
@@ -1675,3 +1723,13 @@
     FoodCannabisButter: 2
     FoodSnackChocolateBar: 2
     FoodEgg: 3
+
+- type: microwaveMealRecipe
+  id: RecipeCornInButter
+  name: corn in butter recipe
+  result: FoodMealCornInButter
+  time: 10
+  solids:
+    FoodCorn: 1
+    FoodPlate: 1
+    FoodButter: 1

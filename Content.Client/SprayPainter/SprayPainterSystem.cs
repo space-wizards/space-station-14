@@ -4,6 +4,7 @@ using Robust.Client.ResourceManagement;
 using Robust.Shared.Serialization.TypeSerializers.Implementations;
 using Robust.Shared.Utility;
 using System.Linq;
+using Robust.Shared.Graphics;
 
 namespace Content.Client.SprayPainter;
 

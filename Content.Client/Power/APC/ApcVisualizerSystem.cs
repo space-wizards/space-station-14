@@ -6,10 +6,16 @@ namespace Content.Client.Power.APC;
 
 public sealed class ApcVisualizerSystem : VisualizerSystem<ApcVisualsComponent>
 {
+    [Dependency] private readonly SharedPointLightSystem _lights = default!;
+
     protected override void OnAppearanceChange(EntityUid uid, ApcVisualsComponent comp, ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null)
             return;
+
+        // get the mapped layer index of the first lock layer and the first channel layer
+        var lockIndicatorOverlayStart = args.Sprite.LayerMapGet(ApcVisualLayers.InterfaceLock);
+        var channelIndicatorOverlayStart = args.Sprite.LayerMapGet(ApcVisualLayers.Equipment);
 
         // Handle APC screen overlay:
         if(!AppearanceSystem.TryGetData<ApcChargeState>(uid, ApcVisuals.ChargeState, out var chargeState, args.Component))
@@ -24,7 +30,7 @@ public sealed class ApcVisualizerSystem : VisualizerSystem<ApcVisualsComponent>
             {
                 for(var i = 0; i < comp.LockIndicators; ++i)
                 {
-                    var layer = ((byte)ApcVisualLayers.LockIndicatorOverlayStart + i);
+                    var layer = ((byte)lockIndicatorOverlayStart + i);
                     sbyte lockState = (sbyte)((lockStates >> (i << (sbyte)ApcLockState.LogWidth)) & (sbyte)ApcLockState.All);
                     args.Sprite.LayerSetState(layer, $"{comp.LockPrefix}{i}-{comp.LockSuffixes[lockState]}");
                     args.Sprite.LayerSetVisible(layer, true);
@@ -36,15 +42,17 @@ public sealed class ApcVisualizerSystem : VisualizerSystem<ApcVisualsComponent>
             {
                 for(var i = 0; i < comp.ChannelIndicators; ++i)
                 {
-                    var layer = ((byte)ApcVisualLayers.ChannelIndicatorOverlayStart + i);
+                    var layer = ((byte)channelIndicatorOverlayStart + i);
                     sbyte channelState = (sbyte)((channelStates >> (i << (sbyte)ApcChannelState.LogWidth)) & (sbyte)ApcChannelState.All);
                     args.Sprite.LayerSetState(layer, $"{comp.ChannelPrefix}{i}-{comp.ChannelSuffixes[channelState]}");
                     args.Sprite.LayerSetVisible(layer, true);
                 }
             }
 
-            if (TryComp<SharedPointLightComponent>(uid, out var light))
-                light.Color = comp.ScreenColors[(sbyte)chargeState];
+            if (TryComp<PointLightComponent>(uid, out var light))
+            {
+                _lights.SetColor(uid, comp.ScreenColors[(sbyte)chargeState], light);
+            }
         }
         else
         {
@@ -52,17 +60,19 @@ public sealed class ApcVisualizerSystem : VisualizerSystem<ApcVisualsComponent>
             args.Sprite.LayerSetState(ApcVisualLayers.ChargeState, comp.EmaggedScreenState);
             for(var i = 0; i < comp.LockIndicators; ++i)
             {
-                var layer = ((byte)ApcVisualLayers.LockIndicatorOverlayStart + i);
+                var layer = ((byte)lockIndicatorOverlayStart + i);
                 args.Sprite.LayerSetVisible(layer, false);
             }
             for(var i = 0; i < comp.ChannelIndicators; ++i)
             {
-                var layer = ((byte)ApcVisualLayers.ChannelIndicatorOverlayStart + i);
+                var layer = ((byte)channelIndicatorOverlayStart + i);
                 args.Sprite.LayerSetVisible(layer, false);
             }
 
-            if (TryComp<SharedPointLightComponent>(uid, out var light))
-                light.Color = comp.EmaggedScreenColor;
+            if (TryComp<PointLightComponent>(uid, out var light))
+            {
+                _lights.SetColor(uid, comp.EmaggedScreenColor, light);
+            }
         }
     }
 }
@@ -72,35 +82,27 @@ enum ApcVisualLayers : byte
     /// <summary>
     /// The sprite layer used for the interface lock indicator light overlay.
     /// </summary>
-    InterfaceLock = 0,
+    InterfaceLock,
     /// <summary>
     /// The sprite layer used for the panel lock indicator light overlay.
     /// </summary>
-    PanelLock = 1,
-    /// <summary>
-    /// The first of the lock indicator light layers.
-    /// </summary>
-    LockIndicatorOverlayStart = InterfaceLock,
+    PanelLock,
 
     /// <summary>
     /// The sprite layer used for the equipment channel indicator light overlay.
     /// </summary>
-    Equipment = 2,
+    Equipment,
     /// <summary>
     /// The sprite layer used for the lighting channel indicator light overlay.
     /// </summary>
-    Lighting = 3,
+    Lighting,
     /// <summary>
     /// The sprite layer used for the environment channel indicator light overlay.
     /// </summary>
-    Environment = 4,
-    /// <summary>
-    /// The first of the channel status indicator light layers.
-    /// </summary>
-    ChannelIndicatorOverlayStart = Equipment,
+    Environment,
 
     /// <summary>
     /// The sprite layer used for the APC screen overlay.
     /// </summary>
-    ChargeState = 5,
+    ChargeState,
 }

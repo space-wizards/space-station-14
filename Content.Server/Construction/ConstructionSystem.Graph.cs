@@ -8,6 +8,7 @@ using Content.Shared.Database;
 using Robust.Server.Containers;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
+using System.Linq;
 
 namespace Content.Server.Construction
 {
@@ -298,8 +299,22 @@ namespace Content.Server.Construction
                 throw new Exception("Missing construction components");
             }
 
+            // Exit if the new entity's prototype is the same as the original, or the prototype is invalid
             if (newEntity == metaData.EntityPrototype?.ID || !_prototypeManager.HasIndex<EntityPrototype>(newEntity))
                 return null;
+
+            // [Optional] Exit if the new entity's prototype is a parent of the original
+            // E.g., if an entity with the 'AirlockCommand' prototype was to be replaced with a new entity that 
+            // had the 'Airlock' prototype, and DoNotReplaceInheritingEntities was true, the code block would 
+            // exit here because 'AirlockCommand' is derived from 'Airlock'
+            if (GetCurrentNode(uid, construction)?.DoNotReplaceInheritingEntities == true &&
+                metaData.EntityPrototype?.ID != null)
+            {
+                var parents = _prototypeManager.EnumerateParents<EntityPrototype>(metaData.EntityPrototype.ID)?.ToList();
+
+                if (parents != null && parents.Any(x => x.ID == newEntity))
+                    return null;
+            }
 
             // Optional resolves.
             Resolve(uid, ref containerManager, false);
@@ -324,11 +339,17 @@ namespace Content.Server.Construction
                 }
             }
 
-            // We set the graph and node accordingly.
-            ChangeGraph(newUid, userUid, construction.Graph, construction.Node, false, newConstruction);
+            // If the new entity has the *same* construction graph, stay on the same node.
+            // If not, we effectively restart the construction graph, so the new entity can be completed.
+            if (construction.Graph == newConstruction.Graph)
+            {
+                ChangeNode(newUid, userUid, construction.Node, false, newConstruction);
 
-            if (construction.TargetNode is {} targetNode)
-                SetPathfindingTarget(newUid, targetNode, newConstruction);
+                // Retain the target node if an entity change happens in response to deconstruction;
+                // in that case, we must continue to move towards the start node.
+                if (construction.TargetNode is {} targetNode)
+                    SetPathfindingTarget(newUid, targetNode, newConstruction);
+            }
 
             // Transfer all pending interaction events too.
             while (construction.InteractionQueue.TryDequeue(out var ev))
