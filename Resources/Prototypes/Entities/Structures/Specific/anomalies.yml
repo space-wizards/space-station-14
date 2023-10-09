@@ -263,3 +263,109 @@
     superCriticalSpawns:
     - AsteroidRock
     - SpawnMobOreCrab
+
+- type: entity
+  id: AnomalyLiquid
+  parent: BaseAnomaly
+  suffix: Liquid
+  components:
+  - type: Sprite
+    sprite: Structures/Specific/Anomalies/liquid_anom.rsi
+    layers:
+    - state: anom
+      map: ["enum.AnomalyVisualLayers.Base"]
+    - state: pulse
+      map: ["enum.AnomalyVisualLayers.Animated"]
+      visible: false
+  - type: RandomSprite
+    selected: # Initialized layer values. Edited through the ReagentProducerAnomalySystem
+      enum.AnomalyVisualLayers.Base:
+        anom: "#ffffff"
+      enum.AnomalyVisualLayers.Animated:
+        pulse: "#ffffff"
+  - type: PointLight
+    radius: 4.0
+    energy: 3.5
+    color: "#bbbbbb"
+  - type: BadFood
+  - type: Anomaly
+    anomalyContactDamage:
+      types:
+        Slash: 1
+  - type: EntitySpawnAnomaly
+    superCriticalSpawns: 
+    - ReagentSlimeSpawner
+    spawns:
+      - PuddleSparkle
+  - type: SolutionContainerManager
+    solutions:
+      anomaly:
+        maxVol: 1500
+  - type: PuddleCreateAnomaly
+    solution: anomaly
+  - type: InjectionAnomaly
+    solution: anomaly
+  - type: ReagentProducerAnomaly
+    solution: anomaly
+    needRecolor: true
+    dangerousChemicals:
+    - UnstableMutagen
+    - Mold
+    - PolytrinicAcid
+    - FerrochromicAcid
+    - FluorosulfuricAcid
+    - SulfuricAcid
+    - HeartbreakerToxin
+    - VentCrud
+    - UncookedAnimalProteins
+    - Thermite
+    - Napalm
+    - Phlogiston
+    - ChlorineTrifluoride
+    - FoamingAgent
+    - BuzzochloricBees
+    - RobustHarvest
+    usefulChemicals:
+    - Cryptobiolin
+    - Dylovene
+    - Arithrazine
+    - Bicaridine
+    - Cryoxadone
+    - Dermaline
+    - Dexalin
+    - DexalinPlus
+    - Epinephrine
+    - Leporazine
+    - Ambuzol
+    - Tricordrazine
+    - Artifexium
+    - Ethylredoxrazine
+    funChemicals:
+    - Desoxyephedrine
+    - Ephedrine
+    - THC
+    - THCOil
+    - SpaceDrugs
+    - Nocturine
+    - MuteToxin
+    - NorepinephricAcid
+    - Pax
+    - Ipecac
+    - Cognizine
+    - Beer
+    - SpaceGlue
+    - CogChamp
+    - Honk
+    - Carpetium
+  - type: Drink
+    solution: anomaly
+  - type: DrainableSolution
+    solution: anomaly
+  - type: DrawableSolution
+    solution: anomaly
+  - type: ExaminableSolution
+    solution: anomaly
+  - type: RefillableSolution
+    solution: anomaly
+  - type: InjectableSolution
+    solution: beaker

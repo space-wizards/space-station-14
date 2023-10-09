@@ -2315,6 +2315,16 @@ entities:
             4794: 73,0
             4795: 73,-1
         - node:
+            color: '#0E7F1BFF'
+            id: Delivery
+          decals:
+            4993: 37,-12
+        - node:
+            color: '#1861D5FF'
+            id: Delivery
+          decals:
+            4991: 34,-13
+        - node:
             color: '#334E6DC8'
             id: Delivery
           decals:
@@ -2331,6 +2341,16 @@ entities:
             3302: 75,16
             3303: 76,16
             3304: 77,16
+        - node:
+            color: '#951710FF'
+            id: Delivery
+          decals:
+            4992: 34,-12
+        - node:
+            color: '#D58C18FF'
+            id: Delivery
+          decals:
+            4994: 38,-12
         - node:
             color: '#EFB34196'
             id: Delivery
@@ -3203,7 +3223,6 @@ entities:
             2411: 62,-21
             2412: 61,-22
             2413: 60,-19
-            2414: 43,-16
             2415: 41,-16
             2416: 38,-16
             2417: 37,-16
@@ -3910,7 +3929,6 @@ entities:
             3040: 80,6
             3041: 53,-2
             3042: 46,-16
-            3043: 38,-12
             3044: 35,-6
             3045: 32,-4
             3046: 26,-5
@@ -4527,6 +4545,16 @@ entities:
             610: -11,45
             611: -10,45
         - node:
+            color: '#0E7F1BFF'
+            id: HalfTileOverlayGreyscale180
+          decals:
+            4983: 43,-17
+        - node:
+            color: '#1861D5FF'
+            id: HalfTileOverlayGreyscale180
+          decals:
+            4981: 37,-17
+        - node:
             color: '#334E6DC8'
             id: HalfTileOverlayGreyscale180
           decals:
@@ -4567,6 +4595,11 @@ entities:
             4883: -33,-45
             4884: -34,-45
             4885: -35,-45
+        - node:
+            color: '#951710FF'
+            id: HalfTileOverlayGreyscale180
+          decals:
+            4982: 40,-17
         - node:
             color: '#A4610696'
             id: HalfTileOverlayGreyscale180
@@ -4741,6 +4774,11 @@ entities:
             936: 68,2
             937: 69,2
         - node:
+            color: '#D58C18FF'
+            id: HalfTileOverlayGreyscale180
+          decals:
+            4984: 46,-17
+        - node:
             color: '#DE3A3A96'
             id: HalfTileOverlayGreyscale180
           decals:
@@ -4750,16 +4788,11 @@ entities:
             333: 44,-1
             334: 45,-1
             335: 46,-1
-            377: 46,-17
             378: 45,-17
-            379: 44,-17
-            380: 43,-17
             381: 42,-17
             382: 41,-17
-            383: 40,-17
             384: 39,-17
             385: 38,-17
-            386: 37,-17
             510: -32,25
             511: -31,25
             512: -30,25
@@ -4774,6 +4807,8 @@ entities:
             1605: 60,-23
             1606: 61,-23
             1607: 62,-23
+            4980: 44,-17
+            4986: 34,-13
         - node:
             color: '#EFB34196'
             id: HalfTileOverlayGreyscale180
@@ -4944,8 +4979,6 @@ entities:
             354: 34,-9
             355: 34,-10
             356: 34,-11
-            357: 34,-12
-            358: 34,-13
             359: 35,-14
             360: 35,-15
             361: 36,-16
@@ -4955,6 +4988,8 @@ entities:
             1217: -64,50
             1461: 35,49
             1462: 35,50
+            4987: 34,-13
+            4988: 34,-12
         - node:
             color: '#EFB34196'
             id: HalfTileOverlayGreyscale270
@@ -5147,6 +5182,11 @@ entities:
             896: 29,-1
             897: 29,0
             898: 29,1
+        - node:
+            color: '#D58C18FF'
+            id: HalfTileOverlayGreyscale90
+          decals:
+            4985: 46,-17
         - node:
             color: '#DE3A3A96'
             id: HalfTileOverlayGreyscale90
@@ -5695,7 +5735,6 @@ entities:
           decals:
             238: -27,-40
             336: 43,-1
-            371: 34,-13
             372: 35,-15
             373: 36,-17
             374: 33,-8
@@ -6029,8 +6068,6 @@ entities:
             415: 41,-12
             416: 40,-12
             417: 39,-12
-            418: 38,-12
-            419: 37,-12
             435: 56,-3
             436: 56,-2
             437: 56,-1
@@ -6050,7 +6087,8 @@ entities:
             461: 58,0
             521: -26,25
             522: -30,26
-            1611: 46,-17
+            4989: 37,-12
+            4990: 38,-12
         - node:
             color: '#EFB34196'
             id: QuarterTileOverlayGreyscale90
@@ -67894,6 +67932,13 @@ entities:
           occludes: True
           ent: null
       type: ContainerContainer
+- proto: CrateMindShieldImplants
+  entities:
+  - uid: 18366
+    components:
+    - pos: 58.5,-7.5
+      parent: 82
+      type: Transform
 - proto: CrateNPCBee
   entities:
   - uid: 22551
@@ -68140,7 +68185,7 @@ entities:
       type: Transform
   - uid: 8707
     components:
-    - pos: 60.495476,-8.848388
+    - pos: 60.47793,-8.497251
       parent: 82
       type: Transform
   - uid: 10774
@@ -118101,73 +118146,19 @@ entities:
       type: EntityStorage
   - uid: 3658
     components:
-    - pos: 38.5,-16.5
+    - pos: 46.5,-7.5
       parent: 82
       type: Transform
-    - air:
-        volume: 200
-        immutable: False
-        temperature: 293.1496
-        moles:
-        - 1.6971024
-        - 6.3843384
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-      type: EntityStorage
   - uid: 3659
     components:
-    - pos: 41.5,-16.5
+    - pos: 46.5,-6.5
       parent: 82
       type: Transform
-    - air:
-        volume: 200
-        immutable: False
-        temperature: 293.1496
-        moles:
-        - 1.6971024
-        - 6.3843384
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-      type: EntityStorage
   - uid: 3660
     components:
-    - pos: 44.5,-16.5
+    - pos: 38.5,-11.5
       parent: 82
       type: Transform
-    - air:
-        volume: 200
-        immutable: False
-        temperature: 293.1496
-        moles:
-        - 1.6971024
-        - 6.3843384
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-      type: EntityStorage
   - uid: 8370
     components:
     - pos: -63.5,51.5
@@ -118237,6 +118228,11 @@ entities:
         - 0
         - 0
       type: EntityStorage
+  - uid: 17130
+    components:
+    - pos: 37.5,-11.5
+      parent: 82
+      type: Transform
   - uid: 17785
     components:
     - pos: 34.5,-11.5
@@ -122131,13 +122127,6 @@ entities:
   - uid: 21926
     components:
     - pos: 29.5,33.5
-      parent: 82
-      type: Transform
-- proto: PosterContrabandVoteWeh
-  entities:
-  - uid: 22463
-    components:
-    - pos: 33.5,-11.5
       parent: 82
       type: Transform
 - proto: PosterContrabandWehWatches
@@ -134899,6 +134888,11 @@ entities:
     - pos: 3.6323419,-16.35247
       parent: 82
       type: Transform
+  - uid: 17131
+    components:
+    - pos: 60.709972,-8.613329
+      parent: 82
+      type: Transform
   - uid: 19393
     components:
     - pos: 40.646282,29.698788
@@ -134932,7 +134926,7 @@ entities:
       type: Transform
   - uid: 22192
     components:
-    - pos: 60.38359,-8.403477
+    - pos: 60.40058,-8.604193
       parent: 82
       type: Transform
 - proto: RubberStampHop
@@ -134940,13 +134934,6 @@ entities:
   - uid: 10834
     components:
     - pos: -6.5865464,1.3825479
-      parent: 82
-      type: Transform
-- proto: RubberStampHos
-  entities:
-  - uid: 22194
-    components:
-    - pos: 60.647476,-8.593557
       parent: 82
       type: Transform
 - proto: RubberStampSyndicate
@@ -140661,6 +140648,18 @@ entities:
   - uid: 22264
     components:
     - pos: -16.5,-8.5
+      parent: 82
+      type: Transform
+- proto: SpawnPointBorg
+  entities:
+  - uid: 18367
+    components:
+    - pos: 12.5,57.5
+      parent: 82
+      type: Transform
+  - uid: 22194
+    components:
+    - pos: 13.5,56.5
       parent: 82
       type: Transform
 - proto: SpawnPointBotanist
