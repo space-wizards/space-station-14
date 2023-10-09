@@ -1,9 +1,4 @@
 Entries:
-- author: LinkUyx
-  changes:
-  - {message: Added new skirt for security., type: Add}
-  id: 4477
-  time: '2023-08-07T17:42:30.0000000+00:00'
 - author: Fahasor
   changes:
   - {message: Mops now does not stops absorbing for no reason., type: Fix}
@@ -2949,3 +2944,9 @@ Entries:
   - {message: Brains now function properly when inserted into an MMI., type: Fix}
   id: 4976
   time: '2023-10-09T04:49:20.0000000+00:00'
+- author: gusxyz
+  changes:
+  - {message: Using capital letter for your department specific radio channels will
+      work now!, type: Tweak}
+  id: 4977
+  time: '2023-10-09T05:07:54.0000000+00:00'
