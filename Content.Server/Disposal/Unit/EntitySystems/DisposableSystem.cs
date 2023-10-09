@@ -6,7 +6,6 @@ using Content.Server.Disposal.Unit.Components;
 using Content.Shared.Body.Components;
 using Content.Shared.Item;
 using Content.Shared.Throwing;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Physics.Components;
@@ -17,7 +16,6 @@ namespace Content.Server.Disposal.Unit.EntitySystems
 {
     public sealed class DisposableSystem : EntitySystem
     {
-        [Dependency] private readonly IPrototypeManager _proto = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly ThrowingSystem _throwing = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
