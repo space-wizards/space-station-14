@@ -9,7 +9,7 @@
       path: /Audio/Machines/microwave_loop.ogg
       params:
         loop: true
-        maxdistance: 5
+        maxDistance: 5
   - type: Sprite
     sprite: Structures/Machines/fat_sucker.rsi
     snapCardinals: true
