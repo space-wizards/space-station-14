@@ -96,6 +96,10 @@
         Piercing: 12
   - type: CombatMode
   - type: NpcFactionMember
+  - type: Reflect
+    enabled: true
+    reflectProb: .75
+    spread: 75
     factions:
       - SimpleHostile
   - type: Destructible
