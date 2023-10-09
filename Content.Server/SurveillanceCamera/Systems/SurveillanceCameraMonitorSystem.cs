@@ -186,6 +186,8 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
     private void OnRefreshSubnetsMessage(EntityUid uid, SurveillanceCameraMonitorComponent component,
         SurveillanceCameraRefreshSubnetsMessage message)
     {
+        component.KnownCameras.Clear();
+        UpdateUserInterface(uid, component);
         RefreshSubnets(uid, component);
     }
 
@@ -321,7 +323,7 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
         }
 
         // SS220 Camera-Map begin
-        foreach (var (_, address) in monitor.KnownSubnets)
+        foreach (var (freqId, address) in monitor.KnownSubnets)
         {
             RequestSubnetInfo(uid, address);
         }

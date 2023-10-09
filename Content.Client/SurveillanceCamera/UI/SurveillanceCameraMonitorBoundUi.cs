@@ -56,6 +56,8 @@ public sealed class SurveillanceCameraMonitorBoundUserInterface : BoundUserInter
                 _window.SetMap(path);
             }
         }
+
+        OnSubnetRefresh();
         // SS220 Camera-Map end
     }
 
