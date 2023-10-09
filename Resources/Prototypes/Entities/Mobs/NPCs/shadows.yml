@@ -39,13 +39,15 @@
     speedModifierThresholds:
       60: 0.7
       80: 0.5
-
+      
 - type: entity
   name: shadow cat
   parent: BaseShadowMob
   id: MobCatShadow
   description: A lovely piece of darkness. Hope he doesn't bring you a curse.
   components:
+  - type: DestroyedByFlashing
+    lifeCount: 2
   - type: Sprite
     drawdepth: Mobs
     sprite: Mobs/Pets/cat.rsi
@@ -67,7 +69,7 @@
   - type: Tag
     tags:
     - VimPilot
-
+    
 # ---------- WIP----------
 
 #- type: entity

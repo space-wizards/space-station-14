@@ -9,11 +9,37 @@
         state: anom
     - type: RandomSpawner
       offset: 0.05
-      rareChance: 0.05
+      rareChance: 0.1
       rarePrototypes:
         - MobCatShadow
         - CrystalPink
         - ArtifactFragment
+        - ShadowPortal
+        - ShadowTree01
+        - ShadowTree02
+        - ShadowTree03
+        - ShadowTree04
+        - ShadowTree05
+        - ShadowTree06
       chance: 0.7
       prototypes:
         - ShadowBasaltRandom
+        
+#WIP
+- type: entity
+  id: ShadowPortal
+  name: shadow rift
+  parent: PortalBlue
+  components:
+  - type: Sprite
+    color: "#793a80dd"
+  - type: PointLight    
+    color: "#793a80dd"
+  - type: DestroyedByFlashing
+    lifeCount: 2
+  - type: Flashable
+  - type: AmbientSound
+    range: 6
+    volume: -3
+    sound:
+      path: /Audio/Ambience/anomaly_scary.ogg

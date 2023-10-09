@@ -392,3 +392,52 @@
   components:
   - type: Sprite
     state: treestumpconifer
+
+- type: entity
+  parent: FloraTree01
+  id: ShadowTree01
+  name: tree
+  components:
+  - type: Sprite
+    sprite: Objects/Decoration/Flora/flora_shadow_trees.rsi
+    state: tree01
+
+- type: entity
+  parent: ShadowTree01
+  id: ShadowTree02
+  name: tree
+  components:
+  - type: Sprite
+    state: tree02
+    
+- type: entity
+  parent: ShadowTree01
+  id: ShadowTree03
+  name: tree
+  components:
+  - type: Sprite
+    state: tree03
+    
+- type: entity
+  parent: ShadowTree01
+  id: ShadowTree04
+  name: tree
+  components:
+  - type: Sprite
+    state: tree04
+    
+- type: entity
+  parent: ShadowTree01
+  id: ShadowTree05
+  name: tree
+  components:
+  - type: Sprite
+    state: tree05
+    
+- type: entity
+  parent: ShadowTree01
+  id: ShadowTree06
+  name: tree
+  components:
+  - type: Sprite
+    state: tree06
