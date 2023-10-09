@@ -36,6 +36,7 @@ public sealed partial class EntitySpawnAnomalyComponent : Component
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public int SuperCriticalMaxSpawnAmount = 7;
+
     /// <summary>
     /// The maximum radius the entities will spawn in.
     /// Also governs the maximum reach of flesh tiles
@@ -50,7 +51,7 @@ public sealed partial class EntitySpawnAnomalyComponent : Component
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public float SuperCriticalSpawnRange = 8f;
-    
+
     /// <summary>
     /// The tile that is spawned by the anomaly's effect
     /// </summary>

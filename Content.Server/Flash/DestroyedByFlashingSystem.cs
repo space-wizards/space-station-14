@@ -1,7 +1,7 @@
 using Content.Shared.Flash;
 using Content.Server.Flash;
 
-namespace Content.Server.Spreader;
+namespace Content.Server.Flash;
 
 public sealed class DestroyedByFlashingSystem : EntitySystem
 {
@@ -9,19 +9,16 @@ public sealed class DestroyedByFlashingSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<FlashableComponent, FlashAttemptEvent>(OnFlashAttempt);
+        SubscribeLocalEvent<DestroyedByFlashingComponent, FlashAttemptEvent>(OnFlashAttempt);
     }
-    private void OnFlashAttempt(EntityUid uid, FlashableComponent component, FlashAttemptEvent args)
+    private void OnFlashAttempt(EntityUid uid, DestroyedByFlashingComponent component, FlashAttemptEvent args)
     {
-        if (!TryComp<DestroyedByFlashingComponent>(uid, out var destroyedBy))
-            return;
-
         var uidXform = Transform(uid);
 
-        Spawn(destroyedBy.RemoveEffect, uidXform.Coordinates);
-        
-        destroyedBy.LifeCount -= 1;
-        if (destroyedBy.LifeCount <= 0)
+        Spawn(component.RemoveEffect, uidXform.Coordinates);
+
+        component.LifeCount -= 1;
+        if (component.LifeCount <= 0)
             QueueDel(uid);
     }
 }

@@ -16,6 +16,6 @@ public sealed partial class DestroyedByFlashingComponent : Component
     /// The name of the prototype that appears on the destroyed shadow kudzu
     /// </summary>
     // (according to the idea - a visual effect)
-    [DataField, ViewVariables(VVAccess.ReadOnly)]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public EntProtoId RemoveEffect = "EffectDarknessPulse";
 }

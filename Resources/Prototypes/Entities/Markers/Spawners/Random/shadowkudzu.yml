@@ -9,7 +9,7 @@
         state: anom
     - type: RandomSpawner
       offset: 0.05
-      rareChance: 0.1
+      rareChance: 0.05
       rarePrototypes:
         - MobCatShadow
         - CrystalPink
