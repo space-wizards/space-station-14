@@ -11014,7 +11014,6 @@ entities:
       parent: 8364
       type: Transform
     - devices:
-      - 25013
       - 22722
       - 25012
       type: DeviceList
@@ -12284,7 +12283,7 @@ entities:
       type: Transform
   - uid: 9456
     components:
-    - name: Допросная
+    - name: Процедурная
       type: MetaData
     - pos: 13.5,29.5
       parent: 8364
@@ -12326,7 +12325,7 @@ entities:
       type: Transform
   - uid: 11623
     components:
-    - name: Допросная
+    - name: Процедурная
       type: MetaData
     - pos: 13.5,30.5
       parent: 8364
@@ -18034,11 +18033,6 @@ entities:
     - pos: 22.56969,6.4959354
       parent: 8364
       type: Transform
-  - uid: 7017
-    components:
-    - pos: 36.5,-7.5
-      parent: 8364
-      type: Transform
   - uid: 10348
     components:
     - pos: 26.624043,1.661195
@@ -18057,6 +18051,11 @@ entities:
   - uid: 28645
     components:
     - pos: -16.599936,40.63777
+      parent: 8364
+      type: Transform
+  - uid: 30018
+    components:
+    - pos: 36.479393,-7.278453
       parent: 8364
       type: Transform
 - proto: Bed
@@ -20183,7 +20182,7 @@ entities:
   entities:
   - uid: 26146
     components:
-    - pos: 18.021652,36.528175
+    - pos: 30.331043,-30.36095
       parent: 8364
       type: Transform
   - uid: 26147
@@ -70822,7 +70821,7 @@ entities:
       type: Transform
   - uid: 7748
     components:
-    - rot: 1.5707963267948966 rad
+    - rot: 0.5934119456780721 rad
       pos: 17.721352,21.367231
       parent: 8364
       type: Transform
@@ -70834,7 +70833,8 @@ entities:
       type: Transform
   - uid: 8821
     components:
-    - pos: 17.065102,21.070356
+    - rot: -0.7504915783575618 rad
+      pos: 17.065102,21.070356
       parent: 8364
       type: Transform
   - uid: 29200
@@ -78526,11 +78526,6 @@ entities:
     - pos: 8.5,-18.5
       parent: 8364
       type: Transform
-  - uid: 5977
-    components:
-    - pos: -9.5,-26.5
-      parent: 8364
-      type: Transform
   - uid: 6389
     components:
     - pos: 8.5,-16.5
@@ -78559,11 +78554,6 @@ entities:
   - uid: 7864
     components:
     - pos: 4.5,23.5
-      parent: 8364
-      type: Transform
-  - uid: 8706
-    components:
-    - pos: 4.5,22.5
       parent: 8364
       type: Transform
   - uid: 9826
@@ -78609,11 +78599,6 @@ entities:
   - uid: 17662
     components:
     - pos: -10.5,14.5
-      parent: 8364
-      type: Transform
-  - uid: 21506
-    components:
-    - pos: 8.5,-17.5
       parent: 8364
       type: Transform
   - uid: 23077
@@ -78671,11 +78656,6 @@ entities:
     - pos: -11.5,-8.5
       parent: 8364
       type: Transform
-  - uid: 27637
-    components:
-    - pos: -11.5,-7.5
-      parent: 8364
-      type: Transform
   - uid: 27638
     components:
     - pos: 5.5,13.5
@@ -78691,6 +78671,26 @@ entities:
   - uid: 5867
     components:
     - pos: 5.5,21.5
+      parent: 8364
+      type: Transform
+  - uid: 5977
+    components:
+    - pos: -9.5,-26.5
+      parent: 8364
+      type: Transform
+  - uid: 6015
+    components:
+    - pos: 4.5,22.5
+      parent: 8364
+      type: Transform
+  - uid: 6027
+    components:
+    - pos: 8.5,-17.5
+      parent: 8364
+      type: Transform
+  - uid: 6210
+    components:
+    - pos: -11.5,-7.5
       parent: 8364
       type: Transform
   - uid: 17659
@@ -80666,12 +80666,6 @@ entities:
     components:
     - rot: 3.141592653589793 rad
       pos: -7.5,-20.5
-      parent: 8364
-      type: Transform
-  - uid: 6210
-    components:
-    - rot: -1.5707963267948966 rad
-      pos: -8.5,-21.5
       parent: 8364
       type: Transform
   - uid: 6224
@@ -87604,12 +87598,6 @@ entities:
       pos: 4.5,-9.5
       parent: 8364
       type: Transform
-  - uid: 6015
-    components:
-    - rot: 1.5707963267948966 rad
-      pos: -9.5,-21.5
-      parent: 8364
-      type: Transform
   - uid: 6144
     components:
     - rot: 3.141592653589793 rad
@@ -87626,6 +87614,12 @@ entities:
     components:
     - rot: -1.5707963267948966 rad
       pos: 20.5,15.5
+      parent: 8364
+      type: Transform
+  - uid: 7017
+    components:
+    - rot: 1.5707963267948966 rad
+      pos: -8.5,-21.5
       parent: 8364
       type: Transform
   - uid: 7251
@@ -87978,11 +87972,6 @@ entities:
     - pos: -9.5,-66.5
       parent: 8364
       type: Transform
-  - uid: 6027
-    components:
-    - pos: -9.5,-21.5
-      parent: 8364
-      type: Transform
   - uid: 6561
     components:
     - pos: 20.5,15.5
@@ -88191,6 +88180,11 @@ entities:
   - uid: 23586
     components:
     - pos: 7.5,-16.5
+      parent: 8364
+      type: Transform
+  - uid: 25013
+    components:
+    - pos: -8.5,-21.5
       parent: 8364
       type: Transform
   - uid: 25573
@@ -93611,9 +93605,9 @@ entities:
     - pos: 9.527203,-53.33554
       parent: 8364
       type: Transform
-  - uid: 7198
+  - uid: 8706
     components:
-    - pos: 36.5,-7.5
+    - pos: 36.620018,-7.184703
       parent: 8364
       type: Transform
   - uid: 15582
@@ -94230,6 +94224,12 @@ entities:
     components:
     - rot: 3.141592653589793 rad
       pos: 53.5,-50.5
+      parent: 8364
+      type: Transform
+  - uid: 21506
+    components:
+    - rot: 1.5707963267948966 rad
+      pos: 72.5,-41.5
       parent: 8364
       type: Transform
 - proto: GasPassiveGate
@@ -123513,12 +123513,6 @@ entities:
       type: Transform
     - color: '#0335FCFF'
       type: AtmosPipeColor
-  - uid: 25013
-    components:
-    - rot: 1.5707963267948966 rad
-      pos: 72.5,-41.5
-      parent: 8364
-      type: Transform
   - uid: 25069
     components:
     - pos: 70.5,-23.5
@@ -139659,6 +139653,11 @@ entities:
     - pos: -2.5,-59.5
       parent: 8364
       type: Transform
+  - uid: 7198
+    components:
+    - pos: -9.5,-21.5
+      parent: 8364
+      type: Transform
   - uid: 8175
     components:
     - pos: -3.5,-9.5
@@ -139747,11 +139746,6 @@ entities:
   - uid: 26316
     components:
     - pos: 13.5,50.5
-      parent: 8364
-      type: Transform
-  - uid: 26592
-    components:
-    - pos: -8.5,-21.5
       parent: 8364
       type: Transform
   - uid: 26603
@@ -157226,7 +157220,7 @@ entities:
     - pos: 1.5,28.5
       parent: 8364
       type: Transform
-- proto: SignPsych
+- proto: SignPsychology
   entities:
   - uid: 29655
     components:
@@ -161636,12 +161630,49 @@ entities:
       type: Transform
     - id: Кухня
       type: SurveillanceCamera
+  - uid: 27637
+    components:
+    - pos: 79.5,-6.5
+      parent: 8364
+      type: Transform
+    - id: Отбытие (Север)
+      type: SurveillanceCamera
   - uid: 27885
     components:
     - pos: 4.5,3.5
       parent: 8364
       type: Transform
     - id: Криогенное хранилище
+      type: SurveillanceCamera
+  - uid: 30012
+    components:
+    - rot: 1.5707963267948966 rad
+      pos: 82.5,-16.5
+      parent: 8364
+      type: Transform
+    - id: Отбытие (Юг)
+      type: SurveillanceCamera
+  - uid: 30014
+    components:
+    - rot: 1.5707963267948966 rad
+      pos: -57.5,-2.5
+      parent: 8364
+      type: Transform
+    - id: Прибытие
+      type: SurveillanceCamera
+  - uid: 30015
+    components:
+    - pos: -39.5,-2.5
+      parent: 8364
+      type: Transform
+    - id: Западный коридор
+      type: SurveillanceCamera
+  - uid: 30016
+    components:
+    - pos: 42.5,-14.5
+      parent: 8364
+      type: Transform
+    - id: Восточный коридор
       type: SurveillanceCamera
 - proto: SurveillanceCameraMedical
   entities:
@@ -161758,6 +161789,13 @@ entities:
       - SurveillanceCameraMedical
       nameSet: True
       id: Офис Главврача
+      type: SurveillanceCamera
+  - uid: 30013
+    components:
+    - pos: 27.5,-20.5
+      parent: 8364
+      type: Transform
+    - id: Приёмная медбея
       type: SurveillanceCamera
 - proto: SurveillanceCameraRouterCommand
   entities:
@@ -161876,6 +161914,14 @@ entities:
       nameSet: True
       id: Лабаратория аномалий
       type: SurveillanceCamera
+  - uid: 30017
+    components:
+    - rot: -1.5707963267948966 rad
+      pos: 65.5,-43.5
+      parent: 8364
+      type: Transform
+    - id: Коридор РнД
+      type: SurveillanceCamera
 - proto: SurveillanceCameraSecurity
   entities:
   - uid: 310
@@ -161977,6 +162023,14 @@ entities:
       parent: 8364
       type: Transform
     - id: Комната экипировки
+      type: SurveillanceCamera
+  - uid: 26592
+    components:
+    - rot: 1.5707963267948966 rad
+      pos: 88.5,-0.5
+      parent: 8364
+      type: Transform
+    - id: Пост СБ в отбытии
       type: SurveillanceCamera
   - uid: 26600
     components:
