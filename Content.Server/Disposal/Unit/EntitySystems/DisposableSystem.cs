@@ -116,7 +116,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 else
                 {
                     _xformSystem.AttachToGridOrMap(entity, xform);
-                    _throwing.TryThrow(entity, _random.NextVector2(), 0.1f);
+                    _throwing.TryThrow(entity, _random.NextVector2(0.1f), 0.1f);
                 }
                 if (EntityManager.TryGetComponent(entity, out PhysicsComponent? physics))
                 {
