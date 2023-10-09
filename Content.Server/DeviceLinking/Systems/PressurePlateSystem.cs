@@ -82,4 +82,3 @@ public sealed class PressurePlateSystem : EntitySystem
         return totalMass;
     }
 }
-
