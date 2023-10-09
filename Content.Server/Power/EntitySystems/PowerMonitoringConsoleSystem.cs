@@ -94,8 +94,8 @@ internal sealed partial class PowerMonitoringConsoleSystem : EntitySystem
             return;
 
         // Data to be send to the client
-        var totalSources = 0f;
-        var totalLoads = 0f;
+        var totalSources = 0d;
+        var totalLoads = 0d;
         var allSources = new List<PowerMonitoringConsoleEntry>();
         var allLoads = new List<PowerMonitoringConsoleEntry>();
         var sourcesForFocus = new List<PowerMonitoringConsoleEntry>();
@@ -106,8 +106,6 @@ internal sealed partial class PowerMonitoringConsoleSystem : EntitySystem
         foreach (var ent in _trackedDevices)
         {
             // Generate a new console entry
-            var powerValue = 0f;
-
             if (!TryMakeConsoleEntry(ent, out var entry))
                 continue;
 
@@ -124,7 +122,7 @@ internal sealed partial class PowerMonitoringConsoleSystem : EntitySystem
                     entry.PowerValue = battery.NetworkBattery.CurrentSupply;
 
                 allSources.Add(entry);
-                totalSources += powerValue;
+                totalSources += entry.PowerValue;
             }
 
             // SMES / substation / APC
@@ -136,7 +134,7 @@ internal sealed partial class PowerMonitoringConsoleSystem : EntitySystem
                     entry.PowerValue = battery.NetworkBattery.CurrentReceiving;
 
                 allLoads.Add(entry);
-                totalLoads += powerValue;
+                totalLoads += entry.PowerValue;
             }
 
             // Power consumers
@@ -146,7 +144,7 @@ internal sealed partial class PowerMonitoringConsoleSystem : EntitySystem
                     entry.PowerValue = consumer.ReceivedPower;
 
                 allLoads.Add(entry);
-                totalLoads += powerValue;
+                totalLoads += entry.PowerValue;
             }
         }
 
@@ -209,7 +207,7 @@ internal sealed partial class PowerMonitoringConsoleSystem : EntitySystem
             if (uid == ent)
                 continue;
 
-            var supply = powerSupplier.Enabled ? powerSupplier.MaxSupply : 0f;
+            var supply = powerSupplier.Enabled ? powerSupplier.MaxSupply : 0d;
 
             if (TryMakeConsoleEntry(ent, out var entry, supply))
                 sources.Add(entry);

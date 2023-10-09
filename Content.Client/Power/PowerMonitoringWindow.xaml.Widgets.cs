@@ -1,8 +1,10 @@
+using Content.Client.Administration.UI.CustomControls;
 using Content.Client.Stylesheets;
 using Content.Shared.Power;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Utility;
+using System.Composition.Hosting;
 using System.Linq;
 using System.Numerics;
 
@@ -11,7 +13,7 @@ namespace Content.Client.Power;
 public sealed partial class PowerMonitoringWindow
 {
     private void UpdateAllConsoleEntries
-        (GridContainer masterContainer,
+        (BoxContainer masterContainer,
         PowerMonitoringConsoleEntry[] entries,
         PowerMonitoringConsoleEntry[]? focusSources,
         PowerMonitoringConsoleEntry[]? focusLoads)
@@ -34,7 +36,12 @@ public sealed partial class PowerMonitoringWindow
             masterContainer.AddChild(windowEntry);
 
             // Selection action
-            windowEntry.Button.OnButtonUp += args => { ButtonAction(windowEntry, masterContainer); };
+            windowEntry.Button.OnButtonUp += args =>
+            {
+                windowEntry.SourcesContainer.DisposeAllChildren();
+                windowEntry.LoadsContainer.DisposeAllChildren();
+                ButtonAction(windowEntry, masterContainer);
+            };
         }
 
         // Update all children
@@ -52,13 +59,16 @@ public sealed partial class PowerMonitoringWindow
             var uid = _entManager.GetEntity(entry.NetEntity);
 
             // Update entry info and button appearance
+            castChild.EntityUid = uid;
             castChild.Entry = entry;
+
             UpdateEntryButton(uid, castChild.Button, entry, true);
 
             // Update sources and loads (if applicable)
             if (_trackedEntity == uid)
             {
                 castChild.MainContainer.Visible = true;
+
                 UpdateEntrySourcesAndLoads(masterContainer, castChild.SourcesContainer, focusSources, PowerMonitoringHelper.SourceIconPath);
                 UpdateEntrySourcesAndLoads(masterContainer, castChild.LoadsContainer, focusLoads, PowerMonitoringHelper.LoadIconPath);
             }
@@ -84,15 +94,15 @@ public sealed partial class PowerMonitoringWindow
         button.SpriteView.SetEntity(uid);
 
         // Update name length
-        float offset = offsetPowerLabel ? 38f : 0f;
-        button.NameLocalized.SetWidth = 220f + offset;
+        //float offset = offsetPowerLabel ? 38f : 0f;
+        //button.NameLocalized.SetWidth = 220f + offset;
 
         // Update name
         var name = Loc.GetString(entry.NameLocalized);
-        var charLimit = (int) (button.NameLocalized.SetWidth / 8f);
+        var charLimit = (int) (button.NameLocalized.Width / 8f);
 
         // Shorten name if required
-        if (name.Length > charLimit)
+        if (charLimit > 3 && name.Length > charLimit)
             name = $"{name.Substring(0, charLimit - 3)}...";
 
         button.NameLocalized.Text = name;
@@ -101,7 +111,7 @@ public sealed partial class PowerMonitoringWindow
         button.PowerValue.Text = Loc.GetString("power-monitoring-window-value", ("value", entry.PowerValue));
     }
 
-    private void UpdateEntrySourcesAndLoads(GridContainer masterContainer, GridContainer currentContainer, PowerMonitoringConsoleEntry[]? entries, string iconPath)
+    private void UpdateEntrySourcesAndLoads(BoxContainer masterContainer, BoxContainer currentContainer, PowerMonitoringConsoleEntry[]? entries, string iconPath)
     {
         if (currentContainer == null)
             return;
@@ -119,11 +129,11 @@ public sealed partial class PowerMonitoringWindow
         while (currentContainer.ChildCount < entries.Length)
         {
             var entry = entries[currentContainer.ChildCount];
-            var subEntry = new PowerMonitoringWindowSubEntry();
+            var subEntry = new PowerMonitoringWindowSubEntry(entry);
             currentContainer.AddChild(subEntry);
 
             // Selection action
-            //subEntry.Button.OnButtonUp += args => { ButtonAction(windowEntry, masterContainer); };
+            subEntry.Button.OnButtonUp += args => { ButtonAction(subEntry, masterContainer); };
         }
 
         // Update all children
@@ -143,17 +153,24 @@ public sealed partial class PowerMonitoringWindow
             var entry = entries[child.GetPositionInParent()];
             var uid = _entManager.GetEntity(entry.NetEntity);
 
+            castChild.Entry = entry;
+            castChild.EntityUid = uid;
+
             UpdateEntryButton(uid, castChild.Button, entries.ElementAt(child.GetPositionInParent()));
         }
     }
 
-    private void ButtonAction(PowerMonitoringWindowEntry entry, GridContainer masterContainer)
+    private void ButtonAction(PowerMonitoringWindowBaseEntry entry, BoxContainer masterContainer)
     {
         // Toggle off button?
         if (entry.EntityUid == _trackedEntity)
         {
             entry.Button.RemoveStyleClass(StyleNano.StyleClassButtonColorGreen);
             _trackedEntity = null;
+
+            // Request an update from the power monitoring system
+            RequestPowerMonitoringUpdateAction?.Invoke(_entManager.GetNetEntity(_trackedEntity));
+            _updateTimer = 0f;
 
             return;
         }
@@ -209,17 +226,27 @@ public sealed partial class PowerMonitoringWindow
         if (scroll == null)
             return false;
 
-        var grid = scroll.Children.ElementAt(0) as GridContainer;
-        if (grid == null)
+        var container = scroll.Children.ElementAt(0) as BoxContainer;
+        if (container == null)
             return false;
 
-        var pos = grid.Children.FirstOrDefault(x => (x is PowerMonitoringWindowEntry) && ((PowerMonitoringWindowEntry) x).EntityUid == _trackedEntity);
-        if (pos == null)
-            return false;
+        nextScrollValue = 0;
 
-        nextScrollValue = 40f * pos.GetPositionInParent();
+        foreach (var control in container.Children)
+        {
+            if (control == null || control is not PowerMonitoringWindowEntry)
+                continue;
 
-        return true;
+            if (((PowerMonitoringWindowEntry) control).EntityUid == _trackedEntity)
+                return true;
+
+            nextScrollValue += control.Height;
+        }
+
+        // Failed to find control
+        nextScrollValue = null;
+
+        return false;
     }
 
     private void TryToScrollToFocus()
@@ -237,16 +264,13 @@ public sealed partial class PowerMonitoringWindow
     }
 }
 
-public sealed class PowerMonitoringWindowEntry : BoxContainer
+public sealed class PowerMonitoringWindowEntry : PowerMonitoringWindowBaseEntry
 {
-    public EntityUid EntityUid;
-    public PowerMonitoringConsoleEntry Entry;
-    public PowerMonitoringButton Button;
-    public GridContainer MainContainer;
-    public GridContainer SourcesContainer;
-    public GridContainer LoadsContainer;
+    public BoxContainer MainContainer;
+    public BoxContainer SourcesContainer;
+    public BoxContainer LoadsContainer;
 
-    public PowerMonitoringWindowEntry(PowerMonitoringConsoleEntry entry)
+    public PowerMonitoringWindowEntry(PowerMonitoringConsoleEntry entry) : base(entry)
     {
         Entry = entry;
 
@@ -254,64 +278,71 @@ public sealed class PowerMonitoringWindowEntry : BoxContainer
         Orientation = LayoutOrientation.Vertical;
         HorizontalExpand = true;
 
-        // Add selection button
-        Button = new PowerMonitoringButton();
+        // Update selection button
         Button.StyleClasses.Add("OpenLeft");
         AddChild(Button);
 
         // Grid container to hold sub containers
-        MainContainer = new GridContainer();
-        MainContainer.Columns = 1;
+        MainContainer = new BoxContainer();
+        MainContainer.Orientation = LayoutOrientation.Vertical;
         MainContainer.HorizontalExpand = true;
-        MainContainer.Margin = new Thickness(8, 5, 0, 0);
+        MainContainer.Margin = new Thickness(8, 0, 0, 0);
         MainContainer.Visible = false;
         AddChild(MainContainer);
 
         // Grid container to hold the list of sources when selected 
-        SourcesContainer = new GridContainer();
-        SourcesContainer.Columns = 1;
+        SourcesContainer = new BoxContainer();
+        SourcesContainer.Orientation = LayoutOrientation.Vertical;
         SourcesContainer.HorizontalExpand = true;
-        SourcesContainer.Margin = new Thickness(0, 0, 0, 0);
         MainContainer.AddChild(SourcesContainer);
 
         // Grid container to hold the list of loads when selected
-        LoadsContainer = new GridContainer();
-        LoadsContainer.Columns = 1;
+        LoadsContainer = new BoxContainer();
+        LoadsContainer.Orientation = LayoutOrientation.Vertical;
         LoadsContainer.HorizontalExpand = true;
-        LoadsContainer.Margin = new Thickness(0, 0, 0, 0);
         MainContainer.AddChild(LoadsContainer);
-
-        // Add spacer
-        var spacer = new Control();
-        spacer.Margin = new Thickness(0, 0, 0, 5);
-        AddChild(spacer);
     }
 }
 
-public sealed class PowerMonitoringWindowSubEntry : BoxContainer
+public sealed class PowerMonitoringWindowSubEntry : PowerMonitoringWindowBaseEntry
 {
     public TextureRect? Icon;
-    public PowerMonitoringButton Button;
 
-    public PowerMonitoringWindowSubEntry()
+    public PowerMonitoringWindowSubEntry(PowerMonitoringConsoleEntry entry) : base(entry)
     {
         Orientation = LayoutOrientation.Horizontal;
         HorizontalExpand = true;
 
+        // Source/load icon
         Icon = new TextureRect();
         Icon.VerticalAlignment = VAlignment.Center;
         Icon.Margin = new Thickness(0, 0, 2, 0);
         AddChild(Icon);
 
-        Button = new PowerMonitoringButton();
+        // Selection button
         Button.StyleClasses.Add("OpenBoth");
         AddChild(Button);
     }
 }
 
+public abstract class PowerMonitoringWindowBaseEntry : BoxContainer
+{
+    public EntityUid EntityUid;
+    public PowerMonitoringConsoleEntry Entry;
+    public PowerMonitoringButton Button;
+
+    public PowerMonitoringWindowBaseEntry(PowerMonitoringConsoleEntry entry)
+    {
+        Entry = entry;
+
+        // Add selection button (properties set by derivative classes)
+        Button = new PowerMonitoringButton();
+    }
+}
+
 public sealed class PowerMonitoringButton : Button
 {
-    public GridContainer MainContainer;
+    public BoxContainer MainContainer;
     public SpriteView SpriteView;
     public Label NameLocalized;
     public Label PowerValue;
@@ -320,23 +351,28 @@ public sealed class PowerMonitoringButton : Button
     {
         HorizontalExpand = true;
         VerticalExpand = true;
+        Margin = new Thickness(0, 1, 0, 1);
 
-        MainContainer = new GridContainer() { Columns = 3 };
+        MainContainer = new BoxContainer();
+        MainContainer.Orientation = BoxContainer.LayoutOrientation.Horizontal;
+        MainContainer.HorizontalExpand = true;
         AddChild(MainContainer);
 
         SpriteView = new SpriteView();
         SpriteView.OverrideDirection = Direction.South;
         SpriteView.SetSize = new Vector2(32f, 32f);
+        SpriteView.Margin = new Thickness(0, 0, 5, 0);
         MainContainer.AddChild(SpriteView);
 
         NameLocalized = new Label();
         NameLocalized.ClipText = true;
-        NameLocalized.SetWidth = 220f;
+        NameLocalized.HorizontalExpand = true;
         MainContainer.AddChild(NameLocalized);
 
         PowerValue = new Label();
         PowerValue.ClipText = true;
-        PowerValue.SetWidth = 64f;
+        PowerValue.SetWidth = 72f;
+        PowerValue.HorizontalAlignment = HAlignment.Right;
         MainContainer.AddChild(PowerValue);
     }
 }

@@ -10,8 +10,8 @@ namespace Content.Shared.Power;
 [Serializable, NetSerializable]
 public sealed class PowerMonitoringConsoleBoundInterfaceState : BoundUserInterfaceState
 {
-    public float TotalSources;
-    public float TotalLoads;
+    public double TotalSources;
+    public double TotalLoads;
     public PowerMonitoringConsoleEntry[] AllSources;
     public PowerMonitoringConsoleEntry[] AllLoads;
     public PowerMonitoringConsoleEntry[] FocusSources;
@@ -20,8 +20,8 @@ public sealed class PowerMonitoringConsoleBoundInterfaceState : BoundUserInterfa
     public Dictionary<Vector2i, NavMapChunkPowerCables>? FocusCableChunks;
 
     public PowerMonitoringConsoleBoundInterfaceState
-        (float totalSources,
-        float totalLoads,
+        (double totalSources,
+        double totalLoads,
         PowerMonitoringConsoleEntry[] allSources,
         PowerMonitoringConsoleEntry[] allLoads,
         PowerMonitoringConsoleEntry[] focusSources,

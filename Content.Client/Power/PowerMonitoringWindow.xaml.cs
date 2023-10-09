@@ -70,8 +70,8 @@ public sealed partial class PowerMonitoringWindow : FancyWindow
     }
 
     public void ShowEntites
-        (float totalSources,
-        float totalLoads,
+        (double totalSources,
+        double totalLoads,
         PowerMonitoringConsoleEntry[] allSources,
         PowerMonitoringConsoleEntry[] allLoads,
         PowerMonitoringConsoleEntry[] focusSources,
@@ -190,7 +190,12 @@ public sealed partial class PowerMonitoringWindow : FancyWindow
 
         var icon = _spriteSystem.Frame0(new SpriteSpecifier.Texture(new(iconPath)));
 
-        NavMap.TrackedEntities.TryAdd(coords, (true, color, icon));
+        // We expect a single tracked entity at a given coordinate
+        if (NavMap.TrackedEntities.ContainsKey(coords))
+            NavMap.TrackedEntities[coords] = (true, color, icon);
+
+        else
+            NavMap.TrackedEntities.Add(coords, (true, color, icon));
     }
 
     protected override void FrameUpdate(FrameEventArgs args)

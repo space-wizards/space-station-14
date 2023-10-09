@@ -55,19 +55,19 @@
                 <TabContainer Name="MasterTabContainer" VerticalExpand="True" HorizontalExpand="True" Margin="0 10 0 0">
                     <ScrollContainer HorizontalExpand="True"                                     
                                      Margin="8, 8, 8, 8">
-                        <GridContainer Name="SourcesList" VerticalExpand="True" HorizontalExpand="True" Columns="1"/>
+                        <BoxContainer Name="SourcesList" Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True"/>
                     </ScrollContainer>
                     <ScrollContainer HorizontalExpand="True"                                    
                                      Margin="8, 8, 8, 8">
-                        <GridContainer Name="SMESList" VerticalExpand="True" HorizontalExpand="True" Columns="1"/>
+                        <BoxContainer Name="SMESList" Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True"/>
                     </ScrollContainer>
                     <ScrollContainer HorizontalExpand="True"                                  
                                      Margin="8, 8, 8, 8">
-                        <GridContainer Name="SubstationList" VerticalExpand="True" HorizontalExpand="True" Columns="1"/>
+                        <BoxContainer Name="SubstationList" Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True"/>
                     </ScrollContainer>
                     <ScrollContainer HorizontalExpand="True"                                   
                                      Margin="8, 8, 8, 8">
-                        <GridContainer Name="ApcList" VerticalExpand="True" HorizontalExpand="True" Columns="1"/>
+                        <BoxContainer Name="ApcList" Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True"/>
                     </ScrollContainer>
                 </TabContainer>
 
