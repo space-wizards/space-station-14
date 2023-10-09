@@ -1,32 +1,26 @@
 - type: loadout
-  id: LoadoutServiceClownUniformJesterAlt
+  id: LoadoutServiceClownOutfitJester
   category: Jobs
-  cost: 2
+  cost: 3
+  exclusive: true
+  jobWhitelist:
+    - Clown
+  items:
+    - ClothingUniformJumpsuitJester
+    - ClothingHeadHatJester
+    - ClothingShoesJester
+
+- type: loadout
+  id: LoadoutServiceClownOutfitJesterAlt
+  category: Jobs
+  cost: 3
   exclusive: true
   jobWhitelist:
     - Clown
   items:
     - ClothingUniformJumpsuitJesterAlt
-
-- type: loadout
-  id: LoadoutServiceClownShoesJester
-  category: Jobs
-  cost: 1
-  exclusive: true
-  jobWhitelist:
-    - Clown
-  items:
-    - ClothingShoesJester
-
-- type: loadout
-  id: LoadoutServiceClownHeadJesterHatAlt
-  category: Jobs
-  cost: 1
-  exclusive: true
-  jobWhitelist:
-    - Clown
-  items:
     - ClothingHeadHatJesterAlt
+    - ClothingShoesJester
 
 - type: loadout
   id: LoadoutServiceBartenderUniformPurple

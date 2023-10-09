@@ -19,23 +19,14 @@
     - ClothingOuterVestHazard
 
 - type: loadout
-  id: LoadoutEngineeringOuterChickenSuit
+  id: LoadoutEngineeringChickenSuit # :)
   category: Jobs
   cost: 3
   exclusive: true
   jobWhitelist:
-    - AtmosphericTechnician # :)
+    - AtmosphericTechnician
   items:
     - ClothingOuterSuitChicken
-
-- type: loadout
-  id: LoadoutEngineeringHeadChicken
-  category: Jobs
-  cost: 2
-  exclusive: true
-  jobWhitelist:
-    - AtmosphericTechnician # :)
-  items:
     - ClothingHeadHatChickenhead
 
 - type: loadout
