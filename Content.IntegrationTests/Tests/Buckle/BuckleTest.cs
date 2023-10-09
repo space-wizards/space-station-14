@@ -30,6 +30,7 @@ namespace Content.IntegrationTests.Tests.Buckle
   - type: Buckle
   - type: Hands
   - type: Body
+  - type: InputMover
     prototype: Human
   - type: StandingState
 
