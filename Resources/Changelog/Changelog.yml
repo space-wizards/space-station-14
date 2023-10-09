@@ -1,9 +1,4 @@
 Entries:
-- author: Fahasor
-  changes:
-  - {message: Mops now does not stops absorbing for no reason., type: Fix}
-  id: 4478
-  time: '2023-08-07T17:47:34.0000000+00:00'
 - author: Emisse
   changes:
   - {message: Bounty payouts x10, type: Tweak}
@@ -2950,3 +2945,9 @@ Entries:
       work now!, type: Tweak}
   id: 4977
   time: '2023-10-09T05:07:54.0000000+00:00'
+- author: nmajask
+  changes:
+  - {message: 'Added flannel jackets, find them at your local winterdrobe or dark
+      maint corridor.', type: Add}
+  id: 4978
+  time: '2023-10-09T15:22:57.0000000+00:00'
