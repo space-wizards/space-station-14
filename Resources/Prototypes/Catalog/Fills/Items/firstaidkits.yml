@@ -46,7 +46,9 @@
       - id: Bloodpack
       - id: SyringeTranexamicAcid
       - id: PillIron
-        amount: 5
+        amount: 4
+      - id: PillCopper
+        amount: 2
       - id: PillBicaridine
         amount: 5
 
