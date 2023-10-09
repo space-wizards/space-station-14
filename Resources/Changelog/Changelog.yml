@@ -1,9 +1,4 @@
 Entries:
-- author: Emisse
-  changes:
-  - {message: Bounty payouts x10, type: Tweak}
-  id: 4479
-  time: '2023-08-07T21:41:57.0000000+00:00'
 - author: hord-brayden
   changes:
   - {message: Added Syringe Support for Chemical Analysis Goggles, type: Fix}
@@ -2951,3 +2946,9 @@ Entries:
       maint corridor.', type: Add}
   id: 4978
   time: '2023-10-09T15:22:57.0000000+00:00'
+- author: Vasilis
+  changes:
+  - {message: Contributors are automatically updated now once a week in the credits
+      section., type: Add}
+  id: 4979
+  time: '2023-10-09T23:42:53.0000000+00:00'
