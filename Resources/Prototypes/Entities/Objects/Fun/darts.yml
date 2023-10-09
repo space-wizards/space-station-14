@@ -141,15 +141,18 @@
   - type: Damageable
   - type: DamageRandomPopup
     popups:
-      - "1 point"
-      - "1 point"
-      - "1 point"
-      - "5 points"
-      - "5 points"
-      - "10 points"
-      - "10 points"
-      - "25 points"
-      - "Bullseye! 50 points!"
+      - darts-popup-bullseye
+      - darts-popup-25
+      - darts-popup-10
+      - darts-popup-10
+      - darts-popup-5
+      - darts-popup-5
+      - darts-popup-5
+      - darts-popup-1
+      - darts-popup-1
+      - darts-popup-1
+      - darts-popup-miss
+      - darts-popup-miss
   - type: RangedDamageSound
     soundGroups:
       brute: /Audio/Weapons/pierce.ogg
