@@ -44,7 +44,7 @@
             #Cargo
             Quartermaster: [ 1, 1 ]
             CargoTechnician: [ 5, 5 ]
-            SalvageSpecialist: [ 3, 3 ]
+            SalvageSpecialist: [ 4, 4 ]
             #Medical
             ChiefMedicalOfficer: [ 1, 1 ]
             SeniorPhysician: [ 1, 1 ]
@@ -73,3 +73,30 @@
             ServiceWorker: [ 3, 3 ]
             Zookeeper: [ 1, 1 ]
             Lawyer: [ 2, 2 ]
+
+- type: entity
+  id: DeltaNanotrasenStation
+  parent:
+    - BaseStation
+    - BaseStationCargo
+    - BaseStationJobsSpawning
+    - BaseStationRecords
+    - BaseStationArrivals
+    - BaseStationShuttles
+    - BaseStationCentcomm
+    - BaseStationEvacuation
+    - BaseStationAlertLevels
+    - BaseStationExpeditions
+    - BaseStationAllEventsEligible
+    - BaseStationNanotrasen
+  noSpawn: true
+  components:
+    - type: Transform
+    - type: GridSpawn
+      paths:
+        - /Maps/Shuttles/cargo.yml
+    - type: StationMinimap
+      minimapData: !type:StationMinimapData
+        mapTexture: SS220/ViewableMaps/220Delta.png
+        originOffset: -80, -35
+        mapScale: 6.4
