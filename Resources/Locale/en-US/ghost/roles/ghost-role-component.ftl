@@ -166,3 +166,6 @@ ghost-role-information-loneop-rules = You are a syndicate operative tasked with 
 
 ghost-role-information-behonker-name = Behonker
 ghost-role-information-behonker-description = You are an antagonist, bring death and honks to those who do not follow the honkmother.
+
+ghost-role-information-mothroach-name = Mothroach
+ghost-role-information-mothroach-description = Be cute roach, but moth! You are hungry always.

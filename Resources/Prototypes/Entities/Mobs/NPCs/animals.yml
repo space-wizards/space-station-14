@@ -2488,3 +2488,96 @@
   - type: NpcFactionMember
     factions:
     - Passive
+
+- type: entity
+  name: mothroach
+  parent: SimpleMobBase
+  id: MobMothroach
+  description: Cute and fluffy roach, but moth.
+  components:
+  - type: GhostRole
+    name: ghost-role-information-mothroach-name
+    description: ghost-role-information-mothroach-description
+  - type: GhostTakeoverAvailable
+  - type: Speech
+    speechSounds: Chitter
+    speechVerb: SmallMob
+  - type: Sprite
+    drawdepth: SmallMobs
+    sprite: Mobs/Animals/mothroach.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: mothroach
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.3
+        density: 150
+        mask:
+        - SmallMobMask
+        layer:
+        - SmallMobLayer
+  - type: MobState
+  - type: Deathgasp
+  - type: MobStateActions
+    actions:
+      Critical:
+      - ActionCritSuccumb
+      - ActionCritFakeDeath
+      - ActionCritLastWords
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      15: Critical
+      30: Dead
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 5.5
+    baseSprintSpeed : 5.5
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: mothroach
+      Dead:
+        Base: mothroach_dead
+  - type: Food
+  - type: Hunger
+    spawned:
+    - id: FoodMeatRat
+      amount: 1
+  - type: ReplacementAccent
+    accent: mothroach
+  - type: Tag
+    tags:
+    - Trash
+    - DoorBumpOpener
+  - type: Respirator
+    damage:
+      types:
+        Asphyxiation: 0.25
+    damageRecovery:
+      types:
+        Asphyxiation: -0.25
+  - type: Barotrauma
+    damage:
+      types:
+        Blunt: 0.1
+  - type: Vocal
+    sounds:
+      Male: UnisexMoth
+      Female: UnisexMoth
+  - type: Damageable
+    damageContainer: Biological
+    damageModifierSet: Moth
+  - type: Bloodstream
+    bloodMaxVolume: 70
+  - type: MobPrice
+    price: 60
+  - type: Puller
+    needsHands: true
+  - type: Butcherable
+    spawned:
+    - id: FoodMeatRat
+      amount: 1
