@@ -39,7 +39,7 @@
     belt: EnergyKatana
     suitstorage: YellowOxygenTankFilled
   inhand:
-    left hand: JetpackBlackFilled
+    - JetpackBlackFilled
 
 #Deathsquad Outfit
 - type: startingGear
@@ -136,7 +136,7 @@
     pocket2: BaseUplinkRadio40TC
     belt: ClothingBeltMilitaryWebbing
   inhand:
-    right hand: NukeOpsDeclarationOfWar
+    - NukeOpsDeclarationOfWar
   innerclothingskirt: ClothingUniformJumpskirtOperative
   satchel: ClothingBackpackDuffelSyndicateOperative
   duffelbag: ClothingBackpackDuffelSyndicateOperative
@@ -304,7 +304,7 @@
     gloves: ClothingHandsGlovesFingerless
   innerclothingskirt: ClothingUniformJumpskirtColorWhite
   inhand:
-    left hand: WeaponMeleeToolboxRobust
+    - WeaponMeleeToolboxRobust
 
 #Brigmedic
 

@@ -22,7 +22,7 @@
     belt: BooksBag
     pocket2: HandLabeler # for making named bestsellers
   inhand:
-    right hand: BriefcaseBrownFilled
+    - BriefcaseBrownFilled
   innerclothingskirt: ClothingUniformJumpskirtColorLightBrown
   satchel: ClothingBackpackSatchelLibrarianFilled
   duffelbag: ClothingBackpackDuffelLibrarianFilled
