@@ -402,9 +402,9 @@
     spawns:
     - ShadowKudzuWeak
     spawnRange: 12
-    minSpawnAmount: 5
-    maxSpawnAmount: 10
+    minSpawnAmount: 10
+    maxSpawnAmount: 30
     superCriticalSpawns:
     - ShadowKudzu
     superCriticalSpawnRange: 20
-    superCriticalMaxSpawnAmount: 20
+    superCriticalMaxSpawnAmount: 100
