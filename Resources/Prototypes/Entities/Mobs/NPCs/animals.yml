@@ -525,9 +525,11 @@
     interactFailureString: petting-failure-crab
   - type: Bloodstream
     bloodMaxVolume: 50
+    bloodReagent: CopperBlood
   - type: Tag
     tags:
     - VimPilot
+    - CopperBlood
 
 - type: entity
   name: goat
@@ -1657,9 +1659,14 @@
   - type: IgnoreSpiderWeb
   - type: Bloodstream
     bloodMaxVolume: 150
-    bloodReagent: SpiderBlood
+    bloodReagent: CopperBlood
   - type: Speech
     speechVerb: Arachnid
+  - type: Tag
+    tags:
+    - DoorBumpOpener
+    - FootstepSound
+    - CopperBlood
 
 - type: entity
   name: tarantula
@@ -1709,10 +1716,6 @@
         180: Dead
     - type: Spider
       webPrototype: SpiderWebClown
-    - type: Tag
-      tags:
-      - DoorBumpOpener
-      - FootstepSound
     - type: MeleeWeapon
       hidden: true
       angle: 0

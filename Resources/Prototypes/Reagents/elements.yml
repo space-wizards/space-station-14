@@ -62,9 +62,20 @@
       metabolismRate: 0.1
       effects:
       - !type:HealthChange
+        conditions:
+        - !type:HasTag
+          invert: true
+          tag: CopperBlood
         damage:
           types:
             Poison: 0.1
+    Medicine:
+      effects:
+      - !type:ModifyBloodLevel
+        conditions:
+        - !type:HasTag
+          tag: CopperBlood
+        amount: 4
 
 - type: reagent
   id: Fluorine
@@ -137,9 +148,23 @@
   boilingPoint: 2862.0
   meltingPoint: 1538.0
   metabolisms:
+    Poison:
+      metabolismRate: 0.1
+      effects:
+      - !type:HealthChange
+        conditions:
+        - !type:HasTag
+          tag: CopperBlood
+        damage:
+          types:
+            Poison: 0.1
     Medicine:
       effects:
       - !type:ModifyBloodLevel
+        condition:
+        - !type:HasTag
+          invert: true
+          tag: CopperBlood
         amount: 4
 
 - type: reagent
