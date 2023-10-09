@@ -610,6 +610,7 @@
   - type: Tag
     tags:
     - Fruit
+  - type: Fragile
 
 - type: entity
   name: blue tomato

@@ -112,8 +112,16 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 if (duc != null)
                     duc.Container.Insert(entity, EntityManager, xform, meta: meta);
                 else
-                    _xformSystem.AttachToGridOrMap(entity, xform);
-
+                {
+                    if (meta.EntityPrototype.Components.ContainsKey("Fragile"))
+                    {
+                        Log.Error("SPLAT");
+                    }
+                    else
+                    {
+                        _xformSystem.AttachToGridOrMap(entity, xform);
+                    }
+                }
                 if (EntityManager.TryGetComponent(entity, out PhysicsComponent? physics))
                 {
                     _physicsSystem.WakeBody(entity, body: physics);
