@@ -7,8 +7,8 @@ namespace Content.Server.Fragile;
 public sealed partial class FragileComponent : Component
 {
     /// <summary>
-    ///     Used to create a puddle when this entity is flushed
+    ///     Sound played when the entity is destroyed.
     /// </summary>
-    [DataField("puddle")]
-    public string? puddle;
+    [DataField("splatSound")]
+    public string? splatSound;
 }

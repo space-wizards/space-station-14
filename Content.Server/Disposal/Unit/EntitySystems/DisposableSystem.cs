@@ -8,6 +8,8 @@ using Content.Shared.Disposal.Components;
 using Content.Shared.Item;
 using Content.Server.Fluids.EntitySystems;
 using Content.Shared.Chemistry.Components;
+using Content.Server.Fragile;
+using Content.Server.Chemistry.Components.SolutionManager;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -21,6 +23,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
 {
     public sealed class DisposableSystem : EntitySystem
     {
+        [Dependency] private readonly IPrototypeManager _proto = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly AudioSystem _audio = default!;
         [Dependency] private readonly PuddleSystem _puddle = default!;
@@ -120,12 +123,22 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                     duc.Container.Insert(entity, EntityManager, xform, meta: meta);
                 else
                 {
-                    if (meta.EntityPrototype.Components.ContainsKey("Fragile"))
+                    // fragile things go splat
+                    if (TryComp<FragileComponent>(entity, out var fragile))
                     {
-                        var puddle = String.Format("{0}", meta.EntityPrototype.Components["Fragile"].Mapping["puddle"]);
-                        var solution = new Solution(puddle, 10);
-                        _audio.PlayPvs(new SoundPathSpecifier("/Audio/Effects/Fluids/splat.ogg"), uid, AudioParams.Default.WithVariation(0.2f).WithVolume(-4f));
-                        _puddle.TrySpillAt(uid, solution, out var _, false);
+                        TryComp<SolutionContainerManagerComponent>(entity, out var reagents);
+                        var puddle = new Solution();
+                        foreach (var solution in reagents.Solutions.Values)
+                        {
+                            foreach (var quantity in solution.Contents)
+                            {
+                                puddle.AddReagent(quantity.Reagent.Prototype, quantity.Quantity, false);
+                            }
+                        }
+
+                        _audio.PlayPvs(new SoundPathSpecifier(fragile.splatSound), uid, AudioParams.Default.WithVariation(0.2f).WithVolume(-4f));
+                        _puddle.TrySpillAt(uid, puddle, out var _, false);
+
                     }
                     else
                     {

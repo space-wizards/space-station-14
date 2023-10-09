@@ -57,7 +57,7 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: Fragile
-    puddle: Egg
+    splatSound: "/Audio/Effects/Fluids/splat.ogg"
 
 # Splat
 - type: entity

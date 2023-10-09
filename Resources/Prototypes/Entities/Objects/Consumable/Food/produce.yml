@@ -611,7 +611,7 @@
     tags:
     - Fruit
   - type: Fragile
-    puddle: JuiceTomato
+    splatSound: "/Audio/Effects/Fluids/splat.ogg"
 
 - type: entity
   name: blue tomato
@@ -1418,7 +1418,7 @@
     tags:
     - Fruit
   - type: Fragile
-    puddle: JuiceWatermelon
+    splatSound: "/Audio/Effects/Fluids/splat.ogg"
 
 - type: entity
   name: watermelon slice
