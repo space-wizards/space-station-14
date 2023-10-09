@@ -36,6 +36,7 @@
   - type: Input
     context: "ghost"
   - type: Brain
+  - type: InputMover
   - type: Examiner
   - type: BlockMovement
 
