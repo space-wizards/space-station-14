@@ -63,9 +63,9 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
     private const string Slime = "Slime";
 
     [ValidatePrototypeId<ReagentPrototype>]
-    private const string SpiderBlood = "SpiderBlood";
+    private const string CopperBlood = "CopperBlood";
 
-    private static string[] _standoutReagents = new[] { Blood, Slime, SpiderBlood };
+    private static string[] _standoutReagents = new[] { Blood, Slime, CopperBlood };
 
     public static float PuddleVolume = 1000;
 
