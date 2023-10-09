@@ -5,7 +5,7 @@
   minPlayers: 0
   stations:
     Fland:
-      stationProto: StandardNanotrasenStation
+      stationProto: FlandNanotrasenStation
       components:
         - type: StationNameSetup
           mapNameTemplate: '{0} Fland Installation {1}'
@@ -66,3 +66,14 @@
             Musician: [ 1, 1 ]
             BlueShield: [ 1, 1 ]
             Brigmedic: [ 1, 1 ]
+
+- type: entity
+  id: FlandNanotrasenStation
+  parent: StandardNanotrasenStation
+  noSpawn: true
+  components:
+    - type: StationMinimap
+      minimapData: !type:StationMinimapData
+        mapTexture: SS220/ViewableMaps/220Fland.png
+        originOffset: 208, -38
+        mapScale: 6.4

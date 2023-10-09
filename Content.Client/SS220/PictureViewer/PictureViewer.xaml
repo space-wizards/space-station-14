@@ -1,6 +1,8 @@
+<!-- © SS220, An EULA/CLA with a hosting restriction, full text: https://raw.githubusercontent.com/SerbiaStrong-220/space-station-14/master/CLA.txt -->
 <Control xmlns="https://spacestation14.io"
          MouseFilter="Stop"
-         MinSize="100 100">
+         MinSize="100 100"
+         RectClipContent="True">
 
     <Label
         Name="NoImageLabel" Text="{Loc 'image-viewer-no-image'}"
@@ -8,7 +10,7 @@
         VerticalAlignment="Center"
         MouseFilter="Ignore"/>
 
-        <TextureRect
+    <TextureRect
         Name="Picture"
         Stretch="KeepCentered"
         MouseFilter="Ignore"/>

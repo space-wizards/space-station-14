@@ -914,6 +914,7 @@
     interfaces:
       - key: enum.SurveillanceCameraMonitorUiKey.Key
         type: SurveillanceCameraMonitorBoundUserInterface
+  - type: ViewableStationMap # SS220 Camera-Map
 
 - type: entity
   parent: BaseComputer
@@ -952,6 +953,7 @@
     interfaces:
       - key: enum.SurveillanceCameraMonitorUiKey.Key
         type: SurveillanceCameraMonitorBoundUserInterface
+  - type: ViewableStationMap # SS220 Camera-Map
 
 - type: entity
   id: ComputerPalletConsole

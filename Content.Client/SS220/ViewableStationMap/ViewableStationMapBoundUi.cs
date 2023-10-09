@@ -1,4 +1,3 @@
-using Robust.Client.GameObjects;
 using Robust.Shared.Serialization.TypeSerializers.Implementations;
 using Content.Client.SS220.ViewableStationMap.UI;
 using Content.Shared.SS220.ViewableStationMap;
@@ -27,10 +26,14 @@ public sealed class StationViewableMapBoundUserInterface : BoundUserInterface
 
         _window.OnClose += Close;
 
-        if (_entMan.TryGetComponent(Owner, out ViewableStationMapComponent? comp))
+        if (_entMan.TryGetComponent(Owner, out ViewableStationMapComponent? comp) && comp.MinimapData is StationMinimapData minimap)
         {
-            var path = SpriteSpecifierSerializer.TextureRoot / comp.MapTexture;
-            _window.ViewedMap = path;
+            if (!string.IsNullOrEmpty(minimap.MapTexture))
+            {
+                var path = SpriteSpecifierSerializer.TextureRoot / minimap.MapTexture;
+                _window.ViewedMap = path;
+                _window.Viewer.SetPictureCenterOffset(minimap.OriginOffset);
+            }
         }
     }
 

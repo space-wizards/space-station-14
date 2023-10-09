@@ -3,5 +3,6 @@
                Title="{Loc 'viewable-station-map-ui-window-title'}"
                MinSize="300 300"
                SetSize="725 725">
-    <pv:PictureViewer Name="Viewer"/>
+    <pv:PictureViewer Name="Viewer" Access="Public"/>
+    <pv:PictureViewerControls Name="ViewerControls"/>
 </DefaultWindow>

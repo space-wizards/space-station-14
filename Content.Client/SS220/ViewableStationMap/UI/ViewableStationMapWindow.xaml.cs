@@ -18,5 +18,7 @@ public sealed partial class ViewableStationMapWindow : DefaultWindow
     public ViewableStationMapWindow()
     {
         RobustXamlLoader.Load(this);
+
+        ViewerControls.AttachToViewer(Viewer);
     }
 }

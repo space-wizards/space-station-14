@@ -3,6 +3,9 @@
   abstract: true
   components:
     - type: StationData
+    - type: StationMinimap #SS220 Camera-Map
+      minimapData: !type:StationMinimapData
+        mapScale: 5
 
 - type: entity
   id: BaseStationCargo

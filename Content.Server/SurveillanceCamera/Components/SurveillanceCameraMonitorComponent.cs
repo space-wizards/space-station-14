@@ -1,3 +1,6 @@
+using System.Numerics;
+using Robust.Shared.Serialization;
+
 namespace Content.Server.SurveillanceCamera;
 
 [RegisterComponent]
@@ -31,14 +34,16 @@ public sealed partial class SurveillanceCameraMonitorComponent : Component
 
     // Current active subnet.
     [ViewVariables]
-    public string ActiveSubnet { get; set; } = default!;
+    public string? ActiveSubnet { get; set; } = null;
 
     // Known cameras in this subnet by address with name values.
     // This is cleared when the subnet is changed.
     [ViewVariables]
-    public Dictionary<string, string> KnownCameras { get; } = new();
+    public Dictionary<string, Dictionary<string, (string, Vector2)>> KnownCameras { get; } = new();
 
     [ViewVariables]
     // The subnets known by this camera monitor.
     public Dictionary<string, string> KnownSubnets { get; } = new();
+
+    public HashSet<string> ConnectedSubnets { get; } = new();
 }

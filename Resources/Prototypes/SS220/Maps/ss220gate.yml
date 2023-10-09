@@ -5,7 +5,7 @@
   minPlayers: 0 #Нужно для автоголосования
   stations:
     Gate:
-      stationProto: StandardNanotrasenStation
+      stationProto: GateNanotrasenStation
       components:
         - type: StationNameSetup
           mapNameTemplate: '{0} Gate Station {1}'
@@ -68,3 +68,14 @@
             Clown: [ 1, 1 ]
             Mime: [ 1, 1 ]
             Musician: [ 1, 1 ]
+
+- type: entity
+  id: GateNanotrasenStation
+  parent: StandardNanotrasenStation
+  noSpawn: true
+  components:
+    - type: StationMinimap
+      minimapData: !type:StationMinimapData
+        mapTexture: SS220/ViewableMaps/220Gate.png
+        originOffset: -126, -686
+        mapScale: 6.4

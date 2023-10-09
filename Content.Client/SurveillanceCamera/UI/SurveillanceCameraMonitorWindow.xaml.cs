@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Numerics;
 using Content.Client.Resources;
 using Content.Client.Viewport;
 using Content.Shared.DeviceNetwork;
@@ -11,6 +12,7 @@ using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Graphics;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 
 namespace Content.Client.SurveillanceCamera.UI;
 
@@ -20,6 +22,22 @@ public sealed partial class SurveillanceCameraMonitorWindow : DefaultWindow
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IResourceCache _resourceCache = default!;
 
+    // SS220 Camera-Map begin
+    private enum TabNumbers
+    {
+        CameraMap,
+        CameraList
+    }
+
+    public void SetMap(ResPath mapPath)
+    {
+        MapViewer.ViewedPicture = mapPath;
+    }
+
+    private string _subnetFilter = "";
+    private Dictionary<string, Dictionary<string, (string, Vector2)>> _camerasCache = new();
+    // SS220 Camera-Map end
+
     public event Action<string>? CameraSelected;
     public event Action<string>? SubnetOpened;
     public event Action? CameraRefresh;
@@ -28,10 +46,12 @@ public sealed partial class SurveillanceCameraMonitorWindow : DefaultWindow
     public event Action? CameraDisconnect;
 
     private string _currentAddress = string.Empty;
+    private string _currentName = string.Empty; // SS220 Camera-Map
     private bool _isSwitching;
     private readonly FixedEye _defaultEye = new();
     private readonly Dictionary<string, int> _subnetMap = new();
 
+    /*
     private string? SelectedSubnet
     {
         get
@@ -45,6 +65,7 @@ public sealed partial class SurveillanceCameraMonitorWindow : DefaultWindow
             return (string) SubnetSelector.SelectedMetadata;
         }
     }
+    */
 
     public SurveillanceCameraMonitorWindow()
     {
@@ -65,40 +86,41 @@ public sealed partial class SurveillanceCameraMonitorWindow : DefaultWindow
 
         SubnetSelector.OnItemSelected += args =>
         {
-            // piss
-            SubnetOpened!((string) args.Button.GetItemMetadata(args.Id)!);
+            _subnetFilter = (string) args.Button.GetItemMetadata(args.Id)!; // SS220 Camera-Map
+            PopulateCameraList(_camerasCache); // SS220 Camera-Map
+            SubnetSelector.Select(args.Id);
         };
         SubnetRefreshButton.OnPressed += _ => SubnetRefresh!();
+        SubnetRefreshButton2.OnPressed += _ => SubnetRefresh!(); // SS220 Camera-Map
         CameraRefreshButton.OnPressed += _ => CameraRefresh!();
         CameraDisconnectButton.OnPressed += _ => CameraDisconnect!();
+
+        // SS220 Camera-Map begin
+        SelectorTabs.SetTabTitle((int) TabNumbers.CameraList, "Список");
+        SelectorTabs.SetTabTitle((int) TabNumbers.CameraMap, "Карта");
+
+        MapViewerControls.AttachToViewer(MapViewer);
+        // SS220 Camera-Map end
     }
 
 
     // The UI class should get the eye from the entity, and then
     // pass it here so that the UI can change its view.
-    public void UpdateState(IEye? eye, HashSet<string> subnets, string activeAddress, string activeSubnet, Dictionary<string, string> cameras)
+    public void UpdateState(IEye? eye, HashSet<string> subnets, string activeAddress, Dictionary<string, Dictionary<string, (string, Vector2)>> cameras)
     {
         _currentAddress = activeAddress;
-        SetCameraView(eye);
+        _currentName = string.Empty; //SS220 Camera-Map
 
         if (subnets.Count == 0)
         {
             SubnetSelector.AddItem(Loc.GetString("surveillance-camera-monitor-ui-no-subnets"));
             SubnetSelector.Disabled = true;
-            return;
         }
 
         if (SubnetSelector.Disabled && subnets.Count != 0)
         {
             SubnetSelector.Clear();
             SubnetSelector.Disabled = false;
-        }
-
-        // That way, we have *a* subnet selected if this is ever opened.
-        if (string.IsNullOrEmpty(activeSubnet))
-        {
-            SubnetOpened!(subnets.First());
-            return;
         }
 
         // if the subnet count is unequal, that means
@@ -115,22 +137,30 @@ public sealed partial class SurveillanceCameraMonitorWindow : DefaultWindow
             }
         }
 
-        if (_subnetMap.TryGetValue(activeSubnet, out var subnetId))
-        {
-            SubnetSelector.Select(subnetId);
-        }
-
         PopulateCameraList(cameras);
+        MapViewer.Populate(cameras);
+        SetCameraView(eye);
     }
 
-    private void PopulateCameraList(Dictionary<string, string> cameras)
+    private void PopulateCameraList(Dictionary<string, Dictionary<string, (string, Vector2)>> cameras)
     {
         SubnetList.Clear();
 
-        foreach (var (address, name) in cameras)
+        // SS220 Camera-Map begin
+        _camerasCache = cameras;
+
+        foreach (var (subnetFreqId, subnetCameras) in cameras)
         {
-            AddCameraToList(name, address);
+            foreach (var (address, (name, _)) in subnetCameras)
+            {
+                if (address == _currentAddress)
+                    _currentName = name;
+
+                if (subnetFreqId != _subnetFilter)
+                    AddCameraToList(name, address);
+            }
         }
+        // SS220 Camera-Map end
 
         SubnetList.SortItemsByText();
     }
@@ -153,7 +183,7 @@ public sealed partial class SurveillanceCameraMonitorWindow : DefaultWindow
             CameraViewBackground.Visible = true;
             CameraStatus.Text = Loc.GetString("surveillance-camera-monitor-ui-status",
                 ("status", Loc.GetString("surveillance-camera-monitor-ui-status-connecting")),
-                ("address", _currentAddress));
+                ("address", _currentAddress)) + $" ({_currentName})"; // SS220 Camera-Map
             CameraSwitchTimer!();
         }
         else
@@ -170,7 +200,7 @@ public sealed partial class SurveillanceCameraMonitorWindow : DefaultWindow
         CameraViewBackground.Visible = CameraView.Eye == _defaultEye;
         CameraStatus.Text = Loc.GetString("surveillance-camera-monitor-ui-status",
                             ("status", Loc.GetString("surveillance-camera-monitor-ui-status-connected")),
-                            ("address", _currentAddress));
+                            ("address", _currentAddress)) + $" ({_currentName})"; // SS220 Camera-Map
     }
 
     private int AddSubnet(string subnet)
@@ -183,6 +213,9 @@ public sealed partial class SurveillanceCameraMonitorWindow : DefaultWindow
 
         SubnetSelector.AddItem(name);
         SubnetSelector.SetItemMetadata(SubnetSelector.ItemCount - 1, subnet);
+
+        if (_subnetFilter == "")
+            _subnetFilter = subnet;
 
         return SubnetSelector.ItemCount - 1;
     }

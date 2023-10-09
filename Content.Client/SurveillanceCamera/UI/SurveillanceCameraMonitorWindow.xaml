@@ -1,25 +1,40 @@
 <DefaultWindow xmlns="https://spacestation14.io"
                xmlns:viewport="clr-namespace:Content.Client.Viewport"
+               xmlns:pv="clr-namespace:Content.Client.SS220.PictureViewer"
+               xmlns:cm="clr-namespace:Content.Client.SS220.CameraMap"
                Title="{Loc 'surveillance-camera-monitor-ui-window'}">
     <BoxContainer Orientation="Horizontal">
         <BoxContainer Orientation="Vertical" MinWidth="350" VerticalExpand="True">
             <!-- lazy -->
-            <OptionButton Name="SubnetSelector" />
-            <Button Name="SubnetRefreshButton" Text="{Loc 'surveillance-camera-monitor-ui-refresh-subnets'}" />
-            <ScrollContainer VerticalExpand="True">
-                <ItemList Name="SubnetList" />
-            </ScrollContainer>
-            <Button Name="CameraRefreshButton" Text="{Loc 'surveillance-camera-monitor-ui-refresh-cameras'}" />
+            <TabContainer Name="SelectorTabs" VerticalExpand="True"> <!-- SS220 Camera-Map begin -->
+                <BoxContainer Orientation="Vertical">
+                    <Control Name="CameraMap" VerticalExpand="True" MinWidth="450" MinHeight="350">
+                        <cm:CameraMap Name="MapViewer" Access="Public"/>
+                        <pv:PictureViewerControls Name="MapViewerControls"/>
+                    </Control>
+                    <Button Name="SubnetRefreshButton2" Text="Обновить" />
+                </BoxContainer>
+                <BoxContainer Name="CameraList" Orientation="Vertical" MinWidth="350" VerticalExpand="True">
+                    <OptionButton Name="SubnetSelector" />
+                    <Button Name="SubnetRefreshButton" Text="{Loc 'surveillance-camera-monitor-ui-refresh-subnets'}" />
+                    <ScrollContainer VerticalExpand="True">
+                        <ItemList Name="SubnetList" />
+                    </ScrollContainer>
+                    <Button Name="CameraRefreshButton" Text="{Loc 'surveillance-camera-monitor-ui-refresh-cameras'}" />
+                </BoxContainer>
+            </TabContainer>
             <Button Name="CameraDisconnectButton" Text="{Loc 'surveillance-camera-monitor-ui-disconnect'}" />
-            <Label Name="CameraStatus" />
         </BoxContainer>
-        <Control VerticalExpand="True" HorizontalExpand="True" Margin="5 5 5 5" Name="CameraViewBox">
-            <viewport:ScalingViewport Name="CameraView"
-                                      VerticalExpand="True"
-                                      HorizontalExpand="True"
-                                      MinSize="500 500"
-                                      MouseFilter="Ignore" />
-            <TextureRect VerticalExpand="True" HorizontalExpand="True" MinSize="500 500" Name="CameraViewBackground" />
-        </Control>
+        <BoxContainer Orientation="Vertical">
+            <Label Name="CameraStatus" />
+            <Control VerticalExpand="True" HorizontalExpand="True" Margin="5 5 5 5" Name="CameraViewBox">
+                <viewport:ScalingViewport Name="CameraView"
+                                        VerticalExpand="True"
+                                        HorizontalExpand="True"
+                                        MinSize="500 500"
+                                        MouseFilter="Ignore" />
+                <TextureRect VerticalExpand="True" HorizontalExpand="True" MinSize="500 500" Name="CameraViewBackground" />
+            </Control>
+        </BoxContainer>
     </BoxContainer>
 </DefaultWindow>
