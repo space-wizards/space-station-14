@@ -5,7 +5,7 @@
   minPlayers: 0
   stations:
     Ishimura:
-      stationProto: StandardNanotrasenStation
+      stationProto: IshimuraNanotrasenStation
       components:
         - type: StationNameSetup
           mapNameTemplate: '{0} Ishimura {1}'
@@ -60,3 +60,14 @@
             Reporter: [ 2, 2 ]
             Paramedic: [ 1, 1 ]
             Borg: [ 2, 2 ]
+
+- type: entity
+  id: IshimuraNanotrasenStation
+  parent: StandardNanotrasenStation
+  noSpawn: true
+  components:
+    - type: StationMinimap
+      minimapData: !type:StationMinimapData
+        mapTexture: SS220/ViewableMaps/220Ishimura.png
+        originOffset: -269, -7
+        mapScale: 6.4

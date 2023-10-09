@@ -6,7 +6,7 @@
   maxPlayers: 0
   stations:
     Bagel:
-      stationProto: StandardNanotrasenStation
+      stationProto: BagelNanotrasenStation
       components:
         - type: StationNameSetup
           mapNameTemplate: '{0} Bagel Station {1}'
@@ -68,3 +68,15 @@
             Reporter: [ 2, 2 ]
             BlueShield: [ 1, 1 ]
             Brigmedic: [ 1, 1 ]
+
+
+- type: entity
+  id: BagelNanotrasenStation
+  parent: StandardNanotrasenStation
+  noSpawn: true
+  components:
+    - type: StationMinimap
+      minimapData: !type:StationMinimapData
+        mapTexture: SS220/ViewableMaps/220Bagel.png
+        originOffset: -126, -18
+        mapScale: 6.4
