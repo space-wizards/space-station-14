@@ -158,7 +158,7 @@ namespace Content.Server.Flash
                 //cut to a circle. for the aesthetics of cleansing Shadow Kudzu. The square-shaped removal from the flash looked ugly
                 if (MathF.Sqrt(MathF.Pow(mapPosition.X - Transform(entity).MapPosition.X, 2) + MathF.Pow(mapPosition.Y - Transform(entity).MapPosition.Y, 2)) > range)
                     continue;
-                    
+
                 if (!flashableQuery.HasComponent(entity))
                     continue;
 

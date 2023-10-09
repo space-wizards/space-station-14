@@ -51,3 +51,25 @@
     radius: 3
     energy: 1
     netsync: false
+
+- type: entity
+  id: ShadowPortal
+  name: shadow rift
+  description: Looks unstable.
+  parent: BasePortal
+  components:
+  - type: Sprite
+    color: "#793a80dd"
+  - type: PointLight    
+    color: "#793a80dd"
+    radius: 3
+    energy: 1
+    netsync: false
+  - type: DestroyedByFlashing
+    lifeCount: 1
+  - type: Flashable
+  - type: AmbientSound
+    range: 6
+    volume: -3
+    sound:
+      path: /Audio/Ambience/anomaly_scary.ogg

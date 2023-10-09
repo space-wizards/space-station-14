@@ -21,7 +21,6 @@ public sealed class DestroyedByFlashingSystem : EntitySystem
         Spawn(destroyedBy.RemoveEffect, uidXform.Coordinates);
         
         destroyedBy.LifeCount -= 1;
-        Log.Debug("Осталось жизней: " + destroyedBy.LifeCount);
         if (destroyedBy.LifeCount <= 0)
             QueueDel(uid);
     }
