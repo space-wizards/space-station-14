@@ -18,18 +18,14 @@ public sealed class SurveillanceCameraMonitorUiState : BoundUserInterfaceState
 
     public string ActiveAddress;
 
-    // Currently active subnet.
-    public string ActiveSubnet { get; }
-
     // Known cameras, by address and name.
-    public Dictionary<string, (string, Vector2)> Cameras { get; }
+    public Dictionary<string, Dictionary<string, (string, Vector2)>> Cameras { get; } // SS220 Camera-Map
 
-    public SurveillanceCameraMonitorUiState(NetEntity? activeCamera, HashSet<string> subnets, string activeAddress, string activeSubnet, Dictionary<string, (string, Vector2)> cameras)
+    public SurveillanceCameraMonitorUiState(NetEntity? activeCamera, HashSet<string> subnets, string activeAddress, Dictionary<string, Dictionary<string, (string, Vector2)>> cameras)
     {
         ActiveCamera = activeCamera;
         Subnets = subnets;
         ActiveAddress = activeAddress;
-        ActiveSubnet = activeSubnet;
         Cameras = cameras;
     }
 }

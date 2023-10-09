@@ -7,19 +7,22 @@
         <BoxContainer Orientation="Vertical" MinWidth="350" VerticalExpand="True">
             <!-- lazy -->
             <TabContainer Name="SelectorTabs" VerticalExpand="True"> <!-- SS220 Camera-Map begin -->
+                <BoxContainer Orientation="Vertical">
+                    <Control Name="CameraMap" VerticalExpand="True" MinWidth="450" MinHeight="350">
+                        <cm:CameraMap Name="MapViewer" Access="Public"/>
+                        <pv:PictureViewerControls Name="MapViewerControls"/>
+                    </Control>
+                    <Button Name="SubnetRefreshButton2" Text="{Loc 'surveillance-camera-monitor-ui-refresh-subnets'}" />
+                </BoxContainer>
                 <BoxContainer Name="CameraList" Orientation="Vertical" MinWidth="350" VerticalExpand="True">
                     <OptionButton Name="SubnetSelector" />
                     <Button Name="SubnetRefreshButton" Text="{Loc 'surveillance-camera-monitor-ui-refresh-subnets'}" />
                     <ScrollContainer VerticalExpand="True">
                         <ItemList Name="SubnetList" />
                     </ScrollContainer>
+                    <Button Name="CameraRefreshButton" Text="{Loc 'surveillance-camera-monitor-ui-refresh-cameras'}" />
                 </BoxContainer>
-                <Control Name="CameraMap" VerticalExpand="True" MinWidth="450" MinHeight="350">
-                    <cm:CameraMap Name="MapViewer" Access="Public"/>
-                    <pv:PictureViewerControls Name="MapViewerControls"/>
-                </Control>
             </TabContainer>
-            <Button Name="CameraRefreshButton" Text="{Loc 'surveillance-camera-monitor-ui-refresh-cameras'}" />
             <Button Name="CameraDisconnectButton" Text="{Loc 'surveillance-camera-monitor-ui-disconnect'}" />
             <Label Name="CameraStatus" />
         </BoxContainer>

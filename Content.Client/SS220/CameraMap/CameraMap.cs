@@ -67,7 +67,7 @@ public sealed class CameraMap : PictureViewer.PictureViewer
         }
     }
 
-    public void Populate(Dictionary<string, (string, Vector2)> cameras)
+    public void Populate(Dictionary<string, Dictionary<string, (string, Vector2)>> cameras)
     {
         List<string> toRemove = new();
         foreach (var (address, button) in _cameraButtons)
@@ -85,19 +85,24 @@ public sealed class CameraMap : PictureViewer.PictureViewer
             _cameraButtons.Remove(address);
         }
 
-        foreach (var (address, (name, position)) in cameras)
+        foreach (var (_, subnetCameras) in cameras)
         {
-            if (!_cameraButtons.TryGetValue(address, out var button))
+            foreach (var (address, (name, position)) in subnetCameras)
             {
-                if (!_cameraButtonPool.TryDequeue(out button))
-                    button = CreateButton();
+                if (!_cameraButtons.TryGetValue(address, out var button))
+                {
+                    if (!_cameraButtonPool.TryDequeue(out button))
+                        button = CreateButton();
 
-                _cameraButtons.Add(address, button);
-                button.Address = address;
-                AddChild(button);
+                    _cameraButtons.Add(address, button);
+                    button.Address = address;
+                    button.Selected = button.Address == SelectedAddress;
+                    button.UpdateVisuals();
+                    AddChild(button);
+                }
+
+                TrackControl(button, new Vector2(position.X, -position.Y) * MapScale);
             }
-
-            TrackControl(button, new Vector2(position.X, -position.Y) * MapScale);
         }
 
         UpdateTrackedControls();

@@ -25,14 +25,17 @@ public sealed partial class SurveillanceCameraMonitorWindow : DefaultWindow
     // SS220 Camera-Map begin
     private enum TabNumbers
     {
-        CameraList,
-        CameraMap
+        CameraMap,
+        CameraList
     }
 
     public void SetMap(ResPath mapPath)
     {
         MapViewer.ViewedPicture = mapPath;
     }
+
+    private string _subnetFilter = "";
+    private Dictionary<string, Dictionary<string, (string, Vector2)>> _camerasCache = new();
     // SS220 Camera-Map end
 
     public event Action<string>? CameraSelected;
@@ -80,10 +83,11 @@ public sealed partial class SurveillanceCameraMonitorWindow : DefaultWindow
 
         SubnetSelector.OnItemSelected += args =>
         {
-            // piss
-            SubnetOpened!((string) args.Button.GetItemMetadata(args.Id)!);
+            _subnetFilter = (string) args.Button.GetItemMetadata(args.Id)!; // SS220 Camera-Map
+            PopulateCameraList(_camerasCache); // SS220 Camera-Map
         };
         SubnetRefreshButton.OnPressed += _ => SubnetRefresh!();
+        SubnetRefreshButton2.OnPressed += _ => SubnetRefresh!(); // SS220 Camera-Map
         CameraRefreshButton.OnPressed += _ => CameraRefresh!();
         CameraDisconnectButton.OnPressed += _ => CameraDisconnect!();
 
@@ -98,7 +102,7 @@ public sealed partial class SurveillanceCameraMonitorWindow : DefaultWindow
 
     // The UI class should get the eye from the entity, and then
     // pass it here so that the UI can change its view.
-    public void UpdateState(IEye? eye, HashSet<string> subnets, string activeAddress, string activeSubnet, Dictionary<string, (string, Vector2)> cameras)
+    public void UpdateState(IEye? eye, HashSet<string> subnets, string activeAddress, Dictionary<string, Dictionary<string, (string, Vector2)>> cameras)
     {
         _currentAddress = activeAddress;
         SetCameraView(eye);
@@ -116,13 +120,6 @@ public sealed partial class SurveillanceCameraMonitorWindow : DefaultWindow
             SubnetSelector.Disabled = false;
         }
 
-        // That way, we have *a* subnet selected if this is ever opened.
-        if (string.IsNullOrEmpty(activeSubnet))
-        {
-            SubnetOpened!(subnets.First());
-            return;
-        }
-
         // if the subnet count is unequal, that means
         // we have to rebuild the subnet selector
         if (SubnetSelector.ItemCount != subnets.Count)
@@ -137,23 +134,28 @@ public sealed partial class SurveillanceCameraMonitorWindow : DefaultWindow
             }
         }
 
-        if (_subnetMap.TryGetValue(activeSubnet, out var subnetId))
-        {
-            SubnetSelector.Select(subnetId);
-        }
-
         PopulateCameraList(cameras);
         MapViewer.Populate(cameras);
     }
 
-    private void PopulateCameraList(Dictionary<string, (string, Vector2)> cameras)
+    private void PopulateCameraList(Dictionary<string, Dictionary<string, (string, Vector2)>> cameras)
     {
         SubnetList.Clear();
 
-        foreach (var (address, (name, _)) in cameras)
+        // SS220 Camera-Map begin
+        _camerasCache = cameras;
+
+        foreach (var (subnetFreqId, subnetCameras) in cameras)
         {
-            AddCameraToList(name, address);
+            if (subnetFreqId != _subnetFilter)
+                continue;
+
+            foreach (var (address, (name, _)) in subnetCameras)
+            {
+                AddCameraToList(name, address);
+            }
         }
+        // SS220 Camera-Map end
 
         SubnetList.SortItemsByText();
     }
@@ -206,6 +208,9 @@ public sealed partial class SurveillanceCameraMonitorWindow : DefaultWindow
 
         SubnetSelector.AddItem(name);
         SubnetSelector.SetItemMetadata(SubnetSelector.ItemCount - 1, subnet);
+
+        if (_subnetFilter == "")
+            _subnetFilter = subnet;
 
         return SubnetSelector.ItemCount - 1;
     }
