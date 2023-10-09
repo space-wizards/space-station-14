@@ -102,7 +102,7 @@ public sealed partial class GameTicker
         }
         catch (UnauthorizedAccessException e)
         {
-            _sawmillReplays.Error($"Error creating replay directory {state.MoveToPath.Value.Directory}", e);
+            _sawmillReplays.Error($"Error creating replay directory {state.MoveToPath.Value.Directory}: {e}");
         }
 
         data.Directory.Rename(data.Path, state.MoveToPath.Value);
