@@ -18,8 +18,6 @@ public sealed class PressurePlateSystem : EntitySystem
     {
         base.Initialize();
         SubscribeLocalEvent<PressurePlateComponent, ComponentInit>(OnInit);
-        //SubscribeLocalEvent<PressurePlateComponent, EndCollideEvent>(OnEndCollide);
-        //SubscribeLocalEvent<PressurePlateComponent, StartCollideEvent>(OnStartCollide);
         SubscribeLocalEvent<PressurePlateComponent, ItemPlacedEvent>(OnItemPlaced);
         SubscribeLocalEvent<PressurePlateComponent, ItemRemovedEvent>(OnItemRemoved);
     }
@@ -39,21 +37,10 @@ public sealed class PressurePlateSystem : EntitySystem
         _signalSystem.EnsureSourcePorts(uid, component.PressedPort, component.ReleasedPort);
         _appearance.SetData(uid, PressurePlateVisuals.Pressed, false);
     }
-    //private void OnStartCollide(EntityUid uid, PressurePlateComponent component, ref StartCollideEvent args)
-    //{
-    //    UpdateState(uid, component);
-    //}
-    //
-    //private void OnEndCollide(EntityUid uid, PressurePlateComponent component, ref EndCollideEvent args)
-    //{
-    //    UpdateState(uid, component);
-    //}
-
     private void UpdateState(EntityUid uid, PressurePlateComponent component)
     {
         if (!TryComp<ItemPlacerComponent>(uid, out var itemPlacer))
             return;
-
 
         var totalMass = 0f;
         foreach (var ent in itemPlacer.PlacedEntities)
