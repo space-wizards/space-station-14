@@ -22,6 +22,9 @@ namespace Content.Shared.Damage
         [Dependency] private readonly MobThresholdSystem _mobThreshold = default!;
         [Dependency] private readonly StaminaSystem _stamina = default!;
 
+        private EntityQuery<AppearanceComponent> _appearanceQuery;
+        private EntityQuery<DamageableComponent> _damageableQuery;
+
         public override void Initialize()
         {
             SubscribeLocalEvent<DamageableComponent, ComponentInit>(DamageableInit);
@@ -29,6 +32,9 @@ namespace Content.Shared.Damage
             SubscribeLocalEvent<DamageableComponent, ComponentGetState>(DamageableGetState);
             SubscribeLocalEvent<DamageableComponent, OnIrradiatedEvent>(OnIrradiated);
             SubscribeLocalEvent<DamageableComponent, RejuvenateEvent>(OnRejuvenate);
+
+            _appearanceQuery = GetEntityQuery<AppearanceComponent>();
+            _damageableQuery = GetEntityQuery<DamageableComponent>();
         }
 
         /// <summary>
@@ -47,9 +53,9 @@ namespace Content.Shared.Damage
                     component.Damage.DamageDict.TryAdd(type, FixedPoint2.Zero);
                 }
 
-                foreach (var groupID in damageContainerPrototype.SupportedGroups)
+                foreach (var groupId in damageContainerPrototype.SupportedGroups)
                 {
-                    var group = _prototypeManager.Index<DamageGroupPrototype>(groupID);
+                    var group = _prototypeManager.Index<DamageGroupPrototype>(groupId);
                     foreach (var type in group.DamageTypes)
                     {
                         component.Damage.DamageDict.TryAdd(type, FixedPoint2.Zero);
@@ -65,8 +71,8 @@ namespace Content.Shared.Damage
                 }
             }
 
-            component.DamagePerGroup = component.Damage.GetDamagePerGroup(_prototypeManager);
-            component.TotalDamage = component.Damage.Total;
+            component.Damage.GetDamagePerGroup(_prototypeManager, component.DamagePerGroup);
+            component.TotalDamage = component.Damage.GetTotal();
         }
 
         /// <summary>
@@ -92,11 +98,11 @@ namespace Content.Shared.Damage
         public void DamageChanged(EntityUid uid, DamageableComponent component, DamageSpecifier? damageDelta = null,
             bool interruptsDoAfters = true, EntityUid? origin = null)
         {
-            component.DamagePerGroup = component.Damage.GetDamagePerGroup(_prototypeManager);
-            component.TotalDamage = component.Damage.Total;
-            Dirty(component);
+            component.Damage.GetDamagePerGroup(_prototypeManager, component.DamagePerGroup);
+            component.TotalDamage = component.Damage.GetTotal();
+            Dirty(uid, component);
 
-            if (EntityManager.TryGetComponent<AppearanceComponent>(uid, out var appearance) && damageDelta != null)
+            if (_appearanceQuery.TryGetComponent(uid, out var appearance) && damageDelta != null)
             {
                 var data = new DamageVisualizerGroupData(component.DamagePerGroup.Keys.ToList());
                 _appearance.SetData(uid, DamageVisualizerKeys.DamageUpdateGroups, data, appearance);
@@ -119,7 +125,7 @@ namespace Content.Shared.Damage
         public DamageSpecifier? TryChangeDamage(EntityUid? uid, DamageSpecifier damage, bool ignoreResistances = false,
             bool interruptsDoAfters = true, DamageableComponent? damageable = null, EntityUid? origin = null)
         {
-            if (!uid.HasValue || !Resolve(uid.Value, ref damageable, false))
+            if (!uid.HasValue || !_damageableQuery.Resolve(uid.Value, ref damageable, false))
             {
                 // TODO BODY SYSTEM pass damage onto body system
                 return null;
@@ -142,6 +148,8 @@ namespace Content.Shared.Damage
                 if (damageable.DamageModifierSetId != null &&
                     _prototypeManager.TryIndex<DamageModifierSetPrototype>(damageable.DamageModifierSetId, out var modifierSet))
                 {
+                    // TODO DAMAGE PERFORMANCE
+                    // use a local private field instead of creating a new dictionary here..
                     damage = DamageSpecifier.ApplyModifierSet(damage, modifierSet);
                 }
 
@@ -155,20 +163,32 @@ namespace Content.Shared.Damage
                 }
             }
 
-            // Copy the current damage, for calculating the difference
-            DamageSpecifier oldDamage = new(damageable.Damage);
-
-            damageable.Damage.ExclusiveAdd(damage);
-            damageable.Damage.ClampMin(FixedPoint2.Zero);
-
-            var delta = damageable.Damage - oldDamage;
-            delta.TrimZeros();
-
-            if (!delta.Empty)
-                DamageChanged(uid.Value, damageable, delta, interruptsDoAfters, origin);
-
             if (damage.DamageDict.TryGetValue("Stamina", out var staminavalue))
                 _stamina.TakeStaminaDamage(uid.Value, staminavalue.Float());
+
+            // TODO DAMAGE PERFORMANCE
+            // Consider using a local private field instead of creating a new dictionary here.
+            // Would need to check that nothing ever tries to cache the delta.
+            var delta = new DamageSpecifier();
+            delta.DamageDict.EnsureCapacity(damage.DamageDict.Count);
+
+            var dict = damageable.Damage.DamageDict;
+            foreach (var (type, value) in damage.DamageDict)
+            {
+                // CollectionsMarshal my beloved.
+                if (!dict.TryGetValue(type, out var oldValue))
+                    continue;
+
+                var newValue = FixedPoint2.Max(FixedPoint2.Zero, oldValue + value);
+                if (newValue == oldValue)
+                    continue;
+
+                dict[type] = newValue;
+                delta.DamageDict[type] = newValue - oldValue;
+            }
+
+            if (delta.DamageDict.Count > 0)
+                DamageChanged(uid.Value, damageable, delta, interruptsDoAfters, origin);
 
             return delta;
         }
@@ -199,12 +219,11 @@ namespace Content.Shared.Damage
 
         public void SetDamageModifierSetId(EntityUid uid, string damageModifierSetId, DamageableComponent? comp = null)
         {
-            if (!Resolve(uid, ref comp))
+            if (!_damageableQuery.Resolve(uid, ref comp))
                 return;
 
             comp.DamageModifierSetId = damageModifierSetId;
-
-            Dirty(comp);
+            Dirty(uid, comp);
         }
 
         private void DamageableGetState(EntityUid uid, DamageableComponent component, ref ComponentGetState args)
@@ -268,7 +287,7 @@ namespace Content.Shared.Damage
     ///     Raised before damage is done, so stuff can cancel it if necessary.
     /// </summary>
     [ByRefEvent]
-    public record struct BeforeDamageChangedEvent(DamageSpecifier Delta, EntityUid? Origin = null, bool Cancelled = false);
+    public record struct BeforeDamageChangedEvent(DamageSpecifier Damage, EntityUid? Origin = null, bool Cancelled = false);
 
     /// <summary>
     ///     Raised on an entity when damage is about to be dealt,
@@ -315,14 +334,14 @@ namespace Content.Shared.Damage
         /// <summary>
         ///     Was any of the damage change dealing damage, or was it all healing?
         /// </summary>
-        public readonly bool DamageIncreased = false;
+        public readonly bool DamageIncreased;
 
         /// <summary>
         ///     Does this event interrupt DoAfters?
         ///     Note: As provided in the constructor, this *does not* account for DamageIncreased.
         ///     As written into the event, this *does* account for DamageIncreased.
         /// </summary>
-        public readonly bool InterruptsDoAfters = false;
+        public readonly bool InterruptsDoAfters;
 
         /// <summary>
         ///     Contains the entity which caused the change in damage, if any was responsible.
