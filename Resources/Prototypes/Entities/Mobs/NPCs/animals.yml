@@ -1687,6 +1687,13 @@
   - type: HTN
     rootTask:
       task: SimpleHostileCompound
+  - type: EggLayer
+    eggSpawn:
+    - id: SpiderWeb
+    hungerUsage: 1
+    eggLayCooldownMin: 1
+    eggLayCooldownMax: 2
+    eggLayAction: ActionSpiderWebForLayer
 
 - type: entity
   name: tarantula

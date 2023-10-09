@@ -19,3 +19,12 @@
     icon: Interface/Actions/web.png
     event: !type:SericultureActionEvent
     useDelay: 1
+
+- type: entity
+  parent: ActionSpiderWeb
+  id: ActionSpiderWebForLayer
+  components:
+  - type: InstantAction
+    icon: Interface/Actions/web.png
+    event: !type:EggLayInstantActionEvent
+    useDelay: 10
