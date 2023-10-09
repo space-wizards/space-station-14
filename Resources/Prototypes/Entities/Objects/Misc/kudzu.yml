@@ -242,7 +242,9 @@
     - type: Kudzu
       growthTickChance: 0.2
       spreadChance: 0.6
-    - type: ShadowKudzu
+    - type: ConditionalSpawner
+      prototypes:
+        - ShadowKudzuLootSpawner
     - type: DestroyedByFlashing
     - type: Flashable
     - type: GrowingKudzu

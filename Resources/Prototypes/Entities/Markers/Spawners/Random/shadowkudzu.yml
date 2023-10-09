@@ -8,12 +8,12 @@
       - sprite: Structures/Specific/Anomalies/shadow_anom.rsi
         state: anom
     - type: RandomSpawner
-      offset: 0.2
+      offset: 0.05
       rareChance: 0.05
       rarePrototypes:
         - MobCatShadow
         - CrystalPink
-      chance: 0.5
-      prototypes:
         - ArtifactFragment
-        - EggSpider
+      chance: 0.7
+      prototypes:
+        - ShadowBasaltRandom
