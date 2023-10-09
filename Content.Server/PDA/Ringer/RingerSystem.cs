@@ -1,3 +1,5 @@
+using System.Linq;
+using System.Runtime.InteropServices;
 using Content.Server.Store.Components;
 using Content.Server.Store.Systems;
 using Content.Shared.PDA;
@@ -7,8 +9,10 @@ using Content.Shared.Store;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Audio;
+using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
+using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using System.Linq;
 using Robust.Server.Audio;
@@ -18,10 +22,13 @@ namespace Content.Server.PDA.Ringer
     public sealed class RingerSystem : SharedRingerSystem
     {
         [Dependency] private readonly PdaSystem _pda = default!;
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly UserInterfaceSystem _ui = default!;
         [Dependency] private readonly AudioSystem _audio = default!;
         [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
+
+        private readonly Dictionary<NetUserId, TimeSpan> _lastSetRingtoneAt = new();
 
         public override void Initialize()
         {
@@ -54,7 +61,7 @@ namespace Content.Server.PDA.Ringer
 
             _popupSystem.PopupEntity(Loc.GetString("comp-ringer-vibration-popup"), uid, Filter.Pvs(uid, 0.05f), false, PopupType.Small);
 
-            UpdateRingerUserInterface(uid, ringer);
+            UpdateRingerUserInterface(uid, ringer, true);
         }
 
         public void RingerPlayRingtone(EntityUid uid, RingerComponent ringer)
@@ -63,18 +70,27 @@ namespace Content.Server.PDA.Ringer
 
             _popupSystem.PopupEntity(Loc.GetString("comp-ringer-vibration-popup"), uid, Filter.Pvs(uid, 0.05f), false, PopupType.Small);
 
-            UpdateRingerUserInterface(uid, ringer);
+            UpdateRingerUserInterface(uid, ringer, true);
         }
 
         private void UpdateRingerUserInterfaceDriver(EntityUid uid, RingerComponent ringer, RingerRequestUpdateInterfaceMessage args)
         {
-            UpdateRingerUserInterface(uid, ringer);
+            UpdateRingerUserInterface(uid, ringer, HasComp<ActiveRingerComponent>(uid));
         }
 
         private void OnSetRingtone(EntityUid uid, RingerComponent ringer, RingerSetRingtoneMessage args)
         {
+            ref var lastSetAt = ref CollectionsMarshal.GetValueRefOrAddDefault(_lastSetRingtoneAt, args.Session.UserId, out var exists);
+
+            // Delay on the client is 0.333, 0.25 is still enough and gives some leeway in case of small time differences
+            if (exists && lastSetAt > _gameTiming.CurTime - TimeSpan.FromMilliseconds(250))
+                return;
+
+            lastSetAt = _gameTiming.CurTime;
+
             // Client sent us an updated ringtone so set it to that.
-            if (args.Ringtone.Length != RingtoneLength) return;
+            if (args.Ringtone.Length != RingtoneLength)
+                return;
 
             var ev = new BeforeRingtoneSetEvent(args.Ringtone);
             RaiseLocalEvent(uid, ref ev);
@@ -157,15 +173,15 @@ namespace Content.Server.PDA.Ringer
         {
             // Assume validation has already happened.
             ringer.Ringtone = ringtone;
-            UpdateRingerUserInterface(uid, ringer);
+            UpdateRingerUserInterface(uid, ringer, HasComp<ActiveRingerComponent>(uid));
 
             return true;
         }
 
-        private void UpdateRingerUserInterface(EntityUid uid, RingerComponent ringer)
+        private void UpdateRingerUserInterface(EntityUid uid, RingerComponent ringer, bool isPlaying)
         {
             if (_ui.TryGetUi(uid, RingerUiKey.Key, out var bui))
-                _ui.SetUiState(bui, new RingerUpdateState(HasComp<ActiveRingerComponent>(uid), ringer.Ringtone));
+                _ui.SetUiState(bui, new RingerUpdateState(isPlaying, ringer.Ringtone));
         }
 
         public bool ToggleRingerUI(EntityUid uid, IPlayerSession session)
@@ -203,7 +219,7 @@ namespace Content.Server.PDA.Ringer
                 if (ringer.NoteCount > RingtoneLength - 1)
                 {
                     remove.Add(uid);
-                    UpdateRingerUserInterface(uid, ringer);
+                    UpdateRingerUserInterface(uid, ringer, false);
                     ringer.TimeElapsed = 0;
                     ringer.NoteCount = 0;
                     break;

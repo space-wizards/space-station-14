@@ -1,26 +1,4 @@
 Entries:
-- author: ubis1
-  changes:
-  - {message: some lathes can be emagged now; emaggable recipes list has been added
-      for protolathes and autolathes, type: Add}
-  id: 4474
-  time: '2023-08-07T14:21:04.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Fix crusher., type: Fix}
-  id: 4475
-  time: '2023-08-07T17:05:18.0000000+00:00'
-- author: MilenVolf
-  changes:
-  - {message: 'Moths now have more types of wings, antennas and many fashionable markings
-      to create their own unique style!', type: Add}
-  id: 4476
-  time: '2023-08-07T17:12:41.0000000+00:00'
-- author: LinkUyx
-  changes:
-  - {message: Added new skirt for security., type: Add}
-  id: 4477
-  time: '2023-08-07T17:42:30.0000000+00:00'
 - author: Fahasor
   changes:
   - {message: Mops now does not stops absorbing for no reason., type: Fix}
@@ -2951,3 +2929,24 @@ Entries:
   - {message: Kudzu has been reenabled., type: Add}
   id: 4973
   time: '2023-10-07T19:59:39.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Diona now move at the same speed as other species., type: Tweak}
+  id: 4974
+  time: '2023-10-08T21:02:46.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Updated the PDA ringtone UI to have a small delay between sets., type: Tweak}
+  id: 4975
+  time: '2023-10-08T21:25:08.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Brains now function properly when inserted into an MMI., type: Fix}
+  id: 4976
+  time: '2023-10-09T04:49:20.0000000+00:00'
+- author: gusxyz
+  changes:
+  - {message: Using capital letter for your department specific radio channels will
+      work now!, type: Tweak}
+  id: 4977
+  time: '2023-10-09T05:07:54.0000000+00:00'
