@@ -56,6 +56,8 @@
           # Wow double-yolk you're so lucky!
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: Fragile
+    puddle: Egg
 
 # Splat
 - type: entity

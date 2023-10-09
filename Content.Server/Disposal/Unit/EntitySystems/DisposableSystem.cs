@@ -6,7 +6,12 @@ using Content.Server.Disposal.Unit.Components;
 using Content.Shared.Body.Components;
 using Content.Shared.Disposal.Components;
 using Content.Shared.Item;
+using Content.Server.Fluids.EntitySystems;
+using Content.Shared.Chemistry.Components;
 using JetBrains.Annotations;
+using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Physics.Components;
@@ -17,6 +22,8 @@ namespace Content.Server.Disposal.Unit.EntitySystems
     public sealed class DisposableSystem : EntitySystem
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
+        [Dependency] private readonly AudioSystem _audio = default!;
+        [Dependency] private readonly PuddleSystem _puddle = default!;
         [Dependency] private readonly DisposalUnitSystem _disposalUnitSystem = default!;
         [Dependency] private readonly DisposalTubeSystem _disposalTubeSystem = default!;
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
@@ -115,7 +122,10 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 {
                     if (meta.EntityPrototype.Components.ContainsKey("Fragile"))
                     {
-                        Log.Error("SPLAT");
+                        var puddle = String.Format("{0}", meta.EntityPrototype.Components["Fragile"].Mapping["puddle"]);
+                        var solution = new Solution(puddle, 10);
+                        _audio.PlayPvs(new SoundPathSpecifier("/Audio/Effects/Fluids/splat.ogg"), uid, AudioParams.Default.WithVariation(0.2f).WithVolume(-4f));
+                        _puddle.TrySpillAt(uid, solution, out var _, false);
                     }
                     else
                     {
