@@ -15,6 +15,7 @@ using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
 using Robust.Shared.Network;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
@@ -283,7 +284,7 @@ public sealed class BanManager : IBanManager, IPostInjectInit
         SendRoleBans(player);
     }
 
-    public void SendRoleBans(IPlayerSession pSession)
+    public void SendRoleBans(ICommonSession pSession)
     {
         var roleBans = _cachedRoleBans.GetValueOrDefault(pSession.UserId) ?? new HashSet<ServerRoleBanDef>();
         var bans = new MsgRoleBans()

@@ -9,7 +9,6 @@ using Content.Client.Chat.UI;
 using Content.Client.Examine;
 using Content.Client.Gameplay;
 using Content.Client.Ghost;
-using Content.Client.Lobby.UI;
 using Content.Client.UserInterface.Screens;
 using Content.Client.UserInterface.Systems.Chat.Widgets;
 using Content.Client.UserInterface.Systems.Gameplay;
@@ -31,7 +30,6 @@ using Robust.Shared.Configuration;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
-using Robust.Shared.Random;
 using Robust.Shared.Replays;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
@@ -163,14 +161,15 @@ public sealed class ChatUIController : UIController
         _sawmill = Logger.GetSawmill("chat");
         _sawmill.Level = LogLevel.Info;
         _admin.AdminStatusUpdated += UpdateChannelPermissions;
-        _player.LocalPlayerChanged += OnLocalPlayerChanged;
+        _player.LocalPlayerAttached += OnAttachedChanged;
+        _player.LocalPlayerDetached += OnAttachedChanged;
         _state.OnStateChanged += StateChanged;
         _net.RegisterNetMessage<MsgChatMessage>(OnChatMessage);
         SubscribeNetworkEvent<DamageForceSayEvent>(OnDamageForceSay);
 
         _speechBubbleRoot = new LayoutContainer();
 
-        OnLocalPlayerChanged(new LocalPlayerChangedEventArgs(null, _player.LocalPlayer));
+        UpdateChannelPermissions();
 
         _input.SetInputCommand(ContentKeyFunctions.FocusChat,
             InputCmdHandler.FromDelegate(_ => FocusChat()));
@@ -363,29 +362,7 @@ public sealed class ChatUIController : UIController
         _speechBubbleRoot.SetPositionLast();
     }
 
-    private void OnLocalPlayerChanged(LocalPlayerChangedEventArgs obj)
-    {
-        if (obj.OldPlayer != null)
-        {
-            obj.OldPlayer.EntityAttached -= OnLocalPlayerEntityAttached;
-            obj.OldPlayer.EntityDetached -= OnLocalPlayerEntityDetached;
-        }
-
-        if (obj.NewPlayer != null)
-        {
-            obj.NewPlayer.EntityAttached += OnLocalPlayerEntityAttached;
-            obj.NewPlayer.EntityDetached += OnLocalPlayerEntityDetached;
-        }
-
-        UpdateChannelPermissions();
-    }
-
-    private void OnLocalPlayerEntityAttached(EntityAttachedEventArgs obj)
-    {
-        UpdateChannelPermissions();
-    }
-
-    private void OnLocalPlayerEntityDetached(EntityDetachedEventArgs obj)
+    private void OnAttachedChanged(EntityUid uid)
     {
         UpdateChannelPermissions();
     }

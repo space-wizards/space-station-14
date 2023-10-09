@@ -1,7 +1,7 @@
 using Content.Shared.Administration;
 using Content.Shared.Mind;
-using Robust.Server.Player;
 using Robust.Shared.Console;
+using Robust.Shared.Player;
 
 namespace Content.Server.Administration.Commands
 {
@@ -16,7 +16,7 @@ namespace Content.Server.Administration.Commands
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            if (shell.Player is not IPlayerSession player)
+            if (shell.Player is not ICommonSession player)
             {
                 shell.WriteLine("shell-server-cannot");
                 return;

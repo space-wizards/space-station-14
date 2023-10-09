@@ -2,7 +2,7 @@ using Content.Shared.Movement.Components;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Map;
-using Robust.Shared.Players;
+using Robust.Shared.Player;
 
 namespace Content.Client.Replay.Spectator;
 

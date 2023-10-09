@@ -14,6 +14,7 @@ using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Network;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
@@ -55,7 +56,7 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
         _tracking.CalcTrackers -= CalcTrackers;
     }
 
-    private void CalcTrackers(IPlayerSession player, HashSet<string> trackers)
+    private void CalcTrackers(ICommonSession player, HashSet<string> trackers)
     {
         if (_afk.IsAfk(player))
             return;
@@ -67,7 +68,7 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
         trackers.UnionWith(GetTimedRoles(player));
     }
 
-    private bool IsPlayerAlive(IPlayerSession session)
+    private bool IsPlayerAlive(ICommonSession session)
     {
         var attached = session.AttachedEntity;
         if (attached == null)
@@ -93,7 +94,7 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
         }
     }
 
-    private IEnumerable<string> GetTimedRoles(IPlayerSession session)
+    private IEnumerable<string> GetTimedRoles(ICommonSession session)
     {
         var contentData = _playerManager.GetPlayerData(session.UserId).ContentData();
 
@@ -156,7 +157,7 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
         _tracking.QueueSendTimers(ev.PlayerSession);
     }
 
-    public bool IsAllowed(IPlayerSession player, string role)
+    public bool IsAllowed(ICommonSession player, string role)
     {
         if (!_prototypes.TryIndex<JobPrototype>(role, out var job) ||
             job.Requirements == null ||
@@ -168,7 +169,7 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
         return JobRequirements.TryRequirementsMet(job, playTimes, out _, EntityManager, _prototypes);
     }
 
-    public HashSet<string> GetDisallowedJobs(IPlayerSession player)
+    public HashSet<string> GetDisallowedJobs(ICommonSession player)
     {
         var roles = new HashSet<string>();
         if (!_cfg.GetCVar(CCVars.GameRoleTimers))
@@ -230,7 +231,7 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
         }
     }
 
-    public void PlayerRolesChanged(IPlayerSession player)
+    public void PlayerRolesChanged(ICommonSession player)
     {
         _tracking.QueueRefreshTrackers(player);
     }

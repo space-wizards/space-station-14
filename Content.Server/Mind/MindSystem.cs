@@ -10,6 +10,7 @@ using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
+using Robust.Shared.Player;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
@@ -128,18 +129,18 @@ public sealed class MindSystem : SharedMindSystem
         return false;
     }
 
-    public bool TryGetSession(EntityUid? mindId, [NotNullWhen(true)] out IPlayerSession? session)
+    public bool TryGetSession(EntityUid? mindId, [NotNullWhen(true)] out ICommonSession? session)
     {
         session = null;
-        return TryComp(mindId, out MindComponent? mind) && (session = (IPlayerSession?) mind.Session) != null;
+        return TryComp(mindId, out MindComponent? mind) && (session = (ICommonSession?) mind.Session) != null;
     }
 
-    public IPlayerSession? GetSession(MindComponent mind)
+    public ICommonSession? GetSession(MindComponent mind)
     {
-        return (IPlayerSession?) mind.Session;
+        return (ICommonSession?) mind.Session;
     }
 
-    public bool TryGetSession(MindComponent mind, [NotNullWhen(true)] out IPlayerSession? session)
+    public bool TryGetSession(MindComponent mind, [NotNullWhen(true)] out ICommonSession? session)
     {
         return (session = GetSession(mind)) != null;
     }
@@ -177,7 +178,9 @@ public sealed class MindSystem : SharedMindSystem
             return;
         }
 
-        GetSession(mind)?.AttachToEntity(entity);
+        if (GetSession(mind) is { } session)
+            _actor.Attach(entity, session);
+
         mind.VisitingEntity = entity;
 
         // EnsureComp instead of AddComp to deal with deferred deletions.
@@ -202,7 +205,8 @@ public sealed class MindSystem : SharedMindSystem
             return;
 
         var owned = mind.OwnedEntity;
-        GetSession(mind)?.AttachToEntity(owned);
+        if (GetSession(mind) is { } session)
+            _actor.Attach(owned, session);
 
         if (owned.HasValue)
         {

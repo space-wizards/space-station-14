@@ -2,8 +2,8 @@ using Content.Server.Station.Systems;
 using Content.Shared.Administration;
 using Content.Shared.GameTicking;
 using Content.Shared.Roles;
-using Robust.Server.Player;
 using Robust.Shared.Console;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.GameTicking.Commands
@@ -30,7 +30,7 @@ namespace Content.Server.GameTicking.Commands
                 return;
             }
 
-            var player = shell.Player as IPlayerSession;
+            var player = shell.Player as ICommonSession;
 
             if (player == null)
             {

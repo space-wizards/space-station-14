@@ -2,7 +2,6 @@ using Content.Server.Shuttles.Components;
 using Content.Shared.Shuttles.Components;
 using Content.Shared.Shuttles.Events;
 using Robust.Shared.Physics.Components;
-using Robust.Shared.Players;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Shuttles.Systems;

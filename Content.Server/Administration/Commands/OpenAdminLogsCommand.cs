@@ -1,8 +1,8 @@
 ﻿using Content.Server.Administration.Logs;
 using Content.Server.EUI;
 using Content.Shared.Administration;
-using Robust.Server.Player;
 using Robust.Shared.Console;
+using Robust.Shared.Player;
 
 namespace Content.Server.Administration.Commands;
 
@@ -15,7 +15,7 @@ public sealed class OpenAdminLogsCommand : IConsoleCommand
 
     public void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        if (shell.Player is not IPlayerSession player)
+        if (shell.Player is not ICommonSession player)
         {
             shell.WriteLine("This does not work from the server console.");
             return;

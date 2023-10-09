@@ -4,8 +4,8 @@ using Content.Server.Body.Systems;
 using Content.Shared.Administration;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
-using Robust.Server.Player;
 using Robust.Shared.Console;
+using Robust.Shared.Player;
 using Robust.Shared.Random;
 
 namespace Content.Server.Body.Commands
@@ -22,7 +22,7 @@ namespace Content.Server.Body.Commands
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            var player = shell.Player as IPlayerSession;
+            var player = shell.Player as ICommonSession;
             if (player == null)
             {
                 shell.WriteLine("Only a player can run this command.");

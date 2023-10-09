@@ -281,7 +281,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
         // Get chunks in range
         foreach (var client in Filter.GetAllPlayers(_playerManager))
         {
-            var pSession = (IPlayerSession) client;
+            var pSession = (ICommonSession) client;
 
             if (xformQuery.TryGetComponent(pSession.AttachedEntity, out var xform) &&
                 _handledEntities.Add(pSession.AttachedEntity.Value) &&

@@ -2,9 +2,9 @@ using Content.Server.Administration;
 using Content.Shared.Administration;
 using Content.Shared.Maps;
 using Content.Shared.Tag;
-using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.Map;
+using Robust.Shared.Player;
 
 namespace Content.Server.Construction.Commands
 {
@@ -28,7 +28,7 @@ namespace Content.Server.Construction.Commands
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            var player = shell.Player as IPlayerSession;
+            var player = shell.Player as ICommonSession;
             EntityUid? gridId;
 
             switch (args.Length)

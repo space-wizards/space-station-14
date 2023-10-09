@@ -10,10 +10,9 @@ using Content.Shared.CCVar;
 using Content.Shared.CrewManifest;
 using Content.Shared.GameTicking;
 using Content.Shared.StationRecords;
-using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Console;
-using Robust.Shared.Players;
+using Robust.Shared.Player;
 
 namespace Content.Server.CrewManifest;
 
@@ -59,7 +58,7 @@ public sealed class CrewManifestSystem : EntitySystem
 
     private void OnRequestCrewManifest(RequestCrewManifestMessage message, EntitySessionEventArgs args)
     {
-        if (args.SenderSession is not IPlayerSession sessionCast
+        if (args.SenderSession is not ICommonSession sessionCast
             || !_configManager.GetCVar(CCVars.CrewManifestWithoutEntity))
         {
             return;
@@ -86,7 +85,7 @@ public sealed class CrewManifestSystem : EntitySystem
     private void OnBoundUiClose(EntityUid uid, CrewManifestViewerComponent component, BoundUIClosedEvent ev)
     {
         var owningStation = _stationSystem.GetOwningStation(uid);
-        if (owningStation == null || ev.Session is not IPlayerSession sessionCast)
+        if (owningStation == null || ev.Session is not ICommonSession sessionCast)
         {
             return;
         }
@@ -119,7 +118,7 @@ public sealed class CrewManifestSystem : EntitySystem
     private void OpenEuiFromBui(EntityUid uid, CrewManifestViewerComponent component, CrewManifestOpenUiMessage msg)
     {
         var owningStation = _stationSystem.GetOwningStation(uid);
-        if (owningStation == null || msg.Session is not IPlayerSession sessionCast)
+        if (owningStation == null || msg.Session is not ICommonSession sessionCast)
         {
             return;
         }
@@ -138,7 +137,7 @@ public sealed class CrewManifestSystem : EntitySystem
     /// <param name="station">Station that we're displaying the crew manifest for.</param>
     /// <param name="session">The player's session.</param>
     /// <param name="owner">If this EUI should be 'owned' by an entity.</param>
-    public void OpenEui(EntityUid station, IPlayerSession session, EntityUid? owner = null)
+    public void OpenEui(EntityUid station, ICommonSession session, EntityUid? owner = null)
     {
         if (!HasComp<StationRecordsComponent>(station))
         {
@@ -245,7 +244,7 @@ public sealed class CrewManifestCommand : IConsoleCommand
             return;
         }
 
-        if (shell.Player == null || shell.Player is not IPlayerSession session)
+        if (shell.Player == null || shell.Player is not ICommonSession session)
         {
             shell.WriteLine("You must run this from a client.");
             return;

@@ -18,15 +18,11 @@ using Content.Shared.Pulling.Components;
 using Content.Shared.Stacks;
 using Content.Shared.Storage;
 using Content.Shared.Throwing;
-using JetBrains.Annotations;
-using Robust.Server.Player;
-using Robust.Shared.Configuration;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
-using Robust.Shared.Players;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Hands.Systems
@@ -164,7 +160,7 @@ namespace Content.Server.Hands.Systems
         #region interactions
         private bool HandleThrowItem(ICommonSession? session, EntityCoordinates coordinates, EntityUid entity)
         {
-            if (session is not IPlayerSession playerSession)
+            if (session is not ICommonSession playerSession)
                 return false;
 
             if (playerSession.AttachedEntity is not {Valid: true} player ||
@@ -223,7 +219,7 @@ namespace Content.Server.Hands.Systems
         // TODO: move to storage or inventory
         private void HandleSmartEquip(ICommonSession? session, string equipmentSlot)
         {
-            if (session is not IPlayerSession playerSession)
+            if (session is not ICommonSession playerSession)
                 return;
 
             if (playerSession.AttachedEntity is not {Valid: true} plyEnt || !Exists(plyEnt))

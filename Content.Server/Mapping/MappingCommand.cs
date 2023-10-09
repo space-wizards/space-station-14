@@ -10,6 +10,7 @@ using Robust.Shared.Configuration;
 using Robust.Shared.Console;
 using Robust.Shared.ContentPack;
 using Robust.Shared.Map;
+using Robust.Shared.Player;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Mapping
@@ -40,7 +41,7 @@ namespace Content.Server.Mapping
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            if (shell.Player is not IPlayerSession player)
+            if (shell.Player is not ICommonSession player)
             {
                 shell.WriteError(Loc.GetString("cmd-savemap-server"));
                 return;

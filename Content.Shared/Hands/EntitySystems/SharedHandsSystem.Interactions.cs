@@ -6,7 +6,7 @@ using Content.Shared.Input;
 using Content.Shared.Localizations;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Map;
-using Robust.Shared.Players;
+using Robust.Shared.Player;
 
 namespace Content.Shared.Hands.EntitySystems;
 

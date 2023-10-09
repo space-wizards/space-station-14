@@ -1,8 +1,8 @@
 using Content.Server.Administration;
 using Content.Server.Chat.Managers;
 using Content.Shared.Administration;
-using Robust.Server.Player;
 using Robust.Shared.Console;
+using Robust.Shared.Player;
 
 namespace Content.Server.Chat.Commands
 {
@@ -15,7 +15,7 @@ namespace Content.Server.Chat.Commands
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            var player = (IPlayerSession?) shell.Player;
+            var player = (ICommonSession?) shell.Player;
 
             if (player == null)
             {

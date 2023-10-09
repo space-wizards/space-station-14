@@ -1,4 +1,4 @@
-using Robust.Server.Player;
+using Robust.Shared.Player;
 
 namespace Content.Server.Afk.Events;
 
@@ -8,9 +8,9 @@ namespace Content.Server.Afk.Events;
 [ByRefEvent]
 public readonly struct UnAFKEvent
 {
-    public readonly IPlayerSession Session;
+    public readonly ICommonSession Session;
 
-    public UnAFKEvent(IPlayerSession playerSession)
+    public UnAFKEvent(ICommonSession playerSession)
     {
         Session = playerSession;
     }

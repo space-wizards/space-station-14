@@ -1,18 +1,12 @@
 using System.Linq;
-using System.Net;
-using System.Net.Sockets;
-using System.Text;
 using Content.Server.Administration.Managers;
-using Content.Server.Administration.Notes;
-using Content.Server.Database;
-using Content.Server.GameTicking;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
 using Content.Shared.Database;
-using Content.Shared.Players.PlayTimeTracking;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Console;
+using Robust.Shared.Player;
 
 
 namespace Content.Server.Administration.Commands;
@@ -84,7 +78,7 @@ public sealed class BanCommand : LocalizedCommands
         }
 
         var located = await _locator.LookupIdByNameOrIdAsync(target);
-        var player = shell.Player as IPlayerSession;
+        var player = shell.Player as ICommonSession;
 
         if (located == null)
         {
@@ -102,7 +96,7 @@ public sealed class BanCommand : LocalizedCommands
     {
         if (args.Length == 1)
         {
-            var options = _playerManager.ServerSessions.Select(c => c.Name).OrderBy(c => c).ToArray();
+            var options = _playerManager.Sessions.Select(c => c.Name).OrderBy(c => c).ToArray();
             return CompletionResult.FromHintOptions(options, LocalizationManager.GetString("cmd-ban-hint"));
         }
 

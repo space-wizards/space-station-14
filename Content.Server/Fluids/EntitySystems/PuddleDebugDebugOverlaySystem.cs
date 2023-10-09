@@ -1,9 +1,8 @@
 using System.Numerics;
-using Content.Server.Fluids.Components;
 using Content.Shared.Fluids;
 using Content.Shared.Fluids.Components;
-using Robust.Server.Player;
 using Robust.Shared.Map;
+using Robust.Shared.Player;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Fluids.EntitySystems;
@@ -14,10 +13,10 @@ public sealed class PuddleDebugDebugOverlaySystem : SharedPuddleDebugOverlaySyst
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly PuddleSystem _puddle = default!;
 
-    private readonly HashSet<IPlayerSession> _playerObservers = new();
+    private readonly HashSet<ICommonSession> _playerObservers = new();
 
 
-    public bool ToggleObserver(IPlayerSession observer)
+    public bool ToggleObserver(ICommonSession observer)
     {
         NextTick ??= _timing.CurTime + Cooldown;
 
@@ -31,7 +30,7 @@ public sealed class PuddleDebugDebugOverlaySystem : SharedPuddleDebugOverlaySyst
         return true;
     }
 
-    private void RemoveObserver(IPlayerSession observer)
+    private void RemoveObserver(ICommonSession observer)
     {
         if (!_playerObservers.Remove(observer))
         {

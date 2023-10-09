@@ -3,8 +3,8 @@ using Content.Server.Administration;
 using Content.Server.Station.Systems;
 using Content.Shared.Administration;
 using JetBrains.Annotations;
-using Robust.Server.Player;
 using Robust.Shared.Console;
+using Robust.Shared.Player;
 
 namespace Content.Server.AlertLevel.Commands
 {
@@ -19,7 +19,7 @@ namespace Content.Server.AlertLevel.Commands
         public CompletionResult GetCompletion(IConsoleShell shell, string[] args)
         {
             var levelNames = new string[] {};
-            var player = shell.Player as IPlayerSession;
+            var player = shell.Player as ICommonSession;
             if (player?.AttachedEntity != null)
             {
                 var stationUid = EntitySystem.Get<StationSystem>().GetOwningStation(player.AttachedEntity.Value);
@@ -54,7 +54,7 @@ namespace Content.Server.AlertLevel.Commands
                 return;
             }
 
-            var player = shell.Player as IPlayerSession;
+            var player = shell.Player as ICommonSession;
             if (player?.AttachedEntity == null)
             {
                 shell.WriteLine(Loc.GetString("shell-only-players-can-run-this-command"));

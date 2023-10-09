@@ -6,7 +6,6 @@ using Robust.Shared.Audio;
 using Robust.Shared.Console;
 using Robust.Shared.ContentPack;
 using Robust.Shared.Player;
-using Robust.Shared.Players;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Administration.Commands;

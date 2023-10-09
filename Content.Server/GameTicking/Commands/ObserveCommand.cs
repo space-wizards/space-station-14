@@ -1,7 +1,7 @@
 using Content.Shared.Administration;
 using Content.Shared.GameTicking;
-using Robust.Server.Player;
 using Robust.Shared.Console;
+using Robust.Shared.Player;
 
 namespace Content.Server.GameTicking.Commands
 {
@@ -14,7 +14,7 @@ namespace Content.Server.GameTicking.Commands
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            if (shell.Player is not IPlayerSession player)
+            if (shell.Player is not ICommonSession player)
             {
                 return;
             }

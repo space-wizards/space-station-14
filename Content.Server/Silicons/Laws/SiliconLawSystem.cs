@@ -18,7 +18,7 @@ using Content.Shared.Silicons.Laws.Components;
 using Content.Shared.Stunnable;
 using Content.Shared.Wires;
 using Robust.Server.GameObjects;
-using Robust.Server.Player;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Toolshed;
 
@@ -94,7 +94,7 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
         HashSet<string>? radioChannels = intrinsicRadio?.Channels;
 
         var state = new SiliconLawBuiState(GetLaws(uid), radioChannels);
-        _userInterface.TrySetUiState(args.Entity, SiliconLawsUiKey.Key, state, (IPlayerSession) args.Session);
+        _userInterface.TrySetUiState(args.Entity, SiliconLawsUiKey.Key, state, (ICommonSession) args.Session);
     }
 
     private void OnPlayerSpawnComplete(EntityUid uid, SiliconLawBoundComponent component, PlayerSpawnCompleteEvent args)

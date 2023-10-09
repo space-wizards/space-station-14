@@ -4,8 +4,8 @@ using System.Text.Json.Serialization;
 using Content.Server.Administration.Logs.Converters;
 using Content.Server.Database;
 using Robust.Server.GameObjects;
-using Robust.Server.Player;
 using Robust.Shared.Map;
+using Robust.Shared.Player;
 
 namespace Content.Server.Administration.Logs;
 
@@ -46,7 +46,7 @@ public sealed partial class AdminLogManager
             var value = properties[key];
             value = value switch
             {
-                IPlayerSession player => new SerializablePlayer(player),
+                ICommonSession player => new SerializablePlayer(player),
                 EntityCoordinates entityCoordinates => new SerializableEntityCoordinates(_entityManager, entityCoordinates),
                 _ => value
             };
@@ -58,7 +58,7 @@ public sealed partial class AdminLogManager
             {
                 EntityUid id => id,
                 EntityStringRepresentation rep => rep.Uid,
-                IPlayerSession {AttachedEntity: {Valid: true}} session => session.AttachedEntity,
+                ICommonSession {AttachedEntity: {Valid: true}} session => session.AttachedEntity,
                 IComponent component => component.Owner,
                 _ => null
             };

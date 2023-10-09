@@ -2,8 +2,8 @@
 using Content.Server.Administration.Managers;
 using Content.Server.Afk;
 using Content.Shared.Administration;
-using Robust.Server.Player;
 using Robust.Shared.Console;
+using Robust.Shared.Player;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Administration.Commands;
@@ -35,7 +35,7 @@ public sealed class AdminWhoCommand : IConsoleCommand
             if (adminData.Title is { } title)
                 sb.Append($": [{title}]");
 
-            if (shell.Player is IPlayerSession player && adminMgr.HasAdminFlag(player, AdminFlags.Admin))
+            if (shell.Player is ICommonSession player && adminMgr.HasAdminFlag(player, AdminFlags.Admin))
             {
                 if (afk.IsAfk(admin))
                     sb.Append(" [AFK]");

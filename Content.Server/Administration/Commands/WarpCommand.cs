@@ -4,13 +4,12 @@ using Content.Server.Warps;
 using Content.Shared.Administration;
 using Content.Shared.Follower;
 using Content.Shared.Ghost;
-using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.Enums;
 using Robust.Shared.Map;
-using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
+using Robust.Shared.Player;
 
 namespace Content.Server.Administration.Commands
 {
@@ -28,7 +27,7 @@ namespace Content.Server.Administration.Commands
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            var player = shell.Player as IPlayerSession;
+            var player = shell.Player as ICommonSession;
             if (player == null)
             {
                 shell.WriteLine("Only players can use this command");

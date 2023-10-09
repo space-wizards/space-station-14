@@ -1,10 +1,10 @@
 using Content.Server.ParticleAccelerator.Components;
 using JetBrains.Annotations;
-using Robust.Server.Player;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Events;
 using System.Diagnostics.CodeAnalysis;
 using System.Numerics;
+using Robust.Shared.Player;
 
 namespace Content.Server.ParticleAccelerator.EntitySystems;
 
@@ -18,7 +18,7 @@ public sealed partial class ParticleAcceleratorSystem
         SubscribeLocalEvent<ParticleAcceleratorPartComponent, PhysicsBodyTypeChangedEvent>(BodyTypeChanged);
     }
 
-    public void RescanParts(EntityUid uid, IPlayerSession? user = null, ParticleAcceleratorControlBoxComponent? controller = null)
+    public void RescanParts(EntityUid uid, ICommonSession? user = null, ParticleAcceleratorControlBoxComponent? controller = null)
     {
         if (!Resolve(uid, ref controller))
             return;

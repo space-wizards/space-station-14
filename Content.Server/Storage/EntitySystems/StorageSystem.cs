@@ -9,10 +9,8 @@ using Content.Shared.Storage.EntitySystems;
 using Content.Shared.Timing;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
-using Robust.Server.Player;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
-using Robust.Shared.Players;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Storage.EntitySystems;
@@ -134,7 +132,7 @@ public sealed partial class StorageSystem : SharedStorageSystem
     ///     If the user has nested-UIs open (e.g., PDA UI open when pda is in a backpack), close them.
     /// </summary>
     /// <param name="session"></param>
-    public void CloseNestedInterfaces(EntityUid uid, IPlayerSession session, StorageComponent? storageComp = null)
+    public void CloseNestedInterfaces(EntityUid uid, ICommonSession session, StorageComponent? storageComp = null)
     {
         if (!Resolve(uid, ref storageComp))
             return;

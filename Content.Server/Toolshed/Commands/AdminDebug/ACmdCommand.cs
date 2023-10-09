@@ -1,7 +1,7 @@
 ﻿using Content.Server.Administration;
 using Content.Server.Administration.Managers;
 using Content.Shared.Administration;
-using Robust.Server.Player;
+using Robust.Shared.Player;
 using Robust.Shared.Toolshed;
 using Robust.Shared.Toolshed.Syntax;
 
@@ -25,7 +25,7 @@ public sealed class ACmdCommand : ToolshedCommand
     public bool CanInvoke(
         [CommandInvocationContext] IInvocationContext ctx,
         [PipedArgument] CommandSpec command,
-        [CommandArgument] ValueRef<IPlayerSession> player
+        [CommandArgument] ValueRef<ICommonSession> player
         )
     {
         // Deliberately discard the error.

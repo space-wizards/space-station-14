@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Server.Afk.Events;
 using Content.Server.GameTicking;
 using Content.Shared.CCVar;
@@ -24,7 +23,7 @@ public sealed class AFKSystem : EntitySystem
     private float _checkDelay;
     private TimeSpan _checkTime;
 
-    private readonly HashSet<IPlayerSession> _afkPlayers = new();
+    private readonly HashSet<ICommonSession> _afkPlayers = new();
 
     public override void Initialize()
     {
@@ -77,7 +76,7 @@ public sealed class AFKSystem : EntitySystem
         {
             if (session.Status != SessionStatus.InGame) continue;
 
-            var pSession = (IPlayerSession) session;
+            var pSession = (ICommonSession) session;
             var isAfk = _afkManager.IsAfk(pSession);
 
             if (isAfk && _afkPlayers.Add(pSession))

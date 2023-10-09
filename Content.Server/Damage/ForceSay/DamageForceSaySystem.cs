@@ -6,7 +6,6 @@ using Content.Shared.Mobs.Systems;
 using Content.Shared.Stunnable;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
-using Robust.Shared.Players;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;

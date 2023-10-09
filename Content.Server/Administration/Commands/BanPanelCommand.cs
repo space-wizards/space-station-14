@@ -1,12 +1,7 @@
 using Content.Shared.Administration;
 using Robust.Shared.Console;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Content.Server.EUI;
-using Robust.Server.Player;
+using Robust.Shared.Player;
 
 namespace Content.Server.Administration.Commands;
 
@@ -21,7 +16,7 @@ public sealed class BanPanelCommand : LocalizedCommands
 
     public override async void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        if (shell.Player is not IPlayerSession player)
+        if (shell.Player is not ICommonSession player)
         {
             shell.WriteError(Loc.GetString("cmd-banpanel-server"));
             return;

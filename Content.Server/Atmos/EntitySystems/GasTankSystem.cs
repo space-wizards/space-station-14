@@ -12,7 +12,6 @@ using Content.Shared.Toggleable;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
-using Robust.Server.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.Physics.Systems;
@@ -60,7 +59,7 @@ namespace Content.Server.Atmos.EntitySystems
 
         private void OnGasTankToggleInternals(EntityUid uid, GasTankComponent component, GasTankToggleInternalsMessage args)
         {
-            if (args.Session is not IPlayerSession playerSession ||
+            if (args.Session is not ICommonSession playerSession ||
                 playerSession.AttachedEntity is not {} player) return;
 
             ToggleInternals(component);

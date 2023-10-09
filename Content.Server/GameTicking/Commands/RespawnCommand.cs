@@ -3,6 +3,7 @@ using Content.Shared.Players;
 using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.Network;
+using Robust.Shared.Player;
 
 namespace Content.Server.GameTicking.Commands
 {
@@ -14,7 +15,7 @@ namespace Content.Server.GameTicking.Commands
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            var player = shell.Player as IPlayerSession;
+            var player = shell.Player as ICommonSession;
             if (args.Length > 1)
             {
                 shell.WriteLine("Must provide <= 1 argument.");

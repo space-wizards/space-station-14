@@ -14,13 +14,14 @@ using Content.Shared.Ghost.Roles;
 using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
 using Content.Shared.Mobs;
+using Content.Shared.Players;
 using Content.Shared.Roles;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.Enums;
-using Robust.Shared.Players;
+using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 
@@ -97,7 +98,7 @@ namespace Content.Server.Ghost.Roles
             return unchecked(_nextRoleIdentifier++);
         }
 
-        public void OpenEui(IPlayerSession session)
+        public void OpenEui(ICommonSession session)
         {
             if (session.AttachedEntity is not {Valid: true} attached ||
                 !EntityManager.HasComponent<GhostComponent>(attached))
@@ -111,7 +112,7 @@ namespace Content.Server.Ghost.Roles
             eui.StateDirty();
         }
 
-        public void OpenMakeGhostRoleEui(IPlayerSession session, EntityUid uid)
+        public void OpenMakeGhostRoleEui(ICommonSession session, EntityUid uid)
         {
             if (session.AttachedEntity == null)
                 return;
@@ -406,7 +407,7 @@ namespace Content.Server.Ghost.Roles
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if(shell.Player != null)
-                EntitySystem.Get<GhostRoleSystem>().OpenEui((IPlayerSession)shell.Player);
+                EntitySystem.Get<GhostRoleSystem>().OpenEui((ICommonSession)shell.Player);
             else
                 shell.WriteLine("You can only open the ghost roles UI on a client.");
         }

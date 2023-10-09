@@ -1,8 +1,6 @@
 using Content.Shared.Chat;
-using Robust.Server.Player;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
-using Robust.Shared.Players;
 
 namespace Content.Server.Chat.Managers
 {
@@ -19,7 +17,7 @@ namespace Content.Server.Chat.Managers
 
         void DispatchServerMessage(ICommonSession player, string message, bool suppressLog = false);
 
-        void TrySendOOCMessage(IPlayerSession player, string message, OOCChatType type);
+        void TrySendOOCMessage(ICommonSession player, string message, OOCChatType type);
 
         void SendHookOOC(string sender, string message);
         void SendAdminAnnouncement(string message);
@@ -36,6 +34,6 @@ namespace Content.Server.Chat.Managers
 
         void ChatMessageToAll(ChatChannel channel, string message, string wrappedMessage, EntityUid source, bool hideChat, bool recordReplay, Color? colorOverride = null, string? audioPath = null, float audioVolume = 0);
 
-        bool MessageCharacterLimit(IPlayerSession player, string message);
+        bool MessageCharacterLimit(ICommonSession player, string message);
     }
 }

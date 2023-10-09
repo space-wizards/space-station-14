@@ -1,8 +1,7 @@
 ﻿using Content.Server.Administration.Notes;
-using Content.Server.Database;
 using Content.Shared.Administration;
-using Robust.Server.Player;
 using Robust.Shared.Console;
+using Robust.Shared.Player;
 
 namespace Content.Server.Administration.Commands;
 
@@ -17,7 +16,7 @@ public sealed class OpenAdminNotesCommand : IConsoleCommand
 
     public async void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        if (shell.Player is not IPlayerSession player)
+        if (shell.Player is not ICommonSession player)
         {
             shell.WriteError("This does not work from the server console.");
             return;

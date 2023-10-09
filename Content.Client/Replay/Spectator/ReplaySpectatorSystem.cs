@@ -6,7 +6,6 @@ using Robust.Client.Player;
 using Robust.Client.Replays.Playback;
 using Robust.Client.State;
 using Robust.Shared.Console;
-using Robust.Shared.Network;
 using Robust.Shared.Serialization.Markdown.Mapping;
 
 namespace Content.Client.Replay.Spectator;
@@ -40,7 +39,7 @@ public sealed partial class ReplaySpectatorSystem : EntitySystem
 
         SubscribeLocalEvent<GetVerbsEvent<AlternativeVerb>>(OnGetAlternativeVerbs);
         SubscribeLocalEvent<ReplaySpectatorComponent, EntityTerminatingEvent>(OnTerminating);
-        SubscribeLocalEvent<ReplaySpectatorComponent, PlayerDetachedEvent>(OnDetached);
+        SubscribeLocalEvent<ReplaySpectatorComponent, LocalPlayerDetachedEvent>(OnDetached);
         SubscribeLocalEvent<ReplaySpectatorComponent, EntParentChangedMessage>(OnParentChanged);
 
         InitializeBlockers();

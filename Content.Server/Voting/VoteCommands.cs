@@ -6,8 +6,8 @@ using Content.Server.Voting.Managers;
 using Content.Shared.Administration;
 using Content.Shared.Database;
 using Content.Shared.Voting;
-using Robust.Server.Player;
 using Robust.Shared.Console;
+using Robust.Shared.Player;
 
 namespace Content.Server.Voting
 {
@@ -36,14 +36,14 @@ namespace Content.Server.Voting
 
             var mgr = IoCManager.Resolve<IVoteManager>();
 
-            if (shell.Player != null && !mgr.CanCallVote((IPlayerSession) shell.Player, type))
+            if (shell.Player != null && !mgr.CanCallVote((ICommonSession) shell.Player, type))
             {
                 _adminLogger.Add(LogType.Vote, LogImpact.Medium, $"{shell.Player} failed to start {type.ToString()} vote");
                 shell.WriteError(Loc.GetString("cmd-createvote-cannot-call-vote-now"));
                 return;
             }
 
-            mgr.CreateStandardVote((IPlayerSession?) shell.Player, type);
+            mgr.CreateStandardVote((ICommonSession?) shell.Player, type);
         }
 
         public CompletionResult GetCompletion(IConsoleShell shell, string[] args)
@@ -92,7 +92,7 @@ namespace Content.Server.Voting
                 options.Options.Add((args[i], i));
             }
 
-            options.SetInitiatorOrServer((IPlayerSession?) shell.Player);
+            options.SetInitiatorOrServer((ICommonSession?) shell.Player);
 
             if (shell.Player != null)
                 _adminLogger.Add(LogType.Vote, LogImpact.Medium, $"{shell.Player} initiated a custom vote: {options.Title} - {string.Join("; ", options.Options.Select(x => x.text))}");
@@ -187,7 +187,7 @@ namespace Content.Server.Voting
                 return;
             }
 
-            vote.CastVote((IPlayerSession) shell.Player!, optionN);
+            vote.CastVote((ICommonSession) shell.Player!, optionN);
         }
     }
 

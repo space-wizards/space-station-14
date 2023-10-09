@@ -1,5 +1,4 @@
-using Robust.Server.GameObjects;
-using Robust.Server.Player;
+using Robust.Shared.Player;
 using Robust.Shared.Reflection;
 using Robust.Shared.Serialization;
 
@@ -68,7 +67,7 @@ namespace Content.Server.UserInterface
         ///     NOTE: DO NOT DIRECTLY SET, USE ActivatableUISystem.SetCurrentSingleUser
         /// </summary>
         [ViewVariables]
-        public IPlayerSession? CurrentSingleUser;
+        public ICommonSession? CurrentSingleUser;
 
         void ISerializationHooks.AfterDeserialization()
         {

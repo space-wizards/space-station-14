@@ -14,6 +14,7 @@ using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Mind;
+using Content.Shared.Players;
 using Robust.Client.Input;
 using Robust.Client.UserInterface;
 using Robust.Server.GameObjects;
@@ -21,7 +22,7 @@ using Robust.Server.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
-using Robust.Shared.Players;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.UnitTesting;
@@ -67,7 +68,7 @@ public abstract partial class InteractionTest
     protected NetEntity Player;
 
     protected ICommonSession ClientSession = default!;
-    protected IPlayerSession ServerSession = default!;
+    protected ICommonSession ServerSession = default!;
 
     public EntityUid? ClientTarget;
 

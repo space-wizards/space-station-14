@@ -5,6 +5,7 @@ using Content.Server.EUI;
 using Content.Shared.Administration;
 using Robust.Server.Player;
 using Robust.Shared.Console;
+using Robust.Shared.Player;
 
 namespace Content.Server.Administration.Commands;
 
@@ -36,7 +37,7 @@ public sealed class BanListCommand : LocalizedCommands
             return;
         }
 
-        if (shell.Player is not IPlayerSession player)
+        if (shell.Player is not ICommonSession player)
         {
             var bans = await _dbManager.GetServerBansAsync(data.LastAddress, data.UserId, data.LastHWId, false);
 
@@ -67,7 +68,7 @@ public sealed class BanListCommand : LocalizedCommands
             return CompletionResult.Empty;
 
         var playerMgr = IoCManager.Resolve<IPlayerManager>();
-        var options = playerMgr.ServerSessions.Select(c => c.Name).OrderBy(c => c).ToArray();
+        var options = playerMgr.Sessions.Select(c => c.Name).OrderBy(c => c).ToArray();
         return CompletionResult.FromHintOptions(options, Loc.GetString("cmd-banlist-hint"));
     }
 }
