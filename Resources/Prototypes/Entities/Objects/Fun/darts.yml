@@ -153,9 +153,6 @@
       - darts-popup-1
       - darts-popup-miss
       - darts-popup-miss
-  - type: RangedDamageSound
-    soundGroups:
-      brute: /Audio/Weapons/pierce.ogg
   - type: Destructible
     thresholds:
     - trigger:
