@@ -47,7 +47,7 @@ public partial class SharedBodySystem
     private void OnBodyPartRemoved(EntityUid uid, BodyPartComponent component, EntRemovedFromContainerMessage args)
     {
         // TODO: lifestage shenanigans
-        if (LifeStage(uid) >= EntityLifeStage.Terminating)
+        if (TerminatingOrDeleted(uid))
             return;
 
         // Body part removed from another body part.

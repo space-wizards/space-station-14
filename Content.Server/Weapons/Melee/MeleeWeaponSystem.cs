@@ -62,7 +62,7 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
 
         var damageSpec = GetDamage(uid, args.User, component);
 
-        if (damageSpec.Total == FixedPoint2.Zero)
+        if (damageSpec.Empty)
             return;
 
         _damageExamine.AddDamageExamine(args.Message, damageSpec, Loc.GetString("damage-melee"));
