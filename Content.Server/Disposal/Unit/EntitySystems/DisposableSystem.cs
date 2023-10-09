@@ -4,20 +4,14 @@ using Content.Server.Disposal.Tube;
 using Content.Server.Disposal.Tube.Components;
 using Content.Server.Disposal.Unit.Components;
 using Content.Shared.Body.Components;
-using Content.Shared.Disposal.Components;
 using Content.Shared.Item;
-using Content.Server.Fluids.EntitySystems;
-using Content.Shared.Chemistry.Components;
-using Content.Server.Fragile;
-using Content.Server.Chemistry.Components.SolutionManager;
-using JetBrains.Annotations;
-using Robust.Server.GameObjects;
-using Robust.Shared.Audio;
+using Content.Shared.Throwing;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
+using Robust.Shared.Random;
 
 namespace Content.Server.Disposal.Unit.EntitySystems
 {
@@ -25,8 +19,8 @@ namespace Content.Server.Disposal.Unit.EntitySystems
     {
         [Dependency] private readonly IPrototypeManager _proto = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
-        [Dependency] private readonly AudioSystem _audio = default!;
-        [Dependency] private readonly PuddleSystem _puddle = default!;
+        [Dependency] private readonly ThrowingSystem _throwing = default!;
+        [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly DisposalUnitSystem _disposalUnitSystem = default!;
         [Dependency] private readonly DisposalTubeSystem _disposalTubeSystem = default!;
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
@@ -123,27 +117,8 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                     duc.Container.Insert(entity, EntityManager, xform, meta: meta);
                 else
                 {
-                    // fragile things go splat
-                    if (TryComp<FragileComponent>(entity, out var fragile))
-                    {
-                        TryComp<SolutionContainerManagerComponent>(entity, out var reagents);
-                        var puddle = new Solution();
-                        foreach (var solution in reagents.Solutions.Values)
-                        {
-                            foreach (var quantity in solution.Contents)
-                            {
-                                puddle.AddReagent(quantity.Reagent.Prototype, quantity.Quantity, false);
-                            }
-                        }
-
-                        _audio.PlayPvs(new SoundPathSpecifier(fragile.splatSound), uid, AudioParams.Default.WithVariation(0.2f).WithVolume(-4f));
-                        _puddle.TrySpillAt(uid, puddle, out var _, false);
-
-                    }
-                    else
-                    {
-                        _xformSystem.AttachToGridOrMap(entity, xform);
-                    }
+                    _xformSystem.AttachToGridOrMap(entity, xform);
+                    _throwing.TryThrow(entity, _random.NextVector2(), 0.1f);
                 }
                 if (EntityManager.TryGetComponent(entity, out PhysicsComponent? physics))
                 {

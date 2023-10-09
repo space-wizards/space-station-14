@@ -610,8 +610,6 @@
   - type: Tag
     tags:
     - Fruit
-  - type: Fragile
-    splatSound: "/Audio/Effects/Fluids/splat.ogg"
 
 - type: entity
   name: blue tomato
@@ -1417,8 +1415,6 @@
   - type: Tag
     tags:
     - Fruit
-  - type: Fragile
-    splatSound: "/Audio/Effects/Fluids/splat.ogg"
 
 - type: entity
   name: watermelon slice

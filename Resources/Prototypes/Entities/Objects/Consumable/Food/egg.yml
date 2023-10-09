@@ -56,8 +56,6 @@
           # Wow double-yolk you're so lucky!
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
-  - type: Fragile
-    splatSound: "/Audio/Effects/Fluids/splat.ogg"
 
 # Splat
 - type: entity
