@@ -16,6 +16,7 @@ namespace Content.Client.Ghost
         [Dependency] private readonly SharedActionsSystem _actions = default!;
         [Dependency] private readonly ILightManager _lightManager = default!;
         [Dependency] private readonly ContentEyeSystem _contentEye = default!;
+        [Dependency] private readonly IEyeManager _eye = default!;
 
         public int AvailableGhostRoleCount { get; private set; }
 
@@ -114,10 +115,11 @@ namespace Content.Client.Ghost
             _actions.RemoveAction(uid, component.ToggleGhostsActionEntity);
             _actions.RemoveAction(uid, component.ToggleGhostHearingActionEntity);
 
+            _lightManager.Enabled = true;
+            _eye.CurrentEye.DrawFov = true;
+
             if (uid != _playerManager.LocalPlayer?.ControlledEntity)
                 return;
-
-            _lightManager.Enabled = true;
 
             if (component.IsAttached)
             {
