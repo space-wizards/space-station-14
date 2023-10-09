@@ -876,6 +876,7 @@
     clumsySound:
       path: /Audio/Animals/monkey_scream.ogg
   - type: IdExaminable
+  - type: AlwaysRevolutionaryConvertible
 
 - type: entity
   name: guidebook monkey
@@ -980,6 +981,7 @@
     - Trash
     - VimPilot
     - Mouse
+    - Meat
   - type: Respirator
     damage:
       types:
@@ -2329,6 +2331,7 @@
     - VimPilot
     - Trash
     - Hamster
+    - Meat
   - type: Respirator
     damage:
       types:

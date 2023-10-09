@@ -7534,8 +7534,10 @@ entities:
             0: 34944
           -7,-13:
             0: 2184
+            2: 9984
           -6,-13:
             0: 36232
+            2: 512
           -5,-13:
             0: 36744
           -2,-20:
@@ -8183,6 +8185,7 @@ entities:
             0: 65535
           -7,-12:
             0: 44544
+            2: 34
           -6,-10:
             0: 39144
           13,-14:
@@ -9073,6 +9076,10 @@ entities:
             0: 32768
           -3,-20:
             0: 28672
+          -8,-13:
+            2: 3840
+          -9,-13:
+            2: 3584
         uniqueMixes:
         - volume: 2500
           temperature: 293.15
@@ -9439,7 +9446,7 @@ entities:
   entities:
   - uid: 2133
     components:
-    - pos: -25.315247,-10.432565
+    - pos: -27.45107,-11.577459
       parent: 60
       type: Transform
   - uid: 6610
@@ -16275,7 +16282,7 @@ entities:
   entities:
   - uid: 7793
     components:
-    - pos: -25.315247,-11.16694
+    - pos: -25.31633,-11.483709
       parent: 60
       type: Transform
 - proto: BoxFolderBlack
@@ -16553,7 +16560,7 @@ entities:
   entities:
   - uid: 19869
     components:
-    - pos: -25.596497,-10.963815
+    - pos: -25.488205,-11.296209
       parent: 60
       type: Transform
 - proto: BrbSign
@@ -61138,6 +61145,13 @@ entities:
       - EntityStorageComponent
       - entity_storage
       type: Construction
+- proto: CrateMindShieldImplants
+  entities:
+  - uid: 11097
+    components:
+    - pos: -25.5,-10.5
+      parent: 60
+      type: Transform
 - proto: CrateNPCChicken
   entities:
   - uid: 5597
@@ -121618,7 +121632,6 @@ entities:
       type: Transform
     - links:
       - 11098
-      - 9091
       type: DeviceLinkSink
   - uid: 6522
     components:
@@ -121726,7 +121739,6 @@ entities:
       type: Transform
     - links:
       - 11098
-      - 9091
       type: DeviceLinkSink
   - uid: 7045
     components:
@@ -122412,19 +122424,6 @@ entities:
         7728:
         - Pressed: Toggle
       type: DeviceLinkSource
-  - uid: 9091
-    components:
-    - name: Cell 1 Shutters
-      type: MetaData
-    - pos: -25.5,-10.5
-      parent: 60
-      type: Transform
-    - linkedPorts:
-        6467:
-        - Pressed: Toggle
-        7032:
-        - Pressed: Toggle
-      type: DeviceLinkSource
   - uid: 11511
     components:
     - pos: -52.5,28.5
@@ -123045,6 +123044,13 @@ entities:
   - uid: 3111
     components:
     - pos: 46.5,-19.5
+      parent: 60
+      type: Transform
+- proto: SignCourt
+  entities:
+  - uid: 24097
+    components:
+    - pos: -39.5,-18.5
       parent: 60
       type: Transform
 - proto: SignCryogenicsMed
@@ -123907,6 +123913,13 @@ entities:
     - pos: -31.5,-5.5
       parent: 60
       type: Transform
+- proto: SignJanitor
+  entities:
+  - uid: 9091
+    components:
+    - pos: -8.5,-25.5
+      parent: 60
+      type: Transform
 - proto: SignKiddiePlaque
   entities:
   - uid: 23096
@@ -123919,6 +123932,13 @@ entities:
   - uid: 14624
     components:
     - pos: -29.5,2.5
+      parent: 60
+      type: Transform
+- proto: SignLawyer
+  entities:
+  - uid: 18024
+    components:
+    - pos: -47.5,-19.5
       parent: 60
       type: Transform
 - proto: SignLibrary
@@ -131691,11 +131711,6 @@ entities:
   - uid: 9594
     components:
     - pos: -40.5,5.5
-      parent: 60
-      type: Transform
-  - uid: 11097
-    components:
-    - pos: -25.5,-10.5
       parent: 60
       type: Transform
   - uid: 11127
