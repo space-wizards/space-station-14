@@ -66,6 +66,7 @@
         !type:CableDeviceNode
         nodeGroupID: Apc
   - type: PowerMonitoringDevice
+    group: APC
     sourceNode: input
     loadNode: output
   - type: BatteryCharger

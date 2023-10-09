@@ -41,6 +41,7 @@
         !type:CableDeviceNode
         nodeGroupID: HVPower
   - type: PowerMonitoringDevice
+    group: Generator
     loadNode: output
   - type: PowerSupplier
     supplyRate: 3000
@@ -127,6 +128,7 @@
         !type:CableDeviceNode
         nodeGroupID: HVPower
   - type: PowerMonitoringDevice
+    group: Generator
     loadNode: output
   - type: PowerSupplier
     supplyRate: 3000

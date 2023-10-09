@@ -38,6 +38,7 @@
         !type:CableDeviceNode
         nodeGroupID: MVPower
   - type: PowerMonitoringDevice
+    group: Substation
     sourceNode: input
     loadNode: output
   - type: BatteryCharger
@@ -167,6 +168,7 @@
         !type:CableDeviceNode
         nodeGroupID: MVPower
   - type: PowerMonitoringDevice
+    group: Substation
     sourceNode: input
     loadNode: output
   - type: BatteryCharger

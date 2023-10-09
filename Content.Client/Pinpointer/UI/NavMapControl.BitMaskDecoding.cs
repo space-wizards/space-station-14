@@ -1,0 +1,225 @@
+using Content.Client.Power;
+using Content.Shared.Pinpointer;
+using Robust.Shared.Map.Components;
+using System.Numerics;
+
+namespace Content.Client.Pinpointer.UI;
+
+public sealed partial class NavMapControl
+{
+    public Dictionary<Vector2i, List<ChunkedLine>> GetDecodedPowerCableChunks
+        (Dictionary<Vector2i, NavMapChunkPowerCables> chunks,
+        MapGridComponent grid,
+        bool useDarkColors = false)
+    {
+        var decodedOutput = new Dictionary<Vector2i, List<ChunkedLine>>();
+        var colorMap = useDarkColors ? PowerMonitoringHelper.DarkPowerCableColors : PowerMonitoringHelper.PowerCableColors;
+
+        foreach ((var chunkOrigin, var chunk) in chunks)
+        {
+            var list = new List<ChunkedLine>();
+
+            foreach ((var cableType, var chunkMask) in chunk.CableData)
+            {
+                var offset = PowerMonitoringHelper.PowerCableOffsets.TryGetValue(cableType, out var _offset) ? _offset : Vector2.Zero;
+                var color = colorMap.TryGetValue(cableType, out var _color) ? _color : Color.White;
+
+                for (var i = 0; i < SharedNavMapSystem.ChunkSize * SharedNavMapSystem.ChunkSize; i++)
+                {
+                    var value = (int) Math.Pow(2, i);
+                    var mask = chunkMask & value;
+
+                    if (mask == 0x0)
+                        continue;
+
+                    var relativeTile = SharedNavMapSystem.GetTile(mask);
+                    var tile = (chunk.Origin * SharedNavMapSystem.ChunkSize + relativeTile) * grid.TileSize;
+                    var position = new Vector2(tile.X, -tile.Y);
+
+                    NavMapChunkPowerCables? neighborChunk;
+                    bool neighbor;
+
+                    // Note: we only check the north and east neighbors
+
+                    // East
+                    if (relativeTile.X == SharedNavMapSystem.ChunkSize - 1)
+                    {
+                        neighbor = chunks.TryGetValue(chunkOrigin + new Vector2i(1, 0), out neighborChunk) &&
+                                    neighborChunk.CableData.TryGetValue(cableType, out var neighborChunkMask) &&
+                                    (neighborChunkMask & SharedNavMapSystem.GetFlag(new Vector2i(0, relativeTile.Y))) != 0x0;
+                    }
+                    else
+                    {
+                        var flag = SharedNavMapSystem.GetFlag(relativeTile + new Vector2i(1, 0));
+                        neighbor = (chunkMask & flag) != 0x0;
+                    }
+
+                    if (neighbor)
+                    {
+                        // Add points
+                        var line = new ChunkedLine
+                            (position + offset + new Vector2(grid.TileSize * 0.5f, -grid.TileSize * 0.5f),
+                            position + new Vector2(1f, 0f) + offset + new Vector2(grid.TileSize * 0.5f, -grid.TileSize * 0.5f),
+                            color);
+                        list.Add(line);
+                    }
+
+                    // North
+                    if (relativeTile.Y == SharedNavMapSystem.ChunkSize - 1)
+                    {
+                        neighbor = chunks.TryGetValue(chunkOrigin + new Vector2i(0, 1), out neighborChunk) &&
+                                    neighborChunk.CableData.TryGetValue(cableType, out var neighborChunkMask) &&
+                                    (neighborChunkMask & SharedNavMapSystem.GetFlag(new Vector2i(relativeTile.X, 0))) != 0x0;
+                    }
+                    else
+                    {
+                        var flag = SharedNavMapSystem.GetFlag(relativeTile + new Vector2i(0, 1));
+                        neighbor = (chunkMask & flag) != 0x0;
+                    }
+
+                    if (neighbor)
+                    {
+                        // Add points
+                        var line = new ChunkedLine
+                            (position + offset + new Vector2(grid.TileSize * 0.5f, -grid.TileSize * 0.5f),
+                            position + new Vector2(0f, -1f) + offset + new Vector2(grid.TileSize * 0.5f, -grid.TileSize * 0.5f),
+                            color);
+                        list.Add(line);
+                    }
+                }
+
+            }
+
+            decodedOutput.Add(chunkOrigin, list);
+        }
+
+        return decodedOutput;
+    }
+
+    public Dictionary<Vector2i, List<ChunkedLine>> GetDecodedTileChunks
+        (Dictionary<Vector2i, NavMapChunk> chunks,
+        MapGridComponent grid)
+    {
+        var decodedOutput = new Dictionary<Vector2i, List<ChunkedLine>>();
+
+        foreach ((var chunkOrigin, var chunk) in chunks)
+        {
+            var list = new List<ChunkedLine>();
+
+            // TODO: Okay maybe I should just use ushorts lmao...
+            for (var i = 0; i < SharedNavMapSystem.ChunkSize * SharedNavMapSystem.ChunkSize; i++)
+            {
+                var value = (int) Math.Pow(2, i);
+
+                var mask = chunk.TileData & value;
+
+                if (mask == 0x0)
+                    continue;
+
+                // Alright now we'll work out our edges
+                var relativeTile = SharedNavMapSystem.GetTile(mask);
+                var tile = (chunk.Origin * SharedNavMapSystem.ChunkSize + relativeTile) * grid.TileSize;
+                var position = new Vector2(tile.X, -tile.Y);
+                NavMapChunk? neighborChunk;
+                bool neighbor;
+
+                // North edge
+                if (relativeTile.Y == SharedNavMapSystem.ChunkSize - 1)
+                {
+                    neighbor = chunks.TryGetValue(chunkOrigin + new Vector2i(0, 1), out neighborChunk) &&
+                                  (neighborChunk.TileData &
+                                   SharedNavMapSystem.GetFlag(new Vector2i(relativeTile.X, 0))) != 0x0;
+                }
+                else
+                {
+                    var flag = SharedNavMapSystem.GetFlag(relativeTile + new Vector2i(0, 1));
+                    neighbor = (chunk.TileData & flag) != 0x0;
+                }
+
+                if (!neighbor)
+                {
+                    // Add points
+                    list.Add(new ChunkedLine(position + new Vector2(0f, -grid.TileSize), position + new Vector2(grid.TileSize, -grid.TileSize), Color.Cyan));
+                }
+
+                // East edge
+                if (relativeTile.X == SharedNavMapSystem.ChunkSize - 1)
+                {
+                    neighbor = chunks.TryGetValue(chunkOrigin + new Vector2i(1, 0), out neighborChunk) &&
+                               (neighborChunk.TileData &
+                                SharedNavMapSystem.GetFlag(new Vector2i(0, relativeTile.Y))) != 0x0;
+                }
+                else
+                {
+                    var flag = SharedNavMapSystem.GetFlag(relativeTile + new Vector2i(1, 0));
+                    neighbor = (chunk.TileData & flag) != 0x0;
+                }
+
+                if (!neighbor)
+                {
+                    // Add points
+                    list.Add(new ChunkedLine(position + new Vector2(grid.TileSize, -grid.TileSize), position + new Vector2(grid.TileSize, 0f), Color.Cyan));
+                }
+
+                // South edge
+                if (relativeTile.Y == 0)
+                {
+                    neighbor = chunks.TryGetValue(chunkOrigin + new Vector2i(0, -1), out neighborChunk) &&
+                               (neighborChunk.TileData &
+                                SharedNavMapSystem.GetFlag(new Vector2i(relativeTile.X, SharedNavMapSystem.ChunkSize - 1))) != 0x0;
+                }
+                else
+                {
+                    var flag = SharedNavMapSystem.GetFlag(relativeTile + new Vector2i(0, -1));
+                    neighbor = (chunk.TileData & flag) != 0x0;
+                }
+
+                if (!neighbor)
+                {
+                    // Add points
+                    list.Add(new ChunkedLine(position + new Vector2(grid.TileSize, 0f), position, Color.Cyan));
+                }
+
+                // West edge
+                if (relativeTile.X == 0)
+                {
+                    neighbor = chunks.TryGetValue(chunkOrigin + new Vector2i(-1, 0), out neighborChunk) &&
+                               (neighborChunk.TileData &
+                                SharedNavMapSystem.GetFlag(new Vector2i(SharedNavMapSystem.ChunkSize - 1, relativeTile.Y))) != 0x0;
+                }
+                else
+                {
+                    var flag = SharedNavMapSystem.GetFlag(relativeTile + new Vector2i(-1, 0));
+                    neighbor = (chunk.TileData & flag) != 0x0;
+                }
+
+                if (!neighbor)
+                {
+                    // Add point
+                    list.Add(new ChunkedLine(position, position + new Vector2(0f, -grid.TileSize), Color.Cyan));
+                }
+
+                // Draw a diagonal line for interiors.
+                list.Add(new ChunkedLine(position + new Vector2(0f, -grid.TileSize), position + new Vector2(grid.TileSize, 0f), Color.Cyan));
+            }
+
+            decodedOutput.Add(chunkOrigin, list);
+        }
+
+        return decodedOutput;
+    }
+}
+
+public sealed class ChunkedLine
+{
+    public Vector2 Origin;
+    public Vector2 Terminus;
+    public Color Color;
+
+    public ChunkedLine(Vector2 origin, Vector2 terminus, Color color)
+    {
+        Origin = origin;
+        Terminus = terminus;
+        Color = color;
+    }
+}

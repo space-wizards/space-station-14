@@ -39,6 +39,7 @@
         !type:CableDeviceNode
         nodeGroupID: HVPower
   - type: PowerMonitoringDevice
+    group: Generator
     loadNode: input
   - type: RadiationCollector
     chargeModifier: 7500

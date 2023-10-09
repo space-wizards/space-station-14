@@ -46,7 +46,7 @@ public sealed class PowerMonitoringConsoleBoundUserInterface : BoundUserInterfac
             xform?.Coordinates);
     }
 
-    public void RequestPowerMonitoringData(NetEntity? netEntity)
+    public void RequestPowerMonitoringUpdate(NetEntity? netEntity)
     {
         SendMessage(new RequestPowerMonitoringUpdateMessage(netEntity));
     }

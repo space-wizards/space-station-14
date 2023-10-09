@@ -1,9 +1,7 @@
-using System.Numerics;
-using Content.Client.NPC;
+using Content.Client.Power;
 using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Pinpointer;
-using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
@@ -16,14 +14,16 @@ using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Physics.Components;
 using Content.Shared.Power;
 using System.Linq;
-using Content.Client.Power;
+using System.Numerics;
+using JetBrains.Annotations;
 
 namespace Content.Client.Pinpointer.UI;
 
 /// <summary>
 /// Displays the nav map data of the specified grid.
 /// </summary>
-public sealed class NavMapControl : MapGridControl
+[UsedImplicitly]
+public sealed partial class NavMapControl : MapGridControl
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
 
@@ -212,8 +212,6 @@ public sealed class NavMapControl : MapGridControl
         }
 
         var offset = _offset;
-        //var lineColor = new Color(102, 217, 102);
-        var lineColor = new Color(102, 164, 217);
 
         if (_entManager.TryGetComponent<PhysicsComponent>(MapUid, out var physics))
         {
@@ -241,146 +239,27 @@ public sealed class NavMapControl : MapGridControl
             }
         }
 
-        // Draw the wall data
-        /*var area = new Box2(-WorldRange, -WorldRange, WorldRange + 1f, WorldRange + 1f).Translated(offset);
-        var tileSize = new Vector2(grid.TileSize, -grid.TileSize);
-
-        for (var x = Math.Floor(area.Left); x <= Math.Ceiling(area.Right); x += SharedNavMapSystem.ChunkSize * grid.TileSize)
-        {
-            for (var y = Math.Floor(area.Bottom); y <= Math.Ceiling(area.Top); y += SharedNavMapSystem.ChunkSize * grid.TileSize)
-            {
-                var floored = new Vector2i((int) x, (int) y);
-
-                var chunkOrigin = SharedMapSystem.GetChunkIndices(floored, SharedNavMapSystem.ChunkSize);
-
-                if (!navMap.Chunks.TryGetValue(chunkOrigin, out var chunk))
-                    continue;
-
-                // TODO: Okay maybe I should just use ushorts lmao...
-                for (var i = 0; i < SharedNavMapSystem.ChunkSize * SharedNavMapSystem.ChunkSize; i++)
-                {
-                    var value = (int) Math.Pow(2, i);
-
-                    var mask = chunk.TileData & value;
-
-                    if (mask == 0x0)
-                        continue;
-
-                    // Alright now we'll work out our edges
-                    var relativeTile = SharedNavMapSystem.GetTile(mask);
-                    var tile = (chunk.Origin * SharedNavMapSystem.ChunkSize + relativeTile) * grid.TileSize - offset;
-                    var position = new Vector2(tile.X, -tile.Y);
-                    NavMapChunk? neighborChunk;
-                    bool neighbor;
-
-                    // North edge
-                    if (relativeTile.Y == SharedNavMapSystem.ChunkSize - 1)
-                    {
-                        neighbor = navMap.Chunks.TryGetValue(chunkOrigin + new Vector2i(0, 1), out neighborChunk) &&
-                                      (neighborChunk.TileData &
-                                       SharedNavMapSystem.GetFlag(new Vector2i(relativeTile.X, 0))) != 0x0;
-                    }
-                    else
-                    {
-                        var flag = SharedNavMapSystem.GetFlag(relativeTile + new Vector2i(0, 1));
-                        neighbor = (chunk.TileData & flag) != 0x0;
-                    }
-
-                    if (!neighbor)
-                    {
-                        handle.DrawLine(Scale(position + new Vector2(0f, -grid.TileSize)), Scale(position + tileSize), lineColor);
-                    }
-
-                    // East edge
-                    if (relativeTile.X == SharedNavMapSystem.ChunkSize - 1)
-                    {
-                        neighbor = navMap.Chunks.TryGetValue(chunkOrigin + new Vector2i(1, 0), out neighborChunk) &&
-                                   (neighborChunk.TileData &
-                                    SharedNavMapSystem.GetFlag(new Vector2i(0, relativeTile.Y))) != 0x0;
-                    }
-                    else
-                    {
-                        var flag = SharedNavMapSystem.GetFlag(relativeTile + new Vector2i(1, 0));
-                        neighbor = (chunk.TileData & flag) != 0x0;
-                    }
-
-                    if (!neighbor)
-                    {
-                        handle.DrawLine(Scale(position + tileSize), Scale(position + new Vector2(grid.TileSize, 0f)), lineColor);
-                    }
-
-                    // South edge
-                    if (relativeTile.Y == 0)
-                    {
-                        neighbor = navMap.Chunks.TryGetValue(chunkOrigin + new Vector2i(0, -1), out neighborChunk) &&
-                                   (neighborChunk.TileData &
-                                    SharedNavMapSystem.GetFlag(new Vector2i(relativeTile.X, SharedNavMapSystem.ChunkSize - 1))) != 0x0;
-                    }
-                    else
-                    {
-                        var flag = SharedNavMapSystem.GetFlag(relativeTile + new Vector2i(0, -1));
-                        neighbor = (chunk.TileData & flag) != 0x0;
-                    }
-
-                    if (!neighbor)
-                    {
-                        handle.DrawLine(Scale(position + new Vector2(grid.TileSize, 0f)), Scale(position), lineColor);
-                    }
-
-                    // West edge
-                    if (relativeTile.X == 0)
-                    {
-                        neighbor = navMap.Chunks.TryGetValue(chunkOrigin + new Vector2i(-1, 0), out neighborChunk) &&
-                                   (neighborChunk.TileData &
-                                    SharedNavMapSystem.GetFlag(new Vector2i(SharedNavMapSystem.ChunkSize - 1, relativeTile.Y))) != 0x0;
-                    }
-                    else
-                    {
-                        var flag = SharedNavMapSystem.GetFlag(relativeTile + new Vector2i(-1, 0));
-                        neighbor = (chunk.TileData & flag) != 0x0;
-                    }
-
-                    if (!neighbor)
-                    {
-                        handle.DrawLine(Scale(position), Scale(position + new Vector2(0f, -grid.TileSize)), lineColor);
-                    }
-
-                    // Draw a diagonal line for interiors.
-                    handle.DrawLine(Scale(position + new Vector2(0f, -grid.TileSize)), Scale(position + new Vector2(grid.TileSize, 0f)), lineColor);
-                }
-            }
-        }*/
-
-        // Draw cables
-        if (FocusPowerCableChunks != null && FocusPowerCableChunks.Any())
-        {
-            //DrawCables(handle, PowerCableChunks, _unfocusCableData, area, grid, offset);
-            //DrawCables(handle, FocusPowerCableChunks, _cableData, area, grid, offset);
-        }
-
-        else
-        {
-           // DrawCables(handle, PowerCableChunks, _cableData, area, grid, offset);
-        }
-
         var area = new Box2(-WorldRange, -WorldRange, WorldRange + 1f, WorldRange + 1f).Translated(offset);
 
-        foreach ((var chunk, var chunkedLines) in TileGrid)
+        if (TileGrid != null && TileGrid.Any())
         {
-            var offsetChunk = new Vector2(chunk.X, chunk.Y) * SharedNavMapSystem.ChunkSize;
-
-            if (offsetChunk.X < area.Left - SharedNavMapSystem.ChunkSize || offsetChunk.X > area.Right)
-                continue;
-
-            if (offsetChunk.Y < area.Bottom - SharedNavMapSystem.ChunkSize || offsetChunk.Y > area.Top)
-                continue;
-
-            foreach (var chunkedLine in chunkedLines)
+            foreach ((var chunk, var chunkedLines) in TileGrid)
             {
-                handle.DrawLine
-                (Scale(chunkedLine.Origin - new Vector2(offset.X, -offset.Y)),
-                Scale(chunkedLine.Terminus - new Vector2(offset.X, -offset.Y)),
-                new Color(102, 164, 217));
+                var offsetChunk = new Vector2(chunk.X, chunk.Y) * SharedNavMapSystem.ChunkSize;
+
+                if (offsetChunk.X < area.Left - SharedNavMapSystem.ChunkSize || offsetChunk.X > area.Right)
+                    continue;
+
+                if (offsetChunk.Y < area.Bottom - SharedNavMapSystem.ChunkSize || offsetChunk.Y > area.Top)
+                    continue;
+
+                foreach (var chunkedLine in chunkedLines)
+                {
+                    handle.DrawLine
+                    (Scale(chunkedLine.Origin - new Vector2(offset.X, -offset.Y)),
+                    Scale(chunkedLine.Terminus - new Vector2(offset.X, -offset.Y)),
+                    new Color(102, 164, 217));
+                }
             }
         }
 
@@ -529,126 +408,6 @@ public sealed class NavMapControl : MapGridControl
             }
         }
     }
-
-    /*private void DrawCables(DrawingHandleScreen handle,
-        Dictionary<Vector2i, NavMapChunkPowerCables> chunks,
-        List<CableData> cableData,
-        Box2 area,
-        MapGridComponent grid,
-        Vector2 offset)
-    {
-        for (var x = Math.Floor(area.Left); x <= Math.Ceiling(area.Right); x += SharedNavMapSystem.ChunkSize * grid.TileSize)
-        {
-            for (var y = Math.Floor(area.Bottom); y <= Math.Ceiling(area.Top); y += SharedNavMapSystem.ChunkSize * grid.TileSize)
-            {
-                var floored = new Vector2i((int) x, (int) y);
-
-                var chunkOrigin = SharedMapSystem.GetChunkIndices(floored, SharedNavMapSystem.ChunkSize);
-
-                if (!chunks.TryGetValue(chunkOrigin, out var chunk))
-                    continue;
-
-                foreach (var datum in cableData)
-                {
-                    if (!ShowCables[datum.CableType])
-                        continue;
-
-                    for (var i = 0; i < SharedNavMapSystem.ChunkSize * SharedNavMapSystem.ChunkSize; i++)
-                    {
-                        var value = (int) Math.Pow(2, i);
-                        var mask = chunk.CableData[datum.CableType] & value;
-
-                        if (mask == 0x0)
-                            continue;
-
-                        var relativeTile = SharedNavMapSystem.GetTile(mask);
-                        var tile = (chunk.Origin * SharedNavMapSystem.ChunkSize + relativeTile) * grid.TileSize - offset;
-                        var position = new Vector2(tile.X, -tile.Y);
-                        NavMapChunkPowerCables? neighborChunk;
-                        bool neighbor;
-
-                        // Only check the north and east neighbors
-
-                        // East
-                        if (relativeTile.X == SharedNavMapSystem.ChunkSize - 1)
-                        {
-                            neighbor = chunks.TryGetValue(chunkOrigin + new Vector2i(1, 0), out neighborChunk) &&
-                                       (neighborChunk.CableData[datum.CableType] & SharedNavMapSystem.GetFlag(new Vector2i(0, relativeTile.Y))) != 0x0;
-                        }
-                        else
-                        {
-                            var flag = SharedNavMapSystem.GetFlag(relativeTile + new Vector2i(1, 0));
-                            neighbor = (chunk.CableData[datum.CableType] & flag) != 0x0;
-                        }
-
-                        if (neighbor)
-                        {
-                            if (WorldRange / WorldMaxRange < 0.5f)
-                            {
-                                var drawOffset = new Vector2(grid.TileSize * 0.5f, -grid.TileSize * 0.5f) + datum.Offset;
-
-                                var leftTop = new Vector2
-                                    (Math.Min(position.X, (position + new Vector2(1f, 0f)).X) - 0.1f,
-                                    Math.Min(position.Y, (position + new Vector2(1f, 0f)).Y) - 0.1f);
-
-                                var rightBottom = new Vector2
-                                    (Math.Max(position.X, (position + new Vector2(1f, 0f)).X) + 0.1f,
-                                    Math.Max(position.Y, (position + new Vector2(1f, 0f)).Y) + 0.1f);
-
-                                handle.DrawRect(new UIBox2(Scale(leftTop + drawOffset), Scale(rightBottom + drawOffset)), datum.Color);
-                            }
-
-                            else
-                            {
-                                handle.DrawLine
-                                (Scale(position + new Vector2(grid.TileSize * 0.5f, -grid.TileSize * 0.5f) + datum.Offset),
-                                Scale(position + new Vector2(1f, 0f) + new Vector2(grid.TileSize * 0.5f, -grid.TileSize * 0.5f) + datum.Offset),
-                                datum.Color);
-                            }
-                        }
-
-                        // North
-                        if (relativeTile.Y == SharedNavMapSystem.ChunkSize - 1)
-                        {
-                            neighbor = chunks.TryGetValue(chunkOrigin + new Vector2i(0, 1), out neighborChunk) &&
-                                          (neighborChunk.CableData[datum.CableType] & SharedNavMapSystem.GetFlag(new Vector2i(relativeTile.X, 0))) != 0x0;
-                        }
-                        else
-                        {
-                            var flag = SharedNavMapSystem.GetFlag(relativeTile + new Vector2i(0, 1));
-                            neighbor = (chunk.CableData[datum.CableType] & flag) != 0x0;
-                        }
-
-                        if (neighbor)
-                        {
-                            if (WorldRange / WorldMaxRange < 0.5f)
-                            {
-                                var drawOffset = new Vector2(grid.TileSize * 0.5f, -grid.TileSize * 0.5f) + datum.Offset;
-
-                                var leftTop = new Vector2
-                                    (Math.Min(position.X, (position + new Vector2(0f, -1f)).X) - 0.1f,
-                                    Math.Min(position.Y, (position + new Vector2(0f, -1f)).Y) - 0.1f);
-
-                                var rightBottom = new Vector2
-                                    (Math.Max(position.X, (position + new Vector2(0f, -1f)).X) + 0.1f,
-                                    Math.Max(position.Y, (position + new Vector2(0f, -1f)).Y) + 0.1f);
-
-                                handle.DrawRect(new UIBox2(Scale(leftTop + drawOffset), Scale(rightBottom + drawOffset)), datum.Color);
-                            }
-
-                            else
-                            {
-                                handle.DrawLine
-                                (Scale(position + new Vector2(grid.TileSize * 0.5f, -grid.TileSize * 0.5f) + datum.Offset),
-                                Scale(position + new Vector2(0f, -1f) + new Vector2(grid.TileSize * 0.5f, -grid.TileSize * 0.5f) + datum.Offset),
-                                datum.Color);
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }*/
 
     private Vector2 Scale(Vector2 position)
     {

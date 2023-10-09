@@ -1,12 +1,8 @@
 using Content.Server.NodeContainer.Nodes;
-using Content.Server.NodeContainer.NodeGroups;
-using Content.Server.NodeContainer;
-using Content.Server.Power.Nodes;
+using Content.Server.Power.Components;
 using Content.Shared.Pinpointer;
-using Content.Shared.Power;
 using Robust.Shared.Map.Components;
 using System.Linq;
-using Content.Server.Power.Components;
 
 namespace Content.Server.Power.EntitySystems;
 
@@ -87,8 +83,7 @@ internal sealed partial class PowerMonitoringConsoleSystem
         return chunks;
     }
 
-    // Probably a faster way of getting all reachable nodes from a root node 
-    // than querying all node entities and checking their NetID?
+    // Probably faster than querying all node entities and checking their NetID?
     private List<Node> FloodFillNode(Node rootNode)
     {
         rootNode.FloodGen += 1;

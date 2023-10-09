@@ -52,6 +52,7 @@
           !type:TegNodeGenerator
           nodeGroupID: Teg
     - type: PowerMonitoringDevice
+      group: Generator
       loadNode: output
     - type: Rotatable
 

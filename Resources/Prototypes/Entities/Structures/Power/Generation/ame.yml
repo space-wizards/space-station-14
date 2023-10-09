@@ -79,6 +79,7 @@
         !type:CableDeviceNode
         nodeGroupID: HVPower
   - type: PowerMonitoringDevice
+    group: Generator
     loadNode: input
 #  - type: ApcPowerReceiver
 #  - type: ExtensionCableReceiver

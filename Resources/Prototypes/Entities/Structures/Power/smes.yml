@@ -46,6 +46,7 @@
           !type:CableDeviceNode
           nodeGroupID: HVPower
     - type: PowerMonitoringDevice
+      group: SMES
       sourceNode: input
       loadNode: output
     - type: BatteryDischarger

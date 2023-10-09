@@ -37,6 +37,7 @@
         !type:CableDeviceNode
         nodeGroupID: HVPower
   - type: PowerMonitoringDevice
+    group: Generator
     loadNode: output
   - type: Anchorable
   - type: Pullable
