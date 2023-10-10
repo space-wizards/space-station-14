@@ -13,15 +13,10 @@
       effects:
         - !type:SatiateHunger
           conditions:
-            - !type:OrganType
-              type: Animal
           factor: 1.1
     Drink:
       effects:
       - !type:SatiateThirst
-        conditions:
-          - !type:OrganType
-            type: Animal
         factor: 1.5
     Poison:
       effects:
@@ -29,13 +24,9 @@
           damage:
             types:
               Poison: 1
-        - !type:HealthChange
-          damage:
-            types:
-              Poison: -1
           conditions:
             - !type:OrganType
-              type: Animal
+              type: Human
   plantMetabolism:
     - !type:PlantAdjustWater
       amount: 0.5
