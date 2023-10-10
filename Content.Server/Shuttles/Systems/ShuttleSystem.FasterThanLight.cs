@@ -286,10 +286,8 @@ public sealed partial class ShuttleSystem
                     var ev = new FTLStartedEvent(uid, target, fromMapUid, fromMatrix, fromRotation);
                     RaiseLocalEvent(uid, ref ev, true);
 
-                    if (comp.TravelSound != null)
-                    {
-                        comp.TravelStream = _audio.PlayPvs(comp.TravelSound, uid).Value.Entity;
-                    }
+                    comp.TravelStream = _audio.PlayPvs(comp.TravelSound, uid)?.Entity;
+
                     break;
                 // Arriving, play effects
                 case FTLState.Travelling:
