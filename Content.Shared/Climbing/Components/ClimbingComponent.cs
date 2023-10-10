@@ -28,9 +28,9 @@ public sealed partial class ClimbingComponent : Component
     /// <summary>
     /// How fast the entity is moved when climbing.
     /// </summary>
-    [DataField("transitionRate")]
+    [DataField]
     public float TransitionRate = 5f;
 
-    [AutoNetworkedField(cloneData: true), DataField]
+    [AutoNetworkedField, DataField]
     public Dictionary<string, int> DisabledFixtureMasks = new();
 }

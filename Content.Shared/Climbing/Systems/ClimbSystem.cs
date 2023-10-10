@@ -13,6 +13,7 @@ using Content.Shared.Hands.Components;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Movement.Events;
+using Content.Shared.Movement.Systems;
 using Content.Shared.Physics;
 using Content.Shared.Popups;
 using Content.Shared.Stunnable;
@@ -54,6 +55,7 @@ public sealed partial class ClimbSystem : VirtualController
     {
         base.Initialize();
 
+        UpdatesAfter.Add(typeof(SharedMoverController));
         _fixturesQuery = GetEntityQuery<FixturesComponent>();
         _xformQuery = GetEntityQuery<TransformComponent>();
 
@@ -100,7 +102,7 @@ public sealed partial class ClimbSystem : VirtualController
             }
 
             var xform = _xformQuery.GetComponent(uid);
-            _xformSystem.SetLocalPosition(uid, xform.LocalPosition + comp.Direction * frameTime, xform);
+            _xformSystem.SetLocalPositionNoLerp(uid, xform.LocalPosition + comp.Direction * frameTime, xform);
         }
     }
 
