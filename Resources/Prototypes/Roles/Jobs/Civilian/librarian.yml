@@ -23,6 +23,6 @@
     pocket2: HandLabeler # for making named bestsellers
   inhand:
     - BriefcaseBrownFilled
-  innerclothingskirt: ClothingUniformJumpskirtColorLightBrown
+  innerClothingSkirt: ClothingUniformJumpskirtColorLightBrown
   satchel: ClothingBackpackSatchelLibrarianFilled
   duffelbag: ClothingBackpackDuffelLibrarianFilled
