@@ -98,3 +98,6 @@ chatsan-replacement-35 = hit me up
 
 chatsan-word-36 = gtfo
 chatsan-replacement-36 = get the fuck out
+
+chatsan-word-37 = wdym
+chatsan-replacement-37 = what do you mean
