@@ -1,0 +1,17 @@
+﻿<Document>
+# Races
+
+SS14 has a variety of races to choose from. Each of them has some (relatively) minor differences that you should keep in mind when playing as and interacting with one.
+
+## Human
+<Box>
+<GuideEntityEmbed Entity="MobHuman" Caption="A boring human.">
+</Box>
+Your average baseliner, humans are the most intuitive race.
+
+## Reptile
+<Box>
+<GuideEntityEmbed Entity="MobReptilian" Caption="Tailed folk with cold blood.">
+</Box>
+
+</Document>
