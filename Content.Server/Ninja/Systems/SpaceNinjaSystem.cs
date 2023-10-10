@@ -178,7 +178,7 @@ public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
 
         if (warps.Count > 0 && _mind.TryGetObjectiveComp<SpiderChargeConditionComponent>(uid, out var obj))
         {
-            obj.SpiderChargeTarget = _random.Pick(warps);
+            obj.Target = _random.Pick(warps);
         }
 
         var session = mind.Session;

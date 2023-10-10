@@ -22,8 +22,7 @@ public sealed class SpiderChargeTargetRequirementSystem : EntitySystem
             return;
 
         if (!HasComp<NinjaRoleComponent>(args.MindId)
-            || _mind.TryGetObjectiveComp<SpiderChargeConditionComponent>(args.MindId, out var obj, args.Mind)
-            && obj.SpiderChargeTarget == null)
+            || _mind.TryGetObjectiveComp<SpiderChargeConditionComponent>(args.MindId, out var obj, args.Mind) && obj.Target == null)
         {
             args.Cancelled = true;
         }

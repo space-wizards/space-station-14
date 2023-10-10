@@ -52,14 +52,14 @@ public sealed class NinjaConditionsSystem : EntitySystem
 
     private void OnSpiderChargeGetProgress(EntityUid uid, SpiderChargeConditionComponent comp, ref ObjectiveGetProgressEvent args)
     {
-        args.Progress = comp.SpiderChargeDetonated ? 1f : 0f;
+        args.Progress = comp.Detonated ? 1f : 0f;
     }
 
     private string SpiderChargeTitle(EntityUid mindId, MindComponent mind)
     {
         if (!_mind.TryGetObjectiveComp<SpiderChargeConditionComponent>(mindId, out var obj, mind) ||
-            obj.SpiderChargeTarget == null ||
-            !TryComp<WarpPointComponent>(obj.SpiderChargeTarget, out var warp) ||
+            obj.Target == null ||
+            !TryComp<WarpPointComponent>(obj.Target, out var warp) ||
             warp.Location == null)
         {
             // this should never really happen but eh

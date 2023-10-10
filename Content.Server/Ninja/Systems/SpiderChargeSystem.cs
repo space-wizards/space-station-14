@@ -43,11 +43,11 @@ public sealed class SpiderChargeSystem : EntitySystem
         }
 
         // allow planting anywhere if there is no target, which should never happen
-        if (obj.SpiderChargeTarget == null)
+        if (obj.Target == null)
             return;
 
         // assumes warp point still exists
-        var target = Transform(obj.SpiderChargeTarget.Value).MapPosition;
+        var target = Transform(obj.Target.Value).MapPosition;
         var coords = args.ClickLocation.ToMap(EntityManager, _transform);
         if (!coords.InRange(target, comp.Range))
         {
@@ -74,6 +74,6 @@ public sealed class SpiderChargeSystem : EntitySystem
             return;
 
         // assumes the target was destroyed, that the charge wasn't moved somehow
-        obj.SpiderChargeDetonated = true;
+        obj.Detonated = true;
     }
 }
