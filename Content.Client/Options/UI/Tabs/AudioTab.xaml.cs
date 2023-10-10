@@ -111,7 +111,7 @@ namespace Content.Client.Options.UI.Tabs
 
         private void OnApplyButtonPressed(BaseButton.ButtonEventArgs args)
         {
-            _cfg.SetCVar(CVars.AudioMasterVolume, MasterVolumeSlider.Value / 100);
+            _cfg.SetCVar(CVars.AudioMasterVolume, LV100ToDB(MasterVolumeSlider.Value, CCVars.MasterMultiplier));
             // Want the CVar updated values to have the multiplier applied
             // For the UI we just display 0-100 still elsewhere
             _cfg.SetCVar(CVars.MidiVolume, LV100ToDB(MidiVolumeSlider.Value, CCVars.MidiMultiplier));
@@ -135,7 +135,7 @@ namespace Content.Client.Options.UI.Tabs
 
         private void Reset()
         {
-            MasterVolumeSlider.Value = _cfg.GetCVar(CVars.AudioMasterVolume) * 100;
+            MasterVolumeSlider.Value = DBToLV100(_cfg.GetCVar(CVars.AudioMasterVolume), CCVars.MasterMultiplier);
             MidiVolumeSlider.Value = DBToLV100(_cfg.GetCVar(CVars.MidiVolume), CCVars.MidiMultiplier);
             AmbienceVolumeSlider.Value = DBToLV100(_cfg.GetCVar(CCVars.AmbienceVolume), CCVars.AmbienceMultiplier);
             AmbientMusicVolumeSlider.Value =
@@ -167,7 +167,7 @@ namespace Content.Client.Options.UI.Tabs
         private void UpdateChanges()
         {
             var isMasterVolumeSame =
-                Math.Abs(MasterVolumeSlider.Value - _cfg.GetCVar(CVars.AudioMasterVolume) * 100) < 0.01f;
+                Math.Abs(MasterVolumeSlider.Value - DBToLV100(_cfg.GetCVar(CVars.AudioMasterVolume), CCVars.MasterMultiplier)) < 0.01f;
             var isMidiVolumeSame =
                 Math.Abs(MidiVolumeSlider.Value - DBToLV100(_cfg.GetCVar(CVars.MidiVolume), CCVars.MidiMultiplier)) < 0.01f;
             var isAmbientVolumeSame =
