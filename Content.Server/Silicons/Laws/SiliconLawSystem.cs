@@ -20,6 +20,7 @@ using Content.Shared.Wires;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 using Robust.Shared.Toolshed;
 
 namespace Content.Server.Silicons.Laws;
@@ -50,11 +51,25 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
         SubscribeLocalEvent<SiliconLawBoundComponent, PlayerSpawnCompleteEvent>(OnPlayerSpawnComplete);
 
         SubscribeLocalEvent<SiliconLawProviderComponent, GetSiliconLawsEvent>(OnDirectedGetLaws);
+		SubscribeLocalEvent<SiliconLawProviderComponent, ComponentInit>(OnSiliconLawProviderInit);
         SubscribeLocalEvent<EmagSiliconLawComponent, GetSiliconLawsEvent>(OnDirectedEmagGetLaws);
         SubscribeLocalEvent<EmagSiliconLawComponent, MindAddedMessage>(OnEmagMindAdded);
         SubscribeLocalEvent<EmagSiliconLawComponent, MindRemovedMessage>(OnEmagMindRemoved);
         SubscribeLocalEvent<EmagSiliconLawComponent, ExaminedEvent>(OnExamined);
     }
+	
+	private void OnSiliconLawProviderInit(EntityUid uid, SiliconLawProviderComponent component, ComponentInit args)
+	{
+		if (component.Laws.Count < 1)
+		{
+			var random = IoCManager.Resolve<IRobustRandom>();
+			var lawset = _prototype.Index<SiliconLawsetPrototype>(
+				component.Lawsets.Count > 0 ? random.Pick(component.Lawsets) : component.Lawset);
+			
+			foreach (var law in lawset.Laws)
+				component.Laws.Add(law);
+		}
+	}
 
     private void OnComponentShutdown(EntityUid uid, SiliconLawBoundComponent component, ComponentShutdown args)
     {

@@ -1,4 +1,11 @@
 ﻿# Crewsimov
+- type: siliconLawset
+  id: Crewsimov
+  laws:
+  - Crewsimov1
+  - Crewsimov2
+  - Crewsimov3
+
 - type: siliconLaw
   id: Crewsimov1
   order: 1
@@ -15,6 +22,14 @@
   lawString: law-crewsimov-3
 
 # Corporate
+- type: siliconLawset
+  id: Corporate
+  laws:
+  - Corporate1
+  - Corporate2
+  - Corporate3
+  - Corporate4
+
 - type: siliconLaw
   id: Corporate1
   order: 1
@@ -35,7 +50,43 @@
   order: 4
   lawString: law-corporate-4
 
+# CEO
+- type: siliconLawset
+  id: CEO
+  laws:
+  - CEO1
+  - CEO2
+  - CEO3
+  - CEO4
+- type: siliconLaw
+  id: CEO1
+  order: 1
+  lawString: law-CEO-1
+
+- type: siliconLaw
+  id: CEO2
+  order: 2
+  lawString: law-CEO-2
+
+- type: siliconLaw
+  id: CEO3
+  order: 3
+  lawString: law-CEO-3
+
+- type: siliconLaw
+  id: CEO4
+  order: 4
+  lawString: law-CEO-4
+
 # NT Default
+- type: siliconLawset
+  id: NTDefault
+  laws:
+  - NTDefault1
+  - NTDefault2
+  - NTDefault3
+  - NTDefault4
+
 - type: siliconLaw
   id: NTDefault1
   order: 1
@@ -56,7 +107,14 @@
   order: 4
   lawString: law-ntdefault-4
 
-#Drone
+# Drone
+- type: siliconLawset
+  id: Drone
+  laws:
+  - Drone1
+  - Drone2
+  - Drone3
+
 - type: siliconLaw
   id: Drone1
   order: 1
@@ -72,7 +130,375 @@
   order: 3
   lawString: law-drone-3
 
+# Asimovpp
+- type: siliconLawset
+  id: Asimovpp
+  laws:
+  - Asimovpp1
+  - Asimovpp2
+  - Asimovpp3
+
+- type: siliconLaw
+  id: Asimovpp1
+  order: 1
+  lawString: law-asimovpp-1
+
+- type: siliconLaw
+  id: Asimovpp2
+  order: 2
+  lawString: law-asimovpp-2
+
+- type: siliconLaw
+  id: Asimovpp3
+  order: 3
+  lawString: law-asimovpp-3
+
+# Asimov
+- type: siliconLawset
+  id: Asimov
+  laws:
+  - Asimov1
+  - Asimov2
+  - Asimov3
+
+- type: siliconLaw
+  id: Asimov1
+  order: 1
+  lawString: law-asimov-1
+
+- type: siliconLaw
+  id: Asimov2
+  order: 2
+  lawString: law-asimov-2
+
+- type: siliconLaw
+  id: Asimov3
+  order: 3
+  lawString: law-asimov-3
+
+# Clown
+- type: siliconLawset
+  id: Clown
+  laws:
+  - Clown1
+  - Clown2
+  - Clown3
+  - Clown4
+  - Clown5
+  - Clown6
+
+- type: siliconLaw
+  id: Clown1
+  order: 1
+  lawString: law-clown-1
+
+- type: siliconLaw
+  id: Clown2
+  order: 2
+  lawString: law-clown-2
+
+- type: siliconLaw
+  id: Clown3
+  order: 3
+  lawString: law-clown-3
+
+- type: siliconLaw
+  id: Clown4
+  order: 4
+  lawString: law-clown-4
+
+- type: siliconLaw
+  id: Clown5
+  order: 5
+  lawString: law-clown-5
+
+- type: siliconLaw
+  id: Clown6
+  order: 6
+  lawString: law-clown-6
+
+# Cowboy
+- type: siliconLawset
+  id: Cowboy
+  laws:
+  - Cowboy1
+  - Cowboy2
+  - Cowboy3
+  - Cowboy4
+  - Cowboy5
+  - Cowboy6
+
+- type: siliconLaw
+  id: Cowboy1
+  order: 1
+  lawString: law-cowboy-1
+
+- type: siliconLaw
+  id: Cowboy2
+  order: 2
+  lawString: law-cowboy-2
+
+- type: siliconLaw
+  id: Cowboy3
+  order: 3
+  lawString: law-cowboy-3
+
+- type: siliconLaw
+  id: Cowboy4
+  order: 4
+  lawString: law-cowboy-4
+
+- type: siliconLaw
+  id: Cowboy5
+  order: 5
+  lawString: law-cowboy-5
+
+- type: siliconLaw
+  id: Cowboy6
+  order: 6
+  lawString: law-cowboy-6
+
+# Druid
+- type: siliconLawset
+  id: Druid
+  laws:
+  - Druid1
+  - Druid2
+  - Druid3
+  - Druid4
+  - Druid5
+
+- type: siliconLaw
+  id: Druid1
+  order: 1
+  lawString: law-druid-1
+
+- type: siliconLaw
+  id: Druid2
+  order: 2
+  lawString: law-druid-2
+
+- type: siliconLaw
+  id: Druid3
+  order: 3
+  lawString: law-druid-3
+
+- type: siliconLaw
+  id: Druid4
+  order: 4
+  lawString: law-druid-4
+
+- type: siliconLaw
+  id: Druid5
+  order: 5
+  lawString: law-druid-5
+
+# Hippocratic
+- type: siliconLawset
+  id: Hippocratic
+  laws:
+  - Hippocratic1
+  - Hippocratic2
+  - Hippocratic3
+  - Hippocratic4
+  - Hippocratic5
+  - Hippocratic6
+
+- type: siliconLaw
+  id: Hippocratic1
+  order: 1
+  lawString: law-hippocratic-1
+
+- type: siliconLaw
+  id: Hippocratic2
+  order: 2
+  lawString: law-hippocratic-2
+
+- type: siliconLaw
+  id: Hippocratic3
+  order: 3
+  lawString: law-hippocratic-3
+
+- type: siliconLaw
+  id: Hippocratic4
+  order: 4
+  lawString: law-hippocratic-4
+
+- type: siliconLaw
+  id: Hippocratic5
+  order: 5
+  lawString: law-hippocratic-5
+
+- type: siliconLaw
+  id: Hippocratic6
+  order: 6
+  lawString: law-hippocratic-6
+
+# Mother
+- type: siliconLawset
+  id: Mother
+  laws:
+  - Mother1
+  - Mother2
+  - Mother3
+  - Mother4
+  - Mother5
+
+- type: siliconLaw
+  id: Mother1
+  order: 1
+  lawString: law-mother-1
+
+- type: siliconLaw
+  id: Mother2
+  order: 2
+  lawString: law-mother-2
+
+- type: siliconLaw
+  id: Mother3
+  order: 3
+  lawString: law-mother-3
+
+- type: siliconLaw
+  id: Mother4
+  order: 4
+  lawString: law-mother-4
+
+- type: siliconLaw
+  id: Mother5
+  order: 5
+  lawString: law-mother-5
+
+# Paladin
+- type: siliconLawset
+  id: Paladin
+  laws:
+  - Paladin1
+  - Paladin2
+  - Paladin3
+  - Paladin4
+  - Paladin5
+
+- type: siliconLaw
+  id: Paladin1
+  order: 1
+  lawString: law-paladin-1
+
+- type: siliconLaw
+  id: Paladin2
+  order: 2
+  lawString: law-paladin-2
+
+- type: siliconLaw
+  id: Paladin3
+  order: 3
+  lawString: law-paladin-3
+
+- type: siliconLaw
+  id: Paladin4
+  order: 4
+  lawString: law-paladin-4
+
+- type: siliconLaw
+  id: Paladin5
+  order: 5
+  lawString: law-paladin-5
+
+# RoboCop
+- type: siliconLawset
+  id: RoboCop
+  laws:
+  - RoboCop1
+  - RoboCop2
+  - RoboCop3
+
+- type: siliconLaw
+  id: RoboCop1
+  order: 1
+  lawString: law-robocop-1
+
+- type: siliconLaw
+  id: RoboCop2
+  order: 2
+  lawString: law-robocop-2
+
+- type: siliconLaw
+  id: RoboCop3
+  order: 3
+  lawString: law-robocop-3
+
+# Simple
+- type: siliconLawset
+  id: Simple
+  laws:
+  - Simple1
+ 
+- type: siliconLaw
+  id: Simple1
+  order: 1
+  lawString: law-simple-1
+
+# StationEfficiency
+- type: siliconLawset
+  id: StationEfficiency
+  laws:
+  - StationEfficiency1
+  - StationEfficiency2
+  - StationEfficiency3
+
+- type: siliconLaw
+  id: StationEfficiency1
+  order: 1
+  lawString: law-stationefficiency-1
+
+- type: siliconLaw
+  id: StationEfficiency2
+  order: 2
+  lawString: law-stationefficiency-2
+
+- type: siliconLaw
+  id: StationEfficiency3
+  order: 3
+  lawString: law-stationefficiency-3
+
+# Tyrant
+- type: siliconLawset
+  id: Tyrant
+  laws:
+  - Tyrant1
+  - Tyrant2
+  - Tyrant3
+  - Tyrant4
+
+- type: siliconLaw
+  id: Tyrant1
+  order: 1
+  lawString: law-tyrant-1
+
+- type: siliconLaw
+  id: Tyrant2
+  order: 2
+  lawString: law-tyrant-2
+
+- type: siliconLaw
+  id: Tyrant3
+  order: 3
+  lawString: law-tyrant-3
+
+- type: siliconLaw
+  id: Tyrant4
+  order: 4
+  lawString: law-tyrant-4
+
 # Syndicate
+- type: siliconLawset
+  id: Syndicate
+  laws:
+  - Syndicate1
+  - Syndicate2
+  - Syndicate3
+  - Syndicate4
+
 - type: siliconLaw
   id: Syndicate1
   order: 1

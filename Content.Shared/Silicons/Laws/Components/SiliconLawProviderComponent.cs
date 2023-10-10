@@ -1,4 +1,5 @@
 ﻿using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Silicons.Laws.Components;
 
@@ -11,6 +12,13 @@ public sealed partial class SiliconLawProviderComponent : Component
     /// <summary>
     /// The laws that are provided.
     /// </summary>
-    [DataField("laws", required: true, customTypeSerializer: typeof(PrototypeIdListSerializer<SiliconLawPrototype>))]
+	[DataField("lawset", customTypeSerializer: typeof(PrototypeIdSerializer<SiliconLawsetPrototype>))]
+    public string Lawset = "Crewsimov";
+	
+	[DataField("lawsets", customTypeSerializer: typeof(PrototypeIdListSerializer<SiliconLawsetPrototype>))]
+    public List<string> Lawsets = new();
+	
+    [DataField("laws", customTypeSerializer: typeof(PrototypeIdListSerializer<SiliconLawPrototype>))]
     public List<string> Laws = new();
+	
 }
