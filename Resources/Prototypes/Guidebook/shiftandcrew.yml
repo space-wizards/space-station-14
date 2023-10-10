@@ -48,3 +48,7 @@
   name: guide-entry-foodrecipes
   text: "/ServerInfo/Guidebook/Service/FoodRecipes.xml"
 
+- type: guideEntry
+  id: Playable Races
+  name: guide-entry-playableraces
+  text: "/ServerInfo/Guidebook/Service/Races.xml"

@@ -43,7 +43,6 @@ Main differences:
 Notes:
 - Keep in mind that attempting to breath with an oxygen tank will merely cause you to asphyxiate.
 
-
 ## Diona
 <Box>
 <GuideEntityEmbed Entity="MobDiona" Caption="Living trees.">
@@ -55,8 +54,11 @@ Main differences:
 - They have roots instead of feet, making them unable to wear shoes or boots.
 - Their bark is fairly resistant to most physical damage.
 - Being plant-like, fire and electric shocks are extra deadly to them.
-- Can also metabolize plant-related chemicals and be affected like a plant would. Do not drink weed killer, stay off the harvest.
+- Can also metabolize plant-related chemicals and be affected like a plant would.
 - They require more water to live and also "bleed" water when harmed.
+
+Notes:
+- While robust harvest is a very benefficial chemical for a Diona, overdosing on it can have severe consequences.
 
 ## Dwarf
 <Box>
@@ -73,12 +75,10 @@ Hardy insectoids, very similar to actual spiders.
 
 Main differences:
 - Their exo-skeleton is resistant to cuts, but vulnerable to other types of physical damage.
-- They are specially sensitive to changes in temperature and air. They will
-- When attacking bare handed, their attacks can cut targets.
-- A more efficient metabolizm makes them require less food and water.
+- They are specially sensitive to changes in temperature and air. But are highly resistant to extreme pressures.
+- When attacking bare handed, their attacks cut targets instead of bashing them.
+- A more efficient metabolism makes them require less food and water.
 - Can produce webs which can be used to build furniture and clothing.
-
-
 
 ## Moth
 <Box>
