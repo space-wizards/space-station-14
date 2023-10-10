@@ -124720,6 +124720,11 @@ entities:
     - pos: 4.5,34.5
       parent: 60
       type: Transform
+  - uid: 17674
+    components:
+    - pos: -3.5,33.5
+      parent: 60
+      type: Transform
   - uid: 17946
     components:
     - name: GravGenSMES
@@ -124772,13 +124777,6 @@ entities:
     - name: Arrival Shuttle SMES
       type: MetaData
     - pos: 10.5,-73.5
-      parent: 60
-      type: Transform
-- proto: SMESBasicEmpty
-  entities:
-  - uid: 17674
-    components:
-    - pos: -3.5,33.5
       parent: 60
       type: Transform
 - proto: SMESMachineCircuitboard
