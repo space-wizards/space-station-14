@@ -107,6 +107,9 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
 
     private void OnBiomeMapInit(EntityUid uid, BiomeComponent component, MapInitEvent args)
     {
+        if (component.Seed != -1)
+            return;
+
         SetSeed(component, _random.Next());
     }
 
