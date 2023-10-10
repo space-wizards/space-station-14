@@ -64,8 +64,8 @@
       type: WiresBoundUserInterface
   - type: WiresPanel
   - type: Wires
-    BoardName: wires-board-name-vendingmachine
-    LayoutId: Vending
+    boardName: wires-board-name-vendingmachine
+    layoutId: Vending
   - type: Anchorable
   - type: TypingIndicator
     proto: robot
