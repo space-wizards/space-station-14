@@ -62,7 +62,7 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
     private const string DamageType = "Shock";
 
     // Yes, this is absurdly small for a reason.
-    private const float ElectrifiedDamagePerWatt = 8E-5f;
+    private const float ElectrifiedScalePerWatt = 1E-6f;
 
     private const float RecursiveDamageMultiplier = 0.75f;
     private const float RecursiveTimeMultiplier = 0.8f;
@@ -103,7 +103,7 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
             var timePassed = Math.Min(frameTime, electrocution.TimeLeft);
 
             electrocution.TimeLeft -= timePassed;
-            electrocution.AccumulatedDamage += electrocution.BaseDamage * consumer.ReceivedPower * ElectrifiedDamagePerWatt * timePassed;
+            electrocution.AccumulatedDamage += electrocution.BaseDamage * (consumer.ReceivedPower / consumer.DrawRate) * timePassed;
 
             if (!MathHelper.CloseTo(electrocution.TimeLeft, 0))
                 continue;
@@ -261,12 +261,14 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
         if (node?.NodeGroup is not IBasePowerNet powerNet)
             return false;
 
-        var supply = powerNet.NetworkNode.LastCombinedSupply;
+        var net = powerNet.NetworkNode;
+        var supp = net.LastCombinedSupply;
 
-        if (supply <= 0f)
+        if (supp <= 0f)
             return false;
 
-        var scale = supply * ElectrifiedDamagePerWatt;
+        // Initial damage scales off of the available supply on the principle that the victim has shorted the entire powernet through their body.
+        var damageScale = supp * ElectrifiedScalePerWatt;
 
         {
             var lastRet = true;
@@ -277,8 +279,8 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
                     entity,
                     uid,
                     node,
-                    (int) (electrified.ShockDamage * scale * MathF.Pow(RecursiveDamageMultiplier, depth)),
-                    TimeSpan.FromSeconds(electrified.ShockTime * MathF.Min(1f + MathF.Log2(1f + scale), 3f) * MathF.Pow(RecursiveTimeMultiplier, depth)),
+                    (int) (electrified.ShockDamage * damageScale * MathF.Pow(RecursiveDamageMultiplier, depth)),
+                    TimeSpan.FromSeconds(electrified.ShockTime * MathF.Min(1f + MathF.Log2(1f + damageScale), 3f) * MathF.Pow(RecursiveTimeMultiplier, depth)),
                     true,
                     electrified.SiemensCoefficient);
             }
@@ -332,12 +334,12 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
         if (!DoCommonElectrocutionAttempt(uid, sourceUid, ref siemensCoefficient))
             return false;
 
+        if (!DoCommonElectrocution(uid, sourceUid, shockDamage, time, refresh, siemensCoefficient, statusEffects))
+            return false;
+
         // Coefficient needs to be higher than this to do a powered electrocution!
         if (siemensCoefficient <= 0.5f)
-            return DoCommonElectrocution(uid, sourceUid, shockDamage, time, refresh, siemensCoefficient, statusEffects);
-
-        if (!DoCommonElectrocution(uid, sourceUid, null, time, refresh, siemensCoefficient, statusEffects))
-            return false;
+            return true;
 
         if (!Resolve(sourceUid, ref sourceTransform)) // This shouldn't really happen, but just in case...
             return true;
