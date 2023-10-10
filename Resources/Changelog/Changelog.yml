@@ -1,10 +1,4 @@
 Entries:
-- author: TotallyLemon
-  changes:
-  - {message: 'Nanotrasen''s R&D department have improved the RPED''s design, allowing
-      it to quickly install parts into in-progress machine frames.', type: Add}
-  id: 4482
-  time: '2023-08-08T00:26:25.0000000+00:00'
 - author: Doru991
   changes:
   - {message: 'Due to Nanotrasen choosing a new seed supplier, most plants consume
@@ -2953,3 +2947,8 @@ Entries:
   - {message: Reenabled Kudzu (again) (for real this time), type: Add}
   id: 4981
   time: '2023-10-10T03:34:41.0000000+00:00'
+- author: GoodWheatley
+  changes:
+  - {message: Dionas are actually the same speed as other species now., type: Fix}
+  id: 4982
+  time: '2023-10-10T14:03:20.0000000+00:00'
