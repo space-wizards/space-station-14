@@ -126,11 +126,7 @@ public sealed class AmeNodeGroup : BaseNodeGroup
 
         var safeFuelLimit = CoreCount * 2;
 
-        // Note the float conversions. The maths will completely fail if not done using floats.
-        // Oh, and don't ever stuff the result of this in an int. Seriously.
-        var floatFuel = (float) fuel;
-        var floatCores = (float) CoreCount;
-        var powerOutput = CalculatePower(floatFuel, floatCores);
+        var powerOutput = CalculatePower(fuel, CoreCount);
         if (fuel <= safeFuelLimit)
             return powerOutput;
 
@@ -180,13 +176,13 @@ public sealed class AmeNodeGroup : BaseNodeGroup
     /// <summary>
     /// Calculates the amount of power the AME can produce with the given settings
     /// </summary>
-    /// <remarks>
-    /// We use float because the math will fail if we use integers
-    /// </remarks>
-
-    public float CalculatePower(float fuel, float cores)
+    public float CalculatePower(int fuel, int cores)
     {
-        return 20000f * fuel * fuel / cores;
+        // Note the float conversions. The maths will completely fail if not done using floats.
+        // Oh, and don't ever stuff the result of this in an int. Seriously.
+        var floatFuel = (float) fuel;
+        var floatCores = (float) cores;
+        return 20000f * floatFuel * floatFuel / floatCores;
     }
 
     public int GetTotalStability()
