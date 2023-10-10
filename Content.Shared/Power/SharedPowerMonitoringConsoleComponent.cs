@@ -12,8 +12,7 @@ public sealed class PowerMonitoringConsoleBoundInterfaceState : BoundUserInterfa
 {
     public double TotalSources;
     public double TotalLoads;
-    public PowerMonitoringConsoleEntry[] AllSources;
-    public PowerMonitoringConsoleEntry[] AllLoads;
+    public PowerMonitoringConsoleEntry[] AllEntries;
     public PowerMonitoringConsoleEntry[] FocusSources;
     public PowerMonitoringConsoleEntry[] FocusLoads;
     public Dictionary<Vector2i, NavMapChunkPowerCables> PowerCableChunks;
@@ -22,8 +21,7 @@ public sealed class PowerMonitoringConsoleBoundInterfaceState : BoundUserInterfa
     public PowerMonitoringConsoleBoundInterfaceState
         (double totalSources,
         double totalLoads,
-        PowerMonitoringConsoleEntry[] allSources,
-        PowerMonitoringConsoleEntry[] allLoads,
+        PowerMonitoringConsoleEntry[] allEntries,
         PowerMonitoringConsoleEntry[] focusSources,
         PowerMonitoringConsoleEntry[] focusLoads,
         Dictionary<Vector2i, NavMapChunkPowerCables> powerCableChunks,
@@ -31,8 +29,7 @@ public sealed class PowerMonitoringConsoleBoundInterfaceState : BoundUserInterfa
     {
         TotalSources = totalSources;
         TotalLoads = totalLoads;
-        AllSources = allSources;
-        AllLoads = allLoads;
+        AllEntries = allEntries;
         FocusSources = focusSources;
         FocusLoads = focusLoads;
         PowerCableChunks = powerCableChunks;

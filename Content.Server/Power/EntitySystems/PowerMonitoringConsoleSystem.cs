@@ -13,6 +13,7 @@ using Robust.Shared.Players;
 using System.Linq;
 using Robust.Shared.Map;
 using System.Diagnostics.CodeAnalysis;
+using Content.Server.NodeContainer.NodeGroups;
 
 namespace Content.Server.Power.EntitySystems;
 
@@ -96,8 +97,7 @@ internal sealed partial class PowerMonitoringConsoleSystem : EntitySystem
         // Data to be send to the client
         var totalSources = 0d;
         var totalLoads = 0d;
-        var allSources = new List<PowerMonitoringConsoleEntry>();
-        var allLoads = new List<PowerMonitoringConsoleEntry>();
+        var allEntries = new List<PowerMonitoringConsoleEntry>();
         var sourcesForFocus = new List<PowerMonitoringConsoleEntry>();
         var loadsForFocus = new List<PowerMonitoringConsoleEntry>();
         var cableNetwork = GetPowerCableNetworkBitMask(gridUid, mapGrid);
@@ -105,6 +105,10 @@ internal sealed partial class PowerMonitoringConsoleSystem : EntitySystem
 
         foreach (var ent in _trackedDevices)
         {
+            var xform = Transform(ent);
+            if (xform.Anchored == false || xform.GridUid != gridUid)
+                continue;
+
             // Generate a new console entry
             if (!TryMakeConsoleEntry(ent, out var entry))
                 continue;
@@ -121,7 +125,7 @@ internal sealed partial class PowerMonitoringConsoleSystem : EntitySystem
                     TryComp(ent, out PowerNetworkBatteryComponent? battery))
                     entry.PowerValue = battery.NetworkBattery.CurrentSupply;
 
-                allSources.Add(entry);
+                allEntries.Add(entry);
                 totalSources += entry.PowerValue;
             }
 
@@ -133,7 +137,7 @@ internal sealed partial class PowerMonitoringConsoleSystem : EntitySystem
                 if (TryComp<PowerNetworkBatteryComponent>(ent, out var battery))
                     entry.PowerValue = battery.NetworkBattery.CurrentReceiving;
 
-                allLoads.Add(entry);
+                allEntries.Add(entry);
                 totalLoads += entry.PowerValue;
             }
 
@@ -143,7 +147,7 @@ internal sealed partial class PowerMonitoringConsoleSystem : EntitySystem
                 if (TryComp<PowerConsumerComponent>(ent, out var consumer))
                     entry.PowerValue = consumer.ReceivedPower;
 
-                allLoads.Add(entry);
+                allEntries.Add(entry);
                 totalLoads += entry.PowerValue;
             }
         }
@@ -175,16 +179,14 @@ internal sealed partial class PowerMonitoringConsoleSystem : EntitySystem
         }
 
         // Sort found devices alphabetically (not by power usage; otherwise their position on the UI will shift)
-        allSources.Sort(AlphabeticalSort);
-        allLoads.Sort(AlphabeticalSort);
+        allEntries.Sort(AlphabeticalSort);
 
         // Set the UI state
         _userInterfaceSystem.SetUiState(bui,
             new PowerMonitoringConsoleBoundInterfaceState
                 (totalSources,
                 totalLoads,
-                allSources.ToArray(),
-                allLoads.ToArray(),
+                allEntries.ToArray(),
                 sourcesForFocus.ToArray(),
                 loadsForFocus.ToArray(),
                 cableNetwork,

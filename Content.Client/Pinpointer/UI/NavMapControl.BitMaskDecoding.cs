@@ -1,5 +1,6 @@
 using Content.Client.Power;
 using Content.Shared.Pinpointer;
+using Content.Shared.Power;
 using Robust.Shared.Map.Components;
 using System.Numerics;
 
@@ -7,17 +8,17 @@ namespace Content.Client.Pinpointer.UI;
 
 public sealed partial class NavMapControl
 {
-    public Dictionary<Vector2i, List<ChunkedLine>> GetDecodedPowerCableChunks
+    public Dictionary<Vector2i, List<NavMapLine>> GetDecodedPowerCableChunks
         (Dictionary<Vector2i, NavMapChunkPowerCables> chunks,
         MapGridComponent grid,
         bool useDarkColors = false)
     {
-        var decodedOutput = new Dictionary<Vector2i, List<ChunkedLine>>();
+        var decodedOutput = new Dictionary<Vector2i, List<NavMapLine>>();
         var colorMap = useDarkColors ? PowerMonitoringHelper.DarkPowerCableColors : PowerMonitoringHelper.PowerCableColors;
 
         foreach ((var chunkOrigin, var chunk) in chunks)
         {
-            var list = new List<ChunkedLine>();
+            var list = new List<NavMapLine>();
 
             foreach ((var cableType, var chunkMask) in chunk.CableData)
             {
@@ -57,10 +58,12 @@ public sealed partial class NavMapControl
                     if (neighbor)
                     {
                         // Add points
-                        var line = new ChunkedLine
+                        var line = new NavMapLine
                             (position + offset + new Vector2(grid.TileSize * 0.5f, -grid.TileSize * 0.5f),
                             position + new Vector2(1f, 0f) + offset + new Vector2(grid.TileSize * 0.5f, -grid.TileSize * 0.5f),
                             color);
+
+                        line.Group = (NavMapLineGroup) Enum.Parse(typeof(NavMapLineGroup), cableType.ToString());
                         list.Add(line);
                     }
 
@@ -80,10 +83,12 @@ public sealed partial class NavMapControl
                     if (neighbor)
                     {
                         // Add points
-                        var line = new ChunkedLine
+                        var line = new NavMapLine
                             (position + offset + new Vector2(grid.TileSize * 0.5f, -grid.TileSize * 0.5f),
                             position + new Vector2(0f, -1f) + offset + new Vector2(grid.TileSize * 0.5f, -grid.TileSize * 0.5f),
                             color);
+
+                        line.Group = (NavMapLineGroup) Enum.Parse(typeof(NavMapLineGroup), cableType.ToString());
                         list.Add(line);
                     }
                 }
@@ -96,15 +101,15 @@ public sealed partial class NavMapControl
         return decodedOutput;
     }
 
-    public Dictionary<Vector2i, List<ChunkedLine>> GetDecodedTileChunks
+    public Dictionary<Vector2i, List<NavMapLine>> GetDecodedTileChunks
         (Dictionary<Vector2i, NavMapChunk> chunks,
         MapGridComponent grid)
     {
-        var decodedOutput = new Dictionary<Vector2i, List<ChunkedLine>>();
+        var decodedOutput = new Dictionary<Vector2i, List<NavMapLine>>();
 
         foreach ((var chunkOrigin, var chunk) in chunks)
         {
-            var list = new List<ChunkedLine>();
+            var list = new List<NavMapLine>();
 
             // TODO: Okay maybe I should just use ushorts lmao...
             for (var i = 0; i < SharedNavMapSystem.ChunkSize * SharedNavMapSystem.ChunkSize; i++)
@@ -139,7 +144,7 @@ public sealed partial class NavMapControl
                 if (!neighbor)
                 {
                     // Add points
-                    list.Add(new ChunkedLine(position + new Vector2(0f, -grid.TileSize), position + new Vector2(grid.TileSize, -grid.TileSize), Color.Cyan));
+                    list.Add(new NavMapLine(position + new Vector2(0f, -grid.TileSize), position + new Vector2(grid.TileSize, -grid.TileSize), WallColor));
                 }
 
                 // East edge
@@ -158,7 +163,7 @@ public sealed partial class NavMapControl
                 if (!neighbor)
                 {
                     // Add points
-                    list.Add(new ChunkedLine(position + new Vector2(grid.TileSize, -grid.TileSize), position + new Vector2(grid.TileSize, 0f), Color.Cyan));
+                    list.Add(new NavMapLine(position + new Vector2(grid.TileSize, -grid.TileSize), position + new Vector2(grid.TileSize, 0f), WallColor));
                 }
 
                 // South edge
@@ -177,7 +182,7 @@ public sealed partial class NavMapControl
                 if (!neighbor)
                 {
                     // Add points
-                    list.Add(new ChunkedLine(position + new Vector2(grid.TileSize, 0f), position, Color.Cyan));
+                    list.Add(new NavMapLine(position + new Vector2(grid.TileSize, 0f), position, WallColor));
                 }
 
                 // West edge
@@ -196,11 +201,11 @@ public sealed partial class NavMapControl
                 if (!neighbor)
                 {
                     // Add point
-                    list.Add(new ChunkedLine(position, position + new Vector2(0f, -grid.TileSize), Color.Cyan));
+                    list.Add(new NavMapLine(position, position + new Vector2(0f, -grid.TileSize), WallColor));
                 }
 
                 // Draw a diagonal line for interiors.
-                list.Add(new ChunkedLine(position + new Vector2(0f, -grid.TileSize), position + new Vector2(grid.TileSize, 0f), Color.Cyan));
+                list.Add(new NavMapLine(position + new Vector2(0f, -grid.TileSize), position + new Vector2(grid.TileSize, 0f), WallColor));
             }
 
             decodedOutput.Add(chunkOrigin, list);
@@ -210,16 +215,25 @@ public sealed partial class NavMapControl
     }
 }
 
-public sealed class ChunkedLine
+public sealed class NavMapLine
 {
+    public NavMapLineGroup Group;
     public Vector2 Origin;
     public Vector2 Terminus;
     public Color Color;
 
-    public ChunkedLine(Vector2 origin, Vector2 terminus, Color color)
+    public NavMapLine(Vector2 origin, Vector2 terminus, Color color)
     {
         Origin = origin;
         Terminus = terminus;
         Color = color;
     }
+}
+
+public enum NavMapLineGroup
+{
+    Wall,
+    HighVoltage,
+    MediumVoltage,
+    Apc,
 }

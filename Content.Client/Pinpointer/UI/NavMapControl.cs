@@ -1,4 +1,3 @@
-using Content.Client.Power;
 using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Pinpointer;
@@ -12,10 +11,10 @@ using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Physics.Components;
-using Content.Shared.Power;
 using System.Linq;
 using System.Numerics;
 using JetBrains.Annotations;
+using Robust.Shared.Timing;
 
 namespace Content.Client.Pinpointer.UI;
 
@@ -26,46 +25,32 @@ namespace Content.Client.Pinpointer.UI;
 public sealed partial class NavMapControl : MapGridControl
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
+    private readonly SharedTransformSystem _transformSystem = default!;
 
     public EntityUid? MapUid;
 
+    // Tracked data
     public Dictionary<EntityCoordinates, (bool Visible, Color Color)> TrackedCoordinates = new();
     public Dictionary<EntityCoordinates, (bool Visible, Color Color, Texture? Texture)> TrackedEntities = new();
-    public Dictionary<Vector2i, List<ChunkedLine>> PowerCableNetwork = default!;
-    public Dictionary<Vector2i, List<ChunkedLine>>? FocusCableNetwork;
-    public Dictionary<Vector2i, List<ChunkedLine>> TileGrid = default!;
-    public Dictionary<CableType, bool> ShowCables = new Dictionary<CableType, bool>
-    {
-        [CableType.HighVoltage] = false,
-        [CableType.MediumVoltage] = false,
-        [CableType.Apc] = false,
-    };
-    public bool ShowBeacons = true;
+    public Dictionary<Vector2i, List<NavMapLine>> PowerCableNetwork = default!;
+    public Dictionary<Vector2i, List<NavMapLine>>? FocusCableNetwork;
+    public Dictionary<Vector2i, List<NavMapLine>> TileGrid = default!;
+
+    // Default colors
+    public Color WallColor = new(102, 217, 102);
+    public Color TileColor = new(30, 67, 30);
+
+    // Toggles
+    public List<NavMapLineGroup> HiddenLineGroups = new List<NavMapLineGroup>();
+
+    // Local
     private Vector2 _offset;
     private bool _draggin;
     private bool _recentering = false;
     private readonly float _recenterMinimum = 0.05f;
     private readonly Font _font;
-    //private static readonly Color TileColor = new(30, 67, 30);
-    private static readonly Color TileColor = new(30, 57, 67);
-    private static readonly Color BeaconColor = Color.FromSrgb(TileColor.WithAlpha(0.8f));
-
-    private List<CableData> _cableData = new List<CableData>()
-    {
-        new CableData(CableType.HighVoltage, Color.Orange),
-        new CableData(CableType.MediumVoltage, Color.Yellow, new Vector2(-0.2f, -0.2f)),
-        new CableData(CableType.Apc, Color.LimeGreen, new Vector2(0.2f, 0.2f)),
-    };
-
-    private List<CableData> _unfocusCableData = new List<CableData>()
-    {
-        new CableData(CableType.HighVoltage, new Color(82,52,0)),
-        new CableData(CableType.MediumVoltage, new Color(80,80,0), new Vector2(-0.2f, -0.2f)),
-        new CableData(CableType.Apc, new Color(20,76,20), new Vector2(0.2f, 0.2f)),
-    };
-
-    public Dictionary<Vector2i, NavMapChunkPowerCables> PowerCableChunks = new();
-    public Dictionary<Vector2i, NavMapChunkPowerCables>? FocusPowerCableChunks = new();
+    private float _updateTimer = 1.0f;
+    private const float UpdateTime = 1.0f;
 
     // TODO: https://github.com/space-wizards/RobustToolbox/issues/3818
     private readonly Label _zoom = new()
@@ -76,17 +61,28 @@ public sealed partial class NavMapControl : MapGridControl
 
     private readonly Button _recenter = new()
     {
-        Text = "Recentre",
+        Text = Loc.GetString("navmap-recenter"),
         VerticalAlignment = VAlignment.Top,
         HorizontalAlignment = HAlignment.Right,
         Margin = new Thickness(8f, 4f),
         Disabled = true,
     };
 
+    private readonly CheckBox _beacons = new()
+    {
+        Text = Loc.GetString("navmap-toggle-beacons"),
+        Margin = new Thickness(4f, 0f),
+        VerticalAlignment = VAlignment.Center,
+        HorizontalAlignment = HAlignment.Center,
+        Pressed = true,
+    };
+
     public NavMapControl() : base(8f, 128f, 48f)
     {
         IoCManager.InjectDependencies(this);
         var cache = IoCManager.Resolve<IResourceCache>();
+
+        _transformSystem = _entManager.System<SharedTransformSystem>();
         _font = new VectorFont(cache.GetResource<FontResource>("/EngineFonts/NotoSans/NotoSans-Regular.ttf"), 16);
 
         RectClipContent = true;
@@ -104,6 +100,7 @@ public sealed partial class NavMapControl : MapGridControl
             Children =
             {
                 _zoom,
+                _beacons,
                 _recenter,
             }
         };
@@ -130,6 +127,11 @@ public sealed partial class NavMapControl : MapGridControl
         {
             _recentering = true;
         };
+    }
+
+    public void ForceRecenter()
+    {
+        _recentering = true;
     }
 
     public void CenterToCoordinates(EntityCoordinates coordinates)
@@ -202,11 +204,10 @@ public sealed partial class NavMapControl : MapGridControl
             }
         }
 
-        _zoom.Text = $"Zoom: {(WorldRange / WorldMaxRange * 100f):0.00}%";
+        _zoom.Text = Loc.GetString("navmap-zoom", ("value", $"{(WorldRange / WorldMaxRange * 100f):0.00}"));
 
         if (!_entManager.TryGetComponent<NavMapComponent>(MapUid, out var navMap) ||
-            !_entManager.TryGetComponent<TransformComponent>(MapUid, out var xform) ||
-            !_entManager.TryGetComponent<MapGridComponent>(MapUid, out var grid))
+            !_entManager.TryGetComponent<TransformComponent>(MapUid, out var xform))
         {
             return;
         }
@@ -241,7 +242,13 @@ public sealed partial class NavMapControl : MapGridControl
 
         var area = new Box2(-WorldRange, -WorldRange, WorldRange + 1f, WorldRange + 1f).Translated(offset);
 
-        if (TileGrid != null && TileGrid.Any())
+        // Drawing lines is rather expensive due to the number of neighbors that need to be checked in order  
+        // to figure out where they should be drawn. However, we don't *need* to do check these every frame.
+        // Instead, lets periodically update where to draw each line and then cache these points in a list.
+        // Then we can just run through the list each frame and draw the lines without any extra computation.
+
+        // Draw walls
+        if (TileGrid != null && TileGrid.Any() && !HiddenLineGroups.Contains(NavMapLineGroup.Wall))
         {
             foreach ((var chunk, var chunkedLines) in TileGrid)
             {
@@ -258,11 +265,12 @@ public sealed partial class NavMapControl : MapGridControl
                     handle.DrawLine
                     (Scale(chunkedLine.Origin - new Vector2(offset.X, -offset.Y)),
                     Scale(chunkedLine.Terminus - new Vector2(offset.X, -offset.Y)),
-                    new Color(102, 164, 217));
+                    chunkedLine.Color);
                 }
             }
         }
 
+        // Draw full cable network
         if (PowerCableNetwork != null && PowerCableNetwork.Any())
         {
             foreach ((var chunk, var chunkedLines) in PowerCableNetwork)
@@ -277,6 +285,9 @@ public sealed partial class NavMapControl : MapGridControl
 
                 foreach (var chunkedLine in chunkedLines)
                 {
+                    if (HiddenLineGroups.Contains(chunkedLine.Group))
+                        continue;
+
                     if (WorldRange / WorldMaxRange < 0.5f)
                     {
                         var leftTop = new Vector2
@@ -304,6 +315,7 @@ public sealed partial class NavMapControl : MapGridControl
             }
         }
 
+        // Draw focus network
         if (FocusCableNetwork != null && FocusCableNetwork.Any())
         {
             foreach ((var chunk, var chunkedLines) in FocusCableNetwork)
@@ -318,6 +330,9 @@ public sealed partial class NavMapControl : MapGridControl
 
                 foreach (var chunkedLine in chunkedLines)
                 {
+                    if (HiddenLineGroups.Contains(chunkedLine.Group))
+                        continue;
+
                     if (WorldRange / WorldMaxRange < 0.5f)
                     {
                         var leftTop = new Vector2
@@ -349,15 +364,16 @@ public sealed partial class NavMapControl : MapGridControl
         var blinkFrequency = 1f / 1f;
         var lit = curTime.TotalSeconds % blinkFrequency > blinkFrequency / 2f;
 
+        // Tracked coordinates (simple dot)
         foreach (var (coord, value) in TrackedCoordinates)
         {
             if (lit && value.Visible)
             {
-                var mapPos = coord.ToMap(_entManager);
+                var mapPos = coord.ToMap(_entManager, _transformSystem);
 
                 if (mapPos.MapId != MapId.Nullspace)
                 {
-                    var position = xform.InvWorldMatrix.Transform(mapPos.Position) - offset;
+                    var position = _transformSystem.GetInvWorldMatrix(xform).Transform(mapPos.Position) - offset;
                     position = Scale(new Vector2(position.X, -position.Y));
 
                     handle.DrawCircle(position, float.Sqrt(MinimapScale) * 2f, value.Color);
@@ -365,15 +381,16 @@ public sealed partial class NavMapControl : MapGridControl
             }
         }
 
+        // Tracked entities (can use a supplied sprite as a marker)
         foreach (var (coord, value) in TrackedEntities)
         {
             if (lit && value.Visible)
             {
-                var mapPos = coord.ToMap(_entManager);
+                var mapPos = coord.ToMap(_entManager, _transformSystem);
 
                 if (mapPos.MapId != MapId.Nullspace)
                 {
-                    var position = xform.InvWorldMatrix.Transform(mapPos.Position) - offset;
+                    var position = _transformSystem.GetInvWorldMatrix(xform).Transform(mapPos.Position) - offset;
                     position = Scale(new Vector2(position.X, -position.Y));
 
                     float f = 2.5f;
@@ -388,10 +405,11 @@ public sealed partial class NavMapControl : MapGridControl
         }
 
         // Beacons
-        if (ShowBeacons)
+        if (_beacons.Pressed)
         {
             var labelOffset = new Vector2(0.5f, 0.5f) * MinimapScale;
             var rectBuffer = new Vector2(5f, 3f);
+            var beaconColor = Color.FromSrgb(TileColor.WithAlpha(0.8f));
 
             foreach (var beacon in navMap.Beacons)
             {
@@ -403,29 +421,32 @@ public sealed partial class NavMapControl : MapGridControl
                 var textDimensions = handle.GetDimensions(_font, beacon.Text, 1f);
 
                 var labelPosition = position + labelOffset;
-                handle.DrawRect(new UIBox2(labelPosition, labelPosition + textDimensions + rectBuffer * 2), BeaconColor);
+                handle.DrawRect(new UIBox2(labelPosition, labelPosition + textDimensions + rectBuffer * 2), beaconColor);
                 handle.DrawString(_font, labelPosition + rectBuffer, beacon.Text, beacon.Color);
             }
+        }
+    }
+
+    protected override void FrameUpdate(FrameEventArgs args)
+    {
+        _updateTimer += args.DeltaSeconds;
+
+        if (_updateTimer >= UpdateTime)
+        {
+            _updateTimer -= UpdateTime;
+
+            if (!_entManager.TryGetComponent<NavMapComponent>(MapUid, out var navMap))
+                return;
+
+            if (!_entManager.TryGetComponent<MapGridComponent>(MapUid, out var grid))
+                return;
+
+            TileGrid = GetDecodedTileChunks(navMap.Chunks, grid);
         }
     }
 
     private Vector2 Scale(Vector2 position)
     {
         return position * MinimapScale + MidpointVector;
-    }
-}
-
-[DataDefinition]
-public sealed partial class CableData
-{
-    public CableType CableType;
-    public Color Color;
-    public Vector2 Offset;
-
-    public CableData(CableType cableType, Color color, Vector2 offset = new Vector2())
-    {
-        CableType = cableType;
-        Color = color;
-        Offset = offset;
     }
 }

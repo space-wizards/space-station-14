@@ -13,6 +13,9 @@ internal sealed class PowerMonitoringHelper
     public static string SourceIconPath = "/Textures/Interface/PowerMonitoring/source_arrow.png";
     public static string LoadIconPath = "/Textures/Interface/PowerMonitoring/load_arrow.png";
 
+    public static Color WallColor = new Color(102, 164, 217);
+    public static Color TileColor = new Color(30, 57, 67);
+
     public static Dictionary<PowerMonitoringConsoleGroup, Color> PowerIconColors = new Dictionary<PowerMonitoringConsoleGroup, Color>
     {
         [PowerMonitoringConsoleGroup.Generator] = Color.Purple,

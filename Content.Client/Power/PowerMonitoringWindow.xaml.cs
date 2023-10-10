@@ -1,3 +1,4 @@
+using Content.Client.Pinpointer.UI;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Pinpointer;
 using Content.Shared.Power;
@@ -46,34 +47,33 @@ public sealed partial class PowerMonitoringWindow : FancyWindow
         MasterTabContainer.SetTabTitle(3, Loc.GetString("power-monitoring-window-label-apc"));
 
         // Set UI toggles
-        ShowHVCable.OnToggled += _ => OnShowCableToggled(CableType.HighVoltage);
-        ShowMVCable.OnToggled += _ => OnShowCableToggled(CableType.MediumVoltage);
-        ShowLVCable.OnToggled += _ => OnShowCableToggled(CableType.Apc);
+        ShowHVCable.OnToggled += _ => OnShowCableToggled(NavMapLineGroup.HighVoltage);
+        ShowMVCable.OnToggled += _ => OnShowCableToggled(NavMapLineGroup.MediumVoltage);
+        ShowLVCable.OnToggled += _ => OnShowCableToggled(NavMapLineGroup.Apc);
 
-        NavMap.ShowCables = new Dictionary<CableType, bool>
-        {
-            [CableType.HighVoltage] = true,
-            [CableType.MediumVoltage] = true,
-            [CableType.Apc] = true,
-        };
-
-        // Turn off beacons (they obscure too much)
-        NavMap.ShowBeacons = false;
+        // Set colors
+        NavMap.TileColor = PowerMonitoringHelper.TileColor;
+        NavMap.WallColor = PowerMonitoringHelper.WallColor;
 
         // Set power monitoring update request action
         RequestPowerMonitoringUpdateAction += userInterface.RequestPowerMonitoringUpdate;
+
+        // Recenter map
+        NavMap.ForceRecenter();
     }
 
-    private void OnShowCableToggled(CableType cableType)
+    private void OnShowCableToggled(NavMapLineGroup lineGroup)
     {
-        NavMap.ShowCables[cableType] = !NavMap.ShowCables[cableType];
+        if (NavMap.HiddenLineGroups.Contains(lineGroup))
+            NavMap.HiddenLineGroups.Remove(lineGroup);
+        else
+            NavMap.HiddenLineGroups.Add(lineGroup);
     }
 
     public void ShowEntites
         (double totalSources,
         double totalLoads,
-        PowerMonitoringConsoleEntry[] allSources,
-        PowerMonitoringConsoleEntry[] allLoads,
+        PowerMonitoringConsoleEntry[] allEntries,
         PowerMonitoringConsoleEntry[] focusSources,
         PowerMonitoringConsoleEntry[] focusLoads,
         Dictionary<Vector2i, NavMapChunkPowerCables> powerCableChunks,
@@ -83,16 +83,10 @@ public sealed partial class PowerMonitoringWindow : FancyWindow
         if (!_entManager.TryGetComponent<MapGridComponent>(NavMap.MapUid, out var grid))
             return;
 
-        if (!_entManager.TryGetComponent<NavMapComponent>(NavMap.MapUid, out var navMap))
-            return;
-
         // Reset nav map values
         NavMap.TrackedCoordinates.Clear();
         NavMap.TrackedEntities.Clear();
         NavMap.FocusCableNetwork = null;
-
-        // Update nav map tile grid
-        NavMap.TileGrid = NavMap.GetDecodedTileChunks(navMap.Chunks, grid);
 
         // Determine what color scheme to use
         bool useDarkColors = focusSources.Any() || focusLoads.Any();
@@ -103,22 +97,13 @@ public sealed partial class PowerMonitoringWindow : FancyWindow
         if (focusCableChunks != null)
             NavMap.FocusCableNetwork = NavMap.GetDecodedPowerCableChunks(focusCableChunks, grid);
 
-        // Draw all sources on the map
-        foreach (var source in allSources)
+        // Draw all entities on the map
+        foreach (var entry in allEntries)
         {
-            if (source.Coordinates == null)
+            if (entry.Coordinates == null)
                 continue;
 
-            AddTrackedEntityToNavMap(_entManager.GetEntity(source.NetEntity), _entManager.GetCoordinates(source.Coordinates.Value), source, useDarkColors);
-        }
-
-        // Draw all loads on the map
-        foreach (var load in allLoads)
-        {
-            if (load.Coordinates == null)
-                continue;
-
-            AddTrackedEntityToNavMap(_entManager.GetEntity(load.NetEntity), _entManager.GetCoordinates(load.Coordinates.Value), load, useDarkColors);
+            AddTrackedEntityToNavMap(_entManager.GetEntity(entry.NetEntity), _entManager.GetCoordinates(entry.Coordinates.Value), entry, useDarkColors);
         }
 
         // Draw the sources for the focused device
@@ -151,18 +136,19 @@ public sealed partial class PowerMonitoringWindow : FancyWindow
         TotalLoads.FontColorOverride = totalSources < totalLoads && !MathHelper.CloseToPercent(totalSources, totalLoads, 0.1f) ? new Color(180, 0, 0) : Color.White;
 
         // Update generator list
-        UpdateAllConsoleEntries(SourcesList, allSources, null, focusLoads);
+        var generatorList = allEntries.Where(x => x.Group == PowerMonitoringConsoleGroup.Generator);
+        UpdateAllConsoleEntries(SourcesList, generatorList.ToArray(), null, focusLoads);
 
         // Update SMES list
-        var smesList = allLoads.Where(x => x.Group == PowerMonitoringConsoleGroup.SMES);
+        var smesList = allEntries.Where(x => x.Group == PowerMonitoringConsoleGroup.SMES);
         UpdateAllConsoleEntries(SMESList, smesList.ToArray(), focusSources, focusLoads);
 
         // Update substation list
-        var substationList = allLoads.Where(x => x.Group == PowerMonitoringConsoleGroup.Substation);
+        var substationList = allEntries.Where(x => x.Group == PowerMonitoringConsoleGroup.Substation);
         UpdateAllConsoleEntries(SubstationList, substationList.ToArray(), focusSources, focusLoads);
 
         // Update APC list
-        var apcList = allLoads.Where(x => x.Group == PowerMonitoringConsoleGroup.APC);
+        var apcList = allEntries.Where(x => x.Group == PowerMonitoringConsoleGroup.APC);
         UpdateAllConsoleEntries(ApcList, apcList.ToArray(), focusSources, null);
     }
 

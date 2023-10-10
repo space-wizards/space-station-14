@@ -1,10 +1,7 @@
-using Content.Client.Administration.UI.CustomControls;
 using Content.Client.Stylesheets;
 using Content.Shared.Power;
-using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Utility;
-using System.Composition.Hosting;
 using System.Linq;
 using System.Numerics;
 
@@ -62,7 +59,7 @@ public sealed partial class PowerMonitoringWindow
             castChild.EntityUid = uid;
             castChild.Entry = entry;
 
-            UpdateEntryButton(uid, castChild.Button, entry, true);
+            UpdateEntryButton(uid, castChild.Button, entry);
 
             // Update sources and loads (if applicable)
             if (_trackedEntity == uid)
@@ -78,7 +75,7 @@ public sealed partial class PowerMonitoringWindow
         }
     }
 
-    public void UpdateEntryButton(EntityUid uid, PowerMonitoringButton button, PowerMonitoringConsoleEntry entry, bool offsetPowerLabel = false)
+    public void UpdateEntryButton(EntityUid uid, PowerMonitoringButton button, PowerMonitoringConsoleEntry entry)
     {
         // Update button style
         if (uid == _trackedEntity)
@@ -92,10 +89,6 @@ public sealed partial class PowerMonitoringWindow
 
         // Update sprite view
         button.SpriteView.SetEntity(uid);
-
-        // Update name length
-        //float offset = offsetPowerLabel ? 38f : 0f;
-        //button.NameLocalized.SetWidth = 220f + offset;
 
         // Update name
         var name = Loc.GetString(entry.NameLocalized);
@@ -117,7 +110,10 @@ public sealed partial class PowerMonitoringWindow
             return;
 
         if (entries == null || !entries.Any())
+        {
+            currentContainer.RemoveAllChildren();
             return;
+        }
 
         // Remove excess children
         while (currentContainer.ChildCount > entries.Length)

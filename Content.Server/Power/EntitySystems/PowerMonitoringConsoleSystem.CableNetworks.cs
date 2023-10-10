@@ -1,53 +1,36 @@
+using Content.Server.NodeContainer;
 using Content.Server.NodeContainer.Nodes;
 using Content.Server.Power.Components;
 using Content.Shared.Pinpointer;
 using Robust.Shared.Map.Components;
-using System.Linq;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Power.EntitySystems;
 
 internal sealed partial class PowerMonitoringConsoleSystem
 {
-    private Dictionary<Vector2i, NavMapChunkPowerCables> GetPowerCableNetworkBitMask(EntityUid uid, MapGridComponent grid)
+    private Dictionary<Vector2i, NavMapChunkPowerCables> GetPowerCableNetworkBitMask(EntityUid gridUid, MapGridComponent grid)
     {
-        var chunks = new Dictionary<Vector2i, NavMapChunkPowerCables>();
-        var tiles = grid.GetAllTilesEnumerator();
+        var nodeList = new List<Node>();
+        var query = AllEntityQuery<NodeContainerComponent, CableComponent>();
 
-        while (tiles.MoveNext(out var tile))
+        while (query.MoveNext(out var ent, out var nodeContainer, out var _))
         {
-            var gridIndices = tile.Value.GridIndices;
-            var chunkOrigin = SharedMapSystem.GetChunkIndices(gridIndices, SharedNavMapSystem.ChunkSize);
+            if (Transform(ent).GridUid != gridUid)
+                continue;
 
-            if (!chunks.TryGetValue(chunkOrigin, out var chunk))
-            {
-                chunk = new NavMapChunkPowerCables(chunkOrigin);
-                chunks[chunkOrigin] = chunk;
-            }
+            var node = nodeContainer.Nodes.FirstOrNull()?.Value;
 
-            var relative = SharedMapSystem.GetChunkRelative(gridIndices, SharedNavMapSystem.ChunkSize);
-            var flag = SharedNavMapSystem.GetFlag(relative);
-            var enumerator = grid.GetAnchoredEntitiesEnumerator(gridIndices);
+            if (node == null)
+                continue;
 
-            while (enumerator.MoveNext(out var ent))
-            {
-                if (TryComp<CableComponent>(ent, out var cable))
-                {
-                    if (!chunk.CableData.ContainsKey(cable.CableType))
-                        chunk.CableData.Add(cable.CableType, 0);
-
-                    chunk.CableData[cable.CableType] |= flag;
-                }
-            }
-
-            // Remove empty chucks to save on bandwith
-            if (chunk.CableData.Values.All(x => x == 0))
-                chunks.Remove(chunkOrigin);
+            nodeList.Add(node);
         }
 
-        return chunks;
+        return GetPowerCableNetworkBitMask(gridUid, grid, nodeList);
     }
 
-    private Dictionary<Vector2i, NavMapChunkPowerCables> GetPowerCableNetworkBitMask(EntityUid uid, MapGridComponent grid, IEnumerable<Node> nodeList)
+    private Dictionary<Vector2i, NavMapChunkPowerCables> GetPowerCableNetworkBitMask(EntityUid gridUid, MapGridComponent grid, IEnumerable<Node> nodeList)
     {
         var chunks = new Dictionary<Vector2i, NavMapChunkPowerCables>();
 
@@ -58,7 +41,7 @@ internal sealed partial class PowerMonitoringConsoleSystem
 
             var ent = node.Owner;
             var xform = Transform(ent);
-            var tile = _sharedMapSystem.GetTileRef(uid, grid, xform.Coordinates);
+            var tile = _sharedMapSystem.GetTileRef(gridUid, grid, xform.Coordinates);
             var chunkOrigin = SharedMapSystem.GetChunkIndices(tile.GridIndices, SharedNavMapSystem.ChunkSize);
 
             if (!chunks.TryGetValue(chunkOrigin, out var chunk))
@@ -83,7 +66,6 @@ internal sealed partial class PowerMonitoringConsoleSystem
         return chunks;
     }
 
-    // Probably faster than querying all node entities and checking their NetID?
     private List<Node> FloodFillNode(Node rootNode)
     {
         rootNode.FloodGen += 1;

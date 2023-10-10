@@ -37,8 +37,7 @@ public sealed class PowerMonitoringConsoleBoundUserInterface : BoundUserInterfac
         _menu?.ShowEntites
             (castState.TotalSources,
             castState.TotalLoads,
-            castState.AllSources,
-            castState.AllLoads,
+            castState.AllEntries,
             castState.FocusSources,
             castState.FocusLoads,
             castState.PowerCableChunks,
