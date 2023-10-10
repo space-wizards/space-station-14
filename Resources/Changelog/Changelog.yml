@@ -1,16 +1,4 @@
 Entries:
-- author: chromiumboy
-  changes:
-  - {message: Access readers can now be programmed using the access configurator.,
-    type: Add}
-  id: 4485
-  time: '2023-08-08T18:30:46.0000000+00:00'
-- author: Slava0135
-  changes:
-  - {message: Stun batons and bolas can now be thrown to deal stamina damage. Stun
-      batons no longer show the damage effect when stunning., type: Fix}
-  id: 4486
-  time: '2023-08-08T20:19:31.0000000+00:00'
 - author: PJB3005
   changes:
   - {message: Better nuke sprite from /vg/., type: Tweak}
@@ -2955,3 +2943,15 @@ Entries:
       will be able to consume this., type: Tweak}
   id: 4984
   time: '2023-10-10T18:02:47.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix shuttles sometimes clipping planet marker entities such as ore.,
+    type: Fix}
+  id: 4985
+  time: '2023-10-10T21:33:04.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix expedition faction sometimes not aligning with the mission faction.,
+    type: Fix}
+  id: 4986
+  time: '2023-10-10T21:33:18.0000000+00:00'
