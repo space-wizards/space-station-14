@@ -116,11 +116,8 @@ public sealed class AmeControllerSystem : EntitySystem
 
     private AmeControllerBoundUserInterfaceState GetUiState(EntityUid uid, AmeControllerComponent controller)
     {
-
         var powered = !TryComp<ApcPowerReceiverComponent>(uid, out var powerSource) || powerSource.Powered;
         var coreCount = 0;
-        // how much power is currently drawn from the AME, in kW
-        float currentPowerSupply = 0;
         // how much power can be produced at the current settings, in kW
         // we don't use max. here since this is what is set in the Controller, not what the AME is actually producing
         float targetedPowerSupply = 0;
@@ -131,6 +128,7 @@ public sealed class AmeControllerSystem : EntitySystem
         }
 
         // set current power statistics in kW
+        float currentPowerSupply = 0;
         if (TryComp<PowerSupplierComponent>(uid, out var powerOutlet) && coreCount > 0)
         {
             currentPowerSupply = powerOutlet.CurrentSupply / 1000;
