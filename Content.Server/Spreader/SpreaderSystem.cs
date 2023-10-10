@@ -94,7 +94,8 @@ public sealed class SpreaderSystem : EntitySystem
 
     private void OnGridInit(GridInitializeEvent ev)
     {
-        EnsureComp<SpreaderGridComponent>(ev.EntityUid);
+        var grid = EnsureComp<SpreaderGridComponent>(ev.EntityUid);
+        grid.NextUpdate = _timing.CurTime + SpreadCooldown;
     }
 
     private void OnTerminating(EntityUid uid, EdgeSpreaderComponent component, ref EntityTerminatingEvent args)
