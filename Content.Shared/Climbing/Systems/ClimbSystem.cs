@@ -230,8 +230,7 @@ public sealed partial class ClimbSystem : VirtualController
          };
 
          _audio.PlayPredicted(comp.StartClimbSound, climbable, user);
-         _doAfterSystem.TryStartDoAfter(args, out id);
-         return true;
+         return _doAfterSystem.TryStartDoAfter(args, out id);
      }
 
      private void OnDoAfter(EntityUid uid, ClimbingComponent component, ClimbDoAfterEvent args)
