@@ -10,9 +10,6 @@ chatsan-replacement-3 = on god
 chatsan-word-4 = wtf
 chatsan-replacement-4 = what the fuck
 
-chatsan-word-5 = gtfo
-chatsan-replacement-5 = get the fuck out
-
 chatsan-word-5 = ffs
 chatsan-replacement-5 = for fuck's sake
 
@@ -83,3 +80,21 @@ chatsan-replacement-29 = thank you
 
 chatsan-word-30 = afk
 chatsan-replacement-30 = ssd
+
+chatsan-word-31 = stfu
+chatsan-replacement-31 = shut the fuck up
+
+chatsan-word-32 = gtg
+chatsan-replacement-32 = got to go
+
+chatsan-word-33 = gl
+chatsan-replacement-33 = good luck
+
+chatsan-word-34 = hbu
+chatsan-replacement-34 = how about you
+
+chatsan-word-35 = hmu
+chatsan-replacement-35 = hit me up
+
+chatsan-word-36 = gtfo
+chatsan-replacement-36 = get the fuck out
