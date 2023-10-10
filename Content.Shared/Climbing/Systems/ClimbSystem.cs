@@ -160,16 +160,12 @@ public sealed partial class ClimbSystem : VirtualController
 
      private void OnCanDragDropOn(EntityUid uid, ClimbableComponent component, ref CanDropTargetEvent args)
      {
-         if (!args.CanDrop)
+         if (args.Handled)
              return;
 
-         string reason;
          var canVault = args.User == args.Dragged
-             ? CanVault(component, args.User, uid, out reason)
-             : CanVault(component, args.User, args.Dragged, uid, out reason);
-
-         if (!canVault)
-             _popupSystem.PopupEntity(reason, args.User, args.User);
+             ? CanVault(component, args.User, uid, out _)
+             : CanVault(component, args.User, args.Dragged, uid, out _);
 
          args.CanDrop = canVault;
          args.Handled = true;
