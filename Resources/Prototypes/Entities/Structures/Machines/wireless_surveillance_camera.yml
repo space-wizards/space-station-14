@@ -73,6 +73,7 @@
       layers:
         - map: [ "enum.SurveillanceCameraVisualsKey.Key" ]
           state: mobilevision
+    - type: Cart #SS220-Cart-system
 
 - type: entity
   parent: SurveillanceWirelessCameraAnchoredBase

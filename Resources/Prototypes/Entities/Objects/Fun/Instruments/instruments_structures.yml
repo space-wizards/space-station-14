@@ -9,6 +9,7 @@
   - type: Sprite
     state: piano
   - type: Climbable
+  - type: Cart #SS220-Cart-system
 
 - type: entity
   name: upright piano
@@ -21,6 +22,7 @@
   - type: Sprite
     state: piano-upright
   - type: Climbable
+  - type: Cart #SS220-Cart-system
 
 - type: entity
   name: vibraphone

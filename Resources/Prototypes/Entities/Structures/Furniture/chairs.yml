@@ -109,6 +109,7 @@
   - type: Construction
     graph: Seat
     node: chairOffice
+  - type: Cart #SS220-Cart-system
 
 - type: entity
   name: dark office chair
@@ -120,6 +121,7 @@
   - type: Construction
     graph: Seat
     node: chairOfficeDark
+  - type: Cart #SS220-Cart-system
 
 - type: entity
   name: comfy chair

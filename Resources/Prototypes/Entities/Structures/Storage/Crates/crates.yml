@@ -547,6 +547,7 @@
     sprite: Structures/Storage/Crates/trashcart.rsi
   - type: Sprite
     sprite: Structures/Storage/Crates/trashcart.rsi
+  - type: Cart #SS220-Cart-system
 
 - type: entity
   parent: CrateBaseSecure
@@ -559,3 +560,4 @@
     sprite: Structures/Storage/Crates/trashcart_jani.rsi
   - type: AccessReader
     access: [["Janitor"]]
+  - type: Cart #SS220-Cart-system

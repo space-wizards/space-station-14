@@ -196,6 +196,7 @@
       - SetParticleDelta
       - SetParticleEpsilon
       - SetParticleZeta
+  - type: Cart #SS220-Cart-system
 
 - type: entity
   id: MachineAnomalyGenerator

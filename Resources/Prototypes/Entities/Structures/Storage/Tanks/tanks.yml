@@ -31,6 +31,7 @@
   - type: Explosive
     explosionType: Default
     totalIntensity: 120 # ~ 5 tile radius
+  - type: Cart #SS220-Cart-system
 
 - type: entity
   id: WeldingFuelTankFull
@@ -71,6 +72,7 @@
   - type: Explosive
     explosionType: Default
     totalIntensity: 140
+  - type: Cart #SS220-Cart-system
 
 # Water
 
@@ -94,6 +96,7 @@
     fillBaseName: watertank-2-
   - type: ExaminableSolution
     solution: tank
+  - type: Cart #SS220-Cart-system
 
 - type: entity
   parent: WaterTank
@@ -106,6 +109,7 @@
         reagents:
         - ReagentId: Water
           Quantity: 1500
+  - type: Cart #SS220-Cart-system
 
 - type: entity
   parent: WaterTankFull
@@ -127,6 +131,7 @@
         reagents:
         - ReagentId: Water
           Quantity: 500
+  - type: Cart #SS220-Cart-system
 
 - type: entity
   parent: StorageTank
@@ -157,6 +162,7 @@
     solution: tank
   - type: ReagentTank
     transferAmount: 100
+  - type: Cart #SS220-Cart-system
 
 - type: entity
   id: GenericTank
@@ -178,3 +184,4 @@
       fillBaseName: watertank-2-
     - type: ExaminableSolution
       solution: tank
+    - type: Cart #SS220-Cart-system

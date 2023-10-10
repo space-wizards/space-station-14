@@ -155,6 +155,8 @@
     node: bot
   - type: TTS # Corvax-TTS
     voice: Robold
+  - type: Cart #SS220-Cart-system
+  - type: CartPuller #SS220-Cart-system
 
 - type: entity
   parent: MobSiliconBaseVehicle
@@ -183,6 +185,8 @@
     containers:
       storagebase: !type:Container
         ents: []
+  - type: Cart #SS220-Cart-system
+  - type: CartPuller #SS220-Cart-system
 
 - type: entity
   parent: MobSiliconBase

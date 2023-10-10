@@ -433,6 +433,7 @@
       - Janitorial
     - type: TileFrictionModifier
       modifier: 0.4 # makes it slide
+    - type: Cart #SS220-Cart-system
 
 - type: entity
   id: FloorDrain

@@ -50,6 +50,7 @@
       capacity: 30
     - type: TileFrictionModifier
       modifier: 0.4 # makes it slide 
+    - type: Cart #SS220-Cart-system
     
 # Add this if freezing/heating container/objects thermodynamics becomes a thing
 

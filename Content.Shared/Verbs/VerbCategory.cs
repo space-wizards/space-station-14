@@ -83,5 +83,11 @@ namespace Content.Shared.Verbs
         public static readonly VerbCategory Lever = new("verb-categories-lever", null);
 
         public static readonly VerbCategory SelectType = new("verb-categories-select-type", null);
+
+        //SS220-Cart-system begin
+        public static readonly VerbCategory AttachCart = new("verb-categories-attach-cart", null);
+
+        public static readonly VerbCategory DeattachCart = new("verb-categories-deattach-cart", null);
+        //SS220-Cart-system end
     }
 }

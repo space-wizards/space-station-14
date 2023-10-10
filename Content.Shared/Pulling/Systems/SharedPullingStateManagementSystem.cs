@@ -1,6 +1,7 @@
 using System.Linq;
 using Content.Shared.Physics.Pull;
 using Content.Shared.Pulling.Components;
+using Content.Shared.SS220.Cart.Components;
 using JetBrains.Annotations;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
@@ -29,7 +30,24 @@ namespace Content.Shared.Pulling
             SubscribeLocalEvent<SharedPullableComponent, ComponentShutdown>(OnShutdown);
             SubscribeLocalEvent<SharedPullableComponent, ComponentGetState>(OnGetState);
             SubscribeLocalEvent<SharedPullableComponent, ComponentHandleState>(OnHandleState);
+
+            SubscribeLocalEvent<SharedPullerComponent, ComponentStartup>(OnPullerStartup); //SS220-Cart-system
         }
+
+        //SS220-Cart-system begin
+        private void OnPullerStartup(EntityUid uid, SharedPullerComponent component, ComponentStartup args)
+        {
+            // Soooooooooo this is fucking dumb
+            // but I WILL NOT rewrite the whole component to be
+            // networked for the space wizards to do it themselves
+            // right after me, so this will work for now and I don't really care
+            // COPIUM
+            if (!HasComp<CartPullerComponent>(uid))
+                return;
+
+            component.NeedsHands = false;
+        }
+        //SS220-Cart-system end
 
         private void OnGetState(EntityUid uid, SharedPullableComponent component, ref ComponentGetState args)
         {
