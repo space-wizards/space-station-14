@@ -1,11 +1,4 @@
 Entries:
-- author: Doru991
-  changes:
-  - {message: 'Due to Nanotrasen choosing a new seed supplier, most plants consume
-      nutrients much faster.', type: Tweak}
-  - {message: Composting produce into trays actually works now., type: Fix}
-  id: 4483
-  time: '2023-08-08T00:29:59.0000000+00:00'
 - author: Ilya246
   changes:
   - {message: Fix radiator transfer rate in high-pressure environments., type: Fix}
@@ -2952,3 +2945,11 @@ Entries:
   - {message: Dionas are actually the same speed as other species now., type: Fix}
   id: 4982
   time: '2023-10-10T14:03:20.0000000+00:00'
+- author: Potato1234_x
+  changes:
+  - {message: Added the CuraDrobe., type: Add}
+  - {message: Added the sensible suit and skirt., type: Add}
+  - {message: Fixed the librarian not having their own jumpskirt., type: Fix}
+  - {message: Resprited the librarian jumpsuit., type: Tweak}
+  id: 4983
+  time: '2023-10-10T16:55:31.0000000+00:00'
