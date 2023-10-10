@@ -178,8 +178,10 @@ public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
         var map = Transform(uid).MapID;
         while (query.MoveNext(out var warpUid, out _, out var warp, out var xform))
         {
-            if (warp.Location != null)
+            if (warp.Location != null && map == xform.MapID)
+            {
                 warps.Add(warpUid);
+            }
         }
 
         if (warps.Count > 0 && _mind.TryGetObjectiveComp<SpiderChargeConditionComponent>(uid, out var obj))
