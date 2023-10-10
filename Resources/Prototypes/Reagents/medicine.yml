@@ -143,8 +143,10 @@
       effects:
       - !type:HealthChange
         damage:
-          groups:
-            Brute: -2
+          types:
+            Blunt: -1.5
+            Slash: -1.5
+            Piercing: -1.5
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
