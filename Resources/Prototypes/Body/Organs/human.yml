@@ -40,6 +40,10 @@
     context: "ghost"
   - type: Brain
   - type: BlockMovement
+  - type: BadFood
+  - type: Tag
+    tags:
+      - Meat
 
 - type: entity
   id: OrganHumanEyes
