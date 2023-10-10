@@ -19,7 +19,7 @@
       food:
         maxVol: 5
         reagents:
-        - ReagentId: Nutriment
+        - ReagentId: UncookedAnimalProteins
           Quantity: 5
   - type: FlavorProfile
     flavors:
@@ -46,7 +46,7 @@
       food:
         maxVol: 5
         reagents:
-        - ReagentId: Nutriment
+        - ReagentId: UncookedAnimalProteins
           Quantity: 5
   - type: Brain
   - type: Lung #lungs in they head. why they there tho?
@@ -85,7 +85,7 @@
       food:
         maxVol: 5
         reagents:
-        - ReagentId: Nutriment
+        - ReagentId: UncookedAnimalProteins
           Quantity: 5
   - type: Stomach
   - type: Metabolizer
