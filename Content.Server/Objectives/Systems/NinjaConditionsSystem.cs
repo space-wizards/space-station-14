@@ -78,26 +78,22 @@ public sealed class NinjaConditionsSystem : EntitySystem
 
     private void OnSpiderChargeAfterAssign(EntityUid uid, SpiderChargeConditionComponent comp, ref ObjectiveAfterAssignEvent args)
     {
-        _metaData.SetEntityName(uid, SpiderChargeTitle(args.MindId, args.Mind), args.Meta);
+        string title;
+        if (comp.Target == null || !TryComp<WarpPointComponent>(comp.Target, out var warp) || warp.Location == null)
+        {
+            // this should never really happen but eh
+            title = Loc.GetString("objective-condition-spider-charge-title-no-target");
+        }
+        else
+        {
+            title = Loc.GetString("objective-condition-spider-charge-title", ("location", warp.Location));
+        }
+        _metaData.SetEntityName(uid, title, args.Meta);
     }
 
     private void OnSpiderChargeGetProgress(EntityUid uid, SpiderChargeConditionComponent comp, ref ObjectiveGetProgressEvent args)
     {
         args.Progress = comp.Detonated ? 1f : 0f;
-    }
-
-    private string SpiderChargeTitle(EntityUid mindId, MindComponent mind)
-    {
-        if (!_mind.TryGetObjectiveComp<SpiderChargeConditionComponent>(mindId, out var obj, mind) ||
-            obj.Target == null ||
-            !TryComp<WarpPointComponent>(obj.Target, out var warp) ||
-            warp.Location == null)
-        {
-            // this should never really happen but eh
-            return Loc.GetString("objective-condition-spider-charge-title-no-target");
-        }
-
-        return Loc.GetString("objective-condition-spider-charge-title", ("location", warp.Location));
     }
 
     // steal research
