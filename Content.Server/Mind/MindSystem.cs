@@ -55,10 +55,6 @@ public sealed class MindSystem : SharedMindSystem
 
     private void OnMindContainerTerminating(EntityUid uid, MindContainerComponent component, ref EntityTerminatingEvent args)
     {
-        // Let's not create ghosts if not in the middle of the round.
-        if (_gameTicker.RunLevel == GameRunLevel.PreRoundLobby)
-            return;
-
         if (!TryGetMind(uid, out var mindId, out var mind, component))
             return;
 
@@ -75,6 +71,11 @@ public sealed class MindSystem : SharedMindSystem
         }
 
         TransferTo(mindId, null, createGhost: false, mind: mind);
+        DebugTools.AssertNull(mind.OwnedEntity);
+
+        // Let's not create ghosts if not in the middle of the round.
+        if (_gameTicker.RunLevel == GameRunLevel.PreRoundLobby)
+            return;
 
         if (component.GhostOnShutdown && mind.Session != null)
         {
