@@ -444,6 +444,15 @@
   metabolisms:
     Poison:
       effects:
+      - !type:PopupMessage
+        conditions:
+          - !type:OrganType
+            type: Human
+        reagent: Protein
+        type: Local
+        visualType: MediumCaution
+        messages: [ "generic-reagent-effect-sick" ]
+        probability: 0.5
       - !type:ChemVomit
         probability: 0.1
         conditions:
