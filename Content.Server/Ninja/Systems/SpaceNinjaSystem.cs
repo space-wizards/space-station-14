@@ -52,6 +52,7 @@ public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
         base.Initialize();
 
         SubscribeLocalEvent<SpaceNinjaComponent, GenericAntagCreatedEvent>(OnNinjaCreated);
+        SubscribeLocalEvent<SpaceNinjaComponent, GenericAntagObjectivesAddedEvent>(OnNinjaObjectivesAdded);
         SubscribeLocalEvent<SpaceNinjaComponent, EmaggedSomethingEvent>(OnDoorjack);
         SubscribeLocalEvent<SpaceNinjaComponent, ResearchStolenEvent>(OnResearchStolen);
         SubscribeLocalEvent<SpaceNinjaComponent, ThreatCalledInEvent>(OnThreatCalledIn);
@@ -164,6 +165,13 @@ public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
         };
         _role.MindAddRole(mindId, role, mind);
 
+        var session = mind.Session;
+        _audio.PlayGlobal(config.GreetingSound, Filter.Empty().AddPlayer(session), false, AudioParams.Default);
+        _chatMan.DispatchServerMessage(session, Loc.GetString("ninja-role-greeting"));
+    }
+
+    private void OnNinjaObjectivesAdded(EntityUid uid, SpaceNinjaComponent comp, ref GenericAntagObjectivesAddedEvent args)
+    {
         // choose spider charge detonation point
         var warps = new List<EntityUid>();
         var query = EntityQueryEnumerator<BombingTargetComponent, WarpPointComponent, TransformComponent>();
@@ -178,10 +186,6 @@ public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
         {
             obj.Target = _random.Pick(warps);
         }
-
-        var session = mind.Session;
-        _audio.PlayGlobal(config.GreetingSound, Filter.Empty().AddPlayer(session), false, AudioParams.Default);
-        _chatMan.DispatchServerMessage(session, Loc.GetString("ninja-role-greeting"));
     }
 
     // TODO: PowerCellDraw, modify when cloak enabled
