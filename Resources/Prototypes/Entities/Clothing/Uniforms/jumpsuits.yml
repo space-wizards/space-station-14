@@ -769,6 +769,17 @@
 
 - type: entity
   parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitCurator
+  name: sensible suit
+  description: It's sensible. Too sensible...
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/curator.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/curator.rsi
+
+- type: entity
+  parent: ClothingUniformBase
   id: ClothingUniformJumpsuitLawyerRed
   name: red lawyer suit
   description: A flashy red suit worn by lawyers and show-offs.
@@ -1157,7 +1168,7 @@
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitCossack
-  name: Cossack suit
+  name: cossack suit
   description: the good old pants and brigantine.
   components:
   - type: Sprite

@@ -539,6 +539,28 @@
 
 - type: entity
   parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtLibrarian
+  name: librarian jumpskirt
+  description: A cosy green jumper fit for a curator of books.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpskirt/librarian.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpskirt/librarian.rsi
+
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtCurator
+  name: sensible skirt
+  description: It's sensible. Too sensible...
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpskirt/curator.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpskirt/curator.rsi
+
+- type: entity
+  parent: ClothingUniformSkirtBase
   id: ClothingUniformJumpskirtPerformer
   name: performer's jumpskirt
   description: Hi, I'm Scott, president of Donk Pizza. Have you heard of [FAMOUS VIRTUAL PERFORMER]?
