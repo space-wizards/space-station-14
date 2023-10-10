@@ -6,7 +6,7 @@ namespace Content.Shared.Ensnaring.Components;
 /// Use this on something you want to use to ensnare an entity with
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-public sealed class EnsnaringComponent : Component
+public sealed partial class EnsnaringComponent : Component
 {
     /// <summary>
     /// How long it should take to free someone else.

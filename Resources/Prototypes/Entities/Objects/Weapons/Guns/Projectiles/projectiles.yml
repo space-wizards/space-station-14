@@ -278,7 +278,6 @@
   noSpawn: true
   components:
   - type: Sprite
-    color: "#ffff33"
     sprite: Structures/Power/Generation/Singularity/emitter.rsi
     layers:
       - state: projectile
@@ -306,6 +305,65 @@
     - EmitterBolt
   - type: TimedDespawn
     lifetime: 3
+
+- type: entity
+  name: watcher bolt
+  id: WatcherBolt
+  parent: BaseBullet
+  noSpawn: true
+  components:
+  - type: FlyBySound
+    sound:
+      collection: EnergyMiss
+      params:
+        volume: 5
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles_tg.rsi
+    layers:
+    - state: omnilaser
+      shader: unshaded
+  - type: Ammo
+    muzzleFlash: null
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+      projectile:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.2,-0.2,0.2,0.2"
+        hard: false
+        mask:
+        - Opaque
+      fly-by: *flybyfixture
+  - type: StaminaDamageOnCollide
+    damage: 40
+  - type: Projectile
+    #   soundHit:  Waiting on serv3
+    impactEffect: BulletImpactEffectDisabler
+    damage:
+      types:
+        Cold: 10
+  - type: TimedDespawn
+    lifetime: 3
+
+- type: entity
+  name: magmawing watcher bolt
+  id: WatcherBoltMagmawing
+  parent: BaseBullet
+  noSpawn: true
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles_tg.rsi
+    layers:
+    - state: omnilaser_greyscale
+      shader: unshaded
+      color: orangered
+  - type: Projectile
+    #   soundHit:  Waiting on serv3
+    impactEffect: BulletImpactEffectOrangeDisabler
+    damage:
+      types:
+        Heat: 10
 
 - type: entity
   id: BulletKinetic
@@ -378,7 +436,7 @@
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/magic.rsi
     layers:
-      - state: magicm
+      - state: magicm_red
         shader: unshaded
   - type: Ammo
     muzzleFlash: null
@@ -419,6 +477,10 @@
   name: epsilon particles
   noSpawn: true
   components:
+  - type: Sprite
+    layers:
+      - state: magicm_cyan
+        shader: unshaded
   - type: AnomalousParticle
     particleType: Epsilon
 
@@ -440,6 +502,10 @@
   name: zeta particles
   noSpawn: true
   components:
+  - type: Sprite
+    layers:
+      - state: magicm_yellow
+        shader: unshaded
   - type: AnomalousParticle
     particleType: Zeta
 
@@ -458,6 +524,7 @@
 - type: entity
   parent: AnomalousParticleDelta
   id: AnomalousParticleOmegaStrong
+  name: omega particles
   noSpawn: true
   components:
   - type: Sprite

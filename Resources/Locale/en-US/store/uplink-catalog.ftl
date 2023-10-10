@@ -55,10 +55,13 @@ uplink-grenadier-rig-name = grenadier chest rig
 uplink-grenadier-rig-desc = All you need for a loud party: 4 explosive grenades, 2 EMP grenades and 2 minibombs in a chest rig.
 
 uplink-emp-grenade-name = EMP Grenade
-uplink-emp-grenade-desc = A grenade designed to disrupt electronic systems. Useful for disrupting communications, security's energy weapons, and APCs when you're in a tight spot."
+uplink-emp-grenade-desc = A grenade designed to disrupt electronic systems. Useful for disrupting communications, security's energy weapons, and APCs when you're in a tight spot.
 
 uplink-exploding-pen-name = Exploding pen
 uplink-exploding-pen-desc = A class IV explosive device contained within a standard pen. Comes with a 4 second fuse.
+
+uplink-exploding-syndicate-bomb-name = Syndicate Bomb
+uplink-exploding-syndicate-bomb-desc = A big, anchored bomb that can create a huge explosion if not defused in time. Useful as a distraction. Has an adjustable timer with a minimum setting of 120 seconds.
 
 # Ammo
 uplink-pistol-magazine-name = Pistol Magazine (.35 auto)
@@ -115,6 +118,9 @@ uplink-headset-desc = A headset that allows you to communicate with other syndic
 uplink-encryption-key-name = Syndicate Encryption Keys
 uplink-encryption-key-desc = Two encryption keys for access to the secret frequency of our special agents. Give the spare to a friend, but make sure it doesn't fall into enemy hands.
 
+uplink-binary-translator-key-name = Binary Translator Key
+uplink-binary-translator-key-desc = Lets you tap into the silicons' binary channel. Don't talk on it though, at least not without a voice mask.
+
 uplink-hypopen-name = Hypopen
 uplink-hypopen-desc = A chemical hypospray disguised as a pen, capable of instantly injecting up to 10u of reagents. Starts empty.
 
@@ -137,8 +143,6 @@ uplink-dna-scrambler-implanter-desc = A single use implant that can be activated
 uplink-emp-implanter-name = EMP Implanter
 uplink-emp-implanter-desc = Detonates a small EMP pulse on activation that drains nearby electronics of their power, can be used three times before the internal battery runs out.
 
-uplink-micro-bomb-implanter-name = Micro Bomb Implanter
-uplink-micro-bomb-implanter-desc = Explode on death or manual activation with this implant. Destroys the body with all equipment.
 
 uplink-macro-bomb-implanter-name = Macro Bomb Implanter
 uplink-macro-bomb-implanter-desc = Inject this and on death you'll create a large explosion. Huge team casualty cost, use at own risk. Replaces internal micro bomb.
@@ -221,8 +225,8 @@ uplink-banana-peel-explosive-desc = They will burst into laughter when they slip
 uplink-hot-potato-name = Hot Potato
 uplink-hot-potato-desc = Once activated, this time bomb can't be dropped - only passed to someone else!
 
-uplink-chimp-ammo-name = Box of 10 Omega Cartridges.
-uplink-chimp-ammo-desc = A box of 10 omega particle cartridges for the CHIMP. Omega particles inflict severe burns and cause anomalies to go supercritical.
+uplink-chimp-upgrade-kit-name = C.H.I.M.P. Handcannon Upgrade Chip
+uplink-chimp-upgrade-kit-desc = Insert this chip into a standard C.H.I.M.P. handcannon to allow it to fire omega particles. Omega particles inflict severe burns and cause anomalies to go supercritical.
 
 uplink-proximity-mine-name = Proximity Mine
 uplink-proximity-mine-desc = A mine disguised as a wet floor sign.
@@ -316,6 +320,9 @@ uplink-costume-pyjama-desc = Contains 3 pairs of syndicate pyjamas and 3 plushie
 
 uplink-costume-clown-name = Clown Costume Duffel Bag
 uplink-costume-clown-desc = Contains a complete Clown outfit. Includes PDA and service radio.
+
+uplink-carp-suit-bundle-name = Carp Suit Duffel Bag
+uplink-carp-suit-bundle-desc = Contains a carp suit and some friends to play with.
 
 uplink-operative-suit-name = Operative Jumpsuit
 uplink-operative-suit-desc = A suit given to our nuclear operatives with fine fabric to make sure you stand out, no other benefits aside from looking cool.

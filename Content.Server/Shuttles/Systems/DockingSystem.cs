@@ -28,15 +28,17 @@ namespace Content.Server.Shuttles.Systems
         [Dependency] private readonly SharedPhysicsSystem _physics = default!;
         [Dependency] private readonly SharedTransformSystem _transform = default!;
 
-        private ISawmill _sawmill = default!;
         private const string DockingFixture = "docking";
         private const string DockingJoint = "docking";
         private const float DockingRadius = 0.20f;
 
+        private EntityQuery<PhysicsComponent> _physicsQuery;
+
         public override void Initialize()
         {
             base.Initialize();
-            _sawmill = Logger.GetSawmill("docking");
+            _physicsQuery = GetEntityQuery<PhysicsComponent>();
+
             SubscribeLocalEvent<DockingComponent, ComponentStartup>(OnStartup);
             SubscribeLocalEvent<DockingComponent, ComponentShutdown>(OnShutdown);
             SubscribeLocalEvent<DockingComponent, AnchorStateChangedEvent>(OnAnchorChange);
@@ -114,7 +116,7 @@ namespace Content.Server.Shuttles.Systems
                     if (otherDockingFixture == null)
                     {
                         DebugTools.Assert(false);
-                        _sawmill.Error($"Found null docking fixture on {ent}");
+                        Log.Error($"Found null docking fixture on {ent}");
                         continue;
                     }
 
@@ -159,7 +161,7 @@ namespace Content.Server.Shuttles.Systems
                 !TryComp(dockBUid, out DockingComponent? dockB))
             {
                 DebugTools.Assert(false);
-                _sawmill.Error($"Tried to cleanup {dockAUid} but not docked?");
+                Log.Error($"Tried to cleanup {dockAUid} but not docked?");
 
                 dockA.DockedWith = null;
                 if (dockA.DockJoint != null)
@@ -288,7 +290,7 @@ namespace Content.Server.Shuttles.Systems
                 (dockAUid, dockBUid) = (dockBUid, dockAUid);
             }
 
-            _sawmill.Debug($"Docking between {dockAUid} and {dockBUid}");
+            Log.Debug($"Docking between {dockAUid} and {dockBUid}");
 
             // https://gamedev.stackexchange.com/questions/98772/b2distancejoint-with-frequency-equal-to-0-vs-b2weldjoint
 

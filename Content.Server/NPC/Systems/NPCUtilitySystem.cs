@@ -15,6 +15,7 @@ using Content.Shared.Hands.Components;
 using Content.Shared.Inventory;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Nutrition.Components;
+using Content.Shared.Tools.Systems;
 using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
@@ -39,9 +40,11 @@ public sealed class NPCUtilitySystem : EntitySystem
     [Dependency] private readonly InventorySystem _inventory = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly NpcFactionSystem _npcFaction = default!;
+    [Dependency] private readonly OpenableSystem _openable = default!;
     [Dependency] private readonly PuddleSystem _puddle = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SolutionContainerSystem _solutions = default!;
+    [Dependency] private readonly WeldableSystem _weldable = default!;
 
     private EntityQuery<TransformComponent> _xformQuery;
 
@@ -154,6 +157,10 @@ public sealed class NPCUtilitySystem : EntitySystem
                 if (!TryComp<FoodComponent>(targetUid, out var food))
                     return 0f;
 
+                // mice can't eat unpeeled bananas, need monkey's help
+                if (_openable.IsClosed(targetUid))
+                    return 0f;
+
                 if (!_food.IsDigestibleBy(owner, targetUid, food))
                     return 0f;
 
@@ -171,7 +178,11 @@ public sealed class NPCUtilitySystem : EntitySystem
             }
             case DrinkValueCon:
             {
-                if (!TryComp<DrinkComponent>(targetUid, out var drink) || !drink.Opened)
+                if (!TryComp<DrinkComponent>(targetUid, out var drink))
+                    return 0f;
+
+                // can't drink closed drinks
+                if (_openable.IsClosed(targetUid))
                     return 0f;
 
                 // only drink when thirsty
@@ -189,13 +200,23 @@ public sealed class NPCUtilitySystem : EntitySystem
 
                 return 1f;
             }
+            case OrderedTargetCon:
+            {
+                if (!blackboard.TryGetValue<EntityUid>(NPCBlackboard.CurrentOrderedTarget, out var orderedTarget, EntityManager))
+                    return 0f;
+
+                if (targetUid != orderedTarget)
+                    return 0f;
+
+                return 1f;
+            }
             case TargetAccessibleCon:
             {
                 if (_container.TryGetContainingContainer(targetUid, out var container))
                 {
                     if (TryComp<EntityStorageComponent>(container.Owner, out var storageComponent))
                     {
-                        if (storageComponent is { IsWeldedShut: true, Open: false })
+                        if (storageComponent is { Open: false } && _weldable.IsWelded(container.Owner))
                         {
                             return 0.0f;
                         }

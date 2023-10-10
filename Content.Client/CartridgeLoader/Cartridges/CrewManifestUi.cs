@@ -5,7 +5,7 @@ using Robust.Client.UserInterface;
 
 namespace Content.Client.CartridgeLoader.Cartridges;
 
-public sealed class CrewManifestUi : UIFragment
+public sealed partial class CrewManifestUi : UIFragment
 {
     private CrewManifestUiFragment? _fragment;
 

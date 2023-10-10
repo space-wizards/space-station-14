@@ -9,7 +9,6 @@ using Content.Shared.Examine;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Stacks;
 using Robust.Shared.Containers;
-using Robust.Shared.GameStates;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Timing;
 
@@ -32,8 +31,6 @@ public abstract class SharedMaterialReclaimerSystem : EntitySystem
     /// <inheritdoc/>
     public override void Initialize()
     {
-        SubscribeLocalEvent<MaterialReclaimerComponent, ComponentGetState>(OnGetState);
-        SubscribeLocalEvent<MaterialReclaimerComponent, ComponentHandleState>(OnHandleState);
         SubscribeLocalEvent<MaterialReclaimerComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<MaterialReclaimerComponent, EntityUnpausedEvent>(OnUnpaused);
         SubscribeLocalEvent<MaterialReclaimerComponent, ExaminedEvent>(OnExamined);
@@ -41,24 +38,6 @@ public abstract class SharedMaterialReclaimerSystem : EntitySystem
         SubscribeLocalEvent<CollideMaterialReclaimerComponent, StartCollideEvent>(OnCollide);
         SubscribeLocalEvent<ActiveMaterialReclaimerComponent, ComponentStartup>(OnActiveStartup);
         SubscribeLocalEvent<ActiveMaterialReclaimerComponent, EntityUnpausedEvent>(OnActiveUnpaused);
-    }
-
-    private void OnGetState(EntityUid uid, MaterialReclaimerComponent component, ref ComponentGetState args)
-    {
-        args.State = new MaterialReclaimerComponentState(component.Powered,
-            component.Enabled,
-            component.MaterialProcessRate,
-            component.ItemsProcessed);
-    }
-
-    private void OnHandleState(EntityUid uid, MaterialReclaimerComponent component, ref ComponentHandleState args)
-    {
-        if (args.Current is not MaterialReclaimerComponentState state)
-            return;
-        component.Powered = state.Powered;
-        component.Enabled = state.Enabled;
-        component.MaterialProcessRate = state.MaterialProcessRate;
-        component.ItemsProcessed = state.ItemsProcessed;
     }
 
     private void OnShutdown(EntityUid uid, MaterialReclaimerComponent component, ComponentShutdown args)
@@ -83,7 +62,7 @@ public abstract class SharedMaterialReclaimerSystem : EntitySystem
 
     private void OnCollide(EntityUid uid, CollideMaterialReclaimerComponent component, ref StartCollideEvent args)
     {
-        if (args.OurFixture.ID != component.FixtureId)
+        if (args.OurFixtureId != component.FixtureId)
             return;
         if (!TryComp<MaterialReclaimerComponent>(uid, out var reclaimer))
             return;
@@ -120,7 +99,7 @@ public abstract class SharedMaterialReclaimerSystem : EntitySystem
         if (component.Blacklist is {} blacklist && blacklist.IsValid(item))
             return false;
 
-        if (!_container.TryRemoveFromContainer(item))
+        if (_container.TryGetContainingContainer(item, out _) && !_container.TryRemoveFromContainer(item))
             return false;
 
         if (user != null)

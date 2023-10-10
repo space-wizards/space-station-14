@@ -1,184 +1,260 @@
-- type: instantAction
-  id: Scream
-  useDelay: 10
-  icon: Interface/Actions/scream.png
-  name: action-name-scream
-  description: action-description-scream
-  serverEvent: !type:ScreamActionEvent
-  checkCanInteract: false
+- type: entity
+  id: ActionScream
+  name: Scream
+  description: AAAAAAAAAAAAAAAAAAAAAAAAA
+  noSpawn: true
+  components:
+  - type: InstantAction
+    useDelay: 10
+    icon: Interface/Actions/scream.png
+    event: !type:ScreamActionEvent
+    checkCanInteract: false
 
-- type: instantAction
-  id: TurnUndead
-  name: turn-undead-action-name
-  description: turn-undead-action-description
-  checkCanInteract: false
-  icon: Interface/Actions/zombie-turn.png
-  event: !type:ZombifySelfActionEvent
+- type: entity
+  id: ActionTurnUndead
+  name: Turn Undead
+  description: Succumb to your infection and become a zombie.
+  noSpawn: true
+  components:
+  - type: InstantAction
+    checkCanInteract: false
+    icon: Interface/Actions/zombie-turn.png
+    event: !type:ZombifySelfActionEvent
 
-- type: instantAction
-  id: ToggleLight
-  name: action-name-toggle-light
-  description: action-description-toggle-light
-  icon: { sprite: Objects/Tools/flashlight.rsi, state: flashlight }
-  iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
-  event: !type:ToggleActionEvent
+- type: entity
+  id: ActionToggleLight
+  name: Toggle Light
+  description: Turn the light on and off.
+  noSpawn: true
+  components:
+  - type: InstantAction
+    icon: { sprite: Objects/Tools/flashlight.rsi, state: flashlight }
+    iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
+    event: !type:ToggleActionEvent
 
-- type: instantAction
-  id: OpenStorageImplant
-  name: open-storage-implant-action-name
-  description: open-storage-implant-action-description
-  itemIconStyle: BigAction
-  priority: -20
-  icon:
-    sprite: Clothing/Back/Backpacks/backpack.rsi
-    state: icon
-  event: !type:OpenStorageImplantEvent
+- type: entity
+  id: ActionOpenStorageImplant
+  name: Open Storage Implant
+  description: Opens the storage implant embedded under your skin
+  noSpawn: true
+  components:
+  - type: InstantAction
+    itemIconStyle: BigAction
+    priority: -20
+    icon:
+      sprite: Clothing/Back/Backpacks/backpack.rsi
+      state: icon
+    event: !type:OpenStorageImplantEvent
 
-- type: instantAction
-  id: ActivateMicroBomb
-  name: activate-micro-bomb-action-name
-  description: activate-micro-bomb-action-description
-  checkCanInteract: false
-  itemIconStyle: BigAction
-  priority: -20
-  icon:
-    sprite: Actions/Implants/implants.rsi
-    state: explosive
-  event: !type:ActivateImplantEvent
+- type: entity
+  id: ActionActivateMicroBomb
+  name: Activate Microbomb
+  description: Activates your internal microbomb, completely destroying you and your equipment
+  noSpawn: true
+  components:
+  - type: InstantAction
+    checkCanInteract: false
+    itemIconStyle: BigAction
+    priority: -20
+    icon:
+      sprite: Actions/Implants/implants.rsi
+      state: explosive
+    event: !type:ActivateImplantEvent
 
-- type: instantAction
-  id: ActivateFreedomImplant
-  name: use-freedom-implant-action-name
-  description: use-freedom-implant-action-description
-  charges: 3
-  checkCanInteract: false
-  itemIconStyle: BigAction
-  priority: -20
-  icon:
-    sprite: Actions/Implants/implants.rsi
-    state: freedom
-  event: !type:UseFreedomImplantEvent
+- type: entity
+  id: ActionActivateFreedomImplant
+  name: Break Free
+  description: Activating your freedom implant will free you from any hand restraints
+  noSpawn: true
+  components:
+  - type: InstantAction
+    charges: 3
+    checkCanInteract: false
+    itemIconStyle: BigAction
+    priority: -20
+    icon:
+      sprite: Actions/Implants/implants.rsi
+      state: freedom
+    event: !type:UseFreedomImplantEvent
 
-- type: instantAction
-  id: OpenUplinkImplant
-  name: open-uplink-implant-action-name
-  description: open-uplink-implant-action-description
-  itemIconStyle: BigAction
-  priority: -20
-  icon:
-    sprite: Objects/Devices/communication.rsi
-    state: old-radio
-  event: !type:OpenUplinkImplantEvent
+- type: entity
+  id: ActionOpenUplinkImplant
+  name: Open Uplink
+  description: Opens the syndicate uplink embedded under your skin
+  noSpawn: true
+  components:
+  - type: InstantAction
+    itemIconStyle: BigAction
+    priority: -20
+    icon:
+      sprite: Objects/Devices/communication.rsi
+      state: old-radio
+    event: !type:OpenUplinkImplantEvent
 
-- type: instantAction
-  id: ActivateEmpImplant
-  name: use-emp-implant-action-name
-  description: use-emp-implant-action-description
-  charges: 3
-  useDelay: 5
-  itemIconStyle: BigAction
-  priority: -20
-  icon:
-    sprite: Objects/Weapons/Grenades/empgrenade.rsi
-    state: icon
-  event: !type:ActivateImplantEvent
+- type: entity
+  id: ActionActivateEmpImplant
+  name: Activate EMP
+  description: Triggers a small EMP pulse around you
+  noSpawn: true
+  components:
+  - type: InstantAction
+    charges: 3
+    useDelay: 5
+    itemIconStyle: BigAction
+    priority: -20
+    icon:
+      sprite: Objects/Weapons/Grenades/empgrenade.rsi
+      state: icon
+    event: !type:ActivateImplantEvent
 
-- type: instantAction
-  id: ActivateDnaScramblerImplant
-  name: use-dna-scrambler-implant-action-name
-  description: use-dna-scrambler-implant-action-description
-  charges: 1
-  itemIconStyle: BigAction
-  priority: -20
-  icon:
-    sprite: Clothing/OuterClothing/Hardsuits/lingspacesuit.rsi
-    state: icon
-  event: !type:UseDnaScramblerImplantEvent
+- type: entity
+  id: ActionActivateDnaScramblerImplant
+  name: Scramble DNA
+  description:  Randomly changes your name and appearance.
+  noSpawn: true
+  components:
+  - type: InstantAction
+    charges: 1
+    itemIconStyle: BigAction
+    priority: -20
+    icon:
+      sprite: Clothing/OuterClothing/Hardsuits/lingspacesuit.rsi
+      state: icon
+    event: !type:UseDnaScramblerImplantEvent
 
-- type: instantAction
-  id: ToggleSuitHelmet
-  name: action-name-hardsuit
-  description: action-description-hardsuit
-  itemIconStyle: BigItem
-  useDelay: 1 # equip noise spam.
-  event: !type:ToggleClothingEvent
+- type: entity
+  id: ActionToggleSuitPiece
+  name: Toggle Suit Piece
+  description: Remember to equip the important pieces of your suit before going into action.
+  noSpawn: true
+  components:
+  - type: InstantAction
+    itemIconStyle: BigItem
+    useDelay: 1 # equip noise spam.
+    event: !type:ToggleClothingEvent
 
-- type: instantAction
-  id: CombatModeToggle
-  name: action-name-combat
-  description: action-description-combat
-  checkCanInteract: false
-  icon: Interface/Actions/harmOff.png
-  iconOn: Interface/Actions/harm.png
-  event: !type:ToggleCombatActionEvent
+- type: entity
+  id: ActionCombatModeToggle
+  name: "[color=red]Combat Mode[/color]"
+  description: Enter combat mode
+  noSpawn: true
+  components:
+  - type: InstantAction
+    checkCanInteract: false
+    icon: Interface/Actions/harmOff.png
+    iconOn: Interface/Actions/harm.png
+    event: !type:ToggleCombatActionEvent
+    priority: -100
 
-- type: instantAction
-  id: ChangeVoiceMask
-  name: voice-mask-name-change-set
-  icon: Interface/Actions/scream.png # somebody else can figure out a better icon for this
-  description: voice-mask-name-change-set-description
-  serverEvent: !type:VoiceMaskSetNameEvent
+- type: entity
+  id: ActionCombatModeToggleOff
+  parent: ActionCombatModeToggle
+  name: "[color=red]Combat Mode[/color]"
+  description: Enter combat mode
+  noSpawn: true
+  components:
+  - type: InstantAction
+    enabled: false
+    autoPopulate: false
+    priority: -100
 
-- type: instantAction
-  id: VendingThrow
-  name: vending-machine-action-name
-  description: vending-machine-action-description
-  useDelay: 30
-  event: !type:VendingMachineSelfDispenseEvent
+- type: entity
+  id: ActionChangeVoiceMask
+  name: Set name
+  description: Change the name others hear to something else.
+  noSpawn: true
+  components:
+  - type: InstantAction
+    icon: Interface/Actions/scream.png # somebody else can figure out a better icon for this
+    event: !type:VoiceMaskSetNameEvent
 
-- type: instantAction
-  id: ArtifactActivate
-  name: activate-artifact-action-name
-  description: activate-artifact-action-desc
-  icon:
-    sprite: Objects/Specific/Xenoarchaeology/xeno_artifacts.rsi
-    state: ano01
-  useDelay: 60
-  event: !type:ArtifactSelfActivateEvent
+- type: entity
+  id: ActionVendingThrow
+  name: Dispense Item
+  description: Randomly dispense an item from your stock.
+  noSpawn: true
+  components:
+  - type: InstantAction
+    useDelay: 30
+    event: !type:VendingMachineSelfDispenseEvent
 
-- type: instantAction
-  id: ToggleBlock
-  name: action-name-blocking
-  description: action-description-blocking
-  icon: { sprite: Objects/Weapons/Melee/shields.rsi, state: teleriot-icon }
-  iconOn: Objects/Weapons/Melee/shields.rsi/teleriot-on.png
-  event: !type:ToggleActionEvent
+- type: entity
+  id: ActionArtifactActivate
+  name: Activate Artifact
+  description: Immediately activates your current artifact node.
+  noSpawn: true
+  components:
+  - type: InstantAction
+    icon:
+      sprite: Objects/Specific/Xenoarchaeology/xeno_artifacts.rsi
+      state: ano01
+    useDelay: 60
+    event: !type:ArtifactSelfActivateEvent
 
-- type: instantAction
-  id: ClearNetworkLinkOverlays
-  name: network-configurator-clear-network-link-overlays
-  description: network-configurator-clear-network-link-overlays-desc
-  icon: { sprite: Objects/Tools/multitool.rsi, state: icon }
-  event: !type:ClearAllOverlaysEvent
+- type: entity
+  id: ActionToggleBlock
+  name: Block
+  description: Raise or lower your shield.
+  noSpawn: true
+  components:
+  - type: InstantAction
+    icon: { sprite: Objects/Weapons/Melee/shields.rsi, state: teleriot-icon }
+    iconOn: Objects/Weapons/Melee/shields.rsi/teleriot-on.png
+    event: !type:ToggleActionEvent
 
-- type: instantAction
-  id: AnimalLayEgg
-  name: action-name-lay-egg
-  description: action-description-lay-egg
-  icon: { sprite: Objects/Consumable/Food/egg.rsi, state: icon }
-  useDelay: 60
-  serverEvent: !type:EggLayInstantActionEvent
+- type: entity
+  id: ActionClearNetworkLinkOverlays
+  name: Clear network link overlays
+  description: Clear network link overlays.
+  noSpawn: true
+  components:
+  - type: InstantAction
+    clientExclusive: true
+    checkCanInteract: false
+    temporary: true
+    icon: { sprite: Objects/Tools/multitool.rsi, state: icon }
+    event: !type:ClearAllOverlaysEvent
 
-- type: instantAction
-  id: Sleep
-  name: action-name-sleep
-  description: action-desc-sleep
-  checkCanInteract: false
-  icon: { sprite: Clothing/Head/Hats/pyjamasyndicatered.rsi, state: icon }
-  event: !type:SleepActionEvent
+- type: entity
+  id: ActionAnimalLayEgg
+  name: Lay egg
+  description: Uses hunger to lay an egg.
+  noSpawn: true
+  components:
+  - type: InstantAction
+    icon: { sprite: Objects/Consumable/Food/egg.rsi, state: icon }
+    useDelay: 60
+    event: !type:EggLayInstantActionEvent
 
-- type: instantAction
-  id: Wake
-  name: action-name-wake
-  description: action-desc-wake
-  icon: { sprite: Clothing/Head/Hats/pyjamasyndicatered.rsi, state: icon }
-  checkCanInteract: false
-  event: !type:WakeActionEvent
+- type: entity
+  id: ActionSleep
+  name: Sleep
+  description: Go to sleep.
+  noSpawn: true
+  components:
+  - type: InstantAction
+    checkCanInteract: false
+    icon: { sprite: Clothing/Head/Hats/pyjamasyndicatered.rsi, state: icon }
+    event: !type:SleepActionEvent
 
-- type: instantAction
-  id: ActivateHonkImplant
-  name: action-name-honk
-  description: action-desc-honk
-  icon: { sprite: Objects/Fun/bikehorn.rsi, state: icon }
-  event: !type:ActivateImplantEvent
-  useDelay: 1
+- type: entity
+  id: ActionWake
+  name: Wake up
+  description: Stop sleeping.
+  noSpawn: true
+  components:
+  - type: InstantAction
+    icon: { sprite: Clothing/Head/Hats/pyjamasyndicatered.rsi, state: icon }
+    checkCanInteract: false
+    event: !type:WakeActionEvent
+
+- type: entity
+  id: ActionActivateHonkImplant
+  name: Honk
+  description: Activates your honking implant, which will produce the signature sound of the clown.
+  noSpawn: true
+  components:
+  - type: InstantAction
+    icon: { sprite: Objects/Fun/bikehorn.rsi, state: icon }
+    event: !type:ActivateImplantEvent
+    useDelay: 1

@@ -2,8 +2,9 @@
   name: ore bag
   id: OreBag
   parent: BaseStorageItem
-  description: A robust bag for salvage specialists and miners alike to carry large amounts of ore.
+  description: A robust bag for salvage specialists and miners alike to carry large amounts of ore. Magnetises any nearby ores when attached to a belt.
   components:
+  - type: MagnetPickup
   - type: Sprite
     sprite: Objects/Specific/Mining/ore_bag.rsi
     state: icon
@@ -20,5 +21,6 @@
     areaInsert: true
     whitelist:
       tags:
+        - ArtifactFragment
         - Ore
   - type: Dumpable

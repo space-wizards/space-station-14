@@ -4,7 +4,7 @@ namespace Content.Server.Traits.Assorted;
 /// This is used for the uncloneable trait.
 /// </summary>
 [RegisterComponent]
-public sealed class UncloneableComponent : Component
+public sealed partial class UncloneableComponent : Component
 {
 
 }

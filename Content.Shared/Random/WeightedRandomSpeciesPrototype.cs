@@ -11,8 +11,8 @@ namespace Content.Shared.Random;
 public sealed class WeightedRandomSpeciesPrototype : IWeightedRandomPrototype
 {
     [IdDataField]
-    public string ID { get; } = default!;
+    public string ID { get; private set; } = default!;
 
     [DataField("weights", customTypeSerializer: typeof(PrototypeIdDictionarySerializer<float, SpeciesPrototype>))]
-    public Dictionary<string, float> Weights { get; } = new();
+    public Dictionary<string, float> Weights { get; private set; } = new();
 }

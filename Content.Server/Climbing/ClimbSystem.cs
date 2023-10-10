@@ -21,7 +21,6 @@ using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
-using Robust.Shared.GameStates;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Physics.Components;
@@ -49,7 +48,7 @@ public sealed class ClimbSystem : SharedClimbSystem
     private const string ClimbingFixtureName = "climb";
     private const int ClimbingCollisionGroup = (int) (CollisionGroup.TableLayer | CollisionGroup.LowImpassable);
 
-    private readonly Dictionary<EntityUid, List<Fixture>> _fixtureRemoveQueue = new();
+    private readonly Dictionary<EntityUid, Dictionary<string, Fixture>> _fixtureRemoveQueue = new();
 
     public override void Initialize()
     {
@@ -62,7 +61,6 @@ public sealed class ClimbSystem : SharedClimbSystem
         SubscribeLocalEvent<ClimbingComponent, ClimbDoAfterEvent>(OnDoAfter);
         SubscribeLocalEvent<ClimbingComponent, EndCollideEvent>(OnClimbEndCollide);
         SubscribeLocalEvent<ClimbingComponent, BuckleChangeEvent>(OnBuckleChange);
-        SubscribeLocalEvent<ClimbingComponent, ComponentGetState>(OnClimbingGetState);
 
         SubscribeLocalEvent<GlassTableComponent, ClimbedOnEvent>(OnGlassClimbed);
     }
@@ -128,7 +126,7 @@ public sealed class ClimbSystem : SharedClimbSystem
         if (climbing.IsClimbing)
             return true;
 
-        var args = new DoAfterArgs(user, comp.ClimbDelay, new ClimbDoAfterEvent(), entityToMove, target: climbable, used: entityToMove)
+        var args = new DoAfterArgs(EntityManager, user, comp.ClimbDelay, new ClimbDoAfterEvent(), entityToMove, target: climbable, used: entityToMove)
         {
             BreakOnTargetMove = true,
             BreakOnUserMove = true,
@@ -212,8 +210,8 @@ public sealed class ClimbSystem : SharedClimbSystem
                 || (fixture.CollisionMask & ClimbingCollisionGroup) == 0)
                 continue;
 
-            climbingComp.DisabledFixtureMasks.Add(fixture.ID, fixture.CollisionMask & ClimbingCollisionGroup);
-            _physics.SetCollisionMask(uid, fixture, fixture.CollisionMask & ~ClimbingCollisionGroup, fixturesComp);
+            climbingComp.DisabledFixtureMasks.Add(name, fixture.CollisionMask & ClimbingCollisionGroup);
+            _physics.SetCollisionMask(uid, name, fixture, fixture.CollisionMask & ~ClimbingCollisionGroup, fixturesComp);
         }
 
         if (!_fixtureSystem.TryCreateFixture(
@@ -233,7 +231,7 @@ public sealed class ClimbSystem : SharedClimbSystem
 
     private void OnClimbEndCollide(EntityUid uid, ClimbingComponent component, ref EndCollideEvent args)
     {
-        if (args.OurFixture.ID != ClimbingFixtureName
+        if (args.OurFixtureId != ClimbingFixtureName
             || !component.IsClimbing
             || component.OwnerIsTransitioning)
             return;
@@ -262,18 +260,18 @@ public sealed class ClimbSystem : SharedClimbSystem
                 continue;
             }
 
-            _physics.SetCollisionMask(uid, fixture, fixture.CollisionMask | fixtureMask, fixtures);
+            _physics.SetCollisionMask(uid, name, fixture, fixture.CollisionMask | fixtureMask, fixtures);
         }
         climbing.DisabledFixtureMasks.Clear();
 
         if (!_fixtureRemoveQueue.TryGetValue(uid, out var removeQueue))
         {
-            removeQueue = new List<Fixture>();
+            removeQueue = new Dictionary<string, Fixture>();
             _fixtureRemoveQueue.Add(uid, removeQueue);
         }
 
         if (fixtures.Fixtures.TryGetValue(ClimbingFixtureName, out var climbingFixture))
-            removeQueue.Add(climbingFixture);
+            removeQueue.Add(ClimbingFixtureName, climbingFixture);
 
         climbing.IsClimbing = false;
         climbing.OwnerIsTransitioning = false;
@@ -300,8 +298,8 @@ public sealed class ClimbSystem : SharedClimbSystem
 
         if (!HasComp<ClimbingComponent>(user)
             || !TryComp(user, out BodyComponent? body)
-            || !_bodySystem.BodyHasChildOfType(user, BodyPartType.Leg, body)
-            || !_bodySystem.BodyHasChildOfType(user, BodyPartType.Foot, body))
+            || !_bodySystem.BodyHasPartType(user, BodyPartType.Leg, body)
+            || !_bodySystem.BodyHasPartType(user, BodyPartType.Foot, body))
         {
             reason = Loc.GetString("comp-climbable-cant-climb");
             return false;
@@ -364,11 +362,6 @@ public sealed class ClimbSystem : SharedClimbSystem
         if (!args.Buckling)
             return;
         StopClimb(uid, component);
-    }
-
-    private static void OnClimbingGetState(EntityUid uid, ClimbingComponent component, ref ComponentGetState args)
-    {
-        args.State = new ClimbingComponent.ClimbModeComponentState(component.IsClimbing, component.OwnerIsTransitioning);
     }
 
     private void OnGlassClimbed(EntityUid uid, GlassTableComponent component, ClimbedOnEvent args)
@@ -440,7 +433,7 @@ public sealed class ClimbSystem : SharedClimbSystem
 
             foreach (var fixture in fixtures)
             {
-                _fixtureSystem.DestroyFixture(uid, fixture, body: physicsComp, manager: fixturesComp);
+                _fixtureSystem.DestroyFixture(uid, fixture.Key, fixture.Value, body: physicsComp, manager: fixturesComp);
             }
         }
 

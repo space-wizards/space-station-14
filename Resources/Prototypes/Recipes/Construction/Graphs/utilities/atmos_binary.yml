@@ -49,7 +49,7 @@
     - to: radiator
       steps:
       - material: Steel
-        amount: 8
+        amount: 2
         doAfter: 1
 
   - node: pressurepump
@@ -176,7 +176,7 @@
       completed:
       - !type:SpawnPrototype
         prototype: SheetSteel1
-        amount: 8
+        amount: 2
       - !type:DeleteEntity
       steps:
       - tool: Screwing

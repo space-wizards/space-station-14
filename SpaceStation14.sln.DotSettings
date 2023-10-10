@@ -46,6 +46,7 @@
     <s:String x:Key="/Default/CodeStyle/CodeFormatting/CSharpFormat/ACCESSOR_OWNER_DECLARATION_BRACES/@EntryValue">NEXT_LINE</s:String>
     <s:String x:Key="/Default/CodeStyle/CodeFormatting/CSharpFormat/ANONYMOUS_METHOD_DECLARATION_BRACES/@EntryValue">NEXT_LINE</s:String>
     <s:String x:Key="/Default/CodeStyle/CodeFormatting/CSharpFormat/CASE_BLOCK_BRACES/@EntryValue">NEXT_LINE</s:String>
+	<s:String x:Key="/Default/CodeStyle/CodeFormatting/CSharpFormat/INDENT_RAW_LITERAL_STRING/@EntryValue">INDENT</s:String>
     <s:String x:Key="/Default/CodeStyle/CodeFormatting/CSharpFormat/INITIALIZER_BRACES/@EntryValue">NEXT_LINE</s:String>
     <s:String x:Key="/Default/CodeStyle/CodeFormatting/CSharpFormat/INVOCABLE_DECLARATION_BRACES/@EntryValue">NEXT_LINE</s:String>
     <s:String x:Key="/Default/CodeStyle/CodeFormatting/CSharpFormat/OTHER_BRACES/@EntryValue">NEXT_LINE</s:String>
@@ -56,6 +57,7 @@
 	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=GC/@EntryIndexedValue">GC</s:String>
     <s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=GD/@EntryIndexedValue">GD</s:String>
     <s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=GL/@EntryIndexedValue">GL</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=HV/@EntryIndexedValue">HV</s:String>
 	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=HW/@EntryIndexedValue">HW</s:String>
 	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=IC/@EntryIndexedValue">IC</s:String>
 	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=IL/@EntryIndexedValue">IL</s:String>
@@ -63,6 +65,7 @@
     <s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=KHR/@EntryIndexedValue">KHR</s:String>
 	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=MMI/@EntryIndexedValue">MMI</s:String>
 	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=MS/@EntryIndexedValue">MS</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=MV/@EntryIndexedValue">MV</s:String>
     <s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=OGL/@EntryIndexedValue">OGL</s:String>
     <s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=OOC/@EntryIndexedValue">OOC</s:String>
 	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=OS/@EntryIndexedValue">OS</s:String>
@@ -133,13 +136,15 @@
 	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=142539C9975BA84BA1996ADB02B1E422/CustomProperties/=ValidateFileName/@EntryIndexedValue">True</s:String>
 	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=142539C9975BA84BA1996ADB02B1E422/Description/@EntryValue">&amp;Entity Component</s:String>
 	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=142539C9975BA84BA1996ADB02B1E422/Field/=CLASS/@KeyIndexDefined">True</s:Boolean>
-	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=142539C9975BA84BA1996ADB02B1E422/Field/=CLASS/Expression/@EntryValue">getAlphaNumericFileNameWithoutExtension()</s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=142539C9975BA84BA1996ADB02B1E422/Field/=CLASS/Expression/@EntryValue">getFileNameWithoutExtension()</s:String>
+	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=142539C9975BA84BA1996ADB02B1E422/Field/=CLASS/InitialRange/@EntryValue">-1</s:Int64>
 	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=142539C9975BA84BA1996ADB02B1E422/Field/=CLASS/Order/@EntryValue">2</s:Int64>
 	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=142539C9975BA84BA1996ADB02B1E422/Field/=HEADER/@KeyIndexDefined">True</s:Boolean>
 	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=142539C9975BA84BA1996ADB02B1E422/Field/=HEADER/Expression/@EntryValue">fileheader()</s:String>
 	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=142539C9975BA84BA1996ADB02B1E422/Field/=HEADER/Order/@EntryValue">0</s:Int64>
 	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=142539C9975BA84BA1996ADB02B1E422/Field/=NAMESPACE/@KeyIndexDefined">True</s:Boolean>
 	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=142539C9975BA84BA1996ADB02B1E422/Field/=NAMESPACE/Expression/@EntryValue">fileDefaultNamespace()</s:String>
+	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=142539C9975BA84BA1996ADB02B1E422/Field/=NAMESPACE/InitialRange/@EntryValue">-1</s:Int64>
 	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=142539C9975BA84BA1996ADB02B1E422/Field/=NAMESPACE/Order/@EntryValue">1</s:Int64>
 	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=142539C9975BA84BA1996ADB02B1E422/Reformat/@EntryValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=142539C9975BA84BA1996ADB02B1E422/Scope/=E8F0594528C33E45BBFEC6CFE851095D/@KeyIndexDefined">True</s:Boolean>
@@ -151,14 +156,43 @@
 /// This is used for...
 /// &lt;/summary&gt;
 [RegisterComponent]
-public sealed class $CLASS$ : Component {
+public sealed partial class $CLASS$ : Component {
     $END$
 }</s:String>
 	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=142539C9975BA84BA1996ADB02B1E422/UITag/@EntryValue">SS14</s:String>
-	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=2CAB0A567F30704CA99AA3EC249E3153/Text/@EntryValue">$HEADER$namespace $NAMESPACE$
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=2CAB0A567F30704CA99AA3EC249E3153/Text/@EntryValue">$HEADER$namespace $NAMESPACE$;
+
+public sealed class $CLASS$ {$END$}</s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=2CBD6971A7955044AD2624B84FB49E38/Text/@EntryValue">$HEADER$using System.ComponentModel;
+
+namespace $NAMESPACE$;
+
+public partial class $CLASS$ : Component
 {
-  public sealed class $CLASS$ {$END$}
+    public $CLASS$()
+    {
+        InitializeComponent();
+    }
+
+    public $CLASS$(IContainer container)
+    {
+        container.Add(this);
+
+        InitializeComponent();
+    }
 }</s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=37AB964D6E4D424BBE2530F92DA37EEB/CustomProperties/=Category/@EntryIndexedValue"></s:String>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=37AB964D6E4D424BBE2530F92DA37EEB/CustomProperties/=Category/@EntryIndexRemoved">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=37AB964D6E4D424BBE2530F92DA37EEB/Image/@EntryValue"></s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=37AB964D6E4D424BBE2530F92DA37EEB/Text/@EntryValue">$HEADER$namespace $NAMESPACE$;
+
+public sealed record $RECORD$($END$);</s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=40C163D436D8ED48A6D01A0AFEFC5556/Text/@EntryValue">$HEADER$using NUnit.Framework;
+
+namespace $NAMESPACE$;
+
+[TestFixture]
+public class $CLASS$ {$END$}</s:String>
 	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=42CD33DDCA56314C933090204C703B42/@KeyIndexDefined">True</s:Boolean>
 	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=42CD33DDCA56314C933090204C703B42/Applicability/=File/@EntryIndexedValue">True</s:Boolean>
 	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=42CD33DDCA56314C933090204C703B42/CustomProperties/=Extension/@EntryIndexedValue">cs</s:String>
@@ -186,7 +220,7 @@ namespace $NAMESPACE$;
 /// This is a prototype for...
 /// &lt;/summary&gt;
 [Prototype($END$)]
-public sealed class $CLASS$ : IPrototype {
+public sealed partial class $CLASS$ : IPrototype {
     /// &lt;inheritdoc/&gt;
     [IdDataField]
     public string ID { get; } = default!;
@@ -220,7 +254,15 @@ public sealed class $CLASS$ : IPrototype {
 	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=612D1A1D3CD84A4BB90130D6230F13C1/Scope/=C3001E7C0DA78E4487072B7E050D86C5/Type/@EntryValue"></s:String>
 	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=612D1A1D3CD84A4BB90130D6230F13C1/ShortenQualifiedReferences/@EntryValue">False</s:Boolean>
 	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=612D1A1D3CD84A4BB90130D6230F13C1/Text/@EntryValue"></s:String>
+	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=652E0DBD3559BD4EA35305A83762B0C8/Field/=CLASS/InitialRange/@EntryValue">-1</s:Int64>
 	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=652E0DBD3559BD4EA35305A83762B0C8/UITag/@EntryValue">SS14</s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=6FAA6736247D464489DF536819A6D103/Text/@EntryValue">$HEADER$namespace $NAMESPACE$;
+
+public interface $INTERFACE$ {$END$}
+</s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=7B10AC30B0320A4F95A3763001E1DBF6/Text/@EntryValue">$HEADER$namespace $NAMESPACE$;
+
+public enum $ENUM$ {$END$}</s:String>
 	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=7C233DA875A1B54AB9906002129B9E8C/@KeyIndexDefined">True</s:Boolean>
 	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=7C233DA875A1B54AB9906002129B9E8C/Applicability/=File/@EntryIndexedValue">True</s:Boolean>
 	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=7C233DA875A1B54AB9906002129B9E8C/CustomProperties/=Extension/@EntryIndexedValue">cs</s:String>
@@ -252,6 +294,18 @@ public sealed class $CLASS$ : Shared$CLASS$ {
     }
 }</s:String>
 	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=7C233DA875A1B54AB9906002129B9E8C/UITag/@EntryValue">SS14</s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=7F2A1BE8D0078241A9AE7802038BAD3C/Text/@EntryValue">$HEADER$using System.Windows.Forms;
+
+namespace $NAMESPACE$;
+
+public partial class $CLASS$ : Form
+{
+    public $CLASS$()
+    {
+        InitializeComponent();
+    }
+}
+</s:String>
 	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=81EA2D3ED3A77048A10222F86F7F2CAD/@KeyIndexDefined">True</s:Boolean>
 	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=81EA2D3ED3A77048A10222F86F7F2CAD/Applicability/=Live/@EntryIndexedValue">True</s:Boolean>
 	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=81EA2D3ED3A77048A10222F86F7F2CAD/Description/@EntryValue">IoC resolve</s:String>
@@ -310,6 +364,9 @@ public sealed class $CLASS$ : EntitySystem {
     }
 }</s:String>
 	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=8B1B60A18C22DF418EB1E319EA2FFA90/UITag/@EntryValue">SS14</s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=9BB83ED0FF792E47BAAB217C25589C77/Text/@EntryValue">$HEADER$namespace $NAMESPACE$;
+
+public struct $STRUCT$ {$END$}</s:String>
 	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=A04E4F8184AF3244891524889B282DB9/@KeyIndexDefined">True</s:Boolean>
 	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=A04E4F8184AF3244891524889B282DB9/Applicability/=File/@EntryIndexedValue">True</s:Boolean>
 	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=A04E4F8184AF3244891524889B282DB9/CustomProperties/=Extension/@EntryIndexedValue">cs</s:String>
@@ -329,12 +386,14 @@ public sealed class $CLASS$ : EntitySystem {
 	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=A04E4F8184AF3244891524889B282DB9/Scope/=E8F0594528C33E45BBFEC6CFE851095D/@KeyIndexDefined">True</s:Boolean>
 	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=A04E4F8184AF3244891524889B282DB9/Scope/=E8F0594528C33E45BBFEC6CFE851095D/Type/@EntryValue">InCSharpProjectFile</s:String>
 	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=A04E4F8184AF3244891524889B282DB9/ShortenQualifiedReferences/@EntryValue">True</s:Boolean>
-	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=A04E4F8184AF3244891524889B282DB9/Text/@EntryValue">$HEADER$namespace $NAMESPACE$;
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=A04E4F8184AF3244891524889B282DB9/Text/@EntryValue">$HEADER$using Robust.Shared.Serialization;
+
+namespace $NAMESPACE$;
 
 /// &lt;summary&gt;
 /// This is used for...
 /// &lt;/summary&gt;
-public abstract class $CLASS$ : Component {
+public abstract partial class $CLASS$ : Component {
     $END$
 }
 
@@ -361,6 +420,17 @@ public sealed class $CLASS$State : ComponentState {
 	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=C1EA2E5A7CC15B4387C5C4996D12465E/Shortcut/@EntryValue">netser</s:String>
 	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=C1EA2E5A7CC15B4387C5C4996D12465E/ShortenQualifiedReferences/@EntryValue">True</s:Boolean>
 	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=C1EA2E5A7CC15B4387C5C4996D12465E/Text/@EntryValue">[System.Serializable, Robust.Shared.Serialization.NetSerializable]</s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=C4795E57DDEC1C4F97BBC8C7173EBBCA/Text/@EntryValue">$HEADER$using System.Windows.Forms;
+
+namespace $NAMESPACE$;
+
+public partial class $CLASS$ : UserControl
+{
+    public $CLASS$()
+    {
+        InitializeComponent();
+    }
+}</s:String>
 	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=D02105D81279C44393024753C36CA5EA/@KeyIndexDefined">True</s:Boolean>
 	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=D02105D81279C44393024753C36CA5EA/Applicability/=File/@EntryIndexedValue">True</s:Boolean>
 	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=D02105D81279C44393024753C36CA5EA/CustomProperties/=Extension/@EntryIndexedValue">cs</s:String>
@@ -413,7 +483,7 @@ public abstract class $CLASS$ : EntitySystem {
 	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=EA04030275C2A349A1CF0D32838BD1FA/Scope/=E8F0594528C33E45BBFEC6CFE851095D/Type/@EntryValue">InCSharpProjectFile</s:String>
 	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=EA04030275C2A349A1CF0D32838BD1FA/ShortenQualifiedReferences/@EntryValue">True</s:Boolean>
 	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=EA04030275C2A349A1CF0D32838BD1FA/Text/@EntryValue">$HEADER$using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Array;
 
 namespace $NAMESPACE$;
 
@@ -427,8 +497,8 @@ public sealed class $CLASS$ : IPrototype, IInheritingPrototype {
     public string ID { get; } = default!;
 
     /// &lt;inheritdoc/&gt;
-    [ParentDataField(typeof(AbstractPrototypeIdSerializer&lt;$CLASS$&gt;))]
-    public string? Parent { get; }
+    [ParentDataField(typeof(AbstractPrototypeIdArraySerializer&lt;$CLASS$&gt;))]
+    public string[]? Parents { get; }
 
     /// &lt;inheritdoc/&gt;
     [NeverPushInheritance]
@@ -455,12 +525,14 @@ public sealed class $CLASS$ : IPrototype, IInheritingPrototype {
 	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=F78E2BE57FA393438C0E0AC717B4FC76/Scope/=E8F0594528C33E45BBFEC6CFE851095D/@KeyIndexDefined">True</s:Boolean>
 	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=F78E2BE57FA393438C0E0AC717B4FC76/Scope/=E8F0594528C33E45BBFEC6CFE851095D/Type/@EntryValue">InCSharpProjectFile</s:String>
 	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=F78E2BE57FA393438C0E0AC717B4FC76/ShortenQualifiedReferences/@EntryValue">True</s:Boolean>
-	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=F78E2BE57FA393438C0E0AC717B4FC76/Text/@EntryValue">$HEADER$namespace $NAMESPACE$;
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=F78E2BE57FA393438C0E0AC717B4FC76/Text/@EntryValue">$HEADER$using Robust.Shared.GameStates;
+
+namespace $NAMESPACE$;
 
 /// &lt;inheritdoc/&gt;
 [RegisterComponent, NetworkedComponent]
 [ComponentReference(typeof(Shared$CLASS$))]
-public sealed class $CLASS$ : Shared$CLASS$ {
+public sealed partial class $CLASS$ : Shared$CLASS$ {
     $END$
 }</s:String>
 	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=F78E2BE57FA393438C0E0AC717B4FC76/UITag/@EntryValue">SS14</s:String>
@@ -582,6 +654,7 @@ public sealed class $CLASS$ : Shared$CLASS$ {
 	<s:Boolean x:Key="/Default/UserDictionary/Words/=Ruinable/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/UserDictionary/Words/=saltern/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/UserDictionary/Words/=sandboxing/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=satisfier/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/UserDictionary/Words/=Serilog/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/UserDictionary/Words/=Shrimple/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/UserDictionary/Words/=singulo/@EntryIndexedValue">True</s:Boolean>
@@ -608,6 +681,7 @@ public sealed class $CLASS$ : Shared$CLASS$ {
 	<s:Boolean x:Key="/Default/UserDictionary/Words/=Thonk/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/UserDictionary/Words/=threadsafe/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/UserDictionary/Words/=tickrate/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=toggleghosts/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/UserDictionary/Words/=Toolshed/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/UserDictionary/Words/=Toolshed_0027s/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/UserDictionary/Words/=Trasen/@EntryIndexedValue">True</s:Boolean>
@@ -631,14 +705,25 @@ public sealed class $CLASS$ : Shared$CLASS$ {
 	<s:Boolean x:Key="/Default/UserDictionary/Words/=Xeno/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/UserDictionary/Words/=Xenoarchaeology/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/UserDictionary/Words/=xform/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=Xnor/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/UserDictionary/Words/=yamls/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/UserDictionary/Words/=Zumos/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=652E0DBD3559BD4EA35305A83762B0C8/@KeyIndexDefined">True</s:Boolean>
     	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=652E0DBD3559BD4EA35305A83762B0C8/Description/@EntryValue">&amp;XAML Control</s:String>
-    	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=652E0DBD3559BD4EA35305A83762B0C8/Text/@EntryValue">$HEADER$namespace $NAMESPACE$&#xD;
-    {&#xD;
-      public class $CLASS$ {$END$}&#xD;
-    }</s:String>
+    	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=652E0DBD3559BD4EA35305A83762B0C8/Text/@EntryValue">$HEADER$using Robust.Client.AutoGenerated;&#xD;
+using Robust.Client.UserInterface;&#xD;
+using Robust.Client.UserInterface.XAML;
+
+namespace $NAMESPACE$;
+
+[GenerateTypedNameReferences]
+public sealed partial class $CLASS$ : Control
+{
+    public $CLASS$()
+	{
+	    RobustXamlLoader.Load(this);
+	}
+}</s:String>
     	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=652E0DBD3559BD4EA35305A83762B0C8/Reformat/@EntryValue">True</s:Boolean>
     	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=652E0DBD3559BD4EA35305A83762B0C8/ShortenQualifiedReferences/@EntryValue">True</s:Boolean>
     	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=652E0DBD3559BD4EA35305A83762B0C8/CustomProperties/=FileName/@EntryIndexedValue">Control.xaml</s:String>
@@ -651,7 +736,7 @@ public sealed class $CLASS$ : Shared$CLASS$ {
     	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=652E0DBD3559BD4EA35305A83762B0C8/Field/=HEADER/Expression/@EntryValue">fileheader()</s:String>
     	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=652E0DBD3559BD4EA35305A83762B0C8/Field/=HEADER/Order/@EntryValue">0</s:Int64>
     	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=652E0DBD3559BD4EA35305A83762B0C8/Field/=CLASS/@KeyIndexDefined">True</s:Boolean>
-    	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=652E0DBD3559BD4EA35305A83762B0C8/Field/=CLASS/Expression/@EntryValue">getUpperCaseAlphaNumericFileName()</s:String>
+    	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=652E0DBD3559BD4EA35305A83762B0C8/Field/=CLASS/Expression/@EntryValue">getFileNameWithoutExtension()</s:String>
     	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=652E0DBD3559BD4EA35305A83762B0C8/Field/=CLASS/Order/@EntryValue">1</s:Int64>
     	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=652E0DBD3559BD4EA35305A83762B0C8/Field/=NAMESPACE/@KeyIndexDefined">True</s:Boolean>
     	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=652E0DBD3559BD4EA35305A83762B0C8/Field/=NAMESPACE/Expression/@EntryValue">fileDefaultNamespace()</s:String>
@@ -659,9 +744,9 @@ public sealed class $CLASS$ : Shared$CLASS$ {
     	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=652E0DBD3559BD4EA35305A83762B0C8/Field/=NAMESPACE/Order/@EntryValue">2</s:Int64>
     	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=652E0DBD3559BD4EA35305A83762B0C8/Section/=84500DDEC5FA9F44B5EC0DC137ED8589/@KeyIndexDefined">True</s:Boolean>
     	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=652E0DBD3559BD4EA35305A83762B0C8/Section/=84500DDEC5FA9F44B5EC0DC137ED8589/LocationSelectorName/@EntryValue">manual</s:String>
-    	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=652E0DBD3559BD4EA35305A83762B0C8/Section/=84500DDEC5FA9F44B5EC0DC137ED8589/LocationSelectorConfig/@EntryValue">&lt;RelativeConfig File="$NAME$" /&gt;</s:String>
+    	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=652E0DBD3559BD4EA35305A83762B0C8/Section/=84500DDEC5FA9F44B5EC0DC137ED8589/LocationSelectorConfig/@EntryValue">&lt;RelativeConfig File="$NAME$.xaml" /&gt;</s:String>
     	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=652E0DBD3559BD4EA35305A83762B0C8/Section/=84500DDEC5FA9F44B5EC0DC137ED8589/Order/@EntryValue">0</s:Int64>
-    	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=652E0DBD3559BD4EA35305A83762B0C8/Section/=84500DDEC5FA9F44B5EC0DC137ED8589/SectionPlain/Text/@EntryValue">&lt;controls:$CLASS$&gt;&#xD;
-        xmlns="https://spacestation14.io"&#xD;
-        xmlns:controls="clr-namespace:$NAMESPACE$"&gt;&#xD;
-    &lt;/controls:$CLASS$&gt;</s:String></wpf:ResourceDictionary>
+    	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=652E0DBD3559BD4EA35305A83762B0C8/Section/=84500DDEC5FA9F44B5EC0DC137ED8589/SectionPlain/Text/@EntryValue">&lt;controls:$CLASS$&#xD;
+    xmlns="https://spacestation14.io"&#xD;
+    xmlns:controls="clr-namespace:$NAMESPACE$"&gt;$END$&#xD;
+&lt;/controls:$CLASS$&gt;</s:String></wpf:ResourceDictionary>

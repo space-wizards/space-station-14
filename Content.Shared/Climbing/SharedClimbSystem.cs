@@ -5,7 +5,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Climbing;
 
-public abstract class SharedClimbSystem : EntitySystem
+public abstract partial class SharedClimbSystem : EntitySystem
 {
     public override void Initialize()
     {
@@ -28,7 +28,7 @@ public abstract class SharedClimbSystem : EntitySystem
     }
 
     [Serializable, NetSerializable]
-    protected sealed class ClimbDoAfterEvent : SimpleDoAfterEvent
+    protected sealed partial class ClimbDoAfterEvent : SimpleDoAfterEvent
     {
     }
 }

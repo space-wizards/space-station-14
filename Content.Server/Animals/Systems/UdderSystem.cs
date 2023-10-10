@@ -43,7 +43,7 @@ namespace Content.Server.Animals.Systems
                     udder.AccumulatedFrameTime -= udder.UpdateRate;
 
                     // Actually there is food digestion so no problem with instant reagent generation "OnFeed"
-                    if (EntityManager.TryGetComponent<HungerComponent?>(udder.Owner, out var hunger))
+                    if (EntityManager.TryGetComponent(udder.Owner, out HungerComponent? hunger))
                     {
                         // Is there enough nutrition to produce reagent?
                         if (_hunger.GetHungerThreshold(hunger) < HungerThreshold.Peckish)
@@ -66,7 +66,7 @@ namespace Content.Server.Animals.Systems
             if (!Resolve(uid, ref udder))
                 return;
 
-            var doargs = new DoAfterArgs(userUid, 5, new MilkingDoAfterEvent(), uid, uid, used: containerUid)
+            var doargs = new DoAfterArgs(EntityManager, userUid, 5, new MilkingDoAfterEvent(), uid, uid, used: containerUid)
             {
                 BreakOnUserMove = true,
                 BreakOnDamage = true,

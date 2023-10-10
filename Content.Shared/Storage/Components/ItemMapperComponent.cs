@@ -54,9 +54,9 @@ namespace Content.Shared.Storage.Components
     /// </summary>
     [RegisterComponent]
     [Access(typeof(SharedItemMapperSystem))]
-    public sealed class ItemMapperComponent : Component
+    public sealed partial class ItemMapperComponent : Component
     {
-        [DataField("mapLayers")] public readonly Dictionary<string, SharedMapLayerData> MapLayers = new();
+        [DataField("mapLayers")] public  Dictionary<string, SharedMapLayerData> MapLayers = new();
 
         [DataField("sprite")] public ResPath? RSIPath;
 
@@ -66,6 +66,11 @@ namespace Content.Shared.Storage.Components
         [DataField("containerWhitelist")]
         public HashSet<string>? ContainerWhitelist;
 
-        public readonly List<string> SpriteLayers = new();
+        /// <summary>
+        ///     The list of map layer keys that are valid targets for changing in <see cref="MapLayers"/>
+        ///     Can be initialized if already existing on the sprite, or inferred automatically
+        /// </summary>
+        [DataField("spriteLayers")]
+        public List<string> SpriteLayers = new();
     }
 }

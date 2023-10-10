@@ -1,0 +1,14 @@
+- type: entity
+  name: C.H.I.M.P. handcannon upgrade chip
+  parent: BaseItem
+  id: WeaponPistolCHIMPUpgradeKit
+  description: An experimental upgrade kit for the C.H.I.M.P.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/module.rsi
+    state: abductor_mod  
+  - type: Item
+    size: 10
+  - type: Tag
+    tags:
+    - WeaponPistolCHIMPUpgradeKit

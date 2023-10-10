@@ -1,6 +1,5 @@
 using Content.Client.Clothing;
 using Content.Client.Examine;
-using Content.Client.Storage;
 using Content.Client.UserInterface.Controls;
 using Content.Client.Verbs.UI;
 using Content.Shared.Clothing.Components;
@@ -9,6 +8,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
+using Content.Shared.Storage;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Player;
@@ -91,7 +91,7 @@ namespace Content.Client.Inventory
             UpdateSlot(args.Equipee, component, args.Slot);
             if (args.Equipee != _playerManager.LocalPlayer?.ControlledEntity)
                 return;
-            var update = new SlotSpriteUpdate(args.SlotGroup, args.Slot, null, false);
+            var update = new SlotSpriteUpdate(null, args.SlotGroup, args.Slot, false);
             OnSpriteUpdate?.Invoke(update);
         }
 
@@ -100,9 +100,8 @@ namespace Content.Client.Inventory
             UpdateSlot(args.Equipee, component, args.Slot);
             if (args.Equipee != _playerManager.LocalPlayer?.ControlledEntity)
                 return;
-            var sprite = EntityManager.GetComponentOrNull<SpriteComponent>(args.Equipment);
-            var update = new SlotSpriteUpdate(args.SlotGroup, args.Slot, sprite,
-                HasComp<ClientStorageComponent>(args.Equipment));
+            var update = new SlotSpriteUpdate(args.Equipment, args.SlotGroup, args.Slot,
+                HasComp<StorageComponent>(args.Equipment));
             OnSpriteUpdate?.Invoke(update);
         }
 
@@ -283,7 +282,7 @@ namespace Content.Client.Inventory
                 return;
 
             EntityManager.RaisePredictiveEvent(
-                new InteractInventorySlotEvent(item.Value, altInteract: false));
+                new InteractInventorySlotEvent(GetNetEntity(item.Value), altInteract: false));
         }
 
         public void UIInventoryAltActivateItem(string slot, EntityUid uid)
@@ -291,7 +290,7 @@ namespace Content.Client.Inventory
             if (!TryGetSlotEntity(uid, slot, out var item))
                 return;
 
-            EntityManager.RaisePredictiveEvent(new InteractInventorySlotEvent(item.Value, altInteract: true));
+            EntityManager.RaisePredictiveEvent(new InteractInventorySlotEvent(GetNetEntity(item.Value), altInteract: true));
         }
 
         public sealed class SlotData
@@ -340,9 +339,9 @@ namespace Content.Client.Inventory
         }
 
         public readonly record struct SlotSpriteUpdate(
+            EntityUid? Entity,
             string Group,
             string Name,
-            SpriteComponent? Sprite,
             bool ShowStorage
         );
     }

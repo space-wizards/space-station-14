@@ -110,11 +110,14 @@
       - tool: Prying
         doAfter: 5
 
+## Glass airlock
   - node: glassAirlock
     entity: AirlockGlass
+    doNotReplaceInheritingEntities: true
     actions:
-    - !type:ChangeWiresPanelSecurityLevel
-      level: Level0
+    - !type:SetWiresPanelSecurity
+      wiresAccessible: true
+      weldingAllowed: true
     edges:
     - to: glassElectronics
       conditions:
@@ -132,7 +135,7 @@
       - tool: Prying
         doAfter: 2
         
-    - to: glassAirlockMedSecurityBreached
+    - to: medSecurityUnfinished
       conditions:
       - !type:WirePanel {}
       steps:
@@ -140,235 +143,22 @@
         amount: 2
         doAfter: 2
     
-    - to: glassAirlockHighSecurityBreached
+    - to: highSecurityUnfinished
       conditions:
       - !type:WirePanel {}
       steps:
       - material: Plasteel
-        amount: 2
-        doAfter: 2
-
-## Return node so that removing all internal plating doesn't reset the door
-  - node: glassAirlockUnsecured    
-    actions:
-    - !type:ChangeWiresPanelSecurityLevel
-      level: Level0
-    edges:
-    - to: glassElectronics
-      conditions:
-      - !type:EntityAnchored {}
-      - !type:DoorWelded {}
-      - !type:DoorBolted
-        value: false
-      - !type:WirePanel {}
-      - !type:AllWiresCut
-      completed:
-      - !type:SpawnPrototype
-        prototype: SheetRGlass1
-        amount: 1
-      steps:
-      - tool: Prying
-        doAfter: 2
-        
-    - to: glassAirlockMedSecurityBreached 
-      conditions:
-      - !type:WirePanel {}
-      steps:
-      - material: Steel
         amount: 2
         doAfter: 2
         
-    - to: glassAirlockHighSecurityBreached
-      conditions:
-      - !type:WirePanel {}
-      steps:
-      - material: Plasteel
-        amount: 2
-        doAfter: 2
-
-## Medium security level airlock: a layer of steel plating protects the internal wiring
-  - node: glassAirlockMedSecurityBreached
-    actions:
-      - !type:ChangeWiresPanelSecurityLevel
-        level: Level1    
-    edges:
-    - to: glassAirlockUnsecured 
-      completed:
-      - !type:GivePrototype
-        prototype: SheetSteel1
-        amount: 2
-      conditions:
-      - !type:WirePanel {}
-      steps:
-      - tool: Prying
-        doAfter: 4
-    
-    - to: glassAirlockMedSecurity 
-      conditions:  
-      - !type:WirePanel {}
-      steps:
-      - tool: Welding
-        doAfter: 3
-      
-  - node: glassAirlockMedSecurity
-    actions:
-      - !type:ChangeWiresPanelSecurityLevel
-        level: Level2
-    edges:
-    - to: glassAirlockMedSecurityBreached 
-      conditions:
-      - !type:WirePanel {}
-      steps:
-      - tool: Welding
-        doAfter: 10
-
-## High security level airlock: a layer of plasteel plating protects the internal wiring
-  - node: glassAirlockHighSecurityBreached
-    actions:
-      - !type:ChangeWiresPanelSecurityLevel
-        level: Level3   
-    edges:
-    - to: glassAirlockUnsecured 
-      completed:
-      - !type:GivePrototype
-        prototype: SheetPlasteel1
-        amount: 2
-      conditions:
-      - !type:WirePanel {}
-      steps:
-      - tool: Prying
-        doAfter: 4
-    
-    - to: glassAirlockHighSecurity 
-      conditions:  
-      - !type:WirePanel {}
-      steps:
-      - tool: Welding
-        doAfter: 5
-      
-  - node: glassAirlockHighSecurity
-    actions:
-      - !type:ChangeWiresPanelSecurityLevel
-        level: Level4
-    edges:
-    - to: glassAirlockHighSecurityBreached
-      conditions:
-      - !type:WirePanel {}
-      steps:
-      - tool: Welding
-        doAfter: 15
-    
-    - to: glassAirlockMaxSecurity
-      conditions:
-      - !type:WirePanel {}
-      steps:     
-      - material: MetalRod
-        amount: 2
-        doAfter: 1
-
-## Max security level airlock: an electric grill is added        
-  - node: glassAirlockMaxSecurity
-    actions:
-      - !type:ChangeWiresPanelSecurityLevel
-        level: Level5
-    edges:
-    - to: glassAirlockHighSecurity 
-      completed:
-      - !type:AttemptElectrocute
-      - !type:GivePrototype
-        prototype: PartRodMetal1
-        amount: 2
-      conditions:  
-      - !type:WirePanel {}
-      steps:
-      - tool: Cutting
-        doAfter: 0.5 
-
-    - to: glassAirlockSuperMaxSecurityBreached
-      conditions:
-      - !type:WirePanel {}
-      steps:     
-      - material: Plasteel
-        amount: 2
-        doAfter: 2
-
-## Super max security level airlock: an additional layer of plasteel is added     
-  - node: glassAirlockSuperMaxSecurityBreached
-    actions:
-      - !type:ChangeWiresPanelSecurityLevel
-        level: Level6
-    edges:
-    - to: glassAirlockMaxSecurity 
-      completed:
-      - !type:GivePrototype
-        prototype: SheetPlasteel1
-        amount: 2
-      conditions:
-      - !type:WirePanel {}
-      steps:
-      - tool: Prying
-        doAfter: 4
-    
-    - to: glassAirlockSuperMaxSecurity 
-      conditions:  
-      - !type:WirePanel {}
-      steps:
-      - tool: Welding
-        doAfter: 5
-      
-  - node: glassAirlockSuperMaxSecurity
-    actions:
-      - !type:ChangeWiresPanelSecurityLevel
-        level: Level7
-    edges:
-    - to: glassAirlockSuperMaxSecurityBreached 
-      conditions:
-      - !type:WirePanel {}
-      steps:
-      - tool: Welding
-        doAfter: 15
-
+## Standard airlock
   - node: airlock
     entity: Airlock
+    doNotReplaceInheritingEntities: true
     actions:
-    - !type:ChangeWiresPanelSecurityLevel
-      level: Level0
-    edges:
-    - to: wired #TODO DOOR ELECTRONICS. If door electronics ever govern access permissions, this step should probably be further down? It makes it too easy to swap permissions around. See also windoor.
-      conditions:
-      - !type:EntityAnchored {}
-      - !type:DoorWelded {}
-      - !type:DoorBolted
-        value: false
-      - !type:WirePanel {}
-      - !type:AllWiresCut
-      completed:
-      - !type:EmptyAllContainers {}
-      steps:
-      - tool: Prying
-        doAfter: 5
-        
-    - to: airlockMedSecurityBreached
-      conditions:
-      - !type:WirePanel {}
-      steps:
-      - material: Steel
-        amount: 2
-        doAfter: 2
-    
-    - to: airlockHighSecurityBreached
-      conditions:
-      - !type:WirePanel {}
-      steps:
-      - material: Plasteel
-        amount: 2
-        doAfter: 2
-
-## Return node so that removing all internal plating doesn't reset the door
-  - node: airlockUnsecured    
-    actions:
-      - !type:ChangeWiresPanelSecurityLevel
-        level: Level0
+    - !type:SetWiresPanelSecurity
+      wiresAccessible: true
+      weldingAllowed: true
     edges:
     - to: wired
       conditions:
@@ -384,15 +174,15 @@
       - tool: Prying
         doAfter: 5
         
-    - to: airlockMedSecurityBreached 
+    - to: medSecurityUnfinished
       conditions:
       - !type:WirePanel {}
       steps:
       - material: Steel
         amount: 2
         doAfter: 2
-        
-    - to: airlockHighSecurityBreached
+    
+    - to: highSecurityUnfinished
       conditions:
       - !type:WirePanel {}
       steps:
@@ -400,79 +190,166 @@
         amount: 2
         doAfter: 2
 
-## Medium security level airlock: a layer of steel plating protects the internal wiring
-  - node: airlockMedSecurityBreached
+## High security door
+  - node: highSecDoor
     actions:
-      - !type:ChangeWiresPanelSecurityLevel
-        level: Level1    
+    - !type:SetWiresPanelSecurity
+      wiresAccessible: true
+      weldingAllowed: true
+    edges:   
+    - to: medSecurityUnfinished
+      conditions:
+      - !type:WirePanel {}
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 2
+    
+    - to: highSecurityUnfinished
+      conditions:
+      - !type:WirePanel {}
+      steps:
+      - material: Plasteel
+        amount: 2
+        doAfter: 2
+
+## Medium security level door: a layer of steel plating protects the internal wiring
+  - node: medSecurityUnfinished
+    actions:
+    - !type:SetWiresPanelSecurity
+      examine: wires-panel-component-on-examine-security-level1
+      wiresAccessible: false
+      weldingAllowed: false
     edges:
-    - to: airlockUnsecured 
+    - to: glassAirlock 
       completed:
       - !type:GivePrototype
         prototype: SheetSteel1
         amount: 2
       conditions:
       - !type:WirePanel {}
+      - !type:HasTag
+        tag: GlassAirlock
+      steps:
+      - tool: Prying
+        doAfter: 4
+        
+    - to: airlock 
+      completed:
+      - !type:GivePrototype
+        prototype: SheetSteel1
+        amount: 2
+      conditions:
+      - !type:WirePanel {}
+      - !type:HasTag
+        tag: Airlock
+      steps:
+      - tool: Prying
+        doAfter: 4
+        
+    - to: highSecDoor 
+      completed:
+      - !type:GivePrototype
+        prototype: SheetSteel1
+        amount: 2
+      conditions:
+      - !type:WirePanel {}
+      - !type:HasTag
+        tag: HighSecDoor
       steps:
       - tool: Prying
         doAfter: 4
     
-    - to: airlockMedSecurity 
+    - to: medSecurity 
       conditions:  
       - !type:WirePanel {}
       steps:
       - tool: Welding
         doAfter: 3
       
-  - node: airlockMedSecurity
+  - node: medSecurity
     actions:
-      - !type:ChangeWiresPanelSecurityLevel
-        level: Level2
+    - !type:SetWiresPanelSecurity
+      examine: wires-panel-component-on-examine-security-level2
+      wiresAccessible: false
+      weldingAllowed: false
     edges:
-    - to: airlockMedSecurityBreached 
+    - to: medSecurityUnfinished 
       conditions:
       - !type:WirePanel {}
       steps:
       - tool: Welding
         doAfter: 10
 
-## High security level airlock: a layer of plasteel plating protects the internal wiring
-  - node: airlockHighSecurityBreached
+## High security level door: a layer of plasteel plating protects the internal wiring
+  - node: highSecurityUnfinished
     actions:
-      - !type:ChangeWiresPanelSecurityLevel
-        level: Level3   
+    - !type:SetWiresPanelSecurity
+      examine: wires-panel-component-on-examine-security-level3
+      wiresAccessible: false
+      weldingAllowed: false
     edges:
-    - to: airlockUnsecured 
+    - to: glassAirlock 
       completed:
       - !type:GivePrototype
         prototype: SheetPlasteel1
         amount: 2
       conditions:
       - !type:WirePanel {}
+      - !type:HasTag
+        tag: GlassAirlock
+      steps:
+      - tool: Prying
+        doAfter: 4
+        
+    - to: airlock 
+      completed:
+      - !type:GivePrototype
+        prototype: SheetPlasteel1
+        amount: 2
+      conditions:
+      - !type:WirePanel {}
+      - !type:HasTag
+        tag: Airlock
+      steps:
+      - tool: Prying
+        doAfter: 4
+        
+    - to: highSecDoor 
+      completed:
+      - !type:GivePrototype
+        prototype: SheetPlasteel1
+        amount: 2
+      conditions:
+      - !type:WirePanel {}
+      - !type:HasTag
+        tag: HighSecDoor
       steps:
       - tool: Prying
         doAfter: 4
     
-    - to: airlockHighSecurity 
+    - to: highSecurity 
       conditions:  
       - !type:WirePanel {}
       steps:
       - tool: Welding
         doAfter: 5
       
-  - node: airlockHighSecurity
+  - node: highSecurity
     actions:
-      - !type:ChangeWiresPanelSecurityLevel
-        level: Level4
+    - !type:SetWiresPanelSecurity
+      examine: wires-panel-component-on-examine-security-level4
+      wiresAccessible: false
+      weldingAllowed: false
     edges:
-    - to: airlockHighSecurityBreached
+    - to: highSecurityUnfinished
       conditions:
       - !type:WirePanel {}
       steps:
       - tool: Welding
         doAfter: 15
     
-    - to: airlockMaxSecurity
+    - to: maxSecurity
       conditions:
       - !type:WirePanel {}
       steps:     
@@ -480,13 +357,15 @@
         amount: 2
         doAfter: 1
 
-## Max security level airlock: an electric grill is added        
-  - node: airlockMaxSecurity
+## Max security level door: an electric grill is added        
+  - node: maxSecurity
     actions:
-      - !type:ChangeWiresPanelSecurityLevel
-        level: Level5
+    - !type:SetWiresPanelSecurity
+      examine: wires-panel-component-on-examine-security-level5
+      wiresAccessible: false
+      weldingAllowed: true
     edges:
-    - to: airlockHighSecurity 
+    - to: highSecurity 
       completed:
       - !type:AttemptElectrocute
       - !type:GivePrototype
@@ -498,7 +377,7 @@
       - tool: Cutting
         doAfter: 0.5 
 
-    - to: airlockSuperMaxSecurityBreached
+    - to: superMaxSecurityUnfinished
       conditions:
       - !type:WirePanel {}
       steps:     
@@ -506,13 +385,15 @@
         amount: 2
         doAfter: 2
 
-## Super max security level airlock: an additional layer of plasteel is added     
-  - node: airlockSuperMaxSecurityBreached
+## Super max security level door: an additional layer of plasteel is added     
+  - node: superMaxSecurityUnfinished
     actions:
-      - !type:ChangeWiresPanelSecurityLevel
-        level: Level6
+    - !type:SetWiresPanelSecurity
+      examine: wires-panel-component-on-examine-security-level6
+      wiresAccessible: false
+      weldingAllowed: false
     edges:
-    - to: airlockMaxSecurity 
+    - to: maxSecurity 
       completed:
       - !type:GivePrototype
         prototype: SheetPlasteel1
@@ -523,21 +404,24 @@
       - tool: Prying
         doAfter: 4
     
-    - to: airlockSuperMaxSecurity 
+    - to: superMaxSecurity 
       conditions:  
       - !type:WirePanel {}
       steps:
       - tool: Welding
         doAfter: 5
       
-  - node: airlockSuperMaxSecurity
+  - node: superMaxSecurity
     actions:
-      - !type:ChangeWiresPanelSecurityLevel
-        level: Level7
+    - !type:SetWiresPanelSecurity
+      examine: wires-panel-component-on-examine-security-level7
+      wiresAccessible: false  
+      weldingAllowed: false
     edges:
-    - to: airlockSuperMaxSecurityBreached 
+    - to: superMaxSecurityUnfinished 
       conditions:
       - !type:WirePanel {}
       steps:
       - tool: Welding
-        doAfter: 15
+        doAfter: 15        
+ 

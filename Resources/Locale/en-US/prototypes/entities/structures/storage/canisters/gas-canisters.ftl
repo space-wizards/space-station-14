@@ -10,11 +10,20 @@ ent-AirCanister = Air canister
 ent-OxygenCanister = Oxygen canister
     .desc = A canister that can contain any type of gas. This one is supposed to contain oxygen. It can be attached to connector ports using a wrench.
 
+ent-LiquidOxygenCanister = Liquid oxygen canister
+    .desc = A canister that can contain any type of gas. This one is supposed to contain liquid oxygen. It can be attached to connector ports using a wrench.
+
 ent-NitrogenCanister = Nitrogen canister
     .desc = A canister that can contain any type of gas. This one is supposed to contain nitrogen. It can be attached to connector ports using a wrench.
 
+ent-LiquidNitrogenCanister = Liquid nitrogen canister
+    .desc = A canister that can contain any type of gas. This one is supposed to contain liquid nitrogen. It can be attached to connector ports using a wrench.
+
 ent-CarbonDioxideCanister = Carbon dioxide canister
     .desc = A canister that can contain any type of gas. This one is supposed to contain carbon dioxide. It can be attached to connector ports using a wrench.
+
+ent-LiquidCarbonDioxideCanister = Liquid carbon dioxide canister
+    .desc = A canister that can contain any type of gas. This one is supposed to contain liquid carbon dioxide. It can be attached to connector ports using a wrench.
 
 ent-PlasmaCanister = Plasma canister
     .desc = A canister that can contain any type of gas. This one is supposed to contain plasma. It can be attached to connector ports using a wrench.

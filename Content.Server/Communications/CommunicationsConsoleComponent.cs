@@ -6,7 +6,7 @@ using Robust.Shared.Audio;
 namespace Content.Server.Communications
 {
     [RegisterComponent]
-    public sealed class CommunicationsConsoleComponent : SharedCommunicationsConsoleComponent
+    public sealed partial class CommunicationsConsoleComponent : SharedCommunicationsConsoleComponent
     {
         public float UIUpdateAccumulator = 0f;
 
@@ -57,6 +57,6 @@ namespace Content.Server.Communications
         [DataField("sound")]
         public SoundSpecifier AnnouncementSound = new SoundPathSpecifier("/Audio/Announcements/announce.ogg");
 
-        public BoundUserInterface? UserInterface => Owner.GetUIOrNull(CommunicationsConsoleUiKey.Key);
+        public PlayerBoundUserInterface? UserInterface => Owner.GetUIOrNull(CommunicationsConsoleUiKey.Key);
     }
 }

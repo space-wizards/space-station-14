@@ -10,27 +10,27 @@ using Content.Shared.Physics;
 using Content.Shared.Stunnable;
 using Content.Shared.Tag;
 using Robust.Shared.Audio;
-using Robust.Shared.GameStates;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
+using Content.Shared.Prying.Components;
 
 namespace Content.Shared.Doors.Systems;
 
-public abstract class SharedDoorSystem : EntitySystem
+public abstract partial class SharedDoorSystem : EntitySystem
 {
     [Dependency] protected readonly IGameTiming GameTiming = default!;
     [Dependency] protected readonly SharedPhysicsSystem PhysicsSystem = default!;
-    [Dependency] private   readonly DamageableSystem _damageableSystem = default!;
-    [Dependency] private   readonly SharedStunSystem _stunSystem = default!;
+    [Dependency] private readonly DamageableSystem _damageableSystem = default!;
+    [Dependency] private readonly SharedStunSystem _stunSystem = default!;
     [Dependency] protected readonly TagSystem Tags = default!;
     [Dependency] protected readonly SharedAudioSystem Audio = default!;
-    [Dependency] private   readonly EntityLookupSystem _entityLookup = default!;
+    [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
     [Dependency] protected readonly SharedAppearanceSystem AppearanceSystem = default!;
-    [Dependency] private   readonly OccluderSystem _occluder = default!;
-    [Dependency] private   readonly AccessReaderSystem _accessReaderSystem = default!;
+    [Dependency] private readonly OccluderSystem _occluder = default!;
+    [Dependency] private readonly AccessReaderSystem _accessReaderSystem = default!;
 
     /// <summary>
     ///     A body must have an intersection percentage larger than this in order to be considered as colliding with a
@@ -54,13 +54,14 @@ public abstract class SharedDoorSystem : EntitySystem
         SubscribeLocalEvent<DoorComponent, ComponentInit>(OnComponentInit);
         SubscribeLocalEvent<DoorComponent, ComponentRemove>(OnRemove);
 
-        SubscribeLocalEvent<DoorComponent, ComponentGetState>(OnGetState);
-        SubscribeLocalEvent<DoorComponent, ComponentHandleState>(OnHandleState);
+        SubscribeLocalEvent<DoorComponent, AfterAutoHandleStateEvent>(OnHandleState);
 
         SubscribeLocalEvent<DoorComponent, ActivateInWorldEvent>(OnActivate);
 
         SubscribeLocalEvent<DoorComponent, StartCollideEvent>(HandleCollide);
         SubscribeLocalEvent<DoorComponent, PreventCollideEvent>(PreventCollision);
+        SubscribeLocalEvent<DoorComponent, GetPryTimeModifierEvent>(OnPryTimeModifier);
+
     }
 
     protected virtual void OnComponentInit(EntityUid uid, DoorComponent door, ComponentInit args)
@@ -99,32 +100,14 @@ public abstract class SharedDoorSystem : EntitySystem
     }
 
     #region StateManagement
-    private void OnGetState(EntityUid uid, DoorComponent door, ref ComponentGetState args)
+    private void OnHandleState(EntityUid uid, DoorComponent door, ref AfterAutoHandleStateEvent args)
     {
-        args.State = new DoorComponentState(door);
-    }
-
-    private void OnHandleState(EntityUid uid, DoorComponent door, ref ComponentHandleState args)
-    {
-        if (args.Current is not DoorComponentState state)
-            return;
-
-        if (!door.CurrentlyCrushing.SetEquals(state.CurrentlyCrushing))
-        {
-            door.CurrentlyCrushing.Clear();
-            door.CurrentlyCrushing.UnionWith(state.CurrentlyCrushing);
-        }
-
-        door.State = state.DoorState;
-        door.NextStateChange = state.NextStateChange;
-        door.Partial = state.Partial;
-
-        if (state.NextStateChange == null)
+        if (door.NextStateChange == null)
             _activeDoors.Remove(door);
         else
             _activeDoors.Add(door);
 
-        RaiseLocalEvent(uid, new DoorStateChangedEvent(door.State), false);
+        RaiseLocalEvent(uid, new DoorStateChangedEvent(door.State));
         AppearanceSystem.SetData(uid, DoorVisuals.State, door.State);
     }
 
@@ -185,6 +168,11 @@ public abstract class SharedDoorSystem : EntitySystem
         args.Handled = true;
     }
 
+    private void OnPryTimeModifier(EntityUid uid, DoorComponent door, ref GetPryTimeModifierEvent args)
+    {
+        args.BaseTime = door.PryTime;
+    }
+
     /// <summary>
     ///     Update the door state/visuals and play an access denied sound when a user without access interacts with the
     ///     door.
@@ -208,6 +196,7 @@ public abstract class SharedDoorSystem : EntitySystem
         if (door.DenySound != null)
             PlaySound(uid, door.DenySound, AudioParams.Default.WithVolume(-3), user, predicted);
     }
+
 
     public bool TryToggleDoor(EntityUid uid, DoorComponent? door = null, EntityUid? user = null, bool predicted = false)
     {
@@ -249,7 +238,7 @@ public abstract class SharedDoorSystem : EntitySystem
         if (door.State == DoorState.Welded)
             return false;
 
-        var ev = new BeforeDoorOpenedEvent(){User=user};
+        var ev = new BeforeDoorOpenedEvent() { User = user };
         RaiseLocalEvent(uid, ev, false);
         if (ev.Cancelled)
             return false;
@@ -264,6 +253,14 @@ public abstract class SharedDoorSystem : EntitySystem
         return true;
     }
 
+    /// <summary>
+    /// Immediately start opening a door
+    /// </summary>
+    /// <param name="uid"> The uid of the door</param>
+    /// <param name="door"> The doorcomponent of the door</param>
+    /// <param name="user"> The user (if any) opening the door</param>
+    /// <param name="predicted">Whether the interaction would have been
+    /// predicted. See comments in the PlaySound method on the Server system for details</param>
     public virtual void StartOpening(EntityUid uid, DoorComponent? door = null, EntityUid? user = null, bool predicted = false)
     {
         if (!Resolve(uid, ref door))
@@ -312,6 +309,14 @@ public abstract class SharedDoorSystem : EntitySystem
         return true;
     }
 
+    /// <summary>
+    /// Immediately start closing a door
+    /// </summary>
+    /// <param name="uid"> The uid of the door</param>
+    /// <param name="door"> The doorcomponent of the door</param>
+    /// <param name="user"> The user (if any) opening the door</param>
+    /// <param name="predicted">Whether the interaction would have been
+    /// predicted. See comments in the PlaySound method on the Server system for details</param>
     public bool CanClose(EntityUid uid, DoorComponent? door = null, EntityUid? user = null, bool quiet = true)
     {
         if (!Resolve(uid, ref door))
@@ -447,11 +452,11 @@ public abstract class SharedDoorSystem : EntitySystem
 
             //TODO: Make only shutters ignore these objects upon colliding instead of all airlocks
             // Excludes Glasslayer for windows, GlassAirlockLayer for windoors, TableLayer for tables
-            if (!otherPhysics.CanCollide || otherPhysics.CollisionLayer == (int) CollisionGroup.GlassLayer || otherPhysics.CollisionLayer == (int) CollisionGroup.GlassAirlockLayer || otherPhysics.CollisionLayer == (int) CollisionGroup.TableLayer)
+            if (!otherPhysics.CanCollide || otherPhysics.CollisionLayer == (int)CollisionGroup.GlassLayer || otherPhysics.CollisionLayer == (int)CollisionGroup.GlassAirlockLayer || otherPhysics.CollisionLayer == (int)CollisionGroup.TableLayer)
                 continue;
 
             //If the colliding entity is a slippable item ignore it by the airlock
-            if (otherPhysics.CollisionLayer == (int) CollisionGroup.SlipLayer && otherPhysics.CollisionMask == (int) CollisionGroup.ItemMask)
+            if (otherPhysics.CollisionLayer == (int)CollisionGroup.SlipLayer && otherPhysics.CollisionMask == (int)CollisionGroup.ItemMask)
                 continue;
 
             if ((physics.CollisionMask & otherPhysics.CollisionLayer) == 0 && (otherPhysics.CollisionMask & physics.CollisionLayer) == 0)
@@ -509,9 +514,9 @@ public abstract class SharedDoorSystem : EntitySystem
         return AccessType switch
         {
             // Some game modes modify access rules.
-            AccessTypes.AllowAllIdExternal => !isExternal || _accessReaderSystem.IsAllowed(user.Value, access),
+            AccessTypes.AllowAllIdExternal => !isExternal || _accessReaderSystem.IsAllowed(user.Value, uid, access),
             AccessTypes.AllowAllNoExternal => !isExternal,
-            _ => _accessReaderSystem.IsAllowed(user.Value, access)
+            _ => _accessReaderSystem.IsAllowed(user.Value, uid, access)
         };
     }
 
@@ -601,7 +606,7 @@ public abstract class SharedDoorSystem : EntitySystem
         }
     }
 
-    protected virtual void CheckDoorBump(DoorComponent component, PhysicsComponent body) {}
+    protected virtual void CheckDoorBump(DoorComponent component, PhysicsComponent body) { }
 
     /// <summary>
     ///     Makes a door proceed to the next state (if applicable).
@@ -662,9 +667,4 @@ public abstract class SharedDoorSystem : EntitySystem
     #endregion
 
     protected abstract void PlaySound(EntityUid uid, SoundSpecifier soundSpecifier, AudioParams audioParams, EntityUid? predictingPlayer, bool predicted);
-
-    [Serializable, NetSerializable]
-    protected sealed class DoorPryDoAfterEvent : SimpleDoAfterEvent
-    {
-    }
 }

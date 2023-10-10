@@ -23,6 +23,7 @@ namespace Content.Server.Forensics
         [Dependency] private readonly PaperSystem _paperSystem = default!;
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
         [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
+        [Dependency] private readonly MetaDataSystem _metaData = default!;
 
         private ISawmill _sawmill = default!;
 
@@ -90,7 +91,7 @@ namespace Content.Server.Forensics
         /// </remarks>
         private void StartScan(EntityUid uid, ForensicScannerComponent component, EntityUid user, EntityUid target)
         {
-            _doAfterSystem.TryStartDoAfter(new DoAfterArgs(user, component.ScanDelay, new ForensicScannerDoAfterEvent(), uid, target: target, used: uid)
+            _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, user, component.ScanDelay, new ForensicScannerDoAfterEvent(), uid, target: target, used: uid)
             {
                 BreakOnTargetMove = true,
                 BreakOnUserMove = true,
@@ -106,7 +107,7 @@ namespace Content.Server.Forensics
             var verb = new UtilityVerb()
             {
                 Act = () => StartScan(uid, component, args.User, args.Target),
-                IconEntity = uid,
+                IconEntity = GetNetEntity(uid),
                 Text = Loc.GetString("forensic-scanner-verb-text"),
                 Message = Loc.GetString("forensic-scanner-verb-message")
             };
@@ -197,7 +198,7 @@ namespace Content.Server.Forensics
                 return;
             }
 
-            MetaData(printed).EntityName = Loc.GetString("forensic-scanner-report-title", ("entity", component.LastScannedName));
+            _metaData.SetEntityName(printed, Loc.GetString("forensic-scanner-report-title", ("entity", component.LastScannedName)));
 
             var text = new StringBuilder();
 

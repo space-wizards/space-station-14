@@ -11,12 +11,12 @@
   - type: Armor
     modifiers:
       coefficients:
-        Blunt: 0.5
+        Blunt: 0.9
         Slash: 0.9
         Piercing: 0.9
         Heat: 0.75
   - type: ExplosionResistance
-    damageCoefficient: 0.2
+    damageCoefficient: 0.15
   - type: GroupExamine
   - type: Tag
     tags:
@@ -93,21 +93,43 @@
 
 - type: entity
   parent: ClothingOuterBase
-  id: ClothingOuterSuitSpaceninja
+  id: ClothingOuterSuitSpaceNinja
   name: space ninja suit
-  description: This black technologically advanced, cybernetically-enhanced suit provides good protection and many abilities like invisibility or teleportation.
+  description: This black technologically advanced, cybernetically-enhanced suit provides many abilities like invisibility or teleportation.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Suits/spaceninja.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Suits/spaceninja.rsi
+  - type: StealthClothing
+    visibility: 1.1
+    toggleAction: ActionTogglePhaseCloak
+  - type: PressureProtection
+    highPressureMultiplier: 0.6
+    lowPressureMultiplier: 1000
+  - type: TemperatureProtection
+    coefficient: 0.01
   - type: Armor
     modifiers:
       coefficients:
-        Blunt: 0.6
-        Slash: 0.6
-        Piercing: 0.6
-        Heat: 0.6
+        Blunt: 0.8
+        Slash: 0.8
+        Piercing: 0.8
+        Heat: 0.8
+  - type: NinjaSuit
+  - type: PowerCellSlot
+    cellSlotId: cell_slot
+    # throwing in a recharger would bypass glove charging mechanic
+    fitsInCharger: false
+  - type: ContainerContainer
+    containers:
+      cell_slot: !type:ContainerSlot
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellSmall
+        disableEject: true
 
 - type: entity
   parent: ClothingOuterBase
@@ -141,3 +163,45 @@
     sprite: Clothing/OuterClothing/Suits/monkey.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Suits/monkey.rsi
+  - type: ContainerContainer
+    containers:
+      toggleable-clothing: !type:ContainerSlot {}
+
+- type: entity
+  parent: ClothingOuterBase
+  id: ClothingOuterSuitIan
+  name: ian suit
+  description: Who's a good boy?
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Suits/iansuit.rsi
+  - type: Item
+    size: 30
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Suits/iansuit.rsi
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHatHoodIan
+  - type: ContainerContainer
+    containers:
+      toggleable-clothing: !type:ContainerSlot {}
+  - type: Construction
+    graph: ClothingOuterSuitIan
+    node: suit
+
+- type: entity
+  parent: ClothingOuterBase
+  id: ClothingOuterSuitCarp
+  name: carp suit
+  description: A special suit that makes you look just like a space carp, if your eyesight is bad.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Suits/carpsuit.rsi
+  - type: Item
+    size: 30
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Suits/carpsuit.rsi
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHatHoodCarp
+  - type: ContainerContainer
+    containers:
+      toggleable-clothing: !type:ContainerSlot {}

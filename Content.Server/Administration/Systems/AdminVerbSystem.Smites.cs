@@ -18,7 +18,6 @@ using Content.Server.Storage.Components;
 using Content.Server.Storage.EntitySystems;
 using Content.Server.Tabletop;
 using Content.Server.Tabletop.Components;
-using Content.Server.Tools.Systems;
 using Content.Shared.Administration;
 using Content.Shared.Administration.Components;
 using Content.Shared.Body.Components;
@@ -39,6 +38,7 @@ using Content.Shared.Movement.Systems;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Popups;
 using Content.Shared.Tabletop.Components;
+using Content.Shared.Tools.Systems;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Shared.Map;
@@ -76,11 +76,12 @@ public sealed partial class AdminVerbSystem
     [Dependency] private readonly VomitSystem _vomitSystem = default!;
     [Dependency] private readonly WeldableSystem _weldableSystem = default!;
     [Dependency] private readonly SharedContentEyeSystem _eyeSystem = default!;
+    [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
 
     // All smite verbs have names so invokeverb works.
     private void AddSmiteVerbs(GetVerbsEvent<Verb> args)
     {
-        if (!EntityManager.TryGetComponent<ActorComponent?>(args.User, out var actor))
+        if (!EntityManager.TryGetComponent(args.User, out ActorComponent? actor))
             return;
 
         var player = actor.PlayerSession;
@@ -293,8 +294,7 @@ public sealed partial class AdminVerbSystem
                         if (HasComp<BrainComponent>(xform.Owner) || HasComp<EyeComponent>(xform.Owner))
                             continue;
 
-                        var coordinates = baseXform.Coordinates.Offset(_random.NextVector2(0.5f, 0.75f));
-                        _bodySystem.DropOrganAt(organ.Owner, coordinates, organ);
+                        _transformSystem.AttachToGridOrMap(organ.Owner);
                     }
 
                     _popupSystem.PopupEntity(Loc.GetString("admin-smite-vomit-organs-self"), args.Target,
@@ -317,7 +317,7 @@ public sealed partial class AdminVerbSystem
                     var baseXform = Transform(args.Target);
                     foreach (var part in _bodySystem.GetBodyChildrenOfType(args.Target, BodyPartType.Hand))
                     {
-                        _bodySystem.DropPartAt(part.Id, baseXform.Coordinates, part.Component);
+                        _transformSystem.AttachToGridOrMap(part.Id);
                     }
                     _popupSystem.PopupEntity(Loc.GetString("admin-smite-remove-hands-self"), args.Target,
                         args.Target, PopupType.LargeCaution);
@@ -339,7 +339,7 @@ public sealed partial class AdminVerbSystem
                     var baseXform = Transform(args.Target);
                     foreach (var part in _bodySystem.GetBodyChildrenOfType(body.Owner, BodyPartType.Hand, body))
                     {
-                        _bodySystem.DropPartAt(part.Id, baseXform.Coordinates, part.Component);
+                        _transformSystem.AttachToGridOrMap(part.Id);
                         break;
                     }
                     _popupSystem.PopupEntity(Loc.GetString("admin-smite-remove-hands-self"), args.Target,
@@ -677,7 +677,7 @@ public sealed partial class AdminVerbSystem
                     _entityStorageSystem.Insert(args.Target, locker, storage);
                     _entityStorageSystem.ToggleOpen(args.Target, locker, storage);
                 }
-                _weldableSystem.ForceWeldedState(locker, true);
+                _weldableSystem.SetWeldedState(locker, true);
             },
             Impact = LogImpact.Extreme,
             Message = Loc.GetString("admin-smite-locker-stuff-description"),

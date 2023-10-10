@@ -7,7 +7,7 @@ namespace Content.Shared.Hands.Components;
 
 [RegisterComponent, NetworkedComponent]
 [Access(typeof(SharedHandsSystem))]
-public sealed class HandsComponent : Component
+public sealed partial class HandsComponent : Component
 {
     /// <summary>
     ///     The currently active hand.

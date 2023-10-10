@@ -9,7 +9,7 @@ namespace Content.Server.Power.Generation.Teg;
 /// <seealso cref="TegSystem"/>
 [RegisterComponent]
 [Access(typeof(TegSystem))]
-public sealed class TegCirculatorComponent : Component
+public sealed partial class TegCirculatorComponent : Component
 {
     /// <summary>
     /// The difference between the inlet and outlet pressure at the start of the previous tick.

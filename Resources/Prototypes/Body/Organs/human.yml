@@ -15,6 +15,14 @@
         reagents:
         - ReagentId: Nutriment
           Quantity: 10
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
+  - type: FlavorProfile
+    flavors:
+      - people
 
 - type: entity
   id: OrganHumanBrain
@@ -28,6 +36,8 @@
   - type: Input
     context: "ghost"
   - type: Brain
+  - type: InputMover
+  - type: Examiner
   - type: BlockMovement
 
 - type: entity
@@ -98,6 +108,11 @@
       Lung:
         maxVol: 100.0
         canReact: false
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
 
 - type: entity
   id: OrganHumanHeart
@@ -130,6 +145,11 @@
     solutions:
       stomach:
         maxVol: 50
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
   - type: Stomach
   # The stomach metabolizes stuff like foods and drinks.
   # TODO: Have it work off of the ent's solution container, and move this

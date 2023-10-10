@@ -64,7 +64,7 @@
       type: WiresBoundUserInterface
   - type: WiresPanel
   - type: Wires
-    BoardName: "Vending Machine"
+    BoardName: wires-board-name-vendingmachine
     LayoutId: Vending
   - type: Anchorable
   - type: TypingIndicator
@@ -115,6 +115,17 @@
     layers:
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.Base"]
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.3,-0.16,0.3,0.40"
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
+        density: 190
   - type: Advertise
     pack: CondimentVendAds
   - type: Speech
@@ -211,7 +222,7 @@
 - type: entity
   parent: VendingMachine
   id: VendingMachineChefvend
-  name: Chefvend
+  name: ChefVend
   description: An ingredient vendor for all your cheffin needs.
   components:
   - type: VendingMachine
@@ -1783,7 +1794,7 @@
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: AccessReader
-    access: [["NuclearOperative"]]
+    access: [["NuclearOperative"], ["SyndicateAgent"]]
 
 - type: entity
   parent: VendingMachine

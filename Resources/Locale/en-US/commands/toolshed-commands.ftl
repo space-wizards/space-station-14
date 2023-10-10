@@ -40,6 +40,12 @@ command-description-stations-rename =
     Renames the given station.
 command-description-stations-largestgrid =
     Returns the largest grid the given station has, if any.
+command-description-stationevent-lsprob =
+    Lists the probability of different station events occuring out of the entire pool.
+command-description-stationevent-lsprobtime =
+    Lists the probability of different station events occuring based on the specified length of a round.
+command-description-stationevent-prob =
+    Returns the probability of a single station event occuring out of the entire pool.
 command-description-admins-active =
     Returns a list of active admins.
 command-description-admins-all =
@@ -58,5 +64,15 @@ command-description-tag-addmany =
     Adds a list of tags to the given entities.
 command-description-tag-rmmany =
     Removes a list of tags from the given entities.
+command-description-polymorph =
+    Polymorphs the input entity with the given prototype.
+command-description-unpolymorph =
+    Reverts a polymorph.
 command-description-solution-get =
-    Returns a solution stored in an entity's solution container.
+    Grabs the given solution off the given entity.
+command-description-solution-adjreagent =
+    Adjusts the given reagent on the given solution.
+command-description-mind-get =
+    Grabs the mind from the entity, if any.
+command-description-mind-control =
+    Assumes control of an entity with the given player.

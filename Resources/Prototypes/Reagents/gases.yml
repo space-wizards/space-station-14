@@ -234,10 +234,9 @@
         scaleByQuantity: true
         ignoreResistances: true
         damage:
-          types:
-            Blunt: -4
-            Slash: -3
-            Piercing: -3
+          Groups:
+            Brute: -5
+            Burn: -5
 
 - type: reagent
   id: NitrousOxide

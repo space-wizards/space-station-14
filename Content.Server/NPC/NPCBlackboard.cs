@@ -12,7 +12,7 @@ using Robust.Shared.Utility;
 namespace Content.Server.NPC;
 
 [DataDefinition]
-public sealed class NPCBlackboard : IEnumerable<KeyValuePair<string, object>>
+public sealed partial class NPCBlackboard : IEnumerable<KeyValuePair<string, object>>
 {
     /// <summary>
     /// Global defaults for NPCs
@@ -319,6 +319,16 @@ public sealed class NPCBlackboard : IEnumerable<KeyValuePair<string, object>>
     public const string RotateSpeed = "RotateSpeed";
     public const string VisionRadius = "VisionRadius";
     public const string UtilityTarget = "UtilityTarget";
+
+    /// <summary>
+    /// A configurable "order" enum that can be given to an NPC from an external source.
+    /// </summary>
+    public const string CurrentOrders = "CurrentOrders";
+
+    /// <summary>
+    /// A configurable target that's ordered by external sources.
+    /// </summary>
+    public const string CurrentOrderedTarget = "CurrentOrderedTarget";
 
     public IEnumerator<KeyValuePair<string, object>> GetEnumerator()
     {

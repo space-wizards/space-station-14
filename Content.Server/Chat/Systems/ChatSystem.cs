@@ -1,10 +1,10 @@
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking;
-using Content.Server.Ghost.Components;
 using Content.Server.Players;
 using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
@@ -12,6 +12,7 @@ using Content.Shared.ActionBlocker;
 using Content.Shared.CCVar;
 using Content.Shared.Chat;
 using Content.Shared.Database;
+using Content.Shared.Ghost;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory;
@@ -199,8 +200,11 @@ public sealed partial class ChatSystem : SharedChatSystem
 
         bool shouldCapitalize = (desiredType != InGameICChatType.Emote);
         bool shouldPunctuate = _configurationManager.GetCVar(CCVars.ChatPunctuation);
+        // Capitalizing the word I only happens in English, so we check language here
+        bool shouldCapitalizeTheWordI = (!CultureInfo.CurrentCulture.IsNeutralCulture && CultureInfo.CurrentCulture.Parent.Name == "en")
+            || (CultureInfo.CurrentCulture.IsNeutralCulture && CultureInfo.CurrentCulture.Name == "en");
 
-        message = SanitizeInGameICMessage(source, message, out var emoteStr, shouldCapitalize, shouldPunctuate);
+        message = SanitizeInGameICMessage(source, message, out var emoteStr, shouldCapitalize, shouldPunctuate, shouldCapitalizeTheWordI);
 
         // Was there an emote in the message? If so, send it.
         if (player != null && emoteStr != message && emoteStr != null)
@@ -480,7 +484,7 @@ public sealed partial class ChatSystem : SharedChatSystem
                 _chatManager.ChatMessageToOne(ChatChannel.Whisper, obfuscatedMessage, wrappedUnknownMessage, source, false, session.ConnectedClient);
         }
 
-        _replay.RecordServerMessage(new ChatMessage(ChatChannel.Whisper, message, wrappedMessage, source, MessageRangeHideChatForReplay(range)));
+        _replay.RecordServerMessage(new ChatMessage(ChatChannel.Whisper, message, wrappedMessage, GetNetEntity(source), MessageRangeHideChatForReplay(range)));
 
         var ev = new EntitySpokeEvent(source, message, channel, obfuscatedMessage);
         RaiseLocalEvent(source, ev, true);
@@ -581,7 +585,7 @@ public sealed partial class ChatSystem : SharedChatSystem
             _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Dead chat from {player:Player}: {message}");
         }
 
-        _chatManager.ChatMessageToMany(ChatChannel.Dead, message, wrappedMessage, source, hideChat, false, clients.ToList());
+        _chatManager.ChatMessageToMany(ChatChannel.Dead, message, wrappedMessage, source, hideChat, true, clients.ToList());
 
     }
     #endregion
@@ -647,7 +651,7 @@ public sealed partial class ChatSystem : SharedChatSystem
             _chatManager.ChatMessageToOne(channel, message, wrappedMessage, source, entHideChat, session.ConnectedClient);
         }
 
-        _replay.RecordServerMessage(new ChatMessage(channel, message, wrappedMessage, source, MessageRangeHideChatForReplay(range)));
+        _replay.RecordServerMessage(new ChatMessage(channel, message, wrappedMessage, GetNetEntity(source), MessageRangeHideChatForReplay(range)));
     }
 
     /// <summary>
@@ -677,11 +681,13 @@ public sealed partial class ChatSystem : SharedChatSystem
     }
 
     // ReSharper disable once InconsistentNaming
-    private string SanitizeInGameICMessage(EntityUid source, string message, out string? emoteStr, bool capitalize = true, bool punctuate = false)
+    private string SanitizeInGameICMessage(EntityUid source, string message, out string? emoteStr, bool capitalize = true, bool punctuate = false, bool capitalizeTheWordI = true)
     {
         var newMessage = message.Trim();
         if (capitalize)
             newMessage = SanitizeMessageCapital(newMessage);
+        if (capitalizeTheWordI)
+            newMessage = SanitizeMessageCapitalizeTheWordI(newMessage, "i");
         if (punctuate)
             newMessage = SanitizeMessagePeriod(newMessage);
 
@@ -733,7 +739,7 @@ public sealed partial class ChatSystem : SharedChatSystem
         // TODO proper speech occlusion
 
         var recipients = new Dictionary<ICommonSession, ICChatRecipientData>();
-        var ghosts = GetEntityQuery<GhostComponent>();
+        var ghostHearing = GetEntityQuery<GhostHearingComponent>();
         var xforms = GetEntityQuery<TransformComponent>();
 
         var transformSource = xforms.GetComponent(source);
@@ -750,9 +756,9 @@ public sealed partial class ChatSystem : SharedChatSystem
             if (transformEntity.MapID != sourceMapId)
                 continue;
 
-            var observer = ghosts.HasComponent(playerEntity);
+            var observer = ghostHearing.HasComponent(playerEntity);
 
-            // even if they are an observer, in some situations we still need the range
+            // even if they are a ghost hearer, in some situations we still need the range
             if (sourceCoords.TryDistance(EntityManager, transformEntity.Coordinates, out var distance) && distance < voiceGetRange)
             {
                 recipients.Add(player, new ICChatRecipientData(distance, observer));
