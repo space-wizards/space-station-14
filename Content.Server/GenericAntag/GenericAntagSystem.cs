@@ -56,9 +56,6 @@ public sealed class GenericAntagSystem : EntitySystem
         {
             _mind.TryAddObjective(mindId, mind, id);
         }
-
-        var afterEv = new GenericAntagObjectivesAddedEvent(mindId, mind);
-        RaiseLocalEvent(uid, ref afterEv);
     }
 }
 
@@ -68,10 +65,3 @@ public sealed class GenericAntagSystem : EntitySystem
 /// </summary>
 [ByRefEvent]
 public record struct GenericAntagCreatedEvent(EntityUid MindId, MindComponent Mind);
-
-/// <summary>
-/// Event raised on a player's entity after its simple antag objectives get added.
-/// Use this to configure objectives.
-/// </summary>
-[ByRefEvent]
-public record struct GenericAntagObjectivesAddedEvent(EntityUid MindId, MindComponent Mind);

@@ -7,7 +7,6 @@ using Content.Server.PowerCell;
 using Content.Server.Research.Systems;
 using Content.Server.Roles;
 using Content.Server.GenericAntag;
-using Content.Server.Warps;
 using Content.Shared.Alert;
 using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.Doors.Components;
@@ -19,7 +18,6 @@ using Content.Shared.Popups;
 using Content.Shared.Rounding;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
-using Robust.Shared.Random;
 using System.Diagnostics.CodeAnalysis;
 using Content.Server.Objectives.Components;
 
@@ -39,7 +37,6 @@ public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
     [Dependency] private readonly AlertsSystem _alerts = default!;
     [Dependency] private readonly BatterySystem _battery = default!;
     [Dependency] private readonly IChatManager _chatMan = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly PowerCellSystem _powerCell = default!;
     [Dependency] private readonly RoleSystem _role = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
@@ -51,7 +48,6 @@ public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
         base.Initialize();
 
         SubscribeLocalEvent<SpaceNinjaComponent, GenericAntagCreatedEvent>(OnNinjaCreated);
-        SubscribeLocalEvent<SpaceNinjaComponent, GenericAntagObjectivesAddedEvent>(OnNinjaObjectivesAdded);
         SubscribeLocalEvent<SpaceNinjaComponent, EmaggedSomethingEvent>(OnDoorjack);
         SubscribeLocalEvent<SpaceNinjaComponent, ResearchStolenEvent>(OnResearchStolen);
         SubscribeLocalEvent<SpaceNinjaComponent, ThreatCalledInEvent>(OnThreatCalledIn);
@@ -167,26 +163,6 @@ public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
         var session = mind.Session;
         _audio.PlayGlobal(config.GreetingSound, Filter.Empty().AddPlayer(session), false, AudioParams.Default);
         _chatMan.DispatchServerMessage(session, Loc.GetString("ninja-role-greeting"));
-    }
-
-    private void OnNinjaObjectivesAdded(EntityUid uid, SpaceNinjaComponent comp, ref GenericAntagObjectivesAddedEvent args)
-    {
-        // choose spider charge detonation point
-        var warps = new List<EntityUid>();
-        var query = EntityQueryEnumerator<BombingTargetComponent, WarpPointComponent, TransformComponent>();
-        var map = Transform(uid).MapID;
-        while (query.MoveNext(out var warpUid, out _, out var warp, out var xform))
-        {
-            if (warp.Location != null && map == xform.MapID)
-            {
-                warps.Add(warpUid);
-            }
-        }
-
-        if (warps.Count > 0 && _mind.TryGetObjectiveComp<SpiderChargeConditionComponent>(uid, out var obj))
-        {
-            obj.Target = _random.Pick(warps);
-        }
     }
 
     // TODO: PowerCellDraw, modify when cloak enabled

@@ -2,6 +2,9 @@ using Content.Server.Objectives.Components;
 using Content.Server.Warps;
 using Content.Shared.Objectives.Components;
 using Content.Shared.Mind;
+using Content.Shared.Ninja.Components;
+using Robust.Shared.Random;
+using Content.Server.Roles;
 
 namespace Content.Server.Objectives.Systems;
 
@@ -14,11 +17,13 @@ public sealed class NinjaConditionsSystem : EntitySystem
     [Dependency] private readonly MetaDataSystem _metaData = default!;
     [Dependency] private readonly NumberObjectiveSystem _number = default!;
     [Dependency] private readonly SharedMindSystem _mind = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
 
     public override void Initialize()
     {
         SubscribeLocalEvent<DoorjackConditionComponent, ObjectiveGetProgressEvent>(OnDoorjackGetProgress);
 
+        SubscribeLocalEvent<SpiderChargeConditionComponent, RequirementCheckEvent>(OnSpiderChargeRequirementCheck);
         SubscribeLocalEvent<SpiderChargeConditionComponent, ObjectiveAfterAssignEvent>(OnSpiderChargeAfterAssign);
         SubscribeLocalEvent<SpiderChargeConditionComponent, ObjectiveGetProgressEvent>(OnSpiderChargeGetProgress);
 
@@ -44,6 +49,32 @@ public sealed class NinjaConditionsSystem : EntitySystem
     }
 
     // spider charge
+    private void OnSpiderChargeRequirementCheck(EntityUid uid, SpiderChargeConditionComponent comp, ref RequirementCheckEvent args)
+    {
+        if (args.Cancelled || !HasComp<NinjaRoleComponent>(args.MindId))
+        {
+            return;
+        }
+
+        // choose spider charge detonation point
+        var warps = new List<EntityUid>();
+        var query = EntityQueryEnumerator<BombingTargetComponent, WarpPointComponent, TransformComponent>();
+        var map = Transform(uid).MapID;
+        while (query.MoveNext(out var warpUid, out _, out var warp, out var xform))
+        {
+            if (warp.Location != null && map == xform.MapID)
+            {
+                warps.Add(warpUid);
+            }
+        }
+
+        if (warps.Count <= 0)
+        {
+            args.Cancelled = true;
+            return;
+        }
+        comp.Target = _random.Pick(warps);
+    }
 
     private void OnSpiderChargeAfterAssign(EntityUid uid, SpiderChargeConditionComponent comp, ref ObjectiveAfterAssignEvent args)
     {
