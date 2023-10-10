@@ -1,6 +1,5 @@
 using Content.Server.Communications;
 using Content.Server.Chat.Managers;
-using Content.Server.GameTicking;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
