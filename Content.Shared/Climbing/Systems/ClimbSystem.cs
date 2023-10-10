@@ -55,7 +55,6 @@ public sealed partial class ClimbSystem : VirtualController
     {
         base.Initialize();
 
-        UpdatesAfter.Add(typeof(SharedMoverController));
         _fixturesQuery = GetEntityQuery<FixturesComponent>();
         _xformQuery = GetEntityQuery<TransformComponent>();
 
