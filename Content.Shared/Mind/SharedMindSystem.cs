@@ -2,6 +2,7 @@ using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.Examine;
+using Content.Shared.Emoting;
 using Content.Shared.GameTicking;
 using Content.Shared.Humanoid;
 using Content.Shared.Interaction.Events;
@@ -10,6 +11,7 @@ using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Objectives.Systems;
 using Content.Shared.Players;
+using Content.Shared.Speech;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Players;
@@ -140,33 +142,36 @@ public abstract class SharedMindSystem : EntitySystem
     }
 
     /// <summary>
-    ///     True if the OwnedEntity of this mind is physically dead.
-    ///     This specific definition, as opposed to CharacterDeadIC, is used to determine if ghosting should allow return.
+    ///     True if the OwnedEntity of this mind is safe to return to after Ghosting (from a metagaming POV).
+    ///     This will be true of any entity which is physically dead, or of enetities which have no physical life state but are unable to communicate.
+    ///     This is the stricter definition of Dead, via MobState, as opposed to CharacterDeadIC which may consider e.g. Borgs and Zombies.
     /// </summary>
     public bool IsCharacterDeadPhysically(MindComponent mind)
     {
         // This is written explicitly so that the logic can be understood.
-        // But it's also weird and potentially situational.
-        // Specific considerations when updating this:
-        //  + Does being turned into a borg (if/when implemented) count as dead?
-        //    *If not, add specific conditions to users of this property where applicable.*
-        //  + Is being transformed into a donut 'dead'?
-        //    TODO: Consider changing the way ghost roles work.
-        //    Mind is an *IC* mind, therefore ghost takeover is IC revival right now.
-        //  + Is it necessary to have a reference to a specific 'mind iteration' to cycle when certain events happen?
-        //    (If being a borg or AI counts as dead, then this is highly likely, as it's still the same Mind for practical purposes.)
+        // But it's also weird and potentially situational, as IC 'dead' does not always match game-impact 'dead'.
+        // Specific cases which may not be obvious:
+        //  + Being borged or zombied should count as "alive" physically, but be overriden to "dead" via IsCharacterDeadIc,
+        //    which covers things like kill/escape conditions.
+        //  + Being transferred into something without a MobState (vending machine, donut, etc.) should count as "alive",
+        //    only if the entity can interact with or communicate with others via things like Speech or Emotes.
 
         if (mind.OwnedEntity == null)
             return true;
 
-        // This can be null if they're deleted (spike / brain nom)
+        // This can be null if they're deleted (spike / brain nom), merely a brain (gibbing), or within a non-mob sentience container (vendors).
         var targetMobState = EntityManager.GetComponentOrNull<MobStateComponent>(mind.OwnedEntity);
-        // This can be null if it's a brain (this happens very often)
-        // Brains are the result of gibbing so should definitely count as dead
-        if (targetMobState == null)
-            return true;
-        // They might actually be alive.
-        return _mobState.IsDead(mind.OwnedEntity.Value, targetMobState);
+        if (targetMobState != null)
+        {
+            //If we have a MobState, we can empirically determine death state, which will be 1:1 with whether there are metagaming concerns with returning.
+            return _mobState.IsDead(mind.OwnedEntity.Value, targetMobState);
+        }
+        else
+        {
+            // For other sentience targets (e.g. vending machines, brains, admin ghost roles), we instead care about whether they can communicate.
+            var canCommunicate = EntityManager.HasComponent<SpeechComponent>(mind.OwnedEntity) || EntityManager.HasComponent<EmotingComponent>(mind.OwnedEntity);
+            return !canCommunicate;
+        }
     }
 
     public virtual void Visit(EntityUid mindId, EntityUid entity, MindComponent? mind = null)
